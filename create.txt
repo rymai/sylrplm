@@ -256,7 +256,15 @@ Next steps:
   git remote add origin git@github.com:sylvani/sylrplm.git
   git push origin master
       
-
+  git add .gitignore
+  git commit -m 'second commit'
+  git push origin master
+  
+  git add .
+git commit -m 'all commit'
+  git push origin master
+  
+  
 Existing Git Repo?
 
   cd existing_git_repo
