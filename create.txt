@@ -261,7 +261,7 @@ Next steps:
   git push origin master
   
   git add .
-git commit -m 'all commit'
+  git commit -m 'all commit'
   git push origin master
   
   

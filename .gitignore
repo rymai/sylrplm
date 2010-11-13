@@ -2,6 +2,7 @@
 ./**/*.*~
 ./**/*.obsolete
 ./**/*.sov
+doc/**/*
 log/*.log*
 explo_syl/**/*
 tmp/**/*
