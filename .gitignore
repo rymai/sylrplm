@@ -1,8 +1,10 @@
-./**/*/*.log
-./**/*/*.*~
-log/*.log
+./**/*.log*
+./**/*.*~
+./**/*.obsolete
+./**/*.sov
+log/*.log*
 explo_syl/**/*
 tmp/**/*
 config/database.yml
 route/**/*
-
+.directory
