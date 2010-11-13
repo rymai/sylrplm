@@ -1,0 +1,29 @@
+
+application sylrplm : Product Life Management
+
+- pre requis
+
+	- mysql
+	
+- mise en place
+
+	- décompresseer le fichier zip
+	
+	- se placer sur le repertoire principal de l'application 
+		cd sylrplm
+
+- installation des plugins 
+
+	- plugin de gestion d'autorisations
+		ruby script/plugin install http://opensvn.csie.org/ezra/rails/plugins/dev/acl_system2
+
+- installation de l'application
+
+	- créer la base
+		mysqladmin -u root create sylrplm_production
+		
+	- charger le schema
+		rake db:schema:load RAILS_ENV=production
+		
+		
+
