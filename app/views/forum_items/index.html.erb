@@ -1,0 +1,47 @@
+<h1><%=t(:forum_item_list)%></h1>
+
+<table>
+  <tr>
+    <th><%= t(:label_id) %></th>
+   <th><%=  t(:label_message) %></th>
+    <th><%= t(:label_subject) %></th>
+    <th><%= t(:label_parent) %></th>
+    <th><%= t(:label_owner) %></th>
+  </tr>
+
+<% @forum_items.each do |forum_item| %>
+  <tr>
+    <td><%=h forum_item.id %></td>
+   <td><%=h forum_item.message %></td>
+   <td>
+   <% if forum_item.forum!=nil %>
+   	<%=h forum_item.forum.id %>:<%=h forum_item.forum.subject %>
+   <% end %>
+   </td>
+    <td>
+    <% if forum_item.parent != nil %>
+    	<%=h forum_item.parent.id %>
+    <% else %>
+    	no parent
+    <% end %>
+    </td>
+    
+    <td>
+    <% if forum_item.author !=nil%>
+    	<%=h forum_item.author.login %>
+    <% else %>
+    	no author
+    <%end%>
+    </td>
+    <td><%= link_to h_img_show.to_s, forum_item %></td>
+    <td><%= link_to h_img_edit.to_s, edit_forum_item_path(forum_item) %></td>
+    <td><%= link_to h_img_destroy.to_s, forum_item, :confirm => t(:msg_confirm), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<table class='menu_bas'>
+<tr>
+<td><%= link_to t(:new_forum_item), new_forum_item_path %></td>
+</tr>
+</table>
+

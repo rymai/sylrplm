@@ -1,0 +1,2 @@
+module PlmObjectHelper
+end

@@ -1,0 +1,6 @@
+1: 
+ id: 1 
+ name: volume1 
+ description: volume de depart
+ directory:  
+ protocole: ror

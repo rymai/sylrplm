@@ -1,0 +1,54 @@
+<%=t(:hello)%>
+<br>
+<%=t(:part_tovalidate)%>
+<br>
+
+<p>
+  <b><%=t(:label_ident)%></b>
+  <%=h @part.ident %>
+</p>
+
+<p>
+  <b><%=t(:label_type)%></b>
+  <% if(@part.typesobject != nil) %>
+  	<%=h @part.typesobject.id %>:<%=h @part.typesobject.name %>
+  <% end %>
+</p>
+
+<p>
+  <b><%=t(:label_revision)%></b>
+  <%=h @part.revision %>
+</p>
+
+<p>
+  <b><%=t(:label_designation)%></b>
+  <%=h @part.designation %>
+</p>
+
+<p>
+  <b><%=t(:label_description)%></b>
+  <%=h @part.description %>
+</p>
+
+<p>
+  <b><%=t(:label_status)%></b>
+  <% if(@part.statusobject != nil) %>
+  	<%=h @part.statusobject.id %>:<%=h @part.statusobject.name %>
+  <% end %>
+</p>
+
+<p>
+  <b><%=t(:label_responsible)%></b>
+  <%=h @part.owner.login %>
+</p>
+
+<p>
+  <b><%=t(:label_date)%>:</b>
+  <%=h @part.date %>
+</p>
+
+<%=t(:check_object_and_promote)%><a href="<%= @urlbase %><%= url_for(:controller=>"parts", :action=>'edit', :id => @part.id) %>" title="<%= @part.ident %>" ><%=h @part.ident %></a>
+
+
+
+

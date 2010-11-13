@@ -1,0 +1,40 @@
+<h1>Listing forums</h1>
+
+<table>
+  <tr>
+    
+   <th><%=t(:label_type)%></th>
+    <th><%=t(:label_status)%></th>
+    <th><%=t(:label_subject)%></th>
+    <th><%=t(:label_description)%></th>
+    <th><%=t(:label_owner)%></th>
+				<th></th><th></th><th></th>
+   </tr>
+
+<% @forums.each do |forum| %>
+  <tr>
+    
+    <td><%=h forum.typesobject.name %></td>
+    <td><%=h forum.statusobject.name %></td>
+    <td><%=h forum.subject %></td>
+    <td><%=h forum.description %></td>
+    
+    <td>
+    <% if forum.creator != nil %>
+    	<%=h forum.creator.login %>
+    <% end %>
+    </td>
+    <td><%= link_to h_img_show.to_s, forum %></td>
+    <% if (forum.isFreeze() == false ) %>
+    	<td><%= link_to h_img_edit.to_s, edit_forum_path(forum) %></td>
+    	<td><%= link_to h_img_destroy, forum, :confirm => 'Are you sure?', :method => :delete %></td>
+  	<% end %>
+  </tr>
+<% end %>
+</table>
+
+<table class='menu_bas'>
+<tr>
+<td><%= link_to t("new_forum"), new_forum_path %></td>
+</tr>
+</table

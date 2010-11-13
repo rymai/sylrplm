@@ -1,0 +1,33 @@
+<h1><%=t(:part_new_forum)%></h1>
+
+<% form_for (@forum, :url => { :action=>"add_forum",:id=>@part.id } ) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label t(:label_typesobject) %><br />
+    <%= f.collection_select(:typesobject_id, @types, :id, :name)%>
+  </p>
+  <p>
+    <%= f.label t(:label_statusobject) %><br />
+    <%= f.collection_select(:statusobject_id, @status, :id, :name)%>
+  </p>
+  <p>
+    <%= f.label t(:label_subject) %><br />
+    <%= f.text_field :subject %>
+  </p>
+  <p>
+    <%= f.label t(:label_description) %><br />
+    <%= f.text_area :description %>
+  </p>
+   <p>
+    <%= label_tag t(:label_message) %><br />
+    <%= text_area_tag :message %>
+  </p>
+ 
+  
+ <table class='menu_bas'>
+<tr>
+<td><%= f.submit t(:add_forum) %></td>
+</tr>
+</table>
+<% end %>

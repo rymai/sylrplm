@@ -1,0 +1,74 @@
+<H1><%=t(:project_show) %></H1>
+<p>
+    <b><%=t(:label_ident) %></b>
+    <%=h @project.ident %>
+</p>
+<p>
+    <b><%=t(:label_type) %></b>
+    <% if(@project.typesobject != nil) %>
+    <%=h @project.typesobject.id %>:<%=h @project.typesobject.name %>
+    <% end %>
+</p>
+<p>
+    <b><%=t(:label_designation) %></b>
+    <%=h @project.designation %>
+</p>
+<p>
+    <b><%=t(:label_description) %></b>
+    <%=h @project.description %>
+</p>
+<p>
+    <b><%=t(:label_statusobject) %></b>
+    <% if(@project.statusobject != nil) %>
+    <%=h @project.statusobject.id %>:<%=h @project.statusobject.name %>
+    <% end %>
+</p>
+<p>
+    <b><%=t(:label_responsible) %></b>
+    <%=h @project.owner.login %>
+</p>
+<p>
+    <b><%=t(:label_date) %></b>
+    <%=h @project.date %>
+</p>
+<h1></h1>
+<%= h_sylrplm_tree %>
+<table class='menu_bas'>
+    <tr>
+    <% if(!@favori_document.empty) %>
+    <% form_for(@project, :url => {:id => @project.id, :action => "add_docs" }) do |f| %>
+    <td>
+        <%= select("relation","document",options_for_select(@relation_types_document)) %>
+    </td>
+    <td>
+        <%= submit_tag t("paste_documents") %>
+    </td>
+    <% end %>
+    <tr>
+        <% end %>
+        <% if(!@favori_part.empty) %>
+        <% form_for(@project, :url => {:id => @project.id, :action => "add_parts" }) do |f| %>
+        <td>
+            <%= select("relation","part",options_for_select(@relation_types_part)) %>
+        </td>
+        <td>
+            <%= submit_tag t("paste_parts") %>
+        </td>
+        <% end %>
+        <% end %>
+    </tr>
+</table>
+<h1></h1>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to h_img_add_forum.to_s+t("add_forum"), :id => @project.id, :action => :new_forum %>
+        </td>
+        <td>
+            <%= link_to t("edit"), edit_project_path(@project) %>
+        </td>
+        <td>
+            <%= link_to t("list"), projects_path %>
+        </td>
+    </tr>
+</table>

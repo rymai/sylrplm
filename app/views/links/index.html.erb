@@ -1,0 +1,38 @@
+<h1>Listing links</h1>
+
+<table>
+  <tr>
+    <th>Father object</th>
+    <th>Child object</th>
+    <th>Father</th>
+    <th>Child</th>
+    <th>Name</th>
+    <th>Designation</th>
+    <th>Description</th>
+    <th>Responsible</th>
+    <th>Group</th>
+    <th>Date</th>
+  </tr>
+
+<% @links.each do |link| %>
+  <tr>
+    <td><%=h link.father_object %></td>
+    <td><%=h link.child_object %></td>
+    <td><%=h link.father_id %></td>
+    <td><%=h link.child_id %></td>
+    <td><%=h link.name %></td>
+    <td><%=h link.designation %></td>
+    <td><%=h link.description %></td>
+    <td><%=h link.responsible %></td>
+    <td><%=h link.group %></td>
+    <td><%=h link.date %></td>
+    <td><%= link_to 'Show', link %></td>
+    <td><%= link_to 'Edit', edit_link_path(link) %></td>
+    <td><%= link_to 'Destroy', link, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New link', new_link_path %>

@@ -1,0 +1,23 @@
+<%=t(:typesobjects_show) %>
+<p>
+    <b><%=t(:label_object) %></b>
+    <%=h @typesobject.object %>
+</p>
+<p>
+    <b><%=t(:label_name) %></b>
+    <%=h @typesobject.name %>
+</p>
+<p>
+    <b><%=t(:label_description) %></b>
+    <%=h @typesobject.description %>
+</p>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t(:edit), edit_typesobject_path(@typesobject) %>
+        </td>
+        <td>
+            <%= link_to t(:list), typesobjects_path %>
+        </td>
+    </tr>
+</table>

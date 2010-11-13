@@ -1,0 +1,10 @@
+<sylrplm_help>
+<msg key="help_main">
+	welcome to the sylrplm application powered by rails&lt;img src="/images/rails.png"&gt;&lt;/img&gt;
+</msg>
+<msg key="help2">ceci est le help 2</msg>
+<msg key="help3">ceci est le help 3</msg>
+<msg key="help4">ceci est le help 4</msg>
+
+
+</sylrplm_help>

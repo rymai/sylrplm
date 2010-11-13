@@ -1,0 +1,675 @@
+<sylrplm_help key="help_main" title="Documentation de l'application SYLPLM">
+    
+    Bienvenue dans l'application SYLRPLM développée sur "Ruby On Rails"#img=rails.png=img##lnk=http://www.railsfrance.org/=lnk#"
+    <msg key="help_presentation" title="Présentation générale">
+        <msg key="help_banner" title="Bandeau">
+            #img=help/bandeau.png=img#
+            Indique le nom de l'utilisateur et son rôle ()
+            Permet de se déconnecter.
+            Permet de changer le thème de présentation de l'application.
+        </msg>
+        <msg key="help_icones" title="Icones">
+            <ul>
+                <li title="Déconnexion">#img=disconnect.png=img#</li>
+                <li title="Explorer un objet">#img=explorer.png=img#</li>
+                <li title="Editer un objet">#img=edit.png=img#</li>
+                <li title="Réviser un objet">#img=revise.png=img#</li>
+                <li title="Couper la relation d'un objet avec son 'père'">#img=cut.png=img#</li>
+                <li title="Détruire un objet">#img=destroy.png=img#</li>
+                <li title="Lancer le filtrage de la liste des objets">#img=filter.png=img#</li>
+                <li title="Copier un objet dans le presse papier">#img=copy.png=img#</li>
+                <li title="Coller les documents du presse papier">#img=paste_documents.png=img#</li>
+                <li title="Coller les articles du presse papier">#img=paste_parts.png=img#</li>
+                <li title="Coller les projets du presse papier">#img=paste_projects.png=img#</li>
+                <li title="Valider la création ou modification">#img=submit.png=img#</li>
+                <li title="Activer l'aide sur un menu">#img=help.png=img#</li>
+                <li title="Aller au chapitre principal">#img=help_main.png=img#</li>
+                <li title="Aller au chapitre suivant">#img=help_next.png=img#</li>
+                <li title="Aller au chapitre précedent">#img=help_previous.png=img#</li>
+                <li title="Aller au chapitre supérieur">#img=help_upper.png=img#</li>
+                <li title="Aller au début de la documentation">#img=welcome.png=img#</li>
+            </ul>
+        </msg>
+        <msg key="help_filter" title="Filtre">
+            Dans toutes les pages listant des objets, il est possible de ne voir qu'une partie de ceux ci.
+            Ceci en renseignant le filtre et en validant:
+            <ul>
+                <li title="Documents avant filtre">
+                    #img=help/documents_filtre_1.png=img#
+                </li>
+                <li title="Documents après filtre sur le type 'm3d'">
+                    #img=help/documents_filtre_2.png=img#
+                </li>
+            </ul>
+        </msg>
+        <msg key="help_sort" title="Tri">
+            Dans toutes les pages listant des objets, il est possible de trier les objets suivant un critère.
+            Ceci en en activant l'entête de la colonne contenant l'attribut désiré.:
+            <ul>
+                <li title="Documents avant tri">
+                    #img=help/documents_tri_1.png=img#
+                </li>
+                <li title="Documents après tri sur l'attribut 'type'">
+                    #img=help/documents_tri_2.png=img#
+                </li>
+            </ul>
+        </msg>
+        <msg key="help_pagination" title="Pagination">
+            Lorsque le nombre d'objets listés dépassent la limite définie par la constante NB_ITEMS_PER_PAGE, voir la configuration:#jump=help_config=jump#
+            , la page n'affiche que ce nombre maximum d'objets.
+            Il est possible de demander l'affichage des autres pages à l'aide d'un bandeau de pagination:
+            <ul>
+                <li title="Liste des documents">
+                    #img=help/pagination_1.png=img#
+                </li>
+                <li title="Après appui sur Next">
+                    #img=help/pagination_2.png=img#
+                </li>
+            </ul>
+        </msg>
+        <msg key="help_notice_error" title="Notifications et erreurs">
+            Après chaque opération de modification d'un objet, une ou plusieurs lignes de notification apparaissent sur l'écran suivant.
+            Elles indiquent le résultat de l'action précédente: succès, échec, information importante...
+            De plus, spécifiquement pour les écrans de saisie d'attributs, un affichage des erreurs éventuelles de saisie s'affiche.
+            Voici un exemple pour la création d'un document.
+            <ul>
+                <li title="Page de création">#img=help/documents_new.png=img#
+                </li>
+                <li title="Après validation et création sans erreur (après changement de thème)">Notification de "Document 'ident' crée avec succès"
+								#img=help/documents_new_ok.png=img#
+                </li>
+                <li title="Après validation et création avec erreur ">Notification de "Document non crée' et affichage de l'erreur (il manque la désignation)
+								#img=help/documents_new_ko.png=img#
+                </li>
+            </ul>
+        </msg>
+    </msg>
+    
+    <msg key="help_modules" title="Modules">
+        Les différents modules de l'application sont:
+        <msg key="help_welcome" title="Acceuil">
+            #img=help/module_acceuil.png=img#
+            Permet de visualiser cette page d'aide.
+            Permet de changer la langue.
+            Permet d'activer l'aide sur un menu: clic sur l'image help puis clic sur un menu.
+        </msg>
+        <msg key="help_objects" title="Les objets PLM">
+            #img=help/module_objets.png=img#
+            <msg key="help_authorization" title="Autorisations/login">
+                Certains menus exigent que l'utilisateur ait certains droits sur les objets, il doit donc se connecter.
+                Cette connexion s'effectue en deux temps suite à l'activation d'un menu (il n'y a pas de menu connexion, on ne se connecte que si c'est indispensable):
+                <ul>
+                    <li title="Connexion">#img=help/login_1.png=img#</li>
+                    <li title="Choix du rôle">#img=help/login_2.png=img#</li>
+                </ul>
+            </msg>
+            <msg key="help_documents" title="Documents" href="/documents">
+                Le module "Objets PLM" permet de gérer les objets suivants:
+                <msg key="help_documents_description" title="Description">
+                    <ul>
+                        <li>Les documents permettent de décrire les articles ou projets ou clients.
+                            Cependant, ils ne sont pas forcément rattachés à un article ou projet ou client (par exemple les normes).</li>
+                        <li>Ils peuvent être de différents types: note de calcul, fiche de description de recette, norme, ...#jump=help_typesobjects=jump#.</li>
+                        <li>Leur fichier associé peut être de différents formats: word, excel, catia, solid-works,...</li>
+                        <li>L'application gère le cycle de vie des documents, voir le chapitre correspondant: #jump=help_lifecycle=jump#</li>
+                        <li>Les modifications du fichier associé au document sont contrôlés à l'aide du mécanisme
+                            de réservation/libération afin d'éviter que deux utilisateurs modifient le même fichier en même temps : #jump=help_documents_reservation=jump#</li>
+                    </ul>
+                </msg>
+                <msg key="help_documents_attributs" title="Attributs">
+                    <ul>Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                        <li title="Identifiant">Identifiant du document</li>
+                        <li title="Type">Type du document</li>
+                        <li title="Révision">Révision, ident+revision=identifiant unique d'un document</li>
+                        <li title="Désignation"></li>
+                        <li title="Statut">Statut (voir le cycle de vie)</li>
+                        <li title="Responsable">Nom de l'utilisateur créateur ou dernier modifieur</li>
+                        <li title="Date">Date de création ou de dernière modification</li>
+                        <li title="Volume">Nom du volume ou est stocké le fichier</li>
+                        <li title="Fichier">Nom du fichier associé à ce document</li>
+                        <li title="Type de contenu">Type de contenu du document</li>
+                    </ul>
+                </msg>
+                <msg key="help_documents_functions" title="Fonctionnalités">
+                    Les principales fonctionnalités sur les documents sont:
+                    <msg key="help_documents_list" title="Liste" href="/documents">
+                        #img=help/documents_list.png=img#
+                    </msg>
+                    <msg key="help_documents_show" title="Explorer" href="/documents/1">
+                        #img=help/documents_show.png=img#
+                    </msg>
+                    <msg key="help_documents_reservation" title="Réservation/Libération">
+                        <ul>
+                            <li title="Réservation">Pour pouvoir modifier le fichier associé à un document, celui ci doit être réservé dans la fenêtre "Explorer":
+                                <ul>
+                                    <li title="Télécharger fichier">Permet de récuperer le fichier sur un disque de la machine en local.
+                                        L'utilisateur peut ainsi le modifier par l'éditeur de son choix.</li>
+                                    <li title="Reason">Raison de la réservation</li>
+                                </ul>
+                            </li>
+                            <li title="Libération">Lorsque le document est réservé, le menu est modifié:
+                                #img=help/documents_checkin.png=img#
+                                <ul>
+                                    <li title="Maj et libérer">Permet de prendre en compte les modifications sur le fichier et de libérer le document</li>
+                                    <li title="Reason">Raison de la mise à jour</li>
+                                    <li title="nom du fichier">Nom du fichier qui a été téléchargé lors de réservation</li>
+                                    <li title="Parcourir">Indiquez le fichier à charger (le fichier qui a été téléchargé lors de réservation puis modifié)</li>
+                                    <li title="Libérer">Permet de libérer le fichier sans prendre en compte les modifications éventuelles</li>
+                                    <li title="Reason">Raison de la libération</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </msg>
+                    <msg key="help_documents_edit" title="Edition" href="/documents/edit/1">
+                        #img=help/documents_edit.png=img#
+                    </msg>
+                    <msg key="help_documents_new" title="Nouveau document" href="/documents/new">
+                        <ul>
+                            <li title="Page de création">#img=help/documents_new.png=img#
+                            </li>
+                            <li title="Après validation et création sans erreur (après changement de thème)">#img=help/documents_new_ok.png=img#
+                            </li>
+                            <li title="Après validation et création avec erreur (il manque la désignation)">#img=help/documents_new_ko.png=img#
+                            </li>
+                        </ul>
+                    </msg>
+                </msg>
+            </msg>
+            <msg key="help_parts" title="Articles" href="/parts">
+                <ul>
+                    <li>Les Articles sont les composants d'un produit (qui est également un article)</li>
+                    <li>Suivant l'entreprise, ils peuvent être de différents types:#jump=help_typesobjects=jump#</li>
+                    <li>Un article est rattaché à 0 ou plusieurs projets</li>
+                    <li>Il est décrit par 0 à plusieurs documents</li>
+                    <li>L'application gère le cycle de vie des articles, voir le chapitre correspondant:#jump=help_lifecycle=jump#</li>
+                </ul>
+                <msg key="help_parts_attributs" title="Attributs">
+                    <ul>Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                        <li title="Identifiant">Identifiant de l'article</li>
+                        <li title="Type">Type de l'article</li>
+                        <li title="Révision">Révision, ident+revision=identifiant unique de l'article</li>
+                        <li title="Désignation"></li>
+                        <li title="Statut">Statut (voir le cycle de vie)</li>
+                        <li title="Responsable">Nom de l'utilisateur créateur ou dernier modifieur</li>
+                        <li title="Date">Date de création ou de dernière modification</li>
+                    </ul>
+                </msg>
+                <msg key="help_parts_functions" title="Fonctionnalités">
+                    Les principales fonctionnalités sur les articles sont:
+                    <msg key="help_parts_list" title="Liste" href="/parts">
+                        #img=help/parts_list.png=img#
+                    </msg>
+                    <msg key="help_parts_show" title="Explorer" href="/parts/1">
+                        <ul>
+                            <li title="Page d'exploration">#img=help/parts_show.png=img#
+                            </li>
+                            <li title="Ajout forum">#img=help/parts_add_forum.png=img#
+                            </li>
+                        </ul>
+                    </msg>
+                    <msg key="help_parts_edit" title="Edition" href="/parts/edit/1">
+                        #img=help/parts_edit.png=img#
+                    </msg>
+                    <msg key="help_parts_new" title="Nouvel article" href="/parts/new">
+                        <ul>
+                            <li title="Page de création">#img=help/parts_new.png=img#
+                            </li>
+                        </ul>
+                    </msg>
+                </msg>
+            </msg>
+            <msg key="help_projects" title="Projets" href="/projects">
+                <ul>
+                    <li>Les projets permettent de regrouper les informations relatives à un projet de l'entreprise</li>
+                    <li>Ils peuvent être de différents types:#jump=help_typesobjects=jump#</li>
+                    <li>Un projet est rattaché à 0 ou 1 client</li>
+                    <li>Il est décrit par 0 à plusieurs documents</li>
+                    <li>L'application gère le cycle de vie des projets, voir le chapitre correspondant: #jump=help_lifecycle=jump#</li>
+                </ul>
+                <msg key="help_projects_attributs" title="Attributs">
+                    <ul>Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                        <li title="Identifiant">Identifiant du projet</li>
+                        <li title="Type">Type du projet</li>
+                        <li title="Désignation"></li>
+                        <li title="Statut">Statut (voir le cycle de vie)</li>
+                        <li title="Responsable">Nom de l'utilisateur créateur ou dernier modifieur</li>
+                        <li title="Date">Date de création ou de dernière modification</li>
+                        <li title="Client">Le client ayant demandé le projet</li>
+                    </ul>
+                </msg>
+                <msg key="help_projects_functions" title="Fonctionnalités">
+                    Les principales fonctionnalités sur les projets sont:
+                    <msg key="help_projects_list" title="Liste" href="/projects">
+                        #img=help/projects_list.png=img#
+                    </msg>
+                    <msg key="help_projects_show" title="Explorer" href="/projects/1">
+                        #img=help/projects_show.png=img#
+                    </msg>
+                    <msg key="help_projects_edit" title="Edition" href="/projects/edit/1">
+                        #img=help/projects_edit.png=img#
+                    </msg>
+                    <msg key="help_projects_new" title="Nouveau projet" href="/projects/new">
+                        #img=help/projects_new.png=img#
+                    </msg>
+                </msg>
+            </msg>
+            <msg key="help_customers" title="Clients" href="/customers">
+                <ul>
+                    <li>Les clients sont les demandeurs des projets</li>
+                    <li>Ils peuvent être de différents types:#jump=help_typesobjects=jump#</li>
+                    <li>Il est décrit par 0 à plusieurs documents</li>
+                    <li>L'application gère le cycle de vie des clients, voir le chapitre correspondant: #jump=help_lifecycle=jump#</li>
+                </ul>
+                <msg key="help_customers_attributs" title="Attributs">
+                    <ul>Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                        <li title="Identifiant">Identifiant du client</li>
+                        <li title="Type">Type du client</li>
+                        <li title="Désignation"></li>
+                        <li title="Statut">Statut (voir le cycle de vie)</li>
+                        <li title="Responsable">Nom de l'utilisateur créateur ou dernier modifieur</li>
+                        <li title="Date">Date de création ou de dernière modification</li>
+                    </ul>
+                </msg>
+                <msg key="help_parts_functions" title="Fonctionnalités">
+                    Les principales fonctionnalités sur les articles sont:
+                    <msg key="help_customers_list" title="Liste" href="/customers">
+                        #img=help/customers_list.png=img#
+                    </msg>
+                    <msg key="help_customers_show" title="Explorer" href="/customers/1">
+                        #img=help/customers_show.png=img#
+                    </msg>
+                    <msg key="help_customers_edit" title="Edition" href="/customers/edit/1">
+                        #img=help/customers_edit.png=img#
+                    </msg>
+                    <msg key="help_customers_new" title="Nouveau client" href="/customers/new">
+                        <ul>
+                            <li title="Page de création">#img=help/customers_new.png=img#
+                            </li>
+                        </ul>
+                    </msg>
+                </msg>
+            </msg>
+            <msg key="help_relation" title="Relations entre objets">
+                L'application permet d'établir des relations entres les objets PLM.
+                Par exemple, la définition d'un article par un document est faite par une relation de type relation_document
+                Les articles sont reliés entre eux par une relation de type relation_part.
+                Les articles sont reliés aux projets par une relation de type relation_part.
+                Les projets sont reliés aux projets par une relation de type relation_projet.
+                Ces différents types de relations ont des noms paramétrables suivant l'entreprise, voir le chapitre paramétrages: #jump=help_typesobjects=jump#
+                La méthode pour créer une relation entre deux objets est la suivante.
+                <ul>
+                    <li>Afficher la liste des objets d'un type donné: document/article/projet</li>
+                    <li>Pour pouvoir relier un de ces objets à un autre objet, activer d'abord le menu "copier"
+                        Le module "Presse papier" affiche alors l'objet 'copié'
+                        #img=help/module_pressepapier_1.png=img#</li>
+                    <li>Ensuite, afficher la liste des objets du type avec lequel on veut établir la relation: article/projet/client</li>
+                    <li>Activer le menu "Détails" sur l'objet désiré</li>
+                    <li>Dans la page "Détails", choisir la relation voulue et activer le menu "Coller Documents" ou "Coller articles" ou "Coller projets" pour coller le ou les objets du type se trouvant dans le prese papier.
+                        Résultat:
+                        <ul>
+                            <li title="Document collé sur un article">#img=help/explorer_part_document.png=img#
+                            </li>
+                            <li title="Article collé sur un article">#img=help/explorer_part_part.png=img#
+                            </li>
+                            <li title="Article collé sur un projet">#img=help/explorer_project_part.png=img#
+                            </li>
+                            <li title="Client avec tous ses composants">#img=help/explorer_customer_all.png=img#
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </msg>
+            <msg key="help_lifecycle" title="Cycle de vie des objets PLM">
+                L'application gère le cycle de vie de ces objets PLM:document,article,projet,client grâce à 2 notions:
+                <ul>
+                    <li title="Maturité">A un moment donné, un objet a un statut parmi plusieurs possibles, par exemple "inwork", "ready", "approved".
+                        Le passage d'un statut à un autre s'effectue, par le menu d' "Edition" sur la liste des objets,
+                        soit par choix dans la liste des statuts possibles, soit par les menus "Promouvoir"/"Rétrograder" : #jump=help_statusobjects=jump#.
+                        Ceci dépend du paramétrage des statuts, voir le chapitre correspondant:#jump=help_statusobjects=jump#
+                        Lorsque le statut, suite à cette action, est l'avant dernier possible, ex:"ready",
+                        l'application envoie un mail à l'utilisateur ayant le rôle "valider" lui demandant de valider cet objet en modifiant son statut,
+                        ex: "approved".
+                        Lorsque le "valider" a modifier le statut, l'application envoie un mail au demandeur l'informant de la validation de l'objet
+                        Remarque: si le "valider" ou le "demandeur" n'ont pas mail, le mail correspondant n'est pas envoyé.
+                    </li>
+                    <li title="Révision">Pour les documents et articles seulement.
+                        Un objet peut être révisé lorsque le dernier statut possible est atteint, ex:"approved".
+                        L'utilisateur peut alors demander sa révision par le menu "Révision" sur la liste des objets.
+                        Une nouvelle version de lobjet est alors crée, la valeur de la révision ayant été incrémentée.
+                    </li>
+                </ul>
+            </msg>
+        </msg>
+        <msg key="help_collab" title="Travail collaboratif">
+            #img=help/module_collaboratif.png=img#
+            Les fonctions de travail collaboratif sont:
+            <msg key="help_questions" title="Foire aux questions" href="/questions">
+                Cette foire aux questions permet à l'administrateur de préciser certains points techniques ou de fonctionnement de l'application.
+                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                    <li title="Question">La question</li>
+                    <li title="Réponse">La réponse</li>
+                </ul>
+            </msg>
+            <msg key="help_news" title="Nouveautés" href="/main/news">
+                Permet à l'administrateur d'informer les utilisateurs (#jump=help_users=jump#) sur les nouveautés de l'application.
+            </msg>
+            <msg key="help_forums" title="Forums" href="/forums">
+                Permet aux utilisateurs (#jump=help_users=jump#) d'échanger des informations.
+                Un ou plusieurs forums peuvent être associés aux objets PLM suivants: article, projet, client par le menu "Ajout forum" de la page "Explorer"
+                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                    <li title="Type">Type de forum</li>
+                    <li title="Statut">Statut du forum</li>
+                    <li title="Sujet du forum">Sujet du forum</li>
+                    <li title="Description">Description du forum</li>
+                    <li title="Emetteur">Créateur du forum</li>
+                    <li title="Message">Le premier message sur ce forum</li>
+                </ul>
+            </msg>
+            <msg key="help_contacts" title="Contacts" href="/main/contacts">
+                Liste les contacts utiles pour l'utilisation de l'application.
+            </msg>
+        </msg>
+        <msg key="help_organization" title="L'organisation">
+            #img=help/module_organisation.png=img#
+            Le module "Organisation" permet de gérer:
+            <msg key="help_users" title="Utilisateurs" href="/login/list_users">
+                Permet de définir les personnes ayant accès à l'application.
+                <msg key="help_users_attributs" title="Attributs">
+                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                        <li title="Nom">Nom de l'utilisateur
+                        </li>
+                        <li title="Rôle">Rôle actuel de l'utilisateur
+                        </li>
+                        <li title="Email">Adresse de messagerie de l'utilisateur
+                        </li>
+                        <li title="Thème">Thème actif pour l'utilisateur
+                        </li>
+                        <li title="Rôles(en création seulement)">Rôles attribués à l'utilisateur
+                        </li>
+                    </ul>
+                </msg>
+                <msg key="help_users_functions" title="Fonctionnalités">
+                    Les principales fonctionnalités sur les utilisateurs sont:
+                    <msg key="help_users_list" title="Liste" href="/list_users">
+                        #img=help/users_list.png=img#
+                    </msg>
+                    <msg key="help_users_edit" title="Edition" href="/edit_user/1">
+                        #img=help/users_edit.png=img#
+                    </msg>
+                    <msg key="help_users_new" title="Nouvel utilisateur" href="/add_user">
+                        #img=help/users_new.png=img#
+                    </msg>
+                </msg>
+            </msg>
+            <msg key="help_roles" title="Rôles" href="/roles">
+                Un ou plusieurs rôles sont attribués à un utilisateur, il se connecte avec un seul de ses rôles dans une session.
+                <msg key="help_roles_attributs" title="Attributs">
+                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                        <li title="Nom">Nom du rôle.
+                        </li>
+                        <li title="Description">
+                        </li>
+                    </ul>
+                </msg>
+                <msg key="help_roles_functions" title="Fonctionnalités">
+                    Les principales fonctionnalités sur les rôles sont:
+                    <msg key="help_roles_list" title="Liste" href="/roles">
+                        #img=help/roles_list.png=img#
+                    </msg>
+                    <msg key="help_roles_show" title="Explorer" href="/roles/1">
+                        #img=help/roles_show.png=img#
+                    </msg>
+                    <msg key="help_roles_edit" title="Edition" href="/roles/1">
+                        #img=help/roles_edit.png=img#
+                    </msg>
+                    <msg key="help_users_new" title="Nouveau rôle" href="/roles/new">
+                        #img=help/roles_new.png=img#
+                    </msg>
+                </msg>
+            </msg>
+            <msg key="help_access" title="Autorisations" href="/access">
+                Déterminent les fonctions utilisables par chaque rôle (#jump=help_roles=jump#)
+                <msg key="help_access_attributs" title="Autorisations">
+                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                        <li title="Controleur">Controleur(ruby and rails) sur lequel l'action est permise au rôle.
+                        </li>
+                        <li title="Action">L'action du controleur que peut effectuer le rôle.
+                        </li>
+                        <li title="Rôle">le Rôle pour lequel l'action du controleur est permise.
+                        </li>
+                        <li title="Controleur(en création seulement">Controleur(ruby and rails).action permis au rôle.
+                        </li>
+                    </ul>
+                </msg>
+                <msg key="help_accesss_functions" title="Fonctionnalités">
+                    Les principales fonctionnalités sur les autorisations sont:
+                    <msg key="help_access_list" title="Liste" href="/access">
+                        #img=help/access_list.png=img#
+                    </msg>
+                    <msg key="help_access_show" title="Explorer" href="/access/1">
+                        #img=help/access_show.png=img#
+                    </msg>
+                    <msg key="help_roles_edit" title="Edition" href="/access/1">
+                        #img=help/access_edit.png=img#
+                    </msg>
+                    <msg key="help_users_new" title="Nouveau rôle" href="/access/new">
+                        #img=help/access_new.png=img#
+                    </msg>
+                </msg>
+            </msg>
+            <msg key="help_volumes" title="Volumes" href="/volumes">
+                Détermine le lieu de stockage des fichiers des Documents
+                <msg key="help_volumes_volumes" title="Volumes">
+                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                        <li title="Nom">Nom du volume, il appraitra tel quel sans traduction.
+                        </li>
+                        <li title="Description">
+                        </li>
+                        <li title="Répertoire">Répertoire de base du volume.
+                            Les fichiers y seront stockés suivant la structure suivante.
+                            %Répertoire%/@nom_volume/Document/@ident/@revision/@nom_fichier.extension
+                        </li>
+                    </ul>
+                </msg>
+                <msg key="help_volumes_functions" title="Fonctionnalités">
+                    Les principales fonctionnalités sur les volumes sont:
+                    <msg key="help_volumes_list" title="Liste" href="/volumes">
+                        #img=help/volumes_list.png=img#
+                    </msg>
+                    <msg key="help_roles_show" title="Explorer" href="/volumes/1">
+                        #img=help/volumes_show.png=img#
+                    </msg>
+                    <msg key="help_roles_edit" title="Edition" href="/volumes/1">
+                        #img=help/volumes_edit.png=img#
+                    </msg>
+                    <msg key="help_users_new" title="Nouveau volumes" href="/volumes/new">
+                        #img=help/volumes_new.png=img#
+                    </msg>
+                </msg>
+            </msg>
+        </msg>
+        <msg key="help_param" title="Paramétrages">
+            #img=help/module_parametrage.png=img#
+            Les diverses possibilités de paramétrage portent sur:
+            <msg key="help_typesobjects" title="Types d'objet" href="/typesobjects">
+                Les types permettent de classer les différents objets suivant une caractéristique considerée comme importante dans l'entreprise.
+                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                    <li title="Objet">Type d'objet ou de relation sur lequel portera le statut:
+                        <ul>
+                            <li>document</li>
+                            <li>article</li>
+                            <li>projet</li>
+                            <li>client</li>
+                            <li>relation_document (depuis part ou projet ou client)</li>
+                            <li>relation_part (depuis projet ou client)</li>
+                            <li>relation_projet (depuis client)</li>
+                        </ul>
+                    </li>
+                    <li title="Nom">Nom du type, il appraitra tel quel sans traduction.
+                    </li>
+                    <li title="Description">
+                    </li>
+                </ul>
+            </msg>
+            <msg key="help_statusobjects" title="Status des objets" href="/statusobjects">
+                Les statuts permettent de définir les statuts de maturité des objets suivant les processus mis en oeuvre dans l'entreprise.
+                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                    <li title="Objet">Type d'objet sur lequel portera le statut: document/article/projet/client
+                    </li>
+                    <li title="Nom">Nom du statut, il appraitra tel quel sans traduction.
+                    </li>
+                    <li title="Rang de promotion">Rang du statut dans le cycle de vie de l'objet:
+                        le Premier est pris à la creation
+                        Une promotion attribue le suivant
+                        Une rétrogradation attribue le précédent
+                        Le dernier permet à l'utilisateur de demander une révision de l'objet:#jump=help_lifecycle=jump#
+                    </li>
+                    <li title="Description">
+                    </li>
+                    <li title="Promotion(oui/non)">Permet de préciser si le changement de statut vers le haut se fait par le menu promote (oui) ou par choix dans la liste (non)
+                    </li>
+                    <li title="Rétrogadation(oui/non)">Permet de préciser si le changement de statut vers le bas se fait par le menu promote (oui) ou par choix dans la liste (non)
+                    </li>
+                </ul>
+            </msg>
+            <msg key="help_sequences" title="Valeurs par défaut" href="/sequences">
+                Définit les différentes valeurs par défaut utilisées par l'application, en particulier lors de l'attribution de noms aux objets.
+                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                    <li title="Utilisation(identifiant/revision/...)">Permet d'attribuer la valeur à n'importe quel attribut d'un objet
+                    </li>
+                    <li title="Séquence(oui/non)">Permet de préciser que la valeur doit s'incrémenter à chaque création d'un nouel objet de ce type.
+                    </li>
+                    <li title="Modifiable">Permet de rendre possible la modification de la valeur de cet attribut( non pris en compte pour le moment)
+                    </li>
+                    <li title="Valeur">Pour préciser la valeur par défaut ou la première valeur d'une séquence.
+                    </li>
+                    <li title="Valeur minimale">Pour préciser la valeur minimale, non utilisée pour l'instant.
+                    </li>
+                    <li title="Valeur maximale">Pour préciser la valeur maximale, non utilisée pour l'instant.
+                    </li>
+                </ul>
+            </msg>
+            <msg key="help_config" title="Configuration">
+                Il est possible de configurer l'application à l'aide paramètres à définir dans le fichier sylrplm.rb du répertoire config
+                Toute modification de ce fichier requiert un redémarrage du serveur http.
+                <ul title="config/sylrplm.rb">
+                    <li title="VOLUME_DIRECTORY_DEFAULT">=/home/syl/trav/rubyonrails/sylrplm_data/
+                        Répertoire par défaut du premier volume crée lors de l'initialisation: #jump=help_init_db=jump#
+                    </li>
+                    <li title="LOCAL_DEFAULT">="fr"
+                        Langue par défaut (fr ou us)
+                    </li>
+                    <li title="THEME_DEFAULT">="blackwhite"
+                        Thème par défaut (blackwhite ou blue ou green)
+                    </li>
+                    <li title="NB_ITEMS_PER_PAGE">=15
+                        Nombre de lignes d'objets affichées dans les listes.
+                    </li>
+                </ul>
+            </msg>
+        </msg>
+        
+        <msg key="help_clipboard" title="Presse papiers">
+            #img=help/module_pressepapier.png=img#
+            Indique les objets copiés depuis les listes d'objets par le menu "Copier".
+            Ces objets peuvent être "collés" dans les autres objets par le menu "Explorer"
+        </msg>
+        <msg key="help_debug" title="Debug">
+            #img=help/module_debug.png=img#
+            Permet de gérer les tables internes de l'application.
+            Pour administrateur très éclairé seulement.
+        </msg>
+    </msg>
+    <msg key="help_technical_doc" title="Documentation technique">
+        La documentation technique de l'application décrit les classes,fichiers source et méthodes:#lnk=doc/app/index.html=lnk#
+    </msg>
+    
+    <msg key="help_init_db" title="Initialisation d'une base de données">
+        Avant de commencer à créer des objets , l'application vous invite à initialiser la base de donnée suivant le domaine dans lequel vous voulez l'utiliser
+        Vous pourrez ensuite compléter ce paramétrage, voir la partie paramétrage.
+        L'application propose donc le choix du domaine de votre PLM: Mécanique ou Culinaire ainsi que celui de l'emplacement du 1er volume de stockage des fichiers associés aux documents.
+        <ul>
+            <li title="Domaine mécanique">
+                Le domaine mécanique comprend les paramétrages suivants:
+                <ul>
+                    <li title="Types d'objets" href="/typesobjects/new">
+                        <ul>
+                            <li>Documents:Plan2D, Plan3D, Note de calcul, ...</li>
+                            <li>Pièces:Mécanique, Electronique, ...</li>
+                            <li>Projets:PDM, Batiment, ...</li>
+                            <li>Clients:Interne, Public, Privé ...</li>
+                        </ul>
+                    </li>
+                    <li title="Statuts des objets" href="/statusobjects/new">
+                        <ul>
+                            <li>Documents: En cours, Approuvé</li>
+                            <li>Pièces: En cours, Validé</li>
+                            <li>Projets: Démarré, Terminé, Obsolète</li>
+                            <li>Clients: Actif, Inactif, Obsolète</li>
+                        </ul>
+                    </li>
+                    <li title="Valeurs par défaut" href="/sequences/new">
+                        <ul>
+                            <li>Documents: DOC000000 ou ______ ...</li>
+                            <li>Parts: PART000000 ou ______ ...</li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li title="Volumes">Au moins un volume. ex:volume1 sur le repertoire /home/syl/trav/rubyonrails/sylrplm_data:#lnk=/volumes/new=lnk#
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>A la validation du choix, l' initialisation automatique consiste a paramétrer les éléments suivants:
+            Note: les liens renvoient sur les menus associés pour modifications ultérieures.
+            <li title="Rôles">Rôles crées: admin(tous les privilèges), designer(peut créer), consultant(peut voir) :#lnk=/roles/new=lnk#
+            </li>
+            <li title="Utilisateurs">Utilisateurs crées: admin avec le rôle admin, designer avec le rôle designer, consutant avec le rôle consultant:#lnk=/login/add_user=lnk#
+                Mot de passe=nom utilisateur
+            </li>
+            
+        </ul>
+    </msg>
+    <msg key="help_raf" title="Reste à faire">
+        <ul>
+            <li>IMPROV:Vues:prendre en compte l'attribut fixe o/n sur les valeurs par défaut pour permettre ou non la modif de la valeur par le user</li>
+            <li>BUG:Documents:Lorsque l'on trie, l'entete de la colonne devient class='sort..' attribut !!</li>
+            <li>IMPROV:Documents:prévoir plusieurs fichiers par document (dataset)</li>
+        </ul>
+    </msg>
+    <msg key="help_about" title="A propos de SYLRPLM">
+        <msg key="help_contrib" title="Contributeurs">
+            <ul>
+                <li title="Concepteur">Sylvère Coutable, consultant expert intégration PLM</li>
+                <li title="Développeur">Sylvère Coutable</li>
+                <li title="Conseiller technique Ruby On Rails">Rémy Coutable</li>
+                <li title="Graphisme">Rémy Coutable</li>
+            </ul>
+        </msg>
+        <msg key="help_plugins" title="Plugins">
+            <ul>
+                <li title="Pagination">will_paginate
+                    Implémentation:config/environment.rb:config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
+                </li>
+                <li title="Autorisations">acl_system2
+                    Implémentation:vendor/plugins/acl_system2</li>
+            </ul>
+        </msg>
+    </msg>
+    
+</sylrplm_help>

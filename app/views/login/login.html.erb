@@ -1,0 +1,48 @@
+<div class="depot-form">
+    <fieldset>
+        <legend>
+            <%=t(:legend_login)%>
+        </legend>
+        <% if @roles==nil %>
+        <% form_tag do |form| %>
+        <p>
+            <label for="name">
+                <%=t(:label_username)%>
+            </label>
+            <%= text_field_tag :login, params[:login] %>
+        </p>
+        <p>
+            <label for="password">
+                <%=t(:label_password)%>
+            </label>
+            <%= password_field_tag :password, params[:password] %>
+        </p>
+				<table class='menu_bas'>
+            <tr>
+                <td>
+                	<%= submit_tag t(:submit_login)  %>
+                </td>
+            </tr>
+        </table>
+        <% end %>
+        <% else %>
+        <% form_for :user, :action=>:login do |form| %>
+        <p>
+            <label for="role">
+                <%=t(:label_role)%>
+            </label>
+            <%= form.collection_select(:role_id, @roles, :id, :title,{}) %>
+        </p>
+				<table class='menu_bas'>
+            <tr>
+                <td>
+                	<%= submit_tag t(:submit_login)  %>
+                </td>
+            </tr>
+        </table>
+        <% end %>
+        <% end %>
+				
+        
+    </fieldset>
+</div>

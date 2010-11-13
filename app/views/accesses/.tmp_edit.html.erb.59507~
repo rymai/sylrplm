@@ -1,0 +1,26 @@
+<h1><%=t("access_edit")%></h1>
+
+<% form_for(@access) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label t("label_controller") %><br />
+    <%=f.collection_select(:controller, @controllers, :name_method, :name_method) %>
+  </p>
+  
+  <p>
+    <%= f.label t("label_role") %><br />
+    <%= f.collection_select(:role_id, @roles, :id, :title)%>
+  </p>
+  
+
+
+<table class='menu_bas'>
+<tr>
+<td><%= f.submit t("update") %></td>
+<td><%= link_to t("explorer"), @access %></td>
+<td><%= link_to t("list"), accesses_path %></td>
+</tr>
+</table>
+
+<% end %>

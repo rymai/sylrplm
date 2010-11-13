@@ -1,0 +1,104 @@
+<div id="banner">
+    <table>
+        <tr>
+            <td class='title'>
+                <%= @page_title || "SYLRPLM" %>
+            </td>
+            <td class='banner'>
+                <%= @username %>(<%= @userrole %>)
+            </td>
+            <td class='banner'>
+                <%= link_to h_img("disconnect").to_s, :controller=> "login", :action => "logout" %>
+            </td>
+            <% if @themes != nil %>
+            <% form_tag do |f| %>
+            <td class='banner'>
+                <%= t(:label_theme) %>
+            </td>
+            <td class='banner'>
+                <%= select_tag("theme",@themes,:class=>'banner') %>
+            </td>
+            <td class='banner'>
+                <%= h_img_sub(:submit) %>
+            </td>
+            <%end %>
+            <%end %>
+        </tr>
+    </table>
+</div>
+<div id="columns">
+    <div id="side">
+        <fieldset>
+            <legend>
+                <%= t(:legend_main) %>
+            </legend>
+            <%=h_menu("/main","help_main",t("mnu_main")) %>
+            <%=link_to t('lng_english'), :locale => 'en' %>| <%= link_to t('lng_french'), :locale => 'fr' %>
+            <%=tip_help() %>
+        </fieldset>
+        <div id="menu">
+            <fieldset>
+                <legend>
+                    <%= t(:legend_plm_objects) %>
+                </legend>
+                <%=h_menu("/documents","help_documents",t("mnu_documents")) %>
+                <%=h_menu("/parts","help_parts",t("mnu_parts")) %>
+                <%=h_menu("/projects","help_projects",t("mnu_projects")) %>
+                <%=h_menu("/customers","help_customers",t("mnu_customers")) %>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <%= t(:legend_collab) %>
+                </legend>
+                <%=h_menu("/questions","help_questions",t("mnu_questions")) %>
+                <%=h_menu("/main/news","help_news",t("mnu_news")) %>
+                <%=h_menu("/forums","help_forums",t("mnu_forums")) %>
+                <%=h_menu("/main/contacts","help_contacts",t("mnu_contact")) %>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <%= t(:legend_organization) %>
+                </legend>
+                <%=h_menu("/login/list_users","help_users",t("mnu_users")) %>
+                <%=h_menu("/roles","help_roles",t("mnu_roles")) %>
+                <%=h_menu("/accesses","help_accesses",t("mnu_acces")) %>
+                <%=h_menu("/volumes","help_volumes",t("mnu_volumes")) %>
+            </fieldset>
+             <fieldset>
+                <legend>
+                    <%= t(:legend_param) %>
+                </legend>
+                 <%=h_menu("/typesobjects","help_typesobjects",t("mnu_types_objects")) %>
+                <%=h_menu("/statusobjects","help_statusobjects",t("mnu_status_objects")) %>
+                <%=h_menu("/sequences","help_sequences",t("mnu_sequences")) %>
+            </fieldset>
+            <fieldset>
+                <legend>
+                <%= t(:legend_clipboard) %>
+                <div id="favori_document">
+                    <%= render(:partial => "main/favori_document", :object => @favori_document) %>
+                </div>
+                <div id="favori_part">
+                    <%= render(:partial => "main/favori_part", :object => @favori_part) %>
+                </div>
+                <div id="favori_project">
+                    <%= render(:partial => "main/favori_project", :object => @favori_project) %>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>
+                    <%= t(:legend_debug) %>
+                </legend>
+                <%=h_menu("/forum_items", "help_forum_items",t("mnu_forum_items")) %>
+                <%=h_menu("/links", "help_links",t("mnu_links")) %>
+                <%=h_menu("/checks", "help_checks",t("mnu_checks")) %>
+            </fieldset>
+        </div>
+    </div>
+    <div id="main">
+        <p class="notice">
+            <%= flash[:notice] %>
+        </p>
+        <%= yield :layout %>
+    </div>
+</div>

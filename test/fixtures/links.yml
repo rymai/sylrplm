@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  father_object: MyString
+  child_object: MyString
+  father_id: 1
+  child_id: 1
+  name: MyString
+  designation: MyString
+  description: MyText
+  responsible: MyString
+  group: MyString
+  date: 2009-12-05
+
+two:
+  father_object: MyString
+  child_object: MyString
+  father_id: 1
+  child_id: 1
+  name: MyString
+  designation: MyString
+  description: MyText
+  responsible: MyString
+  group: MyString
+  date: 2009-12-05

@@ -1,0 +1,260 @@
+/* Global styles */
+/* Styles for main page */
+
+body {
+	background: #5555DD;
+	color: black;
+	font-size: 10px;
+	}
+	
+a, span, p, li, ul {
+	text-decoration: none;
+	color: black;
+	margin-left:0px;
+	padding-left:0px;
+}
+
+ul {
+	margin-left:5px;
+	padding-left:0px;
+	text-indent: 0px;
+}
+li ul {
+	margin-left:20px;
+	padding-left:0px;
+	text-indent: 0px;
+}
+
+li {
+	margin-left:0px;
+	padding-left:0px;
+	text-indent: 0px;
+}
+
+a {
+	cursor:pointer;
+	font-weight:bold;
+	}
+legend {
+	color:     white;
+}
+
+table {
+	border:0px;
+	margin: 0px;
+	padding: 0px;
+	border-spacing: 0; 
+	border-collapse: collapse;
+	 }
+	 
+tr {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	}
+	
+th {
+	font-weight: bold;
+ 	padding: 1px;
+  margin: 0px;
+  background-color:#CCCCFF;
+  border: 1px solid black ;
+}
+
+td {
+  	padding: 1px;
+  	margin: 0px;
+  	background-color:#BBBBEE;
+  	border: 1px solid black ;
+}
+
+
+/*header*/
+#banner {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  height :10%;
+}
+
+#banner table {
+	margin-left:auto;
+   margin-right:auto;
+	}
+	
+td.title {
+	font: small-caps 40px/40px "Times New Roman", serif;
+  border:none;
+  background: #5555DD;
+	}
+	
+td.banner   {
+	font: small-caps 18px/18px "Times New Roman", serif;
+	border:none;
+	background: #5555DD;
+	}
+
+#banner img {
+  float: left;
+}
+
+#columns {
+}
+
+#main {
+  margin-left: 10em;
+  padding-top: 4ex;
+  padding-left: 2em;
+  background: #AAAAEE;
+  overflow: auto;
+  height:760px;
+}
+
+#side {
+  float: left;
+  padding-top: 1em;
+  padding-left: 1em;
+  padding-bottom: 1em;
+  width: 14em;
+  height:760px;
+}
+
+#side a, div.favori-title {
+  font-size: small;
+}
+
+.translation_missing {
+	background-color: #00f0f0;
+}
+
+ul.help {
+  text-decoration: none;
+  margin-top: 6px;
+}
+
+li.help {
+  text-decoration: none;
+  margin-top: 3px;
+}
+
+ul.help_key {
+  color:     black;
+  text-decoration: none;
+  list-style: decimal-leading-zero;
+  margin-top: 7px;
+}
+
+li.help_key {
+  color:     black;
+  text-decoration: none;
+  list-style: decimal-leading-zero;
+  margin-top: 3px;
+}
+
+ul.help_ul {
+  color:     black;
+  text-decoration: none;
+  margin-top: 4px;
+}
+
+li.help_ul {
+  color:     black;
+  text-decoration: none;
+  margin-top: 3px;
+}
+
+
+img.icone {
+	width:12px;
+	height:12px;
+	border:none;
+}
+
+.help {
+	font-weight: bold;
+	cursor: help;
+}
+img.help {
+	width: 16px;
+	height: 16px;
+}
+img.help_tr {
+	/*width: 16px;
+	height: 16px;*/
+	border: 2px solid white;
+}
+
+a.help_tr, img.help_tr {
+	background-color:#DDDDFF;
+	cursor:pointer;
+}
+
+a.menu {
+	cursor:pointer;
+}
+
+.pagination a,span{
+}
+
+h1 {
+  font:  bold 14px sans-serif;
+  color: #222222;
+  border-bottom: 3px dotted #222222;
+}
+
+/* Styles for the favori in the sidebar */
+
+li.favori  {
+  font-size: 8px;	
+}
+
+td.favori {
+  font-size: 8px;	
+}
+
+#favori table {
+  border-top:    1px dotted #595;
+  border-bottom: 1px dotted #595;
+  margin-bottom: 10px;
+}
+
+/* END:favori */
+p.notice {
+	font-size: 14px;
+	border: 1px dotted black;
+	}
+input, option, select, textarea {
+	padding:0pt;
+	margin:0pt;
+	background-color: #DDDDDD;
+}
+
+table.menu_bas {
+	border: 0px;
+	/*background-color: #bcb;*/
+}
+
+.menu_bas tr {
+	border: 0px;
+	}
+
+.menu_bas td {
+	background-color:#CCCCFF;
+	border: 1px solid ;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.menu_bas a , a.menu_bas, .menu_bas input, input.menu_bas {
+	border: 0px;
+	text-decoration: none;
+	cursor:pointer;
+}
+
+a:HOVER, input:HOVER, img.help_tr:hover {
+  background-color: #6666EE;
+	color: #222222;
+	cursor: pointer;
+}
+
+

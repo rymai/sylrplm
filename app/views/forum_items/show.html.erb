@@ -1,0 +1,30 @@
+<h1><%=t(:forum_item_show) %></h1>
+<p>
+  <b><%= t(:label_message) %></b>
+  <%=h @forum_item.message %>
+</p>
+
+<p>
+  <b><%= t(:label_id) %></b>
+  <%=h @forum_item.forum_id %>
+</p>
+
+<p>
+  <b><%= t(:label_parent) %></b>
+  <%=h @forum_item.parent_id %>
+</p>
+
+<p>
+  <b><%= t(:label_owner) %></b>
+  <%=h @forum_item.owner_id %>
+</p>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t(:edit),edit_forum_item_path(@forum_item) %>
+        </td>
+        <td>
+            <%= link_to t(:list), forum_items_path %>
+        </td>
+    </tr>
+</table>

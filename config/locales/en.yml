@@ -1,0 +1,407 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  ##############
+  #controllers
+  ##############
+  ctrl_no_privilege: "You don't have privileges to access this action"
+  ctrl_object_created: "{{object}} {{ident}} was successfully created"
+  ctrl_object_not_created: "{{object}} not created"
+  ctrl_object_updated: "{{object}} {{ident}} was successfully updated"
+  ctrl_object_not_updated: "{{object}} {{ident}} not updated"
+  ctrl_object_deleted: "{{object}} {{ident}} successfully deleted"
+  ctrl_object_not_deleted: "{{object}} {{ident}} could not be deleted"
+  ctrl_object_promoted: "{{object}} {{ident}} was successfully promoted from {{current_rank}} to {{new_rank}}, validers={{validersMail}}"
+  ctrl_object_not_promoted: "{{object}} {{ident}} not promote from {{current_rank}} to {{new_rank}}}"
+  ctrl_user_no_email: "User {{user}} have no mail"
+  ctrl_object_demoted: "{{object}} {{ident}} was successfully demote from {{current_rank}} to {{new_rank}}, validers={{validersMail}}"
+  ctrl_object_not_demoted: "{{object}} {{ident}} not demote from {{current_rank}} to {{new_rank}}}"
+  ctrl_object_revised: "{{object}} {{ident}} was successfully revised from {{previous_rev}} to {{revision}}"
+  ctrl_object_not_revised: "{{object}} {{ident}} cannot be revised from {{previous_rev}} (not last revision or not frozen status ?)"
+  ctrl_object_checkout: "{{object}} {{ident}} was successfully checkout , see {{file}}, reason:{{reason}}"
+  ctrl_object_not_checkout: "{{object}} {{ident}} not checkout"
+  ctrl_object_give_reason: "Please, give a reason"
+  ctrl_object_already_checkout: "{{object}} {{ident}} is already checkout, see {{file}}"
+  ctrl_object_checkin: "{{object}} {{ident}} was successfully checkin"
+  ctrl_object_not_checkin: "{{object}} {{ident}} not checkin"
+  ctrl_object_notyet_checkout: "{{object}} {{ident}} not yet checkout"
+  ctrl_object_give_file: "Please, give a new file"
+  ctrl_object_checkfree: "{{object}} {{ident}} was successfully free"
+  ctrl_object_not_checkfree: "{{object}} {{ident}} not free"
+  ctrl_object_added: "<br> {{object}} {{ident}} was successfully added, relation={{relation}}, messag={{msg}}"
+  ctrl_object_not_added: "<br> {{object}} {{ident}} was not added, relation={{relation}}, messag={{msg}}"
+  ctrl_object_not_linked: "<br> {{object}} {{ident}} was not linked, relation={{relation}}, messag={{msg}}"
+  ctrl_nothing_to_paste: "No {{object}} to paste"
+  ctrl_subject_forum: "Forum on {{object}} {{ident}}"
+  ctrl_object_explorer: "{{object}} Explorer"
+  ctrl_object_referencer: "{{object}} Referencer"
+  ctrl_init_to_do: Initialization to do
+  ctrl_init_done: Initialization done
+  #access
+  ctrl_object_no_controlers: "No controlers found"
+  #application
+  login_login: "Please, login"
+  label_project: "Project-"
+  link_project: "{{link}}-Project-{{ident}}"
+  link_customer: "{{link}}-Customer-{{ident}}"
+  user_unknown: User Unknown
+  user_not_connected: Not Connected
+  user_unknown_mail: unknownmail@laposte.net
+  #customers
+  ctrl_customer: "Customer"
+  #ctrl_remove_project_ok: "Project {{project}} was successfully removed from {{object}}"
+  #ctrl_remove_project_ko: "Project {{project}}  was not removed from {{object}}"
+  #documents
+  ctrl_document: Document
+  #faq
+  ctrl_faq: FAQ
+  #forums
+  #forum_items
+  ctrl_forum_item: Forum messag
+  #link
+  ctrl_link_already_customer_project: Project already link at customer
+  ctrl_link_already_project: Project already link
+  ctrl_link_already_customer_document: Document already link at customer
+  ctrl_link_already_project_part: Part already link at project
+  ctrl_link_already_part_part: Part already link at part
+  ctrl_link_already_part_document: document already link at part
+  ctrl_link_not_part_document: Document not link at part
+  ctrl_link_recursivity: Recursivity risk
+  ctrl_link_customer_project: Relation client / project
+  ctrl_link_customer_document: Relation client / document
+  ctrl_link_project_part: Relation project / part
+  ctrl_link_project_document: Relation project / document
+  ctrl_link_part_part: Relation part / part
+  ctrl_link_part_document: Relation part / document
+  ctrl_link_document_forum: Relation document / forum
+  ctrl_link_part_forum: Relation article / forum
+  ctrl_link_project_forum: Relation projet / forum
+  ctrl_link_customer_forum: Relation client / forum
+  #info
+  info_object_not_found: SYLRPLM_ERROR-{{context}}-{{object}} not found - {{id}}
+  #login
+  ctrl_role_needed: Give the role
+  ctrl_invalid_login: Invalid user/password combination
+  ctrl_user_needed: Give the user
+  ctrl_user_created: User {{user}} created
+  ctrl_user_updated: User {{user}} updated
+  ctrl_user_not_updated: User {{user}} not updated
+  ctrl_user_deleted: User {{user}} deleted
+  ctrl_user_connected: User {{user}} connected !
+  ctrl_user_disconnected: User {{user}} disconnected !
+  #main
+  #parts
+  ctrl_part: Article
+  ctrl_forum: Forum
+  #projects
+  ctrl_project: Project
+  #roles
+  ctrl_role: Role
+  #sequences
+  ctrl_sequence: Séquence
+  #statusobjects
+  ctrl_statusobject: Object status
+  #typesobjects
+  ctrl_typesobject: Object type
+  #volumes
+  ctrl_volume: Volume
+  #########################################
+  #helpers
+  #########################################
+  #application
+  h_show_hide_tree: Show/Hide tree
+  #help
+  help_no_help_title: Aide absente
+  help_no_help: Pas d'aide pour {{key}}
+  help_lnk_acces: Go
+  help_summary: Summary
+  help_jump: View
+  help_previous: Previous
+  help_next: Next
+  help_upper: Upper
+  help_main: Main
+  #########################################
+  #views
+  #########################################
+  hello: "Hello world"
+  disconnect: "Disconnect"
+  #langues
+  tit_language: "Language:"
+  lng_english: "English"
+  lng_french: "French"
+  #
+  context_info: "Context informations"
+  no_item: There are no items to display.
+  #menus
+  mnu_main: Welcome
+  mnu_documents: Documents
+  mnu_parts: Parts
+  mnu_projects: Projects
+  mnu_customers: Customers
+  mnu_questions: Questions
+  mnu_news: News
+  mnu_contact: Contact
+  mnu_forums: Forums 
+  mnu_forum_items: Message 
+  mnu_users: Users
+  mnu_types_objects: Objects types
+  mnu_status_objects: Objects status
+  mnu_roles: Roles
+  mnu_volumes: Volumes
+  mnu_sequences: Sequences
+  mnu_acces: Acces
+  mnu_links: Links 
+  mnu_checks: Reservations 
+  mnu_roles_users: Roles/users 
+  #
+  explorer: "Explorer"
+  list: "List"
+  query: "Filter"
+  filter: "Filter"
+  FAQ: "Frequently Asked Questions"
+  new_customer: "New customer"
+  new_document: "New document"
+  new_part: "New Part"
+  new_project: "New project"
+  new_question: "New FAQ"
+  new_forum: "New forum"
+  new_forum_item: "New forum messag"
+  new_access: "New access"
+  new_check: "New check"
+  new_user: "New user"
+  new_statusobject: New status
+  new_typesobject: New type
+  new_role: New role
+  new_sequence: New sequence
+  new_volume: New volume
+  #
+  paste_part: Paste parts 
+  paste_documents: Paste documents
+  paste_projects: Paste projects
+  add_forum: Add forum
+  freeze: Freeze
+  edit: Edit
+  update: Update
+  create: Create
+  copy: Copy
+  destroy: Remove
+  cancel: Cancel
+  menu_action: Action(s)
+  #forums
+  forum_items: Messages
+  forum_follow: follow
+  forum_item_response: Response to
+  #
+  # views
+  #
+  # general
+  modif_status: Modifier le statut
+  # fields access
+  label_controller: Controler
+  label_action: Action
+  label_role: Role
+  access_edit: Editing access
+  access_list: Listing accesses
+  access_show: Detail access
+  access_new: New access
+  #
+  # fields check
+  check_edit: Editing check
+  check_list: Listing checks
+  check_show: Detail check
+  check_new: New check
+  label_object: Object
+  label_object_id: ID
+  label_status: Status
+  label_out_reason: Out reason
+  label_out_date: Out date
+  label_out_user: Out user
+  label_in_reason: In reason
+  label_in_date: In date
+  label_in_user: In user
+  label_local_dir: Local dir
+  # fields customers
+  customer_edit: Editing customer
+  customer_list: Listing customers
+  customer_show: Detail customer
+  customer_new: New customer
+  label_id: ID
+  label_ident: Identifier
+  label_type: Type
+  label_designation: Designation
+  label_responsible: Responsable
+  label_group: Groupe
+  label_date: Date
+  label_description: Description
+  label_statusobject: Status 
+  label_typesobject: Type
+  # fields documents
+  document_edit: Editing document
+  document_list: Listing documents
+  document_show: Detail document
+  document_new: New document
+  label_revision: Revision
+  label_extension: Extension
+  label_repository: Volume
+  label_file: Fichier
+  label_volume: Volume
+  label_content_type: Mime type
+  # fields faq
+  faq_edit: Edition question
+  faq_list: Liste questions
+  faq_show: Détail question
+  faq_new: Nouvelle question 
+  # fields forums
+  part_new_forum: New forum on this part
+  label_subject: Forum subject
+  label_message: First forum Message 
+  # fields forum_items
+  forum_item_edit: Edition messag forum
+  forum_item_list: List messag forum
+  forum_item_show: Detail messag forum
+  forum_item_new: New messag forum
+  label_parent: Parent
+  label_owner: Sender
+  label_forum: Forum
+  # fields help
+  # fields info
+  # fields login
+  legend_user: Enter User Details
+  legend_login: Please Log In
+  submit_login: Login
+  label_username: Name
+  label_password: Password
+  label_confirm_password: Confirm
+  label_role: Role
+  label_email: Email
+  label_roles: Roles
+  # fields main
+  label_domain: Domain
+  submit_create_domain: Create domain  
+  label_theme: Theme
+  favori_document_delete: Remove documents from clipboard 
+  favori_part_delete: Remove parts from clipboard 
+  favori_project_delete: Remove projects from clipboard 
+  favoris_document: Documents
+  favoris_part: Parts
+  favoris_project: Projects
+  title_contacts: SYLRPLM Contacts
+  title_news: SYLRPLM News 
+  # main/_frame
+  legend_main: Welcome
+  legend_plm_objects: PLM Objects
+  legend_collab: Collaboration
+  legend_admin: Administration
+  legend_organization: Organization 
+  legend_param: Customization
+  legend_debug: Debug
+  legend_clipboard: Clipboard  
+  # fields parts
+  part_edit: Edition article
+  part_list: List articles
+  part_show: Detail article
+  part_new: New article
+  # fields plm_mailer
+  document_validated: I just validate the following document
+  part_validated: I just validate the following part
+  document_tovalidate: Please, validate this document
+  part_tovalidate: Please, validate this part
+  check_object_and_promote: Please, check and promote this object.
+  direct_access: Direct access.
+  # fields questions
+  questions_edit: Edition question
+  questions_list: List questions
+  questions_show: Detail question
+  questions_new: New question 
+  label_question: Question
+  label_answer: Answer
+  label_position: Position
+  # fields projects
+  project_edit: Edit a project
+  project_list: Liste of projects
+  project_show: Detail of project
+  project_new: New project
+  label_customer: Client
+  # fields roles
+  role_list: Listing of roles
+  role_new: New role
+  role_show: Detail of role
+  role_edit:  Edition of role
+  # fields sequences
+  sequence_list: Listing of sequences
+  sequence_new: New sequence
+  sequence_show: Detail of sequence
+  sequence_edit:  Edition of sequence
+  label_value: Sequence value
+  label_min: Minimum value
+  label_max: Maximum value
+  label_utility: Utility
+  label_modify: Modifiable
+  label_sequence: Sequence
+  # fields statusobjects
+  statusobjects_list: Listing of status 
+  statusobjects_new: New status
+  statusobjects_show: Detail of status
+  statusobjects_edit: Edit the status 
+  label_name: Name
+  label_rank: Rank
+  label_promote: Promotion
+  label_demote: Rétrogadation
+  # msg _check_status
+  msg_define_status_document: Please, define documents status
+  msg_define_status_part: Please, define parts status
+  msg_define_status_project: Please, define projects status
+  msg_define_status_customer: Please, define customers status
+  msg_define_status_forum:  Please, define forums status
+  # fields typesobjects
+  typesobjects_list: Listing of types 
+  typesobjects_new: New type
+  typesobjects_show: Detail of type
+  typesobjects_edit: Edit the type 
+  # msg _check_types
+  msg_define_types_document: Please, define documents types
+  msg_define_types_part: Please, define parts types
+  msg_define_types_project: Please, define projects types
+  msg_define_types_customer: Please, define customers types
+  msg_define_types_forum: Please, define forums types
+   # fields volumes
+  volume_list: Listing of volumes
+  volume_new: New volume
+  volume_show: Detail of volume
+  volume_edit:  Edition of volume
+  label_directory: Directory
+  label_protocol: Protocol
+  # messages
+  msg_confirm: Are you sure?
+  # attributs
+  faq_question: Question
+  faq_answer: answer
+  updated_at: Updated at
+  id: Id
+  #
+  cut: "Cut"
+  revise: "Revise"
+  promote: "Promote"
+  # relations
+  no_relation: "-----"
+  specification: "Specification"
+  notice: "Notice"
+  norme: "Norme"
+  reference: "Reference"
+  bom: "BOM"
+  research: "Research"
+  production: "Production"
+  forum: Forum
+  #
+  check_out: "Check Out"
+  check_in: "Check In"
+  check_free: "Unlock"
+  download: "download file"
+  
+  # help
+  help_title: "Help on SYLRPLM application"
+  help_close_window: Close the help window
+  # messages
+  msg.no_item_to_display: "There are no items to display."
+  

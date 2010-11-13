@@ -1,0 +1,92 @@
+<h1><%=t(:project_list)%><%= @projects.count %> / <%= @total %></h1>
+<%= form_simple_query_helper('/projects', @query) %>
+<table>
+    <tr>
+        <th></th>
+        <th <%= sort_td_class_helper "ident"  %>>
+            <%= sort_link_helper t(:label_ident), "ident" %>
+        </th>
+        <th <%= sort_td_class_helper "typesobject_id" %>>
+            <%= sort_link_helper t(:label_typesobject), "typesobject_id" %>
+        </th>
+        <th <%= sort_td_class_helper "designation" %>>
+            <%= sort_link_helper t(:label_designation), "designation" %>
+        </th>
+        <th <%= sort_td_class_helper "statusobject_id" %>>
+            <%= sort_link_helper t(:label_statusobject), "statusobject_id" %>
+        </th>
+        <th <%= sort_td_class_helper  "owner" %>>
+            <%= sort_link_helper t(:label_responsible), "owner" %>
+        </th>
+        <th <%= sort_td_class_helper  "date" %>>
+            <%= sort_link_helper t(:label_date) , "date" %>
+        </th>
+        <th <%= sort_td_class_helper "customer_id" %>>
+            <%= sort_link_helper t(:label_customer), "customer_id" %>
+        </th>
+				<th></th><th></th><th></th><th></th>
+     </tr>
+    <% @projects.each do |project| %>
+    <tr>
+        <td>
+            <%=icone(project) %>
+        </td>
+        <td>
+            <%=h project.ident %>
+        </td>
+        <% if(project.typesobject != nil) %>
+        <td>
+            <%=h project.typesobject.name %>
+        </td>
+        <% else %>
+        <td>
+        </td>
+        <% end %>
+        <td>
+            <%=h project.designation %>
+        </td>
+        <% if(project.statusobject != nil) %>
+        <td>
+            <%=h project.statusobject.name %>
+        </td>
+        <% else %>
+        <td>
+        </td>
+        <% end %>
+        <td>
+            <%=h project.owner.login %>
+        </td>
+        <td>
+            <%=h project.date %>
+        </td>
+        <% if(project.customer != nil) %>
+        <td>
+            <%= link_to project.customer.ident , :controller => "customers", :action => :show, :id => project.customer.id %>
+        </td>
+        <% else %>
+        <td>
+        </td>
+        <% end %>
+        <td>
+            <%= link_to h_img_show.to_s, project %>
+        </td>
+        <td>
+            <%= link_to h_img_edit.to_s, edit_project_path(project) %>
+        </td>
+        <td>
+            <%= link_to h_img_destroy.to_s, project, :confirm => t(:msg_confirm), :method => :delete %>
+        </td>
+        <td>
+        <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_project_to_favori, :id => project.id} %>        
+       </td>
+    </tr>
+    <% end %>
+</table>
+<%= will_paginate(@projects) %>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t("new_project"), new_project_path %>
+        </td>
+    </tr>
+</table>

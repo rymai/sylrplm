@@ -1,0 +1,56 @@
+<h1>
+<%=t(:hello) %>
+</H1>
+
+            <%= render(:partial => "main/check_types") %>
+            <%= render(:partial => "main/check_status") %>
+
+<% if @domains != nil %>
+<% form_tag do |f| %>
+<p>
+    <label for="domain">
+        <%=t(:label_domain) %>
+    </label>
+    <%= select_tag("domain",@domains) %>
+</p>
+<p>
+    <label for="directory">
+        <%=t(:label_directory) %>
+    </label>
+    <%= text_field_tag :directory, @directory %>
+</p>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= submit_tag t(:submit_create_domain) %>
+        </td>
+    </tr>
+</table>
+<% end %>
+<hr><%= h_help("help_init_db")[:text] %>
+<%end %>
+<hr><%= @help_all %>
+<br/>
+<hr><h2><%=t("context_info") %></h2>
+<table>
+    <tr>
+        <th>
+            key
+        </th>
+        <th>
+            value
+        </th>
+    </tr>
+    <% for item in request.env %>
+    <% if item[0].index("rack.session") == nil %>
+		<tr>
+        <td>
+            <%= item[0] %>
+        </td>
+        <td>
+            <%= item[1] %>
+        </td>
+    </tr>
+    <% end %>
+		<% end %>
+</table>

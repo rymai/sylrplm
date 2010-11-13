@@ -1,0 +1,124 @@
+<h1><%= t("document_list") %><%=@documents.count %> / <%=@total %></h1>
+<%= form_simple_query_helper('/documents', @query) %>
+<table>
+    <tr>
+        <th>
+        </th>
+        <th><%= sort_td_class_helper "id" %>
+            <%= sort_link_helper t("label_id"), "id" %>
+        </th>
+        <th><%= sort_td_class_helper "ident" %>
+            <%= sort_link_helper t("label_ident"), "ident" %>
+        </th>
+        <th><%= sort_td_class_helper "typesobject_id" %>
+            <%= sort_link_helper t("label_typesobject"), "typesobject_id" %>
+        </th>
+        <th><%= sort_td_class_helper "revision" %>
+            <%= sort_link_helper t("label_revision"), "revision" %>
+        </th>
+        <th><%= sort_td_class_helper "designation" %>
+            <%= sort_link_helper t("label_designation"), "designation" %>
+        </th>
+        <th><%= sort_td_class_helper "statusobject_id" %>
+            <%= sort_link_helper t("label_statusobject"), "statusobject_id" %>
+        </th>
+        <th><%= sort_td_class_helper "owner" %>
+            <%= sort_link_helper t("label_responsible"), "owner" %>
+        </th>
+        <th<%= sort_td_class_helper "date" %>
+            <%= sort_link_helper t("label_date"), "date" %>
+        </th>
+        <th><%= sort_td_class_helper "volume_id" %>
+            <%= sort_link_helper t("label_volume"), "volume_id" %>
+        </th>
+        <th><%= sort_td_class_helper "filename" %>
+            <%= sort_link_helper t("label_file"), "filename" %>
+        </th>
+        <th><%= sort_td_class_helper "content_type" %>
+            <%= sort_link_helper t("label_content_type"), "content_type" %>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+    </tr>
+    <% @documents.each do |document| %>
+    <tr>
+    <td>
+        <%= icone(document) %>
+    </td>
+    <td>
+        <%=h document.id %>
+    </td>
+    <td>
+        <%=h document.ident %>
+    </td>
+    <td>
+        <% if(document.typesobject != nil) %>
+        <%=h document.typesobject.name %>
+        <% end %>
+    </td>
+    <td>
+        <%=h document.revision %>
+    </td>
+    <td>
+        <%=h document.designation[0..20] %>
+    </td>
+    <td>
+        <% if(document.statusobject != nil) %>
+        <%=h document.statusobject.name %>
+        <% end %>
+    </td>
+    <td>
+        <%=h document.owner.login %>
+    </td>
+    <td>
+        <%=h document.date %>
+    </td>
+    <td>
+        <%=h document.volume.name %>
+    </td>
+    <td>
+        <a href="<%= url_for(:action=>'show_file', :id => document.id) %>" title="<%= document.getRepository %>"><%=h document.filename %></a>
+    </td>
+    <td>
+    	<% if document.content_type != nil %>
+        <%= document.content_type[0..20] %>
+			<%end%>
+    </td>
+    <td>
+        <%= link_to h_img_show.to_s, document %>
+    </td>
+    <% if (document.isFreeze() == true ) %>
+    <td>
+        <%= link_to h_img_revise.to_s, :id => document.id, :action => :revise , :confirm => t("msg_confirm") %>
+    </td>
+    <td>
+    </td>
+    <% else %>
+    <td>
+        <%= link_to h_img_edit.to_s, edit_document_path(document) %>
+    </td>
+    <td>
+        <%= link_to h_img_destroy.to_s, document, :confirm => t("msg_confirm"), :method => :delete %>
+    </td>
+    <% end %>
+    </td>
+    <td>
+       <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_document_to_favori, :id => document.id} %>        
+    </td>
+</tr>
+<%end %>
+</table>
+<%= will_paginate(@documents) %>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t("new_document"), new_document_path %>
+        </td>
+    </tr>
+</table>

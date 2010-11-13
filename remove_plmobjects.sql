@@ -1,0 +1,9 @@
+delete from checks;
+delete from customers;
+delete from documents;
+delete from links;
+delete from parts;
+delete from projects;
+delete from questions;
+delete from forum_items;
+delete from forums;

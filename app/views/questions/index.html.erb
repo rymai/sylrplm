@@ -1,0 +1,39 @@
+<h1><%=t(:questions_list) %></h1>
+<table>
+    <tr>
+        <th>
+            <%=t(:label_question) %>
+        </th>
+        <th>
+            <%=t(:label_answer) %>
+        </th>
+ 				<th></th><th></th><th></th>
+        
+    </tr>
+    <% @faqs.each do |question| %>
+    <tr>
+        <td>
+            <%=h question.question %>
+        </td>
+        <td>
+            <%=h question.answer %>
+        </td>
+				<td>
+            <%= link_to h_img_show.to_s, question %>
+        </td>
+        <td>
+            <%= link_to h_img_edit.to_s, edit_question_path(question) %>
+        </td>
+        <td>
+            <%= link_to h_img_destroy.to_s, question, :confirm => t(:msg_confirm), :method => :delete %>
+        </td>
+    </tr>
+    <% end %>
+</table>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t(:new_question), new_question_path %>
+        </td>
+    </tr>
+</table>

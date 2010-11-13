@@ -1,0 +1,40 @@
+<h1><%=t(:role_list) %></h1>
+<table>
+    <tr>
+        <th>
+            <%=t(:label_name) %>
+        </th>
+        <th>
+            <%=t(:label_description) %>
+        </th>
+								<th></th><th></th><th></th>
+ 
+    </tr>
+    <% @roles.each do |role| %>
+    <tr>
+        <td>
+            <%=h role.title %>
+        </td>
+        <td>
+            <%=h role.description %>
+        </td>
+        <td>
+            <%= link_to h_img_show.to_s, role %>
+        </td>
+        <td>
+            <%= link_to h_img_edit.to_s, edit_role_path(role) %>
+        </td>
+        <td>
+            <%= link_to h_img_destroy.to_s, role, :confirm => t(:msg_confirm), :method => :delete %>
+        </td>
+    </tr>
+    <% end %>
+</table>
+<br/>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t(:new_role), new_role_path %>
+        </td>
+    </tr>
+</table>

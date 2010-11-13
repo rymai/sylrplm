@@ -1,0 +1,98 @@
+<h1><%=t(:part_list) %><%= @parts.count %> / <%= @total %></h1>
+<%= form_simple_query_helper('/parts', @query) %>
+<table>
+    <tr>
+        <th>
+        </th>
+        <th <%= sort_td_class_helper "id" %>>
+            <%= sort_link_helper t("label_id"), "id" %>
+        </th>
+        <th <%= sort_td_class_helper "ident" %>>
+            <%= sort_link_helper t("label_ident"), "ident" %>
+        </th>
+        <th <%= sort_td_class_helper "typesobject_id" %>>
+            <%= sort_link_helper t("label_typesobject"), "typesobject_id" %>
+        </th>
+        <th <%= sort_td_class_helper "revision" %>>
+            <%= sort_link_helper t("label_revision"), "revision" %>
+        </th>
+        <th <%= sort_td_class_helper "designation" %>>
+            <%= sort_link_helper t("label_designation"), "designation" %>
+        </th>
+        <th <%= sort_td_class_helper "statusobject_id" %>>
+            <%= sort_link_helper t("label_statusobject"), "statusobject_id" %>
+        </th>
+        <th <%= sort_td_class_helper "owner" %>>
+            <%= sort_link_helper t("label_responsible"), "owner" %>
+        </th>
+        <th <%= sort_td_class_helper "date" %>>
+            <%= sort_link_helper t("label_date"), "date" %>
+        </th>
+				<th></th><th></th><th></th><th></th>
+     </tr>
+    <% @parts.each do |part| %>
+    <tr>
+        <td>
+            <%= icone(part) %>
+        </td
+        <td>
+            <%=h part.id %>
+        </td>
+        <td>
+            <%=h part.ident %>
+        </td>
+        <td>
+            <% if(part.typesobject != nil) %>
+            <%=h part.typesobject.name %>
+            <% end %>
+        </td>
+        <td>
+            <%=h part.revision %>
+        </td>
+        <td>
+            <%=h part.designation %>
+        </td>
+        <td>
+            <% if(part.statusobject != nil) %>
+            <%=h part.statusobject.name %>
+            <% end %>
+        </td>
+        <td>
+            <%=h part.owner.login %>
+        </td>
+        <td>
+            <%=h part.date %>
+        </td>
+        <td>
+            <%= link_to h_img_show.to_s, part %>
+        </td>
+        <% if (part.isFreeze() == true ) %>
+        <td>
+            <%= link_to h_img_revise.to_s, :id => part.id, :action => :revise , :confirm => t("msg_confirm") %>
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <% else %>
+        <td>
+            <%= link_to h_img_edit.to_s, edit_part_path(part) %>
+        </td>
+        <td>
+            <%= h_destroy( part) %>
+        </td>
+        <% end %>
+        <td>
+        <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_part_to_favori, :id => part.id} %>        
+        </td>
+    </tr>
+    <% end %>
+</table>
+<%= will_paginate(@documents) %>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t("new_part"), new_part_path %>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  object: MyString
+  name: MyString
+  rank: 1
+  description: MyText
+
+two:
+  object: MyString
+  name: MyString
+  rank: 1
+  description: MyText

@@ -1,0 +1,16 @@
+<div class="favori-title"><%=t(:favoris_document)%>
+<%= link_to_remote( h_img(:destroy).to_s, 
+:url=> { :controller=>"documents", :action => :empty_favori_document })%>
+</div>
+<% if @favori_document != nil %>
+	<% if @favori_document.items.count >0 %>
+		<table>
+			<%= render(:partial => "main/favori_document_item", :collection => @favori_document.items) %>
+		</table>
+<!--
+		<%= button_to h_img(:destroy).to_s, :controller=>"documents", :action => :empty_favori_document %>
+-->
+	<% end %>
+<% end %>
+
+

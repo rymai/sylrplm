@@ -1,0 +1,35 @@
+<h1><%=t("access_list")%></h1>
+
+<table>
+  <tr>
+  	<th <%= sort_td_class_helper "controller" %>>
+            <%= sort_link_helper t("label_controller"), "controller" %>
+        </th>
+	  	<th <%= sort_td_class_helper "action" %>>
+            <%= sort_link_helper t("label_action"), "action" %>
+        </th>
+				<th <%= sort_td_class_helper "roles" %>>
+            <%= sort_link_helper t("label_role"), "roles" %>
+        </th>
+    				<th></th><th></th><th></th>
+ 
+  </tr>
+
+<% @accesses.each do |access| %>
+  <tr>
+    <td><%=h access.controller %></td>
+    <td><%=h access.action %></td>
+    <td><%=h access.roles %></td>
+     <td><%= link_to h_img_show.to_s, access %></td>
+    <td><%= link_to h_img_edit.to_s, edit_access_path(access) %></td>
+    <td><%= link_to h_img_destroy.to_s, access, :confirm => t("msg_confirm"), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%= will_paginate(@accesses) %>
+<br />
+<table class='menu_bas'>
+<tr>
+<td><%= link_to t("new_access"), new_access_path %></td>
+</tr>
+</table

@@ -1,0 +1,256 @@
+/* Global styles */
+/* Styles for main page */
+body {
+	background: black;
+	color: black;
+	font-size: 11px;
+	margin:0;
+	padding:0;
+	}
+	
+a, span, p, li, ul {
+	text-decoration: none;
+	color: white;
+	margin-left:0px;
+	padding-left:0px;
+	
+}
+ul {
+	margin-left:5px;
+	padding-left:0px;
+	text-indent: 0px;
+}
+
+li {
+	margin-left:0px;
+	padding-left:0px;
+	text-indent: 0px;
+}
+
+a {
+	cursor:pointer;
+	font-weight:bold;
+	background: #242424;
+	}
+
+legend {
+	color:     white;
+}
+
+h1 {
+  font:  bold 120% sans-serif;
+  color: white;
+  border-bottom: 3px dotted white;
+}
+
+input, option, select, textarea {
+	padding:0pt;
+	margin:0pt;
+	background-color: #DDDDDD;
+}
+
+table {
+	border:0px;
+	margin: 0px;
+	padding: 0px;
+	border-spacing: 0; 
+	border-collapse: collapse;
+	color: white;
+	 }
+tr {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+	color: white;
+	}
+	
+th {
+	font-weight: bold;
+ 	padding: 1px;
+  margin: 0px;
+  font-size: 10px;
+  background-color:#222222;
+  color: white;
+  border: 1px solid white ;
+}
+
+td {
+  	padding: 1px;
+  	margin: 0px;
+  	background-color:#555555;
+  	border: 1px solid white ;
+  	color: white;
+}
+
+/*header*/
+#container {
+background: black;	
+}
+	
+#banner {
+  background: black;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid white;
+  text-align: center;
+  height :10%;
+  margin:0px;
+  
+}
+#banner table {
+	margin-left:auto;
+   margin-right:auto;
+	}
+	
+td.title {
+	font: small-caps 40px/40px "Times New Roman", serif;
+  color: white;
+  border:none;
+  background-color: #222222;
+	}
+	
+td.banner   {
+	font: small-caps 18px/18px "Times New Roman", serif;
+	color: white;
+	border:none;
+	background-color: #222222;
+	}
+	
+/*end header*/
+#columns {
+}
+
+#main {
+  margin-left: 0em;
+  padding-top: 4ex;
+  padding-left: 2em;
+  background: #333333;
+  overflow: auto;
+  height:760px;
+}
+
+#side {
+  float: left;
+  padding-top: 1em;
+  padding-left: 1em;
+  padding-bottom: 1em;
+  width: 14em;
+  height:760px;
+}
+
+#side a, div.favori-title {
+  color: white;
+}
+
+.translation_missing {
+	background-color: #00f0f0;
+}
+
+ul.help {
+  margin-top: 6px;
+}
+
+li.help {
+  margin-top: 3px;
+}
+
+ul.help_key {
+  list-style: decimal-leading-zero;
+  margin-top: 3px;
+  margin-left:5px;
+	padding-left:0px;
+	text-indent: 0px;
+}
+
+li.help_key ul.help_key {
+	margin-left:20px;
+}
+
+li.help_key {
+  list-style: decimal-leading-zero;
+  margin-top: 2px;
+}
+
+ul.help_ul {
+  margin-top: 4px;
+}
+
+li.help_ul {
+  margin-top: 3px;
+}
+
+
+img.icone {
+	width:12px;
+	height:12px;
+	border:none;
+}
+
+.help {
+	font-weight: bold;
+	cursor: help;
+	color: white;
+}
+
+img.help {
+	width: 16px;
+	height: 16px;
+}
+
+img.help_tr {
+	/*width: 16px;
+	height: 16px;*/
+	background: #242424;
+	border: 2px solid white;
+}
+
+/* Styles for the favori in the sidebar */
+
+li.favori  {
+  font-size: 9px;	
+  color:     white;
+}
+
+td.favori {
+  font-size: 9px;	
+  color:     white;
+}
+
+#favori table {
+  border-top:    1px dotted #595;
+  border-bottom: 1px dotted #595;
+  margin-bottom: 10px;
+}
+/* END:favori */
+p.notice {
+	font-size: 14px;
+	border: 1px dotted black;
+	}
+/* menus en bas des listes*/
+
+table.menu_bas .menu_bas tr {
+	border: 0px;
+	}
+	
+.menu_bas td {
+	background-color:#333333;
+	border: 2px solid;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+td a,th a,.menu_bas a , a.menu_bas, .menu_bas input, input.menu_bas {
+	border: 0px;
+	text-decoration: none;
+	cursor:pointer;
+	background-color:black;
+	color: white;
+}
+/* end menus en bas des listes*/
+
+a:HOVER, input:HOVER, img.help_tr:hover {
+  background-color: #AAAAAA;
+	color: #222222;
+	cursor: pointer;
+}
+

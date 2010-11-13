@@ -1,0 +1,28 @@
+class Partslink < ActiveRecord::Base
+    belongs_to (:father, :class_name => "Part")
+    belongs_to (:child, :class_name => "Part")
+    
+  def self.find_fathers(part)
+      find(:all,
+        :conditions => ["child_id =#{part.id}"],
+        :order=>"father_id")
+  end 
+  
+  def self.find_childs(part)
+      find(:all,
+        :conditions => ["father_id =#{part.id}"],
+        :order=>"child_id")
+  end 
+  def self.createNew(idfather, idchild)
+      partslink = Partslink.new
+      partslink.father_id=idfather
+      partslink.child_id=idchild  
+      partslink
+  end
+  
+  def self.remove(id)
+    link=self.find(id)
+    link.destroy
+    return nil
+  end
+end

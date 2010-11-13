@@ -1,0 +1,281 @@
+/* Global styles */ /* Styles for main page */
+
+body {
+	background: #225522;
+	color: #bbffbb;
+	font-size: 11px;
+}
+
+a,span,p,li,ul {
+	text-decoration: none;
+	color: #bbffbb;
+	margin-left:0px;
+	padding-left:0px;
+}
+
+ul {
+	margin-left:5px;
+	padding-left:0px;
+	text-indent: 0px;
+}
+li ul {
+	margin-left:20px;
+	padding-left:0px;
+	text-indent: 0px;
+}
+
+li {
+	margin-left:0px;
+	padding-left:0px;
+	text-indent: 0px;
+}
+
+a {
+	cursor:pointer;
+	font-weight:bold;
+	}
+legend {
+	color: white;
+}
+
+table {
+	border: 0px;
+	margin: 0px;
+	padding: 0px;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+
+tr {
+	margin: 0px;
+	padding: 0px;
+	border: 0px;
+}
+
+th {
+	font-weight: bold;
+	padding: 1px;
+	margin: 0px;
+	background-color: #bbffbb;
+	color: black;
+	border: 1px solid black;
+}
+
+td {
+	padding: 1px;
+	margin: 0px;
+	background-color: #A8CCA8;
+	border: 1px solid black;
+	color: black;
+}
+
+input,option,select,textarea {
+	padding: 0pt;
+	margin: 0pt;
+	background-color: #DDDDDD;
+}
+
+/*header*/
+#banner {
+	background: #225522;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	height: 20%;
+}
+
+#banner table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+td.title {
+	background: #225522;
+	font: small-caps 40px/40px "Times New Roman", serif;
+	border: none;
+}
+
+td.banner {
+	background: #225522;
+	font: small-caps 18px/18px "Times New Roman", serif;
+	border: none;
+}
+
+#main {
+	margin-left: 10em;
+	padding-top: 4ex;
+	padding-left: 2em;
+	overflow: auto;
+	margin-left: 14em;
+	height: 760px;
+	background: #33AA33;
+}
+
+#side {
+	float: left;
+	padding-top: 1em;
+	padding-left: 1em;
+	padding-bottom: 1em;
+	width: 14em;
+	background: #225522;
+	height: 760px;
+}
+
+#side a,div.favori-title {
+	color: #bbffbb;
+}
+
+/* START:notice */
+#notice {
+	border: 2px solid red;
+	padding: 1em;
+	margin-bottom: 2em;
+	background-color: #f0f0f0;
+}
+
+/* END:notice */
+.translation_missing {
+	background-color: #00f0f0;
+}
+
+ul.help { /*font-size: smaller;*/
+	color: black;
+	text-decoration: none;
+  margin-top: 6px;
+}
+
+li.help { /*font-size: smaller;*/
+	color: black;
+	text-decoration: none;
+  margin-top: 3px;
+}
+
+
+ul.help_key {
+  color:     white;
+  text-decoration: none;
+  list-style: decimal-leading-zero;
+  margin-top: 7px;
+}
+
+li.help_key {
+  color:     white;
+  text-decoration: none;
+  list-style: decimal-leading-zero;
+  margin-top: 3px;
+}
+
+ul.help_ul {
+  color:     white;
+  text-decoration: none;
+  margin-top: 4px;
+}
+
+li.help_ul {
+  color:     white;
+  text-decoration: none;
+  margin-top: 3px;
+}
+
+img.icone {
+	width: 12px;
+	height: 12px;
+	border: none;
+}
+
+.help {
+	font-weight: bold;
+	cursor: help;
+}
+
+img.help {
+	width: 16px;
+	height: 16px;
+}
+
+img.help_tr {
+	/*width: 16px;
+	height: 16px;*/
+	border: 2px solid white;
+}
+
+.help_tr {
+	background: #33AA33;
+	color: black;
+}
+
+a.help_tr,img.help_tr {
+	background-color: #228822;
+	cursor: pointer;
+}
+
+a.menu {
+	cursor: pointer;
+}
+
+.pagination a,span {
+}
+
+h1 {
+	font: bold 20px sans-serif;
+	color: #bbffbb;
+	border-bottom: 3px dotted #bbffbb;
+}
+
+/* START:cart */
+	/* Styles for the cart in the main page and the sidebar */
+.favori-title {
+	background: green;
+}
+
+/* Styles for the favori in the sidebar */
+li.favori {
+	font-size: 9px;
+	color: white;
+}
+
+td.favori {
+	font-size: 9px;
+	color: white;
+}
+
+#favori table {
+	border-top: 1px dotted #595;
+	border-bottom: 1px dotted #595;
+	margin-bottom: 10px;
+}
+p.notice {
+	font-size: 14px;
+	border: 1px dotted black;
+	}
+/* END:favori */ 
+
+table.menu_bas {
+	border: 0px;
+	background-color: #bbffbb;
+}
+
+.menu_bas tr {
+	border: 0px;
+}
+
+.menu_bas td {
+	background-color: #bbffbb;
+	border: 1px solid;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+td a,th a,.menu_bas a , a.menu_bas, .menu_bas input, input.menu_bas {
+	border: 0px;
+	text-decoration: none;
+	cursor:pointer;
+	background:#aaeeaa;
+	color: black;
+}
+
+a:HOVER, input:HOVER, img.help_tr:hover {
+  color: black;
+  background: #336633;
+	cursor: pointer;
+}

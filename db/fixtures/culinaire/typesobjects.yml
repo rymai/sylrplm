@@ -1,0 +1,131 @@
+1:
+  id: 1 
+  object: customer 
+  name: internal 
+  description: Service ou direction interne a l'entreprise 	  	
+2:
+  id: 2 
+  object: customer 
+  name: private
+  description: Client externe a acces restreint 		
+3:
+  id: 3 
+  object: customer 
+  name: public 
+  description: Client externe accessible a tous		
+4:
+  id: 4 
+  object: document 
+  name: recette
+  description: Fiche recette		
+5:
+  id: 5 
+  object: document 
+  name: ingredient 
+  description: Fiche ingredient	
+6:
+  id: 6 
+  object: document 
+  name: ustensile 	
+  description: Fiche ustensile	
+7:
+  id: 7 
+  object: document 
+  name: norme
+  description: Norme 		
+8:
+  id: 8 
+  object: forum 
+  name: requirements 
+  description: Forum sur les exigences 		
+9:
+  id: 9 
+  object: forum 
+  name: needs
+  description: Forum sur les besoins
+10:
+  id: 10 
+  object: forum 
+  name: specifs 
+  description: Forum sur les specifications		
+11:
+  id: 11 
+  object: forum 
+  name: design
+  description: Forum sur la conception		
+12:
+  id: 12 
+  object: forum 
+  name: tests 
+  description: Forum sur les tests	
+13:
+  id: 13 
+  object: part 
+  name: ingredient
+  description: Ingredient d'une recette 
+14:
+  id: 14
+  object: part 
+  name: recette 		
+  description: Recette 
+15:
+  id: 15 
+  object: part 
+  name: ustensile 		
+  description: Ustensile 
+16:
+  id: 16 
+  object: project 
+  name: recette
+  description: Projet de recette 		
+17:
+  id: 17
+  object: project 
+  name: menu
+  description: Projet de menu
+18:
+  id: 18
+  object: project 
+  name: repas
+  description: Projet de repas
+51:
+  id: 51
+  object: relation_document 
+  name: need
+  description: Expression de besoin
+52:
+  id: 52
+  object: relation_document 
+  name: spec-fonctionnelles
+  description: Specifications fonctionnelles
+53:
+  id: 53
+  object: relation_document 
+  name: spec-detaillees
+  description: Specifications detaillees
+54:
+  id: 54
+  object: relation_document 
+  name: re7
+  description: Detail recette
+61:
+  id: 61
+  object: relation_part 
+  name: reference
+  description: Lien de reference
+62:
+  id: 62
+  object: relation_part 
+  name: bom
+  description: Lien de nomenclature
+71:
+  id: 71
+  object: relation_project
+  name: prospective
+  description: Projet de prospective
+72:
+  id: 72
+  object: relation_project
+  name: production
+  description: Projet de production
+  

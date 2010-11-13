@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: CustomersController</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">CustomersController</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/app/controllers/customers_controller_rb.html">
+                app/controllers/customers_controller.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                <a href="ApplicationController.html">
+                ApplicationController
+               </a>
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000243">add_docs</a>&nbsp;&nbsp;
+      <a href="#M000244">add_projects</a>&nbsp;&nbsp;
+      <a href="#M000238">create</a>&nbsp;&nbsp;
+      <a href="#M000242">create_tree</a>&nbsp;&nbsp;
+      <a href="#M000246">demote</a>&nbsp;&nbsp;
+      <a href="#M000240">destroy</a>&nbsp;&nbsp;
+      <a href="#M000237">edit</a>&nbsp;&nbsp;
+      <a href="#M000234">index</a>&nbsp;&nbsp;
+      <a href="#M000236">new</a>&nbsp;&nbsp;
+      <a href="#M000245">promote</a>&nbsp;&nbsp;
+      <a href="#M000241">remove_project</a>&nbsp;&nbsp;
+      <a href="#M000235">show</a>&nbsp;&nbsp;
+      <a href="#M000239">update</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="PlmObjectController.html">PlmObjectController</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000243" class="method-detail">
+        <a name="M000243"></a>
+
+        <div class="method-heading">
+          <a href="#M000243" class="method-signature">
+          <span class="method-name">add_docs</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000243-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000243-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/customers_controller.rb, line 131</span>
+131:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_docs</span>
+132:     <span class="ruby-ivar">@customer</span> = <span class="ruby-constant">Customer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+133:     <span class="ruby-identifier">relation</span>=<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:relation</span>][<span class="ruby-identifier">:document</span>]
+134:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>      
+135:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@favori_document</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span> 
+136:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;&quot;</span>
+137:         <span class="ruby-ivar">@favori_document</span>.<span class="ruby-identifier">items</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+138:           <span class="ruby-comment cmt">#flash[:notice] += &quot;&lt;br&gt;&quot;+ item.ident.to_s</span>
+139:           <span class="ruby-identifier">link_</span>=<span class="ruby-constant">Link</span>.<span class="ruby-identifier">createNew</span>(<span class="ruby-identifier">:customer</span>, <span class="ruby-ivar">@customer</span>, <span class="ruby-identifier">:document</span>, <span class="ruby-identifier">item</span>, <span class="ruby-identifier">relation</span>)  
+140:           <span class="ruby-identifier">link</span>=<span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:link</span>]
+141:           <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">link!</span>=<span class="ruby-keyword kw">nil</span>) 
+142:             <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">link</span>.<span class="ruby-identifier">save</span>)
+143:               <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_add_document_ok</span>,<span class="ruby-identifier">:document=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@item</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:msg</span>])       
+144:             <span class="ruby-keyword kw">else</span>
+145:               <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_add_document_not_added</span>,<span class="ruby-identifier">:document=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@item</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:msg</span>])       
+146:             <span class="ruby-keyword kw">end</span>
+147:           <span class="ruby-keyword kw">else</span>
+148:             <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_add_document_not_linked</span>,<span class="ruby-identifier">:document=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@item</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:msg</span>])       
+149:           <span class="ruby-keyword kw">end</span>
+150:         <span class="ruby-keyword kw">end</span>
+151:         <span class="ruby-identifier">reset_favori_document</span>
+152:       <span class="ruby-keyword kw">else</span>
+153:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_no_documents_in_favorites</span>)
+154:       <span class="ruby-keyword kw">end</span>
+155:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-ivar">@customer</span>) }
+156:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }
+157:     <span class="ruby-keyword kw">end</span>
+158:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000244" class="method-detail">
+        <a name="M000244"></a>
+
+        <div class="method-heading">
+          <a href="#M000244" class="method-signature">
+          <span class="method-name">add_projects</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000244-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000244-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/customers_controller.rb, line 160</span>
+160:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_projects</span>
+161:     <span class="ruby-ivar">@customer</span> = <span class="ruby-constant">Customer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+162:     <span class="ruby-identifier">relation</span>=<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:relation</span>][<span class="ruby-identifier">:project</span>]
+163:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>      
+164:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@favori_project</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span> 
+165:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;&quot;</span>
+166:         <span class="ruby-ivar">@favori_project</span>.<span class="ruby-identifier">items</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+167:           <span class="ruby-identifier">link_</span>=<span class="ruby-constant">Link</span>.<span class="ruby-identifier">createNew</span>(<span class="ruby-identifier">:customer</span>, <span class="ruby-ivar">@customer</span>, <span class="ruby-identifier">:project</span>, <span class="ruby-identifier">item</span>, <span class="ruby-identifier">relation</span>)  
+168:           <span class="ruby-identifier">link</span>=<span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:link</span>]
+169:           <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">link!</span>=<span class="ruby-keyword kw">nil</span>) 
+170:             <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">link</span>.<span class="ruby-identifier">save</span>)
+171:               <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_add_project_ok</span>,<span class="ruby-identifier">:project=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@item</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:msg</span>])       
+172:             <span class="ruby-keyword kw">else</span>
+173:               <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_add_project_not_added</span>,<span class="ruby-identifier">:project=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@item</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:msg</span>])       
+174:             <span class="ruby-keyword kw">end</span>
+175:           <span class="ruby-keyword kw">else</span>
+176:             <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_add_project_not_linked</span>,<span class="ruby-identifier">:project=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@item</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:msg</span>])       
+177:           <span class="ruby-keyword kw">end</span>
+178:         <span class="ruby-keyword kw">end</span>
+179:         <span class="ruby-identifier">reset_favori_project</span>
+180:       <span class="ruby-keyword kw">else</span>
+181:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_no_projects_in_favorites</span>)
+182:       <span class="ruby-keyword kw">end</span>
+183:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-ivar">@customer</span>) }
+184:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }
+185:     <span class="ruby-keyword kw">end</span>
+186:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000238" class="method-detail">
+        <a name="M000238"></a>
+
+        <div class="method-heading">
+          <a href="#M000238" class="method-signature">
+          <span class="method-name">create</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+POST /customers POST /customers.xml
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000238-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000238-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/customers_controller.rb, line 63</span>
+63:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
+64:     <span class="ruby-ivar">@customer</span> = <span class="ruby-constant">Customer</span>.<span class="ruby-identifier">createNew</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:customer</span>],<span class="ruby-ivar">@user</span>)
+65:     <span class="ruby-ivar">@types</span>=<span class="ruby-constant">Typesobject</span>.<span class="ruby-identifier">getTypes</span>(<span class="ruby-identifier">:customer</span>)
+66:     <span class="ruby-ivar">@status</span>= <span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-identifier">:customer</span>)
+67:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+68:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">save</span>
+69:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_created</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_customer</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">ident</span>)
+70:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-ivar">@customer</span>) }
+71:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@customer</span>, <span class="ruby-identifier">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:created</span>, <span class="ruby-identifier">:location</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@customer</span> }
+72:       <span class="ruby-keyword kw">else</span>
+73:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_not_created</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_customer</span>))
+74:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:new</span> }
+75:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-identifier">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:unprocessable_entity</span> }
+76:       <span class="ruby-keyword kw">end</span>
+77:     <span class="ruby-keyword kw">end</span>
+78:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000242" class="method-detail">
+        <a name="M000242"></a>
+
+        <div class="method-heading">
+          <a href="#M000242" class="method-signature">
+          <span class="method-name">create_tree</span><span class="method-args">(obj)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000242-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000242-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/customers_controller.rb, line 123</span>
+123:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_tree</span>(<span class="ruby-identifier">obj</span>)
+124:     <span class="ruby-identifier">tree</span> = <span class="ruby-constant">Tree</span>.<span class="ruby-identifier">new</span>({<span class="ruby-identifier">:label=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_explorer</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_customer</span>)),<span class="ruby-identifier">:open</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>})   
+125:     <span class="ruby-comment cmt">#cnode = tree_customer(obj)    </span>
+126:     <span class="ruby-comment cmt">#tree &lt;&lt; cnode</span>
+127:     <span class="ruby-identifier">follow_tree_customer</span>(<span class="ruby-identifier">tree</span>, <span class="ruby-identifier">obj</span>)
+128:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">tree</span>
+129:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000246" class="method-detail">
+        <a name="M000246"></a>
+
+        <div class="method-heading">
+          <a href="#M000246" class="method-signature">
+          <span class="method-name">demote</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000246-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000246-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/customers_controller.rb, line 192</span>
+192:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">demote</span>
+193:     <span class="ruby-identifier">ctrl_demote</span>(<span class="ruby-constant">Customer</span>,<span class="ruby-keyword kw">false</span>)
+194:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000240" class="method-detail">
+        <a name="M000240"></a>
+
+        <div class="method-heading">
+          <a href="#M000240" class="method-signature">
+          <span class="method-name">destroy</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+DELETE /customers/1 DELETE /customers/1.xml
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000240-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000240-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/customers_controller.rb, line 101</span>
+101:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
+102:     <span class="ruby-ivar">@customer</span> = <span class="ruby-constant">Customer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+103:     <span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">destroy</span>
+104:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_deleted</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_customer</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">ident</span>)
+105:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+106:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">customers_url</span>) }
+107:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }
+108:     <span class="ruby-keyword kw">end</span>
+109:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000237" class="method-detail">
+        <a name="M000237"></a>
+
+        <div class="method-heading">
+          <a href="#M000237" class="method-signature">
+          <span class="method-name">edit</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+GET /customers/1/edit
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000237-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000237-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/customers_controller.rb, line 55</span>
+55:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">edit</span>
+56:     <span class="ruby-ivar">@customer</span> = <span class="ruby-constant">Customer</span>.<span class="ruby-identifier">find_edit</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+57:     <span class="ruby-ivar">@types</span>=<span class="ruby-constant">Typesobject</span>.<span class="ruby-identifier">getTypes</span>(<span class="ruby-identifier">:customer</span>)
+58:     <span class="ruby-ivar">@status</span>= <span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-identifier">:customer</span>)
+59:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000234" class="method-detail">
+        <a name="M000234"></a>
+
+        <div class="method-heading">
+          <a href="#M000234" class="method-signature">
+          <span class="method-name">index</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+GET /customers GET /customers.xml
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000234-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000234-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/customers_controller.rb, line 10</span>
+10:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
+11:     <span class="ruby-identifier">sort</span>=<span class="ruby-identifier">params</span>[<span class="ruby-value str">'sort'</span>]
+12:     <span class="ruby-identifier">conditions</span> = [<span class="ruby-value str">&quot;ident LIKE ? or &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">qry_type</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot; or designation LIKE ? or &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">qry_status</span><span class="ruby-operator">+</span>
+13:       <span class="ruby-value str">&quot; or &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">qry_owner</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot; or date LIKE ? &quot;</span>,
+14:       <span class="ruby-node">&quot;#{params[:query]}%&quot;</span>, <span class="ruby-node">&quot;#{params[:query]}%&quot;</span>, 
+15:     <span class="ruby-node">&quot;#{params[:query]}%&quot;</span>, <span class="ruby-node">&quot;#{params[:query]}%&quot;</span>, 
+16:     <span class="ruby-node">&quot;#{params[:query]}%&quot;</span>, <span class="ruby-node">&quot;#{params[:query]}%&quot;</span> ] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:query</span>].<span class="ruby-identifier">nil?</span> 
+17:     <span class="ruby-ivar">@query</span>=<span class="ruby-node">&quot;#{params[:query]}&quot;</span>
+18:     <span class="ruby-ivar">@total</span>=<span class="ruby-constant">Customer</span>.<span class="ruby-identifier">count</span>( <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">conditions</span>)
+19:     <span class="ruby-ivar">@customers</span> = <span class="ruby-constant">Customer</span>.<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page</span>], 
+20:           <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">conditions</span>,
+21:           <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">sort</span>,
+22:           <span class="ruby-identifier">:per_page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">cfg_items_per_page</span>)
+23:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+24:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment cmt"># index.html.erb</span>
+25:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@customers</span> }
+26:     <span class="ruby-keyword kw">end</span>
+27:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000236" class="method-detail">
+        <a name="M000236"></a>
+
+        <div class="method-heading">
+          <a href="#M000236" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+GET /customers/new GET /customers/new.xml
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000236-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000236-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/customers_controller.rb, line 44</span>
+44:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
+45:     <span class="ruby-ivar">@customer</span> = <span class="ruby-constant">Customer</span>.<span class="ruby-identifier">createNew</span>(<span class="ruby-keyword kw">nil</span>,<span class="ruby-ivar">@user</span>)
+46:     <span class="ruby-ivar">@types</span>=<span class="ruby-constant">Typesobject</span>.<span class="ruby-identifier">getTypes</span>(<span class="ruby-identifier">:customer</span>)
+47:     <span class="ruby-ivar">@status</span>= <span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-identifier">:customer</span>)
+48:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+49:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment cmt"># new.html.erb</span>
+50:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@customer</span> }
+51:     <span class="ruby-keyword kw">end</span>
+52:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000245" class="method-detail">
+        <a name="M000245"></a>
+
+        <div class="method-heading">
+          <a href="#M000245" class="method-signature">
+          <span class="method-name">promote</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000245-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000245-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/customers_controller.rb, line 188</span>
+188:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">promote</span>
+189:     <span class="ruby-identifier">ctrl_promote</span>(<span class="ruby-constant">Customer</span>,<span class="ruby-keyword kw">false</span>)
+190:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000241" class="method-detail">
+        <a name="M000241"></a>
+
+        <div class="method-heading">
+          <a href="#M000241" class="method-signature">
+          <span class="method-name">remove_project</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000241-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000241-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/customers_controller.rb, line 112</span>
+112:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_project</span>
+113:     <span class="ruby-ivar">@project</span> = <span class="ruby-constant">Project</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+114:     <span class="ruby-ivar">@customer</span> = <span class="ruby-constant">Customer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@project</span>.<span class="ruby-identifier">customer</span>)
+115:     <span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">remove_project</span>(<span class="ruby-ivar">@project</span>)
+116:     <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">save</span>)
+117:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_remove_project_ok</span>,<span class="ruby-identifier">:project=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@project</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">ident</span>)
+118:     <span class="ruby-keyword kw">else</span>
+119:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_remove_project_ko</span>,<span class="ruby-identifier">:project=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@project</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">ident</span>)
+120:     <span class="ruby-keyword kw">end</span>
+121:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000235" class="method-detail">
+        <a name="M000235"></a>
+
+        <div class="method-heading">
+          <a href="#M000235" class="method-signature">
+          <span class="method-name">show</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+GET /customers/1 GET /customers/1.xml
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000235-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000235-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/customers_controller.rb, line 31</span>
+31:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>
+32:     <span class="ruby-ivar">@customer</span> = <span class="ruby-constant">Customer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+33:     <span class="ruby-ivar">@relation_types_document</span>=<span class="ruby-identifier">get_relation_types_document</span>
+34:     <span class="ruby-ivar">@relation_types_project</span>=<span class="ruby-identifier">get_relation_types_project</span>
+35:     <span class="ruby-ivar">@tree</span>=<span class="ruby-identifier">create_tree</span>(<span class="ruby-ivar">@customer</span>)
+36:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+37:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment cmt"># show.html.erb</span>
+38:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@customer</span> }
+39:     <span class="ruby-keyword kw">end</span>
+40:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000239" class="method-detail">
+        <a name="M000239"></a>
+
+        <div class="method-heading">
+          <a href="#M000239" class="method-signature">
+          <span class="method-name">update</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+PUT /customers/1 PUT /customers/1.xml
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000239-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000239-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/customers_controller.rb, line 82</span>
+82:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>
+83:     <span class="ruby-ivar">@customer</span> = <span class="ruby-constant">Customer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+84:     <span class="ruby-ivar">@types</span>=<span class="ruby-constant">Typesobject</span>.<span class="ruby-identifier">getTypes</span>(<span class="ruby-identifier">:customer</span>)
+85:     <span class="ruby-ivar">@status</span>= <span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-identifier">:customer</span>)
+86:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+87:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:customer</span>])
+88:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_updated</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_customer</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">ident</span>)
+89:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-ivar">@customer</span>) }
+90:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }
+91:       <span class="ruby-keyword kw">else</span>
+92:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_notupdated</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_customer</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">ident</span>)
+93:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:edit</span> }
+94:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@customer</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-identifier">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:unprocessable_entity</span> }
+95:       <span class="ruby-keyword kw">end</span>
+96:     <span class="ruby-keyword kw">end</span>
+97:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

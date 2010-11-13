@@ -1,0 +1,21 @@
+<h1><%=t(:questions_show)%></h1>
+<p>
+  <b><%=t(:label_question) %></b>
+  <%=h @faq.question %>
+</p>
+
+<p>
+  <b><%=t(:label_answer) %></b>
+  <%=h @faq.answer %>
+</p>
+
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t(:edit), edit_question_path(@faq) %>
+        </td>
+        <td>
+            <%= link_to t(:list), questions_path %>
+        </td>
+    </tr>
+</table>

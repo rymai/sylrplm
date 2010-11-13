@@ -1,0 +1,51 @@
+<h1><%=t(:typesobjects_list) %></h1>
+<table>
+    <tr>
+        <th>
+            <%=t(:label_id) %>
+        </th>
+        <th>
+            <%=t(:label_object) %>
+        </th>
+        <th>
+            <%=t(:label_name) %>
+        </th>
+        <th>
+            <%=t(:label_description) %>
+        </th>
+				<th></th><th></th><th></th>
+     </tr>
+    <% @typesobjects.each do |typesobject| %>
+    <tr>
+        <td>
+            <%=h typesobject.id %>
+        </td>
+        <td>
+            <%=h typesobject.object %>
+        </td>
+        <td>
+            <%=h typesobject.name %>
+        </td>
+        <td>
+            <%=h typesobject.description %>
+        </td>
+        <td>
+            <%= link_to h_img_show.to_s, typesobject %>
+        </td>
+        <td>
+            <%= link_to h_img_edit.to_s, edit_typesobject_path(typesobject) %>
+        </td>
+        <td>
+            <%= link_to h_img_destroy.to_s, typesobject, :confirm => t(:msg_confirm), :method => :delete %>
+        </td>
+    </tr>
+    <% end %>
+</table>
+<br/>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t(:new_typesobject), new_typesobject_path %>
+        </td>
+    </tr>
+</table

@@ -1,0 +1,542 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+fr:
+  ##############
+  #controllers
+  ##############
+  ctrl_no_privilege: "Désolé, privilèges insuffisants"
+  ctrl_object_created: "{{object}} {{ident}} crée avec succès"
+  ctrl_object_not_created: "{{object}} non crée"
+  ctrl_object_updated: "{{object}} {{ident}} modifié avec succès"
+  ctrl_object_not_updated: "{{object}} {{ident}} non modifié"
+  ctrl_object_deleted: "{{object}} {{ident}} supprimé avec succès"
+  ctrl_object_not_deleted: "{{object}} {{ident}} ne peut être supprimé"
+  ctrl_object_promoted: "{{object}} {{ident}} promu de {{current_rank}} à {{new_rank}}, valideurs={{validersMail}}"
+  ctrl_object_not_promoted: "{{object}} {{ident}} non promu de {{current_rank}} à {{new_rank}}"
+  ctrl_user_no_email: "L'utilisateur {{user}} n'a pas d'adresse mail"
+  ctrl_object_demoted: "{{object}} {{ident}} rétrogradé de {{current_rank}} à {{new_rank}}, valideurs={{validersMail}}"
+  ctrl_object_not_demoted: "{{object}} {{ident}} non rétrogradé de {{current_rank}} à {{new_rank}}"
+  ctrl_object_revised: "{{object}} {{ident}} revisé de {{previous_rev}} à {{revision}}"
+  ctrl_object_not_revised: "{{object}} {{ident}} non révisé depuis {{previous_rev}} (pas dernière revision ou non gelé ?)"
+  ctrl_object_checkout: "{{object}} {{ident}} réservé , voir {{file}}, raison:{{reason}}"  
+  ctrl_object_not_checkout: "{{object}} {{ident}} non réservé"  
+  ctrl_object_give_reason: "Indiquez une raison"
+  ctrl_object_already_checkout: "{{object}} {{ident}} et déja réservé, voir {{file}}"
+  ctrl_object_checkin: "{{object}} {{ident}} est sauvé et libéré"
+  ctrl_object_not_checkin: "{{object}} {{ident}} n'est pas libéré"
+  ctrl_object_notyet_checkout: "{{object}} {{ident}} n'est pas encore réservé"
+  ctrl_object_give_file: "Indiquez un nouveau fichier"
+  ctrl_object_checkfree: "{{object}} {{ident}} est libéré"
+  ctrl_object_not_checkfree: "{{object}} {{ident}} n'est pas libéré"
+  ctrl_object_added: "<br> {{object}} {{ident}} a été ajouté, relation={{relation}}, message={{msg}}"
+  ctrl_object_not_added: "<br> {{object}} {{ident}} n'a pas été ajouté, relation={{relation}}, messag={{msg}}"
+  ctrl_object_not_linked: "<br> {{object}} {{ident}} n'a pas été relié, relation={{relation}}, messag={{msg}}"
+  ctrl_nothing_to_paste: "Pas de {{object}} à coller"
+  ctrl_subject_forum: "Forum sur {{object}} {{ident}}"
+  ctrl_object_explorer: "{{object}} Explorer"
+  ctrl_object_referencer: "{{object}} Référenceur"
+  ctrl_init_to_do: Initialisation à effectuer
+  ctrl_init_done: Initialisation effectuée
+  #access
+  ctrl_object_no_controlers: Controleurs non trouvés
+  #application
+  login_login: "Veuillez vous connecter"
+  label_project: "Projet-"
+  label_customer: "Client-"
+  link_project: "{{link}}-Projet-{{ident}}"
+  link_customer: "{{link}}-Client-{{ident}}"
+  user_unknown: Compte inconnu
+  user_not_connected: Non connecté
+  user_unknown_mail: unknownmail@laposte.net
+  #customers
+  ctrl_customer: Client
+  #ctrl_remove_project_ok: Project {{project}} was successfully removed from {{object}}
+  #ctrl_remove_project_ko: Project {{project}}  was not removed from {{object}}
+  #documents
+  ctrl_document: Document
+  #faq
+  ctrl_faq: Question
+  #forums
+  #forum_items
+  ctrl_forum_item: Message forum
+  #link
+  ctrl_link_already_customer_project: Projet déja lié à ce client
+  ctrl_link_already_project: Projet déja utilise ici ou ailleurs
+  ctrl_link_already_customer_document: Document déja lié à ce client
+  ctrl_link_already_project_part: Article déja lié à ce projet
+  ctrl_link_already_part_part: Article déja lié à cet article
+  ctrl_link_already_part_document: Document déja lié à cet article
+  ctrl_link_not_part_document: Document pas dans cette part
+  ctrl_link_recursivity: Risque de récursivité
+  ctrl_link_customer_project: Relation client / projet
+  ctrl_link_customer_document: Relation client / document
+  ctrl_link_project_part: Relation projet / article
+  ctrl_link_project_document: Relation projet / document
+  ctrl_link_part_part: Relation article / article
+  ctrl_link_part_document: Relation article / document
+  ctrl_link_document_forum: Relation document / forum
+  ctrl_link_part_forum: Relation article / forum
+  ctrl_link_project_forum: Relation projet / forum
+  ctrl_link_customer_forum: Relation client / forum
+  #info
+  info_object_not_found: SYLRPLM_ERROR-{{context}}-{{object}} non trouvÃ©(e) - {{id}}
+  #login
+  ctrl_role_needed: Renseigner le rôle
+  ctrl_invalid_login: Nom utilisateur ou mot de passe invalide
+  ctrl_user_needed: Renseigner l'utilisateur
+  ctrl_user_created: Utilisateur {{user}} crée
+  ctrl_user_updated: Utilisateur {{user}} modifié
+  ctrl_user_not_updated: Utilisateur {{user}} non modifié
+  ctrl_user_deleted: Utilisateur {{user}} supprimé
+  ctrl_user_connected: Utilisateur {{user}} connecté !
+  ctrl_user_disconnected: Utilisateur {{user}} déconnecté !
+  #main
+  #parts
+  ctrl_part: Article
+  ctrl_forum: Forum
+  #projects
+  ctrl_project: Projet
+  #roles
+  ctrl_role: Rôle
+  #sequences
+  ctrl_sequence: Valeur par défaut
+  #statusobjects
+  ctrl_statusobject: Statut objet
+  #typesobjects
+  ctrl_typesobject: Type objet
+  #volumes
+  ctrl_volume: Volume
+  #########################################
+  #helpers
+  #########################################
+  #application
+  h_show_hide_tree: Montrer/Cacher arbre
+  #help
+  help_no_help_title: Aide absente
+  help_no_help: Pas d'aide pour {{key}}
+  help_lnk_acces: Accès
+  help_summary: Sommaire
+  help_jump: Voir
+  help_previous: Précédent
+  help_next: Suivant
+  help_upper: Supérieur
+  help_main: Début
+  #########################################
+  #views
+  #########################################
+  hello: "Bienvenue"
+  disconnect: "Se deconnecter"
+  #langues
+  tit_language: "Langue:"
+  lng_english: "English"
+  lng_french: "French"
+  #
+  context_info: "Informations sur le contexte:"
+  no_item: Il n'y a rien à afficher.
+  #menus
+  mnu_main: Acceuil
+  mnu_documents: Documents
+  mnu_parts: Articles
+  mnu_projects: Projets
+  mnu_customers: Clients
+  mnu_questions: Questions
+  mnu_news: Nouveautés
+  mnu_contact: Contacts
+  mnu_forums: Forums 
+  mnu_forum_items: Messages 
+  mnu_users: Utilisateurs
+  mnu_types_objects: Types objets
+  mnu_status_objects: Status objets
+  mnu_roles: Roles
+  mnu_volumes: Volumes
+  mnu_sequences: Valeurs par défaut
+  mnu_acces: Autorisations
+  mnu_links: Liens 
+  mnu_checks: Réservations 
+  mnu_roles_users: Roles/users 
+  #
+  explorer: "Explorer"
+  list: "Liste"
+  query: "Filtre"
+  filter: "Filtrer"
+  FAQ: "Questions fréquentes"
+  new_customer: "Nouveau client"
+  new_document: "Nouveau document"
+  new_part: "Nouvel article"
+  new_project: "Nouveau projet"
+  new_question: "Nouvelle question"
+  new_forum: "Nouveau forum"
+  new_forum_item: "Nouveau message forum"
+  new_access: "Nouvelle autorisation"
+  new_check: "Nouvelle réservation"
+  new_user: "Nouvel utilisateur"
+  new_statusobject: Nouveau statut
+  new_typesobject: Nouveau type
+  new_role: Nouveau rôle
+  new_sequence: Nouvelle valeur par défaut
+  new_volume: Nouveau volume
+  #
+  paste_parts: Coller articles 
+  paste_documents: Coller documents
+  paste_projects: Coller projets
+  add_forum: Ajout forum
+  freeze: Gelé
+  edit: Editer
+  update: Mettre à jour
+  create: Créer 
+  copy: Copier
+  destroy: "Supprimer"
+  cancel: Annuler
+  menu_action: Action(s)
+  #forums
+  forum_items: Messages
+  forum_follow: suites
+  forum_item_response: Répondre
+  #
+  # views
+  #
+  # general
+  modif_status: Modifier le statut
+  # fields access
+  label_controller: Controleur
+  label_action: Action
+  label_role: Rôle
+  access_edit: Edition autorisation
+  access_list: Liste des autorisations
+  access_show: Détail autorisation
+  access_new: Nouvel autorisation
+  #
+  # fields check
+  check_edit: Edition check
+  check_list: Liste des check
+  check_show: Détail check
+  check_new: Nouveau check
+  label_object: Objet
+  label_object_id: ID
+  label_status: Statut
+  label_out_reason: Raison check-out
+  label_out_date: Date check-out
+  label_out_user: Utilisateur check-out
+  label_in_reason: Raison check-in
+  label_in_date: Date check-in
+  label_in_user: Utilisateur check-in
+  label_local_dir: Répertoire local
+  # fields customers
+  customer_edit: Edition client
+  customer_list: Liste clients
+  customer_show: Detail client
+  customer_new: Nouveau client
+  label_id: ID
+  label_ident: Identifiant
+  label_type: Type
+  label_designation: Désignation
+  label_responsible: Responsable
+  label_group: Groupe
+  label_statusobject: Statut
+  label_date: Date
+  label_description: Description
+  label_typesobject: Type
+  # fields documents
+  document_edit: Edition document
+  document_list: Liste documents
+  document_show: Détail document
+  document_new: Nouveau document
+  label_revision: Révision
+  label_extension: Extension
+  label_repository: Volume
+  label_file: Fichier
+  label_volume: Volume
+  label_content_type: Type de contenu
+  # fields forums
+  forum_edit: Edition forum 
+  forum_list: Liste des forums 
+  forum_show: Détail du forum 
+  forum_new: Nouveau forum 
+  part_new_forum: Nouveau forum sur cet article
+  label_subject: Sujet du forum
+  label_message: Message de démarrage du forum
+  # fields forum_items
+  forum_item_edit: Edition message forum
+  forum_item_list: Liste message forum
+  forum_item_show: Détail message forum
+  forum_item_new: Nouveau message forum
+  label_parent: Prédécesseur
+  label_owner: Emetteur
+  label_forum: Forum
+  # fields help
+  # fields info
+  # fields login
+  legend_user: Renseignez les propriétés de l'utilisateur
+  legend_login: Merci de vous connecter
+  submit_login: Login
+  label_username: Nom
+  label_password: Password
+  label_confirm_password: Confirmation
+  label_role: Rôle
+  label_email: Email
+  label_roles: Rôles
+  # fields main
+  label_domain: Domaine
+  submit_create_domain: Créer le domaine  
+  label_theme: Thème
+  favori_document_delete: Vider presse-papier documents 
+  favori_part_delete: Vider presse-papier articles 
+  favori_project_delete: Vider presse-papier projects 
+  favoris_document: Documents
+  favoris_part: Articles
+  favoris_project: Projets
+  title_contacts: SYLRPLM Contacts
+  title_news: SYLRPLM Nouveautés
+  # main/_frame
+  legend_main: Acceuil
+  legend_plm_objects: Objets PLM
+  legend_collab: Collaboratif
+  legend_organization: Organisation 
+  legend_param: Paramétrage
+  legend_debug: Debug
+  legend_clipboard: Presse papier
+  submit: GO
+  # fields parts
+  part_edit: Edition article
+  part_list: Liste articles
+  part_show: Détail article
+  part_new: Nouvel article
+  # fields plm_mailer
+  document_validated: Le document suivant vient d'être validé par mes soins
+  part_validated: La part suivante vient d'être validée par mes soins
+  document_tovalidate: Ceci est une demande de validation pour le document
+  part_tovalidate: Ceci est une demande de validation pour la part
+  check_object_and_promote: Merci de verifier cet objet et d'effectuer une promotion par le menu suivant.
+  direct_access: Accès direct.
+  # fields projects
+  project_edit: Edition projet
+  project_list: Liste projets
+  project_show: Détail projet
+  project_new: Nouvel projet
+  label_customer: Client
+  # fields questions
+  questions_edit: Edition question
+  questions_list: Liste questions
+  questions_show: Détail question
+  questions_new: Nouvelle question 
+  label_question: Question
+  label_answer: Réponse
+  label_position: Position
+  # fields roles
+  role_list: Liste des rôles
+  role_new: Nouveau rôle
+  role_show: Détail du rôle
+  role_edit:  Edition du rôle
+  # fields sequences
+  sequence_list: Liste des valeurs/sequences
+  sequence_new: Nouvelle valeur/sequence
+  sequence_show: Détail de la valeur/sequence
+  sequence_edit:  Edition de la valeur/sequence
+  label_value: Valeur 
+  label_min: Valeur minimale
+  label_max: Valeur maximale
+  label_utility: Utilisation
+  label_modify: Modifiable
+  label_sequence: Séquence
+  # fields statusobjects
+  statusobjects_list: Liste des statuts d' objets
+  statusobjects_new: Nouveau statut d' objet
+  statusobjects_show: Détail du statut d' objet
+  statusobjects_edit: Edition du statut d' objet
+  label_name: Nom
+  label_rank: Rang de promotion
+  label_promote: Promotion
+  label_demote: Rétrogadation
+  # msg _check_status
+  msg_define_status_document: Définissez les statuts des documents
+  msg_define_status_part: Définissez les statuts des articles
+  msg_define_status_project: Définissez les statuts des projets
+  msg_define_status_customer: Définissez les statuts des clients
+  msg_define_status_forum: Définissez les statuts des forums
+  # fields typesobjects
+  typesobjects_list: Liste des types d' objets
+  typesobjects_new: Nouveau type d' objet
+  typesobjects_show: Détail du type d' objet
+  typesobjects_edit:  Edition du type d' objet
+  # msg _check_types
+  msg_define_types_document: Définissez les types des documents
+  msg_define_types_part: Définissez les types des articles
+  msg_define_types_project: Définissez les types des projets
+  msg_define_types_customer: Définissez les types des clients
+  msg_define_types_forum: Définissez les types des forums
+  # fields volumes
+  volume_list: Liste des volumes
+  volume_new: Nouveau volume
+  volume_show: Détail du volume
+  volume_edit:  Edition du volume
+  label_directory: Répertoire
+  label_protocol: Protocole
+  #
+  msg_confirm: Etes vous sûr ?
+  # attributs
+  faq_question: Question
+  faq_answer: Réponse
+  updated_at: Mis à jour 
+  id: Id
+  #
+  cut: "Couper"
+  revise: "Reviser"
+  promote: "Promouvoir"
+  demote: Rétrograder
+  # relations
+  no_relation: "-----"
+  specification: "Spécification"
+  notice: "Notice"
+  norme: "Norme"
+  reference: "Référence"
+  bom: "BOM"
+  research: "Recherche"
+  production: "Production"
+  forum: Forum
+  #
+  check_out: "Réserver"
+  check_in: "Maj et libérer"
+  check_free: "Libérer"
+  download: "Télécharger fichier"
+  
+  # help
+  help_title: "Aide relative à l application SYLRPLM" 
+  help_close_window: Fermer la fenêtre d'aide
+  # messages
+  msg.no_item_to_display: "Il n'y a rien à afficher."
+  
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%e %b"
+      long: "%e %B %Y"
+      long_ordinal: "%e %B %Y"
+    day_names: [dimanche, lundi, mardi, mercredi, jeudi, vendredi, samedi]
+    abbr_day_names: [dim, lun, mar, mer, jeu, ven, sam]
+    month_names: [~, janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre]
+    abbr_month_names: [~, jan.n fév., mar., avr., mai., juin, juil, août, sept., oct., nov., déc.]
+    order: [ :day, :month, :year ]
+  time:
+    formats:
+      default: "%d %B %Y %H:%M"
+      time: "%H:%M"
+      short: "%d %b %H:%M"
+      long: "%A %d %B %Y %H:%M:%S %Z"
+      long_ordinal: "%A %d %B %Y %H:%M:%S %Z"
+      only_second: "%S"
+    am: 'am'
+    pm: 'pm'
+ 
+  datetime:
+    distance_in_words:
+      half_a_minute: "une demi-minute"
+      less_than_x_seconds:
+        zero: "moins d'une seconde"
+        one: "moins de 1 seconde"
+        other: "moins de {{count}} secondes"
+      x_seconds:
+        one: "1 seconde"
+        other: "{{count}} secondes"
+      less_than_x_minutes:
+        zero: "moins d'une minute"
+        one: "moins de 1 minute"
+        other: "moins de {{count}} minutes"
+      x_minutes:
+        one: "1 minute"
+        other: "{{count}} minutes"
+      about_x_hours:
+        one: "environ une heure"
+        other: "environ {{count}} heures"
+      x_days:
+        one: "1 jour"
+        other: "{{count}} jours"
+      about_x_months:
+        one: "environ un mois"
+        other: "environ {{count}} mois"
+      x_months:
+        one: "1 mois"
+        other: "{{count}} mois"
+      about_x_years:
+        one: "environ un an"
+        other: "environ {{count}} ans"
+      over_x_years:
+        one: "plus d'un an"
+        other: "plus de {{count}} ans"
+    prompts:
+      year: "Ann�e"
+      month: "Mois"
+      day: "Jour"
+      hour: "Heure"
+      minute: "Minute"
+      second: "Seconde"
+  
+  number:
+    format:
+      precision: 3
+      separator: ','
+      delimiter: ' '
+    currency:
+      format:
+        unit: '�'
+        precision: 2
+        format: '%n %u'
+    human:
+      format:
+        # These three are to override number.format and are optional
+        # separator:
+        delimiter: ""
+        precision: 2
+      # Rails <= v2.2.2
+      # storage_units: [octet, kb, Mb, Gb, Tb]
+      # Rails >= v2.3
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            one: "octet"
+            other: "octets"
+          kb: "ko"
+          mb: "Mo"
+          gb: "Go"
+          tb: "To"
+ 
+  support:
+    array:
+      sentence_connector: 'et'
+      skip_last_comma: true
+      words_connector: ", "
+      two_words_connector: " et "
+      last_word_connector: " et "
+  
+  activerecord:
+    errors:
+      template:
+        header:
+          one: "Impossible d'enregistrer {{model}}: 1 erreur"
+          other: "Impossible d'enregistrer {{model}}: {{count}} erreurs."
+        body: "Veuillez v�rifier les champs suivants :"
+      messages:
+        inclusion: "n'est pas inclus(e) dans la liste"
+        exclusion: "n'est pas disponible"
+        invalid: "n'est pas valide"
+        confirmation: "ne concorde pas avec la confirmation"
+        accepted: "doit �tre accept�(e)"
+        empty: "doit �tre rempli(e)"
+        blank: "doit �tre rempli(e)"
+        too_long: "est trop long (pas plus de {{count}} caract�res)"
+        too_short: "est trop court (au moins {{count}} caract�res)"
+        wrong_length: "ne fait pas la bonne longueur (doit comporter {{count}} caract�res)"
+        taken: "n'est pas disponible"
+        not_a_number: "n'est pas un nombre"
+        greater_than: "doit �tre sup�rieur � {{count}}"
+        greater_than_or_equal_to: "doit �tre sup�rieur ou �gal � {{count}}"
+        equal_to: "doit �tre �gal � {{count}}"
+        less_than: "doit �tre inf�rieur � {{count}}"
+        less_than_or_equal_to: "doit �tre inf�rieur ou �gal � {{count}}"
+        odd: "doit �tre impair"
+        even: "doit �tre pair"
+        
+  
+        
+ 

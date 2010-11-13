@@ -1,0 +1,36 @@
+I recently needed to update a database with the contents of an XML file under a controlled environment (details at Blackrat's Blog) and came up with this.
+
+With an XML input file of the following format
+
+<tags>
+  <tag name='test' desc='Test Description' other='Other Item' />
+  <tag name='test2' desc='2nd Test Description' other='Another Item' />
+</tags>
+
+
+
+and a database which contains identical columns name,desc,other (or a superset of the tags) you can use the follow snippet to populate it.
+
+View [import_xml.rhtml]
+
+<h1>Import XML</h1>
+
+<%= form_tag({ :action => 'import_xml'}, { :multipart => true }) %>
+<%= file_field 'document', 'file' %>
+<%= submit_tag 'Import' %>
+<%= end_form_tag %>
+
+
+
+Controller [names_controller.rb]
+
+def import_xml
+  require 'rexml/document'
+  file=params[:document][:file]
+  doc=REXML::Document.new(file.read)
+  doc.root.each_element('//tag') do |tag|
+    @name = Name.new
+    @name.update_attributes(tag.attributes)
+  end
+  redirect_to :action => 'list'
+end

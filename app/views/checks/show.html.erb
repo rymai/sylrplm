@@ -1,0 +1,58 @@
+<h1><%=t("check_show")%></h1>
+<p>
+  <b><%= t("label_object") %></b>
+  <%=h @check.object %>
+</p>
+
+<p>
+  <b><%= t("label_object_id") %></b>
+  <%=h @check.object_id %>
+</p>
+
+<p>
+  <b><%= t("label_status") %></b>
+  <%=h @check.status %>
+</p>
+
+<p>
+  <b><%= t("label_out_reason") %></b>
+  <%=h @check.out_reason %>
+</p>
+
+<p>
+  <b><%= t("label_out_date") %></b>
+  <%=h @check.out_date %>
+</p>
+
+<p>
+  <b><%= t("label_out_user") %></b>
+  <%=h @check.out_user %>
+</p>
+
+<p>
+  <b><%= t("label_in_reason") %></b>
+  <%=h @check.in_reason %>
+</p>
+
+<p>
+  <b><%= t("label_in_date") %></b>
+  <%=h @check.in_date %>
+</p>
+
+<p>
+  <b><%= t("label_in_user") %></b>
+  <%=h @check.in_user %>
+</p>
+
+<p>
+  <b><%= t("label_local_dir") %></b>
+  <%=h @check.local_dir %>
+</p>
+
+<table class='menu_bas'>
+<tr>
+<td><%= link_to t("edit"), edit_check_path(@check)  %></td>
+<td><%= link_to t("list"), checks_path %></td>
+</tr>
+</table
+
