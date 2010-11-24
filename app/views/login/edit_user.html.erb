@@ -40,6 +40,11 @@
             <br/>
             <%= form.text_field :email, :size => 40 %>
         </p>
+        <p>
+            <b><%= form.label t(:label_repository) %></b>
+            <br/>
+            <%= form.collection_select(:volume_id, @volumes, :id, :name) %>
+        </p>
         <% if @themes != nil %>
         <%= form.label t(:label_theme) %>
         <br/>

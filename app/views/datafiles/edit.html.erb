@@ -1,0 +1,23 @@
+<h1><%=t(:datafile_edit) %></h1>
+<% form_for(@datafile,
+:html => { :multipart => true}) do |f| %>
+<%= f.error_messages %>
+<%= render(:partial => "datafiles/add_datafile",:locals => { :f => f, :fonct=>"edit" }) %>
+<p>
+    <%= f.submit t(:update) %>
+</p>
+
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= f.submit t("update") %>
+        </td>
+        <td>
+            <%= link_to t("explorer"), @datafile %>
+        </td>
+        <td>
+            <%= link_to t("list"), datafiles_path %>
+        </td>
+    </tr>
+</table>
+<% end %>

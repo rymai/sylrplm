@@ -1,0 +1,14 @@
+<h1><%=t(:datafile_new) %></h1>
+<% form_for(@datafile , :html => { :multipart => true}) do |f| %>
+<%= render(:partial => "datafiles/add_datafile",:locals => { :f => f , :fonct=>"new"}) %>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= f.submit t("create") %>
+        </td>
+        <td>
+            <%= link_to t("list"), datafiles_path %>
+        </td>
+    </tr>
+</table>
+<% end %>

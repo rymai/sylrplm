@@ -3,7 +3,7 @@
 body {
 	background: black;
 	color: black;
-	font-size: 11px;
+	font-size: 13px;
 	margin:0;
 	padding:0;
 	}
@@ -68,7 +68,7 @@ th {
 	font-weight: bold;
  	padding: 1px;
   margin: 0px;
-  font-size: 10px;
+  font-size: 12px;
   background-color:#222222;
   color: white;
   border: 1px solid white ;
@@ -142,6 +142,11 @@ td.banner   {
   color: white;
 }
 
+/* input file*/
+#datafile_uploaded_file {
+	maxlength:10;
+	}
+
 .translation_missing {
 	background-color: #00f0f0;
 }
@@ -207,12 +212,12 @@ img.help_tr {
 /* Styles for the favori in the sidebar */
 
 li.favori  {
-  font-size: 9px;	
+  font-size: 12px;	
   color:     white;
 }
 
 td.favori {
-  font-size: 9px;	
+  font-size: 12px;	
   color:     white;
 }
 

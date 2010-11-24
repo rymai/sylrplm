@@ -52,6 +52,8 @@ en:
   ctrl_customer: "Customer"
   #ctrl_remove_project_ok: "Project {{project}} was successfully removed from {{object}}"
   #ctrl_remove_project_ko: "Project {{project}}  was not removed from {{object}}"
+  #datafiles
+  ctrl_datafile: Fichier
   #documents
   ctrl_document: Document
   #faq
@@ -78,6 +80,7 @@ en:
   ctrl_link_part_forum: Relation article / forum
   ctrl_link_project_forum: Relation projet / forum
   ctrl_link_customer_forum: Relation client / forum
+  ctrl_link_document_datafile: Relation document / file
   #info
   info_object_not_found: SYLRPLM_ERROR-{{context}}-{{object}} not found - {{id}}
   #login
@@ -153,7 +156,8 @@ en:
   mnu_acces: Acces
   mnu_links: Links 
   mnu_checks: Reservations 
-  mnu_roles_users: Roles/users 
+  mnu_roles_users: Roles/users
+  mnu_datafiles: Data files
   #
   explorer: "Explorer"
   list: "List"
@@ -161,6 +165,7 @@ en:
   filter: "Filter"
   FAQ: "Frequently Asked Questions"
   new_customer: "New customer"
+  new_datafile: New file
   new_document: "New document"
   new_part: "New Part"
   new_project: "New project"
@@ -175,6 +180,11 @@ en:
   new_role: New role
   new_sequence: New sequence
   new_volume: New volume
+  #########################################
+  #modules
+  #########################################
+  #plm_object_controller_module
+  ctrl_datafile: File
   #
   paste_part: Paste parts 
   paste_documents: Paste documents
@@ -236,6 +246,14 @@ en:
   label_description: Description
   label_statusobject: Status 
   label_typesobject: Type
+  # fields datafile
+  datafile_edit: Editing file
+  datafile_list: Listing files
+  datafile_show: Detail file
+  datafile_new: New file
+  label_filename: File
+  label_volume: Volume
+  label_content_type: Mime type
   # fields documents
   document_edit: Editing document
   document_list: Listing documents
@@ -243,10 +261,8 @@ en:
   document_new: New document
   label_revision: Revision
   label_extension: Extension
-  label_repository: Volume
-  label_file: Fichier
-  label_volume: Volume
-  label_content_type: Mime type
+  add_datafile: Add file
+  document_datafiles: Document files
   # fields faq
   faq_edit: Edition question
   faq_list: Liste questions

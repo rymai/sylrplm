@@ -53,6 +53,8 @@ fr:
   ctrl_customer: Client
   #ctrl_remove_project_ok: Project {{project}} was successfully removed from {{object}}
   #ctrl_remove_project_ko: Project {{project}}  was not removed from {{object}}
+  #datafiles
+  ctrl_datafile: File
   #documents
   ctrl_document: Document
   #faq
@@ -79,6 +81,7 @@ fr:
   ctrl_link_part_forum: Relation article / forum
   ctrl_link_project_forum: Relation projet / forum
   ctrl_link_customer_forum: Relation client / forum
+  ctrl_link_document_datafile: Relation document / fichier
   #info
   info_object_not_found: SYLRPLM_ERROR-{{context}}-{{object}} non trouvÃ©(e) - {{id}}
   #login
@@ -107,6 +110,11 @@ fr:
   ctrl_typesobject: Type objet
   #volumes
   ctrl_volume: Volume
+  #########################################
+  #modules
+  #########################################
+  #plm_object_controller_module
+  ctrl_datafile: Fichier
   #########################################
   #helpers
   #########################################
@@ -154,7 +162,8 @@ fr:
   mnu_acces: Autorisations
   mnu_links: Liens 
   mnu_checks: Réservations 
-  mnu_roles_users: Roles/users 
+  mnu_roles_users: Roles/users
+  mnu_datafiles: Fichiers de données
   #
   explorer: "Explorer"
   list: "Liste"
@@ -162,6 +171,7 @@ fr:
   filter: "Filtrer"
   FAQ: "Questions fréquentes"
   new_customer: "Nouveau client"
+  new_datafile: Nouveau fichier
   new_document: "Nouveau document"
   new_part: "Nouvel article"
   new_project: "Nouveau projet"
@@ -193,9 +203,9 @@ fr:
   forum_items: Messages
   forum_follow: suites
   forum_item_response: Répondre
-  #
+  ######################################################
   # views
-  #
+  ######################################################
   # general
   modif_status: Modifier le statut
   # fields access
@@ -237,6 +247,14 @@ fr:
   label_date: Date
   label_description: Description
   label_typesobject: Type
+  # fields datafile
+  datafile_edit: Edition fichier
+  datafile_list: Liste fichiers
+  datafile_show: Détail fichier
+  datafile_new: Nouveau fichier
+  label_filename: Fichier
+  label_volume: Volume
+  label_content_type: Type de contenu
   # fields documents
   document_edit: Edition document
   document_list: Liste documents
@@ -244,10 +262,8 @@ fr:
   document_new: Nouveau document
   label_revision: Révision
   label_extension: Extension
-  label_repository: Volume
-  label_file: Fichier
-  label_volume: Volume
-  label_content_type: Type de contenu
+  add_datafile: Ajout fichier
+  document_datafiles: Fichiers du document
   # fields forums
   forum_edit: Edition forum 
   forum_list: Liste des forums 

@@ -1,16 +1,15 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
-
+require 'rexml/document'
+#require 'logger'
+require "lib/classes/app_classes"
 #  controleur principal.
 class ApplicationController < ActionController::Base
-  require 'rexml/document'
-  
-  require 'logger'
-  
+  include AppClasses
   #include REXML
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  
+  filter_parameter_logging :password
   before_filter :authorize, :except => [:index,:init_objects,:get_themes,:find_theme,:permission_denied,:permission_granted,
   :permission_granted,:current_user,:redirect_to_index,:tree_part,:tree_project,:tree_customer,:follow_tree_part,:follow_tree_up_part,
   :follow_tree_project,:follow_tree_up_project,:follow_tree_customer,:tree_documents,:tree_forums] 
@@ -66,15 +65,15 @@ class ApplicationController < ActionController::Base
   
   # definition de la langue
   def set_locale
-    if(params[:locale]!=nil)
-      I18n.locale = params[:locale] || 'en ou fr'
+    if params[:locale]
+      I18n.locale = params[:locale] 
       session[:lng]=I18n.locale
     else
-      if(session[:lng]!=nil)
-        I18n.locale=session[:lng]
+      if session[:lng]
+        I18n.locale = session[:lng]
       else
         I18n.locale=SYLRPLM::LOCAL_DEFAULT
-        session[:lng]=I18n.locale
+        session[:lng] = I18n.locale
       end
     end
     #I18n.locale = "en" #force a en sinon les date_select ne marchent plus
@@ -85,39 +84,23 @@ class ApplicationController < ActionController::Base
     @current_user ||= session[:user_id] ? User.find(session[:user_id]) : nil
   end
   
-  # Build a Logger::Formatter subclass.
-  class SylFormatter < Logger::Formatter
-    # Provide a call() method that returns the formatted message.
-    def call(severity, time, program_name, message)
-      datetime      = time.strftime("%Y-%m-%d %H:%M")
-      if severity == "ERROR"
-        
-        print_message = "!!! #{String(message)} (#{datetime}) !!!"
-        border        = "!" * print_message.length
-        [border, print_message, border].join("\n") + "\n"
-      else
-        #super
-        [severity.ljust(5), datetime, program_name, message].join("_") + "\n"
-      end
-    end
-  end
   
   # definition des variables globales.
   def define_variables
-    @user =find_user
-    @userid =find_userid
-    @username =find_username
-    @usermail =find_usermail
-    @userrole =find_userrole
-    @favori_document=find_favori_document
-    @favori_project=find_favori_project
-    @favori_part=find_favori_part
+    @user = User.find_user(session)
+    @userid = User.find_userid(session)
+    @username = User.find_username(session)
+    @usermail = User.find_usermail(session)
+    @userrole = User.find_userrole(session)
+    @favori_document=  find_favori_document
+    @favori_project  = find_favori_project
+    @favori_part = find_favori_part
     @urlbase="http://"+request.env["HTTP_HOST"]
-    @theme=find_theme
+    @theme=User.find_theme(session)
     logfile = File.join(File.dirname(__FILE__),'..','..','log', 'sylrplm.log')
     @logger = Logger.new(logfile, 'daily')
     @logger.level     = Logger::DEBUG #DEBUG INFO WARN ERROR FATAL ANY
-    @logger.formatter = SylFormatter.new  # Install custom formatter!
+    @logger.formatter = LogFormatter.new  # Install custom formatter!
     #@logger.datetime_format = "%Y-%m-%d %H:%M:%S"
   end
   
@@ -157,95 +140,7 @@ class ApplicationController < ActionController::Base
     SYLRPLM::NB_ITEMS_PER_PAGE
   end
   
-  # recherche du theme
-  def find_theme
-    ret=SYLRPLM::THEME_DEFAULT 
-    if session[:user_id]
-      if user = User.find(session[:user_id])
-        if(user.theme!=nil)
-          ret=user.theme
-        end
-      end
-    else
-      if session[:theme]
-        ret=session[:theme]
-      end
-    end
-  return ret
-  end
   
-  # recherche du user connecte
-  def find_user
-    if session[:user_id] 
-      if  user = User.find(session[:user_id])
-        user
-      else 
-              t(:user_not_connected)
-      end
-    else
-          t(:user_not_connected)
-    end
-  end
-  
-  # recherche de l'id du user connecte
-  def find_userid
-    if session[:user_id] 
-      if  user = User.find(session[:user_id])
-        user.id
-      else 
-        nil
-      end
-    else
-      nil
-    end
-  end
-  
-  # recherche du nom du user connecte      
-  def find_username
-    if session[:user_id] 
-      if user = User.find(session[:user_id])
-        user.login
-      else 
-            t(:user_unknown)
-      end
-    else
-        t(:user_not_connected)
-    end
-  end
-  
-  # recherche du role du user connecte
-  def find_userrole
-    if session[:user_id] 
-      if  user = User.find(session[:user_id])
-        if(user.role != nil) 
-          user.role.title
-        else
-                  ""
-        end
-      else 
-              ""
-      end
-    else
-          ""
-    end
-  end
-  
-  # recherche du mail du user connecte
-  def find_usermail
-    if session[:user_id] 
-      if  user = User.find(session[:user_id])
-        if(user.email != nil) 
-          user.email
-        else
-             t(:user_unknown_mail)
-        end
-      else 
-          t(:user_unknown_mail)
-      end
-    else
-      t(:user_unknown_mail)
-    end
-  end
   
   # recherche du favori des documents
   def find_favori_document

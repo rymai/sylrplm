@@ -8,6 +8,7 @@ class Link < ActiveRecord::Base
     relation.belongs_to :part , :conditions => ["child_object='part'"]
     relation.belongs_to :project , :conditions => ["child_object='project'"]
     relation.belongs_to :customer , :conditions => ["child_object='customer'"]
+    relation.belongs_to :datafiles , :conditions => ["child_object='datafile'"]
   end
   
   def self.find_childs(father_object, father, child_object)
@@ -96,6 +97,9 @@ class Link < ActiveRecord::Base
       end
     end
     if(child_object=="forum")
+      ok=true
+    end
+    if(child_object=="datafile")
       ok=true
     end
     link=nil

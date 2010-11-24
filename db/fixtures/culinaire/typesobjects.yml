@@ -128,4 +128,30 @@
   object: relation_project
   name: production
   description: Projet de production
+82:
+  id: 82
+  object: datafile
+  name: autocad
+  description: DAO Autocad
+83:
+  id: 83
+  object: datafile
+  name: text
+  description: Fichier texte
+84:
+  id: 84
+  object: datafile
+  name: writer
+  description: Traitement de texte
+85:
+  id: 85
+  object: datafile
+  name: spreadsheet
+  description: Projet de production
+86:
+  id: 86
+  object: datafile
+  name: image
+  description: fichier image (jpg,gif,bmp,...)
+
   

@@ -5,7 +5,7 @@ class InfoController < ApplicationController
   def which_documents
     part =Part.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    logger.error("Part non trouvée: #{params[:id]}")
+    logger.error("Part non trouvee: #{params[:id]}")
     #flash[:notice] = "Part invalide"
     #@part=nil
     #@documents=nil

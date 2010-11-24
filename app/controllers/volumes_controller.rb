@@ -89,11 +89,12 @@ class VolumesController < ApplicationController
     @volume = Volume.find(params[:id])
     dirsave=@volume.directory
     st=@volume.destroyVolume
+    #puts "volumes_controller.destroy:st="+st.to_s
     if(st==nil) 
       flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_volume),:ident=>@volume.name+":"+dirsave)
     else
       #flash[:notice] = "Volume #{@volume.name} was not deleted on #{dirsave}, files found: #{st.gsub("\n","<br/>")}."
-      flash[:notice] = t(:ctrl_object_not_deleted,:object=>t(:ctrl_volume),:ident=>@volume.name+":"+dirsave+st.gsub("\n","<br/>"))
+      flash[:notice] = t(:ctrl_object_not_deleted,:object=>t(:ctrl_volume),:ident=>@volume.name+":"+dirsave)+":"+st.gsub("\n","<br/>")
     end
     respond_to do |format|
       format.html { redirect_to(volumes_url) }

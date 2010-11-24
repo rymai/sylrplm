@@ -1,9 +1,4 @@
 <h1><%= t("document_show") %></h1>
-<!--
-<p>
-<b>First status:<%=h @first_status.object %>.<%=h @first_status.name %>.<%=h @first_status.rank %>
-</p>
--->
 <p>
     <b><%= t("label_ident") %></b>
     <%=h @document.ident %>
@@ -27,14 +22,6 @@
     <%=h @document.description %>
 </p>
 <p>
-    <b><%= t("label_repository") %></b>
-    <%=h @document.volume.name %>
-</p>
-<p>
-    <b><%= t("label_file") %></b>
-    <%=h @document.filename %>
-</p>
-<p>
     <b><%= t("label_statusobject") %></b>
     <% if(@document.statusobject != nil) %>
     <%=h @document.statusobject.id %>:<%=h @document.statusobject.name %>
@@ -49,62 +36,63 @@
     <%=h @document.date %>
 </p>
 <table class='menu_bas'>
+    <% if (@document.isFreeze() == true ) %>
+	    <tr>
+	        <td>
+	            <%=t("freeze") %>
+	        </td>
+	    </tr>
+    <% else %>
+	    <% if(@document.is_checked()==false) %>
+		    <% form_for(@document, :url => {:id => @document.id, :action => "check_out" }) do |f| %>
+			    <tr>
+			        <td>
+			            <%= f.submit t("check_out") %>
+			        </td>
+			        <td>
+			            <%= label_tag :reason %><%= text_field_tag :reason %>
+			        </td>
+			    </tr>
+		    <%end %>
+	    <% else %>
+		    <% form_for(@document, :url => {:id => @document.id, :action => "check_in" },
+		    :html => { :multipart => true}) do |f| %>
+			    <tr>
+			        <td>
+			            <%= f.submit t("check_in") %>
+			        </td>
+			        <td>
+			            <%= label_tag :reason %><%= text_field_tag :reason %>
+			        </td>
+			    </tr>
+		    <% end %>
+		    <% form_for(@document, :url => {:id => @document.id, :action => "check_free" }) do |f| %>
+			    <tr>
+			        <td>
+			            <%= f.submit t("check_free") %>
+			        </td>
+			        <td>
+			            <%= label_tag :reason %><%= text_field_tag :reason %>
+			        </td>
+			    </tr>
+		    <% end %>
+			<%end%>
+    <% end %>
     <tr>
-        <% if (@document.isFreeze() == true ) %>
         <td>
-            <%=t("freeze") %>
-        </td>
-        <% else %>
-        <td>
-            <%= link_to t("download"), :id => @document.id, :action => :download_file %>
-        </td>
-        <% if(@document.is_checked()==false) %>
-        <% form_for(@document, :url => {:id => @document.id, :action => "check_out" }) do |f| %>
-        <td>
-            <%= f.submit t("check_out") %>
+            <%= link_to t("edit"), edit_document_path(@document) %>
         </td>
         <td>
-            <%= label_tag :reason %><%= text_field_tag :reason %>
+            <%= link_to t("list"), documents_path %>
         </td>
     </tr>
-    <% end %>
-    <% else %>
-    <% form_for(@document, :url => {:id => @document.id, :action => "check_in" },
-    :html => { :multipart => true}) do |f| %>
+</table>
+<h1><%= t("document_datafiles") %></h1>
+<%= render(:partial => "datafiles/index_datafiles", :locals=>{:document=>@document}) %>
+<table class='menu_bas'>
     <tr>
         <td>
-            <%= f.submit t("check_in") %>
-            <td>
-            <td>
-                <%= label_tag :reason %><%= text_field_tag :reason %>
-            </td>
-            <td>
-                <%= f.label @document.filename %>
-            </td>
-            <td>
-                <%= f.file_field("uploaded_file") %>
-            </td>
-            </tr>
-            <% end %>
-            <% form_for(@document, :url => {:id => @document.id, :action => "check_free" }) do |f| %>
-            <tr>
-                <td>
-                    <%= f.submit t("check_free") %>
-                    <td>
-                    <td>
-                        <%= label_tag :reason %><%= text_field_tag :reason %>
-                    </td>
-                    </tr>
-                    <% end %>
-                    <% end %>
-                    <!--	<td><%= link_to t("check_free"), :id => @document.id, :action => :check_free %></td> -->
-                    <tr>
-                        <td>
-                            <%= link_to t("edit"), edit_document_path(@document) %>
-                        </td>
-                        <% end %>
-                        <td>
-                            <%= link_to t("list"), documents_path %>
-                        </td>
-                    </tr>
-                </table
+            <%= link_to h_img(:add_datafile).to_s+t("add_datafile"), :id => @document.id, :action => :new_datafile %>
+        </td>
+    </tr>
+</table>

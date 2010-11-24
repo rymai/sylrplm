@@ -1,3 +1,4 @@
+require 'lib/models/plm_object'
 class Customer < ActiveRecord::Base
   
   include PlmObject

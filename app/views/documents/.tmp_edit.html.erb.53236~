@@ -1,0 +1,91 @@
+<h1><%=t(:document_edit) %></h1>
+<% form_for(@document,
+:html => { :multipart => true}) do |f| %>
+<%= f.error_messages %>
+<p>
+    <b><%= f.label t("label_ident") %></b>
+    <br/>
+    <%= f.text_field :ident %>
+</p>
+<p>
+    <b><%= f.label t("label_type") %></b>
+    <br/>
+    <%= f.collection_select(:typesobject_id, @types, :id, :name) %>
+</p>
+<p>
+    <b><%= f.label t("label_revision") %></b>
+    <br/>
+    <%=h @document.revision %>
+</p>
+<p>
+    <b><%= f.label t("label_designation") %></b>
+    <br/>
+    <%= f.text_field :designation %>
+</p>
+<p>
+    <b><%= f.label t("label_description") %></b>
+    <br/>
+    <%= f.text_area :description , :rows => 10 %>
+</p>
+<h3><p>
+    <b><%= f.label t("label_repository") %></b>
+    <br/>
+    <%= @document.volume.name %>
+</p>
+<p>
+    <b><%= f.label t("label_file") %>:</b>
+    <%=@document.filename %>
+    <br/>
+    <%= f.file_field("uploaded_file") %>
+</p></h3>
+<p>
+    <%if (@document.statusobject.promote!=true || @document.statusobject.demote!=true ) && !@document.isFreeze %>
+    <b><%= f.label t("modif_status") %></b>
+    <br/>
+    <% if(@document.statusobject != nil) %>
+    <%= f.collection_select(:statusobject_id, @status, :id, :name) %>
+    <% end %>
+    <%else %>
+    <b><%= f.label t("label_status") %></b>
+    <br/>
+    <% if(@document.statusobject != nil) %>
+    <%= @document.statusobject.name %>
+    <%end %>
+    <%end %>
+</p>
+<p>
+    <b><%= f.label t("label_responsible") %></b>
+    <br/>
+    <%= @document.owner.login %>
+</p>
+<p>
+    <b><%= f.label t("label_date") %></b>
+    <br/>
+    <%= f.date_select :date %>
+</p>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= f.submit t("update") %>
+        </td>
+        <td>
+            <% if (@document.isFreeze() == true ) %>
+            <%=t("freeze") %>
+            <% else %>
+            <%if @document.statusobject.promote==true %>
+            <%= link_to t("promote"), :id => @document.id, :action => :promote , :confirm => t("msg_confirm") %>
+            <%end %>
+            <%if @document.statusobject.demote==true %>
+            <%= link_to t("demote"), :id => @document.id, :action => :demote , :confirm => t("msg_confirm") %>
+            <%end %>
+            <% end %>
+        </td>
+        <td>
+            <%= link_to t("explorer"), @document %>
+        </td>
+        <td>
+            <%= link_to t("list"), documents_path %>
+        </td>
+    </tr>
+</table>
+<% end %>

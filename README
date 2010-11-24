@@ -4,26 +4,41 @@ application sylrplm : Product Life Management
 - pre requis
 
 	- mysql
+	- ruby 1.8.7-p249
+	- rails 2.3.4 : gem install -v=2.3.4 rails
 	
 - mise en place
 
-	- décompresseer le fichier zip
+	- decompresseer le fichier zip
 	
 	- se placer sur le repertoire principal de l'application 
 		cd sylrplm
 
 - installation des plugins 
 
-	- plugin de gestion d'autorisations
-		ruby script/plugin install http://opensvn.csie.org/ezra/rails/plugins/dev/acl_system2
+	- rake gems:install
+			=> install de will_paginate
+			
+	- gem install mysql
 
+- environnement windows
+	- ajouter le chemin de mysql/bin au PATH
+	- telecharger http://instantrails.rubyforge.org/svn/trunk/InstantRails-win/InstantRails/mysql/bin/libmySQL.dll
+	  et copier la dll dans le repertoire bin de ruby
+	  
 - installation de l'application
 
 	- créer la base
+		mysqladmin -u root password monpass
 		mysqladmin -u root create sylrplm_production
+		ou
+		utiliser phpmyadmin
 		
 	- charger le schema
 		rake db:schema:load RAILS_ENV=production
+		
+	- lancer le serveur
+	  ruby script/server -e production
 		
 		
 

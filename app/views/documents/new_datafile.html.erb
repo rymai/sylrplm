@@ -1,0 +1,14 @@
+<h1>Add datafile</h1>
+
+<% form_for (@datafile, 
+	:html => { :multipart => true}, :url => { :action=>"add_datafile",:id=>@object.id } ) do |f| %>
+	<%= f.error_messages %>
+
+<%= render(:partial => "datafiles/add_datafile",:locals => { :f => f }) %>
+
+<table class='menu_bas'>
+<tr>
+<td><%= f.submit t("create") %></td>
+</tr>
+</table>
+<% end %>

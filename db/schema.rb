@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101102170703) do
+ActiveRecord::Schema.define(:version => 20101113205138) do
 
   create_table "accesses", :force => true do |t|
     t.string   "controller"
@@ -50,6 +50,18 @@ ActiveRecord::Schema.define(:version => 20101102170703) do
   add_index "customers", ["owner"], :name => "fk_customer_owner"
   add_index "customers", ["statusobject_id"], :name => "fk_customer_status"
   add_index "customers", ["typesobject_id"], :name => "fk_customer_type"
+
+  create_table "datafiles", :force => true do |t|
+    t.string   "ident"
+    t.string   "filename"
+    t.integer  "revision"
+    t.integer  "typesobject_id"
+    t.string   "content_type"
+    t.integer  "owner_id"
+    t.integer  "volume_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "documents", :force => true do |t|
     t.string   "ident"
@@ -184,8 +196,8 @@ ActiveRecord::Schema.define(:version => 20101102170703) do
   end
 
   create_table "sessions", :force => true do |t|
-    t.string   "session_id", :null => false
-    t.text     "data"
+    t.string   "session_id",                       :null => false
+    t.text     "data",       :limit => 2147483647
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -221,6 +233,7 @@ ActiveRecord::Schema.define(:version => 20101102170703) do
     t.integer  "role_id"
     t.string   "email"
     t.string   "theme"
+    t.integer  "volume_id"
   end
 
   add_index "users", ["role_id"], :name => "fk_user_role"

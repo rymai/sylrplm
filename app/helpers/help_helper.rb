@@ -108,41 +108,14 @@ module HelpHelper
     root_help = xmlHelp.root
   end
   
-  def h_help_all
-    #debug si /main?debug=true
-   # puts "MainHelper.h_help_all:params[:debug]="+params[:debug].to_s
-    if params[:debug]!=nil
-      session[:debug]=params[:debug]
-    else
-      session[:debug]=nil
-    end
-    
-    if session[:debug]!=nil
-      if session[:debug]=="true"
-        puts "MainHelper.h_help_all:debug="+session[:debug]
-        session[:help]=nil
-      end
-    else
-      puts "MainHelper.h_help_all:no debug"
-    end
-    if session[:help]==nil
-      root_help=h_help_root
-      #sommaire
-      msg="<h1><a class='help_tr' name='help_summary'>"+t(:help_summary)+"</a></h1>\n"
-      #msg+="<ul class='help_key'>\n"
-      msg+=h_help_summary(root_help)
-      #msg+="</ul>\n"  
-      msg+="<hr>\n"
-      #contenu
-      #msg+="<ul class='help_key'>\n"
-      msg+=h_help_level(root_help)
-      #msg+="</ul>\n"  
-      session[:help]=msg
-    else
-      msg=session[:help]
-    end
-    
-    return msg
+  def h_help_all   
+    root_help=h_help_root
+    #sommaire
+    msg="<h1><a class='help_tr' name='help_summary'>"+t(:help_summary)+"</a></h1>\n"
+    msg+=h_help_summary(root_help)
+    msg+="<hr>\n"
+    #contenu
+    msg+=h_help_level(root_help)  
   end
   
   
@@ -151,7 +124,7 @@ module HelpHelper
     #puts "h_help_level:"+h_help_root.name
     msg=""
     msg+="<ul class='help_key'>\n"
-    if(elem.attributes["title"]!=nil)
+    if elem.attributes["title"]!=nil
       msg+="<a class='help_tr' name='"+elem.attributes["key"]+"'></a>\n"
       if(elem.attributes["href"]!=nil)
         msg+="<a class='help_tr' href='"+elem.attributes["href"]+"'>"+elem.attributes["title"]+"</a>\n"
@@ -160,7 +133,7 @@ module HelpHelper
         #msg=msg+elem.attributes["title"]+"<br/>"
       end
       msg+="<a class='help_tr' href='#help_summary'>"+h_img_tit("help_upper",t(:help_summary))+"</a>\n"
-     ## msg+="<A HREF='javascript:javascript:history.go(-1)'>"+h_img_tit("previous",t(:help_previous))+"</A>"
+      ## msg+="<A HREF='javascript:javascript:history.go(-1)'>"+h_img_tit("previous",t(:help_previous))+"</A>"
     end
     msg+=h_help_transform(elem.text)
     msg+=h_help_ul(elem)

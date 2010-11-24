@@ -2,19 +2,16 @@ class Forum < ActiveRecord::Base
 
   validates_presence_of :statusobject_id,:typesobject_id,:subject
   
-  
   belongs_to :typesobject
   belongs_to :statusobject
   belongs_to :creator,
     :class_name => "User",
     :foreign_key => "owner_id"
     
-    
   has_many :forum_item,
   :conditions => ["parent_id is null"]
   
   def self.createNew(forum)
-    
     if(forum==nil)
         forum=Forum.new  
         forum.statusobject=Statusobject.find_first("forum")
@@ -24,7 +21,6 @@ class Forum < ActiveRecord::Base
         #Sequence.set_default_values(forum, self.name,false)
     end
     forum.creator=@user
-    
     return forum
   end
   

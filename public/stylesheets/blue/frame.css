@@ -4,7 +4,7 @@
 body {
 	background: #5555DD;
 	color: black;
-	font-size: 10px;
+	font-size: 13px;
 	}
 	
 a, span, p, li, ul {
@@ -120,9 +120,14 @@ td.banner   {
 }
 
 #side a, div.favori-title {
-  font-size: small;
+  font-size: 12px;
 }
 
+/* input file*/
+#datafile_uploaded_file {
+	maxlength:10;
+	}
+	
 .translation_missing {
 	background-color: #00f0f0;
 }
@@ -205,11 +210,11 @@ h1 {
 /* Styles for the favori in the sidebar */
 
 li.favori  {
-  font-size: 8px;	
+  font-size: 12px;	
 }
 
 td.favori {
-  font-size: 8px;	
+  font-size: 12px;	
 }
 
 #favori table {

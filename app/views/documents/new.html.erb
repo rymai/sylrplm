@@ -28,15 +28,7 @@
     <%= f.text_area :description , :rows => 10%>
   </p>
   
-  <p>
-    <b><%= f.label t("label_repository") %></b><br />
-    <%= f.collection_select(:volume_id, @volumes, :id, :name)%>
-  </p>
-  <p>
-    <b><%= f.label t("label_file")%>:</b><%=@document.filename %><br />
-    <%= f.file_field("uploaded_file") %>
-  </p>
-  <p>
+	<p>
     <b><%= f.label t("label_status") %></b><br />
     <% if(@document.statusobject != nil) %>
   		<%=h @document.statusobject.id %>:<%=h @document.statusobject.name %>

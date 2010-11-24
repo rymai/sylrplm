@@ -1,9 +1,8 @@
-require 'fileutils'
 class Volume < ActiveRecord::Base
   validates_presence_of :name, :directory
   validates_uniqueness_of :name
   has_many :documents
-  
+  has_many :users
   
   def self.createNew()
     obj=Volume.new
@@ -12,8 +11,15 @@ class Volume < ActiveRecord::Base
   end
   
   def self.find_all
-          find(:all, :order=>"name")
+    find(:all, :order=>"name")
   end 
+  def self.find_first
+    find(:first, :order=>"name")
+  end 
+  
+  def is_used
+    self.users.count >0 || self.documents.count >0
+  end
   
   def createDir(olddir)
     if (!File.exists?(self.directory))
@@ -29,13 +35,13 @@ class Volume < ActiveRecord::Base
         dirto=self.directory
         catto=File.join(olddir,dirto)
         if(catto!=dirto)
-        begin
-          FileUtils.mv(dirfrom, dirto)
-          dir=File.join(self.directory,self.name)
-          dir
-        rescue 
+          begin
+            FileUtils.mv(dirfrom, dirto)
+            dir=File.join(self.directory,self.name)
+            dir
+          rescue 
             return nil
-        end
+          end
         end
       else
         return nil
@@ -54,15 +60,30 @@ class Volume < ActiveRecord::Base
     end
   end
   
-  
   def destroyVolume
+    lst=_list_files_
+    ret=nil
+    if !is_used
+      ret=_destroyVolume_
+    else
+      ret="is_used"
+    end
+    ret
+  end
+  
+  def list_files
+    _list_files_
+  end
+  
+  :private
+  
+  def _list_files_
     dir=File.join(self.directory,self.name)
     ret=""
     if(File.exists?(dir))
       Dir.foreach(dir) { |objectdir| 
         if(objectdir!="." and objectdir!="..")
           dirobject=File.join(dir,objectdir)
-          #ret+="<br/>objectdir="+objectdir+"="+dirobject
           if(File.directory?(dirobject))
             Dir.foreach(dirobject) { |iddir|     
               if(iddir!="." and iddir!="..")
@@ -75,46 +96,33 @@ class Volume < ActiveRecord::Base
                     for f in  files
                       ret+=":"+f
                     end
-                    return ret
+                    
                   end
                 else
-                  ret+="\nbad file:"+dirid
-                  return ret
+                  ret+="\nbad file:"+dirid               
                 end
-               end
-             }
+              end
+            }
           else
-              ret+="\nbad file:"+dirobject
-              return ret   
+            ret+="\nbad file:"+dirobject          
           end
         end
       } 
-     
-      # detruire le repertoires volume/ids
-      Dir.foreach(dir) {
-            |objectdir| 
-        if(objectdir!="." and objectdir!="..")
-          dirobject=File.join(dir,objectdir)
-          Dir.foreach(dirobject) {
-              |iddir|     
-            if(iddir!="." and iddir!="..")
-              dirid=File.join(dirobject,iddir)
-              if(File.exists?(dirid))
-                if(File.directory?(dirid))
-                    Dir.rmdir(dirid)
-                end
-              end
-            end
-          }
-          if(File.exists?(dirobject))
-            Dir.rmdir(dirobject)
-          end
-        end
-      }  
-      Dir.rmdir(dir)
+      ret
     end
-    self.destroy
-    nil    
   end
-      
+  
+  def _destroyVolume_
+    strm=FileUtils.remove_dir self.getDirName
+    stdel=self.destroy
+    #puts "volume.destroyVolume:"+ret.to_s
+    puts "volume.destroyVolume:strm="+strm.to_s+":stdel="+stdel.to_s
+    strm.to_s+"."+stdel.to_s
+    nil
+  end
+  
+  def getDirName
+    File.join(self.directory,self.name)
+  end
+  
 end

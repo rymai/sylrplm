@@ -1,3 +1,4 @@
+require 'lib/models/plm_object'
 class Part < ActiveRecord::Base
   include PlmObject
   validates_presence_of :ident, :designation
@@ -17,7 +18,6 @@ class Part < ActiveRecord::Base
   #:foreign_key => "father_id", :association_foreign_key => "child_id", :conditions => ["father_object='part' AND child_object='document'"]
   
   has_many :links, :foreign_key => "father_id", :conditions => ["father_object='part'"]
-  
   has_many :documents , :through => :links
   
   #def self.getFirstRevision

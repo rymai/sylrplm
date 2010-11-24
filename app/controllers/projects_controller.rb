@@ -1,3 +1,5 @@
+require 'lib/controllers/plm_object_controller_module'
+require 'lib/controllers/plm_init_controller_module'
 class ProjectsController < ApplicationController
   include PlmObjectControllerModule
   include PlmInitControllerModule

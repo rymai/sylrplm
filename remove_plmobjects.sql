@@ -1,3 +1,4 @@
+delete from datafiles;
 delete from checks;
 delete from customers;
 delete from documents;

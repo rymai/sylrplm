@@ -105,7 +105,7 @@ module ApplicationHelper
   
   def sort_td_class_helper(param)
     result = 'class="sortup"' if params[:sort] == param
-    result = 'class="sortdown"' if params[:sort] == param + " DESC"
+    result = 'class="sortdown"' if params[:sort] == param.to_s + " DESC"
     return result
   end
   
@@ -130,7 +130,7 @@ module ApplicationHelper
     if (@tree || @tree_up) 
       bloc << "<table class='menu_bas' >"
       bloc << "<tr>"
-      bloc<< "<td><a class='menu_bas' href='#' onclick='hideTreeMenu();'>"+t(h_show_hide_tree)+"</a></td>"
+      bloc<< "<td><a class='menu_bas' href='#' onclick='hideTreeMenu();'>"+t("h_show_hide_tree")+"</a></td>"
       bloc << "</tr>"
       bloc << "</table>"
       bloc << "<div id='dtree'>"

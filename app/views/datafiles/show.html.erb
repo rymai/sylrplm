@@ -1,0 +1,45 @@
+<h1><%=t(:datafile_show) %></h1>
+<p>
+    <b><%= t("label_ident") %></b>
+    <%=h @datafile.ident %>
+</p>
+<p>
+    <b><%= t("label_typesobject") %></b>
+    <% if(@datafile.typesobject != nil) %>
+    <%=h @datafile.typesobject.id %>:<%=h @datafile.typesobject.name %>
+    <% end %>
+</p>
+<p>
+    <b><%= t("label_revision") %></b>
+    <%=h @datafile.revision %>
+</p>
+<p>
+    <b><%= t("label_volume") %></b>
+    <%=h @datafile.volume_id %>
+</p>
+<p>
+    <b><%= t("label_filename") %></b>
+    <%=h @datafile.filename %>
+</p>
+<p>
+    <b><%= t("label_content_type") %></b>
+    <%=h @datafile.content_type %>
+</p>
+<p>
+    <b><%= t("label_responsible") %></b>
+    <%=h @datafile.owner.login %>
+</p>
+<p>
+    <b><%= t("label_date") %></b>
+    <%=h @datafile.updated_at %>
+</p>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t("edit"), edit_datafile_path(@datafile) %>
+        </td>
+        <td>
+            <%= link_to t("list"), datafiles_path %>
+        </td>
+    </tr>
+</table>

@@ -1,19 +1,23 @@
+require 'lib/models/plm_object'
 class Document < ActiveRecord::Base
   include PlmObject
+  
   validates_presence_of :ident , :designation 
   validates_uniqueness_of :ident, :scope => :revision
   #validates_format_of :ident, :with =>/^(doc|img)[0-9]+$/, :message=>" doit commencer par doc ou img suivi de chiffres"
   validates_format_of :ident, :with =>/^([a-z]|[A-Z])+[0-9]+$/, :message=>" doit commencer par des lettres suivi de chiffres"
+
   #belongs_to :typesobject, :conditions => ["object='part'"]
   belongs_to :typesobject
   belongs_to :statusobject
-  ## dans link belongs_to :part 
   belongs_to :volume
   belongs_to :owner,
     :class_name => "User",
     :foreign_key => "owner"
   
   has_many :checks
+  has_many :links, :foreign_key => "father_id", :conditions => ["father_object='document'"]
+  has_many :datafiles , :through => :links
   
   before_create :set_initial_attributes
   
@@ -28,12 +32,11 @@ class Document < ActiveRecord::Base
       #Sequence.set_default_values(doc, self.name, false)
     else
       #doc = user.documents.build(:ident => Sequence.get_next_seq("Document.ident"))    
-      doc = Document.new()  
+      doc = Document.new  
       Sequence.set_default_values(doc, self.name, true)
       doc.volume = Volume.find(1) 
     end
     doc.owner=user
-    #doc.revision = Document.getFirstRevision
     doc.statusobject = Statusobject.find_first("document")
     puts "document.createNew:"+doc.inspect
     doc
@@ -91,6 +94,15 @@ class Document < ActiveRecord::Base
     Typesobject.find(:all, :order=>"name",
       :conditions => ["object = 'document'"])
   end
+  def getDatafiles
+    ret=[]
+    links=Link.find_childs("document", self,  "datafile")
+    links.each do |link|
+      child=Datafile.find(link.child_id)
+      ret<<child
+    end
+    ret
+  end
   
   def self.find_all
     find(:all, :order=>"ident ASC, revision ASC")
@@ -108,21 +120,21 @@ class Document < ActiveRecord::Base
       :order=>"ident")
   end  
   
-  def uploaded_file=(file_field)
-    puts "document.uploaded_file"+file_field.inspect
-    if file_field != nil
-      self.removeFile
-      fname=base_part_of(file_field.original_filename)
-      self.filename=fname
-      self.content_type=file_field.content_type.chomp
-      content=file_field.read
-      writeFile(content)
-    end
-  end
+#  def uploaded_file=(file_field)
+#    puts "document.uploaded_file"+file_field.inspect
+#    if file_field != nil
+#      self.removeFile
+#      fname=base_part_of(file_field.original_filename)
+#      self.filename=fname
+#      self.content_type=file_field.content_type.chomp
+#      content=file_field.read
+#      writeFile(content)
+#    end
+#  end
   
-  def base_part_of(file_name)
-    File.basename(file_name).gsub(/[^\w._-]/, '')    
-  end
+#  def base_part_of(file_name)
+#    File.basename(file_name).gsub(/[^\w._-]/, '')    
+#  end
   
   def find_last_revision(object)
     Document.find(:last, :order=>"revision ASC",  :conditions => ["ident = '#{object.ident}'"])

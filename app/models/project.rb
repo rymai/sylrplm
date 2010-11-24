@@ -1,3 +1,4 @@
+require 'lib/models/plm_object'
 class Project < ActiveRecord::Base
   include PlmObject
   validates_presence_of :ident, :designation

@@ -26,7 +26,7 @@ class LoginController < ApplicationController
           flash.now[:notice] = t(:ctrl_invalid_login)
         end
       else
-        @user=find_user
+        @user=User.find_user(session)
         @user.update_attributes(params[:user])    
         uri=session[:original_uri]
         session[:original_uri]=nil
@@ -43,13 +43,18 @@ class LoginController < ApplicationController
     @user = User.new(params[:user])
     @roles = Role.all
     @themes=get_themes(@theme)
-    if request.post? and @user.save   
-      #@theme=params[:theme]
-      puts "login_controller.add_user:"+@user.inspect
-      #@user.theme=@theme
-      #@user.save
-      flash.now[:notice] = t(:ctrl_user_created,:user=>@user.login)
-      #@user = User.new
+     @volumes = Volume.find_all 
+    if request.post? 
+      if @user.save   
+        #@theme=params[:theme]
+        puts "login_controller.add_user:"+@user.inspect
+        #@user.theme=@theme
+        #@user.save
+        flash.now[:notice] = t(:ctrl_user_created,:user=>@user.login)
+        #@user = User.new
+      end
+    else
+      @user.volume=Volume.find(1)
     end
   end
   
@@ -58,7 +63,8 @@ class LoginController < ApplicationController
     #@roles=@user.roles
     #respond_to do |format|
     id = params[:id]
-    @user = User.find(id)
+    @user = User.find(id) 
+    @volumes = Volume.find_all 
     @roles = Role.all
     if request.post?
       if @user.update_attributes(params[:user])
@@ -114,7 +120,7 @@ class LoginController < ApplicationController
 
   def logout
    session[:user_id] = nil
-   if(@user!=t(:user_not_connected))
+   if @user!=:user_not_connected
     flash[:notice] = t(:ctrl_user_disconnected,:user=>@user.login)
     end
     redirect_to(:controller => "main", :action => "index")
