@@ -1,7 +1,7 @@
-./**/*.log*
-./**/*.*~
-./**/*.obsolete
-./**/*.sov
+*.log*
+*.*~
+*.obsolete
+*.sov
 doc/**/*
 log/*.log*
 explo_syl/**/*
@@ -9,3 +9,4 @@ tmp/**/*
 config/database.yml
 route/**/*
 .directory
+.project
