@@ -9,14 +9,12 @@ class DocumentsController < ApplicationController
   #droits d'acces suivant le controller et l'action demandee
   #administration par le menu Access
   #access_control (Document.controller_access())
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   
   # GET /documents
   # GET /documents.xml
   def index
-    #Document.getColumns().each do |col|
-    #  puts 'DocumentsController.index:column='+col.to_s
-    #end
+    
     sort=params['sort']
     @query="#{params[:query]}" 
     #    if params[:part_id]
@@ -51,7 +49,7 @@ class DocumentsController < ApplicationController
   # GET /documents/1.xml
   def show
     @document = Document.find(params[:id])
-    @datafiles=@document.getDatafiles
+    @datafiles=@document.get_datafiles
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @document }
@@ -61,9 +59,10 @@ class DocumentsController < ApplicationController
   # GET /documents/new
   # GET /documents/new.xml
   def new
-    @document = Document.createNew(nil, @user)
-    @types=Document.getTypesDocument
+    @document = Document.create_new(nil, @user)
+    @types=Document.get_types_document
     @volumes = Volume.find_all 
+    @status= Statusobject.find_for("document")
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @document }
@@ -86,10 +85,10 @@ class DocumentsController < ApplicationController
     document=params[:document]
     #    uploaded_file=document[:uploaded_file]
     #contournement pour faire le upload apres la creation pour avoir la revision dans
-    #getRepository !!!!!!!!!!!!!!
+    #get_repository !!!!!!!!!!!!!!
     #document.delete(:uploaded_file)
-    @document = Document.createNew(document,@user)
-    @types=Document.getTypesDocument
+    @document = Document.create_new(document,@user)
+    @types=Document.get_types_document
     @volumes = Volume.find_all 
     respond_to do |format|
       if @document.save
@@ -131,9 +130,9 @@ class DocumentsController < ApplicationController
     @document= Document.find(params[:id])
     if(@document!=nil)
       @document.destroy
-      flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_document),:ident=>doc.ident)
+      flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_document),:ident=>@document.ident)
     else
-      flash[:notice] = t(:ctrl_object_not_deleted,:object=>t(:ctrl_document),:ident=>doc.ident)
+      flash[:notice] = t(:ctrl_object_not_deleted,:object=>t(:ctrl_document),:ident=>@document.ident)
     end
     respond_to do |format|
       format.html { redirect_to(documents_url) }
@@ -162,7 +161,7 @@ class DocumentsController < ApplicationController
     document = Document.find(params[:id])
     previous_rev=document.revision
     @document=document.revise
-    @types=Document.getTypesDocument
+    @types=Document.get_types_document
     respond_to do |format|
       if(@document != nil)
         if @document.save
@@ -189,7 +188,7 @@ class DocumentsController < ApplicationController
     file=@document.filename
     if(check==nil)
       if(params[:reason]!="")
-        check=Check.createNew("document",@document,params, @user)
+        check=Check.create_new("document",@document,params, @user)
         if check.save       
           flash[:notice] = t(:ctrl_object_checkout,:object=>t(:ctrl_document),:ident=>@document.ident,:file=>file,:reason=>params[:reason])
         else
@@ -268,7 +267,6 @@ class DocumentsController < ApplicationController
     puts "main_controller.add_document_to_favori:"+document.inspect
     @favori_document.add_document(document)
     ##redirect_to(:action => index) 
-    return
   end
   
   def empty_favori_document
@@ -284,7 +282,7 @@ class DocumentsController < ApplicationController
     puts 'DocumentsController.new_datafile:'+@object.inspect
     respond_to do |format|      
       flash[:notice] = ""
-      @datafile=Datafile.createNew(nil,@user)
+      @datafile=Datafile.create_new(nil,@user)
       format.html {render :action=>:new_datafile, :id=>@object.id }
       format.xml  { head :ok }
     end

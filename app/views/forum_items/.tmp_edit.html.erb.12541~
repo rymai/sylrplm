@@ -1,0 +1,37 @@
+<h1><%=t("forum_item_edit")%></h1>
+<% form_for(@forum_item) do |f| %>
+<%= f.error_messages %>
+<p>
+    <b><%= f.label t("label_message") %></b>
+    <br/>
+    <%= f.text_area :message %>
+</p>
+<p>
+    <b><%= f.label t("label_id") %></b>
+    <br/>
+    <%= f.text_field :forum_id %>
+</p>
+<p>
+    <b><%= f.label t("label_parent") %></b>
+    <br/>
+    <%= f.text_field :parent_id %>
+</p>
+<p>
+    <b><%= f.label t("label_owner") %></b>
+    <br/>
+    <%= f.text_field :owner_id %>
+</p>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= f.submit t(:update) %>
+        </td>
+        <td>
+            <%= link_to t(:explorer), @forum_item %>
+        </td>
+        <td>
+            <%= link_to t(:list), forum_items_path %>
+        </td>
+    </tr>
+</table>
+<% end %>

@@ -5,7 +5,7 @@ class CustomersController < ApplicationController
   include PlmInitControllerModule
   before_filter :check_init, :only=>[:new]
   
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   
   # GET /customers
   # GET /customers.xml
@@ -44,7 +44,7 @@ class CustomersController < ApplicationController
   # GET /customers/new
   # GET /customers/new.xml
   def new
-    @customer = Customer.createNew(nil,@user)
+    @customer = Customer.create_new(nil,@user)
     @types=Typesobject.getTypes(:customer)
     @status= Statusobject.find_for(:customer)
     respond_to do |format|
@@ -63,7 +63,7 @@ class CustomersController < ApplicationController
   # POST /customers
   # POST /customers.xml
   def create
-    @customer = Customer.createNew(params[:customer],@user)
+    @customer = Customer.create_new(params[:customer],@user)
     @types=Typesobject.getTypes(:customer)
     @status= Statusobject.find_for(:customer)
     respond_to do |format|
@@ -128,7 +128,7 @@ class CustomersController < ApplicationController
     #tree << cnode
     session[:tree_object]=obj
     follow_tree_customer(tree, obj,self)
-    return tree
+    tree
   end
   
   def add_docs
@@ -139,7 +139,7 @@ class CustomersController < ApplicationController
         flash[:notice] = ""
         @favori_document.items.each do |item|
           #flash[:notice] += "<br>"+ item.ident.to_s
-          link_=Link.createNew(:customer, @customer, :document, item, relation)  
+          link_=Link.create_new(:customer, @customer, :document, item, relation)  
           link=link_[:link]
           if(link!=nil) 
             if(link.save)
@@ -166,7 +166,7 @@ class CustomersController < ApplicationController
       if @favori_project != nil 
         flash[:notice] = ""
         @favori_project.items.each do |item|
-          link_=Link.createNew(:customer, @customer, :project, item, relation)  
+          link_=Link.create_new(:customer, @customer, :project, item, relation)  
           link=link_[:link]
           if(link!=nil) 
             if(link.save)
@@ -203,7 +203,7 @@ class CustomersController < ApplicationController
     @status= Statusobject.find_for("forum")
     respond_to do |format|      
       flash[:notice] = ""
-      @forum=Forum.createNew(nil)
+      @forum=Forum.create_new(nil)
       @forum.subject=t(:ctrl_subject_forum,:object=>t(:ctrl_customer),:ident=>@object.ident)
       format.html {render :action=>:new_forum, :id=>@object.id }
       format.xml  { head :ok }

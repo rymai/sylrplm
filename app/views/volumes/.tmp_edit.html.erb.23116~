@@ -1,0 +1,36 @@
+<h1><%=t(:volume_edit) %></h1>
+
+<% form_for(@volume) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label t(:label_name) %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label t(:label_description) %><br />
+    <%= f.text_area :description %>
+  </p>
+  <p>
+    <%= f.label t(:label_directory) %><br />
+    <%= f.text_field :directory %>
+  </p>
+  <p>
+    <%= f.label t(:label_protocol) %><br />
+    <%= f.text_field :protocole %>
+  </p>
+  <input type="hidden" name="olddir" value="<%= @volume.directory %>"/>
+  <table class='menu_bas'>
+    <tr>
+        <td>
+            <%= f.submit t("update") %>
+        </td>
+        <td>
+            <%= link_to t("explorer"), @volume %>
+        </td>
+        <td>
+            <%= link_to t("list"), volumes_path %>
+        </td>
+    </tr>
+</table>
+<% end %>

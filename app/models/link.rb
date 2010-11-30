@@ -1,7 +1,7 @@
 class Link < ActiveRecord::Base
   
   # une seule occurence d'un fils de type donne dans un pere de type donne
-  ### verif par soft dans createNew validates_uniqueness_of :child_id, :scope => [:child_object, :father_id, :father_object ]
+  ### verif par soft dans create_new validates_uniqueness_of :child_id, :scope => [:child_object, :father_id, :father_object ]
   
   with_options :foreign_key => 'child_id' do |relation|
     relation.belongs_to :document , :conditions => ["child_object='document'"]
@@ -14,6 +14,11 @@ class Link < ActiveRecord::Base
   def self.find_childs(father_object, father, child_object)
     find(:all,
           :conditions => ["father_object='#{father_object}' and child_object='#{child_object}' and father_id =#{father.id}"],
+          :order=>"child_id")
+  end
+  def self.find_child(father_object, father, child_object, child)
+    find(:first,
+          :conditions => ["father_object='#{father_object}' and child_object='#{child_object}' and father_id =#{father.id} and child_id =#{child.id}"],
           :order=>"child_id")
   end
   
@@ -45,8 +50,8 @@ class Link < ActiveRecord::Base
   end
   
   
-  def self.createNew(father_object, father, child_object, child, relation)
-   ok=false
+  def self.create_new(father_object, father, child_object, child, relation)
+    ok=false
     msg="ctrl_link_"+father_object.to_s+"_"+child_object.to_s
     if(father_object.to_s=="customer" and child_object.to_s=="project")
       ok=true
@@ -79,8 +84,8 @@ class Link < ActiveRecord::Base
     if(father_object.to_s=="part" and child_object.to_s=="part")
       ok=true
       #if(is_child_of(father_object.to_s, father, child_object.to_s, child))
-        #ok=false
-        #msg=:ctrl_link_already_part_part.to_s
+      #ok=false
+      #msg=:ctrl_link_already_part_part.to_s
       #end
       if(father==child)
         ok=false
@@ -92,8 +97,8 @@ class Link < ActiveRecord::Base
       if(is_child_of(father_object.to_s, father, child_object.to_s, child))
         ok=false
         msg=:ctrl_link_already_part_document.to_s
-      #else
-      #  msg=:ctrl_link_not_part_document.to_s
+        #else
+        #  msg=:ctrl_link_not_part_document.to_s
       end
     end
     if(child_object=="forum")
@@ -111,13 +116,13 @@ class Link < ActiveRecord::Base
       link.child_id=child.id  
       link.name=relation
     end 
-    puts "link:createNew:link="+link.inspect+" msg="+msg.to_s
+    puts "link:create_new:link="+link.inspect+" msg="+msg.to_s
     {:link=>link,:msg=>msg} 
   end
   
   def self.remove(id)
     link=self.find(id)
     link.destroy
-    return nil
+    nil
   end
 end

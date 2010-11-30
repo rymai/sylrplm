@@ -73,16 +73,16 @@ class User < ActiveRecord::Base
       :conditions => ["ro.title like ?",'valid%' ],
       :joins => "as us inner join roles as ro on us.role_id=ro.id")
     puts "User.find_validers:"+ret.inspect
-    return ret
+    ret
   end
   
-  def isValider
-    if(self.login.left=="valider")
-      true
-    else
-      false
-    end
-  end
+#  def is_valider
+#    if(self.login.left=="valider")
+#      true
+#    else
+#      false
+#    end
+#  end
   
   def self.check_admin
     admin_user=find_by_name('admin')
@@ -151,7 +151,7 @@ class User < ActiveRecord::Base
       auser.save
       
     end
-    return ya_admin
+    ya_admin
   end
   
   # recherche du theme
@@ -168,7 +168,7 @@ class User < ActiveRecord::Base
         ret=session[:theme]
       end
     end
-  return ret
+   ret
   end
   
   # recherche du user connecte

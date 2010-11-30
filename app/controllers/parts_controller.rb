@@ -4,7 +4,7 @@ class PartsController < ApplicationController
   include PlmObjectControllerModule
   include PlmInitControllerModule
   before_filter :check_init, :only=>[:new]
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   
   
   # GET /parts
@@ -54,8 +54,8 @@ class PartsController < ApplicationController
   # GET /parts/new
   # GET /parts/new.xml
   def new
-    @part = Part.createNew(nil, @user)
-    @types= Part.getTypesPart
+    @part = Part.create_new(nil, @user)
+    @types= Part.get_types_part
     @status= Statusobject.find_for("part")
     respond_to do |format|
       format.html # new.html.erb
@@ -66,15 +66,15 @@ class PartsController < ApplicationController
   # GET /parts/1/edit
   def edit
     @part = Part.find_edit(params[:id])
-    @types=Part.getTypesPart
+    @types=Part.get_types_part
     @status= Statusobject.find_for("part")
   end
   
   # POST /parts
   # POST /parts.xml
   def create
-    @part = Part.createNew(params[:part], @user)
-    @types=Part.getTypesPart
+    @part = Part.create_new(params[:part], @user)
+    @types=Part.get_types_part
     @status= Statusobject.find_for("part")
     respond_to do |format|
       if @part.save
@@ -135,14 +135,14 @@ class PartsController < ApplicationController
     tree = Tree.new({:label=>t(:ctrl_object_explorer,:object=>t(:ctrl_part)),:open => true})   
     session[:tree_object]=part
     follow_tree_part(tree, part, self)
-    return tree
+    tree
   end
   
   def create_tree_up(part)
     tree = Tree.new({:label=>t(:ctrl_object_referencer,:object=>t(:ctrl_part)),:open => true})   
     session[:tree_object]=part
     follow_tree_up_part(tree, part,self)
-    return tree
+    tree
   end
   
   def add_docs
@@ -155,7 +155,7 @@ class PartsController < ApplicationController
           #flash[:notice]+="_"+item.to_s
         end  
         @favori_document.items.each do |item|
-          link_=Link.createNew("part", @part, "document", item, relation) 
+          link_=Link.create_new("part", @part, "document", item, relation) 
           link=link_[:link]
           if(link!=nil) 
             if(link.save)
@@ -183,7 +183,7 @@ class PartsController < ApplicationController
       if @favori_part != nil 
         flash[:notice] = ""
         @favori_part.items.each do |item|
-          link_=Link.createNew("part", @part, "part", item, relation)  
+          link_=Link.create_new("part", @part, "part", item, relation)  
           link=link_[:link]
           if(link!=nil) 
             if(link.save)
@@ -211,7 +211,7 @@ class PartsController < ApplicationController
     @status= Statusobject.find_for("forum")
     respond_to do |format|      
       flash[:notice] = ""
-      @forum=Forum.createNew(nil)
+      @forum=Forum.create_new(nil)
       @forum.subject=t(:ctrl_subject_forum,:object=>t(:ctrl_part),:ident=>@object.ident)
       format.html {render :action=>:new_forum, :id=>@object.id }
       format.xml  { head :ok }
@@ -232,9 +232,9 @@ class PartsController < ApplicationController
       @forum=Forum.new(params[:forum])
       @forum.creator=@user
       if(@forum.save)
-        item=ForumItem.createNew(@forum, params)
+        item=ForumItem.create_new(@forum, params)
         if(item.save)
-          link_=Link.createNew("part", @part, "forum", @forum, relation)  
+          link_=Link.create_new("part", @part, "forum", @forum, relation)  
           link=link_[:link]
           if(link!=nil) 
             if(link.save)
@@ -288,7 +288,6 @@ class PartsController < ApplicationController
     part=Part.find(params[:id])
     @favori_part.add_part(part)
     ##redirect_to(:action => index) 
-    return
   end
   
   def empty_favori_part

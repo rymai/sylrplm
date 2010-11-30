@@ -1,9 +1,9 @@
 class FavoriDocumentItem
   attr_reader :document
   def initialize(document)
-      @document=document
+    @document=document
   end
   def title
-      @document.title    
+    @document.title    
   end
 end

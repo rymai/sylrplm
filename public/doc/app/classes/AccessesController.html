@@ -88,13 +88,13 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000132">create</a>&nbsp;&nbsp;
-      <a href="#M000134">destroy</a>&nbsp;&nbsp;
-      <a href="#M000131">edit</a>&nbsp;&nbsp;
-      <a href="#M000128">index</a>&nbsp;&nbsp;
-      <a href="#M000130">new</a>&nbsp;&nbsp;
-      <a href="#M000129">show</a>&nbsp;&nbsp;
-      <a href="#M000133">update</a>&nbsp;&nbsp;
+      <a href="#M000137">create</a>&nbsp;&nbsp;
+      <a href="#M000139">destroy</a>&nbsp;&nbsp;
+      <a href="#M000136">edit</a>&nbsp;&nbsp;
+      <a href="#M000133">index</a>&nbsp;&nbsp;
+      <a href="#M000135">new</a>&nbsp;&nbsp;
+      <a href="#M000134">show</a>&nbsp;&nbsp;
+      <a href="#M000138">update</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -116,11 +116,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000132" class="method-detail">
-        <a name="M000132"></a>
+      <div id="method-M000137" class="method-detail">
+        <a name="M000137"></a>
 
         <div class="method-heading">
-          <a href="#M000132" class="method-signature">
+          <a href="#M000137" class="method-signature">
           <span class="method-name">create</span><span class="method-args">()</span>
           </a>
         </div>
@@ -130,8 +130,8 @@
 POST /accesses POST /accesses.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000132-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000132-source">
+            onclick="toggleCode('M000137-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000137-source">
 <pre>
      <span class="ruby-comment cmt"># File app/controllers/accesses_controller.rb, line 59</span>
  59:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
@@ -144,15 +144,15 @@ POST /accesses POST /accesses.xml
  66:       <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
  67:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>]=<span class="ruby-value str">&quot;&quot;</span>
  68:         <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:access</span>][<span class="ruby-identifier">:controller</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cont</span><span class="ruby-operator">|</span> 
- 69:           <span class="ruby-ivar">@access</span> = <span class="ruby-constant">Access</span>.<span class="ruby-identifier">createNew</span>(<span class="ruby-identifier">cont</span>,<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:access</span>][<span class="ruby-identifier">:role_id</span>]  ) 
- 70:           <span class="ruby-identifier">puts</span> <span class="ruby-value str">'access='</span><span class="ruby-operator">+</span><span class="ruby-ivar">@access</span>.<span class="ruby-identifier">controller</span><span class="ruby-operator">+</span><span class="ruby-value str">' '</span><span class="ruby-operator">+</span><span class="ruby-ivar">@access</span>.<span class="ruby-identifier">role</span>.<span class="ruby-identifier">title</span>
+ 69:           <span class="ruby-ivar">@access</span> = <span class="ruby-constant">Access</span>.<span class="ruby-identifier">create_new</span>(<span class="ruby-identifier">cont</span>,<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:access</span>][<span class="ruby-identifier">:role_id</span>]  ) 
+ 70:           <span class="ruby-comment cmt">#puts 'accesses_controller.create:access='+@access.controller+' '+@access.role.title</span>
  71:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@access</span>.<span class="ruby-identifier">save</span>  
- 72:             <span class="ruby-identifier">puts</span> <span class="ruby-value str">'succes:access='</span><span class="ruby-operator">+</span><span class="ruby-ivar">@access</span>.<span class="ruby-identifier">controller</span><span class="ruby-operator">+</span><span class="ruby-value str">' '</span><span class="ruby-operator">+</span><span class="ruby-ivar">@access</span>.<span class="ruby-identifier">role</span>.<span class="ruby-identifier">title</span>
+ 72:             <span class="ruby-identifier">puts</span> <span class="ruby-value str">'accesses_controller.create:succes:access='</span><span class="ruby-operator">+</span><span class="ruby-ivar">@access</span>.<span class="ruby-identifier">controller</span><span class="ruby-operator">+</span><span class="ruby-value str">' '</span><span class="ruby-operator">+</span><span class="ruby-ivar">@access</span>.<span class="ruby-identifier">role</span>.<span class="ruby-identifier">title</span><span class="ruby-operator">+</span><span class="ruby-value str">' '</span><span class="ruby-operator">+</span><span class="ruby-ivar">@access</span>.<span class="ruby-identifier">action</span>
  73:             <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span><span class="ruby-value str">'&lt;BR/&gt;'</span><span class="ruby-operator">+</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_created</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'Access'</span>,<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@access</span>.<span class="ruby-identifier">controller</span>)
  74:             <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-ivar">@access</span>) }
  75:             <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@access</span>, <span class="ruby-identifier">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:created</span>, <span class="ruby-identifier">:location</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@access</span> }
  76:           <span class="ruby-keyword kw">else</span>
- 77:             <span class="ruby-identifier">puts</span> <span class="ruby-value str">'error:access='</span><span class="ruby-operator">+</span><span class="ruby-ivar">@access</span>.<span class="ruby-identifier">controller</span><span class="ruby-operator">+</span><span class="ruby-value str">' '</span><span class="ruby-operator">+</span><span class="ruby-ivar">@access</span>.<span class="ruby-identifier">role</span>.<span class="ruby-identifier">title</span>
+ 77:             <span class="ruby-identifier">puts</span> <span class="ruby-value str">'accesses_controller.create:error save:access='</span><span class="ruby-operator">+</span><span class="ruby-ivar">@access</span>.<span class="ruby-identifier">controller</span><span class="ruby-operator">+</span><span class="ruby-value str">' '</span><span class="ruby-operator">+</span><span class="ruby-ivar">@access</span>.<span class="ruby-identifier">role</span>.<span class="ruby-identifier">title</span><span class="ruby-operator">+</span><span class="ruby-value str">' '</span><span class="ruby-operator">+</span><span class="ruby-ivar">@access</span>.<span class="ruby-identifier">action</span>
  78:             <span class="ruby-identifier">error</span>=<span class="ruby-keyword kw">true</span>
  79:             <span class="ruby-ivar">@access</span> = <span class="ruby-constant">Access</span>.<span class="ruby-identifier">new</span>
  80:             <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span><span class="ruby-value str">'&lt;BR/&gt;'</span><span class="ruby-operator">+</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_not_created</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">'Access'</span>)
@@ -183,11 +183,11 @@ POST /accesses POST /accesses.xml
         </div>
       </div>
 
-      <div id="method-M000134" class="method-detail">
-        <a name="M000134"></a>
+      <div id="method-M000139" class="method-detail">
+        <a name="M000139"></a>
 
         <div class="method-heading">
-          <a href="#M000134" class="method-signature">
+          <a href="#M000139" class="method-signature">
           <span class="method-name">destroy</span><span class="method-args">()</span>
           </a>
         </div>
@@ -197,8 +197,8 @@ POST /accesses POST /accesses.xml
 DELETE /accesses/1 DELETE /accesses/1.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000134-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000134-source">
+            onclick="toggleCode('M000139-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000139-source">
 <pre>
      <span class="ruby-comment cmt"># File app/controllers/accesses_controller.rb, line 125</span>
 125:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
@@ -216,11 +216,11 @@ DELETE /accesses/1 DELETE /accesses/1.xml
         </div>
       </div>
 
-      <div id="method-M000131" class="method-detail">
-        <a name="M000131"></a>
+      <div id="method-M000136" class="method-detail">
+        <a name="M000136"></a>
 
         <div class="method-heading">
-          <a href="#M000131" class="method-signature">
+          <a href="#M000136" class="method-signature">
           <span class="method-name">edit</span><span class="method-args">()</span>
           </a>
         </div>
@@ -230,8 +230,8 @@ DELETE /accesses/1 DELETE /accesses/1.xml
 GET /accesses/1/edit
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000131-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000131-source">
+            onclick="toggleCode('M000136-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000136-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/accesses_controller.rb, line 51</span>
 51:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">edit</span>
@@ -244,11 +244,11 @@ GET /accesses/1/edit
         </div>
       </div>
 
-      <div id="method-M000128" class="method-detail">
-        <a name="M000128"></a>
+      <div id="method-M000133" class="method-detail">
+        <a name="M000133"></a>
 
         <div class="method-heading">
-          <a href="#M000128" class="method-signature">
+          <a href="#M000133" class="method-signature">
           <span class="method-name">index</span><span class="method-args">()</span>
           </a>
         </div>
@@ -258,15 +258,15 @@ GET /accesses/1/edit
 GET /accesses GET /accesses.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000128-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000128-source">
+            onclick="toggleCode('M000133-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000133-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/accesses_controller.rb, line 7</span>
  7:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
  8:     <span class="ruby-comment cmt">#@accesses = Access.all</span>
  9:     <span class="ruby-identifier">admin</span>=<span class="ruby-constant">Role</span>.<span class="ruby-identifier">find_by_name</span>(<span class="ruby-value str">'admin'</span>)
 10:     <span class="ruby-identifier">sort</span>=<span class="ruby-identifier">params</span>[<span class="ruby-value str">'sort'</span>]
-11:     <span class="ruby-identifier">conditions</span>=[<span class="ruby-node">&quot;role_id != '#{admin.id}'&quot;</span>]
+11:     <span class="ruby-identifier">conditions</span>=<span class="ruby-value str">&quot;&quot;</span> <span class="ruby-comment cmt">#[&quot;role_id != '#{admin.id}'&quot;]</span>
 12:     <span class="ruby-ivar">@accesses</span> = <span class="ruby-constant">Access</span>.<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page</span>], 
 13:     <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">conditions</span>,
 14:     <span class="ruby-comment cmt">#:order =&gt; 'part_id ASC, ident ASC, revision ASC',</span>
@@ -283,11 +283,11 @@ GET /accesses GET /accesses.xml
         </div>
       </div>
 
-      <div id="method-M000130" class="method-detail">
-        <a name="M000130"></a>
+      <div id="method-M000135" class="method-detail">
+        <a name="M000135"></a>
 
         <div class="method-heading">
-          <a href="#M000130" class="method-signature">
+          <a href="#M000135" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
@@ -297,12 +297,12 @@ GET /accesses GET /accesses.xml
 GET /accesses/new GET /accesses/new.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000130-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000130-source">
+            onclick="toggleCode('M000135-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000135-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/accesses_controller.rb, line 37</span>
 37:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
-38:     <span class="ruby-ivar">@access</span> = <span class="ruby-constant">Access</span>.<span class="ruby-identifier">createNew</span>
+38:     <span class="ruby-ivar">@access</span> = <span class="ruby-constant">Access</span>.<span class="ruby-identifier">new</span>
 39:     <span class="ruby-comment cmt">#  @controllers={[&quot;id&quot;=&gt;&quot;1&quot;,&quot;name&quot;=&gt;&quot;c1&quot;],[&quot;id&quot;=&gt;&quot;2&quot;,&quot;name&quot;=&gt;&quot;c2&quot;]}#get_controllers</span>
 40:     <span class="ruby-ivar">@controllers</span>=<span class="ruby-constant">Controller</span>.<span class="ruby-identifier">get_controllers</span>
 41:     <span class="ruby-ivar">@roles</span>=<span class="ruby-constant">Role</span>.<span class="ruby-identifier">findall_except_admin</span>()
@@ -318,11 +318,11 @@ GET /accesses/new GET /accesses/new.xml
         </div>
       </div>
 
-      <div id="method-M000129" class="method-detail">
-        <a name="M000129"></a>
+      <div id="method-M000134" class="method-detail">
+        <a name="M000134"></a>
 
         <div class="method-heading">
-          <a href="#M000129" class="method-signature">
+          <a href="#M000134" class="method-signature">
           <span class="method-name">show</span><span class="method-args">()</span>
           </a>
         </div>
@@ -332,8 +332,8 @@ GET /accesses/new GET /accesses/new.xml
 GET /accesses/1 GET /accesses/1.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000129-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000129-source">
+            onclick="toggleCode('M000134-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000134-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/accesses_controller.rb, line 26</span>
 26:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>
@@ -349,11 +349,11 @@ GET /accesses/1 GET /accesses/1.xml
         </div>
       </div>
 
-      <div id="method-M000133" class="method-detail">
-        <a name="M000133"></a>
+      <div id="method-M000138" class="method-detail">
+        <a name="M000138"></a>
 
         <div class="method-heading">
-          <a href="#M000133" class="method-signature">
+          <a href="#M000138" class="method-signature">
           <span class="method-name">update</span><span class="method-args">()</span>
           </a>
         </div>
@@ -363,8 +363,8 @@ GET /accesses/1 GET /accesses/1.xml
 PUT /accesses/1 PUT /accesses/1.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000133-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000133-source">
+            onclick="toggleCode('M000138-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000138-source">
 <pre>
      <span class="ruby-comment cmt"># File app/controllers/accesses_controller.rb, line 106</span>
 106:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>

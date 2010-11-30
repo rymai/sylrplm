@@ -1,17 +1,8 @@
 <h1><%=t(:access_new) %></h1>
 <% form_for(@access) do |f| %>
 <%= f.error_messages %>
-<p>
-    <%= f.label t("label_controller") %>
-    <br/>
-    <%=f.collection_select(:controller, @controllers, :name_method, :name_method,{},{:multiple=>:true}) %>
-</p>
-<p>
-    <%= f.label t("label_role") %>
-    <br/>
-    <%= f.text_field :roles %>
-    
-</p>
+ <%= render(:partial => "accesses/edit",:locals => { :f => f, :fonct=>"new" }) %> 
+
 <table class='menu_bas'>
     <tr>
         <td>

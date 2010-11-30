@@ -4,7 +4,7 @@ class Volume < ActiveRecord::Base
   has_many :documents
   has_many :users
   
-  def self.createNew()
+  def self.create_new()
     obj=Volume.new
     Sequence.set_default_values(obj, self.name, true)
     obj
@@ -21,7 +21,7 @@ class Volume < ActiveRecord::Base
     self.users.count >0 || self.documents.count >0
   end
   
-  def createDir(olddir)
+  def create_dir(olddir)
     if (!File.exists?(self.directory))
       begin 
         Dir.mkdir(self.directory)
@@ -60,11 +60,11 @@ class Volume < ActiveRecord::Base
     end
   end
   
-  def destroyVolume
+  def destroy_volume
     lst=_list_files_
     ret=nil
     if !is_used
-      ret=_destroyVolume_
+      ret=_destroy_volume_
     else
       ret="is_used"
     end
@@ -112,16 +112,15 @@ class Volume < ActiveRecord::Base
     end
   end
   
-  def _destroyVolume_
-    strm=FileUtils.remove_dir self.getDirName
+  def _destroy_volume_
+    strm=FileUtils.remove_dir self.get_dir_name
     stdel=self.destroy
-    #puts "volume.destroyVolume:"+ret.to_s
-    puts "volume.destroyVolume:strm="+strm.to_s+":stdel="+stdel.to_s
+    puts "volume._destroy_volume_:strm="+strm.to_s+":stdel="+stdel.to_s
     strm.to_s+"."+stdel.to_s
     nil
   end
   
-  def getDirName
+  def get_dir_name
     File.join(self.directory,self.name)
   end
   

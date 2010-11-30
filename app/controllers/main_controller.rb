@@ -3,7 +3,7 @@ class MainController < ApplicationController
   include PlmInitControllerModule
   
   
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   
   def infos()
     request.env["PATH_INFO"] +":"+__FILE__+":"+__LINE__.to_s

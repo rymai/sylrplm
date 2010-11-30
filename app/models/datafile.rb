@@ -11,8 +11,8 @@ class Datafile < ActiveRecord::Base
     :class_name => "User",
     :foreign_key => "owner_id" 
   
-  def self.createNew(params,user)
-    #puts "datafile.createNew:user="+user.inspect
+  def self.create_new(params,user)
+    #puts "datafile.create_new:user="+user.inspect
     if(params==nil)   
       datafile=new 
       Sequence.set_default_values(datafile, self.name,true)
@@ -22,27 +22,31 @@ class Datafile < ActiveRecord::Base
       ret=true
     else
       parameters=params[:datafile]
+      puts "datafile.create_new:param="+params.inspect
       uploaded_file=parameters[:uploaded_file]
       #contournement pour faire le upload apres la creation pour avoir la revision dans
-      #getRepository !!!!!!!!!!!!!!
+      #get_repository !!!!!!!!!!!!!!
       parameters.delete(:uploaded_file)
       parameters[:volume]=user.volume
       parameters[:owner]=user
-      puts "datafile.createNew:param="+parameters.inspect
+      puts "datafile.create_new:param="+parameters.inspect
       datafile=new(parameters)
-      #puts "datafile.createNew:save1="+datafile.errors.inspect
+      #puts "datafile.create_new:save1="+datafile.errors.inspect
       if datafile.save   
         # on sauve le fichier maintenant et le tour est joue
-        self.createDir
-        datafile.update_attributes(:uploaded_file=>uploaded_file)
-        datafile.save
+        datafile.create_dir
+        if uploaded_file
+          datafile.update_attributes(:uploaded_file=>uploaded_file)
+          datafile.save
+        end
       end
     end
     puts __FILE__+":"+datafile.inspect
     datafile
   end
   
-  def update_attributes_repos(parameters, user)
+  def update_attributes_repos(params, user)
+    parameters=params[:datafile]
     uploaded_file=parameters[:uploaded_file]
     puts "datafile.parameters:param="+parameters.inspect
     parameters[:volume]=user.volume
@@ -50,65 +54,40 @@ class Datafile < ActiveRecord::Base
       parameters.delete(:uploaded_file)
       parameters[:revision]=self.revision.next
       self.update_attributes(parameters)
-      createDir
+      self.create_dir
       self.update_attributes(:uploaded_file=>uploaded_file)
     else
       self.update_attributes(parameters)
     end
-    #if isUploaded
-    
-    #end
-    
-    ##mv_to_volume
   end
   
   def uploaded_file=(file_field)
     puts "plm_object.uploaded_file=:file_field="+file_field.inspect
     puts "plm_object.uploaded_file=:self="+self.inspect
     if (file_field!=nil && file_field!="" && file_field.original_filename!=nil && file_field.original_filename!="")
-      ##self.removeFile
-      ##self.filename=fname+"##"+file_field.path
       content=file_field.read
       self.content_type=file_field.content_type.chomp
       self.filename=base_part_of(file_field.original_filename)
-      writeFile(content)
+      write_file(content)
     end
   end
-  
-  #  def isUploaded
-  #    ret=false
-  #    if self.filename 
-  #      ret=self.filename.index("##")!=nil
-  #    end
-  #  end
-  
-#  def mv_to_volume
-#    fields=self.filename.split("##")
-#    puts "plm_object.mv_to_volume:fields="+fields.inspect
-#    tmpfile=File.new(fields[1],"r")
-#    content=tmpfile.read
-#    self.filename=fields[0]
-#    self.save
-#    createDir
-#    writeFile(content)
-#  end
   
   def base_part_of(file_name)
     File.basename(file_name).gsub(/[^\w._-]/, '')    
   end
   
-  def getDirRepository
-    File.join self.volume.getDirName, self.class.name, self.ident
+  def get_dir_repository
+    File.join self.volume.get_dir_name, self.class.name, self.ident
   end
   
-  def getRepository
+  def get_repository
     # on prend le volume du fichier lui meme
-    puts "plm_object.getRepository:file="+self.inspect
-    repos=getDirRepository
+    puts "plm_object.get_repository="+self.inspect
+    repos=get_dir_repository
     #        begin 
     #          FileUtils.mkdir_p(repos)
     #        rescue Errno::ENOENT
-    #          puts "plm_object.getRepository:pb mkdir:"+repos
+    #          puts "plm_object.get_repository mkdir:"+repos
     #          return nil
     #        end
     if(self.filename!=nil)
@@ -121,33 +100,33 @@ class Datafile < ActiveRecord::Base
       else
         repos=File.join(repos, self.filename)
       end 
-      puts "plm_object.getRepository:revision="+rev.to_s+" filename="+self.filename.to_s
+      puts "plm_object.get_repository="+rev.to_s+" filename="+self.filename.to_s
     end
     repos
   end
   
-  def readFile
+  def read_file
     data = ''
-    f = File.open(getRepository, "r") 
+    f = File.open(get_repository, "r") 
     f.each_line do |line|
       data += line
     end
-    return data
+    data
   end
   
-  def createDir
-    FileUtils.mkdir_p(getDirRepository)
+  def create_dir
+    FileUtils.mkdir_p(get_dir_repository)
   end
   
-  def writeFile(content)
-    f = File.open(getRepository, "w") 
-    puts "writeFile:"+getRepository
+  def write_file(content)
+    f = File.open(get_repository, "w") 
+    puts "write_file:"+get_repository
     f.puts(content)
     f.close          
   end  
   
-  def removeFile
-    repos=getRepository
+  def remove_file
+    repos=get_repository
     if(repos!=nil)
       if (File.exists?(repos))
         begin

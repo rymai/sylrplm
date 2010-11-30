@@ -1,5 +1,5 @@
 class RolesController < ApplicationController
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   # GET /roles
   # GET /roles.xml
   def index
@@ -79,8 +79,8 @@ class RolesController < ApplicationController
     @role = Role.find(params[:id])
     @role.destroy
     respond_to do |format|
-     flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_role),:ident=>@role.title)
-     format.html { redirect_to(roles_url) }
+      flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_role),:ident=>@role.title)
+      format.html { redirect_to(roles_url) }
       format.xml  { head :ok }
     end
   end

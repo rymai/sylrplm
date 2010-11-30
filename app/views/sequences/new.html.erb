@@ -1,40 +1,7 @@
 <h1><%=t(:sequence_new) %></h1>
-
 <% form_for(@sequence) do |f| %>
-  <%= f.error_messages %>
-
-<p>
-    <%= f.label t(:label_utility) %>
-    <br/>
-     <%= select_tag("sequence[utility]",@utilities)%>
-		 
-</p>
-<p>
-    <%= f.label t(:label_sequence) %>
-    <br/>
-    <%= f.check_box :sequence %>
-</p>
-<p>
-    <%= f.label t(:label_modify) %>
-    <br/>
-    <%= f.check_box :modify %>
-</p>
-<p>
-    <%= f.label t(:label_value) %>
-    <br/>
-    <%= f.text_field :value %>
-</p>
-<p>
-    <%= f.label t(:label_min) %>
-    <br/>
-    <%= f.text_field :min %>
-</p>
-<p>
-    <%= f.label t(:label_max) %>
-    <br/>
-    <%= f.text_field :max %>
-</p>
-
+<%= f.error_messages %>
+<%= render(:partial => "sequences/edit",:locals => { :f => f, :fonct=>"new" }) %>
 <table class='menu_bas'>
     <tr>
         <td>

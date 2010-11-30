@@ -25,7 +25,7 @@
     <% end %>
     </td>
     <td><%= link_to h_img_show.to_s, forum %></td>
-    <% if (forum.isFreeze() == false ) %>
+    <% if (forum.is_freeze() == false ) %>
     	<td><%= link_to h_img_edit.to_s, edit_forum_path(forum) %></td>
     	<td><%= link_to h_img_destroy, forum, :confirm => 'Are you sure?', :method => :delete %></td>
   	<% end %>

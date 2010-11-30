@@ -60,7 +60,7 @@ module PlmInitControllerModule
      if @status_forum.size==0
       ret +="Pas de statuts de forums<br>"
     end
-    return ret
+    ret
   end
   
   def check_init
@@ -95,7 +95,7 @@ module PlmInitControllerModule
       ret<<"<option>"<<File.basename(dir, '.*')<<"</option>"
     end
     puts "plm_init_controller.get_domains:"+dirname+"="+ret
-    return ret
+    ret
   end
   
   #appelle par main_controller.init_objects

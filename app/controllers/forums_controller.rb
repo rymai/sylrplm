@@ -1,6 +1,6 @@
 class ForumsController < ApplicationController
   
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   # GET /forums
   # GET /forums.xml
   def index
@@ -43,12 +43,12 @@ class ForumsController < ApplicationController
   # POST /forums
   # POST /forums.xml
   def create
-    @forum = Forum.createNew(params[:forum])
+    @forum = Forum.create_new(params[:forum])
     @types=Typesobject.find_for("forum")
     @status= Statusobject.find_for("forum")
     respond_to do |format|
       if @forum.save
-        @item=ForumItem.createNew(@forum, params)
+        @item=ForumItem.create_new(@forum, params)
         if(@item.save)
           flash[:notice] = 'Forum and item was successfully created.'
           format.html { redirect_to(@forum) }

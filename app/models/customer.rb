@@ -11,8 +11,8 @@ class Customer < ActiveRecord::Base
   belongs_to :owner,
     :class_name => "User",
     :foreign_key => "owner"
-    
-  def self.createNew(customer,user)
+  
+  def self.create_new(customer,user)
     if(customer!=nil)
       obj=Customer.new(customer)
       #Sequence.set_default_values(obj, self.name, false)
@@ -22,6 +22,7 @@ class Customer < ActiveRecord::Base
       Sequence.set_default_values(obj, self.name, true)
     end
     obj.owner=user
+    obj.statusobject = Statusobject.find_first("customer")
     puts obj.inspect
     obj
   end
@@ -30,13 +31,13 @@ class Customer < ActiveRecord::Base
   def self.find_edit(object_id)
     obj=find(object_id)
     obj.edit
-    return obj
+    obj
   end
   
   def add_projects_from_favori(favori)
-        favori.items.each do |item|
-            projects << item
-        end    
+    favori.items.each do |item|
+      projects << item
+    end    
   end
   
   #def self.getTypesCustomer
@@ -45,29 +46,18 @@ class Customer < ActiveRecord::Base
   #end
   
   def remove_project(project)
-             projects.delete( project)
+    projects.delete( project)
   end  
-   
+  
   def add_documents_from_favori(favori)
-        favori.items.each do |item|
-          documents << item
-        end    
-    end
-    
-  def isFreeze_old
-    if(self.statusobject!=nil && Statusobject.find_last(:customer)!=nil)
-      if(self.statusobject.rank == Statusobject.find_last(:customer).rank)
-        true
-      else
-        false
-      end
-    else
-      false
-    end
+    favori.items.each do |item|
+      documents << item
+    end    
   end
   
+  
   # a valider si avant dernier status
-  def isToValidate
+  def is_to_validate
     if(self.statusobject!=nil && Statusobject.find_last(:customer)!=nil)
       if(self.statusobject.rank == Statusobject.find_last(:customer).rank-1)
         true

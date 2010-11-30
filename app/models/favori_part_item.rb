@@ -1,9 +1,9 @@
 class FavoriPartItem
   attr_reader :part
   def initialize(part)
-      @part=part
+    @part=part
   end
   def title
-      @part.title    
+    @part.title    
   end
 end

@@ -1,6 +1,6 @@
 class AccessesController < ApplicationController
   
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   
   # GET /accesses
   # GET /accesses.xml
@@ -66,7 +66,7 @@ class AccessesController < ApplicationController
       respond_to do |format|
         flash[:notice]=""
         params[:access][:controller].each do |cont| 
-          @access = Access.createNew(cont,params[:access][:role_id]  ) 
+          @access = Access.create_new(cont,params[:access][:role_id]  ) 
           #puts 'accesses_controller.create:access='+@access.controller+' '+@access.role.title
           if @access.save  
             puts 'accesses_controller.create:succes:access='+@access.controller+' '+@access.role.title+' '+@access.action

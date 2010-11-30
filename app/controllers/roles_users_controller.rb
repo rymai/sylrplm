@@ -1,5 +1,5 @@
 class RolesUsersController < ApplicationController
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   # GET /roles_users
   # GET /roles_users.xml
   def index

@@ -106,7 +106,7 @@ module ApplicationHelper
   def sort_td_class_helper(param)
     result = 'class="sortup"' if params[:sort] == param
     result = 'class="sortdown"' if params[:sort] == param.to_s + " DESC"
-    return result
+    result
   end
   
   def sort_link_helper(text, param)
@@ -145,7 +145,7 @@ module ApplicationHelper
       
       
     end
-    return bloc    
+    bloc    
   end
   
  

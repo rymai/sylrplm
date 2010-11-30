@@ -9,6 +9,7 @@ en:
   ctrl_object_created: "{{object}} {{ident}} was successfully created"
   ctrl_object_not_created: "{{object}} not created"
   ctrl_object_updated: "{{object}} {{ident}} was successfully updated"
+  ctrl_object_not_saved: "{{object}} {{ident}} not saved"
   ctrl_object_not_updated: "{{object}} {{ident}} not updated"
   ctrl_object_deleted: "{{object}} {{ident}} successfully deleted"
   ctrl_object_not_deleted: "{{object}} {{ident}} could not be deleted"
@@ -263,6 +264,7 @@ en:
   label_extension: Extension
   add_datafile: Add file
   document_datafiles: Document files
+  datafile_add: Add a file
   # fields faq
   faq_edit: Edition question
   faq_list: Liste questions

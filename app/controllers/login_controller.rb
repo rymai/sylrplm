@@ -1,6 +1,6 @@
 class LoginController < ApplicationController
   before_filter :authorize, :except => [:login, :logout]
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   
   def index
     @total_documents = Document.count
@@ -43,7 +43,7 @@ class LoginController < ApplicationController
     @user = User.new(params[:user])
     @roles = Role.all
     @themes=get_themes(@theme)
-     @volumes = Volume.find_all 
+    @volumes = Volume.find_all 
     if request.post? 
       if @user.save   
         #@theme=params[:theme]
@@ -52,6 +52,19 @@ class LoginController < ApplicationController
         #@user.save
         flash.now[:notice] = t(:ctrl_user_created,:user=>@user.login)
         #@user = User.new
+        if params[:role_id]!=nil  
+          @roles.each do |rid|
+            role=Role.find(rid)
+            if(params[:role_id][role.id.to_s]=="1")
+              if(@user.roles.count(:all, :conditions=>["id=#{rid.id}"])==0)
+                flash[:notice]+=" #{role.id}:#{role.title}:#{params[:role_id][role.id.to_s]}"              
+                @user.roles<<role                                
+              end
+            end
+          end
+        end 
+      else
+        flash.now[:notice] = t(:ctrl_user_not_created,:user=>@user.login)
       end
     else
       @user.volume=Volume.find(1)

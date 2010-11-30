@@ -3,46 +3,8 @@
 <% form_for(@link) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :father_object %><br />
-    <%= f.text_field :father_object %>
-  </p>
-  <p>
-    <%= f.label :child_object %><br />
-    <%= f.text_field :child_object %>
-  </p>
-  <p>
-    <%= f.label :father_id %><br />
-    <%= f.text_field :father_id %>
-  </p>
-  <p>
-    <%= f.label :child_id %><br />
-    <%= f.text_field :child_id %>
-  </p>
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :designation %><br />
-    <%= f.text_field :designation %>
-  </p>
-  <p>
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </p>
-  <p>
-    <%= f.label :responsible %><br />
-    <%= f.text_field :responsible %>
-  </p>
-  <p>
-    <%= f.label :group %><br />
-    <%= f.text_field :group %>
-  </p>
-  <p>
-    <%= f.label :date %><br />
-    <%= f.date_select :date %>
-  </p>
+   <%= render(:partial => "links/edit",:locals => { :f => f, :fonct=>"new" }) %>
+  
   <p>
     <%= f.submit 'Create' %>
   </p>

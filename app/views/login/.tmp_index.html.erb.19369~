@@ -1,0 +1,10 @@
+<h1>Login#index</h1>
+<p>Find me in app/views/login/index.html.erb</p>
+<h1>Welcome</h1>
+It's <%= Time.now %>. 
+We have following data:<br/>
+<%= pluralize(@total_documents, "documents") %>.<br/>
+<%= pluralize(@total_partss, "parts") %>.<br/>
+<%= pluralize(@total_projects, "projects") %>.<br/>
+<%= pluralize(@total_customerss, "customers") %>.<br/>
+<%= pluralize(@total_favoris, "favoris") %>.<br/>

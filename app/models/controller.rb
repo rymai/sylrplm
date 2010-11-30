@@ -8,8 +8,8 @@ class Controller
   end
   
   def name_method
-      ret=@name+"."+@method
-      ret
+    ret=@name+"."+@method
+    ret
   end
   
   def self.get_controllers
@@ -33,7 +33,7 @@ class Controller
         }
       end
     end
-    return ret   
+    ret   
   end
   
   def self.get_controllers_old

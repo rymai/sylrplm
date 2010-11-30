@@ -88,13 +88,13 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000063">create</a>&nbsp;&nbsp;
-      <a href="#M000065">destroy</a>&nbsp;&nbsp;
-      <a href="#M000062">edit</a>&nbsp;&nbsp;
-      <a href="#M000059">index</a>&nbsp;&nbsp;
-      <a href="#M000061">new</a>&nbsp;&nbsp;
-      <a href="#M000060">show</a>&nbsp;&nbsp;
-      <a href="#M000064">update</a>&nbsp;&nbsp;
+      <a href="#M000061">create</a>&nbsp;&nbsp;
+      <a href="#M000063">destroy</a>&nbsp;&nbsp;
+      <a href="#M000060">edit</a>&nbsp;&nbsp;
+      <a href="#M000057">index</a>&nbsp;&nbsp;
+      <a href="#M000059">new</a>&nbsp;&nbsp;
+      <a href="#M000058">show</a>&nbsp;&nbsp;
+      <a href="#M000062">update</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -116,11 +116,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000063" class="method-detail">
-        <a name="M000063"></a>
+      <div id="method-M000061" class="method-detail">
+        <a name="M000061"></a>
 
         <div class="method-heading">
-          <a href="#M000063" class="method-signature">
+          <a href="#M000061" class="method-signature">
           <span class="method-name">create</span><span class="method-args">()</span>
           </a>
         </div>
@@ -130,17 +130,17 @@
 POST /forums POST /forums.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000063-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000063-source">
+            onclick="toggleCode('M000061-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000061-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/forums_controller.rb, line 45</span>
 45:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
-46:     <span class="ruby-ivar">@forum</span> = <span class="ruby-constant">Forum</span>.<span class="ruby-identifier">createNew</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:forum</span>])
+46:     <span class="ruby-ivar">@forum</span> = <span class="ruby-constant">Forum</span>.<span class="ruby-identifier">create_new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:forum</span>])
 47:     <span class="ruby-ivar">@types</span>=<span class="ruby-constant">Typesobject</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-value str">&quot;forum&quot;</span>)
 48:     <span class="ruby-ivar">@status</span>= <span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-value str">&quot;forum&quot;</span>)
 49:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
 50:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@forum</span>.<span class="ruby-identifier">save</span>
-51:         <span class="ruby-ivar">@item</span>=<span class="ruby-constant">ForumItem</span>.<span class="ruby-identifier">createNew</span>(<span class="ruby-ivar">@forum</span>, <span class="ruby-identifier">params</span>)
+51:         <span class="ruby-ivar">@item</span>=<span class="ruby-constant">ForumItem</span>.<span class="ruby-identifier">create_new</span>(<span class="ruby-ivar">@forum</span>, <span class="ruby-identifier">params</span>)
 52:         <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@item</span>.<span class="ruby-identifier">save</span>)
 53:           <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">'Forum and item was successfully created.'</span>
 54:           <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-ivar">@forum</span>) }
@@ -160,11 +160,11 @@ POST /forums POST /forums.xml
         </div>
       </div>
 
-      <div id="method-M000065" class="method-detail">
-        <a name="M000065"></a>
+      <div id="method-M000063" class="method-detail">
+        <a name="M000063"></a>
 
         <div class="method-heading">
-          <a href="#M000065" class="method-signature">
+          <a href="#M000063" class="method-signature">
           <span class="method-name">destroy</span><span class="method-args">()</span>
           </a>
         </div>
@@ -174,8 +174,8 @@ POST /forums POST /forums.xml
 DELETE /forums/1 DELETE /forums/1.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000065-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000065-source">
+            onclick="toggleCode('M000063-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000063-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/forums_controller.rb, line 85</span>
 85:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
@@ -191,11 +191,11 @@ DELETE /forums/1 DELETE /forums/1.xml
         </div>
       </div>
 
-      <div id="method-M000062" class="method-detail">
-        <a name="M000062"></a>
+      <div id="method-M000060" class="method-detail">
+        <a name="M000060"></a>
 
         <div class="method-heading">
-          <a href="#M000062" class="method-signature">
+          <a href="#M000060" class="method-signature">
           <span class="method-name">edit</span><span class="method-args">()</span>
           </a>
         </div>
@@ -205,8 +205,8 @@ DELETE /forums/1 DELETE /forums/1.xml
 GET /forums/1/edit
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000062-source">
+            onclick="toggleCode('M000060-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000060-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/forums_controller.rb, line 37</span>
 37:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">edit</span>
@@ -219,11 +219,11 @@ GET /forums/1/edit
         </div>
       </div>
 
-      <div id="method-M000059" class="method-detail">
-        <a name="M000059"></a>
+      <div id="method-M000057" class="method-detail">
+        <a name="M000057"></a>
 
         <div class="method-heading">
-          <a href="#M000059" class="method-signature">
+          <a href="#M000057" class="method-signature">
           <span class="method-name">index</span><span class="method-args">()</span>
           </a>
         </div>
@@ -233,8 +233,8 @@ GET /forums/1/edit
 GET /forums GET /forums.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000059-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000059-source">
+            onclick="toggleCode('M000057-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000057-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/forums_controller.rb, line 6</span>
  6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
@@ -249,11 +249,11 @@ GET /forums GET /forums.xml
         </div>
       </div>
 
-      <div id="method-M000061" class="method-detail">
-        <a name="M000061"></a>
+      <div id="method-M000059" class="method-detail">
+        <a name="M000059"></a>
 
         <div class="method-heading">
-          <a href="#M000061" class="method-signature">
+          <a href="#M000059" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
@@ -263,12 +263,12 @@ GET /forums GET /forums.xml
 GET /forums/new GET /forums/new.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000061-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000061-source">
+            onclick="toggleCode('M000059-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000059-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/forums_controller.rb, line 26</span>
 26:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
-27:     <span class="ruby-ivar">@forum</span> = <span class="ruby-constant">Forum</span>.<span class="ruby-identifier">createNew</span>
+27:     <span class="ruby-ivar">@forum</span> = <span class="ruby-constant">Forum</span>.<span class="ruby-identifier">new</span>
 28:     <span class="ruby-ivar">@types</span>=<span class="ruby-constant">Typesobject</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-value str">&quot;forum&quot;</span>)
 29:     <span class="ruby-ivar">@status</span>= <span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-value str">&quot;forum&quot;</span>)
 30:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
@@ -281,11 +281,11 @@ GET /forums/new GET /forums/new.xml
         </div>
       </div>
 
-      <div id="method-M000060" class="method-detail">
-        <a name="M000060"></a>
+      <div id="method-M000058" class="method-detail">
+        <a name="M000058"></a>
 
         <div class="method-heading">
-          <a href="#M000060" class="method-signature">
+          <a href="#M000058" class="method-signature">
           <span class="method-name">show</span><span class="method-args">()</span>
           </a>
         </div>
@@ -295,8 +295,8 @@ GET /forums/new GET /forums/new.xml
 GET /forums/1 GET /forums/1.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000060-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000060-source">
+            onclick="toggleCode('M000058-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000058-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/forums_controller.rb, line 16</span>
 16:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>
@@ -311,11 +311,11 @@ GET /forums/1 GET /forums/1.xml
         </div>
       </div>
 
-      <div id="method-M000064" class="method-detail">
-        <a name="M000064"></a>
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
 
         <div class="method-heading">
-          <a href="#M000064" class="method-signature">
+          <a href="#M000062" class="method-signature">
           <span class="method-name">update</span><span class="method-args">()</span>
           </a>
         </div>
@@ -325,8 +325,8 @@ GET /forums/1 GET /forums/1.xml
 PUT /forums/1 PUT /forums/1.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000064-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000064-source">
+            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000062-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/forums_controller.rb, line 69</span>
 69:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>

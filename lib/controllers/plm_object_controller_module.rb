@@ -49,11 +49,11 @@ module PlmObjectControllerModule
           if withMail==true
             email=nil 
             validers=User.find_validers             
-            if object.isToValidate
+            if object.is_to_validate
               validersMail=PlmMailer.listUserMail(validers)
               email=PlmMailer.create_toValidate(object, @usermail, @urlbase, validersMail) 
             end
-            if object.isFreeze
+            if object.is_freeze
               validersMail=PlmMailer.listUserMail(validers,@user)
               email=PlmMailer.create_validated(object, @usermail, @urlbase, askUserMail, validersMail)
             end
@@ -90,11 +90,11 @@ module PlmObjectControllerModule
             askUserMail=object.owner.email
             email=nil 
             validers=User.find_validers             
-            if object.isToValidate
+            if object.is_to_validate
               validersMail=PlmMailer.listUserMail(validers)
               email=PlmMailer.create_docToValidate(object, @usermail, @urlbase, validersMail) 
             end
-            if object.isFreeze
+            if object.is_freeze
               validersMail=PlmMailer.listUserMail(validers,@user)
               email=PlmMailer.create_docValidated(object, @usermail, @urlbase, askUserMail, validersMail)
             end
@@ -144,7 +144,7 @@ module PlmObjectControllerModule
     else
       cnode=nil
     end
-    return cnode
+    cnode
   end
   
   def tree_project(obj, link,ctrl)
@@ -165,7 +165,7 @@ module PlmObjectControllerModule
     else
       cnode=nil
     end 
-    return cnode
+    cnode
   end
   
   def tree_customer(obj)  
@@ -183,8 +183,9 @@ module PlmObjectControllerModule
     else
       cnode=nil
     end
-    return cnode
+    cnode
   end
+  
   def icone(obj)
     if obj.type!=nil && obj.typesobject!=nil
       "../images/"+obj.type.to_s+"_"+obj.typesobject.name+".png"
@@ -192,6 +193,7 @@ module PlmObjectControllerModule
       ""
     end
   end
+  
   def img(name)
         "<img class=\"icone\" src=\"../images/"+name+".png\"/>"  
   end
@@ -359,7 +361,7 @@ module PlmObjectControllerModule
           destroy_url=url_for(:controller => ctrl.controller_name,
                               :action => "remove_link",
                               :id => "#{link.id}" )
-          if d.isFreeze() == false 
+          if d.is_freeze() == false 
               cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'   
           else 
               cut_a=""
@@ -396,9 +398,9 @@ module PlmObjectControllerModule
       @forum=Forum.new(params[:forum])
       @forum.creator=@user
       if(@forum.save)
-        item=ForumItem.createNew(@forum, params)
+        item=ForumItem.create_new(@forum, params)
         if(item.save)
-          link_=Link.createNew(type, object, "forum", @forum, relation)  
+          link_=Link.create_new(type, object, "forum", @forum, relation)  
           link=link_[:link]
           if(link!=nil) 
             if(link.save)
@@ -444,9 +446,9 @@ module PlmObjectControllerModule
     respond_to do |format|      
       flash[:notice] = ""
       puts "plm_object_controller.ctrl_add_datafile:user="+@user.inspect
-      @datafile=Datafile.createNew(params[:datafile],@user)
+      @datafile=Datafile.create_new(params,@user)
       if(@datafile.save)
-          link_=Link.createNew(type, object, "datafile", @datafile, relation)  
+          link_=Link.create_new(type, object, "datafile", @datafile, relation)  
           link=link_[:link]
           if(link!=nil) 
             if(link.save)
@@ -462,7 +464,7 @@ module PlmObjectControllerModule
             error=true
           end
       else
-        flash[:notice] += t(:ctrl_object_not_saved,:object=>t(:ctrl_datafile),:ident=>@datafile.ident,:relation=>relation,:msg=>link_[:msg])
+        flash[:notice] += t(:ctrl_object_not_saved,:object=>t(:ctrl_datafile),:ident=>@datafile.ident,:relation=>relation,:msg=>nil)
         error=true
       end
       if error==false

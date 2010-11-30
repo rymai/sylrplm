@@ -9,6 +9,7 @@ fr:
   ctrl_object_created: "{{object}} {{ident}} crée avec succès"
   ctrl_object_not_created: "{{object}} non crée"
   ctrl_object_updated: "{{object}} {{ident}} modifié avec succès"
+  ctrl_object_not_saved: "{{object}} {{ident}} non sauvegardé"
   ctrl_object_not_updated: "{{object}} {{ident}} non modifié"
   ctrl_object_deleted: "{{object}} {{ident}} supprimé avec succès"
   ctrl_object_not_deleted: "{{object}} {{ident}} ne peut être supprimé"
@@ -264,6 +265,7 @@ fr:
   label_extension: Extension
   add_datafile: Ajout fichier
   document_datafiles: Fichiers du document
+  datafile_add: Ajout d'un fichier au document
   # fields forums
   forum_edit: Edition forum 
   forum_list: Liste des forums 

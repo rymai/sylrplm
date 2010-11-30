@@ -16,11 +16,11 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale 
   before_filter :define_variables
   
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   
   def permission_denied
     flash[:notice] = t(:ctrl_no_privilege)
-    return redirect_to(:action => "index") 
+    redirect_to(:action => "index") 
   end
   
   def permission_granted
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def getModelsAndColumns
+  def get_models_and_columns
     ret=""
     i=0
     models = Dir.new("#{RAILS_ROOT}/app/models").entries
@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
         end   
       end
     end
-    return ret
+    ret
   end
   
   
@@ -117,7 +117,7 @@ class ApplicationController < ActionController::Base
       end
     end
     puts "application_controller.get_themes"+dirname+"="+ret
-    return ret
+    ret
   end
   
   #utilise pour les filtres des objets (index)
@@ -171,7 +171,6 @@ class ApplicationController < ActionController::Base
   def redirect_to_index(msg=nil)
     flash[:notice]=msg if msg
     redirect_to :action => index 
-    return
   end
   
   

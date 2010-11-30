@@ -30,6 +30,9 @@ class DatafilesController < ApplicationController
   def show
     @datafile = Datafile.find(params[:id])
     @types=Typesobject.find_for("datafile")
+    if(params["doc"])
+      @document=Document.find(params["doc"])
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @datafile }
@@ -39,7 +42,7 @@ class DatafilesController < ApplicationController
   # GET /datafiles/new
   # GET /datafiles/new.xml
   def new
-    @datafile = Datafile.createNew(nil, @user)
+    @datafile = Datafile.create_new(nil, @user)
     @types=Typesobject.find_for("datafile")
     respond_to do |format|
       format.html # new.html.erb
@@ -51,13 +54,17 @@ class DatafilesController < ApplicationController
   def edit
     @datafile = Datafile.find(params[:id])
     @types=Typesobject.find_for("datafile")
+    params["doc"]
   end
   
   # POST /datafiles
   # POST /datafiles.xml
   def create
-    @datafile = Datafile.createNew(params, @user)
+    @datafile = Datafile.create_new(params, @user)
     @types=Typesobject.find_for("datafile")
+    if(params["doc"])
+      @document=Document.find(params["doc"])
+    end
     puts "datafiles_controller.create:errors="+@datafile.errors.inspect
     respond_to do |format|
       if @datafile
@@ -77,8 +84,11 @@ class DatafilesController < ApplicationController
   def update
     @datafile = Datafile.find(params[:id])
     @types=Typesobject.find_for("datafile")
+   if(params["doc"])
+      @document=Document.find(params["doc"])
+    end
     respond_to do |format|
-      if @datafile.update_attributes_repos(params[:datafile],@user)
+      if @datafile.update_attributes_repos(params,@user)
         flash[:notice] = t(:ctrl_object_updated,:object=>t(:ctrl_datafile),:ident=>@datafile.ident)
         format.html { redirect_to(@datafile) }
         format.xml  { head :ok }
@@ -94,17 +104,25 @@ class DatafilesController < ApplicationController
   # DELETE /datafiles/1.xml
   def destroy
     @datafile = Datafile.find(params[:id])
+    if params["doc"]
+      @document=Document.find(params["doc"])
+      @document.remove_datafile(@datafile)
+    end
     @datafile.destroy
     @types=Typesobject.find_for("datafile")
     respond_to do |format|
-      format.html { redirect_to(datafiles_url) }
+      if params["doc"]
+        format.html { redirect_to(@document) } 
+      else 
+        format.html { redirect_to(datafiles_url) }
+      end
       format.xml  { head :ok }
     end
   end
   
   def show_file
     @datafile = Datafile.find(params[:id])
-    send_data(@datafile.readFile,
+    send_data(@datafile.read_file,
         :filename=>@datafile.filename,
         :type=>@datafile.content_type,
         :disposition=>"inline")    
@@ -112,11 +130,11 @@ class DatafilesController < ApplicationController
   
   def download_file
     @datafile = Datafile.find(params[:id])
-    send_data(@datafile.readFile,
+    send_data(@datafile.read_file,
       :filename=>@datafile.filename,
       :type=>@datafile.content_type,
       :disposition=>"attachment")   
-    return @datafile.filename 
+    @datafile.filename 
   end
   
   def show_file_data

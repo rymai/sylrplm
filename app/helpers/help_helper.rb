@@ -57,7 +57,7 @@ module HelpHelper
       end      
       helem={:el=>el, :main_elem=>elem}
     end    
-    return helem
+    helem
   end
   
   def h_help_suitable(root_help,key)
@@ -96,8 +96,7 @@ module HelpHelper
         childs_src<<"<a href='/help?help=#{key}'>#{key}</a>"
       }
     end
-    suite={:previous_src=>previous_src, :main_src=>main_src, :upper_src=>upper_src, :next_src=>next_src, :childs_src=>childs_src} 
-    return suite           
+    suite={:previous_src=>previous_src, :main_src=>main_src, :upper_src=>upper_src, :next_src=>next_src, :childs_src=>childs_src}       
   end
   
   
@@ -243,7 +242,7 @@ module HelpHelper
       #puts "h_help_transform:"+txt.length.to_s+"|"+txt+"|"
     end
     
-    return txt+"\n"
+    txt+"\n"
     
   end
 end

@@ -1,0 +1,1000 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: PlmObjectControllerModule</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">PlmObjectControllerModule</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/controllers/plm_object_controller_module_rb.html">
+                lib/controllers/plm_object_controller_module.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000371">ctrl_add_datafile</a>&nbsp;&nbsp;
+      <a href="#M000370">ctrl_add_forum</a>&nbsp;&nbsp;
+      <a href="#M000354">ctrl_demote</a>&nbsp;&nbsp;
+      <a href="#M000353">ctrl_promote</a>&nbsp;&nbsp;
+      <a href="#M000352">ctrl_revise</a>&nbsp;&nbsp;
+      <a href="#M000364">follow_tree_customer</a>&nbsp;&nbsp;
+      <a href="#M000362">follow_tree_part</a>&nbsp;&nbsp;
+      <a href="#M000365">follow_tree_project</a>&nbsp;&nbsp;
+      <a href="#M000363">follow_tree_up_part</a>&nbsp;&nbsp;
+      <a href="#M000366">follow_tree_up_project</a>&nbsp;&nbsp;
+      <a href="#M000358">icone</a>&nbsp;&nbsp;
+      <a href="#M000359">img</a>&nbsp;&nbsp;
+      <a href="#M000361">img_cut</a>&nbsp;&nbsp;
+      <a href="#M000360">img_destroy</a>&nbsp;&nbsp;
+      <a href="#M000369">remove_link</a>&nbsp;&nbsp;
+      <a href="#M000357">tree_customer</a>&nbsp;&nbsp;
+      <a href="#M000367">tree_documents</a>&nbsp;&nbsp;
+      <a href="#M000368">tree_forums</a>&nbsp;&nbsp;
+      <a href="#M000355">tree_part</a>&nbsp;&nbsp;
+      <a href="#M000356">tree_project</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000371" class="method-detail">
+        <a name="M000371"></a>
+
+        <div class="method-heading">
+          <a href="#M000371" class="method-signature">
+          <span class="method-name">ctrl_add_datafile</span><span class="method-args">(object,type)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000371-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000371-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 443</span>
+443:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ctrl_add_datafile</span>(<span class="ruby-identifier">object</span>,<span class="ruby-identifier">type</span>)
+444:     <span class="ruby-identifier">relation</span>=<span class="ruby-value str">&quot;datafile&quot;</span>
+445:     <span class="ruby-identifier">error</span>=<span class="ruby-keyword kw">false</span>
+446:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>      
+447:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;&quot;</span>
+448:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;plm_object_controller.ctrl_add_datafile:user=&quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@user</span>.<span class="ruby-identifier">inspect</span>
+449:       <span class="ruby-ivar">@datafile</span>=<span class="ruby-constant">Datafile</span>.<span class="ruby-identifier">create_new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:datafile</span>],<span class="ruby-ivar">@user</span>)
+450:       <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@datafile</span>.<span class="ruby-identifier">save</span>)
+451:           <span class="ruby-identifier">link_</span>=<span class="ruby-constant">Link</span>.<span class="ruby-identifier">create_new</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">object</span>, <span class="ruby-value str">&quot;datafile&quot;</span>, <span class="ruby-ivar">@datafile</span>, <span class="ruby-identifier">relation</span>)  
+452:           <span class="ruby-identifier">link</span>=<span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:link</span>]
+453:           <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">link!</span>=<span class="ruby-keyword kw">nil</span>) 
+454:             <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">link</span>.<span class="ruby-identifier">save</span>)
+455:               <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_added</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_datafile</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@datafile</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:relation=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">relation</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:msg</span>]))
+456:             <span class="ruby-keyword kw">else</span>
+457:               <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_not_added</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_datafile</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@datafile</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:relation=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">relation</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:msg</span>]))
+458:               <span class="ruby-ivar">@datafile</span>.<span class="ruby-identifier">destroy</span>
+459:               <span class="ruby-identifier">error</span>=<span class="ruby-keyword kw">true</span>
+460:             <span class="ruby-keyword kw">end</span> 
+461:           <span class="ruby-keyword kw">else</span>
+462:             <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_not_linked</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_datafile</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@datafile</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:relation=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">relation</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">nil</span>)
+463:             <span class="ruby-ivar">@datafile</span>.<span class="ruby-identifier">destroy</span> 
+464:             <span class="ruby-identifier">error</span>=<span class="ruby-keyword kw">true</span>
+465:           <span class="ruby-keyword kw">end</span>
+466:       <span class="ruby-keyword kw">else</span>
+467:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_not_saved</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_datafile</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@datafile</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:relation=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">relation</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:msg</span>])
+468:         <span class="ruby-identifier">error</span>=<span class="ruby-keyword kw">true</span>
+469:       <span class="ruby-keyword kw">end</span>
+470:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">error</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">false</span>
+471:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">object</span>) }
+472:       <span class="ruby-keyword kw">else</span>
+473:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">'plm_object_controller.add_datafile:id='</span><span class="ruby-operator">+</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>
+474:         <span class="ruby-ivar">@types</span>=<span class="ruby-constant">Typesobject</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-value str">&quot;datafile&quot;</span>)
+475:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span>  <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:new_datafile</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">id</span>   }
+476:       <span class="ruby-keyword kw">end</span>
+477:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }
+478:     <span class="ruby-keyword kw">end</span>
+479:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000370" class="method-detail">
+        <a name="M000370"></a>
+
+        <div class="method-heading">
+          <a href="#M000370" class="method-signature">
+          <span class="method-name">ctrl_add_forum</span><span class="method-args">(object,type)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000370-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000370-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 393</span>
+393:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ctrl_add_forum</span>(<span class="ruby-identifier">object</span>,<span class="ruby-identifier">type</span>)
+394:     <span class="ruby-identifier">relation</span>=<span class="ruby-value str">&quot;forum&quot;</span>
+395:     <span class="ruby-identifier">error</span>=<span class="ruby-keyword kw">false</span>
+396:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>      
+397:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;&quot;</span>
+398:       <span class="ruby-ivar">@forum</span>=<span class="ruby-constant">Forum</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:forum</span>])
+399:       <span class="ruby-ivar">@forum</span>.<span class="ruby-identifier">creator</span>=<span class="ruby-ivar">@user</span>
+400:       <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@forum</span>.<span class="ruby-identifier">save</span>)
+401:         <span class="ruby-identifier">item</span>=<span class="ruby-constant">ForumItem</span>.<span class="ruby-identifier">create_new</span>(<span class="ruby-ivar">@forum</span>, <span class="ruby-identifier">params</span>)
+402:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">item</span>.<span class="ruby-identifier">save</span>)
+403:           <span class="ruby-identifier">link_</span>=<span class="ruby-constant">Link</span>.<span class="ruby-identifier">create_new</span>(<span class="ruby-identifier">type</span>, <span class="ruby-identifier">object</span>, <span class="ruby-value str">&quot;forum&quot;</span>, <span class="ruby-ivar">@forum</span>, <span class="ruby-identifier">relation</span>)  
+404:           <span class="ruby-identifier">link</span>=<span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:link</span>]
+405:           <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">link!</span>=<span class="ruby-keyword kw">nil</span>) 
+406:             <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">link</span>.<span class="ruby-identifier">save</span>)
+407:               <span class="ruby-comment cmt">#flash[:notice] += &quot;&lt;br&gt; forum #{@forum.subject} was successfully added:rel=#{relation}:#{link_[:msg]}&quot;</span>
+408:               <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_added</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_forum</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@forum</span>.<span class="ruby-identifier">subject</span>,<span class="ruby-identifier">:relation=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">relation</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:msg</span>]))
+409:             <span class="ruby-keyword kw">else</span>
+410:               <span class="ruby-comment cmt">#flash[:notice] += &quot;&lt;br&gt; forum #{@forum.subject} was not added:rel=#{relation}:#{link_[:msg]}&quot;</span>
+411:               <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_not_added</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_forum</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@forum</span>.<span class="ruby-identifier">subject</span>,<span class="ruby-identifier">:relation=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">relation</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:msg</span>]))
+412:               <span class="ruby-ivar">@forum</span>.<span class="ruby-identifier">destroy</span>
+413:               <span class="ruby-identifier">error</span>=<span class="ruby-keyword kw">true</span>
+414:             <span class="ruby-keyword kw">end</span> 
+415:           <span class="ruby-keyword kw">else</span>
+416:             <span class="ruby-comment cmt">#flash[:notice] += &quot;&lt;br&gt; link #{@forum.subject} was not created:rel=#{relation}:#{link_[:msg]}&quot;</span>
+417:             <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_not_linked</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_forum</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@forum</span>.<span class="ruby-identifier">subject</span>,<span class="ruby-identifier">:relation=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">relation</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-keyword kw">nil</span>)
+418:             <span class="ruby-ivar">@forum</span>.<span class="ruby-identifier">destroy</span> 
+419:             <span class="ruby-identifier">error</span>=<span class="ruby-keyword kw">true</span>
+420:           <span class="ruby-keyword kw">end</span>
+421:         <span class="ruby-keyword kw">else</span>
+422:           <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_not_created</span>, <span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_forum_item</span>))
+423:           <span class="ruby-ivar">@forum</span>.<span class="ruby-identifier">destroy</span> 
+424:           <span class="ruby-identifier">error</span>=<span class="ruby-keyword kw">true</span>
+425:         <span class="ruby-keyword kw">end</span>
+426:       <span class="ruby-keyword kw">else</span>
+427:         <span class="ruby-comment cmt">#flash[:notice] += &quot;&lt;br&gt; forum #{@forum.subject} was not saved:rel=#{relation}:#{link_[:msg]}&quot;</span>
+428:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_not_saved</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_forum</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@forum</span>.<span class="ruby-identifier">subject</span>,<span class="ruby-identifier">:relation=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">relation</span>,<span class="ruby-identifier">:msg=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">link_</span>[<span class="ruby-identifier">:msg</span>])
+429:         <span class="ruby-identifier">error</span>=<span class="ruby-keyword kw">true</span>
+430:       <span class="ruby-keyword kw">end</span>
+431:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">error</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">false</span>
+432:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">object</span>) }
+433:       <span class="ruby-keyword kw">else</span>
+434:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">'PartController.add_forum:id='</span><span class="ruby-operator">+</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>
+435:         <span class="ruby-ivar">@types</span>=<span class="ruby-constant">Typesobject</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-value str">&quot;forum&quot;</span>)
+436:         <span class="ruby-ivar">@status</span>= <span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-value str">&quot;forum&quot;</span>)
+437:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span>  <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:new_forum</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">id</span>   }
+438:       <span class="ruby-keyword kw">end</span>
+439:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }
+440:     <span class="ruby-keyword kw">end</span>
+441:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000354" class="method-detail">
+        <a name="M000354"></a>
+
+        <div class="method-heading">
+          <a href="#M000354" class="method-signature">
+          <span class="method-name">ctrl_demote</span><span class="method-args">(model, withMail=true)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000354-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000354-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 81</span>
+ 81:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ctrl_demote</span>(<span class="ruby-identifier">model</span>, <span class="ruby-identifier">withMail</span>=<span class="ruby-keyword kw">true</span>)
+ 82:     <span class="ruby-identifier">object</span> = <span class="ruby-identifier">model</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+ 83:     <span class="ruby-identifier">current_rank</span>=<span class="ruby-identifier">object</span>.<span class="ruby-identifier">statusobject</span>.<span class="ruby-identifier">name</span>
+ 84:     <span class="ruby-identifier">object</span>.<span class="ruby-identifier">demote</span>
+ 85:     <span class="ruby-identifier">new_rank</span>=<span class="ruby-identifier">object</span>.<span class="ruby-identifier">statusobject</span>.<span class="ruby-identifier">name</span>
+ 86:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+ 87:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">current_rank!</span>=<span class="ruby-identifier">new_rank</span>
+ 88:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">save</span>
+ 89:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">withMail</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">true</span>
+ 90:             <span class="ruby-identifier">askUserMail</span>=<span class="ruby-identifier">object</span>.<span class="ruby-identifier">owner</span>.<span class="ruby-identifier">email</span>
+ 91:             <span class="ruby-identifier">email</span>=<span class="ruby-keyword kw">nil</span> 
+ 92:             <span class="ruby-identifier">validers</span>=<span class="ruby-constant">User</span>.<span class="ruby-identifier">find_validers</span>             
+ 93:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">is_to_validate</span>
+ 94:               <span class="ruby-identifier">validersMail</span>=<span class="ruby-constant">PlmMailer</span>.<span class="ruby-identifier">listUserMail</span>(<span class="ruby-identifier">validers</span>)
+ 95:               <span class="ruby-identifier">email</span>=<span class="ruby-constant">PlmMailer</span>.<span class="ruby-identifier">create_docToValidate</span>(<span class="ruby-identifier">object</span>, <span class="ruby-ivar">@usermail</span>, <span class="ruby-ivar">@urlbase</span>, <span class="ruby-identifier">validersMail</span>) 
+ 96:             <span class="ruby-keyword kw">end</span>
+ 97:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">is_freeze</span>
+ 98:               <span class="ruby-identifier">validersMail</span>=<span class="ruby-constant">PlmMailer</span>.<span class="ruby-identifier">listUserMail</span>(<span class="ruby-identifier">validers</span>,<span class="ruby-ivar">@user</span>)
+ 99:               <span class="ruby-identifier">email</span>=<span class="ruby-constant">PlmMailer</span>.<span class="ruby-identifier">create_docValidated</span>(<span class="ruby-identifier">object</span>, <span class="ruby-ivar">@usermail</span>, <span class="ruby-ivar">@urlbase</span>, <span class="ruby-identifier">askUserMail</span>, <span class="ruby-identifier">validersMail</span>)
+100:             <span class="ruby-keyword kw">end</span>
+101:             <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">email!</span>=<span class="ruby-keyword kw">nil</span>)
+102:               <span class="ruby-identifier">email</span>.<span class="ruby-identifier">set_content_type</span>(<span class="ruby-value str">&quot;text/html&quot;</span>)
+103:               <span class="ruby-constant">PlmMailer</span>.<span class="ruby-identifier">deliver</span>(<span class="ruby-identifier">email</span>)
+104:             <span class="ruby-keyword kw">end</span>
+105:           <span class="ruby-keyword kw">end</span>
+106:           <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_demoted</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">downcase!</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:current_rank=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">current_rank</span>,<span class="ruby-identifier">:new_rank=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">new_rank</span>,<span class="ruby-identifier">:validersMail=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">validersMail</span>)
+107:           <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">object</span>) }
+108:           <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }
+109:         <span class="ruby-keyword kw">else</span>
+110:           <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_not_demoted</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">downcase!</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:current_rank=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">current_rank</span>,<span class="ruby-identifier">:new_rank=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">new_rank</span>)
+111:           <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;edit&quot;</span> }
+112:           <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-identifier">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:unprocessable_entity</span> }
+113:         <span class="ruby-keyword kw">end</span>
+114:       <span class="ruby-keyword kw">else</span>
+115:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_not_demoted</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">downcase!</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:current_rank=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">current_rank</span>,<span class="ruby-identifier">:new_rank=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">new_rank</span>,<span class="ruby-identifier">:validersMail=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">validersMail</span>)
+116:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">object</span>) }
+117:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }
+118:       <span class="ruby-keyword kw">end</span>
+119:     <span class="ruby-keyword kw">end</span>
+120:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000353" class="method-detail">
+        <a name="M000353"></a>
+
+        <div class="method-heading">
+          <a href="#M000353" class="method-signature">
+          <span class="method-name">ctrl_promote</span><span class="method-args">(object, withMail=true)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+def <a
+href="PlmObjectControllerModule.html#M000353">ctrl_promote</a>(model,
+params, withMail=true)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000353-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000353-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 31</span>
+31:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ctrl_promote</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">withMail</span>=<span class="ruby-keyword kw">true</span>)
+32:     <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;plm_object_controller.ctrl_promote:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">inspect</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot; &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">withMail</span>.<span class="ruby-identifier">to_s</span>
+33:     <span class="ruby-identifier">email_ok</span>=<span class="ruby-keyword kw">true</span>
+34:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">withMail</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">true</span>
+35:       <span class="ruby-identifier">askUserMail</span>=<span class="ruby-identifier">object</span>.<span class="ruby-identifier">owner</span>.<span class="ruby-identifier">email</span>
+36:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;plm_object_controller.ctrl_promote:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">askUserMail</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;|&quot;</span>
+37:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">askUserMail</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">nil</span>
+38:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;plm_object_controller.ctrl_promote:pas de mail&quot;</span>
+39:         <span class="ruby-identifier">email_ok</span>=<span class="ruby-keyword kw">false</span>
+40:       <span class="ruby-keyword kw">end</span>
+41:     <span class="ruby-keyword kw">end</span>
+42:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+43:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">email_ok</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">true</span>
+44:         <span class="ruby-identifier">current_rank</span>=<span class="ruby-identifier">object</span>.<span class="ruby-identifier">statusobject</span>.<span class="ruby-identifier">name</span>
+45:         <span class="ruby-identifier">object</span>.<span class="ruby-identifier">promote</span>
+46:         <span class="ruby-identifier">new_rank</span>=<span class="ruby-identifier">object</span>.<span class="ruby-identifier">statusobject</span>.<span class="ruby-identifier">name</span>
+47:         <span class="ruby-identifier">current_rank!</span>=<span class="ruby-identifier">new_rank</span>
+48:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">save</span>
+49:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">withMail</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">true</span>
+50:             <span class="ruby-identifier">email</span>=<span class="ruby-keyword kw">nil</span> 
+51:             <span class="ruby-identifier">validers</span>=<span class="ruby-constant">User</span>.<span class="ruby-identifier">find_validers</span>             
+52:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">is_to_validate</span>
+53:               <span class="ruby-identifier">validersMail</span>=<span class="ruby-constant">PlmMailer</span>.<span class="ruby-identifier">listUserMail</span>(<span class="ruby-identifier">validers</span>)
+54:               <span class="ruby-identifier">email</span>=<span class="ruby-constant">PlmMailer</span>.<span class="ruby-identifier">create_toValidate</span>(<span class="ruby-identifier">object</span>, <span class="ruby-ivar">@usermail</span>, <span class="ruby-ivar">@urlbase</span>, <span class="ruby-identifier">validersMail</span>) 
+55:             <span class="ruby-keyword kw">end</span>
+56:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">is_freeze</span>
+57:               <span class="ruby-identifier">validersMail</span>=<span class="ruby-constant">PlmMailer</span>.<span class="ruby-identifier">listUserMail</span>(<span class="ruby-identifier">validers</span>,<span class="ruby-ivar">@user</span>)
+58:               <span class="ruby-identifier">email</span>=<span class="ruby-constant">PlmMailer</span>.<span class="ruby-identifier">create_validated</span>(<span class="ruby-identifier">object</span>, <span class="ruby-ivar">@usermail</span>, <span class="ruby-ivar">@urlbase</span>, <span class="ruby-identifier">askUserMail</span>, <span class="ruby-identifier">validersMail</span>)
+59:             <span class="ruby-keyword kw">end</span>
+60:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">email!</span>=<span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">email!</span>=<span class="ruby-value str">&quot;&quot;</span>
+61:               <span class="ruby-identifier">email</span>.<span class="ruby-identifier">set_content_type</span>(<span class="ruby-value str">&quot;text/html&quot;</span>)
+62:               <span class="ruby-constant">PlmMailer</span>.<span class="ruby-identifier">deliver</span>(<span class="ruby-identifier">email</span>)
+63:             <span class="ruby-keyword kw">end</span>
+64:           <span class="ruby-keyword kw">end</span>
+65:           <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_promoted</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">downcase!</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:current_rank=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">current_rank</span>,<span class="ruby-identifier">:new_rank=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">new_rank</span>,<span class="ruby-identifier">:validersMail=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">validersMail</span>)
+66:           <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">object</span>) }
+67:           <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }
+68:         <span class="ruby-keyword kw">else</span>
+69:           <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_not_promoted</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">downcase!</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:current_rank=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">current_rank</span>,<span class="ruby-identifier">:new_rank=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">new_rank</span>,<span class="ruby-identifier">:validersMail=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">validersMail</span>)
+70:           <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;edit&quot;</span> }
+71:           <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-identifier">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:unprocessable_entity</span> }
+72:         <span class="ruby-keyword kw">end</span>
+73:       <span class="ruby-keyword kw">else</span>
+74:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_user_no_email</span>,<span class="ruby-identifier">:user=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">object</span>.<span class="ruby-identifier">owner</span>.<span class="ruby-identifier">login</span>)
+75:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;edit&quot;</span> }
+76:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-identifier">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:unprocessable_entity</span> }        
+77:       <span class="ruby-keyword kw">end</span>
+78:     <span class="ruby-keyword kw">end</span>
+79:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000352" class="method-detail">
+        <a name="M000352"></a>
+
+        <div class="method-heading">
+          <a href="#M000352" class="method-signature">
+          <span class="method-name">ctrl_revise</span><span class="method-args">(model)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000352-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000352-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 3</span>
+ 3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ctrl_revise</span>(<span class="ruby-identifier">model</span>)
+ 4:     <span class="ruby-identifier">define_variables</span>
+ 5:     <span class="ruby-identifier">object</span> = <span class="ruby-identifier">model</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+ 6:     <span class="ruby-identifier">previous_rev</span>=<span class="ruby-identifier">object</span>.<span class="ruby-identifier">revision</span>
+ 7:     <span class="ruby-ivar">@object</span>=<span class="ruby-identifier">object</span>.<span class="ruby-identifier">revise</span>
+ 8:     <span class="ruby-ivar">@types</span>=<span class="ruby-constant">Typesobject</span>.<span class="ruby-identifier">getTypes</span>(<span class="ruby-identifier">object</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">downcase!</span>)
+ 9:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+10:       <span class="ruby-keyword kw">if</span>(<span class="ruby-ivar">@object</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>)
+11:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">save</span>
+12:           <span class="ruby-identifier">puts</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">+</span><span class="ruby-value str">'.revision apres save='</span><span class="ruby-operator">+</span><span class="ruby-ivar">@object</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;:&quot;</span><span class="ruby-operator">+</span><span class="ruby-ivar">@object</span>.<span class="ruby-identifier">revision</span>;
+13:           <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_revised</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-ivar">@object</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">downcase!</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@object</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:previous_rev=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">previous_rev</span>,<span class="ruby-identifier">:revision=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@object</span>.<span class="ruby-identifier">revision</span>)
+14:           <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-ivar">@object</span>) }
+15:           <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }
+16:         <span class="ruby-keyword kw">else</span>
+17:           <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;edit&quot;</span> }
+18:           <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">errors</span>, <span class="ruby-identifier">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:unprocessable_entity</span> }
+19:         <span class="ruby-keyword kw">end</span>
+20:       <span class="ruby-keyword kw">else</span>
+21:         <span class="ruby-ivar">@object</span> = <span class="ruby-identifier">model</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+22:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_not_revised</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-ivar">@object</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">downcase!</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@object</span>.<span class="ruby-identifier">ident</span>,<span class="ruby-identifier">:previous_rev=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">previous_rev</span>)
+23:         <span class="ruby-comment cmt">#flash[:notice] = &quot;Document cannot be revised from #{previous_rev} (not last revision or not frozen status ?).&quot;</span>
+24:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-ivar">@object</span>) }
+25:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }        
+26:       <span class="ruby-keyword kw">end</span>
+27:     <span class="ruby-keyword kw">end</span>
+28:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000364" class="method-detail">
+        <a name="M000364"></a>
+
+        <div class="method-heading">
+          <a href="#M000364" class="method-signature">
+          <span class="method-name">follow_tree_customer</span><span class="method-args">(node, obj,ctrl)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000364-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000364-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 289</span>
+289:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">follow_tree_customer</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">obj</span>,<span class="ruby-identifier">ctrl</span>)
+290:     <span class="ruby-identifier">tree_documents</span>(<span class="ruby-identifier">node</span>,<span class="ruby-value str">&quot;customer&quot;</span>,<span class="ruby-identifier">obj</span>,<span class="ruby-identifier">ctrl</span>)  
+291:      <span class="ruby-identifier">tree_forums</span>(<span class="ruby-identifier">node</span>,<span class="ruby-value str">&quot;customer&quot;</span>,<span class="ruby-identifier">obj</span>,<span class="ruby-identifier">ctrl</span>)  
+292:      <span class="ruby-identifier">links</span>=<span class="ruby-constant">Link</span>.<span class="ruby-identifier">find_childs</span>(<span class="ruby-value str">&quot;customer&quot;</span>, <span class="ruby-identifier">obj</span>,  <span class="ruby-value str">&quot;project&quot;</span>)
+293:     <span class="ruby-identifier">links</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">link</span><span class="ruby-operator">|</span>
+294:       <span class="ruby-identifier">child</span>=<span class="ruby-constant">Project</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">link</span>.<span class="ruby-identifier">child_id</span>)
+295:       <span class="ruby-identifier">pnode</span>=<span class="ruby-identifier">tree_project</span>(<span class="ruby-identifier">child</span>,<span class="ruby-identifier">link</span>,<span class="ruby-identifier">ctrl</span>)
+296:       <span class="ruby-identifier">node</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-identifier">pnode</span>                  
+297:         <span class="ruby-identifier">follow_tree_project</span>(<span class="ruby-identifier">pnode</span>, <span class="ruby-identifier">child</span>,<span class="ruby-identifier">ctrl</span>)
+298:       <span class="ruby-keyword kw">end</span>
+299:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000362" class="method-detail">
+        <a name="M000362"></a>
+
+        <div class="method-heading">
+          <a href="#M000362" class="method-signature">
+          <span class="method-name">follow_tree_part</span><span class="method-args">(node, part,ctrl)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000362-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000362-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 209</span>
+209:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">follow_tree_part</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">part</span>,<span class="ruby-identifier">ctrl</span>)
+210:     <span class="ruby-comment cmt">#part.projects.each do |d|</span>
+211:     <span class="ruby-comment cmt">#  cnode = tree_project(d)        </span>
+212:     <span class="ruby-comment cmt">#  node &lt;&lt; cnode</span>
+213:     <span class="ruby-comment cmt">#non car bouclage follow_tree_project(node,d)</span>
+214:     <span class="ruby-comment cmt">#end</span>
+215:     <span class="ruby-identifier">tree_forums</span>(<span class="ruby-identifier">node</span>,<span class="ruby-value str">&quot;part&quot;</span>,<span class="ruby-identifier">part</span>,<span class="ruby-identifier">ctrl</span>)  
+216:     <span class="ruby-identifier">tree_documents</span>(<span class="ruby-identifier">node</span>,<span class="ruby-value str">&quot;part&quot;</span>,<span class="ruby-identifier">part</span>,<span class="ruby-identifier">ctrl</span>) 
+217:     <span class="ruby-identifier">links</span>=<span class="ruby-constant">Link</span>.<span class="ruby-identifier">find_childs</span>(<span class="ruby-value str">&quot;part&quot;</span>, <span class="ruby-identifier">part</span>,  <span class="ruby-value str">&quot;part&quot;</span>)
+218:     <span class="ruby-identifier">links</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">link</span><span class="ruby-operator">|</span>
+219:       <span class="ruby-identifier">child</span>=<span class="ruby-constant">Part</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">link</span>.<span class="ruby-identifier">child_id</span>) 
+220:       <span class="ruby-identifier">url</span>={<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'parts'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{child.id}&quot;</span>}
+221:       <span class="ruby-comment cmt">#link_to_remote= {</span>
+222:       <span class="ruby-comment cmt">#       :url =&gt; url,</span>
+223:       <span class="ruby-comment cmt">#       :update =&gt; &quot;content&quot;,</span>
+224:       <span class="ruby-comment cmt">#       :base =&gt; self</span>
+225:       <span class="ruby-comment cmt">#     }</span>
+226:       <span class="ruby-comment cmt">#link_to=url</span>
+227:       <span class="ruby-identifier">destroy_url</span>=<span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ctrl</span>.<span class="ruby-identifier">controller_name</span>,
+228:                                    <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;remove_link&quot;</span>,
+229:                                    <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">link</span>.<span class="ruby-identifier">id</span>)
+230:       <span class="ruby-identifier">cut_a</span>=<span class="ruby-value str">'&lt;a href=&quot;'</span><span class="ruby-operator">+</span><span class="ruby-identifier">destroy_url</span><span class="ruby-operator">+</span><span class="ruby-value str">'&quot;&gt;'</span><span class="ruby-operator">+</span><span class="ruby-identifier">img_cut</span><span class="ruby-operator">+</span><span class="ruby-value str">'&lt;/a&gt;'</span> 
+231:       <span class="ruby-identifier">options</span>={
+232:                 <span class="ruby-identifier">:label</span>  =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">link</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">||</span><span class="ruby-value str">'no_relation'</span>)<span class="ruby-operator">+</span><span class="ruby-value str">'-'</span><span class="ruby-operator">+</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_part</span>)<span class="ruby-operator">+</span><span class="ruby-value str">':'</span><span class="ruby-operator">+</span><span class="ruby-identifier">child</span>.<span class="ruby-identifier">ident</span><span class="ruby-operator">+</span><span class="ruby-identifier">cut_a</span>,
+233:                 <span class="ruby-identifier">:icon=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">icone</span>(<span class="ruby-identifier">child</span>),
+234:         <span class="ruby-comment cmt">#:icon_open=&gt;icone(child),</span>
+235:                 <span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">designation</span>,
+236:                 <span class="ruby-identifier">:url=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">url</span>),
+237:               <span class="ruby-identifier">:open</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
+238:       }
+239:       <span class="ruby-identifier">cnode</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>)          
+240:       <span class="ruby-identifier">node</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">cnode</span>
+241:       <span class="ruby-identifier">follow_tree_part</span>(<span class="ruby-identifier">cnode</span>, <span class="ruby-identifier">child</span>,<span class="ruby-identifier">ctrl</span>) 
+242:     <span class="ruby-keyword kw">end</span>
+243:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000365" class="method-detail">
+        <a name="M000365"></a>
+
+        <div class="method-heading">
+          <a href="#M000365" class="method-signature">
+          <span class="method-name">follow_tree_project</span><span class="method-args">(node, obj,ctrl)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000365-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000365-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 301</span>
+301:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">follow_tree_project</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">obj</span>,<span class="ruby-identifier">ctrl</span>)
+302:     <span class="ruby-identifier">tree_documents</span>(<span class="ruby-identifier">node</span>,<span class="ruby-value str">&quot;project&quot;</span>,<span class="ruby-identifier">obj</span>,<span class="ruby-identifier">ctrl</span>) 
+303:     <span class="ruby-identifier">tree_forums</span>(<span class="ruby-identifier">node</span>,<span class="ruby-value str">&quot;project&quot;</span>,<span class="ruby-identifier">obj</span>,<span class="ruby-identifier">ctrl</span>)  
+304:     <span class="ruby-comment cmt">#if(obj.customer!=nil)</span>
+305:     <span class="ruby-comment cmt">#    cnode=tree_customer(obj.customer)</span>
+306:     <span class="ruby-comment cmt">#    node&lt;&lt;cnode    </span>
+307:     <span class="ruby-comment cmt">#  end</span>
+308:     <span class="ruby-identifier">links</span>=<span class="ruby-constant">Link</span>.<span class="ruby-identifier">find_childs</span>(<span class="ruby-value str">&quot;project&quot;</span>, <span class="ruby-identifier">obj</span>,  <span class="ruby-value str">&quot;part&quot;</span>)
+309:     <span class="ruby-identifier">links</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">link</span><span class="ruby-operator">|</span>
+310:       <span class="ruby-identifier">child</span>=<span class="ruby-constant">Part</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">link</span>.<span class="ruby-identifier">child_id</span>)
+311:         <span class="ruby-identifier">pnode</span>=<span class="ruby-identifier">tree_part</span>(<span class="ruby-identifier">child</span>, <span class="ruby-identifier">link</span>,<span class="ruby-identifier">ctrl</span>)
+312:         <span class="ruby-identifier">node</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-identifier">pnode</span>       
+313:         <span class="ruby-identifier">follow_tree_part</span>(<span class="ruby-identifier">pnode</span>, <span class="ruby-identifier">child</span>,<span class="ruby-identifier">ctrl</span>)
+314:       <span class="ruby-keyword kw">end</span>
+315:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000363" class="method-detail">
+        <a name="M000363"></a>
+
+        <div class="method-heading">
+          <a href="#M000363" class="method-signature">
+          <span class="method-name">follow_tree_up_part</span><span class="method-args">(node, part,ctrl)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000363-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000363-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 245</span>
+245:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">follow_tree_up_part</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">part</span>,<span class="ruby-identifier">ctrl</span>)
+246:     <span class="ruby-identifier">links</span>=<span class="ruby-constant">Link</span>.<span class="ruby-identifier">find_fathers</span>(<span class="ruby-value str">&quot;part&quot;</span>, <span class="ruby-identifier">part</span>,  <span class="ruby-value str">&quot;part&quot;</span>)
+247:     <span class="ruby-identifier">links</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">link</span><span class="ruby-operator">|</span>
+248:       <span class="ruby-identifier">f</span>=<span class="ruby-constant">Part</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">link</span>.<span class="ruby-identifier">father_id</span>) 
+249:       <span class="ruby-identifier">url</span>={<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'parts'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{f.id}&quot;</span>}
+250:       <span class="ruby-identifier">options</span>={
+251:                 <span class="ruby-identifier">:label</span>  =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">link</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">||</span><span class="ruby-value str">'no_relation'</span>)<span class="ruby-operator">+</span><span class="ruby-value str">'-'</span><span class="ruby-operator">+</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_part</span>)<span class="ruby-operator">+</span><span class="ruby-value str">':'</span><span class="ruby-operator">+</span><span class="ruby-identifier">f</span>.<span class="ruby-identifier">ident</span>,
+252:                 <span class="ruby-identifier">:icon=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">icone</span>(<span class="ruby-identifier">f</span>),
+253:         <span class="ruby-comment cmt"># :icon_open=&gt;&quot;&quot;,</span>
+254:                 <span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">designation</span>,
+255:                 <span class="ruby-identifier">:url=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">url</span>),
+256:               <span class="ruby-identifier">:open</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
+257:       }
+258:       <span class="ruby-identifier">html_options</span> = {   
+259:               <span class="ruby-identifier">:alt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;alt:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">f</span>.<span class="ruby-identifier">ident</span>
+260:       }
+261:       <span class="ruby-identifier">cnode</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>)          
+262:       <span class="ruby-identifier">node</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">cnode</span>
+263:       <span class="ruby-comment cmt"># projets</span>
+264:       <span class="ruby-identifier">links</span>=<span class="ruby-constant">Link</span>.<span class="ruby-identifier">find_fathers</span>(<span class="ruby-value str">&quot;part&quot;</span>, <span class="ruby-identifier">part</span>,  <span class="ruby-value str">&quot;project&quot;</span>)
+265:       <span class="ruby-identifier">links</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">link</span><span class="ruby-operator">|</span>
+266:         <span class="ruby-identifier">f</span>=<span class="ruby-constant">Project</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">link</span>.<span class="ruby-identifier">father_id</span>) 
+267:         <span class="ruby-identifier">url</span>={<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'projects'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{f.id}&quot;</span>}
+268:         <span class="ruby-identifier">link_to_remote</span>= {
+269:                      <span class="ruby-identifier">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">url</span>,
+270:                      <span class="ruby-identifier">:update</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;content&quot;</span>,
+271:                      <span class="ruby-identifier">:base</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>
+272:         }
+273:         <span class="ruby-identifier">link_to</span>=<span class="ruby-identifier">url</span>
+274:         <span class="ruby-identifier">options</span>={
+275:                   <span class="ruby-identifier">:label</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:link_project</span>,<span class="ruby-identifier">:link=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">link</span>.<span class="ruby-identifier">name</span>,<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">f</span>.<span class="ruby-identifier">ident</span>),
+276:           <span class="ruby-comment cmt"># :icon=&gt;&quot;&quot;,</span>
+277:           <span class="ruby-comment cmt"># :icon_open=&gt;&quot;&quot;,</span>
+278:                   <span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">designation</span>,
+279:                   <span class="ruby-identifier">:url=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">url</span>),
+280:                 <span class="ruby-identifier">:open</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
+281:         }
+282:         <span class="ruby-identifier">cnode</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>)          
+283:         <span class="ruby-identifier">node</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">cnode</span>
+284:         
+285:       <span class="ruby-keyword kw">end</span>
+286:     <span class="ruby-keyword kw">end</span>
+287:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000366" class="method-detail">
+        <a name="M000366"></a>
+
+        <div class="method-heading">
+          <a href="#M000366" class="method-signature">
+          <span class="method-name">follow_tree_up_project</span><span class="method-args">(node, project,ctrl)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000366-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000366-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 317</span>
+317:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">follow_tree_up_project</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">project</span>,<span class="ruby-identifier">ctrl</span>)
+318:           <span class="ruby-identifier">links</span>=<span class="ruby-constant">Link</span>.<span class="ruby-identifier">find_fathers</span>(<span class="ruby-value str">&quot;project&quot;</span>, <span class="ruby-identifier">project</span>,  <span class="ruby-value str">&quot;customer&quot;</span>)
+319:           <span class="ruby-identifier">links</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">link</span><span class="ruby-operator">|</span>
+320:             <span class="ruby-identifier">c</span>=<span class="ruby-constant">Customer</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">link</span>.<span class="ruby-identifier">father_id</span>) 
+321:             <span class="ruby-identifier">url</span>={<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'customers'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{c.id}&quot;</span>}
+322:             <span class="ruby-identifier">options</span>={
+323:                 <span class="ruby-identifier">:label</span>  =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">link</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">||</span><span class="ruby-value str">'no_relation'</span>)<span class="ruby-operator">+</span><span class="ruby-value str">'-'</span><span class="ruby-operator">+</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_customer</span>)<span class="ruby-operator">+</span><span class="ruby-value str">':'</span><span class="ruby-operator">+</span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">ident</span>,
+324:                 <span class="ruby-identifier">:icon=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">icone</span>(<span class="ruby-identifier">c</span>),
+325:                 <span class="ruby-comment cmt"># :icon_open=&gt;&quot;&quot;,</span>
+326:                 <span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">designation</span>,
+327:                 <span class="ruby-identifier">:url=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">url</span>),
+328:               <span class="ruby-identifier">:open</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
+329:             }
+330:             <span class="ruby-identifier">cnode</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>)          
+331:             <span class="ruby-identifier">node</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">cnode</span>
+332:           <span class="ruby-keyword kw">end</span>
+333:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000358" class="method-detail">
+        <a name="M000358"></a>
+
+        <div class="method-heading">
+          <a href="#M000358" class="method-signature">
+          <span class="method-name">icone</span><span class="method-args">(obj)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000358-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000358-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 189</span>
+189:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">icone</span>(<span class="ruby-identifier">obj</span>)
+190:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">type!</span>=<span class="ruby-keyword kw">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">typesobject!</span>=<span class="ruby-keyword kw">nil</span>
+191:       <span class="ruby-value str">&quot;../images/&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">obj</span>.<span class="ruby-identifier">type</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;_&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">obj</span>.<span class="ruby-identifier">typesobject</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;.png&quot;</span>
+192:     <span class="ruby-keyword kw">else</span>
+193:       <span class="ruby-value str">&quot;&quot;</span>
+194:     <span class="ruby-keyword kw">end</span>
+195:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000359" class="method-detail">
+        <a name="M000359"></a>
+
+        <div class="method-heading">
+          <a href="#M000359" class="method-signature">
+          <span class="method-name">img</span><span class="method-args">(name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000359-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000359-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 197</span>
+197:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">img</span>(<span class="ruby-identifier">name</span>)
+198:         <span class="ruby-value str">&quot;&lt;img class=\&quot;icone\&quot; src=\&quot;../images/&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">name</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;.png\&quot;/&gt;&quot;</span>  
+199:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000361" class="method-detail">
+        <a name="M000361"></a>
+
+        <div class="method-heading">
+          <a href="#M000361" class="method-signature">
+          <span class="method-name">img_cut</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000361-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000361-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 205</span>
+205:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">img_cut</span>
+206:     <span class="ruby-identifier">img</span>(<span class="ruby-value str">&quot;cut&quot;</span>)
+207:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000360" class="method-detail">
+        <a name="M000360"></a>
+
+        <div class="method-heading">
+          <a href="#M000360" class="method-signature">
+          <span class="method-name">img_destroy</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000360-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000360-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 201</span>
+201:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">img_destroy</span>
+202:     <span class="ruby-identifier">img</span>(<span class="ruby-value str">&quot;destroy&quot;</span>)
+203:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000369" class="method-detail">
+        <a name="M000369"></a>
+
+        <div class="method-heading">
+          <a href="#M000369" class="method-signature">
+          <span class="method-name">remove_link</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000369-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000369-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 381</span>
+381:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_link</span>
+382:     <span class="ruby-identifier">link</span> = <span class="ruby-constant">Link</span>.<span class="ruby-identifier">remove</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+383:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>      
+384:      <span class="ruby-comment cmt">#flash[:notice] = t(:ctrl_nothing_to_paste,:object=&gt;t(:ctrl_document))</span>
+385:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:tree_object</span>]) }
+386:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }
+387:       <span class="ruby-keyword kw">end</span>
+388:     <span class="ruby-comment cmt">#uri=session[:original_uri]</span>
+389:     <span class="ruby-comment cmt">#session[:original_uri]=nil</span>
+390:     <span class="ruby-comment cmt">#redirect_to(uri || {:controller =&gt; &quot;main&quot;, :action =&gt; &quot;index&quot;})</span>
+391:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000357" class="method-detail">
+        <a name="M000357"></a>
+
+        <div class="method-heading">
+          <a href="#M000357" class="method-signature">
+          <span class="method-name">tree_customer</span><span class="method-args">(obj)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000357-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000357-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 171</span>
+171:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tree_customer</span>(<span class="ruby-identifier">obj</span>)  
+172:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">obj!</span>=<span class="ruby-keyword kw">nil</span>) 
+173:       <span class="ruby-identifier">url</span>={<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'customers'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{obj.id}&quot;</span>}
+174:       <span class="ruby-identifier">options</span>={
+175:                       <span class="ruby-identifier">:label</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_customer</span>)<span class="ruby-operator">+</span><span class="ruby-value str">&quot;:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">obj</span>.<span class="ruby-identifier">ident</span>,
+176:                       <span class="ruby-identifier">:icon=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">icone</span>(<span class="ruby-identifier">obj</span>),
+177:         <span class="ruby-comment cmt"># :icon_open=&gt;&quot;&quot;,</span>
+178:                       <span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">designation</span>,
+179:                       <span class="ruby-identifier">:open</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>,
+180:                       <span class="ruby-identifier">:url=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">url</span>)
+181:       }
+182:       <span class="ruby-identifier">cnode</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>,<span class="ruby-keyword kw">nil</span>)
+183:     <span class="ruby-keyword kw">else</span>
+184:       <span class="ruby-identifier">cnode</span>=<span class="ruby-keyword kw">nil</span>
+185:     <span class="ruby-keyword kw">end</span>
+186:     <span class="ruby-identifier">cnode</span>
+187:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000367" class="method-detail">
+        <a name="M000367"></a>
+
+        <div class="method-heading">
+          <a href="#M000367" class="method-signature">
+          <span class="method-name">tree_documents</span><span class="method-args">(node, father_object, father,ctrl)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000367-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000367-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 335</span>
+335:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tree_documents</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">father_object</span>, <span class="ruby-identifier">father</span>,<span class="ruby-identifier">ctrl</span>)
+336:       <span class="ruby-identifier">docs</span>=<span class="ruby-constant">Link</span>.<span class="ruby-identifier">find_childs</span>(<span class="ruby-identifier">father_object</span>, <span class="ruby-identifier">father</span>,  <span class="ruby-value str">&quot;document&quot;</span>)
+337:       <span class="ruby-identifier">docs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">link</span><span class="ruby-operator">|</span>
+338:           <span class="ruby-identifier">d</span>=<span class="ruby-constant">Document</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">link</span>.<span class="ruby-identifier">child_id</span>)
+339:           <span class="ruby-identifier">url</span>={<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'documents'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{d.id}&quot;</span>}        
+340:           <span class="ruby-identifier">destroy_url</span>=<span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ctrl</span>.<span class="ruby-identifier">controller_name</span>,
+341:                               <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;remove_link&quot;</span>,
+342:                               <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{link.id}&quot;</span> )
+343:           <span class="ruby-identifier">cut_a</span>=<span class="ruby-value str">'&lt;a href=&quot;'</span><span class="ruby-operator">+</span><span class="ruby-identifier">destroy_url</span><span class="ruby-operator">+</span><span class="ruby-value str">'&quot;&gt;'</span><span class="ruby-operator">+</span><span class="ruby-identifier">img_cut</span><span class="ruby-operator">+</span><span class="ruby-value str">'&lt;/a&gt;'</span>   
+344:           <span class="ruby-identifier">options</span>={
+345:                    <span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">link</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">||</span><span class="ruby-value str">'no_relation'</span>)<span class="ruby-operator">+</span><span class="ruby-value str">'-'</span><span class="ruby-operator">+</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_document</span>)<span class="ruby-operator">+</span><span class="ruby-value str">':'</span><span class="ruby-operator">+</span><span class="ruby-identifier">d</span>.<span class="ruby-identifier">ident</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">cut_a</span>,
+346:                    <span class="ruby-identifier">:icon=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">icone</span>(<span class="ruby-identifier">d</span>),
+347:                    <span class="ruby-comment cmt">#:icon_open=&gt;icone(d),</span>
+348:                    <span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">designation</span>,
+349:                    <span class="ruby-identifier">:open</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>,
+350:                    <span class="ruby-identifier">:url=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">url</span>)
+351:           }
+352:           <span class="ruby-identifier">cnode</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>,<span class="ruby-keyword kw">nil</span>)          
+353:           <span class="ruby-identifier">node</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-identifier">cnode</span>   
+354:       <span class="ruby-keyword kw">end</span>
+355:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000368" class="method-detail">
+        <a name="M000368"></a>
+
+        <div class="method-heading">
+          <a href="#M000368" class="method-signature">
+          <span class="method-name">tree_forums</span><span class="method-args">(node, father_object, father,ctrl)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000368-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000368-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 356</span>
+356:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tree_forums</span>(<span class="ruby-identifier">node</span>, <span class="ruby-identifier">father_object</span>, <span class="ruby-identifier">father</span>,<span class="ruby-identifier">ctrl</span>)
+357:       <span class="ruby-identifier">docs</span>=<span class="ruby-constant">Link</span>.<span class="ruby-identifier">find_childs</span>(<span class="ruby-identifier">father_object</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">father</span>,  <span class="ruby-value str">&quot;forum&quot;</span>)
+358:       <span class="ruby-identifier">docs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">link</span><span class="ruby-operator">|</span>
+359:           <span class="ruby-identifier">d</span>=<span class="ruby-constant">Forum</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">link</span>.<span class="ruby-identifier">child_id</span>)
+360:           <span class="ruby-identifier">url</span>={<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'forums'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{d.id}&quot;</span>}        
+361:           <span class="ruby-identifier">destroy_url</span>=<span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ctrl</span>.<span class="ruby-identifier">controller_name</span>,
+362:                               <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;remove_link&quot;</span>,
+363:                               <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{link.id}&quot;</span> )
+364:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">is_freeze</span>() <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span> 
+365:               <span class="ruby-identifier">cut_a</span>=<span class="ruby-value str">'&lt;a href=&quot;'</span><span class="ruby-operator">+</span><span class="ruby-identifier">destroy_url</span><span class="ruby-operator">+</span><span class="ruby-value str">'&quot;&gt;'</span><span class="ruby-operator">+</span><span class="ruby-identifier">img_cut</span><span class="ruby-operator">+</span><span class="ruby-value str">'&lt;/a&gt;'</span>   
+366:           <span class="ruby-keyword kw">else</span> 
+367:               <span class="ruby-identifier">cut_a</span>=<span class="ruby-value str">&quot;&quot;</span>
+368:           <span class="ruby-keyword kw">end</span>
+369:           <span class="ruby-identifier">options</span>={
+370:                    <span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">link</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">||</span><span class="ruby-value str">'no_relation'</span>)<span class="ruby-operator">+</span><span class="ruby-value str">'-'</span><span class="ruby-operator">+</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_forum</span>)<span class="ruby-operator">+</span><span class="ruby-value str">':'</span><span class="ruby-operator">+</span><span class="ruby-identifier">d</span>.<span class="ruby-identifier">subject</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">cut_a</span>,
+371:                    <span class="ruby-identifier">:icon=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">icone</span>(<span class="ruby-identifier">d</span>),
+372:                    <span class="ruby-comment cmt">#:icon_open=&gt;icone(d),</span>
+373:                    <span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">d</span>.<span class="ruby-identifier">subject</span>,
+374:                    <span class="ruby-identifier">:open</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>,
+375:                    <span class="ruby-identifier">:url=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">url</span>)
+376:           }
+377:           <span class="ruby-identifier">cnode</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>,<span class="ruby-keyword kw">nil</span>)          
+378:           <span class="ruby-identifier">node</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-identifier">cnode</span>   
+379:       <span class="ruby-keyword kw">end</span>
+380:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000355" class="method-detail">
+        <a name="M000355"></a>
+
+        <div class="method-heading">
+          <a href="#M000355" class="method-signature">
+          <span class="method-name">tree_part</span><span class="method-args">(obj, link,ctrl)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000355-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000355-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 122</span>
+122:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tree_part</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">link</span>,<span class="ruby-identifier">ctrl</span>) 
+123:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">obj!</span>=<span class="ruby-keyword kw">nil</span>) 
+124:       <span class="ruby-identifier">url</span>={<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'parts'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{obj.id}&quot;</span>}
+125:       <span class="ruby-identifier">link_to_remote</span>= {
+126:              <span class="ruby-identifier">:url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">url</span>,
+127:              <span class="ruby-identifier">:update</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;content&quot;</span>,
+128:              <span class="ruby-identifier">:base</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>
+129:       }
+130:       <span class="ruby-identifier">link_to</span>= <span class="ruby-identifier">url</span>
+131:       <span class="ruby-identifier">destroy_url</span>=<span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ctrl</span>.<span class="ruby-identifier">controller_name</span>,
+132:                                                    <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;remove_link&quot;</span>,
+133:                                                    <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">link</span>.<span class="ruby-identifier">id</span>)
+134:       <span class="ruby-identifier">cut_a</span>=<span class="ruby-value str">'&lt;a href=&quot;'</span><span class="ruby-operator">+</span><span class="ruby-identifier">destroy_url</span><span class="ruby-operator">+</span><span class="ruby-value str">'&quot;&gt;'</span><span class="ruby-operator">+</span><span class="ruby-identifier">img_cut</span><span class="ruby-operator">+</span><span class="ruby-value str">'&lt;/a&gt;'</span> 
+135:       <span class="ruby-identifier">options</span>={
+136:               <span class="ruby-identifier">:label</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_part</span>)<span class="ruby-operator">+</span><span class="ruby-value str">&quot;:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">obj</span>.<span class="ruby-identifier">ident</span><span class="ruby-operator">+</span><span class="ruby-identifier">cut_a</span>,
+137:               <span class="ruby-identifier">:icon=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">icone</span>(<span class="ruby-identifier">obj</span>),
+138:         <span class="ruby-comment cmt">#:title =&gt; obj.id.to_s,</span>
+139:               <span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">designation</span>,
+140:               <span class="ruby-identifier">:url=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">url</span>),
+141:               <span class="ruby-identifier">:open</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
+142:       }
+143:       <span class="ruby-identifier">cnode</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>)                              
+144:     <span class="ruby-keyword kw">else</span>
+145:       <span class="ruby-identifier">cnode</span>=<span class="ruby-keyword kw">nil</span>
+146:     <span class="ruby-keyword kw">end</span>
+147:     <span class="ruby-identifier">cnode</span>
+148:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000356" class="method-detail">
+        <a name="M000356"></a>
+
+        <div class="method-heading">
+          <a href="#M000356" class="method-signature">
+          <span class="method-name">tree_project</span><span class="method-args">(obj, link,ctrl)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000356-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000356-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/controllers/plm_object_controller_module.rb, line 150</span>
+150:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tree_project</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">link</span>,<span class="ruby-identifier">ctrl</span>)
+151:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">obj!</span>=<span class="ruby-keyword kw">nil</span>) 
+152:       <span class="ruby-identifier">url</span>={<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'projects'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>, <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{obj.id}&quot;</span>}
+153:       <span class="ruby-identifier">destroy_url</span>=<span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ctrl</span>.<span class="ruby-identifier">controller_name</span>,
+154:                                                  <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;remove_link&quot;</span>,
+155:                                                  <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">link</span>.<span class="ruby-identifier">id</span>)
+156:       <span class="ruby-identifier">cut_a</span>=<span class="ruby-value str">'&lt;a href=&quot;'</span><span class="ruby-operator">+</span><span class="ruby-identifier">destroy_url</span><span class="ruby-operator">+</span><span class="ruby-value str">'&quot;&gt;'</span><span class="ruby-operator">+</span><span class="ruby-identifier">img_cut</span><span class="ruby-operator">+</span><span class="ruby-value str">'&lt;/a&gt;'</span> 
+157:       <span class="ruby-identifier">options</span>={
+158:                         <span class="ruby-identifier">:label</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_project</span>)<span class="ruby-operator">+</span><span class="ruby-value str">&quot;:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">obj</span>.<span class="ruby-identifier">ident</span><span class="ruby-operator">+</span><span class="ruby-identifier">cut_a</span>,
+159:                         <span class="ruby-identifier">:icon=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">icone</span>(<span class="ruby-identifier">obj</span>),
+160:                         <span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">designation</span>,
+161:                         <span class="ruby-identifier">:open</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>,
+162:                         <span class="ruby-identifier">:url=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">url</span>)
+163:       }
+164:       <span class="ruby-identifier">cnode</span> = <span class="ruby-constant">Node</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>,<span class="ruby-keyword kw">nil</span>)                        
+165:     <span class="ruby-keyword kw">else</span>
+166:       <span class="ruby-identifier">cnode</span>=<span class="ruby-keyword kw">nil</span>
+167:     <span class="ruby-keyword kw">end</span> 
+168:     <span class="ruby-identifier">cnode</span>
+169:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

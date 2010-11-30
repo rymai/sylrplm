@@ -88,7 +88,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000042">which_documents</a>&nbsp;&nbsp;
+      <a href="#M000040">which_documents</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -110,29 +110,29 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000042" class="method-detail">
-        <a name="M000042"></a>
+      <div id="method-M000040" class="method-detail">
+        <a name="M000040"></a>
 
         <div class="method-heading">
-          <a href="#M000042" class="method-signature">
+          <a href="#M000040" class="method-signature">
           <span class="method-name">which_documents</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000042-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000042-source">
+            onclick="toggleCode('M000040-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000040-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/info_controller.rb, line 5</span>
  5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">which_documents</span>
  6:     <span class="ruby-identifier">part</span> =<span class="ruby-constant">Part</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
  7:   <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span>
- 8:     <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(<span class="ruby-node">&quot;Part non trouvée: #{params[:id]}&quot;</span>)
+ 8:     <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span>(<span class="ruby-node">&quot;Part non trouvee: #{params[:id]}&quot;</span>)
  9:     <span class="ruby-comment cmt">#flash[:notice] = &quot;Part invalide&quot;</span>
 10:     <span class="ruby-comment cmt">#@part=nil</span>
 11:     <span class="ruby-comment cmt">#@documents=nil</span>
-12:     <span class="ruby-identifier">render</span>(<span class="ruby-identifier">:text</span>, <span class="ruby-identifier">:text=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:info_object_not_found</span>, <span class="ruby-identifier">context</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;which_documents&quot;</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;Part&quot;</span>,<span class="ruby-identifier">:id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>]))
+12:     <span class="ruby-identifier">render</span>(<span class="ruby-identifier">:text</span>, <span class="ruby-identifier">:text=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:info_object_not_found</span>, <span class="ruby-identifier">context</span>=<span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;which_documents&quot;</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">:ctrl_part</span>,<span class="ruby-identifier">:id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>]))
 13:   <span class="ruby-keyword kw">else</span>
 14:     <span class="ruby-ivar">@part</span>=<span class="ruby-identifier">part</span>
 15:     <span class="ruby-ivar">@documents</span>=<span class="ruby-ivar">@part</span>.<span class="ruby-identifier">documents</span>
