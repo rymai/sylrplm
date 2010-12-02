@@ -1,36 +1,8 @@
 <h1><%=t(:statusobjects_edit)%></h1>
 <% form_for(@statusobject) do |f| %>
 <%= f.error_messages %>
-<p>
-    <%= f.label t(:label_object) %>
-    <br/>
-    <%= f.select(:object, @objectswithstatus) %>
-</p>
-<p>
-    <%= f.label t(:label_name) %>
-    <br/>
-    <%= f.text_field :name %>
-</p>
-<p>
-    <%= f.label t(:label_rank) %>
-    <br/>
-    <%= f.text_field :rank %>
-</p>
-<p>
-    <%= f.label t(:label_description) %>
-    <br/>
-    <%= f.text_area :description %>
-</p>
-<p>
-    <%= f.label t(:label_promote) %>
-    <br/>
-    <%= f.check_box :promote %>
-</p>
-<p>
-    <%= f.label t(:label_demote) %>
-    <br/>
-    <%= f.check_box :demote %>
-</p>
+<%= render(:partial => "statusobjects/edit",:locals => { :f => f, :fonct=>"edit" }) %>
+
 <table class='menu_bas'>
     <tr>
         <td>

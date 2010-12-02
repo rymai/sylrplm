@@ -3,6 +3,8 @@ Application SylRPLM : Product Life Management
 - Pré-requis
   
   - La gem mysql : gem install mysql
+  - Ruby 1.8.7-p249
+  - Rails 2.3.4 : gem install -v=2.3.4 rails
   
 - Mise en place
   
@@ -22,17 +24,26 @@ Application SylRPLM : Product Life Management
     
 - Installation des plugins 
   
-  - Plugin de gestion d'autorisations
-    
-      ruby script/plugin install http://opensvn.csie.org/ezra/rails/plugins/dev/acl_system2
+  - rake gems:install
+  - gem install mysql
+  
+- environnement windows
+  - ajouter le chemin de mysql/bin au PATH
+  - telecharger http://instantrails.rubyforge.org/svn/trunk/InstantRails-win/InstantRails/mysql/bin/libmySQL.dll
+    et copier la dll dans le repertoire bin de ruby
     
 - Installation de l'application
   
   - Créer la base de données:
     
+      mysqladmin -u root password monpass
       mysqladmin -u root create sylrplm_production
+      ou
+      utiliser phpmyadmin
     
   - Charger le schéma de la base de données
     
       rake db:schema:load RAILS_ENV=production
     
+  - lancer le serveur
+    ruby script/server -e production

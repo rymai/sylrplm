@@ -3,14 +3,8 @@
 <% form_for(@faq) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label t(:label_question) %><br />
-    <%= f.text_field :question %>
-  </p>
-  <p>
-    <%= f.label t(:label_answer) %><br />
-    <%= f.text_field :answer %>
-  </p>
+<%= render(:partial => "questions/edit",:locals => { :f => f, :fonct=>"edit" }) %>
+
   
   <table class='menu_bas'>
     <tr>

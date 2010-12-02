@@ -1,8 +1,10 @@
+require 'lib/controllers/plm_object_controller_module'
+require 'lib/controllers/plm_init_controller_module'
 class ProjectsController < ApplicationController
   include PlmObjectControllerModule
   include PlmInitControllerModule
   before_filter :check_init, :only=>[:new]
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   
   #before_filter :authorize, :only => [ :show, :edit , :new, :destroy ]
   
@@ -55,11 +57,11 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   # GET /projects/new.xml
   # nouveau projet
-  # le owner est attribue avant la saisie, voir Project.createNew
+  # le owner est attribue avant la saisie, voir Project.create_new
   # on definit les listes de valeur pour le type et le statut 
   def new
     define_variables
-    @project = Project.createNew(nil, @user)
+    @project = Project.create_new(nil, @user)
     @types=Project.getTypesProject
     @status= Statusobject.find_for("project")
     respond_to do |format|
@@ -82,7 +84,7 @@ class ProjectsController < ApplicationController
   # creation d'un projet (apres validation du new)
   def create
     define_variables
-    @project = Project.createNew(params[:project], @user)
+    @project = Project.create_new(params[:project], @user)
     @types=Project.getTypesProject
     @status= Statusobject.find_for("project")
     respond_to do |format|
@@ -139,7 +141,7 @@ class ProjectsController < ApplicationController
     #tree << cnode     
     session[:tree_object]=obj
     follow_tree_project(tree, obj,self)
-    return tree
+    tree
   end
   
   def create_tree_up(obj)
@@ -148,7 +150,7 @@ class ProjectsController < ApplicationController
     #tree << cnode     
     session[:tree_object]=obj
     follow_tree_up_project(tree, obj,self)
-    return tree
+    tree
   end
   
   def add_docs
@@ -159,7 +161,7 @@ class ProjectsController < ApplicationController
       if @favori_document != nil 
         flash[:notice] = ""
         @favori_document.items.each do |item|
-          link_=Link.createNew("project", @project, "document", item, relation)  
+          link_=Link.create_new("project", @project, "document", item, relation)  
           link=link_[:link]
           if(link!=nil) 
             if(link.save)
@@ -189,7 +191,7 @@ class ProjectsController < ApplicationController
         flash[:notice] = ""
         @favori_part.items.each do |item|
           #flash[:notice] += "<br>"+ item.ident.to_s
-          link_=Link.createNew("project", @project, "part", item, relation)  
+          link_=Link.create_new("project", @project, "part", item, relation)  
           link=link_[:link]
           if(link!=nil) 
             if(link.save)
@@ -224,7 +226,6 @@ class ProjectsController < ApplicationController
     project=Project.find(params[:id])
     @favori_project.add_project(project)
     ##redirect_to(:action => index) 
-    return
   end
   
   def empty_favori_project
@@ -240,7 +241,7 @@ class ProjectsController < ApplicationController
     @status= Statusobject.find_for("forum")
     respond_to do |format|      
       flash[:notice] = ""
-      @forum=Forum.createNew(nil)
+      @forum=Forum.create_new(nil)
       @forum.subject=t(:ctrl_subject_forum,:object=>t(:ctrl_project),:ident=>@object.ident)
       format.html {render :action=>:new_forum, :id=>@object.id }
       format.xml  { head :ok }

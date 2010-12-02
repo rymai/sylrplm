@@ -10,23 +10,35 @@
         <th<%= sort_td_class_helper "mail" %>
             <%= sort_link_helper t(:label_email), "email" %>
         </th>
-       <th<%= sort_td_class_helper "theme" %>
-            <%= sort_link_helper t(:label_theme), "email" %>
+        <th>
+            <%= sort_td_class_helper "volume" %>
+            <%= sort_link_helper t(:label_volume), "volume.name" %>
         </th>
-				<th></th><th></th>
-     </tr>
+        <th<%= sort_td_class_helper "theme" %>
+            <%= sort_link_helper t(:label_theme), "theme" %>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+    </tr>
     <% for user in @all_users %>
     <tr>
         <td>
             <%= h(user.login) %>
         </td>
         <td>
+            <%if(user.role != nil) %>
             <%= h(user.role.title) %>
+            <%end %>
         </td>
         <td>
             <%= h(user.email) %>
         </td>
-         <td>
+        <td>
+            <%=h user.volume.name %>
+        </td>
+        <td>
             <%= h(user.theme) %>
         </td>
         <td>

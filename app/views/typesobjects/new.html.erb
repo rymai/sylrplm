@@ -1,21 +1,8 @@
 <h1><%=t(:typesobjects_new) %></h1>
 <% form_for(@typesobject) do |f| %>
 <%= f.error_messages %>
-<p>
-    <%= f.label t(:label_object) %>
-    <br/>
-    <%= f.select(:object, @objectswithtype) %>
-</p>
-<p>
-    <%= f.label t(:label_name) %>
-    <br/>
-    <%= f.text_field :name %>
-</p>
-<p>
-    <%= f.label t(:label_description) %>
-    <br/>
-    <%= f.text_area :description %>
-</p>
+<%= render(:partial => "typesobjects/edit",:locals => { :f => f, :fonct=>"new" }) %>
+
 <table class='menu_bas'>
     <tr>
         <td>

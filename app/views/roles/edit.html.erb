@@ -1,16 +1,8 @@
 <h1><%=t(:role_edit) %></h1>
 <% form_for(@role) do |f| %>
 <%= f.error_messages %>
-<p>
-    <%= f.label t(:label_name) %>
-    <br/>
-    <%= f.text_field :title %>
-</p>
-<p>
-    <%= f.label t(:label_description) %>
-    <br/>
-    <%= f.text_area :description %>
-</p>
+<%= render(:partial => "roles/edit",:locals => { :f => f, :fonct=>"edit" }) %>
+
 <table class='menu_bas'>
     <tr>
         <td>

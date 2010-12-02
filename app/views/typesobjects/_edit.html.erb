@@ -1,0 +1,15 @@
+<p>
+    <%= f.label t(:label_object) %>
+    <br/>
+    <%= f.select(:object, @objectswithtype) %>
+</p>
+<p>
+    <%= f.label t(:label_name) %>
+    <br/>
+    <%= f.text_field :name %>
+</p>
+<p>
+    <%= f.label t(:label_description) %>
+    <br/>
+    <%= f.text_area :description %>
+</p>

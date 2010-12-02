@@ -1,6 +1,6 @@
 class LoginController < ApplicationController
   before_filter :authorize, :except => [:login, :logout]
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   
   def index
     @total_documents = Document.count
@@ -26,7 +26,7 @@ class LoginController < ApplicationController
           flash.now[:notice] = t(:ctrl_invalid_login)
         end
       else
-        @user=find_user
+        @user=User.find_user(session)
         @user.update_attributes(params[:user])    
         uri=session[:original_uri]
         session[:original_uri]=nil
@@ -43,13 +43,31 @@ class LoginController < ApplicationController
     @user = User.new(params[:user])
     @roles = Role.all
     @themes=get_themes(@theme)
-    if request.post? and @user.save   
-      #@theme=params[:theme]
-      puts "login_controller.add_user:"+@user.inspect
-      #@user.theme=@theme
-      #@user.save
-      flash.now[:notice] = t(:ctrl_user_created,:user=>@user.login)
-      #@user = User.new
+    @volumes = Volume.find_all 
+    if request.post? 
+      if @user.save   
+        #@theme=params[:theme]
+        puts "login_controller.add_user:"+@user.inspect
+        #@user.theme=@theme
+        #@user.save
+        flash.now[:notice] = t(:ctrl_user_created,:user=>@user.login)
+        #@user = User.new
+        if params[:role_id]!=nil  
+          @roles.each do |rid|
+            role=Role.find(rid)
+            if(params[:role_id][role.id.to_s]=="1")
+              if(@user.roles.count(:all, :conditions=>["id=#{rid.id}"])==0)
+                flash[:notice]+=" #{role.id}:#{role.title}:#{params[:role_id][role.id.to_s]}"              
+                @user.roles<<role                                
+              end
+            end
+          end
+        end 
+      else
+        flash.now[:notice] = t(:ctrl_user_not_created,:user=>@user.login)
+      end
+    else
+      @user.volume=Volume.find(1)
     end
   end
   
@@ -58,7 +76,8 @@ class LoginController < ApplicationController
     #@roles=@user.roles
     #respond_to do |format|
     id = params[:id]
-    @user = User.find(id)
+    @user = User.find(id) 
+    @volumes = Volume.find_all 
     @roles = Role.all
     if request.post?
       if @user.update_attributes(params[:user])
@@ -114,7 +133,7 @@ class LoginController < ApplicationController
 
   def logout
    session[:user_id] = nil
-   if(@user!=t(:user_not_connected))
+   if @user!=:user_not_connected
     flash[:notice] = t(:ctrl_user_disconnected,:user=>@user.login)
     end
     redirect_to(:controller => "main", :action => "index")

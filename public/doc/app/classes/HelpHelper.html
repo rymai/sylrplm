@@ -76,6 +76,21 @@
 
    </div>
 
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000385">h_help</a>&nbsp;&nbsp;
+      <a href="#M000389">h_help_all</a>&nbsp;&nbsp;
+      <a href="#M000386">h_help_elem</a>&nbsp;&nbsp;
+      <a href="#M000390">h_help_level</a>&nbsp;&nbsp;
+      <a href="#M000388">h_help_root</a>&nbsp;&nbsp;
+      <a href="#M000387">h_help_suitable</a>&nbsp;&nbsp;
+      <a href="#M000391">h_help_summary</a>&nbsp;&nbsp;
+      <a href="#M000393">h_help_transform</a>&nbsp;&nbsp;
+      <a href="#M000392">h_help_ul</a>&nbsp;&nbsp;
+      </div>
+    </div>
 
   </div>
 
@@ -92,6 +107,425 @@
 
 
     <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000385" class="method-detail">
+        <a name="M000385"></a>
+
+        <div class="method-heading">
+          <a href="#M000385" class="method-signature">
+          <span class="method-name">h_help</span><span class="method-args">(key)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000385-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000385-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/help_helper.rb, line 3</span>
+ 3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">h_help</span>(<span class="ruby-identifier">key</span>)
+ 4:     <span class="ruby-identifier">root_help</span>=<span class="ruby-identifier">h_help_root</span>
+ 5:     <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">h_help_elem</span>(<span class="ruby-identifier">root_help</span>,<span class="ruby-identifier">key</span>)
+ 6:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">msg</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">nil</span>)
+ 7:       <span class="ruby-identifier">help</span>={<span class="ruby-identifier">:key=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">key</span>, 
+ 8:                     <span class="ruby-identifier">:title=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:help_no_help_title</span>),
+ 9:                     <span class="ruby-identifier">:text=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:help_no_help</span>,<span class="ruby-identifier">:key=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">key</span>),
+10:       } 
+11:     <span class="ruby-keyword kw">else</span>      
+12:       <span class="ruby-identifier">txt</span>=<span class="ruby-keyword kw">nil</span>
+13:       <span class="ruby-identifier">hlp</span>=<span class="ruby-identifier">msg</span>[<span class="ruby-identifier">:el</span>].<span class="ruby-identifier">text</span>
+14:       <span class="ruby-identifier">title</span>=<span class="ruby-keyword kw">nil</span>
+15:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">hlp</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">nil</span>)
+16:         <span class="ruby-identifier">txt</span>=<span class="ruby-identifier">t</span>(<span class="ruby-identifier">:help_no_help</span>,<span class="ruby-identifier">:key=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">key</span>)
+17:       <span class="ruby-keyword kw">else</span>   
+18:         <span class="ruby-identifier">txt</span>=<span class="ruby-identifier">h_help_transform</span>(<span class="ruby-identifier">hlp</span>)             
+19:       <span class="ruby-keyword kw">end</span>
+20:       <span class="ruby-identifier">suitable_helps</span>=<span class="ruby-identifier">h_help_suitable</span>(<span class="ruby-identifier">root_help</span>,<span class="ruby-identifier">key</span>)
+21:       <span class="ruby-identifier">title</span>=<span class="ruby-identifier">msg</span>[<span class="ruby-identifier">:el</span>].<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;title&quot;</span>]
+22:       <span class="ruby-identifier">href</span>=<span class="ruby-identifier">msg</span>[<span class="ruby-identifier">:el</span>].<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;href&quot;</span>]
+23:       <span class="ruby-identifier">help</span>={<span class="ruby-identifier">:key=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">key</span>, 
+24:               <span class="ruby-identifier">:title=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">title</span>,
+25:               <span class="ruby-identifier">:href=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">href</span>,
+26:               <span class="ruby-identifier">:text=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">txt</span>,
+27:               <span class="ruby-identifier">:previous_src=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">suitable_helps</span>[<span class="ruby-identifier">:previous_src</span>],
+28:               <span class="ruby-identifier">:main_src=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">suitable_helps</span>[<span class="ruby-identifier">:main_src</span>],
+29:               <span class="ruby-identifier">:upper_src=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">suitable_helps</span>[<span class="ruby-identifier">:upper_src</span>],
+30:               <span class="ruby-identifier">:next_src=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">suitable_helps</span>[<span class="ruby-identifier">:next_src</span>],
+31:               <span class="ruby-identifier">:childs_src=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">suitable_helps</span>[<span class="ruby-identifier">:childs_src</span>]}
+32:     <span class="ruby-keyword kw">end</span>
+33:     <span class="ruby-identifier">help</span>
+34:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000389" class="method-detail">
+        <a name="M000389"></a>
+
+        <div class="method-heading">
+          <a href="#M000389" class="method-signature">
+          <span class="method-name">h_help_all</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000389-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000389-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/help_helper.rb, line 110</span>
+110:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">h_help_all</span>   
+111:     <span class="ruby-identifier">root_help</span>=<span class="ruby-identifier">h_help_root</span>
+112:     <span class="ruby-comment cmt">#sommaire</span>
+113:     <span class="ruby-identifier">msg</span>=<span class="ruby-value str">&quot;&lt;h1&gt;&lt;a class='help_tr' name='help_summary'&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:help_summary</span>)<span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/a&gt;&lt;/h1&gt;\n&quot;</span>
+114:     <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-identifier">h_help_summary</span>(<span class="ruby-identifier">root_help</span>)
+115:     <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;hr&gt;\n&quot;</span>
+116:     <span class="ruby-comment cmt">#contenu</span>
+117:     <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-identifier">h_help_level</span>(<span class="ruby-identifier">root_help</span>)  
+118:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000386" class="method-detail">
+        <a name="M000386"></a>
+
+        <div class="method-heading">
+          <a href="#M000386" class="method-signature">
+          <span class="method-name">h_help_elem</span><span class="method-args">(elem,key)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000386-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000386-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/help_helper.rb, line 36</span>
+36:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">h_help_elem</span>(<span class="ruby-identifier">elem</span>,<span class="ruby-identifier">key</span>)
+37:     <span class="ruby-identifier">helem</span>=<span class="ruby-keyword kw">nil</span>
+38:     <span class="ruby-identifier">el</span> = <span class="ruby-identifier">elem</span>.<span class="ruby-identifier">elements</span>[<span class="ruby-node">&quot;msg[@key='#{key}']&quot;</span>]
+39:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">el</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">nil</span>)
+40:       <span class="ruby-identifier">elem</span>.<span class="ruby-identifier">each_element</span>(<span class="ruby-value str">&quot;msg&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">element</span><span class="ruby-operator">|</span> 
+41:         <span class="ruby-identifier">amsg</span>=<span class="ruby-identifier">h_help_elem</span>(<span class="ruby-identifier">element</span>,<span class="ruby-identifier">key</span>)
+42:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">amsg!</span>=<span class="ruby-keyword kw">nil</span>)   
+43:           <span class="ruby-identifier">msg_ul</span>=<span class="ruby-identifier">h_help_ul</span>(<span class="ruby-identifier">element</span>)
+44:           <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;h_help_elem:msg_ul=&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">element</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-identifier">:key</span>).<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">msg_ul</span>
+45:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">msg_ul!</span>=<span class="ruby-value str">&quot;&quot;</span>
+46:             <span class="ruby-identifier">amsg</span>[<span class="ruby-identifier">:el</span>].<span class="ruby-identifier">text</span><span class="ruby-operator">+=</span><span class="ruby-identifier">msg_ul</span>
+47:           <span class="ruby-keyword kw">end</span>
+48:           <span class="ruby-identifier">helem</span>={<span class="ruby-identifier">:el=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">amsg</span>[<span class="ruby-identifier">:el</span>], <span class="ruby-identifier">:main_elem=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">element</span>}
+49:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">helem</span>
+50:         <span class="ruby-keyword kw">end</span>
+51:       }
+52:     <span class="ruby-keyword kw">else</span>
+53:       <span class="ruby-identifier">msg_ul</span>=<span class="ruby-identifier">h_help_ul</span>(<span class="ruby-identifier">el</span>)
+54:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;h_help_elem:msg_ul=&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">el</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-identifier">:key</span>).<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">msg_ul</span>
+55:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">msg_ul!</span>=<span class="ruby-value str">&quot;&quot;</span>
+56:         <span class="ruby-identifier">el</span>.<span class="ruby-identifier">text</span><span class="ruby-operator">+=</span><span class="ruby-identifier">msg_ul</span>
+57:       <span class="ruby-keyword kw">end</span>      
+58:       <span class="ruby-identifier">helem</span>={<span class="ruby-identifier">:el=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">el</span>, <span class="ruby-identifier">:main_elem=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">elem</span>}
+59:     <span class="ruby-keyword kw">end</span>    
+60:     <span class="ruby-identifier">helem</span>
+61:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000390" class="method-detail">
+        <a name="M000390"></a>
+
+        <div class="method-heading">
+          <a href="#M000390" class="method-signature">
+          <span class="method-name">h_help_level</span><span class="method-args">(elem)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000390-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000390-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/help_helper.rb, line 121</span>
+121:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">h_help_level</span>(<span class="ruby-identifier">elem</span>)
+122:     <span class="ruby-comment cmt">#puts &quot;h_help_level:&quot;+elem.name</span>
+123:     <span class="ruby-comment cmt">#puts &quot;h_help_level:&quot;+h_help_root.name</span>
+124:     <span class="ruby-identifier">msg</span>=<span class="ruby-value str">&quot;&quot;</span>
+125:     <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;ul class='help_key'&gt;\n&quot;</span>
+126:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">elem</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;title&quot;</span>]<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>
+127:       <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;a class='help_tr' name='&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">elem</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;key&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;'&gt;&lt;/a&gt;\n&quot;</span>
+128:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">elem</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;href&quot;</span>]<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>)
+129:         <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;a class='help_tr' href='&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">elem</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;href&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;'&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">elem</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;title&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/a&gt;\n&quot;</span>
+130:       <span class="ruby-keyword kw">else</span>
+131:         <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;a class='help_tr' &gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">elem</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;title&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/a&gt;\n&quot;</span>
+132:         <span class="ruby-comment cmt">#msg=msg+elem.attributes[&quot;title&quot;]+&quot;&lt;br/&gt;&quot;</span>
+133:       <span class="ruby-keyword kw">end</span>
+134:       <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;a class='help_tr' href='#help_summary'&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">h_img_tit</span>(<span class="ruby-value str">&quot;help_upper&quot;</span>,<span class="ruby-identifier">t</span>(<span class="ruby-identifier">:help_summary</span>))<span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/a&gt;\n&quot;</span>
+135:       <span class="ruby-comment cmt">## msg+=&quot;&lt;A HREF='javascript:javascript:history.go(-1)'&gt;&quot;+h_img_tit(&quot;previous&quot;,t(:help_previous))+&quot;&lt;/A&gt;&quot;</span>
+136:     <span class="ruby-keyword kw">end</span>
+137:     <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-identifier">h_help_transform</span>(<span class="ruby-identifier">elem</span>.<span class="ruby-identifier">text</span>)
+138:     <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-identifier">h_help_ul</span>(<span class="ruby-identifier">elem</span>)
+139:     <span class="ruby-identifier">elem</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">&quot;msg&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">element</span><span class="ruby-operator">|</span> 
+140:       <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;li class='help_key'&gt;\n&quot;</span>
+141:       <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span>  <span class="ruby-identifier">h_help_level</span>(<span class="ruby-identifier">element</span>)
+142:       <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;/li&gt;\n&quot;</span>  
+143:     }
+144:     <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;/ul&gt;\n&quot;</span>
+145:     <span class="ruby-identifier">msg</span>
+146:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000388" class="method-detail">
+        <a name="M000388"></a>
+
+        <div class="method-heading">
+          <a href="#M000388" class="method-signature">
+          <span class="method-name">h_help_root</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000388-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000388-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/help_helper.rb, line 104</span>
+104:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">h_help_root</span>
+105:     <span class="ruby-comment cmt">#xmlHelp = REXML::Document.new(File.new(&quot;/home/syl/trav/rubyonrails/sylrplm/public/help.xml&quot;))</span>
+106:     <span class="ruby-identifier">xmlHelp</span> = <span class="ruby-constant">REXML</span><span class="ruby-operator">::</span><span class="ruby-constant">Document</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;public/help_&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">session</span>[<span class="ruby-identifier">:lng</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;.xml&quot;</span>))
+107:     <span class="ruby-identifier">root_help</span> = <span class="ruby-identifier">xmlHelp</span>.<span class="ruby-identifier">root</span>
+108:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000387" class="method-detail">
+        <a name="M000387"></a>
+
+        <div class="method-heading">
+          <a href="#M000387" class="method-signature">
+          <span class="method-name">h_help_suitable</span><span class="method-args">(root_help,key)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000387-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000387-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/help_helper.rb, line 63</span>
+ 63:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">h_help_suitable</span>(<span class="ruby-identifier">root_help</span>,<span class="ruby-identifier">key</span>)
+ 64:     <span class="ruby-identifier">previous_src</span>=<span class="ruby-keyword kw">nil</span>
+ 65:     <span class="ruby-identifier">main_src</span>=<span class="ruby-keyword kw">nil</span>
+ 66:     <span class="ruby-identifier">upper_src</span>=<span class="ruby-keyword kw">nil</span>
+ 67:     <span class="ruby-identifier">next_src</span>=<span class="ruby-keyword kw">nil</span>
+ 68:     <span class="ruby-identifier">childs_src</span>=<span class="ruby-keyword kw">nil</span>
+ 69:     <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">h_help_elem</span>(<span class="ruby-identifier">root_help</span>,<span class="ruby-identifier">key</span>)
+ 70:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">msg!</span>=<span class="ruby-keyword kw">nil</span>)
+ 71:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">msg</span>[<span class="ruby-identifier">:el</span>]<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>)
+ 72:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">msg</span>[<span class="ruby-identifier">:el</span>].<span class="ruby-identifier">previous_element!</span>=<span class="ruby-keyword kw">nil</span>)
+ 73:           <span class="ruby-identifier">previous_src</span>=<span class="ruby-identifier">msg</span>[<span class="ruby-identifier">:el</span>].<span class="ruby-identifier">previous_element</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-identifier">:key</span>).<span class="ruby-identifier">to_s</span>
+ 74:           <span class="ruby-comment cmt">#previous_src=&quot;&lt;a href='/help?help=#{previous_src}' title='previous'&gt;&quot;+img(&quot;previous&quot;)+&quot;&lt;/a&gt;&quot;</span>
+ 75:         <span class="ruby-keyword kw">end</span>
+ 76:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">msg</span>[<span class="ruby-identifier">:main_elem</span>]<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>)
+ 77:           <span class="ruby-identifier">main_src</span>=<span class="ruby-identifier">msg</span>[<span class="ruby-identifier">:main_elem</span>].<span class="ruby-identifier">attribute</span>(<span class="ruby-identifier">:key</span>).<span class="ruby-identifier">to_s</span>
+ 78:           <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">main_src</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">strip</span>()<span class="ruby-operator">!=</span><span class="ruby-value str">&quot;&quot;</span>) 
+ 79:             <span class="ruby-comment cmt">#main_src=&quot;&lt;a href='/help?help=#{main_src.to_s}' title='main'&gt;&quot;+img(&quot;main&quot;)+&quot;&lt;/a&gt;&quot;</span>
+ 80:           <span class="ruby-keyword kw">end</span>
+ 81:         <span class="ruby-keyword kw">end</span>         
+ 82:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">msg</span>[<span class="ruby-identifier">:el</span>].<span class="ruby-identifier">parent!</span>=<span class="ruby-keyword kw">nil</span>)
+ 83:           <span class="ruby-identifier">upper_src</span>=<span class="ruby-identifier">msg</span>[<span class="ruby-identifier">:el</span>].<span class="ruby-identifier">parent</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-identifier">:key</span>).<span class="ruby-identifier">to_s</span>
+ 84:           <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">upper_src</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">strip</span>()<span class="ruby-operator">!=</span><span class="ruby-value str">&quot;&quot;</span>) 
+ 85:             <span class="ruby-comment cmt">#upper_src=&quot;&lt;a href='/help?help=#{upper_src.to_s}' title='upper'&gt;&quot;+img(&quot;upper&quot;)+&quot;&lt;/a&gt;&quot;</span>
+ 86:           <span class="ruby-keyword kw">end</span>
+ 87:         <span class="ruby-keyword kw">end</span>                      
+ 88:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">msg</span>[<span class="ruby-identifier">:el</span>].<span class="ruby-identifier">next_element!</span>=<span class="ruby-keyword kw">nil</span>)
+ 89:           <span class="ruby-identifier">next_src</span>=<span class="ruby-identifier">msg</span>[<span class="ruby-identifier">:el</span>].<span class="ruby-identifier">next_element</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-identifier">:key</span>).<span class="ruby-identifier">to_s</span>
+ 90:           <span class="ruby-comment cmt">#next_src=&quot;&lt;a href='/help?help=#{next_src}' title='next'&gt;&quot;+img(&quot;next&quot;)+&quot;&lt;/a&gt;&quot;</span>
+ 91:         <span class="ruby-keyword kw">end</span>
+ 92:       <span class="ruby-keyword kw">end</span>
+ 93:       <span class="ruby-identifier">childs_src</span>=[]
+ 94:       <span class="ruby-identifier">msg</span>[<span class="ruby-identifier">:el</span>].<span class="ruby-identifier">each_element</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span> 
+ 95:         <span class="ruby-identifier">key</span>=<span class="ruby-identifier">child</span>.<span class="ruby-identifier">attribute</span>(<span class="ruby-identifier">:key</span>)
+ 96:         <span class="ruby-identifier">childs_src</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-node">&quot;&lt;a href='/help?help=#{key}'&gt;#{key}&lt;/a&gt;&quot;</span>
+ 97:       }
+ 98:     <span class="ruby-keyword kw">end</span>
+ 99:     <span class="ruby-identifier">suite</span>={<span class="ruby-identifier">:previous_src=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">previous_src</span>, <span class="ruby-identifier">:main_src=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">main_src</span>, <span class="ruby-identifier">:upper_src=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">upper_src</span>, <span class="ruby-identifier">:next_src=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">next_src</span>, <span class="ruby-identifier">:childs_src=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">childs_src</span>}       
+100:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000391" class="method-detail">
+        <a name="M000391"></a>
+
+        <div class="method-heading">
+          <a href="#M000391" class="method-signature">
+          <span class="method-name">h_help_summary</span><span class="method-args">(elem)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000391-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000391-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/help_helper.rb, line 148</span>
+148:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">h_help_summary</span>(<span class="ruby-identifier">elem</span>)
+149:     <span class="ruby-identifier">msg</span>=<span class="ruby-value str">&quot;&quot;</span>
+150:     <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;ul class='help_key'&gt;\n&quot;</span>
+151:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">elem</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;title&quot;</span>]<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>)
+152:       <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;a class='help_tr' href='#&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">elem</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;key&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;'&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">elem</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;title&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/a&gt;\n&quot;</span>
+153:     <span class="ruby-keyword kw">end</span>
+154:     <span class="ruby-identifier">elem</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">&quot;msg&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">element</span><span class="ruby-operator">|</span> 
+155:       <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;li class='help_key'&gt;\n&quot;</span>
+156:       <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span>  <span class="ruby-identifier">h_help_summary</span>(<span class="ruby-identifier">element</span>)
+157:       <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;/li&gt;\n&quot;</span>  
+158:     }
+159:     <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;/ul&gt;\n&quot;</span>
+160:     <span class="ruby-identifier">msg</span>
+161:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000393" class="method-detail">
+        <a name="M000393"></a>
+
+        <div class="method-heading">
+          <a href="#M000393" class="method-signature">
+          <span class="method-name">h_help_transform</span><span class="method-args">(hlp)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000393-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000393-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/help_helper.rb, line 201</span>
+201:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">h_help_transform</span>(<span class="ruby-identifier">hlp</span>)
+202:     
+203:     <span class="ruby-comment cmt">#ind=hlp.index(&quot;aaaa&quot;)</span>
+204:     <span class="ruby-comment cmt">#puts &quot;help_helper:&quot;+ind.to_s+&quot;:&quot;+hlp.to_s</span>
+205:     <span class="ruby-comment cmt">#if ind!=nil</span>
+206:     <span class="ruby-comment cmt">#  puts &quot;help_helper:&quot;+hlp.to_s+&quot;=&quot;+hlp.unpack('U'*hlp.length).collect {|x| x.to_s 10}.inspect </span>
+207:     <span class="ruby-comment cmt">#end</span>
+208:     <span class="ruby-identifier">txt</span>=<span class="ruby-identifier">hlp</span>
+209:     <span class="ruby-identifier">special</span>=<span class="ruby-keyword kw">true</span>
+210:     <span class="ruby-identifier">decode</span>=<span class="ruby-value str">&quot;&quot;</span>
+211:     <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">each_byte</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+212:       <span class="ruby-identifier">decode</span><span class="ruby-operator">+=</span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot; &quot;</span>
+213:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c!</span>=<span class="ruby-value">10</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">c!</span>=<span class="ruby-value">13</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">c!</span>=<span class="ruby-value">32</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">c!</span>=<span class="ruby-value str">'\t'</span> 
+214:         <span class="ruby-identifier">special</span>=<span class="ruby-keyword kw">false</span> 
+215:       <span class="ruby-keyword kw">end</span>
+216:     <span class="ruby-keyword kw">end</span>
+217:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">special</span>)
+218:       <span class="ruby-comment cmt">###puts &quot;h_help_transform:&quot;+txt+&quot;:&quot;+decode</span>
+219:     <span class="ruby-keyword kw">end</span>
+220:     <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">special</span>
+221:       <span class="ruby-comment cmt">#puts &quot;h_help_transform:&quot;+txt.length.to_s+&quot;:&quot;+txt</span>
+222:       <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-value str">'\n\n'</span>,<span class="ruby-value str">'\n'</span>)
+223:       <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-value str">'\n'</span>,<span class="ruby-value str">'&lt;br/&gt;'</span>)
+224:       <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-value">10</span>.<span class="ruby-identifier">chr</span>,<span class="ruby-value str">'&lt;br/&gt;'</span>)
+225:       <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">gsub!</span>(<span class="ruby-value str">'\t'</span>,<span class="ruby-value str">''</span>)
+226:       <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">gsub!</span> <span class="ruby-regexp re">/#hlp=(.+?)=hlp#/</span>, 
+227:               <span class="ruby-value str">&quot;&lt;img class='help' id='\\1' src='images/help.gif' onclick=\&quot;return helpPopup('\\1');\&quot;&gt;&lt;/img&gt;&quot;</span>
+228:       <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">gsub!</span> <span class="ruby-regexp re">/#img=(.+?)=img#/</span>, 
+229:               <span class="ruby-value str">&quot;&lt;img class='help_tr' src='images/\\1'&gt;&lt;/img&gt;&quot;</span>
+230:       <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">gsub!</span> <span class="ruby-regexp re">/#jump=(.+?)=jump#/</span>, 
+231:               <span class="ruby-value str">&quot;&lt;a class='help_tr' href='#\\1' target='_top'&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:help_jump</span>)<span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/a&gt;&quot;</span>
+232:       <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">gsub!</span> <span class="ruby-regexp re">/#lnk=(.+?)=lnk#/</span>, 
+233:               <span class="ruby-value str">&quot;&lt;a class='help_tr' href='\\1' target='_blank'&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:help_lnk_acces</span>)<span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/a&gt;&quot;</span>
+234:       <span class="ruby-comment cmt">#txt.gsub! /#ul=#/, </span>
+235:       <span class="ruby-comment cmt">#          &quot;&lt;ul class='help_tr'&gt;&quot;</span>
+236:       <span class="ruby-comment cmt">#txt.gsub! /#=ul#/, </span>
+237:       <span class="ruby-comment cmt">#          &quot;&lt;/ul&gt;&quot;</span>
+238:       <span class="ruby-comment cmt">#txt.gsub! /#li=#/, </span>
+239:       <span class="ruby-comment cmt">#          &quot;&lt;li class='help_tr'&gt;&quot;</span>
+240:       <span class="ruby-comment cmt">#txt.gsub! /#=li#/, </span>
+241:       <span class="ruby-comment cmt">#          &quot;&lt;/li&gt;&quot;</span>
+242:       <span class="ruby-comment cmt">#puts &quot;h_help_transform:&quot;+txt.length.to_s+&quot;|&quot;+txt+&quot;|&quot;</span>
+243:     <span class="ruby-keyword kw">end</span>
+244:     
+245:     <span class="ruby-identifier">txt</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;\n&quot;</span>
+246:     
+247:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000392" class="method-detail">
+        <a name="M000392"></a>
+
+        <div class="method-heading">
+          <a href="#M000392" class="method-signature">
+          <span class="method-name">h_help_ul</span><span class="method-args">(elem)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000392-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000392-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/helpers/help_helper.rb, line 163</span>
+163:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">h_help_ul</span>(<span class="ruby-identifier">elem</span>)
+164:     <span class="ruby-identifier">msg</span>=<span class="ruby-value str">&quot;&quot;</span>
+165:     <span class="ruby-identifier">elem</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">&quot;ul&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">elem_ul</span><span class="ruby-operator">|</span>    
+166:       <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;ul class='help_ul'&gt;\n&quot;</span>
+167:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">elem_ul</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;title&quot;</span>]<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>)
+168:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">elem_ul</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;href&quot;</span>]<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>)
+169:           <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;a class='help_tr' href='&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">elem_ul</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;href&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;'&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">elem_ul</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;title&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/a&gt;\n&quot;</span>
+170:         <span class="ruby-keyword kw">else</span>
+171:           <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;b&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">elem_ul</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;title&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/b&gt;\n&quot;</span>
+172:         <span class="ruby-keyword kw">end</span>
+173:       <span class="ruby-keyword kw">end</span>
+174:       <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span>  <span class="ruby-identifier">h_help_transform</span>(<span class="ruby-identifier">elem_ul</span>.<span class="ruby-identifier">text</span>)
+175:       <span class="ruby-identifier">elem_ul</span>.<span class="ruby-identifier">elements</span>.<span class="ruby-identifier">each</span>(<span class="ruby-value str">&quot;li&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">elem_li</span><span class="ruby-operator">|</span>
+176:         <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;li class='help_ul'&gt;\n&quot;</span>
+177:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">elem_li</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;title&quot;</span>]<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>)
+178:           <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">elem_li</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;href&quot;</span>]<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>)
+179:             <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;a class='help_tr' href='&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">elem_li</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;href&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;'&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">elem_li</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;title&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/a&gt;\n&quot;</span>
+180:           <span class="ruby-keyword kw">else</span>
+181:             <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;b&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">elem_li</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">&quot;title&quot;</span>]<span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/b&gt;\n&quot;</span>
+182:           <span class="ruby-keyword kw">end</span>
+183:           <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/li&gt;\n&quot;</span> 
+184:           <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">elem_li</span>.<span class="ruby-identifier">text!</span>=<span class="ruby-keyword kw">nil</span>)
+185:             <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span> <span class="ruby-identifier">h_help_transform</span>(<span class="ruby-identifier">elem_li</span>.<span class="ruby-identifier">text</span>)
+186:           <span class="ruby-keyword kw">end</span>
+187:           <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span>  <span class="ruby-identifier">h_help_ul</span>(<span class="ruby-identifier">elem_li</span>)
+188:         <span class="ruby-keyword kw">else</span>
+189:           <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">elem_li</span>.<span class="ruby-identifier">text!</span>=<span class="ruby-keyword kw">nil</span>)
+190:             <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span> <span class="ruby-identifier">h_help_transform</span>(<span class="ruby-identifier">elem_li</span>.<span class="ruby-identifier">text</span>)
+191:           <span class="ruby-keyword kw">end</span>
+192:           <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span>  <span class="ruby-identifier">h_help_ul</span>(<span class="ruby-identifier">elem_li</span>)
+193:           <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/li&gt;\n&quot;</span> 
+194:         <span class="ruby-keyword kw">end</span>                       
+195:       }
+196:       <span class="ruby-identifier">msg</span>=<span class="ruby-identifier">msg</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/ul&gt;\n&quot;</span>     
+197:     }
+198:     <span class="ruby-identifier">msg</span>
+199:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
 
 
   </div>

@@ -3,14 +3,8 @@
 <% form_for(@roles_user) do |f| %>
   <%= f.error_messages %>
 
-  <p>
-    <%= f.label :role_id %><br />
-    <%= f.text_field :role_id %>
-  </p>
-  <p>
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
-  </p>
+ <%= render(:partial => "roles_users/edit",:locals => { :f => f, :fonct=>"new" }) %>
+
   <p>
     <%= f.submit 'Create' %>
   </p>

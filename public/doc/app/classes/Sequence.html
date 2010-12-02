@@ -86,13 +86,13 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000114">find_all</a>&nbsp;&nbsp;
-      <a href="#M000117">find_col_for</a>&nbsp;&nbsp;
-      <a href="#M000116">find_cols_for</a>&nbsp;&nbsp;
-      <a href="#M000115">find_for</a>&nbsp;&nbsp;
-      <a href="#M000112">get_constants</a>&nbsp;&nbsp;
-      <a href="#M000111">get_next_seq</a>&nbsp;&nbsp;
-      <a href="#M000113">set_default_values</a>&nbsp;&nbsp;
+      <a href="#M000118">find_all</a>&nbsp;&nbsp;
+      <a href="#M000121">find_col_for</a>&nbsp;&nbsp;
+      <a href="#M000120">find_cols_for</a>&nbsp;&nbsp;
+      <a href="#M000119">find_for</a>&nbsp;&nbsp;
+      <a href="#M000116">get_constants</a>&nbsp;&nbsp;
+      <a href="#M000115">get_next_seq</a>&nbsp;&nbsp;
+      <a href="#M000117">set_default_values</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -114,34 +114,34 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000114" class="method-detail">
-        <a name="M000114"></a>
+      <div id="method-M000118" class="method-detail">
+        <a name="M000118"></a>
 
         <div class="method-heading">
-          <a href="#M000114" class="method-signature">
+          <a href="#M000118" class="method-signature">
           <span class="method-name">find_all</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000114-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000114-source">
+            onclick="toggleCode('M000118-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000118-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 59</span>
-59:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_all</span>
-60:     <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;utility&quot;</span>)
-61:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 52</span>
+52:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_all</span>
+53:     <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;utility&quot;</span>)
+54:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000117" class="method-detail">
-        <a name="M000117"></a>
+      <div id="method-M000121" class="method-detail">
+        <a name="M000121"></a>
 
         <div class="method-heading">
-          <a href="#M000117" class="method-signature">
+          <a href="#M000121" class="method-signature">
           <span class="method-name">find_col_for</span><span class="method-args">(model,col)</span>
           </a>
         </div>
@@ -151,22 +151,77 @@
 recherche d&#8216;un attribut d&#8216;un modele
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000117-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000117-source">
+            onclick="toggleCode('M000121-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000121-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 81</span>
-81:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_col_for</span>(<span class="ruby-identifier">model</span>,<span class="ruby-identifier">col</span>)
-82:     <span class="ruby-identifier">ret</span>=<span class="ruby-keyword kw">nil</span>
-83:     <span class="ruby-identifier">find_all</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
-84:         <span class="ruby-identifier">tokens</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">utility</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;.&quot;</span>)
-85:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;find_col_for:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">model</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;.&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">col</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">line</span>.<span class="ruby-identifier">utility</span>
-86:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">tokens</span>[<span class="ruby-value">0</span>]<span class="ruby-operator">==</span><span class="ruby-identifier">model</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">tokens</span>[<span class="ruby-value">1</span>]<span class="ruby-operator">==</span><span class="ruby-identifier">col</span>)
-87:           <span class="ruby-identifier">ret</span>=<span class="ruby-identifier">line</span>
-88:         <span class="ruby-keyword kw">end</span>
-89:     <span class="ruby-keyword kw">end</span>
-90:     <span class="ruby-identifier">puts</span> <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">inspect</span>
-91:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">ret</span>
-92:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 73</span>
+73:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_col_for</span>(<span class="ruby-identifier">model</span>,<span class="ruby-identifier">col</span>)
+74:     <span class="ruby-identifier">ret</span>=<span class="ruby-keyword kw">nil</span>
+75:     <span class="ruby-identifier">find_all</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+76:         <span class="ruby-identifier">tokens</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">utility</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;.&quot;</span>)
+77:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;find_col_for:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">model</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;.&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">col</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">line</span>.<span class="ruby-identifier">utility</span>
+78:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">tokens</span>[<span class="ruby-value">0</span>]<span class="ruby-operator">==</span><span class="ruby-identifier">model</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">tokens</span>[<span class="ruby-value">1</span>]<span class="ruby-operator">==</span><span class="ruby-identifier">col</span>)
+79:           <span class="ruby-identifier">ret</span>=<span class="ruby-identifier">line</span>
+80:         <span class="ruby-keyword kw">end</span>
+81:     <span class="ruby-keyword kw">end</span>
+82:     <span class="ruby-identifier">ret</span>
+83:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000120" class="method-detail">
+        <a name="M000120"></a>
+
+        <div class="method-heading">
+          <a href="#M000120" class="method-signature">
+          <span class="method-name">find_cols_for</span><span class="method-args">(model)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+recherche des attributs d&#8216;un modele
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000120-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000120-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 61</span>
+61:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_cols_for</span>(<span class="ruby-identifier">model</span>)
+62:     <span class="ruby-identifier">ret</span>=[]
+63:     <span class="ruby-identifier">find_all</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
+64:       <span class="ruby-identifier">tokens</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;.&quot;</span>)[<span class="ruby-value">0</span>]
+65:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">tokens</span>[<span class="ruby-value">0</span>]<span class="ruby-operator">==</span><span class="ruby-identifier">model</span>)
+66:         <span class="ruby-identifier">ret</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-identifier">tokens</span>[<span class="ruby-value">1</span>]
+67:         <span class="ruby-keyword kw">end</span>
+68:     <span class="ruby-keyword kw">end</span>
+69:     <span class="ruby-identifier">ret</span>
+70:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000119" class="method-detail">
+        <a name="M000119"></a>
+
+        <div class="method-heading">
+          <a href="#M000119" class="method-signature">
+          <span class="method-name">find_for</span><span class="method-args">(utility)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000119-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000119-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 56</span>
+56:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-identifier">utility</span>)
+57:     <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;utility&quot;</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;utility = '#{utility}' &quot;</span>])
+58:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -177,30 +232,26 @@ recherche d&#8216;un attribut d&#8216;un modele
 
         <div class="method-heading">
           <a href="#M000116" class="method-signature">
-          <span class="method-name">find_cols_for</span><span class="method-args">(model)</span>
+          <span class="method-name">get_constants</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
-          <p>
-recherche des attributs d&#8216;un modele
-</p>
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000116-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000116-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 68</span>
-68:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_cols_for</span>(<span class="ruby-identifier">model</span>)
-69:     <span class="ruby-identifier">ret</span>=[]
-70:     <span class="ruby-identifier">find_all</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">line</span><span class="ruby-operator">|</span>
-71:         <span class="ruby-identifier">tokens</span>=<span class="ruby-identifier">line</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;.&quot;</span>)[<span class="ruby-value">0</span>]
-72:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">tokens</span>[<span class="ruby-value">0</span>]<span class="ruby-operator">==</span><span class="ruby-identifier">model</span>)
-73:           <span class="ruby-identifier">ret</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-identifier">tokens</span>[<span class="ruby-value">1</span>]
-74:         <span class="ruby-keyword kw">end</span>
-75:     <span class="ruby-keyword kw">end</span>
-76:     <span class="ruby-identifier">puts</span> <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">inspect</span>
-77:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">ret</span>
-78:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 17</span>
+17:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_constants</span>
+18:     <span class="ruby-constant">Module</span>.<span class="ruby-identifier">constants</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">constant_name</span><span class="ruby-operator">|</span>
+19:       
+20:       <span class="ruby-identifier">constant</span> = <span class="ruby-identifier">eval</span> <span class="ruby-identifier">constant_name</span>
+21:       <span class="ruby-identifier">isClass</span>=<span class="ruby-identifier">constant</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Class</span>
+22:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">'ApplicationController.get_constants='</span><span class="ruby-operator">+</span><span class="ruby-identifier">constant</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-value str">' class='</span><span class="ruby-operator">+</span><span class="ruby-identifier">isClass</span>.<span class="ruby-identifier">to_s</span>
+23:       <span class="ruby-comment cmt">#if not constant.nil? and isClass and constant.extend? ActiveRecord::Base</span>
+24:       
+25:     <span class="ruby-keyword kw">end</span>
+26:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -211,7 +262,7 @@ recherche des attributs d&#8216;un modele
 
         <div class="method-heading">
           <a href="#M000115" class="method-signature">
-          <span class="method-name">find_for</span><span class="method-args">(utility)</span>
+          <span class="method-name">get_next_seq</span><span class="method-args">(utility)</span>
           </a>
         </div>
       
@@ -220,92 +271,27 @@ recherche des attributs d&#8216;un modele
             onclick="toggleCode('M000115-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000115-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 63</span>
-63:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-identifier">utility</span>)
-64:     <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;utility&quot;</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;utility = '#{utility}' &quot;</span>])
-65:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 6</span>
+ 6:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_next_seq</span>(<span class="ruby-identifier">utility</span>)
+ 7:     <span class="ruby-identifier">current</span>=<span class="ruby-identifier">find_for</span>(<span class="ruby-identifier">utility</span>) 
+ 8:     <span class="ruby-identifier">ret</span>=<span class="ruby-keyword kw">nil</span>
+ 9:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">current</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>)
+10:       <span class="ruby-identifier">old</span>=<span class="ruby-identifier">current</span>.<span class="ruby-identifier">value</span>
+11:       <span class="ruby-identifier">ret</span>=<span class="ruby-identifier">current</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">next</span> 
+12:       <span class="ruby-identifier">current</span>.<span class="ruby-identifier">update_attribute</span>(<span class="ruby-value str">&quot;value&quot;</span>,<span class="ruby-identifier">ret</span>)
+13:     <span class="ruby-keyword kw">end</span>
+14:     <span class="ruby-identifier">ret</span>
+15:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000112" class="method-detail">
-        <a name="M000112"></a>
+      <div id="method-M000117" class="method-detail">
+        <a name="M000117"></a>
 
         <div class="method-heading">
-          <a href="#M000112" class="method-signature">
-          <span class="method-name">get_constants</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000112-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000112-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 23</span>
-23:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_constants</span>
-24:     <span class="ruby-constant">Module</span>.<span class="ruby-identifier">constants</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">constant_name</span><span class="ruby-operator">|</span>
-25:       
-26:       <span class="ruby-identifier">constant</span> = <span class="ruby-identifier">eval</span> <span class="ruby-identifier">constant_name</span>
-27:       <span class="ruby-identifier">isClass</span>=<span class="ruby-identifier">constant</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Class</span>
-28:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">'ApplicationController.getModels:constant='</span><span class="ruby-operator">+</span><span class="ruby-identifier">constant</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-value str">' class='</span><span class="ruby-operator">+</span><span class="ruby-identifier">isClass</span>.<span class="ruby-identifier">to_s</span>
-29:       <span class="ruby-comment cmt">#if not constant.nil? and isClass and constant.extend? ActiveRecord::Base</span>
-30:       
-31:     <span class="ruby-keyword kw">end</span>
-32:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000111" class="method-detail">
-        <a name="M000111"></a>
-
-        <div class="method-heading">
-          <a href="#M000111" class="method-signature">
-          <span class="method-name">get_next_seq</span><span class="method-args">(utility)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-def self.getObjectsWithSequence
-</p>
-<pre>
-  ret=[&quot;document&quot;,&quot;part&quot;,&quot;project&quot;,&quot;customer&quot;]
-  return ret
-</pre>
-<p>
-end
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000111-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000111-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 10</span>
-10:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_next_seq</span>(<span class="ruby-identifier">utility</span>)
-11:     <span class="ruby-identifier">current</span>=<span class="ruby-identifier">find_for</span>(<span class="ruby-identifier">utility</span>) 
-12:     <span class="ruby-identifier">ret</span>=<span class="ruby-keyword kw">nil</span>
-13:     <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;get_next_seq:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">utility</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;=&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">current</span>.<span class="ruby-identifier">utility</span>
-14:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">current</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>)
-15:     <span class="ruby-identifier">old</span>=<span class="ruby-identifier">current</span>.<span class="ruby-identifier">value</span>
-16:       <span class="ruby-identifier">ret</span>=<span class="ruby-identifier">current</span>.<span class="ruby-identifier">value</span>.<span class="ruby-identifier">next</span> 
-17:       <span class="ruby-identifier">current</span>.<span class="ruby-identifier">update_attribute</span>(<span class="ruby-value str">&quot;value&quot;</span>,<span class="ruby-identifier">ret</span>)
-18:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;get_next_seq:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">utility</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;=&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">old</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot; to &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">ret</span>
-19:     <span class="ruby-keyword kw">end</span>
-20:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">ret</span>
-21:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000113" class="method-detail">
-        <a name="M000113"></a>
-
-        <div class="method-heading">
-          <a href="#M000113" class="method-signature">
+          <a href="#M000117" class="method-signature">
           <span class="method-name">set_default_values</span><span class="method-args">(object, model, next_seq)</span>
           </a>
         </div>
@@ -315,33 +301,32 @@ end
 attribution de valeurs par defaut suivant la table sequence
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000113-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000113-source">
+            onclick="toggleCode('M000117-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000117-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 35</span>
-35:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">set_default_values</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">model</span>, <span class="ruby-identifier">next_seq</span>)
-36:     <span class="ruby-comment cmt">#find_cols_for(model).each do |strcol|</span>
-37:      <span class="ruby-comment cmt"># object.column_for_attribute(strcol)=</span>
-38:      <span class="ruby-comment cmt">#get_constants</span>
-39:      
-40:       <span class="ruby-identifier">object</span>.<span class="ruby-identifier">attribute_names</span>().<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">strcol</span><span class="ruby-operator">|</span>
-41:         <span class="ruby-identifier">old_value</span>=<span class="ruby-identifier">object</span>[<span class="ruby-identifier">strcol</span>]
-42:         <span class="ruby-identifier">col</span>=<span class="ruby-identifier">find_col_for</span>(<span class="ruby-identifier">model</span>,<span class="ruby-identifier">strcol</span>)
-43:         <span class="ruby-identifier">val</span>=<span class="ruby-identifier">old_value</span>
-44:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">col!</span>=<span class="ruby-keyword kw">nil</span>) 
-45:           <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">col</span>.<span class="ruby-identifier">sequence</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">true</span>)
-46:             <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">next_seq</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">true</span>)
-47:               <span class="ruby-identifier">val</span>=<span class="ruby-identifier">get_next_seq</span>(<span class="ruby-identifier">col</span>.<span class="ruby-identifier">utility</span>)
-48:             <span class="ruby-keyword kw">end</span>
-49:           <span class="ruby-keyword kw">else</span>
-50:             <span class="ruby-identifier">val</span>=<span class="ruby-identifier">col</span>.<span class="ruby-identifier">value</span>
-51:           <span class="ruby-keyword kw">end</span>
-52:           <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;sequence.set_default_values:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">strcol</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;=&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">old_value</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot; to &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">val</span>.<span class="ruby-identifier">to_s</span>
-53:           <span class="ruby-comment cmt">#object.update_attribute(strcol,val)</span>
-54:           <span class="ruby-identifier">object</span>[<span class="ruby-identifier">strcol</span>]=<span class="ruby-identifier">val</span>
-55:         <span class="ruby-keyword kw">end</span>
-56:     <span class="ruby-keyword kw">end</span>
-57:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/sequence.rb, line 29</span>
+29:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">set_default_values</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">model</span>, <span class="ruby-identifier">next_seq</span>)
+30:     <span class="ruby-comment cmt">#find_cols_for(model).each do |strcol|</span>
+31:     <span class="ruby-comment cmt"># object.column_for_attribute(strcol)=</span>
+32:     <span class="ruby-comment cmt">#get_constants</span>
+33:     <span class="ruby-identifier">object</span>.<span class="ruby-identifier">attribute_names</span>().<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">strcol</span><span class="ruby-operator">|</span>
+34:       <span class="ruby-identifier">old_value</span>=<span class="ruby-identifier">object</span>[<span class="ruby-identifier">strcol</span>]
+35:       <span class="ruby-identifier">col</span>=<span class="ruby-identifier">find_col_for</span>(<span class="ruby-identifier">model</span>,<span class="ruby-identifier">strcol</span>)
+36:       <span class="ruby-identifier">val</span>=<span class="ruby-identifier">old_value</span>
+37:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">col!</span>=<span class="ruby-keyword kw">nil</span>) 
+38:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">col</span>.<span class="ruby-identifier">sequence</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">true</span>)
+39:           <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">next_seq</span><span class="ruby-operator">==</span><span class="ruby-keyword kw">true</span>)
+40:             <span class="ruby-identifier">val</span>=<span class="ruby-identifier">get_next_seq</span>(<span class="ruby-identifier">col</span>.<span class="ruby-identifier">utility</span>)
+41:           <span class="ruby-keyword kw">end</span>
+42:         <span class="ruby-keyword kw">else</span>
+43:           <span class="ruby-identifier">val</span>=<span class="ruby-identifier">col</span>.<span class="ruby-identifier">value</span>
+44:         <span class="ruby-keyword kw">end</span>
+45:         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;sequence.set_default_values:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">strcol</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;=&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">old_value</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot; to &quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">val</span>.<span class="ruby-identifier">to_s</span>
+46:         <span class="ruby-comment cmt">#object.update_attribute(strcol,val)</span>
+47:         <span class="ruby-identifier">object</span>[<span class="ruby-identifier">strcol</span>]=<span class="ruby-identifier">val</span>
+48:       <span class="ruby-keyword kw">end</span>
+49:     <span class="ruby-keyword kw">end</span>
+50:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

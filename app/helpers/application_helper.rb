@@ -105,8 +105,8 @@ module ApplicationHelper
   
   def sort_td_class_helper(param)
     result = 'class="sortup"' if params[:sort] == param
-    result = 'class="sortdown"' if params[:sort] == param + " DESC"
-    return result
+    result = 'class="sortdown"' if params[:sort] == param.to_s + " DESC"
+    result
   end
   
   def sort_link_helper(text, param)
@@ -119,7 +119,7 @@ module ApplicationHelper
         :success => "Element.hide('spinner')"
     }
     html_options = {
-      :title => "Sort by this field",
+      :title => t("h_sort_by_field"),
       :href => url_for(:action => 'index', :params => params.merge({:sort => key, :page => nil}))
     }
     link_to_remote(text, options, html_options)
@@ -130,7 +130,7 @@ module ApplicationHelper
     if (@tree || @tree_up) 
       bloc << "<table class='menu_bas' >"
       bloc << "<tr>"
-      bloc<< "<td><a class='menu_bas' href='#' onclick='hideTreeMenu();'>"+t(h_show_hide_tree)+"</a></td>"
+      bloc<< "<td><a class='menu_bas' href='#' onclick='hideTreeMenu();'>"+t("h_show_hide_tree")+"</a></td>"
       bloc << "</tr>"
       bloc << "</table>"
       bloc << "<div id='dtree'>"
@@ -145,7 +145,7 @@ module ApplicationHelper
       
       
     end
-    return bloc    
+    bloc    
   end
   
  

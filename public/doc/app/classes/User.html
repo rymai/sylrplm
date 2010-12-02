@@ -86,12 +86,12 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000058">after_destroy</a>&nbsp;&nbsp;
-      <a href="#M000055">authenticate</a>&nbsp;&nbsp;
-      <a href="#M000053">find_by_name</a>&nbsp;&nbsp;
-      <a href="#M000056">password</a>&nbsp;&nbsp;
-      <a href="#M000057">password=</a>&nbsp;&nbsp;
-      <a href="#M000054">validate</a>&nbsp;&nbsp;
+      <a href="#M000046">authenticate</a>&nbsp;&nbsp;
+      <a href="#M000049">before_destroy</a>&nbsp;&nbsp;
+      <a href="#M000044">find_by_name</a>&nbsp;&nbsp;
+      <a href="#M000047">password</a>&nbsp;&nbsp;
+      <a href="#M000048">password=</a>&nbsp;&nbsp;
+      <a href="#M000045">validate</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -126,19 +126,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000055" class="method-detail">
-        <a name="M000055"></a>
+      <div id="method-M000046" class="method-detail">
+        <a name="M000046"></a>
 
         <div class="method-heading">
-          <a href="#M000055" class="method-signature">
+          <a href="#M000046" class="method-signature">
           <span class="method-name">authenticate</span><span class="method-args">(login, password)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000055-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000055-source">
+            onclick="toggleCode('M000046-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000046-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/user.rb, line 24</span>
 24:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">login</span>, <span class="ruby-identifier">password</span>)
@@ -156,19 +156,19 @@
         </div>
       </div>
 
-      <div id="method-M000053" class="method-detail">
-        <a name="M000053"></a>
+      <div id="method-M000044" class="method-detail">
+        <a name="M000044"></a>
 
         <div class="method-heading">
-          <a href="#M000053" class="method-signature">
+          <a href="#M000044" class="method-signature">
           <span class="method-name">find_by_name</span><span class="method-args">(name)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000053-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000053-source">
+            onclick="toggleCode('M000044-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000044-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/user.rb, line 16</span>
 16:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_by_name</span>(<span class="ruby-identifier">name</span>)
@@ -181,22 +181,22 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000058" class="method-detail">
-        <a name="M000058"></a>
+      <div id="method-M000049" class="method-detail">
+        <a name="M000049"></a>
 
         <div class="method-heading">
-          <a href="#M000058" class="method-signature">
-          <span class="method-name">after_destroy</span><span class="method-args">()</span>
+          <a href="#M000049" class="method-signature">
+          <span class="method-name">before_destroy</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000058-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000058-source">
+            onclick="toggleCode('M000049-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000049-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/user.rb, line 48</span>
-48:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_destroy</span>
+48:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">before_destroy</span>
 49:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">count</span>.<span class="ruby-identifier">zero?</span>
 50:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Can't delete last user&quot;</span>
 51:     <span class="ruby-keyword kw">end</span>
@@ -206,23 +206,23 @@
         </div>
       </div>
 
-      <div id="method-M000056" class="method-detail">
-        <a name="M000056"></a>
+      <div id="method-M000047" class="method-detail">
+        <a name="M000047"></a>
 
         <div class="method-heading">
-          <a href="#M000056" class="method-signature">
+          <a href="#M000047" class="method-signature">
           <span class="method-name">password</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-&#8216;<a href="User.html#M000056">password</a>&#8217; is a virtual
+&#8216;<a href="User.html#M000047">password</a>&#8217; is a virtual
 attribute
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000056-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000056-source">
+            onclick="toggleCode('M000047-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000047-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/user.rb, line 37</span>
 37:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">password</span>
@@ -233,19 +233,19 @@ attribute
         </div>
       </div>
 
-      <div id="method-M000057" class="method-detail">
-        <a name="M000057"></a>
+      <div id="method-M000048" class="method-detail">
+        <a name="M000048"></a>
 
         <div class="method-heading">
-          <a href="#M000057" class="method-signature">
+          <a href="#M000048" class="method-signature">
           <span class="method-name">password=</span><span class="method-args">(pwd)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000057-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000057-source">
+            onclick="toggleCode('M000048-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000048-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/user.rb, line 41</span>
 41:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">password=</span>(<span class="ruby-identifier">pwd</span>)
@@ -259,19 +259,19 @@ attribute
         </div>
       </div>
 
-      <div id="method-M000054" class="method-detail">
-        <a name="M000054"></a>
+      <div id="method-M000045" class="method-detail">
+        <a name="M000045"></a>
 
         <div class="method-heading">
-          <a href="#M000054" class="method-signature">
+          <a href="#M000045" class="method-signature">
           <span class="method-name">validate</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000054-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000054-source">
+            onclick="toggleCode('M000045-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000045-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/user.rb, line 20</span>
 20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate</span>

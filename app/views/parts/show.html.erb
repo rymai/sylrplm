@@ -78,7 +78,7 @@
             <%= link_to h_img_add_forum.to_s+t("add_forum"), :id => @part.id, :action => :new_forum %>
         </td>
         <td>
-            <% if (@part.isFreeze() == true ) %>
+            <% if (@part.is_freeze() == true ) %>
             <%=t("freeze") %>
             <% else %>
             <%= link_to t("edit"), edit_part_path(@part) %>

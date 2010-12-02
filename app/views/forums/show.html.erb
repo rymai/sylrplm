@@ -34,7 +34,7 @@
 
 <table class='menu_bas'>
 <tr>
-<% if (@forum.isFreeze() == true ) %>
+<% if (@forum.is_freeze() == true ) %>
 	<td><%=t("freeze")%></td>
 <% else %>
 	<td><%= link_to t("edit"), edit_forum_path(@forum) %></td>

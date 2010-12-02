@@ -86,13 +86,13 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000228">find_all</a>&nbsp;&nbsp;
-      <a href="#M000230">find_first</a>&nbsp;&nbsp;
-      <a href="#M000229">find_for</a>&nbsp;&nbsp;
-      <a href="#M000231">find_last</a>&nbsp;&nbsp;
-      <a href="#M000232">find_next</a>&nbsp;&nbsp;
-      <a href="#M000233">find_previous</a>&nbsp;&nbsp;
-      <a href="#M000227">getObjectsWithStatus</a>&nbsp;&nbsp;
+      <a href="#M000233">find_all</a>&nbsp;&nbsp;
+      <a href="#M000235">find_first</a>&nbsp;&nbsp;
+      <a href="#M000234">find_for</a>&nbsp;&nbsp;
+      <a href="#M000236">find_last</a>&nbsp;&nbsp;
+      <a href="#M000237">find_next</a>&nbsp;&nbsp;
+      <a href="#M000238">find_previous</a>&nbsp;&nbsp;
+      <a href="#M000232">getObjectsWithStatus</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -114,93 +114,149 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000228" class="method-detail">
-        <a name="M000228"></a>
+      <div id="method-M000233" class="method-detail">
+        <a name="M000233"></a>
 
         <div class="method-heading">
-          <a href="#M000228" class="method-signature">
+          <a href="#M000233" class="method-signature">
           <span class="method-name">find_all</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000228-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000228-source">
+            onclick="toggleCode('M000233-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000233-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/statusobject.rb, line 14</span>
-14:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_all</span>
-15:     <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;object,rank,name&quot;</span>)
-16:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/statusobject.rb, line 12</span>
+12:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_all</span>
+13:     <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;object,rank,name&quot;</span>)
+14:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000230" class="method-detail">
-        <a name="M000230"></a>
+      <div id="method-M000235" class="method-detail">
+        <a name="M000235"></a>
 
         <div class="method-heading">
-          <a href="#M000230" class="method-signature">
+          <a href="#M000235" class="method-signature">
           <span class="method-name">find_first</span><span class="method-args">(object)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000230-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000230-source">
+            onclick="toggleCode('M000235-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000235-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/statusobject.rb, line 22</span>
-22:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_first</span>(<span class="ruby-identifier">object</span>)
-23:     <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;object,rank ASC&quot;</span>,  <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;object = '#{object}'&quot;</span>])
-24:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/statusobject.rb, line 20</span>
+20:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_first</span>(<span class="ruby-identifier">object</span>)
+21:     <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;object,rank ASC&quot;</span>,  <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;object = '#{object}'&quot;</span>])
+22:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000229" class="method-detail">
-        <a name="M000229"></a>
+      <div id="method-M000234" class="method-detail">
+        <a name="M000234"></a>
 
         <div class="method-heading">
-          <a href="#M000229" class="method-signature">
+          <a href="#M000234" class="method-signature">
           <span class="method-name">find_for</span><span class="method-args">(object)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000229-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000229-source">
+            onclick="toggleCode('M000234-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000234-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/statusobject.rb, line 18</span>
-18:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-identifier">object</span>)
-19:       <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;object,rank,name&quot;</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;object = '#{object}' &quot;</span>])
-20:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/statusobject.rb, line 16</span>
+16:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_for</span>(<span class="ruby-identifier">object</span>)
+17:     <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:all</span>, <span class="ruby-identifier">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;object,rank,name&quot;</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;object = '#{object}' &quot;</span>])
+18:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000231" class="method-detail">
-        <a name="M000231"></a>
+      <div id="method-M000236" class="method-detail">
+        <a name="M000236"></a>
 
         <div class="method-heading">
-          <a href="#M000231" class="method-signature">
+          <a href="#M000236" class="method-signature">
           <span class="method-name">find_last</span><span class="method-args">(object)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000231-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000231-source">
+            onclick="toggleCode('M000236-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000236-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/statusobject.rb, line 26</span>
-26:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_last</span>(<span class="ruby-identifier">object</span>)
-27:      <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;object,rank DESC&quot;</span>,  <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;object = '#{object}'&quot;</span>])
-28:    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/statusobject.rb, line 24</span>
+24:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_last</span>(<span class="ruby-identifier">object</span>)
+25:     <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-value str">&quot;object,rank DESC&quot;</span>,  <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;object = '#{object}'&quot;</span>])
+26:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000237" class="method-detail">
+        <a name="M000237"></a>
+
+        <div class="method-heading">
+          <a href="#M000237" class="method-signature">
+          <span class="method-name">find_next</span><span class="method-args">(object, current_status)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000237-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000237-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/statusobject.rb, line 28</span>
+28:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_next</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">current_status</span>)
+29:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">current_status</span>.<span class="ruby-identifier">rank</span><span class="ruby-operator">&lt;</span><span class="ruby-identifier">find_last</span>(<span class="ruby-identifier">object</span>).<span class="ruby-identifier">rank</span>)
+30:       <span class="ruby-identifier">new_rank</span>=<span class="ruby-identifier">current_status</span>.<span class="ruby-identifier">rank</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>
+31:       <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;object = '#{object}' &amp;&amp; rank=#{new_rank}&quot;</span>])
+32:     <span class="ruby-keyword kw">else</span>
+33:       <span class="ruby-identifier">current_status</span>
+34:     <span class="ruby-keyword kw">end</span>
+35:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000238" class="method-detail">
+        <a name="M000238"></a>
+
+        <div class="method-heading">
+          <a href="#M000238" class="method-signature">
+          <span class="method-name">find_previous</span><span class="method-args">(object, current_status)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000238-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000238-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/statusobject.rb, line 37</span>
+37:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_previous</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">current_status</span>)
+38:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">current_status</span>.<span class="ruby-identifier">rank</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">find_first</span>(<span class="ruby-identifier">object</span>).<span class="ruby-identifier">rank</span>)
+39:       <span class="ruby-identifier">new_rank</span>=<span class="ruby-identifier">current_status</span>.<span class="ruby-identifier">rank</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>
+40:       <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;object = '#{object}' &amp;&amp; rank=#{new_rank}&quot;</span>])
+41:     <span class="ruby-keyword kw">else</span>
+42:       <span class="ruby-identifier">current_status</span>
+43:     <span class="ruby-keyword kw">end</span>
+44:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -211,7 +267,7 @@
 
         <div class="method-heading">
           <a href="#M000232" class="method-signature">
-          <span class="method-name">find_next</span><span class="method-args">(object, current_status)</span>
+          <span class="method-name">getObjectsWithStatus</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -220,68 +276,10 @@
             onclick="toggleCode('M000232-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000232-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/statusobject.rb, line 30</span>
-30:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_next</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">current_status</span>)
-31:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">current_status</span>.<span class="ruby-identifier">rank</span><span class="ruby-operator">&lt;</span><span class="ruby-identifier">find_last</span>(<span class="ruby-identifier">object</span>).<span class="ruby-identifier">rank</span>)
-32:           <span class="ruby-identifier">new_rank</span>=<span class="ruby-identifier">current_status</span>.<span class="ruby-identifier">rank</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>
-33:           <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;object = '#{object}' &amp;&amp; rank=#{new_rank}&quot;</span>])
-34:       <span class="ruby-keyword kw">else</span>
-35:         <span class="ruby-identifier">current_status</span>
-36:       <span class="ruby-keyword kw">end</span>
-37:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000233" class="method-detail">
-        <a name="M000233"></a>
-
-        <div class="method-heading">
-          <a href="#M000233" class="method-signature">
-          <span class="method-name">find_previous</span><span class="method-args">(object, current_status)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000233-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000233-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/statusobject.rb, line 39</span>
-39:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_previous</span>(<span class="ruby-identifier">object</span>, <span class="ruby-identifier">current_status</span>)
-40:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">current_status</span>.<span class="ruby-identifier">rank</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">find_first</span>(<span class="ruby-identifier">object</span>).<span class="ruby-identifier">rank</span>)
-41:           <span class="ruby-identifier">new_rank</span>=<span class="ruby-identifier">current_status</span>.<span class="ruby-identifier">rank</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>
-42:           <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;object = '#{object}' &amp;&amp; rank=#{new_rank}&quot;</span>])
-43:       <span class="ruby-keyword kw">else</span>
-44:         <span class="ruby-identifier">current_status</span>
-45:       <span class="ruby-keyword kw">end</span>
-46:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000227" class="method-detail">
-        <a name="M000227"></a>
-
-        <div class="method-heading">
-          <a href="#M000227" class="method-signature">
-          <span class="method-name">getObjectsWithStatus</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000227-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000227-source">
-<pre>
     <span class="ruby-comment cmt"># File app/models/statusobject.rb, line 8</span>
  8:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">getObjectsWithStatus</span>
- 9:                 <span class="ruby-identifier">ret</span>=[<span class="ruby-value str">&quot;document&quot;</span>,<span class="ruby-value str">&quot;part&quot;</span>,<span class="ruby-value str">&quot;project&quot;</span>,<span class="ruby-value str">&quot;customer&quot;</span>,<span class="ruby-value str">&quot;forum&quot;</span>]
-10:       
-11:                 <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">ret</span>
-12:   <span class="ruby-keyword kw">end</span>
+ 9:     <span class="ruby-identifier">ret</span>=[<span class="ruby-value str">&quot;document&quot;</span>,<span class="ruby-value str">&quot;part&quot;</span>,<span class="ruby-value str">&quot;project&quot;</span>,<span class="ruby-value str">&quot;customer&quot;</span>,<span class="ruby-value str">&quot;forum&quot;</span>]
+10:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

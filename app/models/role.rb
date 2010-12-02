@@ -9,5 +9,5 @@ class Role < ActiveRecord::Base
   def self.findall_except_admin()
     find(:all , :conditions => ["title <> 'admin' "])
   end
-   
+  
 end

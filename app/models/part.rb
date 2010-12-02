@@ -1,3 +1,4 @@
+require 'lib/models/plm_object'
 class Part < ActiveRecord::Base
   include PlmObject
   validates_presence_of :ident, :designation
@@ -17,14 +18,13 @@ class Part < ActiveRecord::Base
   #:foreign_key => "father_id", :association_foreign_key => "child_id", :conditions => ["father_object='part' AND child_object='document'"]
   
   has_many :links, :foreign_key => "father_id", :conditions => ["father_object='part'"]
-  
   has_many :documents , :through => :links
   
   #def self.getFirstRevision
   #      "A"    
   #end
   
-  def self.createNew(part,user)
+  def self.create_new(part,user)
     if(part!=nil)
       p=Part.new(part)
       #Sequence.set_default_values(p, self.name, false)
@@ -35,7 +35,7 @@ class Part < ActiveRecord::Base
     #p.revision=getFirstRevision
     p.statusobject=Statusobject.find_first("part")
     p.owner=user
-    puts "part.createNew:"+p.inspect
+    puts "part.create_new:"+p.inspect
     p
   end
   
@@ -43,10 +43,10 @@ class Part < ActiveRecord::Base
   def self.find_edit(object_id)
     obj=find(object_id)
     obj.edit
-    return obj
+    obj
   end
   
-  def isFreeze
+  def is_freeze
     if(self.statusobject!=nil && Statusobject.find_last("part")!=nil)
       if(self.statusobject.rank == Statusobject.find_last("part").rank)
         true
@@ -59,7 +59,7 @@ class Part < ActiveRecord::Base
   end
   
   # a valider si avant dernier status
-  def isToValidate
+  def is_to_validate
     if(self.statusobject!=nil && Statusobject.find_last("part")!=nil)
       if(self.statusobject.rank == Statusobject.find_last("part").rank-1)
         true
@@ -71,7 +71,7 @@ class Part < ActiveRecord::Base
     end 
   end
   
-  def self.getTypesPart
+  def self.get_types_part
     Typesobject.find(:all, :order=>"name",
         :conditions => ["object = 'part'"])
   end
@@ -119,25 +119,6 @@ class Part < ActiveRecord::Base
     self.statusobject=next_status 
     self   
   end 
-  
-  def revise_old
-    if(self.isFreeze)
-      # recherche si c'est la derniere revision
-      rev_cur=self.revision
-      last_rev=find_last_revision(self)
-      if(last_rev.revision==rev_cur)
-        part=clone()
-        part.revision=rev_cur.next
-        part.statusobject=Statusobject.find_first("part")
-        puts "part.revise:"+part.inspect
-        return part
-      else
-        return nil
-      end
-    else
-      return nil
-    end    
-  end
   
   
   

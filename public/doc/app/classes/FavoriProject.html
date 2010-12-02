@@ -86,8 +86,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000119">add_project</a>&nbsp;&nbsp;
-      <a href="#M000118">new</a>&nbsp;&nbsp;
+      <a href="#M000123">add_project</a>&nbsp;&nbsp;
+      <a href="#M000124">empty</a>&nbsp;&nbsp;
+      <a href="#M000122">new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -122,23 +123,23 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000118" class="method-detail">
-        <a name="M000118"></a>
+      <div id="method-M000122" class="method-detail">
+        <a name="M000122"></a>
 
         <div class="method-heading">
-          <a href="#M000118" class="method-signature">
+          <a href="#M000122" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000118-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000118-source">
+            onclick="toggleCode('M000122-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000122-source">
 <pre>
    <span class="ruby-comment cmt"># File app/models/favori_project.rb, line 3</span>
 3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>
-4:       <span class="ruby-ivar">@items</span>=[]   
+4:     <span class="ruby-ivar">@items</span>=[]   
 5:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -147,27 +148,50 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000119" class="method-detail">
-        <a name="M000119"></a>
+      <div id="method-M000123" class="method-detail">
+        <a name="M000123"></a>
 
         <div class="method-heading">
-          <a href="#M000119" class="method-signature">
+          <a href="#M000123" class="method-signature">
           <span class="method-name">add_project</span><span class="method-args">(project)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000119-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000119-source">
+            onclick="toggleCode('M000123-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000123-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/favori_project.rb, line 7</span>
  7:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_project</span>(<span class="ruby-identifier">project</span>)
- 8:      <span class="ruby-identifier">current_item</span>=<span class="ruby-ivar">@items</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span> <span class="ruby-identifier">item</span>.<span class="ruby-identifier">id</span><span class="ruby-operator">==</span><span class="ruby-identifier">project</span>.<span class="ruby-identifier">id</span> }
- 9:      <span class="ruby-keyword kw">if</span>(<span class="ruby-keyword kw">not</span> <span class="ruby-identifier">current_item</span>) 
-10:        <span class="ruby-ivar">@items</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">project</span>
-11:      <span class="ruby-keyword kw">end</span>
-12:    <span class="ruby-keyword kw">end</span>
+ 8:     <span class="ruby-identifier">current_item</span>=<span class="ruby-ivar">@items</span>.<span class="ruby-identifier">find</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span> <span class="ruby-identifier">item</span>.<span class="ruby-identifier">id</span><span class="ruby-operator">==</span><span class="ruby-identifier">project</span>.<span class="ruby-identifier">id</span> }
+ 9:     <span class="ruby-keyword kw">if</span>(<span class="ruby-keyword kw">not</span> <span class="ruby-identifier">current_item</span>) 
+10:       <span class="ruby-ivar">@items</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">project</span>
+11:     <span class="ruby-keyword kw">end</span>
+12:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000124" class="method-detail">
+        <a name="M000124"></a>
+
+        <div class="method-heading">
+          <a href="#M000124" class="method-signature">
+          <span class="method-name">empty</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000124-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000124-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/favori_project.rb, line 13</span>
+13:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">empty</span>
+14:     <span class="ruby-ivar">@items</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">==</span><span class="ruby-value">0</span>
+15:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

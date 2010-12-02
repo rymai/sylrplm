@@ -1,5 +1,5 @@
 class ChecksController < ApplicationController
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   # GET /checks
   # GET /checks.xml
   def index

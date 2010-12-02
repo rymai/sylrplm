@@ -86,15 +86,14 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000288">add_documents_from_favori</a>&nbsp;&nbsp;
-      <a href="#M000286">add_projects_from_favori</a>&nbsp;&nbsp;
-      <a href="#M000284">createNew</a>&nbsp;&nbsp;
-      <a href="#M000292">demote</a>&nbsp;&nbsp;
-      <a href="#M000285">find_edit</a>&nbsp;&nbsp;
-      <a href="#M000289">isFreeze_old</a>&nbsp;&nbsp;
-      <a href="#M000290">isToValidate</a>&nbsp;&nbsp;
-      <a href="#M000291">promote</a>&nbsp;&nbsp;
-      <a href="#M000287">remove_project</a>&nbsp;&nbsp;
+      <a href="#M000300">add_documents_from_favori</a>&nbsp;&nbsp;
+      <a href="#M000298">add_projects_from_favori</a>&nbsp;&nbsp;
+      <a href="#M000296">create_new</a>&nbsp;&nbsp;
+      <a href="#M000303">demote</a>&nbsp;&nbsp;
+      <a href="#M000297">find_edit</a>&nbsp;&nbsp;
+      <a href="#M000301">is_to_validate</a>&nbsp;&nbsp;
+      <a href="#M000302">promote</a>&nbsp;&nbsp;
+      <a href="#M000299">remove_project</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -123,44 +122,44 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000284" class="method-detail">
-        <a name="M000284"></a>
+      <div id="method-M000296" class="method-detail">
+        <a name="M000296"></a>
 
         <div class="method-heading">
-          <a href="#M000284" class="method-signature">
-          <span class="method-name">createNew</span><span class="method-args">(customer,user)</span>
+          <a href="#M000296" class="method-signature">
+          <span class="method-name">create_new</span><span class="method-args">(customer,user)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000284-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000284-source">
+            onclick="toggleCode('M000296-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000296-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/customer.rb, line 14</span>
-14:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">createNew</span>(<span class="ruby-identifier">customer</span>,<span class="ruby-identifier">user</span>)
-15:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">customer!</span>=<span class="ruby-keyword kw">nil</span>)
-16:       <span class="ruby-identifier">obj</span>=<span class="ruby-constant">Customer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">customer</span>)
-17:       <span class="ruby-constant">Sequence</span>.<span class="ruby-identifier">set_default_values</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>, <span class="ruby-keyword kw">false</span>)
-18:     <span class="ruby-keyword kw">else</span>
-19:       <span class="ruby-identifier">obj</span>=<span class="ruby-constant">Customer</span>.<span class="ruby-identifier">new</span>
-20:       <span class="ruby-comment cmt">#obj.ident=Sequence.get_next_seq(&quot;customer&quot;)</span>
-21:       <span class="ruby-constant">Sequence</span>.<span class="ruby-identifier">set_default_values</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>, <span class="ruby-keyword kw">true</span>)
-22:     <span class="ruby-keyword kw">end</span>
-23:     <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">owner</span>=<span class="ruby-identifier">user</span>
-24:     <span class="ruby-identifier">puts</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">inspect</span>
-25:     <span class="ruby-identifier">obj</span>
-26:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/customer.rb, line 15</span>
+15:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">create_new</span>(<span class="ruby-identifier">customer</span>,<span class="ruby-identifier">user</span>)
+16:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">customer!</span>=<span class="ruby-keyword kw">nil</span>)
+17:       <span class="ruby-identifier">obj</span>=<span class="ruby-constant">Customer</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">customer</span>)
+18:       <span class="ruby-comment cmt">#Sequence.set_default_values(obj, self.name, false)</span>
+19:     <span class="ruby-keyword kw">else</span>
+20:       <span class="ruby-identifier">obj</span>=<span class="ruby-constant">Customer</span>.<span class="ruby-identifier">new</span>
+21:       <span class="ruby-comment cmt">#obj.ident=Sequence.get_next_seq(&quot;customer&quot;)</span>
+22:       <span class="ruby-constant">Sequence</span>.<span class="ruby-identifier">set_default_values</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>, <span class="ruby-keyword kw">true</span>)
+23:     <span class="ruby-keyword kw">end</span>
+24:     <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">owner</span>=<span class="ruby-identifier">user</span>
+25:     <span class="ruby-identifier">puts</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">inspect</span>
+26:     <span class="ruby-identifier">obj</span>
+27:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000285" class="method-detail">
-        <a name="M000285"></a>
+      <div id="method-M000297" class="method-detail">
+        <a name="M000297"></a>
 
         <div class="method-heading">
-          <a href="#M000285" class="method-signature">
+          <a href="#M000297" class="method-signature">
           <span class="method-name">find_edit</span><span class="method-args">(object_id)</span>
           </a>
         </div>
@@ -170,15 +169,15 @@
 modifie les attributs avant edition
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000285-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000285-source">
+            onclick="toggleCode('M000297-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000297-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/customer.rb, line 29</span>
-29:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_edit</span>(<span class="ruby-identifier">object_id</span>)
-30:     <span class="ruby-identifier">obj</span>=<span class="ruby-identifier">find</span>(<span class="ruby-identifier">object_id</span>)
-31:     <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">edit</span>
-32:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">obj</span>
-33:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/customer.rb, line 30</span>
+30:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_edit</span>(<span class="ruby-identifier">object_id</span>)
+31:     <span class="ruby-identifier">obj</span>=<span class="ruby-identifier">find</span>(<span class="ruby-identifier">object_id</span>)
+32:     <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">edit</span>
+33:     <span class="ruby-identifier">obj</span>
+34:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -186,117 +185,86 @@ modifie les attributs avant edition
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000288" class="method-detail">
-        <a name="M000288"></a>
+      <div id="method-M000300" class="method-detail">
+        <a name="M000300"></a>
 
         <div class="method-heading">
-          <a href="#M000288" class="method-signature">
+          <a href="#M000300" class="method-signature">
           <span class="method-name">add_documents_from_favori</span><span class="method-args">(favori)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000288-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000288-source">
+            onclick="toggleCode('M000300-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000300-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/customer.rb, line 50</span>
-50:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_documents_from_favori</span>(<span class="ruby-identifier">favori</span>)
-51:         <span class="ruby-identifier">favori</span>.<span class="ruby-identifier">items</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
-52:           <span class="ruby-identifier">documents</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">item</span>
-53:         <span class="ruby-keyword kw">end</span>    
-54:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/customer.rb, line 51</span>
+51:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_documents_from_favori</span>(<span class="ruby-identifier">favori</span>)
+52:     <span class="ruby-identifier">favori</span>.<span class="ruby-identifier">items</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+53:       <span class="ruby-identifier">documents</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">item</span>
+54:     <span class="ruby-keyword kw">end</span>    
+55:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000286" class="method-detail">
-        <a name="M000286"></a>
+      <div id="method-M000298" class="method-detail">
+        <a name="M000298"></a>
 
         <div class="method-heading">
-          <a href="#M000286" class="method-signature">
+          <a href="#M000298" class="method-signature">
           <span class="method-name">add_projects_from_favori</span><span class="method-args">(favori)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000286-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000286-source">
+            onclick="toggleCode('M000298-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000298-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/customer.rb, line 35</span>
-35:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_projects_from_favori</span>(<span class="ruby-identifier">favori</span>)
-36:         <span class="ruby-identifier">favori</span>.<span class="ruby-identifier">items</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
-37:             <span class="ruby-identifier">projects</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">item</span>
-38:         <span class="ruby-keyword kw">end</span>    
-39:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/customer.rb, line 36</span>
+36:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_projects_from_favori</span>(<span class="ruby-identifier">favori</span>)
+37:     <span class="ruby-identifier">favori</span>.<span class="ruby-identifier">items</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span><span class="ruby-operator">|</span>
+38:       <span class="ruby-identifier">projects</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">item</span>
+39:     <span class="ruby-keyword kw">end</span>    
+40:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000292" class="method-detail">
-        <a name="M000292"></a>
+      <div id="method-M000303" class="method-detail">
+        <a name="M000303"></a>
 
         <div class="method-heading">
-          <a href="#M000292" class="method-signature">
+          <a href="#M000303" class="method-signature">
           <span class="method-name">demote</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000292-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000292-source">
+            onclick="toggleCode('M000303-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000303-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/customer.rb, line 84</span>
-84:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">demote</span>
-85:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">statusobject</span>=<span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_previous</span>(<span class="ruby-identifier">:customer</span>,<span class="ruby-identifier">statusobject</span>) 
-86:     <span class="ruby-keyword kw">self</span>   
-87:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/customer.rb, line 74</span>
+74:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">demote</span>
+75:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">statusobject</span>=<span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_previous</span>(<span class="ruby-identifier">:customer</span>,<span class="ruby-identifier">statusobject</span>) 
+76:     <span class="ruby-keyword kw">self</span>   
+77:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000289" class="method-detail">
-        <a name="M000289"></a>
+      <div id="method-M000301" class="method-detail">
+        <a name="M000301"></a>
 
         <div class="method-heading">
-          <a href="#M000289" class="method-signature">
-          <span class="method-name">isFreeze_old</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000289-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000289-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/customer.rb, line 56</span>
-56:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">isFreeze_old</span>
-57:     <span class="ruby-keyword kw">if</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">statusobject!</span>=<span class="ruby-keyword kw">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_last</span>(<span class="ruby-identifier">:customer</span>)<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>)
-58:       <span class="ruby-keyword kw">if</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">statusobject</span>.<span class="ruby-identifier">rank</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_last</span>(<span class="ruby-identifier">:customer</span>).<span class="ruby-identifier">rank</span>)
-59:         <span class="ruby-keyword kw">true</span>
-60:       <span class="ruby-keyword kw">else</span>
-61:         <span class="ruby-keyword kw">false</span>
-62:       <span class="ruby-keyword kw">end</span>
-63:     <span class="ruby-keyword kw">else</span>
-64:       <span class="ruby-keyword kw">false</span>
-65:     <span class="ruby-keyword kw">end</span>
-66:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000290" class="method-detail">
-        <a name="M000290"></a>
-
-        <div class="method-heading">
-          <a href="#M000290" class="method-signature">
-          <span class="method-name">isToValidate</span><span class="method-args">()</span>
+          <a href="#M000301" class="method-signature">
+          <span class="method-name">is_to_validate</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -305,55 +273,55 @@ modifie les attributs avant edition
 a valider si avant dernier status
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000290-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000290-source">
+            onclick="toggleCode('M000301-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000301-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/customer.rb, line 69</span>
-69:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">isToValidate</span>
-70:     <span class="ruby-keyword kw">if</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">statusobject!</span>=<span class="ruby-keyword kw">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_last</span>(<span class="ruby-identifier">:customer</span>)<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>)
-71:       <span class="ruby-keyword kw">if</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">statusobject</span>.<span class="ruby-identifier">rank</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_last</span>(<span class="ruby-identifier">:customer</span>).<span class="ruby-identifier">rank</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
-72:         <span class="ruby-keyword kw">true</span>
-73:       <span class="ruby-keyword kw">else</span>
-74:         <span class="ruby-keyword kw">false</span>
-75:       <span class="ruby-keyword kw">end</span>
-76:     <span class="ruby-keyword kw">else</span>
-77:       <span class="ruby-keyword kw">false</span>
-78:     <span class="ruby-keyword kw">end</span> 
-79:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/customer.rb, line 59</span>
+59:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_to_validate</span>
+60:     <span class="ruby-keyword kw">if</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">statusobject!</span>=<span class="ruby-keyword kw">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_last</span>(<span class="ruby-identifier">:customer</span>)<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>)
+61:       <span class="ruby-keyword kw">if</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">statusobject</span>.<span class="ruby-identifier">rank</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_last</span>(<span class="ruby-identifier">:customer</span>).<span class="ruby-identifier">rank</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
+62:         <span class="ruby-keyword kw">true</span>
+63:       <span class="ruby-keyword kw">else</span>
+64:         <span class="ruby-keyword kw">false</span>
+65:       <span class="ruby-keyword kw">end</span>
+66:     <span class="ruby-keyword kw">else</span>
+67:       <span class="ruby-keyword kw">false</span>
+68:     <span class="ruby-keyword kw">end</span> 
+69:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000291" class="method-detail">
-        <a name="M000291"></a>
+      <div id="method-M000302" class="method-detail">
+        <a name="M000302"></a>
 
         <div class="method-heading">
-          <a href="#M000291" class="method-signature">
+          <a href="#M000302" class="method-signature">
           <span class="method-name">promote</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000291-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000291-source">
+            onclick="toggleCode('M000302-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000302-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/customer.rb, line 80</span>
-80:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">promote</span>
-81:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">statusobject</span>=<span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_next</span>(<span class="ruby-identifier">:customer</span>,<span class="ruby-identifier">statusobject</span>) 
-82:     <span class="ruby-keyword kw">self</span>   
-83:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/customer.rb, line 70</span>
+70:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">promote</span>
+71:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">statusobject</span>=<span class="ruby-constant">Statusobject</span>.<span class="ruby-identifier">find_next</span>(<span class="ruby-identifier">:customer</span>,<span class="ruby-identifier">statusobject</span>) 
+72:     <span class="ruby-keyword kw">self</span>   
+73:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000287" class="method-detail">
-        <a name="M000287"></a>
+      <div id="method-M000299" class="method-detail">
+        <a name="M000299"></a>
 
         <div class="method-heading">
-          <a href="#M000287" class="method-signature">
+          <a href="#M000299" class="method-signature">
           <span class="method-name">remove_project</span><span class="method-args">(project)</span>
           </a>
         </div>
@@ -370,13 +338,13 @@ def self.getTypesCustomer
 end
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000287-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000287-source">
+            onclick="toggleCode('M000299-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000299-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/customer.rb, line 46</span>
-46:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_project</span>(<span class="ruby-identifier">project</span>)
-47:              <span class="ruby-identifier">projects</span>.<span class="ruby-identifier">delete</span>( <span class="ruby-identifier">project</span>)
-48:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/customer.rb, line 47</span>
+47:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_project</span>(<span class="ruby-identifier">project</span>)
+48:     <span class="ruby-identifier">projects</span>.<span class="ruby-identifier">delete</span>( <span class="ruby-identifier">project</span>)
+49:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

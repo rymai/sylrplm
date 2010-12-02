@@ -1,5 +1,5 @@
 class SequencesController < ApplicationController
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   # GET /sequences
   # GET /sequences.xml
   def index
@@ -25,7 +25,7 @@ class SequencesController < ApplicationController
   def new
     @sequence = Sequence.new
     #@objects=Sequence.getObjectsWithSequence
-    @utilities=getModelsAndColumns()
+    @utilities=get_models_and_columns()
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @sequence }
@@ -36,7 +36,7 @@ class SequencesController < ApplicationController
   def edit
     @sequence = Sequence.find(params[:id])
     #@objects=Sequence.getObjectsWithSequence
-    @utilities=getModelsAndColumns()
+    @utilities=get_models_and_columns()
     
   end
   
@@ -45,7 +45,7 @@ class SequencesController < ApplicationController
   def create
     @sequence = Sequence.new(params[:sequence])
     #@objects=Sequence.getObjectsWithSequence
-    @utilities=getModelsAndColumns()
+    @utilities=get_models_and_columns()
     respond_to do |format|
       if @sequence.save
         flash[:notice] = t(:ctrl_object_created,:object=>t(:ctrl_sequence),:ident=>@sequence.utility)
@@ -64,7 +64,7 @@ class SequencesController < ApplicationController
   def update
     @sequence = Sequence.find(params[:id])
     #@objects=Sequence.getObjectsWithSequence
-    @utilities=getModelsAndColumns()
+    @utilities=get_models_and_columns()
     respond_to do |format|
       if @sequence.update_attributes(params[:sequence])
         flash[:notice] = t(:ctrl_object_updated,:object=>t(:ctrl_sequence),:ident=>@sequence.utility)
@@ -84,7 +84,7 @@ class SequencesController < ApplicationController
     @sequence = Sequence.find(params[:id])
     @sequence.destroy
     respond_to do |format|
-        flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_sequence),:ident=>@sequence.utility)
+      flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_sequence),:ident=>@sequence.utility)
       format.html { redirect_to(sequences_url) }
       format.xml  { head :ok }
     end

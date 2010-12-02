@@ -1,8 +1,8 @@
 class Question < ActiveRecord::Base
-
+  
   validates_presence_of :question, :answer
   
-  def self.createNew()
+  def self.create_new()
     obj=Question.new
     Sequence.set_default_values(obj, self.name, true) 
     obj

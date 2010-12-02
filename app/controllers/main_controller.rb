@@ -1,8 +1,9 @@
+require 'lib/controllers/plm_init_controller_module'
 class MainController < ApplicationController
   include PlmInitControllerModule
   
   
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   
   def infos()
     request.env["PATH_INFO"] +":"+__FILE__+":"+__LINE__.to_s
@@ -18,7 +19,7 @@ class MainController < ApplicationController
     puts "main_controller.index"
     if(params[:theme]!=nil)
       @theme=params[:theme]
-      if(@user!=t(:user_not_connected))
+      if @user!=:user_not_connected
         puts "main_controller.index:theme="+params.inspect
         @user.theme=@theme
         st=@user.save
@@ -46,7 +47,7 @@ class MainController < ApplicationController
     if params[:domain] !=nil && params[:domain] != ""
       # creation du domaine demande: status et types d'objets
       create_domain(params[:domain])
-      create_volume(params[:directory])
+      update_first_volume(params[:directory])
       check_init
       @domains==nil
       flash[:notice]=t(:ctrl_init_done)

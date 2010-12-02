@@ -92,33 +92,25 @@ controleur principal.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000208">cfg_items_per_page</a>&nbsp;&nbsp;
-      <a href="#M000202">current_user</a>&nbsp;&nbsp;
-      <a href="#M000203">define_variables</a>&nbsp;&nbsp;
-      <a href="#M000214">find_favori_document</a>&nbsp;&nbsp;
-      <a href="#M000216">find_favori_part</a>&nbsp;&nbsp;
-      <a href="#M000215">find_favori_project</a>&nbsp;&nbsp;
-      <a href="#M000209">find_user</a>&nbsp;&nbsp;
-      <a href="#M000210">find_userid</a>&nbsp;&nbsp;
-      <a href="#M000213">find_usermail</a>&nbsp;&nbsp;
-      <a href="#M000211">find_username</a>&nbsp;&nbsp;
-      <a href="#M000212">find_userrole</a>&nbsp;&nbsp;
-      <a href="#M000200">getModelsAndColumns</a>&nbsp;&nbsp;
-      <a href="#M000199">getModels_old</a>&nbsp;&nbsp;
-      <a href="#M000221">get_relation_types_document</a>&nbsp;&nbsp;
-      <a href="#M000222">get_relation_types_part</a>&nbsp;&nbsp;
-      <a href="#M000223">get_relation_types_project</a>&nbsp;&nbsp;
-      <a href="#M000197">permission_denied</a>&nbsp;&nbsp;
-      <a href="#M000198">permission_granted</a>&nbsp;&nbsp;
-      <a href="#M000206">qry_owner</a>&nbsp;&nbsp;
-      <a href="#M000205">qry_status</a>&nbsp;&nbsp;
-      <a href="#M000204">qry_type</a>&nbsp;&nbsp;
-      <a href="#M000207">qry_volume</a>&nbsp;&nbsp;
-      <a href="#M000220">redirect_to_index</a>&nbsp;&nbsp;
-      <a href="#M000217">reset_favori_document</a>&nbsp;&nbsp;
-      <a href="#M000218">reset_favori_part</a>&nbsp;&nbsp;
-      <a href="#M000219">reset_favori_project</a>&nbsp;&nbsp;
-      <a href="#M000201">set_locale</a>&nbsp;&nbsp;
+      <a href="#M000220">cfg_items_per_page</a>&nbsp;&nbsp;
+      <a href="#M000213">current_user</a>&nbsp;&nbsp;
+      <a href="#M000214">define_variables</a>&nbsp;&nbsp;
+      <a href="#M000221">find_favori_document</a>&nbsp;&nbsp;
+      <a href="#M000223">find_favori_part</a>&nbsp;&nbsp;
+      <a href="#M000222">find_favori_project</a>&nbsp;&nbsp;
+      <a href="#M000211">get_models_and_columns</a>&nbsp;&nbsp;
+      <a href="#M000215">get_themes</a>&nbsp;&nbsp;
+      <a href="#M000209">permission_denied</a>&nbsp;&nbsp;
+      <a href="#M000210">permission_granted</a>&nbsp;&nbsp;
+      <a href="#M000218">qry_owner</a>&nbsp;&nbsp;
+      <a href="#M000217">qry_status</a>&nbsp;&nbsp;
+      <a href="#M000216">qry_type</a>&nbsp;&nbsp;
+      <a href="#M000219">qry_volume</a>&nbsp;&nbsp;
+      <a href="#M000227">redirect_to_index</a>&nbsp;&nbsp;
+      <a href="#M000224">reset_favori_document</a>&nbsp;&nbsp;
+      <a href="#M000225">reset_favori_part</a>&nbsp;&nbsp;
+      <a href="#M000226">reset_favori_project</a>&nbsp;&nbsp;
+      <a href="#M000212">set_locale</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -126,6 +118,13 @@ controleur principal.
 
 
     <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="AppClasses.html">AppClasses</a></span>
+      </div>
+    </div>
 
     <div id="section">
 
@@ -146,11 +145,11 @@ controleur principal.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000208" class="method-detail">
-        <a name="M000208"></a>
+      <div id="method-M000220" class="method-detail">
+        <a name="M000220"></a>
 
         <div class="method-heading">
-          <a href="#M000208" class="method-signature">
+          <a href="#M000220" class="method-signature">
           <span class="method-name">cfg_items_per_page</span><span class="method-args">()</span>
           </a>
         </div>
@@ -160,217 +159,13 @@ controleur principal.
 nombre d&#8216;objets listes par page si pagination
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000208-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000208-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 134</span>
-134:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cfg_items_per_page</span>
-135:     <span class="ruby-value">15</span>
-136:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000202" class="method-detail">
-        <a name="M000202"></a>
-
-        <div class="method-heading">
-          <a href="#M000202" class="method-signature">
-          <span class="method-name">current_user</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000202-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000202-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 100</span>
-100:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_user</span>
-101:     <span class="ruby-ivar">@current_user</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>] <span class="ruby-operator">?</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>]) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-102:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000203" class="method-detail">
-        <a name="M000203"></a>
-
-        <div class="method-heading">
-          <a href="#M000203" class="method-signature">
-          <span class="method-name">define_variables</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-definition des variables globales.
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000203-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000203-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 105</span>
-105:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">define_variables</span>
-106:     <span class="ruby-ivar">@user</span> =<span class="ruby-identifier">find_user</span>
-107:     <span class="ruby-ivar">@userid</span> =<span class="ruby-identifier">find_userid</span>
-108:     <span class="ruby-ivar">@username</span> =<span class="ruby-identifier">find_username</span>
-109:     <span class="ruby-ivar">@usermail</span> =<span class="ruby-identifier">find_usermail</span>
-110:     <span class="ruby-ivar">@userrole</span> =<span class="ruby-identifier">find_userrole</span>
-111:     <span class="ruby-ivar">@favori_document</span>=<span class="ruby-identifier">find_favori_document</span>
-112:     <span class="ruby-ivar">@favori_project</span>=<span class="ruby-identifier">find_favori_project</span>
-113:     <span class="ruby-ivar">@favori_part</span>=<span class="ruby-identifier">find_favori_part</span>
-114:     <span class="ruby-ivar">@urlbase</span>=<span class="ruby-value str">&quot;http://&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">request</span>.<span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;HTTP_HOST&quot;</span>]
-115:     
-116:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000214" class="method-detail">
-        <a name="M000214"></a>
-
-        <div class="method-heading">
-          <a href="#M000214" class="method-signature">
-          <span class="method-name">find_favori_document</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-recherche du favori des documents
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000214-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000214-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 212</span>
-212:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_favori_document</span>
-213:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:favori_document</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">FavoriDocument</span>.<span class="ruby-identifier">new</span>
-214:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000216" class="method-detail">
-        <a name="M000216"></a>
-
-        <div class="method-heading">
-          <a href="#M000216" class="method-signature">
-          <span class="method-name">find_favori_part</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-recherche du favori des parts
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000216-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000216-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 222</span>
-222:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_favori_part</span>
-223:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:favori_part</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">FavoriPart</span>.<span class="ruby-identifier">new</span>
-224:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000215" class="method-detail">
-        <a name="M000215"></a>
-
-        <div class="method-heading">
-          <a href="#M000215" class="method-signature">
-          <span class="method-name">find_favori_project</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-recherche du favori des projets
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000215-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000215-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 217</span>
-217:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_favori_project</span>
-218:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:favori_project</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">FavoriProject</span>.<span class="ruby-identifier">new</span>
-219:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000209" class="method-detail">
-        <a name="M000209"></a>
-
-        <div class="method-heading">
-          <a href="#M000209" class="method-signature">
-          <span class="method-name">find_user</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-recherche du user connecte
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000209-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000209-source">
+            onclick="toggleCode('M000220-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000220-source">
 <pre>
      <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 139</span>
-139:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_user</span>
-140:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>] 
-141:       <span class="ruby-keyword kw">if</span>  <span class="ruby-identifier">user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>])
-142:         <span class="ruby-identifier">user</span>
-143:       <span class="ruby-keyword kw">else</span> 
-144:               <span class="ruby-value str">&quot;User Unknown&quot;</span>
-145:       <span class="ruby-keyword kw">end</span>
-146:     <span class="ruby-keyword kw">else</span>
-147:           <span class="ruby-value str">&quot;Not Connected&quot;</span>
-148:     <span class="ruby-keyword kw">end</span>
-149:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000210" class="method-detail">
-        <a name="M000210"></a>
-
-        <div class="method-heading">
-          <a href="#M000210" class="method-signature">
-          <span class="method-name">find_userid</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-recherche de l&#8216;id du user connecte
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000210-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000210-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 152</span>
-152:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_userid</span>
-153:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>] 
-154:       <span class="ruby-keyword kw">if</span>  <span class="ruby-identifier">user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>])
-155:         <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span>
-156:       <span class="ruby-keyword kw">else</span> 
-157:         <span class="ruby-keyword kw">nil</span>
-158:       <span class="ruby-keyword kw">end</span>
-159:     <span class="ruby-keyword kw">else</span>
-160:       <span class="ruby-keyword kw">nil</span>
-161:     <span class="ruby-keyword kw">end</span>
-162:   <span class="ruby-keyword kw">end</span>
+139:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cfg_items_per_page</span>
+140:     <span class="ruby-constant">SYLRPLM</span><span class="ruby-operator">::</span><span class="ruby-constant">NB_ITEMS_PER_PAGE</span>
+141:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -381,192 +176,59 @@ recherche de l&#8216;id du user connecte
 
         <div class="method-heading">
           <a href="#M000213" class="method-signature">
-          <span class="method-name">find_usermail</span><span class="method-args">()</span>
+          <span class="method-name">current_user</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
-          <p>
-recherche du mail du user connecte
-</p>
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000213-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000213-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 195</span>
-195:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_usermail</span>
-196:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>] 
-197:       <span class="ruby-keyword kw">if</span>  <span class="ruby-identifier">user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>])
-198:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">user</span>.<span class="ruby-identifier">email</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>) 
-199:           <span class="ruby-identifier">user</span>.<span class="ruby-identifier">email</span>
-200:         <span class="ruby-keyword kw">else</span>
-201:              <span class="ruby-value str">&quot;unknownmail@laposte.net&quot;</span>
-202:         <span class="ruby-keyword kw">end</span>
-203:       <span class="ruby-keyword kw">else</span> 
-204:           <span class="ruby-value str">&quot;unknownuser@laposte.net&quot;</span>
-205:       <span class="ruby-keyword kw">end</span>
-206:     <span class="ruby-keyword kw">else</span>
-207:       <span class="ruby-value str">&quot;notconnected@laposte.net&quot;</span>
-208:     <span class="ruby-keyword kw">end</span>
-209:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 83</span>
+83:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_user</span>
+84:     <span class="ruby-ivar">@current_user</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>] <span class="ruby-operator">?</span> <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>]) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+85:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000211" class="method-detail">
-        <a name="M000211"></a>
+      <div id="method-M000214" class="method-detail">
+        <a name="M000214"></a>
 
         <div class="method-heading">
-          <a href="#M000211" class="method-signature">
-          <span class="method-name">find_username</span><span class="method-args">()</span>
+          <a href="#M000214" class="method-signature">
+          <span class="method-name">define_variables</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-recherche du nom du user connecte
+definition des variables globales.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000211-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000211-source">
+            onclick="toggleCode('M000214-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000214-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 165</span>
-165:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_username</span>
-166:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>] 
-167:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>])
-168:         <span class="ruby-identifier">user</span>.<span class="ruby-identifier">login</span>
-169:       <span class="ruby-keyword kw">else</span> 
-170:             <span class="ruby-value str">&quot;User Unknown&quot;</span>
-171:       <span class="ruby-keyword kw">end</span>
-172:     <span class="ruby-keyword kw">else</span>
-173:         <span class="ruby-value str">&quot;Not Connected&quot;</span>
-174:     <span class="ruby-keyword kw">end</span>
-175:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000212" class="method-detail">
-        <a name="M000212"></a>
-
-        <div class="method-heading">
-          <a href="#M000212" class="method-signature">
-          <span class="method-name">find_userrole</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-recherche du role du user connecte
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000212-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000212-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 178</span>
-178:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_userrole</span>
-179:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>] 
-180:       <span class="ruby-keyword kw">if</span>  <span class="ruby-identifier">user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:user_id</span>])
-181:         <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">user</span>.<span class="ruby-identifier">role</span> <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">nil</span>) 
-182:           <span class="ruby-identifier">user</span>.<span class="ruby-identifier">role</span>.<span class="ruby-identifier">title</span>
-183:         <span class="ruby-keyword kw">else</span>
-184:                   <span class="ruby-value str">&quot;&quot;</span>
-185:         <span class="ruby-keyword kw">end</span>
-186:       <span class="ruby-keyword kw">else</span> 
-187:               <span class="ruby-value str">&quot;&quot;</span>
-188:       <span class="ruby-keyword kw">end</span>
-189:     <span class="ruby-keyword kw">else</span>
-190:           <span class="ruby-value str">&quot;&quot;</span>
-191:     <span class="ruby-keyword kw">end</span>
-192:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000200" class="method-detail">
-        <a name="M000200"></a>
-
-        <div class="method-heading">
-          <a href="#M000200" class="method-signature">
-          <span class="method-name">getModelsAndColumns</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000200-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000200-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 47</span>
-47:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getModelsAndColumns</span>
-48:     <span class="ruby-identifier">ret</span>=<span class="ruby-value str">&quot;&quot;</span>
-49:     <span class="ruby-identifier">i</span>=<span class="ruby-value">0</span>
-50:     <span class="ruby-identifier">models</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#{RAILS_ROOT}/app/models&quot;</span>).<span class="ruby-identifier">entries</span>
-51:     <span class="ruby-identifier">models</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">model</span><span class="ruby-operator">|</span>
-52:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">model</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;.&quot;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">model</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;..&quot;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">model</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">'obsolete'</span>)<span class="ruby-operator">==</span><span class="ruby-keyword kw">nil</span>
-53:         <span class="ruby-identifier">mdl</span> = <span class="ruby-identifier">model</span>.<span class="ruby-identifier">camelize</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;.rb&quot;</span>,<span class="ruby-value str">&quot;&quot;</span>)
-54:         <span class="ruby-comment cmt">#puts 'ApplicationController.getModels:mdl='+mdl</span>
-55:         <span class="ruby-identifier">omdl</span> = <span class="ruby-identifier">eval</span>(<span class="ruby-identifier">mdl</span>)
-56:         <span class="ruby-keyword kw">begin</span>
-57:           <span class="ruby-identifier">cols</span>=<span class="ruby-identifier">omdl</span>.<span class="ruby-identifier">content_columns</span>()
-58:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
-59:           <span class="ruby-comment cmt">#puts 'ApplicationController.getModels:pas ActiveRecord::Base:='+mdl</span>
-60:         <span class="ruby-keyword kw">else</span>
-61:           <span class="ruby-comment cmt">#if(met!='index' &amp;&amp; met!='login' &amp;&amp; met!='logout' &amp;&amp; met.index('_old')==nil &amp;&amp; met.index('obsolete')==nil)</span>
-62:           <span class="ruby-identifier">cols</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
-63:             <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">'created_at'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">'updated_at'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">'owner'</span>)
-64:               <span class="ruby-identifier">mdlcol</span>=<span class="ruby-identifier">mdl</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;.&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span>
-65:               <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;option&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">mdlcol</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/option&gt;&quot;</span>
-66:               <span class="ruby-comment cmt">#puts 'ApplicationController.getModels:model.col='+mdlcol</span>
-67:             <span class="ruby-keyword kw">end</span>
-68:           
-69:           <span class="ruby-identifier">i</span>=<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>;
-70:           
-71:         }
-72:         <span class="ruby-keyword kw">end</span>
-73:         
-74:       <span class="ruby-keyword kw">end</span>
-75:       
-76:       
-77:       
-78:     <span class="ruby-keyword kw">end</span>
-79:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">ret</span>
-80:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000199" class="method-detail">
-        <a name="M000199"></a>
-
-        <div class="method-heading">
-          <a href="#M000199" class="method-signature">
-          <span class="method-name">getModels_old</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000199-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000199-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 32</span>
-32:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">getModels_old</span>
-33:     <span class="ruby-constant">Module</span>.<span class="ruby-identifier">constants</span>.<span class="ruby-identifier">select</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">constant_name</span><span class="ruby-operator">|</span>
-34:       
-35:       <span class="ruby-identifier">constant</span> = <span class="ruby-identifier">eval</span> <span class="ruby-identifier">constant_name</span>
-36:       <span class="ruby-identifier">isClass</span>=<span class="ruby-identifier">constant</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Class</span>
-37:       <span class="ruby-identifier">puts</span> <span class="ruby-value str">'ApplicationController.getModels:constant='</span><span class="ruby-operator">+</span><span class="ruby-identifier">constant</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-value str">' class='</span><span class="ruby-operator">+</span><span class="ruby-identifier">isClass</span>.<span class="ruby-identifier">to_s</span>
-38:       <span class="ruby-comment cmt">#if not constant.nil? and isClass and constant.extend? ActiveRecord::Base</span>
-39:       <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">not</span> <span class="ruby-identifier">constant</span>.<span class="ruby-identifier">nil?</span>  <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">constant</span>.<span class="ruby-identifier">extend?</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>
-40:         <span class="ruby-identifier">constant</span>
-41:       <span class="ruby-keyword kw">end</span>
-42:     <span class="ruby-keyword kw">end</span>
-43:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 89</span>
+ 89:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">define_variables</span>
+ 90:     <span class="ruby-ivar">@user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_user</span>(<span class="ruby-identifier">session</span>)
+ 91:     <span class="ruby-ivar">@userid</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_userid</span>(<span class="ruby-identifier">session</span>)
+ 92:     <span class="ruby-ivar">@username</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_username</span>(<span class="ruby-identifier">session</span>)
+ 93:     <span class="ruby-ivar">@usermail</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_usermail</span>(<span class="ruby-identifier">session</span>)
+ 94:     <span class="ruby-ivar">@userrole</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">find_userrole</span>(<span class="ruby-identifier">session</span>)
+ 95:     <span class="ruby-ivar">@favori_document</span>=  <span class="ruby-identifier">find_favori_document</span>
+ 96:     <span class="ruby-ivar">@favori_project</span>  = <span class="ruby-identifier">find_favori_project</span>
+ 97:     <span class="ruby-ivar">@favori_part</span> = <span class="ruby-identifier">find_favori_part</span>
+ 98:     <span class="ruby-ivar">@urlbase</span>=<span class="ruby-value str">&quot;http://&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">request</span>.<span class="ruby-identifier">env</span>[<span class="ruby-value str">&quot;HTTP_HOST&quot;</span>]
+ 99:     <span class="ruby-ivar">@theme</span>=<span class="ruby-constant">User</span>.<span class="ruby-identifier">find_theme</span>(<span class="ruby-identifier">session</span>)
+100:     <span class="ruby-identifier">logfile</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-keyword kw">__FILE__</span>),<span class="ruby-value str">'..'</span>,<span class="ruby-value str">'..'</span>,<span class="ruby-value str">'log'</span>, <span class="ruby-value str">'sylrplm.log'</span>)
+101:     <span class="ruby-ivar">@logger</span> = <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">logfile</span>, <span class="ruby-value str">'daily'</span>)
+102:     <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">level</span>     = <span class="ruby-constant">Logger</span><span class="ruby-operator">::</span><span class="ruby-constant">DEBUG</span> <span class="ruby-comment cmt">#DEBUG INFO WARN ERROR FATAL ANY</span>
+103:     <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">formatter</span> = <span class="ruby-constant">LogFormatter</span>.<span class="ruby-identifier">new</span>  <span class="ruby-comment cmt"># Install custom formatter!</span>
+104:     <span class="ruby-comment cmt">#@logger.datetime_format = &quot;%Y-%m-%d %H:%M:%S&quot;</span>
+105:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -577,42 +239,22 @@ recherche du role du user connecte
 
         <div class="method-heading">
           <a href="#M000221" class="method-signature">
-          <span class="method-name">get_relation_types_document</span><span class="method-args">()</span>
+          <span class="method-name">find_favori_document</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+recherche du favori des documents
+</p>
           <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000221-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000221-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 243</span>
-243:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_relation_types_document</span>
-244:     [<span class="ruby-value str">&quot;specification&quot;</span>,<span class="ruby-value str">&quot;notice&quot;</span>,<span class="ruby-value str">&quot;norme&quot;</span>]
-245:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000222" class="method-detail">
-        <a name="M000222"></a>
-
-        <div class="method-heading">
-          <a href="#M000222" class="method-signature">
-          <span class="method-name">get_relation_types_part</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000222-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000222-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 247</span>
-247:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_relation_types_part</span>
-248:     [<span class="ruby-value str">&quot;reference&quot;</span>,<span class="ruby-value str">&quot;bom&quot;</span>]
-249:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 146</span>
+146:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_favori_document</span>
+147:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:favori_document</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">FavoriDocument</span>.<span class="ruby-identifier">new</span>
+148:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -623,212 +265,178 @@ recherche du role du user connecte
 
         <div class="method-heading">
           <a href="#M000223" class="method-signature">
-          <span class="method-name">get_relation_types_project</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000223-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000223-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 251</span>
-251:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_relation_types_project</span>
-252:     [<span class="ruby-value str">&quot;research&quot;</span>,<span class="ruby-value str">&quot;production&quot;</span>]
-253:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000197" class="method-detail">
-        <a name="M000197"></a>
-
-        <div class="method-heading">
-          <a href="#M000197" class="method-signature">
-          <span class="method-name">permission_denied</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000197-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000197-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 17</span>
-17:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">permission_denied</span>
-18:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_no_privilege</span>)
-19:     <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;index&quot;</span>) 
-20:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000198" class="method-detail">
-        <a name="M000198"></a>
-
-        <div class="method-heading">
-          <a href="#M000198" class="method-signature">
-          <span class="method-name">permission_granted</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000198-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000198-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 22</span>
-22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">permission_granted</span>
-23:     <span class="ruby-comment cmt">#flash[:notice] = &quot;Welcome to the secure area !&quot;</span>
-24:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000206" class="method-detail">
-        <a name="M000206"></a>
-
-        <div class="method-heading">
-          <a href="#M000206" class="method-signature">
-          <span class="method-name">qry_owner</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000206-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000206-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 125</span>
-125:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">qry_owner</span>
-126:     <span class="ruby-value str">&quot;owner in(select id from users where login LIKE ?)&quot;</span>
-127:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000205" class="method-detail">
-        <a name="M000205"></a>
-
-        <div class="method-heading">
-          <a href="#M000205" class="method-signature">
-          <span class="method-name">qry_status</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000205-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000205-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 122</span>
-122:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">qry_status</span>
-123:     <span class="ruby-value str">&quot;statusobject_id in (select id from statusobjects as s where s.name LIKE ?)&quot;</span>
-124:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000204" class="method-detail">
-        <a name="M000204"></a>
-
-        <div class="method-heading">
-          <a href="#M000204" class="method-signature">
-          <span class="method-name">qry_type</span><span class="method-args">()</span>
+          <span class="method-name">find_favori_part</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-utilise pour les filtres des objets (index)
+recherche du favori des parts
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000204-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000204-source">
+            onclick="toggleCode('M000223-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000223-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 119</span>
-119:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">qry_type</span>
-120:     <span class="ruby-value str">&quot;typesobject_id in(select id from typesobjects as t where t.name LIKE ?)&quot;</span>
+     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 156</span>
+156:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_favori_part</span>
+157:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:favori_part</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">FavoriPart</span>.<span class="ruby-identifier">new</span>
+158:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000222" class="method-detail">
+        <a name="M000222"></a>
+
+        <div class="method-heading">
+          <a href="#M000222" class="method-signature">
+          <span class="method-name">find_favori_project</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+recherche du favori des projets
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000222-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000222-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 151</span>
+151:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_favori_project</span>
+152:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:favori_project</span>] <span class="ruby-operator">||=</span> <span class="ruby-constant">FavoriProject</span>.<span class="ruby-identifier">new</span>
+153:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000211" class="method-detail">
+        <a name="M000211"></a>
+
+        <div class="method-heading">
+          <a href="#M000211" class="method-signature">
+          <span class="method-name">get_models_and_columns</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000211-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000211-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 36</span>
+36:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_models_and_columns</span>
+37:     <span class="ruby-identifier">ret</span>=<span class="ruby-value str">&quot;&quot;</span>
+38:     <span class="ruby-identifier">i</span>=<span class="ruby-value">0</span>
+39:     <span class="ruby-identifier">models</span> = <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;#{RAILS_ROOT}/app/models&quot;</span>).<span class="ruby-identifier">entries</span>
+40:     <span class="ruby-identifier">models</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">model</span><span class="ruby-operator">|</span>
+41:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">model</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;.&quot;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">model</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;..&quot;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">model</span>.<span class="ruby-identifier">index</span>(<span class="ruby-value str">'obsolete'</span>)<span class="ruby-operator">==</span><span class="ruby-keyword kw">nil</span>
+42:         <span class="ruby-identifier">mdl</span> = <span class="ruby-identifier">model</span>.<span class="ruby-identifier">camelize</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;.rb&quot;</span>,<span class="ruby-value str">&quot;&quot;</span>)
+43:         <span class="ruby-comment cmt">#puts 'ApplicationController.getModels:mdl='+mdl</span>
+44:         <span class="ruby-identifier">omdl</span> = <span class="ruby-identifier">eval</span>(<span class="ruby-identifier">mdl</span>)
+45:         <span class="ruby-keyword kw">begin</span>
+46:           <span class="ruby-identifier">cols</span>=<span class="ruby-identifier">omdl</span>.<span class="ruby-identifier">content_columns</span>()
+47:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
+48:           <span class="ruby-comment cmt">#puts 'ApplicationController.getModels:pas ActiveRecord::Base:='+mdl</span>
+49:         <span class="ruby-keyword kw">else</span>
+50:           <span class="ruby-comment cmt">#if(met!='index' &amp;&amp; met!='login' &amp;&amp; met!='logout' &amp;&amp; met.index('_old')==nil &amp;&amp; met.index('obsolete')==nil)</span>
+51:           <span class="ruby-identifier">cols</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+52:             <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">'created_at'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">'updated_at'</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">!=</span> <span class="ruby-value str">'owner'</span>)
+53:               <span class="ruby-identifier">mdlcol</span>=<span class="ruby-identifier">mdl</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;.&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">col</span>.<span class="ruby-identifier">name</span>
+54:               <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-value str">&quot;&lt;option&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">mdlcol</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;&lt;/option&gt;&quot;</span>
+55:               <span class="ruby-comment cmt">#puts 'ApplicationController.getModels:model.col='+mdlcol</span>
+56:             <span class="ruby-keyword kw">end</span>           
+57:             <span class="ruby-identifier">i</span>=<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>;       
+58:           }
+59:         <span class="ruby-keyword kw">end</span>   
+60:       <span class="ruby-keyword kw">end</span>
+61:     <span class="ruby-keyword kw">end</span>
+62:     <span class="ruby-identifier">ret</span>
+63:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000215" class="method-detail">
+        <a name="M000215"></a>
+
+        <div class="method-heading">
+          <a href="#M000215" class="method-signature">
+          <span class="method-name">get_themes</span><span class="method-args">(default)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000215-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000215-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 107</span>
+107:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_themes</span>(<span class="ruby-identifier">default</span>)
+108:     <span class="ruby-comment cmt">#renvoie la liste des themes </span>
+109:     <span class="ruby-identifier">dirname</span>=<span class="ruby-constant">RAILS_ROOT</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'/public/stylesheets/*'</span>
+110:     <span class="ruby-identifier">ret</span>=<span class="ruby-value str">&quot;&quot;</span>
+111:     <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">glob</span>(<span class="ruby-identifier">dirname</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span><span class="ruby-operator">|</span>
+112:       <span class="ruby-identifier">theme</span>=<span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">dir</span>, <span class="ruby-value str">'.*'</span>)
+113:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">theme</span><span class="ruby-operator">==</span><span class="ruby-identifier">default</span>)
+114:         <span class="ruby-identifier">ret</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-value str">&quot;&lt;option selected=\&quot;selected\&quot;&gt;&quot;</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-identifier">theme</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-value str">&quot;&lt;/option&gt;&quot;</span>
+115:     <span class="ruby-keyword kw">else</span>
+116:       <span class="ruby-identifier">ret</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-value str">&quot;&lt;option&gt;&quot;</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-identifier">theme</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-value str">&quot;&lt;/option&gt;&quot;</span>
+117:       <span class="ruby-keyword kw">end</span>
+118:     <span class="ruby-keyword kw">end</span>
+119:     <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;application_controller.get_themes&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">dirname</span><span class="ruby-operator">+</span><span class="ruby-value str">&quot;=&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">ret</span>
+120:     <span class="ruby-identifier">ret</span>
 121:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000207" class="method-detail">
-        <a name="M000207"></a>
+      <div id="method-M000209" class="method-detail">
+        <a name="M000209"></a>
 
         <div class="method-heading">
-          <a href="#M000207" class="method-signature">
-          <span class="method-name">qry_volume</span><span class="method-args">()</span>
+          <a href="#M000209" class="method-signature">
+          <span class="method-name">permission_denied</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000207-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000207-source">
+            onclick="toggleCode('M000209-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000209-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 128</span>
-128:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">qry_volume</span>
-129:     <span class="ruby-value str">&quot;volume_id in(select id from volumes where name LIKE ?)&quot;</span>
-130:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 21</span>
+21:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">permission_denied</span>
+22:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_no_privilege</span>)
+23:     <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;index&quot;</span>) 
+24:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000220" class="method-detail">
-        <a name="M000220"></a>
+      <div id="method-M000210" class="method-detail">
+        <a name="M000210"></a>
 
         <div class="method-heading">
-          <a href="#M000220" class="method-signature">
-          <span class="method-name">redirect_to_index</span><span class="method-args">(msg=nil)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-redirection vers l&#8216;action index
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000220-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000220-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 237</span>
-237:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">redirect_to_index</span>(<span class="ruby-identifier">msg</span>=<span class="ruby-keyword kw">nil</span>)
-238:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>]=<span class="ruby-identifier">msg</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">msg</span>
-239:     <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">index</span> 
-240:     <span class="ruby-keyword kw">return</span>
-241:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000217" class="method-detail">
-        <a name="M000217"></a>
-
-        <div class="method-heading">
-          <a href="#M000217" class="method-signature">
-          <span class="method-name">reset_favori_document</span><span class="method-args">()</span>
+          <a href="#M000210" class="method-signature">
+          <span class="method-name">permission_granted</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000217-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000217-source">
+            onclick="toggleCode('M000210-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000210-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 226</span>
-226:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset_favori_document</span>
-227:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:favori_document</span>]=<span class="ruby-keyword kw">nil</span>    
-228:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 26</span>
+26:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">permission_granted</span>
+27:     <span class="ruby-comment cmt">#flash[:notice] = &quot;Welcome to the secure area !&quot;</span>
+28:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -839,7 +447,7 @@ redirection vers l&#8216;action index
 
         <div class="method-heading">
           <a href="#M000218" class="method-signature">
-          <span class="method-name">reset_favori_part</span><span class="method-args">()</span>
+          <span class="method-name">qry_owner</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -848,10 +456,59 @@ redirection vers l&#8216;action index
             onclick="toggleCode('M000218-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000218-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 229</span>
-229:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset_favori_part</span>
-230:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:favori_part</span>]=<span class="ruby-keyword kw">nil</span>    
-231:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 130</span>
+130:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">qry_owner</span>
+131:     <span class="ruby-value str">&quot;owner in(select id from users where login LIKE ?)&quot;</span>
+132:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000217" class="method-detail">
+        <a name="M000217"></a>
+
+        <div class="method-heading">
+          <a href="#M000217" class="method-signature">
+          <span class="method-name">qry_status</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000217-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000217-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 127</span>
+127:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">qry_status</span>
+128:     <span class="ruby-value str">&quot;statusobject_id in (select id from statusobjects as s where s.name LIKE ?)&quot;</span>
+129:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000216" class="method-detail">
+        <a name="M000216"></a>
+
+        <div class="method-heading">
+          <a href="#M000216" class="method-signature">
+          <span class="method-name">qry_type</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+utilise pour les filtres des objets (index)
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000216-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000216-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 124</span>
+124:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">qry_type</span>
+125:     <span class="ruby-value str">&quot;typesobject_id in(select id from typesobjects as t where t.name LIKE ?)&quot;</span>
+126:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -862,7 +519,7 @@ redirection vers l&#8216;action index
 
         <div class="method-heading">
           <a href="#M000219" class="method-signature">
-          <span class="method-name">reset_favori_project</span><span class="method-args">()</span>
+          <span class="method-name">qry_volume</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -871,20 +528,116 @@ redirection vers l&#8216;action index
             onclick="toggleCode('M000219-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000219-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 232</span>
-232:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset_favori_project</span>
-233:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:favori_project</span>]=<span class="ruby-keyword kw">nil</span>    
-234:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 133</span>
+133:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">qry_volume</span>
+134:     <span class="ruby-value str">&quot;volume_id in(select id from volumes where name LIKE ?)&quot;</span>
+135:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000201" class="method-detail">
-        <a name="M000201"></a>
+      <div id="method-M000227" class="method-detail">
+        <a name="M000227"></a>
 
         <div class="method-heading">
-          <a href="#M000201" class="method-signature">
+          <a href="#M000227" class="method-signature">
+          <span class="method-name">redirect_to_index</span><span class="method-args">(msg=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+redirection vers l&#8216;action index
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000227-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000227-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 171</span>
+171:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">redirect_to_index</span>(<span class="ruby-identifier">msg</span>=<span class="ruby-keyword kw">nil</span>)
+172:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>]=<span class="ruby-identifier">msg</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">msg</span>
+173:     <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">index</span> 
+174:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000224" class="method-detail">
+        <a name="M000224"></a>
+
+        <div class="method-heading">
+          <a href="#M000224" class="method-signature">
+          <span class="method-name">reset_favori_document</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000224-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000224-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 160</span>
+160:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset_favori_document</span>
+161:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:favori_document</span>]=<span class="ruby-keyword kw">nil</span>    
+162:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000225" class="method-detail">
+        <a name="M000225"></a>
+
+        <div class="method-heading">
+          <a href="#M000225" class="method-signature">
+          <span class="method-name">reset_favori_part</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000225-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000225-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 163</span>
+163:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset_favori_part</span>
+164:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:favori_part</span>]=<span class="ruby-keyword kw">nil</span>    
+165:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000226" class="method-detail">
+        <a name="M000226"></a>
+
+        <div class="method-heading">
+          <a href="#M000226" class="method-signature">
+          <span class="method-name">reset_favori_project</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000226-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000226-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 166</span>
+166:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reset_favori_project</span>
+167:     <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:favori_project</span>]=<span class="ruby-keyword kw">nil</span>    
+168:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000212" class="method-detail">
+        <a name="M000212"></a>
+
+        <div class="method-heading">
+          <a href="#M000212" class="method-signature">
           <span class="method-name">set_locale</span><span class="method-args">()</span>
           </a>
         </div>
@@ -894,25 +647,25 @@ redirection vers l&#8216;action index
 definition de la langue
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000201-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000201-source">
+            onclick="toggleCode('M000212-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000212-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 84</span>
-84:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_locale</span>
-85:     <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:locale</span>]<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>)
-86:       <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:locale</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">'en ou fr'</span>
-87:       <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:lng</span>]=<span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span>
-88:     <span class="ruby-keyword kw">else</span>
-89:       <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:lng</span>]<span class="ruby-operator">!=</span><span class="ruby-keyword kw">nil</span>)
-90:         <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span>=<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:lng</span>]
-91:       <span class="ruby-keyword kw">else</span>
-92:         <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span>=<span class="ruby-value str">&quot;fr&quot;</span>
-93:         <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:lng</span>]=<span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span>
-94:       <span class="ruby-keyword kw">end</span>
-95:     <span class="ruby-keyword kw">end</span>
-96:     <span class="ruby-comment cmt">#I18n.locale = &quot;en&quot; #force a en sinon les date_select ne marchent plus</span>
-97:     <span class="ruby-comment cmt">#I18n.load_path += Dir[ File.join(RAILS_ROOT, 'lib', 'locale', '*.{rb,yml}') ]</span>
-98:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/application_controller.rb, line 67</span>
+67:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_locale</span>
+68:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:locale</span>]
+69:       <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:locale</span>] 
+70:       <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:lng</span>]=<span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span>
+71:     <span class="ruby-keyword kw">else</span>
+72:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:lng</span>]
+73:         <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span> = <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:lng</span>]
+74:       <span class="ruby-keyword kw">else</span>
+75:         <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span>=<span class="ruby-constant">SYLRPLM</span><span class="ruby-operator">::</span><span class="ruby-constant">LOCAL_DEFAULT</span>
+76:         <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:lng</span>] = <span class="ruby-constant">I18n</span>.<span class="ruby-identifier">locale</span>
+77:       <span class="ruby-keyword kw">end</span>
+78:     <span class="ruby-keyword kw">end</span>
+79:     <span class="ruby-comment cmt">#I18n.locale = &quot;en&quot; #force a en sinon les date_select ne marchent plus</span>
+80:     <span class="ruby-comment cmt">#I18n.load_path += Dir[ File.join(RAILS_ROOT, 'lib', 'locale', '*.{rb,yml}') ]</span>
+81:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

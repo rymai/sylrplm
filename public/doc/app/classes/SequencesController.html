@@ -88,13 +88,13 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000070">create</a>&nbsp;&nbsp;
-      <a href="#M000072">destroy</a>&nbsp;&nbsp;
-      <a href="#M000069">edit</a>&nbsp;&nbsp;
-      <a href="#M000066">index</a>&nbsp;&nbsp;
-      <a href="#M000068">new</a>&nbsp;&nbsp;
-      <a href="#M000067">show</a>&nbsp;&nbsp;
-      <a href="#M000071">update</a>&nbsp;&nbsp;
+      <a href="#M000068">create</a>&nbsp;&nbsp;
+      <a href="#M000070">destroy</a>&nbsp;&nbsp;
+      <a href="#M000067">edit</a>&nbsp;&nbsp;
+      <a href="#M000064">index</a>&nbsp;&nbsp;
+      <a href="#M000066">new</a>&nbsp;&nbsp;
+      <a href="#M000065">show</a>&nbsp;&nbsp;
+      <a href="#M000069">update</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -116,11 +116,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000070" class="method-detail">
-        <a name="M000070"></a>
+      <div id="method-M000068" class="method-detail">
+        <a name="M000068"></a>
 
         <div class="method-heading">
-          <a href="#M000070" class="method-signature">
+          <a href="#M000068" class="method-signature">
           <span class="method-name">create</span><span class="method-args">()</span>
           </a>
         </div>
@@ -130,14 +130,14 @@
 POST /sequences POST /sequences.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000070-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000070-source">
+            onclick="toggleCode('M000068-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000068-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/sequences_controller.rb, line 45</span>
 45:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
 46:     <span class="ruby-ivar">@sequence</span> = <span class="ruby-constant">Sequence</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:sequence</span>])
 47:     <span class="ruby-comment cmt">#@objects=Sequence.getObjectsWithSequence</span>
-48:     <span class="ruby-ivar">@utilities</span>=<span class="ruby-identifier">getModelsAndColumns</span>()
+48:     <span class="ruby-ivar">@utilities</span>=<span class="ruby-identifier">get_models_and_columns</span>()
 49:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
 50:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@sequence</span>.<span class="ruby-identifier">save</span>
 51:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_created</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_sequence</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@sequence</span>.<span class="ruby-identifier">utility</span>)
@@ -155,11 +155,11 @@ POST /sequences POST /sequences.xml
         </div>
       </div>
 
-      <div id="method-M000072" class="method-detail">
-        <a name="M000072"></a>
+      <div id="method-M000070" class="method-detail">
+        <a name="M000070"></a>
 
         <div class="method-heading">
-          <a href="#M000072" class="method-signature">
+          <a href="#M000070" class="method-signature">
           <span class="method-name">destroy</span><span class="method-args">()</span>
           </a>
         </div>
@@ -169,15 +169,15 @@ POST /sequences POST /sequences.xml
 DELETE /sequences/1 DELETE /sequences/1.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000072-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000072-source">
+            onclick="toggleCode('M000070-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000070-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/sequences_controller.rb, line 83</span>
 83:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
 84:     <span class="ruby-ivar">@sequence</span> = <span class="ruby-constant">Sequence</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
 85:     <span class="ruby-ivar">@sequence</span>.<span class="ruby-identifier">destroy</span>
 86:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
-87:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_deleted</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_sequence</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@sequence</span>.<span class="ruby-identifier">utility</span>)
+87:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_deleted</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_sequence</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@sequence</span>.<span class="ruby-identifier">utility</span>)
 88:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">sequences_url</span>) }
 89:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }
 90:     <span class="ruby-keyword kw">end</span>
@@ -187,11 +187,11 @@ DELETE /sequences/1 DELETE /sequences/1.xml
         </div>
       </div>
 
-      <div id="method-M000069" class="method-detail">
-        <a name="M000069"></a>
+      <div id="method-M000067" class="method-detail">
+        <a name="M000067"></a>
 
         <div class="method-heading">
-          <a href="#M000069" class="method-signature">
+          <a href="#M000067" class="method-signature">
           <span class="method-name">edit</span><span class="method-args">()</span>
           </a>
         </div>
@@ -201,14 +201,14 @@ DELETE /sequences/1 DELETE /sequences/1.xml
 GET /sequences/1/edit
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000069-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000069-source">
+            onclick="toggleCode('M000067-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000067-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/sequences_controller.rb, line 36</span>
 36:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">edit</span>
 37:     <span class="ruby-ivar">@sequence</span> = <span class="ruby-constant">Sequence</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
 38:     <span class="ruby-comment cmt">#@objects=Sequence.getObjectsWithSequence</span>
-39:     <span class="ruby-ivar">@utilities</span>=<span class="ruby-identifier">getModelsAndColumns</span>()
+39:     <span class="ruby-ivar">@utilities</span>=<span class="ruby-identifier">get_models_and_columns</span>()
 40:     
 41:   <span class="ruby-keyword kw">end</span>
 </pre>
@@ -216,11 +216,11 @@ GET /sequences/1/edit
         </div>
       </div>
 
-      <div id="method-M000066" class="method-detail">
-        <a name="M000066"></a>
+      <div id="method-M000064" class="method-detail">
+        <a name="M000064"></a>
 
         <div class="method-heading">
-          <a href="#M000066" class="method-signature">
+          <a href="#M000064" class="method-signature">
           <span class="method-name">index</span><span class="method-args">()</span>
           </a>
         </div>
@@ -230,8 +230,8 @@ GET /sequences/1/edit
 GET /sequences GET /sequences.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000066-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000066-source">
+            onclick="toggleCode('M000064-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000064-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/sequences_controller.rb, line 5</span>
  5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
@@ -246,11 +246,11 @@ GET /sequences GET /sequences.xml
         </div>
       </div>
 
-      <div id="method-M000068" class="method-detail">
-        <a name="M000068"></a>
+      <div id="method-M000066" class="method-detail">
+        <a name="M000066"></a>
 
         <div class="method-heading">
-          <a href="#M000068" class="method-signature">
+          <a href="#M000066" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
@@ -260,14 +260,14 @@ GET /sequences GET /sequences.xml
 GET /sequences/new GET /sequences/new.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000068-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000068-source">
+            onclick="toggleCode('M000066-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000066-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/sequences_controller.rb, line 25</span>
 25:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
 26:     <span class="ruby-ivar">@sequence</span> = <span class="ruby-constant">Sequence</span>.<span class="ruby-identifier">new</span>
 27:     <span class="ruby-comment cmt">#@objects=Sequence.getObjectsWithSequence</span>
-28:     <span class="ruby-ivar">@utilities</span>=<span class="ruby-identifier">getModelsAndColumns</span>()
+28:     <span class="ruby-ivar">@utilities</span>=<span class="ruby-identifier">get_models_and_columns</span>()
 29:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
 30:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> <span class="ruby-comment cmt"># new.html.erb</span>
 31:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@sequence</span> }
@@ -278,11 +278,11 @@ GET /sequences/new GET /sequences/new.xml
         </div>
       </div>
 
-      <div id="method-M000067" class="method-detail">
-        <a name="M000067"></a>
+      <div id="method-M000065" class="method-detail">
+        <a name="M000065"></a>
 
         <div class="method-heading">
-          <a href="#M000067" class="method-signature">
+          <a href="#M000065" class="method-signature">
           <span class="method-name">show</span><span class="method-args">()</span>
           </a>
         </div>
@@ -292,8 +292,8 @@ GET /sequences/new GET /sequences/new.xml
 GET /sequences/1 GET /sequences/1.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000067-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000067-source">
+            onclick="toggleCode('M000065-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000065-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/sequences_controller.rb, line 15</span>
 15:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>
@@ -308,11 +308,11 @@ GET /sequences/1 GET /sequences/1.xml
         </div>
       </div>
 
-      <div id="method-M000071" class="method-detail">
-        <a name="M000071"></a>
+      <div id="method-M000069" class="method-detail">
+        <a name="M000069"></a>
 
         <div class="method-heading">
-          <a href="#M000071" class="method-signature">
+          <a href="#M000069" class="method-signature">
           <span class="method-name">update</span><span class="method-args">()</span>
           </a>
         </div>
@@ -322,14 +322,14 @@ GET /sequences/1 GET /sequences/1.xml
 PUT /sequences/1 PUT /sequences/1.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000071-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000071-source">
+            onclick="toggleCode('M000069-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000069-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/sequences_controller.rb, line 64</span>
 64:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>
 65:     <span class="ruby-ivar">@sequence</span> = <span class="ruby-constant">Sequence</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
 66:     <span class="ruby-comment cmt">#@objects=Sequence.getObjectsWithSequence</span>
-67:     <span class="ruby-ivar">@utilities</span>=<span class="ruby-identifier">getModelsAndColumns</span>()
+67:     <span class="ruby-ivar">@utilities</span>=<span class="ruby-identifier">get_models_and_columns</span>()
 68:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
 69:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@sequence</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:sequence</span>])
 70:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_updated</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_sequence</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@sequence</span>.<span class="ruby-identifier">utility</span>)

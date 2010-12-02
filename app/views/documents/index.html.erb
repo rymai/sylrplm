@@ -4,38 +4,26 @@
     <tr>
         <th>
         </th>
-        <th><%= sort_td_class_helper "id" %>
-            <%= sort_link_helper t("label_id"), "id" %>
-        </th>
-        <th><%= sort_td_class_helper "ident" %>
+        <th <%= sort_td_class_helper "ident" %>>
             <%= sort_link_helper t("label_ident"), "ident" %>
         </th>
-        <th><%= sort_td_class_helper "typesobject_id" %>
+        <th <%= sort_td_class_helper "typesobject_id" %>>
             <%= sort_link_helper t("label_typesobject"), "typesobject_id" %>
         </th>
-        <th><%= sort_td_class_helper "revision" %>
+        <th <%= sort_td_class_helper "revision" %>>
             <%= sort_link_helper t("label_revision"), "revision" %>
         </th>
-        <th><%= sort_td_class_helper "designation" %>
+        <th <%= sort_td_class_helper "designation" %>>
             <%= sort_link_helper t("label_designation"), "designation" %>
         </th>
-        <th><%= sort_td_class_helper "statusobject_id" %>
+        <th <%= sort_td_class_helper "statusobject_id" %>>
             <%= sort_link_helper t("label_statusobject"), "statusobject_id" %>
         </th>
-        <th><%= sort_td_class_helper "owner" %>
+        <th <%= sort_td_class_helper "owner" %>>
             <%= sort_link_helper t("label_responsible"), "owner" %>
         </th>
-        <th<%= sort_td_class_helper "date" %>
+        <th <%= sort_td_class_helper "date" %>>
             <%= sort_link_helper t("label_date"), "date" %>
-        </th>
-        <th><%= sort_td_class_helper "volume_id" %>
-            <%= sort_link_helper t("label_volume"), "volume_id" %>
-        </th>
-        <th><%= sort_td_class_helper "filename" %>
-            <%= sort_link_helper t("label_file"), "filename" %>
-        </th>
-        <th><%= sort_td_class_helper "content_type" %>
-            <%= sort_link_helper t("label_content_type"), "content_type" %>
         </th>
         <th>
         </th>
@@ -50,9 +38,6 @@
     <tr>
     <td>
         <%= icone(document) %>
-    </td>
-    <td>
-        <%=h document.id %>
     </td>
     <td>
         <%=h document.ident %>
@@ -80,20 +65,9 @@
         <%=h document.date %>
     </td>
     <td>
-        <%=h document.volume.name %>
-    </td>
-    <td>
-        <a href="<%= url_for(:action=>'show_file', :id => document.id) %>" title="<%= document.getRepository %>"><%=h document.filename %></a>
-    </td>
-    <td>
-    	<% if document.content_type != nil %>
-        <%= document.content_type[0..20] %>
-			<%end%>
-    </td>
-    <td>
         <%= link_to h_img_show.to_s, document %>
     </td>
-    <% if (document.isFreeze() == true ) %>
+    <% if (document.is_freeze() == true ) %>
     <td>
         <%= link_to h_img_revise.to_s, :id => document.id, :action => :revise , :confirm => t("msg_confirm") %>
     </td>
@@ -109,7 +83,7 @@
     <% end %>
     </td>
     <td>
-       <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_document_to_favori, :id => document.id} %>        
+        <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_document_to_favori, :id => document.id} %>
     </td>
 </tr>
 <%end %>

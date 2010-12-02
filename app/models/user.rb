@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   
   has_and_belongs_to_many :roles
   belongs_to :role
-  
+  belongs_to :volume
   has_many :documents, :foreign_key => "owner"
   
   validates_presence_of     :login
@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
     self.hashed_password = User.encrypted_password(self.password, self.salt)
   end
   
-  def after_destroy
+  def before_destroy
     if User.count.zero?
       raise "Can't delete last user"
     end
@@ -62,22 +62,15 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest(string_to_hash)
   end
   
-  def self.find_validers
-    ret=find(:all,
-      :select => "us.login,us.email", 
-      :order => "us.login", 
-      :conditions => ["ro.title like ?",'valid%' ],
-      :joins => "as us inner join roles as ro on us.role_id=ro.id")
-      puts "User.find_validers:"+ret.inspect
-      return ret
-  end
+  def self.find_all
+    find(:all, :order=>"login ASC")
+  end 
   
-  def isValider
-    if(self.login.left=="valider")
-      true
-    else
-      false
-    end
+  def self.find_validers
+    all(:select => [:login, :email],
+          :order => :login,
+          :conditions => "roles.title like valid%",
+          :joins => "inner join roles on users.role_id = roles.id")
   end
   
   def self.check_admin
@@ -147,8 +140,97 @@ class User < ActiveRecord::Base
       auser.save
       
     end
-    return ya_admin
+    ya_admin
   end
   
+  # recherche du theme
+  def self.find_theme(session)
+    ret=SYLRPLM::THEME_DEFAULT 
+    if session[:user_id]
+      if user = User.find(session[:user_id])
+        if(user.theme!=nil)
+          ret=user.theme
+        end
+      end
+    else
+      if session[:theme]
+        ret=session[:theme]
+      end
+    end
+   ret
+  end
+  
+  # recherche du user connecte
+  def self.find_user(session)
+    if session[:user_id] 
+      if  user = User.find(session[:user_id])
+        user
+      else 
+              :user_not_connected
+      end
+    else
+          :user_not_connected
+    end
+  end
+  
+  # recherche de l'id du user connecte
+  def self.find_userid(session)
+    if session[:user_id] 
+      if  user = User.find(session[:user_id])
+        user.id
+      else 
+        nil
+      end
+    else
+      nil
+    end
+  end
+  
+  # recherche du nom du user connecte      
+  def self.find_username(session)
+    if session[:user_id] 
+      if user = User.find(session[:user_id])
+        user.login
+      else 
+            :user_unknown
+      end
+    else
+        :user_not_connected
+    end
+  end
+  
+  # recherche du role du user connecte
+  def self.find_userrole(session)
+    if session[:user_id] 
+      if  user = User.find(session[:user_id])
+        if(user.role != nil) 
+          user.role.title
+        else
+                  ""
+        end
+      else 
+              ""
+      end
+    else
+          ""
+    end
+  end
+  
+  # recherche du mail du user connecte
+  def self.find_usermail(session)
+    if session[:user_id] 
+      if  user = User.find(session[:user_id])
+        if(user.email != nil) 
+          user.email
+        else
+             :user_unknown_mail
+        end
+      else 
+          :user_unknown_mail
+      end
+    else
+      :user_unknown_mail
+    end
+  end
   
 end

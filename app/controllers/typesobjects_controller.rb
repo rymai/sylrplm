@@ -1,5 +1,5 @@
 class TypesobjectsController < ApplicationController
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   # GET /typesobjects
   # GET /typesobjects.xml
   def index
@@ -46,11 +46,11 @@ class TypesobjectsController < ApplicationController
     @objectswithtype=Typesobject.getObjectsWithType
     respond_to do |format|
       if @typesobject.save
-       flash[:notice] = t(:ctrl_object_created,:object=>t(:ctrl_typesobject),:ident=>@typesobject.name)
+        flash[:notice] = t(:ctrl_object_created,:object=>t(:ctrl_typesobject),:ident=>@typesobject.name)
         format.html { redirect_to(@typesobject) }
         format.xml  { render :xml => @typesobject, :status => :created, :location => @typesobject }
       else
-       flash[:notice] = t(:ctrl_object_not_created,:object=>t(:ctrl_typesobject),:ident=>@typesobject.name)
+        flash[:notice] = t(:ctrl_object_not_created,:object=>t(:ctrl_typesobject),:ident=>@typesobject.name)
         format.html { render :action => "new" }
         format.xml  { render :xml => @typesobject.errors, :status => :unprocessable_entity }
       end
@@ -65,10 +65,10 @@ class TypesobjectsController < ApplicationController
     respond_to do |format|
       if @typesobject.update_attributes(params[:typesobject])
         flash[:notice] = t(:ctrl_object_updated,:object=>t(:ctrl_typesobject),:ident=>@typesobject.name)
-       format.html { redirect_to(@typesobject) }
+        format.html { redirect_to(@typesobject) }
         format.xml  { head :ok }
       else
-       flash[:notice] = t(:ctrl_object_not_updated,:object=>t(:ctrl_typesobject),:ident=>@typesobject.name)
+        flash[:notice] = t(:ctrl_object_not_updated,:object=>t(:ctrl_typesobject),:ident=>@typesobject.name)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @typesobject.errors, :status => :unprocessable_entity }
       end
@@ -81,7 +81,7 @@ class TypesobjectsController < ApplicationController
     @typesobject = Typesobject.find(params[:id])
     @typesobject.destroy
     respond_to do |format|
-       flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_typesobject),:ident=>@typesobject.name)
+      flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_typesobject),:ident=>@typesobject.name)
       format.html { redirect_to(typesobjects_url) }
       format.xml  { head :ok }
     end

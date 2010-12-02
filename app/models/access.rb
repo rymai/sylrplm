@@ -1,11 +1,11 @@
+require 'lib/models/sylrplm_common'
 class Access < ActiveRecord::Base
-  
-  ##belongs_to :role
+  include SylrplmCommon
   
   validates_presence_of :controller, :roles , :action
   #validates_uniqueness_of :controller ,:role_id,:action
   
-  def self.createNew(i_controller, i_roles)
+  def self.create_new(i_controller, i_roles)
     obj=Access.new
     conts=i_controller.split(".")
     obj.controller=conts[0]
@@ -14,25 +14,30 @@ class Access < ActiveRecord::Base
     Sequence.set_default_values(obj, self.name, true)
     obj
   end
-  
-  def self.findForController(i_controller)
+  def self.find_paginate(params)
+    self.paginate(:page => params[:page], 
+    :conditions => params[:cond],
+    :order => params[:sort],
+      :per_page => params[:nbr])
+  end 
+  def self.find_for_controller(i_controller)
     ret={}
-    puts 'access.findForController:controller='+i_controller
+    puts 'access.find_for_controller='+i_controller
     self.find(:all, :order=>"controller",
           :conditions => ["controller like '#{i_controller}'"]).each do |acc|
-        #conts=acc.controller.split(".")
-        
-        puts 'access.findForController:controller='+acc.controller
-        puts 'access.findForController:method='+acc.action
-        puts 'access.findForController:roles='+acc.roles
-        ret[acc.action.to_sym]=acc.roles
+      #conts=acc.controller.split(".")
+      
+      #        puts 'access.find_for_controller:controller='+acc.controller
+      #        puts 'access.find_for_controller:method='+acc.action
+      #        puts 'access.find_for_controller:roles='+acc.roles
+      ret[acc.action.to_sym]=acc.roles
       
     end
     
-    return ret
+    ret
   end
   
-   def self.init
+  def self.init
     ret=true
     #admin_role=Role.find_by_name('admin')
     #conc_role=Role.find_by_name('designer')
@@ -53,12 +58,10 @@ class Access < ActiveRecord::Base
         st=st+create_access(controller.name,controller.method,"(admin | designer) & !consultant") 
       end
       puts 'access_controller.index:controller='+controller.name+' method='+controller.method+' st='+st.to_s
-
-      #if st!=0
-      #  return false 
-      #end
+      
+      
     end
-    return true
+    true
   end
   
   def self.create_access(ctrl,met,roles)

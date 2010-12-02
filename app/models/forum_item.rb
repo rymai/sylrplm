@@ -19,12 +19,12 @@ class ForumItem < ActiveRecord::Base
   :class_name => "ForumItem",
   :foreign_key => "parent_id"
   
-  def self.createNew(forum, params)
+  def self.create_new(forum, params)
     item=self.new 
     item.forum=forum
     item.message=params[:message]
     item.author=@user
-    return item
+    item
   end
   
 end

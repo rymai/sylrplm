@@ -1,20 +1,10 @@
 class AccessesController < ApplicationController
-  
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   
   # GET /accesses
   # GET /accesses.xml
   def index
-    #@accesses = Access.all
-    admin=Role.find_by_name('admin')
-    sort=params['sort']
-    conditions="" #["role_id != '#{admin.id}'"]
-    @accesses = Access.paginate(:page => params[:page], 
-    :conditions => conditions,
-    #:order => 'part_id ASC, ident ASC, revision ASC',
-    :order => sort,
-      :per_page => cfg_items_per_page)
-    
+    @accesses = Access.find_paginate({:page=>params[:page],:cond=>"",:sort=>params[:sort], :nbr=>cfg_items_per_page}) 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @accesses }
@@ -25,7 +15,6 @@ class AccessesController < ApplicationController
   # GET /accesses/1.xml
   def show
     @access = Access.find(params[:id])
-    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @access }
@@ -36,12 +25,9 @@ class AccessesController < ApplicationController
   # GET /accesses/new.xml
   def new
     @access = Access.new
-    #  @controllers={["id"=>"1","name"=>"c1"],["id"=>"2","name"=>"c2"]}#get_controllers
     @controllers=Controller.get_controllers
     @roles=Role.findall_except_admin()
-    
     respond_to do |format|
-      #flash[:notice] = "#{@controllers.size()} controllers:1=#{@controllers[1].name}"
       format.html # new.html.erb
       format.xml  { render :xml => @access }
     end
@@ -56,25 +42,20 @@ class AccessesController < ApplicationController
   
   # POST /accesses
   # POST /accesses.xml
-  def create
-    
+  def create   
     @controllers=Controller.get_controllers
     @roles=Role.findall_except_admin()
-    
     error=false
     if(params[:access][:controller]!=nil)
       respond_to do |format|
         flash[:notice]=""
         params[:access][:controller].each do |cont| 
-          @access = Access.createNew(cont,params[:access][:role_id]  ) 
-          #puts 'accesses_controller.create:access='+@access.controller+' '+@access.role.title
+          @access = Access.create_new(cont,params[:access][:role_id]  ) 
           if @access.save  
-            puts 'accesses_controller.create:succes:access='+@access.controller+' '+@access.role.title+' '+@access.action
             flash[:notice] +='<BR/>'+ t(:ctrl_object_created,:object=>'Access',:ident=>@access.controller)
             format.html { redirect_to(@access) }
             format.xml  { render :xml => @access, :status => :created, :location => @access }
           else
-            puts 'accesses_controller.create:error save:access='+@access.controller+' '+@access.role.title+' '+@access.action
             error=true
             @access = Access.new
             flash[:notice] +='<BR/>'+t(:ctrl_object_not_created,:object=>'Access')
@@ -90,7 +71,6 @@ class AccessesController < ApplicationController
     else
       error=true
       @access = Access.new
-      #  @controllers={["id"=>"1","name"=>"c1"],["id"=>"2","name"=>"c2"]}#get_controllers
       @controllers=Controller.get_controllers
       @roles=Role.all
       respond_to do |format|
@@ -125,8 +105,7 @@ class AccessesController < ApplicationController
   def destroy
     @access = Access.find(params[:id])
     @access.destroy
-    flash[:notice] = t(:ctrl_object_deleted,:object=>'Access',:ident=>@access.controller)
-    
+    flash[:notice] = t(:ctrl_object_deleted,:object=>'Access',:ident=>@access.controller)    
     respond_to do |format|
       format.html { redirect_to(accesses_url) }
       format.xml  { head :ok }

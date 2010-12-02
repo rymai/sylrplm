@@ -1,5 +1,5 @@
 class HelpController < ApplicationController
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   
   def index
     @help=params[:help]
@@ -8,5 +8,5 @@ class HelpController < ApplicationController
       #format.xml  { render :xml => @forums }
     end
   end
-
+  
 end

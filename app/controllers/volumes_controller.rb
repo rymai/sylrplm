@@ -1,5 +1,5 @@
 class VolumesController < ApplicationController
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   # GET /volumes
   # GET /volumes.xml
   def index
@@ -23,7 +23,7 @@ class VolumesController < ApplicationController
   # GET /volumes/new
   # GET /volumes/new.xml
   def new
-    @volume = Volume.createNew
+    @volume = Volume.create_new
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @volume }
@@ -39,7 +39,7 @@ class VolumesController < ApplicationController
   # POST /volumes.xml
   def create
     @volume = Volume.new(params[:volume])
-    dir=@volume.createDir(nil)
+    dir=@volume.create_dir(nil)
     respond_to do |format|
       if(dir!=nil) 
         if @volume.save
@@ -67,7 +67,7 @@ class VolumesController < ApplicationController
     @volume = Volume.find(params[:id])
     respond_to do |format|        
       if @volume.update_attributes(params[:volume])
-        dir=@volume.createDir(params[:olddir])
+        dir=@volume.create_dir(params[:olddir])
         if(dir!=nil)
           flash[:notice] = t(:ctrl_object_not_updated,:object=>t(:ctrl_volume),:ident=>@volume.name+":"+dir)
         else
@@ -88,12 +88,13 @@ class VolumesController < ApplicationController
   def destroy
     @volume = Volume.find(params[:id])
     dirsave=@volume.directory
-    st=@volume.destroyVolume
+    st=@volume.destroy_volume
+    #puts "volumes_controller.destroy:st="+st.to_s
     if(st==nil) 
       flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_volume),:ident=>@volume.name+":"+dirsave)
     else
       #flash[:notice] = "Volume #{@volume.name} was not deleted on #{dirsave}, files found: #{st.gsub("\n","<br/>")}."
-      flash[:notice] = t(:ctrl_object_not_deleted,:object=>t(:ctrl_volume),:ident=>@volume.name+":"+dirsave+st.gsub("\n","<br/>"))
+      flash[:notice] = t(:ctrl_object_not_deleted,:object=>t(:ctrl_volume),:ident=>@volume.name+":"+dirsave)+":"+st.gsub("\n","<br/>")
     end
     respond_to do |format|
       format.html { redirect_to(volumes_url) }

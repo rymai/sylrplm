@@ -1,5 +1,5 @@
 class ForumItemsController < ApplicationController
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   # GET /forum_items
   # GET /forum_items.xml
   def index

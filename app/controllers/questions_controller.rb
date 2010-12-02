@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   
   def index
     #@faqs = Faq.find :all
@@ -22,7 +22,7 @@ class QuestionsController < ApplicationController
   end
   
   def new
-    @faq = Question.createNew
+    @faq = Question.create_new
     respond_to do |format|
       #flash[:notice] = "#{@controllers.size()} controllers:1=#{@controllers[1].name}"
       format.html # new.html.erb
@@ -58,7 +58,7 @@ class QuestionsController < ApplicationController
         flash[:notice] = t(:ctrl_object_updated,:object=>t(:ctrl_faq),:ident=>@faq.id)
         format.html { redirect_to(@faq) }
         format.xml  { head :ok }
-     else
+      else
         flash[:notice] = t(:ctrl_object_notupdated,:object=>t(:ctrl_faq),:ident=>@faq.controller)
         format.html { render :action => :edit }
         format.xml  { render :xml => @faq.errors, :status => :unprocessable_entity }

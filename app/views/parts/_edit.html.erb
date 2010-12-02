@@ -1,0 +1,50 @@
+<p>
+    <b><%= f.label t(:label_ident) %></b>
+    <br/>
+    <%= f.text_field :ident %>
+</p>
+<p>
+    <b><%= f.label t(:label_type) %></b>
+    <br/>
+    <%= f.collection_select(:typesobject_id, @types, :id, :name) %>
+</p>
+<p>
+    <b><%= f.label t(:label_revision) %></b>
+    <br/>
+    <%=h @part.revision %>
+</p>
+<p>
+    <b><%= f.label t(:label_designation) %></b>
+    <br/>
+    <%= f.text_field :designation %>
+</p>
+<p>
+    <b><%= f.label t(:label_description) %></b>
+    <br/>
+    <%= f.text_area :description , :rows => 10 %>
+</p>
+<p>
+    <%if (@part.statusobject.promote!=true || @part.statusobject.demote!=true ) && !@part.is_freeze %>
+    <b><%= f.label t("modif_status") %></b>
+    <br/>
+    <% if(@part.statusobject != nil) %>
+    <%= f.collection_select(:statusobject_id, @status, :id, :name) %>
+    <% end %>
+    <%else %>
+    <b><%= f.label t("label_status") %></b>
+    <br/>
+    <% if(@part.statusobject != nil) %>
+    <%= @part.statusobject.name %>
+    <%end %>
+    <%end %>
+</p>
+<p>
+    <b><%= f.label t(:label_responsible) %></b>
+    <br/>
+    <%= @part.owner.login %>
+</p>
+<p>
+    <b><%= f.label t(:label_date) %></b>
+    <br/>
+    <%= f.date_select :date %>
+</p>

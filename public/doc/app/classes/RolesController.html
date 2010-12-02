@@ -88,13 +88,13 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000146">create</a>&nbsp;&nbsp;
-      <a href="#M000148">destroy</a>&nbsp;&nbsp;
-      <a href="#M000145">edit</a>&nbsp;&nbsp;
-      <a href="#M000142">index</a>&nbsp;&nbsp;
-      <a href="#M000144">new</a>&nbsp;&nbsp;
-      <a href="#M000143">show</a>&nbsp;&nbsp;
-      <a href="#M000147">update</a>&nbsp;&nbsp;
+      <a href="#M000151">create</a>&nbsp;&nbsp;
+      <a href="#M000153">destroy</a>&nbsp;&nbsp;
+      <a href="#M000150">edit</a>&nbsp;&nbsp;
+      <a href="#M000147">index</a>&nbsp;&nbsp;
+      <a href="#M000149">new</a>&nbsp;&nbsp;
+      <a href="#M000148">show</a>&nbsp;&nbsp;
+      <a href="#M000152">update</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -116,11 +116,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000146" class="method-detail">
-        <a name="M000146"></a>
+      <div id="method-M000151" class="method-detail">
+        <a name="M000151"></a>
 
         <div class="method-heading">
-          <a href="#M000146" class="method-signature">
+          <a href="#M000151" class="method-signature">
           <span class="method-name">create</span><span class="method-args">()</span>
           </a>
         </div>
@@ -130,8 +130,8 @@
 POST /roles POST /roles.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000146-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000146-source">
+            onclick="toggleCode('M000151-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000151-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/roles_controller.rb, line 43</span>
 43:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
@@ -153,11 +153,11 @@ POST /roles POST /roles.xml
         </div>
       </div>
 
-      <div id="method-M000148" class="method-detail">
-        <a name="M000148"></a>
+      <div id="method-M000153" class="method-detail">
+        <a name="M000153"></a>
 
         <div class="method-heading">
-          <a href="#M000148" class="method-signature">
+          <a href="#M000153" class="method-signature">
           <span class="method-name">destroy</span><span class="method-args">()</span>
           </a>
         </div>
@@ -167,16 +167,16 @@ POST /roles POST /roles.xml
 DELETE /roles/1 DELETE /roles/1.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000148-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000148-source">
+            onclick="toggleCode('M000153-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000153-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/roles_controller.rb, line 78</span>
 78:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
 79:     <span class="ruby-ivar">@role</span> = <span class="ruby-constant">Role</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
 80:     <span class="ruby-ivar">@role</span>.<span class="ruby-identifier">destroy</span>
 81:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
-82:      <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_deleted</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_role</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@role</span>.<span class="ruby-identifier">title</span>)
-83:      <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">roles_url</span>) }
+82:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_object_deleted</span>,<span class="ruby-identifier">:object=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">:ctrl_role</span>),<span class="ruby-identifier">:ident=</span><span class="ruby-operator">&gt;</span><span class="ruby-ivar">@role</span>.<span class="ruby-identifier">title</span>)
+83:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">roles_url</span>) }
 84:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">xml</span>  { <span class="ruby-identifier">head</span> <span class="ruby-identifier">:ok</span> }
 85:     <span class="ruby-keyword kw">end</span>
 86:   <span class="ruby-keyword kw">end</span>
@@ -185,11 +185,11 @@ DELETE /roles/1 DELETE /roles/1.xml
         </div>
       </div>
 
-      <div id="method-M000145" class="method-detail">
-        <a name="M000145"></a>
+      <div id="method-M000150" class="method-detail">
+        <a name="M000150"></a>
 
         <div class="method-heading">
-          <a href="#M000145" class="method-signature">
+          <a href="#M000150" class="method-signature">
           <span class="method-name">edit</span><span class="method-args">()</span>
           </a>
         </div>
@@ -199,8 +199,8 @@ DELETE /roles/1 DELETE /roles/1.xml
 GET /roles/1/edit
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000145-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000145-source">
+            onclick="toggleCode('M000150-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000150-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/roles_controller.rb, line 37</span>
 37:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">edit</span>
@@ -211,11 +211,11 @@ GET /roles/1/edit
         </div>
       </div>
 
-      <div id="method-M000142" class="method-detail">
-        <a name="M000142"></a>
+      <div id="method-M000147" class="method-detail">
+        <a name="M000147"></a>
 
         <div class="method-heading">
-          <a href="#M000142" class="method-signature">
+          <a href="#M000147" class="method-signature">
           <span class="method-name">index</span><span class="method-args">()</span>
           </a>
         </div>
@@ -225,8 +225,8 @@ GET /roles/1/edit
 GET /roles GET /roles.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000142-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000142-source">
+            onclick="toggleCode('M000147-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000147-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/roles_controller.rb, line 5</span>
  5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
@@ -242,11 +242,11 @@ GET /roles GET /roles.xml
         </div>
       </div>
 
-      <div id="method-M000144" class="method-detail">
-        <a name="M000144"></a>
+      <div id="method-M000149" class="method-detail">
+        <a name="M000149"></a>
 
         <div class="method-heading">
-          <a href="#M000144" class="method-signature">
+          <a href="#M000149" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
@@ -256,8 +256,8 @@ GET /roles GET /roles.xml
 GET /roles/new GET /roles/new.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000144-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000144-source">
+            onclick="toggleCode('M000149-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000149-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/roles_controller.rb, line 27</span>
 27:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
@@ -273,11 +273,11 @@ GET /roles/new GET /roles/new.xml
         </div>
       </div>
 
-      <div id="method-M000143" class="method-detail">
-        <a name="M000143"></a>
+      <div id="method-M000148" class="method-detail">
+        <a name="M000148"></a>
 
         <div class="method-heading">
-          <a href="#M000143" class="method-signature">
+          <a href="#M000148" class="method-signature">
           <span class="method-name">show</span><span class="method-args">()</span>
           </a>
         </div>
@@ -287,8 +287,8 @@ GET /roles/new GET /roles/new.xml
 GET /roles/1 GET /roles/1.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000143-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000143-source">
+            onclick="toggleCode('M000148-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000148-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/roles_controller.rb, line 16</span>
 16:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>
@@ -304,11 +304,11 @@ GET /roles/1 GET /roles/1.xml
         </div>
       </div>
 
-      <div id="method-M000147" class="method-detail">
-        <a name="M000147"></a>
+      <div id="method-M000152" class="method-detail">
+        <a name="M000152"></a>
 
         <div class="method-heading">
-          <a href="#M000147" class="method-signature">
+          <a href="#M000152" class="method-signature">
           <span class="method-name">update</span><span class="method-args">()</span>
           </a>
         </div>
@@ -318,8 +318,8 @@ GET /roles/1 GET /roles/1.xml
 PUT /roles/1 PUT /roles/1.xml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000147-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000147-source">
+            onclick="toggleCode('M000152-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000152-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/roles_controller.rb, line 60</span>
 60:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>

@@ -1,5 +1,5 @@
 class LinksController < ApplicationController
-  access_control (Access.findForController(controller_class_name()))
+  access_control (Access.find_for_controller(controller_class_name()))
   # GET /links
   # GET /links.xml
   def index

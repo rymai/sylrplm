@@ -1,0 +1,21 @@
+<input type="hidden" name="olddir" value="<%= @volume.directory %>"/>
+<p>
+    <%= f.label t(:label_name) %>
+    <br/>
+    <%= f.text_field :name %>
+</p>
+<p>
+    <%= f.label t(:label_description) %>
+    <br/>
+    <%= f.text_area :description %>
+</p>
+<p>
+    <%= f.label t(:label_directory) %>
+    <br/>
+    <%= f.text_field :directory %>
+</p>
+<p>
+    <%= f.label t(:label_protocol) %>
+    <br/>
+    <%= f.text_field :protocole %>
+</p>
