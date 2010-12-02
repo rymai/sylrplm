@@ -1,6 +1,6 @@
+require 'lib/models/sylrplm_common'
 class Access < ActiveRecord::Base
-  
-  ##belongs_to :role
+  include SylrplmCommon
   
   validates_presence_of :controller, :roles , :action
   #validates_uniqueness_of :controller ,:role_id,:action
@@ -14,14 +14,12 @@ class Access < ActiveRecord::Base
     Sequence.set_default_values(obj, self.name, true)
     obj
   end
-  
-  def self.find_paginate(page, conditions, sort, nb_items)
-    Access.paginate(:page => page, 
-    :conditions => conditions,
-    :order => sort,
-      :per_page => nb_items)
+  def self.find_paginate(params)
+    self.paginate(:page => params[:page], 
+    :conditions => params[:cond],
+    :order => params[:sort],
+      :per_page => params[:nbr])
   end 
-  
   def self.find_for_controller(i_controller)
     ret={}
     puts 'access.find_for_controller='+i_controller

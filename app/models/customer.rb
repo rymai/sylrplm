@@ -1,6 +1,8 @@
 require 'lib/models/plm_object'
+require 'lib/models/sylrplm_common'
 class Customer < ActiveRecord::Base
-  
+   include SylrplmCommon
+ 
   include PlmObject
   
   validates_presence_of :ident, :designation

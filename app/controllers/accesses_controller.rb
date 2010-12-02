@@ -1,12 +1,10 @@
 class AccessesController < ApplicationController
-  
   access_control (Access.find_for_controller(controller_class_name()))
   
   # GET /accesses
   # GET /accesses.xml
   def index
-    conditions="" 
-    @accesses = Access.find_paginate(params[:page],conditions, params[:sort],cfg_items_per_page) 
+    @accesses = Access.find_paginate({:page=>params[:page],:cond=>"",:sort=>params[:sort], :nbr=>cfg_items_per_page}) 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @accesses }

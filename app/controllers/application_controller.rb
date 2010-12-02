@@ -8,6 +8,9 @@ class ApplicationController < ActionController::Base
   include AppClasses
   #include REXML
   helper :all # include all helpers, all the time
+  
+  layout "main"
+  
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   filter_parameter_logging :password
   before_filter :authorize, :except => [:index,:init_objects,:get_themes,:find_theme,:permission_denied,:permission_granted,

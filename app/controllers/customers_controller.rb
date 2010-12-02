@@ -18,10 +18,13 @@ class CustomersController < ApplicationController
     "#{params[:query]}%", "#{params[:query]}%" ] unless params[:query].nil? 
     @query="#{params[:query]}"
     @total=Customer.count( :conditions => conditions)
-    @customers = Customer.paginate(:page => params[:page], 
-          :conditions => conditions,
-          :order => sort,
-          :per_page => cfg_items_per_page)
+#    @customers = Customer.paginate(:page => params[:page], 
+#          :conditions => conditions,
+#          :order => sort,
+#          :per_page => cfg_items_per_page)
+          
+    @customers = Customer.find_paginate({:page=>params[:page],:cond=>conditions,:sort=>params[:sort], :nbr=>cfg_items_per_page}) 
+          
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @customers }
