@@ -115,6 +115,7 @@ en:
   #########################################
   #application
   h_show_hide_tree: Show/Hide tree
+  h_sort_by_field: Sort by this field
   #help
   help_no_help_title: Aide absente
   help_no_help: Pas d'aide pour {{key}}

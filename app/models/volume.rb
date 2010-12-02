@@ -82,11 +82,11 @@ class Volume < ActiveRecord::Base
     ret=""
     if(File.exists?(dir))
       Dir.foreach(dir) { |objectdir| 
-        if(objectdir!="." and objectdir!="..")
+        if(objectdir!="." && objectdir!="..")
           dirobject=File.join(dir,objectdir)
           if(File.directory?(dirobject))
             Dir.foreach(dirobject) { |iddir|     
-              if(iddir!="." and iddir!="..")
+              if(iddir!="." && iddir!="..")
                 dirid=File.join(dirobject,iddir)
                 ret+="\ndirid="+iddir+"="+dirid
                 if(File.directory?(dirid))

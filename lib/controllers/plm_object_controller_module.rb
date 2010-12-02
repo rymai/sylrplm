@@ -57,7 +57,7 @@ module PlmObjectControllerModule
               validersMail=PlmMailer.listUserMail(validers,@user)
               email=PlmMailer.create_validated(object, @usermail, @urlbase, askUserMail, validersMail)
             end
-            if email!=nil and email!=""
+            if email!=nil && email!=""
               email.set_content_type("text/html")
               PlmMailer.deliver(email)
             end

@@ -121,6 +121,7 @@ fr:
   #########################################
   #application
   h_show_hide_tree: Montrer/Cacher arbre
+  h_sort_by_field: Tri sur ce champ
   #help
   help_no_help_title: Aide absente
   help_no_help: Pas d'aide pour {{key}}

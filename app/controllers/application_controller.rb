@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   
   class Class
     def extend?(klass)
-      not superclass.nil? and ( superclass == klass or superclass.extend? klass )
+      not superclass.nil? && ( superclass == klass or superclass.extend? klass )
     end
   end
   

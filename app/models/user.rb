@@ -67,22 +67,11 @@ class User < ActiveRecord::Base
   end 
   
   def self.find_validers
-    ret=find(:all,
-      :select => "us.login,us.email", 
-      :order => "us.login", 
-      :conditions => ["ro.title like ?",'valid%' ],
-      :joins => "as us inner join roles as ro on us.role_id=ro.id")
-    puts "User.find_validers:"+ret.inspect
-    ret
+    all(:select => [:login, :email],
+          :order => :login,
+          :conditions => "roles.title like valid%",
+          :joins => "inner join roles on users.role_id = roles.id")
   end
-  
-#  def is_valider
-#    if(self.login.left=="valider")
-#      true
-#    else
-#      false
-#    end
-#  end
   
   def self.check_admin
     admin_user=find_by_name('admin')

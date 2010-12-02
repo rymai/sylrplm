@@ -210,7 +210,7 @@ module HelpHelper
     decode=""
     txt.each_byte do |c|
       decode+=c.to_s+" "
-      if c!=10 and c!=13 and c!=32 and c!='\t' 
+      if c!=10 && c!=13 && c!=32 && c!='\t' 
         special=false 
       end
     end

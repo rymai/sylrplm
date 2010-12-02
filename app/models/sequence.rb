@@ -20,7 +20,7 @@ class Sequence < ActiveRecord::Base
       constant = eval constant_name
       isClass=constant.is_a? Class
       puts 'ApplicationController.get_constants='+constant.to_s+' class='+isClass.to_s
-      #if not constant.nil? and isClass and constant.extend? ActiveRecord::Base
+      #if not constant.nil? && isClass && constant.extend? ActiveRecord::Base
       
     end
   end 

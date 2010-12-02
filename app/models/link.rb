@@ -53,7 +53,7 @@ class Link < ActiveRecord::Base
   def self.create_new(father_object, father, child_object, child, relation)
     ok=false
     msg="ctrl_link_"+father_object.to_s+"_"+child_object.to_s
-    if(father_object.to_s=="customer" and child_object.to_s=="project")
+    if(father_object.to_s=="customer" && child_object.to_s=="project")
       ok=true
       if(is_child_of(father_object.to_s, father, child_object.to_s, child))
         ok=false
@@ -63,25 +63,25 @@ class Link < ActiveRecord::Base
         msg=:ctrl_link_already_project.to_s
       end
     end
-    if(father_object.to_s=="customer" and child_object.to_s=="document")
+    if(father_object.to_s=="customer" && child_object.to_s=="document")
       ok=true
       if(is_child_of(father_object.to_s, father, child_object.to_s, child))
         ok=false
         msg=:ctrl_link_already_customer_document.to_s
       end
     end
-    if(father_object.to_s=="project" and child_object.to_s=="part")
+    if(father_object.to_s=="project" && child_object.to_s=="part")
       ok=true
       #msg=:ctrl_link_already_project_part.to_s
     end
-    if(father_object=="project" and child_object=="document")
+    if(father_object=="project" && child_object=="document")
       ok=true
       if(is_child_of(father_object.to_s, father, child_object.to_s, child))
         ok=false
         msg=:ctrl_link_already_project_document.to_s
       end
     end
-    if(father_object.to_s=="part" and child_object.to_s=="part")
+    if(father_object.to_s=="part" && child_object.to_s=="part")
       ok=true
       #if(is_child_of(father_object.to_s, father, child_object.to_s, child))
       #ok=false
@@ -92,7 +92,7 @@ class Link < ActiveRecord::Base
         msg=:ctrl_link_recursivity.to_s
       end
     end
-    if(father_object.to_s=="part" and child_object.to_s=="document")
+    if(father_object.to_s=="part" && child_object.to_s=="document")
       ok=true
       if(is_child_of(father_object.to_s, father, child_object.to_s, child))
         ok=false

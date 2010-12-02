@@ -15,6 +15,13 @@ class Access < ActiveRecord::Base
     obj
   end
   
+  def self.find_paginate(page, conditions, sort, nb_items)
+    Access.paginate(:page => page, 
+    :conditions => conditions,
+    :order => sort,
+      :per_page => nb_items)
+  end 
+  
   def self.find_for_controller(i_controller)
     ret={}
     puts 'access.find_for_controller='+i_controller

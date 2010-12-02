@@ -30,7 +30,7 @@ module Caboose
       
       #&
       if logicstring =~ /&/
-        return (process(logicstring[/^[^&]+/], context) and process(logicstring[/^[^&]+&(.*)$/,1], context))
+        return (process(logicstring[/^[^&]+/], context) && process(logicstring[/^[^&]+&(.*)$/,1], context))
       end
       
       #|
