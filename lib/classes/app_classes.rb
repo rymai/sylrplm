@@ -15,5 +15,5 @@ module AppClasses
       end
     end
   end
-  
 end
+

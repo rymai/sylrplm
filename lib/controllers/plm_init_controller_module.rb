@@ -1,7 +1,8 @@
-module PlmInitControllerModule
-  require 'yaml'
-  require 'active_record/fixtures'
-    
+require 'active_record/fixtures'
+module Controllers::PlmInitControllerModule
+  #require 'yaml'
+  #require 'active_record/fixtures'
+  
   def check_init_objects
     ret =""
     ya_admin=User.check_admin
@@ -53,11 +54,11 @@ module PlmInitControllerModule
       ret +="Pas de statuts de projets<br>"
     end
     @status_customer= Statusobject.find_for("customer")
-     if @status_customer.size==0
+    if @status_customer.size==0
       ret +="Pas de statuts de clients<br>"
     end
     @status_forum= Statusobject.find_for("forum")
-     if @status_forum.size==0
+    if @status_forum.size==0
       ret +="Pas de statuts de forums<br>"
     end
     ret
@@ -87,7 +88,7 @@ module PlmInitControllerModule
   end
   
   #renvoie la liste des domaines pour le chargement initial
-    #appelle par main_controller.init_objects
+  #appelle par main_controller.init_objects
   def get_domains
     dirname=RAILS_ROOT + '/db/fixtures/*'
     ret=""
@@ -111,5 +112,6 @@ module PlmInitControllerModule
       puts "plm_init_controller.update_first_volume:user="+auser.inspect
     end
   end
+  
   
 end

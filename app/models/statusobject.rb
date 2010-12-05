@@ -1,4 +1,5 @@
 class Statusobject < ActiveRecord::Base
+  include Models::SylrplmCommon
   validates_presence_of :object, :name, :rank
   has_many :documents
   has_many :parts
@@ -42,5 +43,9 @@ class Statusobject < ActiveRecord::Base
       current_status
     end
   end
-  
+    def self.get_conditions(filter)
+    filter=filter.gsub("*","%")
+      conditions = ["object LIKE ? or name LIKE ? or description LIKE ? or rank LIKE ? or promote LIKE ? or demote LIKE ? ",
+      "#{filter}", "#{filter}", "#{filter}", "#{filter}", "#{filter}", "#{filter}"] unless filter.nil?
+  end
 end

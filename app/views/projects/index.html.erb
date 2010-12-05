@@ -1,5 +1,5 @@
-<h1><%=t(:project_list)%><%= @projects.count %> / <%= @total %></h1>
-<%= form_simple_query_helper('/projects', @query) %>
+<h1><%=t(:project_list)%><%=h_count_objects(@projects)%> </h1>
+<%= form_simple_query_helper('/projects', @projects) %>
 <table>
     <tr>
         <th></th>
@@ -26,7 +26,7 @@
         </th>
 				<th></th><th></th><th></th><th></th>
      </tr>
-    <% @projects.each do |project| %>
+    <% @projects[:recordset].each do |project| %>
     <tr>
         <td>
             <%=icone(project) %>
@@ -82,11 +82,12 @@
     </tr>
     <% end %>
 </table>
-<%= will_paginate(@projects) %>
+<%= will_paginate(@projects[:recordset]) %>
 <table class='menu_bas'>
     <tr>
         <td>
             <%= link_to t("new_project"), new_project_path %>
         </td>
+       
     </tr>
 </table>

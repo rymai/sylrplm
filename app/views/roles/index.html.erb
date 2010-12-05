@@ -1,4 +1,6 @@
-<h1><%=t(:role_list) %></h1>
+<h1><%=t(:role_list) %><%=h_count_objects(@roles)%> </h1>
+<%= form_simple_query_helper('/roles', @roles) %>
+
 <table>
     <tr>
         <th>
@@ -10,7 +12,7 @@
 								<th></th><th></th><th></th>
  
     </tr>
-    <% @roles.each do |role| %>
+    <% @roles[:recordset].each do |role| %>
     <tr>
         <td>
             <%=h role.title %>
@@ -30,6 +32,7 @@
     </tr>
     <% end %>
 </table>
+<%= will_paginate(@roles[:recordset]) %>
 <br/>
 <table class='menu_bas'>
     <tr>

@@ -1,8 +1,8 @@
-require 'lib/controllers/plm_object_controller_module'
-require 'lib/controllers/plm_init_controller_module'
+#require 'lib/controllers/plm_object_controller_module'
+#require 'lib/controllers/plm_init_controller_module'
 class ProjectsController < ApplicationController
-  include PlmObjectControllerModule
-  include PlmInitControllerModule
+  include Controllers::PlmObjectControllerModule
+  include Controllers::PlmInitControllerModule
   before_filter :check_init, :only=>[:new]
   access_control (Access.find_for_controller(controller_class_name()))
   
@@ -14,25 +14,11 @@ class ProjectsController < ApplicationController
   # les lignes sont tries d'apres le parametre sort
   # les objets sont filtres d'apres le parametre query (requete simple d'egalite 
   #   sur tous les attributs)
-  def index
-    define_variables
-    # tri
-    sort=params['sort']
-    
-    conditions = ["ident LIKE ? or "+qry_type+" or designation LIKE ? or "+qry_status+
-       " or "+qry_owner+" or date LIKE ? ",
-       "#{params[:query]}%", "#{params[:query]}%", 
-     "#{params[:query]}%", "#{params[:query]}%", 
-     "#{params[:query]}%", "#{params[:query]}%" ] unless params[:query].nil? 
-    @query="#{params[:query]}"
-    @total=Project.count( :conditions => conditions)
-    @projects = Project.paginate(:page => params[:page], 
-           :conditions => conditions,
-           :order => sort,
-           :per_page => cfg_items_per_page)
+  def index   
+    @projects = Project.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])}) 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @projects }
+      format.xml  { render :xml => @projects[:recordset] } 
     end
   end
   
@@ -42,7 +28,6 @@ class ProjectsController < ApplicationController
   # liste des attributs avec leur valeur
   # arbre montrant la structure du projet: le client et les parts
   def show
-    define_variables
     @project = Project.find(params[:id])
     @relation_types_document=Typesobject.getTypesNames(:relation_document)
     @relation_types_part=Typesobject.getTypesNames(:relation_part)
@@ -60,7 +45,6 @@ class ProjectsController < ApplicationController
   # le owner est attribue avant la saisie, voir Project.create_new
   # on definit les listes de valeur pour le type et le statut 
   def new
-    define_variables
     @project = Project.create_new(nil, @user)
     @types=Project.getTypesProject
     @status= Statusobject.find_for("project")
@@ -73,7 +57,6 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   # modification d'un projet
   def edit
-    define_variables
     @project = Project.find_edit(params[:id])
     @types=Project.getTypesProject
     @status= Statusobject.find_for("project")
@@ -83,7 +66,6 @@ class ProjectsController < ApplicationController
   # POST /projects.xml
   # creation d'un projet (apres validation du new)
   def create
-    define_variables
     @project = Project.create_new(params[:project], @user)
     @types=Project.getTypesProject
     @status= Statusobject.find_for("project")
@@ -104,7 +86,6 @@ class ProjectsController < ApplicationController
   # PUT /projects/1.xml
   # maj d'un projet (apres validation du edit)
   def update
-    define_variables
     @project = Project.find(params[:id])
     @types=Project.getTypesProject
     @status= Statusobject.find_for("project")
@@ -124,7 +105,6 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.xml
   def destroy
-    define_variables
     @project = Project.find(params[:id])
     @project.destroy
     respond_to do |format|

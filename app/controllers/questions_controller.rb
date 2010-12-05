@@ -1,20 +1,9 @@
 class QuestionsController < ApplicationController
+  include Controllers::PlmObjectControllerModule
   access_control (Access.find_for_controller(controller_class_name()))
   
   def index
-    #@faqs = Faq.find :all
-    @query="#{params[:query]}" 
-    sort=params['sort']
-    conditions = ["question LIKE ? or answer LIKE ? or updated_at LIKE ?",
-    "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%" ] unless params[:query].nil?
-    
-    @faqs = Question.paginate(:page => params[:page], 
-          :conditions => conditions,
-    #:order => 'part_id ASC, ident ASC, revision ASC',
-          :order => sort,
-    :per_page => cfg_items_per_page)
-    
+    @faqs = Question.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])}) 
   end
   
   def show

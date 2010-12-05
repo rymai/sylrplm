@@ -1,5 +1,5 @@
-<h1><%=t("customer_list") %><%= @customers.count %> / <%= @total %></h1>
-<%= form_simple_query_helper('/customers', @query) %>
+<h1><%=t("customer_list") %><%=h_count_objects(@customers)%> </h1>
+<%= form_simple_query_helper('/customers', @customers) %>
 <table>
     <tr>
     	<th></th>
@@ -23,7 +23,7 @@
         </th>
  				<th></th><th></th><th></th>
     </tr>
-    <% @customers.each do |customer| %>
+    <% @customers[:recordset].each do |customer| %>
     <tr>
         <td>
             <%=icone(customer) %>
@@ -68,7 +68,7 @@
     </tr>
     <% end %>
 </table>
-<%= will_paginate(@customers) %>
+<%= will_paginate(@customers[:recordset]) %>
 <table class='menu_bas'>
     <tr>
         <td>

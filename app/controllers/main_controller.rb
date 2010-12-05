@@ -1,6 +1,6 @@
-require 'lib/controllers/plm_init_controller_module'
+#require 'lib/controllers/plm_init_controller_module'
 class MainController < ApplicationController
-  include PlmInitControllerModule
+  include Controllers::PlmInitControllerModule
   
   
   access_control (Access.find_for_controller(controller_class_name()))

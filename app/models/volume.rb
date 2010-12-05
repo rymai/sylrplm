@@ -1,4 +1,5 @@
 class Volume < ActiveRecord::Base
+  include Models::SylrplmCommon
   validates_presence_of :name, :directory
   validates_uniqueness_of :name
   has_many :documents
@@ -123,5 +124,9 @@ class Volume < ActiveRecord::Base
   def get_dir_name
     File.join(self.directory,self.name)
   end
-  
+  def self.get_conditions(filter)
+    filter=filter.gsub("*","%")
+      conditions = ["name LIKE ? or description LIKE ? or directory LIKE ? or protocole LIKE ?",
+      "#{filter}", "#{filter}", "#{filter}", "#{filter}"] unless filter.nil?
+  end
 end

@@ -1,6 +1,7 @@
-require 'digest/sha1'
+#require 'digest/sha1'
 
 class User < ActiveRecord::Base
+  include Models::SylrplmCommon
   
   has_and_belongs_to_many :roles
   belongs_to :role
@@ -67,9 +68,9 @@ class User < ActiveRecord::Base
   end 
   
   def self.find_validers
-    all(:select => [:login, :email],
+    all(:select => "login, email",
           :order => :login,
-          :conditions => "roles.title like valid%",
+          :conditions => "roles.title like 'valid%'",
           :joins => "inner join roles on users.role_id = roles.id")
   end
   
@@ -232,5 +233,7 @@ class User < ActiveRecord::Base
       :user_unknown_mail
     end
   end
-  
+   def self.get_conditions(filter)
+    nil
+  end
 end

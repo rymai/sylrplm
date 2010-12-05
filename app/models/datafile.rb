@@ -1,6 +1,7 @@
-require 'lib/models/plm_object'
+#require 'lib/models/plm_object'
 class Datafile < ActiveRecord::Base
-  include PlmObject
+  include Models::PlmObject
+  include Models::SylrplmCommon
   
   validates_presence_of :ident , :typesobject
   validates_uniqueness_of :ident, :scope => :revision
@@ -140,4 +141,14 @@ class Datafile < ActiveRecord::Base
     end
     self
   end
+  def self.get_conditions(filter)
+    filter=filter.gsub("*","%")
+    ["ident LIKE ? or "+qry_type+" or revision LIKE ? "+
+      " or "+qry_owner_id+" or updated_at LIKE ? or "+qry_volume,
+      "#{filter}", 
+    "#{filter}", "#{filter}", 
+    "#{filter}", "#{filter}", 
+    "#{filter}" ] unless filter.nil?
+  end
+  
 end

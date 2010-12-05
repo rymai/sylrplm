@@ -1,9 +1,10 @@
-<h1><%=t(:datafile_list) %></h1>
+<h1><%=t(:datafile_list) %><%=h_count_objects(@datafiles)%> </h1>
+<%= form_simple_query_helper('/datafiles', @datafiles) %>
 
 <%= render(:partial => "datafiles/index_datafiles", :locals=>{:document=>nil}) %>
 
 <br />
-<%= will_paginate(@datafiles) %>
+<%= will_paginate(@datafiles[:recordset]) %>
 <table class='menu_bas'>
     <tr>
         <td>

@@ -2,7 +2,7 @@
 <% form_for(@datafile,
 :html => { :multipart => true}) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "datafiles/add_datafile",:locals => { :f => f, :fonct=>"edit" }) %>
+<%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f, :fonct=>"edit", :document=>@document }) %>
 <table class='menu_bas'>
     <tr>
         <td>

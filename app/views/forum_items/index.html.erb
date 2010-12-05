@@ -1,4 +1,5 @@
-<h1><%=t(:forum_item_list)%></h1>
+<h1><%=t(:forum_item_list)%><%=h_count_objects(@forum_items)%> </h1>
+<%= form_simple_query_helper('/forum_items', @forum_items) %>
 
 <table>
   <tr>
@@ -9,7 +10,7 @@
     <th><%= t(:label_owner) %></th>
   </tr>
 
-<% @forum_items.each do |forum_item| %>
+<% @forum_items[:recordset].each do |forum_item| %>
   <tr>
     <td><%=h forum_item.id %></td>
    <td><%=h forum_item.message %></td>
@@ -39,6 +40,7 @@
   </tr>
 <% end %>
 </table>
+<%= will_paginate(@forum_items[:recordset]) %>
 <table class='menu_bas'>
 <tr>
 <td><%= link_to t(:new_forum_item), new_forum_item_path %></td>

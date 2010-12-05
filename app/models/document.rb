@@ -1,7 +1,7 @@
-require 'lib/models/plm_object'
+#require 'lib/models/plm_object'
 class Document < ActiveRecord::Base
-  include PlmObject
-  
+  include Models::PlmObject
+  include Models::SylrplmCommon
   validates_presence_of :ident , :designation 
   validates_uniqueness_of :ident, :scope => :revision
   #validates_format_of :ident, :with =>/^(doc|img)[0-9]+$/, :message=>" doit commencer par doc ou img suivi de chiffres"
@@ -21,10 +21,6 @@ class Document < ActiveRecord::Base
   has_many :datafiles , :through => :links
   
   before_create :set_initial_attributes
-  
-  #def self.getFirstRevision
-  #    "00100"    
-  #end
   
   def self.create_new(document, user)
     if(document!=nil)
@@ -56,7 +52,6 @@ class Document < ActiveRecord::Base
   
   def is_checked
     check=Check.findCheckout("document", self) 
-    file=self.filename
     if(check.nil?)
       #non reserve
       false
@@ -141,6 +136,14 @@ class Document < ActiveRecord::Base
       item.destroy
     end
   end
-  
+  def self.get_conditions(filter)
+      filter=filter.gsub("*","%")
+      conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
+      " or "+qry_owner+" or date LIKE ? ",
+      "#{filter}", "#{filter}", 
+    "#{filter}", "#{filter}", 
+    "#{filter}", "#{filter}", 
+    "#{filter}" ] unless filter.nil?
+ end
   
 end

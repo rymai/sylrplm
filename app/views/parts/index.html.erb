@@ -1,5 +1,5 @@
-<h1><%=t(:part_list) %><%= @parts.count %> / <%= @total %></h1>
-<%= form_simple_query_helper('/parts', @query) %>
+<h1><%=t(:part_list) %><%=h_count_objects(@parts)%> </h1>
+<%= form_simple_query_helper('/parts', @parts) %>
 <table>
     <tr>
         <th>
@@ -30,7 +30,7 @@
         </th>
 				<th></th><th></th><th></th><th></th>
      </tr>
-    <% @parts.each do |part| %>
+    <% @parts[:recordset].each do |part| %>
     <tr>
         <td>
             <%= icone(part) %>
@@ -88,7 +88,7 @@
     </tr>
     <% end %>
 </table>
-<%= will_paginate(@documents) %>
+<%= will_paginate(@parts[:recordset]) %>
 <table class='menu_bas'>
     <tr>
         <td>

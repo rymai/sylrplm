@@ -1,6 +1,6 @@
-require 'lib/models/sylrplm_common'
+#require 'lib/models/sylrplm_common'
 class Access < ActiveRecord::Base
-  include SylrplmCommon
+  include Models::SylrplmCommon
   
   validates_presence_of :controller, :roles , :action
   #validates_uniqueness_of :controller ,:role_id,:action
@@ -14,12 +14,7 @@ class Access < ActiveRecord::Base
     Sequence.set_default_values(obj, self.name, true)
     obj
   end
-  def self.find_paginate(params)
-    self.paginate(:page => params[:page], 
-    :conditions => params[:cond],
-    :order => params[:sort],
-      :per_page => params[:nbr])
-  end 
+  
   def self.find_for_controller(i_controller)
     ret={}
     puts 'access.find_for_controller='+i_controller
@@ -77,5 +72,11 @@ class Access < ActiveRecord::Base
     end
   end
   
+  def self.get_conditions(filter)
+    filter=filter.gsub("*","%")
+    ["controller LIKE ? or action LIKE ? or roles LIKE ? " ,
+      "#{filter}", "#{filter}", 
+    "#{filter}"] unless filter.nil? 
+  end
   
 end

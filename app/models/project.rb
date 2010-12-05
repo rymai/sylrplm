@@ -1,6 +1,7 @@
-require 'lib/models/plm_object'
+#require 'lib/models/plm_object'
 class Project < ActiveRecord::Base
-  include PlmObject
+  include Models::PlmObject
+  include Models::SylrplmCommon
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident
   belongs_to :customer
@@ -61,6 +62,13 @@ class Project < ActiveRecord::Base
     self.statusobject=Statusobject.find_previous(:project,statusobject) 
     self   
   end  
-  
+  def self.get_conditions(filter)
+      filter=filter.gsub("*","%")
+      conditions = ["ident LIKE ? or "+qry_type+" or designation LIKE ? or "+qry_status+
+       " or "+qry_owner+" or date LIKE ? ",
+       "#{filter}", "#{filter}", 
+     "#{filter}", "#{filter}", 
+     "#{filter}", "#{filter}" ] unless filter.nil? 
+  end
   
 end

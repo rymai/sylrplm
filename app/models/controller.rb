@@ -1,4 +1,4 @@
-require 'lib/controllers/plm_object_controller_module'
+#require 'lib/controllers/plm_object_controller_module'
 class Controller 
   attr_accessor :id, :name, :method
   def initialize(i_id,i_name,i_method)

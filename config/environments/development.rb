@@ -18,3 +18,8 @@ config.action_view.cache_template_loading            = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = true
 
+#pour recharger un fichier particulier
+#require_dependency RAILS_ROOT + "/lib/classes/toto.rb"
+config.load_paths += %W( #{RAILS_ROOT}/lib/classes )
+config.load_paths += %W( #{RAILS_ROOT}/lib/controllers )
+config.load_paths += %W( #{RAILS_ROOT}/lib/models )

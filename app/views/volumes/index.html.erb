@@ -1,4 +1,6 @@
-<h1><%=t(:volume_list) %></h1>
+<h1><%=t(:volume_list) %><%=h_count_objects(@volumes)%> </h1>
+<%= form_simple_query_helper('/volumes', @volumes) %>
+
 
 <table>
   <tr>
@@ -7,10 +9,9 @@
     <th><%=t(:label_directory)%></th>
     <th><%=t(:label_protocol)%></th>
 						<th></th><th></th><th></th>
- 
   </tr>
 
-<% @volumes.each do |volume| %>
+<% @volumes[:recordset].each do |volume| %>
   <tr>
     <td><%=h volume.name %></td>
     <td><%=h volume.description %></td>
@@ -22,6 +23,7 @@
   </tr>
 <% end %>
 </table>
+<%= will_paginate(@volumes[:recordset]) %>
 <table class='menu_bas'>
     <tr>
         <td>

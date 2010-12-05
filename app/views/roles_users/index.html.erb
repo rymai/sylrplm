@@ -1,4 +1,6 @@
-<h1>Listing roles_users</h1>
+<h1>Listing roles_users <%=h_count_objects(@roles_users)%> </h1>
+<%= form_simple_query_helper('/roles_users', @roles_users) %>
+
 
 <table>
   <tr>
@@ -16,6 +18,7 @@
   </tr>
 <% end %>
 </table>
+<%= will_paginate(@roles_users[:recordset]) %>
 
 <br />
 

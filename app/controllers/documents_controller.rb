@@ -1,9 +1,8 @@
-require 'net/http'
-require 'lib/controllers/plm_object_controller_module'
-require 'lib/controllers/plm_init_controller_module'
+#require 'lib/controllers/plm_object_controller_module'
+#require 'lib/controllers/plm_init_controller_module'
 class DocumentsController < ApplicationController
-  include PlmObjectControllerModule
-  include PlmInitControllerModule
+  include Controllers::PlmObjectControllerModule
+  include Controllers::PlmInitControllerModule
   before_filter :check_init, :only=>[:new]
   
   #droits d'acces suivant le controller et l'action demandee
@@ -14,34 +13,12 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.xml
   def index
-    
-    sort=params['sort']
-    @query="#{params[:query]}" 
-    #    if params[:part_id]
-    #      @part = Part.find(params[:part_id])
-    #      @documents = @part.documents.paginate(:page => params[:page], 
-    #      :order => sort,
-    #      :per_page => cfg_items_per_page)
-    #      @total = @part.documents.count()
-    #    else
-    conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
-      " or "+qry_owner+" or date LIKE ? or "+qry_volume,
-      "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%", "#{params[:query]}%" ] unless params[:query].nil?
-    @documents = Document.paginate(:page => params[:page], 
-      :conditions => conditions,
-    #:order => 'part_id ASC, ident ASC, revision ASC',
-      :order => sort,
-      :per_page => cfg_items_per_page)
-    #    end
-    @total=Document.count( )
+    @documents = Document.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])}) 
     respond_to do |format|
       #flash[:notice] =Document.controller_access()
       #flash[:notice] = "Filter=#{params[:query]} "
       format.html # index.html.erb
-      format.xml  { render :xml => @documents }
+      format.xml  { render :xml => @documents[:recordset]  }
     end
   end
   
@@ -185,12 +162,12 @@ class DocumentsController < ApplicationController
   def check_out
     @document = Document.find(params[:id])
     check=Check.findCheckout("document", @document) 
-    file=@document.filename
+    
     if(check==nil)
       if(params[:reason]!="")
         check=Check.create_new("document",@document,params, @user)
         if check.save       
-          flash[:notice] = t(:ctrl_object_checkout,:object=>t(:ctrl_document),:ident=>@document.ident,:file=>file,:reason=>params[:reason])
+          flash[:notice] = t(:ctrl_object_checkout,:object=>t(:ctrl_document),:ident=>@document.ident,:reason=>params[:reason])
         else
           flash[:notice] = t(:ctrl_object_notcheckout,:object=>t(:ctrl_document),:ident=>@document.ident)
         end    
@@ -198,7 +175,7 @@ class DocumentsController < ApplicationController
         flash[:notice] = t(:ctrl_object_give_reason)
       end
     else
-      flash[:notice] = t(:ctrl_object_already_checkout,:object=>t(:ctrl_document),:ident=>@document.ident,:file=>file) 
+      flash[:notice] = t(:ctrl_object_already_checkout,:object=>t(:ctrl_document),:ident=>@document.ident) 
     end
     respond_to do |format|
       format.xml  { head :ok }
@@ -212,7 +189,6 @@ class DocumentsController < ApplicationController
     check=Check.findCheckout("document", @document)
     respond_to do |format|
       if(params[:reason]!="")
-        if(params[:document] && params[:document][:uploaded_file]!=nil)
           if(check!=nil)
             check.checkIn(params,@user)
             if check.save   
@@ -225,9 +201,6 @@ class DocumentsController < ApplicationController
           else
             flash[:notice] = t(:ctrl_object_notyet_checkout,:object=>t(:ctrl_document),:ident=>@document.ident)
           end
-        else
-          flash[:notice] = t(:ctrl_object_give_file)
-        end
       else
         flash[:notice] = t(:ctrl_object_give_reason)
       end

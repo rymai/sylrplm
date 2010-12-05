@@ -1,9 +1,8 @@
-require 'lib/models/plm_object'
-require 'lib/models/sylrplm_common'
+#require 'lib/models/plm_object'
+#require 'lib/models/sylrplm_common'
 class Customer < ActiveRecord::Base
-   include SylrplmCommon
- 
-  include PlmObject
+  include Models::SylrplmCommon
+  include Models::PlmObject
   
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident
@@ -77,5 +76,14 @@ class Customer < ActiveRecord::Base
   def demote
     self.statusobject=Statusobject.find_previous(:customer,statusobject) 
     self   
-  end  
+  end 
+  
+  def self.get_conditions(filter)
+    filter=filter.gsub("*","%")
+    ["ident LIKE ? or "+qry_type+" or designation LIKE ? or "+qry_status+
+      " or "+qry_owner+" or date LIKE ? ",
+      "#{filter}", "#{filter}", 
+    "#{filter}", "#{filter}", 
+    "#{filter}", "#{filter}" ] unless filter.nil? 
+  end
 end

@@ -1,4 +1,5 @@
-<h1><%=t("access_list") %></h1>
+<h1><%=t("access_list") %><%=h_count_objects(@accesses)%> </h1>
+<%= form_simple_query_helper('/accesses', @accesses) %>
 <table>
     <tr>
         <th <%= sort_td_class_helper "controller" %>>
@@ -17,7 +18,7 @@
         <th>
         </th>
     </tr>
-    <% @accesses.each do |access| %>
+    <% @accesses[:recordset].each do |access| %>
     <tr>
         <td>
             <%=h access.controller %>
@@ -40,7 +41,7 @@
     </tr>
     <% end %>
 </table>
-<%= will_paginate(@accesses) %>
+<%= will_paginate(@accesses[:recordset]) %>
 <br/>
 <table class='menu_bas'>
     <tr>

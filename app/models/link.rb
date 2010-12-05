@@ -1,4 +1,5 @@
 class Link < ActiveRecord::Base
+  include Models::SylrplmCommon
   
   # une seule occurence d'un fils de type donne dans un pere de type donne
   ### verif par soft dans create_new validates_uniqueness_of :child_id, :scope => [:child_object, :father_id, :father_object ]
@@ -123,6 +124,10 @@ class Link < ActiveRecord::Base
   def self.remove(id)
     link=self.find(id)
     link.destroy
+    nil
+  end
+  
+   def self.get_conditions(filter)
     nil
   end
 end

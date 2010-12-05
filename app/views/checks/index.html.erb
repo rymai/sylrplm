@@ -1,4 +1,5 @@
-<h1><%=t("check_list")%></h1>
+<h1><%=t("check_list")%><%=h_count_objects(@checks)%> </h1>
+<%= form_simple_query_helper('/checks', @checks) %>
 
 <table>
   <tr>
@@ -14,7 +15,7 @@
     <th><%= t("label_local_dir") %></th>
   </tr>
 
-<% @checks.each do |check| %>
+<% @checks[:recordset].each do |check| %>
   <tr>
     <td><%=h check.object %></td>
     <td><%=h check.object_id %></td>
@@ -32,6 +33,7 @@
   </tr>
 <% end %>
 </table>
+<%= will_paginate(@checks[:recordset]) %>
 
 <br />
 <table class='menu_bas'>

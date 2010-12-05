@@ -1,6 +1,7 @@
-require 'lib/models/plm_object'
+#require 'lib/models/plm_object'
 class Part < ActiveRecord::Base
-  include PlmObject
+  include Models::PlmObject
+  include Models::SylrplmCommon
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident, :scope => :revision
   # dans link has_many :documents
@@ -119,7 +120,14 @@ class Part < ActiveRecord::Base
     self.statusobject=next_status 
     self   
   end 
-  
-  
+  def self.get_conditions(filter)
+     filter=filter.gsub("*","%")
+     conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
+      " or "+qry_owner+" or date LIKE ? ",
+      "#{filter}", "#{filter}", 
+    "#{filter}", "#{filter}", 
+    "#{filter}", "#{filter}", 
+    "#{filter}" ] unless filter.nil? 
+  end
   
 end

@@ -1,6 +1,6 @@
 <h1><%=t(:datafile_new) %></h1>
 <% form_for(@datafile , :html => { :multipart => true}) do |f| %>
-<%= render(:partial => "datafiles/add_datafile",:locals => { :f => f , :fonct=>"new"}) %>
+<%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f , :fonct=>"new", :document=>@document}) %>
 <table class='menu_bas'>
     <tr>
         <td>

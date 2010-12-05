@@ -1,4 +1,6 @@
-<h1><%=t(:statusobjects_list) %></h1>
+<h1><%=t(:statusobjects_list) %><%=h_count_objects(@statusobjects)%> </h1>
+<%= form_simple_query_helper('/statusobjects', @statusobjects) %>
+
 <table>
     <tr>
         <th>
@@ -25,7 +27,7 @@
 								<th></th><th></th><th></th>
  
     </tr>
-    <% @statusobjects.each do |statusobject| %>
+    <% @statusobjects[:recordset].each do |statusobject| %>
     <tr>
         <td>
             <%=h statusobject.id %>
@@ -60,6 +62,7 @@
     </tr>
     <% end %>
 </table>
+<%= will_paginate(@statusobjects[:recordset]) %>
 <br/>
 <table class='menu_bas'>
     <tr>

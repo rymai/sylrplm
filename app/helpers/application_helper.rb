@@ -28,16 +28,37 @@ module ApplicationHelper
     onclick=\"return helpPopup('#{key}');\">"
     bloc
   end
-  
-  def form_simple_query_helper(url,query) 
+
+  def h_count_objects(objects)
+    unless objects[:page].nil?
+      num_begin=(objects[:page].to_i-1)
+    else
+      num_begin=0
+    end
+    num_begin*=objects[:nb_items].to_i
+    num_begin+=1
+    num_end=num_begin+objects[:recordset].length-1
+    t("count_objects",:number_begin=>num_begin,:number_end=>num_end,:total=>objects[:total])
+  end
+
+  def form_simple_query_helper(url,objects) 
     bloc=""
     bloc<<form_tag(url, :method=>:get)  
-    bloc << "<p>"
+    bloc << "<table><tr>"
+    bloc << "<td>" 
     bloc << t("query") 
-    bloc << text_field_tag(:query , value=query)
-    bloc << h_img_sub(:filter) 
-    bloc << "</p>" 
-    bloc
+    bloc << text_field_tag(:query , value=objects[:query])
+   bloc << "</td>" 
+   bloc << "<td>"
+    bloc << t("nb_items_per_page") 
+    bloc << text_field_tag(:nb_items , value=objects[:nb_items], :size=>5)
+   bloc << "</td>" 
+   bloc << "</td>" 
+   bloc << "<td>"
+     bloc << h_img_sub(:filter) 
+    bloc << "</td>" 
+   bloc << "</tr></table>" 
+     bloc
   end
   
   

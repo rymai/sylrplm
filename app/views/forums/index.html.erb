@@ -1,4 +1,6 @@
-<h1>Listing forums</h1>
+<h1><%=t(:forum_list) %><%=h_count_objects(@forums)%> </h1>
+<%= form_simple_query_helper('/forums', @forums) %>
+
 
 <table>
   <tr>
@@ -11,7 +13,7 @@
 				<th></th><th></th><th></th>
    </tr>
 
-<% @forums.each do |forum| %>
+<% @forums[:recordset].each do |forum| %>
   <tr>
     
     <td><%=h forum.typesobject.name %></td>
@@ -32,6 +34,7 @@
   </tr>
 <% end %>
 </table>
+<%= will_paginate(@forums[:recordset]) %>
 
 <table class='menu_bas'>
 <tr>

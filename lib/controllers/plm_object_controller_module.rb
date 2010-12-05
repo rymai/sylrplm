@@ -1,4 +1,4 @@
-module PlmObjectControllerModule
+module Controllers::PlmObjectControllerModule
   
   def ctrl_revise(model)
     define_variables
@@ -288,8 +288,8 @@ module PlmObjectControllerModule
   
   def follow_tree_customer(node, obj,ctrl)
     tree_documents(node,"customer",obj,ctrl)  
-     tree_forums(node,"customer",obj,ctrl)  
-     links=Link.find_childs("customer", obj,  "project")
+    tree_forums(node,"customer",obj,ctrl)  
+    links=Link.find_childs("customer", obj,  "project")
     links.each do |link|
       child=Project.find(link.child_id)
       pnode=tree_project(child,link,ctrl)
@@ -477,6 +477,18 @@ module PlmObjectControllerModule
       format.xml  { head :ok }
     end
   end 
+  
+  def get_nb_items(nb_items)
+    unless nb_items.nil? || nb_items==""
+      nb_items
+    else
+      unless session[:nb_items].nil?
+        session[:nb_items]
+      else
+        SYLRPLM::NB_ITEMS_PER_PAGE
+      end
+    end
+  end
   
   
 end

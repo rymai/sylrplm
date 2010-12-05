@@ -68,28 +68,18 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.string   "revision"
     t.string   "designation"
     t.text     "description"
-    t.string   "extension"
-    t.string   "repository"
     t.string   "group"
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "part_id"
-    t.string   "filename"
-    t.binary   "data",            :limit => 16777215
-    t.string   "content_type"
     t.integer  "typesobject_id"
     t.integer  "statusobject_id"
-    t.integer  "volume"
-    t.integer  "volume_id"
     t.integer  "owner"
   end
 
   add_index "documents", ["owner"], :name => "fk_document_owner"
-  add_index "documents", ["part_id"], :name => "fk_document_part"
   add_index "documents", ["statusobject_id"], :name => "fk_document_status"
   add_index "documents", ["typesobject_id"], :name => "fk_document_type"
-  add_index "documents", ["volume_id"], :name => "fk_document_volume"
 
   create_table "forum_items", :force => true do |t|
     t.text     "message"

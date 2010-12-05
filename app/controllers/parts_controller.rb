@@ -1,8 +1,8 @@
-require 'lib/controllers/plm_object_controller_module'
-require 'lib/controllers/plm_init_controller_module'
+#require 'lib/controllers/plm_object_controller_module'
+#require 'lib/controllers/plm_init_controller_module'
 class PartsController < ApplicationController
-  include PlmObjectControllerModule
-  include PlmInitControllerModule
+  include Controllers::PlmObjectControllerModule
+  include Controllers::PlmInitControllerModule
   before_filter :check_init, :only=>[:new]
   access_control (Access.find_for_controller(controller_class_name()))
   
@@ -10,23 +10,11 @@ class PartsController < ApplicationController
   # GET /parts
   # GET /parts.xml
   def index
-    sort=params['sort']
-    conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
-      " or "+qry_owner+" or date LIKE ? ",
-      "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%" ] unless params[:query].nil? 
-    @query="#{params[:query]}"
-    @total=Part.count( :conditions => conditions)
-    @parts = Part.paginate(:page => params[:page], 
-          :conditions => conditions,
-          :order => sort,
-          :per_page => cfg_items_per_page)
+    @parts = Part.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])}) 
     respond_to do |format|
       #flash[:notice] = "Filter=#{params[:query]}"
       format.html # index.html.erb
-      format.xml  { render :xml => @parts }
+      format.xml  { render :xml => @parts[:recordset] } 
     end
   end
   
