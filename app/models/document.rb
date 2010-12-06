@@ -97,7 +97,10 @@ class Document < ActiveRecord::Base
       child=Datafile.find(link.child_id)
       ret<<child
     end
-    ret
+    
+    ret={:recordset=>ret,:total=>ret.length}
+puts "document.get_datafiles:"+ret.inspect
+ret
   end
   
   def self.find_all
