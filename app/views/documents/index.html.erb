@@ -22,6 +22,9 @@
         <th <%= sort_td_class_helper "owner" %>>
             <%= sort_link_helper t("label_responsible"), "owner" %>
         </th>
+        <th>
+            <%= t("label_nbfiles") %>
+        </th>
         <th <%= sort_td_class_helper "date" %>>
             <%= sort_link_helper t("label_date"), "date" %>
         </th>
@@ -60,6 +63,9 @@
     </td>
     <td>
         <%=h document.owner.login %>
+    </td>   
+		<td>
+        <%=h document.datafile.length %>
     </td>
     <td>
         <%=h document.date %>

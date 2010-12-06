@@ -6,6 +6,8 @@ class Datafile < ActiveRecord::Base
   validates_presence_of :ident , :typesobject
   validates_uniqueness_of :ident, :scope => :revision
   
+  belongs_to :document
+    
   belongs_to :typesobject
   belongs_to :volume
   belongs_to :owner,

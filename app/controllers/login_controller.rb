@@ -1,4 +1,5 @@
 class LoginController < ApplicationController
+  include Controllers::PlmObjectControllerModule
   before_filter :authorize, :except => [:login, :logout]
   access_control (Access.find_for_controller(controller_class_name()))
   
@@ -40,14 +41,15 @@ class LoginController < ApplicationController
   end
   
   def add_user
-    @user = User.new(params[:user])
+    @user = User.create_new(params[:user])
     @roles = Role.all
     @themes=get_themes(@theme)
     @volumes = Volume.find_all 
     if request.post? 
+      puts "login_controller.add_user:"+@user.inspect
       if @user.save   
         #@theme=params[:theme]
-        puts "login_controller.add_user:"+@user.inspect
+        
         #@user.theme=@theme
         #@user.save
         flash.now[:notice] = t(:ctrl_user_created,:user=>@user.login)
@@ -57,7 +59,7 @@ class LoginController < ApplicationController
             role=Role.find(rid)
             if(params[:role_id][role.id.to_s]=="1")
               if(@user.roles.count(:all, :conditions=>["id=#{rid.id}"])==0)
-                flash[:notice]+=" #{role.id}:#{role.title}:#{params[:role_id][role.id.to_s]}"              
+                flash[:notice]+="<br/>"+t(:ctrl_user_role,:role=>role.title)           
                 @user.roles<<role                                
               end
             end
@@ -66,8 +68,6 @@ class LoginController < ApplicationController
       else
         flash.now[:notice] = t(:ctrl_user_not_created,:user=>@user.login)
       end
-    else
-      @user.volume=Volume.find(1)
     end
   end
   
@@ -128,7 +128,8 @@ class LoginController < ApplicationController
   end
 
   def list_users
-   @all_users = User.find(:all)
+   #@all_users = User.find(:all)
+    @all_users = User.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})   
   end
 
   def logout

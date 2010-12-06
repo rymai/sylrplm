@@ -440,52 +440,25 @@ module Controllers::PlmObjectControllerModule
     end
   end 
   
-  def ctrl_add_datafile(object,type)
-    relation="datafile"
-    error=false
-    respond_to do |format|      
-      flash[:notice] = ""
-      puts "plm_object_controller.ctrl_add_datafile:user="+@user.inspect
-      @datafile=Datafile.create_new(params,@user)
-      if(@datafile.save)
-          link_=Link.create_new(type, object, "datafile", @datafile, relation)  
-          link=link_[:link]
-          if(link!=nil) 
-            if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:object=>t(:ctrl_datafile),:ident=>@datafile.ident,:relation=>relation,:msg=>t(link_[:msg]))
-            else
-              flash[:notice] += t(:ctrl_object_not_added,:object=>t(:ctrl_datafile),:ident=>@datafile.ident,:relation=>relation,:msg=>t(link_[:msg]))
-              @datafile.destroy
-              error=true
-            end 
-          else
-            flash[:notice] += t(:ctrl_object_not_linked,:object=>t(:ctrl_datafile),:ident=>@datafile.ident,:relation=>relation,:msg=>nil)
-            @datafile.destroy 
-            error=true
-          end
-      else
-        flash[:notice] += t(:ctrl_object_not_saved,:object=>t(:ctrl_datafile),:ident=>@datafile.ident,:relation=>relation,:msg=>nil)
-        error=true
-      end
-      if error==false
-        format.html { redirect_to(object) }
-      else
-        puts 'plm_object_controller.add_datafile:id='+object.id.to_s
-        @types=Typesobject.find_for("datafile")
-        format.html { render  :action => :new_datafile, :id => object.id   }
-      end
-      format.xml  { head :ok }
-    end
-  end 
+  
   
   def get_nb_items(nb_items)
     unless nb_items.nil? || nb_items==""
+      unless @user.nil?
+        if nb_items!=@user.nb_items
+          @user.update_attributes({:nb_items=>nb_items})
+        end
+      end
       nb_items
     else
-      unless session[:nb_items].nil?
-        session[:nb_items]
+      unless @user.nil?
+        @user.nb_items
       else
-        SYLRPLM::NB_ITEMS_PER_PAGE
+        unless session[:nb_items].nil?
+          session[:nb_items]
+        else
+          SYLRPLM::NB_ITEMS_PER_PAGE
+        end
       end
     end
   end

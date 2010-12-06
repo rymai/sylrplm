@@ -29,6 +29,10 @@
             <%= sort_link_helper t(:label_responsible), :owner %>
         </th>
         <th
+            <%= sort_td_class_helper :document %>>
+            <%= sort_link_helper t(:label_document), :document %>
+        </th>
+        <th
             <%= sort_td_class_helper :created_at %>>
             <%= sort_link_helper t(:label_date), :created_at %>
         </th>
@@ -65,6 +69,11 @@
         </td>
         <td>
             <%=h datafile.owner.login %>
+        </td>
+         <td>
+         	<% unless datafile.document.nil?%>
+            <%=h datafile.document.ident %>
+						<%end%>
         </td>
         <td>
             <%=h datafile.updated_at %>

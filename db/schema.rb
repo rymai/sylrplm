@@ -61,7 +61,10 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.integer  "volume_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "document_id"
   end
+
+  add_index "datafiles", ["document_id"], :name => "fk_datafile_document"
 
   create_table "documents", :force => true do |t|
     t.string   "ident"
@@ -224,6 +227,7 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.string   "email"
     t.string   "theme"
     t.integer  "volume_id"
+    t.integer  "nb_items"
   end
 
   add_index "users", ["role_id"], :name => "fk_user_role"

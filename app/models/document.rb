@@ -8,6 +8,8 @@ class Document < ActiveRecord::Base
   validates_format_of :ident, :with =>/^([a-z]|[A-Z])+[0-9]+$/, :message=>" doit commencer par des lettres suivi de chiffres"
   
   #belongs_to :typesobject, :conditions => ["object='part'"]
+  
+  has_many :datafile
   belongs_to :typesobject
   belongs_to :statusobject
   belongs_to :volume
@@ -92,15 +94,15 @@ class Document < ActiveRecord::Base
   end
   def get_datafiles
     ret=[]
-    links=Link.find_childs("document", self,  "datafile")
-    links.each do |link|
-      child=Datafile.find(link.child_id)
-      ret<<child
-    end
-    
+    #    links=Link.find_childs("document", self,  "datafile")
+    #    links.each do |link|
+    #      child=Datafile.find(link.child_id)
+    #      ret<<child
+    #    end
+    ret=self.datafile
     ret={:recordset=>ret,:total=>ret.length}
-puts "document.get_datafiles:"+ret.inspect
-ret
+    puts "document.get_datafiles:"+ret.inspect
+    ret
   end
   
   def self.find_all
@@ -133,20 +135,27 @@ ret
     self   
   end
   
+  def add_datafile(object,type)
+    #relation="datafile"
+    
+  end 
+  
   def remove_datafile(item)
-    link=Link.find_child("document",self,"datafile",item)
-    if link.destroy
-      item.destroy
-    end
+    #    link=Link.find_child("document",self,"datafile",item)
+    #    if link.destroy
+    #      item.destroy
+    #    end
+    self.datafile.delete(item)
   end
+  
   def self.get_conditions(filter)
-      filter=filter.gsub("*","%")
-      conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
+    filter=filter.gsub("*","%")
+    conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
       " or "+qry_owner+" or date LIKE ? ",
       "#{filter}", "#{filter}", 
     "#{filter}", "#{filter}", 
     "#{filter}", "#{filter}", 
     "#{filter}" ] unless filter.nil?
- end
+  end
   
 end

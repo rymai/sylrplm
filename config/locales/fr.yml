@@ -91,11 +91,13 @@ fr:
   ctrl_invalid_login: Nom utilisateur ou mot de passe invalide
   ctrl_user_needed: Renseigner l'utilisateur
   ctrl_user_created: Utilisateur {{user}} crée
+  ctrl_user_not_created: Utilisateur {{user}} non crée
   ctrl_user_updated: Utilisateur {{user}} modifié
   ctrl_user_not_updated: Utilisateur {{user}} non modifié
   ctrl_user_deleted: Utilisateur {{user}} supprimé
   ctrl_user_connected: Utilisateur {{user}} connecté !
   ctrl_user_disconnected: Utilisateur {{user}} déconnecté !
+  ctrl_user_role: Rôle={{role}}
   #main
   #parts
   ctrl_part: Article
@@ -259,6 +261,7 @@ fr:
   label_filename: Fichier
   label_volume: Volume
   label_content_type: Type de contenu
+  label_document: Document
   # fields documents
   document_edit: Edition document
   document_list: Liste documents
@@ -269,6 +272,7 @@ fr:
   add_datafile: Ajout fichier
   document_datafiles: Fichiers du document
   datafile_add: Ajout d'un fichier au document
+  label_nbfiles: Nb fichiers
   # fields forums
   forum_edit: Edition forum 
   forum_list: Liste des forums 
@@ -297,6 +301,11 @@ fr:
   label_role: Rôle
   label_email: Email
   label_roles: Rôles
+  label_nb_items: Nombre de données par page
+  user_edit: Edition l'utilisateur
+  user_list: Liste des utilisateurs
+  user_show: Détail de l'utilisateur
+  user_new: Nouvel utilisateur
   # fields main
   label_domain: Domaine
   submit_create_domain: Créer le domaine  
