@@ -1,7 +1,7 @@
 #!/bin/sh
 cmd="rails -d mysql $1"
 echo $cmd
-$cmd
+$cmda
 cd $1
 
 eof:
@@ -279,6 +279,20 @@ cmd="ruby script/generate scaffold datafile ident:string filename:string revisio
 echo $cmd
 $cmd
 
+=========================================================
+
+action flow
+script/plugin install svn://rubyforge.org/var/svn/actionflow/trunk/action_flow
+trop vieux
+
+generateur de schemas
+gem install railroad
+dans config linux: install de graphviz pour dot
+railroad -a -i -M | dot -Tsvg > public/mdd/models.svg
+railroad -a -i -C | dot -Tsvg > public/mdd/controllers.svg
+ou
+railroad -a -i -M | neato -Tpng > public/mdd/models.png
+railroad -a -i -C | neato -Tpng > public/mdd/controllers.png
 
 
 

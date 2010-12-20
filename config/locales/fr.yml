@@ -3,6 +3,11 @@
 
 fr:
   ##############
+  #models (ko)
+  ##############
+  valid_ident: "L'identifiant d'un {{object}} doit commencer par des lettres suivi de chiffres"
+  #
+  ##############
   #controllers
   ##############
   ctrl_no_privilege: "Désolé, privilèges insuffisants"
@@ -20,10 +25,10 @@ fr:
   ctrl_object_not_demoted: "{{object}} {{ident}} non rétrogradé de {{current_rank}} à {{new_rank}}"
   ctrl_object_revised: "{{object}} {{ident}} revisé de {{previous_rev}} à {{revision}}"
   ctrl_object_not_revised: "{{object}} {{ident}} non révisé depuis {{previous_rev}} (pas dernière revision ou non gelé ?)"
-  ctrl_object_checkout: "{{object}} {{ident}} réservé , voir {{file}}, raison:{{reason}}"  
+  ctrl_object_checkout: "{{object}} {{ident}} réservé, raison:{{reason}}"  
   ctrl_object_not_checkout: "{{object}} {{ident}} non réservé"  
   ctrl_object_give_reason: "Indiquez une raison"
-  ctrl_object_already_checkout: "{{object}} {{ident}} et déja réservé, voir {{file}}"
+  ctrl_object_already_checkout: "{{object}} {{ident}} déja réservé"
   ctrl_object_checkin: "{{object}} {{ident}} est sauvé et libéré"
   ctrl_object_not_checkin: "{{object}} {{ident}} n'est pas libéré"
   ctrl_object_notyet_checkout: "{{object}} {{ident}} n'est pas encore réservé"
@@ -39,6 +44,7 @@ fr:
   ctrl_object_referencer: "{{object}} Référenceur"
   ctrl_init_to_do: Initialisation à effectuer
   ctrl_init_done: Initialisation effectuée
+  count_objects: " : {{number_begin}}-{{number_end}} / {{total}}"
   #access
   ctrl_object_no_controlers: Controleurs non trouvés
   #application
@@ -55,7 +61,7 @@ fr:
   #ctrl_remove_project_ok: Project {{project}} was successfully removed from {{object}}
   #ctrl_remove_project_ko: Project {{project}}  was not removed from {{object}}
   #datafiles
-  ctrl_datafile: File
+  ctrl_datafile: Fichier
   #documents
   ctrl_document: Document
   #faq
@@ -90,11 +96,13 @@ fr:
   ctrl_invalid_login: Nom utilisateur ou mot de passe invalide
   ctrl_user_needed: Renseigner l'utilisateur
   ctrl_user_created: Utilisateur {{user}} crée
+  ctrl_user_not_created: Utilisateur {{user}} non crée
   ctrl_user_updated: Utilisateur {{user}} modifié
   ctrl_user_not_updated: Utilisateur {{user}} non modifié
   ctrl_user_deleted: Utilisateur {{user}} supprimé
   ctrl_user_connected: Utilisateur {{user}} connecté !
   ctrl_user_disconnected: Utilisateur {{user}} déconnecté !
+  ctrl_user_role: Rôle={{role}}
   #main
   #parts
   ctrl_part: Article
@@ -116,6 +124,7 @@ fr:
   #########################################
   #plm_object_controller_module
   ctrl_datafile: Fichier
+  ctrl_no_relation: sans relation
   #########################################
   #helpers
   #########################################
@@ -137,6 +146,7 @@ fr:
   #########################################
   hello: "Bienvenue"
   disconnect: "Se deconnecter"
+  datas_in_database: Données actuellement en base
   #langues
   tit_language: "Langue:"
   lng_english: "English"
@@ -170,6 +180,7 @@ fr:
   explorer: "Explorer"
   list: "Liste"
   query: "Filtre"
+  nb_items_per_page: Nombre par page
   filter: "Filtrer"
   FAQ: "Questions fréquentes"
   new_customer: "Nouveau client"
@@ -257,6 +268,7 @@ fr:
   label_filename: Fichier
   label_volume: Volume
   label_content_type: Type de contenu
+  label_document: Document
   # fields documents
   document_edit: Edition document
   document_list: Liste documents
@@ -267,6 +279,7 @@ fr:
   add_datafile: Ajout fichier
   document_datafiles: Fichiers du document
   datafile_add: Ajout d'un fichier au document
+  label_nbfiles: Nb fichiers
   # fields forums
   forum_edit: Edition forum 
   forum_list: Liste des forums 
@@ -295,6 +308,11 @@ fr:
   label_role: Rôle
   label_email: Email
   label_roles: Rôles
+  label_nb_items: Nombre de données par page
+  user_edit: Edition l'utilisateur
+  user_list: Liste des utilisateurs
+  user_show: Détail de l'utilisateur
+  user_new: Nouvel utilisateur
   # fields main
   label_domain: Domaine
   submit_create_domain: Créer le domaine  

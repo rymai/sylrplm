@@ -1,5 +1,8 @@
-<h1><%=t(:sequence_list) %></h1>
+<h1><%=t(:sequence_list) %><%=h_count_objects(@sequences)%> </h1>
+<%= form_simple_query_helper('/sequences', @sequences) %>
 
+<br/>
+<%= will_paginate(@sequences[:recordset]) %>
 <table>
   <tr>
     <th><%=t(:label_utility)%></th>
@@ -13,7 +16,7 @@
   </tr>
 
 
-<% @sequences.each do |sequence| %>
+<% @sequences[:recordset].each do |sequence| %>
   <tr>
     <td><%=h sequence.utility %></td>
    	<td><%=h sequence.sequence %></td>
@@ -27,10 +30,14 @@
   </tr>
 <% end %>
 </table>
+<%= will_paginate(@sequences[:recordset]) %>
 <table class='menu_bas'>
     <tr>
         <td>
             <%= link_to t(:new_sequence), new_sequence_path %>
+        </td>
+				<td>
+            <%= show_help("help_sequences") %>
         </td>
     </tr>
 </table>

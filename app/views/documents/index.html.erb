@@ -1,5 +1,7 @@
-<h1><%= t("document_list") %><%=@documents.count %> / <%=@total %></h1>
-<%= form_simple_query_helper('/documents', @query) %>
+<h1><%= t("document_list") %><%=h_count_objects(@documents)%> </h1>
+<%= form_simple_query_helper('/documents', @documents) %>
+<br/>
+<%= will_paginate(@documents[:recordset]) %>
 <table>
     <tr>
         <th>
@@ -22,6 +24,9 @@
         <th <%= sort_td_class_helper "owner" %>>
             <%= sort_link_helper t("label_responsible"), "owner" %>
         </th>
+        <th>
+            <%= t("label_nbfiles") %>
+        </th>
         <th <%= sort_td_class_helper "date" %>>
             <%= sort_link_helper t("label_date"), "date" %>
         </th>
@@ -34,7 +39,7 @@
         <th>
         </th>
     </tr>
-    <% @documents.each do |document| %>
+    <% @documents[:recordset].each do |document| %>
     <tr>
     <td>
         <%= icone(document) %>
@@ -60,6 +65,9 @@
     </td>
     <td>
         <%=h document.owner.login %>
+    </td>   
+		<td>
+        <%=h document.datafile.length %>
     </td>
     <td>
         <%=h document.date %>
@@ -88,11 +96,14 @@
 </tr>
 <%end %>
 </table>
-<%= will_paginate(@documents) %>
+<%= will_paginate(@documents[:recordset]) %>
 <table class='menu_bas'>
     <tr>
         <td>
             <%= link_to t("new_document"), new_document_path %>
+        </td>
+         <td>
+            <%= show_help("help_documents") %>
         </td>
     </tr>
 </table>

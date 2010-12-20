@@ -596,6 +596,8 @@
     </msg>
     <msg key="help_technical_doc" title="Documentation technique">
         La documentation technique de l'application décrit les classes,fichiers source et méthodes:#lnk=doc/app/index.html=lnk#
+        Diagramme des classes du modèle de données:#lnk=mdd/models.png=lnk#
+        Diagramme des classes du modèle des controlleurs:#lnk=mdd/controllers.png=lnk#
     </msg>
     
     <msg key="help_init_db" title="Initialisation d'une base de données">

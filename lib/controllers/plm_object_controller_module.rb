@@ -1,11 +1,11 @@
-module PlmObjectControllerModule
+module Controllers::PlmObjectControllerModule
   
   def ctrl_revise(model)
     define_variables
     object = model.find(params[:id])
     previous_rev=object.revision
     @object=object.revise
-    @types=Typesobject.getTypes(object.class.name.downcase!)
+    @types=Typesobject.get_types(object.class.name.downcase!)
     respond_to do |format|
       if(@object != nil)
         if @object.save
@@ -207,11 +207,6 @@ module PlmObjectControllerModule
   end  
   
   def follow_tree_part(node, part,ctrl)
-    #part.projects.each do |d|
-    #  cnode = tree_project(d)        
-    #  node << cnode
-    #non car bouclage follow_tree_project(node,d)
-    #end
     tree_forums(node,"part",part,ctrl)  
     tree_documents(node,"part",part,ctrl) 
     links=Link.find_childs("part", part,  "part")
@@ -229,9 +224,9 @@ module PlmObjectControllerModule
                                    :id => link.id)
       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>' 
       options={
-                :label  => (link.name||'no_relation')+'-'+t(:ctrl_part)+':'+child.ident+cut_a,
+                :label  => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+':'+child.ident+cut_a,
                 :icon=>icone(child),
-        #:icon_open=>icone(child),
+                :icon_open=>icone(child),
                 :title => child.designation,
                 :url=>url_for(url),
               :open => false
@@ -248,7 +243,7 @@ module PlmObjectControllerModule
       f=Part.find(link.father_id) 
       url={:controller => 'parts', :action => 'show', :id => "#{f.id}"}
       options={
-                :label  => (link.name||'no_relation')+'-'+t(:ctrl_part)+':'+f.ident,
+                :label  => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+':'+f.ident,
                 :icon=>icone(f),
         # :icon_open=>"",
                 :title => f.designation,
@@ -288,8 +283,8 @@ module PlmObjectControllerModule
   
   def follow_tree_customer(node, obj,ctrl)
     tree_documents(node,"customer",obj,ctrl)  
-     tree_forums(node,"customer",obj,ctrl)  
-     links=Link.find_childs("customer", obj,  "project")
+    tree_forums(node,"customer",obj,ctrl)  
+    links=Link.find_childs("customer", obj,  "project")
     links.each do |link|
       child=Project.find(link.child_id)
       pnode=tree_project(child,link,ctrl)
@@ -320,7 +315,7 @@ module PlmObjectControllerModule
             c=Customer.find(link.father_id) 
             url={:controller => 'customers', :action => 'show', :id => "#{c.id}"}
             options={
-                :label  => (link.name||'no_relation')+'-'+t(:ctrl_customer)+':'+c.ident,
+                :label  => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_customer)+':'+c.ident,
                 :icon=>icone(c),
                 # :icon_open=>"",
                 :title => c.designation,
@@ -342,7 +337,7 @@ module PlmObjectControllerModule
                               :id => "#{link.id}" )
           cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'   
           options={
-                   :label => (link.name||'no_relation')+'-'+t(:ctrl_document)+':'+d.ident + cut_a,
+                   :label => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_document)+':'+d.ident + cut_a,
                    :icon=>icone(d),
                    #:icon_open=>icone(d),
                    :title => d.designation,
@@ -367,7 +362,7 @@ module PlmObjectControllerModule
               cut_a=""
           end
           options={
-                   :label => (link.name||'no_relation')+'-'+t(:ctrl_forum)+':'+d.subject + cut_a,
+                   :label => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_forum)+':'+d.subject + cut_a,
                    :icon=>icone(d),
                    #:icon_open=>icone(d),
                    :title => d.subject,
@@ -440,43 +435,28 @@ module PlmObjectControllerModule
     end
   end 
   
-  def ctrl_add_datafile(object,type)
-    relation="datafile"
-    error=false
-    respond_to do |format|      
-      flash[:notice] = ""
-      puts "plm_object_controller.ctrl_add_datafile:user="+@user.inspect
-      @datafile=Datafile.create_new(params,@user)
-      if(@datafile.save)
-          link_=Link.create_new(type, object, "datafile", @datafile, relation)  
-          link=link_[:link]
-          if(link!=nil) 
-            if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:object=>t(:ctrl_datafile),:ident=>@datafile.ident,:relation=>relation,:msg=>t(link_[:msg]))
-            else
-              flash[:notice] += t(:ctrl_object_not_added,:object=>t(:ctrl_datafile),:ident=>@datafile.ident,:relation=>relation,:msg=>t(link_[:msg]))
-              @datafile.destroy
-              error=true
-            end 
-          else
-            flash[:notice] += t(:ctrl_object_not_linked,:object=>t(:ctrl_datafile),:ident=>@datafile.ident,:relation=>relation,:msg=>nil)
-            @datafile.destroy 
-            error=true
-          end
-      else
-        flash[:notice] += t(:ctrl_object_not_saved,:object=>t(:ctrl_datafile),:ident=>@datafile.ident,:relation=>relation,:msg=>nil)
-        error=true
+  
+  
+  def get_nb_items(nb_items)
+    unless nb_items.nil? || nb_items==""
+      unless @user.nil?
+        if nb_items!=@user.nb_items
+          @user.update_attributes({:nb_items=>nb_items})
+        end
       end
-      if error==false
-        format.html { redirect_to(object) }
+      nb_items
+    else
+      unless @user.nil? || @user==:user_not_connected
+        @user.nb_items
       else
-        puts 'plm_object_controller.add_datafile:id='+object.id.to_s
-        @types=Typesobject.find_for("datafile")
-        format.html { render  :action => :new_datafile, :id => object.id   }
+        unless session[:nb_items].nil?
+          session[:nb_items]
+        else
+          SYLRPLM::NB_ITEMS_PER_PAGE
+        end
       end
-      format.xml  { head :ok }
     end
-  end 
+  end
   
   
 end

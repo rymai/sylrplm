@@ -1,4 +1,5 @@
 class Check < ActiveRecord::Base
+  include Models::SylrplmCommon
   #validates_presence_of :out_reason
   #validates_uniqueness_of [:object,:object_id,:status]
   
@@ -43,6 +44,8 @@ class Check < ActiveRecord::Base
     end
     self.in_date=DateTime.now
   end
-  
+   def self.get_conditions(filter)
+    nil
+  end
   
 end

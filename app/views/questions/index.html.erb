@@ -1,4 +1,7 @@
-<h1><%=t(:questions_list) %></h1>
+<h1><%=t(:questions_list) %><%=h_count_objects(@faqs) %></h1>
+<%= form_simple_query_helper('/questions', @faqs) %>
+<br/>
+<%= will_paginate(@faqs[:recordset]) %>
 <table>
     <tr>
         <th>
@@ -7,10 +10,14 @@
         <th>
             <%=t(:label_answer) %>
         </th>
- 				<th></th><th></th><th></th>
-        
+        <th>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
     </tr>
-    <% @faqs.each do |question| %>
+    <% @faqs[:recordset].each do |question| %>
     <tr>
         <td>
             <%=h question.question %>
@@ -18,7 +25,7 @@
         <td>
             <%=h question.answer %>
         </td>
-				<td>
+        <td>
             <%= link_to h_img_show.to_s, question %>
         </td>
         <td>
@@ -30,10 +37,14 @@
     </tr>
     <% end %>
 </table>
+<%= will_paginate(@faqs[:recordset]) %>
 <table class='menu_bas'>
     <tr>
         <td>
             <%= link_to t(:new_question), new_question_path %>
+        </td>
+        <td>
+            <%= show_help("help_questions") %>
         </td>
     </tr>
 </table>

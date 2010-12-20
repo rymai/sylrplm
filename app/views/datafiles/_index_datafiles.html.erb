@@ -29,6 +29,10 @@
             <%= sort_link_helper t(:label_responsible), :owner %>
         </th>
         <th
+            <%= sort_td_class_helper :document %>>
+            <%= sort_link_helper t(:label_document), :document %>
+        </th>
+        <th
             <%= sort_td_class_helper :created_at %>>
             <%= sort_link_helper t(:label_date), :created_at %>
         </th>
@@ -41,7 +45,7 @@
         <th>
         </th>
     </tr>
-    <% @datafiles.each do |datafile| %>
+    <% @datafiles[:recordset].each do |datafile| %>
     <tr>
         <td>
             <%=h datafile.ident %>
@@ -66,32 +70,21 @@
         <td>
             <%=h datafile.owner.login %>
         </td>
+         <td>
+         	<% unless datafile.document.nil?%>
+            <%=h datafile.document.ident %>
+						<%end%>
+        </td>
         <td>
             <%=h datafile.updated_at %>
         </td>
-        <% if(document==nil) %>
+        <% if document.nil? || !document.is_checked %>
         <td>
             <%= link_to t(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %>
         </td>
-        <%else %>
-        <% if(!document.is_checked) %>
-        <td>
-            <%= link_to t(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %>
-        </td>
-        <%else %>
-        <% form_for(datafile , :html => { :multipart => true}) do |f| %>
-				<% if(document != nil) %>
-				  <%= hidden_field_tag "document_id" , document.id %>
-				<%end %>
-        <td>
-            <%= f.file_field(:uploaded_file, :class=>'menu_bas', :size=>10) %>
-            <%= h_img_sub(:submit) %>
-        </td>
-        <%end %>
-        <%end %>
         <%end %>
         
-				<% if(document != nil) %>
+				<% unless document.nil? %>
         <td>
             <%= link_to h_img_show.to_s, datafile_path(datafile)+"?doc=#{document.id}" %>
         </td>

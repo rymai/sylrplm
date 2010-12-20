@@ -1,13 +1,15 @@
 class AccessesController < ApplicationController
+  include Controllers::PlmObjectControllerModule
   access_control (Access.find_for_controller(controller_class_name()))
   
   # GET /accesses
   # GET /accesses.xml
   def index
-    @accesses = Access.find_paginate({:page=>params[:page],:cond=>"",:sort=>params[:sort], :nbr=>cfg_items_per_page}) 
+    @accesses = Access.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])}) 
+    
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @accesses }
+      format.xml  { render :xml => @accesses[:recordset] }
     end
   end
   

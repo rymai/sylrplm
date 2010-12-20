@@ -1,14 +1,45 @@
 <h1>
-<%=t(:hello) %></H1>
-<!--
-<br/>
-<%= t(:tit_language) %><%= I18n.locale.to_s %>
-<br/>
---><%= render(:partial => "main/check_types") %>
+<%=t(:hello) %>
+</H1>
+<%= render(:partial => "main/check_types") %>
 <%= render(:partial => "main/check_status") %>
-
-
-<%=h_help_all %>
+<h2><%= t(:tit_language) %><%= I18n.locale.to_s %></h2>
+<h2><%=t(:datas_in_database) %></h2>
+<table>
+    <tr>
+        <td>
+            <%= @datas[:documents] %>
+        </td>
+        <td>
+            <%= t("ctrl_document") %>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <%= @datas[:parts] %>
+        </td>
+        <td>
+            <%= t("ctrl_part") %>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <%= @datas[:projects] %>
+        </td>
+        <td>
+            <%= t("ctrl_project") %>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <%= @datas[:customers] %>
+        </td>
+        <td>
+            <%= t("ctrl_customer") %>
+        </td>
+    </tr>
+</table>
+<hr><%=h_help_all %>
 <hr><h2><%=t("context_info") %></h2>
 <table>
     <tr>
@@ -20,7 +51,7 @@
         </th>
     </tr>
     <% for item in request.env %>
-    <% if item[0].index("rack.session") == nil%>
+    <% if item[0].index("rack.session") == nil %>
     <tr>
         <td>
             <%= item[0] %>

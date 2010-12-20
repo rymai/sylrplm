@@ -4,7 +4,7 @@ require 'rexml/document'
 #require 'logger'
 require "lib/classes/app_classes"
 #  controleur principal.
-class ApplicationController < ActionController::Base
+class ApplicationController < Application
   include AppClasses
   #include REXML
   helper :all # include all helpers, all the time
@@ -122,28 +122,11 @@ class ApplicationController < ActionController::Base
     puts "application_controller.get_themes"+dirname+"="+ret
     ret
   end
-  
-  #utilise pour les filtres des objets (index)
-  def qry_type
-    "typesobject_id in(select id from typesobjects as t where t.name LIKE ?)"
-  end
-  def qry_status
-    "statusobject_id in (select id from statusobjects as s where s.name LIKE ?)"
-  end
-  def qry_owner
-    "owner in(select id from users where login LIKE ?)"
-  end
-  def qry_volume
-    "volume_id in(select id from volumes where name LIKE ?)"
-  end
-  
-  
+   
   # nombre d'objets listes par page si pagination
   def cfg_items_per_page
     SYLRPLM::NB_ITEMS_PER_PAGE
   end
-  
-  
   
   # recherche du favori des documents
   def find_favori_document
@@ -176,6 +159,12 @@ class ApplicationController < ActionController::Base
     redirect_to :action => index 
   end
   
+  def get_datas_count
+    {:documents=>Document.count,
+    :parts => Part.count,
+    :projects => Project.count,
+    :customers => Customer.count}
+  end
   
   
   # Scrub sensitive parameters from your log

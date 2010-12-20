@@ -3,6 +3,11 @@
 
 en:
   ##############
+  #models (ko)
+  ##############
+  valid_ident: "L'identifiant d'un {{object}} doit commencer par des lettres suivi de chiffres"
+  #
+  ##############
   #controllers
   ##############
   ctrl_no_privilege: "You don't have privileges to access this action"
@@ -20,10 +25,10 @@ en:
   ctrl_object_not_demoted: "{{object}} {{ident}} not demote from {{current_rank}} to {{new_rank}}}"
   ctrl_object_revised: "{{object}} {{ident}} was successfully revised from {{previous_rev}} to {{revision}}"
   ctrl_object_not_revised: "{{object}} {{ident}} cannot be revised from {{previous_rev}} (not last revision or not frozen status ?)"
-  ctrl_object_checkout: "{{object}} {{ident}} was successfully checkout , see {{file}}, reason:{{reason}}"
+  ctrl_object_checkout: "{{object}} {{ident}} was successfully checkout, reason:{{reason}}"
   ctrl_object_not_checkout: "{{object}} {{ident}} not checkout"
   ctrl_object_give_reason: "Please, give a reason"
-  ctrl_object_already_checkout: "{{object}} {{ident}} is already checkout, see {{file}}"
+  ctrl_object_already_checkout: "{{object}} {{ident}} is already checkout"
   ctrl_object_checkin: "{{object}} {{ident}} was successfully checkin"
   ctrl_object_not_checkin: "{{object}} {{ident}} not checkin"
   ctrl_object_notyet_checkout: "{{object}} {{ident}} not yet checkout"
@@ -89,11 +94,13 @@ en:
   ctrl_invalid_login: Invalid user/password combination
   ctrl_user_needed: Give the user
   ctrl_user_created: User {{user}} created
+  ctrl_user_not_created: User {{user}} not created
   ctrl_user_updated: User {{user}} updated
   ctrl_user_not_updated: User {{user}} not updated
   ctrl_user_deleted: User {{user}} deleted
   ctrl_user_connected: User {{user}} connected !
   ctrl_user_disconnected: User {{user}} disconnected !
+  ctrl_user_role: Role=
   #main
   #parts
   ctrl_part: Article
@@ -110,6 +117,7 @@ en:
   ctrl_typesobject: Object type
   #volumes
   ctrl_volume: Volume
+  ctrl_no_relation: no relation
   #########################################
   #helpers
   #########################################
@@ -131,6 +139,7 @@ en:
   #########################################
   hello: "Hello world"
   disconnect: "Disconnect"
+  datas_in_database: We have following data
   #langues
   tit_language: "Language:"
   lng_english: "English"
@@ -164,6 +173,7 @@ en:
   explorer: "Explorer"
   list: "List"
   query: "Filter"
+  nb_items_per_page: Items number in page
   filter: "Filter"
   FAQ: "Frequently Asked Questions"
   new_customer: "New customer"
@@ -256,6 +266,7 @@ en:
   label_filename: File
   label_volume: Volume
   label_content_type: Mime type
+  label_document: Document
   # fields documents
   document_edit: Editing document
   document_list: Listing documents
@@ -266,11 +277,12 @@ en:
   add_datafile: Add file
   document_datafiles: Document files
   datafile_add: Add a file
+  label_nbfiles: Nb files
   # fields faq
   faq_edit: Edition question
   faq_list: Liste questions
-  faq_show: Détail question
-  faq_new: Nouvelle question 
+  faq_show: Details question
+  faq_new: New question 
   # fields forums
   part_new_forum: New forum on this part
   label_subject: Forum subject
@@ -295,6 +307,11 @@ en:
   label_role: Role
   label_email: Email
   label_roles: Roles
+  label_nb_items: Data number in page
+  user_edit: Edit user
+  user_list: User list 
+  user_show: User detail
+  user_new: New User
   # fields main
   label_domain: Domain
   submit_create_domain: Create domain  

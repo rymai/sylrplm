@@ -1,27 +1,14 @@
 require 'net/http'
-require "lib/controllers/plm_object_controller_module"
+#require "lib/controllers/plm_object_controller_module"
 class DatafilesController < ApplicationController
-  include PlmObjectControllerModule
+  include Controllers::PlmObjectControllerModule
   # GET /datafiles
   # GET /datafiles.xml
   def index
-    sort=params['sort']
-    @query="#{params[:query]}" 
-    conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? "+
-      " or "+qry_owner+" or updated_at LIKE ? or "+qry_volume,
-      "#{params[:query]}%", 
-    "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%", "#{params[:query]}%" ] unless params[:query].nil?
-    #@total=Datafile.count( :conditions => conditions)
-    @total=Datafile.count
-    @datafiles = Datafile.paginate(:page => params[:page], 
-      :conditions => conditions,
-      :order => sort,
-      :per_page => cfg_items_per_page)
+    @datafiles = Datafile.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})  
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @datafiles }
+      format.xml  { render :xml => @datafiles[:recordset] } 
     end
   end
   
@@ -32,6 +19,7 @@ class DatafilesController < ApplicationController
     @types=Typesobject.find_for("datafile")
     if(params["doc"])
       @document=Document.find(params["doc"])
+      puts "datafiles_controller.show:doc="+@document.inspect
     end
     respond_to do |format|
       format.html # show.html.erb
@@ -54,7 +42,9 @@ class DatafilesController < ApplicationController
   def edit
     @datafile = Datafile.find(params[:id])
     @types=Typesobject.find_for("datafile")
-    params["doc"]
+    if(params["doc"])
+      @document=Document.find(params["doc"])
+    end
   end
   
   # POST /datafiles

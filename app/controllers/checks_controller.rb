@@ -1,13 +1,13 @@
 class ChecksController < ApplicationController
+  include Controllers::PlmObjectControllerModule
   access_control (Access.find_for_controller(controller_class_name()))
   # GET /checks
   # GET /checks.xml
   def index
-    @checks = Check.all
-    
+    @checks = Check.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])}) 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @checks }
+      format.xml  { render :xml => @checks[:recordset] } 
     end
   end
   

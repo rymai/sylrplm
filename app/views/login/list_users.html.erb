@@ -1,4 +1,7 @@
-<H1>Users</H1>
+<h1><%=t("user_list") %><%=h_count_objects(@all_users) %></h1>
+<%= form_simple_query_helper('/login/list_users', @all_users) %>
+<br/>
+<%= will_paginate(@all_users[:recordset]) %>
 <table>
     <tr>
         <th<%= sort_td_class_helper "login" %>
@@ -17,12 +20,15 @@
         <th<%= sort_td_class_helper "theme" %>
             <%= sort_link_helper t(:label_theme), "theme" %>
         </th>
+        <th<%= sort_td_class_helper "nb_items" %>
+            <%= sort_link_helper t(:label_nb_items), "nb_items" %>
+        </th>
         <th>
         </th>
         <th>
         </th>
     </tr>
-    <% for user in @all_users %>
+    <% for user in @all_users[:recordset] %>
     <tr>
         <td>
             <%= h(user.login) %>
@@ -42,6 +48,9 @@
             <%= h(user.theme) %>
         </td>
         <td>
+            <%= h(user.nb_items) %>
+        </td>
+        <td>
             <%= link_to h_img_edit.to_s, :controller => "login", :action => :edit_user, :id => user.id %>
         </td>
         <td>
@@ -56,10 +65,15 @@
     </tr>
     <% end %>
 </table>
+<%= will_paginate(@all_users[:recordset]) %>
+<br/>
 <table class='menu_bas'>
     <tr>
         <td>
             <%= link_to t("new_user"), :controller=> "login", :action => "add_user" %>
+        </td>
+        <td>
+            <%= show_help("help_users") %>
         </td>
     </tr>
 </table>

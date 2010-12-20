@@ -1,4 +1,5 @@
 class Sequence < ActiveRecord::Base
+  include Models::SylrplmCommon
   validates_presence_of :utility, :value 
   validates_uniqueness_of :utility
   
@@ -81,6 +82,8 @@ class Sequence < ActiveRecord::Base
     end
     ret
   end
-  
+   def self.get_conditions(filter)
+    nil
+  end
     
 end

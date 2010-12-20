@@ -1,6 +1,6 @@
-require 'lib/controllers/plm_init_controller_module'
+#require 'lib/controllers/plm_init_controller_module'
 class MainController < ApplicationController
-  include PlmInitControllerModule
+  include Controllers::PlmInitControllerModule
   
   
   access_control (Access.find_for_controller(controller_class_name()))
@@ -17,6 +17,9 @@ class MainController < ApplicationController
     @logger.fatal("fatal")
     message=check_init
     puts "main_controller.index"
+    @datas=get_datas_count
+    #@total_favoris = Favori.count
+    
     if(params[:theme]!=nil)
       @theme=params[:theme]
       if @user!=:user_not_connected

@@ -1,9 +1,10 @@
 class ForumItemsController < ApplicationController
+  include Controllers::PlmObjectControllerModule
   access_control (Access.find_for_controller(controller_class_name()))
   # GET /forum_items
   # GET /forum_items.xml
   def index
-    @forum_items = ForumItem.all
+    @forum_items = ForumItem.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})   
     
     respond_to do |format|
       format.html # index.html.erb

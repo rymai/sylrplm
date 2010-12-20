@@ -206,7 +206,10 @@ h1 {
   color: #222222;
   border-bottom: 3px dotted #222222;
 }
-
+h2 {
+  font:  bold 100% sans-serif;
+  color: #222222;
+}
 /* Styles for the favori in the sidebar */
 
 li.favori  {

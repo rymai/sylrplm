@@ -1,15 +1,22 @@
-require 'lib/models/plm_object'
+#require 'lib/models/plm_object'
 class Project < ActiveRecord::Base
-  include PlmObject
+  include Models::PlmObject
+  include Models::SylrplmCommon
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident
   belongs_to :customer
   belongs_to :typesobject
   belongs_to :statusobject
-  has_and_belongs_to_many :parts
   belongs_to :owner,
     :class_name => "User",
     :foreign_key => "owner"
+    
+  has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='project' and child_object='document'"]
+  has_many :documents , :through => :links_documents
+  has_many :links_parts,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='project' and child_object='part'"]
+  has_many :parts , :through => :links_parts
+  has_many :links_customers,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='customer' and child_object='project'"]
+  has_many :customers , :through => :links_customers
   
   def self.create_new(project, user)
     if(project!=nil)
@@ -33,7 +40,7 @@ class Project < ActiveRecord::Base
     obj
   end
   
-  def self.getTypesProject 
+  def self.get_types_project 
     Typesobject.find(:all, :order=>"name",
           :conditions => ["object = 'project'"])
   end
@@ -61,6 +68,13 @@ class Project < ActiveRecord::Base
     self.statusobject=Statusobject.find_previous(:project,statusobject) 
     self   
   end  
-  
+  def self.get_conditions(filter)
+      filter=filter.gsub("*","%")
+      conditions = ["ident LIKE ? or "+qry_type+" or designation LIKE ? or "+qry_status+
+       " or "+qry_owner+" or date LIKE ? ",
+       "#{filter}", "#{filter}", 
+     "#{filter}", "#{filter}", 
+     "#{filter}", "#{filter}" ] unless filter.nil? 
+  end
   
 end

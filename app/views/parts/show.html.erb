@@ -72,6 +72,7 @@
     </tr>
 </table>
 <h1></h1>
+
 <table class='menu_bas'>
     <tr>
         <td>
@@ -83,6 +84,9 @@
             <% else %>
             <%= link_to t("edit"), edit_part_path(@part) %>
             <% end %>
+        </td>
+				<td>
+            <%= link_to t("new_part"), new_part_path %>
         </td>
         <td>
             <%= link_to t("list"), parts_path %>

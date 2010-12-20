@@ -1,9 +1,8 @@
-require 'lib/models/plm_object'
-require 'lib/models/sylrplm_common'
+#require 'lib/models/plm_object'
+#require 'lib/models/sylrplm_common'
 class Customer < ActiveRecord::Base
-   include SylrplmCommon
- 
-  include PlmObject
+  include Models::SylrplmCommon
+  include Models::PlmObject
   
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident
@@ -13,6 +12,10 @@ class Customer < ActiveRecord::Base
   belongs_to :owner,
     :class_name => "User",
     :foreign_key => "owner"
+  has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='customer' and child_object='document'"]
+  has_many :documents , :through => :links_documents
+  has_many :links_projects,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='customer' and child_object='project'"]
+  has_many :projects , :through => :links_projects
   
   def self.create_new(customer,user)
     if(customer!=nil)
@@ -41,11 +44,6 @@ class Customer < ActiveRecord::Base
       projects << item
     end    
   end
-  
-  #def self.getTypesCustomer
-  #    Typesobject.find(:all, :order=>"name",
-  #      :conditions => ["object = 'customer'"])
-  #end
   
   def remove_project(project)
     projects.delete( project)
@@ -77,5 +75,14 @@ class Customer < ActiveRecord::Base
   def demote
     self.statusobject=Statusobject.find_previous(:customer,statusobject) 
     self   
-  end  
+  end 
+  
+  def self.get_conditions(filter)
+    filter=filter.gsub("*","%")
+    ["ident LIKE ? or "+qry_type+" or designation LIKE ? or "+qry_status+
+      " or "+qry_owner+" or date LIKE ? ",
+      "#{filter}", "#{filter}", 
+    "#{filter}", "#{filter}", 
+    "#{filter}", "#{filter}" ] unless filter.nil? 
+  end
 end

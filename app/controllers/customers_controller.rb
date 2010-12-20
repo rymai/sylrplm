@@ -1,33 +1,19 @@
-require 'lib/controllers/plm_object_controller_module'
-require 'lib/controllers/plm_init_controller_module'
+#require 'lib/controllers/plm_object_controller_module'
+#require 'lib/controllers/plm_init_controller_module'
 class CustomersController < ApplicationController
-  include PlmObjectControllerModule
-  include PlmInitControllerModule
+  include Controllers::PlmObjectControllerModule
+  include Controllers::PlmInitControllerModule
   before_filter :check_init, :only=>[:new]
   
   access_control (Access.find_for_controller(controller_class_name()))
   
   # GET /customers
   # GET /customers.xml
-  def index
-    sort=params['sort']
-    conditions = ["ident LIKE ? or "+qry_type+" or designation LIKE ? or "+qry_status+
-      " or "+qry_owner+" or date LIKE ? ",
-      "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%", "#{params[:query]}%" ] unless params[:query].nil? 
-    @query="#{params[:query]}"
-    @total=Customer.count( :conditions => conditions)
-#    @customers = Customer.paginate(:page => params[:page], 
-#          :conditions => conditions,
-#          :order => sort,
-#          :per_page => cfg_items_per_page)
-          
-    @customers = Customer.find_paginate({:page=>params[:page],:cond=>conditions,:sort=>params[:sort], :nbr=>cfg_items_per_page}) 
-          
+  def index      
+    @customers = Customer.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})   
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @customers }
+      format.xml  { render :xml => @customers[:recordset] } 
     end
   end
   
@@ -35,9 +21,12 @@ class CustomersController < ApplicationController
   # GET /customers/1.xml
   def show
     @customer = Customer.find(params[:id])
-    @relation_types_document=Typesobject.getTypesNames(:relation_document)
-    @relation_types_project=Typesobject.getTypesNames(:relation_project)
+    @relation_types_document=Typesobject.get_types_names(:relation_document)
+    @relation_types_project=Typesobject.get_types_names(:relation_project)
     @tree=create_tree(@customer)
+    @documents=@customer.documents
+    @projects=@customer.projects
+      
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @customer }
@@ -48,7 +37,7 @@ class CustomersController < ApplicationController
   # GET /customers/new.xml
   def new
     @customer = Customer.create_new(nil,@user)
-    @types=Typesobject.getTypes(:customer)
+    @types=Typesobject.get_types(:customer)
     @status= Statusobject.find_for(:customer)
     respond_to do |format|
       format.html # new.html.erb
@@ -59,7 +48,7 @@ class CustomersController < ApplicationController
   # GET /customers/1/edit
   def edit
     @customer = Customer.find_edit(params[:id])
-    @types=Typesobject.getTypes(:customer)
+    @types=Typesobject.get_types(:customer)
     @status= Statusobject.find_for(:customer)
   end
   
@@ -67,7 +56,7 @@ class CustomersController < ApplicationController
   # POST /customers.xml
   def create
     @customer = Customer.create_new(params[:customer],@user)
-    @types=Typesobject.getTypes(:customer)
+    @types=Typesobject.get_types(:customer)
     @status= Statusobject.find_for(:customer)
     respond_to do |format|
       if @customer.save
@@ -86,7 +75,7 @@ class CustomersController < ApplicationController
   # PUT /customers/1.xml
   def update
     @customer = Customer.find(params[:id])
-    @types=Typesobject.getTypes(:customer)
+    @types=Typesobject.get_types(:customer)
     @status= Statusobject.find_for(:customer)
     respond_to do |format|
       if @customer.update_attributes(params[:customer])

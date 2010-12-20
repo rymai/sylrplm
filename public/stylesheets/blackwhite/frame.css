@@ -42,6 +42,10 @@ h1 {
   color: white;
   border-bottom: 3px dotted white;
 }
+h2 {
+  font:  bold 100% sans-serif;
+  color: white;
+}
 
 input, option, select, textarea {
 	padding:0pt;

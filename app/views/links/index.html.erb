@@ -1,5 +1,8 @@
-<h1>Listing links</h1>
+<h1>Listing links <%=h_count_objects(@links)%> </h1>
+<%= form_simple_query_helper('/links', @links) %>
 
+<br/>
+<%= will_paginate(@links[:recordset]) %>
 <table>
   <tr>
     <th>Father object</th>
@@ -14,7 +17,7 @@
     <th>Date</th>
   </tr>
 
-<% @links.each do |link| %>
+<% @links[:recordset].each do |link| %>
   <tr>
     <td><%=h link.father_object %></td>
     <td><%=h link.child_object %></td>
@@ -32,6 +35,7 @@
   </tr>
 <% end %>
 </table>
+<%= will_paginate(@links[:recordset]) %>
 
 <br />
 

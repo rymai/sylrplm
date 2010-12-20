@@ -1,5 +1,6 @@
 class Forum < ActiveRecord::Base
-  
+   include Models::SylrplmCommon
+ 
   validates_presence_of :statusobject_id,:typesobject_id,:subject
   
   belongs_to :typesobject
@@ -41,5 +42,11 @@ class Forum < ActiveRecord::Base
       false
     end
   end
-  
+   def self.get_conditions(filter)
+    filter=filter.gsub("*","%")
+      conditions = ["subject LIKE ? or "+qry_type+" or "+qry_owner_id+
+      " or "+qry_status,
+      "#{filter}", "#{filter}", 
+    "#{filter}", "#{filter}"] unless filter.nil?
+  end
 end

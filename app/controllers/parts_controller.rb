@@ -1,8 +1,8 @@
-require 'lib/controllers/plm_object_controller_module'
-require 'lib/controllers/plm_init_controller_module'
+#require 'lib/controllers/plm_object_controller_module'
+#require 'lib/controllers/plm_init_controller_module'
 class PartsController < ApplicationController
-  include PlmObjectControllerModule
-  include PlmInitControllerModule
+  include Controllers::PlmObjectControllerModule
+  include Controllers::PlmInitControllerModule
   before_filter :check_init, :only=>[:new]
   access_control (Access.find_for_controller(controller_class_name()))
   
@@ -10,31 +10,19 @@ class PartsController < ApplicationController
   # GET /parts
   # GET /parts.xml
   def index
-    sort=params['sort']
-    conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
-      " or "+qry_owner+" or date LIKE ? ",
-      "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%", "#{params[:query]}%", 
-    "#{params[:query]}%" ] unless params[:query].nil? 
-    @query="#{params[:query]}"
-    @total=Part.count( :conditions => conditions)
-    @parts = Part.paginate(:page => params[:page], 
-          :conditions => conditions,
-          :order => sort,
-          :per_page => cfg_items_per_page)
+    @parts = Part.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])}) 
     respond_to do |format|
       #flash[:notice] = "Filter=#{params[:query]}"
       format.html # index.html.erb
-      format.xml  { render :xml => @parts }
+      format.xml  { render :xml => @parts[:recordset] } 
     end
   end
   
   # GET /parts/1
   # GET /parts/1.xml
   def show
-    @relation_types_document=Typesobject.getTypesNames(:relation_document)
-    @relation_types_part=Typesobject.getTypesNames(:relation_part)
+    @relation_types_document=Typesobject.get_types_names(:relation_document)
+    @relation_types_part=Typesobject.get_types_names(:relation_part)
     @part = Part.find(params[:id])
     #@fathers = Partslink.find_fathers(@part)
     #@childs = Partslink.find_childs(@part)
@@ -45,6 +33,11 @@ class PartsController < ApplicationController
     @first_status=Statusobject.find_first("part")
     @tree=create_tree(@part)
     @tree_up=create_tree_up(@part)
+    
+    @documents=@part.documents
+    @parts=@part.parts
+    @projects=@part.projects
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @part }

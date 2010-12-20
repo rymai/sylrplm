@@ -1,10 +1,12 @@
-require 'lib/models/plm_object'
+#require 'lib/models/plm_object'
 class Datafile < ActiveRecord::Base
-  include PlmObject
+  include Models::PlmObject
+  include Models::SylrplmCommon
   
   validates_presence_of :ident , :typesobject
   validates_uniqueness_of :ident, :scope => :revision
   
+  belongs_to :document
   belongs_to :typesobject
   belongs_to :volume
   belongs_to :owner,
@@ -22,14 +24,14 @@ class Datafile < ActiveRecord::Base
       ret=true
     else
       parameters=params[:datafile]
-      puts "datafile.create_new:param="+params.inspect
+      #puts "datafile.create_new:param="+params.inspect
       uploaded_file=parameters[:uploaded_file]
       #contournement pour faire le upload apres la creation pour avoir la revision dans
       #get_repository !!!!!!!!!!!!!!
       parameters.delete(:uploaded_file)
       parameters[:volume]=user.volume
       parameters[:owner]=user
-      puts "datafile.create_new:param="+parameters.inspect
+      #puts "datafile.create_new:param="+parameters.inspect
       datafile=new(parameters)
       #puts "datafile.create_new:save1="+datafile.errors.inspect
       if datafile.save   
@@ -140,4 +142,14 @@ class Datafile < ActiveRecord::Base
     end
     self
   end
+  def self.get_conditions(filter)
+    filter=filter.gsub("*","%")
+    ["ident LIKE ? or "+qry_type+" or revision LIKE ? "+
+      " or "+qry_owner_id+" or updated_at LIKE ? or "+qry_volume,
+      "#{filter}", 
+    "#{filter}", "#{filter}", 
+    "#{filter}", "#{filter}", 
+    "#{filter}" ] unless filter.nil?
+  end
+  
 end

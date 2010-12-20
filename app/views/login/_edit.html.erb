@@ -2,7 +2,6 @@
     <legend>
         <%= t(:legend_user) %>
     </legend>
-    
     <p>
         <label for="user_name">
             <%= t(:label_username) %>
@@ -30,7 +29,7 @@
         <% else %>
         <%= check_box(:role_id,role.id) %><%= role.title %>
         <% end %>
-				<% end %>
+        <% end %>
         <br/>
     </p>
     <p>
@@ -42,6 +41,11 @@
         <b><%= form.label t(:label_volume) %></b>
         <br/>
         <%= form.collection_select(:volume_id, @volumes, :id, :name) %>
+    </p>
+    <p>
+        <b><%= form.label t(:label_nb_items) %></b>
+        <br/>
+        <%= form.text_field :nb_items, :size => 2 %>
     </p>
     <% if @themes != nil %>
     <%= form.label t(:label_theme) %>

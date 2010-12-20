@@ -1,73 +1,78 @@
-<H1><%=t("customer_show")%></H1>
-
+<H1><%=t("customer_show") %></H1>
 <p>
-  <b><%= t("label_ident") %></b>
-  <%=h @customer.ident %>
+    <b><%= t("label_ident") %></b>
+    <%=h @customer.ident %>
 </p>
-
 <p>
-  <b><%= t("label_typesobject") %></b>
+    <b><%= t("label_typesobject") %></b>
     <% if(@customer.typesobject != nil) %>
-  		<%=h @customer.typesobject.id %>:<%=h @customer.typesobject.name %>
-  	<% end %> 
+    <%=h @customer.typesobject.id %>:<%=h @customer.typesobject.name %>
+    <% end %>
 </p>
-
 <p>
-  <b><%= t("label_designation") %></b>
-  <%=h @customer.designation %>
+    <b><%= t("label_designation") %></b>
+    <%=h @customer.designation %>
 </p>
-
 <p>
-  <b><%= t("label_description") %></b>
-  <%=h @customer.description %>
+    <b><%= t("label_description") %></b>
+    <%=h @customer.description %>
 </p>
- <p>
-  <b><%= t("label_statusobject") %></b>
+<p>
+    <b><%= t("label_statusobject") %></b>
     <% if(@customer.statusobject != nil) %>
-  		<%=h @customer.statusobject.id %>:<%=h @customer.statusobject.name %>
-  	<% end %> 
+    <%=h @customer.statusobject.id %>:<%=h @customer.statusobject.name %>
+    <% end %>
 </p>
-
 <p>
-  <b><%= t("label_responsible") %></b>
-  <%=h @customer.owner.login %>
+    <b><%= t("label_responsible") %></b>
+    <%=h @customer.owner.login %>
 </p>
-
-
-
 <p>
-  <b><%= t("label_date") %></b>
-  <%=h @customer.date %>
+    <b><%= t("label_date") %></b>
+    <%=h @customer.date %>
 </p>
-
 <h1></h1>
 <%= h_sylrplm_tree %>
 <table class='menu_bas'>
-<tr>
-   	<% if(!@favori_document.empty) %>
- 		<% form_for(@customer, :url => {:id => @customer.id, :action => "add_docs" }) do |f| %>   	
-   	    	<td><%= select("relation","document",options_for_select(@relation_types_document))%></td>
-   	    	<td><%= submit_tag t("paste_documents") %><td>
-   	   	<% end %>
-   	</tr><tr>
-   	<% end %>
-	<% if(!@favori_project.empty) %>
- 		<% form_for(@customer, :url => {:id => @customer.id, :action => "add_projects" }) do |f| %>
-			<td><%= select("relation","project",options_for_select(@relation_types_project))%></td>
-			<td><%= submit_tag t("paste_projects") %></td>
-		<% end %>   	
-  	<% end %>
-</tr>
-</table>
-
-
-<h1></h1>
-<table class='menu_bas'>
-<tr>
-<td>
-    <%= link_to h_img_add_forum.to_s+t("add_forum"), :id => @customer.id, :action => :new_forum %>
-</td>
-<td><%= link_to t("edit"), edit_customer_path(@customer) %></td>
-<td><%= link_to t("list"), customers_path %></td>
-</tr>
-</table
+    <tr>
+        <% if(!@favori_document.empty) %>
+        <% form_for(@customer, :url => {:id => @customer.id, :action => "add_docs" }) do |f| %>
+        <td>
+            <%= select("relation","document",options_for_select(@relation_types_document)) %>
+        </td>
+        <td>
+            <%= submit_tag t("paste_documents") %>
+            <td>
+            <% end %>
+            </tr>
+            <tr>
+                <% end %>
+                <% if(!@favori_project.empty) %>
+                <% form_for(@customer, :url => {:id => @customer.id, :action => "add_projects" }) do |f| %>
+                <td>
+                    <%= select("relation","project",options_for_select(@relation_types_project)) %>
+                </td>
+                <td>
+                    <%= submit_tag t("paste_projects") %>
+                </td>
+                <% end %>
+                <% end %>
+            </tr>
+        </table>
+        <h1></h1>
+        <table class='menu_bas'>
+            <tr>
+                <td>
+                    <%= link_to h_img_add_forum.to_s+t("add_forum"), :id => @customer.id, :action => :new_forum %>
+                </td>
+                <td>
+                    <%= link_to t("edit"), edit_customer_path(@customer) %>
+                </td>
+                <td>
+                    <%= link_to t("new_customer"), new_customer_path %>
+                </td>
+                <td>
+                    <%= link_to t("list"), customers_path %>
+                </td>
+            </tr>
+        </table

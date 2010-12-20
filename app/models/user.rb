@@ -1,6 +1,7 @@
-require 'digest/sha1'
+#require 'digest/sha1'
 
 class User < ActiveRecord::Base
+  include Models::SylrplmCommon
   
   has_and_belongs_to_many :roles
   belongs_to :role
@@ -12,6 +13,24 @@ class User < ActiveRecord::Base
   
   attr_accessor :password_confirmation
   validates_confirmation_of :password
+  before_create :set_initial_attributes
+  
+  
+  puts "user.set_initial_attributes"
+  
+  
+  def self.create_new(params)
+    unless params.nil?
+      #puts "user.create_new:"+params.inspect
+      user = User.new(params)
+    else
+      user = User.new
+      Sequence.set_default_values(user, self.name, true)
+      user.nb_items = SYLRPLM::NB_ITEMS_PER_PAGE
+      user.volume = Volume.find(1) 
+    end
+    user
+  end
   
   def self.find_by_name(name)
     find(:first , :conditions => ["login = '#{name}' "])
@@ -49,7 +68,11 @@ class User < ActiveRecord::Base
     if User.count.zero?
       raise "Can't delete last user"
     end
-  end     
+  end
+  
+  def set_initial_attributes
+    
+  end
   
   private
   
@@ -67,9 +90,9 @@ class User < ActiveRecord::Base
   end 
   
   def self.find_validers
-    all(:select => [:login, :email],
+    all(:select => "login, email",
           :order => :login,
-          :conditions => "roles.title like valid%",
+          :conditions => "roles.title like 'valid%'",
           :joins => "inner join roles on users.role_id = roles.id")
   end
   
@@ -232,5 +255,10 @@ class User < ActiveRecord::Base
       :user_unknown_mail
     end
   end
-  
+   def self.get_conditions(filter)
+    filter=filter.gsub("*","%")
+    ["login LIKE ? or "+qry_role+" or email LIKE ? ",
+      "#{filter}", "#{filter}", 
+    "#{filter}" ] unless filter.nil? 
+  end
 end

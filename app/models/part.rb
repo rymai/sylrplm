@@ -1,14 +1,12 @@
-require 'lib/models/plm_object'
+#require 'lib/models/plm_object'
 class Part < ActiveRecord::Base
-  include PlmObject
+  include Models::PlmObject
+  include Models::SylrplmCommon
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident, :scope => :revision
-  # dans link has_many :documents
-  ##has_many :partslinks
-  #belongs_to :typesobject, :conditions => ["object='part'"]
+
   belongs_to :typesobject
   belongs_to :statusobject
-  #has_and_belongs_to_many :projects
   belongs_to :owner,
     :class_name => "User",
     :foreign_key => "owner"
@@ -17,13 +15,15 @@ class Part < ActiveRecord::Base
   #has_and_belongs_to_many :documents, :join_table => "links",
   #:foreign_key => "father_id", :association_foreign_key => "child_id", :conditions => ["father_object='part' AND child_object='document'"]
   
-  has_many :links, :foreign_key => "father_id", :conditions => ["father_object='part'"]
-  has_many :documents , :through => :links
-  
-  #def self.getFirstRevision
-  #      "A"    
-  #end
-  
+  has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='part' and child_object='document'"]
+  has_many :documents , :through => :links_documents
+  has_many :links_parts,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='part' and child_object='part'"]
+  has_many :parts , :through => :links_parts
+  has_many :links_projects,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='project' and child_object='part'"]
+  has_many :projects , :through => :links_projects
+  has_many :links_customers,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='customer' and child_object='part'"]
+  has_many :customers , :through => :links_customers
+
   def self.create_new(part,user)
     if(part!=nil)
       p=Part.new(part)
@@ -119,7 +119,14 @@ class Part < ActiveRecord::Base
     self.statusobject=next_status 
     self   
   end 
-  
-  
+  def self.get_conditions(filter)
+     filter=filter.gsub("*","%")
+     conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
+      " or "+qry_owner+" or date LIKE ? ",
+      "#{filter}", "#{filter}", 
+    "#{filter}", "#{filter}", 
+    "#{filter}", "#{filter}", 
+    "#{filter}" ] unless filter.nil? 
+  end
   
 end
