@@ -1,31 +1,41 @@
-<h1><%=t(:project_list)%><%=h_count_objects(@projects)%> </h1>
+<h1><%=t(:project_list) %><%=h_count_objects(@projects) %></h1>
 <%= form_simple_query_helper('/projects', @projects) %>
+<br/>
+<%= will_paginate(@projects[:recordset]) %>
 <table>
     <tr>
-        <th></th>
-        <th <%= sort_td_class_helper "ident"  %>>
+        <th>
+        </th>
+        <th<%= sort_td_class_helper "ident" %>>
             <%= sort_link_helper t(:label_ident), "ident" %>
         </th>
-        <th <%= sort_td_class_helper "typesobject_id" %>>
+        <th<%= sort_td_class_helper "typesobject_id" %>>
             <%= sort_link_helper t(:label_typesobject), "typesobject_id" %>
         </th>
-        <th <%= sort_td_class_helper "designation" %>>
+        <th<%= sort_td_class_helper "designation" %>>
             <%= sort_link_helper t(:label_designation), "designation" %>
         </th>
-        <th <%= sort_td_class_helper "statusobject_id" %>>
+        <th<%= sort_td_class_helper "statusobject_id" %>>
             <%= sort_link_helper t(:label_statusobject), "statusobject_id" %>
         </th>
-        <th <%= sort_td_class_helper  "owner" %>>
+        <th<%= sort_td_class_helper  "owner" %>>
             <%= sort_link_helper t(:label_responsible), "owner" %>
         </th>
-        <th <%= sort_td_class_helper  "date" %>>
+        <th<%= sort_td_class_helper  "date" %>>
             <%= sort_link_helper t(:label_date) , "date" %>
         </th>
-        <th <%= sort_td_class_helper "customer_id" %>>
+        <th<%= sort_td_class_helper "customer_id" %>>
             <%= sort_link_helper t(:label_customer), "customer_id" %>
         </th>
-				<th></th><th></th><th></th><th></th>
-     </tr>
+        <th>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+    </tr>
     <% @projects[:recordset].each do |project| %>
     <tr>
         <td>
@@ -77,8 +87,8 @@
             <%= link_to h_img_destroy.to_s, project, :confirm => t(:msg_confirm), :method => :delete %>
         </td>
         <td>
-        <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_project_to_favori, :id => project.id} %>        
-       </td>
+            <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_project_to_favori, :id => project.id} %>
+        </td>
     </tr>
     <% end %>
 </table>
@@ -88,6 +98,8 @@
         <td>
             <%= link_to t("new_project"), new_project_path %>
         </td>
-       
+        <td>
+            <%= show_help("help_projects") %>
+        </td>
     </tr>
 </table>

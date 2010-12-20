@@ -1,4 +1,4 @@
-require "os_functions"
+require "lib/os_functions"
 include OsFunctions
 # Be sure to restart your server when you modify this file
 

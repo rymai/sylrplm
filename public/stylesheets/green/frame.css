@@ -226,7 +226,10 @@ h1 {
 	color: #bbffbb;
 	border-bottom: 3px dotted #bbffbb;
 }
-
+h2 {
+  font:  bold 100% sans-serif;
+  color: #bbffbb;
+}
 /* START:cart */
 	/* Styles for the cart in the main page and the sidebar */
 .favori-title {

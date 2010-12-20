@@ -3,6 +3,11 @@
 
 en:
   ##############
+  #models (ko)
+  ##############
+  valid_ident: "L'identifiant d'un {{object}} doit commencer par des lettres suivi de chiffres"
+  #
+  ##############
   #controllers
   ##############
   ctrl_no_privilege: "You don't have privileges to access this action"
@@ -112,6 +117,7 @@ en:
   ctrl_typesobject: Object type
   #volumes
   ctrl_volume: Volume
+  ctrl_no_relation: no relation
   #########################################
   #helpers
   #########################################
@@ -133,6 +139,7 @@ en:
   #########################################
   hello: "Hello world"
   disconnect: "Disconnect"
+  datas_in_database: We have following data
   #langues
   tit_language: "Language:"
   lng_english: "English"

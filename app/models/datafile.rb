@@ -7,7 +7,6 @@ class Datafile < ActiveRecord::Base
   validates_uniqueness_of :ident, :scope => :revision
   
   belongs_to :document
-    
   belongs_to :typesobject
   belongs_to :volume
   belongs_to :owner,
@@ -25,14 +24,14 @@ class Datafile < ActiveRecord::Base
       ret=true
     else
       parameters=params[:datafile]
-      puts "datafile.create_new:param="+params.inspect
+      #puts "datafile.create_new:param="+params.inspect
       uploaded_file=parameters[:uploaded_file]
       #contournement pour faire le upload apres la creation pour avoir la revision dans
       #get_repository !!!!!!!!!!!!!!
       parameters.delete(:uploaded_file)
       parameters[:volume]=user.volume
       parameters[:owner]=user
-      puts "datafile.create_new:param="+parameters.inspect
+      #puts "datafile.create_new:param="+parameters.inspect
       datafile=new(parameters)
       #puts "datafile.create_new:save1="+datafile.errors.inspect
       if datafile.save   

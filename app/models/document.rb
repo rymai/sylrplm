@@ -1,15 +1,11 @@
-#require 'lib/models/plm_object'
 class Document < ActiveRecord::Base
   include Models::PlmObject
   include Models::SylrplmCommon
   validates_presence_of :ident , :designation 
   validates_uniqueness_of :ident, :scope => :revision
   #validates_format_of :ident, :with =>/^(doc|img)[0-9]+$/, :message=>" doit commencer par doc ou img suivi de chiffres"
-  validates_format_of :ident, :with =>/^([a-z]|[A-Z])+[0-9]+$/, :message=>" doit commencer par des lettres suivi de chiffres"
+  validates_format_of :ident, :with =>/^([a-z]|[A-Z])+[0-9]+$/ #, :message=>t(:valid_ident,:object=>:ctrl_document)
   
-  #belongs_to :typesobject, :conditions => ["object='part'"]
-  
-  has_many :datafile
   belongs_to :typesobject
   belongs_to :statusobject
   belongs_to :volume
@@ -17,16 +13,21 @@ class Document < ActiveRecord::Base
     :class_name => "User",
     :foreign_key => "owner"
   
+  has_many :datafile
   has_many :checks
   
-  has_many :links, :foreign_key => "father_id", :conditions => ["father_object='document'"] 
-  has_many :datafiles , :through => :links
+  has_many :links_parts,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='part' and child_object='document'"]
+  has_many :parts , :through => :links_parts
+  has_many :links_projects,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='project' and child_object='document'"]
+  has_many :projects , :through => :links_projects
+  has_many :links_customers,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='customer' and child_object='document'"]
+  has_many :customers , :through => :links_customers
   
   before_create :set_initial_attributes
   
   def self.create_new(document, user)
     if(document!=nil)
-      puts "document.create_new:"+document.inspect
+      #puts "document.create_new:"+document.inspect
       doc = Document.new(document)
       #Sequence.set_default_values(doc, self.name, false)
     else
@@ -37,7 +38,7 @@ class Document < ActiveRecord::Base
     end
     doc.owner=user
     doc.statusobject = Statusobject.find_first("document")
-    puts "document.create_new:"+doc.inspect
+    #puts "document.create_new:"+doc.inspect
     doc
   end
   

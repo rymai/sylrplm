@@ -1,5 +1,7 @@
 <h1><%=t("access_list") %><%=h_count_objects(@accesses)%> </h1>
 <%= form_simple_query_helper('/accesses', @accesses) %>
+<br/>
+<%= will_paginate(@accesses[:recordset]) %>
 <table>
     <tr>
         <th <%= sort_td_class_helper "controller" %>>
@@ -47,6 +49,9 @@
     <tr>
         <td>
             <%= link_to t("new_access"), new_access_path %>
+        </td>
+				<td>
+            <%= show_help("help_access") %>
         </td>
     </tr>
 </table

@@ -4,7 +4,7 @@ require 'rexml/document'
 #require 'logger'
 require "lib/classes/app_classes"
 #  controleur principal.
-class ApplicationController < ActionController::Base
+class ApplicationController < Application
   include AppClasses
   #include REXML
   helper :all # include all helpers, all the time
@@ -159,6 +159,12 @@ class ApplicationController < ActionController::Base
     redirect_to :action => index 
   end
   
+  def get_datas_count
+    {:documents=>Document.count,
+    :parts => Part.count,
+    :projects => Project.count,
+    :customers => Customer.count}
+  end
   
   
   # Scrub sensitive parameters from your log

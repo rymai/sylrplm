@@ -1,19 +1,21 @@
 class Typesobject < ActiveRecord::Base
    include Models::SylrplmCommon
  validates_presence_of :object, :name
+  
+  has_many :datafiles
   has_many :documents
   has_many :parts
   has_many :projects
   has_many :customers
   
-  def self.getTypes(s_object)
+  def self.get_types(s_object)
     find(:all, :order=>"name",
       :conditions => ["object = '"+s_object.to_s+"'"])
   end
   
-  def self.getTypesNames(s_object)
+  def self.get_types_names(s_object)
     ret=[]
-    types=getTypes(s_object)
+    types=get_types(s_object)
     types.each do |t| 
       ret<<t.name 
       end

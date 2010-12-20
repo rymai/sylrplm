@@ -1,6 +1,8 @@
 <h1>Listing links <%=h_count_objects(@links)%> </h1>
 <%= form_simple_query_helper('/links', @links) %>
 
+<br/>
+<%= will_paginate(@links[:recordset]) %>
 <table>
   <tr>
     <th>Father object</th>

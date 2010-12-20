@@ -1,5 +1,7 @@
-<h1><%=t("user_list") %><%=h_count_objects(@all_users)%> </h1>
+<h1><%=t("user_list") %><%=h_count_objects(@all_users) %></h1>
 <%= form_simple_query_helper('/login/list_users', @all_users) %>
+<br/>
+<%= will_paginate(@all_users[:recordset]) %>
 <table>
     <tr>
         <th<%= sort_td_class_helper "login" %>
@@ -64,10 +66,14 @@
     <% end %>
 </table>
 <%= will_paginate(@all_users[:recordset]) %>
+<br/>
 <table class='menu_bas'>
     <tr>
         <td>
             <%= link_to t("new_user"), :controller=> "login", :action => "add_user" %>
+        </td>
+        <td>
+            <%= show_help("help_users") %>
         </td>
     </tr>
 </table>

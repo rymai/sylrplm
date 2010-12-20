@@ -1,43 +1,93 @@
-<h1><%=t("check_list")%><%=h_count_objects(@checks)%> </h1>
+<h1><%=t("check_list") %><%=h_count_objects(@checks) %></h1>
 <%= form_simple_query_helper('/checks', @checks) %>
-
+<br/>
+<%= will_paginate(@checks[:recordset]) %>
 <table>
-  <tr>
-    <th><%= t("label_object") %></th>
-   <th><%= t("label_object_id") %></th>
-    <th><%= t("label_status") %></th>
-    <th><%= t("label_out_reason") %></th>
-    <th><%= t("label_out_date") %></th>
-    <th><%= t("label_out_user") %></th>
-    <th><%= t("label_in_reason") %></th>
-    <th><%= t("label_in_date") %></th>
-    <th><%= t("label_in_user") %></th>
-    <th><%= t("label_local_dir") %></th>
-  </tr>
-
-<% @checks[:recordset].each do |check| %>
-  <tr>
-    <td><%=h check.object %></td>
-    <td><%=h check.object_id %></td>
-    <td><%=h check.status %></td>
-    <td><%=h check.out_reason %></td>
-    <td><%=h check.out_date %></td>
-    <td><%=h check.out_user %></td>
-    <td><%=h check.in_reason %></td>
-    <td><%=h check.in_date %></td>
-    <td><%=h check.in_user %></td>
-    <td><%=h check.local_dir %></td>
-    <td><%= link_to h_img_show.to_s, check %></td>
-    <td><%= link_to h_img_edit.to_s, edit_check_path(check) %></td>
-    <td><%= link_to h_img_destroy.to_s, check, :confirm => t("msg_confirm"), :method => :delete %></td>
-  </tr>
-<% end %>
+    <tr>
+        <th>
+            <%= t("label_object") %>
+        </th>
+        <th>
+            <%= t("label_object_id") %>
+        </th>
+        <th>
+            <%= t("label_status") %>
+        </th>
+        <th>
+            <%= t("label_out_reason") %>
+        </th>
+        <th>
+            <%= t("label_out_date") %>
+        </th>
+        <th>
+            <%= t("label_out_user") %>
+        </th>
+        <th>
+            <%= t("label_in_reason") %>
+        </th>
+        <th>
+            <%= t("label_in_date") %>
+        </th>
+        <th>
+            <%= t("label_in_user") %>
+        </th>
+        <th>
+            <%= t("label_local_dir") %>
+        </th>
+    </tr>
+    <% @checks[:recordset].each do |check| %>
+    <tr>
+        <td>
+            <%=h check.object %>
+        </td>
+        <td>
+            <%=h check.object_id %>
+        </td>
+        <td>
+            <%=h check.status %>
+        </td>
+        <td>
+            <%=h check.out_reason %>
+        </td>
+        <td>
+            <%=h check.out_date %>
+        </td>
+        <td>
+            <%=h check.out_user %>
+        </td>
+        <td>
+            <%=h check.in_reason %>
+        </td>
+        <td>
+            <%=h check.in_date %>
+        </td>
+        <td>
+            <%=h check.in_user %>
+        </td>
+        <td>
+            <%=h check.local_dir %>
+        </td>
+        <td>
+            <%= link_to h_img_show.to_s, check %>
+        </td>
+        <td>
+            <%= link_to h_img_edit.to_s, edit_check_path(check) %>
+        </td>
+        <td>
+            <%= link_to h_img_destroy.to_s, check, :confirm => t("msg_confirm"), :method => :delete %>
+        </td>
+    </tr>
+    <% end %>
 </table>
 <%= will_paginate(@checks[:recordset]) %>
-
-<br />
+<br/>
 <table class='menu_bas'>
-<tr>
-<td><%= link_to t("new_check"), new_check_path %></td>
-</tr>
+    <tr>
+        <td>
+            <%= link_to t("new_check"), new_check_path %>
+        </td>
+        <td>
+            <%= show_help("help_checks") %>
+        </td>
+    </tr>
 </table

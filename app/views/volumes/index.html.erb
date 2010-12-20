@@ -1,33 +1,63 @@
-<h1><%=t(:volume_list) %><%=h_count_objects(@volumes)%> </h1>
+<h1><%=t(:volume_list) %><%=h_count_objects(@volumes) %></h1>
 <%= form_simple_query_helper('/volumes', @volumes) %>
-
-
+<br/>
+<%= will_paginate(@volumes[:recordset]) %>
 <table>
-  <tr>
-    <th><%=t(:label_name)%></th>
-    <th><%=t(:label_description)%></th>
-    <th><%=t(:label_directory)%></th>
-    <th><%=t(:label_protocol)%></th>
-						<th></th><th></th><th></th>
-  </tr>
-
-<% @volumes[:recordset].each do |volume| %>
-  <tr>
-    <td><%=h volume.name %></td>
-    <td><%=h volume.description %></td>
-    <td><%=h volume.directory %></td>
-    <td><%=h volume.protocole %></td>
-    <td><%= link_to h_img_show.to_s, volume %></td>
-    <td><%= link_to h_img_edit.to_s, edit_volume_path(volume) %></td>
-    <td><%= link_to h_img_destroy.to_s, volume, :confirm =>t(:msg_confirm), :method => :delete %></td>
-  </tr>
-<% end %>
+    <tr>
+        <th>
+            <%=t(:label_name) %>
+        </th>
+        <th>
+            <%=t(:label_description) %>
+        </th>
+        <th>
+            <%=t(:label_directory) %>
+        </th>
+        <th>
+            <%=t(:label_protocol) %>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+    </tr>
+    <% @volumes[:recordset].each do |volume| %>
+    <tr>
+        <td>
+            <%=h volume.name %>
+        </td>
+        <td>
+            <%=h volume.description %>
+        </td>
+        <td>
+            <%=h volume.directory %>
+        </td>
+        <td>
+            <%=h volume.protocole %>
+        </td>
+        <td>
+            <%= link_to h_img_show.to_s, volume %>
+        </td>
+        <td>
+            <%= link_to h_img_edit.to_s, edit_volume_path(volume) %>
+        </td>
+        <td>
+            <%= link_to h_img_destroy.to_s, volume, :confirm =>t(:msg_confirm), :method => :delete %>
+        </td>
+    </tr>
+    <% end %>
 </table>
 <%= will_paginate(@volumes[:recordset]) %>
+<br/>
 <table class='menu_bas'>
     <tr>
         <td>
             <%= link_to t(:new_volume), new_volume_path %>
+        </td>
+        <td>
+            <%= show_help("help_volumes") %>
         </td>
     </tr>
 </table>

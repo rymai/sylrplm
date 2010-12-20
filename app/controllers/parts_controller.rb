@@ -21,8 +21,8 @@ class PartsController < ApplicationController
   # GET /parts/1
   # GET /parts/1.xml
   def show
-    @relation_types_document=Typesobject.getTypesNames(:relation_document)
-    @relation_types_part=Typesobject.getTypesNames(:relation_part)
+    @relation_types_document=Typesobject.get_types_names(:relation_document)
+    @relation_types_part=Typesobject.get_types_names(:relation_part)
     @part = Part.find(params[:id])
     #@fathers = Partslink.find_fathers(@part)
     #@childs = Partslink.find_childs(@part)
@@ -33,6 +33,11 @@ class PartsController < ApplicationController
     @first_status=Statusobject.find_first("part")
     @tree=create_tree(@part)
     @tree_up=create_tree_up(@part)
+    
+    @documents=@part.documents
+    @parts=@part.parts
+    @projects=@part.projects
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @part }

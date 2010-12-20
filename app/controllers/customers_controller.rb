@@ -21,9 +21,12 @@ class CustomersController < ApplicationController
   # GET /customers/1.xml
   def show
     @customer = Customer.find(params[:id])
-    @relation_types_document=Typesobject.getTypesNames(:relation_document)
-    @relation_types_project=Typesobject.getTypesNames(:relation_project)
+    @relation_types_document=Typesobject.get_types_names(:relation_document)
+    @relation_types_project=Typesobject.get_types_names(:relation_project)
     @tree=create_tree(@customer)
+    @documents=@customer.documents
+    @projects=@customer.projects
+      
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @customer }
@@ -34,7 +37,7 @@ class CustomersController < ApplicationController
   # GET /customers/new.xml
   def new
     @customer = Customer.create_new(nil,@user)
-    @types=Typesobject.getTypes(:customer)
+    @types=Typesobject.get_types(:customer)
     @status= Statusobject.find_for(:customer)
     respond_to do |format|
       format.html # new.html.erb
@@ -45,7 +48,7 @@ class CustomersController < ApplicationController
   # GET /customers/1/edit
   def edit
     @customer = Customer.find_edit(params[:id])
-    @types=Typesobject.getTypes(:customer)
+    @types=Typesobject.get_types(:customer)
     @status= Statusobject.find_for(:customer)
   end
   
@@ -53,7 +56,7 @@ class CustomersController < ApplicationController
   # POST /customers.xml
   def create
     @customer = Customer.create_new(params[:customer],@user)
-    @types=Typesobject.getTypes(:customer)
+    @types=Typesobject.get_types(:customer)
     @status= Statusobject.find_for(:customer)
     respond_to do |format|
       if @customer.save
@@ -72,7 +75,7 @@ class CustomersController < ApplicationController
   # PUT /customers/1.xml
   def update
     @customer = Customer.find(params[:id])
-    @types=Typesobject.getTypes(:customer)
+    @types=Typesobject.get_types(:customer)
     @status= Statusobject.find_for(:customer)
     respond_to do |format|
       if @customer.update_attributes(params[:customer])

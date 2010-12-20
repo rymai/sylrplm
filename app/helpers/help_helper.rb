@@ -93,7 +93,8 @@ module HelpHelper
       childs_src=[]
       msg[:el].each_element { |child| 
         key=child.attribute(:key)
-        childs_src<<"<a href='/help?help=#{key}'>#{key}</a>"
+        title=child.attribute(:title)
+        childs_src<<"<a href='/help?help=#{key}'>#{title}</a>"
       }
     end
     suite={:previous_src=>previous_src, :main_src=>main_src, :upper_src=>upper_src, :next_src=>next_src, :childs_src=>childs_src}       

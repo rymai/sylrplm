@@ -12,6 +12,10 @@ class Customer < ActiveRecord::Base
   belongs_to :owner,
     :class_name => "User",
     :foreign_key => "owner"
+  has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='customer' and child_object='document'"]
+  has_many :documents , :through => :links_documents
+  has_many :links_projects,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='customer' and child_object='project'"]
+  has_many :projects , :through => :links_projects
   
   def self.create_new(customer,user)
     if(customer!=nil)
@@ -40,11 +44,6 @@ class Customer < ActiveRecord::Base
       projects << item
     end    
   end
-  
-  #def self.getTypesCustomer
-  #    Typesobject.find(:all, :order=>"name",
-  #      :conditions => ["object = 'customer'"])
-  #end
   
   def remove_project(project)
     projects.delete( project)

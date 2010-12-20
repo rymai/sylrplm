@@ -1,6 +1,7 @@
-<h1><%=t(:role_list) %><%=h_count_objects(@roles)%> </h1>
+<h1><%=t(:role_list) %><%=h_count_objects(@roles) %></h1>
 <%= form_simple_query_helper('/roles', @roles) %>
-
+<br/>
+<%= will_paginate(@roles[:recordset]) %>
 <table>
     <tr>
         <th>
@@ -9,8 +10,12 @@
         <th>
             <%=t(:label_description) %>
         </th>
-								<th></th><th></th><th></th>
- 
+        <th>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
     </tr>
     <% @roles[:recordset].each do |role| %>
     <tr>
@@ -38,6 +43,9 @@
     <tr>
         <td>
             <%= link_to t(:new_role), new_role_path %>
+        </td>
+        <td>
+            <%= show_help("help_roles") %>
         </td>
     </tr>
 </table>

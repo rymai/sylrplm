@@ -5,7 +5,7 @@ module Controllers::PlmObjectControllerModule
     object = model.find(params[:id])
     previous_rev=object.revision
     @object=object.revise
-    @types=Typesobject.getTypes(object.class.name.downcase!)
+    @types=Typesobject.get_types(object.class.name.downcase!)
     respond_to do |format|
       if(@object != nil)
         if @object.save
@@ -207,11 +207,6 @@ module Controllers::PlmObjectControllerModule
   end  
   
   def follow_tree_part(node, part,ctrl)
-    #part.projects.each do |d|
-    #  cnode = tree_project(d)        
-    #  node << cnode
-    #non car bouclage follow_tree_project(node,d)
-    #end
     tree_forums(node,"part",part,ctrl)  
     tree_documents(node,"part",part,ctrl) 
     links=Link.find_childs("part", part,  "part")
@@ -229,9 +224,9 @@ module Controllers::PlmObjectControllerModule
                                    :id => link.id)
       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>' 
       options={
-                :label  => (link.name||'no_relation')+'-'+t(:ctrl_part)+':'+child.ident+cut_a,
+                :label  => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+':'+child.ident+cut_a,
                 :icon=>icone(child),
-        #:icon_open=>icone(child),
+                :icon_open=>icone(child),
                 :title => child.designation,
                 :url=>url_for(url),
               :open => false
@@ -248,7 +243,7 @@ module Controllers::PlmObjectControllerModule
       f=Part.find(link.father_id) 
       url={:controller => 'parts', :action => 'show', :id => "#{f.id}"}
       options={
-                :label  => (link.name||'no_relation')+'-'+t(:ctrl_part)+':'+f.ident,
+                :label  => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+':'+f.ident,
                 :icon=>icone(f),
         # :icon_open=>"",
                 :title => f.designation,
@@ -320,7 +315,7 @@ module Controllers::PlmObjectControllerModule
             c=Customer.find(link.father_id) 
             url={:controller => 'customers', :action => 'show', :id => "#{c.id}"}
             options={
-                :label  => (link.name||'no_relation')+'-'+t(:ctrl_customer)+':'+c.ident,
+                :label  => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_customer)+':'+c.ident,
                 :icon=>icone(c),
                 # :icon_open=>"",
                 :title => c.designation,
@@ -342,7 +337,7 @@ module Controllers::PlmObjectControllerModule
                               :id => "#{link.id}" )
           cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'   
           options={
-                   :label => (link.name||'no_relation')+'-'+t(:ctrl_document)+':'+d.ident + cut_a,
+                   :label => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_document)+':'+d.ident + cut_a,
                    :icon=>icone(d),
                    #:icon_open=>icone(d),
                    :title => d.designation,
@@ -367,7 +362,7 @@ module Controllers::PlmObjectControllerModule
               cut_a=""
           end
           options={
-                   :label => (link.name||'no_relation')+'-'+t(:ctrl_forum)+':'+d.subject + cut_a,
+                   :label => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_forum)+':'+d.subject + cut_a,
                    :icon=>icone(d),
                    #:icon_open=>icone(d),
                    :title => d.subject,
@@ -451,7 +446,7 @@ module Controllers::PlmObjectControllerModule
       end
       nb_items
     else
-      unless @user.nil?
+      unless @user.nil? || @user==:user_not_connected
         @user.nb_items
       else
         unless session[:nb_items].nil?

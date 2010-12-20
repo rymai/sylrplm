@@ -4,11 +4,7 @@ class LoginController < ApplicationController
   access_control (Access.find_for_controller(controller_class_name()))
   
   def index
-    @total_documents = Document.count
-    @total_parts = Part.count
-    @total_projects = Project.count
-    @total_customers = Customer.count
-    #@total_favoris = Favori.count
+    
   end
   
   # just display the form and wait for user to

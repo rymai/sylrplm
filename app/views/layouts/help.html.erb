@@ -11,7 +11,12 @@
     </head>
     <body id="sylrplm">
         <div id="container">
-            <%= render(:partial => "main/frame") %>
+            <div id="main">
+                <p class="notice">
+                    <%= flash[:notice] %>
+                </p>
+                <%= yield :layout %>
+            </div>
         </div>
     </body>
 </html>

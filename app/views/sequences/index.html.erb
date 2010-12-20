@@ -1,6 +1,8 @@
 <h1><%=t(:sequence_list) %><%=h_count_objects(@sequences)%> </h1>
 <%= form_simple_query_helper('/sequences', @sequences) %>
 
+<br/>
+<%= will_paginate(@sequences[:recordset]) %>
 <table>
   <tr>
     <th><%=t(:label_utility)%></th>
@@ -33,6 +35,9 @@
     <tr>
         <td>
             <%= link_to t(:new_sequence), new_sequence_path %>
+        </td>
+				<td>
+            <%= show_help("help_sequences") %>
         </td>
     </tr>
 </table>

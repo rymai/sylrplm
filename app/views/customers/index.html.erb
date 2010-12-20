@@ -1,5 +1,7 @@
 <h1><%=t("customer_list") %><%=h_count_objects(@customers)%> </h1>
 <%= form_simple_query_helper('/customers', @customers) %>
+<br/>
+<%= will_paginate(@customers[:recordset]) %>
 <table>
     <tr>
     	<th></th>
@@ -73,6 +75,9 @@
     <tr>
         <td>
             <%= link_to t("new_customer"), new_customer_path %>
+        </td>
+				<td>
+            <%= show_help("help_customers") %>
         </td>
     </tr>
 </table

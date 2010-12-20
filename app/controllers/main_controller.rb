@@ -17,6 +17,9 @@ class MainController < ApplicationController
     @logger.fatal("fatal")
     message=check_init
     puts "main_controller.index"
+    @datas=get_datas_count
+    #@total_favoris = Favori.count
+    
     if(params[:theme]!=nil)
       @theme=params[:theme]
       if @user!=:user_not_connected

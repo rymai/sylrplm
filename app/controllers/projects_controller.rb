@@ -29,10 +29,16 @@ class ProjectsController < ApplicationController
   # arbre montrant la structure du projet: le client et les parts
   def show
     @project = Project.find(params[:id])
-    @relation_types_document=Typesobject.getTypesNames(:relation_document)
-    @relation_types_part=Typesobject.getTypesNames(:relation_part)
+    @relation_types_document=Typesobject.get_types_names(:relation_document)
+    @relation_types_part=Typesobject.get_types_names(:relation_part)
     @tree=create_tree(@project)
     @tree_up=create_tree_up(@project)
+
+    @documents=@project.documents
+    @parts=@project.parts
+    @customers=@project.customers
+    
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @project }
@@ -46,7 +52,7 @@ class ProjectsController < ApplicationController
   # on definit les listes de valeur pour le type et le statut 
   def new
     @project = Project.create_new(nil, @user)
-    @types=Project.getTypesProject
+    @types=Project.get_types_project
     @status= Statusobject.find_for("project")
     respond_to do |format|
       format.html # new.html.erb
@@ -58,7 +64,7 @@ class ProjectsController < ApplicationController
   # modification d'un projet
   def edit
     @project = Project.find_edit(params[:id])
-    @types=Project.getTypesProject
+    @types=Project.get_types_project
     @status= Statusobject.find_for("project")
   end
   
@@ -67,7 +73,7 @@ class ProjectsController < ApplicationController
   # creation d'un projet (apres validation du new)
   def create
     @project = Project.create_new(params[:project], @user)
-    @types=Project.getTypesProject
+    @types=Project.get_types_project
     @status= Statusobject.find_for("project")
     respond_to do |format|
       if @project.save
@@ -87,7 +93,7 @@ class ProjectsController < ApplicationController
   # maj d'un projet (apres validation du edit)
   def update
     @project = Project.find(params[:id])
-    @types=Project.getTypesProject
+    @types=Project.get_types_project
     @status= Statusobject.find_for("project")
     respond_to do |format|
       if @project.update_attributes(params[:project])
