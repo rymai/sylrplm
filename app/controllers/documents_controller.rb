@@ -27,12 +27,9 @@ class DocumentsController < ApplicationController
   def show
     @document = Document.find(params[:id])
     @datafiles=@document.get_datafiles
-    
     @parts=@document.parts
     @projects=@document.projects
     @customers=@document.customers
-
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @document }
@@ -60,6 +57,7 @@ class DocumentsController < ApplicationController
     @status= Statusobject.find_for("document")
     #@status= Statusobject.find_for("document")
     puts "document.edit:type="+@document.statusobject.inspect
+    puts "document.edit:status="+@status.inspect
   end
   
   # POST /documents
@@ -112,7 +110,7 @@ class DocumentsController < ApplicationController
   def destroy
     @document= Document.find(params[:id])
     if(@document!=nil)
-      @document.destroy
+      @document.delete
       flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_document),:ident=>@document.ident)
     else
       flash[:notice] = t(:ctrl_object_not_deleted,:object=>t(:ctrl_document),:ident=>@document.ident)
@@ -145,6 +143,7 @@ class DocumentsController < ApplicationController
     previous_rev=document.revision
     @document=document.revise
     @types=Document.get_types_document
+    @status= Statusobject.find_for("document")
     respond_to do |format|
       if(@document != nil)
         if @document.save

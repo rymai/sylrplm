@@ -1,39 +1,30 @@
 <table>
     <tr>
-        <th
-            <%= sort_td_class_helper :ident %>>
+        <th<%= sort_td_class_helper :ident %>>
             <%= sort_link_helper t(:label_ident), :ident %>
         </th>
-        <th
-            <%= sort_td_class_helper :typesobject_id %>>
-            <%= sort_link_helper t(:label_typesobject), :typesobject_id %>
-        </th>
-        <th
-            <%= sort_td_class_helper :revision %>>
+        <th<%= sort_td_class_helper :revision %>>
             <%= sort_link_helper t(:label_revision), :revision %>
         </th>
-        <th
-            <%= sort_td_class_helper :volume_id %>>
+        <th<%= sort_td_class_helper :typesobject_id %>>
+            <%= sort_link_helper t(:label_typesobject), :typesobject_id %>
+        </th>
+        <th<%= sort_td_class_helper :volume_id %>>
             <%= sort_link_helper t(:label_volume), :volume_id %>
         </th>
-        <th
-            <%= sort_td_class_helper :filename %>>
+        <th<%= sort_td_class_helper :filename %>>
             <%= sort_link_helper t(:label_filename), :filename %>
         </th>
-        <th
-            <%= sort_td_class_helper :content_type %>>
+        <th<%= sort_td_class_helper :content_type %>>
             <%= sort_link_helper t(:label_content_type), :content_type %>
         </th>
-        <th
-            <%= sort_td_class_helper :owner %>>
+        <th<%= sort_td_class_helper :owner %>>
             <%= sort_link_helper t(:label_responsible), :owner %>
         </th>
-        <th
-            <%= sort_td_class_helper :document %>>
+        <th<%= sort_td_class_helper :document %>>
             <%= sort_link_helper t(:label_document), :document %>
         </th>
-        <th
-            <%= sort_td_class_helper :created_at %>>
+        <th<%= sort_td_class_helper :created_at %>>
             <%= sort_link_helper t(:label_date), :created_at %>
         </th>
         <th>
@@ -70,21 +61,20 @@
         <td>
             <%=h datafile.owner.login %>
         </td>
-         <td>
-         	<% unless datafile.document.nil?%>
+        <td>
+            <% unless datafile.document.nil? %>
             <%=h datafile.document.ident %>
-						<%end%>
+            <%end %>
         </td>
         <td>
             <%=h datafile.updated_at %>
         </td>
-        <% if document.nil? || !document.is_checked %>
+        <% if (document.nil? || !document.is_checked) && !datafile.filename.nil? %>
         <td>
             <%= link_to t(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %>
         </td>
         <%end %>
-        
-				<% unless document.nil? %>
+        <% unless document.nil? %>
         <td>
             <%= link_to h_img_show.to_s, datafile_path(datafile)+"?doc=#{document.id}" %>
         </td>

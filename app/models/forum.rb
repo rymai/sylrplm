@@ -15,7 +15,7 @@ class Forum < ActiveRecord::Base
   def self.create_new(forum)
     if(forum==nil)
       forum=Forum.new  
-      forum.statusobject=Statusobject.find_first("forum")
+      forum.statusobject=Statusobject.get_first("forum")
       Sequence.set_default_values(forum, self.name,true)
     else
       forum=Forum.new(forum)

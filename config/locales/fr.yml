@@ -269,6 +269,7 @@ fr:
   label_volume: Volume
   label_content_type: Type de contenu
   label_document: Document
+  label_restore_file: Fichier à restaurer
   # fields documents
   document_edit: Edition document
   document_list: Liste documents
@@ -280,6 +281,11 @@ fr:
   document_datafiles: Fichiers du document
   datafile_add: Ajout d'un fichier au document
   label_nbfiles: Nb fichiers
+  check_out: "Réserver"
+  check_in: "Maj et libérer"
+  check_free: "Libérer"
+  download: "Télécharger fichier"
+  reason: Raison
   # fields forums
   forum_edit: Edition forum 
   forum_list: Liste des forums 
@@ -431,12 +437,6 @@ fr:
   research: "Recherche"
   production: "Production"
   forum: Forum
-  #
-  check_out: "Réserver"
-  check_in: "Maj et libérer"
-  check_free: "Libérer"
-  download: "Télécharger fichier"
-  
   # help
   help_title: "Aide relative à l application SYLRPLM" 
   help_close_window: Fermer la fenêtre d'aide

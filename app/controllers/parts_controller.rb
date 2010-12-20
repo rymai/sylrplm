@@ -30,7 +30,7 @@ class PartsController < ApplicationController
               :conditions => ["id != #{@part.id}"],
               :order => 'ident ASC',
               :per_page => cfg_items_per_page)
-    @first_status=Statusobject.find_first("part")
+    @first_status=Statusobject.get_first("part")
     @tree=create_tree(@part)
     @tree_up=create_tree_up(@part)
     

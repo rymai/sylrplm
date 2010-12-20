@@ -28,7 +28,7 @@ class Project < ActiveRecord::Base
       Sequence.set_default_values(obj, self.name, true)
     end
     obj.owner=user
-    obj.statusobject = Statusobject.find_first("project")
+    obj.statusobject = Statusobject.get_first("project")
     puts obj.inspect
     obj
   end

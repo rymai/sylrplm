@@ -12,7 +12,7 @@ class Datafile < ActiveRecord::Base
   belongs_to :owner,
     :class_name => "User",
     :foreign_key => "owner_id" 
-  
+  FILE_REV_DELIMITER="__"
   def self.create_new(params,user)
     #puts "datafile.create_new:user="+user.inspect
     if(params==nil)   
@@ -59,8 +59,25 @@ class Datafile < ActiveRecord::Base
       self.create_dir
       self.update_attributes(:uploaded_file=>uploaded_file)
     else
-      self.update_attributes(parameters)
+      unless params[:restore_file].nil?
+        puts "plm_object.update_attributes_repos:"+params[:restore_file]
+        from_rev=Datafile.get_revision_from_file(params[:restore_file])
+        if from_rev!=self.revision.to_s
+          # on remet la revision demandee active en creant une nouvelle revision
+          parameters[:revision]=self.revision.next
+          parameters[:filename]=Datafile.get_filename_from_file(params[:restore_file])
+          self.update_attributes(parameters)
+          move_file(params[:restore_file])
+        else
+          self.update_attributes(parameters)
+        end
+        
+      end
     end
+  end
+  
+  def move_file(from)
+    File.rename(File.join(get_dir_repository,from), get_repository)
   end
   
   def uploaded_file=(file_field)
@@ -84,7 +101,7 @@ class Datafile < ActiveRecord::Base
   
   def get_repository
     # on prend le volume du fichier lui meme
-    puts "plm_object.get_repository="+self.inspect
+    #puts "plm_object.get_repository="+self.inspect
     repos=get_dir_repository
     #        begin 
     #          FileUtils.mkdir_p(repos)
@@ -94,17 +111,57 @@ class Datafile < ActiveRecord::Base
     #        end
     if(self.filename!=nil)
       rev=self.revision
-      if rev==nil 
+      unless rev.nil?
         # if @params[:revision]!=nil
         #   rev=@params[:revision]
         # end
-        repos=File.join(repos, rev.to_s+"_"+self.filename)
+        repos=File.join(repos, FILE_REV_DELIMITER+rev.to_s+FILE_REV_DELIMITER+self.filename)
       else
         repos=File.join(repos, self.filename)
       end 
-      puts "plm_object.get_repository="+rev.to_s+" filename="+self.filename.to_s
+      #puts "plm_object.get_repository="+rev.to_s+" filename="+self.filename.to_s
     end
     repos
+  end
+  
+  def get_revisions_files
+    ret=[]
+    dir=get_dir_repository
+    puts "plm_object.get_revisions;dir="+get_dir_repository
+    if File.exists? (dir)
+      Dir.foreach(dir) { |file| 
+        filename=file.split(FILE_REV_DELIMITER)[2]
+        revision=file.split(FILE_REV_DELIMITER)[1]
+        unless filename.nil? && revision.nil?
+          puts "plm_object.get_revisions;file="+file+" name="+filename.to_s+" rev="+revision.to_s
+          #ret<<{:filename=>filename,:revision=>revision}
+          #if revision.to_s != self.revision.to_s
+          ret<<file.to_s
+          #end
+        end
+      }
+    end
+    ret
+  end
+  
+  def self.get_revision_from_file(_filename)
+    _filename.split(FILE_REV_DELIMITER)[1]
+  end
+  
+  def self.get_filename_from_file(_filename)
+    _filename.split(FILE_REV_DELIMITER)[2]
+  end
+  
+  def get_current_revision_file
+    puts "get_current_revision_file:"+self.revision.to_s+" filename="+self.filename.to_s
+    ret=""
+    unless self.revision.blank? && self.filename.blank?  
+      ret=FILE_REV_DELIMITER
+      ret+=self.revision.to_s
+      ret+=FILE_REV_DELIMITER
+      ret+=self.filename.to_s
+    end
+    ret
   end
   
   def read_file
@@ -142,6 +199,11 @@ class Datafile < ActiveRecord::Base
     end
     self
   end
+  
+  def find_col_for(strcol)
+    Sequence.find_col_for(self.class.name,strcol)
+  end 
+  
   def self.get_conditions(filter)
     filter=filter.gsub("*","%")
     ["ident LIKE ? or "+qry_type+" or revision LIKE ? "+

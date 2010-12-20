@@ -28,24 +28,33 @@
     <% if  document.is_checked %>
     <br/>
     <%= f.file_field(:uploaded_file) %>
-    <%end %>
-    <%else%>
+    <br/>
+		<b><%= f.label t(:label_restore_file) %></b>
 		<br/>
-    <%= f.file_field(:uploaded_file) %>
+    <%= select_tag("restore_file",options_for_select(@datafile.get_revisions_files,@datafile.get_current_revision_file)) %>
     <%end %>
-</p>
-<p>
-    <%= f.label t(:label_content_type) %>
+    <%else %>
     <br/>
-    <%=@datafile.content_type %>
-</p>
-<p>
-    <b><%= f.label t(:label_responsible) %></b>
+    <%= f.file_field(:uploaded_file) %>
     <br/>
-    <%= @datafile.owner.login %>
-</p>
-<p>
-    <b><%= f.label t(:label_date) %></b>
+		<b><%= f.label t(:label_restore_file) %></b>
     <br/>
-    <%= @datafile.updated_at %>
-</p>
+    <%= select_tag("restore_file",options_for_select(@datafile.get_revisions_files,@datafile.get_current_revision_file)) %>
+    <p>
+        <%end %>
+    </p>
+    <p>
+        <b><%= f.label t(:label_content_type) %></b>
+        <br/>
+        <%=@datafile.content_type %>
+    </p>
+    <p>
+        <b><%= f.label t(:label_responsible) %></b>
+        <br/>
+        <%= @datafile.owner.login %>
+    </p>
+    <p>
+        <b><%= f.label t(:label_date) %></b>
+        <br/>
+        <%= @datafile.updated_at %>
+    </p>
