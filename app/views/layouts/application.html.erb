@@ -6,9 +6,12 @@
     <%= javascript_include_tag :defaults %>
     <%= stylesheet_link_tag @theme+"/scaffold" %>
     <%= stylesheet_link_tag @theme+"/frame", :media => "all" %>
+    <%= stylesheet_link_tag @theme+"/tree" %>
+    <%= javascript_include_tag "tree" %>
   </head>
-
-  <body id="store">
-    <%= render(:partial => "main/frame")%>
+  <body id="sylrplm">
+    <div id="container">
+      <%= render(:partial => "main/frame") %>
+    </div>
   </body>
 </html>

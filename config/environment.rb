@@ -10,39 +10,39 @@ Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.
-  
+
   config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
-  
+
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{Rails.root}/lib/classes )
-  
+
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
-  
+
   # Skip frameworks you're not going to use. To use Rails without a database,
   # you must remove the Active Record framework.
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
-  
+
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-  
+
   # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
   # Run "rake -D time" for a list of tasks for finding time zone names.
   config.time_zone = 'UTC'
-  
+
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
   config.action_controller.session_store = :active_record_store
-  
+
   config.i18n.default_locale = :fr
-  
+
   config.action_mailer.delivery_method       = :smtp
   config.action_mailer.perform_deliveries    = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_charset       = 'iso-8859-1'
-  
+  config.action_mailer.default_charset       = 'utf-8'
+
   config.action_mailer.smtp_settings = {
     :address => "smtp.free.fr",
     :port => 25,
@@ -51,15 +51,15 @@ Rails::Initializer.run do |config|
     #:user_name => xxx,
     #:password => xxx
   }
-  
+
 end
 
-#environneemnt specifique a l'admin de l'application sylrplm
-require File.join(File.dirname(__FILE__), 'sylrplm')
+# environneemnt specifique a l'admin de l'application sylrplm
 require 'os_functions'
+require File.join(File.dirname(__FILE__), 'sylrplm')
 
-begin
-  require File.join(File.dirname(__FILE__), 'sylrplm_', OsFunctions.os)
-rescue
-  puts "#{File.join(File.dirname(__FILE__), 'sylrplm_', OsFunctions.os)} doesn't exist!"
+if File.exists?(File.join(File.dirname(__FILE__), "sylrplm_#{OsFunctions.os}.rb"))
+  require File.join(File.dirname(__FILE__), "sylrplm_#{OsFunctions.os}")
+else
+  puts "#{File.join(File.dirname(__FILE__), "sylrplm_#{OsFunctions.os}")} doesn't exist!"
 end

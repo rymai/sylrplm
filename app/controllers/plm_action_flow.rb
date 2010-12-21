@@ -1,4 +1,4 @@
-class PlmActionFlow < ActionFlow::Base
+class PlmActionFlow #< ActionFlow::Base
  
   # Put your mapping in Ruby objects standard initialize method
   def initialize

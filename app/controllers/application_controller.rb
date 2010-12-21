@@ -1,15 +1,7 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
 require 'rexml/document'
-#require 'logger'
-# require "lib/classes/app_classes"
-#  controleur principal.
 class ApplicationController < ActionController::Base
   include Classes::AppClasses
-  #include REXML
   helper :all # include all helpers, all the time
-
-  layout "main"
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   filter_parameter_logging :password
@@ -19,7 +11,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
   before_filter :define_variables
 
-  access_control (Access.find_for_controller(controller_class_name()))
+  access_control(Access.find_for_controller(controller_class_name))
 
   def permission_denied
     flash[:notice] = t(:ctrl_no_privilege)
@@ -32,33 +24,20 @@ class ApplicationController < ActionController::Base
 
   class Class
     def extend?(klass)
-      not superclass.nil? && ( superclass == klass or superclass.extend? klass )
+      !(superclass.nil? && (superclass == klass || superclass.extend?(klass)))
     end
   end
 
   def get_models_and_columns
-    ret=""
-    i=0
-    models = Dir.new("#{RAILS_ROOT}/app/models").entries
-    models.each do |model|
-      if model != "." && model != ".." && model.index('obsolete')==nil
-        mdl = model.camelize.gsub(".rb","")
-        #puts 'ApplicationController.getModels:mdl='+mdl
-        omdl = eval(mdl)
+    ret = ""
+    Dir.new("#{RAILS_ROOT}/app/models").entries.each do |model|
+      unless %w[. .. obsolete].include?(model)
+        mdl = model.camelize.gsub('.rb', '')
         begin
-          cols=omdl.content_columns()
-        rescue Exception
-          #puts 'ApplicationController.getModels:pas ActiveRecord::Base:='+mdl
-        else
-          #if(met!='index' && met!='login' && met!='logout' && met.index('_old')==nil && met.index('obsolete')==nil)
-          cols.each {|col|
-            if(col.name != 'created_at' && col.name != 'updated_at' && col.name != 'owner')
-              mdlcol=mdl.to_s+"."+col.name
-              ret+="<option>"+mdlcol+"</option>"
-              #puts 'ApplicationController.getModels:model.col='+mdlcol
-            end
-            i=i+1;
-          }
+          mdl.constantize.content_columns.each do |col|
+            ret += "<option>#{mdl}.#{col.name}</option>" unless %w[created_at updated_at owner].include?(col.name)
+          end
+        rescue # do nothing
         end
       end
     end

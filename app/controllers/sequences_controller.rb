@@ -26,7 +26,7 @@ class SequencesController < ApplicationController
   def new
     @sequence = Sequence.new
     #@objects=Sequence.getObjectsWithSequence
-    @utilities=get_models_and_columns()
+    @utilities=get_models_and_columns
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @sequence }

@@ -1,11 +1,9 @@
-#require 'lib/controllers/plm_init_controller_module'
 class MainController < ApplicationController
   include Controllers::PlmInitControllerModule
-  
-  
+
   access_control (Access.find_for_controller(controller_class_name()))
-  
-  def infos()
+
+  def infos
     request.env["PATH_INFO"] +":"+__FILE__+":"+__LINE__.to_s
   end
 
@@ -19,7 +17,7 @@ class MainController < ApplicationController
     puts "main_controller.index"
     @datas=get_datas_count
     #@total_favoris = Favori.count
-    
+
     if(params[:theme]!=nil)
       @theme=params[:theme]
       if @user!=:user_not_connected
@@ -33,7 +31,7 @@ class MainController < ApplicationController
       end
     end
     @themes=get_themes(@theme)
-    if message=="" 
+    if message==""
       flash[:notice]=message+"</br>"+t(label_theme)+"="+@theme
       respond_to do |format|
         format.html # index.html.erb
@@ -41,7 +39,7 @@ class MainController < ApplicationController
     end
     @logger.info("<==")
   end
-  
+
   # appelle si il manque des objets pour demarrer (user, role, types, status)
   def init_objects
     check_init_objects
@@ -63,5 +61,5 @@ class MainController < ApplicationController
       format.html # init.html.erb
     end
   end
-  
+
 end

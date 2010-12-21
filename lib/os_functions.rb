@@ -5,7 +5,7 @@ module OsFunctions
   # Examine the ruby platform yourself. If you see other values please comment
   # in the snippet on dzone and I will add them.
   
-  def os
+  def self.os
     case RUBY_PLATFORM
     when /darwin/i
       "mac"
