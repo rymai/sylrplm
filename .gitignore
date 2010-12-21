@@ -10,3 +10,6 @@ config/database.yml
 route/**/*
 .directory
 .project
+
+# Mac OSX
+.DS_Store
