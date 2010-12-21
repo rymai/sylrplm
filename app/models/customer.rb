@@ -1,5 +1,3 @@
-#require 'lib/models/plm_object'
-#require 'lib/models/sylrplm_common'
 class Customer < ActiveRecord::Base
   include Models::SylrplmCommon
   include Models::PlmObject
