@@ -1,17 +1,14 @@
 class InfoController < ApplicationController
-  access_control (Access.find_for_controller(controller_class_name()))
-  
-  
+  access_control(Access.find_for_controller(controller_class_name))
+
   def which_documents
-    part =Part.find(params[:id])
+    part = Part.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     logger.error("Part non trouvee: #{params[:id]}")
-    #flash[:notice] = "Part invalide"
-    #@part=nil
-    #@documents=nil
-    render(:text, :text=>t(:info_object_not_found, context=>"which_documents",:object=>:ctrl_part,:id=>params[:id]))
+    render(:text, :text => t(:info_object_not_found, context => "which_documents", :object => :ctrl_part, :id => params[:id]))
   else
-    @part=part
-    @documents=@part.documents
+    @part      = part
+    @documents = @part.documents
   end
+
 end

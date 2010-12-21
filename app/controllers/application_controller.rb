@@ -48,17 +48,15 @@ class ApplicationController < ActionController::Base
   def set_locale
     if params[:locale]
       I18n.locale = params[:locale]
-      session[:lng]=I18n.locale
+      session[:lng] = I18n.locale
     else
       if session[:lng]
         I18n.locale = session[:lng]
       else
-        I18n.locale=SYLRPLM::LOCAL_DEFAULT
+        I18n.locale = SYLRPLM::LOCAL_DEFAULT
         session[:lng] = I18n.locale
       end
     end
-    #I18n.locale = "en" #force a en sinon les date_select ne marchent plus
-    #I18n.load_path += Dir[ File.join(RAILS_ROOT, 'lib', 'locale', '*.{rb,yml}') ]
   end
 
   def current_user
@@ -67,18 +65,18 @@ class ApplicationController < ActionController::Base
 
   # definition des variables globales.
   def define_variables
-    @user = User.find_user(session)
-    @userid = User.find_userid(session)
-    @username = User.find_username(session)
-    @usermail = User.find_usermail(session)
-    @userrole = User.find_userrole(session)
-    @favori_document=  find_favori_document
-    @favori_project  = find_favori_project
-    @favori_part = find_favori_part
-    @urlbase="http://"+request.env["HTTP_HOST"]
-    @theme=User.find_theme(session)
-    logfile = File.join(File.dirname(__FILE__),'..','..','log', 'sylrplm.log')
-    @logger = Logger.new(logfile, 'daily')
+    @user             = User.find_user(session)
+    @userid           = User.find_userid(session)
+    @username         = User.find_username(session)
+    @usermail         = User.find_usermail(session)
+    @userrole         = User.find_userrole(session)
+    @favori_document  = find_favori_document
+    @favori_project   = find_favori_project
+    @favori_part      = find_favori_part
+    @urlbase          = "http://"+request.env["HTTP_HOST"]
+    @theme            = User.find_theme(session)
+    logfile           = File.join(File.dirname(__FILE__),'..','..','log', 'sylrplm.log')
+    @logger           = Logger.new(logfile, 'daily')
     @logger.level     = Logger::DEBUG #DEBUG INFO WARN ERROR FATAL ANY
     @logger.formatter = LogFormatter.new  # Install custom formatter!
     #@logger.datetime_format = "%Y-%m-%d %H:%M:%S"
@@ -86,14 +84,14 @@ class ApplicationController < ActionController::Base
 
   def get_themes(default)
     #renvoie la liste des themes
-    dirname=RAILS_ROOT + '/public/stylesheets/*'
-    ret=""
+    dirname = "#{Rails.root}/public/stylesheets"
+    ret = ""
     Dir.glob(dirname).each do |dir|
-      theme=File.basename(dir, '.*')
-      if(theme==default)
-        ret<<"<option selected=\"selected\">"<<theme<<"</option>"
-    else
-      ret<<"<option>"<<theme<<"</option>"
+      theme = File.basename(dir, '.*')
+      if theme == default
+        ret << "<option selected=\"selected\">#{theme}</option>"
+      else
+        ret << "<option>#{theme}</option>"
       end
     end
     puts "application_controller.get_themes"+dirname+"="+ret
@@ -121,28 +119,29 @@ class ApplicationController < ActionController::Base
   end
 
   def reset_favori_document
-    session[:favori_document]=nil
+    session[:favori_document] = nil
   end
   def reset_favori_part
-    session[:favori_part]=nil
+    session[:favori_part] = nil
   end
   def reset_favori_project
-    session[:favori_project]=nil
+    session[:favori_project] = nil
   end
 
   # redirection vers l'action index
   def redirect_to_index(msg=nil)
-    flash[:notice]=msg if msg
+    flash[:notice] = msg if msg
     redirect_to :action => index
   end
 
   def get_datas_count
-    {:documents=>Document.count,
-    :parts => Part.count,
-    :projects => Project.count,
-    :customers => Customer.count}
+    {
+      :documents => Document.count,
+      :parts => Part.count,
+      :projects => Project.count,
+      :customers => Customer.count
+    }
   end
-
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
@@ -150,7 +149,7 @@ class ApplicationController < ActionController::Base
   def authorize
     unless User.find_by_id(session[:user_id])
       session[:original_uri] = request.request_uri
-      flash[:notice] =t(:login_login)
+      flash[:notice] = t(:login_login)
       redirect_to(:controller => "login", :action=> "login")
     end
   end

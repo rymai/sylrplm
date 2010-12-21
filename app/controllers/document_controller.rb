@@ -1,4 +1,2 @@
 class DocumentController < ApplicationController
-  
-  
 end
