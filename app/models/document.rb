@@ -33,11 +33,12 @@ class Document < ActiveRecord::Base
     else
       #doc = user.documents.build(:ident => Sequence.get_next_seq("Document.ident"))    
       doc = Document.new  
-      Sequence.set_default_values(doc, self.name, true)
+      #Sequence.set_default_values(doc, self.name, true)
+      doc.set_default_values(true)
       doc.volume = Volume.find(1) 
     end
     doc.owner=user
-    doc.statusobject = Statusobject.find_first("document")
+    doc.statusobject = Statusobject.get_first("document")
     #puts "document.create_new:"+doc.inspect
     doc
   end
@@ -65,8 +66,8 @@ class Document < ActiveRecord::Base
   end
   
   def is_freeze
-    if(self.statusobject!=nil && Statusobject.find_last("document")!=nil)
-      if(self.statusobject.rank == Statusobject.find_last("document").rank)
+    if(self.statusobject!=nil && Statusobject.get_last("document")!=nil)
+      if(self.statusobject.rank == Statusobject.get_last("document").rank)
         true
       else
         false
@@ -78,8 +79,8 @@ class Document < ActiveRecord::Base
   
   # a valider si avant dernier status
   def is_to_validate
-    if(self.statusobject!=nil && Statusobject.find_last("document")!=nil)
-      if(self.statusobject.rank == Statusobject.find_last("document").rank-1)
+    if(self.statusobject!=nil && Statusobject.get_last("document")!=nil)
+      if(self.statusobject.rank == Statusobject.get_last("document").rank-1)
         true
       else
         false
@@ -142,11 +143,15 @@ class Document < ActiveRecord::Base
   end 
   
   def remove_datafile(item)
-    #    link=Link.find_child("document",self,"datafile",item)
-    #    if link.destroy
-    #      item.destroy
-    #    end
+    item.remove_file
     self.datafile.delete(item)
+  end
+  
+  def delete
+    self.datafile.each { |file|
+      self.remove_datafile(file)
+    }
+    self.destroy
   end
   
   def self.get_conditions(filter)

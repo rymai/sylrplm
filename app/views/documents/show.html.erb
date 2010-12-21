@@ -37,52 +37,55 @@
 </p>
 <table class='menu_bas'>
     <% if (@document.is_freeze() == true ) %>
-	    <tr>
-	        <td>
-	            <%=t("freeze") %>
-	        </td>
-	    </tr>
+    <tr>
+        <td>
+            <%=t("freeze") %>
+        </td>
+    </tr>
     <% else %>
-	    <% if(@document.is_checked()==false) %>
-		    <% form_for(@document, :url => {:id => @document.id, :action => "check_out" }) do |f| %>
-			    <tr>
-			        <td>
-			            <%= f.submit t("check_out") %>
-			        </td>
-			        <td>
-			            <%= label_tag :reason %><%= text_field_tag :reason %>
-			        </td>
-			    </tr>
-		    <%end %>
-	    <% else %>
-		    <% form_for(@document, :url => {:id => @document.id, :action => "check_in" },
-		    :html => { :multipart => true}) do |f| %>
-			    <tr>
-			        <td>
-			            <%= f.submit t("check_in") %>
-			        </td>
-			        <td>
-			            <%= label_tag :reason %><%= text_field_tag :reason %>
-			        </td>
-			    </tr>
-		    <% end %>
-		    <% form_for(@document, :url => {:id => @document.id, :action => "check_free" }) do |f| %>
-			    <tr>
-			        <td>
-			            <%= f.submit t("check_free") %>
-			        </td>
-			        <td>
-			            <%= label_tag :reason %><%= text_field_tag :reason %>
-			        </td>
-			    </tr>
-		    <% end %>
-			<%end%>
+    <% if(@document.is_checked()==false) %>
+    <% form_for(@document, :url => {:id => @document.id, :action => "check_out" }) do |f| %>
+    <tr>
+        <td>
+            <%= f.submit t("check_out") %>
+        </td>
+        <td>
+            <%= label_tag t("reason") %><%= text_field_tag :reason %>
+        </td>
+    </tr>
+    <%end %>
+    <% else %>
+    <% form_for(@document, :url => {:id => @document.id, :action => "check_in" },
+    :html => { :multipart => true}) do |f| %>
+    <tr>
+        <td>
+            <%= f.submit t("check_in") %>
+        </td>
+        <td>
+            <%= label_tag t("reason") %><%= text_field_tag :reason %>
+        </td>
+    </tr>
     <% end %>
+    <% form_for(@document, :url => {:id => @document.id, :action => "check_free" }) do |f| %>
+    <tr>
+        <td>
+            <%= f.submit t("check_free") %>
+        </td>
+        <td>
+            <%= label_tag t("reason") %><%= text_field_tag :reason %>
+        </td>
+    </tr>
+    <% end %>
+    <%end %>
+    <% end %>
+</table>
+<br/>
+<table class='menu_bas'>
     <tr>
         <td>
             <%= link_to t("edit"), edit_document_path(@document) %>
         </td>
-				<td>
+        <td>
             <%= link_to t("new_document"), new_document_path %>
         </td>
         <td>
@@ -95,7 +98,9 @@
 <table class='menu_bas'>
     <tr>
         <td>
+        	 <% unless @document.is_freeze  %>
             <%= link_to h_img(:add_datafile).to_s+t("add_datafile"), :id => @document.id, :action => :new_datafile %>
-        </td>
+        <%end%>
+				</td>
     </tr>
 </table>

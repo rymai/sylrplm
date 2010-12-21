@@ -32,12 +32,7 @@ module Controllers::PlmObjectControllerModule
     puts "plm_object_controller.ctrl_promote:"+object.inspect+" "+withMail.to_s
     email_ok=true
     if withMail==true
-      askUserMail=object.owner.email
-      puts "plm_object_controller.ctrl_promote:"+askUserMail.to_s+"|"
-      if askUserMail==nil
-        puts "plm_object_controller.ctrl_promote:pas de mail"
-        email_ok=false
-      end
+      email_ok=PlmMailer.could_send(object.owner)
     end
     respond_to do |format|
       if email_ok==true
@@ -55,9 +50,9 @@ module Controllers::PlmObjectControllerModule
             end
             if object.is_freeze
               validersMail=PlmMailer.listUserMail(validers,@user)
-              email=PlmMailer.create_validated(object, @usermail, @urlbase, askUserMail, validersMail)
+              email=PlmMailer.create_validated(object, @usermail, @urlbase, validersMail)
             end
-            if email!=nil && email!=""
+            unless email.blank?
               email.set_content_type("text/html")
               PlmMailer.deliver(email)
             end

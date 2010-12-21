@@ -33,7 +33,7 @@ class Part < ActiveRecord::Base
       Sequence.set_default_values(p, self.name, true)
     end
     #p.revision=getFirstRevision
-    p.statusobject=Statusobject.find_first("part")
+    p.statusobject=Statusobject.get_first("part")
     p.owner=user
     puts "part.create_new:"+p.inspect
     p

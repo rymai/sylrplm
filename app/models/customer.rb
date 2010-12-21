@@ -25,7 +25,7 @@ class Customer < ActiveRecord::Base
       Sequence.set_default_values(obj, self.name, true)
     end
     obj.owner=user
-    obj.statusobject = Statusobject.find_first("customer")
+    obj.statusobject = Statusobject.get_first("customer")
     puts obj.inspect
     obj
   end

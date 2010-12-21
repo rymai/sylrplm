@@ -6,7 +6,6 @@ module Classes::AppClasses
     def call(severity, time, program_name, message)
       datetime      = time.strftime("%Y-%m-%d %H:%M")
       if severity == "ERROR"
-
         print_message = "!!! #{String(message)} (#{datetime}) !!!"
         border        = "!" * print_message.length
         [border, print_message, border].join("\n") + "\n"

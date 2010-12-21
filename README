@@ -19,18 +19,18 @@ Application SylRPLM : Product Life Management
     unzip sylrplm.zip -d sylrplm
   
   - Se placer dans à la racine de l'application
-    
-      cd sylrplm
-    
-- Installation des plugins 
+  
+    cd sylrplm
+  
+- Installation des gems
   
   - rake gems:install
   - gem install mysql
   
-- environnement windows
-  - ajouter le chemin de mysql/bin au PATH
-  - telecharger http://instantrails.rubyforge.org/svn/trunk/InstantRails-win/InstantRails/mysql/bin/libmySQL.dll
-    et copier la dll dans le repertoire bin de ruby
+- Environnement windows
+  - Ajouter le chemin de mysql/bin au PATH
+  - Télécharger http://instantrails.rubyforge.org/svn/trunk/InstantRails-win/InstantRails/mysql/bin/libmySQL.dll
+    et copier la dll dans le répertoire bin de Ruby
     
 - Installation de l'application
   
@@ -45,5 +45,6 @@ Application SylRPLM : Product Life Management
     
       rake db:schema:load RAILS_ENV=production
     
-  - lancer le serveur
-    ruby script/server -e production
+  - Lancer le serveur
+    
+      ruby script/server -e production
