@@ -1,5 +1,5 @@
-require "lib/classes/app_classes"
-require 'lib/controllers/plm_object_controller_module'
-require 'lib/controllers/plm_init_controller_module'
-require 'lib/models/sylrplm_common'
-require 'lib/models/plm_object'
+require 'classes/app_classes'
+require 'controllers/plm_object_controller_module'
+require 'controllers/plm_init_controller_module'
+require 'models/plm_object'
+require 'models/sylrplm_common'

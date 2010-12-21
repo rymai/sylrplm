@@ -58,7 +58,4 @@ Rails::Initializer.run do |config|
     #:password => xxx
   }
   
-    
-
-  
 end
