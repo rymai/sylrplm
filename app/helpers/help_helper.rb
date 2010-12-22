@@ -104,14 +104,14 @@ module HelpHelper
   
   def h_help_root
     #xmlHelp = REXML::Document.new(File.new("/home/syl/trav/rubyonrails/sylrplm/public/help.xml"))
-    xmlHelp = REXML::Document.new(File.new("public/help_"+session[:lng]+".xml"))
+    xmlHelp = REXML::Document.new(File.new("public/help_#{session[:lng]}.xml"))
     root_help = xmlHelp.root
   end
   
   def h_help_all   
     root_help=h_help_root
     #sommaire
-    msg="<h1><a class='help_tr' name='help_summary'>"+t(:help_summary)+"</a></h1>\n"
+    msg="<h1><a class='help_tr' name='help_summary'>#{t(:help_summary)}</a></h1>\n"
     msg+=h_help_summary(root_help)
     msg+="<hr>\n"
     #contenu

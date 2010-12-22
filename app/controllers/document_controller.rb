@@ -1,2 +1,0 @@
-class DocumentController < ApplicationController
-end

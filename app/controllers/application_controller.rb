@@ -5,9 +5,8 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   filter_parameter_logging :password
-  before_filter :authorize, :except => [:index,:init_objects,:get_themes,:find_theme,:permission_denied,:permission_granted,
-  :permission_granted,:current_user,:redirect_to_index,:tree_part,:tree_project,:tree_customer,:follow_tree_part,:follow_tree_up_part,
-  :follow_tree_project,:follow_tree_up_project,:follow_tree_customer,:tree_documents,:tree_forums]
+  # before_filter :authorize, :except => [:index,:init_objects,:get_themes,:find_theme,:permission_denied,:permission_granted, :permission_granted,:current_user,:redirect_to_index,:tree_part,:tree_project,:tree_customer,:follow_tree_part,:follow_tree_up_part, :follow_tree_project,:follow_tree_up_project,:follow_tree_customer,:tree_documents,:tree_forums]
+  before_filter :authorize, :except => [:index, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
 
@@ -84,9 +83,9 @@ class ApplicationController < ActionController::Base
 
   def get_themes(default)
     #renvoie la liste des themes
-    dirname = "#{Rails.root}/public/stylesheets"
+    dirname = "#{Rails.root}/public/stylesheets/*"
     ret = ""
-    Dir.glob(dirname).each do |dir|
+    Dir[dirname].each do |dir|
       theme = File.basename(dir, '.*')
       if theme == default
         ret << "<option selected=\"selected\">#{theme}</option>"
@@ -150,7 +149,7 @@ class ApplicationController < ActionController::Base
     unless User.find_by_id(session[:user_id])
       session[:original_uri] = request.request_uri
       flash[:notice] = t(:login_login)
-      redirect_to(:controller => "login", :action=> "login")
+      redirect_to new_sessions_url
     end
   end
 

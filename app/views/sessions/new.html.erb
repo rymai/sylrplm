@@ -1,0 +1,28 @@
+<div class="depot-form">
+  <fieldset>
+    <legend>
+      <%= t(:legend_login) %>
+    </legend>
+    <% form_for :session, :url => sessions_path, :html => { :method => 'post' } do |form| %>
+    <p>
+      <label for="name">
+        <%= t(:label_username) %>
+      </label>
+      <%= text_field_tag :login, params[:login] %>
+    </p>
+    <p>
+      <label for="password">
+        <%= t(:label_password) %>
+      </label>
+      <%= password_field_tag :password, params[:password] %>
+    </p>
+    <table class='menu_bas'>
+      <tr>
+        <td>
+          <%= submit_tag t(:submit_login) %>
+        </td>
+      </tr>
+    </table>
+    <% end %>
+  </fieldset>
+</div>

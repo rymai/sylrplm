@@ -1,4 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
+  # syl 17/11/2010 : route par defaut 
+  map.root :controller => "main", :action => "index"
+  
+  map.resource :sessions, :only => [:new, :create, :destroy], :member => { :choose_role => :get }
+
+  map.resources :users
+  
   map.resources :datafiles
 
   map.resources :questions
@@ -78,7 +85,4 @@ ActionController::Routing::Routes.draw do |map|
   # consider removing or commenting them out if you're using named routes and resources.
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
-  
-  #syl 17/11/2010 : route par defaut 
-  map.root :controller => "main", :action => "index"
 end

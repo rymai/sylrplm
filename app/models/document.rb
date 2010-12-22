@@ -1,6 +1,7 @@
 class Document < ActiveRecord::Base
   include Models::PlmObject
   include Models::SylrplmCommon
+  
   validates_presence_of :ident , :designation 
   validates_uniqueness_of :ident, :scope => :revision
   #validates_format_of :ident, :with =>/^(doc|img)[0-9]+$/, :message=>" doit commencer par doc ou img suivi de chiffres"

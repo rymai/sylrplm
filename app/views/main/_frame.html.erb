@@ -8,7 +8,7 @@
                 <%= @username %>(<%= @userrole %>)
             </td>
             <td class='banner'>
-                <%= link_to h_img("disconnect").to_s, :controller=> "login", :action => "logout" %>
+                <%= link_to h_img("disconnect").to_s, sessions_path, :method => :delete %>
             </td>
             <% if @themes != nil %>
             <% form_tag do |f| %>
