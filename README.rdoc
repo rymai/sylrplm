@@ -1,50 +1,50 @@
 Application SylRPLM : Product Life Management
 
-- Pré-requis
-  
+- PrÃ©-requis
+
   - La gem mysql : gem install mysql
   - Ruby 1.8.7-p249
   - Rails 2.3.4 : gem install -v=2.3.4 rails
-  
+
 - Mise en place
-  
-  - Cloner le repository git hébergé sur GitHub :
-  
+
+  - Cloner le repository git hÃ©bergÃ© sur GitHub :
+
     git clone git://github.com/sylvani/sylrplm.git
-  
+
   ou
-  
-  - Télécharger le zip ici : https://github.com/sylvani/sylrplm/zipball/master puis le décompresser :
-  
+
+  - TÃ©lÃ©charger le zip ici : https://github.com/sylvani/sylrplm/zipball/master puis le dÃ©compresser :
+
     unzip sylrplm.zip -d sylrplm
-  
-  - Se placer dans à la racine de l'application
-  
+
+  - Se placer dans la racine de l'application
+
     cd sylrplm
-  
+
 - Installation des gems
-  
+
   - rake gems:install
   - gem install mysql
-  
+
 - Environnement windows
   - Ajouter le chemin de mysql/bin au PATH
-  - Télécharger http://instantrails.rubyforge.org/svn/trunk/InstantRails-win/InstantRails/mysql/bin/libmySQL.dll
-    et copier la dll dans le répertoire bin de Ruby
-    
+  - TÃ©lÃ©charger http://instantrails.rubyforge.org/svn/trunk/InstantRails-win/InstantRails/mysql/bin/libmySQL.dll
+    et copier la dll dans le rÃ©pertoire bin de Ruby
+
 - Installation de l'application
-  
-  - Créer la base de données:
-    
+
+  - CrÃ©er la base de donnÃ©es:
+
       mysqladmin -u root password monpass
       mysqladmin -u root create sylrplm_production
       ou
       utiliser phpmyadmin
-    
-  - Charger le schéma de la base de données
-    
+
+  - Charger le schÃ©ma de la base de donnÃ©es
+
       rake db:schema:load RAILS_ENV=production
-    
+
   - Lancer le serveur
-    
+
       ruby script/server -e production
