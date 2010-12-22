@@ -48,31 +48,31 @@ module Models::SylrplmCommon
       {:recordset=>recordset, :query=>params[:query], :page => params[:page], :total=>self.count(:conditions=>conditions), :nb_items=>params[:nb_items], :conditions=>conditions}
     end 
     
-    # attribution de valeurs par defaut suivant la table sequence
-    def set_default_values(next_seq)
-      #find_cols_for(model).each do |strcol|
-      # object.column_for_attribute(strcol)=
-      #get_constants
-      self.attribute_names().each do |strcol|
-        old_value=self[strcol]
-        #col=self.find_col_for(strcol)
-        col=Sequence.find_col_for(self.class.name,strcol)
-        val=old_value
-        if(col!=nil) 
-          if(col.sequence==true)
-            if(next_seq==true)
-              val=Sequence.get_next_seq(col.utility)
-            end
-          else
-            val=col.value
+    
+  end
+  
+  # attribution de valeurs par defaut suivant la table sequence
+  def set_default_values(next_seq)
+    #find_cols_for(model).each do |strcol|
+    # object.column_for_attribute(strcol)=
+    #get_constants
+    self.attribute_names().each do |strcol|
+      old_value=self[strcol]
+      #col=self.find_col_for(strcol)
+      col = ::Sequence.find_col_for(self.class.name,strcol)
+      val=old_value
+      if(col!=nil) 
+        if(col.sequence==true)
+          if(next_seq==true)
+            val = ::Sequence.get_next_seq(col.utility)
           end
-          puts "sequence.set_default_values:"+strcol+"="+old_value.to_s+" to "+val.to_s
-          #object.update_attribute(strcol,val)
-          self[strcol]=val
+        else
+          val=col.value
         end
+        puts "sequence.set_default_values:"+strcol+"="+old_value.to_s+" to "+val.to_s
+        #object.update_attribute(strcol,val)
+        self[strcol]=val
       end
     end
-    
-    
   end
 end

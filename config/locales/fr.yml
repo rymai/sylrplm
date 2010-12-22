@@ -155,7 +155,7 @@ fr:
   context_info: "Informations sur le contexte:"
   no_item: Il n'y a rien à afficher.
   #menus
-  mnu_main: Acceuil
+  mnu_main: Accueil
   mnu_documents: Documents
   mnu_parts: Articles
   mnu_projects: Projets
@@ -332,7 +332,7 @@ fr:
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM Nouveautés
   # main/_frame
-  legend_main: Acceuil
+  legend_main: Accueil
   legend_plm_objects: Objets PLM
   legend_collab: Collaboratif
   legend_organization: Organisation 

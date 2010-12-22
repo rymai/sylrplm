@@ -24,7 +24,7 @@ class Check < ActiveRecord::Base
       obj.out_reason=params[:reason]
     end
     obj.out_date=DateTime.now
-    Sequence.set_default_values(obj, self.name, true)
+    obj.set_default_values(true)
     obj
   end
   

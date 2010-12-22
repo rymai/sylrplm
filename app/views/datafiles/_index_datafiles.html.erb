@@ -76,13 +76,13 @@
         <%end %>
         <% unless document.nil? %>
         <td>
-            <%= link_to h_img_show.to_s, datafile_path(datafile)+"?doc=#{document.id}" %>
+            <%= link_to h_img_show.to_s, datafile_path(datafile, :doc => document.id) %>
         </td>
         <td>
-            <%= link_to h_img_edit.to_s, edit_datafile_path(datafile)+"?doc=#{document.id}" %>
+            <%= link_to h_img_edit.to_s, edit_datafile_path(datafile, :doc => document.id) %>
         </td>
         <td>
-            <%= link_to h_img_destroy.to_s, "/datafiles/destroy/"+datafile.id.to_s+"?doc=#{document.id}", :controller=> "datafiles", :confirm => t("msg_confirm") %>
+            <%= link_to h_img_destroy.to_s, datafile_path(datafile, :doc => document.id), :method => :delete, :confirm => t("msg_confirm") %>
         </td>
         <%else %>
         <td>
