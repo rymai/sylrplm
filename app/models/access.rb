@@ -20,26 +20,13 @@ class Access < ActiveRecord::Base
     puts 'access.find_for_controller='+i_controller
     self.find(:all, :order=>"controller",
           :conditions => ["controller like '#{i_controller}'"]).each do |acc|
-      #conts=acc.controller.split(".")
-      
-      #        puts 'access.find_for_controller:controller='+acc.controller
-      #        puts 'access.find_for_controller:method='+acc.action
-      #        puts 'access.find_for_controller:roles='+acc.roles
       ret[acc.action.to_sym]=acc.roles
-      
     end
-    
     ret
   end
   
   def self.init
     ret=true
-    #admin_role=Role.find_by_name('admin')
-    #conc_role=Role.find_by_name('designer')
-    #cons_role=Role.find_by_name('consultant')
-    #puts "access.init:roles="+admin_role.inspect
-    #puts "access.init:"+conc_role.inspect
-    #puts "access.init:"+cons_role.inspect
     Controller.get_controllers.each do |controller|
       st=0
       if controller.name !="AccessesController" &&
@@ -52,9 +39,7 @@ class Access < ActiveRecord::Base
       else
         st=st+create_access(controller.name,controller.method,"(admin | designer) & !consultant") 
       end
-      puts 'access_controller.index:controller='+controller.name+' method='+controller.method+' st='+st.to_s
-      
-      
+      puts 'access_controller.index:controller='+controller.name+' method='+controller.method+' st='+st.to_s     
     end
     true
   end

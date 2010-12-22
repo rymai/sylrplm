@@ -4,6 +4,7 @@ class Project < ActiveRecord::Base
   include Models::SylrplmCommon
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident
+  
   belongs_to :customer
   belongs_to :typesobject
   belongs_to :statusobject
@@ -21,11 +22,9 @@ class Project < ActiveRecord::Base
   def self.create_new(project, user)
     if(project!=nil)
       obj=Project.new(project)
-      #Sequence.set_default_values(obj, self.name, false)
     else
       obj=Project.new
-      #obj.ident=Sequence.get_next_seq("project")
-      Sequence.set_default_values(obj, self.name, true)
+      obj.set_default_values(true)
     end
     obj.owner=user
     obj.statusobject = Statusobject.get_first("project")

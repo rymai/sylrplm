@@ -15,17 +15,12 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
   before_create :set_initial_attributes
   
-  
-  puts "user.set_initial_attributes"
-  
-  
   def self.create_new(params)
     unless params.nil?
-      #puts "user.create_new:"+params.inspect
       user = User.new(params)
     else
       user = User.new
-      Sequence.set_default_values(user, self.name, true)
+      user.set_default_values(true)
       user.nb_items = SYLRPLM::NB_ITEMS_PER_PAGE
       user.volume = Volume.find(1) 
     end
@@ -52,7 +47,6 @@ class User < ActiveRecord::Base
   end
   
   # 'password' is a virtual attribute
-  
   def password
     @password
   end

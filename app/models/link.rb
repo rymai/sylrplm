@@ -73,7 +73,6 @@ class Link < ActiveRecord::Base
     end
     if(father_object.to_s=="project" && child_object.to_s=="part")
       ok=true
-      #msg=:ctrl_link_already_project_part.to_s
     end
     if(father_object=="project" && child_object=="document")
       ok=true
@@ -84,10 +83,6 @@ class Link < ActiveRecord::Base
     end
     if(father_object.to_s=="part" && child_object.to_s=="part")
       ok=true
-      #if(is_child_of(father_object.to_s, father, child_object.to_s, child))
-      #ok=false
-      #msg=:ctrl_link_already_part_part.to_s
-      #end
       if(father==child)
         ok=false
         msg=:ctrl_link_recursivity.to_s
@@ -98,8 +93,6 @@ class Link < ActiveRecord::Base
       if(is_child_of(father_object.to_s, father, child_object.to_s, child))
         ok=false
         msg=:ctrl_link_already_part_document.to_s
-        #else
-        #  msg=:ctrl_link_not_part_document.to_s
       end
     end
     if(child_object=="forum")

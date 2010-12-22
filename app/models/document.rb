@@ -18,28 +18,26 @@ class Document < ActiveRecord::Base
   
   has_many :links_parts,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='part' and child_object='document'"]
   has_many :parts , :through => :links_parts
+  
   has_many :links_projects,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='project' and child_object='document'"]
   has_many :projects , :through => :links_projects
+  
   has_many :links_customers,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='customer' and child_object='document'"]
   has_many :customers , :through => :links_customers
   
   before_create :set_initial_attributes
   
   def self.create_new(document, user)
-    if(document!=nil)
-      #puts "document.create_new:"+document.inspect
+    unless document.nil?
       doc = Document.new(document)
-      #Sequence.set_default_values(doc, self.name, false)
     else
       #doc = user.documents.build(:ident => Sequence.get_next_seq("Document.ident"))    
-      doc = Document.new  
-      #Sequence.set_default_values(doc, self.name, true)
+      doc = Document.new 
       doc.set_default_values(true)
       doc.volume = Volume.find(1) 
     end
     doc.owner=user
     doc.statusobject = Statusobject.get_first("document")
-    #puts "document.create_new:"+doc.inspect
     doc
   end
   
@@ -96,11 +94,6 @@ class Document < ActiveRecord::Base
   end
   def get_datafiles
     ret=[]
-    #    links=Link.find_childs("document", self,  "datafile")
-    #    links.each do |link|
-    #      child=Datafile.find(link.child_id)
-    #      ret<<child
-    #    end
     ret=self.datafile
     ret={:recordset=>ret,:total=>ret.length}
     puts "document.get_datafiles:"+ret.inspect
@@ -136,11 +129,6 @@ class Document < ActiveRecord::Base
     self.statusobject=Statusobject.find_previous("document",statusobject) 
     self   
   end
-  
-  def add_datafile(object,type)
-    #relation="datafile"
-    
-  end 
   
   def remove_datafile(item)
     item.remove_file

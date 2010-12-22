@@ -23,8 +23,8 @@ module Models::PlmObject
     end
     
     def is_freeze
-      if(self.statusobject!=nil && Statusobject.find_last(self.class.name)!=nil)
-        if(self.statusobject.rank == Statusobject.find_last(self.class.name).rank)
+      if(self.statusobject!=nil && Statusobject.get_last(self.class.name)!=nil)
+        if(self.statusobject.rank == Statusobject.get_last(self.class.name).rank)
           true
         else
           false
@@ -36,8 +36,8 @@ module Models::PlmObject
     
     # a valider si avant dernier status
     def is_to_validate
-      if(self.statusobject!=nil && Statusobject.find_last(self.class.name)!=nil)
-        if(self.statusobject.rank == Statusobject.find_last(self.class.name).rank-1)
+      if(self.statusobject!=nil && Statusobject.get_last(self.class.name)!=nil)
+        if(self.statusobject.rank == Statusobject.get_last(self.class.name).rank-1)
           true
         else
           false

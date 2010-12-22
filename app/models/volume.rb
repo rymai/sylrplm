@@ -7,7 +7,7 @@ class Volume < ActiveRecord::Base
   
   def self.create_new()
     obj=Volume.new
-    Sequence.set_default_values(obj, self.name, true)
+    obj.set_default_values(true)
     obj
   end
   
