@@ -4,6 +4,7 @@ class Check < ActiveRecord::Base
   #validates_uniqueness_of [:object,:object_id,:status]
   
   belongs_to :documents , :conditions => ["object='document'"]
+  
   #status:
   # 0=unknown
   # 1=out

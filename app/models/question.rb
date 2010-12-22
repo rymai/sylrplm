@@ -4,7 +4,7 @@ class Question < ActiveRecord::Base
   
   def self.create_new()
     obj=Question.new
-    Sequence.set_default_values(obj, self.name, true) 
+    obj.set_default_values( true) 
     obj
   end
   def self.get_conditions(filter)
@@ -13,9 +13,5 @@ class Question < ActiveRecord::Base
     "#{filter}", "#{filter}", 
     "#{filter}" ] unless filter.nil?
   end
-  # for seo purposes
-  #def to_param
-  # "#{id}-#{question.gsub(/[^a-z0-9]+/i, '-')}".downcase
-  #  
-  #end
+  
 end

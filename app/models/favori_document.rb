@@ -5,12 +5,12 @@ class FavoriDocument
   end
   def add_document(document)
     current_item=@items.find { |item| item.id==document.id }
-    puts "favori_document.add_document:"+document.inspect
-    puts "favori_document.add_document:current_item="+current_item.inspect
+    #puts "favori_document.add_document:"+document.inspect
+    #puts "favori_document.add_document:current_item="+current_item.inspect
     if(not current_item) 
-      puts "FavoriDocument.add_document:"+document.inspect
+      #puts "FavoriDocument.add_document:"+document.inspect
       @items << document
-      puts "FavoriDocument.add_document:items="+@items.inspect
+      #puts "FavoriDocument.add_document:items="+@items.inspect
     end
   end
   def empty

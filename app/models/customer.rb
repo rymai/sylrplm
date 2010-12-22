@@ -18,11 +18,9 @@ class Customer < ActiveRecord::Base
   def self.create_new(customer,user)
     if(customer!=nil)
       obj=Customer.new(customer)
-      #Sequence.set_default_values(obj, self.name, false)
     else
       obj=Customer.new
-      #obj.ident=Sequence.get_next_seq("customer")
-      Sequence.set_default_values(obj, self.name, true)
+      obj.set_default_values( true)
     end
     obj.owner=user
     obj.statusobject = Statusobject.get_first("customer")
@@ -56,8 +54,8 @@ class Customer < ActiveRecord::Base
   
   # a valider si avant dernier status
   def is_to_validate
-    if(self.statusobject!=nil && Statusobject.find_last(:customer)!=nil)
-      if(self.statusobject.rank == Statusobject.find_last(:customer).rank-1)
+    if(self.statusobject!=nil && Statusobject.get_last(:customer)!=nil)
+      if(self.statusobject.rank == Statusobject.get_last(:customer).rank-1)
         true
       else
         false

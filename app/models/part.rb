@@ -27,12 +27,10 @@ class Part < ActiveRecord::Base
   def self.create_new(part,user)
     if(part!=nil)
       p=Part.new(part)
-      #Sequence.set_default_values(p, self.name, false)
     else
       p=Part.new
-      Sequence.set_default_values(p, self.name, true)
+      p.set_default_values(true)
     end
-    #p.revision=getFirstRevision
     p.statusobject=Statusobject.get_first("part")
     p.owner=user
     puts "part.create_new:"+p.inspect
@@ -47,8 +45,8 @@ class Part < ActiveRecord::Base
   end
   
   def is_freeze
-    if(self.statusobject!=nil && Statusobject.find_last("part")!=nil)
-      if(self.statusobject.rank == Statusobject.find_last("part").rank)
+    if(self.statusobject!=nil && Statusobject.get_last("part")!=nil)
+      if(self.statusobject.rank == Statusobject.get_last("part").rank)
         true
       else
         false
@@ -60,8 +58,8 @@ class Part < ActiveRecord::Base
   
   # a valider si avant dernier status
   def is_to_validate
-    if(self.statusobject!=nil && Statusobject.find_last("part")!=nil)
-      if(self.statusobject.rank == Statusobject.find_last("part").rank-1)
+    if(self.statusobject!=nil && Statusobject.get_last("part")!=nil)
+      if(self.statusobject.rank == Statusobject.get_last("part").rank-1)
         true
       else
         false

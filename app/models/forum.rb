@@ -16,10 +16,9 @@ class Forum < ActiveRecord::Base
     if(forum==nil)
       forum=Forum.new  
       forum.statusobject=Statusobject.get_first("forum")
-      Sequence.set_default_values(forum, self.name,true)
+      forum.set_default_values(true)
     else
       forum=Forum.new(forum)
-      #Sequence.set_default_values(forum, self.name,false)
     end
     forum.creator=@user
     forum
@@ -32,8 +31,8 @@ class Forum < ActiveRecord::Base
   end
   
   def is_freeze
-    if(self.statusobject!=nil && Statusobject.find_last("forum")!=nil)
-      if(self.statusobject.rank == Statusobject.find_last("forum").rank)
+    if(self.statusobject!=nil && Statusobject.get_last("forum")!=nil)
+      if(self.statusobject.rank == Statusobject.get_last("forum").rank)
         true
       else
         false

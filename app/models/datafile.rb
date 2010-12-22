@@ -12,28 +12,26 @@ class Datafile < ActiveRecord::Base
   belongs_to :owner,
     :class_name => "User",
     :foreign_key => "owner_id" 
+  
   FILE_REV_DELIMITER="__"
+  
   def self.create_new(params,user)
-    #puts "datafile.create_new:user="+user.inspect
     if(params==nil)   
       datafile=new 
-      Sequence.set_default_values(datafile, self.name,true)
+      datafile.set_default_values(true)
       datafile.volume=user.volume
       datafile.owner=user
       datafile.revision="1"
       ret=true
     else
       parameters=params[:datafile]
-      #puts "datafile.create_new:param="+params.inspect
       uploaded_file=parameters[:uploaded_file]
       #contournement pour faire le upload apres la creation pour avoir la revision dans
       #get_repository !!!!!!!!!!!!!!
       parameters.delete(:uploaded_file)
       parameters[:volume]=user.volume
       parameters[:owner]=user
-      #puts "datafile.create_new:param="+parameters.inspect
       datafile=new(parameters)
-      #puts "datafile.create_new:save1="+datafile.errors.inspect
       if datafile.save   
         # on sauve le fichier maintenant et le tour est joue
         datafile.create_dir
@@ -43,14 +41,13 @@ class Datafile < ActiveRecord::Base
         end
       end
     end
-    puts __FILE__+":"+datafile.inspect
+    #puts __FILE__+":"+datafile.inspect
     datafile
   end
   
   def update_attributes_repos(params, user)
     parameters=params[:datafile]
     uploaded_file=parameters[:uploaded_file]
-    puts "datafile.parameters:param="+parameters.inspect
     parameters[:volume]=user.volume
     if(uploaded_file)
       parameters.delete(:uploaded_file)
@@ -101,7 +98,6 @@ class Datafile < ActiveRecord::Base
   
   def get_repository
     # on prend le volume du fichier lui meme
-    #puts "plm_object.get_repository="+self.inspect
     repos=get_dir_repository
     #        begin 
     #          FileUtils.mkdir_p(repos)
@@ -112,14 +108,10 @@ class Datafile < ActiveRecord::Base
     if(self.filename!=nil)
       rev=self.revision
       unless rev.nil?
-        # if @params[:revision]!=nil
-        #   rev=@params[:revision]
-        # end
         repos=File.join(repos, FILE_REV_DELIMITER+rev.to_s+FILE_REV_DELIMITER+self.filename)
       else
         repos=File.join(repos, self.filename)
       end 
-      #puts "plm_object.get_repository="+rev.to_s+" filename="+self.filename.to_s
     end
     repos
   end
@@ -127,17 +119,13 @@ class Datafile < ActiveRecord::Base
   def get_revisions_files
     ret=[]
     dir=get_dir_repository
-    puts "plm_object.get_revisions;dir="+get_dir_repository
     if File.exists? (dir)
       Dir.foreach(dir) { |file| 
         filename=file.split(FILE_REV_DELIMITER)[2]
         revision=file.split(FILE_REV_DELIMITER)[1]
         unless filename.nil? && revision.nil?
           puts "plm_object.get_revisions;file="+file+" name="+filename.to_s+" rev="+revision.to_s
-          #ret<<{:filename=>filename,:revision=>revision}
-          #if revision.to_s != self.revision.to_s
           ret<<file.to_s
-          #end
         end
       }
     end
