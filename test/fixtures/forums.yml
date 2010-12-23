@@ -1,14 +1,14 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  typeobjects_id: 1
+  typesobject_id: 1
   statusobject_id: 1
   subject: MyString
   description: MyText
   owner_id: 1
 
 two:
-  typeobjects_id: 1
+  typesobject_id: 1
   statusobject_id: 1
   subject: MyString
   description: MyText

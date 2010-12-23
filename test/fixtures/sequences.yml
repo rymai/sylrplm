@@ -1,13 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  object: MyString
+  utility: MyString
   value: MyString
   min: MyString
   max: MyString
 
 two:
-  object: MyString
+  utility: MyString
   value: MyString
   min: MyString
   max: MyString

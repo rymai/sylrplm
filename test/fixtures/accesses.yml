@@ -3,9 +3,9 @@
 one:
   controller: MyString
   action: 1
-  role_id: 1
+  roles: Myroles
 
 two:
   controller: MyString
   action: 1
-  role_id: 1
+  roles: Myroles

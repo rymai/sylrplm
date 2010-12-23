@@ -10,9 +10,7 @@ cmd="mysqladmin -u root create $1_development"
 echo $cmd
 $cmd
 
-cmd="mysqladmin -u root create $1_test"
-echo $cmd
-$cmd
+
 
 cmd="mysqladmin -u root create $1_production"
 echo $cmd
@@ -229,9 +227,11 @@ utiliser github
 doc sur rake
 rake -T [db test tmp routes stats rails log notes gems doc]
 
-cmd="ruby script/generate module utilities"
+#non utilise
+cmd="ruby script/generate model utilities"
 echo $cmd
 $cmd
+ruby script/destroy model utilities
 
 =======================================================
 github
@@ -297,5 +297,53 @@ ou
 railroad -a -i -M | neato -Tpng > public/mdd/models.png
 railroad -a -i -C | neato -Tpng > public/mdd/controllers.png
 
+===========================================================
+test
+===========================================================
+
+#creation de la base
+cmd="mysqladmin -u root -p create sylrplm_test"
+echo $cmd
+$cmd
+
+#creation du schema
+echo $PATH
+/home/syl/.gem/ruby/1.8/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/lib/qt4/bin
+
+export PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/lib/qt4/bin
+rake db:test:prepare
+
+copie de vendor/plugins/acl_system2/lib/caboose dans lib !!!
+
+#test
+ruby test/unit/document_test.rb
+1) Error:
+test_the_truth(DocumentTest):
+ActiveRecord::StatementInvalid: Mysql::Error: Table 'sylrplm_test.utilities' doesn't exist: DELETE FROM `utilities`
+
+ruby script/destroy model utilities
+
+ruby test/unit/document_test.rb
+ActiveRecord::StatementInvalid: Mysql::Error: Table 'sylrplm_test.partslinks' doesn't exist: DELETE FROM `partslinks`
+1 tests, 0 assertions, 0 failures, 1 errors
+[syl@localhost sylrplm]$ ruby script/destroy model partslinks
+
+ruby test/unit/document_test.rb
+test_the_truth(DocumentTest):
+ActiveRecord::StatementInvalid: Mysql::Error: Table 'sylrplm_test.favoris' doesn't exist: DELETE FROM `favoris`  
+1 tests, 0 assertions, 0 failures, 1 errors
+[syl@localhost sylrplm]$ ruby script/destroy model favoris
+
+ruby test/unit/document_test.rb
+test_the_truth(DocumentTest):
+ActiveRecord::StatementInvalid: Mysql::Error: Unknown column 'name' in 'field list': INSERT INTO `roles` (`name`, `created_at`, `updated_at`, `id`, `description`) VALUES ('MyString', '2010-12-23 11:37:54', '2010-12-23 11:37:54', 298486374, 'MyText')
+modif de test/fixtures/roles.yml et remplacer name par title
+
+ruby test/unit/document_test.rb
+test_the_truth(DocumentTest):
+ActiveRecord::StatementInvalid: Mysql::Error: Unknown column 'object' in 'field list': INSERT INTO `sequences` (`created_at`, `updated_at`, `max`, `id`, `value`, `min`, `object`) VALUES ('2010-12-23 11:40:51', '2010-12-23 11:40:51', 'MyString', 298486374, 'MyString', 'MyString', 'MyString')
+modif de test/fixtures/sequences.yml et remplacer object par utility
+modif de test/fixtures/forums.yml et remplacer typeobjects_id par typesobject_id
+modif de test/fixtures/accesses.yml et remplacer role_id par roles
 
 
