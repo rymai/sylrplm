@@ -71,9 +71,9 @@ class Project < ActiveRecord::Base
       filter=filter.gsub("*","%")
       conditions = ["ident LIKE ? or "+qry_type+" or designation LIKE ? or "+qry_status+
        " or "+qry_owner+" or date LIKE ? ",
-       "#{filter}", "#{filter}", 
-     "#{filter}", "#{filter}", 
-     "#{filter}", "#{filter}" ] unless filter.nil? 
+       filter, filter, 
+     filter, filter, 
+     filter, filter ] unless filter.nil? 
   end
   
 end

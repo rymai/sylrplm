@@ -60,8 +60,8 @@ class Access < ActiveRecord::Base
   def self.get_conditions(filter)
     filter=filter.gsub("*","%")
     ["controller LIKE ? or action LIKE ? or roles LIKE ? " ,
-      "#{filter}", "#{filter}", 
-    "#{filter}"] unless filter.nil? 
+      filter, filter, 
+    filter] unless filter.nil? 
   end
   
 end

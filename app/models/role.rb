@@ -13,6 +13,6 @@ class Role < ActiveRecord::Base
   def self.get_conditions(filter)
     filter=filter.gsub("*","%")
       conditions = ["title LIKE ? or description LIKE ? ",
-      "#{filter}", "#{filter}"] unless filter.nil?
+      filter, filter] unless filter.nil?
   end
 end

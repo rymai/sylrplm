@@ -1,7 +1,7 @@
 class AccessesController < ApplicationController
   include Controllers::PlmObjectControllerModule
   access_control(Access.find_for_controller(controller_class_name))
-
+  
   # GET /accesses
   # GET /accesses.xml
   def index
@@ -11,7 +11,7 @@ class AccessesController < ApplicationController
       format.xml  { render :xml => @accesses[:recordset] }
     end
   end
-
+  
   # GET /accesses/1
   # GET /accesses/1.xml
   def show
@@ -21,7 +21,7 @@ class AccessesController < ApplicationController
       format.xml  { render :xml => @access }
     end
   end
-
+  
   # GET /accesses/new
   # GET /accesses/new.xml
   def new
@@ -33,14 +33,14 @@ class AccessesController < ApplicationController
       format.xml  { render :xml => @access }
     end
   end
-
+  
   # GET /accesses/1/edit
   def edit
     @access      = Access.find(params[:id])
     @controllers = Controller.get_controllers
     @roles       = Role.all
   end
-
+  
   # POST /accesses
   # POST /accesses.xml
   def create
@@ -81,7 +81,7 @@ class AccessesController < ApplicationController
       end
     end
   end
-
+  
   # PUT /accesses/1
   # PUT /accesses/1.xml
   def update
@@ -100,7 +100,7 @@ class AccessesController < ApplicationController
       end
     end
   end
-
+  
   # DELETE /accesses/1
   # DELETE /accesses/1.xml
   def destroy

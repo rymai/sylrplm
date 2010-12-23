@@ -127,6 +127,6 @@ class Volume < ActiveRecord::Base
   def self.get_conditions(filter)
     filter=filter.gsub("*","%")
       conditions = ["name LIKE ? or description LIKE ? or directory LIKE ? or protocole LIKE ?",
-      "#{filter}", "#{filter}", "#{filter}", "#{filter}"] unless filter.nil?
+      filter, filter, filter, filter] unless filter.nil?
   end
 end

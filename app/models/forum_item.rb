@@ -27,6 +27,6 @@ class ForumItem < ActiveRecord::Base
   def self.get_conditions(filter)
     filter=filter.gsub("*","%")
     conditions = ["message LIKE ? or "+qry_owner_id+" or "+qry_parent+" or "+qry_forum,
-      "#{filter}", "#{filter}", "#{filter}", "#{filter}"] unless filter.nil?
+      filter, filter, filter, filter] unless filter.nil?
   end
 end

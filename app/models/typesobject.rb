@@ -39,6 +39,6 @@ class Typesobject < ActiveRecord::Base
   def self.get_conditions(filter)
     filter=filter.gsub("*","%")
       conditions = ["object LIKE ? or name LIKE ? or description LIKE ? ",
-      "#{filter}", "#{filter}", "#{filter}"] unless filter.nil?
+      filter, filter, filter] unless filter.nil?
   end
 end

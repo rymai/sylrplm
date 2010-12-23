@@ -45,7 +45,7 @@ class Forum < ActiveRecord::Base
     filter=filter.gsub("*","%")
       conditions = ["subject LIKE ? or "+qry_type+" or "+qry_owner_id+
       " or "+qry_status,
-      "#{filter}", "#{filter}", 
-    "#{filter}", "#{filter}"] unless filter.nil?
+      filter, filter, 
+    filter, filter] unless filter.nil?
   end
 end

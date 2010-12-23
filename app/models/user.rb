@@ -252,7 +252,7 @@ class User < ActiveRecord::Base
    def self.get_conditions(filter)
     filter=filter.gsub("*","%")
     ["login LIKE ? or "+qry_role+" or email LIKE ? ",
-      "#{filter}", "#{filter}", 
-    "#{filter}" ] unless filter.nil? 
+      filter, filter, 
+    filter ] unless filter.nil? 
   end
 end

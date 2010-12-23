@@ -196,10 +196,10 @@ class Datafile < ActiveRecord::Base
     filter=filter.gsub("*","%")
     ["ident LIKE ? or "+qry_type+" or revision LIKE ? "+
       " or "+qry_owner_id+" or updated_at LIKE ? or "+qry_volume,
-      "#{filter}", 
-    "#{filter}", "#{filter}", 
-    "#{filter}", "#{filter}", 
-    "#{filter}" ] unless filter.nil?
+      filter, 
+    filter, filter, 
+    filter, filter, 
+    filter ] unless filter.nil?
   end
   
 end
