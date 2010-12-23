@@ -68,7 +68,7 @@ module Models::SylrplmCommon
         else
           val=col.value
         end
-        puts "sequence.set_default_values:"+strcol+"="+old_value.to_s+" to "+val.to_s
+        puts "sylrplm_common.set_default_values:"+strcol+"="+old_value.to_s+" to "+val.to_s
         #object.update_attribute(strcol,val)
         self[strcol]=val
       end

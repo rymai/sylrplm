@@ -61,24 +61,4 @@ class Sequence < ActiveRecord::Base
     nil
   end
     
-  #   # attribution de valeurs par defaut suivant la table sequence
-  # def self.set_default_values(object, model, next_seq)
-  #   object.attribute_names().each do |strcol|
-  #     old_value=object[strcol]
-  #     col=find_col_for(model,strcol)
-  #     val=old_value
-  #     if(col!=nil) 
-  #       if(col.sequence==true)
-  #         if(next_seq==true)
-  #           val=get_next_seq(col.utility)
-  #         end
-  #       else
-  #         val=col.value
-  #       end
-  #       puts "sequence.set_default_values:"+strcol+"="+old_value.to_s+" to "+val.to_s
-  #       #object.update_attribute(strcol,val)
-  #       object[strcol]=val
-  #     end
-  #   end
-  # end
 end

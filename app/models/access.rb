@@ -11,7 +11,7 @@ class Access < ActiveRecord::Base
     obj.controller=conts[0]
     obj.action=conts[1]
     obj.roles=i_roles
-    Sequence.set_default_values(obj, self.name, true)
+    obj.set_default_values(true)
     obj
   end
   
