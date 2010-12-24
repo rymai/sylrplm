@@ -27,7 +27,7 @@ class StatusobjectsController < ApplicationController
   # GET /statusobjects/new.xml
   def new
     @statusobject = Statusobject.new(params[:statusobject])
-    @objectswithstatus=Statusobject.getObjectsWithStatus
+    @objectswithstatus=Statusobject.get_objects_with_status
     @objectswithstatus.each do |v|
       puts controller_class_name()+".new:@objectswithstatus="+v
     end
@@ -40,14 +40,14 @@ class StatusobjectsController < ApplicationController
   # GET /statusobjects/1/edit
   def edit
     @statusobject = Statusobject.find(params[:id])
-    @objectswithstatus=Statusobject.getObjectsWithStatus
+    @objectswithstatus=Statusobject.get_objects_with_status
   end
   
   # POST /statusobjects
   # POST /statusobjects.xml
   def create
     @statusobject = Statusobject.new(params[:statusobject])
-    @objectswithstatus=Statusobject.getObjectsWithStatus
+    @objectswithstatus=Statusobject.get_objects_with_status
     respond_to do |format|
       if @statusobject.save
         flash[:notice] = t(:ctrl_object_created,:object=>t(:ctrl_statusobject),:ident=>@statusobject.name)
@@ -65,7 +65,7 @@ class StatusobjectsController < ApplicationController
   # PUT /statusobjects/1.xml
   def update
     @statusobject = Statusobject.find(params[:id])
-    @objectswithstatus=Statusobject.getObjectsWithStatus
+    @objectswithstatus=Statusobject.get_objects_with_status
     respond_to do |format|
       if @statusobject.update_attributes(params[:statusobject])
         flash[:notice] = t(:ctrl_object_updated,:object=>t(:ctrl_statusobject),:ident=>@statusobject.name)

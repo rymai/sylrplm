@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.string   "roles"
   end
 
+  add_index "accesses", ["controller"], :name => "id_access_controller"
+
   create_table "checks", :force => true do |t|
     t.string   "object"
     t.integer  "object_id"
@@ -34,6 +36,8 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.datetime "updated_at"
   end
 
+  add_index "checks", ["object", "object_id"], :name => "id_check_object"
+
   create_table "customers", :force => true do |t|
     t.string   "ident"
     t.string   "designation"
@@ -44,10 +48,11 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.datetime "updated_at"
     t.integer  "typesobject_id"
     t.integer  "statusobject_id"
-    t.integer  "owner"
+    t.integer  "owner_id"
   end
 
-  add_index "customers", ["owner"], :name => "fk_customer_owner"
+  add_index "customers", ["ident"], :name => "id_customer_ident"
+  add_index "customers", ["owner_id"], :name => "fk_customer_owner"
   add_index "customers", ["statusobject_id"], :name => "fk_customer_status"
   add_index "customers", ["typesobject_id"], :name => "fk_customer_type"
 
@@ -65,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
   end
 
   add_index "datafiles", ["document_id"], :name => "fk_datafile_document"
+  add_index "datafiles", ["ident"], :name => "id_datafile_ident"
 
   create_table "documents", :force => true do |t|
     t.string   "ident"
@@ -77,10 +83,11 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.datetime "updated_at"
     t.integer  "typesobject_id"
     t.integer  "statusobject_id"
-    t.integer  "owner"
+    t.integer  "owner_id"
   end
 
-  add_index "documents", ["owner"], :name => "fk_document_owner"
+  add_index "documents", ["ident"], :name => "id_document_ident"
+  add_index "documents", ["owner_id"], :name => "fk_document_owner"
   add_index "documents", ["statusobject_id"], :name => "fk_document_status"
   add_index "documents", ["typesobject_id"], :name => "fk_document_type"
 
@@ -93,6 +100,10 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.datetime "updated_at"
   end
 
+  add_index "forum_items", ["forum_id"], :name => "index_forum_items_on_forum_id"
+  add_index "forum_items", ["owner_id"], :name => "index_forum_items_on_owner_id"
+  add_index "forum_items", ["parent_id"], :name => "index_forum_items_on_parent_id"
+
   create_table "forums", :force => true do |t|
     t.integer  "statusobject_id"
     t.string   "subject"
@@ -102,6 +113,10 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.datetime "updated_at"
     t.integer  "typesobject_id"
   end
+
+  add_index "forums", ["owner_id"], :name => "index_forums_on_owner_id"
+  add_index "forums", ["statusobject_id"], :name => "index_forums_on_statusobject_id"
+  add_index "forums", ["typesobject_id"], :name => "index_forums_on_typesobject_id"
 
   create_table "links", :force => true do |t|
     t.string   "father_object"
@@ -118,6 +133,9 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.datetime "updated_at"
   end
 
+  add_index "links", ["child_object", "child_id"], :name => "id_link_child"
+  add_index "links", ["father_object", "father_id"], :name => "id_link_father"
+
   create_table "parts", :force => true do |t|
     t.string   "ident"
     t.string   "revision"
@@ -129,10 +147,11 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.datetime "updated_at"
     t.integer  "typesobject_id"
     t.integer  "statusobject_id"
-    t.integer  "owner"
+    t.integer  "owner_id"
   end
 
-  add_index "parts", ["owner"], :name => "fk_part_owner"
+  add_index "parts", ["ident"], :name => "id_part_ident"
+  add_index "parts", ["owner_id"], :name => "fk_part_owner"
   add_index "parts", ["statusobject_id"], :name => "fk_part_status"
   add_index "parts", ["typesobject_id"], :name => "fk_part_type"
 
@@ -147,11 +166,12 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.integer  "customer_id"
     t.integer  "typesobject_id"
     t.integer  "statusobject_id"
-    t.integer  "owner"
+    t.integer  "owner_id"
   end
 
   add_index "projects", ["customer_id"], :name => "fk_project_customer"
-  add_index "projects", ["owner"], :name => "fk_project_owner"
+  add_index "projects", ["ident"], :name => "id_project_ident"
+  add_index "projects", ["owner_id"], :name => "fk_project_owner"
   add_index "projects", ["statusobject_id"], :name => "fk_project_status"
   add_index "projects", ["typesobject_id"], :name => "fk_project_type"
 
@@ -177,6 +197,9 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.datetime "updated_at"
   end
 
+  add_index "roles_users", ["role_id"], :name => "id_role_role"
+  add_index "roles_users", ["user_id"], :name => "id_role_user"
+
   create_table "sequences", :force => true do |t|
     t.string   "value"
     t.string   "min"
@@ -187,6 +210,8 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.boolean  "modify"
     t.boolean  "sequence"
   end
+
+  add_index "sequences", ["utility"], :name => "id_sequence_utility", :unique => true
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id",                       :null => false
@@ -209,6 +234,8 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.boolean  "demote"
   end
 
+  add_index "statusobjects", ["object", "rank", "name"], :name => "id_statusobject_object", :unique => true
+
   create_table "typesobjects", :force => true do |t|
     t.string   "object"
     t.string   "name"
@@ -216,6 +243,8 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "typesobjects", ["object", "name"], :name => "id_typesobject_object", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "login"
@@ -230,7 +259,10 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.integer  "nb_items"
   end
 
+  add_index "users", ["login"], :name => "id_user_login", :unique => true
   add_index "users", ["role_id"], :name => "fk_user_role"
+  add_index "users", ["role_id"], :name => "index_users_on_role_id"
+  add_index "users", ["volume_id"], :name => "index_users_on_volume_id"
 
   create_table "volumes", :force => true do |t|
     t.string   "name"

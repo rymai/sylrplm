@@ -9,10 +9,8 @@ class Document < ActiveRecord::Base
   
   belongs_to :typesobject
   belongs_to :statusobject
-  belongs_to :volume
   belongs_to :owner,
-    :class_name => "User",
-    :foreign_key => "owner"
+    :class_name => "User"
   
   has_many :datafile
   has_many :checks
@@ -35,7 +33,6 @@ class Document < ActiveRecord::Base
       #doc = user.documents.build(:ident => Sequence.get_next_seq("Document.ident"))    
       doc = Document.new 
       doc.set_default_values(true)
-      doc.volume = Volume.find(1) 
     end
     doc.owner=user
     doc.statusobject = Statusobject.get_first("document")
@@ -54,7 +51,7 @@ class Document < ActiveRecord::Base
   end
   
   def is_checked
-    check=Check.findCheckout("document", self) 
+    check=Check.get_checkout("document", self) 
     if(check.nil?)
       #non reserve
       false

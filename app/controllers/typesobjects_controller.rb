@@ -27,7 +27,7 @@ class TypesobjectsController < ApplicationController
   # GET /typesobjects/new.xml
   def new
     @typesobject = Typesobject.new
-    @objectswithtype=Typesobject.getObjectsWithType
+    @objectswithtype=Typesobject.get_objects_with_type
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @typesobject }
@@ -37,14 +37,14 @@ class TypesobjectsController < ApplicationController
   # GET /typesobjects/1/edit
   def edit
     @typesobject = Typesobject.find(params[:id])
-    @objectswithtype=Typesobject.getObjectsWithType
+    @objectswithtype=Typesobject.get_objects_with_type
   end
   
   # POST /typesobjects
   # POST /typesobjects.xml
   def create
     @typesobject = Typesobject.new(params[:typesobject])
-    @objectswithtype=Typesobject.getObjectsWithType
+    @objectswithtype=Typesobject.get_objects_with_type
     respond_to do |format|
       if @typesobject.save
         flash[:notice] = t(:ctrl_object_created,:object=>t(:ctrl_typesobject),:ident=>@typesobject.name)
@@ -62,7 +62,7 @@ class TypesobjectsController < ApplicationController
   # PUT /typesobjects/1.xml
   def update
     @typesobject = Typesobject.find(params[:id])
-    @objectswithtype=Typesobject.getObjectsWithType
+    @objectswithtype=Typesobject.get_objects_with_type
     respond_to do |format|
       if @typesobject.update_attributes(params[:typesobject])
         flash[:notice] = t(:ctrl_object_updated,:object=>t(:ctrl_typesobject),:ident=>@typesobject.name)

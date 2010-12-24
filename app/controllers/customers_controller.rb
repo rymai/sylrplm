@@ -34,8 +34,8 @@ class CustomersController < ApplicationController
   # GET /customers/new.xml
   def new
     @customer = Customer.create_new(nil, @user)
-    @types    = Typesobject.get_types(:customer)
-    @status   = Statusobject.find_for(:customer)
+    @types    = Typesobject.get_types("customer")
+    @status   = Statusobject.find_for("customer")
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @customer }
@@ -45,16 +45,16 @@ class CustomersController < ApplicationController
   # GET /customers/1/edit
   def edit
     @customer = Customer.find_edit(params[:id])
-    @types    = Typesobject.get_types(:customer)
-    @status   = Statusobject.find_for(:customer)
+    @types    = Typesobject.get_types("customer")
+    @status   = Statusobject.find_for("customer")
   end
 
   # POST /customers
   # POST /customers.xml
   def create
     @customer = Customer.create_new(params[:customer], @user)
-    @types    = Typesobject.get_types(:customer)
-    @status   = Statusobject.find_for(:customer)
+    @types    = Typesobject.get_types("customer")
+    @status   = Statusobject.find_for("customer")
     respond_to do |format|
       if @customer.save
         flash[:notice] = t(:ctrl_object_created, :object => t(:ctrl_customer), :ident => @customer.ident)

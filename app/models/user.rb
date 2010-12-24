@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   belongs_to :role
   belongs_to :volume
-  has_many :documents, :foreign_key => "owner"
+  #has_many :documents, :foreign_key => "owner_id"
   
   validates_presence_of     :login
   validates_uniqueness_of   :login

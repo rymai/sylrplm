@@ -6,7 +6,7 @@
 <p>
     <b><%= t("label_typesobject") %></b>
     <% if(@customer.typesobject != nil) %>
-    <%=h @customer.typesobject.id %>:<%=h @customer.typesobject.name %>
+    <%=h @customer.typesobject.name %>
     <% end %>
 </p>
 <p>
@@ -20,7 +20,7 @@
 <p>
     <b><%= t("label_statusobject") %></b>
     <% if(@customer.statusobject != nil) %>
-    <%=h @customer.statusobject.id %>:<%=h @customer.statusobject.name %>
+    <%=h @customer.statusobject.name %>
     <% end %>
 </p>
 <p>
@@ -29,7 +29,7 @@
 </p>
 <p>
     <b><%= t("label_date") %></b>
-    <%=h @customer.date %>
+    <%=l @customer.date %>
 </p>
 <h1></h1>
 <%= h_sylrplm_tree %>

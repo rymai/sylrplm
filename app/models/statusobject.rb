@@ -11,7 +11,7 @@ class Statusobject < ActiveRecord::Base
   named_scope :cond_object, lambda{|obj| {:conditions=> ["object = ?",obj] }}
   named_scope :find_all , order_default.all
   
-  def self.getObjectsWithStatus
+  def self.get_objects_with_status
     ret=["document","part","project","customer","forum"]
   end
   

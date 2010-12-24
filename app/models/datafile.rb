@@ -10,8 +10,7 @@ class Datafile < ActiveRecord::Base
   belongs_to :typesobject
   belongs_to :volume
   belongs_to :owner,
-    :class_name => "User",
-    :foreign_key => "owner_id" 
+    :class_name => "User"
   
   FILE_REV_DELIMITER="__"
   
@@ -119,7 +118,7 @@ class Datafile < ActiveRecord::Base
   def get_revisions_files
     ret=[]
     dir=get_dir_repository
-    if File.exists? (dir)
+    if File.exists?(dir)
       Dir.foreach(dir) { |file| 
         filename=file.split(FILE_REV_DELIMITER)[2]
         revision=file.split(FILE_REV_DELIMITER)[1]

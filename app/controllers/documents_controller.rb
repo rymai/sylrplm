@@ -158,7 +158,7 @@ class DocumentsController < ApplicationController
 
   def check_out
     @document = Document.find(params[:id])
-    check     = Check.findCheckout("document", @document)
+    check     = Check.get_checkout("document", @document)
     if check.nil?
       unless params[:reason].blank?
         check = Check.create_new("document", @document, params, @user)
@@ -181,7 +181,7 @@ class DocumentsController < ApplicationController
 
   def check_in
     @document = Document.find(params[:id])
-    check     = Check.findCheckout("document", @document)
+    check     = Check.get_checkout("document", @document)
     respond_to do |format|
       unless params[:reason].blank?
         unless check.nil?
@@ -205,7 +205,7 @@ class DocumentsController < ApplicationController
 
   def check_free
     @document = Document.find(params[:id])
-    check     = Check.findCheckout("document", @document)
+    check     = Check.get_checkout("document", @document)
     respond_to do |format|
       unless check.nil?
         unless params[:reason].blank?

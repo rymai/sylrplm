@@ -16,7 +16,7 @@ module Caboose
       #                 :update => '(admin | moderator) & !blacklist',
       #                 :list => '(admin | moderator | user) & !blacklist'
       def access_control(actions={})
-        puts "access_control:actions=#{actions.inspect}"
+        #puts "access_control:actions=#{actions.inspect}"
         # Add class-wide permission callback to before_filter
         defaults = {}  
         if block_given?
@@ -37,19 +37,19 @@ module Caboose
           
           if @access.allowed?(c.action_name)
             c.send(:permission_granted)  if c.respond_to?:permission_granted
-            puts "access_control:allowed #{c.controller_name}/#{c.action_name} to #{role_title}"
+            #puts "access_control:allowed #{c.controller_name}/#{c.action_name} to #{role_title}"
           else    
             if c.respond_to?:permission_denied
-              puts "access_control:not allowed #{c.controller_name}/#{c.action_name} permission_denied to #{role_title}"
+             # puts "access_control:not allowed #{c.controller_name}/#{c.action_name} permission_denied to #{role_title}"
               c.send(:permission_denied)
             else  
-              puts "access_control:not allowed #{c.controller_name}/#{c.action_name} not permission_denied to #{role_title}"
+             # puts "access_control:not allowed #{c.controller_name}/#{c.action_name} not permission_denied to #{role_title}"
               c.send(:render_text, "You have insuffient permissions to access #{c.controller_name}/#{c.action_name}")
             end
           end
           
         end
-        puts "access_control:fin"
+       # puts "access_control:fin"
         
       end 
     end # ClassMethods 
@@ -109,14 +109,14 @@ module Caboose
       def allowed?(action)
         if @actions.has_key? action.to_sym
           ret=@subject.access_handler.process(@actions[action.to_sym].dup, @subject.access_context)
-          puts "allowed:actions.has_key #{action} ret=#{ret}"
+        #  puts "allowed:actions.has_key #{action} ret=#{ret}"
           return ret
         elsif @actions.has_key? :DEFAULT
           ret=@subject.access_handler.process(@actions[:DEFAULT].dup, @subject.access_context) 
-          puts "allowed:actions.has_key #{:DEFAULT} ret=#{ret}"
+         # puts "allowed:actions.has_key #{:DEFAULT} ret=#{ret}"
           return ret
         else
-          puts "allowed:actions.has_no_key #{action} or #{:DEFAULT}"
+         # puts "allowed:actions.has_no_key #{action} or #{:DEFAULT}"
           return true
         end  
       end

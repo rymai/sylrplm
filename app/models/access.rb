@@ -17,7 +17,7 @@ class Access < ActiveRecord::Base
   
   def self.find_for_controller(i_controller)
     ret={}
-    puts 'access.find_for_controller='+i_controller
+    #puts 'access.find_for_controller='+i_controller
     self.find(:all, :order=>"controller",
           :conditions => ["controller like '#{i_controller}'"]).each do |acc|
       ret[acc.action.to_sym]=acc.roles

@@ -26,7 +26,7 @@ class Typesobject < ActiveRecord::Base
       ret
   end
   
-  def self.getObjectsWithType
+  def self.get_objects_with_type
   		ret=["document","part","project","customer","forum","datafile","relation_document","relation_part","relation_project"]
   		ret
   end

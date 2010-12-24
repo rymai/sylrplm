@@ -10,7 +10,7 @@ class Check < ActiveRecord::Base
   # 1=out
   # 2=in
   # 3=free
-  def self.findCheckout(object_cls, object)
+  def self.get_checkout(object_cls, object)
     find(:last, :conditions => ["object = '#{object_cls}' and object_id=#{object.id} and status=1"])
   end
   

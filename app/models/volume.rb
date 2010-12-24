@@ -2,7 +2,7 @@ class Volume < ActiveRecord::Base
   include Models::SylrplmCommon
   validates_presence_of :name, :directory
   validates_uniqueness_of :name
-  has_many :documents
+ 
   has_many :users
   
   def self.create_new()
