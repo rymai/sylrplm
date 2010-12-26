@@ -101,22 +101,20 @@ td.banner   {
 #columns {
 }
 
-#main {
-  margin-left: 10em;
-  padding-top: 4ex;
-  padding-left: 2em;
-  background: #AAAAEE;
-  overflow: auto;
-  height:760px;
-}
-
 #side {
   float: left;
+  margin-left: 0em;
   padding-top: 1em;
   padding-left: 1em;
   padding-bottom: 1em;
   width: 14em;
-  height:760px;
+}
+
+#main {
+  margin-left: 15em;
+  padding-top: 4ex;
+  padding-left: 2em;
+  background: #AAAAEE;
 }
 
 #side a, div.favori-title {

@@ -13,8 +13,6 @@
     <th>Designation</th>
     <th>Description</th>
     <th>Responsible</th>
-    <th>Group</th>
-    <th>Date</th>
   </tr>
 
 <% @links[:recordset].each do |link| %>
@@ -27,8 +25,6 @@
     <td><%=h link.designation %></td>
     <td><%=h link.description %></td>
     <td><%=h link.responsible %></td>
-    <td><%=h link.group %></td>
-    <td><%=h link.date %></td>
     <td><%= link_to 'Show', link %></td>
     <td><%= link_to 'Edit', edit_link_path(link) %></td>
     <td><%= link_to 'Destroy', link, :confirm => 'Are you sure?', :method => :delete %></td>

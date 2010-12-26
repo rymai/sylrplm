@@ -50,7 +50,7 @@
             <%=h check.out_reason %>
         </td>
         <td>
-            <%=h check.out_date %>
+            <%=l check.out_date %>
         </td>
         <td>
             <%=h check.out_user %>
@@ -59,7 +59,9 @@
             <%=h check.in_reason %>
         </td>
         <td>
-            <%=h check.in_date %>
+            <%unless check.in_date.nil? %>
+            <%=l check.in_date %>
+            <%end %>
         </td>
         <td>
             <%=h check.in_user %>

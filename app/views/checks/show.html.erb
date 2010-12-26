@@ -21,7 +21,7 @@
 
 <p>
   <b><%= t("label_out_date") %></b>
-  <%=h @check.out_date %>
+  <%=l @check.out_date %>
 </p>
 
 <p>
@@ -34,11 +34,12 @@
   <%=h @check.in_reason %>
 </p>
 
+<%unless @check.in_date.nil? %>
 <p>
-  <b><%= t("label_in_date") %></b>
-  <%=h @check.in_date %>
+	 <b><%= t("label_in_date") %></b>
+  <%=l @check.in_date %>
 </p>
-
+<%end%>
 <p>
   <b><%= t("label_in_user") %></b>
   <%=h @check.in_user %>

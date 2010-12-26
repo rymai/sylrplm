@@ -127,8 +127,6 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.string   "designation"
     t.text     "description"
     t.string   "responsible"
-    t.string   "group"
-    t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
