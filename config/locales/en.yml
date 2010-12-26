@@ -44,6 +44,7 @@ en:
   ctrl_object_referencer: "{{object}} Referencer"
   ctrl_init_to_do: Initialization to do
   ctrl_init_done: Initialization done
+  count_objects: " : {{number_begin}}-{{number_end}} / {{total}}"
   #access
   ctrl_object_no_controlers: "No controlers found"
   #application
@@ -290,6 +291,10 @@ en:
   faq_show: Details question
   faq_new: New question 
   # fields forums
+  forum_edit: Forum edit
+  forum_list: Forums list 
+  forum_show: Forum detail 
+  forum_new: New forum 
   part_new_forum: New forum on this part
   label_subject: Forum subject
   label_message: First forum Message 
@@ -299,25 +304,10 @@ en:
   forum_item_show: Detail messag forum
   forum_item_new: New messag forum
   label_parent: Parent
-  label_owner: Sender
+  label_author: Sender
   label_forum: Forum
   # fields help
   # fields info
-  # fields login
-  legend_user: Enter User Details
-  legend_login: Please Log In
-  submit_login: Login
-  label_username: Name
-  label_password: Password
-  label_confirm_password: Confirm
-  label_role: Role
-  label_email: Email
-  label_roles: Roles
-  label_nb_items: Data number in page
-  user_edit: Edit user
-  user_list: User list 
-  user_show: User detail
-  user_new: New User
   # fields main
   label_domain: Domain
   submit_create_domain: Create domain  
@@ -381,6 +371,9 @@ en:
   label_utility: Utility
   label_modify: Modifiable
   label_sequence: Sequence
+  # fields session
+  legend_login: Please Log In
+  submit_login: Login
   # fields statusobjects
   statusobjects_list: Listing of status 
   statusobjects_new: New status
@@ -388,8 +381,8 @@ en:
   statusobjects_edit: Edit the status 
   label_name: Name
   label_rank: Rank
-  label_promote: Promotion
-  label_demote: Rétrogadation
+  label_promote: Promote
+  label_demote: Demote
   # msg _check_status
   msg_define_status_document: Please, define documents status
   msg_define_status_part: Please, define parts status
@@ -407,7 +400,20 @@ en:
   msg_define_types_project: Please, define projects types
   msg_define_types_customer: Please, define customers types
   msg_define_types_forum: Please, define forums types
-   # fields volumes
+  #fields users
+  user_edit: Edit user
+  user_list: User list 
+  user_show: User detail
+  user_new: New User
+  legend_user: Enter User Details
+  label_username: Name
+  label_password: Password
+  label_confirm_password: Confirm
+  label_role: Role
+  label_email: Email
+  label_roles: Roles
+  label_nb_items: Data number in page
+  # fields volumes
   volume_list: Listing of volumes
   volume_new: New volume
   volume_show: Detail of volume

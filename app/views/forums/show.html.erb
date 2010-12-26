@@ -20,8 +20,8 @@
 
 <p>
   <b>Creator:</b>
-  <% if @forum.creator!= nil %>
-  	<%=h @forum.creator.login%>
+  <% if @forum.owner!= nil %>
+  	<%=h @forum.owner.login%>
   <% end %>
 </p>
 

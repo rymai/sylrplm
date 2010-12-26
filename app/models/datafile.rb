@@ -98,36 +98,43 @@ class Datafile < ActiveRecord::Base
   def get_repository
     # on prend le volume du fichier lui meme
     repos=get_dir_repository
-    #        begin 
-    #          FileUtils.mkdir_p(repos)
-    #        rescue Errno::ENOENT
-    #          puts "plm_object.get_repository mkdir:"+repos
-    #          return nil
-    #        end
     if(self.filename!=nil)
-      rev=self.revision
-      unless rev.nil?
-        repos=File.join(repos, FILE_REV_DELIMITER+rev.to_s+FILE_REV_DELIMITER+self.filename)
-      else
-        repos=File.join(repos, self.filename)
-      end 
+      repos=File.join(repos, get_filename_repository)
     end
     repos
+  end
+  
+  def get_filename_repository
+    unless self.revision.nil?
+      FILE_REV_DELIMITER+self.revision.to_s+FILE_REV_DELIMITER+self.filename.to_s
+    else
+      self.filename.to_s
+    end
   end
   
   def get_revisions_files
     ret=[]
     dir=get_dir_repository
     if File.exists?(dir)
-      Dir.foreach(dir) { |file| 
+      repos=get_filename_repository
+      Dir.foreach(dir) { |file|
+        #unless file == repos
         filename=file.split(FILE_REV_DELIMITER)[2]
         revision=file.split(FILE_REV_DELIMITER)[1]
         unless filename.nil? && revision.nil?
-          puts "plm_object.get_revisions;file="+file+" name="+filename.to_s+" rev="+revision.to_s
+          #puts "plm_object.get_revisions;file="+file+" name="+filename.to_s+" rev="+revision.to_s
           ret<<file.to_s
-        end
+          end
+        #end
       }
     end
+#    if ret.length==0
+#      nil
+#    else
+#      ret
+#    end
+    puts "plm_object.get_revisions:"+ret.length.to_s
+
     ret
   end
   
@@ -140,7 +147,7 @@ class Datafile < ActiveRecord::Base
   end
   
   def get_current_revision_file
-    puts "get_current_revision_file:"+self.revision.to_s+" filename="+self.filename.to_s
+    #puts "get_current_revision_file:"+self.revision.to_s+" filename="+self.filename.to_s
     ret=""
     unless self.revision.blank? && self.filename.blank?  
       ret=FILE_REV_DELIMITER
@@ -185,6 +192,26 @@ class Datafile < ActiveRecord::Base
       return nil
     end
     self
+  end
+  
+  def delete
+    self.remove_files
+    self.destroy
+  end
+  
+  def remove_files
+    dir=get_dir_repository
+    puts "datafile.remove_files:"+dir
+    if File.exists?(dir)
+      Dir.foreach(dir) { |file| 
+        repos=File.join(dir,file)
+        puts "datafile.remove_files:"+repos
+        if File.file?(repos)
+          File.unlink(repos)
+        end
+      }
+      Dir.rmdir(dir)
+    end
   end
   
   def find_col_for(strcol)

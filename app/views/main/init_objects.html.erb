@@ -29,28 +29,3 @@
 <% end %>
 <hr><%= h_help("help_init_db")[:text] %>
 <%end %>
-<hr><%= @help_all %>
-<br/>
-<hr><h2><%=t("context_info") %></h2>
-<table>
-    <tr>
-        <th>
-            key
-        </th>
-        <th>
-            value
-        </th>
-    </tr>
-    <% for item in request.env %>
-    <% if item[0].index("rack.session") == nil %>
-		<tr>
-        <td>
-            <%= item[0] %>
-        </td>
-        <td>
-            <%= item[1] %>
-        </td>
-    </tr>
-    <% end %>
-		<% end %>
-</table>

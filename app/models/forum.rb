@@ -5,9 +5,8 @@ class Forum < ActiveRecord::Base
   
   belongs_to :typesobject
   belongs_to :statusobject
-  belongs_to :creator,
-    :class_name => "User",
-    :foreign_key => "owner_id"
+  belongs_to :owner,
+    :class_name => "User"
   
   has_many :forum_item,
   :conditions => ["parent_id is null"]

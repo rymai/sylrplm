@@ -1,8 +1,5 @@
 <H1><%=t(:part_show) %></H1>
-<p>
-    <b><%=t(:label_id) %></b>
-    <%=h @part.id %>
-</p>
+
 <p>
     <b><%=t(:label_ident) %></b>
     <%=h @part.ident %>
@@ -10,7 +7,7 @@
 <p>
     <b><%=t(:label_type) %></b>
     <% if(@part.typesobject != nil) %>
-    <%=h @part.typesobject.id %>:<%=h @part.typesobject.name %>
+    <%=h @part.typesobject.name %>
     <% end %>
 </p>
 <p>
@@ -28,7 +25,7 @@
 <p>
     <b><%=t(:label_status) %></b>
     <% if(@part.statusobject != nil) %>
-    <%=h @part.statusobject.id %>:<%=h @part.statusobject.name %>
+    <%=h @part.statusobject.name %>
     <% end %>
 </p>
 <p>

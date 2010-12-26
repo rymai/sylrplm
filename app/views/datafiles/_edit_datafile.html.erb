@@ -28,11 +28,13 @@
     <% if  document.is_checked %>
     <br/>
     <%= f.file_field(:uploaded_file) %>
-    <br/>
+    <% if @datafile.get_revisions_files.length > 0 %>
+		<br/>
 		<b><%= f.label t(:label_restore_file) %></b>
 		<br/>
     <%= select_tag("restore_file",options_for_select(@datafile.get_revisions_files,@datafile.get_current_revision_file)) %>
-    <%end %>
+    <%end%>
+		<%end %>
     <%else %>
     <br/>
     <%= f.file_field(:uploaded_file) %>

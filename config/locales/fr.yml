@@ -300,25 +300,10 @@ fr:
   forum_item_show: Détail message forum
   forum_item_new: Nouveau message forum
   label_parent: Prédécesseur
-  label_owner: Emetteur
+  label_author: Emetteur
   label_forum: Forum
   # fields help
   # fields info
-  # fields login
-  legend_user: Renseignez les propriétés de l'utilisateur
-  legend_login: Merci de vous connecter
-  submit_login: Login
-  label_username: Nom
-  label_password: Password
-  label_confirm_password: Confirmation
-  label_role: Rôle
-  label_email: Email
-  label_roles: Rôles
-  label_nb_items: Nombre de données par page
-  user_edit: Edition l'utilisateur
-  user_list: Liste des utilisateurs
-  user_show: Détail de l'utilisateur
-  user_new: Nouvel utilisateur
   # fields main
   label_domain: Domaine
   submit_create_domain: Créer le domaine  
@@ -397,6 +382,9 @@ fr:
   msg_define_status_project: Définissez les statuts des projets
   msg_define_status_customer: Définissez les statuts des clients
   msg_define_status_forum: Définissez les statuts des forums
+   #fields session
+  legend_login: Merci de vous connecter
+  submit_login: Login
   # fields typesobjects
   typesobjects_list: Liste des types d' objets
   typesobjects_new: Nouveau type d' objet
@@ -408,6 +396,19 @@ fr:
   msg_define_types_project: Définissez les types des projets
   msg_define_types_customer: Définissez les types des clients
   msg_define_types_forum: Définissez les types des forums
+  # fields users
+  user_edit: Edition l'utilisateur
+  user_list: Liste des utilisateurs
+  user_show: Détail de l'utilisateur
+  user_new: Nouvel utilisateur
+  legend_user: Renseignez les propriétés de l'utilisateur
+  label_username: Nom
+  label_password: Password
+  label_confirm_password: Confirmation
+  label_role: Rôle
+  label_email: Email
+  label_roles: Rôles
+  label_nb_items: Nombre de données par page
   # fields volumes
   volume_list: Liste des volumes
   volume_new: Nouveau volume

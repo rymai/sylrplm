@@ -129,7 +129,6 @@ class Document < ActiveRecord::Base
   end
   
   def remove_datafile(item)
-    item.remove_file
     self.datafile.delete(item)
   end
   

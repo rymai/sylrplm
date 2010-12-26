@@ -5,17 +5,19 @@
 </p>
 
 <p>
-  <b><%= t(:label_id) %></b>
-  <%=h @forum_item.forum_id %>
+  <b><%= t(:label_forum) %></b>
+  <%=h @forum_item.forum.subject%>
 </p>
 
 <p>
   <b><%= t(:label_parent) %></b>
-  <%=h @forum_item.parent_id %>
+	<%unless @forum_item.parent.nil?%>
+  <%=h @forum_item.parent.message %>
+	<%end%>
 </p>
 
 <p>
-  <b><%= t(:label_owner) %></b>
+  <b><%= t(:label_author) %></b>
   <%=h @forum_item.owner_id %>
 </p>
 <table class='menu_bas'>

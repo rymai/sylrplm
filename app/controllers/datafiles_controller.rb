@@ -92,7 +92,7 @@ class DatafilesController < ApplicationController
       @document = Document.find(params["doc"])
       @document.remove_datafile(@datafile)
     end
-    @datafile.destroy
+    @datafile.delete
     @types = Typesobject.find_for("datafile")
     respond_to do |format|
       if params["doc"]

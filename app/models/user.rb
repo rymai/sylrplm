@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   validates_confirmation_of :password
   before_create :set_initial_attributes
   
-  def self.create_new(params)
+  def self.create_new(params=nil)
     unless params.nil?
       user = User.new(params)
     else

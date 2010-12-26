@@ -6,7 +6,7 @@
 <p>
     <b><%=t(:label_type) %></b>
     <% if(@project.typesobject != nil) %>
-    <%=h @project.typesobject.id %>:<%=h @project.typesobject.name %>
+    <%=h @project.typesobject.name %>
     <% end %>
 </p>
 <p>
@@ -20,7 +20,7 @@
 <p>
     <b><%=t(:label_statusobject) %></b>
     <% if(@project.statusobject != nil) %>
-    <%=h @project.statusobject.id %>:<%=h @project.statusobject.name %>
+    <%=h @project.statusobject.name %>
     <% end %>
 </p>
 <p>

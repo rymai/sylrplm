@@ -17,7 +17,7 @@
             <%=t(:label_description) %>
         </th>
         <th>
-            <%=t(:label_owner) %>
+            <%=t(:label_responsible) %>
         </th>
         <th>
         </th>
@@ -41,8 +41,8 @@
             <%=h forum.description %>
         </td>
         <td>
-            <% if forum.creator != nil %>
-            <%=h forum.creator.login %>
+            <% if forum.owner != nil %>
+            <%=h forum.owner.login %>
             <% end %>
         </td>
         <td>

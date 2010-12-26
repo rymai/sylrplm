@@ -6,7 +6,7 @@
 <p>
     <b><%= t("label_typesobject") %></b>
     <% if(@datafile.typesobject != nil) %>
-    <%=h @datafile.typesobject.id %>:<%=h @datafile.typesobject.name %>
+    <%=h @datafile.typesobject.name %>
     <% end %>
 </p>
 <p>
@@ -15,7 +15,7 @@
 </p>
 <p>
     <b><%= t("label_volume") %></b>
-    <%=h @datafile.volume_id %>
+    <%=h @datafile.volume.name %>
 </p>
 <p>
     <b><%= t("label_filename") %></b>
