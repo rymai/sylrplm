@@ -111,7 +111,7 @@ en:
   #roles
   ctrl_role: Role
   #sequences
-  ctrl_sequence: Séquence
+  ctrl_sequence: Sï¿½quence
   #statusobjects
   ctrl_statusobject: Object status
   #typesobjects
@@ -446,4 +446,14 @@ en:
   help_close_window: Close the help window
   # messages
   msg.no_item_to_display: "There are no items to display."
-  
+  ###########################
+  # plugins
+  ###########################
+  ###########################
+  # will_paginate
+  ###########################
+  label_previous: Previous
+  label_next: Next
+  ###########################
+  # formattage 
+  ###########################

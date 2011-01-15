@@ -79,6 +79,15 @@ class ApplicationController < ActionController::Base
     @logger.level     = Logger::DEBUG #DEBUG INFO WARN ERROR FATAL ANY
     @logger.formatter = LogFormatter.new  # Install custom formatter!
     #@logger.datetime_format = "%Y-%m-%d %H:%M:%S"
+    WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
+    WillPaginate::ViewHelpers.pagination_options[:next_label] = t('label_next')
+    WillPaginate::ViewHelpers.pagination_options[:page_links ] = true  # when false, only previous/next links are rendered (default: true)
+    WillPaginate::ViewHelpers.pagination_options[:inner_window] = 10 # how many links are shown around the current page (default: 4)
+    WillPaginate::ViewHelpers.pagination_options[:page_links ] = true  # when false, only previous/next links are rendered (default: true)
+    WillPaginate::ViewHelpers.pagination_options[:inner_window] = 10 # how many links are shown around the current page (default: 4)
+    WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
+    WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
+
   end
 
   def get_themes(default)

@@ -443,7 +443,17 @@ fr:
   help_close_window: Fermer la fenêtre d'aide
   # messages
   msg.no_item_to_display: "Il n'y a rien à afficher."
-  
+  ###########################
+  # plugins
+  ###########################
+  ###########################
+  # will_paginate
+  ###########################
+  label_previous: Précédente
+  label_next: Suivante
+  ###########################
+  # formattage 
+  ###########################
   date:
     formats:
       default: "%d/%m/%Y"
