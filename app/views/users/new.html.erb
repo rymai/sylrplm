@@ -1,0 +1,17 @@
+<h1><%=t(:user_new) %></h1>
+<% form_for(@user) do |form| %>
+<%= form.error_messages %>
+
+<%= render(:partial => "users/edit",:locals => { :form => form, :fonct=>"add" }) %>
+
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= form.submit t("create") %>
+        </td>
+        <td>
+            <%= link_to t("list"), users_path %>
+        </td>
+    </tr>
+</table>
+<%end%>

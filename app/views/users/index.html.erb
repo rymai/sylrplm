@@ -1,0 +1,66 @@
+<h1><%=t(:user_list) %><%=h_count_objects(@users)%> </h1>
+<%= form_simple_query_helper('/users', @users) %>
+<table>
+    <tr>
+        <th<%= sort_td_class_helper "login" %>
+            <%= sort_link_helper t(:label_username), "login" %>
+        </th>
+        <th<%= sort_td_class_helper "role" %>
+            <%= sort_link_helper t(:label_role), "role.title" %>
+        </th>
+        <th<%= sort_td_class_helper "mail" %>
+            <%= sort_link_helper t(:label_email), "email" %>
+        </th>
+        <th>
+            <%= sort_td_class_helper "volume" %>
+            <%= sort_link_helper t(:label_volume), "volume.name" %>
+        </th>
+        <th<%= sort_td_class_helper "theme" %>
+            <%= sort_link_helper t(:label_theme), "theme" %>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+    </tr>
+    <% for user in @users[:recordset] %>
+    <tr>
+        <td>
+            <%= h(user.login) %>
+        </td>
+        <td>
+            <%if(user.role != nil) %>
+            <%= h(user.role.title) %>
+            <%end %>
+        </td>
+        <td>
+            <%= h(user.email) %>
+        </td>
+        <td>
+            <%=h user.volume.name %>
+        </td>
+        <td>
+            <%= h(user.theme) %>
+        </td>
+        <td>
+            <%= link_to h_img_show.to_s, user %>
+        </td>
+        <td>
+            <%= link_to h_img_edit.to_s, edit_user_path(user) %>
+        </td>
+        <td>
+            <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %>
+        </td>
+    </tr>
+    <% end %>
+</table>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t("new_user"), new_user_path %>
+        </td>
+		<td>
+            <%= show_help("help_users") %>
+        </td>
+    </tr>
+</table>
