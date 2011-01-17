@@ -11,6 +11,8 @@ module OsFunctions
       "mac"
     when /mswin/i
       "win"
+     when /i386-mingw32/i
+      "win"
     when /linux/i
       "linux"
     else
