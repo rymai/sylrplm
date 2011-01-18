@@ -386,7 +386,7 @@ module Controllers::PlmObjectControllerModule
     respond_to do |format|      
       flash[:notice] = ""
       @forum=Forum.new(params[:forum])
-      @forum.creator=@user
+      @forum.owner=@user
       if(@forum.save)
         item=ForumItem.create_new(@forum, params)
         if(item.save)

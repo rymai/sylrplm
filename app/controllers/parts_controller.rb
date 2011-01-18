@@ -211,57 +211,6 @@ class PartsController < ApplicationController
     ctrl_add_forum(@part,"part")
   end
 
-  def add_forum_old
-    @part = Part.find(params[:id])
-    relation="forum"
-    error=false
-    respond_to do |format|
-      flash[:notice] = ""
-      @forum=Forum.new(params[:forum])
-      @forum.creator=@user
-      if(@forum.save)
-        item=ForumItem.create_new(@forum, params)
-        if(item.save)
-          link_=Link.create_new("part", @part, "forum", @forum, relation)
-          link=link_[:link]
-          if(link!=nil)
-            if(link.save)
-              #flash[:notice] += "<br> forum #{@forum.subject} was successfully added:rel=#{relation}:#{link_[:msg]}"
-              flash[:notice] += t(:ctrl_object_added,:object=>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>link_[:msg])
-            else
-              #flash[:notice] += "<br> forum #{@forum.subject} was not added:rel=#{relation}:#{link_[:msg]}"
-              flash[:notice] += t(:ctrl_object_not_added,:object=>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>link_[:msg])
-              @forum.destroy
-              error=true
-            end
-          else
-            #flash[:notice] += "<br> link #{@forum.subject} was not created:rel=#{relation}:#{link_[:msg]}"
-            flash[:notice] += t(:ctrl_object_not_linked,:object=>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>nil)
-            @forum.destroy
-            error=true
-          end
-        else
-          flash[:notice] += t(:ctrl_object_not_created, :object=>t(:ctrl_forum_item))
-          @forum.destroy
-          error=true
-        end
-      else
-        #flash[:notice] += "<br> forum #{@forum.subject} was not saved:rel=#{relation}:#{link_[:msg]}"
-        flash[:notice] += t(:ctrl_object_not_saved,:object=>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>link_[:msg])
-        error=true
-      end
-      if error==false
-        format.html { redirect_to(@part) }
-      else
-        puts 'PartController.add_forum:part_id='+@part.id.to_s
-        @types=Typesobject.find_for("forum")
-        @status= Statusobject.find_for("forum")
-        format.html { render  :action => :new_forum, :id => @part.id   }
-      end
-      format.xml  { head :ok }
-    end
-  end
-
   def promote
     @part = Part.find(params[:id])
     ctrl_promote(@part)

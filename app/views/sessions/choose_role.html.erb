@@ -3,7 +3,7 @@
     <legend>
       <%= t(:legend_login) %>
     </legend>
-    <% form_for @user do |form| %>
+    <% form_for :sessions, :url=>url_for( :controller =>'sessions', :action => 'update', :id => @user.id)  do |form| %>
     <p>
       <label for="role">
         <%= t(:label_role) %>
@@ -13,7 +13,8 @@
     <table class='menu_bas'>
       <tr>
         <td>
-          <%= submit_tag t(:submit_login)  %>
+        	<%= link_to t(:submit_login), :controller =>'sessions', :action => 'update', :id => @user.id %>
+            <%=form.submit t(:submit_login)%>
         </td>
       </tr>
     </table>

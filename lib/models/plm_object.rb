@@ -2,7 +2,7 @@ module Models::PlmObject
 
   # modifie les attributs avant edition
   def self.included(base)
-    base.extend(ClassMethods) # ça appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclue la lib
+    base.extend(ClassMethods) # ï¿½a appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclue la lib
   end
 
   module ClassMethods
@@ -23,8 +23,8 @@ module Models::PlmObject
   end
 
   def is_freeze
-    if(self.statusobject!=nil && Statusobject.find_last(self.class.name)!=nil)
-      if(self.statusobject.rank == Statusobject.find_last(self.class.name).rank)
+    if(self.statusobject!=nil && Statusobject.get_last(self.class.name)!=nil)
+      if(self.statusobject.rank == Statusobject.get_last(self.class.name).rank)
         true
       else
         false
@@ -36,8 +36,8 @@ module Models::PlmObject
 
   # a valider si avant dernier status
   def is_to_validate
-    if(self.statusobject!=nil && Statusobject.find_last(self.class.name)!=nil)
-      if(self.statusobject.rank == Statusobject.find_last(self.class.name).rank-1)
+    if(self.statusobject!=nil && Statusobject.get_last(self.class.name)!=nil)
+      if(self.statusobject.rank == Statusobject.get_last(self.class.name).rank-1)
         true
       else
         false
@@ -68,7 +68,7 @@ module Models::PlmObject
       if(last_rev.revision==rev_cur)
         obj=clone()
         obj.revision=rev_cur.next
-        obj.statusobject=Statusobject.find_first(self.class.name)
+        obj.statusobject=Statusobject.get_first(self.class.name)
         puts self.class.name+".revise:"+rev_cur+"->"+obj.revision
         if self.has_attribute?(:filename)
           if(self.filename!=nil)

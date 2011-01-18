@@ -1,5 +1,6 @@
 <h1><%=t(:part_new) %></h1>
 <% form_for(@part) do |f| %>
+<%= hidden_field :part , :revision %>
 <%= f.error_messages %>
 <%= render(:partial => "parts/edit",:locals => { :f => f, :fonct=>"new" }) %>
 <table class='menu_bas'>

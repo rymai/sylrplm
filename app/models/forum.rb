@@ -19,7 +19,7 @@ class Forum < ActiveRecord::Base
     else
       forum=Forum.new(forum)
     end
-    forum.creator=@user
+    forum.owner=@user
     forum
   end
   

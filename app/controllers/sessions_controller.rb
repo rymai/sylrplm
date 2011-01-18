@@ -33,6 +33,25 @@ class SessionsController < ApplicationController
     # redirect_to(uri || { :controller => "main", :action => "index" })
   end
   
+  #appelle par choose_role
+  def update
+  @user    = User.find(params[:id])
+    respond_to do |format|
+      if @user.update_attributes(params[:sessions]) 
+        original_uri=session[:original_uri]
+        session[:original_uri]=nil
+        flash[:notice] = t(:ctrl_user_connected, :user => @user.login)
+        format.html { redirect_to(original_uri) }
+        format.xml  { head :ok }
+      else
+        flash.now[:notice] = t(:ctrl_user_not_connected, :user => @user.login)
+        format.html { redirect_to(index_main) }
+        format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
+      end   
+    end
+end
+
+  
   def destroy
     session[:user_id] = nil
     flash[:notice] = t(:ctrl_user_disconnected, :user => @user.login) if @user != :user_not_connected

@@ -6,16 +6,24 @@ module OsFunctions
   # in the snippet on dzone and I will add them.
   
   def self.os
-    case RUBY_PLATFORM
-    when /darwin/i
-      "mac"
-    when /mswin/i
+    
+    if self.os_windows?
       "win"
-    when /linux/i
+    else 
+      case RUBY_PLATFORM
+        when /darwin/i
+      "mac"
+        when /mswin/i
+      "win"
+        when /linux/i
       "linux"
-    else
-      nil
+      else
+        nil
+      end
     end
   end
   
+  def self.os_windows?
+      /mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM
+  end
 end 
