@@ -5,7 +5,7 @@ class Project < ActiveRecord::Base
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident
   
-  belongs_to :customer
+  #belongs_to :customer
   belongs_to :typesobject
   belongs_to :statusobject
   belongs_to :owner,

@@ -161,13 +161,11 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "customer_id"
     t.integer  "typesobject_id"
     t.integer  "statusobject_id"
     t.integer  "owner_id"
   end
 
-  add_index "projects", ["customer_id"], :name => "fk_project_customer"
   add_index "projects", ["ident"], :name => "id_project_ident"
   add_index "projects", ["owner_id"], :name => "fk_project_owner"
   add_index "projects", ["statusobject_id"], :name => "fk_project_status"
