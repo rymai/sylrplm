@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
   # syl 17/11/2010 : route par defaut 
   map.root :controller => "main", :action => "index"
   
-  map.resource :sessions, :only => [:new, :create, :destroy], :member => { :choose_role => :get }
+  map.resource :sessions, :only => [:new, :create, :update, :destroy], :member => { :choose_role => :get }
 
   map.resources :users
   

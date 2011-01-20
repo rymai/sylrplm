@@ -49,7 +49,7 @@ class Sequence < ActiveRecord::Base
     ret=nil
     find_all.each do |line|
         tokens=line.utility.split(".")
-        puts self.class.name+".find_col_for:"+model+"."+col+":"+line.utility
+        ##puts "Sequence.find_col_for:"+model+"."+col+":"+line.utility
         if(tokens[0]==model && tokens[1]==col)
           ret=line
         end

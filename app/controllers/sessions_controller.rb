@@ -1,15 +1,25 @@
 class SessionsController < ApplicationController
   include Controllers::PlmObjectControllerModule
-  skip_before_filter :authorize, :only => [:new, :create]
+  skip_before_filter :authorize #, :only => [:index, :edit, :new, :create]
   access_control(Access.find_for_controller(controller_class_name))
-
+  
   def index
+#    puts "sessions_controller.index"
+#    respond_to do |format|
+#      flash[:notice] = "sessions"
+#      format.html { render :new }
+#    end
+#    
   end
-
+  
   def new
   end
-
+  
+  def edit
+  end
+  
   def create
+    puts "sessions_controller.create:"+params.inspect
     flash.now[:notice] = "post"
     @user = User.authenticate(params[:login], params[:password])
     respond_to do |format|
@@ -23,7 +33,7 @@ class SessionsController < ApplicationController
       end
     end
   end
-
+  
   def choose_role
     @roles = current_user.roles
     # @user = User.find_user(session)
@@ -35,7 +45,7 @@ class SessionsController < ApplicationController
   
   #appelle par choose_role
   def update
-  @user    = User.find(params[:id])
+    @user    = User.find(params[:id])
     respond_to do |format|
       if @user.update_attributes(params[:sessions]) 
         original_uri=session[:original_uri]
@@ -49,13 +59,13 @@ class SessionsController < ApplicationController
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end   
     end
-end
-
+  end
+  
   
   def destroy
     session[:user_id] = nil
     flash[:notice] = t(:ctrl_user_disconnected, :user => @user.login) if @user != :user_not_connected
     redirect_to(:controller => "main", :action => "index")
   end
-
+  
 end

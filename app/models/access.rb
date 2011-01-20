@@ -34,12 +34,17 @@ class Access < ActiveRecord::Base
         controller.name !="PlmInitController" &&
         controller.name !="RolesController" &&
         controller.name !="RolesUsersController" &&
-        controller.name !="SequencesController"
+        controller.name !="SequencesController" &&
+        controller.name !="SessionsController"
         st=st+create_access(controller.name,controller.method,"admin & !designer & !consultant") 
       else
-        st=st+create_access(controller.name,controller.method,"(admin | designer) & !consultant") 
+        if controller.name =="SessionsController"
+          st=st+create_access(controller.name,controller.method,"admin | designer | consultant") 
+        else
+          st=st+create_access(controller.name,controller.method,"(admin | designer) & !consultant") 
+        end
       end
-      puts 'access_controller.index:controller='+controller.name+' method='+controller.method+' st='+st.to_s     
+      #puts 'access_controller.index:controller='+controller.name+' method='+controller.method+' st='+st.to_s     
     end
     true
   end
@@ -60,7 +65,7 @@ class Access < ActiveRecord::Base
   def self.get_conditions(filter)
     filter=filter.gsub("*","%")
     ["controller LIKE ? or action LIKE ? or roles LIKE ? " ,
-      filter, filter, 
+    filter, filter, 
     filter] unless filter.nil? 
   end
   

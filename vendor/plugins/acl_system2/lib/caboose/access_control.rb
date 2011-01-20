@@ -24,6 +24,7 @@ module Caboose
           default_block_given = true  
         end       
         before_filter do |c|
+          
           c.default_access_context = defaults if default_block_given
           @access = AccessSentry.new(c, actions)
           #syl

@@ -28,6 +28,8 @@ class Controller
           met=smet.to_s
           if(met!='index' && met!='init_objects' && met!='login' && met!='logout' && met.index('_old')==nil && met.index('_obsolete')==nil)
             ret<< Controller.new(i,cont,met)
+          elsif (cont=="SessionsController")
+            ret<< Controller.new(i,cont,met)
           end
           i=i+1;
         }

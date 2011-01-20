@@ -158,6 +158,7 @@ class ApplicationController < ActionController::Base
     unless User.find_by_id(session[:user_id])
       session[:original_uri] = request.request_uri
       flash[:notice] = t(:login_login)
+      puts "application_controller.authorize:url="+new_sessions_url
       redirect_to new_sessions_url
     end
   end

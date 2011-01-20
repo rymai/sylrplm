@@ -3,7 +3,7 @@
     <legend>
       <%= t(:legend_login) %>
     </legend>
-    <% form_for :session, :url => sessions_path, :html => { :method => 'post' } do |form| %>
+    <% form_for :session, :url => {:controller=>:sessions , :action=>:create} do |form| %>
     <p>
       <label for="name">
         <%= t(:label_username) %>

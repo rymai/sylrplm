@@ -1,23 +1,22 @@
 <div class="depot-form">
-  <fieldset>
-    <legend>
-      <%= t(:legend_login) %>
-    </legend>
-    <% form_for :sessions, :url=>url_for( :controller =>'sessions', :action => 'update', :id => @user.id)  do |form| %>
-    <p>
-      <label for="role">
-        <%= t(:label_role) %>
-      </label>
-      <%= form.collection_select(:role_id, @roles, :id, :title, {}) %>
-    </p>
-    <table class='menu_bas'>
-      <tr>
-        <td>
-        	<%= link_to t(:submit_login), :controller =>'sessions', :action => 'update', :id => @user.id %>
-            <%=form.submit t(:submit_login)%>
-        </td>
-      </tr>
-    </table>
-    <% end %>
-  </fieldset>
+    <fieldset>
+        <legend>
+            <%= t(:legend_login) %>
+        </legend>
+        <% form_for :sessions, :url=>"update/"+@user.id.to_s  do |form| %>
+        <p>
+            <label for="role">
+                <%= t(:label_role) %>
+            </label>
+            <%= form.collection_select(:role_id, @roles, :id, :title, {}) %>
+        </p>
+        <table class='menu_bas'>
+            <tr>
+                <td>
+                    <%=form.submit t(:submit_login) %>
+                </td>
+            </tr>
+        </table>
+        <% end %>
+    </fieldset>
 </div>
