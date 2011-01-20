@@ -25,8 +25,7 @@
             <%= sort_link_helper t(:label_date) , "date" %>
         </th>
         
-        <th>
-        </th>
+        
         <th>
         </th>
         <th>
@@ -67,14 +66,8 @@
         <td>
             <%=l project.date %>
         </td>
-        <% if(project.customer != nil) %>
-        <td>
-            <%= link_to project.customer.ident , :controller => "customers", :action => :show, :id => project.customer.id %>
-        </td>
-        <% else %>
-        <td>
-        </td>
-        <% end %>
+ 
+       
         <td>
             <%= link_to h_img_show.to_s, project %>
         </td>
