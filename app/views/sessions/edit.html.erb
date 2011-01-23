@@ -1,0 +1,25 @@
+<div class="depot-form">
+    <fieldset>
+        <legend>
+            <%= t(:legend_login) %>
+        </legend>
+        <% form_for :sessions, :url=>"/sessions/update"  do |form| %>
+        <%= hidden_field_tag :id , @user.id %>
+        
+		<p>
+            <label for="role">
+                <%= t(:label_role) %>
+            </label>
+            
+			<%= form.collection_select(:role_id, @roles, :id, :title, {}) %>
+        </p>
+        <table class='menu_bas'>
+            <tr>
+                <td>
+                    <%=submit_tag t(:submit_login) %>
+               </td>
+            </tr>
+        </table>
+        <% end %>
+    </fieldset>
+</div>
