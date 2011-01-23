@@ -346,4 +346,4 @@ modif de test/fixtures/sequences.yml et remplacer object par utility
 modif de test/fixtures/forums.yml et remplacer typeobjects_id par typesobject_id
 modif de test/fixtures/accesses.yml et remplacer role_id par roles
 
-
+<%= select(:user, "role", @roles.collect {|p| [ p.title, p.id ] } ) %>

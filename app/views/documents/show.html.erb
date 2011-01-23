@@ -55,6 +55,13 @@
     </tr>
     <%end %>
     <% else %>
+	        <td>
+            <%= t("is_check_out") %>
+        </td>
+        <td>
+            <%= t("reason") %><%= @checkout.out_reason %>
+        </td>
+
     <% form_for(@document, :url => {:id => @document.id, :action => "check_in" },
     :html => { :multipart => true}) do |f| %>
     <tr>

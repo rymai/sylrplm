@@ -282,6 +282,7 @@ fr:
   datafile_add: Ajout d'un fichier au document
   label_nbfiles: Nb fichiers
   check_out: "Réserver"
+  is_check_out: "Est réservé"
   check_in: "Maj et libérer"
   check_free: "Libérer"
   download: "Télécharger fichier"

@@ -50,6 +50,65 @@ class Document < ActiveRecord::Base
     obj
   end
   
+  def check_out(params,user)
+    ret=""
+    check     = Check.get_checkout("document", self)
+    if check.nil?
+      unless params[:reason].blank?
+        check = Check.create_new("document", self, params, user)
+        if check.save
+          ret="ok"
+        else
+          ret="notcheckout"
+        end
+      else
+        ret="no_reason"
+      end
+    else
+      ret="already_checkout"
+    end
+  end
+  
+  def check_in(params,user)
+    ret=""
+    check     = Check.get_checkout("document", self)
+    unless params[:reason].blank?
+      unless check.nil?
+        check.checkIn(params,user)
+        if check.save
+          self.update_attributes(params[:document])
+          ret="ok"
+        else
+          ret="notcheckin"
+        end
+      else
+        ret="notyet_checkout"
+      end
+    else
+      ret="no_reason"
+    end
+  end
+  
+  def check_free(params,user)
+    ret=""
+    check     = Check.get_checkout("document", self)
+    unless params[:reason].blank?
+      unless check.nil?
+        check.checkFree(params,user)
+        if check.save
+          self.update_attributes(params[:document])
+          ret="ok"
+        else
+          ret="notcheckfree"
+        end
+      else
+        ret="notyet_checkout"
+      end
+    else
+      ret="no_reason"
+    end
+  end
+  
   def is_checked
     check=Check.get_checkout("document", self) 
     if(check.nil?)
@@ -90,6 +149,19 @@ class Document < ActiveRecord::Base
     Typesobject.find(:all, :order=>"name",
       :conditions => ["object = 'document'"])
   end
+  
+  def add_datafile(params,user)
+    ret=""
+    datafile = Datafile.create_new(params, user)
+    if datafile.save
+      self.datafile << datafile
+      self.save
+      ret="ok"
+    else
+      ret="datafile_not_saved"
+    end
+  end
+  
   def get_datafiles
     ret=[]
     ret=self.datafile
@@ -143,7 +215,7 @@ class Document < ActiveRecord::Base
     filter=filter.gsub("*","%")
     conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
       " or "+qry_owner+" or date LIKE ? ",
-      filter, filter, 
+    filter, filter, 
     filter, filter, 
     filter, filter, 
     filter ] unless filter.nil?

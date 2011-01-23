@@ -2,12 +2,12 @@ class DocumentsController < ApplicationController
   include Controllers::PlmObjectControllerModule
   include Controllers::PlmInitControllerModule
   before_filter :check_init, :only => :new
-
+  
   #droits d'acces suivant le controller et l'action demandee
   #administration par le menu Access
   #access_control (Document.controller_access())
   access_control(Access.find_for_controller(controller_class_name))
-
+  
   # GET /documents
   # GET /documents.xml
   def index
@@ -17,7 +17,7 @@ class DocumentsController < ApplicationController
       format.xml  { render :xml => @documents[:recordset] }
     end
   end
-
+  
   # GET /documents/1
   # GET /documents/1.xml
   def show
@@ -26,12 +26,13 @@ class DocumentsController < ApplicationController
     @parts     = @document.parts
     @projects  = @document.projects
     @customers = @document.customers
+    @checkout  = Check.get_checkout("document", @document)
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @document }
     end
   end
-
+  
   # GET /documents/new
   # GET /documents/new.xml
   def new
@@ -44,7 +45,7 @@ class DocumentsController < ApplicationController
       format.xml  { render :xml => @document }
     end
   end
-
+  
   # GET /documents/1/edit
   def edit
     @document = Document.find_edit(params[:id])
@@ -54,7 +55,7 @@ class DocumentsController < ApplicationController
     puts "document.edit:type=#{@document.statusobject.inspect}"
     puts "document.edit:status=#{@status.inspect}"
   end
-
+  
   # POST /documents
   # POST /documents.xml
   def create
@@ -76,7 +77,7 @@ class DocumentsController < ApplicationController
       end
     end
   end
-
+  
   # PUT /documents/1
   # PUT /documents/1.xml
   def update
@@ -96,7 +97,7 @@ class DocumentsController < ApplicationController
       end
     end
   end
-
+  
   # DELETE /documents/1
   # DELETE /documents/1.xml
   def destroy
@@ -112,7 +113,7 @@ class DocumentsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-
+  
   def promote
     @document = Document.find(params[:id])
     @volumes  = Volume.find_all
@@ -120,7 +121,7 @@ class DocumentsController < ApplicationController
     @status   = Statusobject.find_for("document")
     ctrl_promote(@document)
   end
-
+  
   def demote
     @document = Document.find(params[:id])
     @volumes  = Volume.find_all
@@ -128,7 +129,7 @@ class DocumentsController < ApplicationController
     @status   = Statusobject.find_for("document")
     ctrl_demote(@document)
   end
-
+  
   def revise
     define_variables
     document     = Document.find(params[:id])
@@ -155,14 +156,13 @@ class DocumentsController < ApplicationController
       end
     end
   end
-
+  
   def check_out
     @document = Document.find(params[:id])
-    check     = Check.get_checkout("document", @document)
-    if check.nil?
-      unless params[:reason].blank?
-        check = Check.create_new("document", @document, params, @user)
-        if check.save
+    st=@document.check_out(params,@user)
+    if st!="already_checkout"
+      if st!="no_reason"
+        if st=="ok"
           flash[:notice] = t(:ctrl_object_checkout, :object => t(:ctrl_document), :ident => @document.ident, :reason => params[:reason])
         else
           flash[:notice] = t(:ctrl_object_notcheckout, :object => t(:ctrl_document), :ident => @document.ident)
@@ -178,15 +178,14 @@ class DocumentsController < ApplicationController
       format.html { redirect_to(@document) }
     end
   end
-
+  
   def check_in
     @document = Document.find(params[:id])
-    check     = Check.get_checkout("document", @document)
+    st=@document.check_in(params,@user)
     respond_to do |format|
-      unless params[:reason].blank?
-        unless check.nil?
-          check.checkIn(params,@user)
-          if check.save
+      if st!="no_reason"
+        if st!="notyet_checkout"
+          if st=="ok"
             @document.update_attributes(params[:document])
             flash[:notice] = t(:ctrl_object_checkin, :object => t(:ctrl_document), :ident => @document.ident)
           else
@@ -202,15 +201,14 @@ class DocumentsController < ApplicationController
       format.html { redirect_to(@document) }
     end
   end
-
+  
   def check_free
     @document = Document.find(params[:id])
-    check     = Check.get_checkout("document", @document)
+    st=@document.check_free(params,@user)
     respond_to do |format|
-      unless check.nil?
-        unless params[:reason].blank?
-          check.checkFree(params, @user)
-          if check.save
+      if st!="no_reason"
+        if st!="notyet_checkout"
+          if st=="ok"
             flash[:notice] = t(:ctrl_object_checkfree, :object => t(:ctrl_document), :ident => @document.ident)
           else
             flash[:notice] = t(:ctrl_object_not_checkfree, :object => t(:ctrl_document), :ident => @document.ident)
@@ -225,53 +223,61 @@ class DocumentsController < ApplicationController
       format.html { redirect_to(@document) }
     end
   end
-
+  
   def add_document_to_favori
     document = Document.find(params[:id])
     puts "main_controller.add_document_to_favori:#{document.inspect}"
     @favori_document.add_document(document)
   end
-
+  
   def empty_favori_document
     session[:favori_document] = nil
     @favori_document          = nil
   end
-
+  
   def new_datafile
     @object = Document.find(params[:id])
     @types  = Typesobject.find_for("datafile")
     puts "DocumentsController.new_datafile:#{@object.inspect}"
     respond_to do |format|
-      flash[:notice] = ""
-      @datafile = Datafile.create_new(nil,@user)
-      format.html {render :action => :new_datafile, :id => @object.id }
-      format.xml  { head :ok }
+      check     = Check.get_checkout("document", @object)
+      if check.nil?
+        check = Check.create_new("document", @object, params, @user)
+        if check.save
+          flash[:notice] = t(:ctrl_object_checkout, :object => t(:ctrl_document), :ident => @object.ident, :reason => check.out_reason)
+        else
+          flash[:notice] = t(:ctrl_object_notcheckout, :object => t(:ctrl_document), :ident => @object.ident)
+          check=nil
+        end
+      else
+        flash[:notice] = t(:ctrl_object_already_checkout, :object => t(:ctrl_document), :ident => @object.ident, :reason => check.out_reason)
+      end
+      unless check.nil?
+        @datafile = Datafile.create_new(nil,@user)
+        format.html {render :action => :new_datafile, :id => @object.id }
+        format.xml  { head :ok }
+      end
     end
   end
-
+  
   def add_datafile
     @object = Document.find(params[:id])
     error   = false
+    st=@object.add_datafile(params,@user)
     respond_to do |format|
       flash[:notice] = ""
-      puts "plm_object_controller.ctrl_add_datafile:user=#{@user.inspect}"
-      @datafile = Datafile.create_new(params, @user)
-      if @datafile.save
-        @object.datafile << @datafile
-        @object.save
-      else
+      if st!="ok"
         flash[:notice] += t(:ctrl_object_not_saved,:object=>t(:ctrl_datafile),:ident=>@datafile.ident,:msg=>nil)
         error = true
       end
       unless error
         format.html { redirect_to(@object) }
       else
-        puts "plm_object_controller.add_datafile:id=#{@object.id}"
+        #puts "plm_object_controller.add_datafile:id=#{@object.id}"
         @types = Typesobject.find_for("datafile")
         format.html { render  :action => :new_datafile, :id => @object.id   }
       end
       format.xml  { head :ok }
     end
   end
-
 end

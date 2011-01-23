@@ -16,6 +16,7 @@ class SessionsController < ApplicationController
   end
   
   def edit
+     @roles = current_user.roles
   end
   
   def create
@@ -26,7 +27,9 @@ class SessionsController < ApplicationController
       if @user
         session[:user_id] = @user.id
         flash[:notice]    = t(:ctrl_role_needed)
-        format.html { redirect_to choose_role_sessions_url }
+        #format.html { redirect_to choose_role_sessions_url }
+         @roles = current_user.roles
+         format.html { render :action => "edit" }
       else
         flash[:notice] = t(:ctrl_invalid_login)
         format.html { render :new }
@@ -48,12 +51,14 @@ class SessionsController < ApplicationController
     @user    = User.find(params[:id])
     respond_to do |format|
       if @user.update_attributes(params[:sessions]) 
+        puts "sessions_controller.update ok"
         original_uri=session[:original_uri]
         session[:original_uri]=nil
         flash[:notice] = t(:ctrl_user_connected, :user => @user.login)
         format.html { redirect_to(original_uri) }
         format.xml  { head :ok }
       else
+        puts "sessions_controller.update ko"
         flash.now[:notice] = t(:ctrl_user_not_connected, :user => @user.login)
         format.html { redirect_to(index_main) }
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }

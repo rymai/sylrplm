@@ -281,6 +281,7 @@ en:
   datafile_add: Add a file
   label_nbfiles: Nb files
   check_out: "Check Out"
+  is_check_out: "Is Check Out"
   check_in: "Check In"
   check_free: "Unlock"
   download: "download file"
