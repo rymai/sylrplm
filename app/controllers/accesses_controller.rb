@@ -57,20 +57,14 @@ class AccessesController < ApplicationController
             format.html { redirect_to(@access) }
             format.xml  { render :xml => @access, :status => :created, :location => @access }
           else
-            error   = true
             @access = Access.new
             flash[:notice] += '<br />'+t(:ctrl_object_not_created, :object => 'Access')
             format.html { render :action => "new" }
             format.xml  { render :xml => @access.errors, :status => :unprocessable_entity }
           end
-          unless error
-            format.html { redirect_to(@access) }
-            format.xml  { render :xml => @access, :status => :created, :location => @access }
-          end
         end
       end
     else
-      error        = true
       @access      = Access.new
       @controllers = Controller.get_controllers
       @roles       = Role.all
