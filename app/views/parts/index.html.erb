@@ -7,28 +7,28 @@
         <th>
         </th>
         <th<%= sort_td_class_helper "id" %>>
-            <%= sort_link_helper t("label_id"), "id" %>
+          <%= sort_link_helper t("label_id"), "id" %>
         </th>
         <th<%= sort_td_class_helper "ident" %>>
-            <%= sort_link_helper t("label_ident"), "ident" %>
+          <%= sort_link_helper t("label_ident"), "ident" %>
         </th>
         <th<%= sort_td_class_helper "typesobject_id" %>>
-            <%= sort_link_helper t("label_typesobject"), "typesobject_id" %>
+          <%= sort_link_helper t("label_typesobject"), "typesobject_id" %>
         </th>
         <th<%= sort_td_class_helper "revision" %>>
-            <%= sort_link_helper t("label_revision"), "revision" %>
+          <%= sort_link_helper t("label_revision"), "revision" %>
         </th>
         <th<%= sort_td_class_helper "designation" %>>
-            <%= sort_link_helper t("label_designation"), "designation" %>
+          <%= sort_link_helper t("label_designation"), "designation" %>
         </th>
         <th<%= sort_td_class_helper "statusobject_id" %>>
-            <%= sort_link_helper t("label_statusobject"), "statusobject_id" %>
+          <%= sort_link_helper t("label_statusobject"), "statusobject_id" %>
         </th>
         <th<%= sort_td_class_helper "owner" %>>
-            <%= sort_link_helper t("label_responsible"), "owner" %>
+          <%= sort_link_helper t("label_responsible"), "owner" %>
         </th>
         <th<%= sort_td_class_helper "date" %>>
-            <%= sort_link_helper t("label_date"), "date" %>
+          <%= sort_link_helper t("label_date"), "date" %>
         </th>
         <th>
         </th>
@@ -40,71 +40,69 @@
         </th>
     </tr>
     <% @parts[:recordset].each do |part| %>
-    <tr>
+      <tr>
         <td>
-            <%= icone(part) %>
+          <%= icone(part) %>
         </td
         <td>
-            <%=h part.id %>
+          <%=h part.id %>
         </td>
         <td>
-            <%=h part.ident %>
+          <%=h part.ident %>
         </td>
         <td>
-            <% if(part.typesobject != nil) %>
+          <% unless part.typesobject.nil? %>
             <%=h part.typesobject.name %>
-            <% end %>
+          <% end %>
         </td>
         <td>
-            <%=h part.revision %>
+          <%=h part.revision %>
         </td>
         <td>
-            <%=h part.designation %>
+          <%=h part.designation %>
         </td>
         <td>
-            <% if(part.statusobject != nil) %>
+          <% unless part.statusobject.nil? %>
             <%=h part.statusobject.name %>
-            <% end %>
+          <% end %>
         </td>
         <td>
-            <%=h part.owner.login %>
+          <%=h part.owner.login %>
         </td>
         <td>
-            <%=l part.date %>
+          <%=l part.date %>
         </td>
         <td>
-            <%= link_to h_img_show.to_s, part %>
+          <%= link_to h_img_show.to_s, part %>
         </td>
-        <% if (part.is_freeze() == true ) %>
-        <td>
+        <% if part.frozen? %>
+          <td>
             <%= link_to h_img_revise.to_s, :id => part.id, :action => :revise , :confirm => t("msg_confirm") %>
-        </td>
-        <td>
-        </td>
-        <td>
-        </td>
+          </td>
+          <td></td>
+          <td></td>
         <% else %>
-        <td>
+          <td>
             <%= link_to h_img_edit.to_s, edit_part_path(part) %>
-        </td>
-        <td>
-            <%= h_destroy( part) %>
-        </td>
+          </td>
+          <td>
+            <%= h_destroy(part) %>
+          </td>
         <% end %>
         <td>
-            <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_part_to_favori, :id => part.id} %>
+          <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_part_to_favori, :id => part.id} %>
         </td>
-    </tr>
+      </tr>
     <% end %>
 </table>
 <%= will_paginate(@parts[:recordset]) %>
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t("new_part"), new_part_path %>
-        </td>
-        <td>
-            <%= show_help("help_parts") %>
-        </td>
-    </tr>
+  <tr>
+    <td>
+      <%= link_to t("new_part"), new_part_path %>
+    </td>
+    <td>
+      <%= show_help("help_parts") %>
+    </td>
+  </tr>
 </table>

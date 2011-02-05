@@ -24,19 +24,19 @@
     <%= f.text_area :description , :rows => 10 %>
 </p>
 <p>
-    <%if (@part.statusobject.promote!=true || @part.statusobject.demote!=true ) && !@part.is_freeze %>
-    <b><%= f.label t("modif_status") %></b>
-    <br/>
-    <% if(@part.statusobject != nil) %>
-    <%= f.collection_select(:statusobject_id, @status, :id, :name) %>
+    <% if !(@part.statusobject.promote && @part.statusobject.demote) && !@part.frozen? %>
+      <b><%= f.label t("modif_status") %></b>
+      <br/>
+      <% unless @part.statusobject.nil? %>
+        <%= f.collection_select(:statusobject_id, @status, :id, :name) %>
+      <% end %>
+    <% else %>
+      <b><%= f.label t("label_status") %></b>
+      <br/>
+      <% unless @part.statusobject.nil? %>
+        <%= @part.statusobject.name %>
+      <% end %>
     <% end %>
-    <%else %>
-    <b><%= f.label t("label_status") %></b>
-    <br/>
-    <% if(@part.statusobject != nil) %>
-    <%= @part.statusobject.name %>
-    <%end %>
-    <%end %>
 </p>
 <p>
     <b><%= f.label t(:label_responsible) %></b>

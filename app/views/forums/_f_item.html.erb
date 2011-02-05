@@ -17,7 +17,7 @@
 	 
 	<tr>
 		<td><%= f_item.forum_item.count %> <%= t("forum_follow")%>
-		<% if (@forum.is_freeze() == false ) %>
+		<% unless @forum.frozen? %>
 			<%= link_to t("forum_item_response"), 
 				{:controller=>"forum_items",:action => "new",
 			 	:forum_id=>@forum.id,:parent_id=>f_item.id}

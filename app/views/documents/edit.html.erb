@@ -9,7 +9,7 @@
             <%= f.submit t("update") %>
         </td>
         <td>
-            <% if (@document.is_freeze() == true ) %>
+            <% if @document.frozen? %>
             <%=t("freeze") %>
             <% else %>
             <%if @document.statusobject.promote==true %>

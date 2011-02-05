@@ -43,16 +43,9 @@ class Part < ActiveRecord::Base
     obj
   end
   
-  def is_freeze
-    if(self.statusobject!=nil && Statusobject.get_last("part")!=nil)
-      if(self.statusobject.rank == Statusobject.get_last("part").rank)
-        true
-      else
-        false
-      end
-    else
-      false
-    end
+  def frozen?
+    !(self.statusobject.nil? || Statusobject.get_last("part").nil?) &&
+      self.statusobject.rank == Statusobject.get_last("part").rank
   end
   
   # a valider si avant dernier status

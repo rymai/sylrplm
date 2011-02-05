@@ -12,14 +12,14 @@ class Forum < ActiveRecord::Base
   :conditions => ["parent_id is null"]
   
   def self.create_new(forum)
-    if(forum==nil)
-      forum=Forum.new  
-      forum.statusobject=Statusobject.get_first("forum")
+    if forum.nil?
+      forum = Forum.new  
+      forum.statusobject = Statusobject.get_first("forum")
       forum.set_default_values(true)
     else
-      forum=Forum.new(forum)
+      forum = Forum.new(forum)
     end
-    forum.owner=@user
+    forum.owner = @user
     forum
   end
   
@@ -29,22 +29,17 @@ class Forum < ActiveRecord::Base
     )
   end
   
-  def is_freeze
-    if(self.statusobject!=nil && Statusobject.get_last("forum")!=nil)
-      if(self.statusobject.rank == Statusobject.get_last("forum").rank)
-        true
-      else
-        false
-      end
-    else
-      false
-    end
+  def frozen?
+    !(self.statusobject.nil? || Statusobject.get_last("forum").nil?) &&
+      self.statusobject.rank == Statusobject.get_last("forum").rank
   end
    def self.get_conditions(filter)
-    filter=filter.gsub("*","%")
-      conditions = ["subject LIKE ? or "+qry_type+" or "+qry_owner_id+
-      " or "+qry_status,
-      filter, filter, 
-    filter, filter] unless filter.nil?
+    filter.gsub!("*", "%")
+    unless filter.nil?
+      conditions = [
+        "subject LIKE ? or " + qry_type + " or " + qry_owner_id + " or " + qry_status,
+        filter, filter, filter, filter
+      ]
+  end
   end
 end

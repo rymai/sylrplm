@@ -36,7 +36,7 @@
     <%=l @document.date %>
 </p>
 <table class='menu_bas'>
-    <% if (@document.is_freeze() == true ) %>
+    <% if @document.frozen? ) %>
     <tr>
         <td>
             <%=t("freeze") %>
@@ -105,7 +105,7 @@
 <table class='menu_bas'>
     <tr>
         <td>
-        	 <% unless @document.is_freeze  %>
+        	 <% unless @document.frozen? %>
             <%= link_to h_img(:add_datafile).to_s+t("add_datafile"), :id => @document.id, :action => :new_datafile %>
         <%end%>
 				</td>
