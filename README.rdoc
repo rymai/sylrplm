@@ -10,22 +10,22 @@ Application SylRPLM : Product Life Management
 
   - Cloner le repository git hébergé sur GitHub :
 
-    git clone git://github.com/sylvani/sylrplm.git
+      git clone git://github.com/sylvani/sylrplm.git
 
   ou
 
   - Télécharger le zip ici : https://github.com/sylvani/sylrplm/zipball/master puis le décompresser :
 
-    unzip sylrplm.zip -d sylrplm
+      unzip sylrplm.zip -d sylrplm
 
   - Se placer dans la racine de l'application
 
-    cd sylrplm
+      cd sylrplm
 
 - Installation des gems
 
-  - rake gems:install
-  - gem install mysql
+      rake gems:install
+      gem install mysql
 
 - Environnement windows
   - Ajouter le chemin de mysql/bin au PATH
