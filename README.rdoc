@@ -1,20 +1,20 @@
 Application SylRPLM : Product Life Management
 
 - Pré-requis
-
-  - La gem mysql : gem install mysql
+  - RubyGems : https://rubygems.org/pages/download
   - Ruby 1.8.7-p249
-  - Rails 2.3.4 : gem install -v=2.3.4 rails
+  - Rails 2.3.11 :
+
+      gem install rails -v=2.3.11
 
 - Mise en place
-
   - Cloner le repository git hébergé sur GitHub :
 
       git clone git://github.com/sylvani/sylrplm.git
 
   ou
 
-  - Télécharger le zip ici : https://github.com/sylvani/sylrplm/zipball/master puis le décompresser :
+  - Télécharger le zip (https://github.com/sylvani/sylrplm/zipball/master) puis le décompresser :
 
       unzip sylrplm.zip -d sylrplm
 
@@ -33,13 +33,10 @@ Application SylRPLM : Product Life Management
     et copier la dll dans le répertoire bin de Ruby
 
 - Installation de l'application
-
-  - Créer la base de données:
+  - Créer la base de données (ou utiliser phpmyadmin) :
 
       mysqladmin -u root password monpass
       mysqladmin -u root create sylrplm_production
-      ou
-      utiliser phpmyadmin
 
   - Charger le schéma de la base de données
 
