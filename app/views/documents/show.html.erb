@@ -106,7 +106,7 @@
     <tr>
         <td>
         	 <% unless @document.is_freeze  %>
-            <%= link_to h_img(:add_datafile).to_s+t("add_datafile"), :id => @document.id, :action => :new_datafile %>
+            <%= link_to h_img(:add_datafile).to_s, :id => @document.id, :action => :new_datafile %>
         <%end%>
 				</td>
     </tr>

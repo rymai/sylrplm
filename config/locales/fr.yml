@@ -19,6 +19,7 @@ fr:
   ctrl_object_deleted: "{{object}} {{ident}} supprimé avec succès"
   ctrl_object_not_deleted: "{{object}} {{ident}} ne peut être supprimé"
   ctrl_object_promoted: "{{object}} {{ident}} promu de {{current_rank}} à {{new_rank}}, valideurs={{validersMail}}"
+  ctrl_object_no_validers: "{{object}} {{ident}} non promu de {{current_rank}} à {{new_rank}} car pas de valideur(s)"
   ctrl_object_not_promoted: "{{object}} {{ident}} non promu de {{current_rank}} à {{new_rank}}"
   ctrl_user_no_email: "L'utilisateur {{user}} n'a pas d'adresse mail"
   ctrl_object_demoted: "{{object}} {{ident}} rétrogradé de {{current_rank}} à {{new_rank}}, valideurs={{validersMail}}"

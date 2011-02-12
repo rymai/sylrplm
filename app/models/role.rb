@@ -10,6 +10,18 @@ class Role < ActiveRecord::Base
   def self.findall_except_admin()
     find(:all , :conditions => ["title <> 'admin' "])
   end
+  
+  #return the list of validers
+  def self.get_validers
+    ret=[]
+    all(:conditions => "title like 'valid%'").each do |role|
+      role.users.each do |user|
+        ret<<user
+      end
+    end
+    ret
+  end
+  
   def self.get_conditions(filter)
     filter=filter.gsub("*","%")
       conditions = ["title LIKE ? or description LIKE ? ",

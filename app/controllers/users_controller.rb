@@ -82,6 +82,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update_attributes(params[:user]) 
         unless params[:role_id].nil?
+          flash[:notice] =""
           @roles.each do |rid|
             role = Role.find(rid)
             if params[:role_id][role.id.to_s] == "1"

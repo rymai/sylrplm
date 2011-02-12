@@ -83,27 +83,41 @@ class User < ActiveRecord::Base
     find(:all, :order=>"login ASC")
   end 
   
-  def self.find_validers
-    all(:select => "login, email",
-          :order => :login,
-          :conditions => "roles.title like 'valid%'",
-          :joins => "inner join roles on users.role_id = roles.id")
+  
+  
+  #user is it a valider ?
+  def is_valider
+    ret=false
+    self.roles.each do  |role|
+      if role.title.left(5)=='valid'
+        ret=true
+      end
+      ret
+    end
+    #    all(:select => "login, email",
+    #          :order => :login,
+    #          :conditions => "roles.title like 'valid%'",
+    #          :joins => "inner join roles on users.role_id = roles.id")
   end
   
   def self.check_admin
     admin_user=find_by_name('admin')
-    ya_admin=false
-    if admin_user!=nil
-      admin_role=Role.find_by_name('admin')
-      if admin_role!=nil
-        if admin_user.roles.index(admin_role)!=nil
-          ya_admin=true
-        else
-          admin_user.roles<<admin_role
-          admin_user.role=admin_role
-          admin_user.save
-        end
-      else
+    if admin_user.nil?
+      params={
+      :login=>'admin',
+      :password=>'admin',
+      :password_confirmation=>'admin'
+      }
+      admin_user=new(params)
+      puts "User.check_admin:admin_user="+admin_user.inspect
+    end
+    admin_role=Role.find_by_name('admin')
+    unless admin_role.nil?
+      if admin_user.roles.index(admin_role).nil?        
+        admin_user.roles<<admin_role
+          admin_user.role=admin_role 
+      end
+    else
         params={
         :title=>'admin',:description=>'role admin'
         }
@@ -111,24 +125,25 @@ class User < ActiveRecord::Base
         admin_role.save
         admin_user.roles<<admin_role
         admin_user.role=admin_role
-        admin_user.save
+    end
+    admin_role=Role.find_by_name('valider')
+    unless admin_role.nil?
+      if admin_user.roles.index(admin_role).nil?
+          admin_user.roles<<admin_role
+          admin_user.role=admin_role
       end
     else
-      params={
-      :login=>'admin',
-      :password=>'admin',
-      :password_confirmation=>'admin'
-      }
-      admin_user=new(params)
-      params={:title=>'admin',:description=>'role admin'}
-      admin_role=Role.new(params)
-      admin_role.save
-      admin_user.roles<<admin_role
-      admin_user.role=admin_role
-      admin_user.save
-      puts "User.check_admin:admin_user="+admin_user.inspect
+        params={
+        :title=>'valider',:description=>'role valider'
+        }
+        admin_role=Role.new(params)        
+        admin_role.save
+        admin_user.roles<<admin_role
+        admin_user.role=admin_role
     end
-    if ya_admin==false
+    admin_user.save
+    auser=find_by_name('designer')
+    if auser.nil?
       #creation designer et consultant
       params={
       :login=>'designer',
@@ -142,6 +157,9 @@ class User < ActiveRecord::Base
       auser.roles<<arole
       auser.role=arole
       auser.save
+    end
+    auser=find_by_name('consultant')
+    if auser.nil?
       #
        params={
       :login=>'consultant',
@@ -155,9 +173,8 @@ class User < ActiveRecord::Base
       auser.roles<<arole
       auser.role=arole
       auser.save
-      
     end
-    ya_admin
+    true
   end
   
   # recherche du theme

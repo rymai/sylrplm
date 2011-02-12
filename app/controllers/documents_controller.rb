@@ -140,7 +140,7 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       unless @document.nil?
         if @document.save
-          puts "document.revision apres save=#{@document.id}:#{@document.revision}"
+          puts "documents_controller.revision apres save=#{@document.id}:#{@document.revision}"
           flash[:notice] = t(:ctrl_object_revised, :object => t(:ctrl_document), :ident => @document.ident, :previous_rev => previous_rev, :revision => @document.revision)
           format.html { redirect_to(@document) }
           format.xml  { head :ok }

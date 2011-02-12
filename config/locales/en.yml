@@ -19,6 +19,7 @@ en:
   ctrl_object_deleted: "{{object}} {{ident}} successfully deleted"
   ctrl_object_not_deleted: "{{object}} {{ident}} could not be deleted"
   ctrl_object_promoted: "{{object}} {{ident}} was successfully promoted from {{current_rank}} to {{new_rank}}, validers={{validersMail}}"
+  ctrl_object_no_validers: "{{object}} {{ident}} not promote from {{current_rank}} to {{new_rank}} because no validers(s)"
   ctrl_object_not_promoted: "{{object}} {{ident}} not promote from {{current_rank}} to {{new_rank}}}"
   ctrl_user_no_email: "User {{user}} have no mail"
   ctrl_object_demoted: "{{object}} {{ident}} was successfully demote from {{current_rank}} to {{new_rank}}, validers={{validersMail}}"

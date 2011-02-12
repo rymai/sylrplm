@@ -96,9 +96,6 @@
             <%=h document.description %>
         </td>
         <td>
-            <%=h document.repository %>
-        </td>
-        <td>
             <% if(document.statusobject != nil) %>
             <%=h document.statusobject.id %>:<%=h document.statusobject.name %>
             <% end %>
@@ -108,12 +105,6 @@
         </td>
         <td>
             <%=h document.date %>
-        </td>
-        <td>
-            <a href="<%= url_for(:controller => "document", :action=>'show_file', :id => document.id) %>"><%=h document.filename %></a>
-        </td>
-        <td>
-            <%= document.content_type %>
         </td>
         <table class='menu_bas'>
             <tr>

@@ -40,30 +40,42 @@ module Controllers::PlmObjectControllerModule
         object.promote
         new_rank=object.statusobject.name
         current_rank!=new_rank
-        if object.save
-          if withMail==true
-            email=nil 
-            validers=User.find_validers             
-            if object.is_to_validate
-              validersMail=PlmMailer.listUserMail(validers)
-              email=PlmMailer.create_toValidate(object, @usermail, @urlbase, validersMail) 
-            end
-            if object.is_freeze
-              validersMail=PlmMailer.listUserMail(validers,@user)
-              email=PlmMailer.create_validated(object, @usermail, @urlbase, validersMail)
-            end
-            unless email.blank?
-              email.set_content_type("text/html")
-              PlmMailer.deliver(email)
-            end
+        if withMail==true
+          email=nil
+          validers=Role.get_validers
+          if validers.length>0
+            if object.save
+              if object.is_to_validate
+                validersMail=PlmMailer.listUserMail(validers)
+                email=PlmMailer.create_toValidate(object, @usermail, @urlbase, validersMail) 
+              end
+              if object.is_freeze
+                validersMail=PlmMailer.listUserMail(validers,@user)
+                email=PlmMailer.create_validated(object, @usermail, @urlbase, validersMail)
+              end
+              unless email.blank?
+                email.set_content_type("text/html")
+                PlmMailer.deliver(email)
+              end 
+              flash[:notice] = t(:ctrl_object_promoted,:object=>t(:ctrl_.to_s+object.class.name.downcase!),:ident=>object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>validersMail)
+              format.html { redirect_to(object) }
+              format.xml  { head :ok }
+            end            
+          else
+            flash[:notice] = t(:ctrl_object_no_validers,:object=>t(:ctrl_.to_s+object.class.name.downcase!),:ident=>object.ident,:current_rank=>current_rank,:new_rank=>new_rank)
+            format.html { redirect_to(object) }
+            format.xml  { head :ok }        
           end
-          flash[:notice] = t(:ctrl_object_promoted,:object=>t(:ctrl_.to_s+object.class.name.downcase!),:ident=>object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>validersMail)
-          format.html { redirect_to(object) }
-          format.xml  { head :ok }
         else
-          flash[:notice] = t(:ctrl_object_not_promoted,:object=>t(:ctrl_.to_s+object.class.name.downcase!),:ident=>object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>validersMail)
-          format.html { render :action => "edit" }
-          format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
+          if object.save
+            flash[:notice] = t(:ctrl_object_promoted,:object=>t(:ctrl_.to_s+object.class.name.downcase!),:ident=>object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>validersMail)
+            format.html { redirect_to(object) }
+            format.xml  { head :ok }
+          else
+            flash[:notice] = t(:ctrl_object_not_promoted,:object=>t(:ctrl_.to_s+object.class.name.downcase!),:ident=>object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>validersMail)
+            format.html { render :action => "edit" }
+            format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
+          end
         end
       else
         flash[:notice] = t(:ctrl_user_no_email,:user=>object.owner.login)
