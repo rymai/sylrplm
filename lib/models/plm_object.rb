@@ -49,7 +49,7 @@ module Models::PlmObject
 
   def is_checked
     check=Check.get_checkout(self.class.name, self)
-    file=self.filename
+    #file=self.filename
     if(check.nil?)
       #non reserve
       false

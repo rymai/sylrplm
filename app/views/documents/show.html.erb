@@ -36,7 +36,7 @@
     <%=l @document.date %>
 </p>
 <table class='menu_bas'>
-    <% if (@document.is_freeze() == true ) %>
+    <% if @document.frozen? %>
     <tr>
         <td>
             <%=t("freeze") %>
@@ -55,13 +55,12 @@
     </tr>
     <%end %>
     <% else %>
-	        <td>
-            <%= t("is_check_out") %>
-        </td>
-        <td>
-            <%= t("reason") %><%= @checkout.out_reason %>
-        </td>
-
+    <td>
+        <%= t("is_check_out") %>
+    </td>
+    <td>
+        <%= t("reason") %><%= @checkout.out_reason %>
+    </td>
     <% form_for(@document, :url => {:id => @document.id, :action => "check_in" },
     :html => { :multipart => true}) do |f| %>
     <tr>
@@ -105,9 +104,9 @@
 <table class='menu_bas'>
     <tr>
         <td>
-        	 <% unless @document.is_freeze  %>
+            <% unless @document.frozen? %>
             <%= link_to h_img(:add_datafile).to_s, :id => @document.id, :action => :new_datafile %>
-        <%end%>
-				</td>
+            <%end %>
+        </td>
     </tr>
 </table>

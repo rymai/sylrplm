@@ -48,7 +48,7 @@
         <td>
             <%= link_to h_img_show.to_s, forum %>
         </td>
-        <% if (forum.is_freeze() == false ) %>
+        <% unless forum.frozen? %>
         <td>
             <%= link_to h_img_edit.to_s, edit_forum_path(forum) %>
         </td>

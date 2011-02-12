@@ -75,7 +75,7 @@
     <td>
         <%= link_to h_img_show.to_s, document %>
     </td>
-    <% if (document.is_freeze() == true ) %>
+    <% if document.frozen? %>
     <td>
         <%= link_to h_img_revise.to_s, :id => document.id, :action => :revise , :confirm => t("msg_confirm") %>
     </td>

@@ -1,9 +1,9 @@
 ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
-require File.dirname(__FILE__) + '/../lib/caboose/logic_parser'
-require File.dirname(__FILE__) + '/../lib/caboose/role_handler'
-require File.dirname(__FILE__) + '/../lib/caboose/access_control'
+# require File.dirname(__FILE__) + '/../lib/caboose/logic_parser'
+# require File.dirname(__FILE__) + '/../lib/caboose/role_handler'
+# require File.dirname(__FILE__) + '/../lib/caboose/access_control'
 class ActiveSupport::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the

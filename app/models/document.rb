@@ -109,40 +109,19 @@ class Document < ActiveRecord::Base
     end
   end
   
-  def is_checked
-    check=Check.get_checkout("document", self) 
-    if(check.nil?)
-      #non reserve
-      false
-    else
-      #reserve
-      true
-    end
+  def checked?
+    !Check.get_checkout("document", self).nil?
   end
   
-  def is_freeze
-    if(self.statusobject!=nil && Statusobject.get_last("document")!=nil)
-      if(self.statusobject.rank == Statusobject.get_last("document").rank)
-        true
-      else
-        false
-      end
-    else
-      false
-    end
+  def frozen?
+    !(self.statusobject.nil? || Statusobject.get_last("document").nil?) &&
+      self.statusobject.rank == Statusobject.get_last("document").rank
   end
   
   # a valider si avant dernier status
   def is_to_validate
-    if(self.statusobject!=nil && Statusobject.get_last("document")!=nil)
-      if(self.statusobject.rank == Statusobject.get_last("document").rank-1)
-        true
-      else
-        false
-      end
-    else
-      false
-    end 
+    !(self.statusobject.nil? || Statusobject.get_last("document").nil?) &&
+      self.statusobject.rank == Statusobject.get_last("document").rank-1
   end
   
   def self.get_types_document 

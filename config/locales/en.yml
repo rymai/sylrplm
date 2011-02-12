@@ -112,7 +112,7 @@ en:
   #roles
   ctrl_role: Role
   #sequences
-  ctrl_sequence: S�quence
+  ctrl_sequence: Sequence
   #statusobjects
   ctrl_statusobject: Object status
   #typesobjects
@@ -127,8 +127,8 @@ en:
   h_show_hide_tree: Show/Hide tree
   h_sort_by_field: Sort by this field
   #help
-  help_no_help_title: Aide absente
-  help_no_help: Pas d'aide pour {{key}}
+  help_no_help_title: Help missing
+  help_no_help: No help for {{key}}
   help_lnk_acces: Go
   help_summary: Summary
   help_jump: View
@@ -185,7 +185,7 @@ en:
   new_project: "New project"
   new_question: "New FAQ"
   new_forum: "New forum"
-  new_forum_item: "New forum messag"
+  new_forum_item: "New forum message"
   new_access: "New access"
   new_check: "New check"
   new_user: "New user"
@@ -220,7 +220,7 @@ en:
   # views
   #
   # general
-  modif_status: Modifier le statut
+  modif_status: Modify the status
   # fields access
   label_controller: Controler
   label_action: Action
@@ -281,11 +281,11 @@ en:
   document_datafiles: Document files
   datafile_add: Add a file
   label_nbfiles: Nb files
-  check_out: "Check Out"
-  is_check_out: "Is Check Out"
-  check_in: "Check In"
-  check_free: "Unlock"
-  download: "download file"
+  check_out: Check Out
+  is_check_out: Is Check Out
+  check_in: Check In
+  check_free: Unlock
+  download: download file
   reason: Reason
   # fields faq
   faq_edit: Edition question

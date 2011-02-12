@@ -1,5 +1,4 @@
-<H1><%=t(:part_show) %></H1>
-
+<h1><%=t(:part_show) %></h1>
 <p>
     <b><%=t(:label_ident) %></b>
     <%=h @part.ident %>
@@ -38,51 +37,54 @@
 </p>
 <h1></h1>
 <%= h_sylrplm_tree %>
+<h1></h1>
 <table class='menu_bas'>
     <tr>
-    <% if(!@favori_document.empty) %>
+    
+    <% unless @favori_document.empty %>
     <% form_for(@part, :url => {:id => @part.id, :action => "add_docs" }) do |f| %>
     <td>
         <%= select("relation","document",options_for_select(@relation_types_document)) %>
     </td>
+	<td>
+	<%= submit_tag t("paste_documents") %>
+	</td>
+    <% end %>
+	<%end%>
+    </tr>
+    
+</td>
+
+<tr>
+    
+    <% unless @favori_part.empty %>
+    <% form_for(@part, :url => {:id => @part.id, :action => "add_parts" }) do |f| %>
     <td>
-        <%= submit_tag t("paste_documents") %>
+        <%= select("relation","part",options_for_select(@relation_types_part)) %>
+    </td>
+    <td>
+        <%= submit_tag t("paste_parts") %>
     </td>
     <% end %>
     <!--
-    <%= link_to h_img_add_documents.to_s+t("paste_documents"), :id => @part.id, :action => :add_docs %>
+    <%= link_to h_img_add_parts.to_s+t("paste_parts"), :id => @part.id, :action => :add_parts %>
     -->
-    <tr>
-        <% end %>
-        <% if(!@favori_part.empty) %>
-        <% form_for(@part, :url => {:id => @part.id, :action => "add_parts" }) do |f| %>
-        <td>
-            <%= select("relation","part",options_for_select(@relation_types_part)) %>
-        </td>
-        <td>
-            <%= submit_tag t("paste_parts") %>
-        </td>
-        <% end %>
-        <!--
-        <%= link_to h_img_add_parts.to_s+t("paste_parts"), :id => @part.id, :action => :add_parts %>
-        --><% end %>
-    </tr>
+    <% end %>
+</tr>
 </table>
-<h1></h1>
-
 <table class='menu_bas'>
     <tr>
         <td>
             <%= link_to h_img_add_forum.to_s, :id => @part.id, :action => :new_forum %>
         </td>
         <td>
-            <% if (@part.is_freeze() == true ) %>
-            <%=t("freeze") %>
+            <% if @part.frozen? %>
+            <%= t("freeze") %>
             <% else %>
             <%= link_to t("edit"), edit_part_path(@part) %>
             <% end %>
         </td>
-				<td>
+        <td>
             <%= link_to t("new_part"), new_part_path %>
         </td>
         <td>

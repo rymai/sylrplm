@@ -22,7 +22,7 @@ module Controllers::PlmObjectControllerModule
         flash[:notice] = t(:ctrl_object_not_revised,:object=>t(:ctrl_.to_s+@object.class.name.downcase!),:ident=>@object.ident,:previous_rev=>previous_rev)
         #flash[:notice] = "Document cannot be revised from #{previous_rev} (not last revision or not frozen status ?)."
         format.html { redirect_to(@object) }
-        format.xml  { head :ok }        
+        format.xml  { head :ok }
       end
     end
   end
@@ -39,7 +39,7 @@ module Controllers::PlmObjectControllerModule
         current_rank=object.statusobject.name
         object.promote
         new_rank=object.statusobject.name
-        current_rank!=new_rank
+        current_rank!=new_rank        
         if withMail==true
           email=nil
           validers=Role.get_validers
@@ -65,6 +65,7 @@ module Controllers::PlmObjectControllerModule
             flash[:notice] = t(:ctrl_object_no_validers,:object=>t(:ctrl_.to_s+object.class.name.downcase!),:ident=>object.ident,:current_rank=>current_rank,:new_rank=>new_rank)
             format.html { redirect_to(object) }
             format.xml  { head :ok }        
+            
           end
         else
           if object.save
@@ -80,7 +81,7 @@ module Controllers::PlmObjectControllerModule
       else
         flash[:notice] = t(:ctrl_user_no_email,:user=>object.owner.login)
         format.html { render :action => "edit" }
-        format.xml  { render :xml => object.errors, :status => :unprocessable_entity }        
+        format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -95,13 +96,13 @@ module Controllers::PlmObjectControllerModule
         if object.save
           if withMail==true
             askUserMail=object.owner.email
-            email=nil 
-            validers=User.find_validers             
+            email=nil
+            validers=User.find_validers
             if object.is_to_validate
               validersMail=PlmMailer.listUserMail(validers)
-              email=PlmMailer.create_docToValidate(object, @usermail, @urlbase, validersMail) 
+              email=PlmMailer.create_docToValidate(object, @usermail, @urlbase, validersMail)
             end
-            if object.is_freeze
+            if object.frozen?
               validersMail=PlmMailer.listUserMail(validers,@user)
               email=PlmMailer.create_docValidated(object, @usermail, @urlbase, askUserMail, validersMail)
             end
@@ -126,8 +127,8 @@ module Controllers::PlmObjectControllerModule
     end
   end
   
-  def tree_part(obj, link,ctrl) 
-    if(obj!=nil) 
+  def tree_part(obj, link,ctrl)
+    if(obj!=nil)
       url={:controller => 'parts', :action => 'show', :id => "#{obj.id}"}
       link_to_remote= {
              :url => url,
@@ -138,7 +139,7 @@ module Controllers::PlmObjectControllerModule
       destroy_url=url_for(:controller => ctrl.controller_name,
                                                    :action => "remove_link",
                                                    :id => link.id)
-      cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>' 
+      cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
       options={
               :label  => t(:ctrl_part)+":"+obj.ident+cut_a,
               :icon=>icone(obj),
@@ -147,7 +148,7 @@ module Controllers::PlmObjectControllerModule
               :url=>url_for(url),
               :open => false
       }
-      cnode = Node.new(options)                              
+      cnode = Node.new(options)
     else
       cnode=nil
     end
@@ -155,12 +156,12 @@ module Controllers::PlmObjectControllerModule
   end
   
   def tree_project(obj, link,ctrl)
-    if(obj!=nil) 
+    if(obj!=nil)
       url={:controller => 'projects', :action => 'show', :id => "#{obj.id}"}
       destroy_url=url_for(:controller => ctrl.controller_name,
                                                  :action => "remove_link",
                                                  :id => link.id)
-      cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>' 
+      cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
       options={
                         :label  => t(:ctrl_project)+":"+obj.ident+cut_a,
                         :icon=>icone(obj),
@@ -168,15 +169,15 @@ module Controllers::PlmObjectControllerModule
                         :open => false,
                         :url=>url_for(url)
       }
-      cnode = Node.new(options,nil)                        
+      cnode = Node.new(options,nil)
     else
       cnode=nil
-    end 
+    end
     cnode
   end
   
-  def tree_customer(obj)  
-    if(obj!=nil) 
+  def tree_customer(obj)
+    if(obj!=nil)
       url={:controller => 'customers', :action => 'show', :id => "#{obj.id}"}
       options={
                       :label  => t(:ctrl_customer)+":"+obj.ident,
@@ -202,23 +203,23 @@ module Controllers::PlmObjectControllerModule
   end
   
   def img(name)
-        "<img class=\"icone\" src=\"../images/"+name+".png\"/>"  
+        "<img class=\"icone\" src=\"../images/"+name+".png\"/>"
   end
   
   def img_destroy
     img("destroy")
-  end  
+  end
   
   def img_cut
     img("cut")
-  end  
+  end
   
   def follow_tree_part(node, part,ctrl)
-    tree_forums(node,"part",part,ctrl)  
-    tree_documents(node,"part",part,ctrl) 
+    tree_forums(node,"part",part,ctrl)
+    tree_documents(node,"part",part,ctrl)
     links=Link.find_childs("part", part,  "part")
     links.each do |link|
-      child=Part.find(link.child_id) 
+      child=Part.find(link.child_id)
       url={:controller => 'parts', :action => 'show', :id => "#{child.id}"}
       #link_to_remote= {
       #       :url => url,
@@ -229,7 +230,7 @@ module Controllers::PlmObjectControllerModule
       destroy_url=url_for(:controller => ctrl.controller_name,
                                    :action => "remove_link",
                                    :id => link.id)
-      cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>' 
+      cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
       options={
                 :label  => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+':'+child.ident+cut_a,
                 :icon=>icone(child),
@@ -238,16 +239,16 @@ module Controllers::PlmObjectControllerModule
                 :url=>url_for(url),
               :open => false
       }
-      cnode = Node.new(options)          
+      cnode = Node.new(options)
       node << cnode
-      follow_tree_part(cnode, child,ctrl) 
+      follow_tree_part(cnode, child,ctrl)
     end
   end
   
   def follow_tree_up_part(node, part,ctrl)
     links=Link.find_fathers("part", part,  "part")
     links.each do |link|
-      f=Part.find(link.father_id) 
+      f=Part.find(link.father_id)
       url={:controller => 'parts', :action => 'show', :id => "#{f.id}"}
       options={
                 :label  => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+':'+f.ident,
@@ -257,15 +258,15 @@ module Controllers::PlmObjectControllerModule
                 :url=>url_for(url),
               :open => false
       }
-      html_options = {   
+      html_options = {
               :alt => "alt:"+f.ident
       }
-      cnode = Node.new(options)          
+      cnode = Node.new(options)
       node << cnode
       # projets
       links=Link.find_fathers("part", part,  "project")
       links.each do |link|
-        f=Project.find(link.father_id) 
+        f=Project.find(link.father_id)
         url={:controller => 'projects', :action => 'show', :id => "#{f.id}"}
         link_to_remote= {
                      :url => url,
@@ -281,7 +282,7 @@ module Controllers::PlmObjectControllerModule
                   :url=>url_for(url),
                 :open => false
         }
-        cnode = Node.new(options)          
+        cnode = Node.new(options)
         node << cnode
         
       end
@@ -289,37 +290,37 @@ module Controllers::PlmObjectControllerModule
   end
   
   def follow_tree_customer(node, obj,ctrl)
-    tree_documents(node,"customer",obj,ctrl)  
-    tree_forums(node,"customer",obj,ctrl)  
+    tree_documents(node,"customer",obj,ctrl)
+    tree_forums(node,"customer",obj,ctrl)
     links=Link.find_childs("customer", obj,  "project")
     links.each do |link|
       child=Project.find(link.child_id)
       pnode=tree_project(child,link,ctrl)
-      node<<pnode                  
+      node<<pnode
         follow_tree_project(pnode, child,ctrl)
       end
   end
-  
+
   def follow_tree_project(node, obj,ctrl)
-    tree_documents(node,"project",obj,ctrl) 
-    tree_forums(node,"project",obj,ctrl)  
+    tree_documents(node,"project",obj,ctrl)
+    tree_forums(node,"project",obj,ctrl)
     #if(obj.customer!=nil)
     #    cnode=tree_customer(obj.customer)
-    #    node<<cnode    
+    #    node<<cnode
     #  end
     links=Link.find_childs("project", obj,  "part")
     links.each do |link|
       child=Part.find(link.child_id)
         pnode=tree_part(child, link,ctrl)
-        node<<pnode       
+        node<<pnode
         follow_tree_part(pnode, child,ctrl)
       end
   end
-  
+
   def follow_tree_up_project(node, project,ctrl)
           links=Link.find_fathers("project", project,  "customer")
           links.each do |link|
-            c=Customer.find(link.father_id) 
+            c=Customer.find(link.father_id)
             url={:controller => 'customers', :action => 'show', :id => "#{c.id}"}
             options={
                 :label  => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_customer)+':'+c.ident,
@@ -329,20 +330,20 @@ module Controllers::PlmObjectControllerModule
                 :url=>url_for(url),
               :open => false
             }
-            cnode = Node.new(options)          
+            cnode = Node.new(options)
             node << cnode
           end
   end
-  
+
   def tree_documents(node, father_object, father,ctrl)
       docs=Link.find_childs(father_object, father,  "document")
       docs.each do |link|
           d=Document.find(link.child_id)
-          url={:controller => 'documents', :action => 'show', :id => "#{d.id}"}        
+          url={:controller => 'documents', :action => 'show', :id => "#{d.id}"}
           destroy_url=url_for(:controller => ctrl.controller_name,
                               :action => "remove_link",
                               :id => "#{link.id}" )
-          cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'   
+          cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
           options={
                    :label => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_document)+':'+d.ident + cut_a,
                    :icon=>icone(d),
@@ -351,38 +352,38 @@ module Controllers::PlmObjectControllerModule
                    :open => false,
                    :url=>url_for(url)
           }
-          cnode = Node.new(options,nil)          
-          node<<cnode   
+          cnode = Node.new(options,nil)
+          node<<cnode
       end
     end
   def tree_forums(node, father_object, father,ctrl)
-      docs=Link.find_childs(father_object.to_s, father,  "forum")
-      docs.each do |link|
-          d=Forum.find(link.child_id)
-          url={:controller => 'forums', :action => 'show', :id => "#{d.id}"}        
-          destroy_url=url_for(:controller => ctrl.controller_name,
-                              :action => "remove_link",
-                              :id => "#{link.id}" )
-          if d.is_freeze() == false 
-              cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'   
-          else 
-              cut_a=""
-          end
-          options={
-                   :label => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_forum)+':'+d.subject + cut_a,
-                   :icon=>icone(d),
-                   #:icon_open=>icone(d),
-                   :title => d.subject,
-                   :open => false,
-                   :url=>url_for(url)
-          }
-          cnode = Node.new(options,nil)          
-          node<<cnode   
+    docs = Link.find_childs(father_object.to_s, father,  "forum")
+    docs.each do |link|
+      d = Forum.find(link.child_id)
+      url = { :controller => 'forums', :action => 'show', :id => "#{d.id}" }
+      destroy_url = url_for(:controller => ctrl.controller_name,
+                            :action => "remove_link",
+                            :id => "#{link.id}")
+      if d.frozen?
+        cut_a = ""
+      else
+        cut_a = '<a href="'+destroy_url+'">'+img_cut+'</a>'
       end
+      options = {
+       :label => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_forum)+':'+d.subject + cut_a,
+       :icon => icone(d),
+       #:icon_open=>icone(d),
+       :title => d.subject,
+       :open => false,
+       :url => url_for(url)
+      }
+      cnode = Node.new(options,nil)
+      node << cnode
+    end
   end
   def remove_link
     link = Link.remove(params[:id])
-    respond_to do |format|      
+    respond_to do |format|
      #flash[:notice] = t(:ctrl_nothing_to_paste,:object=>t(:ctrl_document))
       format.html { redirect_to(session[:tree_object]) }
       format.xml  { head :ok }
@@ -391,20 +392,20 @@ module Controllers::PlmObjectControllerModule
     #session[:original_uri]=nil
     #redirect_to(uri || {:controller => "main", :action => "index"})
   end
-  
+
   def ctrl_add_forum(object,type)
     relation="forum"
     error=false
-    respond_to do |format|      
+    respond_to do |format|
       flash[:notice] = ""
       @forum=Forum.new(params[:forum])
       @forum.owner=@user
       if(@forum.save)
         item=ForumItem.create_new(@forum, params)
         if(item.save)
-          link_=Link.create_new(type, object, "forum", @forum, relation)  
+          link_=Link.create_new(type, object, "forum", @forum, relation)
           link=link_[:link]
-          if(link!=nil) 
+          if(link!=nil)
             if(link.save)
               #flash[:notice] += "<br> forum #{@forum.subject} was successfully added:rel=#{relation}:#{link_[:msg]}"
               flash[:notice] += t(:ctrl_object_added,:object=>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>t(link_[:msg]))
@@ -413,16 +414,16 @@ module Controllers::PlmObjectControllerModule
               flash[:notice] += t(:ctrl_object_not_added,:object=>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>t(link_[:msg]))
               @forum.destroy
               error=true
-            end 
+            end
           else
             #flash[:notice] += "<br> link #{@forum.subject} was not created:rel=#{relation}:#{link_[:msg]}"
             flash[:notice] += t(:ctrl_object_not_linked,:object=>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>nil)
-            @forum.destroy 
+            @forum.destroy
             error=true
           end
         else
           flash[:notice] += t(:ctrl_object_not_created, :object=>t(:ctrl_forum_item))
-          @forum.destroy 
+          @forum.destroy
           error=true
         end
       else
@@ -440,10 +441,10 @@ module Controllers::PlmObjectControllerModule
       end
       format.xml  { head :ok }
     end
-  end 
-  
-  
-  
+  end
+
+
+
   def get_nb_items(nb_items)
     unless nb_items.nil? || nb_items==""
       unless @user.nil?
@@ -464,6 +465,6 @@ module Controllers::PlmObjectControllerModule
       end
     end
   end
-  
-  
+
+
 end

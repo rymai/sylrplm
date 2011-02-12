@@ -23,7 +23,7 @@
     <br/>
     <%= f.text_area :description , :rows => 10 %>
 </p>
-<%if (@document.statusobject.promote!=true || @document.statusobject.demote!=true ) && !@document.is_freeze %>
+<%if (@document.statusobject.promote!=true || @document.statusobject.demote!=true ) && !@document.frozen? %>
 <b><%= f.label t("label_status") %></b>
 <br/>
 <% if(@document.statusobject != nil) %>
