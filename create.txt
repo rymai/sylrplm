@@ -6,13 +6,17 @@ cd $1
 
 eof:
 
-cmd="mysqladmin -u root create $1_development"
+mysqladmin -u root password xxxx
+modifier /etc/my.cnf
+datadir = /home/mysql/data 
+
+cmd="mysqladmin -u root -p create $1_development"
 echo $cmd
 $cmd
 
 
 
-cmd="mysqladmin -u root create $1_production"
+cmd="mysqladmin -u root -p create $1_production"
 echo $cmd
 $cmd
 
