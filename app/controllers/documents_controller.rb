@@ -242,7 +242,9 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       check     = Check.get_checkout("document", @object)
       if check.nil?
-        check = Check.create_new("document", @object, params, @user)
+        params_chk={}
+        params_chk[:out_reason]=t("ctrl_checkout_auto")
+        check = Check.create_new("document", @object, params_chk, @user)
         if check.save
           flash[:notice] = t(:ctrl_object_checkout, :object => t(:ctrl_document), :ident => @object.ident, :reason => check.out_reason)
         else

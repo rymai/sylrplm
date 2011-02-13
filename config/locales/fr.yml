@@ -65,6 +65,7 @@ fr:
   ctrl_datafile: Fichier
   #documents
   ctrl_document: Document
+  ctrl_checkout_auto: Réservation automatique
   #faq
   ctrl_faq: Question
   #forums

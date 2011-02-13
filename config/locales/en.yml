@@ -64,6 +64,7 @@ en:
   ctrl_datafile: Fichier
   #documents
   ctrl_document: Document
+  ctrl_checkout_auto: Automatic checkout
   #faq
   ctrl_faq: FAQ
   #forums
