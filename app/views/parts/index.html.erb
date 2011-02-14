@@ -1,6 +1,15 @@
 <h1><%=t(:part_list) %><%=h_count_objects(@parts) %></h1>
+<table class='menu_bas'>
+  <tr>
+    <td>
+      <%= link_to t("new_part"), new_part_path %>
+    </td>
+    <td>
+      <%= show_help("help_parts") %>
+    </td>
+  </tr>
+</table>
 <%= form_simple_query_helper('/parts', @parts) %>
-<br/>
 <%= will_paginate(@parts[:recordset]) %>
 <table>
     <tr>
@@ -41,9 +50,7 @@
         <td>
           <%= icone(part) %>
         </td
-        <td>
-          <%=h part.id %>
-        </td>
+        
         <td>
           <%=h part.ident %>
         </td>
@@ -93,13 +100,4 @@
     <% end %>
 </table>
 <%= will_paginate(@parts[:recordset]) %>
-<table class='menu_bas'>
-  <tr>
-    <td>
-      <%= link_to t("new_part"), new_part_path %>
-    </td>
-    <td>
-      <%= show_help("help_parts") %>
-    </td>
-  </tr>
-</table>
+

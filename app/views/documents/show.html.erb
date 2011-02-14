@@ -1,40 +1,17 @@
 <h1><%= t("document_show") %></h1>
-<p>
-    <b><%= t("label_ident") %></b>
-    <%=h @document.ident %>
-</p>
-<p>
-    <b><%= t("label_typesobject") %></b>
-    <% if(@document.typesobject != nil) %>
-    <%=h @document.typesobject.name %>
-    <% end %>
-</p>
-<p>
-    <b><%= t("label_revision") %></b>
-    <%=h @document.revision %>
-</p>
-<p>
-    <b><%= t("label_designation") %></b>
-    <%=h @document.designation %>
-</p>
-<p>
-    <b><%=t("label_description") %></b>
-    <%=h @document.description %>
-</p>
-<p>
-    <b><%= t("label_statusobject") %></b>
-    <% if(@document.statusobject != nil) %>
-    <%=h @document.statusobject.name %>
-    <% end %>
-</p>
-<p>
-    <b><%= t("label_responsible") %></b>
-    <%=h @document.owner.login %>
-</p>
-<p>
-    <b><%= t("label_date") %></b>
-    <%=l @document.date %>
-</p>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t("edit"), edit_document_path(@document) %>
+        </td>
+        <td>
+            <%= link_to t("new_document"), new_document_path %>
+        </td>
+        <td>
+            <%= link_to t("list"), documents_path %>
+        </td>
+    </tr>
+</table>
 <table class='menu_bas'>
     <% if @document.frozen? %>
     <tr>
@@ -98,19 +75,44 @@
     <% end %>
 </table>
 <br/>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t("edit"), edit_document_path(@document) %>
-        </td>
-        <td>
-            <%= link_to t("new_document"), new_document_path %>
-        </td>
-        <td>
-            <%= link_to t("list"), documents_path %>
-        </td>
-    </tr>
-</table>
+<p>
+    <b><%= t("label_ident") %></b>
+    <%=h @document.ident %>
+</p>
+<p>
+    <b><%= t("label_typesobject") %></b>
+    <% if(@document.typesobject != nil) %>
+    <%=h @document.typesobject.name %>
+    <% end %>
+</p>
+<p>
+    <b><%= t("label_revision") %></b>
+    <%=h @document.revision %>
+</p>
+<p>
+    <b><%= t("label_designation") %></b>
+    <%=h @document.designation %>
+</p>
+<p>
+    <b><%=t("label_description") %></b>
+    <%=h @document.description %>
+</p>
+<p>
+    <b><%= t("label_statusobject") %></b>
+    <% if(@document.statusobject != nil) %>
+    <%=h @document.statusobject.name %>
+    <% end %>
+</p>
+<p>
+    <b><%= t("label_responsible") %></b>
+    <%=h @document.owner.login %>
+</p>
+<p>
+    <b><%= t("label_date") %></b>
+    <%=l @document.date %>
+</p>
+
+
 <h1><%= t("document_datafiles") %></h1>
 <%= render(:partial => "datafiles/index_datafiles", :locals=>{:document=>@document}) %>
 <table class='menu_bas'>

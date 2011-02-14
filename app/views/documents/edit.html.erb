@@ -1,7 +1,6 @@
 <h1><%=t(:document_edit) %></h1>
 <% form_for(@document, :html => { :multipart => true}) do |f| %>
 <%= f.error_messages %>
- <%= render(:partial => "documents/edit",:locals => { :f => f, :fonct=>"edit" }) %>   
 
 <table class='menu_bas'>
     <tr>
@@ -28,4 +27,6 @@
         </td>
     </tr>
 </table>
+ <%= render(:partial => "documents/edit",:locals => { :f => f, :fonct=>"edit" }) %>   
+
 <% end %>

@@ -1,4 +1,19 @@
 <h1><%=t(:datafile_show) %></h1>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t("edit"), edit_datafile_path(@datafile) %>
+        </td>
+        <td>
+            <%= link_to t("list"), datafiles_path %>
+        </td>
+				<%if @document!=nil%>
+				<td>
+            <%= link_to t("document_show"), document_path(@document) %>
+        </td>
+				<%end%>
+    </tr>
+</table>
 <p>
     <b><%= t("label_ident") %></b>
     <%=h @datafile.ident %>
@@ -33,18 +48,4 @@
     <b><%= t("label_date") %></b>
     <%=l @datafile.updated_at %>
 </p>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t("edit"), edit_datafile_path(@datafile) %>
-        </td>
-        <td>
-            <%= link_to t("list"), datafiles_path %>
-        </td>
-				<%if @document!=nil%>
-				<td>
-            <%= link_to t("document_show"), document_path(@document) %>
-        </td>
-				<%end%>
-    </tr>
-</table>
+

@@ -1,43 +1,73 @@
-<h1><%=t(:sequence_list) %><%=h_count_objects(@sequences)%> </h1>
-<%= form_simple_query_helper('/sequences', @sequences) %>
-
-<br/>
-<%= will_paginate(@sequences[:recordset]) %>
-<table>
-  <tr>
-    <th><%=t(:label_utility)%></th>
-    <th><%=t(:label_sequence)%></th>
-    <th><%=t(:label_modify)%></th>
-    <th><%=t(:label_value)%></th>
-    <th><%=t(:label_min)%></th>
-    <th><%=t(:label_max)%></th>
-						<th></th><th></th><th></th>
- 
-  </tr>
-
-
-<% @sequences[:recordset].each do |sequence| %>
-  <tr>
-    <td><%=h sequence.utility %></td>
-   	<td><%=h sequence.sequence %></td>
-    <td><%=h sequence.modify %></td>
-    <td><%=h sequence.value %></td>
-    <td><%=h sequence.min %></td>
-    <td><%=h sequence.max %></td>
-     <td><%= link_to h_img_show.to_s, sequence %></td>
-    <td><%= link_to h_img_edit.to_s, edit_sequence_path(sequence) %></td>
-    <td><%= link_to h_img_destroy.to_s, sequence, :confirm => t(:msg_confirm), :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
-<%= will_paginate(@sequences[:recordset]) %>
+<h1><%=t(:sequence_list) %><%=h_count_objects(@sequences) %></h1>
 <table class='menu_bas'>
     <tr>
         <td>
             <%= link_to t(:new_sequence), new_sequence_path %>
         </td>
-				<td>
+        <td>
             <%= show_help("help_sequences") %>
         </td>
     </tr>
 </table>
+<%= form_simple_query_helper('/sequences', @sequences) %>
+<%= will_paginate(@sequences[:recordset]) %>
+<table>
+    <tr>
+        <th>
+            <%=t(:label_utility) %>
+        </th>
+        <th>
+            <%=t(:label_sequence) %>
+        </th>
+        <th>
+            <%=t(:label_modify) %>
+        </th>
+        <th>
+            <%=t(:label_value) %>
+        </th>
+        <th>
+            <%=t(:label_min) %>
+        </th>
+        <th>
+            <%=t(:label_max) %>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+    </tr>
+    <% @sequences[:recordset].each do |sequence| %>
+    <tr>
+        <td>
+            <%=h sequence.utility %>
+        </td>
+        <td>
+            <%=h sequence.sequence %>
+        </td>
+        <td>
+            <%=h sequence.modify %>
+        </td>
+        <td>
+            <%=h sequence.value %>
+        </td>
+        <td>
+            <%=h sequence.min %>
+        </td>
+        <td>
+            <%=h sequence.max %>
+        </td>
+        <td>
+            <%= link_to h_img_show.to_s, sequence %>
+        </td>
+        <td>
+            <%= link_to h_img_edit.to_s, edit_sequence_path(sequence) %>
+        </td>
+        <td>
+            <%= link_to h_img_destroy.to_s, sequence, :confirm => t(:msg_confirm), :method => :delete %>
+        </td>
+    </tr>
+    <% end %>
+</table>
+<%= will_paginate(@sequences[:recordset]) %>

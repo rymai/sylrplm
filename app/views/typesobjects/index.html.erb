@@ -1,7 +1,15 @@
 <h1><%=t(:typesobjects_list) %><%=h_count_objects(@typesobjects)%> </h1>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t(:new_typesobject), new_typesobject_path %>
+        </td>
+        <td>
+            <%= show_help("help_typesobjects") %>
+        </td>
+    </tr>
+</table>
 <%= form_simple_query_helper('/typesobjects', @typesobjects) %>
-
-<br/>
 <%= will_paginate(@typesobjects[:recordset]) %>
 <table>
     <tr>
@@ -46,14 +54,3 @@
     <% end %>
 </table>
 <%= will_paginate(@typesobjects[:recordset]) %>
-<br/>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t(:new_typesobject), new_typesobject_path %>
-        </td>
-        <td>
-            <%= show_help("help_typesobjects") %>
-        </td>
-    </tr>
-</table

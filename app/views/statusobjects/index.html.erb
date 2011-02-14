@@ -1,7 +1,15 @@
 <h1><%=t(:statusobjects_list) %><%=h_count_objects(@statusobjects)%> </h1>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t(:new_statusobject), new_statusobject_path %>
+        </td>
+				<td>
+            <%= show_help("help_statusobjects") %>
+        </td>
+    </tr>
+</table>
 <%= form_simple_query_helper('/statusobjects', @statusobjects) %>
-
-<br/>
 <%= will_paginate(@statusobjects[:recordset]) %>
 <table>
     <tr>
@@ -65,14 +73,3 @@
     <% end %>
 </table>
 <%= will_paginate(@statusobjects[:recordset]) %>
-<br/>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t(:new_statusobject), new_statusobject_path %>
-        </td>
-				<td>
-            <%= show_help("help_statusobjects") %>
-        </td>
-    </tr>
-</table

@@ -1,6 +1,15 @@
 <h1><%=t(:project_list) %><%=h_count_objects(@projects) %></h1>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t("new_project"), new_project_path %>
+        </td>
+        <td>
+            <%= show_help("help_projects") %>
+        </td>
+    </tr>
+</table>
 <%= form_simple_query_helper('/projects', @projects) %>
-<br/>
 <%= will_paginate(@projects[:recordset]) %>
 <table>
     <tr>
@@ -84,13 +93,4 @@
     <% end %>
 </table>
 <%= will_paginate(@projects[:recordset]) %>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t("new_project"), new_project_path %>
-        </td>
-        <td>
-            <%= show_help("help_projects") %>
-        </td>
-    </tr>
-</table>
+

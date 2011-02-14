@@ -1,4 +1,14 @@
 <h1><%=t(:user_list) %><%=h_count_objects(@users)%> </h1>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t("new_user"), new_user_path %>
+        </td>
+		<td>
+            <%= show_help("help_users") %>
+        </td>
+    </tr>
+</table>
 <%= form_simple_query_helper('/users', @users) %>
 <table>
     <tr>
@@ -54,13 +64,4 @@
     </tr>
     <% end %>
 </table>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t("new_user"), new_user_path %>
-        </td>
-		<td>
-            <%= show_help("help_users") %>
-        </td>
-    </tr>
-</table>
+

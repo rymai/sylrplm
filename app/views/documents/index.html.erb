@@ -1,6 +1,15 @@
 <h1><%= t("document_list") %><%=h_count_objects(@documents)%> </h1>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t("new_document"), new_document_path %>
+        </td>
+         <td>
+            <%= show_help("help_documents") %>
+        </td>
+    </tr>
+</table>
 <%= form_simple_query_helper('/documents', @documents) %>
-<br/>
 <%= will_paginate(@documents[:recordset]) %>
 <table>
     <tr>
@@ -97,13 +106,4 @@
 <%end %>
 </table>
 <%= will_paginate(@documents[:recordset]) %>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t("new_document"), new_document_path %>
-        </td>
-         <td>
-            <%= show_help("help_documents") %>
-        </td>
-    </tr>
-</table>
+

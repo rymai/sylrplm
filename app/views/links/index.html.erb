@@ -1,7 +1,6 @@
 <h1>Listing links <%=h_count_objects(@links)%> </h1>
+<%= link_to 'New link', new_link_path %>
 <%= form_simple_query_helper('/links', @links) %>
-
-<br/>
 <%= will_paginate(@links[:recordset]) %>
 <table>
   <tr>
@@ -32,7 +31,3 @@
 <% end %>
 </table>
 <%= will_paginate(@links[:recordset]) %>
-
-<br />
-
-<%= link_to 'New link', new_link_path %>

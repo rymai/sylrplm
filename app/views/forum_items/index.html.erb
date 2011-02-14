@@ -1,7 +1,15 @@
 <h1><%=t(:forum_item_list) %><%=h_count_objects(@forum_items) %></h1>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t(:new_forum_item), new_forum_item_path %>
+        </td>
+        <td>
+            <%= show_help("help_forum_items") %>
+        </td>
+    </tr>
+</table>
 <%= form_simple_query_helper('/forum_items', @forum_items) %>
-<
-br/>
 <%= will_paginate(@forum_items[:recordset]) %>
 <table>
     <tr>
@@ -59,13 +67,3 @@ br/>
     <% end %>
 </table>
 <%= will_paginate(@forum_items[:recordset]) %>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t(:new_forum_item), new_forum_item_path %>
-        </td>
-        <td>
-            <%= show_help("help_forum_items") %>
-        </td>
-    </tr>
-</table>
