@@ -84,5 +84,37 @@ module Models::PlmObject
       return nil
     end
   end
+  
+  def get_workitems
+    ret=[]
+    links=Link.find_fathers(self.class.name.downcase, self,  "workitem")
+    links.each do |link|
+      begin
+        father=OpenWFE::Extras::ArWorkitem.find(link.father_id)
+        puts "part.get_workitems:workitem="+father.inspect
+        ret<<father
+      rescue Exception =>e
+
+      end
+    end
+    puts "part.get_workitems:ret="+ret.size.to_s
+    ret
+  end
+  
+  def get_histories
+      ret=[]
+      links=Link.find_fathers(self.class.name.downcase, self,  "history")
+      links.each do |link|
+        begin
+          father = OpenWFE::Extras::HistoryEntry.find(link.father_id)
+          puts "part.get_histories:history="+father.inspect
+          ret<<father
+        rescue Exception =>e
+  
+        end
+      end
+      ret
+    end
+  
 
 end

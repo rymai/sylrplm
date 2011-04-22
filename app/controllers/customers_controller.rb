@@ -33,7 +33,7 @@ class CustomersController < ApplicationController
   # GET /customers/new
   # GET /customers/new.xml
   def new
-    @customer = Customer.create_new(nil, @user)
+    @customer = Customer.create_new(nil, @current_user)
     @types    = Typesobject.get_types("customer")
     @status   = Statusobject.find_for("customer")
     respond_to do |format|
@@ -52,7 +52,7 @@ class CustomersController < ApplicationController
   # POST /customers
   # POST /customers.xml
   def create
-    @customer = Customer.create_new(params[:customer], @user)
+    @customer = Customer.create_new(params[:customer], @current_user)
     @types    = Typesobject.get_types("customer")
     @status   = Statusobject.find_for("customer")
     respond_to do |format|

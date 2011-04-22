@@ -1,12 +1,23 @@
 require 'rexml/document'
+
+class ErrorReply < Exception
+
+  attr_reader :status
+  def initialize (msg, status=400)
+    super(msg)
+    @status = status
+  end
+end
+
 class ApplicationController < ActionController::Base
   include Classes::AppClasses
   helper :all # include all helpers, all the time
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   filter_parameter_logging :password
-  # before_filter :authorize, :except => [:index,:init_objects,:get_themes,:find_theme,:permission_denied,:permission_granted, :permission_granted,:current_user,:redirect_to_index,:tree_part,:tree_project,:tree_customer,:follow_tree_part,:follow_tree_up_part, :follow_tree_project,:follow_tree_up_project,:follow_tree_customer,:tree_documents,:tree_forums]
+  # before_filter :authorize, :except => [:index,:init_objects,:get_themes,:find_theme,:permission_denied,:permission_granted, :permission_granted,:@current_user,:redirect_to_index,:tree_part,:tree_project,:tree_customer,:follow_tree_part,:follow_tree_up_part, :follow_tree_project,:follow_tree_up_project,:follow_tree_customer,:tree_documents,:tree_forums]
   before_filter :authorize, :except => [:index, :init_objects]
+  #before_filter :authorize
   before_filter :set_locale
   before_filter :define_variables
 
@@ -64,11 +75,11 @@ class ApplicationController < ActionController::Base
 
   # definition des variables globales.
   def define_variables
-    @user             = User.find_user(session)
-    @userid           = User.find_userid(session)
-    @username         = User.find_username(session)
-    @usermail         = User.find_usermail(session)
-    @userrole         = User.find_userrole(session)
+    @current_user             = User.find_user(session)
+    @current_userid           = User.find_userid(session)
+    @current_username         = User.find_username(session)
+    @current_usermail         = User.find_usermail(session)
+    @current_userrole         = User.find_userrole(session)
     @favori_document  = find_favori_document
     @favori_project   = find_favori_project
     @favori_part      = find_favori_part
@@ -129,9 +140,11 @@ class ApplicationController < ActionController::Base
   def reset_favori_document
     session[:favori_document] = nil
   end
+
   def reset_favori_part
     session[:favori_part] = nil
   end
+
   def reset_favori_project
     session[:favori_project] = nil
   end
@@ -151,10 +164,62 @@ class ApplicationController < ActionController::Base
     }
   end
 
-  # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
-  private
+  def error_reply (error_message, status=400)
+
+    if error_message.is_a?(ErrorReply)
+      status = error_message.status
+      error_message = error_message.message
+    end
+
+    flash[:error] = error_message
+
+    plain_reply = lambda() {
+      render(
+      :text => error_message,
+      :status => status,
+      :content_type => 'text/plain')
+    }
+
+    respond_to do |format|
+      format.html { redirect_to '/' }
+      format.json &plain_reply
+      format.xml &plain_reply
+    end
+  end
+
+  rescue_from(ErrorReply) { |e| error_reply(e) }
+
+  #
+  # Returns a new LinkGenerator wrapping the current request.
+  #
+  def linkgen
+
+    LinkGenerator.new(request)
+  end
+
+  #
+  # Creates an HistoryEntry record
+  #
+  def history_log (event, options={})
+
+    source = options.delete(:source) || @current_user.login
+
+    OpenWFE::Extras::HistoryEntry.log!(source, event, options)
+  end
+
+  #
+  # Should return the path to the partial in charge of rendering the
+  # workitem payload.
+  #
+  # This initial implementation is rather, plain. Rewrite at will.
+  #
+  def determine_payload_partial (workitem)
+
+    'shared/ruote_forms'
+  end
+
   def authorize
+    puts "application_controller.authorize:user="+session[:user_id].inspect
     unless User.find_by_id(session[:user_id])
       session[:original_uri] = request.request_uri
       flash[:notice] = t(:login_login)
@@ -162,5 +227,28 @@ class ApplicationController < ActionController::Base
       redirect_to new_sessions_url
     end
   end
-
 end
+
+# Scrub sensitive parameters from your log
+  # filter_parameter_logging :password
+  private
+#
+# the ?plain=true trick
+#
+class ActionController::MimeResponds::Responder
+
+  # TODO : use method_alias_chain ...
+
+  unless public_instance_methods(false).include?('old_respond')
+    alias_method :old_respond, :respond
+  end
+
+  def respond
+
+    old_respond
+
+    @controller.response.content_type = 'text/plain' \
+    if @controller.request.parameters['plain'] == 'true'
+  end
+end
+

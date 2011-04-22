@@ -12,68 +12,6 @@
         </td>
     </tr>
 </table>
-<table class='menu_bas'>
-    <% if @document.frozen? %>
-    <tr>
-        <td>
-            <%=t("freeze") %>
-        </td>
-    </tr>
-    <% else %>
-    <% if(@document.is_checked()==false) %>
-    <% form_for(@document, :url => {:id => @document.id, :action => "check_out" }) do |f| %>
-    <tr>
-        <td>
-            <%= f.submit t("check_out") %>
-        </td>
-        <td>
-            <%= label_tag t("reason") %>
-        </td>
-        <td>
-            <%= text_field_tag :reason %>
-        </td>
-    </tr>
-    <%end %>
-    <% else %>
-    <td>
-        <%= t("is_check_out") %>
-    </td>
-    <td>
-        <%= t("reason") %>
-    </td>
-    <td>
-    	<%= @checkout.out_reason %>
-    </td>
-    <% form_for(@document, :url => {:id => @document.id, :action => "check_in" },
-    :html => { :multipart => true}) do |f| %>
-    <tr>
-        <td>
-            <%= f.submit t("check_in") %>
-        </td>
-        <td>
-            <%= label_tag t("reason") %>
-        </td>
-        <td>
-            <%= text_field_tag :reason %>
-        </td>
-    </tr>
-    <% end %>
-    <% form_for(@document, :url => {:id => @document.id, :action => "check_free" }) do |f| %>
-    <tr>
-        <td>
-            <%= f.submit t("check_free") %>
-        </td>
-        <td>
-            <%= label_tag t("reason") %>
-        </td>
-        <td>
-            <%= text_field_tag :reason %>
-        </td>
-    </tr>
-    <% end %>
-    <%end %>
-    <% end %>
-</table>
 <br/>
 <p>
     <b><%= t("label_ident") %></b>
@@ -111,8 +49,6 @@
     <b><%= t("label_date") %></b>
     <%=l @document.date %>
 </p>
-
-
 <h1><%= t("document_datafiles") %></h1>
 <%= render(:partial => "datafiles/index_datafiles", :locals=>{:document=>@document}) %>
 <table class='menu_bas'>
@@ -123,4 +59,69 @@
             <%end %>
         </td>
     </tr>
+</table>
+<%= render(:partial => "shared/object_workitems", :object=>@document) %>
+
+<h1><%= t("document_check") %></h1>
+<table class='menu_bas'>
+    <% if @document.frozen? %>
+    <tr>
+        <td>
+            <%=t("freeze") %>
+        </td>
+    </tr>
+    <% else %>
+    <% if(@document.is_checked()==false) %>
+    <% form_for(@document, :url => {:id => @document.id, :action => "check_out" }) do |f| %>
+    <tr>
+        <td>
+            <%= f.submit t("check_out") %>
+        </td>
+        <td>
+            <%= label_tag t("reason") %>
+        </td>
+        <td>
+            <%= text_field_tag :reason %>
+        </td>
+    </tr>
+    <%end %>
+    <% else %>
+    <td>
+        <%= t("is_check_out") %>
+    </td>
+    <td>
+        <%= t("reason") %>
+    </td>
+    <td>
+        <%= @checkout.out_reason %>
+    </td>
+    <% form_for(@document, :url => {:id => @document.id, :action => "check_in" },
+    :html => { :multipart => true}) do |f| %>
+    <tr>
+        <td>
+            <%= f.submit t("check_in") %>
+        </td>
+        <td>
+            <%= label_tag t("reason") %>
+        </td>
+        <td>
+            <%= text_field_tag :reason %>
+        </td>
+    </tr>
+    <% end %>
+    <% form_for(@document, :url => {:id => @document.id, :action => "check_free" }) do |f| %>
+    <tr>
+        <td>
+            <%= f.submit t("check_free") %>
+        </td>
+        <td>
+            <%= label_tag t("reason") %>
+        </td>
+        <td>
+            <%= text_field_tag :reason %>
+        </td>
+    </tr>
+    <% end %>
+    <%end %>
+    <% end %>
 </table>

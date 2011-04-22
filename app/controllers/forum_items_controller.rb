@@ -30,7 +30,7 @@ class ForumItemsController < ApplicationController
       @forum_item           = ForumItem.new
       @forum_item.forum     = @forum
       @forum_item.message   = "essai"
-      @forum_item.author    = @user
+      @forum_item.author    = @current_user
       @forum_item.parent_id = params[:parent_id]
     else
       @forum_item = ForumItem.new

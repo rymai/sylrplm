@@ -18,6 +18,9 @@ config.action_view.cache_template_loading            = false
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = true
 
+# See everything in the log (default is :info)
+config.log_level = :debug
+
 # INUTILE (parole d'expert)
 # pour recharger un fichier particulier
 # require_dependency RAILS_ROOT + "/lib/classes/toto.rb"

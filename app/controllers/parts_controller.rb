@@ -17,9 +17,9 @@ class PartsController < ApplicationController
   # GET /parts/1
   # GET /parts/1.xml
   def show
+    @part                    = Part.find(params[:id])
     @relation_types_document = Typesobject.get_types_names(:relation_document)
     @relation_types_part     = Typesobject.get_types_names(:relation_part)
-    @part                    = Part.find(params[:id])
     @other_parts = Part.paginate(:page => params[:page],
                                  :conditions => ["id != #{@part.id}"],
                                  :order => 'ident ASC',
@@ -32,6 +32,7 @@ class PartsController < ApplicationController
     @documents = @part.documents
     @parts     = @part.parts
     @projects  = @part.projects
+    
 
     respond_to do |format|
       format.html # show.html.erb
@@ -42,7 +43,7 @@ class PartsController < ApplicationController
   # GET /parts/new
   # GET /parts/new.xml
   def new
-    @part = Part.create_new(nil, @user)
+    @part = Part.create_new(nil, @current_user)
     @types= Part.get_types_part
     @status= Statusobject.find_for("part")
     respond_to do |format|
@@ -61,7 +62,7 @@ class PartsController < ApplicationController
   # POST /parts
   # POST /parts.xml
   def create
-    @part = Part.create_new(params[:part], @user)
+    @part = Part.create_new(params[:part], @current_user)
     @types=Part.get_types_part
     @status= Statusobject.find_for("part")
     respond_to do |format|

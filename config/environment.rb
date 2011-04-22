@@ -10,8 +10,13 @@ Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.
-
-  config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
+  config.gem(
+      'mislav-will_paginate',
+      :version => '~> 2.3.6',
+      :lib => 'will_paginate',
+      :source => 'http://gems.github.com')
+      
+  #config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{Rails.root}/lib/classes )
@@ -51,6 +56,17 @@ Rails::Initializer.run do |config|
     #:user_name => xxx,
     #:password => xxx
   }
+  
+  #RUOTE_ENV = {:persist_as_yaml=>true}
+  RUOTE_ENV = {}
+    # passing a hash of parameters (application context) to the ruote engine
+    # (well via the ruote_plugin)
+  
+    
+  
+  $:.unshift('~/ruote/lib')
+    # using the local 'ruote', comment that out if you're using ruote as a gem
+
 
 end
 

@@ -92,7 +92,7 @@ fr:
   ctrl_link_customer_forum: Relation client / forum
   ctrl_link_document_datafile: Relation document / fichier
   #info
-  info_object_not_found: SYLRPLM_ERROR-{{context}}-{{object}} non trouvÃ©(e) - {{id}}
+  info_object_not_found: SYLRPLM_ERROR-{{context}}-{{object}} non trouvé(e) - {{id}}
   #login
   ctrl_role_needed: Renseigner le rôle
   ctrl_invalid_login: Nom utilisateur ou mot de passe invalide
@@ -101,9 +101,9 @@ fr:
   ctrl_user_not_created: Utilisateur {{user}} non crée
   ctrl_user_updated: Utilisateur {{user}} modifié
   ctrl_user_not_updated: Utilisateur {{user}} non modifié
-  ctrl_user_deleted: Utilisateur {{user}} supprimé
-  ctrl_user_connected: Utilisateur {{user}} connecté !
-  ctrl_user_disconnected: Utilisateur {{user}} déconnecté !
+  ctrl_user_deleted: "Utilisateur {{user}} supprimé"
+  ctrl_user_connected: "Utilisateur {{user}} connecté !"
+  ctrl_user_disconnected: "Utilisateur {{user}} déconnecté !"
   ctrl_user_role: Rôle={{role}}
   #main
   #parts
@@ -178,7 +178,14 @@ fr:
   mnu_checks: Réservations 
   mnu_roles_users: Roles/users
   mnu_datafiles: Fichiers de données
+  mnu_groups: Groupes
   #
+  proceed: Valider cette tâche
+  delegate: Déléguer cette tâche
+  pick: Prendre cette tâche
+  edit_task: Editer/valider cette tâche
+  launchthis: Lancer ce processus
+  launch: Lancer un nouveau processus
   explorer: "Explorer"
   list: "Liste"
   query: "Filtre"
@@ -288,6 +295,7 @@ fr:
   check_in: "Maj et libérer"
   check_free: "Libérer"
   download: "Télécharger fichier"
+  document_check: Réservation
   reason: Raison
   # fields forums
   forum_edit: Edition forum 
@@ -305,6 +313,11 @@ fr:
   label_parent: Prédécesseur
   label_author: Emetteur
   label_forum: Forum
+  # fields groups
+  groups_edit: Edition du groupe
+  groups_list: Liste des groupes
+  groups_show: Détail du groupe
+  groups_new: Nouveau groupe
   # fields help
   # fields info
   # fields main
@@ -441,6 +454,33 @@ fr:
   research: "Recherche"
   production: "Production"
   forum: Forum
+  #
+  # processes
+  #
+  legend_processes: Processus
+  mnu_flw_workitems: Mes actions
+  mnu_flw_processes: Processus en cours
+  mnu_flw_errors: Erreurs processus
+  mnu_flw_history: Historique processus
+  mnu_flw_definitions: Définitions processus
+  definitions_edit: Edition de la définition du processus
+  definitions_list: Liste des définitions de processus
+  definitions_show: Détail de la définition du processus
+  definitions_new: Nouvelle définition de processus
+  errors_list: Liste des erreurs d'exécution de processus
+  expressions_show: Détail de l'expression
+  history_list: Historique des exécutions de processus
+  history_show: Processus exécuté
+  processes_list: Liste des processus
+  processes_show: Détail du processus
+  processes_new: Nouveau processus
+  workitems_edit: Edition tâche
+  workitems_list: Liste des tâches
+  workitems_show: Détail de la tâche
+  new_definition: Nouvelle définition de processus
+  new_process: Nouveau processus
+  workitems_all: Toutes les tâches
+  
   # help
   help_title: "Aide relative à l application SYLRPLM" 
   help_close_window: Fermer la fenêtre d'aide

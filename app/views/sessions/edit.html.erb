@@ -4,7 +4,7 @@
             <%= t(:legend_login) %>
         </legend>
         <% form_for :sessions, :url=>"/sessions/update"  do |form| %>
-        <%= hidden_field_tag :id , @user.id %>
+        <%= hidden_field_tag :id , @current_user.id %>
         
 		<p>
             <label for="role">

@@ -25,7 +25,9 @@ class Document < ActiveRecord::Base
   has_many :customers , :through => :links_customers
   
   before_create :set_initial_attributes
-  
+  def to_s
+    self.ident+"/"+self.revision+"-"+self.designation+"-"+self.typesobject.name+"-"+self.statusobject.name
+  end
   def self.create_new(document, user)
     unless document.nil?
       doc = Document.new(document)
@@ -170,12 +172,12 @@ class Document < ActiveRecord::Base
   end
   
   def promote
-    self.statusobject=Statusobject.find_next("document",statusobject) 
+    self.statusobject=Statusobject.find_next("document",self.statusobject) 
     self   
   end
   
   def demote
-    self.statusobject=Statusobject.find_previous("document",statusobject) 
+    self.statusobject=Statusobject.find_previous("document",self.statusobject) 
     self   
   end
   

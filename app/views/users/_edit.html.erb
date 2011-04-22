@@ -25,7 +25,7 @@
         <%= form.label t(:label_roles) %>
         <br/>
         <% @roles.each do |role| %>
-        <% if(@user.roles.count(:all, :conditions=>["id=#{role.id}"])>0) %>
+        <% if(@current_user.roles.count(:all, :conditions=>["id=#{role.id}"])>0) %>
         <%= check_box(:role_id,role.id,{:checked=>"checked"}) %><%= role.title %>
         <% else %>
         <%= check_box(:role_id,role.id) %><%= role.title %>

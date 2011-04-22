@@ -1,4 +1,4 @@
-<h1><%=t(:user_list) %><%=h_count_objects(@users)%> </h1>
+<h1><%=t(:user_list) %><%=h_count_objects(@current_users)%> </h1>
 <table class='menu_bas'>
     <tr>
         <td>
@@ -9,7 +9,7 @@
         </td>
     </tr>
 </table>
-<%= form_simple_query_helper('/users', @users) %>
+<%= form_simple_query_helper('/users', @current_users) %>
 <table>
     <tr>
         <th<%= sort_td_class_helper "login" %>
@@ -33,7 +33,7 @@
         <th>
         </th>
     </tr>
-    <% for user in @users[:recordset] %>
+    <% for user in @current_users[:recordset] %>
     <tr>
         <td>
             <%= h(user.login) %>

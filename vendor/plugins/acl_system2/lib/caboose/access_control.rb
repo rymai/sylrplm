@@ -66,14 +66,14 @@ module Caboose
     end
     
     # the current access context; will be created if not setup
-    # will add current_user and merge any other elements of context
+    # will add @current_user and merge any other elements of context
     def access_context(context = {})     
       default_access_context.merge(context)
     end
     
     def default_access_context
       @default_access_context ||= {}
-      @default_access_context[:user] = send(:current_user) if respond_to?(:current_user)
+      @default_access_context[:user] = send(:@current_user) if respond_to?(:@current_user)
       @default_access_context 
     end
     
@@ -89,7 +89,7 @@ module Caboose
     #   link_to "foo"
     # end   
     def restrict_to(logicstring, context = {})
-      return false if current_user.nil?
+      return false if @current_user.nil?
       result = ''    
       if permit?(logicstring, context) 
         result = yield if block_given?

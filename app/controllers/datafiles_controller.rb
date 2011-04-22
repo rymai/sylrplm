@@ -30,7 +30,7 @@ class DatafilesController < ApplicationController
   # GET /datafiles/new
   # GET /datafiles/new.xml
   def new
-    @datafile = Datafile.create_new(nil, @user)
+    @datafile = Datafile.create_new(nil, @current_user)
     @types    = Typesobject.find_for("datafile")
     respond_to do |format|
       format.html # new.html.erb
@@ -48,7 +48,7 @@ class DatafilesController < ApplicationController
   # POST /datafiles
   # POST /datafiles.xml
   def create
-    @datafile = Datafile.create_new(params, @user)
+    @datafile = Datafile.create_new(params, @current_user)
     @types    = Typesobject.find_for("datafile")
     @document = Document.find(params["doc"]) if params["doc"]
     puts "datafiles_controller.create:errors=#{@datafile.errors.inspect}"
@@ -72,7 +72,7 @@ class DatafilesController < ApplicationController
     @types    = Typesobject.find_for("datafile")
     @document = Document.find(params["doc"]) if params["doc"]
     respond_to do |format|
-      if @datafile.update_attributes_repos(params, @user)
+      if @datafile.update_attributes_repos(params, @current_user)
         flash[:notice] = t(:ctrl_object_updated, :object => t(:ctrl_datafile), :ident => @datafile.ident)
         format.html { redirect_to(@datafile) }
         format.xml  { head :ok }

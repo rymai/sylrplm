@@ -19,10 +19,10 @@ class MainController < ApplicationController
 
     unless params[:theme].nil?
       @theme = params[:theme]
-      if @user != :user_not_connected
+      if @current_user != :user_not_connected
         puts "main_controller.index:theme=#{params.inspect}"
-        @user.theme = @theme
-        st = @user.save
+        @current_user.theme = @theme
+        st = @current_user.save
         puts "main_controller.index:theme=#{@theme} update=#{st}"
       else
         session[:theme] = @theme

@@ -36,7 +36,7 @@ class DocumentsController < ApplicationController
   # GET /documents/new
   # GET /documents/new.xml
   def new
-    @document = Document.create_new(nil, @user)
+    @document = Document.create_new(nil, @current_user)
     @types    = Document.get_types_document
     @volumes  = Volume.find_all
     @status   = Statusobject.find_for("document")
@@ -62,7 +62,7 @@ class DocumentsController < ApplicationController
     document = params[:document]
     #contournement pour faire le upload apres la creation pour avoir la revision dans
     #get_repository !!!!!!!!!!!!!!
-    @document = Document.create_new(document,@user)
+    @document = Document.create_new(document,@current_user)
     @types    = Document.get_types_document
     @volumes  = Volume.find_all
     respond_to do |format|
@@ -159,7 +159,7 @@ class DocumentsController < ApplicationController
   
   def check_out
     @document = Document.find(params[:id])
-    st=@document.check_out(params,@user)
+    st=@document.check_out(params,@current_user)
     if st!="already_checkout"
       if st!="no_reason"
         if st=="ok"
@@ -181,7 +181,7 @@ class DocumentsController < ApplicationController
   
   def check_in
     @document = Document.find(params[:id])
-    st=@document.check_in(params,@user)
+    st=@document.check_in(params,@current_user)
     respond_to do |format|
       if st!="no_reason"
         if st!="notyet_checkout"
@@ -204,7 +204,7 @@ class DocumentsController < ApplicationController
   
   def check_free
     @document = Document.find(params[:id])
-    st=@document.check_free(params,@user)
+    st=@document.check_free(params,@current_user)
     respond_to do |format|
       if st!="no_reason"
         if st!="notyet_checkout"
@@ -244,7 +244,7 @@ class DocumentsController < ApplicationController
       if check.nil?
         params_chk={}
         params_chk[:out_reason]=t("ctrl_checkout_auto")
-        check = Check.create_new("document", @object, params_chk, @user)
+        check = Check.create_new("document", @object, params_chk, @current_user)
         if check.save
           flash[:notice] = t(:ctrl_object_checkout, :object => t(:ctrl_document), :ident => @object.ident, :reason => check.out_reason)
         else
@@ -255,7 +255,7 @@ class DocumentsController < ApplicationController
         flash[:notice] = t(:ctrl_object_already_checkout, :object => t(:ctrl_document), :ident => @object.ident, :reason => check.out_reason)
       end
       unless check.nil?
-        @datafile = Datafile.create_new(nil,@user)
+        @datafile = Datafile.create_new(nil,@current_user)
         format.html {render :action => :new_datafile, :id => @object.id }
         format.xml  { head :ok }
       end
@@ -265,7 +265,7 @@ class DocumentsController < ApplicationController
   def add_datafile
     @object = Document.find(params[:id])
     error   = false
-    st=@object.add_datafile(params,@user)
+    st=@object.add_datafile(params,@current_user)
     respond_to do |format|
       flash[:notice] = ""
       if st!="ok"

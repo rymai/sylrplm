@@ -19,7 +19,7 @@ class Forum < ActiveRecord::Base
     else
       forum = Forum.new(forum)
     end
-    forum.owner = @user
+    forum.owner = @current_user
     forum
   end
   

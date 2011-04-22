@@ -1,5 +1,5 @@
 <h1><%=t(:user_edit) %></h1>
-<% form_for @user do |form| %>
+<% form_for @current_user do |form| %>
 <%= form.error_messages %>
 <%= render(:partial => "users/edit",:locals => { :form => form, :fonct=>"edit" }) %>
 <table class='menu_bas'>
@@ -8,7 +8,7 @@
             <%= submit_tag t("update") %>
         </td>
         <td>
-            <%= link_to t("explorer"), @user %>
+            <%= link_to t("explorer"), @current_user %>
         </td>
         <td>
             <%= link_to t("list"), users_path %>

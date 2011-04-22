@@ -21,7 +21,7 @@ class ForumItem < ActiveRecord::Base
     item=self.new 
     item.forum=forum
     item.message=params[:message]
-    item.author=@user
+    item.author=@current_user
     item
   end
   def self.get_conditions(filter)

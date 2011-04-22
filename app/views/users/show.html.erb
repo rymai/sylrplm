@@ -1,17 +1,17 @@
 <%=t(:typesobjects_show) %>
 <p>
     <b><%=t(:label_username) %></b>
-    <%=h @user.login %>
+    <%=h @current_user.login %>
 </p>
 <p>
     <b><%=t(:label_email) %></b>
-    <%=h @user.email %>
+    <%=h @current_user.email %>
 </p>
 
 <table class='menu_bas'>
     <tr>
         <td>
-            <%= link_to t(:edit), edit_user_path(@user) %>
+            <%= link_to t(:edit), edit_user_path(@current_user) %>
         </td>
         <td>
             <%= link_to t(:list), users_path %>

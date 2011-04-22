@@ -172,7 +172,14 @@ en:
   mnu_checks: Reservations 
   mnu_roles_users: Roles/users
   mnu_datafiles: Data files
+  mnu_groups: Groups
   #
+  proceed: Proceed this task
+  delegate: Delegate this task
+  pick: Pick this task
+  edit_task: Edit/proceed this task
+  launchthis: Launch this process
+  launch: Launch a new process
   explorer: "Explorer"
   list: "List"
   query: "Filter"
@@ -288,6 +295,7 @@ en:
   check_free: Unlock
   download: download file
   reason: Reason
+  document_check: Check
   # fields faq
   faq_edit: Edition question
   faq_list: Liste questions
@@ -310,6 +318,11 @@ en:
   label_author: Sender
   label_forum: Forum
   # fields help
+  # fields groups
+  groups_edit: Group editing
+  groups_list: List groups
+  groups_show: Detail group
+  groups_new: New groupe
   # fields info
   # fields main
   label_domain: Domain
@@ -444,6 +457,32 @@ en:
   research: "Research"
   production: "Production"
   forum: Forum
+  #
+  # processes
+  #
+  legend_processes: Processes
+  mnu_flw_workitems: My actions
+  mnu_flw_processes: Running processes
+  mnu_flw_errors: Processes errors
+  mnu_flw_history: Processes history
+  mnu_flw_definitions: Processus definitions
+  definitions_edit: Edit process definition 
+  definitions_list: List process definition
+  definitions_show: Detail process definition
+  definitions_new: New process definition
+  errors_list: Processes errors
+  expressions_show: Detail expression
+  history_list: Processes history
+  history_show: Processus executed
+  processes_list: List processes
+  processes_show: Detail process
+  processes_new: New process
+  workitems_edit: Edit task
+  workitems_list: List tasks
+  workitems_show: Detail task
+  new_definition: Nex process définition 
+  new_process: New process
+  workitems_all: All tasks
   # help
   help_title: "Help on SYLRPLM application"
   help_close_window: Close the help window

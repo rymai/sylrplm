@@ -51,7 +51,7 @@ class ProjectsController < ApplicationController
   # le owner est attribue avant la saisie, voir Project.create_new
   # on definit les listes de valeur pour le type et le statut 
   def new
-    @project = Project.create_new(nil, @user)
+    @project = Project.create_new(nil, @current_user)
     @types=Project.get_types_project
     @status= Statusobject.find_for("project")
     respond_to do |format|
@@ -72,7 +72,7 @@ class ProjectsController < ApplicationController
   # POST /projects.xml
   # creation d'un projet (apres validation du new)
   def create
-    @project = Project.create_new(params[:project], @user)
+    @project = Project.create_new(params[:project], @current_user)
     @types=Project.get_types_project
     @status= Statusobject.find_for("project")
     respond_to do |format|

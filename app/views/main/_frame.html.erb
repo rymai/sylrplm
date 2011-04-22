@@ -5,7 +5,7 @@
                 <%= @page_title || "SYLRPLM" %>
             </td>
             <td class='banner'>
-                <%= @username %>(<%= @userrole %>)
+                <%= @current_username %>(<%= @current_userrole %>)
             </td>
             <td class='banner'>
                 <%= link_to h_img("disconnect").to_s, sessions_path, :method => :delete %>
@@ -64,6 +64,7 @@
                 </legend>
                 <%=h_menu("/users","help_users",t("mnu_users")) %>
                 <%=h_menu("/roles","help_roles",t("mnu_roles")) %>
+                <%=h_menu("/groups","help_groups",t("mnu_groups")) %>
                 <%=h_menu("/accesses","help_accesses",t("mnu_acces")) %>
                 <%=h_menu("/volumes","help_volumes",t("mnu_volumes")) %>
             </fieldset>
@@ -74,7 +75,7 @@
                  <%=h_menu("/typesobjects","help_typesobjects",t("mnu_types_objects")) %>
                 <%=h_menu("/statusobjects","help_statusobjects",t("mnu_status_objects")) %>
                 <%=h_menu("/sequences","help_sequences",t("mnu_sequences")) %>
-            </fieldset>
+           </fieldset>
             <fieldset>
                 <legend>
                 <%= t(:legend_clipboard) %>
@@ -90,8 +91,18 @@
             </fieldset>
             <fieldset>
                 <legend>
+                    <%= t(:legend_processes) %>
+                </legend>
+                 <%=h_menu("/definitions", "help_flw_definitions",t("mnu_flw_definitions")) %>
+                <%=h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
+                 <%=h_menu("/processes", "help_flw_processes",t("mnu_flw_processes")) %>
+            </fieldset>
+            <fieldset>
+                <legend>
                     <%= t(:legend_debug) %>
                 </legend>
+               <%=h_menu("/errors", "help_flw_errors",t("mnu_flw_errors")) %>
+                <%=h_menu("/history", "help_flw_history",t("mnu_flw_history")) %>
                 <%=h_menu("/datafiles", "help_datafiles",t("mnu_datafiles")) %>
                 <%=h_menu("/forum_items", "help_forum_items",t("mnu_forum_items")) %>
                 <%=h_menu("/links", "help_links",t("mnu_links")) %>

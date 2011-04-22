@@ -1,5 +1,4 @@
 module Classes::AppClasses
-
   # Build a Logger::Formatter subclass.
   class LogFormatter < Logger::Formatter
     # Provide a call() method that returns the formatted message.

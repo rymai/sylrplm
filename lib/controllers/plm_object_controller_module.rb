@@ -47,11 +47,11 @@ module Controllers::PlmObjectControllerModule
             if object.save
               if object.is_to_validate
                 validersMail=PlmMailer.listUserMail(validers)
-                email=PlmMailer.create_toValidate(object, @usermail, @urlbase, validersMail) 
+                email=PlmMailer.create_toValidate(object, @current_usermail, @urlbase, validersMail) 
               end
               if object.is_freeze
-                validersMail=PlmMailer.listUserMail(validers,@user)
-                email=PlmMailer.create_validated(object, @usermail, @urlbase, validersMail)
+                validersMail=PlmMailer.listUserMail(validers,@current_user)
+                email=PlmMailer.create_validated(object, @current_usermail, @urlbase, validersMail)
               end
               unless email.blank?
                 email.set_content_type("text/html")
@@ -100,11 +100,11 @@ module Controllers::PlmObjectControllerModule
             validers=User.find_validers
             if object.is_to_validate
               validersMail=PlmMailer.listUserMail(validers)
-              email=PlmMailer.create_docToValidate(object, @usermail, @urlbase, validersMail)
+              email=PlmMailer.create_docToValidate(object, @current_usermail, @urlbase, validersMail)
             end
             if object.frozen?
-              validersMail=PlmMailer.listUserMail(validers,@user)
-              email=PlmMailer.create_docValidated(object, @usermail, @urlbase, askUserMail, validersMail)
+              validersMail=PlmMailer.listUserMail(validers,@current_user)
+              email=PlmMailer.create_docValidated(object, @current_usermail, @urlbase, askUserMail, validersMail)
             end
             if(email!=nil)
               email.set_content_type("text/html")
@@ -399,7 +399,7 @@ module Controllers::PlmObjectControllerModule
     respond_to do |format|
       flash[:notice] = ""
       @forum=Forum.new(params[:forum])
-      @forum.owner=@user
+      @forum.owner=@current_user
       if(@forum.save)
         item=ForumItem.create_new(@forum, params)
         if(item.save)
@@ -447,15 +447,15 @@ module Controllers::PlmObjectControllerModule
 
   def get_nb_items(nb_items)
     unless nb_items.nil? || nb_items==""
-      unless @user.nil?
-        if nb_items!=@user.nb_items
-          @user.update_attributes({:nb_items=>nb_items})
+      unless @current_user.nil?
+        if nb_items!=@current_user.nb_items
+          @current_user.update_attributes({:nb_items=>nb_items})
         end
       end
       nb_items
     else
-      unless @user.nil? || @user==:user_not_connected
-        @user.nb_items
+      unless @current_user.nil? || @current_user==:user_not_connected
+        @current_user.nb_items
       else
         unless session[:nb_items].nil?
           session[:nb_items]
