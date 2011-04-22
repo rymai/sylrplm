@@ -1,0 +1,21 @@
+
+#editor {
+  display: none;
+  position: absolute;
+  background-color: white;
+  padding: 1px;
+}
+
+#editor-in {
+  border: 5px solid lightgrey;
+  padding: 3px;
+  margin-bottom: 2px;
+}
+
+#tred {
+  float: left;
+}
+#flu {
+  float: right;
+}
+

@@ -1,0 +1,50 @@
+<h1><%=t("processes_list") %></h1>
+
+<table class='coll'>
+
+  <thead>
+    <tr>
+      
+      <th>wfid</th>
+      <th>workflow</th>
+      <th>since</th>
+      <th>launcher</th>
+      <th>br</th>
+      <th>err</th>
+      <th class='align-right'><%= @processes.total_entries %> instances</th>
+    </tr>
+  </thead>
+
+<% for ps in @processes %>
+  <tr class="process">
+    <td><%= link_to_slice(ps, :wfid) %></td>
+    <td><%= link_to_slice(ps, :wfname, :workflow) %> <%= h ps.wfrevision %></td>
+    <td><%= h display_time(ps.launch_time) %></td>
+    <td><%= ps.launcher ? link_to_slice(ps, :launcher) : '-' %></td>
+    <td><%= h ps.branches %></td>
+    <td><%= link_to_if(ps.errors.size > 0,
+      h(ps.errors.size),
+      errors_path(ps.wfid)) %></td>
+    <td class="coll_buttons">
+      <%= link_to h_img_show.to_s, process_path(ps.wfid) %> |
+      <%= link_to_if @current_user!=:user_not_connected && @current_user.is_launcher?(ps), h_img_abort, process_path(ps.wfid), :confirm => 'Are you sure ?', :method => :delete %>
+    </td>
+  </tr>
+<% end -%>
+</table>
+
+<div class="processes_nav align-right">
+  <%= (params[:workflow] or params[:launcher]) ? link_to(h_img_all, processes_path) : '' %>
+  <%= will_paginate(@processes) %>
+</div>
+
+<div class="processes_launch align-right">
+  <%= link_to(t("launch"), definitions_path, :title => 'launch a new process from a definition') %>
+</div>
+
+<div id="help">
+  <p>
+List of process instances. With sufficient rights, you can abort them or even modify them.
+  </p>
+</div>
+

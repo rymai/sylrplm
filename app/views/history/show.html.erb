@@ -1,0 +1,48 @@
+<h1><%=t("history_show") %></h1>
+<p>
+    <b>Date:</b>
+    <%=h @entry.created_at %>
+</p>
+<p>
+    <b>Source:</b>
+    <%=h @entry.source %>
+</p>
+<p>
+    <b>Event:</b>
+    <%=h @entry.event %>
+</p>
+<p>
+    <b>wfid:</b>
+    <%=h @entry.wfid %>
+</p>
+<p>
+    <b>wfname:</b>
+    <%=h @entry.wfname %>
+</p>
+<p>
+    <b>fei:</b>
+    <%=h @entry.fei %>
+</p>
+<p>
+    <b>Participant:</b>
+    <%=h @entry.participant %>
+</p>
+<p>
+    <b>Message:</b>
+    <%=h @entry.message %>
+</p>
+
+<p>
+    <b>Tree:</b>
+    
+	<br/>
+	<%= render_fluo :wfid => @entry.wfid %>
+</p>
+
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t("list"), "/history" %>
+        </td>
+    </tr>
+</table>

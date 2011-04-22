@@ -1,0 +1,40 @@
+<tr>
+    <td>
+    <table>
+        <tr>
+            <td>
+                Objets
+            </td>
+        </tr>
+        <tr>
+            <th class="nhover">
+                relation
+            </th>
+            <th class="nhover">
+                type objet 
+            </th>
+            <th class="nhover">
+                designation
+            </th>
+            <th>
+                identifiant
+            </th>
+        </tr>
+        <% for link in @wi_links %>
+        <tr>
+            <td class="nhover">
+                <%= h(link[:link].name) %>
+            </td>
+            <td class="nhover">
+                <%= h(link[:link].child_object) %>
+            </td>
+            <td class="nhover">
+                <%= h(link[:object].designation) %>
+            </td>
+            <td class="nhover">
+                <%= link_to h(link[:object].ident), link[:object] %>
+            </td>
+        </tr>
+        <%end %>
+    </table>
+</tr>

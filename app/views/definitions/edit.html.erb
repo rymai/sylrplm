@@ -1,0 +1,62 @@
+<h1><%=t("definitions_edit") %><%= h @definition.id %></h1>
+
+<div style='float: left;'>
+
+  <% form_for(@definition, :html => { :id => 'definition_form' }) do |f| %>
+    <%= f.error_messages %>
+
+    <table class="nhover">
+      <tr>
+        <td class="wide-first-col">name</td>
+        <td><%= f.text_field :name %></td>
+      </tr>
+      <tr>
+        <td>description</td>
+        <td><%= f.text_field :description %></td>
+      </tr>
+      <tr>
+        <td>uri</td>
+        <td><%= f.text_field :uri %></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+
+          <%= render(
+            :partial => @payload_partial,
+            :locals => {
+              :fields => @definition.launch_fields_hash,
+              :form_id => 'definition_form',
+              :textarea_name => 'definition[launch_fields]' }) %>
+
+        </td>
+      </tr>
+      <tr class="button-row">
+        <td>
+          <%= f.submit 'update' %>
+          <%= link_to 'show', @definition %> |
+          <%= link_to 'back', definitions_path %>
+        </td>
+      </tr>
+    </table>
+  <% end %>
+</div>
+
+<div style='float: left; margin-left: 28px;'>
+  groups that may launch<br/>
+  <br/>
+  <%= render :partial => 'shared/definition_groups', :locals => @dg_locals %>
+</div>
+
+<div class='align-right'>
+  <%= render_fluo :definition => @definition %>
+</div>
+
+<div id="help" style="float: left">
+  <p>
+Change the info about a [business] process definition here.
+  </p>
+  <p>
+Two important things may be edited here : the initial payload for any launch and the list of user groups that may launch the process definition.
+  </p>
+</div>
+

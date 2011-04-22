@@ -1,0 +1,32 @@
+<h1><%=t("groups_list") %></h1>
+<div class='content_title'>/groups</div>
+
+<table class='coll'>
+
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>members</th>
+    </tr>
+  </thead>
+
+<% for group in @groups %>
+  <tr class='group'>
+    <td class='group_name'><%= link_to h(group.name), group_path(group) %></td>
+    <td class='group_members'><%= comma_list(group.users, :login) %></td>
+    <!--td><%= link_to 'Show', group %></td-->
+    <td class='coll_buttons'>
+      <%= link_to 'show', group_path(group) %> |
+      <%= link_to 'edit', edit_group_path(group) %> |
+      <%= link_to 'remove', group, :confirm => 'Are you sure ?', :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+  <tr>
+    <td class='coll_new_button' colspan='4'>
+      <%= link_to 'new group', new_group_path %>
+    </td>
+  </tr>
+</table>
+
+

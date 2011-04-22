@@ -1,0 +1,153 @@
+
+body {
+  font-size: 87%;
+  font-family: "Helvetica Neue Light", Helvetica, Arial, sans-serif;
+}
+
+/* Headings
+ * --------------------------------------------------------------------- */
+h1,h2,h3,h4,h5,h6 { color: #111; }
+
+/* Text Elements
+ * --------------------------------------------------------------------- */
+a                 { color: #125AA7; }
+a:hover           { color: #000; }
+blockquote        { color: #666; }
+
+pre {
+  background: #eee;
+  border:     1px solid #ddd;
+  margin-bottom: 1em;
+}
+
+hr {
+  background: #ddd;
+  color:      #ddd;
+}
+
+/* Forms
+ * --------------------------------------------------------------------- */
+
+input[type="text"], input[type="radio"], input[type="password"], textarea {
+  background-color: #eeeeee;
+  border:1px solid #BBBBBB;
+  font-family: "Helvetica Neue Light", Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  padding: 2px;
+  vertical-align: bottom;
+}
+
+/* Tables
+ * --------------------------------------------------------------------- */
+
+table {
+  /*
+  border-top:     1px solid #ddd;
+  border-left:    1px solid #ddd;
+  border-spacing: 0px;
+  border: 0px;
+  */
+  padding: 0px;
+}
+tr:hover {
+  background-color: #E3E3E3;
+}
+th {
+  font-weight: normal;
+}
+th,td {
+  /* top right bottom left */
+  padding: 3px 2px 3px 0px;
+  border: 0px;
+  line-height: 1.0em;
+  vertical-align: bottom;
+}
+
+td.wide-first-col {
+  /*width: 150px;*/
+  padding-right: 7em;
+}
+tr.button-row td {
+  padding-top: 1.5em;
+}
+
+.nhover:hover {
+  background-color: white;
+}
+table.nhover:hover tr:hover {
+  background-color: white;
+}
+tr.button-row:hover {
+  background-color: white;
+}
+
+/* Default Classes
+ * --------------------------------------------------------------------- */
+
+p.quiet { color: #666; }
+.alt    { color: #666; }
+
+
+#ruote_web2 {
+  font-size: 2.0em;
+  color: #bbbbbb;
+  margin-left: 4px;
+  cursor: pointer;
+}
+#user_control {
+  line-height: 3.7em;
+}
+#subheader {
+  padding-top: 3px;
+  border-top: 1px #888 solid;
+}
+
+#footer {
+  border-top: 1px #888 solid;
+}
+
+.content {
+  margin-top: 28px;
+  margin-bottom: 1em;
+}
+.content_title {
+  font-size: 1.77em;
+  color: #bbbbbb;
+  margin-bottom: 14px;
+}
+
+#help {
+  display: none;
+  font-size: 80%;
+  font-style: italic;
+  margin-top: 7px;
+}
+#help > p {
+  margin: 0px;
+  padding: 0px;
+}
+
+/* COLL */
+
+table.coll {
+  border-spacing: 0px;
+  padding: 0px;
+  text-align: left;
+  width: 100%
+}
+.coll_buttons {
+  text-align: right;
+}
+.coll_new_button {
+  padding-top: 5px;
+  text-align: right;
+}
+.coll_new_button:hover {
+  background-color: white;
+}
+
+table.coll > thead > tr:hover {
+  background-color: white;
+}
+
+/* EOF */

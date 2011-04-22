@@ -1,0 +1,60 @@
+<h1><%=t("processes_new") %></h1>
+<div style="float: left;">
+    <% form_tag('/processes', { :id => 'workitem_form', :multipart => true }) do %>
+    <%= hidden_field_tag 'definition_id', @definition.id %>
+    <table>
+        <tr>
+            <td>
+                uri
+            </td>
+            <td>
+                <%= h @definition.uri %>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="nhover">
+                <%= render(:partial => @payload_partial, :locals => { :fields => @definition.launch_fields_hash }) %>
+            </td>
+        </tr>
+        <% unless @favori_document.empty %>
+        <tr>
+            <td>
+                <%= select("relation","document",options_for_select(@relation_types_document)) %>
+            </td>
+            <td>
+                <%= t("paste_documents") %>
+            </td>
+        </tr>
+        <%end %>
+        <% unless @favori_part.empty %>
+        <tr>
+            <td>
+                <%= select("relation","part",options_for_select(@relation_types_part)) %>
+            </td>
+            <td>
+                <%= t("paste_parts") %>
+            </td>
+        </tr>
+        <% end %>
+        <% unless @favori_project.empty %>
+        <tr>
+            <td>
+                <%= select("relation","project",options_for_select(@relation_types_project)) %>
+            </td>
+            <td>
+                <%= t("paste_projects") %>
+            </td>
+        </tr>
+        <% end %>
+       <tr>
+            <td colspan="2" class="nhover">
+                <%= submit_tag 'launch new process instance' %>
+                <%= link_to 'back', :back %>
+            </td>
+        </tr>
+    </table>
+    <% end -%>
+</div>
+<div class="align-right">
+    <%= render_fluo :definition => @definition %>
+</div>

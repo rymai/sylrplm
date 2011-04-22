@@ -1,0 +1,93 @@
+
+<script>
+    function pick(workitemPath){
+        var form = document.getElementById('workitem_delegation_form');
+        form.action = workitemPath;
+        form.submit();
+    }
+    
+    function doSearch(){
+        var q = document.getElementById('query').value;
+        if (q == '') 
+            return;
+        q = encodeURI(q);
+        h = document.location.href.split('?')[0];
+        document.location.href = h + '?q=' + q;
+    }
+</script>
+<div class="column span-12 last align-right workitem_search">
+    <input type="text" id="query" onkeyup="onEnter(this, event, doSearch); return false;" value="<%= params[:q] %>" /><%= link_to_function 'search', 'doSearch();' %>
+</div>
+<table class='coll'>
+    <thead>
+        <tr>
+            <th>
+                id
+            </th>
+            <th>
+                wfid
+            </th>
+            <th>
+                workflow
+            </th>
+            <th>
+                since
+            </th>
+            <th>
+                expid
+            </th>
+            <th>
+                store
+            </th>
+            <th>
+                participant
+            </th>
+            <th>
+                activity
+            </th>
+            <th class="align-right">
+                <%= workitems.size %>workitems
+            </th>
+        </tr>
+    </thead>
+    <% for workitem in workitems %>
+    <% fei = workitem.full_fei %>
+    <tr class="workitem">
+        <td>
+            <%= workitem.id %>
+        </td>
+        <td>
+            <%= link_to h(fei.wfid), workitems_path(fei.wfid) %>
+        </td>
+        <td>
+            <%= link_to_slice(workitem, :wfname, :workflow) %><%= h workitem.wfrevision %>
+        </td>
+        <td>
+            <%= display_since(workitem, :dispatch_time) %>
+        </td>
+        <td>
+            <%= h workitem.full_fei.expid %>
+        </td>
+        <td>
+            <%= link_to_slice(workitem, :store_name, :store) %>
+        </td>
+        <td>
+            <%= link_to_slice(workitem, :participant_name, :participant) %>
+        </td>
+        <td>
+            <%= h workitem.activity %>
+        </td>
+        <td class="coll_buttons">
+            <%= link_to h_img_show.to_s, workitem_url(workitem) %>
+            <%= link_to_if @current_user.may_see?(workitem), h_img_edit_task, edit_workitem_url(workitem) %>
+            <%= link_to_function h_img_pick, "pick('#{workitem_url(workitem)}');" %>
+        </td>
+    </tr>
+    <% end -%>
+</table>
+<% form_tag(
+'/none',
+:id => 'workitem_delegation_form',
+:method => :put,
+:multipart => true) do -%>
+<input type="hidden" name="store_name" id="store_name" value="<%= @current_user.login %>" /><% end %>

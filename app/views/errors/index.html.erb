@@ -1,0 +1,55 @@
+<h1><%=t("errors_list") %></h1>
+<script>
+
+  function replayError (errorUri) {
+    if ( ! confirm("really replay this error ?")) return false;
+    var form = document.getElementById('replay_form');
+    form.action = errorUri;
+    form.submit();
+    return true;
+  }
+
+</script>
+
+<% form_tag('', :id => 'replay_form', :method => :delete) do -%>
+<% end %>
+
+<table class="coll">
+
+  <thead>
+    <tr>
+      <th>date</th>
+      <th>wfid</th>
+      <th>expid</th>
+      <th>call</th>
+      <th>trace</th>
+      <th><!-- buttons --></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @errors.each do |error|
+       e = error.as_owfe_error -%>
+    <tr>
+      <td><%= h display_time(e.date) %> .<%= h e.date.usec.to_s[0, 3] %></td>
+      <td><%= h e.wfid %></td>
+      <td><%= link_to h(e.fei.expid), expression_path(e.fei) %></td>
+      <td><%= h e.message %></td>
+      <td title="<%= h e.stacktrace %>"><%= h truncate(e.stacktrace, :length => 40) %></td>
+      <td class="coll_buttons">
+        <%= link_to_function(
+          'replay', "return replayError('#{error_path(error)}');") %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+
+  <tfoot>
+  </tfoot>
+</table>
+
+<div class="align-right">
+  <%= @all ? '' : link_to('all', :controller => 'errors') %>
+  <%= will_paginate(@errors) %>
+</div>
+

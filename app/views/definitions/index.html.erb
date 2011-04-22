@@ -1,0 +1,71 @@
+<h1><%=t("definitions_list") %></h1>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t("new_definition"), new_definition_path %>
+        </td>
+        <td>
+            <%= show_help("help_definitions") %>
+        </td>
+    </tr>
+</table>
+<%unless @definitions.length <= 0 %>
+
+<table class='coll'>
+    <thead>
+        <tr>
+            <th>
+                name
+            </th>
+            <th>
+                description
+            </th>
+            <th>
+                uri
+            </th>
+            <th>
+                groups
+            </th>
+        </tr>
+    </thead>
+    <% for definition in @definitions %>
+    <tr>
+        <td>
+            <%= link_to h(definition.name), definition %>
+        </td>
+        <td title="<%= h definition.description %>">
+            <%= h truncate(definition.description, :length => 40) %>
+        </td>
+        <td>
+            <%= link_to h(definition.uri), definition.full_uri %>
+        </td>
+        <td>
+            <%= comma_list(definition.groups) %>
+        </td>
+        <td class='coll_buttons'>
+            <%= link_to(h_img_show.to_s, definition) %>
+            <%= link_to(
+            h_img_edit.to_s,
+            edit_definition_path(definition),
+            { :title => 'edit this process definition' }) %>
+            <%= link_to(
+            h_img_destroy.to_s,
+            definition,
+            { :confirm => 'Are you sure ?',
+            :method => :delete,
+            :title => 'remove this definition' }) %>
+            <%= link_to(
+            h_img_launchthis.to_s,
+            new_process_path(:definition_id => definition.id),
+            { :title => 'launch a new instance of this process' }) %>
+        </td>
+    </tr>
+    <% end %>
+</table>
+<%end %>
+
+<div id="help">
+    <p>
+        [Business] process definitions. Edit them (or their initial payload) or launch them.
+    </p>
+</div>
