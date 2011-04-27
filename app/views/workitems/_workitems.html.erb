@@ -22,8 +22,12 @@
     <thead>
         <tr>
             <th>
+                relation
+            </th>
+            <th>
                 id
             </th>
+            
             <th>
                 wfid
             </th>
@@ -51,8 +55,11 @@
         </tr>
     </thead>
     <% for workitem in workitems %>
-    <% fei = workitem.full_fei %>
+    <% fei = workitem.full_fei%>
     <tr class="workitem">
+        <td>
+            <%= workitem.link_attributes["relation"] %>
+        </td>
         <td>
             <%= workitem.id %>
         </td>

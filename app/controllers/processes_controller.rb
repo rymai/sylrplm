@@ -109,29 +109,6 @@ class ProcessesController < ApplicationController
     end
   end
 
-  # GET /processes/:id/tree
-  #
-  def tree
-    #    puts "processes_controller.tree:params="+params.inspect
-    process = ruote_engine.process_status(params[:id])
-    var = params[:var] || 'proc_tree'
-    unless process.nil?
-      # TODO : use Rails callback
-      render(
-      :text => "var #{var} = #{process.current_tree.to_json};",
-      :content_type => 'text/javascript')
-    else
-      opts={}
-      opts[:page]=nil
-      opts[:conditions]="wfid = '"+params[:id]+"' and event = 'proceeded'" #TODO
-      puts "processes_controller.tree:opts="+opts.inspect
-      history = OpenWFE::Extras::HistoryEntry.paginate(opts)
-      render(
-      :text => "var #{var} = #{history.last.tree};",
-      :content_type => 'text/javascript')
-    end
-  end
-
   # GET /processes/new
   #
   def new
@@ -171,20 +148,20 @@ class ProcessesController < ApplicationController
 
         flash[:notice] = "<br/>launched process instance #{workitem.id} #{fei.wfid}"
 
-#                flash[:notice]+="<br/>"+add_objects(workitem, @favori_document, "document")
-#                 flash[:notice]+="<br/>"+add_objects(workitem, @favori_part, "part")
-#                 flash[:notice]+="<br/>"+add_objects(workitem, @favori_project, "project")
-#
-#                nb=Link.find_childs("workitem",workitem).size
-#                nb=1
-#                if nb>0
+        #                flash[:notice]+="<br/>"+add_objects(workitem, @favori_document, "document")
+        #                 flash[:notice]+="<br/>"+add_objects(workitem, @favori_part, "part")
+        #                 flash[:notice]+="<br/>"+add_objects(workitem, @favori_project, "project")
+        #
+        #                nb=Link.find_childs("workitem",workitem).size
+        #                nb=1
+        #                if nb>0
 
-#        nb=add_objects(workitem, @favori_document, "document")
-#        nb+=add_objects(workitem, @favori_part, "part")
-#        nb+=add_objects(workitem, @favori_project, "project")
-#        if(nb>0)
-#          workitem.save
-#        end
+        nb=add_objects(workitem, @favori_document, "document")
+        nb+=add_objects(workitem, @favori_part, "part")
+        nb+=add_objects(workitem, @favori_project, "project")
+        if(nb>0)
+          workitem.save
+        end
 
         format.html {
           redirect_to :action => 'show', :id => fei.wfid }
@@ -218,13 +195,33 @@ class ProcessesController < ApplicationController
     redirect_to :controller => :processes, :action => :index
   end
 
-  protected
+  # GET /processes/:id/tree
+  #
+  def tree
+    #    puts "processes_controller.tree:params="+params.inspect
+    process = ruote_engine.process_status(params[:id])
+    var = params[:var] || 'proc_tree'
+    unless process.nil?
+      # TODO : use Rails callback
+      render(
+      :text => "var #{var} = #{process.current_tree.to_json};",
+      :content_type => 'text/javascript')
+    else
+      opts={}
+      opts[:page]=nil
+      opts[:conditions]="wfid = '"+params[:id]+"' and event = 'proceeded'" #TODO
+      puts "processes_controller.tree:opts="+opts.inspect
+      history = OpenWFE::Extras::HistoryEntry.paginate(opts)
+      render(
+      :text => "var #{var} = #{history.last.tree};",
+      :content_type => 'text/javascript')
+    end
+  end
 
-  #def authorized?
-  #  return false unless @current_user
-  #  %w{ show index tree new }.include?(action_name) || @current_user.is_admin?
-  #end
-  # :login_required is sufficient
+  #
+  ###############################################################################
+  #
+  protected
 
   def parse_launchitem
 

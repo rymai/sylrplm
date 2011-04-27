@@ -10,12 +10,12 @@ class SylEditeur < OpenWFE::ProcessDefinition
 
     createur :activity=>"Mettez l objet(s) de ref dans le presse papier"
     
-    wfdocument Ruote::WfDocument, :task=>"init"
+    wfdocument Ruote::WfDocument, :task=>"promote_init", :relation=>"applicable"
 
     #    wfblock
 
     #wfdocument Ruote::WfDocument, :task=>"valid"
-    wfdocument Ruote::WfDocument, :task=>"promote"
+    wfdocument Ruote::WfDocument, :task=>"promote_exec"
 
     aztest
 

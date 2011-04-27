@@ -189,8 +189,8 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
   add_index "history", ["wfrevision"], :name => "index_history_on_wfrevision"
 
   create_table "links", :force => true do |t|
-    t.string   "father_object"
-    t.string   "child_object"
+    t.string   "father_type"
+    t.string   "child_type"
     t.integer  "father_id"
     t.integer  "child_id"
     t.string   "name"
@@ -201,8 +201,8 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.datetime "updated_at"
   end
 
-  add_index "links", ["child_object", "child_id"], :name => "id_link_child"
-  add_index "links", ["father_object", "father_id"], :name => "id_link_father"
+  add_index "links", ["child_type", "child_id"], :name => "id_link_child"
+  add_index "links", ["father_type", "father_id"], :name => "id_link_father"
 
   create_table "parts", :force => true do |t|
     t.string   "ident"

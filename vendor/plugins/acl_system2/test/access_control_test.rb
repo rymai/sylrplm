@@ -55,7 +55,7 @@ class ControllerProxy
     false
   end
   
-  def @current_user
+  def current_user
     User.new
   end
   

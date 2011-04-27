@@ -10,7 +10,7 @@ module Classes::AppClasses
         [border, print_message, border].join("\n") + "\n"
       else
         #super
-        [severity.ljust(5), datetime, program_name, message].join("_") + "\n"
+        [severity.ljust(5), "date:"+datetime.to_s, "prg:"+program_name.to_s, "msg:"+message.to_s].join("_") + "\n"
       end
     end
   end

@@ -23,7 +23,7 @@
 #++
 
 require 'openwfe/representations'
-
+require 'ruote/sylrplm/workitems'
 class WorkitemsController < ApplicationController
   include Controllers::PlmObjectControllerModule
 
@@ -38,12 +38,13 @@ class WorkitemsController < ApplicationController
     #    puts "workitems_controller.index:params="+params.inspect
     @query = params[:q] || params[:query]
     @workitems = if @query
-      OpenWFE::Extras::ArWorkitem.search(
+      #OpenWFE::Extras::ArWorkitem.search(
+      Ruote::SylArWorkitem.search(
       @query,
       @current_user.store_names)
       #TODO syl @current_user.is_admin? ? nil : @current_user.store_names)
       # TODO : paginate that !
-
+      
     else
 
       opts = { :order => 'dispatch_time DESC' }
@@ -52,7 +53,7 @@ class WorkitemsController < ApplicationController
       #unless @current_user.is_admin?
       opts[:page] = (params[:page].nil? ? SYLRPLM::NB_ITEMS_PER_PAGE :  params[:page])
       #      puts "workitems_controller.index:page="+opts[:page].inspect
-      OpenWFE::Extras::ArWorkitem.paginate_by_params(
+      Ruote::SylArWorkitem.paginate_by_params(
       [
         # parameter_name[, column_name]
         'wfid',
@@ -63,7 +64,10 @@ class WorkitemsController < ApplicationController
       params,
       opts)
     end
-
+    @workitems.each do |en|
+      en.link_attributes={"relation"=>""}
+    end
+	
     # TODO : escape pagination for XML and JSON ??
 
     respond_to do |format|
@@ -90,7 +94,13 @@ class WorkitemsController < ApplicationController
   def edit
     #    puts "workitems_controller.edit:params="+params.inspect
     @workitem = find_ar_workitem
-    get_wi_links(@workitem)
+    @wi_links=get_wi_links(@workitem)
+    nb=add_objects(@workitem, @favori_document, "document")
+    nb+=add_objects(@workitem, @favori_part, "part")
+    nb+=add_objects(@workitem, @favori_project, "project")
+    if(nb>0)
+      @workitem.save
+    end
     @payload_partial = determine_payload_partial(@workitem)
 
     return error_reply('no workitem', 404) unless @workitem
@@ -103,7 +113,7 @@ class WorkitemsController < ApplicationController
   def show
     #    puts "workitems_controller.show:params="+params.inspect
     @workitem = find_ar_workitem
-    get_wi_links(@workitem)
+    @wi_links=get_wi_links(@workitem)
     @payload_partial = determine_payload_partial(@workitem)
 
     return error_reply('no workitem', 404) unless @workitem
@@ -180,27 +190,54 @@ class WorkitemsController < ApplicationController
     params[:wfid], OpenWFE.to_dots(params[:expid]))
     ret=@current_user.may_see?(workitem) ? workitem : nil
     #puts "workitems_controller.find_workitem:"+ret.inspect
-    get_wi_links(workitem) unless workitem.nil?
+   
+    ret
+  end
+
+  def add_objects(workitem, favori, type_object)
+    fields = workitem.field_hash
+    #puts  "workitems_controller.add_objects:fields="+fields.inspect
+    msg=""
+    ret=0
+    unless favori.nil? 
+      relation="workflow_"+type_object
+      #      puts "processes_controller.add_objects:workitem="+workitem.id.to_s+" rel="+relation.inspect+" favori="+favori.inspect
+      favori.items.each do |item|
+        url="/"+type_object+"s/"+item.id.to_s
+        label=type_object+":"+item.ident+"-"+relation
+    #puts  "workitems_controller.add_objects:params="+fields["params"].inspect
+       fields["params"][url]=label
+        msg += "\nField added:"+label
+        ret+=1
+      end
+      #reset_favori_document
+    else
+      msg += "\nNothing to add:"+type_object
+    end
+    workitem.replace_fields(fields)
+    #puts  "workitems_controller.add_objects:"+workitem.field_hash.inspect
+    puts  "workitems_controller.add_objects:"+type_object+"="+ret.to_s+":"+msg
     ret
   end
 
   def get_wi_links(workitem)
-    @wi_links=[]
+    ret=[]
     unless workitem.nil?
       Link.find_childs("workitem",workitem,"document").each do |link|
-        @wi_links<<{:object=>Document.find(link.child_id), :link=>link}
+        ret<<{:object=>Document.find(link.child_id), :link=>link}
       end
       Link.find_childs("workitem",workitem,"part").each do |link|
-        @wi_links<<{:object=>Part.find(link.child_id), :link=>link}
+        ret<<{:object=>Part.find(link.child_id), :link=>link}
       end
       Link.find_childs("workitem",workitem,"product").each do |link|
-        @wi_links<<{:object=>Product.find(link.child_id), :link=>link}
+        ret<<{:object=>Product.find(link.child_id), :link=>link}
       end
       Link.find_childs("workitem",workitem,"customer").each do |link|
-        @wi_links<<{:object=>Customer.find(link.child_id), :link=>link}
+        ret<<{:object=>Customer.find(link.child_id), :link=>link}
       end
-      #puts "workitems_controller.get_wi_links="+workitem.id.to_s+":"+@links.inspect
+      puts "workitems_controller.get_wi_links="+workitem.id.to_s+":"+ret.inspect
     end
+    ret
   end
 
   def wi_links_update(cur_wi, wfid)
@@ -227,12 +264,12 @@ class WorkitemsController < ApplicationController
       history = OpenWFE::Extras::HistoryEntry.paginate(opts).last
       #puts "workitems_controller.wi_links_update:history="+history.inspect
       Link.find_childs("workitem",cur_wi,"document").each do |link|
-        link.father_object="history"
+        link.father_type="history"
         link.father_id=history.id
         link.save
       end
       Link.find_childs("workitem",cur_wi,"part").each do |link|
-        link.father_object="history"
+        link.father_type="history"
         link.father_id=history.id
         link.save
       end
@@ -266,7 +303,7 @@ class WorkitemsController < ApplicationController
       if wi.attributes.is_a?(String)
       wi
     rescue Exception => e
-      logger.warn("failed to parse workitem : #{e}")
+      LOG.warn("failed to parse workitem : #{e}")
       nil
     end
   end

@@ -21,7 +21,9 @@ class SylEditeur < OpenWFE::ProcessDefinition
     createur :activity => "Ajouter un commentaire svp"
     back :unless => '${f:private_comment_createur} != ""'
     #_redo :ref => 'createur', :unless => '${f:comment} != "" '
-
+    
+    wfdocument Ruote::WfDocument, :task=>"promote_init", :relation=>"applicable"
+    
     # taches paralleles, quorum=1
     set :f => "private_comment_relecteur", :value => "bbb"
     concurrence :count => 1 do
@@ -30,6 +32,8 @@ class SylEditeur < OpenWFE::ProcessDefinition
     end
     back :unless => '${f:private_comment_relecteur} != ""'
 
+    wfdocument Ruote::WfDocument, :task=>"promote_review", :relation=>"reference"
+    
     set :f => "private_ok_for_publish", :value => "true"
     set :f => "private_comment_valideur", :value => "ccc"
     #participant :ref=> "valideur", :activity =>"Merci de valider ce document"
@@ -41,7 +45,7 @@ class SylEditeur < OpenWFE::ProcessDefinition
     ##publish 
     
     #participant 'document', Ruote::Sylrplm::WfDocument 
-    wfdocument Ruote::Sylrplm::WfDocument
+    wfdocument Ruote::WfDocument, :task=>"promote_exec"
     #part_document 'OpenWfe::PrintParticipant'
 
   end

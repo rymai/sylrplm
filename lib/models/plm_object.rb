@@ -1,5 +1,9 @@
-module Models::PlmObject
+require 'openwfe/representations'
+require 'ruote/sylrplm/workitems'
 
+module Models::PlmObject
+#  include OpenWFE::Extras::ArWorkitem
+#  include OpenWFE::Extras::HistoryEntry
   # modifie les attributs avant edition
   def self.included(base)
     base.extend(ClassMethods) # �a appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclue la lib
@@ -84,37 +88,40 @@ module Models::PlmObject
       return nil
     end
   end
-  
+
   def get_workitems
     ret=[]
     links=Link.find_fathers(self.class.name.downcase, self,  "workitem")
     links.each do |link|
       begin
-        father=OpenWFE::Extras::ArWorkitem.find(link.father_id)
-        puts "part.get_workitems:workitem="+father.inspect
+        #father=OpenWFE::Extras::ArWorkitem.find(link.father_id)
+        father=Ruote::SylArWorkitem.find(link.father_id)
+        #puts "plm_object.get_workitems:workitem="+father.inspect
+        father.link_attributes={"relation"=>link.name}
         ret<<father
       rescue Exception =>e
-
+        LOG.error "plm_object.get_workitems:erreur="+e.inspect
       end
     end
-    puts "part.get_workitems:ret="+ret.size.to_s
+    #puts "plm_object.get_workitems:ret="+ret.size.to_s
     ret
   end
-  
+
   def get_histories
-      ret=[]
-      links=Link.find_fathers(self.class.name.downcase, self,  "history")
-      links.each do |link|
-        begin
-          father = OpenWFE::Extras::HistoryEntry.find(link.father_id)
-          puts "part.get_histories:history="+father.inspect
-          ret<<father
-        rescue Exception =>e
-  
-        end
+    ret=[]
+    links=Link.find_fathers(self.class.name.downcase, self,  "history")
+    links.each do |link|
+      begin
+        father = Ruote::SylHistoryEntry.find(link.father_id)
+        #puts "plm_object.get_histories:history="+father.inspect
+        father.link_attributes={"relation"=>link.name}
+        ret<<father
+      rescue Exception => e
+        LOG.error "plm_object.get_histories:erreur="+e.inspect
       end
-      ret
     end
-  
+    #puts "plm_object.get_histories:ret="+ret.size.to_s
+    ret
+  end
 
 end

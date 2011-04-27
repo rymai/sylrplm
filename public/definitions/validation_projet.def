@@ -1,0 +1,10 @@
+require 'ruote'
+pdef = Ruote.process_definition do
+  cursor do
+    concurrence do
+      reviewer1
+      reviewer2
+    end
+    editor
+  end
+end

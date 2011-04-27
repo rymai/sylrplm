@@ -151,7 +151,7 @@ class ExpressionsController < ApplicationController
 
     rescue Exception => e
 
-      logger.warn("failed to parse expression : #{e}")
+      LOG.warn("failed to parse expression : #{e}")
 
       nil
     end

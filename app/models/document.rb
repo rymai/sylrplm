@@ -1,57 +1,62 @@
 class Document < ActiveRecord::Base
   include Models::PlmObject
   include Models::SylrplmCommon
-  
-  validates_presence_of :ident , :designation 
+
+  attr_accessor :link_attributes
+  validates_presence_of :ident , :designation
   validates_uniqueness_of :ident, :scope => :revision
   #validates_format_of :ident, :with =>/^(doc|img)[0-9]+$/, :message=>" doit commencer par doc ou img suivi de chiffres"
   validates_format_of :ident, :with =>/^([a-z]|[A-Z])+[0-9]+$/ #, :message=>t(:valid_ident,:object=>:ctrl_document)
-  
+
   belongs_to :typesobject
   belongs_to :statusobject
   belongs_to :owner,
-    :class_name => "User"
-  
+  :class_name => "User"
+
   has_many :datafile
   has_many :checks
-  
-  has_many :links_parts,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='part' and child_object='document'"]
-  has_many :parts , :through => :links_parts
-  
-  has_many :links_projects,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='project' and child_object='document'"]
-  has_many :projects , :through => :links_projects
-  
-  has_many :links_customers,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='customer' and child_object='document'"]
-  has_many :customers , :through => :links_customers
-  
-  before_create :set_initial_attributes
+
+  has_many :links_parts, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_type='part' and child_type='document'"]
+  has_many :parts, :through => :links_parts
+
+  has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_type='project' and child_type='document'"]
+  has_many :projects, :through => :links_projects
+
+  has_many :links_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_type='customer' and child_type='document'"]
+  has_many :customers, :through => :links_customers
+
   def to_s
     self.ident+"/"+self.revision+"-"+self.designation+"-"+self.typesobject.name+"-"+self.statusobject.name
   end
+
   def self.create_new(document, user)
     unless document.nil?
       doc = Document.new(document)
     else
-      #doc = user.documents.build(:ident => Sequence.get_next_seq("Document.ident"))    
-      doc = Document.new 
+      #doc = user.documents.build(:ident => Sequence.get_next_seq("Document.ident"))
+      doc = Document.new
       doc.set_default_values(true)
     end
     doc.owner=user
     doc.statusobject = Statusobject.get_first("document")
     doc
   end
-  
-  def set_initial_attributes
-    
+
+  def initialize(att)
+    @link_attributes = att
   end
-  
+
+  def link_attributes=(att)
+    @link_attributes = att
+  end
+
   # modifie les attributs avant edition
   def self.find_edit(object_id)
     obj=find(object_id)
     obj.edit
     obj
   end
-  
+
   def check_out(params,user)
     ret=""
     check     = Check.get_checkout("document", self)
@@ -70,7 +75,7 @@ class Document < ActiveRecord::Base
       ret="already_checkout"
     end
   end
-  
+
   def check_in(params,user)
     ret=""
     check     = Check.get_checkout("document", self)
@@ -90,7 +95,7 @@ class Document < ActiveRecord::Base
       ret="no_reason"
     end
   end
-  
+
   def check_free(params,user)
     ret=""
     check     = Check.get_checkout("document", self)
@@ -110,27 +115,27 @@ class Document < ActiveRecord::Base
       ret="no_reason"
     end
   end
-  
+
   def checked?
     !Check.get_checkout("document", self).nil?
   end
-  
+
   def frozen?
     !(self.statusobject.nil? || Statusobject.get_last("document").nil?) &&
-      self.statusobject.rank == Statusobject.get_last("document").rank
+    self.statusobject.rank == Statusobject.get_last("document").rank
   end
-  
+
   # a valider si avant dernier status
   def is_to_validate
     !(self.statusobject.nil? || Statusobject.get_last("document").nil?) &&
-      self.statusobject.rank == Statusobject.get_last("document").rank-1
+    self.statusobject.rank == Statusobject.get_last("document").rank-1
   end
-  
-  def self.get_types_document 
+
+  def self.get_types_document
     Typesobject.find(:all, :order=>"name",
-      :conditions => ["object = 'document'"])
+    :conditions => ["object = 'document'"])
   end
-  
+
   def add_datafile(params,user)
     ret=""
     datafile = Datafile.create_new(params, user)
@@ -142,7 +147,7 @@ class Document < ActiveRecord::Base
       ret="datafile_not_saved"
     end
   end
-  
+
   def get_datafiles
     ret=[]
     ret=self.datafile
@@ -150,56 +155,56 @@ class Document < ActiveRecord::Base
     puts "document.get_datafiles:"+ret.inspect
     ret
   end
-  
+
   def self.find_all
     find(:all, :order=>"ident ASC, revision ASC")
-  end 
-  
+  end
+
   def self.find_with_part
     find(:all,
-      :conditions => ["part_id IS NOT NULL"],
-      :order=>"ident")
-  end 
-  
+    :conditions => ["part_id IS NOT NULL"],
+    :order=>"ident")
+  end
+
   def self.find_without_part
     find(:all,
-      :conditions => ["part_id IS NULL"],
-      :order=>"ident")
-  end  
-  
+    :conditions => ["part_id IS NULL"],
+    :order=>"ident")
+  end
+
   def find_last_revision(object)
     Document.find(:last, :order=>"revision ASC",  :conditions => ["ident = '#{object.ident}'"])
   end
-  
+
   def promote
-    self.statusobject=Statusobject.find_next("document",self.statusobject) 
-    self   
+    self.statusobject=Statusobject.find_next("document",self.statusobject)
+    self
   end
-  
+
   def demote
-    self.statusobject=Statusobject.find_previous("document",self.statusobject) 
-    self   
+    self.statusobject=Statusobject.find_previous("document",self.statusobject)
+    self
   end
-  
+
   def remove_datafile(item)
     self.datafile.delete(item)
   end
-  
+
   def delete
     self.datafile.each { |file|
       self.remove_datafile(file)
     }
     self.destroy
   end
-  
+
   def self.get_conditions(filter)
     filter=filter.gsub("*","%")
     conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
       " or "+qry_owner+" or date LIKE ? ",
-    filter, filter, 
-    filter, filter, 
-    filter, filter, 
-    filter ] unless filter.nil?
+      filter, filter,
+      filter, filter,
+      filter, filter,
+      filter ] unless filter.nil?
   end
-  
+
 end

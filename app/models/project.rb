@@ -11,11 +11,11 @@ class Project < ActiveRecord::Base
   belongs_to :owner,
     :class_name => "User"
     
-  has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='project' and child_object='document'"]
+  has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='project' and child_type='document'"]
   has_many :documents , :through => :links_documents
-  has_many :links_parts,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='project' and child_object='part'"]
+  has_many :links_parts,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='project' and child_type='part'"]
   has_many :parts , :through => :links_parts
-  has_many :links_customers,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_object='customer' and child_object='project'"]
+  has_many :links_customers,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_type='customer' and child_type='project'"]
   has_many :customers , :through => :links_customers
   
   def self.create_new(project, user)

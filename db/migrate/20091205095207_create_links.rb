@@ -1,8 +1,8 @@
 class CreateLinks < ActiveRecord::Migration
   def self.up
     create_table :links do |t|
-      t.string :father_object
-      t.string :child_object
+      t.string :father_type
+      t.string :child_type
       t.integer :father_id
       t.integer :child_id
       t.string :name

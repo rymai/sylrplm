@@ -1,9 +1,10 @@
 <h1><%=t("history_list") %></h1>
+<%= will_paginate(@entries) %>
 <%= render(:partial => "history/histories", :object => @entries ) %>
 <div class="align-right">
     <%= @all ? '' : link_to('all', :controller => 'history') %>
-    <%= will_paginate(@entries) %>
 </div>
+<%= will_paginate(@entries) %>
 <div id="help">
     <p>
         Listing what happened in the engine.

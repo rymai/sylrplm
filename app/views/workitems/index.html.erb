@@ -1,4 +1,4 @@
-<h1><%=t("workitems_list") %></h1>
+<h1><%= t("workitems_list") %></h1>
 <%= render(:partial => "workitems/workitems", :object =>  @workitems ) %>
 
 <% if request.query_string.size > 0 or params[:wfid] %>
@@ -9,7 +9,6 @@
 <div class="processes_launch align-right">
     <%= link_to(t("launch"), definitions_path, :title => 'launch a new process from a definition') %>
 </div>
-
 <div id="help">
     <p>
         A list of workitems (tasks) that your user may view or edit.

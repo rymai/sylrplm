@@ -1,36 +1,19 @@
 <table class="coll">
     <thead>
         <tr>
+            <th>relation</th>
+            <th>date</th>
             <th>
-                date
+            <!--since-->
             </th>
-            <th>
-                <!--since-->
-            </th>
-            <th>
-                source
-            </th>
-            <th>
-                event
-            </th>
-            <th>
-                wfid
-            </th>
-            <th>
-                wfname
-            </th>
-            <th>
-                fei
-            </th>
-            <th>
-                participant
-            </th>
-            <th>
-                message
-            </th>
-            <th>
-                tree
-            </th>
+            <th>source</th>
+            <th>event</th>
+            <th>wfid</th>
+            <th>wfname</th>
+            <th>fei</th>
+            <th>participant</th>
+            <th>message</th>
+            <th>tree</th>
         </tr>
     </thead>
     <tbody>
@@ -39,39 +22,18 @@
         sfei = fei ? "#{fei.sub_instance_id} #{fei.expname} #{fei.expid}" : ''
         cat = entry.created_at.to_s %>
         <tr>
-            <td class="created_at" title="<%= cat %>">
-                <%= cat[0..18] %>
-            </td>
-            <td class="since">
-                <%= display_since(entry, :created_at) %>
-            </td>
-            <td class="source">
-                <%= view_link(entry, :source) %>
-            </td>
-            <td class="event">
-                <%= view_link(entry, :event) %>
-            </td>
-            <td class="wfid">
-                <%= view_link(entry, :wfid) %>
-            </td>
-            <td class="wfname">
-                <%= view_link(entry, :wfname) %><%= h entry.wfrevision %>
-            </td>
-            <td class="fei">
-                <%= sfei %>
-            </td>
-            <td class="participant">
-                <%= view_link(entry, :participant) %>
-            </td>
-            <td class="message" title="<%= h entry.message %>">
-                <%= h truncate(entry.message, :length => 15) %>
-            </td>
-            <td class="tree" title="<%= h entry.tree %>">
-                <%= h truncate(entry.tree, :length => 15) %>
-            </td>
-            <td>
-                <%= link_to h_img_show.to_s, history_path(entry) %>
-            </td>
+            <td><%= entry.link_attributes["relation"] %></td>
+            <td class="created_at" title="<%= cat %>"><%= cat[0..18] %></td>
+            <td class="since"><%= display_since(entry, :created_at) %></td>
+            <td class="source"><%= view_link(entry, :source) %></td>
+            <td class="event"><%= view_link(entry, :event) %></td>
+            <td class="wfid"><%= view_link(entry, :wfid) %></td>
+            <td class="wfname"><%= view_link(entry, :wfname) %><%= h entry.wfrevision %></td>
+            <td class="fei"><%= sfei %></td>
+            <td class="participant"><%= view_link(entry, :participant) %></td>
+            <td class="message" title="<%= h entry.message %>"><%= h truncate(entry.message, :length => 15) %></td>
+            <td class="tree"><%= entry.tree.size unless entry.tree.nil? %></td>
+            <td><%= link_to h_img_show.to_s, history_path(entry) %></td>
         </tr>
         <% end %>
     </tbody>

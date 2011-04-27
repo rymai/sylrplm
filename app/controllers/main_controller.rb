@@ -8,11 +8,11 @@ class MainController < ApplicationController
   end
 
   def index
-    @logger.info("#{infos} ==>")#KO car num ligne=8 !!
-    @logger.error("erreur")
-    @logger.warn("attention")
-    @logger.debug("debug")
-    @logger.fatal("fatal")
+    LOG.info("#{infos} ==>")#KO car num ligne=8 !!
+    LOG.error("erreur")
+    LOG.warn("attention")
+    LOG.debug("debug")
+    LOG.fatal("fatal")
     message = check_init
     puts "main_controller.index"
     @datas = get_datas_count
@@ -36,7 +36,7 @@ class MainController < ApplicationController
         format.html # index.html.erb
       end
     end
-    @logger.info("<==")
+    LOG.info("<==")
   end
 
   # appelle si il manque des objets pour demarrer (user, role, types, status)

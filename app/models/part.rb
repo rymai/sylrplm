@@ -1,12 +1,15 @@
 #require 'lib/models/plm_object'
 require 'openwfe/representations'
 require 'ruote/part/local_participant'
+
 class Part < ActiveRecord::Base
   include Ruote::LocalParticipant
   include Models::PlmObject
   include Models::SylrplmCommon
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident, :scope => :revision
+
+  attr_accessor :link_attributes
 
   belongs_to :typesobject
   belongs_to :statusobject
@@ -15,22 +18,23 @@ class Part < ActiveRecord::Base
   #
 
   #has_and_belongs_to_many :documents, :join_table => "links",
-  #:foreign_key => "father_id", :association_foreign_key => "child_id", :conditions => ["father_object='part' AND child_object='document'"]
+  #:foreign_key => "father_id", :association_foreign_key => "child_id", :conditions => ["father_type='part' AND child_type='document'"]
 
-  has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='part' and child_object='document'"]
-  has_many :documents , :through => :links_documents
+  has_many :links_documents, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='part' and child_type='document'"],:source=>'document'
+  has_many :documents , :through => :links_documents,:source=>'document'
 
-  has_many :links_workitems,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='part' and child_object='workitem'"]
+  has_many :links_workitems, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='part' and child_type='workitem'"]
   has_many :workitems , :through => :links_workitems
 
-  has_many :links_parts,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='part' and child_object='part'"]
+  has_many :links_parts, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='part' and child_type='part'"]
   has_many :parts , :through => :links_parts
 
-  has_many :links_projects,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='project' and child_object='part'"]
+  has_many :links_projects, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='project' and child_type='part'"]
   has_many :projects , :through => :links_projects
 
-  has_many :links_customers,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='customer' and child_object='part'"]
+  has_many :links_customers, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='customer' and child_type='part'"]
   has_many :customers , :through => :links_customers
+
   def to_s
     self.ident+"/"+self.revision+"-"+self.designation+"-"+self.typesobject.name+"-"+self.statusobject.name
   end
@@ -46,6 +50,14 @@ class Part < ActiveRecord::Base
     p.owner=user
     puts "part.create_new:"+p.inspect
     p
+  end
+
+  def initialize(att)
+    @link_attributes = att
+  end
+
+  def link_attributes=(att)
+    @link_attributes = att
   end
 
   # modifie les attributs avant edition

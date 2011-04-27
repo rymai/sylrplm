@@ -9,9 +9,9 @@ class Customer < ActiveRecord::Base
   belongs_to :statusobject
   belongs_to :owner,
     :class_name => "User"
-  has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='customer' and child_object='document'"]
+  has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='customer' and child_type='document'"]
   has_many :documents , :through => :links_documents
-  has_many :links_projects,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_object='customer' and child_object='project'"]
+  has_many :links_projects,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='customer' and child_type='project'"]
   has_many :projects , :through => :links_projects
   
   def self.create_new(customer,user)

@@ -335,8 +335,8 @@ module Controllers::PlmObjectControllerModule
           end
   end
 
-  def tree_documents(node, father_object, father,ctrl)
-      docs=Link.find_childs(father_object, father,  "document")
+  def tree_documents(node, father_type, father,ctrl)
+      docs=Link.find_childs(father_type, father,  "document")
       docs.each do |link|
           d=Document.find(link.child_id)
           url={:controller => 'documents', :action => 'show', :id => "#{d.id}"}
@@ -356,8 +356,8 @@ module Controllers::PlmObjectControllerModule
           node<<cnode
       end
     end
-  def tree_forums(node, father_object, father,ctrl)
-    docs = Link.find_childs(father_object.to_s, father,  "forum")
+  def tree_forums(node, father_type, father,ctrl)
+    docs = Link.find_childs(father_type.to_s, father,  "forum")
     docs.each do |link|
       d = Forum.find(link.child_id)
       url = { :controller => 'forums', :action => 'show', :id => "#{d.id}" }
