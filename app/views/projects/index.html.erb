@@ -33,8 +33,8 @@
         <th<%= sort_td_class_helper  "date" %>>
             <%= sort_link_helper t(:label_date) , "date" %>
         </th>
-        
-        
+        <th>
+        </th>
         <th>
         </th>
         <th>
@@ -75,8 +75,6 @@
         <td>
             <%=l project.date %>
         </td>
- 
-       
         <td>
             <%= link_to h_img_show.to_s, project %>
         </td>
@@ -87,10 +85,11 @@
             <%= link_to h_img_destroy.to_s, project, :confirm => t(:msg_confirm), :method => :delete %>
         </td>
         <td>
-            <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_project_to_favori, :id => project.id} %>
+            <% if connected %>
+            <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => project.id} %>
+            <% end %>
         </td>
     </tr>
     <% end %>
 </table>
 <%= will_paginate(@projects[:recordset]) %>
-

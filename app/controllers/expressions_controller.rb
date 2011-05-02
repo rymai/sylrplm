@@ -30,7 +30,7 @@ class ExpressionsController < ApplicationController
   # GET /expressions/:wfid/:expid
   #
   def show
-    puts "expressions_controller.show:params="+params.inspect
+    #puts "expressions_controller.show:params="+params.inspect
     find_expression
 
     respond_to do |format|
@@ -56,7 +56,7 @@ class ExpressionsController < ApplicationController
   #
   def update
 
-    puts "expressions_controller.update:params="+params.inspect
+    #puts "expressions_controller.update:params="+params.inspect
     find_expression
 
     ruote_engine.update_expression_tree(@expression, parse_tree)
@@ -68,7 +68,7 @@ class ExpressionsController < ApplicationController
   #
   def destroy
 
-    puts "expressions_controller.destroy:params="+params.inspect
+   # puts "expressions_controller.destroy:params="+params.inspect
     find_expression
 
     ruote_engine.cancel_expression(@expression)
@@ -84,7 +84,7 @@ class ExpressionsController < ApplicationController
   #
   def show_tree
 
-    puts "expressions_controller.show_tree:params="+params.inspect
+    #puts "expressions_controller.show_tree:params="+params.inspect
     find_expression
 
     respond_to do |format|
@@ -102,19 +102,19 @@ class ExpressionsController < ApplicationController
   # UPDATE /expressions/:wfid/:expid/tree
   #
   def update_tree
-    puts "expressions_controller.update_tree:params="+params.inspect
+    #puts "expressions_controller.update_tree:params="+params.inspect
 
     # TODO, well maybe
   end
 
   protected
 
-  def authorized?
-    #
-    # only admins may see and edit expressions
-    #
-    @current_user && @current_user.is_admin?
-  end
+#  def authorized?
+#    #
+#    # only admins may see and edit expressions
+#    #
+#    @current_user && @current_user.is_admin?
+#  end
 
   def find_expression
 

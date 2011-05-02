@@ -62,6 +62,7 @@ class GroupDefinitionsController < ApplicationController
 
       if @group_definition.save
 
+        flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_group_definitions), :ident => @group_definition.group.name+"/"+@group_definition.definition.name)    
         #flash[:notice] = 'GroupDefinition was successfully created.'
         format.html do
           if request.env['HTTP_REFERER']
@@ -81,6 +82,7 @@ class GroupDefinitionsController < ApplicationController
         end
 
       else
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group_definitions), :ident => @group_definition.group.name+"/"+@group_definition.definition.name)    
 
         format.html { render :action => "new" }
         format.xml  { render :xml => @group_definition.errors, :status => :unprocessable_entity }

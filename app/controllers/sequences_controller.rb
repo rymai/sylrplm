@@ -49,11 +49,11 @@ class SequencesController < ApplicationController
     @utilities=get_models_and_columns()
     respond_to do |format|
       if @sequence.save
-        flash[:notice] = t(:ctrl_object_created,:object=>t(:ctrl_sequence),:ident=>@sequence.utility)
+        flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility)
         format.html { redirect_to(@sequence) }
         format.xml  { render :xml => @sequence, :status => :created, :location => @sequence }
       else
-        flash[:notice] = t(:ctrl_object_not_created,:object=>t(:ctrl_sequence),:ident=>@sequence.utility)
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility)
         format.html { render :action => "new" }
         format.xml  { render :xml => @sequence.errors, :status => :unprocessable_entity }
       end
@@ -68,11 +68,11 @@ class SequencesController < ApplicationController
     @utilities=get_models_and_columns()
     respond_to do |format|
       if @sequence.update_attributes(params[:sequence])
-        flash[:notice] = t(:ctrl_object_updated,:object=>t(:ctrl_sequence),:ident=>@sequence.utility)
+        flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility)
         format.html { redirect_to(@sequence) }
         format.xml  { head :ok }
       else
-        flash[:notice] = t(:ctrl_object_not_updated,:object=>t(:ctrl_sequence),:ident=>@sequence.utility)
+        flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @sequence.errors, :status => :unprocessable_entity }
       end
@@ -85,7 +85,7 @@ class SequencesController < ApplicationController
     @sequence = Sequence.find(params[:id])
     @sequence.destroy
     respond_to do |format|
-      flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_sequence),:ident=>@sequence.utility)
+      flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility)
       format.html { redirect_to(sequences_url) }
       format.xml  { head :ok }
     end

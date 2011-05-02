@@ -74,7 +74,7 @@ class UserGroupsController < ApplicationController
 
       if @current_user_group.save
 
-        #flash[:notice] = 'UserGroup was successfully created.'
+        flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_group), :ident => "#{@current_user_group.user.login}-#{@current_user_group.group.name}")    
         format.html do
           if request.env['HTTP_REFERER']
             redirect_to :back
@@ -93,6 +93,7 @@ class UserGroupsController < ApplicationController
         end
 
       else
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group))    
 
         format.html {
           render :controller => :groups, :action => :index }

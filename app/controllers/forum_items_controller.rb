@@ -52,7 +52,7 @@ class ForumItemsController < ApplicationController
     @forum_item = ForumItem.new(params[:forum_item])
     respond_to do |format|
       if @forum_item.save
-        flash[:notice] = t(:ctrl_object_created, :object => t(:ctrl_forum_item), :ident => @forum_item.id)
+        flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_forum_item), :ident => @forum_item.id)
         format.html { redirect_to(@forum_item.forum) }
         format.xml  { render :xml => @forum_item, :status => :created, :location => @forum_item }
       else
@@ -68,7 +68,7 @@ class ForumItemsController < ApplicationController
     @forum_item = ForumItem.find(params[:id])
     respond_to do |format|
       if @forum_item.update_attributes(params[:forum_item])
-        flash[:notice] = t(:ctrl_object_updated, :object => t(:ctrl_forum_item), :ident => @forum_item.id)
+        flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_forum_item), :ident => @forum_item.id)
         format.html { redirect_to(@forum_item) }
         format.xml  { head :ok }
       else
@@ -85,7 +85,7 @@ class ForumItemsController < ApplicationController
     @forum      = @forum_item.forum
     @forum_item.destroy
     respond_to do |format|
-      flash[:notice] = flash[:notice] = t(:ctrl_object_deleted, :object => t(:ctrl_forum_item), :ident => @forum_item.id)
+      flash[:notice] = flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_forum_item), :ident => @forum_item.id)
       format.html { redirect_to(@forum) }
       format.xml  { head :ok }
     end

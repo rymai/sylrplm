@@ -24,7 +24,7 @@
 
 class DefinitionsController < ApplicationController
 
-  ##before_filter :login_required
+  
   # GET /definitions
   # GET /definitions.xml
   #
@@ -33,7 +33,6 @@ class DefinitionsController < ApplicationController
     @definitions = Definition.find_all_for(@current_user)
     #puts "DefinitionsController.index:def="+@definitions.inspect+":"+@definitions.length.to_s
     unless @definitions.length==0
-
       respond_to do |format|
         format.html # index.html.erb
         format.xml { render :xml => @definitions.to_xml(:request => request) }
@@ -121,9 +120,7 @@ class DefinitionsController < ApplicationController
     respond_to do |format|
 
       if @definition.save
-
-        flash[:notice] = 'Definition was successfully created.'
-
+        flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_definition), :ident => @definition.name)    
         format.html {
           redirect_to(@definition)
         }
@@ -141,7 +138,7 @@ class DefinitionsController < ApplicationController
         }
 
       else
-
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_definition))
         format.html {
           render(:action => 'new')
         }
@@ -166,12 +163,13 @@ class DefinitionsController < ApplicationController
 
       if @definition.update_attributes(params[:definition])
 
-        flash[:notice] = 'Definition was successfully updated.'
+        flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)
         format.html { redirect_to :action => 'index' }
         format.xml { head :ok }
         format.json { head :ok }
 
       else # there is an error
+        flash[:notice] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)
 
         p @definition.errors
 
@@ -195,7 +193,7 @@ class DefinitionsController < ApplicationController
 
     @definition = Definition.find(params[:id])
     @definition.destroy
-
+    flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_definition), :ident => @definition.name)
     respond_to do |format|
       format.html { redirect_to(definitions_url) }
       format.xml { head :ok }
@@ -208,11 +206,11 @@ class DefinitionsController < ApplicationController
   #
   # Only an admin can add or remove definitions
   #
-  def authorized?
-
-    return false unless @current_user
-
-    %w{ show index tree }.include?(action_name) || @current_user.is_admin?
-  end
+#  def authorized?
+#
+#    return false unless @current_user
+#
+#    %w{ show index tree }.include?(action_name) || @current_user.is_admin?
+#  end
 end
 

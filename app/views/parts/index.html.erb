@@ -94,8 +94,10 @@
           </td>
         <% end %>
         <td>
-          <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_part_to_favori, :id => part.id} %>
-        </td>
+          <% if connected %>
+		  <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => part.id} %>
+		  <%end%>
+		</td>
       </tr>
     <% end %>
 </table>

@@ -43,7 +43,7 @@ class ChecksController < ApplicationController
     @check = Check.new(params[:check])
     respond_to do |format|
       if @check.save
-        flash[:notice] = '<br />' + t(:ctrl_object_created, :object => 'Check', :ident => @check.id)
+        flash[:notice] = '<br />' + t(:ctrl_object_created, :typeobj => 'Check', :ident => @check.id)
         format.html { redirect_to(@check) }
         format.xml  { render :xml => @check, :status => :created, :location => @check }
       else

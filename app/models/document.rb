@@ -6,7 +6,7 @@ class Document < ActiveRecord::Base
   validates_presence_of :ident , :designation
   validates_uniqueness_of :ident, :scope => :revision
   #validates_format_of :ident, :with =>/^(doc|img)[0-9]+$/, :message=>" doit commencer par doc ou img suivi de chiffres"
-  validates_format_of :ident, :with =>/^([a-z]|[A-Z])+[0-9]+$/ #, :message=>t(:valid_ident,:object=>:ctrl_document)
+  validates_format_of :ident, :with =>/^([a-z]|[A-Z])+[0-9]+$/ #, :message=>t(:valid_ident,:typeobj =>:ctrl_document)
 
   belongs_to :typesobject
   belongs_to :statusobject
@@ -34,16 +34,12 @@ class Document < ActiveRecord::Base
       doc = Document.new(document)
     else
       #doc = user.documents.build(:ident => Sequence.get_next_seq("Document.ident"))
-      doc = Document.new
+      doc = Document.new()
       doc.set_default_values(true)
     end
     doc.owner=user
     doc.statusobject = Statusobject.get_first("document")
     doc
-  end
-
-  def initialize(att)
-    @link_attributes = att
   end
 
   def link_attributes=(att)

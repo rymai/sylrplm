@@ -57,11 +57,11 @@ class CustomersController < ApplicationController
     @status   = Statusobject.find_for("customer")
     respond_to do |format|
       if @customer.save
-        flash[:notice] = t(:ctrl_object_created, :object => t(:ctrl_customer), :ident => @customer.ident)
+        flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
         format.html { redirect_to(@customer) }
         format.xml  { render :xml => @customer, :status => :created, :location => @customer }
       else
-        flash[:notice] = t(:ctrl_object_not_created, :object => t(:ctrl_customer))
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_customer))
         format.html { render :action => :new }
         format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
       end
@@ -76,11 +76,11 @@ class CustomersController < ApplicationController
     @status   = Statusobject.find_for(:customer)
     respond_to do |format|
       if @customer.update_attributes(params[:customer])
-        flash[:notice] = t(:ctrl_object_updated, :object => t(:ctrl_customer), :ident => @customer.ident)
+        flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
         format.html { redirect_to(@customer) }
         format.xml  { head :ok }
       else
-        flash[:notice] = t(:ctrl_object_notupdated, :object => t(:ctrl_customer), :ident => @customer.ident)
+        flash[:notice] = t(:ctrl_object_notupdated, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
         format.html { render :action => :edit }
         format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
       end
@@ -92,7 +92,7 @@ class CustomersController < ApplicationController
   def destroy
     @customer = Customer.find(params[:id])
     @customer.destroy
-    flash[:notice] = t(:ctrl_object_deleted, :object => t(:ctrl_customer), :ident => @customer.ident)
+    flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
     respond_to do |format|
       format.html { redirect_to(customers_url) }
       format.xml  { head :ok }
@@ -104,14 +104,14 @@ class CustomersController < ApplicationController
     @customer = Customer.find(@project.customer)
     @customer.remove_project(@project)
     if(@customer.save)
-      flash[:notice] = t(:ctrl_remove_project_ok, :project => @project.ident, :object => @customer.ident)
+      flash[:notice] = t(:ctrl_remove_project_ok, :project => @project.ident, :typeobj => @customer.ident)
     else
-      flash[:notice] = t(:ctrl_remove_project_ko, :project => @project.ident, :object => @customer.ident)
+      flash[:notice] = t(:ctrl_remove_project_ko, :project => @project.ident, :typeobj => @customer.ident)
     end
   end
 
   def create_tree(obj)
-    tree = Tree.new({ :label => t(:ctrl_object_explorer, :object => t(:ctrl_customer)), :open => true })
+    tree = Tree.new({ :label => t(:ctrl_object_explorer, :typeobj => t(:ctrl_customer)), :open => true })
     session[:tree_object] = obj
     follow_tree_customer(tree, obj, self)
     tree
@@ -121,24 +121,24 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     relation  = params[:relation][:document]
     respond_to do |format|
-      unless @favori_document.nil?
+      unless @favori["document"].nil?
         flash[:notice] = ""
-        @favori_document.items.each do |item|
+        @favori["document"].items.each do |item|
           link_ = Link.create_new(:customer, @customer, :document, item, relation)
           link  = link_[:link]
           unless link.nil?
             if link.save
-              flash[:notice] += t(:ctrl_object_added, :object => t(:ctrl_document), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_added, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
             else
-              flash[:notice] += t(:ctrl_object_not_added, :object => t(:ctrl_document), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_not_added, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked, :object => t(:ctrl_document), :ident => item.ident, :relation => relation, :msg => nil)
+            flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation, :msg => nil)
           end
         end
-        reset_favori_document
+        empty_favori("document")
       else
-        flash[:notice] = t(:ctrl_nothing_to_paste, :object => t(:ctrl_document))
+        flash[:notice] = t(:ctrl_nothing_to_paste, :typeobj => t(:ctrl_document))
       end
       format.html { redirect_to(@customer) }
       format.xml  { head :ok }
@@ -149,24 +149,24 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     relation  = params[:relation][:project]
     respond_to do |format|
-      unless @favori_project.nil?
+      unless @favori["project"].nil?
         flash[:notice] = ""
-        @favori_project.items.each do |item|
+        @favori["project"].items.each do |item|
           link_ = Link.create_new(:customer, @customer, :project, item, relation)
           link  = link_[:link]
           unless link.nil?
             if link.save
-              flash[:notice] += t(:ctrl_object_added, :object => t(:ctrl_project), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_added, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
             else
-              flash[:notice] += t(:ctrl_object_not_added, :object => t(:ctrl_project), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_not_added, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked, :object => t(:ctrl_project), :ident => item.ident, :relation => relation, :msg => nil)
+            flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation, :msg => nil)
           end
         end
-        reset_favori_project
+        empty_favori("project")
       else
-        flash[:notice] = t(:ctrl_nothing_to_paste, :object => t(:ctrl_project))
+        flash[:notice] = t(:ctrl_nothing_to_paste, :typeobj => t(:ctrl_project))
       end
       format.html { redirect_to(@customer) }
       format.xml  { head :ok }
@@ -189,7 +189,7 @@ class CustomersController < ApplicationController
     respond_to do |format|
       flash[:notice] = ""
       @forum         = Forum.create_new(nil)
-      @forum.subject = t(:ctrl_subject_forum, :object => t(:ctrl_customer), :ident => @object.ident)
+      @forum.subject = t(:ctrl_subject_forum, :typeobj => t(:ctrl_customer), :ident => @object.ident)
       format.html { render :action => :new_forum, :id => @object.id }
       format.xml  { head :ok }
     end

@@ -54,11 +54,11 @@ class DatafilesController < ApplicationController
     puts "datafiles_controller.create:errors=#{@datafile.errors.inspect}"
     respond_to do |format|
       if @datafile
-        flash[:notice] = t(:ctrl_object_created, :object => t(:ctrl_datafile), :ident => @datafile.ident)
+        flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_datafile), :ident => @datafile.ident)
         format.html { redirect_to(@datafile) }
         format.xml  { render :xml => @datafile, :status => :created, :location => @datafile }
       else
-        flash[:notice] = t(:ctrl_object_not_created,:object => t(:ctrl_datafile))
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj => t(:ctrl_datafile))
         format.html { render :action => "new" }
         format.xml  { render :xml => @datafile.errors, :status => :unprocessable_entity }
       end
@@ -73,11 +73,11 @@ class DatafilesController < ApplicationController
     @document = Document.find(params["doc"]) if params["doc"]
     respond_to do |format|
       if @datafile.update_attributes_repos(params, @current_user)
-        flash[:notice] = t(:ctrl_object_updated, :object => t(:ctrl_datafile), :ident => @datafile.ident)
+        flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_datafile), :ident => @datafile.ident)
         format.html { redirect_to(@datafile) }
         format.xml  { head :ok }
       else
-        flash[:notice] = t(:ctrl_object_not_updated, :object => t(:ctrl_datafile), :ident => @datafile.ident)
+        flash[:notice] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_datafile), :ident => @datafile.ident)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @datafile.errors, :status => :unprocessable_entity }
       end

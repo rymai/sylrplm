@@ -1,10 +1,10 @@
-<h1><%=t("customer_list") %><%=h_count_objects(@customers)%> </h1>
+<h1><%=t("customer_list") %><%=h_count_objects(@customers) %></h1>
 <table class='menu_bas'>
     <tr>
         <td>
             <%= link_to t("new_customer"), new_customer_path %>
         </td>
-				<td>
+        <td>
             <%= show_help("help_customers") %>
         </td>
     </tr>
@@ -13,26 +13,34 @@
 <%= will_paginate(@customers[:recordset]) %>
 <table>
     <tr>
-    	<th></th>
-        <th <%= sort_td_class_helper "ident" %>>
+        <th>
+        </th>
+        <th<%= sort_td_class_helper "ident" %>>
             <%= sort_link_helper t("label_ident"), "ident" %>
         </th>
-        <th <%= sort_td_class_helper "typesobject_id" %>>
+        <th<%= sort_td_class_helper "typesobject_id" %>>
             <%= sort_link_helper t("label_typesobject"), "typesobject_id" %>
         </th>
-        <th <%= sort_td_class_helper "designation" %>>
+        <th<%= sort_td_class_helper "designation" %>>
             <%= sort_link_helper t("label_designation"), "designation" %>
         </th>
-        <th <%= sort_td_class_helper "statusobject_id" %>>
+        <th<%= sort_td_class_helper "statusobject_id" %>>
             <%= sort_link_helper t("label_statusobject"), "statusobject_id" %>
         </th>
-        <th <%= sort_td_class_helper "owner" %>>
+        <th<%= sort_td_class_helper "owner" %>>
             <%= sort_link_helper t("label_responsible"), "owner" %>
         </th>
-        <th <%= sort_td_class_helper "date" %>>
+        <th<%= sort_td_class_helper "date" %>>
             <%= sort_link_helper t("label_date"), "date" %>
         </th>
- 				<th></th><th></th><th></th>
+        <th>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
     </tr>
     <% @customers[:recordset].each do |customer| %>
     <tr>
@@ -75,6 +83,11 @@
         </td>
         <td>
             <%= link_to h_img_destroy.to_s, customer, :confirm => t("msg_confirm"), :method => :delete %>
+        </td>
+        <td>
+        	<% if connected %>
+            <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => customer.id} %>
+			<% end %>
         </td>
     </tr>
     <% end %>

@@ -52,10 +52,6 @@ class Part < ActiveRecord::Base
     p
   end
 
-  def initialize(att)
-    @link_attributes = att
-  end
-
   def link_attributes=(att)
     @link_attributes = att
   end

@@ -26,6 +26,11 @@ module Models::PlmObject
     self.date=DateTime::now()
   end
 
+  # renvoie le type de l'objet: nom de la classe en minuscule  
+  def object_type
+    self.class.name.downcase
+  end
+  
   def is_freeze
     if(self.statusobject!=nil && Statusobject.get_last(self.class.name)!=nil)
       if(self.statusobject.rank == Statusobject.get_last(self.class.name).rank)
@@ -91,7 +96,7 @@ module Models::PlmObject
 
   def get_workitems
     ret=[]
-    links=Link.find_fathers(self.class.name.downcase, self,  "workitem")
+    links=Link.find_fathers(self.object_type, self,  "workitem")
     links.each do |link|
       begin
         #father=OpenWFE::Extras::ArWorkitem.find(link.father_id)
@@ -109,7 +114,7 @@ module Models::PlmObject
 
   def get_histories
     ret=[]
-    links=Link.find_fathers(self.class.name.downcase, self,  "history")
+    links=Link.find_fathers(self.object_type, self,  "history")
     links.each do |link|
       begin
         father = Ruote::SylHistoryEntry.find(link.father_id)

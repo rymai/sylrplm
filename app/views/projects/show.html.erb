@@ -34,11 +34,11 @@
 <h1></h1>
 <%= h_sylrplm_tree %>
 
-<%= render(:partial => "shared/object_workitems", :object=>@project) %>
+<%= render(:partial => "shared/object_workitems", :object =>@project) %>
 
 <table class='menu_bas'>
     <tr>
-    <% if(!@favori_document.empty) %>
+    <% if(!@favori.get('document').empty) %>
     <% form_for(@project, :url => {:id => @project.id, :action => "add_docs" }) do |f| %>
     <td>
         <%= select("relation","document",options_for_select(@relation_types_document)) %>
@@ -49,7 +49,7 @@
     <% end %>
     <tr>
         <% end %>
-        <% if(!@favori_part.empty) %>
+        <% if(!@favori.get('part').empty) %>
         <% form_for(@project, :url => {:id => @project.id, :action => "add_parts" }) do |f| %>
         <td>
             <%= select("relation","part",options_for_select(@relation_types_part)) %>

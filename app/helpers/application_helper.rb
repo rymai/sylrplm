@@ -337,5 +337,9 @@ module ApplicationHelper
     v = h(item.send(accessor))
     link_to(v, (param_name || accessor) => v)
   end
+  
+  def connected
+    User.connected(session)
+  end
 end
 

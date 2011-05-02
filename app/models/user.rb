@@ -280,6 +280,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.connected(session)
+    !User.find_userid(session).nil?
+  end
+
   # recherche de l'id du user connecte
   def self.find_userid(session)
     if session[:user_id]

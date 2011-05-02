@@ -28,7 +28,7 @@ class HistoryController < ApplicationController
   #
   def index
 
-    puts "history_controller.index:params="+params.inspect
+    #puts "history_controller.index:params="+params.inspect
     opts = { :page => params[:page], :order => 'created_at DESC' }
 
     cs = [
@@ -43,7 +43,7 @@ class HistoryController < ApplicationController
 
     opts[:conditions] = [ cs.first.join(' AND ') ] + cs[1..-1] \
     unless cs.first.empty?
-    puts "HistoryController.index:opts="+opts.inspect
+    #puts "HistoryController.index:opts="+opts.inspect
     @all = (opts[:conditions] == nil)
     #entries = OpenWFE::Extras::HistoryEntry.paginate(opts)
     @entries = Ruote::SylHistoryEntry.paginate(opts) 

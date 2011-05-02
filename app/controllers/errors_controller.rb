@@ -34,7 +34,7 @@ class ErrorsController < ApplicationController
   #
   def index
 
-    puts "errors_controller.index:params="+params.inspect
+    #puts "errors_controller.index:params="+params.inspect
     opts = { :page => params[:page], :order => 'created_at DESC' }
 
     @all = (opts[:conditions] == nil)
@@ -62,7 +62,7 @@ class ErrorsController < ApplicationController
   # DELETE /errors/:wfid/:expid
   #
   def destroy
-    puts "errors_controller.destroy:params="+params.inspect
+   # puts "errors_controller.destroy:params="+params.inspect
 
     e = OpenWFE::Extras::ProcessError.find_by_wfid_and_expid(
       params[:wfid], OpenWFE.to_dots(params[:expid]))

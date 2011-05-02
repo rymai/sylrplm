@@ -14,13 +14,12 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   filter_parameter_logging :password
-  # before_filter :authorize, :except => [:index,:init_objects,:get_themes,:find_theme,:permission_denied,:permission_granted, :permission_granted,:@current_user,:redirect_to_index,:tree_part,:tree_project,:tree_customer,:follow_tree_part,:follow_tree_up_part, :follow_tree_project,:follow_tree_up_project,:follow_tree_customer,:tree_documents,:tree_forums]
+  #before_filter :authorize, :except => [:index,:init_objects,:get_themes,:find_theme,:permission_denied,:permission_granted, :permission_granted,:@current_user,:redirect_to_index,:tree_part,:tree_project,:tree_customer,:follow_tree_part,:follow_tree_up_part, :follow_tree_project,:follow_tree_up_project,:follow_tree_customer,:tree_documents,:tree_forums]
   before_filter :authorize, :except => [:index, :init_objects]
-  #before_filter :authorize
   before_filter :set_locale
   before_filter :define_variables
 
-  access_control(Access.find_for_controller(controller_class_name))
+  #access_control(Access.find_for_controller(controller_class_name))
 
   def permission_denied
     flash[:notice] = t(:ctrl_no_privilege)
@@ -79,9 +78,10 @@ class ApplicationController < ActionController::Base
     @current_username         = User.find_username(session)
     @current_usermail         = User.find_usermail(session)
     @current_userrole         = User.find_userrole(session)
-    @favori_document  = find_favori_document
-    @favori_project   = find_favori_project
-    @favori_part      = find_favori_part
+    #    @favori_document  = find_favori_document
+    #    @favori_project   = find_favori_project
+    #    @favori_part      = find_favori_part
+    @favori      = session[:favori] ||= Favori.new
     @urlbase          = "http://"+request.env["HTTP_HOST"]
     @theme            = User.find_theme(session)
     WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
@@ -116,37 +116,47 @@ class ApplicationController < ActionController::Base
     SYLRPLM::NB_ITEMS_PER_PAGE
   end
 
-  # recherche du favori des documents
-  def find_favori_document
-    session[:favori_document] ||= FavoriDocument.new
-  end
+  #    # recherche du favori des documents
+  #    def find_favori_document
+  #      session[:favori_document] ||= FavoriDocument.new
+  #    end
+  #
+  #    # recherche du favori des projets
+  #    def find_favori_project
+  #      session[:favori_project] ||= FavoriProject.new
+  #    end
+  #
+  #    # recherche du favori des parts
+  #    def find_favori_part
+  #      session[:favori_part] ||= FavoriPart.new
+  #    end
 
-  # recherche du favori des projets
-  def find_favori_project
-    session[:favori_project] ||= FavoriProject.new
-  end
-
-  # recherche du favori des parts
-  def find_favori_part
-    session[:favori_part] ||= FavoriPart.new
-  end
-
-  def reset_favori_document
-    session[:favori_document] = nil
-  end
-
-  def reset_favori_part
-    session[:favori_part] = nil
-  end
-
-  def reset_favori_project
-    session[:favori_project] = nil
-  end
+  #  def reset_favori
+  #    session[:favori] = nil
+  #  end
+  #
+  #  def reset_favori_document
+  #    session[:favori_document] = nil
+  #  end
+  #
+  #  def reset_favori_part
+  #    session[:favori_part] = nil
+  #  end
+  #
+  #  def reset_favori_project
+  #    session[:favori_project] = nil
+  #  end
 
   # redirection vers l'action index
   def redirect_to_index(msg=nil)
     flash[:notice] = msg if msg
     redirect_to :action => index
+  end
+
+  # redirection vers l'action index du main si besoin
+  def redirect_to_main(uri, msg=nil)
+    flash[:notice] = msg if msg
+    redirect_to(uri || { :controller => "main", :action => "index" })
   end
 
   def get_datas_count
@@ -214,18 +224,28 @@ class ApplicationController < ActionController::Base
 
   def authorize
     puts "application_controller.authorize:user="+session[:user_id].inspect
-    unless User.find_by_id(session[:user_id])
+    unless session[:user_id] || User.find_by_id(session[:user_id])
+      puts "application_controller.request.request_uri="+request.request_uri
+      puts "application_controller.request.new_sessions_url="+new_sessions_url
+      #      if request.request_uri == new_sessions_url
+      #        respond_to do |format|
+      #          format.html { render :controller => :sessions, :id => session }# new.html.erb
+      #          format.xml  { render :controller => :sessions, :xml => session }
+      #        end
+      #      else
       session[:original_uri] = request.request_uri
       flash[:notice] = t(:login_login)
-      puts "application_controller.authorize:url="+new_sessions_url
+      puts "application_controller.authorize:redirect_tol="+new_sessions_url
       redirect_to new_sessions_url
+      #      end
     end
   end
 end
 
 # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
-  private
+# filter_parameter_logging :password
+private
+
 #
 # the ?plain=true trick
 #

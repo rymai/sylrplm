@@ -50,11 +50,11 @@ class StatusobjectsController < ApplicationController
     @objectswithstatus=Statusobject.get_objects_with_status
     respond_to do |format|
       if @statusobject.save
-        flash[:notice] = t(:ctrl_object_created,:object=>t(:ctrl_statusobject),:ident=>@statusobject.name)
+        flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
         format.html { redirect_to(@statusobject) }
         format.xml  { render :xml => @statusobject, :status => :created, :location => @statusobject }
       else
-        flash[:notice] = t(:ctrl_object_not_created,:object=>t(:ctrl_statusobject),:ident=>@statusobject.name)
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
         format.html { render :action => "new" }
         format.xml  { render :xml => @statusobject.errors, :status => :unprocessable_entity }
       end
@@ -68,11 +68,11 @@ class StatusobjectsController < ApplicationController
     @objectswithstatus=Statusobject.get_objects_with_status
     respond_to do |format|
       if @statusobject.update_attributes(params[:statusobject])
-        flash[:notice] = t(:ctrl_object_updated,:object=>t(:ctrl_statusobject),:ident=>@statusobject.name)
+        flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
         format.html { redirect_to(@statusobject) }
         format.xml  { head :ok }
       else
-        flash[:notice] = t(:ctrl_object_not_updated,:object=>t(:ctrl_statusobject),:ident=>@statusobject.name)
+        flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @statusobject.errors, :status => :unprocessable_entity }
       end
@@ -86,7 +86,7 @@ class StatusobjectsController < ApplicationController
     @statusobject.destroy
     
     respond_to do |format|
-      flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_statusobject),:ident=>@statusobject.name)
+      flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
       format.html { redirect_to(statusobjects_url) }
       format.xml  { head :ok }
     end

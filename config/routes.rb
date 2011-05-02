@@ -1,12 +1,12 @@
 ActionController::Routing::Routes.draw do |map|
-  # syl 17/11/2010 : route par defaut 
+  # syl 17/11/2010 : route par defaut
   map.root :controller => "main", :action => "index"
-  
+
   #map.resource :sessions, :only => [:new, :create, :update, :destroy], :member => { :choose_role => :get }
   map.resource :sessions
 
   map.resources :users
-  
+
   map.resources :datafiles
 
   map.resources :questions
@@ -43,52 +43,51 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :documents
 
-  
-    map.resources :groups
-    map.resources :user_groups
-    map.resources :group_definitions
+  map.resources :groups
+  map.resources :user_groups
+  map.resources :group_definitions
 
-    map.wfid_resources :errors
-    
-    map.wfid_resources :workitems
-  
-    map.wfid_resources :expressions
-  
-    map.connect(
-      'expressions/:wfid/:expid/tree',
-      :controller => 'expressions',
-      :action => 'show_tree',
-      :conditions => { :method => :get })
-    map.connect(
-      'expressions/:wfid/:expid/tree',
-      :controller => 'expressions',
-      :action => 'update_tree',
-      :conditions => { :method => :put })
-  
-    map.resources :definitions
-    map.connect(
-      'definitions/:id/tree.js',
-      :controller => 'definitions',
-      :action => 'tree')
-  
-    map.resources :processes
-    map.connect(
-      'processes/:id/tree.js',
-      :controller => 'processes',
-      :action => 'tree')
-  
+  map.wfid_resources :errors
+
+  map.wfid_resources :workitems
+
+  map.wfid_resources :expressions
+
+  map.connect(
+  'expressions/:wfid/:expid/tree',
+  :controller => 'expressions',
+  :action => 'show_tree',
+  :conditions => { :method => :get })
+  map.connect(
+  'expressions/:wfid/:expid/tree',
+  :controller => 'expressions',
+  :action => 'update_tree',
+  :conditions => { :method => :put })
+
+  map.resources :definitions
+  map.connect(
+  'definitions/:id/tree.js',
+  :controller => 'definitions',
+  :action => 'tree')
+
+  map.resources :processes
+  map.connect(
+  'processes/:id/tree.js',
+  :controller => 'processes',
+  :action => 'tree')
+
   map.resources :workitems
   map.resources :history
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:
   #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-   # Keep in mind you can assign values other than :controller and :action
+  # Keep in mind you can assign values other than :controller and :action
 
   # Sample of named route:
   #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
   # This route can be invoked with purchase_url(:id => product.id)
-  
+
   #map.connect 'forum_items/:forum_id/new_response', :controller => 'forum_items', :action => 'new_response'
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
@@ -99,7 +98,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # Sample resource route with sub-resources:
   #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
+
   # Sample resource route with more complex sub-resources
   #   map.resources :products do |products|
   #     products.resources :comments

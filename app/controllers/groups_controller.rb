@@ -89,10 +89,11 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
-        flash[:notice] = 'Group was successfully created.'
+        flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_group), :ident => @group.name)    
         format.html { redirect_to(@group) }
         format.xml  { render :xml => @group, :status => :created, :location => @group }
       else
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group))    
         format.html { render :action => "new" }
         format.xml  { render :xml => @group.errors, :status => :unprocessable_entity }
       end
@@ -108,10 +109,11 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.update_attributes(params[:group])
-        flash[:notice] = 'Group was successfully updated.'
+        flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_group), :ident => @group.name)    
         format.html { redirect_to(@group) }
         format.xml  { head :ok }
       else
+        flash[:notice] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_group), :ident => @group.name)    
         format.html { render :action => "edit" }
         format.xml  { render :xml => @group.errors, :status => :unprocessable_entity }
       end

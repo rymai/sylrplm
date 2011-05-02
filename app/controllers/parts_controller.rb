@@ -3,7 +3,6 @@ class PartsController < ApplicationController
   include Controllers::PlmInitControllerModule
   before_filter :check_init, :only => :new
   access_control(Access.find_for_controller(controller_class_name))
-
   # GET /parts
   # GET /parts.xml
   def index
@@ -21,18 +20,17 @@ class PartsController < ApplicationController
     @relation_types_document = Typesobject.get_types_names(:relation_document)
     @relation_types_part     = Typesobject.get_types_names(:relation_part)
     @other_parts = Part.paginate(:page => params[:page],
-                                 :conditions => ["id != #{@part.id}"],
-                                 :order => 'ident ASC',
-                                 :per_page => cfg_items_per_page)
+    :conditions => ["id != #{@part.id}"],
+    :order => 'ident ASC',
+    :per_page => cfg_items_per_page)
     @first_status = Statusobject.get_first("part")
-    
+
     @tree         = create_tree(@part)
     @tree_up      = create_tree_up(@part)
 
     @documents = @part.documents
     @parts     = @part.parts
     @projects  = @part.projects
-    
 
     respond_to do |format|
       format.html # show.html.erb
@@ -67,11 +65,11 @@ class PartsController < ApplicationController
     @status= Statusobject.find_for("part")
     respond_to do |format|
       if @part.save
-        flash[:notice] = t(:ctrl_object_created,:object=>t(:ctrl_part),:ident=>@part.ident)
+        flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
         format.html { redirect_to(@part) }
         format.xml  { render :xml => @part, :status => :created, :location => @part }
       else
-        flash[:notice] = t(:ctrl_object_not_created,:object=>t(:ctrl_part))
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_part))
         format.html { render :action => "new" }
         format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
       end
@@ -85,11 +83,11 @@ class PartsController < ApplicationController
 
     respond_to do |format|
       if @part.update_attributes(params[:part])
-        flash[:notice] = t(:ctrl_object_updated,:object=>t(:ctrl_part),:ident=>@part.ident)
+        flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
         format.html { redirect_to(@part) }
         format.xml  { head :ok }
       else
-        flash[:notice] = t(:ctrl_object_not_updated,:object=>t(:ctrl_part),:ident=>@part.ident)
+        flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
       end
@@ -101,7 +99,7 @@ class PartsController < ApplicationController
   def destroy
     @part = Part.find(params[:id])
     @part.destroy
-    flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_part),:ident=>@part.ident)
+    flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
     respond_to do |format|
       format.html { redirect_to(parts_url) }
       format.xml  { head :ok }
@@ -121,14 +119,14 @@ class PartsController < ApplicationController
   #  The base attribute is very important since that reference is used internally in the railstree plugin to
   #  callback so it better be not null.
   def create_tree(part)
-    tree = Tree.new({:label=>t(:ctrl_object_explorer,:object=>t(:ctrl_part)),:open => true})
+    tree = Tree.new({:label=>t(:ctrl_object_explorer,:typeobj =>t(:ctrl_part)),:open => true})
     session[:tree_object]=part
     follow_tree_part(tree, part, self)
     tree
   end
 
   def create_tree_up(part)
-    tree = Tree.new({:label=>t(:ctrl_object_referencer,:object=>t(:ctrl_part)),:open => true})
+    tree = Tree.new({:label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_part)),:open => true})
     session[:tree_object]=part
     follow_tree_up_part(tree, part,self)
     tree
@@ -138,27 +136,27 @@ class PartsController < ApplicationController
     @part = Part.find(params[:id])
     relation=params[:relation][:document]
     respond_to do |format|
-      if @favori_document != nil
+      if @favori["document"] != nil
         flash[:notice] = ""
         params.each do |item|
           #flash[:notice]+="_"+item.to_s
         end
-        @favori_document.items.each do |item|
+        @favori["document"].items.each do |item|
           link_=Link.create_new("part", @part, "document", item, relation)
           link=link_[:link]
           if(link!=nil)
             if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:object=>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
             else
-              flash[:notice] += t(:ctrl_object_not_added,:object=>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked,:object=>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>nil)
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>nil)
           end
         end
-        reset_favori_document
+        empty_favori("document")
       else
-        flash[:notice] = t(:ctrl_nothing_to_paste,:object=>t(:ctrl_document))
+        flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_document))
       end
       format.html { redirect_to(@part) }
       format.xml  { head :ok }
@@ -169,24 +167,24 @@ class PartsController < ApplicationController
     @part = Part.find(params[:id])
     relation=params[:relation][:part]
     respond_to do |format|
-      if @favori_part != nil
+      if @favori["part"] != nil
         flash[:notice] = ""
-        @favori_part.items.each do |item|
+        @favori["part"].items.each do |item|
           link_=Link.create_new("part", @part, "part", item, relation)
           link=link_[:link]
           if(link!=nil)
             if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:object=>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
             else
-              flash[:notice] += t(:ctrl_object_not_added,:object=>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked,:object=>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>nil)
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>nil)
           end
         end
-        reset_favori_part
+        empty_favori("part")
       else
-        flash[:notice] = t(:ctrl_nothing_to_paste,:object=>t(:ctrl_part))
+        flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_part))
       end
       format.html { redirect_to(@part) }
       format.xml  { head :ok }
@@ -201,7 +199,7 @@ class PartsController < ApplicationController
     respond_to do |format|
       flash[:notice] = ""
       @forum=Forum.create_new(nil)
-      @forum.subject=t(:ctrl_subject_forum,:object=>t(:ctrl_part),:ident=>@object.ident)
+      @forum.subject=t(:ctrl_subject_forum,:typeobj =>t(:ctrl_part),:ident=>@object.ident)
       format.html {render :action=>:new_forum, :id=>@object.id }
       format.xml  { head :ok }
     end
@@ -222,17 +220,23 @@ class PartsController < ApplicationController
     ctrl_demote(@part)
   end
 
-  def add_part_to_favori
-    part=Part.find(params[:id])
-    @favori_part.add_part(part)
-    ##redirect_to(:action => index)
-  end
-
-  def empty_favori_part
-    session[:favori_part]=nil
-    @favori_part=nil
-    #flash[:notice] ="Plus de favoris part"
-    ##redirect_to :action => :index
-  end
+  
+  
+  #  def empty_favori_part
+  #    #reset_favori(type)
+  #    empty_favori("part")
+  #  end
+  #
+  #  def add_part_to_favori
+  #    part=Part.find(params[:id])
+  #    @favori_part.add_part(part)
+  #  end
+  #
+  #  def empty_favori_part
+  #    session[:favori_part]=nil
+  #    @favori_part=nil
+  #    #flash[:notice] ="Plus de favoris part"
+  #    ##redirect_to :action => :index
+  #  end
 
 end

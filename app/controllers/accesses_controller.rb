@@ -53,12 +53,12 @@ class AccessesController < ApplicationController
         params[:access][:controller].each do |cont|
           @access = Access.create_new(cont,params[:access][:role_id])
           if @access.save
-            flash[:notice] += '<br />'+ t(:ctrl_object_created, :object => 'Access', :ident => @access.controller)
+            flash[:notice] += '<br />'+ t(:ctrl_object_created, :typeobj => 'Access', :ident => @access.controller)
             format.html { redirect_to(@access) }
             format.xml  { render :xml => @access, :status => :created, :location => @access }
           else
             @access = Access.new
-            flash[:notice] += '<br />'+t(:ctrl_object_not_created, :object => 'Access')
+            flash[:notice] += '<br />'+t(:ctrl_object_not_created, :typeobj => 'Access')
             format.html { render :action => "new" }
             format.xml  { render :xml => @access.errors, :status => :unprocessable_entity }
           end
@@ -69,7 +69,7 @@ class AccessesController < ApplicationController
       @controllers = Controller.get_controllers
       @roles       = Role.all
       respond_to do |format|
-        flash[:notice] = t(:ctrl_object_no_controlers,:object=>'Access')
+        flash[:notice] = t(:ctrl_object_no_controlers,:typeobj =>'Access')
         format.html { render :action => "new" }
         format.xml  { render :xml => @access }
       end
@@ -84,11 +84,11 @@ class AccessesController < ApplicationController
     @roles       = Role.all
     respond_to do |format|
       if @access.update_attributes(params[:access])
-        flash[:notice] = t(:ctrl_object_updated, :object => 'Access', :ident => @access.controller)
+        flash[:notice] = t(:ctrl_object_updated, :typeobj => 'Access', :ident => @access.controller)
         format.html { redirect_to(@access) }
         format.xml  { head :ok }
       else
-        flash[:notice] = t(:ctrl_object_notupdated, :object => 'Access', :ident => @access.controller)
+        flash[:notice] = t(:ctrl_object_notupdated, :typeobj => 'Access', :ident => @access.controller)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @access.errors, :status => :unprocessable_entity }
       end
@@ -100,7 +100,7 @@ class AccessesController < ApplicationController
   def destroy
     @access = Access.find(params[:id])
     @access.destroy
-    flash[:notice] = t(:ctrl_object_deleted, :object => 'Access', :ident => @access.controller)
+    flash[:notice] = t(:ctrl_object_deleted, :typeobj => 'Access', :ident => @access.controller)
     respond_to do |format|
       format.html { redirect_to(accesses_url) }
       format.xml  { head :ok }

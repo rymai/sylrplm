@@ -5,63 +5,65 @@ en:
   ##############
   #models (ko)
   ##############
-  valid_ident: "L'identifiant d'un {{object}} doit commencer par des lettres suivi de chiffres"
+  valid_ident: "L'identifiant d'un %{typeobj} doit commencer par des lettres suivi de chiffres"
   #
   ##############
   #controllers
   ##############
   ctrl_no_privilege: "You don't have privileges to access this action"
-  ctrl_object_created: "{{object}} {{ident}} was successfully created"
-  ctrl_object_not_created: "{{object}} not created"
-  ctrl_object_updated: "{{object}} {{ident}} was successfully updated"
-  ctrl_object_not_saved: "{{object}} {{ident}} not saved"
-  ctrl_object_not_updated: "{{object}} {{ident}} not updated"
-  ctrl_object_deleted: "{{object}} {{ident}} successfully deleted"
-  ctrl_object_not_deleted: "{{object}} {{ident}} could not be deleted"
-  ctrl_object_promoted: "{{object}} {{ident}} was successfully promoted from {{current_rank}} to {{new_rank}}, validers={{validersMail}}"
-  ctrl_object_no_validers: "{{object}} {{ident}} not promote from {{current_rank}} to {{new_rank}} because no validers(s)"
-  ctrl_object_not_promoted: "{{object}} {{ident}} not promote from {{current_rank}} to {{new_rank}}}"
-  ctrl_user_no_email: "User {{user}} have no mail"
-  ctrl_object_demoted: "{{object}} {{ident}} was successfully demote from {{current_rank}} to {{new_rank}}, validers={{validersMail}}"
-  ctrl_object_not_demoted: "{{object}} {{ident}} not demote from {{current_rank}} to {{new_rank}}}"
-  ctrl_object_revised: "{{object}} {{ident}} was successfully revised from {{previous_rev}} to {{revision}}"
-  ctrl_object_not_revised: "{{object}} {{ident}} cannot be revised from {{previous_rev}} (not last revision or not frozen status ?)"
-  ctrl_object_checkout: "{{object}} {{ident}} was successfully checkout, reason:{{reason}}"
-  ctrl_object_not_checkout: "{{object}} {{ident}} not checkout"
+  ctrl_object_created: "%{typeobj} %{ident} was successfully created"
+  ctrl_object_not_created: "%{typeobj} not created"
+  ctrl_object_updated: "%{typeobj} %{ident} was successfully updated"
+  ctrl_object_not_saved: "%{typeobj} %{ident} not saved"
+  ctrl_object_not_updated: "%{typeobj} %{ident} not updated"
+  ctrl_object_deleted: "%{typeobj} %{ident} successfully deleted"
+  ctrl_object_not_deleted: "%{typeobj} %{ident} could not be deleted"
+  ctrl_object_promoted: "%{typeobj} %{ident} was successfully promoted from %{current_rank} to %{new_rank}, validers=%{validersMail}"
+  ctrl_object_no_validers: "%{typeobj} %{ident} not promote from %{current_rank} to %{new_rank} because no validers(s)"
+  ctrl_object_not_promoted: "%{typeobj} %{ident} not promote from %{current_rank} to %{new_rank}}"
+  ctrl_user_no_email: "User %{user} have no mail"
+  ctrl_object_demoted: "%{typeobj} %{ident} was successfully demote from %{current_rank} to %{new_rank}, validers=%{validersMail}"
+  ctrl_object_not_demoted: "%{typeobj} %{ident} not demote from %{current_rank} to %{new_rank}}"
+  ctrl_object_revised: "%{typeobj} %{ident} was successfully revised from %{previous_rev} to %{revision}"
+  ctrl_object_not_revised: "%{typeobj} %{ident} cannot be revised from %{previous_rev} (not last revision or not frozen status ?)"
+  ctrl_object_checkout: "%{typeobj} %{ident} was successfully checkout, reason:%{reason}"
+  ctrl_object_not_checkout: "%{typeobj} %{ident} not checkout"
   ctrl_object_give_reason: "Please, give a reason"
-  ctrl_object_already_checkout: "{{object}} {{ident}} is already checkout"
-  ctrl_object_checkin: "{{object}} {{ident}} was successfully checkin"
-  ctrl_object_not_checkin: "{{object}} {{ident}} not checkin"
-  ctrl_object_notyet_checkout: "{{object}} {{ident}} not yet checkout"
+  ctrl_object_already_checkout: "%{typeobj} %{ident} is already checkout"
+  ctrl_object_checkin: "%{typeobj} %{ident} was successfully checkin"
+  ctrl_object_not_checkin: "%{typeobj} %{ident} not checkin"
+  ctrl_object_notyet_checkout: "%{typeobj} %{ident} not yet checkout"
   ctrl_object_give_file: "Please, give a new file"
-  ctrl_object_checkfree: "{{object}} {{ident}} was successfully free"
-  ctrl_object_not_checkfree: "{{object}} {{ident}} not free"
-  ctrl_object_added: "<br> {{object}} {{ident}} was successfully added, relation={{relation}}, messag={{msg}}"
-  ctrl_object_not_added: "<br> {{object}} {{ident}} was not added, relation={{relation}}, messag={{msg}}"
-  ctrl_object_not_linked: "<br> {{object}} {{ident}} was not linked, relation={{relation}}, messag={{msg}}"
-  ctrl_nothing_to_paste: "No {{object}} to paste"
-  ctrl_subject_forum: "Forum on {{object}} {{ident}}"
-  ctrl_object_explorer: "{{object}} Explorer"
-  ctrl_object_referencer: "{{object}} Referencer"
+  ctrl_object_checkfree: "%{typeobj} %{ident} was successfully free"
+  ctrl_object_not_checkfree: "%{typeobj} %{ident} not free"
+  ctrl_object_added: "<br> %{typeobj} %{ident} was successfully added, relation=%{relation}, messag=%{msg}"
+  ctrl_object_not_added: "<br> %{typeobj} %{ident} was not added, relation=%{relation}, messag=%{msg}"
+  ctrl_object_not_linked: "<br> %{typeobj} %{ident} was not linked, relation=%{relation}, messag=%{msg}"
+  ctrl_nothing_to_paste: "No %{typeobj} to paste"
+  ctrl_subject_forum: "Forum on %{typeobj} %{ident}"
+  ctrl_object_explorer: "%{typeobj} Explorer"
+  ctrl_object_referencer: "%{typeobj} Referencer"
   ctrl_init_to_do: Initialization to do
   ctrl_init_done: Initialization done
-  count_objects: " : {{number_begin}}-{{number_end}} / {{total}}"
+  count_objects: " : %{number_begin}-%{number_end} / %{total}"
   #access
   ctrl_object_no_controlers: "No controlers found"
   #application
   login_login: "Please, login"
   label_project: "Project-"
-  link_project: "{{link}}-Project-{{ident}}"
-  link_customer: "{{link}}-Customer-{{ident}}"
+  link_project: "%{link}-Project-%{ident}"
+  link_customer: "%{link}-Customer-%{ident}"
   user_unknown: User Unknown
   user_not_connected: Not Connected
   user_unknown_mail: unknownmail@laposte.net
   #customers
   ctrl_customer: "Customer"
-  #ctrl_remove_project_ok: "Project {{project}} was successfully removed from {{object}}"
-  #ctrl_remove_project_ko: "Project {{project}}  was not removed from {{object}}"
+  #ctrl_remove_project_ok: "Project %{project} was successfully removed from %{typeobj}"
+  #ctrl_remove_project_ko: "Project %{project}  was not removed from %{typeobj}"
   #datafiles
   ctrl_datafile: Fichier
+  #definitions
+  ctrl_definition: Definition
   #documents
   ctrl_document: Document
   ctrl_checkout_auto: Automatic checkout
@@ -70,6 +72,10 @@ en:
   #forums
   #forum_items
   ctrl_forum_item: Forum messag
+  #group
+  ctrl_group: Group
+  #group_definitions
+  ctrl_group_definitions: Group-processus
   #link
   ctrl_link_already_customer_project: Project already link at customer
   ctrl_link_already_project: Project already link
@@ -91,23 +97,25 @@ en:
   ctrl_link_customer_forum: Relation client / forum
   ctrl_link_document_datafile: Relation document / file
   #info
-  info_object_not_found: SYLRPLM_ERROR-{{context}}-{{object}} not found - {{id}}
+  info_object_not_found: SYLRPLM_ERROR-%{context}-%{typeobj} not found - %{id}
   #login
   ctrl_role_needed: Give the role
   ctrl_invalid_login: Invalid user/password combination
   ctrl_user_needed: Give the user
-  ctrl_user_created: User {{user}} created
-  ctrl_user_not_created: User {{user}} not created
-  ctrl_user_updated: User {{user}} updated
-  ctrl_user_not_updated: User {{user}} not updated
-  ctrl_user_deleted: User {{user}} deleted
-  ctrl_user_connected: User {{user}} connected !
-  ctrl_user_disconnected: User {{user}} disconnected !
+  ctrl_user_created: User %{user} created
+  ctrl_user_not_created: User %{user} not created
+  ctrl_user_updated: User %{user} updated
+  ctrl_user_not_updated: User %{user} not updated
+  ctrl_user_deleted: User %{user} deleted
+  ctrl_user_connected: User %{user} connected !
+  ctrl_user_disconnected: User %{user} disconnected !
   ctrl_user_role: Role=
   #main
   #parts
   ctrl_part: Article
   ctrl_forum: Forum
+  #process
+  ctrl_process: Process
   #projects
   ctrl_project: Project
   #roles
@@ -121,6 +129,10 @@ en:
   #volumes
   ctrl_volume: Volume
   ctrl_no_relation: no relation
+  #workitems
+  ctrl_workitem_delegated: "Workitem %{ident} delegated to store %{store}"
+  ctrl_workitem_proceeded: "Workitem %{ident} proceeded"
+  ctrl_workitem_updated: "Workitem %{ident} modified"
   #########################################
   #helpers
   #########################################
@@ -129,7 +141,7 @@ en:
   h_sort_by_field: Sort by this field
   #help
   help_no_help_title: Help missing
-  help_no_help: No help for {{key}}
+  help_no_help: No help for %{key}
   help_lnk_acces: Go
   help_summary: Summary
   help_jump: View
@@ -142,6 +154,7 @@ en:
   #########################################
   hello: "Hello world"
   disconnect: "Disconnect"
+  connect: "Connect"
   datas_in_database: We have following data
   #langues
   tit_language: "Language:"
@@ -334,6 +347,7 @@ en:
   favoris_document: Documents
   favoris_part: Parts
   favoris_project: Projects
+  favoris_customer: Customers
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM News 
   # main/_frame

@@ -46,11 +46,11 @@ class RolesController < ApplicationController
     @role = Role.new(params[:role])
     respond_to do |format|
       if @role.save
-        flash[:notice] = t(:ctrl_object_created,:object=>t(:ctrl_role),:ident=>@role.title)
+        flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_role),:ident=>@role.title)
         format.html { redirect_to(@role) }
         format.xml  { render :xml => @role, :status => :created, :location => @role }
       else
-        flash[:notice] = t(:ctrl_object_not_created,:object=>t(:ctrl_role),:ident=>@role.title)
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_role),:ident=>@role.title)
         format.html { render :action => "new" }
         format.xml  { render :xml => @role.errors, :status => :unprocessable_entity }
       end
@@ -64,11 +64,11 @@ class RolesController < ApplicationController
     
     respond_to do |format|
       if @role.update_attributes(params[:role])
-        flash[:notice] = t(:ctrl_object_updated,:object=>t(:ctrl_role),:ident=>@role.title)
+        flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_role),:ident=>@role.title)
         format.html { redirect_to(@role) }
         format.xml  { head :ok }
       else
-        flash[:notice] = t(:ctrl_object_not_updated,:object=>t(:ctrl_role),:ident=>@role.title)
+        flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_role),:ident=>@role.title)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @role.errors, :status => :unprocessable_entity }
       end
@@ -81,7 +81,7 @@ class RolesController < ApplicationController
     @role = Role.find(params[:id])
     @role.destroy
     respond_to do |format|
-      flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_role),:ident=>@role.title)
+      flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_role),:ident=>@role.title)
       format.html { redirect_to(roles_url) }
       format.xml  { head :ok }
     end

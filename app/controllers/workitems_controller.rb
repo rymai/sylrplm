@@ -26,7 +26,7 @@ require 'openwfe/representations'
 require 'ruote/sylrplm/workitems'
 class WorkitemsController < ApplicationController
   include Controllers::PlmObjectControllerModule
-
+  before_filter :authorize
   access_control(Access.find_for_controller(controller_class_name))
   # GET /workitems
   #  or
@@ -95,10 +95,11 @@ class WorkitemsController < ApplicationController
     #    puts "workitems_controller.edit:params="+params.inspect
     @workitem = find_ar_workitem
     @wi_links=get_wi_links(@workitem)
-    nb=add_objects(@workitem, @favori_document, "document")
-    nb+=add_objects(@workitem, @favori_part, "part")
-    nb+=add_objects(@workitem, @favori_project, "project")
-    if(nb>0)
+    nb=add_objects(@workitem, @favori.get("document"), "document")
+    nb+=add_objects(@workitem, @favori.get("part"), "part")
+    nb+=add_objects(@workitem, @favori.get("project"), "project")
+    nb+=add_objects(@workitem, @favori.get("customer"), "customer")
+     if(nb>0)
       @workitem.save
     end
     @payload_partial = determine_payload_partial(@workitem)
@@ -148,7 +149,7 @@ class WorkitemsController < ApplicationController
     if store_name = params[:store_name]
       ar_workitem.store_name = store_name
       ar_workitem.save!
-      flash[:notice] = "workitem #{workitem_ident} delegated to store '#{store_name}'"
+      flash[:notice] = t(:ctrl_workitem_delegated, :ident => workitem_ident, :store => store_name)        
       history_log(
       'delegated',
       :fei => in_flow_workitem.fei, :message => "wi delegated to '#{store_name}'")
@@ -157,7 +158,7 @@ class WorkitemsController < ApplicationController
       in_flow_workitem.attributes = workitem.attributes
       puts "workitems_controller.update:in_flow_workitem proceeded********="+in_flow_workitem.inspect
       RuotePlugin.ruote_engine.reply(in_flow_workitem)
-      flash[:notice] = "workitem #{workitem_ident} proceeded"
+      flash[:notice] = t(:ctrl_workitem_proceeded, :ident => workitem_ident)      
       # sauve history
       process = ruote_engine.process_status(params[:wfid])
       unless process.nil?
@@ -170,7 +171,8 @@ class WorkitemsController < ApplicationController
     else
       puts "workitems_controller.update:att="+workitem.attributes.inspect
       ar_workitem.replace_fields(workitem.attributes)
-      flash[:notice] = "workitem #{workitem_ident} modified"
+      flash[:notice] = t(:ctrl_workitem_updated, :ident => workitem_ident)    
+      
       history_log('saved', :fei => in_flow_workitem.fei, :message => 'wi saved')
     end
     #puts "workitems_controller.update:fin"
@@ -202,7 +204,7 @@ class WorkitemsController < ApplicationController
     unless favori.nil? 
       relation="workflow_"+type_object
       #      puts "processes_controller.add_objects:workitem="+workitem.id.to_s+" rel="+relation.inspect+" favori="+favori.inspect
-      favori.items.each do |item|
+      favori.each do |item|
         url="/"+type_object+"s/"+item.id.to_s
         label=type_object+":"+item.ident+"-"+relation
     #puts  "workitems_controller.add_objects:params="+fields["params"].inspect
@@ -224,16 +226,16 @@ class WorkitemsController < ApplicationController
     ret=[]
     unless workitem.nil?
       Link.find_childs("workitem",workitem,"document").each do |link|
-        ret<<{:object=>Document.find(link.child_id), :link=>link}
+        ret<<{:typeobj =>Document.find(link.child_id), :link=>link}
       end
       Link.find_childs("workitem",workitem,"part").each do |link|
-        ret<<{:object=>Part.find(link.child_id), :link=>link}
+        ret<<{:typeobj =>Part.find(link.child_id), :link=>link}
       end
       Link.find_childs("workitem",workitem,"product").each do |link|
-        ret<<{:object=>Product.find(link.child_id), :link=>link}
+        ret<<{:typeobj =>Product.find(link.child_id), :link=>link}
       end
       Link.find_childs("workitem",workitem,"customer").each do |link|
-        ret<<{:object=>Customer.find(link.child_id), :link=>link}
+        ret<<{:typeobj =>Customer.find(link.child_id), :link=>link}
       end
       puts "workitems_controller.get_wi_links="+workitem.id.to_s+":"+ret.inspect
     end

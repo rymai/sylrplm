@@ -23,11 +23,11 @@ class QuestionsController < ApplicationController
     @faq = Question.new(params[:question])
     respond_to do |format|
       if @faq.save
-        flash[:notice] = t(:ctrl_object_created,:object=>t(:ctrl_faq),:ident=>@faq.id)
+        flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_faq),:ident=>@faq.id)
         format.html { redirect_to(@faq) }
         format.xml  { render :xml => @faq, :status => :created, :location => @faq }
       else
-        flash[:notice] =t(:ctrl_object_not_created,:object=>t(:ctrl_faq))
+        flash[:notice] =t(:ctrl_object_not_created,:typeobj =>t(:ctrl_faq))
         format.html { render :action => :new }
         format.xml  { render :xml => @faq.errors, :status => :unprocessable_entity }
       end
@@ -44,11 +44,11 @@ class QuestionsController < ApplicationController
     @faq = Question.find(params[:id])
     respond_to do |format|
       if @faq.update_attributes(params[:question])
-        flash[:notice] = t(:ctrl_object_updated,:object=>t(:ctrl_faq),:ident=>@faq.id)
+        flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_faq),:ident=>@faq.id)
         format.html { redirect_to(@faq) }
         format.xml  { head :ok }
       else
-        flash[:notice] = t(:ctrl_object_notupdated,:object=>t(:ctrl_faq),:ident=>@faq.controller)
+        flash[:notice] = t(:ctrl_object_notupdated,:typeobj =>t(:ctrl_faq),:ident=>@faq.controller)
         format.html { render :action => :edit }
         format.xml  { render :xml => @faq.errors, :status => :unprocessable_entity }
       end
@@ -59,7 +59,7 @@ class QuestionsController < ApplicationController
     @faq = Question.find params[:id]
     id=@faq.id
     @faq.destroy
-    flash[:message] = flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_faq),:ident=>id)
+    flash[:message] = flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_faq),:ident=>id)
     respond_to do |format|
       format.html { redirect_to(faqs_url) }
       format.xml  { head :ok }

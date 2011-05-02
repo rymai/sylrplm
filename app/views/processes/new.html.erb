@@ -16,7 +16,7 @@
                 <%= render(:partial => @payload_partial, :locals => { :fields => @definition.launch_fields_hash }) %>
             </td>
         </tr>
-        <% unless @favori_document.empty %>
+        <% unless @favori.get('document').count==0 %>
         <tr>
             <td>
                 <%= select("relation","document",options_for_select(@relation_types_document)) %>
@@ -26,7 +26,7 @@
             </td>
         </tr>
         <%end %>
-        <% unless @favori_part.empty %>
+        <% unless @favori.get('part').count==0 %>
         <tr>
             <td>
                 <%= select("relation","part",options_for_select(@relation_types_part)) %>
@@ -36,10 +36,20 @@
             </td>
         </tr>
         <% end %>
-        <% unless @favori_project.empty %>
+        <% unless @favori.get('project').count==0 %>
         <tr>
             <td>
                 <%= select("relation","project",options_for_select(@relation_types_project)) %>
+            </td>
+            <td>
+                <%= t("paste_projects") %>
+            </td>
+        </tr>
+        <% end %>
+		<% unless @favori.get('customer').count==0 %>
+        <tr>
+            <td>
+                <%= select("relation","customer",options_for_select(@relation_types_customer)) %>
             </td>
             <td>
                 <%= t("paste_projects") %>

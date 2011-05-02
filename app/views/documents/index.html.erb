@@ -1,10 +1,10 @@
-<h1><%= t("document_list") %><%=h_count_objects(@documents)%> </h1>
+<h1><%= t("document_list") %><%=h_count_objects(@documents) %></h1>
 <table class='menu_bas'>
     <tr>
         <td>
             <%= link_to t("new_document"), new_document_path %>
         </td>
-         <td>
+        <td>
             <%= show_help("help_documents") %>
         </td>
     </tr>
@@ -15,28 +15,28 @@
     <tr>
         <th>
         </th>
-        <th <%= sort_td_class_helper "ident" %>>
+        <th<%= sort_td_class_helper "ident" %>>
             <%= sort_link_helper t("label_ident"), "ident" %>
         </th>
-        <th <%= sort_td_class_helper "typesobject_id" %>>
+        <th<%= sort_td_class_helper "typesobject_id" %>>
             <%= sort_link_helper t("label_typesobject"), "typesobject_id" %>
         </th>
-        <th <%= sort_td_class_helper "revision" %>>
+        <th<%= sort_td_class_helper "revision" %>>
             <%= sort_link_helper t("label_revision"), "revision" %>
         </th>
-        <th <%= sort_td_class_helper "designation" %>>
+        <th<%= sort_td_class_helper "designation" %>>
             <%= sort_link_helper t("label_designation"), "designation" %>
         </th>
-        <th <%= sort_td_class_helper "statusobject_id" %>>
+        <th<%= sort_td_class_helper "statusobject_id" %>>
             <%= sort_link_helper t("label_statusobject"), "statusobject_id" %>
         </th>
-        <th <%= sort_td_class_helper "owner" %>>
+        <th<%= sort_td_class_helper "owner" %>>
             <%= sort_link_helper t("label_responsible"), "owner" %>
         </th>
         <th>
             <%= t("label_nbfiles") %>
         </th>
-        <th <%= sort_td_class_helper "date" %>>
+        <th<%= sort_td_class_helper "date" %>>
             <%= sort_link_helper t("label_date"), "date" %>
         </th>
         <th>
@@ -74,8 +74,8 @@
     </td>
     <td>
         <%=h document.owner.login %>
-    </td>   
-		<td>
+    </td>
+    <td>
         <%=h document.datafile.length %>
     </td>
     <td>
@@ -100,10 +100,11 @@
     <% end %>
     </td>
     <td>
-        <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_document_to_favori, :id => document.id} %>
+    	<% if connected %>
+    	<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => document.id} %>
+		<%end%>
     </td>
 </tr>
 <%end %>
 </table>
 <%= will_paginate(@documents[:recordset]) %>
-

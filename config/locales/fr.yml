@@ -5,64 +5,66 @@ fr:
   ##############
   #models (ko)
   ##############
-  valid_ident: "L'identifiant d'un {{object}} doit commencer par des lettres suivi de chiffres"
+  valid_ident: "L'identifiant d'un {{object} doit commencer par des lettres suivi de chiffres"
   #
   ##############
   #controllers
   ##############
   ctrl_no_privilege: "Désolé, privilèges insuffisants"
-  ctrl_object_created: "{{object}} {{ident}} crée avec succès"
-  ctrl_object_not_created: "{{object}} non crée"
-  ctrl_object_updated: "{{object}} {{ident}} modifié avec succès"
-  ctrl_object_not_saved: "{{object}} {{ident}} non sauvegardé"
-  ctrl_object_not_updated: "{{object}} {{ident}} non modifié"
-  ctrl_object_deleted: "{{object}} {{ident}} supprimé avec succès"
-  ctrl_object_not_deleted: "{{object}} {{ident}} ne peut être supprimé"
-  ctrl_object_promoted: "{{object}} {{ident}} promu de {{current_rank}} à {{new_rank}}, valideurs={{validersMail}}"
-  ctrl_object_no_validers: "{{object}} {{ident}} non promu de {{current_rank}} à {{new_rank}} car pas de valideur(s)"
-  ctrl_object_not_promoted: "{{object}} {{ident}} non promu de {{current_rank}} à {{new_rank}}"
-  ctrl_user_no_email: "L'utilisateur {{user}} n'a pas d'adresse mail"
-  ctrl_object_demoted: "{{object}} {{ident}} rétrogradé de {{current_rank}} à {{new_rank}}, valideurs={{validersMail}}"
-  ctrl_object_not_demoted: "{{object}} {{ident}} non rétrogradé de {{current_rank}} à {{new_rank}}"
-  ctrl_object_revised: "{{object}} {{ident}} revisé de {{previous_rev}} à {{revision}}"
-  ctrl_object_not_revised: "{{object}} {{ident}} non révisé depuis {{previous_rev}} (pas dernière revision ou non gelé ?)"
-  ctrl_object_checkout: "{{object}} {{ident}} réservé, raison:{{reason}}"  
-  ctrl_object_not_checkout: "{{object}} {{ident}} non réservé"  
+  ctrl_object_created: "%{typeobj} %{ident} crée avec succès"
+  ctrl_object_not_created: "%{typeobj} non crée"
+  ctrl_object_updated: "%{typeobj} %{ident} modifié avec succès"
+  ctrl_object_not_saved: "%{typeobj} %{ident} non sauvegardé"
+  ctrl_object_not_updated: "%{typeobj} %{ident} non modifié"
+  ctrl_object_deleted: "%{typeobj} %{ident} supprimé avec succès"
+  ctrl_object_not_deleted: "%{typeobj} %{ident} ne peut être supprimé"
+  ctrl_object_promoted: "%{typeobj} %{ident} promu de %{current_rank} à %{new_rank}, valideurs=%{validersMail}"
+  ctrl_object_no_validers: "%{typeobj} %{ident} non promu de %{current_rank} à %{new_rank} car pas de valideur(s)"
+  ctrl_object_not_promoted: "%{typeobj} %{ident} non promu de %{current_rank} à %{new_rank}"
+  ctrl_user_no_email: "L'utilisateur %{user} n'a pas d'adresse mail"
+  ctrl_object_demoted: "%{typeobj} %{ident} rétrogradé de %{current_rank} à %{new_rank}, valideurs=%{validersMail}"
+  ctrl_object_not_demoted: "%{typeobj} %{ident} non rétrogradé de %{current_rank} à %{new_rank}"
+  ctrl_object_revised: "%{typeobj} %{ident} revisé de %{previous_rev} à %{revision}"
+  ctrl_object_not_revised: "%{typeobj} %{ident} non révisé depuis %{previous_rev} (pas dernière revision ou non gelé ?)"
+  ctrl_object_checkout: "%{typeobj} %{ident} réservé, raison:%{reason}"  
+  ctrl_object_not_checkout: "%{typeobj} %{ident} non réservé"  
   ctrl_object_give_reason: "Indiquez une raison"
-  ctrl_object_already_checkout: "{{object}} {{ident}} déja réservé"
-  ctrl_object_checkin: "{{object}} {{ident}} est sauvé et libéré"
-  ctrl_object_not_checkin: "{{object}} {{ident}} n'est pas libéré"
-  ctrl_object_notyet_checkout: "{{object}} {{ident}} n'est pas encore réservé"
+  ctrl_object_already_checkout: "%{typeobj} %{ident} déja réservé"
+  ctrl_object_checkin: "%{typeobj} %{ident} est sauvé et libéré"
+  ctrl_object_not_checkin: "%{typeobj} %{ident} n'est pas libéré"
+  ctrl_object_notyet_checkout: "%{typeobj} %{ident} n'est pas encore réservé"
   ctrl_object_give_file: "Indiquez un nouveau fichier"
-  ctrl_object_checkfree: "{{object}} {{ident}} est libéré"
-  ctrl_object_not_checkfree: "{{object}} {{ident}} n'est pas libéré"
-  ctrl_object_added: "<br> {{object}} {{ident}} a été ajouté, relation={{relation}}, message={{msg}}"
-  ctrl_object_not_added: "<br> {{object}} {{ident}} n'a pas été ajouté, relation={{relation}}, messag={{msg}}"
-  ctrl_object_not_linked: "<br> {{object}} {{ident}} n'a pas été relié, relation={{relation}}, messag={{msg}}"
-  ctrl_nothing_to_paste: "Pas de {{object}} à coller"
-  ctrl_subject_forum: "Forum sur {{object}} {{ident}}"
-  ctrl_object_explorer: "{{object}} Explorer"
-  ctrl_object_referencer: "{{object}} Référenceur"
+  ctrl_object_checkfree: "%{typeobj} %{ident} est libéré"
+  ctrl_object_not_checkfree: "%{typeobj} %{ident} n'est pas libéré"
+  ctrl_object_added: "<br> %{typeobj} %{ident} a été ajouté, relation=%{relation}, message=%{msg}"
+  ctrl_object_not_added: "<br> %{typeobj} %{ident} n'a pas été ajouté, relation=%{relation}, messag=%{msg}"
+  ctrl_object_not_linked: "<br> %{typeobj} %{ident} n'a pas été relié, relation=%{relation}, messag=%{msg}"
+  ctrl_nothing_to_paste: "Pas de %{typeobj} à coller"
+  ctrl_subject_forum: "Forum sur %{typeobj} %{ident}"
+  ctrl_object_explorer: "%{typeobj} Explorer"
+  ctrl_object_referencer: "%{typeobj} Référenceur"
   ctrl_init_to_do: Initialisation à effectuer
   ctrl_init_done: Initialisation effectuée
-  count_objects: " : {{number_begin}}-{{number_end}} / {{total}}"
+  count_objects: " : %{number_begin}-%{number_end} / %{total}"
   #access
   ctrl_object_no_controlers: Controleurs non trouvés
   #application
   login_login: "Veuillez vous connecter"
   label_project: "Projet-"
   label_customer: "Client-"
-  link_project: "{{link}}-Projet-{{ident}}"
-  link_customer: "{{link}}-Client-{{ident}}"
+  link_project: "%{link}-Projet-%{ident}"
+  link_customer: "%{link}-Client-%{ident}"
   user_unknown: Compte inconnu
   user_not_connected: Non connecté
   user_unknown_mail: unknownmail@laposte.net
   #customers
   ctrl_customer: Client
-  #ctrl_remove_project_ok: Project {{project}} was successfully removed from {{object}}
-  #ctrl_remove_project_ko: Project {{project}}  was not removed from {{object}}
+  #ctrl_remove_project_ok: Project %{project} was successfully removed from %{typeobj}
+  #ctrl_remove_project_ko: Project %{project}  was not removed from %{typeobj}
   #datafiles
   ctrl_datafile: Fichier
+  #definitions
+  ctrl_definition: Définition
   #documents
   ctrl_document: Document
   ctrl_checkout_auto: Réservation automatique
@@ -71,6 +73,10 @@ fr:
   #forums
   #forum_items
   ctrl_forum_item: Message forum
+  #group
+  ctrl_group: Groupe
+  #group_definitions
+  ctrl_group_definitions: Groupe-processus
   #link
   ctrl_link_already_customer_project: Projet déja lié à ce client
   ctrl_link_already_project: Projet déja utilise ici ou ailleurs
@@ -92,23 +98,25 @@ fr:
   ctrl_link_customer_forum: Relation client / forum
   ctrl_link_document_datafile: Relation document / fichier
   #info
-  info_object_not_found: SYLRPLM_ERROR-{{context}}-{{object}} non trouvé(e) - {{id}}
+  info_object_not_found: SYLRPLM_ERROR-%{context}-%{typeobj} non trouvé(e) - %{id}
   #login
   ctrl_role_needed: Renseigner le rôle
   ctrl_invalid_login: Nom utilisateur ou mot de passe invalide
   ctrl_user_needed: Renseigner l'utilisateur
-  ctrl_user_created: Utilisateur {{user}} crée
-  ctrl_user_not_created: Utilisateur {{user}} non crée
-  ctrl_user_updated: Utilisateur {{user}} modifié
-  ctrl_user_not_updated: Utilisateur {{user}} non modifié
-  ctrl_user_deleted: "Utilisateur {{user}} supprimé"
-  ctrl_user_connected: "Utilisateur {{user}} connecté !"
-  ctrl_user_disconnected: "Utilisateur {{user}} déconnecté !"
-  ctrl_user_role: Rôle={{role}}
+  ctrl_user_created: Utilisateur %{user} crée
+  ctrl_user_not_created: Utilisateur %{user} non crée
+  ctrl_user_updated: Utilisateur %{user} modifié
+  ctrl_user_not_updated: Utilisateur %{user} non modifié
+  ctrl_user_deleted: "Utilisateur %{user} supprimé"
+  ctrl_user_connected: "Utilisateur %{user} connecté !"
+  ctrl_user_disconnected: "Utilisateur %{user} déconnecté !"
+  ctrl_user_role: Rôle=%{role}
   #main
   #parts
   ctrl_part: Article
   ctrl_forum: Forum
+  #process
+  ctrl_process: Processus métier
   #projects
   ctrl_project: Projet
   #roles
@@ -121,6 +129,10 @@ fr:
   ctrl_typesobject: Type objet
   #volumes
   ctrl_volume: Volume
+  #workitems
+  ctrl_workitem_delegated: "Tâche %{ident} délégué à %{store}"
+  ctrl_workitem_proceeded: "workitem %{ident} exécutée"
+  ctrl_workitem_updated: "workitem %{ident} modifiée"
   #########################################
   #modules
   #########################################
@@ -135,7 +147,7 @@ fr:
   h_sort_by_field: Tri sur ce champ
   #help
   help_no_help_title: Aide absente
-  help_no_help: Pas d'aide pour {{key}}
+  help_no_help: Pas d'aide pour %{key}
   help_lnk_acces: Accès
   help_summary: Sommaire
   help_jump: Voir
@@ -148,6 +160,7 @@ fr:
   #########################################
   hello: "Bienvenue"
   disconnect: "Se deconnecter"
+  connect: "Se connecter"
   datas_in_database: Données actuellement en base
   #langues
   tit_language: "Langue:"
@@ -330,6 +343,7 @@ fr:
   favoris_document: Documents
   favoris_part: Articles
   favoris_project: Projets
+  favoris_customer: Clients
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM Nouveautés
   # main/_frame
@@ -525,37 +539,37 @@ fr:
       less_than_x_seconds:
         zero: "moins d'une seconde"
         one: "moins de 1 seconde"
-        other: "moins de {{count}} secondes"
+        other: "moins de %{count} secondes"
       x_seconds:
         one: "1 seconde"
-        other: "{{count}} secondes"
+        other: "%{count} secondes"
       less_than_x_minutes:
         zero: "moins d'une minute"
         one: "moins de 1 minute"
-        other: "moins de {{count}} minutes"
+        other: "moins de %{count} minutes"
       x_minutes:
         one: "1 minute"
-        other: "{{count}} minutes"
+        other: "%{count} minutes"
       about_x_hours:
         one: "environ une heure"
-        other: "environ {{count}} heures"
+        other: "environ %{count} heures"
       x_days:
         one: "1 jour"
-        other: "{{count}} jours"
+        other: "%{count} jours"
       about_x_months:
         one: "environ un mois"
-        other: "environ {{count}} mois"
+        other: "environ %{count} mois"
       x_months:
         one: "1 mois"
-        other: "{{count}} mois"
+        other: "%{count} mois"
       about_x_years:
         one: "environ un an"
-        other: "environ {{count}} ans"
+        other: "environ %{count} ans"
       over_x_years:
         one: "plus d'un an"
-        other: "plus de {{count}} ans"
+        other: "plus de %{count} ans"
     prompts:
-      year: "Ann�e"
+      year: "Année"
       month: "Mois"
       day: "Jour"
       hour: "Heure"
@@ -569,7 +583,7 @@ fr:
       delimiter: ' '
     currency:
       format:
-        unit: '�'
+        unit: '€'
         precision: 2
         format: '%n %u'
     human:
@@ -604,29 +618,29 @@ fr:
     errors:
       template:
         header:
-          one: "Impossible d'enregistrer {{model}}: 1 erreur"
-          other: "Impossible d'enregistrer {{model}}: {{count}} erreurs."
-        body: "Veuillez v�rifier les champs suivants :"
+          one: "Impossible d'enregistrer %{model}: 1 erreur"
+          other: "Impossible d'enregistrer %{model}: %{count} erreurs."
+        body: "Veuillez vérifier les champs suivants :"
       messages:
         inclusion: "n'est pas inclus(e) dans la liste"
         exclusion: "n'est pas disponible"
         invalid: "n'est pas valide"
         confirmation: "ne concorde pas avec la confirmation"
-        accepted: "doit �tre accept�(e)"
-        empty: "doit �tre rempli(e)"
-        blank: "doit �tre rempli(e)"
-        too_long: "est trop long (pas plus de {{count}} caract�res)"
-        too_short: "est trop court (au moins {{count}} caract�res)"
-        wrong_length: "ne fait pas la bonne longueur (doit comporter {{count}} caract�res)"
+        accepted: "doit être accepté(e)"
+        empty: "doit être rempli(e)"
+        blank: "doit être rempli(e)"
+        too_long: "est trop long (pas plus de %{count} caractères)"
+        too_short: "est trop court (au moins %{count} caractères)"
+        wrong_length: "ne fait pas la bonne longueur (doit comporter %{count} caractères)"
         taken: "n'est pas disponible"
         not_a_number: "n'est pas un nombre"
-        greater_than: "doit �tre sup�rieur � {{count}}"
-        greater_than_or_equal_to: "doit �tre sup�rieur ou �gal � {{count}}"
-        equal_to: "doit �tre �gal � {{count}}"
-        less_than: "doit �tre inf�rieur � {{count}}"
-        less_than_or_equal_to: "doit �tre inf�rieur ou �gal � {{count}}"
-        odd: "doit �tre impair"
-        even: "doit �tre pair"
+        greater_than: "doit être supérieur à %{count}"
+        greater_than_or_equal_to: "doit être supérieur ou égal à %{count}"
+        equal_to: "doit être égal à %{count}"
+        less_than: "doit être inférieur à %{count}"
+        less_than_or_equal_to: "doit être inférieur ou égal à %{count}"
+        odd: "doit être impair"
+        even: "doit être pair"
         
   
         

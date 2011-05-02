@@ -41,7 +41,7 @@
 <table class='menu_bas'>
     <tr>
     
-    <% unless @favori_document.empty %>
+    <% unless @favori.get('document').empty %>
     <% form_for(@part, :url => {:id => @part.id, :action => "add_docs" }) do |f| %>
     <td>
         <%= select("relation","document",options_for_select(@relation_types_document)) %>
@@ -57,7 +57,7 @@
 
 <tr>
     
-    <% unless @favori_part.empty %>
+    <% unless @favori.get('part').empty %>
     <% form_for(@part, :url => {:id => @part.id, :action => "add_parts" }) do |f| %>
     <td>
         <%= select("relation","part",options_for_select(@relation_types_part)) %>
@@ -73,7 +73,7 @@
 </tr>
 </table>
 
-<%= render(:partial => "shared/object_workitems", :object=>@part) %>
+<%= render(:partial => "shared/object_workitems", :object =>@part) %>
 
 
 <table class='menu_bas'>

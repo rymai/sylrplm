@@ -45,17 +45,17 @@ class VolumesController < ApplicationController
       if(dir!=nil) 
         if @volume.save
           #flash[:notice] = "Volume #{@volume.name} was successfully created on #{dir}"
-          flash[:notice] = t(:ctrl_object_created,:object=>t(:ctrl_volume),:ident=>@volume.name+":"+dir)
+          flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+dir)
           format.html { redirect_to(@volume) }
           format.xml  { render :xml => @volume, :status => :created, :location => @volume }
         else
-          flash[:notice] = t(:ctrl_object_not_created,:object=>t(:ctrl_volume),:ident=>@volume.name+":"+dir)
+          flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+dir)
           format.html { render :action => "new" }
           format.xml  { render :xml => @volume.errors, :status => :unprocessable_entity }
         end
       else
         #flash[:notice] = "Volume #{@volume.name} was not created on #{@volume.directory}."
-        flash[:notice] = t(:ctrl_object_not_created,:object=>t(:ctrl_volume),:ident=>@volume.name+":"+@volume.directory)
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+@volume.directory)
         format.html { render :action => "new" }
         format.xml  { render :xml => @volume.errors, :status => :unprocessable_entity }
       end
@@ -70,14 +70,14 @@ class VolumesController < ApplicationController
       if @volume.update_attributes(params[:volume])
         dir=@volume.create_dir(params[:olddir])
         if(dir!=nil)
-          flash[:notice] = t(:ctrl_object_not_updated,:object=>t(:ctrl_volume),:ident=>@volume.name+":"+dir)
+          flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+dir)
         else
-          flash[:notice] = t(:ctrl_object_not_updated,:object=>t(:ctrl_volume),:ident=>@volume.name)
+          flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_volume),:ident=>@volume.name)
         end
         format.html { redirect_to(@volume) }
         format.xml  { head :ok }
       else
-        flash[:notice] = t(:ctrl_object_not_updated,:object=>t(:ctrl_volume),:ident=>@volume.name)
+        flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_volume),:ident=>@volume.name)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @volume.errors, :status => :unprocessable_entity }
       end       
@@ -92,10 +92,10 @@ class VolumesController < ApplicationController
     st=@volume.destroy_volume
     #puts "volumes_controller.destroy:st="+st.to_s
     if(st==nil) 
-      flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_volume),:ident=>@volume.name+":"+dirsave)
+      flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+dirsave)
     else
       #flash[:notice] = "Volume #{@volume.name} was not deleted on #{dirsave}, files found: #{st.gsub("\n","<br/>")}."
-      flash[:notice] = t(:ctrl_object_not_deleted,:object=>t(:ctrl_volume),:ident=>@volume.name+":"+dirsave)+":"+st.gsub("\n","<br/>")
+      flash[:notice] = t(:ctrl_object_not_deleted,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+dirsave)+":"+st.gsub("\n","<br/>")
     end
     respond_to do |format|
       format.html { redirect_to(volumes_url) }

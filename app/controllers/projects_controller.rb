@@ -77,11 +77,11 @@ class ProjectsController < ApplicationController
     @status= Statusobject.find_for("project")
     respond_to do |format|
       if @project.save
-        flash[:notice] = t(:ctrl_object_created,:object=>t(:ctrl_project),:ident=>@project.ident)
+        flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
         format.html { redirect_to(@project) }
         format.xml  { render :xml => @project, :status => :created, :location => @project }
       else
-        flash[:notice] = t(:ctrl_object_not_created,:object=>t(:ctrl_project),:ident=>@project.ident)
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
         format.html { render :action => "new" }
         format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
       end
@@ -97,11 +97,11 @@ class ProjectsController < ApplicationController
     @status= Statusobject.find_for("project")
     respond_to do |format|
       if @project.update_attributes(params[:project])
-        flash[:notice] = t(:ctrl_object_updated,:object=>t(:ctrl_project),:ident=>@project.ident)
+        flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
         format.html { redirect_to(@project) }
         format.xml  { head :ok }
       else
-        flash[:notice] = t(:ctrl_object_not_updated,:object=>t(:ctrl_project),:ident=>@project.ident)
+        flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
       end
@@ -114,7 +114,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @project.destroy
     respond_to do |format|
-      flash[:notice] = t(:ctrl_object_deleted,:object=>t(:ctrl_project),:ident=>@project.ident)
+      flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
       format.html { redirect_to(projects_url) }
       format.xml  { head :ok }
     end
@@ -122,7 +122,7 @@ class ProjectsController < ApplicationController
   
   #methode: creation de 'arbre du projet  
   def create_tree(obj)
-    tree = Tree.new({:label=>t(:ctrl_object_explorer,:object=>t(:ctrl_project)),:open => true})   
+    tree = Tree.new({:label=>t(:ctrl_object_explorer,:typeobj =>t(:ctrl_project)),:open => true})   
     #cnode=tree_project(obj)     
     #tree << cnode     
     session[:tree_object]=obj
@@ -131,7 +131,7 @@ class ProjectsController < ApplicationController
   end
   
   def create_tree_up(obj)
-    tree = Tree.new({:label=>t(:ctrl_object_referencer,:object=>t(:ctrl_project)),:open => true})   
+    tree = Tree.new({:label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_project)),:open => true})   
     #cnode=tree_project(obj)     
     #tree << cnode     
     session[:tree_object]=obj
@@ -144,24 +144,24 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     relation=params[:relation][:document]
     respond_to do |format|      
-      if @favori_document != nil 
+      if @favori["document"] != nil 
         flash[:notice] = ""
-        @favori_document.items.each do |item|
+        @favori["document"].items.each do |item|
           link_=Link.create_new("project", @project, "document", item, relation)  
           link=link_[:link]
           if(link!=nil) 
             if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:object=>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
             else
-              flash[:notice] += t(:ctrl_object_not_added,:object=>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked,:object=>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>nil)
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>nil)
           end
         end
-        reset_favori_document
+        empty_favori("document")
       else
-        flash[:notice] = t(:ctrl_nothing_to_paste,:object=>t(:ctrl_document))
+        flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_document))
       end
       format.html { redirect_to(@project) }
       format.xml  { head :ok }
@@ -173,25 +173,25 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     relation=params[:relation][:part]
     respond_to do |format|      
-      if @favori_part != nil 
+      if @favori["part"] != nil 
         flash[:notice] = ""
-        @favori_part.items.each do |item|
+        @favori["part"].items.each do |item|
           #flash[:notice] += "<br>"+ item.ident.to_s
           link_=Link.create_new("project", @project, "part", item, relation)  
           link=link_[:link]
           if(link!=nil) 
             if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:object=>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
             else
-              flash[:notice] += t(:ctrl_object_not_added,:object=>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked,:object=>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>nil)           
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>nil)           
           end
         end
-        reset_favori_part
+        empty_favori("part")
       else
-        flash[:notice] = t(:ctrl_nothing_to_paste,:object=>t(:ctrl_part))
+        flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_part))
       end
       format.html { redirect_to(@project) }
       format.xml  { head :ok }
@@ -208,18 +208,21 @@ class ProjectsController < ApplicationController
     ctrl_demote(Project,false)
   end
   
-  def add_project_to_favori 
-    project=Project.find(params[:id])
-    @favori_project.add_project(project)
-    ##redirect_to(:action => index) 
-  end
-  
-  def empty_favori_project
-    session[:favori_project]=nil
-    @favori_project=nil
-    #flash[:notice] ="Plus de favoris project"
-    ##redirect_to :action => :index   
-  end
+#  def empty_favori_project
+#      empty_favori("project")
+#  end
+#    
+#  def add_project_to_favori
+#    project=Project.find(params[:id])
+#    @favori_project.add_project(project)
+#  end
+#  
+#  def empty_favori_project
+#    session[:favori_project]=nil
+#    @favori_project=nil
+#    #flash[:notice] ="Plus de favoris project"
+#    ##redirect_to :action => :index   
+#  end
   def new_forum
     puts 'CustomerController.new_forum:id='+params[:id]
     @object = Project.find(params[:id])
@@ -228,7 +231,7 @@ class ProjectsController < ApplicationController
     respond_to do |format|      
       flash[:notice] = ""
       @forum=Forum.create_new(nil)
-      @forum.subject=t(:ctrl_subject_forum,:object=>t(:ctrl_project),:ident=>@object.ident)
+      @forum.subject=t(:ctrl_subject_forum,:typeobj =>t(:ctrl_project),:ident=>@object.ident)
       format.html {render :action=>:new_forum, :id=>@object.id }
       format.xml  { head :ok }
     end
