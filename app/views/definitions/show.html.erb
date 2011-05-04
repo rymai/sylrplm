@@ -1,50 +1,38 @@
-<h1><%=t("definitions_show") %><%= h @definition.id %></h1>
+<h1><%= t("definitions_show") %><%= h @definition.id %></h1>
 <div style="float: left;">
-
- 
-  <table>
-    <tr>
-      <td class="wide-first-col">name</td>
-      <td><%= h @definition.name %></td>
-    </tr>
-    <tr>
-      <td>description</td>
-      <td><%= h @definition.description %></td>
-    </tr>
-    <tr>
-      <td>uri</td>
-      <td><%= link_to h(@definition.uri), @definition.full_uri %></td>
-    </tr>
-    <tr>
-      <td>created_at</td>
-      <td><%= h @definition.created_at %></td>
-    </tr>
-    <tr>
-      <td>updated_at</td>
-      <td><%= h @definition.updated_at %></td>
-    </tr>
-    <tr>
-      <td>launch_fields</td>
-      <td><%= h @definition.launch_fields %></td>
-    </tr>
-    <tr class="button-row">
-      <td colspan="2">
-        <%= link_to(
-          new_process_path(:definition_id => @definition.id),
-          { :title => 'launch a new instance of this process definition' }) %> |
-        <%= link_to(
-          'edit',
-          edit_definition_path(@definition),
-          { :title => 'edit this process definition' }) %> |
-        <%= link_to('back', :back) %>
-      </td>
-    </tr>
-  </table>
+	<table>
+		<tr class="button-row">
+			<td> <%= link_to t("edit"), edit_definition_path(@definition) %></td>
+			<td> <%= link_to t("new_customer"), new_process_path(:definition_id => @definition.id) %></td>
+			<td> <%= link_to t("list"), definitions_path %></td>
+		</tr>
+		<tr>
+			<td class="wide-first-col"><%= t("label_name")%></td>
+			<td><%= h @definition.name %></td>
+		</tr>
+		<tr>
+			<td><%= t("label_description")%></td>
+			<td><%= h @definition.description %></td>
+		</tr>
+		<tr>
+			<td><%= t("label_uri")%></td>
+			<td><%= link_to h(@definition.uri), @definition.full_uri %></td>
+		</tr>
+		<tr>
+			<td><%= t("label_created_at")%></td>
+			<td><%= h @definition.created_at %></td>
+		</tr>
+		<tr>
+			<td><%= t("label_updated_at")%></td>
+			<td><%= h @definition.updated_at %></td>
+		</tr>
+		<tr>
+			<td><%= t("label_launch_fields")%></td>
+			<td><%= h @definition.launch_fields %></td>
+		</tr>
+	</table>
 </div>
-
 <div class="align-right">
-
-  <%= render_fluo :definition => @definition %>
-
+	<%= render_fluo :definition => @definition %>
 </div>
 

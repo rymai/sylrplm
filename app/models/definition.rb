@@ -122,7 +122,7 @@ class Definition < ActiveRecord::Base
       ret={}
       #ret['attribut']  = 'valeur'
     end
-    puts "definition.launch_fields_hash:"+ret.inspect
+    #puts "definition.launch_fields_hash:"+ret.inspect
     ret
   end
 
@@ -132,7 +132,7 @@ class Definition < ActiveRecord::Base
 
   def definition= (s)
 
-    puts "definition.definition("+s.inspect+")"
+#    puts "definition.definition("+s.inspect+")"
     return if s.blank?
 
     pref = "#{RAILS_ROOT}/public"

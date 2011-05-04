@@ -243,6 +243,9 @@ fr:
   ######################################################
   # general
   modif_status: Modifier le statut
+  label_created_at: Création
+  label_updated_at: Modification
+  label_date: Date
   # fields access
   label_controller: Controleur
   label_action: Action
@@ -292,6 +295,11 @@ fr:
   label_content_type: Type de contenu
   label_document: Document
   label_restore_file: Fichier à restaurer
+  # definitions
+  label_uri: URI
+  label_groups_may_launch: Groupes pouvant lancer ce process
+  label_groups: Groupes
+  label_launch_fields: Champs
   # fields documents
   document_edit: Edition document
   document_list: Liste documents

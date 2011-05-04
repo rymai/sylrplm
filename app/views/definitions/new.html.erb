@@ -1,39 +1,35 @@
-<h1><%=t("definitions_new") %></h1>
+<h1><%= t("definitions_new") %></h1>
 <script>
-  function showDefinitionBox () {
-    byId('uri_label').innerHTML = 'definition';
-    byId('uri_span').style.display = 'none';
-    byId('definition_span').style.display = 'inline';
-  }
+	function showDefinitionBox () {
+		byId('uri_label').innerHTML = 'definition';
+		byId('uri_span').style.display = 'none';
+		byId('definition_span').style.display = 'inline';
+	}
 </script>
-
 <% form_for(@definition, :html => { :multipart => true }) do |f| %>
-  <%= f.error_messages %>
-  <table>
-    <tr>
-      <td class="wide-first-col">name</td>
-      <td><%= f.text_field :name %></td>
-    </tr>
-    <tr>
-      <td>
-        <span id="uri_label">uri</span>
-      </td>
-      <td>
-        <span id="uri_span">
-          <%= f.text_field :uri %> or 
-          <%= link_to_function 'paste a definition', 'showDefinitionBox()' %>
-        </span>
-        <span id="definition_span" style="display: none;">
-          <%= f.text_area 'definition' %>
-        </span>
-      </td>
-    </tr>
-    <tr>
-      <td colspan='2'>
-        <%= f.submit "create" %>
-        <%= link_to 'back', definitions_path %>
-      </td>
-    </tr>
-  <table>
-<% end %>
-
+<%= f.error_messages %>
+<table>
+	<tr>
+		<td class="wide-first-col"><%= t("label_name")%></td>
+		<td><%= f.text_field :name %></td>
+	</tr>
+<tr>
+			<td><%=t("label_description")%></td>
+			<td><%= f.text_field :description %></td>
+		</tr>
+	<tr>
+		<td>
+		<span id="uri_label"><%= t("label_uri")%></span>
+		</td>
+		<td>
+		<span id="uri_span"> <%= f.text_field :uri %> or
+			<%= link_to_function 'paste a definition', 'showDefinitionBox()' %></span>
+		<span id="definition_span" style="display: none;"> <%= f.text_area 'definition' %></span>
+		</td>
+	</tr>
+	<tr>
+		<td> <%= f.submit t(:create) %></td>
+		<td> <%= link_to t(:list), definitions_path %></td>
+	</tr>
+	<table>
+		<% end %>

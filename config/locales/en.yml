@@ -242,6 +242,8 @@ en:
   #
   # general
   modif_status: Modify the status
+  label_created_at: Creation
+  label_updated_at: Update
   # fields access
   label_controller: Controler
   label_action: Action
@@ -291,6 +293,11 @@ en:
   label_content_type: Mime type
   label_document: Document
   label_restore_file: File to restore
+  # definitions
+  label_uri: URI
+  label_groups_may_launch: Group that may launch
+  label_groups: Groups
+  label_launch_fields: Launch fields
   # fields documents
   document_edit: Editing document
   document_list: Listing documents
