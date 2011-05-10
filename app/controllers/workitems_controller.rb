@@ -24,9 +24,9 @@
 
 require 'openwfe/representations'
 require 'ruote/sylrplm/workitems'
+
 class WorkitemsController < ApplicationController
   include Controllers::PlmObjectControllerModule
-  before_filter :authorize
   access_control(Access.find_for_controller(controller_class_name))
   # GET /workitems
   #  or
@@ -36,55 +36,58 @@ class WorkitemsController < ApplicationController
   #
   def index
     #    puts "workitems_controller.index:params="+params.inspect
-    @query = params[:q] || params[:query]
-    @workitems = if @query
-      #OpenWFE::Extras::ArWorkitem.search(
-      Ruote::SylArWorkitem.search(
-      @query,
-      @current_user.store_names)
-      #TODO syl @current_user.is_admin? ? nil : @current_user.store_names)
-      # TODO : paginate that !
-      
-    else
+    @workitems=[]
+    unless @current_user.nil?
+      @query = params[:q] || params[:query]
+      @workitems = if @query
+        #OpenWFE::Extras::ArWorkitem.search(
+        Ruote::SylArWorkitem.search(
+        @query,
+        @current_user.store_names)
+        #TODO syl @current_user.is_admin? ? nil : @current_user.store_names)
+        # TODO : paginate that !
 
-      opts = { :order => 'dispatch_time DESC' }
-      opts[:conditions] = { :store_name => @current_user.store_names }
-      #TODO syl opts[:conditions] = { :store_name => @current_user.store_names } \
-      #unless @current_user.is_admin?
-      opts[:page] = (params[:page].nil? ? SYLRPLM::NB_ITEMS_PER_PAGE :  params[:page])
-      #      puts "workitems_controller.index:page="+opts[:page].inspect
-      Ruote::SylArWorkitem.paginate_by_params(
-      [
-        # parameter_name[, column_name]
-        'wfid',
-        [ 'workflow', 'wfname' ],
-        [ 'store', 'store_name' ],
-        [ 'participant', 'participant_name' ]
-      ],
-      params,
-      opts)
-    end
-    @workitems.each do |en|
-      en.link_attributes={"relation"=>""}
-    end
-	
-    # TODO : escape pagination for XML and JSON ??
+      else
 
-    respond_to do |format|
-
-      format.html
-      # => app/views/workitems/index.html.erb
-
-      format.json do
-        render(:json => OpenWFE::Json.workitems_to_h(
-        @workitems,
-        :linkgen => linkgen).to_json)
+        opts = { :order => 'dispatch_time DESC' }
+        opts[:conditions] = { :store_name => @current_user.store_names }
+        #TODO syl opts[:conditions] = { :store_name => @current_user.store_names } \
+        #unless @current_user.is_admin?
+        opts[:page] = (params[:page].nil? ? SYLRPLM::NB_ITEMS_PER_PAGE :  params[:page])
+        #      puts "workitems_controller.index:page="+opts[:page].inspect
+        Ruote::SylArWorkitem.paginate_by_params(
+        [
+          # parameter_name[, column_name]
+          'wfid',
+          [ 'workflow', 'wfname' ],
+          [ 'store', 'store_name' ],
+          [ 'participant', 'participant_name' ]
+        ],
+        params,
+        opts)
+      end
+      @workitems.each do |en|
+        en.link_attributes={"relation"=>""}
       end
 
-      format.xml do
-        render(:xml => OpenWFE::Xml.workitems_to_xml(
-        @workitems,
-        :indent => 2, :linkgen => linkgen))
+      # TODO : escape pagination for XML and JSON ??
+
+      respond_to do |format|
+
+        format.html
+        # => app/views/workitems/index.html.erb
+
+        format.json do
+          render(:json => OpenWFE::Json.workitems_to_h(
+          @workitems,
+          :linkgen => linkgen).to_json)
+        end
+
+        format.xml do
+          render(:xml => OpenWFE::Xml.workitems_to_xml(
+          @workitems,
+          :indent => 2, :linkgen => linkgen))
+        end
       end
     end
   end
@@ -99,7 +102,7 @@ class WorkitemsController < ApplicationController
     nb+=add_objects(@workitem, @favori.get("part"), "part")
     nb+=add_objects(@workitem, @favori.get("project"), "project")
     nb+=add_objects(@workitem, @favori.get("customer"), "customer")
-     if(nb>0)
+    if(nb>0)
       @workitem.save
     end
     @payload_partial = determine_payload_partial(@workitem)
@@ -149,16 +152,17 @@ class WorkitemsController < ApplicationController
     if store_name = params[:store_name]
       ar_workitem.store_name = store_name
       ar_workitem.save!
-      flash[:notice] = t(:ctrl_workitem_delegated, :ident => workitem_ident, :store => store_name)        
+      flash[:notice] = t(:ctrl_workitem_delegated, :ident => workitem_ident, :store => store_name)
       history_log(
       'delegated',
       :fei => in_flow_workitem.fei, :message => "wi delegated to '#{store_name}'")
     elsif params[:state] == 'proceeded'
+
       puts "workitems_controller.update:wfid="+params[:wfid]
       in_flow_workitem.attributes = workitem.attributes
       puts "workitems_controller.update:in_flow_workitem proceeded********="+in_flow_workitem.inspect
       RuotePlugin.ruote_engine.reply(in_flow_workitem)
-      flash[:notice] = t(:ctrl_workitem_proceeded, :ident => workitem_ident)      
+      flash[:notice] = t(:ctrl_workitem_proceeded, :ident => workitem_ident)
       # sauve history
       process = ruote_engine.process_status(params[:wfid])
       unless process.nil?
@@ -171,8 +175,8 @@ class WorkitemsController < ApplicationController
     else
       puts "workitems_controller.update:att="+workitem.attributes.inspect
       ar_workitem.replace_fields(workitem.attributes)
-      flash[:notice] = t(:ctrl_workitem_updated, :ident => workitem_ident)    
-      
+      flash[:notice] = t(:ctrl_workitem_updated, :ident => workitem_ident)
+
       history_log('saved', :fei => in_flow_workitem.fei, :message => 'wi saved')
     end
     #puts "workitems_controller.update:fin"
@@ -192,7 +196,7 @@ class WorkitemsController < ApplicationController
     params[:wfid], OpenWFE.to_dots(params[:expid]))
     ret=@current_user.may_see?(workitem) ? workitem : nil
     #puts "workitems_controller.find_workitem:"+ret.inspect
-   
+
     ret
   end
 
@@ -201,14 +205,14 @@ class WorkitemsController < ApplicationController
     #puts  "workitems_controller.add_objects:fields="+fields.inspect
     msg=""
     ret=0
-    unless favori.nil? 
+    unless favori.nil?
       relation="workflow_"+type_object
       #      puts "processes_controller.add_objects:workitem="+workitem.id.to_s+" rel="+relation.inspect+" favori="+favori.inspect
       favori.each do |item|
         url="/"+type_object+"s/"+item.id.to_s
         label=type_object+":"+item.ident+"-"+relation
-    #puts  "workitems_controller.add_objects:params="+fields["params"].inspect
-       fields["params"][url]=label
+        #puts  "workitems_controller.add_objects:params="+fields["params"].inspect
+        fields["params"][url]=label
         msg += "\nField added:"+label
         ret+=1
       end
@@ -237,7 +241,7 @@ class WorkitemsController < ApplicationController
       Link.find_childs("workitem",workitem,"customer").each do |link|
         ret<<{:typeobj =>Customer.find(link.child_id), :link=>link}
       end
-      puts "workitems_controller.get_wi_links="+workitem.id.to_s+":"+ret.inspect
+      puts "workitems_controller.get_wi_links="+ret.size.to_s+":"+workitem.id.to_s+":"+ret.inspect
     end
     ret
   end

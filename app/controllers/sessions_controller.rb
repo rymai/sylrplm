@@ -57,7 +57,7 @@ class SessionsController < ApplicationController
         format.xml  { head :ok }
       else
         puts "sessions_controller.update ko"
-        flash.now[:notice] = t(:ctrl_user_not_connected, :user => @current_user.login)
+        flash.now[:notice] = t(:ctrl_user_not_connected, :user => @current_username)
         format.html { redirect_to_main(uri) } 
         format.xml  { render :xml => @current_user.errors, :status => :unprocessable_entity }
       end
@@ -67,7 +67,7 @@ class SessionsController < ApplicationController
   def destroy
     puts "sessions_controller.destroy:"+params.inspect
     session[:user_id] = nil
-    flash[:notice] = t(:ctrl_user_disconnected, :user => @current_user.login) if @current_user != :user_not_connected
+    flash[:notice] = t(:ctrl_user_disconnected, :user => @current_username) if @current_user != nil
     redirect_to(:controller => "main", :action => "index")
   end
 

@@ -38,7 +38,7 @@
 
 <table class='menu_bas'>
     <tr>
-        <% if(!@favori.get("document")) %>
+        <% unless @favori.get("document").count==0 %>
         <% form_for(@customer, :url => {:id => @customer.id, :action => "add_docs" }) do |f| %>
         <td>
             <%= select("relation","document",options_for_select(@relation_types_document)) %>
@@ -50,7 +50,7 @@
             </tr>
             <tr>
                 <% end %>
-                <% if(!@favori.get("project")) %>
+                <% unless @favori.get("project").count==0 %>
                 <% form_for(@customer, :url => {:id => @customer.id, :action => "add_projects" }) do |f| %>
                 <td>
                     <%= select("relation","project",options_for_select(@relation_types_project)) %>

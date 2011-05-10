@@ -121,9 +121,9 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     relation  = params[:relation][:document]
     respond_to do |format|
-      unless @favori["document"].nil?
+      unless @favori.get("document").nil?
         flash[:notice] = ""
-        @favori["document"].items.each do |item|
+        @favori.get("document").each do |item|
           link_ = Link.create_new(:customer, @customer, :document, item, relation)
           link  = link_[:link]
           unless link.nil?
@@ -136,7 +136,7 @@ class CustomersController < ApplicationController
             flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation, :msg => nil)
           end
         end
-        empty_favori("document")
+        empty_favori_by_type("document")
       else
         flash[:notice] = t(:ctrl_nothing_to_paste, :typeobj => t(:ctrl_document))
       end
@@ -149,9 +149,9 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     relation  = params[:relation][:project]
     respond_to do |format|
-      unless @favori["project"].nil?
-        flash[:notice] = ""
-        @favori["project"].items.each do |item|
+      unless @favori.get("project").nil?
+          flash[:notice] = ""
+          @favori.get("project").each do |item|
           link_ = Link.create_new(:customer, @customer, :project, item, relation)
           link  = link_[:link]
           unless link.nil?
@@ -164,7 +164,7 @@ class CustomersController < ApplicationController
             flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation, :msg => nil)
           end
         end
-        empty_favori("project")
+        empty_favori_by_type("project")
       else
         flash[:notice] = t(:ctrl_nothing_to_paste, :typeobj => t(:ctrl_project))
       end

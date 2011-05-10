@@ -300,6 +300,15 @@ fr:
   label_groups_may_launch: Groupes pouvant lancer ce process
   label_groups: Groupes
   label_launch_fields: Champs
+  label_belongs_to: Groupes responsables
+  label_not_belongs_to: Autres groupes
+  button_add: Ajouter
+  button_remove: Enlever
+  label_fields: Attributs
+  label_objects: Objets en relation
+  button_swap: Echanger
+  button_reset: Défaut
+  button_undo: Annuler
   # fields documents
   document_edit: Edition document
   document_list: Liste documents
@@ -502,12 +511,36 @@ fr:
   new_definition: Nouvelle définition de processus
   new_process: Nouveau processus
   workitems_all: Toutes les tâches
-  
+  label_expressions: Expressions
+  label_launch_time: Lancé le
+  label_workitems: Tâches
+  label_paused: En pause
+  label_errors: Erreurs
+  launch_process: Lancer le processus
+  abort process: Abandonner le processus
+  # workitems
+  label_relation: Relation
+  label_wfid: Processus
+  label_workflow: Définition
+  label_since: Depuis
+  label_expid: Expression
+  label_store: Store
+  label_participant: Participant
+  label_activity: Activité
+  label_dispatch_time: Envoyé le
   # help
-  help_title: "Aide relative à l application SYLRPLM" 
+  help_title: Aide relative à l application SYLRPLM 
   help_close_window: Fermer la fenêtre d'aide
   # messages
-  msg.no_item_to_display: "Il n'y a rien à afficher."
+  msg_no_item_to_display: Il n'y a rien à afficher.
+  ###########################
+  # helper
+  ###########################
+  #
+  # processes
+  #
+  label_more: Détails
+  label_less: Sans détails
   ###########################
   # plugins
   ###########################

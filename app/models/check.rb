@@ -16,6 +16,12 @@ class Check < ActiveRecord::Base
 
   def self.create_new(object_cls, object, params, user)
     if(params)
+      # commit genere par le view 
+      params.delete("commit")
+      params.delete("authenticity_token")
+      params.delete("_method")
+      params.delete("action")
+      params.delete("controller")
       obj=Check.new(params)
     else
       obj=Check.new
@@ -33,6 +39,12 @@ class Check < ActiveRecord::Base
     self.status=2
     self.in_user=user
     if(params)
+      # commit genere par le view 
+      params.delete("commit")
+      params.delete("authenticity_token")
+      params.delete("_method")
+      params.delete("action")
+      params.delete("controller")
       self.in_reason=params[:reason]
     end
     self.in_date=DateTime.now
@@ -42,6 +54,12 @@ class Check < ActiveRecord::Base
     self.status=3
     self.in_user=user
     if(params)
+      # commit genere par le view 
+      params.delete("commit")
+      params.delete("authenticity_token")
+      params.delete("_method")
+      params.delete("action")
+      params.delete("controller")
       self.in_reason=params[:reason]
     end
     self.in_date=DateTime.now

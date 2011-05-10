@@ -60,6 +60,20 @@
         </td>
     </tr>
 </table>
+<h1></h1>
+<%= h_sylrplm_tree %>
+<h1></h1>
+<table class='menu_bas'>
+	<tr>
+		<% unless @favori.get('document').count==0 %>
+		<% form_for(@document, :url => {:id => @document.id, :action => "add_docs" }) do |f| %>
+		<td> <%= select("relation","document",options_for_select(@relation_types_document)) %></td>
+		<td><%= submit_tag t("paste_documents") %></td>
+		<% end %>
+		<%end%>
+	</tr>
+	</td>
+</table>
 <%= render(:partial => "shared/object_workitems", :object => @document) %>
 
 <h1><%= t("document_check") %></h1>
@@ -72,10 +86,11 @@
     </tr>
     <% else %>
     <% if(@document.is_checked()==false) %>
-    <% form_for(@document, :url => {:id => @document.id, :action => "check_out" }) do |f| %>
+    <% form_for(@document, :url => {:id => @document.id, :action => :check_out }) do |f| %>
     <tr>
         <td>
             <%= f.submit t("check_out") %>
+<%= link_to t("check_out"), :id => @document.id, :action => "check_out" %>
         </td>
         <td>
             <%= label_tag t("reason") %>

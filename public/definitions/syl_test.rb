@@ -8,16 +8,20 @@ class SylEditeur < OpenWFE::ProcessDefinition
 
   cursor do
 
-    createur :activity=>"Mettez l objet(s) de ref dans le presse papier"
+    createur :activity => "Mettez l objet(s) à promouvoir dans le presse papier puis valider cette tâche"
+    plm Ruote::PlmParticipant, :task=>"promote", :step=>"init"
     
-    wfdocument Ruote::WfDocument, :task=>"promote_init", :relation=>"applicable"
+    reviewer :activity => "Mettez les objet(s) de référence dans le presse papier puis valider cette tâche"
+    plm Ruote::PlmParticipant, :task=>"promote", :step=>"review"
 
     #    wfblock
 
-    #wfdocument Ruote::WfDocument, :task=>"valid"
-    wfdocument Ruote::WfDocument, :task=>"promote_exec"
 
-    aztest
+    #wfdocument Ruote::WfDocument, :task=>"valid"
+    valider :activity => "Merci de valider ou non le(s) objets applicables"
+    plm Ruote::PlmParticipant, :task=>"promote", :step=>"exec"
+
+    creator :activity => "Verifier que l'objet(s) a été promu"
 
   end
 

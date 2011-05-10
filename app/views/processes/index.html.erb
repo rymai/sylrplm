@@ -27,7 +27,7 @@
       errors_path(ps.wfid)) %></td>
     <td class="coll_buttons">
       <%= link_to h_img_show.to_s, process_path(ps.wfid) %> |
-      <%= link_to_if @current_user!=:user_not_connected && @current_user.is_launcher?(ps), h_img_abort, process_path(ps.wfid), :confirm => 'Are you sure ?', :method => :delete %>
+      <%= link_to_if @current_user!=nil && @current_user.is_launcher?(ps), h_img_abort, process_path(ps.wfid), :confirm => 'Are you sure ?', :method => :delete %>
     </td>
   </tr>
 <% end -%>

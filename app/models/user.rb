@@ -78,7 +78,6 @@ class User < ActiveRecord::Base
   # Returns the list of store names this user has access to
   #
   def store_names
-
     [ system_name, 'unknown' ] + group_names
   end
 
@@ -86,7 +85,6 @@ class User < ActiveRecord::Base
   # Returns the array of group names the user belongs to.
   #
   def group_names
-
     groups.collect { |g| g.name }
   end
 
@@ -94,7 +92,6 @@ class User < ActiveRecord::Base
   # Returns true if the user is member of the administrators group
   #
   def is_admin?
-
     group_names.include?(ADMIN_GROUP_NAME)
   end
 
@@ -103,7 +100,6 @@ class User < ActiveRecord::Base
   # user launched the given process instance
   #
   def is_launcher? (process)
-
     is_admin? or login == process.variables['launcher']
   end
 
@@ -112,7 +108,6 @@ class User < ActiveRecord::Base
   # a process instance of the given definition
   #
   def may_launch? (definition)
-
     return false if definition.is_special?
     is_admin? or (self.groups & definition.groups).size > 0
   end
@@ -273,10 +268,10 @@ class User < ActiveRecord::Base
       if  user = User.find(session[:user_id])
         user
       else
-        :user_not_connected
+        nil
       end
     else
-      :user_not_connected
+      nil
     end
   end
 
@@ -303,10 +298,10 @@ class User < ActiveRecord::Base
       if user = User.find(session[:user_id])
         user.login
       else
-        :user_unknown
+        nil
       end
     else
-      :user_not_connected
+      nil
     end
   end
 
@@ -317,13 +312,13 @@ class User < ActiveRecord::Base
         if(user.role != nil)
           user.role.title
         else
-          ""
+          nil
         end
       else
-        ""
+        nil
       end
     else
-      ""
+      nil
     end
   end
 
@@ -334,13 +329,13 @@ class User < ActiveRecord::Base
         if(user.email != nil)
           user.email
         else
-          :user_unknown_mail
+          nil
         end
       else
-        :user_unknown_mail
+        nil
       end
     else
-      :user_unknown_mail
+      nil
     end
   end
 
@@ -355,7 +350,6 @@ class User < ActiveRecord::Base
   # User and Group share this method, which returns login and name respectively
   #
   def system_name
-
     self.login
   end
 

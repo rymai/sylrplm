@@ -14,7 +14,7 @@ if RuotePlugin.ruote_engine
     raise "dead beef !*******************************************************"
   end
 
-  RuotePlugin.ruote_engine.register_participant "wfdocument", Ruote::WfDocument
+  RuotePlugin.ruote_engine.register_participant "plm", Ruote::PlmParticipant
 
   #  RuotePlugin.ruote_engine.register_participant "wfblock" do |workitem|
   #    puts "wfbloc:********************************************"+workitem.inspect

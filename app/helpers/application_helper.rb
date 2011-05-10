@@ -1,5 +1,29 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  # renvoie la valeur de l'attribut att sur current si
+  # 1- current n'a pas le meme identifiant que previous
+  # 2- que les valeurs de l'attribut sont differentes entre les 2objets
+  # att peut etre un attribut "compose" tel que owner.login
+  def h_if_differ(current, previous,  att)
+    ret=get_val(current,att)
+    unless previous.nil?
+      if current.ident == previous.ident && ret == get_val(previous, att)
+        ret= ""
+      end
+    end
+    ret
+  end
+
+  # renvoie la valeur de l'attribut att sur l'objet
+  # att peut etre un attribut "compose" tel que owner.login, d'ou l'utilisation de eval
+  def get_val(obj, att)
+    blk="obj="+obj.class.name+".find("+obj.id.to_s+")\nobj."+att
+    #puts "blk="+blk
+    ret = eval blk
+
+    ret
+  end
+
   def h_menu(href,help,title)
     bloc=""
     bloc<<"<a class='menu' onclick=\"return helpPopup('#{help}','#{href}');\" >#{title}</a><br />";
@@ -92,13 +116,13 @@ module ApplicationHelper
   end
 
   def h_img_edit
-     h_img("edit")
-   end
-  def h_img_edit_task
-     h_img("edit_task")
-   end
+    h_img("edit")
+  end
 
-  
+  def h_img_edit_task
+    h_img("edit_task")
+  end
+
   def h_img_show
     h_img("explorer")
   end
@@ -106,6 +130,7 @@ module ApplicationHelper
   def h_img_launch
     h_img("launch")
   end
+
   def h_img_launchthis
     h_img("launchthis")
   end
@@ -133,18 +158,19 @@ module ApplicationHelper
   def h_img_list
     h_img("list")
   end
-  
-  
+
   def h_img_abort
-      h_img("abort")
-    end
-    def h_img_all
-      h_img("all")
-    end
-    def h_img_pick
-      h_img("pick")
-    end
-    
+    h_img("abort")
+  end
+
+  def h_img_all
+    h_img("all")
+  end
+
+  def h_img_pick
+    h_img("pick")
+  end
+
   def h_img_sub(name)
     image_submit_tag(name.to_s+".png",:title=>t(name), :class=>"submit")
   end
@@ -265,7 +291,7 @@ module ApplicationHelper
   # FLUO
   #
   def render_fluo (opts)
-    
+
     tree = if d = opts[:definition]
       "<script src=\"/definitions/#{d.id}/tree.js?var=proc_tree\"></script>"
     elsif pr = opts[:process]
@@ -277,18 +303,19 @@ module ApplicationHelper
     else
       '<script>var proc_tree = null;</script>'
     end
-    
+
     hl = if e = opts[:expid]
       "\nFluoCan.highlight('fluo', '#{e}');"
     else
       ''
     end
-
+    more=t('label_more')
+    less=t('label_less')
     workitems = Array(opts[:workitems])
 
     %{
       <!-- fluo -->
-    
+
       <script src="/javascripts/fluo-json.js"></script>
       <script src="/javascripts/fluo-can.js"></script>
 
@@ -300,10 +327,11 @@ module ApplicationHelper
       <a id='dataurl_link'>
         <canvas id="fluo" width="50" height="50"></canvas>
       </a>
-      <div id='fluo_minor_toggle' style='cursor: pointer;'>more</div>
-    
+      <div  id='fluo_minor_toggle' style='cursor: pointer;'>
+            <table class='menu_bas'><tr><td><div id='fluo_toggle'>#{more}</div></td></tr></table>
+      </div>
       #{tree}
-    
+
       <script>
         if (proc_tree) {
 
@@ -316,12 +344,12 @@ module ApplicationHelper
           var a = document.getElementById('dataurl_link');
           a.href = document.getElementById('fluo').toDataURL();
 
-          var toggle = document.getElementById('fluo_minor_toggle');
+          var toggle = document.getElementById('fluo_toggle');
           toggle.onclick = function () {
             FluoCan.toggleMinor('fluo');
             FluoCan.crop('fluo');
-            if (toggle.innerHTML == 'more') toggle.innerHTML = 'less'
-            else toggle.innerHTML = 'more';
+            if (toggle.innerHTML == '#{more}') toggle.innerHTML = '#{less}'
+            else toggle.innerHTML = '#{more}';
           };
         }
       </script>
@@ -337,7 +365,7 @@ module ApplicationHelper
     v = h(item.send(accessor))
     link_to(v, (param_name || accessor) => v)
   end
-  
+
   def connected
     User.connected(session)
   end

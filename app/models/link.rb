@@ -15,99 +15,102 @@ class Link < ActiveRecord::Base
   end
 
   def self.create_new_byid(father_type, father, child_type, child, relation)
-      ok=false
-      msg="ctrl_link_"+father_type.to_s+"_"+child_type.to_s
-      if(father_type.to_s=="customer" && child_type.to_s=="project")
-        ok=true
-        if(is_child_of(father_type.to_s, father, child_type.to_s, child))
-          ok=false
-          msg=:ctrl_link_already_customer_project.to_s
-        elsif(nb_linked(child_type, child)>0)
-          ok=false
-          msg=:ctrl_link_already_project.to_s
-        end
+    ok=false
+    msg="ctrl_link_"+father_type.to_s+"_"+child_type.to_s
+    if(father_type.to_s=="customer" && child_type.to_s=="project")
+      ok=true
+      if(is_child_of(father_type.to_s, father, child_type.to_s, child))
+        ok=false
+        msg=:ctrl_link_already_customer_project.to_s
+      elsif(nb_linked(child_type, child)>0)
+        ok=false
+        msg=:ctrl_link_already_project.to_s
       end
-      if(father_type.to_s=="customer" && child_type.to_s=="document")
-        ok=true
-        if(is_child_of(father_type.to_s, father, child_type.to_s, child))
-          ok=false
-          msg=:ctrl_link_already_customer_document.to_s
-        end
-      end
-      if(father_type.to_s=="project" && child_type.to_s=="part")
-        ok=true
-      end
-      if(father_type=="project" && child_type=="document")
-        ok=true
-        if(is_child_of(father_type.to_s, father, child_type.to_s, child))
-          ok=false
-          msg=:ctrl_link_already_project_document.to_s
-        end
-      end
-      if(father_type.to_s=="part" && child_type.to_s=="part")
-        ok=true
-        if(father==child)
-          ok=false
-          msg=:ctrl_link_recursivity.to_s
-        end
-      end
-      if(father_type.to_s=="part" && child_type.to_s=="document")
-        ok=true
-        if(is_child_of(father_type.to_s, father, child_type.to_s, child))
-          ok=false
-          msg=:ctrl_link_already_part_document.to_s
-        end
-      end
-      if(father_type.to_s=="workitem" && child_type.to_s=="document")
-        ok=true
-        if(is_child_of(father_type.to_s, father, child_type.to_s, child))
-          ok=false
-          msg=:ctrl_link_already_workitem_document.to_s
-        end
-      end
-      if(father_type.to_s=="workitem" && child_type.to_s=="part")
-        ok=true
-        if(is_child_of(father_type.to_s, father, child_type.to_s, child))
-          ok=false
-          msg=:ctrl_link_already_workitem_part.to_s
-        end
-      end
-      if(child_type=="forum")
-        ok=true
-      end
-      if(child_type=="datafile")
-        ok=true
-      end
-      link=nil
-      if(ok==true)
-        link = Link.new
-        link.father_type=father_type.to_s
-        link.child_type=child_type.to_s
-        link.father_id=father
-        link.child_id=child
-        link.name=relation
-      end
-      puts "link:create_new:link="+link.inspect+" msg="+msg.to_s
-      {:link=>link,:msg=>msg}
     end
-  
-    def self.create_new(father_type, father, child_type, child, relation)
-      create_new_byid(father_type, father.id, child_type, child.id, relation)
+    if(father_type.to_s=="customer" && child_type.to_s=="document")
+      ok=true
+      if(is_child_of(father_type.to_s, father, child_type.to_s, child))
+        ok=false
+        msg=:ctrl_link_already_customer_document.to_s
+      end
     end
-    
-#  def before_save
-#    puts "link.before_save:"+self.inspect
-#    # ##self.child_type=self.child.class.to_s.underscore
-#    self.name=self.child.link_attributes[:name]
-#    puts "link.before_save:"+self.inspect
-#    self
-#  end
+    if(father_type.to_s=="document" && child_type.to_s=="document")
+      ok=true
+    end
+    if(father_type.to_s=="project" && child_type.to_s=="part")
+      ok=true
+    end
+    if(father_type=="project" && child_type=="document")
+      ok=true
+      if(is_child_of(father_type.to_s, father, child_type.to_s, child))
+        ok=false
+        msg=:ctrl_link_already_project_document.to_s
+      end
+    end
+    if(father_type.to_s=="part" && child_type.to_s=="part")
+      ok=true
+      if(father==child)
+        ok=false
+        msg=:ctrl_link_recursivity.to_s
+      end
+    end
+    if(father_type.to_s=="part" && child_type.to_s=="document")
+      ok=true
+      if(is_child_of(father_type.to_s, father, child_type.to_s, child))
+        ok=false
+        msg=:ctrl_link_already_part_document.to_s
+      end
+    end
+    if(father_type.to_s=="workitem" && child_type.to_s=="document")
+      ok=true
+      if(is_child_of(father_type.to_s, father, child_type.to_s, child))
+        ok=false
+        msg=:ctrl_link_already_workitem_document.to_s
+      end
+    end
+    if(father_type.to_s=="workitem" && child_type.to_s=="part")
+      ok=true
+      if(is_child_of(father_type.to_s, father, child_type.to_s, child))
+        ok=false
+        msg=:ctrl_link_already_workitem_part.to_s
+      end
+    end
+    if(child_type=="forum")
+      ok=true
+    end
+    if(child_type=="datafile")
+      ok=true
+    end
+    link=nil
+    if(ok==true)
+      link = Link.new
+      link.father_type=father_type.to_s
+      link.child_type=child_type.to_s
+      link.father_id=father
+      link.child_id=child
+      link.name=relation
+    end
+    puts "link:create_new:link="+link.inspect+" msg="+msg.to_s
+    {:link=>link,:msg=>msg}
+  end
 
-#  def child
-#    child_cls=eval(self.child_type.capitalize)
-#    #puts "link.child:classe="+child_cls.inspect
-#    c=child_cls.new(self.child_id)
-#  end
+  def self.create_new(father_type, father, child_type, child, relation)
+    create_new_byid(father_type, father.id, child_type, child.id, relation)
+  end
+
+  #  def before_save
+  #    puts "link.before_save:"+self.inspect
+  #    # ##self.child_type=self.child.class.to_s.underscore
+  #    self.name=self.child.link_attributes[:name]
+  #    puts "link.before_save:"+self.inspect
+  #    self
+  #  end
+
+  #  def child
+  #    child_cls=eval(self.child_type.capitalize)
+  #    #puts "link.child:classe="+child_cls.inspect
+  #    c=child_cls.new(self.child_id)
+  #  end
 
   def self.find_childs(father_type, father, child_type=nil)
     unless child_type.nil?

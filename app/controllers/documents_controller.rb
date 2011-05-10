@@ -27,6 +27,10 @@ class DocumentsController < ApplicationController
     @projects  = @document.projects
     @customers = @document.customers
     @checkout  = Check.get_checkout("document", @document)
+    @tree_up      = create_tree_up(@document)
+    @relation_types_document = Typesobject.get_types_names(:relation_document)
+    @tree                    = create_tree(@document)
+    @documents               = @document.documents
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @document }
@@ -161,8 +165,10 @@ class DocumentsController < ApplicationController
   end
 
   def check_out
+    puts "===DocumentsController.check_out:"+params.inspect
     @document = Document.find(params[:id])
     st=@document.check_out(params,@current_user)
+    puts "===DocumentsController.check_out:st="+st
     if st!="already_checkout"
       if st!="no_reason"
         if st=="ok"
@@ -254,6 +260,37 @@ class DocumentsController < ApplicationController
     end
   end
 
+  def add_docs
+    @document = Document.find(params[:id])
+    relation=params[:relation][:document]
+    respond_to do |format|
+      unless @favori.get("document").nil?
+        flash[:notice] = ""
+        params.each do |item|
+          #flash[:notice]+="_"+item.to_s
+        end
+        @favori.get("document").each do |item|
+          link_=Link.create_new("document", @document, "document", item, relation)
+          link=link_[:link]
+          if(link!=nil)
+            if(link.save)
+              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+            else
+              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+            end
+          else
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>nil)
+          end
+        end
+        empty_favori_by_type("document")
+      else
+        flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_document))
+      end
+      format.html { redirect_to(@document) }
+      format.xml  { head :ok }
+    end
+  end
+
   def add_datafile
     @object = Document.find(params[:id])
     error   = false
@@ -293,6 +330,18 @@ class DocumentsController < ApplicationController
   #    @favori.add(obj)
   #  end
   #
-    
+  def create_tree(obj)
+    tree = Tree.new({ :label => t(:ctrl_object_explorer, :typeobj => t(:ctrl_document)), :open => true })
+    session[:tree_document] = obj
+    follow_tree_document(tree, obj, self)
+    tree
+  end
+
+  def create_tree_up(doc)
+    tree = Tree.new({:label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_document)),:open => true})
+    session[:tree_object]=doc
+    follow_tree_up_document(tree, doc,self)
+    tree
+  end
 
 end

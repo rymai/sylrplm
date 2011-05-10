@@ -1,4 +1,3 @@
-require 'ruote/sylrplm/wf_document'
-require 'ruote/sylrplm/wf_part'
+require 'ruote/sylrplm/plm_participant'
 
 

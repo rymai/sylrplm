@@ -48,9 +48,14 @@ h2 {
 }
 
 input, option, select, textarea {
+	
 	padding:0pt;
 	margin:0pt;
 	background-color: #DDDDDD;
+}
+
+input {
+	font-weight:bold;
 }
 
 table {

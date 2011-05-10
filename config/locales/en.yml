@@ -298,6 +298,15 @@ en:
   label_groups_may_launch: Group that may launch
   label_groups: Groups
   label_launch_fields: Launch fields
+  label_belongs_to: Groups
+  label_not_belongs_to: Other groups
+  button_add: Add
+  button_remove: Remove
+  label_fields: Attributs
+  label_objects: Objets en relation
+  button_swap: Echanger
+  button_reset: Défaut
+  button_undo: Annuler
   # fields documents
   document_edit: Editing document
   document_list: Listing documents
@@ -504,11 +513,37 @@ en:
   new_definition: Nex process définition 
   new_process: New process
   workitems_all: All tasks
+  label_expressions: Expressions
+  label_launch_time: Launch
+  label_workitems: Workitems
+  label_paused: Paused
+  label_errors: Errors
+  launch_process: Launch new process instance
+  abort process: Abort the process
+  # workitems
+  label_relation: Relation
+  label_wfid: Processus
+  label_workflow: Definition
+  label_since: Since
+  label_expid: Expression
+  label_store: Store
+  label_participant: Participant
+  label_activity: Activity
+  label_dispatch_time: Dispatch
+  button_task_validate: Validate
   # help
   help_title: "Help on SYLRPLM application"
   help_close_window: Close the help window
   # messages
   msg.no_item_to_display: "There are no items to display."
+  ###########################
+  # helper
+  ###########################
+  #
+  # processes
+  #
+  label_more: More
+  label_less: Less
   ###########################
   # plugins
   ###########################

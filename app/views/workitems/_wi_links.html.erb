@@ -1,23 +1,24 @@
+<% if @wi_links.count>0 %>
 <tr>
     <td>
     <table>
         <tr>
             <td>
-                Objets
+                <%=t(:label_objects)%>
             </td>
         </tr>
         <tr>
             <th class="nhover">
-                relation
+                <%=t(:label_relation)%>
             </th>
             <th class="nhover">
-                type objet 
+                <%=t(:label_type)%> 
             </th>
             <th class="nhover">
-                designation
+                <%=t(:label_designation)%>
             </th>
             <th>
-                identifiant
+                <%=t(:label_ident)%>
             </th>
         </tr>
         <% for link in @wi_links %>
@@ -29,12 +30,13 @@
                 <%= h(link[:link].child_type) %>
             </td>
             <td class="nhover">
-                <%= h(link[:object].designation) %>
+                <%= h(link[:typeobj].designation) %>
             </td>
             <td class="nhover">
-                <%= link_to h(link[:object].ident), link[:object] %>
+                <%= link_to h(link[:typeobj].ident), link[:typeobj] %>
             </td>
         </tr>
         <%end %>
     </table>
 </tr>
+<%end%>

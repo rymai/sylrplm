@@ -22,32 +22,32 @@
     <thead>
         <tr>
             <th>
-                relation
+                <%=t(:label_relation)%>
             </th>
             <th>
-                id
+                <%=t(:label_id)%>
             </th>
             
             <th>
-                wfid
+                <%=t(:label_wfid)%>
             </th>
             <th>
-                workflow
+                <%=t(:label_workflow)%>
             </th>
             <th>
-                since
+                <%=t(:label_since)%>
             </th>
             <th>
-                expid
+                <%=t(:label_expid)%>
             </th>
             <th>
-                store
+                <%=t(:label_store)%>
             </th>
             <th>
-                participant
+                <%=t(:label_participant)%>
             </th>
             <th>
-                activity
+                <%=t(:label_activity)%>
             </th>
             <th class="align-right">
                 <%= workitems.size %>workitems
@@ -97,4 +97,4 @@
 :id => 'workitem_delegation_form',
 :method => :put,
 :multipart => true) do -%>
-<input type="hidden" name="store_name" id="store_name" value="<%= @current_user.login %>" /><% end %>
+<input type="hidden" name="store_name" id="store_name" value="<%= @current_username %>" /><% end %>

@@ -1,16 +1,15 @@
-<h1><%=t("workitems_edit") %><%= h @workitem.wfid %></h1>
+<h1><%= t("workitems_edit") %><%= h @workitem.wfid %></h1>
 <script>
+	function saveWi () {
+		var f = byId('workitem_form');
+		f.onsubmit.call(); // making sure it happens...
+		f.submit();
+	}
 
-  function saveWi () {
-    var f = byId('workitem_form');
-    f.onsubmit.call(); // making sure it happens...
-    f.submit();
-  }
-  function proceedWi () {
-    byId('state').value = 'proceeded';
-    saveWi();
-  }
-
+	function proceedWi () {
+		byId('state').value = 'proceeded';
+		saveWi();
+	}
 </script>
 
 <div style="float: left;">
@@ -23,8 +22,16 @@
 
   <input type="hidden" name="state" id="state" value="" /><!-- :( -->
 
-  <table>
-
+  <table class='menu_bas'>
+		<tr class="nhover">
+      <td colspan='2'>
+        <%= link_to_function(t("update"), 'saveWi()') %> 
+        <%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> 
+        <%= link_to(t("list"), workitems_path) %>
+      <td>
+    </tr>
+</table>
+ <table>
     <%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem } %>
 
     <tr class="nhover">
@@ -35,13 +42,7 @@
       </td>
     </tr>
 	<%= render(:partial => "workitems/wi_links") %>
-    <tr class="nhover">
-      <td colspan='2'>
-        <%= link_to_function(t("update"), 'saveWi()') %> <%=t("delegate") %>
-        <%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> 
-        <%= link_to(t("list"), workitems_path) %>
-      <td>
-    </tr>
+    
   </table>
   <% end -%>
 

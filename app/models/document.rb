@@ -15,6 +15,9 @@ class Document < ActiveRecord::Base
 
   has_many :datafile
   has_many :checks
+  
+  has_many :links_documents, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='document' and child_type='document'"],:source=>'document'
+  has_many :documents , :through => :links_documents,:source=>'document'
 
   has_many :links_parts, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_type='part' and child_type='document'"]
   has_many :parts, :through => :links_parts

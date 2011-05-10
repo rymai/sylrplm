@@ -136,12 +136,12 @@ class PartsController < ApplicationController
     @part = Part.find(params[:id])
     relation=params[:relation][:document]
     respond_to do |format|
-      if @favori["document"] != nil
+      unless @favori.get("document").nil?
         flash[:notice] = ""
         params.each do |item|
           #flash[:notice]+="_"+item.to_s
         end
-        @favori["document"].items.each do |item|
+        @favori.get("document").each do |item|
           link_=Link.create_new("part", @part, "document", item, relation)
           link=link_[:link]
           if(link!=nil)
@@ -154,7 +154,7 @@ class PartsController < ApplicationController
             flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>nil)
           end
         end
-        empty_favori("document")
+        empty_favori_by_type("document")
       else
         flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_document))
       end
@@ -167,9 +167,9 @@ class PartsController < ApplicationController
     @part = Part.find(params[:id])
     relation=params[:relation][:part]
     respond_to do |format|
-      if @favori["part"] != nil
+      unless @favori.get("part").nil?
         flash[:notice] = ""
-        @favori["part"].items.each do |item|
+        @favori.get("part").each do |item|
           link_=Link.create_new("part", @part, "part", item, relation)
           link=link_[:link]
           if(link!=nil)
@@ -182,7 +182,7 @@ class PartsController < ApplicationController
             flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>nil)
           end
         end
-        empty_favori("part")
+        empty_favori_by_type("part")
       else
         flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_part))
       end

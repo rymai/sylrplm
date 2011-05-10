@@ -4,7 +4,7 @@
         <%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem } %>
         <tr class="nhover">
             <td>
-                fields
+                <%=t(:label_fields)%>
             </td>
             <td>
                 <pre><%= h @workitem.field_hash.to_json.gsub(/,/, ",\n") %></pre>

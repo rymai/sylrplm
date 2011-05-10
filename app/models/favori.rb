@@ -22,7 +22,7 @@ class Favori
       @items[type]=nil
       #puts "favori.reset:"+@items[type].inspect
     else
-      @items.size==0
+      @items.size=0
     end
 
   end

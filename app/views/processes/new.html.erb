@@ -5,7 +5,7 @@
     <table>
         <tr>
             <td>
-                uri
+                <%=t(:label_uri)%>
             </td>
             <td>
                 <%= h @definition.uri %>
@@ -58,8 +58,8 @@
         <% end %>
        <tr>
             <td colspan="2" class="nhover">
-                <%= submit_tag 'launch new process instance' %>
-                <%= link_to 'back', :back %>
+                <%= submit_tag t('launch_process') %>
+                <%= link_to t("list"), :back %>
             </td>
         </tr>
     </table>
