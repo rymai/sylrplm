@@ -1,0 +1,42 @@
+admin:  
+  id: 1
+  login: admin
+  email: sylvere.coutable@laposte.net
+  volume_id: 1
+
+consultant:
+  id: 2
+  login: consultant
+  email: sylvere.coutable@laposte.net
+  volume_id: 1
+
+designer:
+  id: 3
+  login: designer
+  email: sylvere.coutable@laposte.net
+  volume_id: 1
+
+valider:
+  id: 4
+  login: valider
+  email: sylvere.coutable@laposte.net
+  volume_id: 1
+	
+alice:
+  id: 12
+  login: alice
+  email: alice@example.com
+  volume_id: 1
+
+bob:
+  id: 13
+  login: bob
+  email: bob@example.com
+  volume_id: 1
+
+charly:
+  id: 14
+  login: charly
+  email: charly@example.com
+  volume_id: 1
+

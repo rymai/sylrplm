@@ -1,0 +1,20 @@
+admin:
+  id: 1
+  title: admin
+  description: Administrateur
+
+consultant:
+  id: 2
+  title: consultant
+  description: consultant
+
+designer:
+  id: 3
+  title: designer
+  description: designer
+
+valider:
+  id: 4
+  title: valider
+  description: valider
+  
