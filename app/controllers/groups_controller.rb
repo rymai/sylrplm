@@ -134,13 +134,6 @@ class GroupsController < ApplicationController
     end
   end
 
-  protected
-
-  def authorized?
-
-    return false unless @current_user
-
-    %w{ show index }.include?(action_name) || @current_user.is_admin?
-  end
+ 
 end
 

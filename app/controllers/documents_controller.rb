@@ -1,7 +1,7 @@
 class DocumentsController < ApplicationController
   include Controllers::PlmObjectControllerModule
   include Controllers::PlmInitControllerModule
-  before_filter :check_init, :only => :new
+  #before_filter :check_init, :only => :new
   #droits d'acces suivant le controller et l'action demandee
   #administration par le menu Access
   #access_control (Document.controller_access())
@@ -311,7 +311,8 @@ class DocumentsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-
+  
+  private
   #  def add_document_to_favori
   #    puts "===DocumentsController.add_document_to_favori:id="+params[:id].to_s
   #    document = Document.find(params[:id])

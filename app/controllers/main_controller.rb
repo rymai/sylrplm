@@ -2,7 +2,6 @@ class MainController < ApplicationController
   include Controllers::PlmInitControllerModule
 
   access_control(Access.find_for_controller(controller_class_name))
-
   def infos
     request.env["PATH_INFO"] +":"+__FILE__+":"+__LINE__.to_s
   end
@@ -41,14 +40,17 @@ class MainController < ApplicationController
 
   # appelle si il manque des objets pour demarrer (user, role, types, status)
   def init_objects
+    puts "main_controller.init_objects"
     check_init_objects
     @themes = get_themes(@theme)
     puts "main_controller.init_objects"
+    create_admin
     unless params[:domain].blank?
       # creation du domaine demande: status et types d'objets
       create_domain(params[:domain])
-      update_first_volume(params[:directory])
+      update_admin(params[:directory])
       check_init
+      st=Access.init
       @domains == nil
       flash[:notice] = t(:ctrl_init_done)
     else

@@ -22,3 +22,10 @@ leave:
   description: "may I leave the office ?"
   launch_fields: "{\"employee\":\"\",\"from_date\":\"\",\"to_date\":\"\",\"reason\":\"\"}"
 
+promote:
+  id: 5
+  name: promote
+  uri: /definitions/promote.rb
+  description: promotion
+  launch_fields: "{}"
+

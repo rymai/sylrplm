@@ -1,4 +1,6 @@
 module Controllers::PlmObjectControllerModule
+  
+
   def ctrl_revise(model)
     define_variables
     object = model.find(params[:id])

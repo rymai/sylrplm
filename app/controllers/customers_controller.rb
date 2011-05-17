@@ -110,12 +110,7 @@ class CustomersController < ApplicationController
     end
   end
 
-  def create_tree(obj)
-    tree = Tree.new({ :label => t(:ctrl_object_explorer, :typeobj => t(:ctrl_customer)), :open => true })
-    session[:tree_object] = obj
-    follow_tree_customer(tree, obj, self)
-    tree
-  end
+  
 
   def add_docs
     @customer = Customer.find(params[:id])
@@ -199,5 +194,12 @@ class CustomersController < ApplicationController
     @object = Customer.find(params[:id])
     ctrl_add_forum(@object,"customer")
   end
-
+  private
+    
+    def create_tree(obj)
+      tree = Tree.new({ :label => t(:ctrl_object_explorer, :typeobj => t(:ctrl_customer)), :open => true })
+      session[:tree_object] = obj
+      follow_tree_customer(tree, obj, self)
+      tree
+    end
 end

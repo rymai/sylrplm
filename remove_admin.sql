@@ -6,3 +6,4 @@ delete from roles_users;
 delete from accesses;
 delete from volumes;
 delete from sequences;
+delete from user_groups;

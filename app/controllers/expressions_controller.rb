@@ -107,7 +107,7 @@ class ExpressionsController < ApplicationController
     # TODO, well maybe
   end
 
-  protected
+  private
 
 #  def authorized?
 #    #

@@ -185,7 +185,7 @@ class WorkitemsController < ApplicationController
     # TODO : no need for a redirection in case of xml/json...
   end
 
-  protected
+  private
 
   #
   # find workitem, says 'unauthorized' if the user is attempting to

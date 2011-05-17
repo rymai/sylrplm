@@ -1,31 +1,28 @@
-<h1>
-<%=t(:hello) %>
-</H1>
-
-            <%= render(:partial => "main/check_types") %>
-            <%= render(:partial => "main/check_status") %>
-
+<h1><%= t(:hello) %></H1>
+<!--
+<%= render(:partial => "main/check_types") %>
+<%= render(:partial => "main/check_status") %>
+-->
 <% if @domains != nil %>
 <% form_tag do |f| %>
 <p>
-    <label for="domain">
-        <%=t(:label_domain) %>
-    </label>
-    <%= select_tag("domain",@domains) %>
+	<label for="domain">
+		<%= t(:label_domain) %>
+	</label>
+	<%= select_tag("domain",@domains) %>
 </p>
 <p>
-    <label for="directory">
-        <%=t(:label_directory) %>
-    </label>
-    <%= text_field_tag :directory, @directory %>
+	<label for="directory">
+		<%= t(:label_directory) %>
+	</label>
+	<%= text_field_tag :directory, @directory %>
 </p>
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= submit_tag t(:submit_create_domain) %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= submit_tag t(:submit_create_domain) %></td>
+	</tr>
 </table>
 <% end %>
-<hr><%= h_help("help_init_db")[:text] %>
+<hr>
+<%= h_help("help_init_db")[:text] %>
 <%end %>

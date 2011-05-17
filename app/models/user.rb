@@ -168,82 +168,86 @@ class User < ActiveRecord::Base
     #          :joins => "inner join roles on users.role_id = roles.id")
   end
 
-  def self.check_admin
-    admin_user=find_by_name('admin')
-    if admin_user.nil?
-      params={
-        :login=>'admin',
-        :password=>'admin',
-        :password_confirmation=>'admin'
-      }
-      admin_user=new(params)
-      puts "User.check_admin:admin_user="+admin_user.inspect
-    end
-    admin_role=Role.find_by_name('admin')
-    unless admin_role.nil?
-      if admin_user.roles.index(admin_role).nil?
-        admin_user.roles<<admin_role
-        admin_user.role=admin_role
-      end
-    else
-      params={
-        :title=>'admin',:description=>'role admin'
-      }
-      admin_role=Role.new(params)
-      admin_role.save
-      admin_user.roles<<admin_role
-      admin_user.role=admin_role
-    end
-    admin_role=Role.find_by_name('valider')
-    unless admin_role.nil?
-      if admin_user.roles.index(admin_role).nil?
-        admin_user.roles<<admin_role
-        admin_user.role=admin_role
-      end
-    else
-      params={
-        :title=>'valider',:description=>'role valider'
-      }
-      admin_role=Role.new(params)
-      admin_role.save
-      admin_user.roles<<admin_role
-      admin_user.role=admin_role
-    end
-    admin_user.save
-    auser=find_by_name('designer')
-    if auser.nil?
-      #creation designer et consultant
-      params={
-        :login=>'designer',
-        :password=>'designer',
-        :password_confirmation=>'designer'
-      }
-      auser=new(params)
-      params={:title=>'designer',:description=>'role designer'}
-      arole=Role.new(params)
-      arole.save
-      auser.roles<<arole
-      auser.role=arole
-      auser.save
-    end
-    auser=find_by_name('consultant')
-    if auser.nil?
-      #
-      params={
-        :login=>'consultant',
-        :password=>'consultant',
-        :password_confirmation=>'consultant'
-      }
-      auser=new(params)
-      params={:title=>'consultant',:description=>'role consultant'}
-      arole=Role.new(params)
-      arole.save
-      auser.roles<<arole
-      auser.role=arole
-      auser.save
-    end
-    true
-  end
+#  def self.check_admin
+#    true
+#  end
+
+#  def self.check_admin_old
+#    admin_user=find_by_name('admin')
+#    if admin_user.nil?
+#      params={
+#        :login=>'admin',
+#        :password=>'admin',
+#        :password_confirmation=>'admin'
+#      }
+#      admin_user=new(params)
+#      puts "User.check_admin:admin_user="+admin_user.inspect
+#    end
+#    admin_role=Role.find_by_name('admin')
+#    unless admin_role.nil?
+#      if admin_user.roles.index(admin_role).nil?
+#        admin_user.roles<<admin_role
+#        admin_user.role=admin_role
+#      end
+#    else
+#      params={
+#        :title=>'admin',:description=>'role admin'
+#      }
+#      admin_role=Role.new(params)
+#      admin_role.save
+#      admin_user.roles<<admin_role
+#      admin_user.role=admin_role
+#    end
+#    admin_role=Role.find_by_name('valider')
+#    unless admin_role.nil?
+#      if admin_user.roles.index(admin_role).nil?
+#        admin_user.roles<<admin_role
+#        admin_user.role=admin_role
+#      end
+#    else
+#      params={
+#        :title=>'valider',:description=>'role valider'
+#      }
+#      admin_role=Role.new(params)
+#      admin_role.save
+#      admin_user.roles<<admin_role
+#      admin_user.role=admin_role
+#    end
+#    admin_user.save
+#    auser=find_by_name('designer')
+#    if auser.nil?
+#      #creation designer et consultant
+#      params={
+#        :login=>'designer',
+#        :password=>'designer',
+#        :password_confirmation=>'designer'
+#      }
+#      auser=new(params)
+#      params={:title=>'designer',:description=>'role designer'}
+#      arole=Role.new(params)
+#      arole.save
+#      auser.roles<<arole
+#      auser.role=arole
+#      auser.save
+#    end
+#    auser=find_by_name('consultant')
+#    if auser.nil?
+#      #
+#      params={
+#        :login=>'consultant',
+#        :password=>'consultant',
+#        :password_confirmation=>'consultant'
+#      }
+#      auser=new(params)
+#      params={:title=>'consultant',:description=>'role consultant'}
+#      arole=Role.new(params)
+#      arole.save
+#      auser.roles<<arole
+#      auser.role=arole
+#      auser.save
+#    end
+#    true
+#  end
 
   # recherche du theme
   def self.find_theme(session)

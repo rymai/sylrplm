@@ -353,3 +353,16 @@ modif de test/fixtures/forums.yml et remplacer typeobjects_id par typesobject_id
 modif de test/fixtures/accesses.yml et remplacer role_id par roles
 
 <%= select(:user, "role", @roles.collect {|p| [ p.title, p.id ] } ) %>
+
+exporter la base en yml
+charger le plugin
+script/plugin install git://github.com/adamwiggins/yaml_db.git 
+#exporter toute la base dans db/data.yml
+rake db:data:dump 
+#recharger la base
+rake db:data:load 
+# Create YAML test fixtures from data in an existing database. 
+rake db:fixtures:dump 
+    
+
+

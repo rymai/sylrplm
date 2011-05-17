@@ -111,14 +111,5 @@ class GroupDefinitionsController < ApplicationController
       end
     end
   end
-
-  protected
-
-  #
-  # Only an admin can create or delete a user.
-  #
-  def authorized?
-
-    @current_user && @current_user.is_admin?
-  end
+  
 end

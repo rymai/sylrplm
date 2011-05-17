@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
 
   skip_before_filter :authorize
   #access_control(Access.find_for_controller(controller_class_name))
+  
   def index
     puts "sessions_controller.index"+params.inspect
   end
@@ -21,11 +22,17 @@ class SessionsController < ApplicationController
     @current_user = User.authenticate(params[:login], params[:password])
     respond_to do |format|
       if @current_user
-        session[:user_id] = @current_user.id
-        flash[:notice]    = t(:ctrl_role_needed)
         #format.html { redirect_to choose_role_sessions_url }
         @roles = @current_user.roles
-        format.html { render :action => "edit" }
+        if @roles.count>0
+          session[:user_id] = @current_user.id
+          flash[:notice]    = t(:ctrl_role_needed)
+          format.html { render :action => "edit" }
+        else
+          @current_user=nil
+          flash[:notice] = t(:ctrl_user_without_roles)
+          format.html { render :new }
+        end
       else
         flash[:notice] = t(:ctrl_invalid_login)
         format.html { render :new }
@@ -58,7 +65,7 @@ class SessionsController < ApplicationController
       else
         puts "sessions_controller.update ko"
         flash.now[:notice] = t(:ctrl_user_not_connected, :user => @current_username)
-        format.html { redirect_to_main(uri) } 
+        format.html { redirect_to_main(uri) }
         format.xml  { render :xml => @current_user.errors, :status => :unprocessable_entity }
       end
     end

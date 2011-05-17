@@ -10,7 +10,7 @@ fr:
   ##############
   #controllers
   ##############
-  ctrl_no_privilege: "Désolé, privilèges insuffisants"
+  ctrl_no_privilege: "Désolé, privilèges insuffisants:%{msg}"
   ctrl_object_created: "%{typeobj} %{ident} crée avec succès"
   ctrl_object_not_created: "%{typeobj} non crée"
   ctrl_object_updated: "%{typeobj} %{ident} modifié avec succès"
@@ -102,6 +102,7 @@ fr:
   #login
   ctrl_role_needed: Renseigner le rôle
   ctrl_invalid_login: Nom utilisateur ou mot de passe invalide
+  ctrl_user_without_roles: Cet utilisateur n'a pas de rôles
   ctrl_user_needed: Renseigner l'utilisateur
   ctrl_user_created: Utilisateur %{user} crée
   ctrl_user_not_created: Utilisateur %{user} non crée

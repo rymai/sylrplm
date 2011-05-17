@@ -210,7 +210,7 @@ class ProcessesController < ApplicationController
   #
   ###############################################################################
   #
-  protected
+  private
 
   def parse_launchitem
 

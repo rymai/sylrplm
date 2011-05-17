@@ -24,23 +24,27 @@ class Access < ActiveRecord::Base
     ret
   end
 
+  #
+  # remplissage initial des autorisations
+  #
   def self.init
     ret=true
     Controller.get_controllers.each do |controller|
       st=0
-      if controller.name !="AccessesController" &&
-      controller.name !="LoginController" &&
-      controller.name !="PlmInitController" &&
-      controller.name !="RolesController" &&
-      controller.name !="RolesUsersController" &&
-      controller.name !="SequencesController" &&
-      controller.name !="SessionsController"
-        st=st+create_access(controller.name,controller.method,"admin & !designer & !consultant")
+      if controller.name == "AccessesController" ||
+      controller.name == "LoginController" ||
+      controller.name == "RolesController" ||
+      controller.name == "RolesUsersController" ||
+      controller.name == "SequencesController" 
+        # fonctions admin
+        st=st+create_access(controller.name,controller.method,"admin & (!designer | !consultant | !valider)")
       else
-        if controller.name =="SessionsController"
-          st=st+create_access(controller.name,controller.method,"admin | designer | consultant")
+        if controller.name == "SessionsController"
+          # tout le monde peut se deconnecter 
+          st=st+create_access(controller.name,controller.method,"admin | designer | consultant | valider")
         else
-          st=st+create_access(controller.name,controller.method,"(admin | designer) & !consultant")
+          # les fonctions plm
+          st=st+create_access(controller.name,controller.method,"(admin | designer | valider) & !consultant")
         end
       end
       #puts 'access_controller.index:controller='+controller.name+' method='+controller.method+' st='+st.to_s
@@ -53,7 +57,7 @@ class Access < ActiveRecord::Base
     access.controller=ctrl
     access.action=met
     access.roles=roles
-    puts "access.create_access:"+access.inspect
+    #puts "access.create_access:"+access.inspect
     if !access.save
       return 1
     else

@@ -47,7 +47,7 @@
             <%= h(user.email) %>
         </td>
         <td>
-            <%=h user.volume.name %>
+            <%=h(user.volume.name)unless user.volume.nil? %>
         </td>
         <td>
             <%= h(user.theme) %>

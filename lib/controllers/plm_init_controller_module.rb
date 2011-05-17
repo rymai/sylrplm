@@ -1,24 +1,24 @@
 require 'active_record/fixtures'
 module Controllers::PlmInitControllerModule
-  #require 'yaml'
-  #require 'active_record/fixtures'
+
+  
   
   def check_init_objects
     ret =""
-    ya_admin=User.check_admin
+    #ya_admin=User.check_admin
     
     #pour debug:forcer la reconstruction des access
     #ya_admin=false
-    if ya_admin != true
-      ret +="Creation User admin,designer,consultant<br>"
-      st=Access.init
-      if st
-        ret +="Acces admin,designer,consultant crees<br>"
-      else
-        ret +="ERREUR:Acces admin,designer,consultant non crees completement<br>"
-      end
-    end
-    puts 'main_controller.index:ya_admin='+ya_admin.to_s
+#    if ya_admin != true
+#      ret +="Creation User admin,designer,consultant<br>"
+#      st=Access.init
+#      if st
+#        ret +="Acces admin,designer,consultant crees<br>"
+#      else
+#        ret +="ERREUR:Acces admin,designer,consultant non crees completement<br>"
+#      end
+#    end
+#    puts 'main_controller.index:ya_admin='+ya_admin.to_s
     
     @types_document=Typesobject.find_for('document')
     if @types_document.size==0
@@ -78,11 +78,23 @@ module Controllers::PlmInitControllerModule
   #appelle par main_controller.init_objects
   def create_domain(domain)
     puts "plm_init_controller.create_domain:"+domain
-    dirname=RAILS_ROOT + '/db/fixtures/'+domain+'/*.yml'
+    dirname=SYLRPLM::DIR_DOMAINS+domain+'/*.yml'
     puts "plm_init_controller.create_domain:"+dirname
     Dir.glob(dirname).each do |file|
-      dirfile='db/fixtures/'+domain
+      dirfile=SYLRPLM::DIR_DOMAINS+domain
       puts "plm_init_controller.create_domain:dirfile="+dirfile+" file="+File.basename(file, '.*')
+      Fixtures.create_fixtures(dirfile, File.basename(file, '.*'))
+    end
+  end
+  
+  #appelle par main_controller.init_objects
+  def create_admin
+    puts "plm_init_controller.create_admin:"
+    dirname=SYLRPLM::DIR_ADMIN+'*.yml'
+    puts "plm_init_controller.create_admin:"+dirname
+    Dir.glob(dirname).each do |file|
+      dirfile=SYLRPLM::DIR_ADMIN
+      puts "plm_init_controller.create_admin:dirfile="+dirfile+" file="+File.basename(file, '.*')
       Fixtures.create_fixtures(dirfile, File.basename(file, '.*'))
     end
   end
@@ -90,7 +102,7 @@ module Controllers::PlmInitControllerModule
   #renvoie la liste des domaines pour le chargement initial
   #appelle par main_controller.init_objects
   def get_domains
-    dirname=RAILS_ROOT + '/db/fixtures/*'
+    dirname=SYLRPLM::DIR_DOMAINS+'*'
     ret=""
     Dir.glob(dirname).each do |dir|
       ret<<"<option>"<<File.basename(dir, '.*')<<"</option>"
@@ -101,13 +113,14 @@ module Controllers::PlmInitControllerModule
   
   #appelle par main_controller.init_objects
   #maj le volume de depart id=1 defini dans le fichier db/fixtures/volume.yml et cree par create_domain 
-  def update_first_volume(dir)
+  def update_admin(dir)
     puts "plm_init_controller.update_first_volume:dir="+dir
     vol=Volume.find_first
     puts "plm_init_controller.update_first_volume:volume="+vol.inspect
     vol.update_attributes(:directory=>dir)
     User.find_all.each do |auser|
       auser.volume=vol
+      auser.password=auser.login
       auser.save
       puts "plm_init_controller.update_first_volume:user="+auser.inspect
     end

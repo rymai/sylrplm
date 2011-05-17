@@ -2,19 +2,19 @@ class UsersController < ApplicationController
   include Controllers::PlmObjectControllerModule
   access_control(Access.find_for_controller(controller_class_name))
   #
-    # Used by is_admin?
-    #
-    ADMIN_GROUP_NAME = SYLRPLM::ADMIN_GROUP_NAME
+  # Used by is_admin?
+  #
+  ADMIN_GROUP_NAME = SYLRPLM::ADMIN_GROUP_NAME
   # GET /users
   # GET /users.xml
   def index
-    @current_users = User.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])}) 
+    @current_users = User.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @current_users }
     end
   end
-  
+
   # GET /users/1
   # GET /users/1.xml
   def show
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
       format.xml  { render :xml => @current_user }
     end
   end
-  
+
   # GET /users/new
   # GET /users/new.xml
   def new
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
       format.xml  { render :xml => @current_user }
     end
   end
-  
+
   # GET /users/1/edit
   def edit
     @current_user = User.find(params[:id])
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
     @themes  = get_themes(@theme)
     @volumes = Volume.find_all
   end
-  
+
   def create
     @current_user    = User.new(params[:user])
     @roles   = Role.all
@@ -76,14 +76,16 @@ class UsersController < ApplicationController
       end
     end
   end
-  
+
   def update
+    #puts "users_controller.update:params="+params.inspect
     @current_user    = User.find(params[:id])
     @volumes = Volume.find_all
     @roles   = Role.all
     @themes = get_themes(@theme)
     respond_to do |format|
-      if @current_user.update_attributes(params[:user]) 
+      if @current_user.update_attributes(params[:user])
+        #puts "users_controller.update:roles="+params[:role_id].inspect
         unless params[:role_id].nil?
           flash[:notice] =""
           @roles.each do |rid|
@@ -103,11 +105,10 @@ class UsersController < ApplicationController
         flash.now[:notice] = t(:ctrl_user_not_updated, :user => @current_user.login)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @current_user.errors, :status => :unprocessable_entity }
-      end   
+      end
     end
   end
-  
-  
+
   def destroy
     id = params[:id]
     if id && user = User.find(id)
@@ -127,5 +128,5 @@ class UsersController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
 end

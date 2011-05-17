@@ -10,6 +10,7 @@ end
 
 class ApplicationController < ActionController::Base
   include Classes::AppClasses
+  include Controllers::PlmObjectControllerModule
   helper :all # include all helpers, all the time
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
@@ -18,16 +19,20 @@ class ApplicationController < ActionController::Base
   before_filter :authorize, :except => [:index, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
-
+  #
   #access_control(Access.find_for_controller(controller_class_name))
 
-  def permission_denied
-    flash[:notice] = t(:ctrl_no_privilege)
+  def permission_denied(msg)
+    flash[:notice] = t(:ctrl_no_privilege,:msg=>msg)
     redirect_to(:action => "index")
   end
 
   def permission_granted
     #flash[:notice] = "Welcome to the secure area !"
+  end
+
+  def render_text(msg)
+    flash[:notice] = msg
   end
 
   class Class
@@ -67,10 +72,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_user
-    @current_user ||= session[:user_id] ? User.find(session[:user_id]) : nil
-  end
-
   # definition des variables globales.
   def define_variables
     @current_user             = User.find_user(session)
@@ -93,6 +94,8 @@ class ApplicationController < ActionController::Base
     WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
     WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
     LOG.info("__FILE__")
+    #puts "define_variables:session="+session.inspect
+    #current_user
   end
 
   def get_themes(default)
@@ -223,7 +226,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize
-    puts "application_controller.authorize:user="+session[:user_id].inspect
+    puts "application_controller.authorize:user_id="+session[:user_id].inspect
     unless session[:user_id] || User.find_by_id(session[:user_id])
       puts "application_controller.request.request_uri="+request.request_uri
       puts "application_controller.request.new_sessions_url="+new_sessions_url
@@ -240,11 +243,20 @@ class ApplicationController < ActionController::Base
       #      end
     end
   end
+  
+  private
+
+  def current_user
+    #@current_user ||= session[:user_id] ? User.find(session[:user_id]) : nil
+    #puts "current_user:session="+session.inspect
+    ret=@current_user ||= User.find_user(session)
+    #puts "current_user:"+ret.inspect
+    ret
+  end
 end
 
 # Scrub sensitive parameters from your log
 # filter_parameter_logging :password
-private
 
 #
 # the ?plain=true trick

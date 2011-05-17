@@ -63,11 +63,5 @@ class HistoryController < ApplicationController
     end
   end
 
-  protected
-
-  def authorized?
-
-    (@current_user != nil) # do I really need that ?...
-  end
 end
 

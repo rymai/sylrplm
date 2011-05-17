@@ -101,6 +101,7 @@ en:
   #login
   ctrl_role_needed: Give the role
   ctrl_invalid_login: Invalid user/password combination
+  ctrl_user_without_roles: This user have no roles
   ctrl_user_needed: Give the user
   ctrl_user_created: User %{user} created
   ctrl_user_not_created: User %{user} not created
