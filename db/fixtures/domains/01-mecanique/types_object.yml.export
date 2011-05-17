@@ -1,0 +1,329 @@
+--- !ruby/object:Typesobject 
+attributes: 
+  name: internal
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "1"
+  description: Service ou direction interne a l'entreprise
+  object: customer
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: private
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "2"
+  description: Client externe a acces restreint
+  object: customer
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: public
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "3"
+  description: Client externe accessible a tous
+  object: customer
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: calculsheet
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "4"
+  description: Feuille de calcul
+  object: document
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: m3d
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "5"
+  description: Numerisation 3D
+  object: document
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: p2d
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "6"
+  description: Numerisation 2D
+  object: document
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: fmat
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "7"
+  description: Fiche matiere
+  object: document
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: requirements
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "8"
+  description: Forum sur les exigences
+  object: forum
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: needs
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "9"
+  description: Forum sur les besoins
+  object: forum
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: specifs
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "10"
+  description: Forum sur les specifications
+  object: forum
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: design
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "11"
+  description: Forum sur la conception
+  object: forum
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: tests
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "12"
+  description: Forum sur les tests
+  object: forum
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: electronic
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "13"
+  description: Composant/ensemble electronique
+  object: part
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: electric
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "14"
+  description: Composant/ensemble electrique
+  object: part
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: mecanic
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "15"
+  description: Composant/ensemble mecanique
+  object: part
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: standard
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "16"
+  description: Projet pour articles standards/catalogues
+  object: project
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: sub-assembly
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "17"
+  description: Projet pour un sous ensemble
+  object: project
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: product
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "18"
+  description: Projet pour un produit
+  object: project
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: norme
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "19"
+  description: Norme
+  object: document
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: need
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "51"
+  description: Expression de besoin
+  object: relation_document
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: spec-fonctionnelles
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "52"
+  description: Specifications fonctionnelles
+  object: relation_document
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: spec-detaillees
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "53"
+  description: Specifications detaillees
+  object: relation_document
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: num3D
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "54"
+  description: Numerisation 3D
+  object: relation_document
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: num2D
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "55"
+  description: Numerisation 2D
+  object: relation_document
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: reference
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "61"
+  description: Lien de reference
+  object: relation_part
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: bom
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "62"
+  description: Lien de nomenclature
+  object: relation_part
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: production
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "72"
+  description: Projet de production
+  object: relation_project
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: catia
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "81"
+  description: CAO Catia
+  object: datafile
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: autocad
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "82"
+  description: DAO Autocad
+  object: datafile
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: text
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "83"
+  description: Fichier texte
+  object: datafile
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: writer
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "84"
+  description: Traitement de texte
+  object: datafile
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: spreadsheet
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "85"
+  description: Projet de production
+  object: datafile
+attributes_cache: {}
+
+--- !ruby/object:Typesobject 
+attributes: 
+  name: image
+  created_at: 2011-02-13 16:52:17
+  updated_at: 2011-02-13 16:52:17
+  id: "86"
+  description: fichier image (jpg,gif,bmp,...)
+  object: datafile
+attributes_cache: {}

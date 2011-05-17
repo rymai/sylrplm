@@ -1,0 +1,179 @@
+1:
+  id: 1 
+  object: customer 
+  name: internal 
+  description: Service ou direction interne a l'entreprise 	  	
+2:
+  id: 2 
+  object: customer 
+  name: private
+  description: Client externe a acces restreint 		
+3:
+  id: 3 
+  object: customer 
+  name: public 
+  description: Client externe accessible a tous		
+4:
+  id: 4 
+  object: document 
+  name: calculsheet
+  description: Feuille de calcul		
+5:
+  id: 5 
+  object: document 
+  name: m3d 
+  description: Numerisation 3D		
+6:
+  id: 6 
+  object: document 
+  name: p2d 	
+  description: Numerisation 2D	
+7:
+  id: 7 
+  object: document 
+  name: fmat
+  description: Fiche matiere 		
+19:
+  id: 19 
+  object: document 
+  name: norme
+  description: Norme 		
+8:
+  id: 8 
+  object: forum 
+  name: requirements 
+  description: Forum sur les exigences 		
+9:
+  id: 9 
+  object: forum 
+  name: needs
+  description: Forum sur les besoins
+10:
+  id: 10 
+  object: forum 
+  name: specifs 
+  description: Forum sur les specifications		
+11:
+  id: 11 
+  object: forum 
+  name: design 
+  description: Forum sur la conception		
+12:
+  id: 12 
+  object: forum 
+  name: tests 
+  description: Forum sur les tests	
+13:
+  id: 13 
+  object: part 
+  name: electronic
+  description: Composant/ensemble electronique 
+14:
+  id: 14
+  object: part 
+  name: electric 		
+  description: Composant/ensemble electrique 
+15:
+  id: 15 
+  object: part 
+  name: mecanic 		
+  description: Composant/ensemble mecanique 
+16:
+  id: 16 
+  object: project 
+  name: standard
+  description: Projet pour articles standards/catalogues 		
+17:
+  id: 17
+  object: project 
+  name: sub-assembly
+  description: Projet pour un sous ensemble
+
+18:
+  id: 18
+  object: project 
+  name: product
+  description: Projet pour un produit
+  
+19:
+  id: 19
+  object: document 
+  name: norme
+  description: Norme applicable
+  
+51:
+  id: 51
+  object: relation_document 
+  name: need
+  description: Expression de besoin
+52:
+  id: 52
+  object: relation_document 
+  name: spec-fonctionnelles
+  description: Specifications fonctionnelles
+53:
+  id: 53
+  object: relation_document 
+  name: spec-detaillees
+  description: Specifications detaillees
+54:
+  id: 54
+  object: relation_document 
+  name: num3D
+  description: Numerisation 3D
+55:
+  id: 55
+  object: relation_document 
+  name: num2D
+  description: Numerisation 2D
+61:
+  id: 61
+  object: relation_part 
+  name: reference
+  description: Lien de reference
+62:
+  id: 62
+  object: relation_part 
+  name: bom
+  description: Lien de nomenclature
+72:
+  id: 72
+  object: relation_project
+  name: production
+  description: Projet de production
+
+81:
+  id: 81
+  object: datafile
+  name: catia
+  description: CAO Catia
+
+82:
+  id: 82
+  object: datafile
+  name: autocad
+  description: DAO Autocad
+83:
+  id: 83
+  object: datafile
+  name: text
+  description: Fichier texte
+84:
+  id: 84
+  object: datafile
+  name: writer
+  description: Traitement de texte
+85:
+  id: 85
+  object: datafile
+  name: spreadsheet
+  description: Projet de production
+86:
+  id: 86
+  object: datafile
+  name: image
+  description: fichier image (jpg,gif,bmp,...)
+
+
+  
+ 
