@@ -74,7 +74,7 @@ module OpenWFE
       #store_name = participant_name
 
       #OpenWFE::Extras::ActiveStoreParticipant.new(store_name)
-      puts "lib/ruote.lookup_participant:store_name="+store_name
+      #puts "lib/ruote.lookup_participant:store_name="+store_name
       OpenWFE::Extras::ArParticipant.new(store_name)
         # returns an 'on the fly' participant
     end
