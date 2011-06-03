@@ -30,11 +30,11 @@ fr:
   ctrl_object_not_checkout: "%{typeobj} %{ident} non réservé"  
   ctrl_object_give_reason: "Indiquez une raison"
   ctrl_object_already_checkout: "%{typeobj} %{ident} déja réservé"
-  ctrl_object_checkin: "%{typeobj} %{ident} est sauvé et libéré"
+  ctrl_object_checkin: "%{typeobj} %{ident} est sauvé et libéré, raison:%{reason}" 
   ctrl_object_not_checkin: "%{typeobj} %{ident} n'est pas libéré"
   ctrl_object_notyet_checkout: "%{typeobj} %{ident} n'est pas encore réservé"
   ctrl_object_give_file: "Indiquez un nouveau fichier"
-  ctrl_object_checkfree: "%{typeobj} %{ident} est libéré"
+  ctrl_object_checkfree: "%{typeobj} %{ident} est libéré, raison:%{reason}" 
   ctrl_object_not_checkfree: "%{typeobj} %{ident} n'est pas libéré"
   ctrl_object_added: "<br> %{typeobj} %{ident} a été ajouté, relation=%{relation}, message=%{msg}"
   ctrl_object_not_added: "<br> %{typeobj} %{ident} n'a pas été ajouté, relation=%{relation}, messag=%{msg}"
@@ -264,12 +264,12 @@ fr:
   label_object: Objet
   label_object_id: ID
   label_status: Statut
-  label_out_reason: Raison check-out
-  label_out_date: Date check-out
-  label_out_user: Utilisateur check-out
-  label_in_reason: Raison check-in
-  label_in_date: Date check-in
-  label_in_user: Utilisateur check-in
+  label_out_reason: Raison réservation
+  label_out_date: Date réservation
+  label_out_user: Utilisateur réservation
+  label_in_reason: Raison libération
+  label_in_date: Date libération
+  label_in_user: Utilisateur libération
   label_local_dir: Répertoire local
   # fields customers
   customer_edit: Edition client
@@ -317,17 +317,16 @@ fr:
   document_new: Nouveau document
   label_revision: Révision
   label_extension: Extension
-  add_datafile: Ajout fichier
+  add_datafile: Ajouter fichier
   document_datafiles: Fichiers du document
   datafile_add: Ajout d'un fichier au document
   label_nbfiles: Nb fichiers
-  check_out: "Réserver"
+  button_check_out: "Réserver"
   is_check_out: "Est réservé"
-  check_in: "Maj et libérer"
-  check_free: "Libérer"
+  button_check_in: "Maj et libérer"
+  button_check_free: "Libérer"
   download: "Télécharger fichier"
   document_check: Réservation
-  reason: Raison
   # fields forums
   forum_edit: Edition forum 
   forum_list: Liste des forums 

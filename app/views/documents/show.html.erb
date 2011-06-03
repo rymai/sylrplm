@@ -89,14 +89,13 @@
     <% form_for(@document, :url => {:id => @document.id, :action => :check_out }) do |f| %>
     <tr>
         <td>
-            <%= f.submit t("check_out") %>
-<%= link_to t("check_out"), :id => @document.id, :action => "check_out" %>
+            <%= f.submit t("button_check_out") %>
         </td>
         <td>
-            <%= label_tag t("reason") %>
+            <%= label_tag t("label_out_reason") %>
         </td>
         <td>
-            <%= text_field_tag :reason %>
+            <%= text_field_tag :out_reason %>
         </td>
     </tr>
     <%end %>
@@ -105,7 +104,7 @@
         <%= t("is_check_out") %>
     </td>
     <td>
-        <%= t("reason") %>
+        <%= t("label_out_reason") %>
     </td>
     <td>
         <%= @checkout.out_reason %>
@@ -114,26 +113,26 @@
     :html => { :multipart => true}) do |f| %>
     <tr>
         <td>
-            <%= f.submit t("check_in") %>
+            <%= f.submit t("button_check_in") %>
         </td>
         <td>
-            <%= label_tag t("reason") %>
+            <%= label_tag t("label_in_reason") %>
         </td>
         <td>
-            <%= text_field_tag :reason %>
+            <%= text_field_tag :in_reason %>
         </td>
     </tr>
     <% end %>
     <% form_for(@document, :url => {:id => @document.id, :action => "check_free" }) do |f| %>
     <tr>
         <td>
-            <%= f.submit t("check_free") %>
+            <%= f.submit t("button_check_free") %>
         </td>
         <td>
-            <%= label_tag t("reason") %>
+            <%= label_tag t("label_in_reason") %>
         </td>
         <td>
-            <%= text_field_tag :reason %>
+            <%= text_field_tag :in_reason %>
         </td>
     </tr>
     <% end %>

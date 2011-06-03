@@ -60,7 +60,7 @@ class Document < ActiveRecord::Base
     ret=""
     check     = Check.get_checkout("document", self)
     if check.nil?
-      unless params[:reason].blank?
+      unless params[:out_reason].blank?
         check = Check.create_new("document", self, params, user)
         if check.save
           ret="ok"
@@ -78,7 +78,7 @@ class Document < ActiveRecord::Base
   def check_in(params,user)
     ret=""
     check     = Check.get_checkout("document", self)
-    unless params[:reason].blank?
+    unless params[:in_reason].blank?
       unless check.nil?
         check.checkIn(params,user)
         if check.save
@@ -98,7 +98,7 @@ class Document < ActiveRecord::Base
   def check_free(params,user)
     ret=""
     check     = Check.get_checkout("document", self)
-    unless params[:reason].blank?
+    unless params[:in_reason].blank?
       unless check.nil?
         check.checkFree(params,user)
         if check.save

@@ -1,63 +1,39 @@
-<h1>
-<%=t(:hello) %>
-</H1>
+<h1><%= t(:hello) %></H1>
 <h2><%= t(:tit_language) %><%= I18n.locale.to_s %></h2>
-<h2><%=t(:datas_in_database) %></h2>
+<h2><%= t(:datas_in_database) %></h2>
 <table>
-    <tr>
-        <td>
-            <%= @datas[:documents] %>
-        </td>
-        <td>
-            <%= t("ctrl_document") %>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <%= @datas[:parts] %>
-        </td>
-        <td>
-            <%= t("ctrl_part") %>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <%= @datas[:projects] %>
-        </td>
-        <td>
-            <%= t("ctrl_project") %>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <%= @datas[:customers] %>
-        </td>
-        <td>
-            <%= t("ctrl_customer") %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= @datas[:documents] %></td>
+		<td> <%= t("ctrl_document") %></td>
+	</tr>
+	<tr>
+		<td> <%= @datas[:parts] %></td>
+		<td> <%= t("ctrl_part") %></td>
+	</tr>
+	<tr>
+		<td> <%= @datas[:projects] %></td>
+		<td> <%= t("ctrl_project") %></td>
+	</tr>
+	<tr>
+		<td> <%= @datas[:customers] %></td>
+		<td> <%= t("ctrl_customer") %></td>
+	</tr>
 </table>
-<hr><%=h_help_all %>
-<hr><h2><%=t("context_info") %></h2>
+<hr>
+<%= h_help_all %>
+<hr>
+<h2><%= t("context_info") %></h2>
 <table>
-    <tr>
-        <th>
-            key
-        </th>
-        <th>
-            value
-        </th>
-    </tr>
-    <% for item in request.env %>
-    <% if item[0].index("rack.session") == nil %>
-    <tr>
-        <td>
-            <%= item[0] %>
-        </td>
-        <td>
-            <%= item[1] %>
-        </td>
-    </tr>
-    <%end %>
-    <% end %>
+	<tr>
+		<th> key</th>
+		<th> value</th>
+	</tr>
+	<% for item in request.env %>
+	<% if item[0].index("rack.session") == nil %>
+	<tr>
+		<td> <%= item[0] %></td>
+		<td> <%= item[1] %></td>
+	</tr>
+	<%end %>
+	<% end %>
 </table>

@@ -1,7 +1,7 @@
 require 'classes/app_classes'
 
 module SYLRPLM
-#include Classes::AppClasses::LogFormatter
+  #include Classes::AppClasses::LogFormatter
   VOLUME_DIRECTORY_DEFAULT="C:\\sylrplm_data"
   LOCAL_DEFAULT="fr"
   THEME_DEFAULT="blackwhite" 

@@ -30,6 +30,14 @@
                 <li title="Aller au début de la documentation">#img=welcome.png=img#</li>
             </ul>
         </msg>
+        <msg key="help_authorization" title="Autorisations/login">
+                Certains menus exigent que l'utilisateur ait certains droits sur les objets, il doit donc se connecter.
+                Cette connexion s'effectue en deux temps suite à l'activation d'un menu (il n'y a pas de menu connexion, on ne se connecte que si c'est indispensable):
+                <ul>
+                    <li title="Connexion">#img=help/login_1.png=img#</li>
+                    <li title="Choix du rôle">#img=help/login_2.png=img#</li>
+                </ul>
+        </msg>
         <msg key="help_filter" title="Filtre">
             Dans toutes les pages listant des objets, il est possible de ne voir qu'une partie de ceux ci.
             Ceci en renseignant le filtre et en validant:
@@ -89,73 +97,70 @@
         Les différents modules de l'application sont:
         <msg key="help_welcome" title="Acceuil">
             #img=help/module_acceuil.png=img#
-            Permet de visualiser cette page d'aide.
+            Acceuil: Permet de visualiser cette page d'aide.
+            Mes actions: Permet de voir les actions à effectuer.
             Permet de changer la langue.
             Permet d'activer l'aide sur un menu: clic sur l'image help puis clic sur un menu.
         </msg>
         <msg key="help_objects" title="Les objets PLM">
             #img=help/module_objets.png=img#
-            <msg key="help_authorization" title="Autorisations/login">
-                Certains menus exigent que l'utilisateur ait certains droits sur les objets, il doit donc se connecter.
-                Cette connexion s'effectue en deux temps suite à l'activation d'un menu (il n'y a pas de menu connexion, on ne se connecte que si c'est indispensable):
-                <ul>
-                    <li title="Connexion">#img=help/login_1.png=img#</li>
-                    <li title="Choix du rôle">#img=help/login_2.png=img#</li>
-                </ul>
-            </msg>
-            <msg key="help_documents" title="Documents" href="/documents">
-                Le module "Objets PLM" permet de gérer les objets suivants:
+            Le module "Objets PLM" permet de gérer les objets suivants:
+            <msg key="help_documents" title="Documents" href="/documents">        
                 <msg key="help_documents_description" title="Description">
                     <ul>
                         <li>Les documents permettent de décrire les articles ou projets ou clients.
                             Cependant, ils ne sont pas forcément rattachés à un article ou projet ou client (par exemple les normes).</li>
                         <li>Ils peuvent être de différents types: note de calcul, fiche de description de recette, norme, ...#jump=help_typesobjects=jump#.</li>
-                        <li>Leur fichier associé peut être de différents formats: word, excel, catia, solid-works,...</li>
-                        <li>L'application gère le cycle de vie des documents, voir le chapitre correspondant: #jump=help_lifecycle=jump#</li>
-                        <li>Les modifications du fichier associé au document sont contrôlés à l'aide du mécanisme
+                        <li>Ils peuvent avoir un plusieurs fichiers associés : #jump=help_datafiles=jump#</li>
+                        <li>L'application gère le cycle de vie des documents : #jump=help_lifecycle=jump#</li>
+                        <li>Les modifications des fichiers associés au document sont contrôlés à l'aide du mécanisme
                             de réservation/libération afin d'éviter que deux utilisateurs modifient le même fichier en même temps : #jump=help_documents_reservation=jump#</li>
                     </ul>
                 </msg>
                 <msg key="help_documents_attributs" title="Attributs">
                     <ul>Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
-                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:                        	 			                       	
                         <li title="Identifiant">Identifiant du document</li>
                         <li title="Type">Type du document</li>
                         <li title="Révision">Révision, ident+revision=identifiant unique d'un document</li>
                         <li title="Désignation"></li>
                         <li title="Statut">Statut (voir le cycle de vie)</li>
                         <li title="Responsable">Nom de l'utilisateur créateur ou dernier modifieur</li>
-                        <li title="Date">Date de création ou de dernière modification</li>
-                        <li title="Volume">Nom du volume ou est stocké le fichier</li>
-                        <li title="Fichier">Nom du fichier associé à ce document</li>
-                        <li title="Type de contenu">Type de contenu du document</li>
+                        <li title="Nb fichiers">Nombre de fichiers associés à ce document</li>
+                        <li title="Date">Date de création ou de dernière modification</li>                 
                     </ul>
-                </msg>
+                </msg>                 
                 <msg key="help_documents_functions" title="Fonctionnalités">
                     Les principales fonctionnalités sur les documents sont:
                     <msg key="help_documents_list" title="Liste" href="/documents">
                         #img=help/documents_list.png=img#
+                    </msg>
+                    <msg key="help_documents_new" title="Nouveau document" href="/documents/new">
+                        <ul>
+                            <li title="Page de création">#img=help/documents_new.png=img#
+                            </li>
+                            <li title="Après validation et création sans erreur">#img=help/documents_new_ok.png=img#
+                            </li>
+                            <li title="Après validation et création avec erreur (il manque la désignation)">#img=help/documents_new_ko.png=img#
+                            </li>
+                        </ul>
                     </msg>
                     <msg key="help_documents_show" title="Explorer" href="/documents/1">
                         #img=help/documents_show.png=img#
                     </msg>
                     <msg key="help_documents_reservation" title="Réservation/Libération">
                         <ul>
-                            <li title="Réservation">Pour pouvoir modifier le fichier associé à un document, celui ci doit être réservé dans la fenêtre "Explorer":
+                            <li title="Réservation">Pour pouvoir modifier le ou les fichiers associés à un document, celui ci doit être réservé dans la fenêtre "Explorer":
                                 <ul>
-                                    <li title="Télécharger fichier">Permet de récuperer le fichier sur un disque de la machine en local.
-                                        L'utilisateur peut ainsi le modifier par l'éditeur de son choix.</li>
                                     <li title="Reason">Raison de la réservation</li>
                                 </ul>
                             </li>
                             <li title="Libération">Lorsque le document est réservé, le menu est modifié:
                                 #img=help/documents_checkin.png=img#
                                 <ul>
-                                    <li title="Maj et libérer">Permet de prendre en compte les modifications sur le fichier et de libérer le document</li>
+                                    <li title="Maj et libérer">Permet de prendre en compte les modifications sur le(s) fichier(s) et de libérer le document</li>
                                     <li title="Reason">Raison de la mise à jour</li>
-                                    <li title="nom du fichier">Nom du fichier qui a été téléchargé lors de réservation</li>
-                                    <li title="Parcourir">Indiquez le fichier à charger (le fichier qui a été téléchargé lors de réservation puis modifié)</li>
-                                    <li title="Libérer">Permet de libérer le fichier sans prendre en compte les modifications éventuelles</li>
+                                    <li title="Libérer">Permet de libérer document sans prendre en compte les modifications éventuelles</li>
                                     <li title="Reason">Raison de la libération</li>
                                 </ul>
                             </li>
@@ -164,18 +169,44 @@
                     <msg key="help_documents_edit" title="Edition" href="/documents/edit/1">
                         #img=help/documents_edit.png=img#
                     </msg>
-                    <msg key="help_documents_new" title="Nouveau document" href="/documents/new">
-                        <ul>
-                            <li title="Page de création">#img=help/documents_new.png=img#
-                            </li>
-                            <li title="Après validation et création sans erreur (après changement de thème)">#img=help/documents_new_ok.png=img#
-                            </li>
-                            <li title="Après validation et création avec erreur (il manque la désignation)">#img=help/documents_new_ko.png=img#
-                            </li>
-                        </ul>
-                    </msg>
+                    
+                    <msg key="help_datafiles" title="Document/fichiers" >
+				            	Les fichiers sont toujours associés aux documents et ne sont donc pas accessibles directement aux utilisateurs.
+				            	<msg key="help_datafiles_description" title="Description">
+				                    <ul>
+				                        <li>Un fichier permet de définir tout ou partie du contenu d'un et un seul document.</li>
+				                        <li>Ils peuvent être de différents types: catia, autocad, text, ...#jump=help_typesobjects=jump#.</li>
+				                        <li>Ils peuvent avoir différents types de contenu: application/pdf, text, ...</li>
+				                        <li>L'application gère le cycle de vie des fichiers</li>
+				                    </ul>
+				                </msg>
+				                <msg key="help_datafiles_attributs" title="Attributs"> 	
+				                    <ul>Les attributs des fichiers ont les suivants, certains sont obligatoires lors de la création ou édition,
+				                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:                        	 			                       	
+				                        <li title="Identifiant">Identifiant du fichier</li>
+				                        <li title="Révision">Révision, ident+revision=identifiant unique d'un fichier</li>
+				                        <li title="Type">Type du fichier</li>
+				                        <li title="Volume">Nom du volume ou est stocké le fichier</li>
+				                				<li title="Fichier">Nom du fichier associé à ce document</li>
+				                				<li title="Type de contenu">Type de contenu du fichier</li>                
+				                        <li title="Responsable">Nom de l'utilisateur créateur ou dernier modifieur</li>                     
+				                       	<li title="Document">Le document que le fichier définit en tout ou partie</li>                     
+				                        <li title="Date">Date de création ou de dernière modification</li>                 
+				                    </ul>
+				                </msg> 
+				                <msg key="help_datafiles_functions" title="Fonctionnalités">
+                    				Les principales fonctionnalités sur les fichiers sont:                            
+                    				<msg key="help_datafiles_show" title="Explorer un fichier">
+			                        #img=help/documents_datafile_show.png=img#			                            
+                    				</msg>
+                    				<msg key="help_datafiles_edit" title="Editer un fichier">
+                           	#img=help/documents_datafile_edit.png=img#
+                    				</msg>
+            						</msg> 
+            						</msg>      
                 </msg>
             </msg>
+                    
             <msg key="help_parts" title="Articles" href="/parts">
                 <ul>
                     <li>Les Articles sont les composants d'un produit (qui est également un article)</li>
@@ -512,8 +543,8 @@
                             <li>article</li>
                             <li>projet</li>
                             <li>client</li>
-                            <li>relation_document (depuis part ou projet ou client)</li>
-                            <li>relation_part (depuis projet ou client)</li>
+                            <li>relation_document (depuis document ou part ou projet ou client)</li>
+                            <li>relation_part (depuis part ou projet ou client)</li>
                             <li>relation_projet (depuis client)</li>
                         </ul>
                     </li>
@@ -650,8 +681,6 @@
     <msg key="help_raf" title="Reste à faire">
         <ul>
             <li>IMPROV:Vues:prendre en compte l'attribut fixe o/n sur les valeurs par défaut pour permettre ou non la modif de la valeur par le user</li>
-            <li>BUG:Documents:Lorsque l'on trie, l'entete de la colonne devient class='sort..' attribut !!</li>
-            <li>IMPROV:Documents:prévoir plusieurs fichiers par document (dataset)</li>
         </ul>
     </msg>
     <msg key="help_about" title="A propos de SYLRPLM">
@@ -660,7 +689,7 @@
                 <li title="Concepteur">Sylvère Coutable, consultant expert intégration PLM</li>
                 <li title="Développeur">Sylvère Coutable</li>
                 <li title="Conseiller technique Ruby On Rails">Rémy Coutable</li>
-                <li title="Graphisme">Rémy Coutable</li>
+                <li title="Graphisme">Sylvère Coutable assisté de Rémy Coutable</li>
             </ul>
         </msg>
         <msg key="help_plugins" title="Plugins">

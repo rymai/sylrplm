@@ -71,7 +71,8 @@ class DocumentsController < ApplicationController
     #get_repository !!!!!!!!!!!!!!
     @document = Document.create_new(document,@current_user)
     @types    = Document.get_types_document
-    @volumes  = Volume.find_all
+    @status   = Statusobject.find_for("document")
+    #@volumes  = Volume.find_all
     respond_to do |format|
       if @document.save
         flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_document), :ident => @document.ident)
@@ -172,7 +173,7 @@ class DocumentsController < ApplicationController
     if st!="already_checkout"
       if st!="no_reason"
         if st=="ok"
-          flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:reason])
+          flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:out_reason])
         else
           flash[:notice] = t(:ctrl_object_notcheckout, :typeobj => t(:ctrl_document), :ident => @document.ident)
         end
@@ -196,7 +197,7 @@ class DocumentsController < ApplicationController
         if st!="notyet_checkout"
           if st=="ok"
             @document.update_attributes(params[:document])
-            flash[:notice] = t(:ctrl_object_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident)
+            flash[:notice] = t(:ctrl_object_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:in_reason])
           else
             flash[:notice] = t(:ctrl_object_not_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident)
           end
@@ -218,7 +219,7 @@ class DocumentsController < ApplicationController
       if st!="no_reason"
         if st!="notyet_checkout"
           if st=="ok"
-            flash[:notice] = t(:ctrl_object_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident)
+            flash[:notice] = t(:ctrl_object_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:in_reason])
           else
             flash[:notice] = t(:ctrl_object_not_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident)
           end
@@ -293,25 +294,23 @@ class DocumentsController < ApplicationController
 
   def add_datafile
     @object = Document.find(params[:id])
-    error   = false
-    st=@object.add_datafile(params,@current_user)
+    st=@object.add_datafile(params, @current_user)
     respond_to do |format|
       flash[:notice] = ""
       if st!="ok"
-        flash[:notice] += t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>@datafile.ident,:msg=>nil)
-        error = true
-      end
-      unless error
-        format.html { redirect_to(@object) }
-      else
+        flash[:notice] += t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
         #puts "plm_object_controller.add_datafile:id=#{@object.id}"
         @types = Typesobject.find_for("datafile")
+        @datafile = Datafile.create_new(nil,@current_user)
         format.html { render  :action => :new_datafile, :id => @object.id   }
+
+      else
+        format.html { redirect_to(@object) }
       end
       format.xml  { head :ok }
     end
   end
-  
+
   private
   #  def add_document_to_favori
   #    puts "===DocumentsController.add_document_to_favori:id="+params[:id].to_s
