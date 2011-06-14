@@ -1,8 +1,6 @@
 require 'active_record/fixtures'
 module Controllers::PlmInitControllerModule
-
-  
-  
+ 
   def check_init_objects
     ret =""
     
