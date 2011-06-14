@@ -42,7 +42,6 @@ class MainController < ApplicationController
     puts "main_controller.init_objects"
     check_init_objects
     @themes = get_themes(@theme)
-    puts "main_controller.init_objects"
     create_admin
     unless params[:domain].blank?
       # creation du domaine demande: status et types d'objets

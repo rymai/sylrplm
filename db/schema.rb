@@ -341,6 +341,12 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
     t.string   "theme"
     t.integer  "volume_id"
     t.integer  "nb_items"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "language"
+    t.integer  "notification"
+    t.boolean  "show_mail"
+    t.string   "time_zone"
   end
 
   add_index "users", ["login"], :name => "id_user_login", :unique => true

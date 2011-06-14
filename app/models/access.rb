@@ -35,16 +35,20 @@ class Access < ActiveRecord::Base
       controller.name == "LoginController" ||
       controller.name == "RolesController" ||
       controller.name == "RolesUsersController" ||
-      controller.name == "SequencesController" 
+      controller.name == "SequencesController"
         # fonctions admin
         st=st+create_access(controller.name,controller.method,"admin & (!designer | !consultant | !valider)")
       else
         if controller.name == "SessionsController"
-          # tout le monde peut se deconnecter 
+          # tout le monde peut se deconnecter
           st=st+create_access(controller.name,controller.method,"admin | designer | consultant | valider")
         else
           # les fonctions plm
-          st=st+create_access(controller.name,controller.method,"(admin | designer | valider) & !consultant")
+          if controller.method=="show"
+            st=st+create_access(controller.name,controller.method,"admin | designer | valider | consultant")
+          else
+            st=st+create_access(controller.name,controller.method,"(admin | designer | valider) & !consultant")
+          end
         end
       end
       #puts 'access_controller.index:controller='+controller.name+' method='+controller.method+' st='+st.to_s

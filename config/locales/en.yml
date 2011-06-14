@@ -10,7 +10,7 @@ en:
   ##############
   #controllers
   ##############
-  ctrl_no_privilege: "You don't have privileges to access this action"
+  ctrl_no_privilege: "Your role '%{role}' don't give access to '%{controller}/%{action}'"
   ctrl_object_created: "%{typeobj} %{ident} was successfully created"
   ctrl_object_not_created: "%{typeobj} not created"
   ctrl_object_updated: "%{typeobj} %{ident} was successfully updated"
@@ -460,6 +460,19 @@ en:
   label_email: Email
   label_roles: Roles
   label_nb_items: Data number in page
+  label_first_name: First name
+  label_last_name: Last name
+  label_language: Language
+  label_notification: Notifications
+  label_time_zone: Time zone
+  label_show_mail: Show mail adress
+  notification_1: Notification 1
+  notification_2: Notification 2
+  notification_3: Notification 3
+  notification_4: Notification 4
+  notification_5: Notification 5
+  language_fr: French
+  language_en: English
   # fields volumes
   volume_list: Listing of volumes
   volume_new: New volume

@@ -10,37 +10,37 @@ fr:
   ##############
   #controllers
   ##############
-  ctrl_no_privilege: "Désolé, privilèges insuffisants:%{msg}"
-  ctrl_object_created: "%{typeobj} %{ident} crée avec succès"
+  ctrl_no_privilege: "Désolé, Votre rôle '%{role}' ne vous permet d'accéder à la fonction '%{controller}/%{action}'"
+  ctrl_object_created: "%{typeobj} '%{ident}' crée avec succès"
   ctrl_object_not_created: "%{typeobj} non crée"
-  ctrl_object_updated: "%{typeobj} %{ident} modifié avec succès"
-  ctrl_object_not_saved: "%{typeobj} %{ident} non sauvegardé"
-  ctrl_object_not_updated: "%{typeobj} %{ident} non modifié"
-  ctrl_object_deleted: "%{typeobj} %{ident} supprimé avec succès"
-  ctrl_object_not_deleted: "%{typeobj} %{ident} ne peut être supprimé"
-  ctrl_object_promoted: "%{typeobj} %{ident} promu de %{current_rank} à %{new_rank}, valideurs=%{validersMail}"
-  ctrl_object_no_validers: "%{typeobj} %{ident} non promu de %{current_rank} à %{new_rank} car pas de valideur(s)"
-  ctrl_object_not_promoted: "%{typeobj} %{ident} non promu de %{current_rank} à %{new_rank}"
-  ctrl_user_no_email: "L'utilisateur %{user} n'a pas d'adresse mail"
-  ctrl_object_demoted: "%{typeobj} %{ident} rétrogradé de %{current_rank} à %{new_rank}, valideurs=%{validersMail}"
-  ctrl_object_not_demoted: "%{typeobj} %{ident} non rétrogradé de %{current_rank} à %{new_rank}"
-  ctrl_object_revised: "%{typeobj} %{ident} revisé de %{previous_rev} à %{revision}"
-  ctrl_object_not_revised: "%{typeobj} %{ident} non révisé depuis %{previous_rev} (pas dernière revision ou non gelé ?)"
-  ctrl_object_checkout: "%{typeobj} %{ident} réservé, raison:%{reason}"  
-  ctrl_object_not_checkout: "%{typeobj} %{ident} non réservé"  
+  ctrl_object_updated: "%{typeobj} '%{ident}' modifié avec succès"
+  ctrl_object_not_saved: "%{typeobj} '%{ident}' non sauvegardé"
+  ctrl_object_not_updated: "%{typeobj} '%{ident}' non modifié"
+  ctrl_object_deleted: "%{typeobj} '%{ident}' supprimé avec succès"
+  ctrl_object_not_deleted: "%{typeobj} '%{ident}' ne peut être supprimé"
+  ctrl_object_promoted: "%{typeobj} '%{ident}' promu de %{current_rank} à %{new_rank}, valideurs=%{validersMail}"
+  ctrl_object_no_validers: "%{typeobj} '%{ident}' non promu de %{current_rank} à %{new_rank} car pas de valideur(s)"
+  ctrl_object_not_promoted: "%{typeobj} '%{ident}' non promu de %{current_rank} à %{new_rank}"
+  ctrl_user_no_email: "L'utilisateur '%{user}' n'a pas d'adresse mail"
+  ctrl_object_demoted: "%{typeobj} '%{ident}' rétrogradé de %{current_rank} à %{new_rank}, valideurs=%{validersMail}"
+  ctrl_object_not_demoted: "%{typeobj} '%{ident}' non rétrogradé de %{current_rank} à %{new_rank}"
+  ctrl_object_revised: "%{typeobj} '%{ident}' revisé de %{previous_rev} à %{revision}"
+  ctrl_object_not_revised: "%{typeobj} '%{ident}' non révisé depuis %{previous_rev} (pas dernière revision ou non gelé ?)"
+  ctrl_object_checkout: "%{typeobj} '%{ident}' réservé, raison:%{reason}"  
+  ctrl_object_not_checkout: "%{typeobj} '%{ident}' non réservé"  
   ctrl_object_give_reason: "Indiquez une raison"
-  ctrl_object_already_checkout: "%{typeobj} %{ident} déja réservé"
-  ctrl_object_checkin: "%{typeobj} %{ident} est sauvé et libéré, raison:%{reason}" 
-  ctrl_object_not_checkin: "%{typeobj} %{ident} n'est pas libéré"
-  ctrl_object_notyet_checkout: "%{typeobj} %{ident} n'est pas encore réservé"
+  ctrl_object_already_checkout: "%{typeobj} '%{ident}' déja réservé"
+  ctrl_object_checkin: "%{typeobj} '%{ident}' est sauvé et libéré, raison:%{reason}" 
+  ctrl_object_not_checkin: "%{typeobj} '%{ident}' n'est pas libéré"
+  ctrl_object_notyet_checkout: "%{typeobj} '%{ident}' n'est pas encore réservé"
   ctrl_object_give_file: "Indiquez un nouveau fichier"
-  ctrl_object_checkfree: "%{typeobj} %{ident} est libéré, raison:%{reason}" 
-  ctrl_object_not_checkfree: "%{typeobj} %{ident} n'est pas libéré"
-  ctrl_object_added: "<br> %{typeobj} %{ident} a été ajouté, relation=%{relation}, message=%{msg}"
-  ctrl_object_not_added: "<br> %{typeobj} %{ident} n'a pas été ajouté, relation=%{relation}, messag=%{msg}"
-  ctrl_object_not_linked: "<br> %{typeobj} %{ident} n'a pas été relié, relation=%{relation}, messag=%{msg}"
+  ctrl_object_checkfree: "%{typeobj} '%{ident}' est libéré, raison:%{reason}" 
+  ctrl_object_not_checkfree: "%{typeobj} '%{ident}' n'est pas libéré"
+  ctrl_object_added: "<br> %{typeobj} '%{ident}' a été ajouté, relation='%{relation}', message=%{msg}"
+  ctrl_object_not_added: "<br> %{typeobj} '%{ident}' n'a pas été ajouté, relation='%{relation}', messag=%{msg}"
+  ctrl_object_not_linked: "<br> %{typeobj} '%{ident}' n'a pas été relié, relation='%{relation}', messag=%{msg}"
   ctrl_nothing_to_paste: "Pas de %{typeobj} à coller"
-  ctrl_subject_forum: "Forum sur %{typeobj} %{ident}"
+  ctrl_subject_forum: "Forum sur %{typeobj} '%{ident}'"
   ctrl_object_explorer: "%{typeobj} Explorer"
   ctrl_object_referencer: "%{typeobj} Référenceur"
   ctrl_init_to_do: Initialisation à effectuer
@@ -456,6 +456,19 @@ fr:
   label_email: Email
   label_roles: Rôles
   label_nb_items: Nombre de données par page
+  label_first_name: Prénom
+  label_last_name: Nom
+  label_language: Langue
+  label_notification: Notifications
+  label_time_zone: Fuseau horaire
+  label_show_mail: Montrer l'adresse mail
+  notification_1: Notification 1
+  notification_2: Notification 2
+  notification_3: Notification 3
+  notification_4: Notification 4
+  notification_5: Notification 5
+  language_fr: Français
+  language_en: Anglais
   # fields volumes
   volume_list: Liste des volumes
   volume_new: Nouveau volume

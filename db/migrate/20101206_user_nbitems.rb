@@ -1,3 +1,4 @@
+
 class UserNbitems < ActiveRecord::Migration
   def self.up
     add_column :users, :nb_items, :integer

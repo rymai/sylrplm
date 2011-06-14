@@ -5,21 +5,21 @@ module Controllers::PlmInitControllerModule
   
   def check_init_objects
     ret =""
-    #ya_admin=User.check_admin
     
-    #pour debug:forcer la reconstruction des access
-    #ya_admin=false
-#    if ya_admin != true
-#      ret +="Creation User admin,designer,consultant<br>"
-#      st=Access.init
-#      if st
-#        ret +="Acces admin,designer,consultant crees<br>"
-#      else
-#        ret +="ERREUR:Acces admin,designer,consultant non crees completement<br>"
-#      end
-#    end
-#    puts 'main_controller.index:ya_admin='+ya_admin.to_s
-    
+    #pour debug: forcer la reconstruction des access
+    ya_acces=Access.count
+    if ya_acces == 0
+      ret +="Creation access<br>"
+      st=Access.init
+      st=true
+      if st
+        ret +="Acces  crees<br>"
+      else
+        ret +="ERREUR:Acces non crees completement<br>"
+      end
+    end
+    puts 'main_controller.index:ya_acces='+ya_acces.to_s+":"+ret
+    ret=""
     @types_document=Typesobject.find_for('document')
     if @types_document.size==0
       ret +="Pas de types de documents<br>"

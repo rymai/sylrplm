@@ -1,5 +1,5 @@
 <h1><%=t(:user_edit) %></h1>
-<% form_for @current_user do |form| %>
+<% form_for @the_user do |form| %>
 <%= form.error_messages %>
 <%= render(:partial => "users/edit",:locals => { :form => form, :fonct=>"edit" }) %>
 <table class='menu_bas'>

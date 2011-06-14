@@ -25,12 +25,11 @@ module Caboose
           c.default_access_context = defaults if default_block_given
           @access = AccessSentry.new(c, actions)
           #syl
-          #role_title=""
-
-          if(c.access_context[:user]!=nil)
-            role_title=c.access_context[:user].role.title
-          else
-            role_title=""
+          role_title=""
+          if c.access_context[:user]!=nil
+            if c.access_context[:user].role!=nil
+              role_title=c.access_context[:user].role.title
+            end
           end
           action=actions[c.action_name.to_sym]
           #puts "access_control:action=#{c.action_name.to_sym} : #{action}"
@@ -43,10 +42,10 @@ module Caboose
           else
             if c.respond_to?:permission_denied
               # puts "access_control:not allowed #{c.controller_name}/#{c.action_name} permission_denied to #{role_title}"
-              c.send(:permission_denied, "Your role #{role_title} don't give access to #{c.controller_name}/#{c.action_name}")
+              c.send(:permission_denied, role_title, c.controller_name, c.action_name)
             else
               # puts "access_control:not allowed #{c.controller_name}/#{c.action_name} not permission_denied to #{role_title}"
-              c.send(:render_text, "Your role #{role_title} don't give access #{c.controller_name}/#{c.action_name}")
+              c.send(:render_text,role_title, c.controller_name, c.action_name)
             end
           end
 

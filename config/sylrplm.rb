@@ -4,6 +4,8 @@ module SYLRPLM
   #include Classes::AppClasses::LogFormatter
   VOLUME_DIRECTORY_DEFAULT="C:\\sylrplm_data"
   LOCAL_DEFAULT="fr"
+  NOTIFICATION_DEFAULT=1
+  TIME_ZONE_DEFAULT=1
   THEME_DEFAULT="blackwhite" 
   NB_ITEMS_PER_PAGE=30
   ADMIN_GROUP_NAME = 'admins'
@@ -19,7 +21,13 @@ LOG           = Logger.new(logfile, 'daily')
 LOG.level     = Logger::DEBUG #DEBUG INFO WARN ERROR FATAL ANY
 LOG.formatter = Classes::AppClasses::LogFormatter.new  # Install custom formatter!
 #@logger.datetime_format = "%Y-%m-%d %H:%M:%S"
-LOG.info("lancement SYLRPLM")
-LOG.info("DIR_DOMAINS=#{SYLRPLM::DIR_DOMAINS}")
-LOG.info("DIR_ADMIN=#{SYLRPLM::DIR_ADMIN}")
+LOG.info("Lancement SYLRPLM")
+LOG.info("logs dans: #{logfile}")
+LOG.info("Constantes du module SYLRPLM:")
+SYLRPLM.constants.each do |c|
+  v=SYLRPLM.const_get(c)
+  LOG.info("#{c}=#{v}")
+end
+LOG.info("--------------------------------------------")
+
 

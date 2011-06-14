@@ -1,67 +1,60 @@
-<h1><%=t(:user_list) %><%=h_count_objects(@current_users)%> </h1>
+<h1><%= t(:user_list) %><%= h_count_objects(@current_users)%> </h1>
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t("new_user"), new_user_path %>
-        </td>
-		<td>
-            <%= show_help("help_users") %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= link_to t("new_user"), new_user_path %></td>
+		<td> <%= show_help("help_users") %></td>
+	</tr>
 </table>
 <%= form_simple_query_helper('/users', @current_users) %>
 <table>
-    <tr>
-        <th<%= sort_td_class_helper "login" %>
-            <%= sort_link_helper t(:label_username), "login" %>
-        </th>
-        <th<%= sort_td_class_helper "role" %>
-            <%= sort_link_helper t(:label_role), "role.title" %>
-        </th>
-        <th<%= sort_td_class_helper "mail" %>
-            <%= sort_link_helper t(:label_email), "email" %>
-        </th>
-        <th>
-            <%= sort_td_class_helper "volume" %>
-            <%= sort_link_helper t(:label_volume), "volume.name" %>
-        </th>
-        <th<%= sort_td_class_helper "theme" %>
-            <%= sort_link_helper t(:label_theme), "theme" %>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-    </tr>
-    <% for user in @current_users[:recordset] %>
-    <tr>
-        <td>
-            <%= h(user.login) %>
-        </td>
-        <td>
-            <%if(user.role != nil) %>
-            <%= h(user.role.title) %>
-            <%end %>
-        </td>
-        <td>
-            <%= h(user.email) %>
-        </td>
-        <td>
-            <%=h(user.volume.name)unless user.volume.nil? %>
-        </td>
-        <td>
-            <%= h(user.theme) %>
-        </td>
-        <td>
-            <%= link_to h_img_show.to_s, user %>
-        </td>
-        <td>
-            <%= link_to h_img_edit.to_s, edit_user_path(user) %>
-        </td>
-        <td>
-            <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %>
-        </td>
-    </tr>
-    <% end %>
+	<tr>
+		<th<%= sort_td_class_helper "login" %>
+			<%= sort_link_helper t(:label_username), "login" %>
+			</th>
+			<th<%= sort_td_class_helper "role" %>
+				<%= sort_link_helper t(:label_role), "role.title" %>
+				</th>
+				<th<%= sort_td_class_helper "mail" %>
+					<%= sort_link_helper t(:label_email), "email" %>
+					</th>
+					<th<%= sort_td_class_helper "language" %>
+						<%= sort_link_helper t(:label_language), "language" %>
+						</th>
+						<th> <%= sort_td_class_helper "volume" %>
+						<%= sort_link_helper t(:label_volume), "volume.name" %></th>
+						<th<%= sort_td_class_helper "theme" %>
+							<%= sort_link_helper t(:label_theme), "theme" %>
+							</th>
+							<th<%= sort_td_class_helper "notification" %>
+								<%= sort_link_helper t(:label_notification), "notification" %>
+								</th>
+								<th<%= sort_td_class_helper "time_zone" %>
+									<%= sort_link_helper t(:label_time_zone), "time_zone" %>
+									</th>
+									<th<%= sort_td_class_helper "show_mail" %>
+										<%= sort_link_helper t(:label_show_mail), "show_mail" %>
+										</th>
+										<th></th>
+										<th></th>
+										<th></th>
+	</tr>
+	<% for user in @current_users[:recordset] %>
+	<tr>
+		<td> <%= h(user.login) %></td>
+		<td> <%if(user.role != nil) %>
+		<%= h(user.role.title) %>
+		<%end %></td>
+		<td> <%= h(user.email) %></td>
+		<td> <%= h(user.language) %></td>
+		<td> <%= h(user.volume.name)unless user.volume.nil? %></td>
+		<td> <%= h(user.theme) %></td>
+		<td> <%= h(user.v_notification) %></td>
+		<td> <%= h(user.v_time_zone) %></td>
+		<td> <%= h(user.show_mail) %></td>
+		<td> <%= link_to h_img_show.to_s, user %></td>
+		<td> <%= link_to h_img_edit.to_s, edit_user_path(user) %></td>
+		<td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td>
+	</tr>
+	<% end %>
 </table>
 

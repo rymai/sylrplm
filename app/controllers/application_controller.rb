@@ -22,8 +22,8 @@ class ApplicationController < ActionController::Base
   #
   #access_control(Access.find_for_controller(controller_class_name))
 
-  def permission_denied(msg)
-    flash[:notice] = t(:ctrl_no_privilege,:msg=>msg)
+  def permission_denied(role, controller, action)
+    flash[:notice] = t(:ctrl_no_privilege, :role=>role, :controller=>controller, :action=>action)
     redirect_to(:action => "index")
   end
 
@@ -59,15 +59,20 @@ class ApplicationController < ActionController::Base
 
   # definition de la langue
   def set_locale
-    if params[:locale]
-      I18n.locale = params[:locale]
-      session[:lng] = I18n.locale
+    @current_user             = User.find_user(session)
+    unless @current_user.nil?
+      I18n.locale = @current_user.language
     else
-      if session[:lng]
-        I18n.locale = session[:lng]
-      else
-        I18n.locale = SYLRPLM::LOCAL_DEFAULT
+      if params[:locale]
+        I18n.locale = params[:locale]
         session[:lng] = I18n.locale
+      else
+        if session[:lng]
+          I18n.locale = session[:lng]
+        else
+          I18n.locale = SYLRPLM::LOCAL_DEFAULT
+          session[:lng] = I18n.locale
+        end
       end
     end
   end
@@ -85,6 +90,9 @@ class ApplicationController < ActionController::Base
     @favori      = session[:favori] ||= Favori.new
     @urlbase          = "http://"+request.env["HTTP_HOST"]
     @theme            = User.find_theme(session)
+    @language=SYLRPLM::LOCAL_DEFAULT
+    @notification=SYLRPLM::NOTIFICATION_DEFAULT
+    @time_zone=SYLRPLM::TIME_ZONE_DEFAULT
     WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
     WillPaginate::ViewHelpers.pagination_options[:next_label] = t('label_next')
     WillPaginate::ViewHelpers.pagination_options[:page_links ] = true  # when false, only previous/next links are rendered (default: true)
@@ -103,14 +111,47 @@ class ApplicationController < ActionController::Base
     dirname = "#{Rails.root}/public/stylesheets/*"
     ret = ""
     Dir[dirname].each do |dir|
-      theme = File.basename(dir, '.*')
-      if theme == default
-        ret << "<option selected=\"selected\">#{theme}</option>"
-      else
-        ret << "<option>#{theme}</option>"
+      if File.directory?(dir)
+        theme = File.basename(dir, '.*')
+        if theme == default
+          ret << "<option selected=\"selected\">#{theme}</option>"
+        else
+          ret << "<option>#{theme}</option>"
+        end
       end
     end
-    puts "application_controller.get_themes"+dirname+"="+ret
+    #puts "application_controller.get_themes"+dirname+"="+ret
+    ret
+  end
+
+  def get_languages
+    #renvoie la liste des langues
+    dirname = "#{Rails.root}/config/locales/*.yml"
+    ret = []
+    Dir[dirname].each do |dir|
+      lng = File.basename(dir, '.*')
+      ret << [t("language_"+lng), lng]
+    end
+    puts "application_controller.get_languages"+dirname+"="+ret.inspect
+    ret
+  end
+
+  def get_html_options(lst, default, translate=false)
+    ret=""
+    lst.each do |item|
+      if translate==true
+        val=t(item[1])
+      else
+        val=item[1]
+      end
+      if item[0].to_s == default.to_s
+        #puts "get_html_options:"+item.inspect+" = "+default.to_s
+        ret << "<option value=\"#{item[0]}\" selected=\"selected\">#{item[1]}</option>"
+      else
+        ret << "<option value=\"#{item[0]}\">#{val}</option>"
+      end
+    end
+    #puts "application_controller.get_html_options:"+ret
     ret
   end
 
@@ -243,7 +284,7 @@ class ApplicationController < ActionController::Base
       #      end
     end
   end
-  
+
   private
 
   def current_user
