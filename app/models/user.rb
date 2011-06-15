@@ -16,11 +16,19 @@ class User < ActiveRecord::Base
   attr_accessor :password_confirmation
   validates_confirmation_of :password
   before_create :set_initial_attributes
-
+  MAIL_NOTIFICATION_OPTIONS = [
+    [0, :label_user_mail_option_all],
+    [1, :label_user_mail_option_selected],
+    [2, :label_user_mail_option_only_my_events],
+    [3, :label_user_mail_option_only_assigned],
+    [4, :label_user_mail_option_only_owner],
+    [5, :label_user_mail_option_none]
+  ]
   #
   # Used by is_admin?
   #
   ADMIN_GROUP_NAME = SYLRPLM::ADMIN_GROUP_NAME
+
   def self.create_new(params=nil)
     unless params.nil?
       user = User.new(params)
@@ -35,6 +43,18 @@ class User < ActiveRecord::Base
 
   def self.find_by_name(name)
     find(:first , :conditions => ["login = '#{name}' "])
+  end
+
+  def object_type
+    "user"
+  end
+
+  def ident
+    self.login
+  end
+
+  def designation
+    self.first_name+" "+self.last_name
   end
 
   def validate
@@ -138,33 +158,25 @@ class User < ActiveRecord::Base
   end
 
   def self.notifications
-      #renvoie la liste des notifications (integer)
-      ret=[]
-      ret << [0,"notification_1"]
-      ret << [1,"notification_2"]
-      ret << [2,"notification_3"]
-      ret << [3,"notification_4"]
-      ret << [4,"notification_5"]
-      ret
-    end
-    
+    MAIL_NOTIFICATION_OPTIONS
+  end
+
   def v_notification
     unless self.notification.nil?
-      ret=User.notifications[self.notification]
+      ret=User.notifications
+      ret=ret[self.notification]
     end
-    puts "v_notification:"+self.notification.to_s+":"+User.notifications.inspect+":"+ret.to_s
+    #puts "v_notification:"+self.notification.to_s+":"+User.notifications.inspect+":"+ret.to_s
     unless ret.nil?
       ret=ret[1]
     end
     ret
   end
 
-  
-
   #renvoie la liste des time zone tries sur le nom ([[texte,nom]])
   def self.time_zones
     ret=ActiveSupport::TimeZone.all.sort{|a,b| a.name <=> b.name}.collect {|z| [ z.to_s, z.name ]}
-    puts "time_zones:" + ret.inspect
+    #puts "time_zones:" + ret.inspect
     ret
   end
 

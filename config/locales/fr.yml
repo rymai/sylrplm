@@ -79,6 +79,7 @@ fr:
   ctrl_group_definitions: Groupe-processus
   #link
   ctrl_link_already_customer_project: Projet déja lié à ce client
+  ctrl_link_already_project_user: Utilisateur déja acteur sur ce projet
   ctrl_link_already_project: Projet déja utilise ici ou ailleurs
   ctrl_link_already_customer_document: Document déja lié à ce client
   ctrl_link_already_project_part: Article déja lié à ce projet
@@ -90,6 +91,7 @@ fr:
   ctrl_link_customer_document: Relation client / document
   ctrl_link_project_part: Relation projet / article
   ctrl_link_project_document: Relation projet / document
+  ctrl_link_project_user: Relation projet / utilisateur
   ctrl_link_part_part: Relation article / article
   ctrl_link_part_document: Relation article / document
   ctrl_link_document_forum: Relation document / forum
@@ -128,6 +130,8 @@ fr:
   ctrl_statusobject: Statut objet
   #typesobjects
   ctrl_typesobject: Type objet
+  #users
+  ctrl_user: Utilisateur
   #volumes
   ctrl_volume: Volume
   #workitems
@@ -223,6 +227,7 @@ fr:
   new_sequence: Nouvelle valeur par défaut
   new_volume: Nouveau volume
   #
+  paste_users: Coller utilisateurs 
   paste_parts: Coller articles 
   paste_documents: Coller documents
   paste_projects: Coller projets
@@ -361,6 +366,7 @@ fr:
   favoris_part: Articles
   favoris_project: Projets
   favoris_customer: Clients
+  favoris_user: Utilisateurs
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM Nouveautés
   # main/_frame
@@ -462,11 +468,12 @@ fr:
   label_notification: Notifications
   label_time_zone: Fuseau horaire
   label_show_mail: Montrer l'adresse mail
-  notification_1: Notification 1
-  notification_2: Notification 2
-  notification_3: Notification 3
-  notification_4: Notification 4
-  notification_5: Notification 5
+  label_user_mail_option_all: "Pour tous les événements de tous mes projets"
+  label_user_mail_option_selected: "Pour tous les événements des projets sélectionnés..."
+  label_user_mail_option_only_my_events: Seulement pour ce que je surveille
+  label_user_mail_option_only_assigned: Seulement pour ce qui m'est assigné
+  label_user_mail_option_only_owner: Seulement pour ce que j'ai créé
+  label_user_mail_option_none: Aucune notification
   language_fr: Français
   language_en: Anglais
   # fields volumes

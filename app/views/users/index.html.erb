@@ -48,12 +48,15 @@
 		<td> <%= h(user.language) %></td>
 		<td> <%= h(user.volume.name)unless user.volume.nil? %></td>
 		<td> <%= h(user.theme) %></td>
-		<td> <%= h(user.v_notification) %></td>
+		<td> <%= t(user.v_notification) %></td>
 		<td> <%= h(user.v_time_zone) %></td>
 		<td> <%= h(user.show_mail) %></td>
 		<td> <%= link_to h_img_show.to_s, user %></td>
 		<td> <%= link_to h_img_edit.to_s, edit_user_path(user) %></td>
 		<td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td>
+		<td><% if connected %>
+		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => user.id} %>
+		<%end%></td>
 	</tr>
 	<% end %>
 </table>

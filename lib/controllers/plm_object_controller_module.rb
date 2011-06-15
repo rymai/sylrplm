@@ -179,7 +179,7 @@ module Controllers::PlmObjectControllerModule
 
   def follow_tree_part(node, part,ctrl)
     tree_forums(node,"part",part,ctrl)
-    tree_documents(node,"part",part,ctrl)
+    tree_documents(node,"part",part)
     links=Link.find_childs("part", part,  "part")
     links.each do |link|
       child=Part.find(link.child_id)
@@ -231,7 +231,8 @@ module Controllers::PlmObjectControllerModule
   end
 
   def follow_tree_project(node, obj,ctrl)
-    tree_documents(node,"project",obj,ctrl)
+    tree_users(node,"project",obj)
+    tree_documents(node,"project",obj)
     tree_forums(node,"project",obj,ctrl)
     links=Link.find_childs("project", obj,  "part")
     links.each do |link|
@@ -267,6 +268,29 @@ module Controllers::PlmObjectControllerModule
       node<<cnode
     end
   end
+  
+  def tree_users(node, father_type, father)
+     docs=Link.find_childs(father_type, father,  "user")
+     docs.each do |link|
+       d=User.find(link.child_id)
+       url={:controller => 'users', :action => 'show', :id => "#{d.id}"}
+       destroy_url=url_for(:controller => "links",
+       :action => "remove_link",
+       :id => "#{link.id}" )
+       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
+       options={
+         :label => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_user)+':'+d.ident + cut_a,
+         #:icon=>icone(d),
+         #:icon_open=>icone(d),
+         :title => d.designation,
+         :open => false,
+         :url=>url_for(url)
+       }
+       cnode = Node.new(options,nil)
+       node<<cnode
+     end
+   end
+   
 
   def tree_forums(node, father_type, father,ctrl)
     docs = Link.find_childs(father_type.to_s, father,  "forum")
@@ -380,6 +404,8 @@ module Controllers::PlmObjectControllerModule
     obj=model.find(params[:id])
     puts "PlmObjectControllerModule.add_favori:#{obj.inspect}"
     @favori.add(obj)
+    puts "PlmObjectControllerModule.add_favori:#{@favori.get_controller_from_model_type("user").inspect}"
+    puts "PlmObjectControllerModule.add_favori:#{@favori.get("user").inspect}"
   end
 
   def empty_favori_by_type(type=nil)

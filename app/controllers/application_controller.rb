@@ -139,14 +139,14 @@ class ApplicationController < ActionController::Base
   def get_html_options(lst, default, translate=false)
     ret=""
     lst.each do |item|
-      if translate==true
+      if translate
         val=t(item[1])
       else
         val=item[1]
       end
       if item[0].to_s == default.to_s
         #puts "get_html_options:"+item.inspect+" = "+default.to_s
-        ret << "<option value=\"#{item[0]}\" selected=\"selected\">#{item[1]}</option>"
+        ret << "<option value=\"#{item[0]}\" selected=\"selected\">#{val}</option>"
       else
         ret << "<option value=\"#{item[0]}\">#{val}</option>"
       end

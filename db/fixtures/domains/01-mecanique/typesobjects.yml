@@ -141,6 +141,11 @@
   object: relation_project
   name: production
   description: Projet de production
+73:
+  id: 73
+  object: relation_user
+  name: project_actor
+  description: Participant au projet
 
 81:
   id: 81

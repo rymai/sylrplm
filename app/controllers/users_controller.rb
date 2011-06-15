@@ -141,13 +141,13 @@ class UsersController < ApplicationController
   def get_notifications(default)
     #renvoie la liste des notifications
     lst=User.notifications
-    get_html_options(lst,default)
+    get_html_options(lst,default,true)
   end
 
   def get_time_zones(default)
     #renvoie la liste des time zone
     lst=User.time_zones
-    get_html_options(lst,default)
+    get_html_options(lst,default,false)
   end
 
 end

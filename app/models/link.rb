@@ -39,6 +39,14 @@ class Link < ActiveRecord::Base
     end
     if(father_type.to_s=="project" && child_type.to_s=="part")
       ok=true
+
+    end
+    if(father_type.to_s=="project" && child_type.to_s=="user")
+      ok=true
+      if(is_child_of(father_type.to_s, father, child_type.to_s, child))
+        ok=false
+        msg=:ctrl_link_already_project_user.to_s
+      end
     end
     if(father_type=="project" && child_type=="document")
       ok=true

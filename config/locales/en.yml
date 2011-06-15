@@ -78,6 +78,7 @@ en:
   ctrl_group_definitions: Group-processus
   #link
   ctrl_link_already_customer_project: Project already link at customer
+  ctrl_link_already_project_user: User already actor on this project
   ctrl_link_already_project: Project already link
   ctrl_link_already_customer_document: Document already link at customer
   ctrl_link_already_project_part: Part already link at project
@@ -89,6 +90,7 @@ en:
   ctrl_link_customer_document: Relation client / document
   ctrl_link_project_part: Relation project / part
   ctrl_link_project_document: Relation project / document
+  ctrl_link_project_user: Relation project / user
   ctrl_link_part_part: Relation part / part
   ctrl_link_part_document: Relation part / document
   ctrl_link_document_forum: Relation document / forum
@@ -127,6 +129,8 @@ en:
   ctrl_statusobject: Object status
   #typesobjects
   ctrl_typesobject: Object type
+  #users
+  ctrl_user: User
   #volumes
   ctrl_volume: Volume
   ctrl_no_relation: no relation
@@ -222,6 +226,7 @@ en:
   #plm_object_controller_module
   ctrl_datafile: File
   #
+  paste_users: Coller users 
   paste_part: Paste parts 
   paste_documents: Paste documents
   paste_projects: Paste projects
@@ -365,6 +370,7 @@ en:
   favoris_part: Parts
   favoris_project: Projects
   favoris_customer: Customers
+  favoris_user: Users
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM News 
   # main/_frame
@@ -466,11 +472,14 @@ en:
   label_notification: Notifications
   label_time_zone: Time zone
   label_show_mail: Show mail adress
-  notification_1: Notification 1
-  notification_2: Notification 2
-  notification_3: Notification 3
-  notification_4: Notification 4
-  notification_5: Notification 5
+  
+  label_user_mail_option_all: "For any event on all my projects"
+  label_user_mail_option_selected: "For any event on the selected projects only..."
+  label_user_mail_option_only_my_events: "Only for things I watch or I'm involved in"
+  label_user_mail_option_only_assigned: "Only for things I am assigned to"
+  label_user_mail_option_only_owner: "Only for things I am the owner of"
+  label_user_mail_option_none: "No events"
+  
   language_fr: French
   language_en: English
   # fields volumes

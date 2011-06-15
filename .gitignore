@@ -13,3 +13,7 @@ route/**/*
 .tmp/**/*
 # Mac OSX
 .DS_Store
+work*/**/*
+/work/
+/work_development/
+/.metadata/

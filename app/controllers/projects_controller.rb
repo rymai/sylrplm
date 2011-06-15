@@ -31,6 +31,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     @relation_types_document=Typesobject.get_types_names(:relation_document)
     @relation_types_part=Typesobject.get_types_names(:relation_part)
+    @relation_types_user=Typesobject.get_types_names(:relation_user)
     @tree=create_tree(@project)
     @tree_up=create_tree_up(@project)
 
@@ -198,6 +199,39 @@ class ProjectsController < ApplicationController
     #redirect_to_index("add_docs termine")
 
   end
+  
+  def add_users
+      define_variables
+      @project = Project.find(params[:id])
+      relation=params[:relation][:user]
+      respond_to do |format|
+        unless @favori.get("user").nil?
+          flash[:notice] = ""
+          @favori.get("user").each do |item|
+            #flash[:notice] += "<br>"+ item.ident.to_s
+            link_=Link.create_new("project", @project, "user", item, relation)
+            link=link_[:link]
+            if(link!=nil)
+              if(link.save)
+                flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_user),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              else
+                flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_user),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              end
+            else
+              flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+            end
+          end
+          empty_favori_by_type("user")
+        else
+          flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_user))
+        end
+        format.html { redirect_to(@project) }
+        format.xml  { head :ok }
+      end
+      #redirect_to_index("add_docs termine")
+  
+    end
+    
 
   def promote
     ctrl_promote(Project,false)
