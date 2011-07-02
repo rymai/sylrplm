@@ -1,0 +1,13 @@
+<div class="favori-title">
+	<%= t(:favoris_user)%>
+	<%= link_to_remote( h_img(:destroy).to_s,
+	:url=> { :controller=>"users", :action => :empty_favori })%>
+</div>
+<% if @favori.get("user") != nil %>
+<% if @favori.get("user").count >0 %>
+<table>
+	<%= render(:partial => "main/favori_item", :collection => @favori.get("user")) %>
+</table>
+<% end %>
+<% end %>
+

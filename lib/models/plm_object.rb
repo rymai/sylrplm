@@ -2,8 +2,8 @@ require 'openwfe/representations'
 require 'ruote/sylrplm/workitems'
 
 module Models::PlmObject
-#  include OpenWFE::Extras::ArWorkitem
-#  include OpenWFE::Extras::HistoryEntry
+  #  include OpenWFE::Extras::ArWorkitem
+  #  include OpenWFE::Extras::HistoryEntry
   # modifie les attributs avant edition
   def self.included(base)
     base.extend(ClassMethods) # �a appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclue la lib
@@ -20,17 +20,21 @@ module Models::PlmObject
       end
       ret
     end
+
+   
   end
+
+  
 
   def edit()
     self.date=DateTime::now()
   end
 
-  # renvoie le type de l'objet: nom de la classe en minuscule  
+  # renvoie le type de l'objet: nom de la classe en minuscule
   def object_type
     self.class.name.downcase
   end
-  
+
   def is_freeze
     if(self.statusobject!=nil && Statusobject.get_last(self.class.name)!=nil)
       if(self.statusobject.rank == Statusobject.get_last(self.class.name).rank)

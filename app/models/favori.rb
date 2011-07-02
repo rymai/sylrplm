@@ -29,7 +29,7 @@ class Favori
   end
 
   def get(type)
-    puts "favori.get:"+@items[type].inspect
+    #puts "favori.get:"+@items[type].inspect
     unless @items[type].nil?
       @items[type]
     else

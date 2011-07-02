@@ -2,6 +2,7 @@ class Document < ActiveRecord::Base
   include Models::PlmObject
   include Models::SylrplmCommon
 
+  
   attr_accessor :link_attributes
   validates_presence_of :ident , :designation
   validates_uniqueness_of :ident, :scope => :revision

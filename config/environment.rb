@@ -5,17 +5,18 @@ RAILS_GEM_VERSION = '2.3.10' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-
+#require File.join(File.dirname(__FILE__),'../lib/classes/app_classes')
+#include Classes::AppClasses
 Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.
   config.gem(
-      'mislav-will_paginate',
-      :version => '~> 2.3.6',
-      :lib => 'will_paginate',
-      :source => 'http://gems.github.com')
-      
+  'mislav-will_paginate',
+  :version => '~> 2.3.6',
+  :lib => 'will_paginate',
+  :source => 'http://gems.github.com')
+
   #config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
 
   # Add additional load paths for your own custom dirs
@@ -47,6 +48,10 @@ Rails::Initializer.run do |config|
   config.action_mailer.perform_deliveries    = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_charset       = 'utf-8'
+  config.action_mailer.default_url_options = {
+    :host => "localhost:3000"
+  }
+
 
   config.action_mailer.smtp_settings = {
     :address => "smtp.free.fr",
@@ -56,17 +61,16 @@ Rails::Initializer.run do |config|
     #:user_name => xxx,
     #:password => xxx
   }
+  config.active_record.observers = :document_observer, :part_observer, :project_observer, :customer_observer
   
+
   #RUOTE_ENV = {:persist_as_yaml=>true}
   RUOTE_ENV = {}
-    # passing a hash of parameters (application context) to the ruote engine
-    # (well via the ruote_plugin)
-  
-    
-  
-  $:.unshift('~/ruote/lib')
-    # using the local 'ruote', comment that out if you're using ruote as a gem
+  # passing a hash of parameters (application context) to the ruote engine
+  # (well via the ruote_plugin)
 
+  $:.unshift('~/ruote/lib')
+  # using the local 'ruote', comment that out if you're using ruote as a gem
 
 end
 

@@ -365,4 +365,39 @@ rake db:data:load
 rake db:fixtures:dump 
     
 
+--------------------------------------------------------
+lancer une tache regulierement
+-------------------------------
+> On a *nix server, you'll want to use cron. On a Windows server, you
+> might be able to use Scheduled Tasks.
+
+As suggested above, you can use Unix cron / Windows scheduled tasks to
+run a Rails rake task.
+
+0 * * * * wget -O - -q http://www.domain.tld/maintenance
+
+http://www.fallenrogue.com/articles/168-Script-vs-Rake
+
+Create a new file in lib/tasks with the extension .rake with your
+required task. To invoke it simply cd to your rails directory and run
+rake with your task name (optionally specify the Rails environment).
+The code inside the task will have full access to your Rails
+environment including models.
+
+cd /path/to/rails/application
+rake <task_name> RAILS_ENV=production
+
+voir aussi , plus moderne
+http://www.igvita.com/2007/03/29/scheduling-tasks-in-ruby-rails/
+
+https://github.com/jmettraux/rufus-scheduler/
+gem install rufus-scheduler
+
+
+---
+--- notifications
+--- 
+ruby script/generate scaffold notification object_type:string object_id:integer event_date:date event_type:text responsible_id:integer notify_date:date
+
+
 

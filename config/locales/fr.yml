@@ -39,6 +39,7 @@ fr:
   ctrl_object_added: "<br> %{typeobj} '%{ident}' a été ajouté, relation='%{relation}', message=%{msg}"
   ctrl_object_not_added: "<br> %{typeobj} '%{ident}' n'a pas été ajouté, relation='%{relation}', messag=%{msg}"
   ctrl_object_not_linked: "<br> %{typeobj} '%{ident}' n'a pas été relié, relation='%{relation}', messag=%{msg}"
+  ctrl_object_not_existing: "L' objet '%{model}/%{id}' est inconnu: %{error}"
   ctrl_nothing_to_paste: "Pas de %{typeobj} à coller"
   ctrl_subject_forum: "Forum sur %{typeobj} '%{ident}'"
   ctrl_object_explorer: "%{typeobj} Explorer"
@@ -197,6 +198,7 @@ fr:
   mnu_roles_users: Roles/users
   mnu_datafiles: Fichiers de données
   mnu_groups: Groupes
+  mnu_notifications: Notifications
   #
   proceed: Valider cette tâche
   delegate: Déléguer cette tâche
@@ -226,6 +228,7 @@ fr:
   new_role: Nouveau rôle
   new_sequence: Nouvelle valeur par défaut
   new_volume: Nouveau volume
+  new_notification: Nouvelle notification 
   #
   paste_users: Coller utilisateurs 
   paste_parts: Coller articles 
@@ -369,6 +372,14 @@ fr:
   favoris_user: Utilisateurs
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM Nouveautés
+  # notifications
+  notification_edit: Edition notification 
+  notification_list: Liste des notifications 
+  notification_show: Détail notification 
+  notification_new: Nouvelle notification
+  label_event_date: Date de l'évenement
+  label_event_type: Type de l'évenement
+  label_notify_date: Date de notification
   # main/_frame
   legend_main: Accueil
   legend_plm_objects: Objets PLM

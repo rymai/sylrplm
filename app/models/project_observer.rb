@@ -1,0 +1,4 @@
+class ProjectObserver < PlmObserver
+  
+
+end

@@ -678,9 +678,33 @@
             
         </ul>
     </msg>
-    <msg key="help_raf" title="Reste à faire">
+    <msg key="help_todo" title="Reste à faire">
         <ul>
             <li>IMPROV:Vues:prendre en compte l'attribut fixe o/n sur les valeurs par défaut pour permettre ou non la modif de la valeur par le user</li>
+            <li>Notifications:
+            	* A chaque modification d'une donnee (create/update/delete/add_*/del_*), Dans l'observer, ajouter un objet notification
+ 							* Regulierement(frequence parametrable)
+ 								= Notifier les  proprietaires des donnees impactees par la modif de cet objet: 
+ 								  - remonter les relations pour trouver les proprio des objets superieurs
+ 									  - conserver le chemin
+ 									  - chercher le proprio 
+ 								    - lui envoyer un mail avec l'info du chemin et de l'action effectuée 
+            		= Notifier les participants aux projets auxquelles appartiennent les objets modifies:
+            		  - remonter les relations pour trouver le ou les projets
+            		  - conserver le chemin
+            		  - lister les users du projet
+            		  - leur envoyer un mail avec l'info du chemin et de l'action effectuée 
+            	* Attributs de l' objet notification, tous obligatoires sauf notify_date
+            	<ul>
+            		<li> id</li>
+            		<li> object_type : document/part/project/customer</li>
+            		<li> object_id : id de l'objet modifie</li>
+            		<li> event_date : date de la modif</li>
+            		<li> event_type : type de la modif</li>
+            		<li> responsible_id : modifieur</li>
+           			<li> notify_date : date de la notification (null si pas encore fait)</li>
+            	</ul>
+        		</li>
         </ul>
     </msg>
     <msg key="help_about" title="A propos de SYLRPLM">

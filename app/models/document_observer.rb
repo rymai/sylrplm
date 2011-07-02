@@ -1,0 +1,4 @@
+class DocumentObserver < PlmObserver
+  
+
+end

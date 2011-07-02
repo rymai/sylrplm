@@ -1,5 +1,87 @@
 module Controllers::PlmObjectControllerModule
-  
+  def self.included(base)
+    base.extend(ClassMethods)
+  end
+
+  # methodes de classe
+  module ClassMethods
+    #  access_control [:create, :edit] => 'admin & !blacklist',
+    #                 :update => '(admin | moderator) & !blacklist',
+    #                 :list => '(admin | moderator | user) & !blacklist'
+    def event_manager
+      name=controller_class_name+".event_manager:"
+      before_filter do |c|
+        #syl
+        role_title=""
+        if c.access_context[:user]!=nil
+          if c.access_context[:user].role!=nil
+            role_title=c.access_context[:user].role.title
+          end
+        end
+        puts name+"before: role_title="+role_title+" controller="+c.controller_name+" action="+c.action_name
+      end
+      after_filter do |c|
+        #syl
+        role_title=""
+        if c.access_context[:user]!=nil
+          if c.access_context[:user].role!=nil
+            role_title=c.access_context[:user].role.title
+          end
+        end
+        puts name+"after: role_title="+role_title+" controller="+c.controller_name+" action="+c.action_name
+      end
+
+    end
+
+    def event_manager_before
+      name=controller_class_name+".event_manager_before:"
+      before_filter do |c|
+        #syl
+        role_title=""
+        if c.access_context[:user]!=nil
+          if c.access_context[:user].role!=nil
+            role_title=c.access_context[:user].role.title
+          end
+        end
+        puts name+"before: role_title="+role_title+" controller="+c.controller_name+" action="+c.action_name
+      end
+
+    end
+
+    def event_manager_after
+      name=controller_class_name+".event_manager_after:"
+      puts name
+      after_filter do |c|
+        #syl
+        role_title=""
+        if c.access_context[:user]!=nil
+          if c.access_context[:user].role!=nil
+            role_title=c.access_context[:user].role.title
+          end
+        end
+        puts name+"role_title="+role_title+" controller="+c.controller_name+" action="+c.action_name
+      end
+    end
+  end # ClassMethods
+
+  def object_exists
+    name=controller_class_name+".object_exists"
+    puts name+params.inspect
+    begin
+      obj=get_model(params).find(params[:id])
+      puts name+obj.inspect
+    rescue Exception => err
+      if obj.nil?
+        flash[:notice] = t(:ctrl_object_not_existing, :model=>get_model_type(params), :id=>params[:id], :error=>err)
+        redirect_to(:action => "index")
+      end
+    end
+#    if obj.nil?
+#      flash[:notice] = t(:ctrl_record_error)
+#      redirect_to(:action => "index")
+#    end
+
+  end
 
   def ctrl_revise(model)
     define_variables
@@ -268,29 +350,28 @@ module Controllers::PlmObjectControllerModule
       node<<cnode
     end
   end
-  
+
   def tree_users(node, father_type, father)
-     docs=Link.find_childs(father_type, father,  "user")
-     docs.each do |link|
-       d=User.find(link.child_id)
-       url={:controller => 'users', :action => 'show', :id => "#{d.id}"}
-       destroy_url=url_for(:controller => "links",
-       :action => "remove_link",
-       :id => "#{link.id}" )
-       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
-       options={
-         :label => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_user)+':'+d.ident + cut_a,
-         #:icon=>icone(d),
-         #:icon_open=>icone(d),
-         :title => d.designation,
-         :open => false,
-         :url=>url_for(url)
-       }
-       cnode = Node.new(options,nil)
-       node<<cnode
-     end
-   end
-   
+    docs=Link.find_childs(father_type, father,  "user")
+    docs.each do |link|
+      d=User.find(link.child_id)
+      url={:controller => 'users', :action => 'show', :id => "#{d.id}"}
+      destroy_url=url_for(:controller => "links",
+      :action => "remove_link",
+      :id => "#{link.id}" )
+      cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
+      options={
+        :label => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_user)+':'+d.ident + cut_a,
+        #:icon=>icone(d),
+        #:icon_open=>icone(d),
+        :title => d.designation,
+        :open => false,
+        :url=>url_for(url)
+      }
+      cnode = Node.new(options,nil)
+      node<<cnode
+    end
+  end
 
   def tree_forums(node, father_type, father,ctrl)
     docs = Link.find_childs(father_type.to_s, father,  "forum")

@@ -39,6 +39,7 @@ en:
   ctrl_object_added: "<br> %{typeobj} %{ident} was successfully added, relation=%{relation}, messag=%{msg}"
   ctrl_object_not_added: "<br> %{typeobj} %{ident} was not added, relation=%{relation}, messag=%{msg}"
   ctrl_object_not_linked: "<br> %{typeobj} %{ident} was not linked, relation=%{relation}, messag=%{msg}"
+  ctrl_object_not_existing: "Object '%{model}/%{id}' is unknown: %{error}"
   ctrl_nothing_to_paste: "No %{typeobj} to paste"
   ctrl_subject_forum: "Forum on %{typeobj} %{ident}"
   ctrl_object_explorer: "%{typeobj} Explorer"
@@ -191,6 +192,7 @@ en:
   mnu_roles_users: Roles/users
   mnu_datafiles: Data files
   mnu_groups: Groups
+  mnu_notifications: Notifications
   #
   proceed: Proceed this task
   delegate: Delegate this task
@@ -220,6 +222,7 @@ en:
   new_role: New role
   new_sequence: New sequence
   new_volume: New volume
+  new_notification: New notification 
   #########################################
   #modules
   #########################################
@@ -372,7 +375,15 @@ en:
   favoris_customer: Customers
   favoris_user: Users
   title_contacts: SYLRPLM Contacts
-  title_news: SYLRPLM News 
+  title_news: SYLRPLM News
+  # notifications
+  notification_edit: Notification edit 
+  notification_list: Liste des Notifications list 
+  notification_show: Notification detail
+  notification_new: New notification
+  label_event_date: Event date
+  label_event_type: Event type
+  label_notify_date: Notify date
   # main/_frame
   legend_main: Welcome
   legend_plm_objects: PLM Objects

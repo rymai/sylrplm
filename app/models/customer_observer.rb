@@ -1,0 +1,4 @@
+class CustomerObserver < PlmObserver
+  
+
+end

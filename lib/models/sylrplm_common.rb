@@ -1,37 +1,56 @@
 module Models::SylrplmCommon
-
   def self.included(base)
-    # ça appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclue la lib
+    # ï¿½a appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclue la lib
     base.extend(ClassMethods)
   end
 
   module ClassMethods
+    def get_object_controller(model_type)
+      # ajouter le 's' de fin
+      model_type+"s"
+    end
 
     #utilise pour les filtres des objets (index)
     def qry_type
       "typesobject_id in (select id from typesobjects as t where t.name LIKE ?)"
     end
+
     def qry_status
       "statusobject_id in (select id from statusobjects as s where s.name LIKE ?)"
     end
+
     def qry_owner
       "owner in(select id from users where login LIKE ?)"
     end
+
+    def qry_responsible
+      "responsible in(select id from users where login LIKE ?)"
+    end
+
     def qry_owner_id
       "owner_id in(select id from users where login LIKE ?)"
     end
+
+    def qrys_object_ident
+      "object_id in(select id from documents where ident LIKE ?)"
+    end
+
     def qry_author
       "author in(select id from users where login LIKE ?)"
     end
+
     def qry_volume
       "volume_id in(select id from volumes where name LIKE ?)"
     end
+
     def qry_role
       "role_id in(select id from roles where title LIKE ?)"
     end
+
     def qry_forum
       "forum_id in(select id from forums where subject LIKE ?)"
     end
+
     def qry_parent
       "parent_id in(select id from forum_items where message LIKE ?)"
     end

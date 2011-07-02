@@ -9,19 +9,25 @@ class ErrorReply < Exception
 end
 
 class ApplicationController < ActionController::Base
-  include Classes::AppClasses
+  #include Controllers::PlmEvent
   include Controllers::PlmObjectControllerModule
   helper :all # include all helpers, all the time
-
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   filter_parameter_logging :password
   #before_filter :authorize, :except => [:index,:init_objects,:get_themes,:find_theme,:permission_denied,:permission_granted, :permission_granted,:@current_user,:redirect_to_index,:tree_part,:tree_project,:tree_customer,:follow_tree_part,:follow_tree_up_part, :follow_tree_project,:follow_tree_up_project,:follow_tree_customer,:tree_documents,:tree_forums]
   before_filter :authorize, :except => [:index, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
+  before_filter :object_exists, :only => [:show, :edit, :destroy]
   #
   #access_control(Access.find_for_controller(controller_class_name))
 
+  #before_filter :event
+
+  def event
+    event_manager
+  end
+  
   def permission_denied(role, controller, action)
     flash[:notice] = t(:ctrl_no_privilege, :role=>role, :controller=>controller, :action=>action)
     redirect_to(:action => "index")
@@ -317,5 +323,8 @@ class ActionController::MimeResponds::Responder
     @controller.response.content_type = 'text/plain' \
     if @controller.request.parameters['plain'] == 'true'
   end
+
+ 
+
 end
 

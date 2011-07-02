@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101113205138) do
+ActiveRecord::Schema.define(:version => 20110623185426) do
 
   create_table "accesses", :force => true do |t|
     t.string   "controller"
@@ -203,6 +203,17 @@ ActiveRecord::Schema.define(:version => 20101113205138) do
 
   add_index "links", ["child_type", "child_id"], :name => "id_link_child"
   add_index "links", ["father_type", "father_id"], :name => "id_link_father"
+
+  create_table "notifications", :force => true do |t|
+    t.string   "object_type"
+    t.integer  "object_id"
+    t.date     "event_date"
+    t.text     "event_type"
+    t.integer  "responsible_id"
+    t.date     "notify_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "parts", :force => true do |t|
     t.string   "ident"
