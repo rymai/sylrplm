@@ -376,6 +376,7 @@ en:
   favoris_user: Users
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM News
+  label_today: Date
   # notifications
   notification_edit: Notification edit 
   notification_list: Liste des Notifications list 
@@ -403,8 +404,10 @@ en:
   part_validated: I just validate the following part
   document_tovalidate: Please, validate this document
   part_tovalidate: Please, validate this part
-  check_object_and_promote: Please, check and promote this object.
-  direct_access: Direct access.
+  check_object_and_promote: Please, check and promote this object
+  direct_access: Direct access
+  notification_notify: Events notification
+  button_notify: Notification
   # fields questions
   questions_edit: Edition question
   questions_list: List questions

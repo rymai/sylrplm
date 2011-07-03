@@ -372,6 +372,7 @@ fr:
   favoris_user: Utilisateurs
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM Nouveautés
+  label_today: Date
   # notifications
   notification_edit: Edition notification 
   notification_list: Liste des notifications 
@@ -395,12 +396,14 @@ fr:
   part_show: Détail article
   part_new: Nouvel article
   # fields plm_mailer
-  document_validated: Le document suivant vient d'être validé par mes soins
-  part_validated: La part suivante vient d'être validée par mes soins
-  document_tovalidate: Ceci est une demande de validation pour le document
-  part_tovalidate: Ceci est une demande de validation pour la part
-  check_object_and_promote: Merci de verifier cet objet et d'effectuer une promotion par le menu suivant.
-  direct_access: Accès direct.
+  document_validated: "Le document suivant vient d'être validé par mes soins"
+  part_validated: "La part suivante vient d'être validée par mes soins"
+  document_tovalidate: "Ceci est une demande de validation pour le document"
+  part_tovalidate: "Ceci est une demande de validation pour la part"
+  check_object_and_promote: "Merci de verifier cet objet et d'effectuer une promotion par le menu suivant"
+  direct_access: "Accès direct"
+  notification_notify: Notification des evenements concernant vos donnees
+  button_notify: Voir la notification
   # fields projects
   project_edit: Edition projet
   project_list: Liste projets

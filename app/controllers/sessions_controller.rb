@@ -1,15 +1,20 @@
 class SessionsController < ApplicationController
   #include Controllers::PlmObjectControllerModule
 
-  skip_before_filter :authorize
-  #access_control(Access.find_for_controller(controller_class_name))
+  skip_before_filter :authorize, :object_exists
   
+  #access_control(Access.find_for_controller(controller_class_name))
   def index
     puts "sessions_controller.index"+params.inspect
   end
 
+  def show
+    puts "sessions_controller.show"+params.inspect
+  end
+
   def new
     puts "sessions_controller.new"+params.inspect
+    @languages = get_languages
   end
 
   def edit
@@ -20,6 +25,7 @@ class SessionsController < ApplicationController
     puts "sessions_controller.create:"+params.inspect
     flash.now[:notice] = "post"
     @current_user = User.authenticate(params[:login], params[:password])
+    @languages = get_languages
     respond_to do |format|
       if @current_user
         #format.html { redirect_to choose_role_sessions_url }
@@ -43,11 +49,11 @@ class SessionsController < ApplicationController
   def choose_role
     puts "sessions_controller.choose_role:"+params.inspect
     @roles = @current_user.roles
-    # @current_user = User.find_user(session)
-    # @current_user.update_attributes(params[:user])
-    # uri = session[:original_uri]
-    # session[:original_uri] = nil
-    # redirect_to(uri || { :controller => "main", :action => "index" })
+  # @current_user = User.find_user(session)
+  # @current_user.update_attributes(params[:user])
+  # uri = session[:original_uri]
+  # session[:original_uri] = nil
+  # redirect_to(uri || { :controller => "main", :action => "index" })
   end
 
   #appelle par choose_role
@@ -75,7 +81,10 @@ class SessionsController < ApplicationController
     puts "sessions_controller.destroy:"+params.inspect
     session[:user_id] = nil
     flash[:notice] = t(:ctrl_user_disconnected, :user => @current_username) if @current_user != nil
-    redirect_to(:controller => "main", :action => "index")
+    #bouclage
+    #format.html { redirect_to_main(uri) }
+    #format.xml  { head :ok }
+  redirect_to(:controller => "main", :action => "index")
   end
 
 end

@@ -1,5 +1,7 @@
 require 'rexml/document'
 
+
+
 class ErrorReply < Exception
   attr_reader :status
   def initialize (msg, status=400)
@@ -8,10 +10,12 @@ class ErrorReply < Exception
   end
 end
 
+
+
 class ApplicationController < ActionController::Base
   #include Controllers::PlmEvent
   include Controllers::PlmObjectControllerModule
-  helper :all # include all helpers, all the time
+  helper :all  # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   filter_parameter_logging :password
   #before_filter :authorize, :except => [:index,:init_objects,:get_themes,:find_theme,:permission_denied,:permission_granted, :permission_granted,:@current_user,:redirect_to_index,:tree_part,:tree_project,:tree_customer,:follow_tree_part,:follow_tree_up_part, :follow_tree_project,:follow_tree_up_project,:follow_tree_customer,:tree_documents,:tree_forums]
@@ -23,11 +27,10 @@ class ApplicationController < ActionController::Base
   #access_control(Access.find_for_controller(controller_class_name))
 
   #before_filter :event
-
   def event
     event_manager
   end
-  
+
   def permission_denied(role, controller, action)
     flash[:notice] = t(:ctrl_no_privilege, :role=>role, :controller=>controller, :action=>action)
     redirect_to(:action => "index")
@@ -66,12 +69,12 @@ class ApplicationController < ActionController::Base
   # definition de la langue
   def set_locale
     @current_user             = User.find_user(session)
-    unless @current_user.nil?
-      I18n.locale = @current_user.language
+    if params[:locale]
+      I18n.locale = params[:locale]
+      session[:lng] = I18n.locale
     else
-      if params[:locale]
-        I18n.locale = params[:locale]
-        session[:lng] = I18n.locale
+      unless @current_user.nil?
+        I18n.locale = @current_user.language
       else
         if session[:lng]
           I18n.locale = session[:lng]
@@ -108,8 +111,8 @@ class ApplicationController < ActionController::Base
     WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
     WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
     LOG.info("__FILE__")
-    #puts "define_variables:session="+session.inspect
-    #current_user
+  #puts "define_variables:session="+session.inspect
+  #current_user
   end
 
   def get_themes(default)
@@ -148,7 +151,7 @@ class ApplicationController < ActionController::Base
       if translate
         val=t(item[1])
       else
-        val=item[1]
+      val=item[1]
       end
       if item[0].to_s == default.to_s
         #puts "get_html_options:"+item.inspect+" = "+default.to_s
@@ -221,8 +224,8 @@ class ApplicationController < ActionController::Base
   def error_reply (error_message, status=400)
 
     if error_message.is_a?(ErrorReply)
-      status = error_message.status
-      error_message = error_message.message
+    status = error_message.status
+    error_message = error_message.message
     end
 
     flash[:error] = error_message
@@ -287,7 +290,7 @@ class ApplicationController < ActionController::Base
       flash[:notice] = t(:login_login)
       puts "application_controller.authorize:redirect_tol="+new_sessions_url
       redirect_to new_sessions_url
-      #      end
+    #      end
     end
   end
 
@@ -301,6 +304,8 @@ class ApplicationController < ActionController::Base
     ret
   end
 end
+
+
 
 # Scrub sensitive parameters from your log
 # filter_parameter_logging :password
@@ -323,8 +328,6 @@ class ActionController::MimeResponds::Responder
     @controller.response.content_type = 'text/plain' \
     if @controller.request.parameters['plain'] == 'true'
   end
-
- 
 
 end
 

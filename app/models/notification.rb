@@ -1,9 +1,11 @@
 class Notification < ActiveRecord::Base
   include Models::SylrplmCommon
   #pour get_controller_from_model_type
+  
   validates_presence_of :object_type, :object_id,  :event_date, :event_type
   belongs_to :responsible,
   :class_name => "User"
+  
   def init_mdd
     create_table "notifications", :force => true do |t|
       t.string   "object_type"
@@ -24,9 +26,11 @@ class Notification < ActiveRecord::Base
     obj
   end
 
+  # utilisation:
+  # ruby script/console
   # Notification.notify
   def self.notify
-    puts "begin of notify"
+    name="****************begin:"+self.class.name+"."+__method__.to_s+":"
     User.all.each do |user|
       to_notify=[]
       notifs=self.find(:all, :conditions => ["notify_date != ''"])
@@ -38,14 +42,16 @@ class Notification < ActiveRecord::Base
       puts "**********"+user.login+":"+to_notify.count.to_s
       if to_notify.count > 0
         puts to_notify.inspect
-        email=PlmMailer.create_notify(to_notify, "sylvere.coutable@laposte.net", user)
+        notifs={}
+        notifs[:recordset]=to_notify
+        email=PlmMailer.create_notify(notifs, SYLRPLM::ADMIN_MAIL, user)
         if(email!=nil)
           email.set_content_type("text/html")
           PlmMailer.deliver(email)
         end
       end
     end
-    puts "end of notify"
+    name="****************end:"+self.class.name+"."+__method__.to_s+":"
   end
 
   def to_s

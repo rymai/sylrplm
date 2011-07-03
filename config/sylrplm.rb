@@ -12,6 +12,7 @@ module SYLRPLM
   # chargement initial, voir PlmInitControllerModule
   DIR_DOMAINS="#{RAILS_ROOT}/db/fixtures/domains/"
   DIR_ADMIN="#{RAILS_ROOT}/db/fixtures/admin/"
+  ADMIN_MAIL="sylvere.coutable@laposte.net"
 end
 #
 # fichier de log specifique

@@ -16,6 +16,8 @@ class MainController < ApplicationController
     message = check_init
     puts "main_controller.index"
     @datas = get_datas_count
+    @languages = get_languages
+    @themes = get_themes(@theme)
     unless params[:theme].nil?
       @theme = params[:theme]
       unless @current_user.nil?
@@ -28,7 +30,11 @@ class MainController < ApplicationController
         puts "main_controller.index:theme=#{session[:theme]}"
       end
     end
-    @themes = get_themes(@theme)
+    unless params[:locale].nil?
+      puts "main_controller.index:language=#{params[:locale]} "
+      set_locale
+    end
+   
     if message == ""
       flash[:notice] = "#{message}</br>#{t(label_theme)}=#{@theme}"
       respond_to do |format|

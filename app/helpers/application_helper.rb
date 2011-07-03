@@ -181,25 +181,29 @@ module ApplicationHelper
   end
 
   def sort_td_class_helper(param)
-    result = 'class="sortup"' if params[:sort] == param
-    result = 'class="sortdown"' if params[:sort] == param.to_s + " DESC"
-    result
+    
+      result = 'class="sortup"' if params[:sort] == param
+      result = 'class="sortdown"' if params[:sort] == param.to_s + " DESC"
+      result
+    
   end
 
   def sort_link_helper(text, param)
-    key = param
-    key += " DESC" if params[:sort] == param
-    options = {
-      :url => {:overwrite_params => {:sort => key, :page => nil}},
-      :update => 'table',
-      :before => "Element.show('spinner')",
-      :success => "Element.hide('spinner')"
-    }
-    html_options = {
-      :title => t("h_sort_by_field"),
-      :href => url_for(:action => 'index', :params => params.merge({:sort => key, :page => nil}))
-    }
-    link_to_remote(text, options, html_options)
+   
+      key = param
+      key += " DESC" if params[:sort] == param
+      options = {
+        :url => {:overwrite_params => {:sort => key, :page => nil}},
+        :update => 'table',
+        :before => "Element.show('spinner')",
+        :success => "Element.hide('spinner')"
+      }
+      html_options = {
+        :title => t("h_sort_by_field"),
+        :href => url_for(:action => 'index', :params => params.merge({:sort => key, :page => nil}))
+      }
+      link_to_remote(text, options, html_options)
+    
   end
 
   def h_sylrplm_tree
@@ -368,6 +372,17 @@ module ApplicationHelper
 
   def connected
     User.connected(session)
+  end
+  
+  # Returns true if the user is connected and having the admin role 
+  def admin_connected
+    ret=false
+    if connected
+      if @current_user.is_admin?
+        ret=true
+      end
+    end
+    ret
   end
 end
 
