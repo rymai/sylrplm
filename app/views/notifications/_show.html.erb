@@ -1,0 +1,29 @@
+<p>
+  <b><%= t(:label_object)%>:</b>
+  <%=h @notification.object_type %>
+</p>
+<p>
+  <b><%= t(:label_object_id)%>:</b>
+  <%=h @notification.object_id %>
+</p>
+
+<p>
+  <b><%= t(:label_event_date)%>:</b>
+  <%=h @notification.event_date %>
+</p>
+
+<p>
+  <b><%= t(:label_event_type)%>:</b>
+  <%=h @notification.event_type %>
+</p>
+
+<p>
+  <b><%= t(:label_responsible)%>:</b>
+ <b><%= @notification.responsible.login %></b>
+</p>
+
+<p>
+  <b><%= t(:label_notify_date)%>:</b>
+  <%=h @notification.notify_date %>
+</p>
+

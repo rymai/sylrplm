@@ -1,0 +1,51 @@
+<table>
+	<tr>
+		<% if fonct == "index" %>
+		<th <%= sort_td_class_helper "object_type" %>	>
+		<%= sort_link_helper t("label_object"), "object_type" %></th>
+		<th <%= sort_td_class_helper "object_id" %>	>
+		<%= sort_link_helper t("label_object_id"), "object_id" %></th>
+		<th <%= sort_td_class_helper "event_date" %>	>
+		<%= sort_link_helper t("label_event_date"), "event_date" %></th>
+		<th <%= sort_td_class_helper "event_type" %>	>
+		<%= sort_link_helper t("label_event_type"), "event_type" %></th>
+		<th <%= sort_td_class_helper "responsible" %>	>
+		<%= sort_link_helper t("label_responsible"), "responsible" %></th>
+		<th <%= sort_td_class_helper "notify_date" %>	>
+		<%= sort_link_helper t("label_notify_date"), "notify_date" %></th>
+		<% else %
+		<th><%= t "label_object_type" %></th>	
+		<th><%= t "label_object_id" %></th> 	
+		<th><%= t "label_event_date" %></th> 	
+		<th><%= t "label_event_type" %></th> 	
+		<th><%= t "label_responsible" %></th> 	
+		<th><%= t "label_notify_date" %></th> 	
+		<% end %>
+	</tr>
+	<% @notifications[:recordset].each do |notification| %>
+	<tr>
+		<td> <%= h notification.object_type %></td>
+		<td> <%= h notification.object_id %></td>
+		<td> <%= h notification.event_date %></td>
+		<td> <%= h notification.event_type %></td>
+		<td> <%= h notification.responsible.login %></td>
+		<td> <%= h notification.notify_date %></td>
+		<% if fonct == "index" %>
+		<td> <%= link_to h_img_show.to_s, notification %></td>
+		<td> <%= link_to h_img_edit.to_s, edit_notification_path(notification) %></td>
+		<td> <%= link_to h_img_destroy.to_s, notification, :confirm => t("msg_confirm"), :method => :delete %></td>
+		<% else %>
+		<td><%= link_to( t("button_notify"),
+		:controller => 'notifications',
+		:action => 'show',
+		:id => notification,
+		:only_path => false)%></td>
+		<td> <%= link_to(t("explorer"),
+		:controller => Notification.get_object_controller(notification.object_type),
+		:action => 'show',
+		:id => notification.object_id,
+		:only_path => false)%></td>
+		<% end %>
+	</tr>
+	<% end %>
+</table>
