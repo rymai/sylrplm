@@ -1,0 +1,189 @@
+<project 
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+
+<!--
+
+    This Maven2 POM is used when generating OpenWFEru jars for
+    using OpenWFEru in JRuby environments.
+
+-->
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.openwfe</groupId>
+  <artifactId>openwferu</artifactId>
+  <packaging>jar</packaging>
+  <name>openwferu</name>
+  <version>0.9.19-SNAPSHOT</version>
+
+  <description>
+OpenWFEru is an open source Ruby workflow and BPM engine.
+  </description>
+
+  <url>http://openwferu.rubyforge.org</url>
+
+  <licenses>
+    <license>
+      <name>MIT</name>
+      <url>http://github.com/jmettraux/ruote/blob/master/LICENSE.txt</url>
+    </license>
+  </licenses>
+
+  <inceptionYear>2001</inceptionYear>
+
+  <mailingLists>
+    <mailingList>
+      <name>OpenWFEru developer List</name>
+      <archive>http://groups.google.com/group/openwferu-dev</archive>
+    </mailingList>
+    <mailingList>
+      <name>OpenWFEru user List</name>
+      <archive>http://groups.google.com/group/openwferu-users</archive>
+    </mailingList>
+  </mailingLists>
+
+  <developers>
+    <developer>
+      <id>jmettraux</id>
+      <name>John Mettraux</name>
+      <email>john.mettraux(at)openwfe.org</email>
+      <organization>OpenWFE</organization>
+      <timezone>+9</timezone>
+    </developer>
+  </developers>
+  <scm>
+    <url>http://github.com/jmettraux/ruote/</url>
+  </scm>
+
+  <organization>
+    <name>OpenWFE</name>
+    <url>http://openwferu.rubyforge.org</url>
+  </organization>
+
+  <build>
+    <resources>
+      <resource>
+        <filtering>false</filtering>
+        <directory>lib</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+
+      <resource>
+        <filtering>false</filtering>
+        <directory>../rufus/rufus-lru/lib</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+      <resource>
+        <filtering>false</filtering>
+        <directory>../rufus/rufus-scheduler/lib</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+      <resource>
+        <filtering>false</filtering>
+        <directory>../rufus/rufus-dollar/lib</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+      <!--resource>
+        <filtering>false</filtering>
+        <directory>../rufus/rufus-eval/lib</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource-->
+      <resource>
+        <filtering>false</filtering>
+        <directory>../rufus/rufus-mnemo/lib</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+      <resource>
+        <filtering>false</filtering>
+        <directory>../rufus/rufus-verbs/lib</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+      
+      <!-- json -->
+      <resource>
+        <filtering>false</filtering>
+        <directory>/Library/Ruby/Gems/1.8/gems/json_pure-1.1.2/lib</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+
+      <!-- builder -->
+      <resource>
+        <filtering>false</filtering>
+        <directory>/Library/Ruby/Gems/1.8/gems/builder-2.1.2/lib</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+
+      <!-- ruby_parser / rogue_parser -->
+      <resource>
+        <filtering>false</filtering>
+        <directory>/Library/Ruby/Gems/1.8/gems/rogue_parser-1.0.1/lib</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+      <resource>
+        <filtering>false</filtering>
+        <directory>/Library/Ruby/Gems/1.8/gems/ParseTree-2.1.1/lib</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.jruby</groupId>
+      <artifactId>jruby-complete</artifactId>
+      <version>1.1.2</version>
+    </dependency>
+  </dependencies>
+
+  <distributionManagement>
+    <!--
+    <repository>
+      <id>magnolia</id>
+      <url>scp://svn.magnolia.info/usr/local/apache/htdocs/maven/m2</url>
+    </repository>
+    -->
+    <snapshotRepository>
+      <id>maven.openwfe.org.snapshots</id>
+      <name>OpenWFE repository</name>
+      <url>scpexe://maven.openwfe.org:722/var/www/www_maven/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <repositories>
+    <!--
+    <repository>
+      <id>maven.openwfe.org.snapshots</id>
+      <url>http://maven.openwfe.org/snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+    -->
+  </repositories>
+
+</project>

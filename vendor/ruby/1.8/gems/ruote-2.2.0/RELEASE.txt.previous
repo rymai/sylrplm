@@ -1,0 +1,96 @@
+
+= OpenWFEru (Ruote) 0.9.19 released
+
+OpenWFEru is an open source workflow / BPM engine implemented in Ruby.
+
+downloads :  http://rubyforge.org/frs/?group_id=2609
+source :     http://github.com/jmettraux/ruote
+
+
+== What's new
+
+The main driving force between this release and the previous has been the work on ruote-rest (the Rack / REST based web application wrapper around ruote).
+
+There have been many bugfixes as well as simplifications. One of the most obvious simplifications : the ruote-extras gem vanished, everything goes into one unique 'ruote' gem.
+
+On the web front, note that ruote-fluo, the javascript library used for drawing process definitions on the fly (used by ruote-rest and ruote-web) is currently usable with Firefox 3 only. I hope that the webkit based browsers will implement canvas text drawing soon.
+
+Ruote-fluo first task is to render process definitions graphically, on the fly. Lately, it was enhanced as a process designer as well [1]. It's currently rather alpha, but promising.
+
+A DbHistory has been implemented (and integrated into ruote-rest). It tracks activity in the workflow engine and is easily queriable. Ruote-rest provides an atom feed representation for it.
+
+
+The next release will probably focus on ruote-web2, a rewrite of ruote-web (the Rails based workflow environment). Ruote-fluo will be improved as well, with a focus on helping the user in its process-design task.
+
+
+Many thanks to all that have contributed patches, suggested ideas and provided feedback.
+
+
+[1] http://difference.openwfe.org:4567/?pdef=pdef_ttt.xml
+
+
+== Source
+
+engine               http://github.com/jmettraux/ruote
+rest webapp          http://github.com/jmettraux/ruote-rest
+process desginer     http://github.com/jmettraux/ruote-fluo
+rails based webapp   http://github.com/jmettraux/ruote-web
+
+
+== Feedback / help
+
+user mailing list    http://groups.google.com/group/openwferu-users
+dev mailing list     http://groups.google.com/group/openwferu-dev
+
+
+== What's next
+
+- 1.0 (instead of 0.9.20) ?
+- ruote-fluo more user-friendly
+- ruote-web2
+- ...
+
+
+== CHANGELOG
+
+- todo  #21849 : added :uri attribute to InFlowWorkitem
+- todo  #21802 : added an updated_at field to FlowExpression
+- todo  #21716 : added option switch :use_ruby_treechecker, on by default
+- todo  #21722 : replaced TreeChecker by the rufus-treechecker gem
+- todo  #21646 : integrated a process status cache
+- todo  #21680 : added timestamp to ProcessStatus
+- todo  #21664 : integrated REXML security patch by Michael Koziarski
+- bug   #21649 : pause and resume were not emitting an expool event. Fixed.
+- todo  #21652 : now generating one unique 'ruote' gem
+- todo  #21644 : included process_stack result into process_status
+- bug   #21585 : to_h.to_json and back broken. Fixed and discarded eval(class)
+- todo  #21498 : implemented DbHistory (with History redux)
+- todo  #21419 : removed direct dependency on json gem, relying on whatever
+                 is present (activesupport or json).
+- bug   #21347 : scheduler was silent when encountering error. Fixed.
+- bug   #21306 : made sure duplicate insert bug for ActiveParticipant is fixed.
+- todo  #21334 : optimized fulldup() (almost 2 times faster).
+- bug   #21322 : reserve mutex not freed upon cancel. Fixed.
+- bug   #21305 : replay_at_error was broken for subprocesses. Fixed.
+- todo  #21167 : exptree.to_code_s() now respecting non-string att values.
+- bug   #20714 : engine.lookup_variable was coaxing target value into a regex. 
+                 Fixed.
+- todo  #20697 : implemented ProcessStatus.scheduled_jobs
+- todo  #20624 : returning [ :terminate, wi, fei ] or [ :error, e, fei ]if 
+                 launch(li, :wait_for => true) [instead of just fei]
+- bug   #20625 : exception inside of BlockParticipant can't get replayed. Fixed.
+- todo  #20467 : got rid of unnecessary synces in yamlfilestorage
+- todo  #20564 : sequence : caching current position for speed gain
+- todo  #20554 : optimized wait_for and added :wait_for option to engine.launch
+- todo  #20539 : indent = 2
+- bug   #20505 : fixed issues with branch count in ProcessStatus.
+- todo  #11856 : got rid of old rest interface (but kept xmlcodec for a while)
+- todo  #20083 : integrated treechecker and got rid of rufus-eval.
+- todo  #20466 : made sure that yaml ejournal mkdir_p path to journal.
+- bug   #20445 : yaml error journal get_error_logs() broken. Fixed.
+- todo  #20360 : implemented hpost/hget/hput/hdelete and hpoll expressions
+- bug   #20378 : workitem.att throws exception if attribute holds the boolean
+                 #false value. Fixed.
+- bug   #20364 : 'a' and 'step' were not using $ substitution for their
+                 first child param. Fixed.
+
