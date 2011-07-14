@@ -24,7 +24,9 @@
 
 
 require 'sourcify'
+require 'ruote/part/local_participant'
 require 'ruote/part/block_participant'
+require 'ruote/part/code_participant'
 
 
 module Ruote
@@ -55,24 +57,47 @@ module Ruote
       klass = (participant || Ruote::BlockParticipant).to_s
 
       options = options.inject({}) { |h, (k, v)|
-        h[k.to_s] = v.is_a?(Symbol) ? v.to_s : v
+
+        h[k.to_s] = case v
+          when Symbol then v.to_s
+          when Proc then v.to_raw_source
+          else v
+        end
+
         h
       }
 
       if block
-        options['block'] = block.to_source
-        @context.treechecker.block_check(options['block'])
+        options['on_workitem'] = block.to_raw_source
+        @context.treechecker.block_check(options['on_workitem'])
       end
 
       key = (name.is_a?(Regexp) ? name : Regexp.new("^#{name}$")).source
-
       entry = [ key, [ klass, options ] ]
 
       list = get_list
 
-      list['list'].delete_if { |e| e.first == key }
+      position = options['position'] || options['pos'] || 'last'
 
-      position = options['position'] || 'last'
+      if position == 'before'
+
+        position = list['list'].index { |e| e.first == key } || -1
+
+      elsif position == 'after'
+
+        position = (list['list'].rindex { |e| e.first == key } || -2) + 1
+
+      elsif position == 'over'
+
+        position = list['list'].index { |e| e.first == key } || -1
+        list['list'].delete_at(position) unless position == -1
+
+      elsif options.delete('override') != false
+
+        list['list'].delete_if { |e| e.first == key }
+          # enforces only one instance of a participant per key/regex
+      end
+
       case position
         when 'last' then list['list'] << entry
         when 'first' then list['list'].unshift(entry)
@@ -147,6 +172,10 @@ module Ruote
     #
     def lookup_info(pname, workitem)
 
+      wi = workitem ?
+        Ruote::Workitem.new(workitem.merge('participant_name' => pname)) :
+        nil
+
       get_list['list'].each do |regex, pinfo|
 
         next unless pname.match(regex)
@@ -156,11 +185,10 @@ module Ruote
         pa = instantiate(pinfo, :if_respond_to? => :accept?)
 
         return pinfo if pa.nil?
-
-        return pinfo if pa.accept?(
-          Ruote::Workitem.new(workitem.merge('participant_name' => pname))
-        )
+        return pinfo if Ruote.participant_send(pa, :accept?, 'workitem' => wi)
       end
+
+      # nothing found...
 
       nil
     end
@@ -168,13 +196,6 @@ module Ruote
     # Returns an instance of a participant
     #
     def instantiate(pinfo, opts={})
-
-      #pinfo = @instantiated_participants[pinfo] if pinfo.is_a?(String)
-      #if pinfo.respond_to?(:consume)
-      #  return (pinfo.respond_to?(irt) ? pinfo : nil) if irt
-      #  return pinfo
-      #end
-      #return nil unless pinfo
 
       pa_class_name, options = pinfo
 
@@ -251,6 +272,7 @@ module Ruote
     def list=(pl)
 
       list = get_list
+
       list['list'] = pl.collect { |e|
         ParticipantEntry.read(e)
       }.collect { |e|
@@ -262,8 +284,17 @@ module Ruote
         #
         # put failed, have to redo it
         #
-        list=(pl)
+        self.list=(pl)
       end
+    end
+
+    # Clears this participant list.
+    #
+    # Used by Engine#register(&block)
+    #
+    def clear
+
+      self.list=([])
     end
 
     protected

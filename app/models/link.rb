@@ -1,6 +1,5 @@
 class Link < ActiveRecord::Base
   include Models::SylrplmCommon
-
   # une seule occurence d'un fils de type donne dans un pere de type donne
   ### verif par soft dans create_new validates_uniqueness_of :child_id, :scope => [:child_type, :father_id, :father_type ]
   #validates_presence_of :name
@@ -35,10 +34,10 @@ class Link < ActiveRecord::Base
       end
     end
     if(father_type.to_s=="document" && child_type.to_s=="document")
-      ok=true
+    ok=true
     end
     if(father_type.to_s=="project" && child_type.to_s=="part")
-      ok=true
+    ok=true
 
     end
     if(father_type.to_s=="project" && child_type.to_s=="user")
@@ -84,19 +83,19 @@ class Link < ActiveRecord::Base
       end
     end
     if(child_type=="forum")
-      ok=true
+    ok=true
     end
     if(child_type=="datafile")
-      ok=true
+    ok=true
     end
     link=nil
     if(ok==true)
       link = Link.new
-      link.father_type=father_type.to_s
-      link.child_type=child_type.to_s
-      link.father_id=father
-      link.child_id=child
-      link.name=relation
+    link.father_type=father_type.to_s
+    link.child_type=child_type.to_s
+    link.father_id=father
+    link.child_id=child
+    link.name=relation
     end
     puts "link:create_new:link="+link.inspect+" msg="+msg.to_s
     {:link=>link,:msg=>msg}
@@ -144,6 +143,17 @@ class Link < ActiveRecord::Base
     :order=>"child_id")
   end
 
+  def self.get_all_fathers(child)
+    name=self.class.name+"."+__method__.to_s+":"
+    child_type=child.model_name
+    cond="child_type='#{child_type}' and child_id =#{child.id}"
+    ret=find(:all,
+    :conditions => [cond],
+    :order=>"child_id")
+    puts name+child_type+" cond="+cond+":"+ret.inspect
+    ret
+  end
+
   def self.is_child_of(father_type, father, child_type, child)
     ret=false
     childs=find_childs(father_type, father, child_type)
@@ -160,7 +170,7 @@ class Link < ActiveRecord::Base
     links=find(:all,
     :conditions => ["child_type='#{child_type}' and child_id =#{child.id}"] )
     if(links!=nil)
-      ret=links.count
+    ret=links.count
     end
     ret
   end

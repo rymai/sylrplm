@@ -22,14 +22,14 @@
 # Made in Japan.
 #++
 
-require 'ruote/log/pretty'
+require 'ruote/log/fancy'
 
 
 module Ruote
 
   class TestLogger
 
-    include PrettyLogging
+    include FancyLogging
 
     attr_reader :seen
     attr_reader :log
@@ -63,10 +63,12 @@ module Ruote
 
     def notify(msg)
 
-      puts(pretty_print(msg)) if @noisy
+      puts(fancy_print(msg)) if @noisy
 
-      @seen << msg
-      @log << msg
+      if msg['action'] != 'noop'
+        @seen << msg
+        @log << msg
+      end
 
       check_waiting
     end
@@ -88,7 +90,11 @@ module Ruote
 
       @waiting << [ Thread.current, interests ]
 
-      check_waiting
+      #check_waiting
+      @context.storage.put_msg('noop', {})
+        #
+        # forces the #check_waiting via #notify
+        # (ie let it happen in the worker)
 
       Thread.stop if @waiting.find { |w| w.first == Thread.current }
 
@@ -101,7 +107,7 @@ module Ruote
     #
     def dump
 
-      @seen.collect { |msg| pretty_print(msg) }.join("\n")
+      @seen.collect { |msg| fancy_print(msg) }.join("\n")
     end
 
     def color=(c)
@@ -109,19 +115,17 @@ module Ruote
       @color = c
     end
 
-    def self.pp(msg)
+    def self.fp(msg)
 
       @logger ||= TestLogger.new(nil)
-      puts @logger.send(:pretty_print, msg)
+      puts @logger.send(:fancy_print, msg)
     end
 
     protected
 
     def check_waiting
 
-      return if @waiting.size < 1
-
-      while msg = @seen.shift
+      while @waiting.any? and msg = @seen.shift
         check_msg(msg)
       end
     end

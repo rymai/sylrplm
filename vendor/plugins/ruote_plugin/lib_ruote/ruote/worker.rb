@@ -34,12 +34,12 @@ module Ruote
   #
   class Worker
 
-    EXP_ACTIONS = %w[ reply cancel fail receive dispatched ]
+    EXP_ACTIONS = %w[ reply cancel fail receive dispatched pause resume ]
       # 'apply' is comprised in 'launch'
       # 'receive' is a ParticipantExpression alias for 'reply'
 
-    PROC_ACTIONS = %w[ cancel_process kill_process ]
-    DISP_ACTIONS = %w[ dispatch dispatch_cancel ]
+    PROC_ACTIONS = %w[ cancel kill pause resume ].collect { |a| a + '_process' }
+    DISP_ACTIONS = %w[ dispatch dispatch_cancel dispatch_pause dispatch_resume ]
 
     attr_reader :storage
     attr_reader :context
@@ -106,13 +106,17 @@ module Ruote
     # Shuts down this worker (makes sure it won't fetch further messages
     # and schedules).
     #
-    def shutdown
+    def shutdown(join=true)
 
       @running = false
 
-      begin
-        @run_thread.join
-      rescue Exception => e
+      if join
+        begin
+          @run_thread.join
+        rescue Exception => e
+        end
+      else
+        sleep(3)
       end
     end
 
@@ -290,11 +294,18 @@ module Ruote
 
       tree = msg['tree']
       variables = msg['variables']
+      wi = msg['workitem']
 
       exp_class = @context.expmap.expression_class(tree.first)
 
       # msg['wfid'] only : it's a launch
       # msg['fei'] : it's a sub launch (a supplant ?)
+
+      wi['wf_name'] ||= (
+        tree[1]['name'] || tree[1].keys.find { |k| tree[1][k] == nil })
+
+      wi['wf_revision'] ||= (
+        tree[1]['revision'] || tree[1]['rev'])
 
       exp_hash = {
         'fei' => msg['fei'] || {
@@ -303,10 +314,11 @@ module Ruote
           'subid' => Ruote.generate_subid(msg.inspect),
           'expid' => '0' },
         'parent_id' => msg['parent_id'],
-        'original_tree' => tree,
+        #'original_tree' => tree,
         'variables' => variables,
-        'applied_workitem' => msg['workitem'],
-        'forgotten' => msg['forgotten']
+        'applied_workitem' => wi,
+        'forgotten' => msg['forgotten'],
+        'stash' => msg['stash']
       }
 
       if not exp_class
@@ -320,7 +332,13 @@ module Ruote
         exp_class = Ruote::Exp::SequenceExpression
       end
 
-      exp = exp_class.new(@context, exp_hash.merge!('original_tree' => tree))
+      exp_hash = exp_hash.inject({}) { |h, (k, v)| h[k] = v unless v.nil?; h }
+      exp_hash['original_tree'] = tree
+        #
+        # dropping nils
+        # and registering potentially reorganized tree
+
+      exp = exp_class.new(@context, exp_hash)
 
       exp.initial_persist
       exp.do_apply(msg)
@@ -346,16 +364,30 @@ module Ruote
 
       return unless root
 
-      flavour = (msg['action'] == 'kill_process') ? 'kill' : nil
-
       @storage.put_msg(
         'cancel',
         'fei' => root['fei'],
         'wfid' => msg['wfid'], # indicates this was triggered by cancel_process
-        'flavour' => flavour)
+        'flavour' => msg['action'] == 'kill_process' ? 'kill' : nil)
     end
 
     alias kill_process cancel_process
+
+    # Handles 'pause_process' and 'resume_process'.
+    #
+    def pause_process(msg)
+
+      root = @storage.find_root_expression(msg['wfid'])
+
+      return unless root
+
+      @storage.put_msg(
+        msg['action'] == 'pause_process' ? 'pause' : 'resume',
+        'fei' => root['fei'],
+        'wfid' => msg['wfid']) # it was triggered by {pause|resume}_process
+    end
+
+    alias resume_process pause_process
   end
 end
 

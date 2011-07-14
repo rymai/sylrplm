@@ -58,6 +58,9 @@ module Ruote::Exp
         tree[1]['ref'] = key
       end
 
+      key = @context.dollar_sub.s(key, self, h.applied_workitem)
+        # see test/functional/ft_62_
+
       key2, value = iterative_var_lookup(key)
 
       tree[1]['ref'] = key2 if key2
@@ -65,7 +68,7 @@ module Ruote::Exp
 
       unless value
         #
-        # seems like it's participant
+        # seems like it's a participant
 
         @h['participant'] =
           @context.plist.lookup_info(tree[1]['ref'], h.applied_workitem)
@@ -73,14 +76,39 @@ module Ruote::Exp
         value = key2 if ( ! @h['participant']) && (key2 != key)
       end
 
-      if value.is_a?(Array) && value.size == 2 && value.last.is_a?(Hash)
+      new_exp_name, new_exp_class = nil
+
+      if value.is_a?(String)
+
+        if value.index("def consume(") && (Rufus::TreeChecker.parse(value) rescue false)
+          #
+          # participant code passed
+
+          @h['participant'] = [ 'Ruote::CodeParticipant', { 'code' => value } ]
+          tree[1]['ref'] = key
+
+        elsif klass = @context.expmap.expression_class(tree[1]['ref'])
+          #
+          # aliased expression
+
+          new_exp_name = value
+          new_exp_class = klass
+        end
+
+      elsif value.is_a?(Hash) && value['on_workitem']
         #
         # participant 'defined' in var
+
+        @h['participant'] = [ 'Ruote::BlockParticipant', value ]
+
+      elsif value.is_a?(Array) && value.size == 2 && value.last.is_a?(Hash)
+        #
+        # participant 'registered' in var
 
         @h['participant'] = value
       end
 
-      unless value || @h['participant']
+      if value == nil and @h['participant'] == nil
         #
         # unknown participant or subprocess
 
@@ -90,22 +118,20 @@ module Ruote::Exp
         raise("unknown participant or subprocess '#{tree[1]['ref']}'")
       end
 
-      new_exp = if @h['participant']
-
-        @h['participant'] = nil if @h['participant'].respond_to?(:consume)
-          # instantiated participant
-
-        tree[0] = 'participant'
-        @h['name'] = 'participant'
-        Ruote::Exp::ParticipantExpression.new(@context, @h)
+      new_exp_name, new_exp_class = if new_exp_name
+        [ new_exp_name, new_exp_class ]
+      elsif @h['participant']
+        [ 'participant', Ruote::Exp::ParticipantExpression ]
       else
-
-        tree[0] = 'subprocess'
-        @h['name'] = 'subprocess'
-        Ruote::Exp::SubprocessExpression.new(@context, @h)
+        [ 'subprocess', Ruote::Exp::SubprocessExpression ]
       end
 
-      do_schedule_timeout(attribute(:timeout)) if tree[0] == 'subprocess'
+      tree[0] = new_exp_name
+      @h['name'] = new_exp_name
+
+      new_exp = new_exp_class.new(@context, @h)
+
+      do_schedule_timeout(attribute(:timeout)) if new_exp_name == 'subprocess'
         #
         # since ref neutralizes consider_timeout because participant expressions
         # handle timeout by themselves, we have to force timeout consideration

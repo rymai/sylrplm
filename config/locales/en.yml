@@ -385,6 +385,7 @@ en:
   label_event_date: Event date
   label_event_type: Event type
   label_notify_date: Notify date
+  label_path: Paths
   # main/_frame
   legend_main: Welcome
   legend_plm_objects: PLM Objects

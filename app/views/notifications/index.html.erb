@@ -3,6 +3,7 @@
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_notification"), new_notification_path %></td>
+		<td> <%= link_to t("button_notify_all"), :confirm => t("msg_confirm"), :action => :notify, :id => 0%></td>
 		<td> <%= show_help("help_notifications") %></td>
 	</tr>
 </table>

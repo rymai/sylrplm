@@ -207,4 +207,7 @@ class Document < ActiveRecord::Base
       filter ] unless filter.nil?
   end
 
+ 
+ 
+  
 end

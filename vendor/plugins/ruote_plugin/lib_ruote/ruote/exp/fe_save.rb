@@ -23,18 +23,21 @@
 #++
 
 
-
 module Ruote::Exp
 
   #
   # Saves the current workitem fields into a variable or into a field.
   #
   #   save :to_field => 'old_workitem'
+  #     # or
+  #   save :to => 'f:old_workitem'
   #     #
   #     # saves a copy of the fields of the current workitem into itself,
   #     # in the field named 'old_workitem'
   #
   #   save :to_variable => '/wix'
+  #     # or
+  #   save :to => 'v:/wix'
   #     #
   #     # saves a copy of the current workitem in the varialbe 'wix' at
   #     # the root of the process
@@ -47,24 +50,14 @@ module Ruote::Exp
 
     def apply
 
-      tk =
-        has_attribute(*%w[ v var variable ].map { |k| "to_#{k}" }) ||
-        has_attribute(*%w[ f fld field ].map { |k| "to_#{k}" })
+      to_v, to_f = determine_tos
 
-      return reply_to_parent(h.applied_workitem) unless tk
-
-      key = attribute(tk)
-
-      if tk.match(/^to_v/)
-
-        set_variable(key, h.applied_workitem['fields'])
-
-      elsif tk.match(/^to_f/)
-
-        Ruote.set(
-          h.applied_workitem['fields'],
-          key,
-          Ruote.fulldup(h.applied_workitem['fields']))
+      if to_v
+        set_variable(to_v, h.applied_workitem['fields'])
+      elsif to_f
+        set_f(to_f, Ruote.fulldup(h.applied_workitem['fields']))
+      #else
+        # do nothing
       end
 
       reply_to_parent(h.applied_workitem)

@@ -52,6 +52,50 @@ module Ruote
       "not a filter : #{filter}"
     ) unless filter.is_a?(Array)
 
+    filters = or_split(filter)
+
+    result = nil
+
+    filters.each do |fl|
+
+      result = begin
+        do_filter(fl, hash, options)
+      rescue ValidationError => err
+        err
+      end
+
+      return result if result.is_a?(Hash)
+        # success
+    end
+
+    raise(result) if result.is_a?(ValidationError)
+
+    result
+  end
+
+  # Used by Ruote.filter
+  #
+  def self.or_split(filter)
+
+    return filter if filter.first.is_a?(Array)
+    return [ filter ] if filter.empty? or ( ! filter.include?('or'))
+
+    # [ {}, 'or', {}, {}, 'or', {} ]
+
+    filter.inject([ [] ]) do |result, fl|
+      if fl.is_a?(Hash)
+        result.last << fl
+      else
+        result << []
+      end
+      result
+    end
+  end
+
+  # Used by Ruote.filter
+  #
+  def self.do_filter(filter, hash, options)
+
     hash = Rufus::Json.dup(hash)
 
     hash['~'] = Rufus::Json.dup(hash)
@@ -82,10 +126,13 @@ module Ruote
   class RuleSession
 
     SKIP = %w[ and or fields field f ]
+    BOOLEANS = %w[ and or ]
     NUMBER_CLASSES = [ Fixnum, Float ]
     BOOLEAN_CLASSES = [ TrueClass, FalseClass ]
     TILDE = /^~/
     RTILDE = /^\^~/
+    COMMA_SPLIT = / *, */
+    PIPE_SPLIT = / *\| */
 
     def initialize(hash, rule)
 
@@ -119,10 +166,19 @@ module Ruote
           a
         }
 
+      elsif fl.is_a?(String) and PIPE_SPLIT.match(fl)
+
+        fields = fl.split(PIPE_SPLIT).collect { |field|
+          val = Ruote.lookup(@hash, field)
+          val.nil? ? nil : [ field, val, nil ]
+        }.compact
+
+        fields.empty? ? [ [ fl, nil, nil ] ] : fields
+          # if no fields where found, place fake fl field to force failure
+
       else
 
-        (fl.is_a?(Array) ? fl : fl.to_s.split(',')).collect { |field|
-          field = field.strip
+        (fl.is_a?(Array) ? fl : fl.to_s.split(COMMA_SPLIT)).collect { |field|
           [ field,  Ruote.lookup(@hash, field), nil ]
         }
       end
@@ -130,20 +186,35 @@ module Ruote
 
     def run
 
+      keys = @rule.keys - SKIP
+      validation = (@rule.keys & BOOLEANS).empty?
+
+      if validation and @fields.empty? and keys.empty?
+        fl = @rule['fields'] || @rule['field'] || @rule['f']
+        return [ [ @rule, fl, nil ] ] # validation break
+      end
+
       @fields.collect { |field, value, matches|
 
         valid = nil
 
-        @rule.each do |k, v|
+        if keys.empty?
 
-          next if SKIP.include?(k)
+          valid = (value != nil)
 
-          m = "_#{k}"
-          next unless self.respond_to?(m)
+        else
 
-          r = self.send(m, field, value, matches, k, v)
+          keys.each do |k|
 
-          valid = false if r == false
+            v = @rule[k]
+
+            m = "_#{k}"
+            next unless self.respond_to?(m)
+
+            r = self.send(m, field, value, matches, k, v)
+
+            valid = false if r == false
+          end
         end
 
         raise_or_and(valid, field, value)
@@ -279,7 +350,9 @@ module Ruote
 
     def _empty(field, value, matches, m, v)
 
-      value.respond_to?(:empty?) ? value.empty? : false
+      # 'empty' => '30%' could be fun ;-)
+
+      (value.respond_to?(:empty?) ? value.empty? : false) == v
     end
     alias _e _empty
 
@@ -305,6 +378,15 @@ module Ruote
       end
     end
     alias _h _has
+
+    def _includes(field, value, matches, m, v)
+
+      case value
+        when Array then value.include?(v)
+        when Hash then value.values.include?(v)
+        else false
+      end
+    end
 
     def _type(field, value, matches, m, v)
 
@@ -352,8 +434,6 @@ module Ruote
           else
             raise ArgumentError.new("unknown type '#{type}'")
         end
-
-        valid
       end
     end
 
@@ -379,6 +459,11 @@ module Ruote
       value.is_a?(String) ? value.match(v) != nil : false
     end
     alias _sm _smatch
+
+    def _is(field, value, matches, m, v)
+
+      value == v
+    end
 
     def _valid(field, value, matches, m, v)
 

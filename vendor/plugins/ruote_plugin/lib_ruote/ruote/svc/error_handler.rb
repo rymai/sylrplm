@@ -85,16 +85,16 @@ module Ruote
         puts
         p exception
         puts backtrace[0, 20].join("\n")
-        puts "..."
+        puts '...'
         puts
-        puts "-- msg --"
+        puts '-- msg --'
         key_length = msg.keys.collect { |k| k.length }.max + 1
         msg.keys.sort.each { |k|
           v = msg[k]
           v = (Ruote.sid(v) rescue nil) if k == 'fei' || k == 'parent_id'
           printf("%*s : %s\n", key_length, k, v.inspect)
         }
-        puts "-- . --"
+        puts '-- . --'
         puts
       end
 
@@ -106,6 +106,8 @@ module Ruote
       #
       # (this message might get intercepted by a tracker)
 
+      dev = exception.respond_to?(:deviations) ? exception.deviations : nil
+
       @context.storage.put_msg(
         'error_intercepted',
         'error' => {
@@ -113,8 +115,8 @@ module Ruote
           'at' => Ruote.now_to_utc_s,
           'class' => exception.class.name,
           'message' => exception.message,
-          'trace' => backtrace
-        },
+          'trace' => backtrace,
+          'deviations' => dev },
         'wfid' => wfid,
         'fei' => fei,
         'msg' => msg)
@@ -126,6 +128,7 @@ module Ruote
         '_id' => "err_#{Ruote.to_storage_id(fei)}",
         'message' => exception.inspect,
         'trace' => backtrace.join("\n"),
+        'deviations' => dev,
         'fei' => fei,
         'msg' => msg
       ) if fei

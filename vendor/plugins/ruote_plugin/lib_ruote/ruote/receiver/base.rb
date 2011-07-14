@@ -49,6 +49,16 @@ module Ruote
         'receiver' => sign)
     end
 
+    # Wraps a call to receive(workitem)
+    #
+    # Not aliasing so that if someone changes the receive implementation,
+    # reply is affected as well.
+    #
+    def reply(workitem)
+
+      receive(workitem)
+    end
+
     # Given a process definitions and optional initial fields and variables,
     # launches a new process instance.
     #
@@ -63,7 +73,7 @@ module Ruote
     #
     # variables contain engine variables.
     #
-    def launch(process_definition, fields={}, variables={})
+    def launch(process_definition, fields={}, variables={}, root_stash=nil)
 
       wfid = @context.wfidgen.generate
 
@@ -72,29 +82,10 @@ module Ruote
         'wfid' => wfid,
         'tree' => @context.reader.read(process_definition),
         'workitem' => { 'fields' => fields },
-        'variables' => variables)
+        'variables' => variables,
+        'stash' => root_stash)
 
       wfid
-    end
-
-    # Wraps a call to receive(workitem)
-    #
-    # Not aliasing so that if someone changes the receive implementation,
-    # reply is affected as well.
-    #
-    def reply(workitem)
-
-      receive(workitem)
-    end
-
-    # Wraps a call to receive(workitem)
-    #
-    # Not aliasing so that if someone changes the receive implementation,
-    # reply_to_engine is affected as well.
-    #
-    def reply_to_engine(workitem)
-
-      receive(workitem)
     end
 
     # A receiver signs a workitem when it comes back.
@@ -116,13 +107,8 @@ module Ruote
         Ruote::FlowExpressionId.extract_h(workitem_or_fei))
     end
 
-    # For example :
-    #
-    #   fexp = engine.fexp(fei)
-    #     # or
-    #   fexp = engine.fexp(workitem)
-    #
     alias fexp fetch_flow_expression
+    alias flow_expression fetch_flow_expression
 
     # A convenience methods for advanced users (like Oleg).
     #
@@ -140,11 +126,13 @@ module Ruote
     # on_terminate processes are not triggered for on_error processes.
     # on_error processes are triggered for on_terminate processes as well.
     #
-    def applied_workitem(fei)
+    def fetch_workitem(fexp_or_fei)
 
-      Ruote::Workitem.new(fexp(fei).h.applied_workitem)
+      Ruote::Workitem.new(flow_expression(fexp_or_fei).h.applied_workitem)
     end
-    alias workitem applied_workitem
+
+    alias workitem fetch_workitem
+    alias applied_workitem fetch_workitem
 
     protected
 
@@ -161,14 +149,24 @@ module Ruote
     # http://groups.google.com/group/openwferu-users/t/2e6a95708c10847b for the
     # justification.
     #
-    def put(fei, hash)
+    def stash_put(workitem_or_fei, key, value=nil)
 
-      fexp = Ruote::Exp::FlowExpression.fetch(@context, fei.to_h)
+      hash = key.is_a?(Hash) ? key : { key => value }
 
-      (fexp.h['stash'] ||= {}).merge!(hash)
+      exp = fetch_flow_expression(workitem_or_fei)
 
-      fexp.persist_or_raise
+      (exp.h['stash'] ||= {}).merge!(hash)
+
+      r = exp.try_persist
+
+      return hash if r == nil
+      return stash_put(workitem_or_fei, key, value) if r != true
+
+      fei = Ruote::FlowExpressionId.extract(workitem_or_fei).sid rescue 'xxx'
+      raise ArgumentError.new("failed to put, expression #{fei} is gone")
     end
+
+    alias put stash_put
 
     # Fetches back a stashed value.
     #
@@ -183,14 +181,15 @@ module Ruote
     # put & get are useful for a participant that needs to communicate
     # between its consume and its cancel.
     #
-    def get(fei, key=nil)
+    def stash_get(workitem_or_fei, key=nil)
 
-      fexp = Ruote::Exp::FlowExpression.fetch(@context, fei.to_h)
-
-      stash = fexp.h['stash'] rescue {}
+      stash = fetch_flow_expression(workitem_or_fei).h['stash'] rescue nil
+      stash ||= {}
 
       key ? stash[key] : stash
     end
+
+    alias get stash_get
   end
 
   #

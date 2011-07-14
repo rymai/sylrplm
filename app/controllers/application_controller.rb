@@ -25,7 +25,6 @@ class ApplicationController < ActionController::Base
   before_filter :object_exists, :only => [:show, :edit, :destroy]
   #
   #access_control(Access.find_for_controller(controller_class_name))
-
   #before_filter :event
   def event
     event_manager
@@ -100,6 +99,7 @@ class ApplicationController < ActionController::Base
     @urlbase          = "http://"+request.env["HTTP_HOST"]
     @theme            = User.find_theme(session)
     @language=SYLRPLM::LOCAL_DEFAULT
+    @languages = get_languages
     @notification=SYLRPLM::NOTIFICATION_DEFAULT
     @time_zone=SYLRPLM::TIME_ZONE_DEFAULT
     WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
@@ -141,7 +141,7 @@ class ApplicationController < ActionController::Base
       lng = File.basename(dir, '.*')
       ret << [t("language_"+lng), lng]
     end
-    puts "application_controller.get_languages"+dirname+"="+ret.inspect
+    #puts "application_controller.get_languages"+dirname+"="+ret.inspect
     ret
   end
 
@@ -276,7 +276,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize
-    puts "application_controller.authorize:user_id="+session[:user_id].inspect
+    #puts "application_controller.authorize:user_id="+session[:user_id].inspect
     unless session[:user_id] || User.find_by_id(session[:user_id])
       puts "application_controller.request.request_uri="+request.request_uri
       puts "application_controller.request.new_sessions_url="+new_sessions_url
@@ -288,7 +288,7 @@ class ApplicationController < ActionController::Base
       #      else
       session[:original_uri] = request.request_uri
       flash[:notice] = t(:login_login)
-      puts "application_controller.authorize:redirect_tol="+new_sessions_url
+      #puts "application_controller.authorize:redirect_tol="+new_sessions_url
       redirect_to new_sessions_url
     #      end
     end

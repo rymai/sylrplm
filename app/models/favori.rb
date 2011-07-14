@@ -6,14 +6,14 @@ class Favori
   end
 
   def add(obj)
-    #puts "favori.add:"+obj.object_type
-    unless @items[obj.object_type].nil?
-      current_item=@items[obj.object_type].find { |item| item.id==obj.id }
+    #puts "favori.add:"+obj.model_name
+    unless @items[obj.model_name].nil?
+      current_item=@items[obj.model_name].find { |item| item.id==obj.id }
     else
-      @items[obj.object_type]=[]
+      @items[obj.model_name]=[]
     end
     if(not current_item)
-      @items[obj.object_type] << obj
+      @items[obj.model_name] << obj
     end
     #puts "favori.add:"+@items.inspect
   end

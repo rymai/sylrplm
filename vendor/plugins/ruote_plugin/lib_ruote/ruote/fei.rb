@@ -69,6 +69,13 @@ module Ruote
     Ruote::FlowExpressionId.extract_h(o)
   end
 
+  # Given something, tries to return the fei (Ruote::FlowExpressionId) in it.
+  #
+  def self.extract_fei(o)
+
+    Ruote::FlowExpressionId.extract(o)
+  end
+
   # This function is used to generate the subids. Each flow
   # expression receives such an id (it's useful for cursors, loops and
   # forgotten branches).
@@ -118,9 +125,15 @@ module Ruote
     alias sub_wfid subid
 
     def to_storage_id
+
       "#{@h['expid']}!#{@h['subid']}!#{@h['wfid']}"
     end
     alias sid to_storage_id
+
+    def to_sortable_id
+
+      "#{@h['wfid']}!!#{@h['expid']}"
+    end
 
     def self.to_storage_id(hfei)
 
@@ -149,6 +162,11 @@ module Ruote
     def hash
 
       to_storage_id.hash
+    end
+
+    def <=>(other)
+
+      self.to_sortable_id <=> other.to_sortable_id
     end
 
     # Returns true if the other is a FlowExpressionId instance and it

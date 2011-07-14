@@ -1,0 +1,43 @@
+GEM
+  remote: https://github.com/jmettraux/ruote/
+  remote: http://rubygems.org/
+  remote: http://rubygems.org/
+  remote: http://rubygems.org/
+  specs:
+    file-tail (1.0.5)
+      spruz (>= 0.1.0)
+    ruby2ruby (1.2.5)
+      ruby_parser (~> 2.0)
+      sexp_processor (~> 3.0)
+    ruby_parser (2.0.6)
+      sexp_processor (~> 3.0)
+    rufus-cloche (0.1.20)
+      rufus-json (>= 0.2.5)
+    rufus-dollar (1.0.4)
+    rufus-json (0.2.5)
+    rufus-mnemo (1.2.0)
+    rufus-scheduler (2.0.10)
+      tzinfo (>= 0.3.23)
+    rufus-treechecker (1.0.4)
+      ruby_parser (>= 2.0.5)
+    ruote (2.2.0)
+      rufus-cloche (>= 0.1.20)
+      rufus-dollar (>= 1.0.4)
+      rufus-json (>= 0.2.5)
+      rufus-mnemo (>= 1.1.0)
+      rufus-scheduler (>= 2.0.8)
+      rufus-treechecker (>= 1.0.4)
+      sourcify (= 0.4.2)
+    sexp_processor (3.0.5)
+    sourcify (0.4.2)
+      file-tail (>= 1.0.5)
+      ruby2ruby (>= 1.2.5)
+      sexp_processor (>= 3.0.5)
+    spruz (0.2.5)
+    tzinfo (0.3.24)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ruote (~> 2.1)

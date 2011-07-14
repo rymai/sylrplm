@@ -59,6 +59,18 @@ module Ruote
       get('configurations', key)
     end
 
+    def replace_engine_configuration(opts)
+
+      return if opts['preserve_configuration']
+
+      conf = get('configurations', 'engine')
+
+      doc = opts.merge('type' => 'configurations', '_id' => 'engine')
+      doc['_rev'] = conf['_rev'] if conf
+
+      put(doc)
+    end
+
     #--
     # messages
     #++
@@ -73,6 +85,7 @@ module Ruote
       #(@local_msgs ||= []) << Ruote.fulldup(msg)
     end
 
+    #--
     #def get_local_msgs
     #  p @local_msgs
     #  if @local_msgs
@@ -83,6 +96,7 @@ module Ruote
     #    []
     #  end
     #end
+    #++
 
     def get_msgs
 
@@ -102,13 +116,27 @@ module Ruote
     # expressions
     #++
 
+    # Given a wfid, returns all the expressions of that process instance.
+    #
+    def find_expressions(wfid)
+
+      get_many('expressions', wfid)
+    end
+
+    # For a given wfid, returns all the expressions (array of Hash instances)
+    # that have a nil 'parent_id'.
+    #
+    def find_root_expressions(wfid)
+
+      find_expressions(wfid).select { |hexp| hexp['parent_id'].nil? }
+    end
+
+    # For a given wfid, fetches all the root expressions, sort by expid and
+    # return the first. Hopefully it's the right root_expression.
+    #
     def find_root_expression(wfid)
 
-      get_many('expressions', wfid).sort_by { |fexp|
-        fexp['fei']['expid']
-      }.select { |e|
-        e['parent_id'].nil?
-      }.first
+      find_root_expressions(wfid).sort_by { |hexp| hexp['fei']['expid'] }.first
     end
 
     # Given all the expressions stored here, returns a sorted list of unique

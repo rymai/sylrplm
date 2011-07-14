@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
     find(:first , :conditions => ["login = '#{name}' "])
   end
 
-  def object_type
+  def model_name
     "user"
   end
 

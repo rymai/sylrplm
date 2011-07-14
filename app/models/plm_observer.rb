@@ -1,5 +1,9 @@
+require 'models/plm_object'
+require 'models/sylrplm_common'
+
 class PlmObserver < ActiveRecord::Observer
   include Models::PlmObject
+  include Models::SylrplmCommon
   def before_validation(object)
     name="****************"+self.class.name+"."+__method__.to_s+":"
     #puts name+object.inspect
@@ -73,10 +77,10 @@ class PlmObserver < ActiveRecord::Observer
 
   def add_notification(event_type, object)
     name="****************"+self.class.name+"."+__method__.to_s+":"
-    puts name+event_type+":"+object.inspect
-    unless object.object_type==self.object_type
+    #puts name+event_type+":"+object.inspect
+    unless object.model_name==self.model_name
       params={}
-      params[:object_type] = object.object_type
+      params[:object_type] = object.model_name
       params[:object_id] = object.id
       params[:event_date] = object.updated_at
       params[:event_type] = event_type

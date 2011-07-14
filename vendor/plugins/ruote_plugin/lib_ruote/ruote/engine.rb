@@ -26,7 +26,9 @@ require 'ruote/context'
 require 'ruote/engine/process_status'
 require 'ruote/receiver/base'
 
+
 module Ruote
+
   #
   # This class holds the 'engine' name, perhaps 'dashboard' would have been
   # a better name. Anyway, the methods here allow to launch processes
@@ -42,6 +44,7 @@ module Ruote
 
     attr_reader :context
     attr_reader :variables
+
     # Creates an engine using either worker or storage.
     #
     # If a storage instance is given as the first argument, the engine will be
@@ -52,11 +55,12 @@ module Ruote
     # argument is true, engine will start the worker and will be able to both
     # manage and run workflows.
     #
-    # If the second options is set to { :join => true }, the worker wil
-    # be started and run in the current thread.
+    # If the second options is set to { :join => true }, the worker will
+    # be started and run in the current thread (and the initialize method
+    # will not return).
     #
     def initialize(worker_or_storage, opts=true)
-      puts "Engine.init:worker_or_storage="+worker_or_storage.inspect
+
       @context = worker_or_storage.context
       @context.engine = self
 
@@ -65,14 +69,14 @@ module Ruote
       if @context.worker
         if opts == true
           @context.worker.run_in_thread
-          # runs worker in its own thread
+            # runs worker in its own thread
         elsif opts == { :join => true }
           @context.worker.run
-          # runs worker in current thread (and doesn't return)
-          #else
+            # runs worker in current thread (and doesn't return)
+        #else
           # worker is not run
         end
-        #else
+      #else
         # no worker
       end
     end
@@ -120,7 +124,7 @@ module Ruote
       name = tree[1]['name'] || (tree[1].find { |k, v| v.nil? } || []).first
 
       raise ArgumentError.new(
-      'process definition is missing a name, cannot launch as single'
+        'process definition is missing a name, cannot launch as single'
       ) unless name
 
       singles = @context.storage.get('variables', 'singles') || {
@@ -129,7 +133,7 @@ module Ruote
       wfid, timestamp = singles['h'][name]
 
       return wfid if wfid && (ps(wfid) || Time.now.to_f - timestamp < 1.0)
-      # return wfid if 'singleton' process is already running
+        # return wfid if 'singleton' process is already running
 
       wfid = @context.wfidgen.generate
 
@@ -138,20 +142,20 @@ module Ruote
       r = @context.storage.put(singles)
 
       return launch_single(tree, fields, variables) unless r.nil?
-      #
-      # the put failed, back to the start...
-      #
-      # all this to prevent races between multiple engines,
-      # multiple launch_single calls (from different Ruby runtimes)
+        #
+        # the put failed, back to the start...
+        #
+        # all this to prevent races between multiple engines,
+        # multiple launch_single calls (from different Ruby runtimes)
 
       # ... green for launch
 
       @context.storage.put_msg(
-      'launch',
-      'wfid' => wfid,
-      'tree' => tree,
-      'workitem' => { 'fields' => fields },
-      'variables' => variables)
+        'launch',
+        'wfid' => wfid,
+        'tree' => tree,
+        'workitem' => { 'fields' => fields },
+        'variables' => variables)
 
       wfid
     end
@@ -161,13 +165,7 @@ module Ruote
     #
     def cancel(wi_or_fei_or_wfid)
 
-      target = Ruote.extract_id(wi_or_fei_or_wfid)
-
-      if target.is_a?(String)
-        @context.storage.put_msg('cancel_process', 'wfid' => target)
-      else
-        @context.storage.put_msg('cancel', 'fei' => target)
-      end
+      do_misc('cancel', wi_or_fei_or_wfid, {})
     end
 
     alias cancel_process cancel
@@ -178,40 +176,88 @@ module Ruote
     #
     def kill(wi_or_fei_or_wfid)
 
-      target = Ruote.extract_id(wi_or_fei_or_wfid)
-
-      if target.is_a?(String)
-        @context.storage.put_msg('kill_process', 'wfid' => target)
-      else
-        @context.storage.put_msg('cancel', 'fei' => target, 'flavour' => 'kill')
-      end
+      do_misc('kill', wi_or_fei_or_wfid, {})
     end
 
     alias kill_process kill
     alias kill_expression kill
+
+    # Given a wfid, will [attempt to] pause the corresponding process instance.
+    # Given an expression id (fei) will [attempt to] pause the expression
+    # and its children.
+    #
+    # The only known option for now is :breakpoint => true, which lets
+    # the engine only pause the targetted expression.
+    #
+    #
+    # == fei and :breakpoint => true
+    #
+    # By default, pausing an expression will pause that expression and
+    # all its children.
+    #
+    #   engine.pause(fei, :breakpoint => true)
+    #
+    # will only flag as paused the given fei. When the children of that
+    # expression will reply to it, the execution for this branch of the
+    # process will stop, much like a break point.
+    #
+    def pause(wi_or_fei_or_wfid, opts={})
+
+      raise ArgumentError.new(
+        ':breakpoint option only valid when passing a workitem or a fei'
+      ) if opts[:breakpoint] and wi_or_fei_or_wfid.is_a?(String)
+
+      do_misc('pause', wi_or_fei_or_wfid, opts)
+    end
+
+    # Given a wfid will [attempt to] resume the process instance.
+    # Given an expression id (fei) will [attempt to] to resume the expression
+    # and its children.
+    #
+    # Note : this is supposed to be called on paused expressions / instances,
+    # this is NOT meant to be called to unstuck / unhang a process.
+    #
+    # == resume(wfid, :anyway => true)
+    #
+    # Resuming a process instance is equivalent to calling resume on its
+    # root expression. If the root is not paused itself, this will have no
+    # effect.
+    #
+    #   engine.resume(wfid, :anyway => true)
+    #
+    # will make sure to call resume on each of the paused branch within the
+    # process instance (tree), effectively resuming the whole process.
+    #
+    def resume(wi_or_fei_or_wfid, opts={})
+
+      do_misc('resume', wi_or_fei_or_wfid, opts)
+    end
 
     # Replays at a given error (hopefully you fixed the cause of the error
     # before replaying...)
     #
     def replay_at_error(err)
 
+      err = error(err) unless err.is_a?(Ruote::ProcessError)
+
       msg = err.msg.dup
-      action = msg.delete('action')
 
-      msg['replay_at_error'] = true
-      # just an indication
+      if tree = msg['tree']
+        #
+        # as soon as there is a tree, it means it's a re_apply
 
-      if msg['tree'] && fei = msg['fei']
-        #
-        # nukes the expression in case of [re]apply
-        #
-        exp = Ruote::Exp::FlowExpression.fetch(@context, fei)
-        exp.unpersist_or_raise if exp
+        re_apply(msg['fei'], 'tree' => tree, 'replay_at_error' => true)
+
+      else
+
+        action = msg.delete('action')
+
+        msg['replay_at_error'] = true
+          # just an indication
+
+        @context.storage.delete(err.to_h) # remove error
+        @context.storage.put_msg(action, msg) # trigger replay
       end
-
-      @context.storage.delete(err.to_h) # remove error
-
-      @context.storage.put_msg(action, msg) # trigger replay
     end
 
     # Re-applies an expression (given via its FlowExpressionId).
@@ -219,6 +265,9 @@ module Ruote
     # That will cancel the expression and, once the cancel operation is over
     # (all the children have been cancelled), the expression will get
     # re-applied.
+    #
+    # The fei parameter may be a hash, a Ruote::FlowExpressionId instance,
+    # a Ruote::Workitem instance or a sid string.
     #
     # == options
     #
@@ -236,7 +285,10 @@ module Ruote
     #
     def re_apply(fei, opts={})
 
-      @context.storage.put_msg('cancel', 'fei' => fei.to_h, 're_apply' => opts)
+      @context.storage.put_msg(
+        'cancel',
+        'fei' => FlowExpressionId.extract_h(fei),
+        're_apply' => Ruote.keys_to_s(opts))
     end
 
     # Returns a ProcessStatus instance describing the current status of
@@ -244,7 +296,7 @@ module Ruote
     #
     def process(wfid)
 
-      statuses([ wfid ], {}).first
+      ProcessStatus.fetch(@context, [ wfid ], {}).first
     end
 
     # Returns an array of ProcessStatus instances.
@@ -262,7 +314,7 @@ module Ruote
 
       wfids = @context.storage.expression_wfids(opts)
 
-      opts[:count] ? wfids.size : statuses(wfids, opts)
+      opts[:count] ? wfids.size : ProcessStatus.fetch(@context, wfids, opts)
     end
 
     # Returns a list of processes or the process status of a given process
@@ -288,12 +340,23 @@ module Ruote
       wfid, options = wfid.is_a?(Hash) ? [ nil, wfid ] : [ wfid, {} ]
 
       errs = wfid.nil? ?
-      @context.storage.get_many('errors', nil, options) :
-      @context.storage.get_many('errors', wfid)
+        @context.storage.get_many('errors', nil, options) :
+        @context.storage.get_many('errors', wfid)
 
       return errs if options[:count]
 
       errs.collect { |err| ProcessError.new(err) }
+    end
+
+    # Given a workitem or a fei (or a String version of a fei), returns
+    # the corresponding error (or nil if there is no other).
+    #
+    def error(wi_or_fei)
+
+      fei = Ruote.extract_fei(wi_or_fei)
+      err = @context.storage.get('errors', "err_#{fei.sid}")
+
+      err ? ProcessError.new(err) : nil
     end
 
     # Returns an array of schedules. Those schedules are open structs
@@ -314,8 +377,8 @@ module Ruote
       wfid, options = wfid.is_a?(Hash) ? [ nil, wfid ] : [ wfid, {} ]
 
       scheds = wfid.nil? ?
-      @context.storage.get_many('schedules', nil, options) :
-      @context.storage.get_many('schedules', /!#{wfid}-\d+$/)
+        @context.storage.get_many('schedules', nil, options) :
+        @context.storage.get_many('schedules', /!#{wfid}-\d+$/)
 
       return scheds if options[:count]
 
@@ -356,7 +419,7 @@ module Ruote
       wis = @context.storage.get_many('workitems').compact
       ers = @context.storage.get_many('errors').compact
       scs = @context.storage.get_many('schedules').compact
-      # some slow storages need the compaction... [c]ouch...
+        # some slow storages need the compaction... [c]ouch...
 
       (wis + ers + scs).reject { |doc| wfids.include?(doc['fei']['wfid']) }
     end
@@ -404,7 +467,7 @@ module Ruote
       logger = @context['s_logger']
 
       raise(
-      "can't wait_for, there is no logger that responds to that call"
+        "can't wait_for, there is no logger that responds to that call"
       ) unless logger.respond_to?(:wait_for)
 
       logger.wait_for(items)
@@ -511,6 +574,44 @@ module Ruote
     # containing the participant implementation. 'require' will load and eval
     # the ruby code only once, 'load' each time.
     #
+    #
+    # == :override => false
+    #
+    # By default, when registering a participant, if this results in a regex
+    # that is already used, the previously registered participant gets
+    # unregistered.
+    #
+    #   engine.register_participant 'alpha', AaParticipant
+    #   engine.register_participant 'alpha', BbParticipant, :override => false
+    #
+    # This can be useful when the #accept? method of participants are in use.
+    #
+    # Note that using the #register(&block) method, :override => false is
+    # automatically enforced.
+    #
+    #   engine.register do
+    #     alpha AaParticipant
+    #     alpha BbParticipant
+    #   end
+    #
+    #
+    # == :position / :pos => 'last' / 'first' / 'before' / 'after' / 'over'
+    #
+    # One can specify the position where the participant should be inserted
+    # in the participant list.
+    #
+    #   engine.register_participant 'auditor', AuditParticipant, :pos => 'last'
+    #
+    # * last : it's the default, places the participant at the end of the list
+    # * first : top of the list
+    # * before : implies :override => false, places before the existing
+    #   participant with the same regex
+    # * after : implies :override => false, places after the last existing
+    #   participant with the same regex
+    # * over : overrides in the same position (while the regular, default
+    #   overide removes and then places the new participant at the end of
+    #   the list)
+    #
     def register_participant(regex, participant=nil, opts={}, &block)
 
       if participant.is_a?(Hash)
@@ -521,8 +622,8 @@ module Ruote
       pa = @context.plist.register(regex, participant, opts, block)
 
       @context.storage.put_msg(
-      'participant_registered',
-      'regex' => regex.is_a?(Regexp) ? regex.inspect : regex.to_s)
+        'participant_registered',
+        'regex' => regex.is_a?(Regexp) ? regex.inspect : regex.to_s)
 
       pa
     end
@@ -541,11 +642,27 @@ module Ruote
     #
     # Originally implemented in ruote-kit by Torsten Schoenebaum.
     #
+    # == registration in block and :clear
+    #
+    # By default, when registering multiple participants in block, ruote
+    # considers you're wiping the participant list and re-adding them all.
+    #
+    # You can prevent the clearing by stating :clear => false like in :
+    #
+    #   engine.register :clear => false do
+    #     alpha 'Participants::Alpha', 'flavour' => 'vanilla'
+    #     participant 'bravo', 'Participants::Bravo', :flavour => 'peach'
+    #     catchall ParticipantCharlie, 'flavour' => 'coconut'
+    #   end
+    #
     def register(*args, &block)
+
+      clear = args.first.is_a?(Hash) ? args.pop[:clear] : true
 
       if args.size > 0
         register_participant(*args, &block)
       else
+        @context.plist.clear if clear
         proxy = ParticipantRegistrationProxy.new(self)
         block.arity < 1 ? proxy.instance_eval(&block) : block.call(proxy)
       end
@@ -560,8 +677,8 @@ module Ruote
       raise(ArgumentError.new('participant not found')) unless re
 
       @context.storage.put_msg(
-      'participant_unregistered',
-      'regex' => re.to_s)
+        'participant_unregistered',
+        'regex' => re.to_s)
     end
 
     alias :unregister :unregister_participant
@@ -629,7 +746,7 @@ module Ruote
     #
     def participant(name)
 
-      @context.plist.lookup(name, nil)
+      @context.plist.lookup(name.to_s, nil)
     end
 
     # Adds a service locally (will not get propagated to other workers).
@@ -721,16 +838,16 @@ module Ruote
     def on_error=(target)
 
       @context.tracker.add_tracker(
-      nil, # do not track a specific wfid
-      'error_intercepted', # react on 'error_intercepted' msgs
-      'on_error', # the identifier
-      nil, # no specific condition
-      { 'action' => 'launch',
-        'wfid' => 'replace',
-        'tree' => target.is_a?(String) ?
-        [ 'define', {}, [ [ target, {}, [] ] ] ] : target,
-        'workitem' => 'replace',
-        'variables' => 'compile' })
+        nil, # do not track a specific wfid
+        'error_intercepted', # react on 'error_intercepted' msgs
+        'on_error', # the identifier
+        nil, # no specific condition
+        { 'action' => 'launch',
+          'wfid' => 'replace',
+          'tree' => target.is_a?(String) ?
+            [ 'define', {}, [ [ target, {}, [] ] ] ] : target,
+          'workitem' => 'replace',
+          'variables' => 'compile' })
     end
 
     # Sets a participant or a subprocess that is to be launched/called whenever
@@ -754,14 +871,14 @@ module Ruote
     def on_terminate=(target)
 
       @context.tracker.add_tracker(
-      nil, # do not track a specific wfid
-      'terminated', # react on 'error_intercepted' msgs
-      'on_terminate', # the identifier
-      nil, # no specific condition
-      { 'action' => 'launch',
-        'tree' => target.is_a?(String) ?
-        [ 'define', {}, [ [ target, {}, [] ] ] ] : target,
-        'workitem' => 'replace' })
+        nil, # do not track a specific wfid
+        'terminated', # react on 'error_intercepted' msgs
+        'on_terminate', # the identifier
+        nil, # no specific condition
+        { 'action' => 'launch',
+          'tree' => target.is_a?(String) ?
+            [ 'define', {}, [ [ target, {}, [] ] ] ] : target,
+          'workitem' => 'replace' })
     end
 
     # A debug helper :
@@ -778,45 +895,44 @@ module Ruote
 
     protected
 
-    # Used by #process and #processes
+    # Used by #pause and #resume.
     #
-    def statuses(wfids, opts)
+    def do_misc(action, wi_or_fei_or_wfid, opts)
 
-      swfids = wfids.collect { |wfid| /!#{wfid}-\d+$/ }
+      target = Ruote.extract_id(wi_or_fei_or_wfid)
 
-      exps = @context.storage.get_many('expressions', wfids).compact
-      swis = @context.storage.get_many('workitems', wfids).compact
-      errs = @context.storage.get_many('errors', wfids).compact
-      schs = @context.storage.get_many('schedules', swfids).compact
-      # some slow storages need the compaction... couch...
+      if action == 'resume' && opts[:anyway]
+        #
+        # determines the roots of the branches that are paused
+        # sends the resume message to them.
 
-      errs = errs.collect { |err| ProcessError.new(err) }
-      schs = schs.collect { |sch| Ruote.schedule_to_h(sch) }
+        exps = ps(target).expressions.select { |fexp| fexp.state == 'paused' }
+        feis = exps.collect { |fexp| fexp.fei }
 
-      by_wfid = {}
+        roots = exps.inject([]) { |a, fexp|
+          a << fexp.fei.h unless feis.include?(fexp.parent_id)
+          a
+        }
 
-      exps.each do |exp|
-        (by_wfid[exp['fei']['wfid']] ||= [ [], [], [], [] ])[0] << exp
+        roots.each { |fei| @context.storage.put_msg('resume', 'fei' => fei) }
+
+      elsif target.is_a?(String)
+        #
+        # action targets a process instance (a string wfid)
+
+        @context.storage.put_msg(
+          "#{action}_process", opts.merge('wfid' => target))
+
+      elsif action == 'kill'
+
+        @context.storage.put_msg(
+          'cancel', opts.merge('fei' => target, 'flavour' => 'kill'))
+
+      else
+
+        @context.storage.put_msg(
+          action, opts.merge('fei' => target))
       end
-      swis.each do |swi|
-        (by_wfid[swi['fei']['wfid']] ||= [ [], [], [], [] ])[1] << swi
-      end
-      errs.each do |err|
-        (by_wfid[err.wfid] ||= [ [], [], [], [] ])[2] << err
-      end
-      schs.each do |sch|
-        (by_wfid[sch['wfid']] ||= [ [], [], [], [] ])[3] << sch
-      end
-
-      wfids = by_wfid.keys.sort
-      wfids = wfids.reverse if opts[:descending]
-      # re-adjust list of wfids, only take what was found
-
-      wfids.inject([]) { |a, wfid|
-        info = by_wfid[wfid]
-        a << ProcessStatus.new(@context, *info) if info
-        a
-      }
     end
   end
 
@@ -827,6 +943,7 @@ module Ruote
   # returned when calling Engine#variables.
   #
   class EngineVariables
+
     def initialize(storage)
 
       @storage = storage
@@ -849,12 +966,15 @@ module Ruote
   # Originally written by Torsten Schoenebaum for ruote-kit.
   #
   class ParticipantRegistrationProxy
+
     def initialize(engine)
 
       @engine = engine
     end
 
     def participant(name, klass=nil, options={}, &block)
+
+      options.merge!(:override => false)
 
       @engine.register_participant(name, klass, options, &block)
     end
@@ -867,11 +987,13 @@ module Ruote
       participant('.+', klass, options)
     end
 
+    alias catch_all catchall
+
     # Maybe a bit audacious...
     #
-    def method_missing(method_name, *args)
+    def method_missing(method_name, *args, &block)
 
-      participant(method_name, *args)
+      participant(method_name, *args, &block)
     end
   end
 

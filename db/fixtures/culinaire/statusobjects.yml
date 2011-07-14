@@ -1,0 +1,105 @@
+1: 
+ id: 1 
+ object: customer 
+ name: active 
+ rank: 1 
+ description: 
+ promote: false 
+ demote: false 	
+2:
+ id: 2 
+ object: customer 
+ name: inactive 
+ rank: 2 	
+ promote: false 
+ demote: false 				
+3:
+ id: 3 
+ object: customer 
+ name: hasbeen 
+ rank: 3 	
+ promote: false 
+ demote: false  	
+ 			
+4:
+ id: 4 
+ object: document 
+ name: inwork 
+ rank: 1 
+ promote: true 
+ demote: false 	
+5:
+ id: 5 
+ object: document 
+ name: ready 
+ rank: 1 
+ promote: true 
+ demote: false 
+ description: Pret pour la validation	
+6:
+ id: 6
+ object: document 
+ name: approved 
+ rank: 2 
+ promote: false 
+ demote: true 
+ 				
+7:
+ id: 7 
+ object: part 
+ name: inprogress 
+ rank: 1 	
+ promote: true 
+ demote: false 	 			
+8:
+ id: 8 
+ object: part 
+ name: ready 
+ rank: 1 	
+ promote: true 
+ demote: false 	 			
+ description: Pret pour la validation	
+9:
+ id: 9 
+ object: part 
+ name: validated 
+ rank: 2 	
+ promote: false 
+ demote: true 
+ 	 				
+10:
+ id: 10 
+ object: project 
+ name: started 
+ rank: 1 
+ promote: false 
+ demote: false 	
+11:
+ id: 11	
+ object: project 
+ name: finished 
+ rank: 2 	
+ promote: false 
+ demote: false 					
+12:
+ id: 12 
+ object: project 
+ name: hasbeen 
+ rank: 3 
+ promote: false 
+ demote: false 
+ 
+13:
+ id: 13 
+ object: forum 
+ name: open 
+ rank: 1 	
+ promote: false 
+ demote: false 	 				 	
+14:
+ id: 14 
+ object: forum 
+ name: close 
+ rank: 2 	
+ promote: false 
+ demote: false 	 	

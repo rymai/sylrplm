@@ -1,7 +1,9 @@
+require 'link'
+require 'models/plm_object'
+require 'models/sylrplm_common'
 class Notification < ActiveRecord::Base
-  include Models::SylrplmCommon
   #pour get_controller_from_model_type
-  
+  include Models::SylrplmCommon
   validates_presence_of :object_type, :object_id,  :event_date, :event_type
   belongs_to :responsible,
   :class_name => "User"
@@ -29,11 +31,17 @@ class Notification < ActiveRecord::Base
   # utilisation:
   # ruby script/console
   # Notification.notify
-  def self.notify
+  
+  def self.notify_all(notif)
     name="****************begin:"+self.class.name+"."+__method__.to_s+":"
     User.all.each do |user|
       to_notify=[]
-      notifs=self.find(:all, :conditions => ["notify_date != ''"])
+      if notif.nil?
+        notifs=self.find(:all, :conditions => ["notify_date != ''"])
+      else
+        notifs=[]
+        notifs<<notif
+      end
       notifs.each do |notif|
         if notif.responsible == user
           to_notify << notif
@@ -45,13 +53,38 @@ class Notification < ActiveRecord::Base
         notifs={}
         notifs[:recordset]=to_notify
         email=PlmMailer.create_notify(notifs, SYLRPLM::ADMIN_MAIL, user)
-        if(email!=nil)
+        unless email.nil
           email.set_content_type("text/html")
           PlmMailer.deliver(email)
         end
       end
     end
     name="****************end:"+self.class.name+"."+__method__.to_s+":"
+  end
+  
+  def notify_one
+    Notification.notify_all(self)
+  end
+  
+  def path
+    name=self.class.name+"."+__method__.to_s+":"
+    
+    #p get_controller_from_model_type("document")
+    obj=object
+    unless obj.nil?
+      ret=obj.follow_up(nil)
+    end
+    puts name+" branches:"
+    ret.each do |path|
+      puts path
+    end
+  end
+  
+  def object
+    name=self.class.name+"."+__method__.to_s+":"
+    ret=get_object(self.object_type, self.object_id)
+    puts name +" object="+ret.inspect
+    ret
   end
 
   def to_s

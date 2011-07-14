@@ -22,12 +22,6 @@
 # Made in Japan.
 #++
 
-begin
-  require 'yajl'
-rescue LoadError
-  require 'json'
-end
-  # gem install yajl-ruby OR json OR json_pure OR json-jruby
 
 require 'rufus/json'
 Rufus::Json.detect_backend
@@ -59,14 +53,24 @@ module Ruote
     #
     def initialize(dir, options={})
 
+      if dir.is_a?(Hash) && options == {}
+        options = dir
+        dir = options.delete('dir')
+      end
+
       FileUtils.mkdir_p(dir)
 
       @cloche = Rufus::Cloche.new(
         :dir => dir, :nolock => options['cloche_nolock'])
 
-      @options = options
+      #@options = options
 
-      @cloche.put(@options.merge('type' => 'configurations', '_id' => 'engine'))
+      replace_engine_configuration(options)
+    end
+
+    def dir
+
+      @cloche.dir
     end
 
     def put(doc, opts={})

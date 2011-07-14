@@ -22,6 +22,7 @@
 # Made in Japan.
 #++
 
+require 'sourcify'
 require 'ruote/util/ometa'
 
 
@@ -147,8 +148,38 @@ module Ruote
         when Regexp; v.inspect
         when Array; v.collect { |e| to_json(e) }
         when Hash; v.inject({}) { |h, (k, v)| h[k.to_s] = to_json(v); h }
+        when Proc; v.to_raw_source + "\n"
         else v
       end
+    end
+  end
+
+  #
+  # The same .read and .understands? method as the other readers are found here.
+  #
+  module RubyReader
+
+    # Returns true if s seems to contain a Ruby process definition
+    #
+    def self.understands?(s)
+
+      s.match(
+        /\bRuote\.(process_definition|workflow_definition|define)\b/
+      ) != nil
+    end
+
+    # Evaluates the ruby string in the code, but at fist, thanks to the
+    # treechecker, makes sure it doesn't code malicious ruby code (at least
+    # tries very hard).
+    #
+    def self.read(s, treechecker)
+
+      treechecker.definition_check(s)
+      eval(s)
+
+    rescue SyntaxError => se
+      #p se
+      raise ArgumentError.new("Ruby syntax error : #{se.message}")
     end
   end
 end

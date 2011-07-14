@@ -1,4 +1,5 @@
 require 'classes/app_classes'
+require 'controllers/plm_event'
 require 'controllers/plm_object_controller_module'
 require 'controllers/plm_init_controller_module'
 require 'models/plm_object'

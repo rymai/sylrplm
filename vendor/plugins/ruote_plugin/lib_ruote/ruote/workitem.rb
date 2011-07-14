@@ -88,7 +88,7 @@ module Ruote
     #
     def fei
 
-      FlowExpressionId.new(h.fei)
+      FlowExpressionId.new(@h['fei'])
     end
 
     # Returns a complete copy of this workitem.
@@ -106,6 +106,25 @@ module Ruote
 
       @h['participant_name']
     end
+
+    # Returns the name of the workflow to which this workitem belongs, or nil.
+    #
+    def wf_name
+
+      @h['wf_name']
+    end
+
+    alias definition_name wf_name
+
+    # Returns the revision of the workflow to which this workitem belongs,
+    # or nil.
+    #
+    def wf_revision
+
+      @h['wf_revision']
+    end
+
+    alias definition_revision wf_revision
 
     # Returns the payload, ie the fields hash.
     #
@@ -205,6 +224,32 @@ module Ruote
       Ruote.set(@h['fields'], key, value)
     end
 
+    # Shortcut for #lookup(key)
+    #
+    #   workitem.fields['customer']['city']
+    #     # or
+    #   workitem.lookup('customer.city')
+    #     # or
+    #   workitem['customer.city']
+    #
+    def [](key)
+
+      lookup(key)
+    end
+
+    # Shortcut for #set_field(key, value)
+    #
+    #   workitem.fields['customer']['city'] = 'Toronto'
+    #     # or
+    #   workitem.set_field('customer.city', 'Toronto')
+    #     # or
+    #   workitem['customer.city'] = 'Toronto'
+    #
+    def []=(key, value)
+
+      set_field(key, value)
+    end
+
     # Shortcut for wi.fields['__timed_out__']
     #
     def timed_out
@@ -232,7 +277,63 @@ module Ruote
     #
     def params
 
-      @h['fields']['params']
+      @h['fields']['params'] || {}
+    end
+
+    # When a participant is invoked like in
+    #
+    #    accounting 'do_invoice', :customer => 'acme corp'
+    #
+    # then
+    #
+    #    p workitem.params
+    #      # => { 'ref' => 'accounting', 'do_invoice' => nil, 'customer' => 'acme corp' }
+    #
+    # and
+    #
+    #    p workitem.param_text
+    #      # => 'do_invoice'
+    #
+    # It returns nil when there is no text passed directly.
+    #
+    def param_text
+
+      (params.find { |k, v| v.nil? } || []).first
+    end
+
+    # Sometimes a value is passed as a[n expression] parameter or as a
+    # workitem field, with priority to the parameter.
+    #
+    #   sequence do
+    #     set 'f:country' => 'uruguay'
+    #     participant 'toto'
+    #       # in toto, workitem.param_or_field(:country) will yield 'uruguay'
+    #     participant 'toto', :country => 'argentina'
+    #       # workitem.param_or_field(:country) will yield 'argentina'
+    #   end
+    #
+    def param_or_field(key)
+
+      key = key.to_s
+
+      (@h['fields']['params'] || {})[key] || @h['fields'][key]
+    end
+
+    # Like #param_or_field, but priority is given to the field.
+    #
+    def field_or_param(key)
+
+      key = key.to_s
+
+      @h['fields'][key] || (@h['fields']['params'] || {})[key]
+    end
+
+    # Shortcut to the temporary/trailing fields
+    #
+    # http://groups.google.com/group/openwferu-users/browse_thread/thread/981dba6204f31ccc
+    #
+    def t
+      @h['fields']['t'] ||= {}
     end
 
     # (advanced)
@@ -291,6 +392,16 @@ module Ruote
       if index = tags.rindex(tag)
         tags.delete_at(index)
       end
+    end
+
+    # How many times was this workitem re_dispatched ?
+    #
+    # It's used by LocalParticipant re_dispatch mostly, or by participant
+    # which poll a resource and re_dispatch after a while.
+    #
+    def re_dispatch_count
+
+      @h['re_dispatch_count'] || 0
     end
 
     # Encodes this workitem as JSON. If pretty is set to true, will output

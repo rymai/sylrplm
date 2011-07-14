@@ -141,6 +141,21 @@ module Ruote::Exp
   # This could prove useful for participant having to deal with multiple merge
   # strategy results.
   #
+  # ==== :union
+  #
+  # (Available from ruote 2.2.1)
+  #
+  # Will override atomic fields, concat arrays and merge hashes...
+  #
+  # The union of those two workitems
+  #
+  #   { 'a' => 0, 'b' => [ 'x' ], 'c' => { 'aa' => 'bb' }
+  #   { 'a' => 1, 'b' => [ 'y' ], 'c' => { 'cc' => 'dd' }
+  #
+  # will be
+  #
+  #   { 'a' => 1, 'b' => [ 'x', 'y' ], 'c' => { 'aa' => 'bb', 'cc' => 'dd' } }
+  #
   #
   # === :over_if (and :over_unless)
   #
@@ -172,7 +187,7 @@ module Ruote::Exp
       h.ccount = nil if h.ccount < 1
 
       h.cmerge = att(:merge, %w[ first last highest lowest ])
-      h.cmerge_type = att(:merge_type, %w[ override mix isolate stack ])
+      h.cmerge_type = att(:merge_type, %w[ override mix isolate stack union ])
       h.remaining = att(:remaining, %w[ cancel forget ])
 
       h.workitems = (h.cmerge == 'first' || h.cmerge == 'last') ? [] : {}
@@ -183,6 +198,12 @@ module Ruote::Exp
     end
 
     def reply(workitem)
+
+      workitem = Ruote.fulldup(workitem)
+        #
+        # since workitem field merging might happen, better to work on
+        # a copy of the workitem (so that history, coming afterwards,
+        # doesn't see a modified version of the workitem)
 
       if h.cmerge == 'first' || h.cmerge == 'last'
         h.workitems << workitem
@@ -294,11 +315,8 @@ module Ruote::Exp
           is = h.workitems.keys.sort.collect { |k| h.workitems[k] }
           h.cmerge == 'highest' ? is.reverse : is
       end
-      rwis = wis.reverse
 
-      wis.inject(nil) { |t, wi|
-        merge_workitems(rwis.index(wi), t, wi, h.cmerge_type)
-      }
+      merge_workitems(wis, h.cmerge_type)
     end
   end
 end

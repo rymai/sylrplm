@@ -22,8 +22,6 @@
 # Made in Japan.
 #++
 
-require 'ruote/part/local_participant'
-
 
 module Ruote
 
@@ -48,19 +46,7 @@ module Ruote
   # == do_not_thread
   #
   # By default, this participant (like most other participants) is executed
-  # in its own thread (in a Ruby runtime where EventMachine is running,
-  # EM.next_tick is used instead of a new thread).
-  #
-  # You can change that behaviour (beware block thats monopolises the whole
-  # engine !) by doing
-  #
-  #   alpha = engine.register_participant :alpha do |workitem|
-  #     workitem.fields['time'] = Time.now
-  #   end
-  #
-  #   alpha.do_not_thread = true
-  #
-  # (you could also override do_not_thread, the method ...)
+  # in its own thread.
   #
   class BlockParticipant
 
@@ -73,26 +59,14 @@ module Ruote
       @opts = opts
     end
 
-    def do_not_thread
-
-      @opts['do_not_thread']
-    end
-
     def consume(workitem)
 
-      block = @opts['block']
-
-      @context.treechecker.block_check(block)
-        # raises in case of 'security' violation
-
-      #block = eval(block, @context.send(:binding))
-        # doesn't work with ruby 1.9.2-p136
-      block = eval(block, @context.instance_eval { binding })
-        # works OK with ruby 1.8.7-249 and 1.9.2-p136
+      block = get_block('on_workitem', 'block')
 
       r = if block.arity == 1
 
         block.call(workitem)
+
       else
 
         block.call(
@@ -108,7 +82,55 @@ module Ruote
 
     def cancel(fei, flavour)
 
-      # do nothing
+      if block = get_block('on_cancel')
+        block.call(fei, flavour)
+      end
+    end
+
+    def on_reply(workitem)
+
+      if block = get_block('on_reply')
+        block.call(workitem)
+      end
+    end
+
+    def accept?(workitem)
+
+      if block = get_block('accept?')
+        block.call(workitem)
+      else
+        true
+      end
+    end
+
+    def do_not_thread(workitem)
+
+      dnt = @opts['do_not_thread']
+
+      return dnt unless dnt.is_a?(String)
+
+      block = get_block('do_not_thread')
+
+      block.call(workitem)
+    end
+
+    protected
+
+    def get_block(*keys)
+
+      key = keys.find { |k| @opts[k] }
+
+      return nil unless key
+
+      block = @opts[key]
+
+      @context.treechecker.block_check(block)
+        # raises in case of 'security' violation
+
+      #eval(block, @context.send(:binding))
+        # doesn't work with ruby 1.9.2-p136
+      eval(block, @context.instance_eval { binding })
+        # works OK with ruby 1.8.7-249 and 1.9.2-p136
     end
   end
 end

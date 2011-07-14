@@ -2,7 +2,7 @@ class NotificationsController < ApplicationController
   # GET /notifications
   # GET /notifications.xml
   def index
-    
+
     @notifications = Notification.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 
     respond_to do |format|
@@ -74,9 +74,25 @@ class NotificationsController < ApplicationController
   # DELETE /notifications/1
   # DELETE /notifications/1.xml
   def destroy
+
     @notification = Notification.find(params[:id])
     @notification.destroy
 
+    respond_to do |format|
+      format.html { redirect_to(notifications_url) }
+      format.xml  { head :ok }
+    end
+  end
+
+  def notify
+    name=self.class.name+"."+__method__.to_s+":"
+    puts name+params[:id]
+    if params[:id]==0 
+      Notification.notify_all
+    else
+      notif=Notification.find(params[:id])
+      notif.notify
+    end
     respond_to do |format|
       format.html { redirect_to(notifications_url) }
       format.xml  { head :ok }

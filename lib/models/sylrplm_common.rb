@@ -9,7 +9,9 @@ module Models::SylrplmCommon
       # ajouter le 's' de fin
       model_type+"s"
     end
-
+    
+   
+    
     #utilise pour les filtres des objets (index)
     def qry_type
       "typesobject_id in (select id from typesobjects as t where t.name LIKE ?)"
@@ -93,5 +95,68 @@ module Models::SylrplmCommon
       end
     end
   end
+  
+  # renvoie le type de l'objet: nom de la classe en minuscule
+     #TODO compatibilite
+    #def object_type
+    # Part devient part
+    # model_name
+    #end
 
+  def model_name()
+    # Part devient part
+    self.class.name.downcase
+  end
+  
+  def get_object(type, id)
+    # parts devient Part
+    name=self.class.name+"."+__method__.to_s+":"
+    puts name+type+"."+id.to_s
+    mdl=eval type.capitalize
+    begin
+    ret=mdl.find(id)
+    rescue Exception => e
+      LOG.warn("failed to find "+type+"."+id.to_s+" : #{e}")
+      ret=nil
+    end
+    ret
+  end
+  
+   def follow_up(path)
+    name=self.class.name+"."+__method__.to_s+":"
+    #puts name+path
+    ret=[]
+    if path.nil?
+      path=get_path
+    end
+    links=Link.get_all_fathers(self)    
+    links.each do |lnk|
+      f = get_model(lnk.father_type).find(lnk.father_id)
+      p=f.get_path(lnk.name)
+      paths=f.follow_up(p)
+      paths.each do |pp|
+        ret<<path+pp
+      end
+    end
+    if ret.count==0
+      ret<<path
+    end
+    #puts name+"end ret="+ret.inspect
+    ret
+  end  
+  
+  def get_path(relation=nil)
+    unless relation.nil?
+      ret="#"+relation+":"+self.model_name+"."+self.ident
+    else
+      # debut de branche
+      ret="$"+self.model_name+"."+self.ident
+    end
+    ret
+  end
+  
+   def get_model(model_type)
+      eval model_type.capitalize
+    end
+  
 end

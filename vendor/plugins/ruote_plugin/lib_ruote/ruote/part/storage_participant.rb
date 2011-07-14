@@ -23,9 +23,10 @@
 #++
 
 require 'ruote/part/local_participant'
-require 'ruote/fei'
+
 
 module Ruote
+
   #
   # A participant that stores the workitem in the same storage used by the
   # engine and the worker(s).
@@ -54,45 +55,48 @@ module Ruote
     include LocalParticipant
     include Enumerable
 
-    attr_accessor :context
     def initialize(engine_or_options={}, options=nil)
-      begin
-        if engine_or_options.respond_to?(:context)
-          @context = engine_or_options.context
-        elsif engine_or_options.is_a?(Ruote::Context)
-          @context = engine_or_options
-        else
-          @options = engine_or_options
-        end
 
-        @options ||= {}
-
-        @store_name = @options['store_name']
-        rescue Exception => e
-        puts "StorageParticipant.initialize:erreur="+e.inspect
+      if engine_or_options.respond_to?(:context)
+        @context = engine_or_options.context
+      elsif engine_or_options.is_a?(Ruote::Context)
+        @context = engine_or_options
+      else
+        @options = engine_or_options
       end
+
+      @options ||= {}
+
+      @store_name = @options['store_name']
     end
 
     # No need for a separate thread when delivering to this participant.
     #
     def do_not_thread; true; end
 
+    # This is the method called by ruote when passing a workitem to
+    # this participant.
+    #
     def consume(workitem)
-       doc = workitem.to_h
-      puts "StorageParticipant.consume*******************************************"
-      puts "StorageParticipant.consume:"+doc.inspect
+
+      doc = workitem.to_h
 
       doc.merge!(
-      'type' => 'workitems',
-      '_id' => to_id(doc['fei']),
-      'participant_name' => doc['participant_name'],
-      'wfid' => doc['fei']['wfid'])
+        'type' => 'workitems',
+        '_id' => to_id(doc['fei']),
+        'participant_name' => doc['participant_name'],
+        'wfid' => doc['fei']['wfid'])
 
       doc['store_name'] = @store_name if @store_name
 
       @context.storage.put(doc)
     end
-    alias :update :consume
+
+    # Though #update is an alias to #consume, it is meant to be used by
+    # client code when "saving" a workitem (fields may have changed). Calling
+    # update won't proceed the workitem.
+    #
+    alias update consume
 
     # Removes the document/workitem from the storage
     #
@@ -105,6 +109,9 @@ module Ruote
       cancel(fei, flavour) if r != nil
     end
 
+    # Given a fei (or its string version, a sid), returns the corresponding
+    # workitem (or nil).
+    #
     def [](fei)
 
       doc = fetch(fei)
@@ -112,31 +119,38 @@ module Ruote
       doc ? Ruote::Workitem.new(doc) : nil
     end
 
-    def fetch(fei)
+    alias by_fei []
 
-      hfei = Ruote::FlowExpressionId.extract_h(fei)
-
-      @context.storage.get('workitems', to_id(hfei))
-    end
-
-    # Removes the workitem from the in-memory hash and replies to the engine.
+    # Removes the workitem from the storage and replies to the engine.
     #
     # TODO : should it raise if the workitem can't be found ?
     # TODO : should it accept just the fei ?
     #
-    def reply(workitem)
-
-      # TODO: change method name (receiver mess cleanup)
+    def proceed(workitem)
 
       doc = fetch(Ruote::FlowExpressionId.extract_h(workitem))
 
       r = @context.storage.delete(doc)
 
-      return reply(workitem) if r != nil
+      raise ArgumentError.new('cannot proceed, workitem is gone') if r == true
+      return proceed(workitem) if r != nil
 
       workitem.h.delete('_rev')
 
       reply_to_engine(workitem)
+    end
+
+    # (soon to be removed)
+    #
+    def reply(workitem)
+
+      puts '-' * 80
+      puts '*** WARNING : please use the Ruote::StorageParticipant#proceed(wi)'
+      puts '              instead of #reply(wi) which is deprecated'
+      #caller.each { |l| puts l }
+      puts '-' * 80
+
+      proceed(workitem)
     end
 
     # Returns the count of workitems stored in this participant.
@@ -157,7 +171,9 @@ module Ruote
     #
     def all(opts={})
 
-      fetch_all(opts).map { |hwi| Ruote::Workitem.new(hwi) }
+      res = fetch_all(opts)
+
+      res.is_a?(Array) ? res.map { |hwi| Ruote::Workitem.new(hwi) } : res
     end
 
     # A convenience method (especially when testing), returns the first
@@ -165,36 +181,31 @@ module Ruote
     #
     def first
 
-      hwi = fetch_all.first
-
-      hwi ? Ruote::Workitem.new(hwi) : nil
+      wi(fetch_all({}).first)
     end
 
     # Return all workitems for the specified wfid
     #
-    def by_wfid(wfid)
+    def by_wfid(wfid, opts={})
 
-      @context.storage.get_many('workitems', wfid).collect { |hwi|
-        Ruote::Workitem.new(hwi)
-      }
+      if @context.storage.respond_to?(:by_wfid)
+        return @context.storage.by_wfid('workitems', wfid, opts)
+      end
+
+      wis(@context.storage.get_many('workitems', wfid, opts))
     end
 
     # Returns all workitems for the specified participant name
     #
     def by_participant(participant_name, opts={})
 
-      hwis = if @context.storage.respond_to?(:by_participant)
+      return @context.storage.by_participant(
+        'workitems', participant_name, opts
+      ) if @context.storage.respond_to?(:by_participant)
 
-        @context.storage.by_participant('workitems', participant_name, opts)
-
-      else
-
-        fetch_all(opts).select { |wi|
-          wi['participant_name'] == participant_name
-        }
+      do_select(opts) do |hwi|
+        hwi['participant_name'] == participant_name
       end
-
-      hwis.collect { |hwi| Ruote::Workitem.new(hwi) }
     end
 
     # field : returns all the workitems with the given field name present.
@@ -206,21 +217,18 @@ module Ruote
     # CouchStorage), the others will load all the workitems and then filter
     # them.
     #
-    def by_field(field, value=nil)
+    def by_field(field, value=nil, opts={})
 
-      hwis = if @context.storage.respond_to?(:by_field)
+      (value, opts = nil, value) if value.is_a?(Hash)
 
-        @context.storage.by_field('workitems', field, value)
-
-      else
-
-        fetch_all.select { |hwi|
-          hwi['fields'].keys.include?(field) &&
-          (value.nil? || hwi['fields'][field] == value)
-        }
+      if @context.storage.respond_to?(:by_field)
+        return @context.storage.by_field('workitems', field, value, opts)
       end
 
-      hwis.collect { |hwi| Ruote::Workitem.new(hwi) }
+      do_select(opts) do |hwi|
+        hwi['fields'].keys.include?(field) &&
+        (value.nil? || hwi['fields'][field] == value)
+      end
     end
 
     # Queries the store participant for workitems.
@@ -244,7 +252,7 @@ module Ruote
     #
     def query(criteria)
 
-      cr = criteria.inject({}) { |h, (k, v)| h[k.to_s] = v; h }
+      cr = Ruote.keys_to_s(criteria)
 
       if @context.storage.respond_to?(:query_workitems)
         return @context.storage.query_workitems(cr)
@@ -256,25 +264,29 @@ module Ruote
       opts[:count] = cr.delete('count')
 
       wfid = cr.delete('wfid')
+
+      count = opts[:count]
+
       pname = cr.delete('participant_name') || cr.delete('participant')
+      opts.delete(:count) if pname
 
       hwis = wfid ?
-      @context.storage.get_many('workitems', wfid, opts) : fetch_all(opts)
+        @context.storage.get_many('workitems', wfid, opts) : fetch_all(opts)
 
-      return hwis if opts[:count]
+      return hwis unless hwis.is_a?(Array)
 
-      hwis.select { |hwi|
+      hwis = hwis.select { |hwi|
         Ruote::StorageParticipant.matches?(hwi, pname, cr)
-      }.collect { |hwi|
-        Ruote::Workitem.new(hwi)
       }
+
+      count ? hwis.size : wis(hwis)
     end
 
     # Cleans this participant out completely
     #
     def purge!
 
-      fetch_all.each { |hwi| @context.storage.delete(hwi) }
+      fetch_all({}).each { |hwi| @context.storage.delete(hwi) }
     end
 
     # Used by #query when filtering workitems.
@@ -311,15 +323,44 @@ module Ruote
 
     protected
 
+    # Fetches a workitem in its raw form (Hash).
+    #
+    def fetch(fei)
+
+      hfei = Ruote::FlowExpressionId.extract_h(fei)
+
+      @context.storage.get('workitems', to_id(hfei))
+    end
+
     # Fetches all the workitems. If there is a @store_name, will only fetch
     # the workitems in that store.
     #
-    def fetch_all(opts={})
+    def fetch_all(opts)
 
       @context.storage.get_many(
-      'workitems',
-      @store_name ? /^wi!#{@store_name}::/ : nil,
-      opts)
+        'workitems',
+        @store_name ? /^wi!#{@store_name}::/ : nil,
+        opts)
+    end
+
+    # Given a few options and a block, returns all the workitems that match
+    # the block
+    #
+    def do_select(opts, &block)
+
+      skip = opts[:offset] || opts[:skip]
+      limit = opts[:limit]
+      count = opts[:count]
+
+      hwis = fetch_all({})
+      hwis = hwis.select(&block)
+
+      hwis = hwis[skip..-1] if skip
+      hwis = hwis[0, limit] if limit
+
+      return hwis.size if count
+
+      hwis.collect { |hwi| Ruote::Workitem.new(hwi) }
     end
 
     # Computes the id for the document representing the document in the storage.
@@ -333,6 +374,18 @@ module Ruote
       a.unshift('wi')
 
       a.join('!')
+    end
+
+    def wi(hwi)
+
+      hwi ? Ruote::Workitem.new(hwi) : nil
+    end
+
+    def wis(workitems_or_count)
+
+      workitems_or_count.is_a?(Array) ?
+        workitems_or_count.collect { |wi| Ruote::Workitem.new(wi) } :
+        workitems_or_count
     end
   end
 end

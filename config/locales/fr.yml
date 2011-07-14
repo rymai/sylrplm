@@ -381,6 +381,7 @@ fr:
   label_event_date: Date de l'évenement
   label_event_type: Type de l'évenement
   label_notify_date: Date de notification
+  label_path: Chemins
   # main/_frame
   legend_main: Accueil
   legend_plm_objects: Objets PLM

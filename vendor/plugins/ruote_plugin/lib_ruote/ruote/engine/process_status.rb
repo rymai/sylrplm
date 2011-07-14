@@ -22,6 +22,7 @@
 # Made in Japan.
 #++
 
+require 'ruote/util/tree'
 require 'ruote/engine/process_error'
 
 
@@ -59,7 +60,12 @@ module Ruote
     #
     attr_reader :schedules
 
+    # Called by Ruote::Engine#processes or Ruote::Engine#process.
+    #
     def initialize(context, expressions, stored_workitems, errors, schedules)
+
+      #
+      # preparing data
 
       @expressions = expressions.collect { |e|
         Ruote::Exp::FlowExpression.from_h(context, e) }
@@ -73,6 +79,14 @@ module Ruote
       @schedules = schedules.sort! { |a, b| a['owner'].sid <=> b['owner'].sid }
 
       @root_expression = root_expressions.first
+
+      #
+      # linking errors and expressions for easy navigation
+
+      @errors.each do |err|
+        err.flow_expression = @expressions.find { |fexp| fexp.fei == err.fei }
+        err.flow_expression.error = err if err.flow_expression
+      end
     end
 
     # Returns a list of all the expressions that have no parent expression.
@@ -160,7 +174,8 @@ module Ruote
     def definition_name
 
       @root_expression && (
-        @root_expression.attribute('name') || @root_expression.attribute_text)
+        @root_expression.attribute('name') ||
+        @root_expression.attribute_text)
     end
 
     # For a process
@@ -174,7 +189,9 @@ module Ruote
     #
     def definition_revision
 
-      @root_expression && @root_expression.attribute('revision')
+      @root_expression && (
+        @root_expression.attribute('revision') ||
+        @root_expression.attribute('rev'))
     end
 
     # Returns the 'position' of the process.
@@ -192,6 +209,10 @@ module Ruote
     #
     # It uses #workitems underneath.
     #
+    # If you want to list all the expressions where the "flow currently is"
+    # regardless they are participant expressions or errors, look at the
+    # #leaves method.
+    #
     def position
 
       workitems.collect { |wi|
@@ -208,6 +229,30 @@ module Ruote
         r << params
         r
       }
+    end
+
+    # Returns the expressions where the flow is currently, ak the leaves
+    # of the execution tree.
+    #
+    # Whereas #position only looks at participant expressions (and errors),
+    # #leaves looks at any expressions that is a leave (which has no
+    # child at this point).
+    #
+    # Returns an array of FlowExpression instances. (Note that they may
+    # have their attribute #error set).
+    #
+    def leaves
+
+      expressions.inject([]) { |a, exp|
+        a.select { |e| ! exp.ancestor?(e.fei) } + [ exp ]
+      }
+    end
+
+    # Returns the workitem as was applied at the root expression.
+    #
+    def root_workitem
+
+      Ruote::Workitem.new(root_expression.h.applied_workitem)
     end
 
     # Returns a list of the workitems currently 'out' to participants
@@ -279,6 +324,7 @@ module Ruote
       @expressions.each do |e|
         s << "     #{e.fei.to_storage_id}"
         s << "       | #{e.name}"
+        s << "       | * #{e.state} *" if e.state
         s << "       | #{e.attributes.inspect}"
         s << "       `-parent--> #{e.h.parent_id ? e.parent_id.to_storage_id : 'nil'}"
       end
@@ -364,6 +410,48 @@ module Ruote
       Ruote.recompose_tree(h)
     end
 
+    # Used by Engine#process and Engine#processes
+    #
+    def self.fetch(context, wfids, opts)
+
+      swfids = wfids.collect { |wfid| /!#{wfid}-\d+$/ }
+
+      exps = context.storage.get_many('expressions', wfids).compact
+      swis = context.storage.get_many('workitems', wfids).compact
+      errs = context.storage.get_many('errors', wfids).compact
+      schs = context.storage.get_many('schedules', swfids).compact
+        # some slow storages need the compaction... couch...
+
+      errs = errs.collect { |err| ProcessError.new(err) }
+      schs = schs.collect { |sch| Ruote.schedule_to_h(sch) }
+
+      by_wfid = {}
+
+      exps.each do |exp|
+        (by_wfid[exp['fei']['wfid']] ||= [ [], [], [], [] ])[0] << exp
+      end
+      swis.each do |swi|
+        (by_wfid[swi['fei']['wfid']] ||= [ [], [], [], [] ])[1] << swi
+      end
+      errs.each do |err|
+        (by_wfid[err.wfid] ||= [ [], [], [], [] ])[2] << err
+      end
+      schs.each do |sch|
+        (by_wfid[sch['wfid']] ||= [ [], [], [], [] ])[3] << sch
+      end
+
+      wfids = by_wfid.keys.sort
+      wfids = wfids.reverse if opts[:descending]
+        # re-adjust list of wfids, only take what was found
+
+      wfids.inject([]) { |a, wfid|
+        if info = by_wfid[wfid]
+          a << ProcessStatus.new(context, *info)
+        end
+        a
+      }
+    end
+
     protected
 
     def original_tree_from_parent(e)
@@ -372,32 +460,6 @@ module Ruote
 
       parent ? parent.tree[2][e.fei.child_id] : e.tree
     end
-  end
-
-  def self.decompose_tree(t, pos='0', h={})
-
-    h[pos] = t[0, 2]
-    t[2].each_with_index { |c, i| decompose_tree(c, "#{pos}_#{i}", h) }
-    h
-  end
-
-  def self.recompose_tree(h, pos='0')
-
-    t = h[pos]
-
-    return nil unless t
-
-    t << []
-    i = 0
-
-    loop do
-      tt = recompose_tree(h, "#{pos}_#{i}")
-      break unless tt
-      t.last << tt
-      i = i + 1
-    end
-
-    t
   end
 end
 

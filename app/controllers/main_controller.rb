@@ -16,7 +16,6 @@ class MainController < ApplicationController
     message = check_init
     puts "main_controller.index"
     @datas = get_datas_count
-    @languages = get_languages
     @themes = get_themes(@theme)
     unless params[:theme].nil?
       @theme = params[:theme]

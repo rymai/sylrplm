@@ -117,7 +117,7 @@ module Ruote::Exp
 
     names :participant
 
-    # Should return true when the dispatch was successful.
+    # Should yield true when the dispatch was successful.
     #
     h_reader :dispatched
 
@@ -134,28 +134,23 @@ module Ruote::Exp
         "no participant name specified"
       ) if h.participant_name == ''
 
-      participant_info =
-        h.participant ||
+      h.participant ||=
         @context.plist.lookup_info(h.participant_name, h.applied_workitem)
-
-      unless participant_info.respond_to?(:consume)
-        h.participant = participant_info
-      end
 
       raise(ArgumentError.new(
         "no participant named #{h.participant_name.inspect}")
-      ) if participant_info.nil?
-
-      #
-      # participant found, consider timeout
-
-      schedule_timeout(participant_info)
+      ) if h.participant.nil?
 
       #
       # dispatch to participant
 
       h.applied_workitem['participant_name'] = h.participant_name
+
       h.applied_workitem['fields']['params'] = compile_atts
+      h.applied_workitem['fields'].delete('t')
+      h.applied_workitem['re_dispatch_count'] = 0
+
+      schedule_timeout(h.participant)
 
       persist_or_raise
 
@@ -194,7 +189,9 @@ module Ruote::Exp
 
       pa = @context.plist.instantiate(pinfo, :if_respond_to? => :on_reply)
 
-      pa.on_reply(Ruote::Workitem.new(workitem)) if pa
+      Ruote.participant_send(
+        pa, :on_reply, 'workitem' => Ruote::Workitem.new(workitem)
+      ) if pa
 
       super(workitem)
     end
@@ -241,13 +238,55 @@ module Ruote::Exp
 
         pa = @context.plist.instantiate(p_info, :if_respond_to? => :rtimeout)
 
-        timeout = (pa.method(:rtimeout).arity == 0 ?
-          pa.rtimeout :
-          pa.rtimeout(Ruote::Workitem.new(h.applied_workitem))
+        #timeout = (pa.method(:rtimeout).arity == 0 ?
+        #  pa.rtimeout :
+        #  pa.rtimeout(Ruote::Workitem.new(h.applied_workitem))
+        #) if pa
+        timeout = Ruote.participant_send(
+          pa, :rtimeout, 'workitem' => Ruote::Workitem.new(h.applied_workitem)
         ) if pa
       end
 
       do_schedule_timeout(timeout)
+    end
+
+    def do_pause(msg)
+
+      return if h.state != nil
+
+      h['state'] = 'paused'
+      h['breakpoint'] = true if msg['breakpoint']
+
+      do_persist || return
+
+      @context.storage.put_msg(
+        'dispatch_pause',
+        'fei' => h.fei,
+        'participant_name' => h.participant_name,
+        'participant' => h.participant
+      ) unless msg['breakpoint']
+    end
+
+    def do_resume(msg)
+
+      return if h.state != 'paused'
+
+      h['state'] = nil
+      replies = h.delete('paused_replies') || []
+
+      do_persist || return
+
+      if replies.empty?
+        @context.storage.put_msg(
+          'dispatch_resume',
+          'fei' => h.fei,
+          'participant_name' => h.participant_name,
+          'participant' => h.participant
+        ) unless h['breakpoint']
+      else
+        replies.each { |m| @context.storage.put_msg(m.delete('action'), m) }
+          # trigger replies
+      end
     end
   end
 end
