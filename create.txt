@@ -557,3 +557,15 @@ git add Gemfile Gemfile.lock
 
 #puis copier le gem ruote a la place de celui installe ci dessus
 copier le contenu de /usr/lib/ruby/gems/1.8/gems/ruote-2.2.0 vers /home/syl/trav/rubyonrails/sylrplm/vendor/ruby/1.8/gems/ruote-2.2.0/
+
+#puis maj git sylrplm
+par smartgit (commit puis push)
+
+#puis maj heroku
+git push heroku master
+
+# puis poursuite install heroku
+heroku rake db:migrate
+
+
+
