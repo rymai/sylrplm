@@ -498,10 +498,20 @@ module Controllers::PlmObjectControllerModule
     empty_favori_by_type(get_model_type(params))
   end
 
+  # enlever le 's' de fin
+  # :controller=>parts devient part
   def get_model_type(params)
-    # enlever le 's' de fin
-    # :controller=>parts devient part
-    params[:controller].chop
+    name=self.class.name+"."+__method__.to_s+":"
+    ret = case params[:controller] 
+      when "documents" then params[:controller].chop
+      when  "parts" then params[:controller].chop
+      when "projects" then params[:controller].chop
+      when "customers" then params[:controller].chop
+      when "notifications" then params[:controller].chop
+    else params[:controller]
+    end
+    puts name+params[:controller]+":"+ret
+    ret
   end
 
   def get_controller_from_model_type(model_type)
@@ -511,7 +521,9 @@ module Controllers::PlmObjectControllerModule
   end
 
   def get_model(params)
+    name=self.class.name+"."+__method__.to_s+":"
     # parts devient Part
+    puts name+params.inspect
     eval get_model_type(params).capitalize
   end
 

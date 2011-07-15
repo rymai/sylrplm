@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   before_filter :authorize, :except => [:index, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
-  before_filter :object_exists, :only => [:show, :edit, :destroy]
+  ## un peu brutal before_filter :object_exists, :only => [:show, :edit, :destroy]
   #
   #access_control(Access.find_for_controller(controller_class_name))
   #before_filter :event
@@ -98,6 +98,7 @@ class ApplicationController < ActionController::Base
     @favori      = session[:favori] ||= Favori.new
     @urlbase          = "http://"+request.env["HTTP_HOST"]
     @theme            = User.find_theme(session)
+    @themes = get_themes(@theme)
     @language=SYLRPLM::LOCAL_DEFAULT
     @languages = get_languages
     @notification=SYLRPLM::NOTIFICATION_DEFAULT

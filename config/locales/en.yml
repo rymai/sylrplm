@@ -115,6 +115,8 @@ en:
   ctrl_user_disconnected: User %{user} disconnected !
   ctrl_user_role: Role=
   #main
+  #notification
+  ctrl_notify: "%{nb_total} Notifications send to %{nb_users} users : %{notifications} "
   #parts
   ctrl_part: Article
   ctrl_forum: Forum
@@ -363,6 +365,7 @@ en:
   groups_new: New groupe
   # fields info
   # fields main
+  legend_desktop: My desktop
   label_domain: Domain
   submit_create_domain: Create domain  
   label_theme: Theme
@@ -386,6 +389,7 @@ en:
   label_event_type: Event type
   label_notify_date: Notify date
   label_path: Paths
+  button_notify_all: Notify all
   # main/_frame
   legend_main: Welcome
   legend_plm_objects: PLM Objects

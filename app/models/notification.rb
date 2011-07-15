@@ -32,8 +32,14 @@ class Notification < ActiveRecord::Base
   # ruby script/console
   # Notification.notify
   
-  def self.notify_all(notif)
-    name="****************begin:"+self.class.name+"."+__method__.to_s+":"
+  def self.notify_all(id)
+    name="****************:"+self.class.name+"."+__method__.to_s+":"
+    ret={}
+    if id == "all"
+      notif=nil
+    else
+      notif=Notification.find(params[:id])
+    end
     User.all.each do |user|
       to_notify=[]
       if notif.nil?
@@ -53,16 +59,18 @@ class Notification < ActiveRecord::Base
         notifs={}
         notifs[:recordset]=to_notify
         email=PlmMailer.create_notify(notifs, SYLRPLM::ADMIN_MAIL, user)
-        unless email.nil
+        unless email.nil?
           email.set_content_type("text/html")
           PlmMailer.deliver(email)
+          ret[user]=to_notify.count
         end
       end
     end
-    name="****************end:"+self.class.name+"."+__method__.to_s+":"
+    puts name+"ret="+ret.inspect
+    ret
   end
   
-  def notify_one
+  def notify
     Notification.notify_all(self)
   end
   
@@ -73,11 +81,14 @@ class Notification < ActiveRecord::Base
     obj=object
     unless obj.nil?
       ret=obj.follow_up(nil)
+    else
+      ret=[]
     end
     puts name+" branches:"
     ret.each do |path|
       puts path
     end
+    ret
   end
   
   def object

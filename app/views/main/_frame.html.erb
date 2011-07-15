@@ -1,4 +1,5 @@
 <div id="banner">
+	<% form_tag do |f| %>
 	<table>
 		<tr>
 			<td class='title'> <%= @page_title || "SYLRPLM" %></td>
@@ -8,32 +9,39 @@
 			<% else %>
 			<td class='banner'> <%= link_to t("connect"), new_sessions_url %></td>
 			<% end %>
-			<% if @themes != nil %>
-			<% form_tag do |f| %>
+			<% unless @themes.nil? %>
+			
 			<td class='banner'> <%= t(:label_theme) %></td>
 			<td class='banner'> <%= select_tag("theme",@themes,:class=>'banner') %></td>
 			<td class='banner'> <%= h_img_sub(:submit) %></td>
-			<%end %>
-			<%end %>
-			<td class='banner'><%= h_menu("/main","help_main",t("mnu_main")) %></td>
-			<td class='banner'><%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %></td>
 			
-			<% form_tag do |f| %>
+			<%end %>
+			<td class='banner'><%= h_menu("/main","help_main",h_img(:mnu_main)) %></td>
+			
 			<td class='banner'> <%= t(:label_language) %></td>
 			<td class='banner'><%= select_tag(:locale, options_for_select(@languages)) %></td>
 			<td class='banner'> <%= h_img_sub(:submit) %></td>
 			<!--<td class='banner'><%= link_to t('lng_english'), :locale => 'en' %>| <%= link_to t('lng_french'), :locale => 'fr' %></td>--->
-			<% end %>
+			
 			<td class='banner'> <%= t(:label_today) %></td>
 			<td class='banner'> <%= Date.today %></td>
 			<td class='banner'><%= tip_help() %></td>
 		</tr>
 	</table>
+	<% end %>
 </div>
 <div id="columns">
 	<div id="side">
-		
+
 		<div id="menu">
+			<fieldset>
+				<legend>
+					<%= t(:legend_desktop) %>
+				</legend>
+				<%= h_menu("/main","help_main",t("mnu_main")) %>
+				<%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
+				<%= h_menu("/notifications", "help_notifications",t("mnu_notifications")) %>
+			</fieldset>
 			<fieldset>
 				<legend>
 					<%= t(:legend_plm_objects) %>

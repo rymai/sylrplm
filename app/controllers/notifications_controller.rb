@@ -74,10 +74,8 @@ class NotificationsController < ApplicationController
   # DELETE /notifications/1
   # DELETE /notifications/1.xml
   def destroy
-
     @notification = Notification.find(params[:id])
     @notification.destroy
-
     respond_to do |format|
       format.html { redirect_to(notifications_url) }
       format.xml  { head :ok }
@@ -86,14 +84,19 @@ class NotificationsController < ApplicationController
 
   def notify
     name=self.class.name+"."+__method__.to_s+":"
-    puts name+params[:id]
-    if params[:id]==0 
-      Notification.notify_all
-    else
-      notif=Notification.find(params[:id])
-      notif.notify
+    puts name+params[:id]+":"
+    st=Notification.notify_all(params[:id])
+    notifs=""
+    nb_users=0
+    nb_total=0
+    st.each do |key,val|
+      notifs+="<br/>"+key.login+":"+val.to_s
+      nb_total+=st[key]
+      nb_users+=1
     end
-    respond_to do |format|
+    puts name+nb_users.to_s+"."+nb_total.to_s+":"+notifs
+    flash[:notice] = t(:ctrl_notify, :nb_total => nb_total, :nb_users => nb_users, :notifications => notifs)
+     respond_to do |format|
       format.html { redirect_to(notifications_url) }
       format.xml  { head :ok }
     end

@@ -567,5 +567,13 @@ git push heroku master
 # puis poursuite install heroku
 heroku rake db:migrate
 
+meme erreur
+
+heroku create
+Creating fierce-journey-219... done, stack is bamboo-mri-1.9.2
+http://fierce-journey-219.heroku.com/ | git@heroku.com:fierce-journey-219.git
+Git remote heroku added
+
+
 
 

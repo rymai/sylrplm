@@ -9,9 +9,7 @@ module Models::SylrplmCommon
       # ajouter le 's' de fin
       model_type+"s"
     end
-    
-   
-    
+  
     #utilise pour les filtres des objets (index)
     def qry_type
       "typesobject_id in (select id from typesobjects as t where t.name LIKE ?)"
@@ -131,11 +129,14 @@ module Models::SylrplmCommon
     end
     links=Link.get_all_fathers(self)    
     links.each do |lnk|
-      f = get_model(lnk.father_type).find(lnk.father_id)
-      p=f.get_path(lnk.name)
-      paths=f.follow_up(p)
-      paths.each do |pp|
-        ret<<path+pp
+      mdl=get_model(lnk.father_type)
+      unless mdl.nil?
+        f = mdl.find(lnk.father_id)
+        p=f.get_path(lnk.name)
+        paths=f.follow_up(p)
+        paths.each do |pp|
+          ret<<path+pp
+        end
       end
     end
     if ret.count==0
@@ -155,8 +156,14 @@ module Models::SylrplmCommon
     ret
   end
   
-   def get_model(model_type)
-      eval model_type.capitalize
-    end
+  def get_model(model_type)
+    begin
+      ret=eval model_type.capitalize
+      rescue Exception => e
+        LOG.warn("failed to find "+model_type+" : #{e}")
+        ret=nil
+      end
+    ret
+   end
   
 end

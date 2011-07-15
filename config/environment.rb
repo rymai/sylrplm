@@ -21,6 +21,9 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{Rails.root}/lib/classes )
+  #config.load_paths += %W( #{Rails.root}/lib/classes )
+  #config.load_paths += %W( #{Rails.root}/lib/controllers )
+  #config.load_paths += %W( #{Rails.root}/lib/models )
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -32,6 +35,7 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
+  config.active_record.observers = :document_observer, :part_observer, :project_observer, :customer_observer
 
   # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
   # Run "rake -D time" for a list of tasks for finding time zone names.
@@ -40,9 +44,9 @@ Rails::Initializer.run do |config|
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
-  config.action_controller.session_store = :active_record_store
-
   config.i18n.default_locale = :fr
+
+  config.action_controller.session_store = :active_record_store
 
   config.action_mailer.delivery_method       = :smtp
   config.action_mailer.perform_deliveries    = true
@@ -61,7 +65,6 @@ Rails::Initializer.run do |config|
     #:user_name => xxx,
     #:password => xxx
   }
-  config.active_record.observers = :document_observer, :part_observer, :project_observer, :customer_observer
   
 
   #RUOTE_ENV = {:persist_as_yaml=>true}
