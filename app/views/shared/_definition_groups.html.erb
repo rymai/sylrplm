@@ -1,24 +1,34 @@
-<table>
-	<tr class="nhover">
-		<td colspan="2"><%= t(:label_belongs_to)%></td>
-	</tr>
-	<% for elt in in_groups %>
-	<tr>
-		<td><%= h elt.group.name %></td>
-		<td> <%= link_to t('button_remove'), elt,  :method => :delete %></td>
-	</tr>
-	<% end %>
-	<tr class="nhover">
-		<td colspan="2">&nbsp;</td>
-	</tr>
-	<tr class="nhover">
-		<td colspan="2"><%= t(:label_not_belongs_to)%></td>
-	</tr>
-	<% for elt in out_groups %>
-	<tr>
-		<td><%= h elt.name %></td>
-		<td><%= link_to t('button_add'), group_definitions_path(:group_definition => { :group_id => elt.id, :definition_id => @definition.id}), :method => :post %></td>
-	</tr>
-	<% end %>
-</table>
-
+<fieldset>
+	<legend>
+		<%= t("label_groups_may_launch")%>
+	</legend>
+	<table>
+		<tr class="nhover">
+			<th ><%= t(:label_belongs_to)%></th>
+			<th><%= t(:label_not_belongs_to)%></th>
+		</tr>
+		<tr class="nhover">
+			<td>
+			<table>
+				<% for elt in out_groups %>
+				<tr>
+					<td><%= h elt.name %></td>
+					<td><%= link_to t('button_add'), group_definitions_path(:group_definition => { :group_id => elt.id, :definition_id => @definition.id}), :method => :post %></td>
+				</tr>
+				<% end %>
+				
+			</table>
+			</td>
+			<td>
+			<table>
+<% for elt in in_groups %>
+				<tr>
+					<td> <%= link_to t('button_remove'), elt,  :method => :delete %></td>
+					<td><%= h elt.group.name %></td>
+				</tr>
+				<% end %>
+			</table>
+			</td>
+		</tr>
+	</table>
+</fieldset>

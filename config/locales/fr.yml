@@ -307,12 +307,13 @@ fr:
   label_document: Document
   label_restore_file: Fichier à restaurer
   # definitions
+  label_process_definition: Définition du processus
   label_uri: URI
-  label_groups_may_launch: Groupes pouvant lancer ce process
+  label_groups_may_launch: Affectation des groupes
   label_groups: Groupes
   label_launch_fields: Champs
-  label_belongs_to: Groupes responsables
-  label_not_belongs_to: Autres groupes
+  label_belongs_to: Groupes pouvant lancer ce processus
+  label_not_belongs_to: Autres groupes pouvant être affectées
   button_add: Ajouter
   button_remove: Enlever
   label_fields: Attributs

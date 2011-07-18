@@ -59,6 +59,7 @@ function dTree(objName) {
 		nlPlus			: '/images/tree/nolines_plus.gif',
 		nlMinus			: '/images/tree/nolines_minus.gif'
 	};
+	
 	this.obj = objName;
 	this.aNodes = [];
 	this.aIndent = [];

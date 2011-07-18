@@ -1,6 +1,5 @@
-<h1><%= t("definitions_edit") %><%= h @definition.id %></h1>
+<h1><%= t("definitions_edit") %>: "<%= h @definition.name %>"</h1>
 <div style='float: left;'>
-
 	<% form_for(@definition, :html => { :id => 'definition_form' }) do |f| %>
 	<%= f.error_messages %>
 	<table class='menu_bas'>
@@ -10,34 +9,36 @@
 			<td> <%= link_to t("list"), definitions_path %></td>
 		</tr>
 	</table>
-	<table class="nhover">
-		<tr>
-			<td class="wide-first-col"><%=t("label_name")%></td>
-			<td><%= f.text_field :name %></td>
-		</tr>
-		<tr>
-			<td><%=t("label_description")%></td>
-			<td><%= f.text_field :description %></td>
-		</tr>
-		<tr>
-			<td><%=t("label_uri")%></td>
-			<td><%= f.text_field :uri %></td>
-		</tr>
-		<tr>
-			<td colspan="2"> <%= render(
-			:partial => @payload_partial,
-			:locals => {
-			:fields => @definition.launch_fields_hash,
-			:form_id => 'definition_form',
-			:textarea_name => 'definition[launch_fields]' }) %></td>
-		</tr>
-	</table>
+	<fieldset>
+		<legend>
+			<%= t("label_process_definition")%>
+		</legend>
+		<table class="nhover">
+			<tr>
+				<td class="wide-first-col"><%= t("label_name")%></td>
+				<td><%= f.text_field :name %></td>
+			</tr>
+			<tr>
+				<td><%= t("label_description")%></td>
+				<td><%= f.text_field :description %></td>
+			</tr>
+			<tr>
+				<td><%= t("label_uri")%></td>
+				<td><%= f.text_field :uri %></td>
+			</tr>
+			<tr>
+				<td colspan="2"> <%= render(
+				:partial => @payload_partial,
+				:locals => {
+				:fields => @definition.launch_fields_hash,
+				:form_id => 'definition_form',
+				:textarea_name => 'definition[launch_fields]' }) %></td>
+			</tr>
+		</table>
+	</fieldset>
 	<% end %>
 </div>
 <div style='float: left; margin-left: 28px;'>
-	 <span class='menu_bas'><%=t("label_groups_may_launch")%></span>
-	<br/>
-	<br/>
 	<%= render :partial => 'shared/definition_groups', :locals => @dg_locals %>
 </div>
 <div class='align-right'>

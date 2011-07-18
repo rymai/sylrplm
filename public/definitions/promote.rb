@@ -1,7 +1,7 @@
 
-class SylEditeur < OpenWFE::ProcessDefinition
+class PLMPromote < OpenWFE::ProcessDefinition
 
-  description "validation document"
+  description "Promotion objet PLM"
 
   set :v => "demandeur", :value => "${f:launcher}"
   set :v => "reviewer1", :value => "relecteur1"
@@ -17,36 +17,31 @@ class SylEditeur < OpenWFE::ProcessDefinition
     #set :f => "protected_comment", :value => ""
     #jump :to => 'partdocument'
     
-    set :f => "private_comment_createur", :value => "commentaire demandeur"
+    set :f => "comment_createur", :value => "commentaire demandeur"
     demandeur :activity =>  "Mettez l objet(s) à promouvoir dans le presse papier, ajouter un commentaire puis valider cette tâche"
-    back :unless => '${f:private_comment_createur} != ""'
+    back :unless => '${f:comment_createur} != ""'
     #_redo :ref => 'createur', :unless => '${f:comment} != "" '
     
     plm Ruote::PlmParticipant, :task=>"promote",:step=>"init"
     
     # taches paralleles, quorum=1
-    set :f => "private_comment_relecteur", :value => "commentaire relecteur"
+    set :f => "comment_relecteur", :value => "commentaire relecteur"
     concurrence :count => 1 do
       reviewer1 :activity => "-Mettez les objet(s) de référence dans le presse papier\n-Relire ce document\n-Mettre un commentaire\n-Valider cette tâche"
       reviewer2 :activity => "-Mettez les objet(s) de référence dans le presse papier\n-Relire ce document\n-Mettre un commentaire\n-Valider cette tâche"
     end
-    back :unless => '${f:private_comment_relecteur} != ""'
+    back :unless => '${f:comment_relecteur} != ""'
 
     plm Ruote::PlmParticipant, :task=>"promote", :step=>"review"
     
-    set :f => "private_ok_for_publish", :value => "true"
-    set :f => "private_comment_valideur", :value => "commentaire valideur"
-    #participant :ref=> "valideur", :activity =>"Merci de valider ce document"
-    valideur :activity =>"Merci de valider ce document"
-    back :if =>  '${f:private_ok_for_publish} == false' && '${f:private_comment_valideur} == ""'
+    set :f => "ok", :value => "true"
+    set :f => "comment_valideur", :value => "commentaire valideur"
+    valideur :activity =>"Merci de commenter puis valider (ok=true) ou (ok=false) non ce document"
+    back :if =>  '${f:ok} == false' && '${f:comment_valideur} == ""'
     # back to the reviewers if editor not happy
-    rewind :unless =>  '${f:private_ok_for_publish}'
-
-    ##publish 
+    rewind :unless =>  '${f:ok}'
     
-    #participant 'document', Ruote::Sylrplm::WfDocument 
     plm Ruote::PlmParticipant, :task=>"promote", :step=>"exec"
-    #part_document 'OpenWfe::PrintParticipant'
 
   end
 end
