@@ -7,7 +7,6 @@ GEM
     atom-tools (2.0.5)
     file-tail (1.0.6)
       spruz (~> 0.2)
-    mislav-will_paginate (2.3.6)
     ruby2ruby (1.2.5)
       ruby_parser (~> 2.0)
       sexp_processor (~> 3.0)
@@ -40,12 +39,13 @@ GEM
       sexp_processor (>= 3.0.5)
     spruz (0.2.10)
     tzinfo (0.3.29)
+    will_paginate (2.3.15)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   atom-tools
-  mislav-will_paginate (>= 2.3.6)
   rufus-verbs
   ruote (>= 2.2)
+  will_paginate (>= 2.3.15)

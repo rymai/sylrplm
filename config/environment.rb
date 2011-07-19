@@ -11,11 +11,6 @@ Rails::Initializer.run do |config|
   # Settings in config/environments/* take precedence over those specified here.
   # Application configuration should go into files in config/initializers
   # -- all .rb files in that directory are automatically loaded.
-  config.gem(
-  'mislav-will_paginate',
-  :version => '~> 2.3.6',
-  :lib => 'will_paginate',
-  :source => 'http://gems.github.com')
 
   #config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
 
