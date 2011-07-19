@@ -1,7 +1,7 @@
 class ModifySequences < ActiveRecord::Migration
   def self.up
-    add_column :sequences, :utility, :string
-    add_column :sequences, :modify, :boolean
+    #add_column :sequences, :utility, :string
+    #add_column :sequences, :modify, :boolean
      
   end
 
