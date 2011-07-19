@@ -1,7 +1,7 @@
 class BelongstoDocumentDatafile < ActiveRecord::Migration
   def self.up
-      add_column :datafiles, :document_id, :integer
-      execute "alter table datafiles add constraint fk_datafile_document foreign key (document_id) references documents(id)"
+      #add_column :datafiles, :document_id, :integer
+      #execute "alter table datafiles add constraint fk_datafile_document foreign key (document_id) references documents(id)"
     end
     
     def self.down
