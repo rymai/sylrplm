@@ -741,6 +741,22 @@ You're running:
 Run `rake gems:install` to install the missing gems.
 
 [syl@localhost sylrplm (master)]$ heroku rake gems:install
+(in /app)
+gem install mislav-will_paginate --version "~> 2.3.6" --source http://gems.github.com
+ERROR:  While executing gem ... (Gem::FilePermissionError)
+    You don't have write permissions into the /usr/ruby1.9.2/lib/ruby/gems/1.9.1 directory.
 
+gem install atom-tools
+ERROR:  While executing gem ... (Gem::FilePermissionError)
+    You don't have write permissions into the /usr/ruby1.9.2/lib/ruby/gems/1.9.1 directory.
 
+--- ajouter  dans Gemfile
+source :rubygems
+source :rubyforge
+source :gemcutter
+source "https://github.com/jmettraux/ruote/"
+gem "ruote", ">=2.2"
+gem "rufus-verbs"
+gem "mislav-will_paginate" , :git=> "http://gems.github.com", ">= 2.3.6"
+gem "atom-tools" 
 
