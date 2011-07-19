@@ -1,5 +1,5 @@
 class UserMore < ActiveRecord::Migration
-  def self.up
+  def self.up_inactif
     add_column :users, :first_name, :string
     add_column :users, :last_name, :string
     add_column :users, :language, :string
@@ -7,7 +7,9 @@ class UserMore < ActiveRecord::Migration
     add_column :users, :show_mail, :boolean
     add_column :users, :time_zone, :string
   end
-
+def self.up
+  
+end
   def self.down
     remove_column :users, :first_name
     remove_column :users, :last_name
