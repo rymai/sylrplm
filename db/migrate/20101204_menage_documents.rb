@@ -1,5 +1,5 @@
 class MenageDocuments < ActiveRecord::Migration
-  def self.up
+  def self.up_inactif
     remove_column :documents, :extension
     remove_column :documents, :repository
     remove_column :documents, :part_id
@@ -10,7 +10,9 @@ class MenageDocuments < ActiveRecord::Migration
     remove_column :documents, :volume_id
     
   end
-  
+  def self.up
+    
+  end
   def self.down
     add_column :documents, :extension, :string
     add_column :documents, :repository, :string
