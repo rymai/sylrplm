@@ -1,7 +1,7 @@
 class RemoveObsolete < ActiveRecord::Migration
   def self.up
-    drop_table :partslinks
-    drop_table :parts_projects
+    #drop_table :partslinks
+    #drop_table :parts_projects
      
   end
 
