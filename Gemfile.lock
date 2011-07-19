@@ -15,11 +15,14 @@ GEM
       rufus-json (>= 0.2.7)
     rufus-dollar (1.0.4)
     rufus-json (1.0.1)
+    rufus-lru (1.0.3)
     rufus-mnemo (1.2.0)
     rufus-scheduler (2.0.10)
       tzinfo (>= 0.3.23)
     rufus-treechecker (1.0.6)
       ruby_parser (>= 2.0.5)
+    rufus-verbs (1.0.0)
+      rufus-lru
     ruote (2.2.0)
       rufus-cloche (>= 0.1.20)
       rufus-dollar (>= 1.0.4)
@@ -40,4 +43,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  rufus-verbs
   ruote (>= 2.2)

@@ -399,11 +399,15 @@ gem install rufus-scheduler
 --- 
 ruby script/generate scaffold notification object_type:string object_id:integer event_date:date event_type:text responsible_id:integer notify_date:date
 
+------------------------------
+--- hebergement sur heroku
+------------------------------
 
 ---
 --- install heroku
 ---
 [root@localhost sylrplm (master)]# gem install heroku 
+
 Fetching: term-ansicolor-1.0.5.gem (100%)
 Fetching: rest-client-1.6.3.gem (100%)
 Fetching: configuration-1.3.1.gem (100%)
@@ -426,7 +430,11 @@ Installing RDoc documentation for configuration-1.3.1...
 Installing RDoc documentation for launchy-0.4.0...
 Installing RDoc documentation for heroku-2.3.6...
 
+---
+--- install de la cle 
+---
 [syl@localhost sylrplm (master)]$ heroku keys:add
+
 Uploading ssh public key /home/syl/.ssh/id_rsa.pub
 Enter your Heroku credentials.
 Email: sylvere.coutable@laposte.net
@@ -436,6 +444,7 @@ Password:
 --- Create your Heroku application
 ---
 heroku create
+
 Creating freezing-stone-916... done, stack is bamboo-mri-1.9.2
 http://freezing-stone-916.heroku.com/ | git@heroku.com:freezing-stone-916.git
 Git remote heroku added
@@ -444,6 +453,7 @@ Git remote heroku added
 --- Push your application to Heroku
 ---
 [syl@localhost sylrplm (master)]$ git push heroku master
+
 Warning: Permanently added 'heroku.com,50.19.85.154' (RSA) to the list of known hosts.
 Counting objects: 3224, done.
 Delta compression using up to 4 threads.
@@ -478,6 +488,7 @@ To git@heroku.com:freezing-stone-916.git
 --- Bootstrap your database
 ---
 [syl@localhost sylrplm (master)]$ heroku rake db:migrate
+
 (in /app)
 rake aborted!
 no such file to load -- openwfe/extras/participants/ar_participants
@@ -574,6 +585,68 @@ Creating fierce-journey-219... done, stack is bamboo-mri-1.9.2
 http://fierce-journey-219.heroku.com/ | git@heroku.com:fierce-journey-219.git
 Git remote heroku added
 
+---
+--- essai apres copie de openwfe dans le projet (lib/openwfe
+---
 
+[syl@localhost sylrplm (master)]$ git push heroku master
 
+Counting objects: 107, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (62/62), done.
+Writing objects: 100% (67/67), 12.52 KiB, done.
+Total 67 (delta 47), reused 0 (delta 0)
+
+-----> Heroku receiving push
+-----> Rails app detected
+-----> WARNING: Detected Rails is not declared in either .gems or Gemfile
+       Scheduling the install of Rails 2.3.10.
+       See http://devcenter.heroku.com/articles/gems for details on specifying gems.
+-----> Configure Rails to log to stdout
+       Installing rails_log_stdout... done
+
+-----> Installing gem rails 2.3.10 from http://rubygems.org
+       Successfully installed activesupport-2.3.10
+       Successfully installed activerecord-2.3.10
+       Successfully installed actionpack-2.3.10
+       Successfully installed actionmailer-2.3.10
+       Successfully installed activeresource-2.3.10
+       Successfully installed rails-2.3.10
+       6 gems installed
+
+-----> Gemfile detected, running Bundler version 1.0.7
+       Unresolved dependencies detected; Installing...
+       Using --without development:test
+       Fetching source index for http://rubygems.org/
+       Fetching source index for http://rubygems.org/
+       Fetching source index for http://rubygems.org/
+       Fetching source index for https://github.com/jmettraux/ruote/
+       Could not reach rubygems repository http://rubygems.org/, http://rubygems.org/, http://rubygems.org/, https://github.com/jmettraux/ruote/
+       Installing spruz (0.2.10) 
+       Installing file-tail (1.0.6) 
+       Installing sexp_processor (3.0.5) 
+       Installing ruby_parser (2.0.6) 
+       Installing ruby2ruby (1.2.5) 
+       Installing rufus-json (1.0.1) 
+       Installing rufus-cloche (1.0.1) 
+       Installing rufus-dollar (1.0.4) 
+       Installing rufus-mnemo (1.2.0) 
+       Installing tzinfo (0.3.29) 
+       Installing rufus-scheduler (2.0.10) 
+       Installing rufus-treechecker (1.0.6) 
+       Installing sourcify (0.4.2) 
+       Installing ruote (2.2.0) 
+       Using bundler (1.0.7) 
+       Your bundle is complete! It was installed into ./.bundle/gems/
+-----> Compiled slug size is 10.1MB
+-----> Launching... done, v7
+       http://freezing-stone-916.heroku.com deployed to Heroku
+
+To git@heroku.com:freezing-stone-916.git
+   e7a601a..f84cf40  master -> master
+
+---
+--- Bootstrap your database
+---
+[syl@localhost sylrplm (master)]$ heroku rake db:migrate
 
