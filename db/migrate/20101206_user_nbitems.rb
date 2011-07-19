@@ -1,7 +1,7 @@
 
 class UserNbitems < ActiveRecord::Migration
   def self.up
-    add_column :users, :nb_items, :integer
+    #add_column :users, :nb_items, :integer
   end
 
   def self.down
