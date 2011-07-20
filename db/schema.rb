@@ -302,8 +302,8 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
   add_index "sequences", ["utility"], :name => "id_sequence_utility", :unique => true
 
   create_table "sessions", :force => true do |t|
-    t.string   "session_id",                       :null => false
-    t.text     "data",       :limit => 2147483647
+    t.string   "session_id",                     :null => false
+    t.text     "data",       :limit => 16777215
     t.datetime "created_at"
     t.datetime "updated_at"
   end
