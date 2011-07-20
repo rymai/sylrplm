@@ -169,15 +169,15 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
 
   create_table "history", :force => true do |t|
     t.datetime "created_at"
-    t.string   "source",                            :null => false
-    t.string   "event",                             :null => false
+    t.string   "source",      :null => false
+    t.string   "event",       :null => false
     t.string   "wfid"
     t.string   "wfname"
     t.string   "wfrevision"
     t.string   "fei"
     t.string   "participant"
     t.string   "message"
-    t.text     "tree",        :limit => 2147483647
+    t.text     "tree"
   end
 
   add_index "history", ["created_at"], :name => "index_history_on_created_at"
