@@ -3,8 +3,15 @@
 
 require(File.join(File.dirname(__FILE__), 'config', 'boot'))
 
+require 'rake/dsl_definition'
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
 require 'tasks/rails'
+
+module ::sylrplm  
+  class Application
+    include Rake::DSL
+  end
+end
