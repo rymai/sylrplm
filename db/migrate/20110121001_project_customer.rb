@@ -1,6 +1,6 @@
 class ProjectCustomer < ActiveRecord::Migration
   def self.up
-    remove_column :projects, :customer_id
+    #remove_column :projects, :customer_id
   end
   
   def self.down
