@@ -796,3 +796,29 @@ bundle update
 # apres modif fichier du projet
 git commit -am "heroku migrate";git push heroku;heroku rake db:migrate
 
+-------------------------
+--- transfert de la bd vers heroku
+-------------------------
+--- installer l'outil taps
+gem install taps
+
+--- pousser la bd locale vers heroku 
+--- le nom est lu dans database.yml
+heroku db:push
+
+Loaded Taps v0.3.23
+Auto-detected local database: mysql://root:pa33zp62@127.0.0.1/sylrplm_development?encoding=utf8
+Enter your Heroku credentials.
+Email: sylvere.coutable@laposte.net
+Password: 
+Warning: Data in the app 'freezing-stone-916' will be overwritten and will not be recoverable.
+
+ !    WARNING: Potentially Destructive Action
+ !    This command will affect the app: freezing-stone-916
+ !    To proceed, type "freezing-stone-916" or re-run this command with --confirm freezing-stone-916
+
+> freezing-stone-916
+Failed to connect to database:
+  Sequel::DatabaseConnectionError -> Mysql::Error: Can't connect to MySQL server on '127.0.0.1' (111)
+
+
