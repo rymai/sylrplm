@@ -1,7 +1,7 @@
 class Statusobjects < ActiveRecord::Migration
   def self.up
-      remove_column :documents, :status
-      remove_column :parts, :status
+      #remove_column :documents, :status
+      #remove_column :parts, :status
       
       add_column :documents, :statusobject_id, :integer
       add_column :parts, :statusobject_id, :integer
