@@ -789,3 +789,10 @@ To git@heroku.com:freezing-stone-916.git
 
 --- Bootstrap your database
 [syl@localhost sylrplm (master)]$ heroku rake db:migrate
+
+# apres modif Gemfile
+bundle update
+
+# apres modif fichier du projet
+git commit -am "heroku migrate";git push heroku;heroku rake db:migrate
+
