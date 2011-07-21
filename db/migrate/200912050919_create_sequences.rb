@@ -1,10 +1,12 @@
 class CreateSequences < ActiveRecord::Migration
   def self.up
     create_table :sequences do |t|
-      t.string :object
-      t.string :value
-      t.string :min
-      t.string :max
+      t.string  :object
+      t.string  :value
+      t.string  :min
+      t.string  :max
+      t.string  :utility
+      t.boolean :modify
 
       t.timestamps
     end
