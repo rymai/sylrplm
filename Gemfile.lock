@@ -26,6 +26,7 @@ GEM
       activesupport (= 2.3.12)
       rake (>= 0.8.3)
     rake (0.9.2)
+    rdoc (3.8)
     ruby2ruby (1.2.5)
       ruby_parser (~> 2.0)
       sexp_processor (~> 3.0)
@@ -64,9 +65,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  atom-tools
-  rails (< 3.0)
-  rake (>= 0.9.2)
-  rufus-verbs
-  ruote (>= 2.2)
-  will_paginate (>= 2.3.15)
+  atom-tools (= 2.0.5)
+  rails (= 2.3.12)
+  rake (= 0.9.2)
+  rdoc (= 3.8)
+  rufus-verbs (= 1.0.0)
+  ruote (= 2.2.0)
+  will_paginate (= 2.3.15)
