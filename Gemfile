@@ -1,8 +1,12 @@
 source 'http://rubygems.org'
 
-gem 'rake', '0.8.7'
+gem 'rake', '0.9.2'
 
 gem 'rails', '2.3.12'
+# required for rails 2.3.12 to work
+gem 'rdoc'
+
+gem 'json'
 
 # Databases
 gem 'pg', '0.11.0'

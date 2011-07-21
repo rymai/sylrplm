@@ -13,7 +13,7 @@ Rails::Initializer.run do |config|
 # Application configuration should go into files in config/initializers
 # -- all .rb files in that directory are automatically loaded.
 
-  config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
+  # config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{Rails.root}/lib/classes )
   #config.load_paths += %W( #{Rails.root}/lib/classes )
