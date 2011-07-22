@@ -821,4 +821,14 @@ Warning: Data in the app 'freezing-stone-916' will be overwritten and will not b
 Failed to connect to database:
   Sequel::DatabaseConnectionError -> Mysql::Error: Can't connect to MySQL server on '127.0.0.1' (111)
 
+# voir les logs apres acces au site http://freezing-stone-916.heroku.com
+# seulement 100 lignes
+heroku logs
 
+# pour en voir plus
+heroku addons:add logging:basic
+heroku logs -n 500
+
+#encore mieux 
+heroku addons:upgrade logging:expanded
+heroku logs --tail

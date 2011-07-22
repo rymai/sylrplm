@@ -109,7 +109,7 @@ module HelpHelper
     ret=read_help_file
     if ret==""
       ret=build_help_all
-      write_help_file(ret)
+      #TODO syl pour eviter d'ecrire si heroku write_help_file(ret)
     end
     ret
   end
