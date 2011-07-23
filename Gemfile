@@ -7,6 +7,7 @@ gem 'rails', '2.3.12'
 gem 'rdoc'
 
 gem 'json'
+gem 'heroku', '2.3.6'
 
 # Databases
 gem 'pg', '0.11.0'
