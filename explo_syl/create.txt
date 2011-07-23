@@ -836,3 +836,12 @@ heroku logs --tail
 # eviter les fichiers por ruote
 gem install datamapper dm-mysql-adapter --no-ri --no-rdoc
 
+ajouter db/migrate/ruote_expression.rb:
+require 'openwfe/extras/expool/ar_expstorage'
+class RuoteExpression < OpenWFE::Extras::ExpressionTables
+  #
+end
+
+git add *
+git commit -am "heroku migrate";git push heroku
+heroku rake --trace db:migrate VERSION=2011072301
