@@ -6,8 +6,8 @@ gem 'rails', '2.3.12'
 # required for rails 2.3.12 to work
 gem 'rdoc'
 
-gem 'json'
-gem 'heroku', '2.3.6'
+gem 'json',   '1.5.3'
+gem 'heroku', '2.4.0'
 
 # Databases
 gem 'pg', '0.11.0'
