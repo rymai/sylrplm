@@ -1,20 +1,19 @@
-class CreateProjects < ActiveRecord::Migration
+class CreateCustomers < ActiveRecord::Migration
   def self.up
-    create_table :projects do |t|
+    create_table :customers do |t|
       t.string :ident
       t.string :type
       t.string :designation
-      t.text :description
-      t.string :status
+      t.text   :description
       t.string :responsible
       t.string :group
-      t.date :date
+      t.date   :date
 
       t.timestamps
     end
   end
 
   def self.down
-    drop_table :projects
+    drop_table :customers
   end
 end

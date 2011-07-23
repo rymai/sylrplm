@@ -22,9 +22,8 @@ class Notification < ActiveRecord::Base
   end
 
   def self.create_new(params)
-    obj=Notification.new(params)
+    obj = Notification.new(params)
     obj.set_default_values( true)
-    puts obj.inspect
     obj
   end
 
