@@ -28,4 +28,6 @@ class RuoteExpression < ActiveRecord::Migration
     end
 
     def self.down
+      
+    end
 end

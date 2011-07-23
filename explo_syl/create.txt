@@ -842,6 +842,6 @@ class RuoteExpression < OpenWFE::Extras::ExpressionTables
   #
 end
 
-git add *
-git commit -am "heroku migrate";git push heroku
+git add *;git commit -am "heroku migrate";git push heroku
+
 heroku rake --trace db:migrate VERSION=2011072301
