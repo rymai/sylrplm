@@ -130,7 +130,8 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
     t.string "wfid",                          :null => false
     t.string "expid",                         :null => false
     t.string "exp_class",                     :null => false
-    t.text   "svalue",    :limit => 16777215, :null => false
+#TODO syl   t.text   "svalue",    :limit => 16777215, :null => false
+    t.text   "svalue" , :null => false
   end
 
   add_index "expressions", ["exp_class"], :name => "index_expressions_on_exp_class"
