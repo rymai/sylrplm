@@ -125,6 +125,19 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
   add_index "documents", ["statusobject_id"], :name => "fk_document_status"
   add_index "documents", ["typesobject_id"], :name => "fk_document_type"
 
+  create_table "expressions", :force => true do |t|
+    t.string "fei",                           :null => false
+    t.string "wfid",                          :null => false
+    t.string "expid",                         :null => false
+    t.string "exp_class",                     :null => false
+    t.text   "svalue",    :limit => 16777215, :null => false
+  end
+
+  add_index "expressions", ["exp_class"], :name => "index_expressions_on_exp_class"
+  add_index "expressions", ["expid"], :name => "index_expressions_on_expid"
+  add_index "expressions", ["fei"], :name => "index_expressions_on_fei"
+  add_index "expressions", ["wfid"], :name => "index_expressions_on_wfid"
+
   create_table "forum_items", :force => true do |t|
     t.text     "message"
     t.integer  "forum_id"

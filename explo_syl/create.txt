@@ -832,3 +832,7 @@ heroku logs -n 500
 #encore mieux 
 heroku addons:upgrade logging:expanded
 heroku logs --tail
+
+# eviter les fichiers por ruote
+gem install datamapper dm-mysql-adapter --no-ri --no-rdoc
+
