@@ -845,3 +845,6 @@ end
 git add *;git commit -am "heroku migrate";git push heroku
 
 heroku rake --trace db:migrate VERSION=2011072301
+
+#si ok:
+heroku restart
