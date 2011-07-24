@@ -853,7 +853,7 @@ heroku restart
 heroku pg:reset SHARED_DATABASE
 puis ??? heroku rake db:schema:load
 
-heroku open
+heroku open;heroku logs -n 500
 
 heroku logs -n 500
 erreur sur fichier pooltool.ru manquant dans /app/lib
