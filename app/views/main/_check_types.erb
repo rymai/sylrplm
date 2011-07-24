@@ -1,25 +1,24 @@
 <%if @types_document.size==0%>
 	<br/>
 	<b><%= t(:msg_define_types_document) %></b>
-	<%= link_to t(:new_typesobject), new_typesobject_path ({"typesobject[object]"=>"document"}) %>
 <%end%>
+
 <%if @types_part.size==0%>
 	<br/>
 	<b><%= t(:msg_define_types_part) %></b>
-	<%= link_to t(:new_typesobject), new_typesobject_path ({"typesobject[object]"=>"part"}) %>
 <%end%>
+
 <%if @types_project.size==0%>
 	<br/>
 	<b><%= t(:msg_define_types_project) %></b>
-	<%= link_to t(:new_typesobject), new_typesobject_path ({"typesobject[object]"=>"project"}) %>
 <%end%>
+
 <%if @types_customer.size==0%>
 	<br/>
 	<b><%= t(:msg_define_types_customer) %></b>
-	<%= link_to t(:new_typesobject), new_typesobject_path ({"typesobject[object]"=>"customer"}) %>
 <%end%>
+
 <%if @types_forum.size==0%>
 	<br/>
 	<b><%= t(:msg_define_types_forum) %></b>
-	<%= link_to t(:new_typesobject), new_typesobject_path ({"typesobject[object]"=>"forum"}) %>
 <%end%>
