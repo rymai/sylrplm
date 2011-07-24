@@ -1,19 +1,6 @@
 require 'classes/app_classes'
 
-module SYLRPLM
-  #include Classes::AppClasses::LogFormatter
-  VOLUME_DIRECTORY_DEFAULT="C:\\sylrplm_data"
-  LOCAL_DEFAULT="fr"
-  NOTIFICATION_DEFAULT=1
-  TIME_ZONE_DEFAULT=1
-  THEME_DEFAULT="blackwhite" 
-  NB_ITEMS_PER_PAGE=30
-  ADMIN_GROUP_NAME = 'admins'
-  # chargement initial, voir PlmInitControllerModule
-  DIR_DOMAINS="#{RAILS_ROOT}/db/fixtures/domains/"
-  DIR_ADMIN="#{RAILS_ROOT}/db/fixtures/admin/"
-  ADMIN_MAIL="sylvere.coutable@laposte.net"
-end
+
 #
 # fichier de log specifique
 #

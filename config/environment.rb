@@ -6,8 +6,21 @@ RAILS_GEM_VERSION = '2.3.12' unless defined? RAILS_GEM_VERSION
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-#require File.join(File.dirname(__FILE__),'../lib/classes/app_classes')
-#include Classes::AppClasses
+module SYLRPLM
+  #include Classes::AppClasses::LogFormatter
+  VOLUME_DIRECTORY_DEFAULT="C:\\sylrplm_data"
+  LOCAL_DEFAULT="fr"
+  NOTIFICATION_DEFAULT=1
+  TIME_ZONE_DEFAULT=1
+  THEME_DEFAULT="blackwhite" 
+  NB_ITEMS_PER_PAGE=30
+  ADMIN_GROUP_NAME = 'admins'
+  # chargement initial, voir PlmInitControllerModule
+  DIR_DOMAINS="#{RAILS_ROOT}/db/fixtures/domains/"
+  DIR_ADMIN="#{RAILS_ROOT}/db/fixtures/admin/"
+  ADMIN_MAIL="sylvere.coutable@laposte.net"
+end
+
 Rails::Initializer.run do |config|
 # Settings in config/environments/* take precedence over those specified here.
 # Application configuration should go into files in config/initializers
@@ -73,7 +86,6 @@ end
 # environneemnt specifique a l'admin de l'application sylrplm
 require 'os_functions'
 require File.join(File.dirname(__FILE__), 'sylrplm')
-
 
 if File.exists?(File.join(File.dirname(__FILE__), "sylrplm_#{OsFunctions.os}.rb"))
   require File.join(File.dirname(__FILE__), "sylrplm_#{OsFunctions.os}")
