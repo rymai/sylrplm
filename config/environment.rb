@@ -13,10 +13,7 @@ Rails::Initializer.run do |config|
 
   # config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
   # Add additional load paths for your own custom dirs
-  # config.load_paths += %W( #{Rails.root}/lib/classes )
-  #config.load_paths += %W( #{Rails.root}/lib/classes )
-  #config.load_paths += %W( #{Rails.root}/lib/controllers )
-  #config.load_paths += %W( #{Rails.root}/lib/models )
+  config.load_paths += %W[#{Rails.root}/lib #{Rails.root}/lib/classes #{Rails.root}/lib/controllers #{Rails.root}/lib/models #{Rails.root}/lib/ruote]
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -66,14 +63,4 @@ Rails::Initializer.run do |config|
 #$:.unshift('~/ruote/lib')
 # using the local 'ruote', comment that out if you're using ruote as a gem
 
-end
-
-# environneemnt specifique a l'admin de l'application sylrplm
-require 'os_functions'
-require File.join(File.dirname(__FILE__), 'sylrplm')
-
-if File.exists?(File.join(File.dirname(__FILE__), "sylrplm_#{OsFunctions.os}.rb"))
-  require File.join(File.dirname(__FILE__), "sylrplm_#{OsFunctions.os}")
-else
-  puts "#{File.join(File.dirname(__FILE__), "sylrplm_#{OsFunctions.os}")} doesn't exist!"
 end

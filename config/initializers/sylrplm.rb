@@ -9,15 +9,25 @@ module SYLRPLM
   NB_ITEMS_PER_PAGE        = 30
   ADMIN_GROUP_NAME         = 'admins'
   # chargement initial, voir PlmInitControllerModule
-  DIR_DOMAINS = "#{RAILS_ROOT}/db/fixtures/domains/"
-  DIR_ADMIN   = "#{RAILS_ROOT}/db/fixtures/admin/"
+  DIR_DOMAINS = "#{Rails.root}/db/fixtures/domains/"
+  DIR_ADMIN   = "#{Rails.root}/db/fixtures/admin/"
   ADMIN_MAIL  = "sylvere.coutable@laposte.net"
+
+  # environneemnt specifique a l'admin de l'application sylrplm
+  VOLUME_DIRECTORY_DEFAULT = case OsFunctions.os
+  when "linux"
+    "/home/syl/trav/rubyonrails/sylrplm_data"
+  when "mac"
+    "/Users/remy/Development/Ruby/Gems/sylvani/sylrplm/sylrplm_data"
+  when "windows"
+    "C:\\sylrplm_data"
+  end
 end
 
 #
 # fichier de log specifique
 #
-logfile       = File.join(File.dirname(__FILE__), '..', 'log', 'sylrplm.log')
+logfile       = File.join(Rails.root, 'log', 'sylrplm.log')
 LOG           = Logger.new(logfile, 'daily')
 LOG.level     = Logger::DEBUG #DEBUG INFO WARN ERROR FATAL ANY
 LOG.formatter = Classes::AppClasses::LogFormatter.new  # Install custom formatter!
