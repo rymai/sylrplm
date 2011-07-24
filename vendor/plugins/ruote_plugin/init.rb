@@ -58,9 +58,9 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
   #h[:engine_class] = Ruote::Engine
   
   #TODO syl 
-  #h[:engine_class] ||= OpenWFE::FsPersistedEngine
+  h[:engine_class] ||= OpenWFE::FsPersistedEngine
   
-  h[:engine_class] = OpenWFE::Extras::DbPersistedEngine
+  # h[:engine_class] = OpenWFE::Extras::DbPersistedEngine
   
   unless h[:logger]
     h[:logger] = ActiveSupport::BufferedLogger.new("#{RAILS_ROOT}/log/ruote_#{RAILS_ENV}.log")
@@ -79,11 +79,11 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
   # launchitems (process_items) may contain process definitions
 
 
-  #worker=Ruote::Worker.new(Ruote::FsStorage.new(h[:work_directory]))
+  worker=Ruote::Worker.new(Ruote::FsStorage.new(h[:work_directory]))
   #puts "init:worker="+worker.inspect
   #puts "init:appel RuotePlugin.engine_init:"+h.inspect
   
-  RuotePlugin.engine_init( h)
+  RuotePlugin.engine_init(worker, h)
 
   begin
     require "#{RAILS_ROOT}/lib/ruote.rb"

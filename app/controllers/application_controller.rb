@@ -103,14 +103,14 @@ class ApplicationController < ActionController::Base
     @languages = get_languages
     @notification=SYLRPLM::NOTIFICATION_DEFAULT
     @time_zone=SYLRPLM::TIME_ZONE_DEFAULT
-    WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
-    WillPaginate::ViewHelpers.pagination_options[:next_label] = t('label_next')
-    WillPaginate::ViewHelpers.pagination_options[:page_links ] = true  # when false, only previous/next links are rendered (default: true)
-    WillPaginate::ViewHelpers.pagination_options[:inner_window] = 10 # how many links are shown around the current page (default: 4)
-    WillPaginate::ViewHelpers.pagination_options[:page_links ] = true  # when false, only previous/next links are rendered (default: true)
-    WillPaginate::ViewHelpers.pagination_options[:inner_window] = 10 # how many links are shown around the current page (default: 4)
-    WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
-    WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
+    ::WillPaginate::ViewHelpers.pagination_options[:page_links ]    = true  # when false, only previous/next links are rendered (default: true)
+    ::WillPaginate::ViewHelpers.pagination_options[:inner_window]   = 10 # how many links are shown around the current page (default: 4)
+    ::WillPaginate::ViewHelpers.pagination_options[:page_links ]    = true  # when false, only previous/next links are rendered (default: true)
+    ::WillPaginate::ViewHelpers.pagination_options[:inner_window]   = 10 # how many links are shown around the current page (default: 4)
+    ::WillPaginate::ViewHelpers.pagination_options[:outer_window]   = 3 # how many links are around the first and the last page (default: 1)
+    ::WillPaginate::ViewHelpers.pagination_options[:separator ]     = ' - '   # string separator for page HTML elements (default: single space)
+    ::WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
+    ::WillPaginate::ViewHelpers.pagination_options[:next_label]     = t('label_next')
     LOG.info("__FILE__")
   #puts "define_variables:session="+session.inspect
   #current_user
@@ -134,35 +134,21 @@ class ApplicationController < ActionController::Base
     ret
   end
 
+  # Renvoie la liste des langues
   def get_languages
-    #renvoie la liste des langues
-    dirname = "#{Rails.root}/config/locales/*.yml"
-    ret = []
-    Dir[dirname].each do |dir|
+    Dir["#{Rails.root}/config/locales/*.yml"].inject([]) do |memo, dir|
       lng = File.basename(dir, '.*')
-      ret << [t("language_"+lng), lng]
+      memo << [t("language_#{lng}"), lng]
+      memo
     end
-    #puts "application_controller.get_languages"+dirname+"="+ret.inspect
-    ret
   end
 
-  def get_html_options(lst, default, translate=false)
-    ret=""
-    lst.each do |item|
-      if translate
-        val=t(item[1])
-      else
-      val=item[1]
-      end
-      if item[0].to_s == default.to_s
-        #puts "get_html_options:"+item.inspect+" = "+default.to_s
-        ret << "<option value=\"#{item[0]}\" selected=\"selected\">#{val}</option>"
-      else
-        ret << "<option value=\"#{item[0]}\">#{val}</option>"
-      end
+  def get_html_options(list, default, translate=false)
+    list.inject("") do |memo, item|
+      val = translate ? t(item[1]) : item[1]
+      memo << "<option value=\"#{item[0]}\"#{' selected="selected"' if item[0].to_s == default.to_s}>#{val}</option>"
+      memo
     end
-    #puts "application_controller.get_html_options:"+ret
-    ret
   end
 
   # nombre d'objets listes par page si pagination
@@ -318,17 +304,17 @@ class ActionController::MimeResponds::Responder
 
   # TODO : use method_alias_chain ...
 
-  unless public_instance_methods(false).include?('old_respond')
-    alias_method :old_respond, :respond
-  end
-
-  def respond
-
-    old_respond
-
-    @controller.response.content_type = 'text/plain' \
-    if @controller.request.parameters['plain'] == 'true'
-  end
+  # unless public_instance_methods(false).include?('old_respond')
+  #   alias_method :old_respond, :respond
+  # end
+  # 
+  # def respond
+  # 
+  #   old_respond
+  # 
+  #   @controller.response.content_type = 'text/plain' \
+  #   if @controller.request.parameters['plain'] == 'true'
+  # end
 
 end
 

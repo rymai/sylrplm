@@ -10,7 +10,7 @@ module OsFunctions
     when /darwin/i
       "mac"
     when /mswin|mingw|bccwin|wince|emx/i
-      "win"
+      "windows"
     when /linux/i
       "linux"
     else

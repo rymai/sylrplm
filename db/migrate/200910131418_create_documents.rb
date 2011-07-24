@@ -1,23 +1,22 @@
 class CreateDocuments < ActiveRecord::Migration
+
   def self.up
     create_table :documents do |t|
-      t.string :ident
-      t.string :type
-      t.string :revision
-      t.string :designation
-      t.text :description
-      t.string :extension
-      t.string :repository
-      t.string :status
-      t.string :responsible
-      t.string :group
-      t.date :date
+      t.integer :owner_id, :typesobject_id, :statusobject_id
+      t.string  :ident, :revision, :designation, :group
+      t.text    :description
+      t.date    :date
 
       t.timestamps
     end
+    add_index :documents, :owner_id
+    add_index :documents, :ident
+    add_index :documents, :typesobject_id
+    add_index :documents, :statusobject_id
   end
 
   def self.down
     drop_table :documents
   end
+
 end

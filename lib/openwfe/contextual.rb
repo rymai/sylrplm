@@ -112,7 +112,7 @@ module OpenWFE
       target = dir + '/pooltool.ru'
       return if File.exist?(target)
       source = File.dirname(__FILE__) + '/../pooltool.ru'
-      FileUtils.cp(source, target)
+      # FileUtils.cp(source, target)
     end
 
   end

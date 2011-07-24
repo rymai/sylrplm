@@ -69,9 +69,9 @@ class Notification < ActiveRecord::Base
     ret
   end
   
-  def notify
-    Notification.notify_all(self)
-  end
+  # def notify
+  #   Notification.notify_all(self)
+  # end
   
   def path
     name=self.class.name+"."+__method__.to_s+":"

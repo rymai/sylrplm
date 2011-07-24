@@ -49,7 +49,7 @@ def empty_tables(*tables)
 end
 
 def create_parts
-  100.times do |i|
+  25.times do |i|
     Part.create!(:ident => "part#{i+100000}", :designation => "des part#{i}")
   end
 end

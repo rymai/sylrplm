@@ -9,17 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110623185426) do
+ActiveRecord::Schema.define(:version => 201107230100) do
 
   create_table "accesses", :force => true do |t|
+    t.string   "roles"
     t.string   "controller"
     t.string   "action"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "roles"
   end
 
-  add_index "accesses", ["controller"], :name => "id_access_controller"
+  add_index "accesses", ["controller"], :name => "index_accesses_on_controller"
 
   create_table "ar_workitems", :force => true do |t|
     t.string   "fei"
@@ -29,15 +29,15 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
     t.string   "wfrevision"
     t.string   "participant_name"
     t.string   "store_name"
-    t.datetime "dispatch_time"
-    t.datetime "last_modified"
     t.text     "wi_fields"
     t.string   "activity"
     t.text     "keywords"
+    t.datetime "dispatch_time"
+    t.datetime "last_modified"
   end
 
   add_index "ar_workitems", ["expid"], :name => "index_ar_workitems_on_expid"
-  add_index "ar_workitems", ["fei"], :name => "index_ar_workitems_on_fei"
+  add_index "ar_workitems", ["fei"], :name => "index_ar_workitems_on_fei", :unique => true
   add_index "ar_workitems", ["participant_name"], :name => "index_ar_workitems_on_participant_name"
   add_index "ar_workitems", ["store_name"], :name => "index_ar_workitems_on_store_name"
   add_index "ar_workitems", ["wfid"], :name => "index_ar_workitems_on_wfid"
@@ -48,52 +48,52 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
     t.string   "object"
     t.integer  "object_id"
     t.integer  "status"
-    t.string   "out_reason"
-    t.date     "out_date"
-    t.integer  "out_user"
     t.string   "in_reason"
     t.date     "in_date"
     t.integer  "in_user"
+    t.string   "out_reason"
+    t.date     "out_date"
+    t.integer  "out_user"
     t.string   "local_dir"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "checks", ["object", "object_id"], :name => "id_check_object"
+  add_index "checks", ["object", "object_id"], :name => "index_checks_on_object_and_object_id"
 
   create_table "customers", :force => true do |t|
+    t.integer  "owner_id"
+    t.integer  "typesobject_id"
+    t.integer  "statusobject_id"
     t.string   "ident"
     t.string   "designation"
-    t.text     "description"
     t.string   "group"
+    t.text     "description"
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "typesobject_id"
-    t.integer  "statusobject_id"
-    t.integer  "owner_id"
   end
 
-  add_index "customers", ["ident"], :name => "id_customer_ident"
-  add_index "customers", ["owner_id"], :name => "fk_customer_owner"
-  add_index "customers", ["statusobject_id"], :name => "fk_customer_status"
-  add_index "customers", ["typesobject_id"], :name => "fk_customer_type"
+  add_index "customers", ["ident"], :name => "index_customers_on_ident"
+  add_index "customers", ["owner_id"], :name => "index_customers_on_owner_id"
+  add_index "customers", ["statusobject_id"], :name => "index_customers_on_statusobject_id"
+  add_index "customers", ["typesobject_id"], :name => "index_customers_on_typesobject_id"
 
   create_table "datafiles", :force => true do |t|
+    t.integer  "owner_id"
+    t.integer  "typesobject_id"
+    t.integer  "document_id"
+    t.integer  "volume_id"
+    t.integer  "revision"
     t.string   "ident"
     t.string   "filename"
-    t.integer  "revision"
-    t.integer  "typesobject_id"
     t.string   "content_type"
-    t.integer  "owner_id"
-    t.integer  "volume_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "document_id"
   end
 
-  add_index "datafiles", ["document_id"], :name => "fk_datafile_document"
-  add_index "datafiles", ["ident"], :name => "id_datafile_ident"
+  add_index "datafiles", ["document_id"], :name => "index_datafiles_on_document_id"
+  add_index "datafiles", ["ident"], :name => "index_datafiles_on_ident"
 
   create_table "definitions", :force => true do |t|
     t.string   "name"
@@ -107,30 +107,31 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
   add_index "definitions", ["name"], :name => "index_definitions_on_name", :unique => true
 
   create_table "documents", :force => true do |t|
+    t.integer  "owner_id"
+    t.integer  "typesobject_id"
+    t.integer  "statusobject_id"
     t.string   "ident"
     t.string   "revision"
     t.string   "designation"
-    t.text     "description"
     t.string   "group"
+    t.text     "description"
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "typesobject_id"
-    t.integer  "statusobject_id"
-    t.integer  "owner_id"
   end
 
-  add_index "documents", ["ident"], :name => "id_document_ident"
-  add_index "documents", ["owner_id"], :name => "fk_document_owner"
-  add_index "documents", ["statusobject_id"], :name => "fk_document_status"
-  add_index "documents", ["typesobject_id"], :name => "fk_document_type"
+  add_index "documents", ["ident"], :name => "index_documents_on_ident"
+  add_index "documents", ["owner_id"], :name => "index_documents_on_owner_id"
+  add_index "documents", ["statusobject_id"], :name => "index_documents_on_statusobject_id"
+  add_index "documents", ["typesobject_id"], :name => "index_documents_on_typesobject_id"
 
   create_table "expressions", :force => true do |t|
-    t.string "fei",                           :null => false
-    t.string "wfid",                          :null => false
-    t.string "expid",                         :null => false
-    t.string "exp_class",                     :null => false
-    t.text   "svalue",    :limit => 16777215, :null => false
+    t.string "fei",       :null => false
+    t.string "wfid",      :null => false
+    t.string "expid",     :null => false
+    t.string "exp_class", :null => false
+    t.text   "svalue",    :null => false
+    t.text   "text",      :null => false
   end
 
   add_index "expressions", ["exp_class"], :name => "index_expressions_on_exp_class"
@@ -139,10 +140,10 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
   add_index "expressions", ["wfid"], :name => "index_expressions_on_wfid"
 
   create_table "forum_items", :force => true do |t|
-    t.text     "message"
     t.integer  "forum_id"
     t.integer  "parent_id"
     t.integer  "owner_id"
+    t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -152,25 +153,27 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
   add_index "forum_items", ["parent_id"], :name => "index_forum_items_on_parent_id"
 
   create_table "forums", :force => true do |t|
+    t.integer  "owner_id"
+    t.integer  "typesobject_id"
     t.integer  "statusobject_id"
     t.string   "subject"
     t.text     "description"
-    t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "typesobject_id"
   end
 
   add_index "forums", ["owner_id"], :name => "index_forums_on_owner_id"
   add_index "forums", ["statusobject_id"], :name => "index_forums_on_statusobject_id"
   add_index "forums", ["typesobject_id"], :name => "index_forums_on_typesobject_id"
 
-  create_table "group_definitions", :force => true do |t|
+  create_table "group_definitions", :id => false, :force => true do |t|
     t.integer  "group_id"
     t.integer  "definition_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "group_definitions", ["group_id", "definition_id"], :name => "index_group_definitions_on_group_id_and_definition_id", :unique => true
 
   create_table "groups", :force => true do |t|
     t.string   "name"
@@ -181,7 +184,6 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
   add_index "groups", ["name"], :name => "index_groups_on_name", :unique => true
 
   create_table "history", :force => true do |t|
-    t.datetime "created_at"
     t.string   "source",      :null => false
     t.string   "event",       :null => false
     t.string   "wfid"
@@ -191,6 +193,7 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
     t.string   "participant"
     t.string   "message"
     t.text     "tree"
+    t.datetime "created_at"
   end
 
   add_index "history", ["created_at"], :name => "index_history_on_created_at"
@@ -208,50 +211,50 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
     t.integer  "child_id"
     t.string   "name"
     t.string   "designation"
-    t.text     "description"
     t.string   "responsible"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "links", ["child_type", "child_id"], :name => "id_link_child"
-  add_index "links", ["father_type", "father_id"], :name => "id_link_father"
+  add_index "links", ["child_type", "child_id"], :name => "index_links_on_child_type_and_child_id"
+  add_index "links", ["father_type", "father_id"], :name => "index_links_on_father_type_and_father_id"
 
   create_table "notifications", :force => true do |t|
     t.string   "object_type"
     t.integer  "object_id"
-    t.date     "event_date"
-    t.text     "event_type"
     t.integer  "responsible_id"
+    t.text     "event_type"
+    t.date     "event_date"
     t.date     "notify_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "parts", :force => true do |t|
+    t.integer  "owner_id"
+    t.integer  "typesobject_id"
+    t.integer  "statusobject_id"
     t.string   "ident"
     t.string   "revision"
     t.string   "designation"
-    t.text     "description"
     t.string   "group"
+    t.text     "description"
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "typesobject_id"
-    t.integer  "statusobject_id"
-    t.integer  "owner_id"
   end
 
-  add_index "parts", ["ident"], :name => "id_part_ident"
-  add_index "parts", ["owner_id"], :name => "fk_part_owner"
-  add_index "parts", ["statusobject_id"], :name => "fk_part_status"
-  add_index "parts", ["typesobject_id"], :name => "fk_part_type"
+  add_index "parts", ["ident"], :name => "index_parts_on_ident"
+  add_index "parts", ["owner_id"], :name => "index_parts_on_owner_id"
+  add_index "parts", ["statusobject_id"], :name => "index_parts_on_statusobject_id"
+  add_index "parts", ["typesobject_id"], :name => "index_parts_on_typesobject_id"
 
   create_table "process_errors", :force => true do |t|
-    t.datetime "created_at"
     t.string   "wfid",       :null => false
     t.string   "expid",      :null => false
     t.text     "svalue",     :null => false
+    t.datetime "created_at"
   end
 
   add_index "process_errors", ["created_at"], :name => "index_process_errors_on_created_at"
@@ -259,22 +262,22 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
   add_index "process_errors", ["wfid"], :name => "index_process_errors_on_wfid"
 
   create_table "projects", :force => true do |t|
+    t.integer  "owner_id"
+    t.integer  "typesobject_id"
+    t.integer  "statusobject_id"
     t.string   "ident"
     t.string   "designation"
-    t.text     "description"
     t.string   "group"
+    t.text     "description"
     t.date     "date"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "typesobject_id"
-    t.integer  "statusobject_id"
-    t.integer  "owner_id"
   end
 
-  add_index "projects", ["ident"], :name => "id_project_ident"
-  add_index "projects", ["owner_id"], :name => "fk_project_owner"
-  add_index "projects", ["statusobject_id"], :name => "fk_project_status"
-  add_index "projects", ["typesobject_id"], :name => "fk_project_type"
+  add_index "projects", ["ident"], :name => "index_projects_on_ident"
+  add_index "projects", ["owner_id"], :name => "index_projects_on_owner_id"
+  add_index "projects", ["statusobject_id"], :name => "index_projects_on_statusobject_id"
+  add_index "projects", ["typesobject_id"], :name => "index_projects_on_typesobject_id"
 
   create_table "questions", :force => true do |t|
     t.string   "question"
@@ -298,25 +301,24 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
     t.datetime "updated_at"
   end
 
-  add_index "roles_users", ["role_id"], :name => "id_role_role"
-  add_index "roles_users", ["user_id"], :name => "id_role_user"
+  add_index "roles_users", ["role_id", "user_id"], :name => "index_roles_users_on_role_id_and_user_id", :unique => true
 
   create_table "sequences", :force => true do |t|
     t.string   "value"
     t.string   "min"
     t.string   "max"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "utility"
     t.boolean  "modify"
     t.boolean  "sequence"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "sequences", ["utility"], :name => "id_sequence_utility", :unique => true
+  add_index "sequences", ["utility"], :name => "index_sequences_on_utility", :unique => true
 
   create_table "sessions", :force => true do |t|
-    t.string   "session_id",                     :null => false
-    t.text     "data",       :limit => 16777215
+    t.string   "session_id", :null => false
+    t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -327,15 +329,15 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
   create_table "statusobjects", :force => true do |t|
     t.string   "object"
     t.string   "name"
-    t.integer  "rank"
     t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "rank"
     t.boolean  "promote"
     t.boolean  "demote"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "statusobjects", ["object", "rank", "name"], :name => "id_statusobject_object", :unique => true
+  add_index "statusobjects", ["object", "rank", "name"], :name => "index_statusobjects_on_object_and_rank_and_name", :unique => true
 
   create_table "typesobjects", :force => true do |t|
     t.string   "object"
@@ -345,9 +347,9 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
     t.datetime "updated_at"
   end
 
-  add_index "typesobjects", ["object", "name"], :name => "id_typesobject_object", :unique => true
+  add_index "typesobjects", ["object", "name"], :name => "index_typesobjects_on_object_and_name", :unique => true
 
-  create_table "user_groups", :force => true do |t|
+  create_table "user_groups", :id => false, :force => true do |t|
     t.integer "user_id",  :null => false
     t.integer "group_id", :null => false
   end
@@ -355,34 +357,31 @@ ActiveRecord::Schema.define(:version => 20110623185426) do
   add_index "user_groups", ["user_id", "group_id"], :name => "index_user_groups_on_user_id_and_group_id", :unique => true
 
   create_table "users", :force => true do |t|
-    t.string   "login"
-    t.string   "hashed_password"
-    t.string   "salt"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "role_id"
     t.string   "email"
-    t.string   "theme"
-    t.integer  "volume_id"
-    t.integer  "nb_items"
+    t.string   "login"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "language"
+    t.string   "time_zone"
+    t.string   "theme"
+    t.string   "hashed_password"
+    t.string   "salt"
+    t.integer  "role_id"
+    t.integer  "volume_id"
+    t.integer  "nb_items"
     t.integer  "notification"
     t.boolean  "show_mail"
-    t.string   "time_zone"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "users", ["login"], :name => "id_user_login", :unique => true
-  add_index "users", ["role_id"], :name => "fk_user_role"
-  add_index "users", ["role_id"], :name => "index_users_on_role_id"
-  add_index "users", ["volume_id"], :name => "index_users_on_volume_id"
+  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
 
   create_table "volumes", :force => true do |t|
     t.string   "name"
-    t.text     "description"
     t.string   "directory"
     t.string   "protocole"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

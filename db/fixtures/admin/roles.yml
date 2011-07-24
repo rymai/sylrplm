@@ -6,15 +6,14 @@ admin:
 consultant:
   id: 2
   title: consultant
-  description: consultant
+  description: Consultant
 
 designer:
   id: 3
   title: designer
-  description: designer
+  description: Designer
 
 valider:
   id: 4
   title: valider
-  description: valider
-  
+  description: Valider

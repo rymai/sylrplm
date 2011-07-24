@@ -27,6 +27,7 @@
 # a small convenience method for
 # will_paginate (http://github.com/mislav/will_paginate)
 #
+require 'will_paginate'
 module WillPaginate::Finder::ClassMethods
 
   #

@@ -114,7 +114,7 @@ class User < ActiveRecord::Base
   def is_admin?
     group_names.include?(ADMIN_GROUP_NAME)
   end
-  
+
   #
   #
   # Returns true if the user is an administrator ('admin' group) or if the

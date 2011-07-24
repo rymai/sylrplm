@@ -1,36 +1,28 @@
-#--
-# Copyright (c) 2007-2009, John Mettraux, jmettraux@gmail.com
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
-#
-# Made in Japan.
-#++
+class CreateWorkitems < ActiveRecord::Migration
 
+  # The migration itself is found in the 'ruote' gem ('openwfe/extras/participants/ar_participants').
+  def self.up
+    create_table :ar_workitems do |t|
+      t.string :fei, :wfid, :expid, :wfname, :wfrevision, :participant_name, :store_name
+      t.text   :wi_fields
+      t.string :activity
+      t.text   :keywords
 
-#require 'openwfe/extras/participants/active_participants'
-require 'openwfe/extras/participants/ar_participants'
+      t.timestamp :dispatch_time, :last_modified
+    end
 
+    add_index :ar_workitems, :fei, :unique => true
+    add_index :ar_workitems, :wfid
+    add_index :ar_workitems, :expid
+    add_index :ar_workitems, :wfname
+    add_index :ar_workitems, :wfrevision
+    add_index :ar_workitems, :participant_name
+    add_index :ar_workitems, :store_name
+  end
 
-#class CreateWorkitems < OpenWFE::Extras::WorkitemTables
-class CreateWorkitems < OpenWFE::Extras::ArWorkitemTables
+  def self.down
+    drop_table :ar_workitems
+  end
 
-  # The migration itself is found in the 'ruote' gem.
-  # Extending it to make it happen.
 end
 
