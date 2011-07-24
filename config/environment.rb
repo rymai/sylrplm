@@ -6,8 +6,6 @@
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
-#require File.join(File.dirname(__FILE__),'../lib/classes/app_classes')
-#include Classes::AppClasses
 Rails::Initializer.run do |config|
 # Settings in config/environments/* take precedence over those specified here.
 # Application configuration should go into files in config/initializers
@@ -73,7 +71,6 @@ end
 # environneemnt specifique a l'admin de l'application sylrplm
 require 'os_functions'
 require File.join(File.dirname(__FILE__), 'sylrplm')
-
 
 if File.exists?(File.join(File.dirname(__FILE__), "sylrplm_#{OsFunctions.os}.rb"))
   require File.join(File.dirname(__FILE__), "sylrplm_#{OsFunctions.os}")

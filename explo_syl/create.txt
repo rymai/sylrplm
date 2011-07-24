@@ -836,3 +836,25 @@ heroku logs --tail
 # eviter les fichiers por ruote
 gem install datamapper dm-mysql-adapter --no-ri --no-rdoc
 
+ajouter db/migrate/ruote_expression.rb:
+require 'openwfe/extras/expool/ar_expstorage'
+class RuoteExpression < OpenWFE::Extras::ExpressionTables
+  #
+end
+
+git add *;git commit -am "heroku migrate";git push heroku
+
+heroku rake --trace db:migrate VERSION=2011072301
+
+#si ok:
+heroku restart
+
+#ou reset de la base
+heroku pg:reset SHARED_DATABASE
+puis ??? heroku rake db:schema:load
+
+heroku open;heroku logs -n 500
+
+heroku logs -n 500
+erreur sur fichier pooltool.ru manquant dans /app/lib
+copy du work_development/pooltool.ru dans sylrplm/lib
