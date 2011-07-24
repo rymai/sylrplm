@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   #
   # Used by is_admin?
   #
-  ADMIN_GROUP_NAME = SYLRPLM::ADMIN_GROUP_NAME
+  ADMIN_GROUP_NAME = ::SYLRPLM::ADMIN_GROUP_NAME
 
   def self.create_new(params=nil)
     unless params.nil?
@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
     else
       user = User.new
       user.set_default_values(true)
-      user.nb_items = SYLRPLM::NB_ITEMS_PER_PAGE
+      user.nb_items = ::SYLRPLM::NB_ITEMS_PER_PAGE
       user.volume = Volume.find(1)
     end
     user
@@ -299,7 +299,7 @@ class User < ActiveRecord::Base
 
   # recherche du theme
   def self.find_theme(session)
-    ret=SYLRPLM::THEME_DEFAULT
+    ret = ::SYLRPLM::THEME_DEFAULT
     if session[:user_id]
       if user = User.find(session[:user_id])
         if(user.theme!=nil)
