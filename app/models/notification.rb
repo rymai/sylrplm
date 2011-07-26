@@ -70,7 +70,7 @@ class Notification < ActiveRecord::Base
     ret
   end
   
-  def notify
+  def notify_me
     Notification.notify_all(self)
   end
   

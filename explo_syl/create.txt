@@ -858,3 +858,34 @@ heroku open;heroku logs -n 500
 heroku logs -n 500
 erreur sur fichier pooltool.ru manquant dans /app/lib
 copy du work_development/pooltool.ru dans sylrplm/lib
+
+
+#install ruby 1.9.2 pour compatibtilite heroku
+#rvm
+
+rvm install 1.9.2
+rvm pkg install readline
+rvm pkg install iconv
+rvm pkg install ncurses
+rvm pkg install zlib
+rvm pkg install curl
+rvm pkg install gettext
+rvm pkg install glib
+rvm pkg install libxml2
+rvm pkg install libxslt
+rvm pkg install libyaml
+rvm pkg install llvm
+rvm pkg install mono
+rvm pgk install pkgconfig
+
+cd /usr/local/rvm/src
+  906  cd readline-6.0
+  915  ./configure
+  916  make
+  917  make install
+rvm remove 1.9.2 
+  872  rvm install 1.9.2-p290 --with-readline-dir=$rvm_path/usr
+
+#mon site dev heroku
+https://api.heroku.com/myapps
+

@@ -117,8 +117,9 @@ module OpenWFE::Extras
       end
 
       e.exp_class = flow_expression.class.name
-
+puts ":flow_expression="+flow_expression.inspect
       e.svalue = @persist_as_yaml ?
+      
         flow_expression.to_yaml :
         Base64.encode64(Marshal.dump(flow_expression))
 

@@ -15,4 +15,6 @@ delete from group_definitions;
 delete from groups;
 delete from history;
 delete from process_errors;
+delete from expressions;
+delete from notifications;
 

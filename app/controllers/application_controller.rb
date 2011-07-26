@@ -314,21 +314,21 @@ end
 #
 # the ?plain=true trick
 #
-class ActionController::MimeResponds::Responder
+ #class ActionController::MimeResponds::Responder
 
-  # TODO : use method_alias_chain ...
+    # TODO : use method_alias_chain ...
 
-  unless public_instance_methods(false).include?('old_respond')
-    alias_method :old_respond, :respond
-  end
+    #unless public_instance_methods(false).include?('old_respond')
+     # alias_method :old_respond, :respond
+    #end
 
-  def respond
+    #def respond
 
-    old_respond
+     # old_respond
 
-    @controller.response.content_type = 'text/plain' \
-    if @controller.request.parameters['plain'] == 'true'
-  end
+      #@controller.response.content_type = 'text/plain' \
+      #if @controller.request.parameters['plain'] == 'true'
+    #end
 
-end
+  #end
 

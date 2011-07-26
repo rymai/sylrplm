@@ -85,10 +85,10 @@ module ApplicationHelper
   end
 
   def icone(object)
-    type=object.type.to_s+"_"+object.typesobject.name.to_s
+    type=object.model_name.to_s+"_"+object.typesobject.name.to_s
     fic="images/"+type+".png"
     if !File.exists?(fic)
-      type=object.type.to_s
+      type=object.model_name.to_s
       fic="images/"+type+".png"
     end
     "<img class='icone' src='"+fic+"' title='"+t("ctrl_"+type.downcase)+"'></img>"

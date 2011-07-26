@@ -23,5 +23,5 @@ scheduler = Rufus::Scheduler.start_new
 scheduler.cron '0 21 * * 1-5' do
   # every day of the week at 21:00
   puts 'scheduler'
-  Notification.notify
+  Notification.notify_all(nil)
 end
