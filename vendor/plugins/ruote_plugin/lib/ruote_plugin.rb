@@ -35,7 +35,7 @@ module RuotePlugin
   #
   # Inits the workflow engine with the given hash of options
   #
-  def self.engine_init ( application_context)
+  def self.engine_init (application_context)
 
     #
     # start engine

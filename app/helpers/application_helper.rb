@@ -291,6 +291,22 @@ module ApplicationHelper
     href
   end
 
+  def connected
+    User.connected(session)
+  end
+  
+  # Returns true if the user is connected and having the admin role 
+  def admin_connected
+    ret=false
+    if connected
+      #puts "admin_connected: connected is_admin="+@current_user.is_admin?.to_s
+      if @current_user.is_admin?
+        ret=true if @current_user.is_admin?
+      end
+    end
+    ret
+  end
+  
   #
   # FLUO
   #
@@ -365,24 +381,9 @@ module ApplicationHelper
   # /processes?workflow=cheeseburger_order
   #
   def link_to_slice (item, accessor, param_name=nil)
-
     v = h(item.send(accessor))
     link_to(v, (param_name || accessor) => v)
   end
 
-  def connected
-    User.connected(session)
-  end
-  
-  # Returns true if the user is connected and having the admin role 
-  def admin_connected
-    ret=false
-    if connected
-      if @current_user.is_admin?
-        ret=true
-      end
-    end
-    ret
-  end
 end
 

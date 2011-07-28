@@ -1,9 +1,7 @@
-
 admins:
   id: 1
-  name: admins
+  name: Admins
 
 a_team:
   id: 2
-  name: team a
-
+  name: Team A

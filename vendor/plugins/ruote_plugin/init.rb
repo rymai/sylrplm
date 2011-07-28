@@ -85,7 +85,7 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
   #puts "init:worker="+worker.inspect
   #puts "init:appel RuotePlugin.engine_init:"+h.inspect
   
-  RuotePlugin.engine_init( h)
+  RuotePlugin.engine_init(h)
 
   begin
     require "#{RAILS_ROOT}/lib/ruote.rb"

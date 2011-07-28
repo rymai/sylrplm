@@ -297,7 +297,7 @@ module Controllers::PlmObjectControllerModule
   end
 
   def follow_tree_customer(node, obj,ctrl)
-    tree_documents(node,"customer",obj,ctrl)
+    tree_documents(node,"customer",obj)
     tree_forums(node,"customer",obj,ctrl)
     links=Link.find_childs("customer", obj,  "project")
     links.each do |link|
@@ -554,10 +554,10 @@ module Controllers::PlmObjectControllerModule
   end
 
   def icone(obj)
-    unless obj.type.nil? || obj.typesobject.nil?
-      ret="../images/"+obj.type.to_s+"_"+obj.typesobject.name+".png"
+    unless obj.model_name.nil? || obj.typesobject.nil?
+      ret="../images/"+obj.model_name.to_s+"_"+obj.typesobject.name+".png"
       unless File.exist?(ret)
-        ret="../images/"+obj.type.to_s+".png"
+        ret="../images/"+obj.model_name.to_s+".png"
         unless File.exist?(ret)
           ret=""
         end

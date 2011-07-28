@@ -1,64 +1,56 @@
 <h1><%= t("document_show") %></h1>
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t("edit"), edit_document_path(@document) %>
-        </td>
-        <td>
-            <%= link_to t("new_document"), new_document_path %>
-        </td>
-        <td>
-            <%= link_to t("list"), documents_path %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= link_to t("edit"), edit_document_path(@document) %></td>
+		<td> <%= link_to t("new_document"), new_document_path %></td>
+		<td> <%= link_to t("list"), documents_path %></td>
+	</tr>
 </table>
 <br/>
 <p>
-    <b><%= t("label_ident") %></b>
-    <%=h @document.ident %>
+	<b><%= t("label_ident") %></b>
+	<%= h @document.ident %>
 </p>
 <p>
-    <b><%= t("label_typesobject") %></b>
-    <% if(@document.typesobject != nil) %>
-    <%=h @document.typesobject.name %>
-    <% end %>
+	<b><%= t("label_typesobject") %></b>
+	<% if(@document.typesobject != nil) %>
+	<%= h @document.typesobject.name %>
+	<% end %>
 </p>
 <p>
-    <b><%= t("label_revision") %></b>
-    <%=h @document.revision %>
+	<b><%= t("label_revision") %></b>
+	<%= h @document.revision %>
 </p>
 <p>
-    <b><%= t("label_designation") %></b>
-    <%=h @document.designation %>
+	<b><%= t("label_designation") %></b>
+	<%= h @document.designation %>
 </p>
 <p>
-    <b><%=t("label_description") %></b>
-    <%=h @document.description %>
+	<b><%= t("label_description") %></b>
+	<%= h @document.description %>
 </p>
 <p>
-    <b><%= t("label_statusobject") %></b>
-    <% if(@document.statusobject != nil) %>
-    <%=h @document.statusobject.name %>
-    <% end %>
+	<b><%= t("label_statusobject") %></b>
+	<% if(@document.statusobject != nil) %>
+	<%= h @document.statusobject.name %>
+	<% end %>
 </p>
 <p>
-    <b><%= t("label_responsible") %></b>
-    <%=h @document.owner.login %>
+	<b><%= t("label_responsible") %></b>
+	<%= h @document.owner.login %>
 </p>
 <p>
-    <b><%= t("label_date") %></b>
-    <%=l @document.date %>
+	<b><%= t("label_date") %></b>
+	<%= l @document.date %>
 </p>
 <h1><%= t("document_datafiles") %></h1>
 <%= render(:partial => "datafiles/index_datafiles", :locals=>{:document=>@document}) %>
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <% unless @document.frozen? %>
-            <%= link_to h_img(:add_datafile).to_s, :id => @document.id, :action => :new_datafile %>
-            <%end %>
-        </td>
-    </tr>
+	<tr>
+		<td> <% unless @document.frozen? %>
+		<%= link_to h_img(:add_datafile).to_s, :id => @document.id, :action => :new_datafile %>
+		<%end %></td>
+	</tr>
 </table>
 <h1></h1>
 <%= h_sylrplm_tree %>
@@ -78,64 +70,38 @@
 
 <h1><%= t("document_check") %></h1>
 <table class='menu_bas'>
-    <% if @document.frozen? %>
-    <tr>
-        <td>
-            <%=t("freeze") %>
-        </td>
-    </tr>
-    <% else %>
-    <% if(@document.is_checked()==false) %>
-    <% form_for(@document, :url => {:id => @document.id, :action => :check_out }) do |f| %>
-    <tr>
-        <td>
-            <%= f.submit t("button_check_out") %>
-        </td>
-        <td>
-            <%= label_tag t("label_out_reason") %>
-        </td>
-        <td>
-            <%= text_field_tag :out_reason %>
-        </td>
-    </tr>
-    <%end %>
-    <% else %>
-    <td>
-        <%= t("is_check_out") %>
-    </td>
-    <td>
-        <%= t("label_out_reason") %>
-    </td>
-    <td>
-        <%= @checkout.out_reason %>
-    </td>
-    <% form_for(@document, :url => {:id => @document.id, :action => "check_in" },
-    :html => { :multipart => true}) do |f| %>
-    <tr>
-        <td>
-            <%= f.submit t("button_check_in") %>
-        </td>
-        <td>
-            <%= label_tag t("label_in_reason") %>
-        </td>
-        <td>
-            <%= text_field_tag :in_reason %>
-        </td>
-    </tr>
-    <% end %>
-    <% form_for(@document, :url => {:id => @document.id, :action => "check_free" }) do |f| %>
-    <tr>
-        <td>
-            <%= f.submit t("button_check_free") %>
-        </td>
-        <td>
-            <%= label_tag t("label_in_reason") %>
-        </td>
-        <td>
-            <%= text_field_tag :in_reason %>
-        </td>
-    </tr>
-    <% end %>
-    <%end %>
-    <% end %>
+	<% if @document.frozen? %>
+	<tr>
+		<td> <%= t("freeze") %></td>
+	</tr>
+	<% else %>
+	<% if(@document.is_checked()==false) %>
+	<% form_for(@document, :url => {:id => @document.id, :action => :check_out }) do |f| %>
+	<tr>
+		<td> <%= f.submit t("button_check_out") %></td>
+		<td> <%= label_tag t("label_out_reason") %></td>
+		<td> <%= text_field_tag :out_reason %></td>
+	</tr>
+	<%end %>
+	<% else %>
+	<td> <%= t("is_check_out") %></td>
+	<td> <%= t("label_out_reason") %></td>
+	<td> <%= @checkout.out_reason.force_encoding('utf-8') %> </td>
+	<% form_for(@document, :url => {:id => @document.id, :action => "check_in" },
+	:html => { :multipart => true}) do |f| %>
+	<tr>
+		<td> <%= f.submit t("button_check_in") %></td>
+		<td> <%= label_tag t("label_in_reason") %></td>
+		<td> <%= text_field_tag :in_reason %></td>
+	</tr>
+	<% end %>
+	<% form_for(@document, :url => {:id => @document.id, :action => "check_free" }) do |f| %>
+	<tr>
+		<td> <%= f.submit t("button_check_free") %></td>
+		<td> <%= label_tag t("label_in_reason") %></td>
+		<td> <%= text_field_tag :in_reason %></td>
+	</tr>
+	<% end %>
+	<%end %>
+	<% end %>
 </table>

@@ -1,16 +1,11 @@
-
 alice:
-  id: 2
   user_id: 2
   group_id: 2
-  
+
 bob:
-  id: 3
   user_id: 3
   group_id: 2
-  
+
 charly:
-  id: 4
   user_id: 4
   group_id: 2
-

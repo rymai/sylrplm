@@ -1,4 +1,3 @@
-
 embedded:
   id: 1
   name: "*embedded*"
@@ -28,4 +27,3 @@ promote:
   uri: /definitions/promote.rb
   description: promotion
   launch_fields: "{}"
-

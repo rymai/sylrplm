@@ -1,3 +1,4 @@
+require 'ruote_routing'
 ActionController::Routing::Routes.draw do |map|
   map.resources :notifications
 

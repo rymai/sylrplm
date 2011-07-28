@@ -859,9 +859,11 @@ heroku logs -n 500
 erreur sur fichier pooltool.ru manquant dans /app/lib
 copy du work_development/pooltool.ru dans sylrplm/lib
 
+---
+--- install ruby 1.9.2 pour compatibilite heroku
+---
 
-#install ruby 1.9.2 pour compatibtilite heroku
-#rvm
+# essai avec utilitaire d'installation rvm
 
 rvm install 1.9.2
 rvm pkg install readline
@@ -878,6 +880,8 @@ rvm pkg install llvm
 rvm pkg install mono
 rvm pgk install pkgconfig
 
+--- probleme au lancement de ruby script/server : il manque le module readline
+
 cd /usr/local/rvm/src
   906  cd readline-6.0
   915  ./configure
@@ -885,6 +889,27 @@ cd /usr/local/rvm/src
   917  make install
 rvm remove 1.9.2 
   872  rvm install 1.9.2-p290 --with-readline-dir=$rvm_path/usr
+
+--- probleme: il manque toujours le module readline
+
+--- maniere plus manuelle mais efficace
+telecharger ruby-1.9.2-p290.tar.gz
+dezipper
+cd dans le repertoire
+modifier le fichier ext/Setup en activant des modules
+./configure
+make
+make install
+
+-- notes sur modifs de remy
+Gemfile
+notifications.rb : notify devient notify_me
+config/initializers/sylrplm_init.rb:  reactive le scheduler des notifications (tres utile)
+ruote_plugin: init.rb et ruote_plugin.rb :enlever le worker, engine=db et non fs
+
+ 
+
+--- ca marche !
 
 #mon site dev heroku
 https://api.heroku.com/myapps

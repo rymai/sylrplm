@@ -1,37 +1,19 @@
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
-RAILS_GEM_VERSION = '2.3.12' unless defined? RAILS_GEM_VERSION
+# RAILS_GEM_VERSION = '2.3.12' unless defined? RAILS_GEM_VERSION
 
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
-
-module SYLRPLM
-  #include Classes::AppClasses::LogFormatter
-  VOLUME_DIRECTORY_DEFAULT="C:\\sylrplm_data"
-  LOCAL_DEFAULT="fr"
-  NOTIFICATION_DEFAULT=1
-  TIME_ZONE_DEFAULT=1
-  THEME_DEFAULT="blackwhite" 
-  NB_ITEMS_PER_PAGE=30
-  ADMIN_GROUP_NAME = 'admins'
-  # chargement initial, voir PlmInitControllerModule
-  DIR_DOMAINS="#{RAILS_ROOT}/db/fixtures/domains/"
-  DIR_ADMIN="#{RAILS_ROOT}/db/fixtures/admin/"
-  ADMIN_MAIL="sylvere.coutable@laposte.net"
-end
 
 Rails::Initializer.run do |config|
 # Settings in config/environments/* take precedence over those specified here.
 # Application configuration should go into files in config/initializers
 # -- all .rb files in that directory are automatically loaded.
 
-  config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
+  # config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
   # Add additional load paths for your own custom dirs
-  # config.load_paths += %W( #{Rails.root}/lib/classes )
-  #config.load_paths += %W( #{Rails.root}/lib/classes )
-  #config.load_paths += %W( #{Rails.root}/lib/controllers )
-  #config.load_paths += %W( #{Rails.root}/lib/models )
+  config.load_paths += %W[#{Rails.root}/lib #{Rails.root}/lib/classes #{Rails.root}/lib/controllers #{Rails.root}/lib/models #{Rails.root}/lib/ruote]
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -81,14 +63,4 @@ Rails::Initializer.run do |config|
 #$:.unshift('~/ruote/lib')
 # using the local 'ruote', comment that out if you're using ruote as a gem
 
-end
-
-# environneemnt specifique a l'admin de l'application sylrplm
-require 'os_functions'
-require File.join(File.dirname(__FILE__), 'sylrplm')
-
-if File.exists?(File.join(File.dirname(__FILE__), "sylrplm_#{OsFunctions.os}.rb"))
-  require File.join(File.dirname(__FILE__), "sylrplm_#{OsFunctions.os}")
-else
-  puts "#{File.join(File.dirname(__FILE__), "sylrplm_#{OsFunctions.os}")} doesn't exist!"
 end

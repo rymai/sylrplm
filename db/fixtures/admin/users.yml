@@ -1,42 +1,55 @@
-admin:  
+admin:
   id: 1
   login: admin
   email: sylvere.coutable@laposte.net
+  salt: 1234
+  hashed_password: <%= User.encrypted_password('admin', '1234') %>
   volume_id: 1
 
 consultant:
   id: 2
   login: consultant
   email: sylvere.coutable@laposte.net
+  salt: 1234
+  hashed_password: <%= User.encrypted_password('consultant', '1234') %>
   volume_id: 1
 
 designer:
   id: 3
   login: designer
   email: sylvere.coutable@laposte.net
+  salt: 1234
+  hashed_password: <%= User.encrypted_password('designer', '1234') %>
   volume_id: 1
 
 valider:
   id: 4
   login: valider
   email: sylvere.coutable@laposte.net
+  salt: 1234
+  hashed_password: <%= User.encrypted_password('valider', '1234') %>
   volume_id: 1
-	
+
 alice:
-  id: 12
+  id: 5
   login: alice
   email: alice@example.com
+  salt: 1234
+  hashed_password: <%= User.encrypted_password('alice', '1234') %>
   volume_id: 1
 
 bob:
-  id: 13
+  id: 6
   login: bob
   email: bob@example.com
+  salt: 1234
+  hashed_password: <%= User.encrypted_password('bob', '1234') %>
   volume_id: 1
 
 charly:
-  id: 14
+  id: 7
   login: charly
   email: charly@example.com
+  salt: 1234
+  hashed_password: <%= User.encrypted_password('charly', '1234') %>
   volume_id: 1
-

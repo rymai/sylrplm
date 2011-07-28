@@ -16,45 +16,45 @@ class Link < ActiveRecord::Base
   def self.create_new_byid(father_type, father, child_type, child, relation)
     ok=false
     msg="ctrl_link_"+father_type.to_s+"_"+child_type.to_s
-    if(father_type.to_s=="customer" && child_type.to_s=="project")
+    if father_type.to_s=="customer" && child_type.to_s=="project"
       ok=true
-      if(is_child_of(father_type.to_s, father, child_type.to_s, child))
+      if is_child_of(father_type.to_s, father, child_type.to_s, child)
         ok=false
         msg=:ctrl_link_already_customer_project.to_s
-      elsif(nb_linked(child_type, child)>0)
+      elsif nb_linked(child_type, child)>0
         ok=false
         msg=:ctrl_link_already_project.to_s
       end
     end
-    if(father_type.to_s=="customer" && child_type.to_s=="document")
+    if father_type.to_s=="customer" && child_type.to_s=="document"
       ok=true
-      if(is_child_of(father_type.to_s, father, child_type.to_s, child))
+      if is_child_of(father_type.to_s, father, child_type.to_s, child)
         ok=false
         msg=:ctrl_link_already_customer_document.to_s
       end
     end
-    if(father_type.to_s=="document" && child_type.to_s=="document")
+    if father_type.to_s=="document" && child_type.to_s=="document"
     ok=true
     end
-    if(father_type.to_s=="project" && child_type.to_s=="part")
+    if father_type.to_s=="project" && child_type.to_s=="part"
     ok=true
 
     end
-    if(father_type.to_s=="project" && child_type.to_s=="user")
+    if father_type.to_s=="project" && child_type.to_s=="user"
       ok=true
-      if(is_child_of(father_type.to_s, father, child_type.to_s, child))
+      if is_child_of(father_type.to_s, father, child_type.to_s, child)
         ok=false
         msg=:ctrl_link_already_project_user.to_s
       end
     end
-    if(father_type=="project" && child_type=="document")
+    if father_type=="project" && child_type=="document"
       ok=true
-      if(is_child_of(father_type.to_s, father, child_type.to_s, child))
+      if is_child_of(father_type.to_s, father, child_type.to_s, child)
         ok=false
         msg=:ctrl_link_already_project_document.to_s
       end
     end
-    if(father_type.to_s=="part" && child_type.to_s=="part")
+    if father_type.to_s=="part" && child_type.to_s=="part"
       ok=true
       if(father==child)
         ok=false
@@ -156,7 +156,7 @@ class Link < ActiveRecord::Base
 
   def self.is_child_of(father_type, father, child_type, child)
     ret=false
-    childs=find_childs(father_type, father, child_type)
+    #childs=find_childs(father_type, father, child_type)
     nb=find(:all,
     :conditions => ["father_type='#{father_type}'
       and child_type='#{child_type}'
@@ -168,11 +168,8 @@ class Link < ActiveRecord::Base
   def self.nb_linked(child_type, child)
     ret=0
     links=find(:all,
-    :conditions => ["child_type='#{child_type}' and child_id =#{child.id}"] )
-    if(links!=nil)
-    ret=links.count
-    end
-    ret
+    :conditions => ["child_type='#{child_type}' and child_id =#{child}"] )
+    links.count unless links.nil?
   end
 
   def self.remove(id)
