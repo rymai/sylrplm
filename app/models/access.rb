@@ -2,78 +2,59 @@
 class Access < ActiveRecord::Base
   include Models::SylrplmCommon
 
-  validates_presence_of :controller, :roles , :action
-  #validates_uniqueness_of :controller ,:role_id,:action
-  def self.create_new(i_controller, i_roles)
-    obj=Access.new
-    conts=i_controller.split(".")
-    obj.controller=conts[0]
-    obj.action=conts[1]
-    obj.roles=i_roles
-    obj.set_default_values(true)
-    obj
+  attr_accessor :controller_and_action
+  attr_accessible :controller_and_action, :roles
+  
+  validates_presence_of :controller, :action, :roles
+  validates_uniqueness_of :action, :scope => :controller
+  
+  def before_create
+    set_default_values(true)
+  end
+    
+  def controller_and_action
+    "#{controller}.#{action}"
+  end
+  
+  def controller_and_action=(controller_and_action)
+    controller_and_action        = controller_and_action.split('.')
+    self.controller, self.action = controller_and_action.shift(2) if controller_and_action.size > 1
   end
 
-  def self.find_for_controller(i_controller)
-    ret={}
-    #puts 'access.find_for_controller='+i_controller
-    self.find(:all, :order=>"controller",
-    :conditions => ["controller like '#{i_controller}'"]).each do |acc|
-      ret[acc.action.to_sym]=acc.roles
+  def self.find_for_controller(controller)
+    self.all(:order=>"controller", :conditions => ["controller like '#{controller}'"]).inject({}) do |memo, access|
+      memo[access.action.to_sym] = access.roles
+      memo
     end
-    ret
   end
 
   #
   # remplissage initial des autorisations
   #
   def self.init
-    ret=true
     Controller.get_controllers.each do |controller|
-      st=0
-      if controller.name == "AccessesController" ||
-      controller.name == "LoginController" ||
-      controller.name == "RolesController" ||
-      controller.name == "RolesUsersController" ||
-      controller.name == "SequencesController"
+      roles = if %w[AccessesController LoginController RolesController RolesUsersController SequencesController].include?(controller.name)
         # fonctions admin
-        st=st+create_access(controller.name,controller.method,"admin & (!designer | !consultant | !valider)")
+        "admin & (!designer | !consultant | !valider)"
       else
         if controller.name == "SessionsController"
           # tout le monde peut se deconnecter
-          st=st+create_access(controller.name,controller.method,"admin | designer | consultant | valider")
+          "admin | designer | consultant | valider"
         else
           # les fonctions plm
-          if controller.method=="show"
-            st=st+create_access(controller.name,controller.method,"admin | designer | valider | consultant")
+          if controller.method == "show"
+            "admin | designer | valider | consultant"
           else
-            st=st+create_access(controller.name,controller.method,"(admin | designer | valider) & !consultant")
+            "(admin | designer | valider) & !consultant"
           end
         end
       end
-      #puts 'access_controller.index:controller='+controller.name+' method='+controller.method+' st='+st.to_s
-    end
-    true
-  end
-
-  def self.create_access(ctrl,met,roles)
-    access=new
-    access.controller=ctrl
-    access.action=met
-    access.roles=roles
-    #puts "access.create_access:"+access.inspect
-    if !access.save
-      return 1
-    else
-      return 0
+      create(:controller_and_action => "#{controller.name}.#{controller.method}", :roles => roles)
     end
   end
 
   def self.get_conditions(filter)
-    filter=filter.gsub("*","%")
-    ["controller LIKE ? or action LIKE ? or roles LIKE ? " ,
-      filter, filter,
-      filter] unless filter.nil?
+    ["controller LIKE ? or action LIKE ? or roles LIKE ?", filter, filter, filter] unless filter.gsub!("*","%").nil?
   end
 
 end
