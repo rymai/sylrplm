@@ -28,7 +28,7 @@
 		<td> <%= h notification.object_id %></td>
 		<td> <%= h notification.event_date %></td>
 		<td> <%= h notification.event_type %></td>
-		<td> <%= h notification.responsible.login %></td>
+		<td> <%= h notification.responsible.try(:login) %></td>
 		<td> <%= h notification.notify_date %></td>
 		<% if fonct == "index" %>
 		<td> <%= link_to h_img_show.to_s, notification %></td>

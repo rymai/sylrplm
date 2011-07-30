@@ -13,7 +13,7 @@ Rails::Initializer.run do |config|
 
   # config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
   # Add additional load paths for your own custom dirs
-  config.load_paths += %W[#{Rails.root}/lib #{Rails.root}/lib/classes #{Rails.root}/lib/controllers #{Rails.root}/lib/models #{Rails.root}/lib/ruote]
+  config.autoload_paths += %W[#{Rails.root}/lib #{Rails.root}/lib/classes #{Rails.root}/lib/controllers #{Rails.root}/lib/models #{Rails.root}/lib/ruote]
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

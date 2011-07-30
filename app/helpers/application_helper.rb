@@ -4,24 +4,21 @@ module ApplicationHelper
   # 1- current n'a pas le meme identifiant que previous
   # 2- que les valeurs de l'attribut sont differentes entre les 2objets
   # att peut etre un attribut "compose" tel que owner.login
-  def h_if_differ(current, previous,  att)
-    ret=get_val(current,att)
-    unless previous.nil?
-      if current.ident == previous.ident && ret == get_val(previous, att)
-        ret= ""
-      end
+  def h_if_differ(current, previous,  attribute)
+    current_attribute_value = get_val(current, attribute)
+    if !previous.nil? && current.ident != previous.ident && current_attribute_value != get_val(previous, attribute)
+      current_attribute_value
+    else
+      ''
     end
-    ret
   end
 
   # renvoie la valeur de l'attribut att sur l'objet
   # att peut etre un attribut "compose" tel que owner.login, d'ou l'utilisation de eval
-  def get_val(obj, att)
-    blk="obj="+obj.class.name+".find("+obj.id.to_s+")\nobj."+att
-    #puts "blk="+blk
-    ret = eval blk
-
-    ret
+  def get_val(object, attribute)
+    attribute.split('.').inject(object) do |o, method|
+      o = o.send(:try, method)
+    end
   end
 
   def h_menu(href,help,title)
@@ -85,11 +82,11 @@ module ApplicationHelper
   end
 
   def icone(object)
-    type=object.type.to_s+"_"+object.typesobject.name.to_s
-    fic="images/"+type+".png"
-    if !File.exists?(fic)
-      type=object.type.to_s
-      fic="images/"+type+".png"
+    type = object.respond_to?(:type) ? object.type.to_s+"_"+object.typesobject.name.to_s : object.class.to_s
+    fic = "images/"+type+".png"
+    unless File.exists?(fic)
+      type = object.respond_to?(:type) ? object.type.to_s : object.class.to_s
+      fic = "images/"+type+".png"
     end
     "<img class='icone' src='"+fic+"' title='"+t("ctrl_"+type.downcase)+"'></img>"
   end
@@ -116,7 +113,7 @@ module ApplicationHelper
   end
 
   def h_img_edit
-    h_img("edit")
+    h_img("edit2")
   end
 
   def h_img_edit_task
@@ -172,7 +169,7 @@ module ApplicationHelper
   end
 
   def h_img_sub(name)
-    image_submit_tag(name.to_s+".png",:title=>t(name), :class=>"submit")
+    image_submit_tag(name.to_s+".png", :title => t(name))
   end
 
   def h_destroy(obj)

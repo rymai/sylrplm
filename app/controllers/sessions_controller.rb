@@ -1,37 +1,25 @@
 class SessionsController < ApplicationController
-  #include Controllers::PlmObjectControllerModule
 
   skip_before_filter :authorize, :object_exists
-  
-  #access_control(Access.find_for_controller(controller_class_name))
-  def index
-    puts "sessions_controller.index"+params.inspect
-  end
-
-  def show
-    puts "sessions_controller.show"+params.inspect
-  end
 
   def new
-    puts "sessions_controller.new"+params.inspect
     @languages = get_languages
   end
 
   def edit
-    @roles = @current_user.roles
+    @roles = current_user.roles
   end
 
   def create
-    puts "sessions_controller.create:"+params.inspect
     flash.now[:notice] = "post"
     @current_user = User.authenticate(params[:login], params[:password])
     @languages = get_languages
     respond_to do |format|
-      if @current_user
+      if current_user
         #format.html { redirect_to choose_role_sessions_url }
-        @roles = @current_user.roles
+        @roles = current_user.roles
         if @roles.count>0
-          session[:user_id] = @current_user.id
+          session[:user_id] = current_user.id
           flash[:notice]    = t(:ctrl_role_needed)
           format.html { render :action => "edit" }
         else
@@ -47,7 +35,6 @@ class SessionsController < ApplicationController
   end
 
   def choose_role
-    puts "sessions_controller.choose_role:"+params.inspect
     @roles = @current_user.roles
   # @current_user = User.find_user(session)
   # @current_user.update_attributes(params[:user])
@@ -58,7 +45,6 @@ class SessionsController < ApplicationController
 
   #appelle par choose_role
   def update
-    puts "sessions_controller.update:"+params.inspect
     @current_user    = User.find(params[:id])
     respond_to do |format|
       if @current_user.update_attributes(params[:sessions])
@@ -70,7 +56,7 @@ class SessionsController < ApplicationController
         format.xml  { head :ok }
       else
         puts "sessions_controller.update ko"
-        flash.now[:notice] = t(:ctrl_user_not_connected, :user => @current_username)
+        flash.now[:notice] = t(:ctrl_user_not_connected, :user => current_user.login)
         format.html { redirect_to_main(uri) }
         format.xml  { render :xml => @current_user.errors, :status => :unprocessable_entity }
       end
@@ -80,7 +66,7 @@ class SessionsController < ApplicationController
   def destroy
     puts "sessions_controller.destroy:"+params.inspect
     session[:user_id] = nil
-    flash[:notice] = t(:ctrl_user_disconnected, :user => @current_username) if @current_user != nil
+    flash[:notice] = t(:ctrl_user_disconnected, :user => current_user.login) if current_user != nil
     #bouclage
     #format.html { redirect_to_main(uri) }
     #format.xml  { head :ok }

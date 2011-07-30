@@ -1,22 +1,17 @@
 <div id="banner">
-  <table>
-    <tr>
-      <td class='title'> <%= @page_title || "SYLRPLM" %></td>
-      <% if connected %>
-      <td class='banner'> <%= @current_username %>(<%= @current_userrole %>)  </td>
-      <td class='banner'> <%= link_to h_img("disconnect").to_s, sessions_path, :method => :delete %></td>
-      <% else %>
-      <td class='banner'> <%= link_to t("connect"), new_sessions_url %></td>
-      <% end %>
-
-      <td class='banner'> <%= t(:label_today) %></td>
-      <td class='banner'> <%= Date.today %></td>
-      <td class='banner'><%= tip_help() %></td>
-    </tr>
-  </table>
+    <span class='title'> <%= @page_title || "SYLRPLM" %></span>
+    <% if connected %>
+      <span class='banner'> <%= "#{current_user.login} #{t("as")} #{current_user.role.try(:title)}" %></span>
+      <span class='banner'> <%= link_to h_img("disconnect").to_s, sessions_path, :method => :delete %></span>
+    <% else %>
+      <span class='banner'> <%= link_to t("connect"), new_sessions_url %></span>
+    <% end %>
 </div>
 <div id="columns">
   <div id="side">
+    <span class='banner'> <%= t(:label_today) %></span>
+    <span class='banner'> <%= Date.today %></span>
+    <span class='banner'><%= tip_help() %></span>
 
     <div id="menu">
       <fieldset>
@@ -100,15 +95,15 @@
       <% unless @themes.nil? %>
         <fieldset>
           <%= content_tag(:legend, t(:label_theme)) %>
-          <% form_tag do |f| %>
-            <%= select_tag("theme",@themes,:class=>'banner') %><%= h_img_sub(:submit) %>
+          <% form_tag do %>
+            <%= select_tag("theme", @themes) %><%= h_img_sub(:submit) %>
           <% end %>
         </fieldset>
       <% end %>
 
       <fieldset>
         <%= content_tag(:legend, t(:label_language)) %>
-        <% form_tag do |f| %>
+        <% form_tag do %>
           <%= select_tag(:locale, options_for_select(@languages)) %><%= h_img_sub(:submit) %>
         <% end %>
       </fieldset>
@@ -116,9 +111,9 @@
     </div>
   </div>
   <div id="main">
-    <p class="notice">
-      <%= flash[:notice] %>
-    </p>
+    <% if flash[:notice].present? %>
+      <p class="notice"><%= flash[:notice] %></p>
+    <% end %>
     <%= yield :layout %>
   </div>
 </div>

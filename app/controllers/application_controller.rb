@@ -1,7 +1,5 @@
 require 'rexml/document'
 
-
-
 class ErrorReply < Exception
   attr_reader :status
   def initialize (msg, status=400)
@@ -10,20 +8,21 @@ class ErrorReply < Exception
   end
 end
 
-
-
 class ApplicationController < ActionController::Base
   #include Controllers::PlmEvent
   include Controllers::PlmObjectControllerModule
   helper :all  # include all helpers, all the time
+  helper_method :current_user, :logged_in?
+
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   filter_parameter_logging :password
+
   #before_filter :authorize, :except => [:index,:init_objects,:get_themes,:find_theme,:permission_denied,:permission_granted, :permission_granted,:@current_user,:redirect_to_index,:tree_part,:tree_project,:tree_customer,:follow_tree_part,:follow_tree_up_part, :follow_tree_project,:follow_tree_up_project,:follow_tree_customer,:tree_documents,:tree_forums]
   before_filter :authorize, :except => [:index, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
   ## un peu brutal before_filter :object_exists, :only => [:show, :edit, :destroy]
-  #
+
   #access_control(Access.find_for_controller(controller_class_name))
   #before_filter :event
   def event
@@ -87,22 +86,14 @@ class ApplicationController < ActionController::Base
 
   # definition des variables globales.
   def define_variables
-    @current_user             = User.find_user(session)
-    @current_userid           = User.find_userid(session)
-    @current_username         = User.find_username(session)
-    @current_usermail         = User.find_usermail(session)
-    @current_userrole         = User.find_userrole(session)
-    #    @favori_document  = find_favori_document
-    #    @favori_project   = find_favori_project
-    #    @favori_part      = find_favori_part
-    @favori      = session[:favori] ||= Favori.new
-    @urlbase          = "http://"+request.env["HTTP_HOST"]
-    @theme            = User.find_theme(session)
-    @themes = get_themes(@theme)
-    @language=SYLRPLM::LOCAL_DEFAULT
-    @languages = get_languages
-    @notification=SYLRPLM::NOTIFICATION_DEFAULT
-    @time_zone=SYLRPLM::TIME_ZONE_DEFAULT
+    @favori       = session[:favori] ||= Favori.new
+    @urlbase      = "http://"+request.env["HTTP_HOST"]
+    @theme        = User.find_theme(session)
+    @themes       = get_themes(@theme)
+    @language     = SYLRPLM::LOCAL_DEFAULT
+    @languages    = get_languages
+    @notification = SYLRPLM::NOTIFICATION_DEFAULT
+    @time_zone    = SYLRPLM::TIME_ZONE_DEFAULT
     ::WillPaginate::ViewHelpers.pagination_options[:page_links ]    = true  # when false, only previous/next links are rendered (default: true)
     ::WillPaginate::ViewHelpers.pagination_options[:inner_window]   = 10 # how many links are shown around the current page (default: 4)
     ::WillPaginate::ViewHelpers.pagination_options[:page_links ]    = true  # when false, only previous/next links are rendered (default: true)
@@ -112,8 +103,6 @@ class ApplicationController < ActionController::Base
     ::WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
     ::WillPaginate::ViewHelpers.pagination_options[:next_label]     = t('label_next')
     LOG.info("__FILE__")
-  #puts "define_variables:session="+session.inspect
-  #current_user
   end
 
   def get_themes(default)
@@ -130,7 +119,6 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    #puts "application_controller.get_themes"+dirname+"="+ret
     ret
   end
 
@@ -209,10 +197,9 @@ class ApplicationController < ActionController::Base
   end
 
   def error_reply (error_message, status=400)
-
     if error_message.is_a?(ErrorReply)
-    status = error_message.status
-    error_message = error_message.message
+      status = error_message.status
+      error_message = error_message.message
     end
 
     flash[:error] = error_message
@@ -237,16 +224,14 @@ class ApplicationController < ActionController::Base
   # Returns a new LinkGenerator wrapping the current request.
   #
   def linkgen
-
     LinkGenerator.new(request)
   end
 
   #
   # Creates an HistoryEntry record
   #
-  def history_log (event, options={})
-
-    source = options.delete(:source) || @current_user.login
+  def history_log(event, options={})
+    source = options.delete(:source) || current_user.login
 
     OpenWFE::Extras::HistoryEntry.log!(source, event, options)
   end
@@ -257,42 +242,27 @@ class ApplicationController < ActionController::Base
   #
   # This initial implementation is rather, plain. Rewrite at will.
   #
-  def determine_payload_partial (workitem)
-
+  def determine_payload_partial(workitem)
     'shared/ruote_forms'
   end
 
   def authorize
-    #puts "application_controller.authorize:user_id="+session[:user_id].inspect
     unless session[:user_id] || User.find_by_id(session[:user_id])
-      puts "application_controller.request.request_uri="+request.request_uri
-      puts "application_controller.request.new_sessions_url="+new_sessions_url
-      #      if request.request_uri == new_sessions_url
-      #        respond_to do |format|
-      #          format.html { render :controller => :sessions, :id => session }# new.html.erb
-      #          format.xml  { render :controller => :sessions, :xml => session }
-      #        end
-      #      else
       session[:original_uri] = request.request_uri
       flash[:notice] = t(:login_login)
-      #puts "application_controller.authorize:redirect_tol="+new_sessions_url
       redirect_to new_sessions_url
-    #      end
     end
   end
 
-  private
-
   def current_user
-    #@current_user ||= session[:user_id] ? User.find(session[:user_id]) : nil
-    #puts "current_user:session="+session.inspect
-    ret=@current_user ||= User.find_user(session)
-    #puts "current_user:"+ret.inspect
-    ret
+    @current_user ||= User.find_by_id(session[:user_id])
   end
+
+   def logged_in?
+     current_user != nil
+   end
+
 end
-
-
 
 # Scrub sensitive parameters from your log
 # filter_parameter_logging :password
@@ -307,11 +277,11 @@ class ActionController::MimeResponds::Responder
   # unless public_instance_methods(false).include?('old_respond')
   #   alias_method :old_respond, :respond
   # end
-  # 
+  #
   # def respond
-  # 
+  #
   #   old_respond
-  # 
+  #
   #   @controller.response.content_type = 'text/plain' \
   #   if @controller.request.parameters['plain'] == 'true'
   # end

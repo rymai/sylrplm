@@ -30,7 +30,7 @@ class Document < ActiveRecord::Base
   has_many :customers, :through => :links_customers
 
   def to_s
-    self.ident+"/"+self.revision+"-"+self.designation+"-"+self.typesobject.name+"-"+self.statusobject.name
+    "#{self.ident}/#{self.revision}-#{self.designation}-#{self.typesobject.try(:name)}-#{self.statusobject.try(:name)}"
   end
 
   def self.create_new(document, user)
