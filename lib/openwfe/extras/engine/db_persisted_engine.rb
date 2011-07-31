@@ -44,7 +44,8 @@ module OpenWFE::Extras
     def build_expression_storage
 
       #init_service(:s_expression_storage, DbExpressionStorage)
-      init_storage(DbExpressionStorage)
+      #init_storage(DbExpressionStorage)
+      init_storage(ArExpressionStorage)
     end
 
     #

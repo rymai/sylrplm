@@ -475,7 +475,7 @@ var RuoteForms = function() {
 	}
 
 	function render_string(elt, data, options) {
-		alert('render_string:data='+data)
+		//alert('render_string:data='+data)
 		var klass = options['class'] || 'rform_string';
 		var e = rcreate(elt, 'span', {
 			'class': klass

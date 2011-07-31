@@ -914,3 +914,13 @@ ruote_plugin: init.rb et ruote_plugin.rb :enlever le worker, engine=db et non fs
 #mon site dev heroku
 https://api.heroku.com/myapps
 
+---
+--- ruote-kit remplace ruote_plugin
+---
+git clone http://github.com/tosch/ruote-kit.git && cd ruote-kit 
+bundle install
+rackup
+
+
+--- bug dans openwfe/expressions/flowexpression.rb
+iv.delete(:@application_context) etait iv.delete('@application_context') ce qui entraiant une erruer sur Mutex

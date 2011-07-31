@@ -12,7 +12,7 @@ en:
   ##############
   ctrl_no_privilege: "Your role '%{role}' don't give access to '%{controller}/%{action}'"
   ctrl_object_created: "%{typeobj} %{ident} was successfully created"
-  ctrl_object_not_created: "%{typeobj} not created"
+  ctrl_object_not_created: "%{typeobj} not created :%{msg}"
   ctrl_object_updated: "%{typeobj} %{ident} was successfully updated"
   ctrl_object_not_saved: "%{typeobj} %{ident} not saved"
   ctrl_object_not_updated: "%{typeobj} %{ident} not updated"

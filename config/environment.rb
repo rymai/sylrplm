@@ -13,7 +13,12 @@ Rails::Initializer.run do |config|
 
   # config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
   # Add additional load paths for your own custom dirs
-  config.load_paths += %W[#{Rails.root}/lib #{Rails.root}/lib/classes #{Rails.root}/lib/controllers #{Rails.root}/lib/models #{Rails.root}/lib/ruote]
+  config.autoload_paths += %W(#{Rails.root}/lib #{Rails.root}/lib/classes #{Rails.root}/lib/controllers #{Rails.root}/lib/models #{Rails.root}/lib/ruote #{Rails.root}/lib/openwfe)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/engine)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/expool #{Rails.root}/lib/openwfe/expressions)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/extras #{Rails.root}/lib/openwfe/listeners)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/participants #{Rails.root}/lib/openwfe/tools)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/utils #{Rails.root}/lib/openwfe/worklist)
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -55,8 +60,8 @@ Rails::Initializer.run do |config|
     #:password => xxx
   }
 
-  #RUOTE_ENV = {:persist_as_yaml=>true}
-  RUOTE_ENV = {}
+  RUOTE_ENV = {:persist_as_yaml => false}
+  #RUOTE_ENV = {}
 # passing a hash of parameters (application context) to the ruote engine
 # (well via the ruote_plugin)
 

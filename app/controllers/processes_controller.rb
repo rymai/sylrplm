@@ -135,19 +135,36 @@ class ProcessesController < ApplicationController
 
     options = { :variables => { 'launcher' => @current_user.login } }
 
-    fei = RuotePlugin.ruote_engine.launch(li, options)
-
+    begin
+      fei = RuotePlugin.ruote_engine.launch(li, options)
     #    puts "processes_controller.create:fei("+fei.wfid+")"
 
-    sleep 1.0
+      rescue Exception => e
+        #puts __FILE__+".create:li="+li.inspect
+        #puts __FILE__+".create:options="+options.inspect
+        
+        e.backtrace.each {|x| puts x}
 
+        respond_to do |format|
+          flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => e)
+          format.html { redirect_to new_process_path(:definition_id => @definition.id)}
+          format.xml  { render :xml => e, :status => :unprocessable_entity }
+        end
+      return
+
+    end
+    
     headers['Location'] = process_url(fei.wfid)
-    workitem = OpenWFE::Extras::ArWorkitem.find_by_wfid(fei.wfid)
-    #puts "processes_controller.create:workitem from fei("+fei.wfid+")="+workitem.inspect
+    nb=0
+    workitem = nil
+    while nb<6 and workitem.nil?
+    sleep 1.0
+      nb+=1
+      workitem = OpenWFE::Extras::ArWorkitem.find_by_wfid(fei.wfid)
+    end
     respond_to do |format|
       unless workitem.nil?
 
-        #flash[:notice] = "<br/>launched process instance #{workitem.id} #{fei.wfid}"
         flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")    
 
         nb=add_objects(workitem, @favori.get("document"), "document")
@@ -166,7 +183,7 @@ class ProcessesController < ApplicationController
           render :xml => "<wfid>#{fei.wfid}</wfid>", :status => 201 }
 
       else
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process))    
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")    
         format.html { redirect_to new_process_path(:definition_id => @definition.id)}
         format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
       end

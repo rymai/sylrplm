@@ -22,7 +22,6 @@
 # Made in Japan.
 #++
 
-
 require 'openwfe/expressions/raw'
 require 'openwfe/expressions/environment'
 require 'openwfe/expressions/fe_define'
@@ -54,9 +53,7 @@ require 'openwfe/expressions/fe_timeout'
 require 'openwfe/expressions/fe_step'
 require 'openwfe/expressions/fe_http'
 
-
 module OpenWFE
-
   #
   # The mapping between expression names like 'sequence', 'participant', etc
   # and classes like 'ParticipantExpression', 'SequenceExpression', etc.
@@ -68,7 +65,6 @@ module OpenWFE
     # (for example, 'wait', 'listen' and more importantly 'participant').
     #
     attr_reader :workitem_holders
-
     #
     # Instantiates this expression map (1 per engine).
     #
@@ -153,8 +149,8 @@ module OpenWFE
       register HpollExpression
 
       register Environment
-        #
-        # only used by get_expression_names()
+      #
+      # only used by get_expression_names()
 
       register_ancestors RawExpression
     end
@@ -166,7 +162,7 @@ module OpenWFE
     def get_class (expression_name)
 
       expression_name = expression_name.expression_name \
-        if expression_name.kind_of?(RawExpression)
+      if expression_name.kind_of?(RawExpression)
 
       expression_name = OpenWFE::symbol_to_name(expression_name)
 
@@ -196,7 +192,7 @@ module OpenWFE
     def get_expression_names (expression_class)
 
       return expression_class.expression_names \
-        if expression_class.method_defined?(:expression_names)
+      if expression_class.method_defined?(:expression_names)
 
       @expressions.inject([]) do |names, (k, v)|
         names << k if v.ancestors.include?(expression_class)
@@ -237,9 +233,9 @@ module OpenWFE
       end
 
       if expression_class.public_instance_methods.find { |fn|
-        fn.to_s == 'applied_workitem'
+      fn.to_s == 'applied_workitem'
       }
-        @workitem_holders << expression_class
+      @workitem_holders << expression_class
       end
 
       register_ancestors(expression_class)

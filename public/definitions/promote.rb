@@ -1,6 +1,5 @@
-
-#class PLMPromote < OpenWFE::ProcessDefinition
-Ruote.process_definition :name => 'PLMPromote' do
+class PLMPromote < OpenWFE::ProcessDefinition
+# Ruote.process_definition :name => 'PLMPromote' do
   description "Promotion objet PLM"
 
   set :v => "demandeur", :value => "${f:launcher}"

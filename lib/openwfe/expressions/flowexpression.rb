@@ -138,7 +138,6 @@ module OpenWFE
 
       e.children = []
       e.apply_time = nil
-
       e
     end
 
@@ -803,7 +802,7 @@ module OpenWFE
 
     def marshal_dump #:nodoc#
       iv = instance_variables
-      iv.delete('@application_context')
+      iv.delete(:@application_context)
       iv.inject({}) { |h, vn| h[vn] = instance_variable_get(vn); h }
     end
 

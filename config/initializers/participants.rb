@@ -3,7 +3,7 @@ require 'openwfe/participants/participants'
 
 
 if RuotePlugin.ruote_engine
-  
+  puts __FILE__+":loading participants"
   # only enter this block if the engine is running
 
   # This is a test participant

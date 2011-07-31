@@ -380,7 +380,7 @@ module OpenWFE
     #
     def build_expression_storage
 
-      init_service(:s_expression_storage, InMemoryExpressionStorage)
+      init_service(:s_expression_storage, OpenWFE::InMemoryExpressionStorage)
     end
 
     #
@@ -390,7 +390,7 @@ module OpenWFE
     #
     def build_participant_map
 
-      init_service(:s_participant_map, ParticipantMap)
+      init_service(:s_participant_map, OpenWFE::ParticipantMap)
     end
 
     #

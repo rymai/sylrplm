@@ -29,6 +29,7 @@ require 'openwfe/service'
 require 'openwfe/rudefinitions'
 require 'openwfe/expool/expstorage'
 require 'openwfe/extras/singlecon'
+require 'openwfe/expressions/fe_define'
 
 
 module OpenWFE::Extras
@@ -116,14 +117,11 @@ module OpenWFE::Extras
         #e.wfname = fei.wfname
       end
 
-      e.exp_class = flow_expression.class.name
-puts ":flow_expression="+flow_expression.inspect
+      e.exp_class = flow_expression.class.name 
       e.svalue = @persist_as_yaml ?
-      
-        flow_expression.to_yaml :
+        YAML::dump(flow_expression) :
         Base64.encode64(Marshal.dump(flow_expression))
 
-      #e.save!
       e.save_without_transactions!
     end
 
@@ -328,8 +326,8 @@ puts ":flow_expression="+flow_expression.inspect
 
       s = record.svalue
 
-      fe = s.match(Y_START) ? YAML.load(s) : Marshal.load(Base64.decode64(s))
-
+     ##fe = s.match(Y_START) ? YAML.load(s) : ::OpenWFE::Xml::from_xml(s)
+     fe = s.match(Y_START) ? YAML.load(s) : Marshal.load(Base64.decode64(s))
       fe.application_context = @application_context
       fe
     end

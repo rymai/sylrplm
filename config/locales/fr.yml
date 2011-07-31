@@ -12,7 +12,7 @@ fr:
   ##############
   ctrl_no_privilege: "Désolé, Votre rôle '%{role}' ne vous permet d'accéder à la fonction '%{controller}/%{action}'"
   ctrl_object_created: "%{typeobj} '%{ident}' crée avec succès"
-  ctrl_object_not_created: "%{typeobj} non crée"
+  ctrl_object_not_created: "%{typeobj} non crée :%{msg}"
   ctrl_object_updated: "%{typeobj} '%{ident}' modifié avec succès"
   ctrl_object_not_saved: "%{typeobj} '%{ident}' non sauvegardé"
   ctrl_object_not_updated: "%{typeobj} '%{ident}' non modifié"

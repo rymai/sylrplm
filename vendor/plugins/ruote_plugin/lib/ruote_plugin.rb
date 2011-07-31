@@ -41,6 +41,7 @@ module RuotePlugin
     # start engine
     engine_class = application_context.delete(:engine_class)
 
+puts __FILE__+".engine_init application_context="+application_context.inspect
     @engine = engine_class.new(application_context)
 
     #

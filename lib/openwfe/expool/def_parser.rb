@@ -106,7 +106,6 @@ module OpenWFE
     # out : a tree [ name, attributes, children ]
     #
     def parse (pdef)
-
       tree = case pdef
         when Array then pdef
         when String then parse_string(pdef)
@@ -116,13 +115,11 @@ module OpenWFE
         else
           raise "cannot handle pdefinition of class #{pdef.class.name}"
       end
-
       tree = [ 'define', { 'name' => 'NoName', 'revision' => '0' }, [ tree ] ] \
         unless get_expression_map.is_definition?(tree.first)
           #
           # making sure the first expression in the tree is a DefineExpression
           # (an alias for 'process-definition')
-
       tree
     end
 

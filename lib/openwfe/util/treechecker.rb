@@ -22,19 +22,19 @@
 # Made in Japan.
 #++
 
-
 require 'openwfe/service'
+
+#require 'openwfe/expressions/flowexpression'
+#require 'openwfe/expressions/rprocdef'
+
 #require 'rufus/treechecker'
 
-
 module OpenWFE
-
   #
   # The TreeChecker service is used to check incoming external ruby code
   # and raise a security error if it contains potentially evil code.
   #
   class TreeChecker < Service
-
     #
     # builds the treechecker. Will return immediately (and not build)
     # if the :use_ruby_treechecker option is set to false. By default
@@ -47,7 +47,7 @@ module OpenWFE
       (ac[:use_ruby_treechecker] == false) and return
 
       require 'rufus/treechecker' # gem 'rufus-treechecker'
-        # load only when needed
+      # load only when needed
 
       @checker = Rufus::TreeChecker.new do
 
@@ -70,10 +70,10 @@ module OpenWFE
         exclude_access_to(
           IO, File, FileUtils, Process, Signal, Thread, ThreadGroup)
 
-        exclude_class_tinkering :except => OpenWFE::ProcessDefinition
-          #
-          # excludes defining/opening any class except
-          # OpenWFE::ProcessDefinition
+        exclude_class_tinkering :except => [::OpenWFE::ProcessDefinition]
+        #
+        # excludes defining/opening any class except
+        # OpenWFE::ProcessDefinition
 
         exclude_call_to :instance_variable_get, :instance_variable_set
       end
@@ -85,12 +85,11 @@ module OpenWFE
           exclude_head [ :lasgn ] # preventing 'a = 3'
         end
       end
-
       @checker.freeze
       @cchecker.freeze
       freeze
-        #
-        # preventing further modifications
+    #
+    # preventing further modifications
     end
 
     def check (ruby_code)
