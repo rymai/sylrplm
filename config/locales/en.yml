@@ -163,6 +163,7 @@ en:
   hello: "Hello world"
   disconnect: "Disconnect"
   connect: "Connect"
+  as: "as"
   datas_in_database: We have following data
   #langues
   tit_language: "Language:"

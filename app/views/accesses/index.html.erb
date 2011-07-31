@@ -23,10 +23,10 @@
             <%= sort_link_helper t("label_role"), "roles" %>
         </th>
         <th>
+          <%= t("edit") %>
         </th>
         <th>
-        </th>
-        <th>
+          <%= t("destroy") %>
         </th>
     </tr>
     <% @accesses[:recordset].each do |access| %>
@@ -39,9 +39,6 @@
         </td>
         <td>
             <%=h access.roles %>
-        </td>
-        <td>
-            <%= link_to h_img_show.to_s, access %>
         </td>
         <td>
             <%= link_to h_img_edit.to_s, edit_access_path(access) %>

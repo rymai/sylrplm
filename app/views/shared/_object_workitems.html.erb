@@ -1,12 +1,10 @@
-<% workitems=object_workitems.get_workitems
-nb=workitems.size
-if nb>0%>
-<h1><%= t("workitems_list") %> : <%= @current_username %></h1>
-<%= render(:partial => "workitems/workitems", :object =>  workitems) %>
-<%end%>
-<% histories=object_workitems.get_histories
-nb=histories.size
-if nb>0%>
-<h1><%= t("history_list") %> : <%= @current_username %></h1>
-<%= render(:partial => "history/histories", :object =>histories) %>
-<%end%>
+<% workitems = object_workitems.get_workitems
+if workitems.any? %>
+  <h1><%= t("workitems_list") %> : <%= current_user.login %></h1>
+  <%= render "workitems/workitems", :object => workitems %>
+<% end %>
+<% histories = object_workitems.get_histories
+if histories.any? %>
+  <h1><%= t("history_list") %> : <%= current_user.login %></h1>
+  <%= render "history/histories", :object => histories %>
+<% end %>

@@ -9,7 +9,6 @@ class DocumentsController < ApplicationController
   # GET /documents
   # GET /documents.xml
   def index
-    puts "===DocumentsController.index:"+params.inspect
     @documents = Document.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
     respond_to do |format|
       format.html # index.html.erb
@@ -20,7 +19,6 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.xml
   def show
-    puts "===DocumentsController.show:"+params.inspect
     @document  = Document.find(params[:id])
     @datafiles = @document.get_datafiles
     @parts     = @document.parts

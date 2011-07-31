@@ -2,7 +2,7 @@ Application SylRPLM : Product Life Management
 
 - Pré-requis
   - RubyGems : https://rubygems.org/pages/download
-  - Ruby 1.8.7-p249
+  - Ruby 1.9.2
 
 - Mise en place
   - Cloner le repository git hébergé sur GitHub :

@@ -130,11 +130,11 @@ module Controllers::PlmObjectControllerModule
             if object.save
               if object.is_to_validate
                 validersMail=PlmMailer.listUserMail(validers)
-                email=PlmMailer.create_toValidate(object, @current_usermail, @urlbase, validersMail)
+                email=PlmMailer.create_toValidate(object, current_user.email, @urlbase, validersMail)
               end
               if object.is_freeze
-                validersMail=PlmMailer.listUserMail(validers,@current_user)
-                email=PlmMailer.create_validated(object, @current_usermail, @urlbase, validersMail)
+                validersMail=PlmMailer.listUserMail(validers, current_user)
+                email=PlmMailer.create_validated(object, current_user.email, @urlbase, validersMail)
               end
               unless email.blank?
                 email.set_content_type("text/html")
@@ -183,11 +183,11 @@ module Controllers::PlmObjectControllerModule
             validers=User.find_validers
             if object.is_to_validate
               validersMail=PlmMailer.listUserMail(validers)
-              email=PlmMailer.create_docToValidate(object, @current_usermail, @urlbase, validersMail)
+              email=PlmMailer.create_docToValidate(object, current_user.email, @urlbase, validersMail)
             end
             if object.frozen?
-              validersMail=PlmMailer.listUserMail(validers,@current_user)
-              email=PlmMailer.create_docValidated(object, @current_usermail, @urlbase, askUserMail, validersMail)
+              validersMail=PlmMailer.listUserMail(validers, current_user)
+              email=PlmMailer.create_docValidated(object, current_user.email, @urlbase, askUserMail, validersMail)
             end
             if(email!=nil)
               email.set_content_type("text/html")
@@ -502,7 +502,7 @@ module Controllers::PlmObjectControllerModule
   # :controller=>parts devient part
   def get_model_type(params)
     name=self.class.name+"."+__method__.to_s+":"
-    ret = case params[:controller] 
+    ret = case params[:controller]
       when "documents" then params[:controller].chop
       when  "parts" then params[:controller].chop
       when "projects" then params[:controller].chop

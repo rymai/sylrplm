@@ -1,16 +1,16 @@
-<h1><%=t(:access_new) %></h1>
+<h1><%= t(:access_new) %></h1>
 <% form_for(@access) do |f| %>
-<%= f.error_messages %>
- <%= render(:partial => "accesses/edit",:locals => { :f => f, :fonct=>"new" }) %> 
+  <%= f.error_messages %>
+  <%= render(:partial => "accesses/edit",:locals => { :f => f, :fonct => "new" }) %> 
 
-<table class='menu_bas'>
+  <table class='menu_bas'>
     <tr>
-        <td>
-            <%= f.submit t("create") %>
-        </td>
-        <td>
-            <%= link_to t("list"), accesses_path %>
-        </td>
+      <td>
+        <%= f.submit t("create") %>
+      </td>
+      <td>
+        <%= link_to t("list"), accesses_path %>
+      </td>
     </tr>
-</table>
+  </table>
 <% end %>

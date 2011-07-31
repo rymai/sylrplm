@@ -1,18 +1,17 @@
 require 'ruote_routing'
 ActionController::Routing::Routes.draw do |map|
-  map.resources :notifications
 
-  map.resources :notifications
-
-  map.resources :notifications
+  map.resources :notifications, :member => { :notify => :get }
 
   # syl 17/11/2010 : route par defaut
   map.root :controller => "main", :action => "index"
 
-  #map.resource :sessions, :only => [:new, :create, :update, :destroy], :member => { :choose_role => :get }
-  map.resource :sessions
+  map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get }
+  
+  map.resource :sessions, :only => [:new, :create, :update, :destroy], :member => { :choose_role => :get }
+  # map.resource :sessions, :only => [:new, :create, :update, :destroy]
 
-  map.resources :users
+  map.resources :users, :collection => { :empty_favori => :get }
 
   map.resources :datafiles
 
@@ -42,13 +41,13 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :partslinks
 
-  map.resources :customers
+  map.resources :customers, :collection => { :empty_favori => :get }
 
-  map.resources :projects
+  map.resources :projects, :collection => { :empty_favori => :get }
 
-  map.resources :parts, :has_many => :documents
+  map.resources :parts, :has_many => :documents, :collection => { :empty_favori => :get }
 
-  map.resources :documents
+  map.resources :documents, :collection => { :empty_favori => :get }
 
   map.resources :groups
   map.resources :user_groups
@@ -126,6 +125,6 @@ ActionController::Routing::Routes.draw do |map|
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  # map.connect ':controller/:action/:id'
+  # map.connect ':controller/:action/:id.:format'
 end
