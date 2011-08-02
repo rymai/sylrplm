@@ -84,7 +84,7 @@
             <%= link_to h_img_revise.to_s, :id => part.id, :action => :revise , :confirm => t("msg_confirm") %>
           </td>
           <td></td>
-          <td></td>
+          
         <% else %>
           <td>
             <%= link_to h_img_edit.to_s, edit_part_path(part) %>
@@ -94,8 +94,8 @@
           </td>
         <% end %>
         <td>
-          <% if connected %>
-		  <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => part.id} %>
+          <% if logged_in? %>
+		  <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => part.id}, :method => :get %>
 		  <%end%>
 		</td>
       </tr>

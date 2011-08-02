@@ -54,8 +54,8 @@
 		<td> <%= link_to h_img_show.to_s, user %></td>
 		<td> <%= link_to h_img_edit.to_s, edit_user_path(user) %></td>
 		<td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td>
-		<td><% if connected %>
-		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => user.id} %>
+		<td><% if logged_in? %>
+		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => user.id}, :method => :get %>
 		<%end%></td>
 	</tr>
 	<% end %>

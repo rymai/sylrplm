@@ -422,37 +422,36 @@ module Controllers::PlmObjectControllerModule
           link=link_[:link]
           if(link!=nil)
             if(link.save)
-              #flash[:notice] += "<br> forum #{@forum.subject} was successfully added:rel=#{relation}:#{link_[:msg]}"
-              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>t(link_[:msg]))
+               flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>t(link_[:msg]))
             else
-              #flash[:notice] += "<br> forum #{@forum.subject} was not added:rel=#{relation}:#{link_[:msg]}"
-              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>t(link_[:msg]))
+               flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>t(link_[:msg]))
               @forum.destroy
               error=true
             end
           else
-            #flash[:notice] += "<br> link #{@forum.subject} was not created:rel=#{relation}:#{link_[:msg]}"
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>nil)
+            msg=$!
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>msg)
             @forum.destroy
             error=true
           end
         else
-          flash[:notice] += t(:ctrl_object_not_created, :typeobj =>t(:ctrl_forum_item))
+          msg=$!
+          flash[:notice] += t(:ctrl_object_not_created, :typeobj =>t(:ctrl_forum_item),:msg=>msg)
           @forum.destroy
           error=true
         end
       else
-        #flash[:notice] += "<br> forum #{@forum.subject} was not saved:rel=#{relation}:#{link_[:msg]}"
-        flash[:notice] += t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>link_[:msg])
+         flash[:notice] += t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>nil)
         error=true
       end
       if error==false
         format.html { redirect_to(object) }
       else
-        puts 'PlmObjectControllerModule.add_forum:id='+object.id.to_s
+        puts 'PlmObjectControllerModule.add_forum:id='+object.id.to_s+" "+object.model_name
         @types=Typesobject.find_for("forum")
         @status= Statusobject.find_for("forum")
-        format.html { render  :action => :new_forum, :id => object.id   }
+        @object=object
+        format.html { render   :action => :new_forum, :id => object.id   }
       end
       format.xml  { head :ok }
     end
@@ -504,19 +503,20 @@ module Controllers::PlmObjectControllerModule
     name=self.class.name+"."+__method__.to_s+":"
     ret = case params[:controller]
       when "documents" then params[:controller].chop
-      when  "parts" then params[:controller].chop
+      when "parts" then params[:controller].chop
       when "projects" then params[:controller].chop
       when "customers" then params[:controller].chop
       when "notifications" then params[:controller].chop
+      when "users" then params[:controller].chop
     else params[:controller]
     end
-    puts name+params[:controller]+":"+ret
+    puts name+params[:controller]+"="+ret
     ret
   end
 
   def get_controller_from_model_type(model_type)
     # ajouter le 's' de fin
-    # parts devient parts
+    # part devient parts
     model_type+"s"
   end
 

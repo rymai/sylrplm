@@ -12,7 +12,10 @@ class User < ActiveRecord::Base
 
   validates_presence_of     :login
   validates_uniqueness_of   :login
-
+  
+  attr_accessor :designation
+  attr_accessible :designation
+  
   attr_accessor :password_confirmation
   validates_confirmation_of :password
   before_create :set_initial_attributes
@@ -29,6 +32,15 @@ class User < ActiveRecord::Base
   #
   ADMIN_GROUP_NAME = ::SYLRPLM::ADMIN_GROUP_NAME
 
+  def designation
+    
+    self.login+" "+self.first_name.to_s+" "+self.last_name.to_s
+  end
+  
+  def designation=(des)
+    designation        = des
+  end
+  
   def self.create_new(params=nil)
     unless params.nil?
       user = User.new(params)
@@ -51,10 +63,6 @@ class User < ActiveRecord::Base
 
   def ident
     self.login
-  end
-
-  def designation
-    self.first_name+" "+self.last_name
   end
 
   def validate

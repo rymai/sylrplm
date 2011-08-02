@@ -106,6 +106,11 @@ module Models::SylrplmCommon
     self.class.name.downcase
   end
   
+  def controller
+    # Part devient parts
+   self.class.name.downcase+"s"
+  end
+  
   def get_object(type, id)
     # parts devient Part
     name=self.class.name+"."+__method__.to_s+":"

@@ -56,8 +56,8 @@
 		<td> <%= link_to h_img_destroy.to_s, document, :confirm => t("msg_confirm"), :method => :delete %></td>
 		<% end %>
 		</td>
-		<td><% if connected %>
-		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => document.id} %>
+		<td><% if logged_in? %>
+		<%= link_to_remote h_img(:copy).to_s, :url => {:controller => "documents", :action => "add_favori", :id => document.id}, :method => :get  %>
 		<%end%></td>
 	</tr>
 	<% previous=document %>

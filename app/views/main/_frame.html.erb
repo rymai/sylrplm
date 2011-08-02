@@ -1,7 +1,7 @@
 <div id="banner">
     <span class='title'> <%= @page_title || "SYLRPLM" %></span>
-    <% if connected %>
-      <span class='banner'> <%= "#{current_user.login} #{t("as")} #{current_user.role.try(:title)}" %></span>
+    <% if logged_in? %>
+      <span class='banner'> <%= "#{@current_user.login} #{t("as")} #{@current_user.role.try(:title)}" %></span>
       <span class='banner'> <%= link_to h_img("disconnect").to_s, sessions_path, :method => :delete %></span>
     <% else %>
       <span class='banner'> <%= link_to t("connect"), new_sessions_url %></span>
@@ -17,7 +17,9 @@
       <fieldset>
         <%= content_tag(:legend, t(:legend_desktop)) %>
         <%= h_menu("/main","help_main",t("mnu_main")) %>
+        
         <%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
+        
         <%= h_menu("/notifications", "help_notifications",t("mnu_notifications")) %>
       </fieldset>
 
@@ -32,8 +34,10 @@
       <fieldset>
         <%= content_tag(:legend, t(:legend_collab)) %>
         <%= h_menu("/questions","help_questions",t("mnu_questions")) %>
+        
         <%= h_menu("/main/news","help_news",t("mnu_news")) %>
         <%= h_menu("/forums","help_forums",t("mnu_forums")) %>
+       
         <%= h_menu("/main/contacts","help_contacts",t("mnu_contact")) %>
       </fieldset>
 
@@ -63,7 +67,7 @@
         <%= h_menu("/processes", "help_flw_processes",t("mnu_flw_processes")) %>
       </fieldset>
 
-      <% if admin_connected %>
+      <% if admin_logged_in? %>
         <fieldset>
           <%= content_tag(:legend, t(:legend_organization)) %>
           <%= h_menu("/users","help_users",t("mnu_users")) %>

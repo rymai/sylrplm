@@ -4,25 +4,25 @@ class TypesobjectsController < ApplicationController
   # GET /typesobjects
   # GET /typesobjects.xml
   def index
-  @typesobjects = Typesobject.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])}) 
+    @typesobjects = Typesobject.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @typesobjects }
     end
   end
-  
+
   # GET /typesobjects/1
   # GET /typesobjects/1.xml
   def show
     @typesobject = Typesobject.find(params[:id])
     # objets pouvant etre types
-    
+
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @typesobject }
     end
   end
-  
+
   # GET /typesobjects/new
   # GET /typesobjects/new.xml
   def new
@@ -33,13 +33,13 @@ class TypesobjectsController < ApplicationController
       format.xml  { render :xml => @typesobject }
     end
   end
-  
+
   # GET /typesobjects/1/edit
   def edit
     @typesobject = Typesobject.find(params[:id])
     @objectswithtype=Typesobject.get_objects_with_type
   end
-  
+
   # POST /typesobjects
   # POST /typesobjects.xml
   def create
@@ -57,7 +57,7 @@ class TypesobjectsController < ApplicationController
       end
     end
   end
-  
+
   # PUT /typesobjects/1
   # PUT /typesobjects/1.xml
   def update
@@ -75,7 +75,7 @@ class TypesobjectsController < ApplicationController
       end
     end
   end
-  
+
   # DELETE /typesobjects/1
   # DELETE /typesobjects/1.xml
   def destroy

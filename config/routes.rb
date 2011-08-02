@@ -1,4 +1,6 @@
 require 'ruote_routing'
+
+
 ActionController::Routing::Routes.draw do |map|
 
   map.resources :notifications, :member => { :notify => :get }
@@ -7,8 +9,11 @@ ActionController::Routing::Routes.draw do |map|
   map.root :controller => "main", :action => "index"
 
   map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get }
-  
-  map.resource :sessions, :only => [:new, :create, :update, :destroy], :member => { :choose_role => :get }
+
+  map.resources :help, :only => [:index]
+
+  map.resource :sessions, :only => [:new, :create,  :destroy]
+  #map.resource :sessions, :only => [:new, :create, :update, :destroy], :member => { :choose_role => :get }
   # map.resource :sessions, :only => [:new, :create, :update, :destroy]
 
   map.resources :users, :collection => { :empty_favori => :get }
@@ -43,14 +48,168 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :customers, :collection => { :empty_favori => :get }
 
-  map.resources :projects, :collection => { :empty_favori => :get }
+  map.resources :projects, :collection => { :empty_favori => :get}
 
-  map.resources :parts, :has_many => :documents, :collection => { :empty_favori => :get }
+  map.resources :parts, :has_many => :documents, :collection => { :empty_favori => :get}
 
   map.resources :documents, :collection => { :empty_favori => :get }
 
+  map.connect(
+  'documents/:id/add_favori',
+  :controller => 'documents',
+  :action => 'add_favori',
+  :conditions => { :method => :get })
+  map.connect(
+  'documents/:id/add_docs',
+  :controller => 'documents',
+  :action => 'add_docs')
+  map.connect(
+  'documents/:id/new_datafile',
+  :controller => 'documents',
+  :action => 'new_datafile',
+  :conditions => { :method => :get })
+  map.connect(
+  'documents/:id/promote',
+  :controller => 'documents',
+  :action => 'promote',
+  :conditions => { :method => :get })
+  map.connect(
+  'documents/:id/demote',
+  :controller => 'documents',
+  :action => 'demote',
+  :conditions => { :method => :get })
+  map.connect(
+  'documents/:id/revise',
+  :controller => 'documents',
+  :action => 'revise',
+  :conditions => { :method => :get })
+  map.connect(
+  'documents/:id/check_out',
+  :controller => 'documents',
+  :action => 'check_out',
+  :conditions => { :method => :get })
+  map.connect(
+  'documents/:id/check_in',
+  :controller => 'documents',
+  :action => 'check_in',
+  :conditions => { :method => :get })
+
+  map.connect(
+  'parts/:id/add_favori',
+  :controller => 'parts',
+  :action => 'add_favori',
+  :conditions => { :method => :get })
+  map.connect(
+  'parts/:id/promote',
+  :controller => 'parts',
+  :action => 'promote',
+  :conditions => { :method => :get })
+  map.connect(
+  'parts/:id/demote',
+  :controller => 'parts',
+  :action => 'demote',
+  :conditions => { :method => :get })
+  map.connect(
+  'parts/:id/revise',
+  :controller => 'parts',
+  :action => 'revise',
+  :conditions => { :method => :get })
+  map.connect(
+  'parts/:id/add_parts',
+  :controller => 'parts',
+  :action => 'add_parts')
+  map.connect(
+  'parts/:id/add_docs',
+  :controller => 'parts',
+  :action => 'add_docs')
+  map.connect(
+  'parts/:id/remove_link',
+  :controller => 'parts',
+  :action => 'remove_link',
+  :conditions => { :method => :get })
+  map.connect(
+  'parts/:id/new_forum',
+  :controller => 'parts',
+  :action => 'new_forum')
+  map.connect(
+  'parts/:id/add_forum',
+  :controller => 'parts',
+  :action => 'add_forum')
+
+  map.connect(
+  'projects/:id/add_favori',
+  :controller => 'projects',
+  :action => 'add_favori',
+  :conditions => { :method => :get })
+  map.connect(
+  'projects/:id/add_docs',
+  :controller => 'projects',
+  :action => 'add_docs')
+  map.connect(
+  'projects/:id/remove_link',
+  :controller => 'projects',
+  :action => 'remove_link',
+  :conditions => { :method => :get })
+  map.connect(
+  'projects/:id/add_parts',
+  :controller => 'projects',
+  :action => 'add_parts')
+  map.connect(
+  'projects/:id/new_forum',
+  :controller => 'projects',
+  :action => 'new_forum')
+  map.connect(
+  'projects/:id/add_forum',
+  :controller => 'projects',
+  :action => 'add_forum')
+
+  map.connect(
+  'customers/:id/add_favori',
+  :controller => 'customers',
+  :action => 'add_favori',
+  :conditions => { :method => :get })
+  map.connect(
+  'customers/:id/add_docs',
+  :controller => 'customers',
+  :action => 'add_docs')
+  map.connect(
+  'customers/:id/remove_link',
+  :controller => 'customers',
+  :action => 'remove_link',
+  :conditions => { :method => :get })
+  map.connect(
+  'customers/:id/add_parts',
+  :controller => 'customers',
+  :action => 'add_parts')
+  map.connect(
+  'customers/:id/add_projects',
+  :controller => 'customers',
+  :action => 'add_projects')
+  map.connect(
+  'customers/:id/new_forum',
+  :controller => 'customers',
+  :action => 'new_forum')
+  map.connect(
+  'customers/:id/add_forum',
+  :controller => 'customers',
+  :action => 'add_forum')
+
+  map.connect(
+  'users/:id/add_favori',
+  :controller => 'users',
+  :action => 'add_favori',
+  :conditions => { :method => :get })
+
+  map.connect(
+  'links/:id/remove_link',
+  :controller => 'links',
+  :action => 'remove_link',
+  :conditions => { :method => :get })
+
   map.resources :groups
+
   map.resources :user_groups
+
   map.resources :group_definitions
 
   map.wfid_resources :errors
@@ -64,6 +223,7 @@ ActionController::Routing::Routes.draw do |map|
   :controller => 'expressions',
   :action => 'show_tree',
   :conditions => { :method => :get })
+
   map.connect(
   'expressions/:wfid/:expid/tree',
   :controller => 'expressions',
@@ -71,60 +231,63 @@ ActionController::Routing::Routes.draw do |map|
   :conditions => { :method => :put })
 
   map.resources :definitions
+
   map.connect(
   'definitions/:id/tree.js',
   :controller => 'definitions',
   :action => 'tree')
 
   map.resources :processes
+
   map.connect(
   'processes/:id/tree.js',
   :controller => 'processes',
   :action => 'tree')
 
   map.resources :workitems
+
   map.resources :history
-  # The priority is based upon order of creation: first created -> highest priority.
+# The priority is based upon order of creation: first created -> highest priority.
 
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
+# Sample of regular route:
+#   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
+# Keep in mind you can assign values other than :controller and :action
 
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
+# Sample of named route:
+#   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
+# This route can be invoked with purchase_url(:id => product.id)
 
-  #map.connect 'forum_items/:forum_id/new_response', :controller => 'forum_items', :action => 'new_response'
+#map.connect 'forum_items/:forum_id/new_response', :controller => 'forum_items', :action => 'new_response'
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
+# Sample resource route (maps HTTP verbs to controller actions automatically):
+#   map.resources :products
 
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
+# Sample resource route with options:
+#   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
 
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
+# Sample resource route with sub-resources:
+#   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
 
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
+# Sample resource route with more complex sub-resources
+#   map.resources :products do |products|
+#     products.resources :comments
+#     products.resources :sales, :collection => { :recent => :get }
+#   end
 
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
+# Sample resource route within a namespace:
+#   map.namespace :admin do |admin|
+#     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
+#     admin.resources :products
+#   end
 
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  # map.root :controller => "welcome"
+# You can have the root of your site routed with map.root -- just remember to delete public/index.html.
+# map.root :controller => "welcome"
 
-  # See how all your routes lay out with "rake routes"
+# See how all your routes lay out with "rake routes"
 
-  # Install the default routes as the lowest priority.
-  # Note: These default routes make all actions in every controller accessible via GET requests. You should
-  # consider removing or commenting them out if you're using named routes and resources.
-  # map.connect ':controller/:action/:id'
-  # map.connect ':controller/:action/:id.:format'
+# Install the default routes as the lowest priority.
+# Note: These default routes make all actions in every controller accessible via GET requests. You should
+# consider removing or commenting them out if you're using named routes and resources.
+# map.connect ':controller/:action/:id'
+# map.connect ':controller/:action/:id.:format'
 end

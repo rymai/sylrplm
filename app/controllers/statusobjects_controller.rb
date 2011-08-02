@@ -4,8 +4,7 @@ class StatusobjectsController < ApplicationController
   # GET /statusobjects
   # GET /statusobjects.xml
   def index
-  @statusobjects = Statusobject.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])}) 
-     
+    @statusobjects = Statusobject.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @statusobjects }
@@ -16,13 +15,12 @@ class StatusobjectsController < ApplicationController
   # GET /statusobjects/1.xml
   def show
     @statusobject = Statusobject.find(params[:id])
-    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @statusobject }
     end
   end
-  
+
   # GET /statusobjects/new
   # GET /statusobjects/new.xml
   def new
@@ -36,13 +34,13 @@ class StatusobjectsController < ApplicationController
       format.xml  { render :xml => @statusobject }
     end
   end
-  
+
   # GET /statusobjects/1/edit
   def edit
     @statusobject = Statusobject.find(params[:id])
     @objectswithstatus=Statusobject.get_objects_with_status
   end
-  
+
   # POST /statusobjects
   # POST /statusobjects.xml
   def create
@@ -60,7 +58,7 @@ class StatusobjectsController < ApplicationController
       end
     end
   end
-  
+
   # PUT /statusobjects/1
   # PUT /statusobjects/1.xml
   def update
@@ -78,13 +76,13 @@ class StatusobjectsController < ApplicationController
       end
     end
   end
-  
+
   # DELETE /statusobjects/1
   # DELETE /statusobjects/1.xml
   def destroy
     @statusobject = Statusobject.find(params[:id])
     @statusobject.destroy
-    
+
     respond_to do |format|
       flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
       format.html { redirect_to(statusobjects_url) }

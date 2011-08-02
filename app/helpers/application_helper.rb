@@ -1,5 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  
   # renvoie la valeur de l'attribut att sur current si
   # 1- current n'a pas le meme identifiant que previous
   # 2- que les valeurs de l'attribut sont differentes entre les 2objets
@@ -56,7 +57,7 @@ module ApplicationHelper
     unless objects[:page].nil?
       num_begin=(objects[:page].to_i-1)
     else
-      num_begin=0
+    num_begin=0
     end
     num_begin*=objects[:nb_items].to_i
     num_begin+=1
@@ -181,29 +182,29 @@ module ApplicationHelper
   end
 
   def sort_td_class_helper(param)
-    
-      result = 'class="sortup"' if params[:sort] == param
-      result = 'class="sortdown"' if params[:sort] == param.to_s + " DESC"
-      result
-    
+
+    result = 'class="sortup"' if params[:sort] == param
+    result = 'class="sortdown"' if params[:sort] == param.to_s + " DESC"
+    result
+
   end
 
   def sort_link_helper(text, param)
-   
-      key = param
-      key += " DESC" if params[:sort] == param
-      options = {
-        :url => {:overwrite_params => {:sort => key, :page => nil}},
-        :update => 'table',
-        :before => "Element.show('spinner')",
-        :success => "Element.hide('spinner')"
-      }
-      html_options = {
-        :title => t("h_sort_by_field"),
-        :href => url_for(:action => 'index', :params => params.merge({:sort => key, :page => nil}))
-      }
-      link_to_remote(text, options, html_options)
-    
+
+    key = param
+    key += " DESC" if params[:sort] == param
+    options = {
+      :url => {:overwrite_params => {:sort => key, :page => nil}},
+      :update => 'table',
+      :before => "Element.show('spinner')",
+      :success => "Element.hide('spinner')"
+    }
+    html_options = {
+      :title => t("h_sort_by_field"),
+      :href => url_for(:action => 'index', :params => params.merge({:sort => key, :page => nil}))
+    }
+    link_to_remote(text, options, html_options)
+
   end
 
   def h_sylrplm_tree
@@ -216,10 +217,10 @@ module ApplicationHelper
       bloc << "</table>"
       bloc << "<div id='dtree'>"
       if (@tree)
-        bloc <<@tree.to_s
+      bloc <<@tree.to_s
       end
       if (@tree_up)
-        bloc <<@tree_up.to_s
+      bloc <<@tree_up.to_s
       end
 
       bloc << "</div>"
@@ -279,11 +280,11 @@ module ApplicationHelper
       :request_uri, ".#{format}?plain=true"
     ].inject('') do |s, elt|
       s << if elt.is_a?(String)
-        elt
+      elt
       elsif request.respond_to?(elt)
         request.send(elt).to_s
       else # shouldn't happen, so let's be verbose
-        elt.inspect
+      elt.inspect
       end
       s
     end
@@ -291,22 +292,8 @@ module ApplicationHelper
     href
   end
 
-  def connected
-    User.connected(session)
-  end
   
-  # Returns true if the user is connected and having the admin role 
-  def admin_connected
-    ret=false
-    if connected
-      #puts "admin_connected: connected is_admin="+@current_user.is_admin?.to_s
-      if @current_user.is_admin?
-        ret=true if @current_user.is_admin?
-      end
-    end
-    ret
-  end
-  
+
   #
   # FLUO
   #
@@ -377,7 +364,7 @@ module ApplicationHelper
   end
 
   #
-  # used to build links to things like /workitems?wfid=xyz or
+  # used to build links to things like "/workitems?wfid=xyz or"
   # /processes?workflow=cheeseburger_order
   #
   def link_to_slice (item, accessor, param_name=nil)
@@ -385,5 +372,6 @@ module ApplicationHelper
     link_to(v, (param_name || accessor) => v)
   end
 
+  
 end
 

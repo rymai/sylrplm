@@ -66,7 +66,7 @@
         <table class='menu_bas'>
             <tr>
                 <td>
-                    <%= link_to h_img_add_forum.to_s+t("add_forum"), :id => @customer.id, :action => :new_forum %>
+                    <%= link_to h_img_add_forum.to_s+t("add_forum"), :action => :new_forum , :id => @customer.id %>
                 </td>
                 <td>
                     <%= link_to t("edit"), edit_customer_path(@customer) %>

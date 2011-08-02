@@ -48,7 +48,7 @@
 <table class='menu_bas'>
 	<tr>
 		<td> <% unless @document.frozen? %>
-		<%= link_to h_img(:add_datafile).to_s, :id => @document.id, :action => :new_datafile %>
+		<%= link_to h_img(:add_datafile).to_s, :url => {:controller => "documents", :action => "new_datafile", :id => @document.id}, :method => :get %>
 		<%end %></td>
 	</tr>
 </table>
@@ -58,7 +58,7 @@
 <table class='menu_bas'>
 	<tr>
 		<% unless @favori.get('document').count==0 %>
-		<% form_for(@document, :url => {:id => @document.id, :action => "add_docs" }) do |f| %>
+		<% form_for(@document, :url => {:id => @document.id, :action => "add_docs" }, :method => :get) do |f| %>
 		<td> <%= select("relation","document",options_for_select(@relation_types_document)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
 		<% end %>

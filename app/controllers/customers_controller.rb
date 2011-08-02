@@ -110,8 +110,6 @@ class CustomersController < ApplicationController
     end
   end
 
-  
-
   def add_docs
     @customer = Customer.find(params[:id])
     relation  = params[:relation][:document]

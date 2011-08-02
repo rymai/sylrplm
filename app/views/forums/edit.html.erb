@@ -2,11 +2,7 @@
 
 <% form_for(@forum) do |f| %>
   <%= f.error_messages %>
-
   <%= render(:partial => "forums/edit",:locals => { :f => f, :fonct=>"edit" }) %>
-
-  
-
 <table class='menu_bas'>
 <tr>
 <td><%= f.submit t("update") %></td>

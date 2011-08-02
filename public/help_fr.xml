@@ -1,7 +1,7 @@
 <sylrplm_help key="help_main" title="Documentation de l'application SYLPLM">
     
     Bienvenue dans l'application SYLRPLM développée sur "Ruby On Rails"#img=rails.png=img##lnk=http://www.railsfrance.org/=lnk#"
-    <msg key="help_presentation" title="Présentation générale">
+    <msg key="help_main" title="Présentation générale">
         <msg key="help_banner" title="Bandeau">
             #img=help/bandeau.png=img#
             Indique le nom de l'utilisateur et son rôle ()

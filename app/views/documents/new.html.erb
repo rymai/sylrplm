@@ -1,6 +1,5 @@
 <h1><%= t("document_new") %></h1>
-<% form_for(@document,
-:html => { :multipart => true}) do |f| %>
+<% form_for(@document) do |f| %>
 <%= hidden_field :document , :revision %>
 
 <table class='menu_bas'>

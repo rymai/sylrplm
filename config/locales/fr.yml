@@ -166,6 +166,7 @@ fr:
   #########################################
   #views
   #########################################
+  as: " en tant que "
   hello: "Bienvenue"
   disconnect: "Se deconnecter"
   connect: "Se connecter"

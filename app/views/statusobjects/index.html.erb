@@ -1,75 +1,35 @@
-<h1><%=t(:statusobjects_list) %><%=h_count_objects(@statusobjects)%> </h1>
+<h1><%= t(:statusobjects_list) %><%= h_count_objects(@statusobjects)%> </h1>
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t(:new_statusobject), new_statusobject_path %>
-        </td>
-				<td>
-            <%= show_help("help_statusobjects") %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= link_to t(:new_statusobject), new_statusobject_path %> </td>
+		<td> <%= show_help("help_statusobjects") %> </td>
+	</tr>
 </table>
 <%= form_simple_query_helper('/statusobjects', @statusobjects) %>
 <%= will_paginate(@statusobjects[:recordset]) %>
 <table>
-    <tr>
-        <th>
-            <%=t(:label_id) %>
-        </th>
-        <th>
-            <%=t(:label_object) %>
-        </th>
-        <th>
-            <%=t(:label_name) %>
-        </th>
-        <th>
-            <%=t(:label_rank) %>
-        </th>
-        <th>
-            <%=t(:label_description) %>
-        </th>
-        <th>
-            <%=t(:label_promote) %>
-        </th>
-        <th>
-            <%=t(:label_demote) %>
-        </th>
-								<th></th><th></th><th></th>
- 
-    </tr>
-    <% @statusobjects[:recordset].each do |statusobject| %>
-    <tr>
-        <td>
-            <%=h statusobject.id %>
-        </td>
-        <td>
-            <%=h statusobject.object %>
-        </td>
-        <td>
-            <%=h statusobject.name %>
-        </td>
-        <td>
-            <%=h statusobject.rank %>
-        </td>
-        <td>
-            <%=h statusobject.description %>
-        </td>
-       <td>
-            <%=h statusobject.promote %>
-        </td>
-       <td>
-            <%=h statusobject.demote %>
-        </td>
-        <td>
-            <%= link_to h_img_show.to_s, statusobject %>
-        </td>
-        <td>
-            <%= link_to h_img_edit.to_s, edit_statusobject_path(statusobject) %>
-        </td>
-        <td>
-            <%= link_to h_img_destroy.to_s, statusobject, :confirm => t(:msg_confirm), :method => :delete %>
-        </td>
-    </tr>
-    <% end %>
+	<tr>
+		<th <%= sort_td_class_helper "id" %>> <%= sort_link_helper t(:label_id), "id" %> </th>
+		<th <%= sort_td_class_helper "object" %>> <%= sort_link_helper t(:label_object), "object" %> </th>
+		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t(:label_name), "name" %> </th>
+		<th <%= sort_td_class_helper "rank" %>> <%= sort_link_helper t(:label_rank), "rank" %> </th>
+		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
+		<th <%= sort_td_class_helper "promote" %>> <%= sort_link_helper t(:label_promote), "promote" %> </th>
+		<th <%= sort_td_class_helper "demote" %>> <%= sort_link_helper t(:label_demote), "demote" %> </th><th></th><th></th><th></th>
+	</tr>
+	<% @statusobjects[:recordset].each do |statusobject| %>
+	<tr>
+		<td> <%= h statusobject.id %> </td>
+		<td> <%= h statusobject.object %> </td>
+		<td> <%= h statusobject.name %> </td>
+		<td> <%= h statusobject.rank %> </td>
+		<td> <%= h statusobject.description %> </td>
+		<td> <%= h statusobject.promote %> </td>
+		<td> <%= h statusobject.demote %> </td>
+		<td> <%= link_to h_img_show.to_s, statusobject %> </td>
+		<td> <%= link_to h_img_edit.to_s, edit_statusobject_path(statusobject) %> </td>
+		<td> <%= link_to h_img_destroy.to_s, statusobject, :confirm => t(:msg_confirm), :method => :delete %> </td>
+	</tr>
+	<% end %>
 </table>
-<%= will_paginate(@statusobjects[:recordset]) %>
+<%= will_paginate(@statusobjects[:recordset]) %> 

@@ -1,6 +1,6 @@
 <div class="favori-title"><%=t(:favoris_customer)%>
 <%= link_to_remote( h_img(:destroy).to_s, 
-:url=> { :controller=>"customers", :action => :empty_favori })%>
+:url=> { :controller=>"customers", :action => :empty_favori }, :method=> :get)%>
 </div>
 <% if @favori.get("customer") != nil %>
 	<% if @favori.get("customer").count >0 %>

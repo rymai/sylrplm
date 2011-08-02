@@ -160,6 +160,7 @@ en:
   #########################################
   #views
   #########################################
+  as: " as "
   hello: "Hello world"
   disconnect: "Disconnect"
   connect: "Connect"

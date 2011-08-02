@@ -22,7 +22,6 @@
 # Made in Japan.
 #++
 
-
 #
 # This RESTful resource has no 'edit' nor 'new' view. User 'groups' for
 # interaction via HTML.
@@ -30,8 +29,6 @@
 class UserGroupsController < ApplicationController
 
   ###before_filter :login_required
-
-
   # GET /user_groups
   # GET /user_groups.xml
   #
@@ -74,7 +71,7 @@ class UserGroupsController < ApplicationController
 
       if @current_user_group.save
 
-        flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_group), :ident => "#{@current_user_group.user.login}-#{@current_user_group.group.name}")    
+        flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_group), :ident => "#{@current_user_group.user.login}-#{@current_user_group.group.name}")
         format.html do
           if request.env['HTTP_REFERER']
             redirect_to :back
@@ -93,7 +90,7 @@ class UserGroupsController < ApplicationController
         end
 
       else
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group))    
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group))
 
         format.html {
           render :controller => :groups, :action => :index }

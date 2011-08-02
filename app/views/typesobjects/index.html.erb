@@ -13,18 +13,11 @@
 <%= will_paginate(@typesobjects[:recordset]) %>
 <table>
     <tr>
-        <th>
-            <%=t(:label_id) %>
-        </th>
-        <th>
-            <%=t(:label_object) %>
-        </th>
-        <th>
-            <%=t(:label_name) %>
-        </th>
-        <th>
-            <%=t(:label_description) %>
-        </th>
+		<th <%= sort_td_class_helper "id" %>> <%= sort_link_helper t(:label_id), "id" %> </th>
+		<th <%= sort_td_class_helper "object" %>> <%= sort_link_helper t(:label_object), "object" %> </th>
+		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t(:label_name), "name" %> </th>
+		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
+
 				<th></th><th></th><th></th>
      </tr>
     <% @typesobjects[:recordset].each do |typesobject| %>

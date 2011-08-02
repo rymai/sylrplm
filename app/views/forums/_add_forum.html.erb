@@ -1,12 +1,12 @@
-<h1><%=t(:forum_new) %></h1>
-<% form_for (@forum, :url => { :action=>"add_forum",:id=>@object.id } ) do |f| %>
+<h1><%= t(:forum_new) %></h1>
+<% form_for( @forum, :url => { :controller => @object.controller,
+:action => "add_forum" ,
+:id => @object.id }, :method => :get ) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "forums/edit",:locals => { :f => f, :fonct=>"add" }) %>
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= f.submit t(:add_forum) %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= f.submit t(:add_forum) %> </td>
+	</tr>
 </table>
 <% end %>

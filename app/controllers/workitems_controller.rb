@@ -27,6 +27,7 @@ require 'ruote/sylrplm/workitems'
 
 class WorkitemsController < ApplicationController
   include Controllers::PlmObjectControllerModule
+  before_filter :authorize, :except => nil
   access_control(Access.find_for_controller(controller_class_name))
   # GET /workitems
   #  or
