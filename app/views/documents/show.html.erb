@@ -1,12 +1,4 @@
 <h1><%= t("document_show") %></h1>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("edit"), edit_document_path(@document) %></td>
-		<td> <%= link_to t("new_document"), new_document_path %></td>
-		<td> <%= link_to t("list"), documents_path %></td>
-	</tr>
-</table>
-<br/>
 <p>
 	<b><%= t("label_ident") %></b>
 	<%= h @document.ident %>
@@ -45,30 +37,28 @@
 </p>
 <h1><%= t("document_datafiles") %></h1>
 <%= render(:partial => "datafiles/index_datafiles", :locals=>{:document=>@document}) %>
+<% unless @document.frozen? %>
 <table class='menu_bas'>
 	<tr>
-		<td> <% unless @document.frozen? %>
-		<%= link_to h_img(:add_datafile).to_s, :url => {:controller => "documents", :action => "new_datafile", :id => @document.id}, :method => :get %>
-		<%end %></td>
+		<td> 
+		<%= link_to t("add_datafile"), :url => {:controller => "documents", :action => "new_datafile", :id => @document.id}, :method => :get %>
+		</td>
 	</tr>
 </table>
+<%end %>
 <h1></h1>
-<%= h_sylrplm_tree %>
-<h1></h1>
+<%= h_sylrplm_tree %> <h1></h1>
 <table class='menu_bas'>
 	<tr>
 		<% unless @favori.get('document').count==0 %>
-		<% form_for(@document, :url => {:id => @document.id, :action => "add_docs" }, :method => :get) do |f| %>
-		<td> <%= select("relation","document",options_for_select(@relation_types_document)) %></td>
+		<% form_for(@document, :url => {:id => @document.id, :action => "add_docs" }, :method => :get) do |f| %> <td> <%= select("relation","document",options_for_select(@relation_types_document)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
 		<% end %>
 		<%end%>
 	</tr>
 	</td>
 </table>
-<%= render(:partial => "shared/object_workitems", :object => @document) %>
-
-<h1><%= t("document_check") %></h1>
+<%= render(:partial => "shared/object_workitems", :object => @document) %> <h1><%= t("document_check") %></h1>
 <table class='menu_bas'>
 	<% if @document.frozen? %>
 	<tr>
@@ -83,8 +73,7 @@
 		<td> <%= text_field_tag :out_reason %></td>
 	</tr>
 	<%end %>
-	<% else %>
-	<td> <%= t("is_check_out") %></td>
+	<% else %> <td> <%= t("is_check_out") %></td>
 	<td> <%= t("label_out_reason") %></td>
 	<td> <%= @checkout.out_reason.force_encoding('utf-8') %> </td>
 	<% form_for(@document, :url => {:id => @document.id, :action => "check_in" },
@@ -104,4 +93,11 @@
 	<% end %>
 	<%end %>
 	<% end %>
+</table>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t("edit"), edit_document_path(@document) %></td>
+		<td> <%= link_to t("new_document"), new_document_path %></td>
+		<td> <%= link_to t("list"), documents_path %></td>
+	</tr>
 </table>

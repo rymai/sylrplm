@@ -1,38 +1,33 @@
 <li>
-
 	<table>
-	
-	<% if(f_item.author!=nil)%>
+		<% if(f_item.author!=nil)%>
 		<tr>
 			<td>Author:<%= f_item.author.login%></td>
 		</tr>
-	<% end %>
-	<tr>
-		<td>Date:<%=f_item.updated_at%>, Id:<%=f_item.id%>, Forum:<%=f_item.forum_id%>, Parent=<%=f_item.parent_id%></td>
-	</tr>
-	
-	<tr>
-		<td><%= text_area_tag "forum_message", f_item.message, :rows => 5, :cols =>60%></td>
-	</tr>
-	 
-	<tr>
-		<td><%= f_item.forum_item.count %> <%= t("forum_follow")%>
-		<% unless @forum.frozen? %>
-			<%= link_to t("forum_item_response"), 
-				{:controller=>"forum_items",:action => "new",
-			 	:forum_id=>@forum.id,:parent_id=>f_item.id}
-			 	%>
-			<% if(f_item.forum_item.count == 0 && f_item.parent != nil ) %>
-				<%= link_to t("destroy"), f_item, :controller=>"forum_items", :method => :delete %>
-			<% end %>
 		<% end %>
-		</td> 	
-	</tr>
+		<tr>
+			<td>Date:<%= f_item.updated_at%>, Id:<%= f_item.id%>, Forum:<%= f_item.forum_id%>, Parent=<%= f_item.parent_id%></td>
+		</tr>
+		<tr>
+			<td><%= text_area_tag "forum_message", f_item.message, :rows => 5, :cols =>60%></td>
+		</tr>
+		<tr>
+			<td><%= f_item.forum_item.count %> <%= t("forum_follow")%>
+			<% unless @forum.frozen? %>
+			<%= link_to t("forum_item_response"),
+			{:controller=>"forum_items",:action => "new",
+			:forum_id=>@forum.id,:parent_id=>f_item.id}
+%>
+			<% if(f_item.forum_item.count == 0 && f_item.parent != nil ) %>
+			<%= link_to t("destroy"), f_item, :controller=>"forum_items", :method => :delete %>
+			<% end %>
+			<% end %> </td>
+		</tr>
 	</table>
 	<% if(f_item.forum_item.count) >0 %>
-		<ul class='forum'>
-			<%= render(:partial => "forums/f_item", :collection => f_item.forum_item) %>
-		</ul>
+	<ul class='forum'>
+		<%= render(:partial => "forums/f_item", :collection => f_item.forum_item) %>
+	</ul>
 	<%end%>
 
-</ul>
+	</ul>

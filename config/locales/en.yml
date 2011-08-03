@@ -78,6 +78,7 @@ en:
   #group_definitions
   ctrl_group_definitions: Group-processus
   #link
+  ctrl_link: Relation
   ctrl_link_already_customer_project: Project already link at customer
   ctrl_link_already_project_user: User already actor on this project
   ctrl_link_already_project: Project already link
@@ -124,6 +125,8 @@ en:
   ctrl_process: Process
   #projects
   ctrl_project: Project
+  #questions
+  ctrl_question: Question
   #roles
   ctrl_role: Role
   #sequences

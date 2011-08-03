@@ -2,22 +2,13 @@
 <h2><%= t(:tit_language) %><%= I18n.locale.to_s %></h2>
 <h2><%= t(:datas_in_database) %></h2>
 <table>
+	<% @datas.each do |key,value| %>
 	<tr>
-		<td> <%= @datas[:documents] %></td>
-		<td> <%= t("ctrl_document") %></td>
+		<td> <%= @datas[key] %></td>
+		<td> <%= t("ctrl_#{key}") %></td>
 	</tr>
-	<tr>
-		<td> <%= @datas[:parts] %></td>
-		<td> <%= t("ctrl_part") %></td>
-	</tr>
-	<tr>
-		<td> <%= @datas[:projects] %></td>
-		<td> <%= t("ctrl_project") %></td>
-	</tr>
-	<tr>
-		<td> <%= @datas[:customers] %></td>
-		<td> <%= t("ctrl_customer") %></td>
-	</tr>
+	<% end %>
+	
 </table>
 <hr>
 <%= h_help_all %>

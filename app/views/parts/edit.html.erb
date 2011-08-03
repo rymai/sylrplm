@@ -1,31 +1,22 @@
-<h1><%=t(:part_edit) %></h1>
+<h1><%= t(:part_edit) %></h1>
 <% form_for(@part) do |f| %>
-  <%= f.error_messages %>
-  <%= render(:partial => "parts/edit",:locals => { :f => f, :fonct=>"edit" }) %>
-
-  <table class='menu_bas'>
-      <tr>
-          <td>
-              <%= f.submit t(:update) %>
-          </td>
-          <td>
-              <% if @part.frozen? %>
-                <%=t(:freeze) %>
-              <% else %>
-                <% if @part.statusobject.promote %>
-                  <%= link_to t(:promote), :id => @part.id, :action => :promote , :confirm => t(:msg_confirm) %>
-                <% end %>
-                <% if @part.statusobject.demote %>
-                  <%= link_to t(:demote), :id => @part.id, :action => :demote , :confirm => t(:msg_confirm) %>
-                <% end %>
-              <% end %>
-          </td>
-          <td>
-              <%= link_to t("explorer"), @part %>
-          </td>
-          <td>
-              <%= link_to t("list"), parts_path %>
-          </td>
-      </tr>
-  </table>
-<% end %>
+<%= f.error_messages %>
+<%= render(:partial => "parts/edit",:locals => { :f => f, :fonct=>"edit" }) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= f.submit t(:update) %> </td>
+		<td> <% if @part.frozen? %>
+		<%= t(:freeze) %>
+		<% else %>
+		<% if @part.statusobject.promote %>
+		<%= link_to t(:promote), :id => @part.id, :action => :promote , :confirm => t(:msg_confirm) %>
+		<% end %>
+		<% if @part.statusobject.demote %>
+		<%= link_to t(:demote), :id => @part.id, :action => :demote , :confirm => t(:msg_confirm) %>
+		<% end %>
+		<% end %> </td>
+		<td> <%= link_to t("explorer"), @part %> </td>
+		<td> <%= link_to t("list"), parts_path %> </td>
+	</tr>
+</table>
+<% end %> 

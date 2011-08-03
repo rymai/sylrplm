@@ -81,7 +81,7 @@ class ProjectsController < ApplicationController
         format.html { redirect_to(@project) }
         format.xml  { render :xml => @project, :status => :created, :location => @project }
       else
-        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_project),:ident=>@project.ident, :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
       end
@@ -156,7 +156,7 @@ class ProjectsController < ApplicationController
               flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>nil)
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>link_[:msg])
           end
         end
         empty_favori_by_type("document")
@@ -186,7 +186,7 @@ class ProjectsController < ApplicationController
               flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>nil)
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>link_[:msg])
           end
         end
         empty_favori_by_type("part")

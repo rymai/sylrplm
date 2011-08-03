@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
 
   skip_before_filter :authorize, :object_exists
   def new
-    @languages = get_languages
+    #@languages = get_languages
   end
 
   def edit
@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     flash.now[:notice] = "post"
     if current_user.nil?
       @current_user = User.authenticate(params[:login], params[:password])
-      @languages = get_languages
+      #@languages = get_languages
       respond_to do |format|
         if current_user
           @roles = current_user.roles

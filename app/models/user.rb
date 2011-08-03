@@ -3,6 +3,8 @@
 class User < ActiveRecord::Base
   include Models::SylrplmCommon
 
+  attr_accessor :designation, :password, :password_confirmation
+
   has_and_belongs_to_many :roles
   belongs_to :role
   belongs_to :volume
@@ -13,12 +15,8 @@ class User < ActiveRecord::Base
   validates_presence_of     :login
   validates_uniqueness_of   :login
   
-  attr_accessor :designation
-  attr_accessible :designation
-  
-  attr_accessor :password_confirmation
   validates_confirmation_of :password
-  before_create :set_initial_attributes
+  
   MAIL_NOTIFICATION_OPTIONS = [
     [0, :label_user_mail_option_all],
     [1, :label_user_mail_option_selected],
@@ -33,12 +31,19 @@ class User < ActiveRecord::Base
   ADMIN_GROUP_NAME = ::SYLRPLM::ADMIN_GROUP_NAME
 
   def designation
-    
     self.login+" "+self.first_name.to_s+" "+self.last_name.to_s
   end
   
-  def designation=(des)
-    designation        = des
+  def designation=(val)
+    designation        = val
+  end
+  
+  def password=(val)
+    password        = val
+  end
+ 
+  def password_confirmation=(val)
+    password_confirmation        = val
   end
   
   def self.create_new(params=nil)
@@ -96,10 +101,6 @@ class User < ActiveRecord::Base
     if User.count.zero?
       raise "Can't delete last user"
     end
-  end
-
-  def set_initial_attributes
-
   end
 
   #

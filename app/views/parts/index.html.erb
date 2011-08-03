@@ -1,4 +1,6 @@
-<h1><%=t(:part_list) %><%=h_count_objects(@parts) %></h1>
+<h1><%= t(:part_list) %><%= h_count_objects(@parts) %></h1>
+
+<%= form_simple_query_helper('/parts', @parts) %>
 <table class='menu_bas'>
   <tr>
     <td>
@@ -9,7 +11,6 @@
     </td>
   </tr>
 </table>
-<%= form_simple_query_helper('/parts', @parts) %>
 <%= will_paginate(@parts[:recordset]) %>
 <table>
     <tr>
@@ -52,29 +53,29 @@
         </td
         
         <td>
-          <%=h part.ident %>
+          <%= h part.ident %>
         </td>
         <td>
           <% unless part.typesobject.nil? %>
-            <%=h part.typesobject.name %>
+            <%= h part.typesobject.name %>
           <% end %>
         </td>
         <td>
-          <%=h part.revision %>
+          <%= h part.revision %>
         </td>
         <td>
-          <%=h part.designation %>
+          <%= h part.designation %>
         </td>
         <td>
           <% unless part.statusobject.nil? %>
-            <%=h part.statusobject.name %>
+            <%= h part.statusobject.name %>
           <% end %>
         </td>
         <td>
-          <%=h part.owner.login %>
+          <%= h part.owner.login %>
         </td>
         <td>
-          <%=l part.date %>
+          <%= l part.date %>
         </td>
         <td>
           <%= link_to h_img_show.to_s, part %>
@@ -102,4 +103,13 @@
     <% end %>
 </table>
 <%= will_paginate(@parts[:recordset]) %>
-
+<table class='menu_bas'>
+  <tr>
+    <td>
+      <%= link_to t("new_part"), new_part_path %>
+    </td>
+    <td>
+      <%= show_help("help_parts") %>
+    </td>
+  </tr>
+</table>

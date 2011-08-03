@@ -1,4 +1,6 @@
 <h1><%=t(:volume_list) %><%=h_count_objects(@volumes) %></h1>
+
+<%= form_simple_query_helper('/volumes', @volumes) %>
 <table class='menu_bas'>
     <tr>
         <td>
@@ -9,7 +11,6 @@
         </td>
     </tr>
 </table>
-<%= form_simple_query_helper('/volumes', @volumes) %>
 <%= will_paginate(@volumes[:recordset]) %>
 <table>
     <tr>
@@ -59,3 +60,13 @@
     <% end %>
 </table>
 <%= will_paginate(@volumes[:recordset]) %>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t(:new_volume), new_volume_path %>
+        </td>
+        <td>
+            <%= show_help("help_volumes") %>
+        </td>
+    </tr>
+</table>

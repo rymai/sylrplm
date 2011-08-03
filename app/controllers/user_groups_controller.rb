@@ -90,7 +90,7 @@ class UserGroupsController < ApplicationController
         end
 
       else
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group))
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group), :msg => nil)
 
         format.html {
           render :controller => :groups, :action => :index }

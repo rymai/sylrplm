@@ -1,11 +1,6 @@
 <h1><%= t("definitions_show") %><%= h @definition.id %></h1>
 <div style="float: left;">
 	<table>
-		<tr class="button-row">
-			<td> <%= link_to t("edit"), edit_definition_path(@definition) %></td>
-			<td> <%= link_to t("new_definition"), new_process_path(:definition_id => @definition.id) %></td>
-			<td> <%= link_to t("list"), definitions_path %></td>
-		</tr>
 		<tr>
 			<td class="wide-first-col"><%= t("label_name")%></td>
 			<td><%= h @definition.name %></td>
@@ -23,16 +18,21 @@
 			<td><%= h @definition.created_at %></td>
 		</tr>
 		<tr>
-			<td><%= t("label_updated_at")%></td>
-			<td><%= h @definition.updated_at %></td>
+			<td><%= t("label_updated_at")%></td> <td><%= h @definition.updated_at %></td>
 		</tr>
 		<tr>
 			<td><%= t("label_launch_fields")%></td>
 			<td><%= h @definition.launch_fields %></td>
 		</tr>
 	</table>
+	<table class='menu_bas'>
+		<tr class="button-row">
+			<td> <%= link_to t("edit"), edit_definition_path(@definition) %></td>
+			<td> <%= link_to t("new_definition"), new_process_path(:definition_id => @definition.id) %></td>
+			<td> <%= link_to t("list"), definitions_path %></td>
+		</tr>
+	</table>
 </div>
 <div class="align-right">
 	<%= render_fluo :definition => @definition %>
 </div>
-

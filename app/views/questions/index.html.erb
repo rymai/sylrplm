@@ -1,4 +1,6 @@
 <h1><%=t(:questions_list) %><%=h_count_objects(@faqs) %></h1>
+
+<%= form_simple_query_helper('/questions', @faqs) %>
 <table class='menu_bas'>
     <tr>
         <td>
@@ -9,7 +11,6 @@
         </td>
     </tr>
 </table>
-<%= form_simple_query_helper('/questions', @faqs) %>
 <%= will_paginate(@faqs[:recordset]) %>
 <table>
     <tr>
@@ -47,4 +48,13 @@
     <% end %>
 </table>
 <%= will_paginate(@faqs[:recordset]) %>
-
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t(:new_question), new_question_path %>
+        </td>
+        <td>
+            <%= show_help("help_questions") %>
+        </td>
+    </tr>
+</table>

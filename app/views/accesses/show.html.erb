@@ -1,26 +1,20 @@
 <h1><%= t("access_show") %></h1>
 <p>
-  <b><%= t("label_controller") %>:</b>
-  <%= h @access.controller %>
+	<b><%= t("label_controller") %>:</b>
+	<%= h @access.controller %>
 </p>
 <p>
-  <b><%= t("label_action") %>:</b>
-  <%=h @access.action %>
+	<b><%= t("label_action") %>:</b>
+	<%= h @access.action %>
 </p>
 <p>
-  <b><%= t("label_role") %>:</b>
-  <%=h @access.roles %>
+	<b><%= t("label_role") %>:</b>
+	<%= h @access.roles %>
 </p>
 <table class='menu_bas'>
-  <tr>
-    <td>
-      <%= link_to t("edit"),edit_access_path(@access) %>
-    </td>
-    <td>
-      <%= link_to t("new_access"), new_access_path %>
-    </td>
-    <td>
-      <%= link_to t("list"), accesses_path %>
-    </td>
-  </tr>
+	<tr>
+		<td> <%= link_to t("edit"),edit_access_path(@access) %> </td>
+		<td> <%= link_to t("new_access"), new_access_path %> </td>
+		<td> <%= link_to t("list"), accesses_path %> </td>
+	</tr>
 </table>

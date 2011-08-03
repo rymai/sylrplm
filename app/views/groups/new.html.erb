@@ -1,18 +1,14 @@
-<h1><%=t("groups_new") %></h1>
-
+<h1><%= t("groups_new") %></h1>
 <% form_for(@group) do |f| %>
-  <%= f.error_messages %>
-  <table>
-    <tr>
-      <td>name</td>
-      <td><%= f.text_field :name %></td>
-    </tr>
-    <tr>
-      <td colspan='2'>
-        <%= f.submit 'create' %>
-        <%= link_to 'back', groups_path %>
-      </td>
-    </tr>
-  <table>
-<% end -%>
-
+<%= f.error_messages %>
+<table>
+	<tr>
+		<td>name</td>
+		<td><%= f.text_field :name %></td>
+	</tr>
+	<tr>
+		<td colspan='2'> <%= f.submit 'create' %>
+		<%= link_to 'back', groups_path %> </td>
+	</tr>
+	<table>
+		<% end %>

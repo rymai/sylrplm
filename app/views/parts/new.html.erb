@@ -1,16 +1,12 @@
-<h1><%=t(:part_new) %></h1>
+<h1><%= t(:part_new) %></h1>
 <% form_for(@part) do |f| %>
 <%= hidden_field :part , :revision %>
 <%= f.error_messages %>
 <%= render(:partial => "parts/edit",:locals => { :f => f, :fonct=>"new" }) %>
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= f.submit t("create") %>
-        </td>
-        <td>
-            <%= link_to t("list"), parts_path %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= f.submit t("create") %> </td>
+		<td> <%= link_to t("list"), parts_path %> </td>
+	</tr>
 </table>
 <% end %>

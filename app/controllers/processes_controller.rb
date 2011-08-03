@@ -146,7 +146,7 @@ class ProcessesController < ApplicationController
         e.backtrace.each {|x| puts x}
 
         respond_to do |format|
-          flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => e)
+          flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => nil)
           format.html { redirect_to new_process_path(:definition_id => @definition.id)}
           format.xml  { render :xml => e, :status => :unprocessable_entity }
         end

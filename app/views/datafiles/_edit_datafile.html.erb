@@ -2,55 +2,55 @@
 <%= hidden_field_tag "fonct" , fonct %>
 <%= f.error_messages %>
 <p>
-  <b><%= f.label t(:label_ident) %></b>
-  <br/>
-  <%= f.text_field :ident %>
+	<b><%= f.label t(:label_ident) %></b>
+	<br/>
+	<%= f.text_field :ident %>
 </p>
 <p>
-  <b><%= f.label t(:label_type) %></b>
-  <br/>
-  <%= f.collection_select(:typesobject_id, @types, :id, :name) %>
+	<b><%= f.label t(:label_type) %></b>
+	<br/>
+	<%= f.collection_select(:typesobject_id, @types, :id, :name) %>
 </p>
 <p>
-  <b><%= f.label t(:label_revision) %></b>
-  <br/>
-  <%=h @datafile.revision %>
+	<b><%= f.label t(:label_revision) %></b>
+	<br/>
+	<%= h @datafile.revision %>
 </p>
 <p>
-  <b><%= f.label t(:label_volume) %></b>
-  <br/>
-  <%= @datafile.volume.name %>
+	<b><%= f.label t(:label_volume) %></b>
+	<br/>
+	<%= @datafile.volume.name %>
 </p>
 <p>
-  <b><%= f.label t(:label_filename) %>:</b>
-  <%= @datafile.filename %>
-  <% unless document.nil? %>
-    <% if document.checked? %>
-      <br/>
-      <%= f.file_field(:uploaded_file) %>
-      <% if @datafile.get_revisions_files.length > 0 %>
-    		<br/>
-    		<b><%= f.label t(:label_restore_file) %></b>
-    		<br/>
-        <%= select_tag("restore_file",options_for_select(@datafile.get_revisions_files,@datafile.get_current_revision_file)) %>
-      <% end %>
-  	<% end %>
-  <% else %>
-    <br/>
-    <%= f.file_field(:uploaded_file) %>
-    <br/>
-  	<b><%= f.label t(:label_restore_file) %></b>
-    <br/>
-    <%= select_tag("restore_file",options_for_select(@datafile.get_revisions_files,@datafile.get_current_revision_file)) %>
-  <% end %>
+	<b><%= f.label t(:label_filename) %>:</b>
+	<%= @datafile.filename %>
+	<% unless document.nil? %>
+	<% if document.checked? %>
+	<br/>
+	<%= f.file_field(:uploaded_file) %>
+	<% if @datafile.get_revisions_files.length > 0 %>
+	<br/>
+	<b><%= f.label t(:label_restore_file) %></b>
+	<br/>
+	<%= select_tag("restore_file",options_for_select(@datafile.get_revisions_files,@datafile.get_current_revision_file)) %>
+	<% end %>
+	<% end %>
+	<% else %>
+	<br/>
+	<%= f.file_field(:uploaded_file) %>
+	<br/>
+	<b><%= f.label t(:label_restore_file) %></b>
+	<br/>
+	<%= select_tag("restore_file",options_for_select(@datafile.get_revisions_files,@datafile.get_current_revision_file)) %>
+	<% end %>
 </p>
 <p>
-  <b><%= f.label t(:label_content_type) %></b>
-  <br/>
-  <%= @datafile.content_type %>
+	<b><%= f.label t(:label_content_type) %></b>
+	<br/>
+	<%= @datafile.content_type %>
 </p>
 <p>
-  <b><%= f.label t(:label_responsible) %></b>
-  <br/>
-  <%= @datafile.owner.login %>
+	<b><%= f.label t(:label_responsible) %></b>
+	<br/>
+	<%= @datafile.owner.login %>
 </p>

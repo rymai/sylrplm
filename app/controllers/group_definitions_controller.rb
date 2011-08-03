@@ -82,7 +82,7 @@ class GroupDefinitionsController < ApplicationController
         end
 
       else
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group_definitions), :ident => @group_definition.group.name+"/"+@group_definition.definition.name)    
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group_definitions), :ident => @group_definition.group.name+"/"+@group_definition.definition.name, :msg => nil)    
 
         format.html { render :action => "new" }
         format.xml  { render :xml => @group_definition.errors, :status => :unprocessable_entity }

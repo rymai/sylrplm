@@ -14,23 +14,18 @@ class MainController < ApplicationController
     LOG.debug("debug")
     LOG.fatal("fatal")
     message = check_init
-    puts "main_controller.index"
     @datas = get_datas_count
     @themes = get_themes(@theme)
     unless params[:theme].nil?
       @theme = params[:theme]
       unless @current_user.nil?
-        puts "main_controller.index:theme=#{params.inspect}"
         @current_user.theme = @theme
         st = @current_user.save
-        puts "main_controller.index:theme=#{@theme} update=#{st}"
       else
         session[:theme] = @theme
-        puts "main_controller.index:theme=#{session[:theme]}"
       end
     end
     unless params[:locale].nil?
-      puts "main_controller.index:language=#{params[:locale]} "
       set_locale
     end
    

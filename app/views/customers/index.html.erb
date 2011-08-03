@@ -1,95 +1,49 @@
-<h1><%=t("customer_list") %><%=h_count_objects(@customers) %></h1>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t("new_customer"), new_customer_path %>
-        </td>
-        <td>
-            <%= show_help("help_customers") %>
-        </td>
-    </tr>
-</table>
+<h1><%= t("customer_list") %><%= h_count_objects(@customers) %></h1>
 <%= form_simple_query_helper('/customers', @customers) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t("new_customer"), new_customer_path %> </td>
+		<td> <%= show_help("help_customers") %> </td>
+	</tr>
+</table>
 <%= will_paginate(@customers[:recordset]) %>
 <table>
-    <tr>
-        <th>
-        </th>
-        <th<%= sort_td_class_helper "ident" %>>
-            <%= sort_link_helper t("label_ident"), "ident" %>
-        </th>
-        <th<%= sort_td_class_helper "typesobject_id" %>>
-            <%= sort_link_helper t("label_typesobject"), "typesobject_id" %>
-        </th>
-        <th<%= sort_td_class_helper "designation" %>>
-            <%= sort_link_helper t("label_designation"), "designation" %>
-        </th>
-        <th<%= sort_td_class_helper "statusobject_id" %>>
-            <%= sort_link_helper t("label_statusobject"), "statusobject_id" %>
-        </th>
-        <th<%= sort_td_class_helper "owner" %>>
-            <%= sort_link_helper t("label_responsible"), "owner" %>
-        </th>
-        <th<%= sort_td_class_helper "date" %>>
-            <%= sort_link_helper t("label_date"), "date" %>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-    </tr>
-    <% @customers[:recordset].each do |customer| %>
-    <tr>
-        <td>
-            <%=icone(customer) %>
-        </td>
-        <td>
-            <%=h customer.ident %>
-        </td>
-        <% if(customer.typesobject != nil) %>
-        <td>
-            <%=h customer.typesobject.name %>
-        </td>
-        <% else %>
-        <td>
-        </td>
-        <% end %>
-        <td>
-            <%=h customer.designation %>
-        </td>
-        <% if(customer.statusobject != nil) %>
-        <td>
-            <%=h customer.statusobject.name %>
-        </td>
-        <% else %>
-        <td>
-        </td>
-        <% end %>
-        <td>
-            <%=h customer.owner.login %>
-        </td>
-        <td>
-            <%=l customer.date %>
-        </td>
-        <td>
-            <%= link_to h_img_show.to_s, customer %>
-        </td>
-        <td>
-            <%= link_to h_img_edit.to_s, edit_customer_path(customer) %>
-        </td>
-        <td>
-            <%= link_to h_img_destroy.to_s, customer, :confirm => t("msg_confirm"), :method => :delete %>
-        </td>
-        <td>
-        	<% if logged_in? %>
-            <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => customer.id}, :method => :get %>
-			<% end %>
-        </td>
-    </tr>
-    <% end %>
+	<tr>
+		<th></th>
+		<th <%= sort_td_class_helper "ident" %>> <%= sort_link_helper t("label_ident"), "ident" %> </th>
+		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %> </th>
+		<th <%= sort_td_class_helper "designation" %>> <%= sort_link_helper t("label_designation"), "designation" %> </th>
+		<th <%= sort_td_class_helper "statusobject_id" %>> <%= sort_link_helper t("label_statusobject"), "statusobject_id" %> </th>
+		<th <%= sort_td_class_helper "owner" %>> <%= sort_link_helper t("label_responsible"), "owner" %> </th>
+		<th <%= sort_td_class_helper "date" %>> <%= sort_link_helper t("label_date"), "date" %> </th><th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	<% @customers[:recordset].each do |customer| %>
+	<tr>
+		<td> <%= icone(customer) %> </td>
+		<td> <%= h customer.ident %> </td>
+		<% if(customer.typesobject != nil) %> <td> <%= h customer.typesobject.name %> </td>
+		<% else %> <td></td>
+		<% end %> <td> <%= h customer.designation %> </td>
+		<% if(customer.statusobject != nil) %> <td> <%= h customer.statusobject.name %> </td>
+		<% else %> <td></td>
+		<% end %> <td> <%= h customer.owner.login %> </td>
+		<td> <%= l customer.date %> </td>
+		<td> <%= link_to h_img_show.to_s, customer %> </td>
+		<td> <%= link_to h_img_edit.to_s, edit_customer_path(customer) %> </td>
+		<td> <%= link_to h_img_destroy.to_s, customer, :confirm => t("msg_confirm"), :method => :delete %> </td>
+		<td> <% if logged_in? %>
+		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => customer.id}, :method => :get %>
+		<% end %> </td>
+	</tr>
+	<% end %>
 </table>
 <%= will_paginate(@customers[:recordset]) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t("new_customer"), new_customer_path %> </td>
+		<td> <%= show_help("help_customers") %> </td>
+	</tr>
+</table>

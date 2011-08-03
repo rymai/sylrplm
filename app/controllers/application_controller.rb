@@ -1,5 +1,7 @@
 require 'controllers/plm_object_controller_module'
 
+
+
 class ErrorReply < Exception
   attr_reader :status
   def initialize (msg, status=400)
@@ -7,6 +9,8 @@ class ErrorReply < Exception
     @status = status
   end
 end
+
+
 
 class ApplicationController < ActionController::Base
   include Controllers::PlmObjectControllerModule
@@ -82,7 +86,6 @@ class ApplicationController < ActionController::Base
 
   # definition des variables globales.
   def define_variables
-
     @favori      = session[:favori] ||= Favori.new
     @urlbase          = "http://"+request.env["HTTP_HOST"]
     @theme            = User.find_theme(session)
@@ -169,10 +172,19 @@ class ApplicationController < ActionController::Base
 
   def get_datas_count
     {
-      :documents => Document.count,
-      :parts => Part.count,
-      :projects => Project.count,
-      :customers => Customer.count
+      :datafile => Datafile.count,
+      :document => Document.count,
+      :part => Part.count,
+      :project => Project.count,
+      :customer => Customer.count,
+      :forum => Forum.count,
+      :question => Question.count,
+      :link => Link.count,
+      :user => User.count,
+      :role => Role.count,
+      :group => Group.count,
+      :volume => Volume.count,
+      :definition => Definition.count
     }
   end
 
@@ -243,13 +255,14 @@ class ApplicationController < ActionController::Base
   def logged_in?
     current_user != nil
   end
-# Returns true if the user is connected and having the admin role
+
+  # Returns true if the user is connected and having the admin role
   def admin_logged_in?
     ret=false
     if logged_in?
       #puts "admin_connected: connected is_admin="+@current_user.is_admin?.to_s
       if current_user.is_admin?
-      ret=true if current_user.is_admin?
+        ret=true if current_user.is_admin?
       end
     end
     ret

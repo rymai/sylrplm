@@ -1,29 +1,29 @@
 <%if @status_document.size==0%>
-	<br/>
-	<b><%= t(:msg_define_status_document) %></b>
-	<%= link_to t(:new_statusobject),  new_statusobject_path({"statusobject[object]"=>"document"}) %>
+<br/>
+<b><%= t(:msg_define_status_document) %></b>
+<%= link_to t(:new_statusobject),  new_statusobject_path({"statusobject[object]"=>"document"}) %>
 <%end%>
 
 <%if @status_part.size==0%>
-	<br/>
-	<b><%= t(:msg_define_status_part) %></b>
-	<%= link_to t(:new_statusobject), new_statusobject_path({"statusobject[object]"=>"part"}) %>
+<br/>
+<b><%= t(:msg_define_status_part) %></b>
+<%= link_to t(:new_statusobject), new_statusobject_path({"statusobject[object]"=>"part"}) %>
 <%end%>
 
- <%if @status_project.size==0%>
-	<br/>
-	<b><%= t(:msg_define_status_project)  %></b>
-	<%= link_to t(:new_statusobject), new_statusobject_path({"statusobject[object]"=>"project"}) %>
+<%if @status_project.size==0%>
+<br/>
+<b><%= t(:msg_define_status_project)  %></b>
+<%= link_to t(:new_statusobject), new_statusobject_path({"statusobject[object]"=>"project"}) %>
 <%end%>
 
 <%if @status_customer.size==0%>
-	<br/>
-	<b><%= t(:msg_define_status_customer)  %></b>
-	<%= link_to t(:new_statusobject), new_statusobject_path({"statusobject[object]"=>"customer"}) %>
-<%end%>  
+<br/>
+<b><%= t(:msg_define_status_customer)  %></b>
+<%= link_to t(:new_statusobject), new_statusobject_path({"statusobject[object]"=>"customer"}) %>
+<%end%>
 
 <%if @status_forum.size==0%>
-	<br/>
-	<b><%= t(:msg_define_status_forum)  %></b>
-	<%= link_to t(:new_statusobject), new_statusobject_path({"statusobject[object]"=>"forum"}) %>
-<%end%>  
+<br/>
+<b><%= t(:msg_define_status_forum)  %></b>
+<%= link_to t(:new_statusobject), new_statusobject_path({"statusobject[object]"=>"forum"}) %>
+<%end%> 

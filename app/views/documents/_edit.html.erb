@@ -1,36 +1,34 @@
 <p>
-    <b><%= f.label t("label_ident") %></b>
-    <br/>
-    <%= f.text_field :ident %>
+	<b><%= f.label t("label_ident") %></b>
+	<br/>
+	<%= f.text_field :ident %>
 </p>
 <p>
-    <b><%= f.label t("label_type") %></b>
-    <br/>
-    <%= f.collection_select(:typesobject_id, @types, :id, :name) %>
+	<b><%= f.label t("label_type") %></b>
+	<br/>
+	<%= f.collection_select(:typesobject_id, @types, :id, :name) %>
 </p>
 <p>
-    <b><%= f.label t("label_revision") %></b>
-    <br/>
-    <%=h @document.revision %>
+	<b><%= f.label t("label_revision") %></b>
+	<br/>
+	<%= h @document.revision %>
 </p>
 <p>
-    <b><%= f.label t("label_designation") %></b>
-    <br/>
-    <%= f.text_field :designation %>
+	<b><%= f.label t("label_designation") %></b>
+	<br/>
+	<%= f.text_field :designation %>
 </p>
 <p>
-    <b><%= f.label t("label_description") %></b>
-    <br/>
-    <%= f.text_area :description , :rows => 10 %>
+	<b><%= f.label t("label_description") %></b>
+	<br/>
+	<%= f.text_area :description , :rows => 10 %>
 </p>
-<%if (@document.statusobject.promote!=true || @document.statusobject.demote!=true ) && !@document.frozen? %>
-<b><%= f.label t("label_status") %></b>
+<%if (@document.statusobject.promote!=true || @document.statusobject.demote!=true ) && !@document.frozen? %> <b><%= f.label t("label_status") %></b>
 <br/>
 <% unless @document.statusobject.nil? %>
 <%= f.collection_select(:statusobject_id, @status, :id, :name) %>
 <% end %>
-<%else %>
-<b><%= f.label t("label_status") %></b>
+<%else %> <b><%= f.label t("label_status") %></b>
 <br/>
 <% if(@document.statusobject != nil) %>
 <%= @document.statusobject.name %>
@@ -38,12 +36,12 @@
 <%end %>
 </p>
 <p>
-    <b><%= f.label t("label_responsible") %></b>
-    <br/>
-    <%= @document.owner.login %>
+	<b><%= f.label t("label_responsible") %></b>
+	<br/>
+	<%= @document.owner.login %>
 </p>
 <p>
-    <b><%= f.label t("label_date") %></b>
-    <br/>
-    <%= f.date_select :date %>
+	<b><%= f.label t("label_date") %></b>
+	<br/>
+	<%= f.date_select :date %>
 </p>

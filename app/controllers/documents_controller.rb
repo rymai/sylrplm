@@ -77,7 +77,7 @@ class DocumentsController < ApplicationController
         format.html { redirect_to(@document) }
         format.xml  { render :xml => @document, :status => :created, :location => @document }
       else
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_document))
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_document), :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @document.errors, :status => :unprocessable_entity }
       end
@@ -278,7 +278,7 @@ class DocumentsController < ApplicationController
               flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>nil)
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>link_[:msg])
           end
         end
         empty_favori_by_type("document")
@@ -297,11 +297,10 @@ class DocumentsController < ApplicationController
       flash[:notice] = ""
       if st!="ok"
         flash[:notice] += t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
-        #puts "plm_object_controller.add_datafile:id=#{@object.id}"
+        puts "plm_object_controller.add_datafile:id=#{@object.id}"
         @types = Typesobject.find_for("datafile")
         @datafile = Datafile.create_new(nil,@current_user)
         format.html { render  :action => :new_datafile, :id => @object.id   }
-
       else
         format.html { redirect_to(@object) }
       end

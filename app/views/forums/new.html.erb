@@ -3,13 +3,9 @@
 <%= f.error_messages %>
 <%= render(:partial => "forums/edit",:locals => { :f => f, :fonct=>"new" }) %>
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= f.submit t("create") %>
-        </td>
-        <td>
-            <%= link_to t("list"), forums_path %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= f.submit t("create") %> </td>
+		<td> <%= link_to t("list"), forums_path %> </td>
+	</tr>
 </table>
 <% end %>

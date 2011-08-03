@@ -51,7 +51,7 @@ class TypesobjectsController < ApplicationController
         format.html { redirect_to(@typesobject) }
         format.xml  { render :xml => @typesobject, :status => :created, :location => @typesobject }
       else
-        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_typesobject),:ident=>@typesobject.name)
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_typesobject),:ident=>@typesobject.name, :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @typesobject.errors, :status => :unprocessable_entity }
       end

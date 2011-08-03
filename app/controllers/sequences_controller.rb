@@ -53,7 +53,7 @@ class SequencesController < ApplicationController
         format.html { redirect_to(@sequence) }
         format.xml  { render :xml => @sequence, :status => :created, :location => @sequence }
       else
-        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility)
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility, :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @sequence.errors, :status => :unprocessable_entity }
       end

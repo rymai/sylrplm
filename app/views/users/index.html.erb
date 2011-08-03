@@ -1,45 +1,45 @@
 <h1><%= t(:user_list) %><%= h_count_objects(@current_users)%> </h1>
+<%= form_simple_query_helper('/users', @current_users) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_user"), new_user_path %></td>
 		<td> <%= show_help("help_users") %></td>
 	</tr>
 </table>
-<%= form_simple_query_helper('/users', @current_users) %>
 <table>
 	<tr>
-		<th<%= sort_td_class_helper "login" %>
-			<%= sort_link_helper t(:label_username), "login" %>
-			</th>
-			<th<%= sort_td_class_helper "role" %>
-				<%= sort_link_helper t(:label_role), "role.title" %>
-				</th>
-				<th<%= sort_td_class_helper "mail" %>
-					<%= sort_link_helper t(:label_email), "email" %>
-					</th>
-					<th<%= sort_td_class_helper "language" %>
-						<%= sort_link_helper t(:label_language), "language" %>
-						</th>
-						<th> <%= sort_td_class_helper "volume" %>
-						<%= sort_link_helper t(:label_volume), "volume.name" %></th>
-						<th<%= sort_td_class_helper "theme" %>
-							<%= sort_link_helper t(:label_theme), "theme" %>
-							</th>
-							<th<%= sort_td_class_helper "notification" %>
-								<%= sort_link_helper t(:label_notification), "notification" %>
-								</th>
-								<th<%= sort_td_class_helper "time_zone" %>
-									<%= sort_link_helper t(:label_time_zone), "time_zone" %>
-									</th>
-									<th<%= sort_td_class_helper "show_mail" %>
-										<%= sort_link_helper t(:label_show_mail), "show_mail" %>
-										</th>
-										<th></th>
-										<th></th>
-										<th></th>
-	</tr>
-	<% for user in @current_users[:recordset] %>
-	<tr>
+		<th <%= sort_td_class_helper "login" %>
+		<%= sort_link_helper t(:label_username), "login" %>
+		</th>
+		<th <%= sort_td_class_helper "role" %>
+		<%= sort_link_helper t(:label_role), "role.title" %>
+		</th>
+		<th <%= sort_td_class_helper "mail" %>
+		<%= sort_link_helper t(:label_email), "email" %>
+		</th>
+		<th <%= sort_td_class_helper "language" %>
+		<%= sort_link_helper t(:label_language), "language" %>
+		</th>
+		<th <%= sort_td_class_helper "volume" %>
+		<%= sort_link_helper t(:label_volume), "volume.name" %></th>
+		<th <%= sort_td_class_helper "theme" %>
+		<%= sort_link_helper t(:label_theme), "theme" %>
+		</th>
+		<th <%= sort_td_class_helper "notification" %>
+		<%= sort_link_helper t(:label_notification), "notification" %>
+		</th>
+		<th <%= sort_td_class_helper "time_zone" %>
+		<%= sort_link_helper t(:label_time_zone), "time_zone" %>
+		</th>
+		<th <%= sort_td_class_helper "show_mail" %>
+		<%= sort_link_helper t(:label_show_mail), "show_mail" %>
+		</th>
+		<th></th>
+		<th></th>
+		<th></th>
+		</tr>
+		<% for user in @current_users[:recordset] %>
+		<tr>
 		<td> <%= h(user.login) %></td>
 		<td> <%if(user.role != nil) %>
 		<%= h(user.role.title) %>
@@ -57,7 +57,12 @@
 		<td><% if logged_in? %>
 		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => user.id}, :method => :get %>
 		<%end%></td>
-	</tr>
-	<% end %>
-</table>
-
+		</tr>
+		<% end %>
+		</table>
+		<table class='menu_bas'>
+		<tr>
+		<td> <%= link_to t("new_user"), new_user_path %></td>
+		<td> <%= show_help("help_users") %></td>
+		</tr>
+		</table>

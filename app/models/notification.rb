@@ -41,9 +41,10 @@ class Notification < ActiveRecord::Base
       notif=Notification.find(params[:id])
     end
     User.all.each do |user|
+      unless user.email==""
       to_notify=[]
       if notif.nil?
-        notifs=self.find(:all, :conditions => ["notify_date != ''"])
+        notifs=self.find(:all, :conditions => ["notify_date is null"])
       else
         notifs=[]
         notifs<<notif
@@ -63,7 +64,12 @@ class Notification < ActiveRecord::Base
           email.set_content_type("text/html")
           PlmMailer.deliver(email)
           ret[user]=to_notify.count
+        else
+          puts name+" mail non cree pour #{user.login}"
         end
+      end
+      else
+        puts name+" pas de email pour #{user.login}"
       end
     end
     puts name+"ret="+ret.inspect

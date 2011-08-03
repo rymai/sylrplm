@@ -1,19 +1,13 @@
-<h1><%=t(:datafile_new) %></h1>
+<h1><%= t(:datafile_new) %></h1>
 <% form_for(@datafile , :html => { :multipart => true}) do |f| %>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= f.submit t("create") %>
-        </td>
-        <td>
-            <%= link_to t("list"), datafiles_path %>
-        </td>
-				<%if @document!=nil%>
-        <td>
-            <%= link_to t("document_show"), document_path(@document) %>
-        </td>
-        <%end%>
-    </tr>
-</table>
+<%= f.error_messages %>
 <%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f , :fonct=>"new", :document=>@document}) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= f.submit t("create") %> </td>
+		<td> <%= link_to t("list"), datafiles_path %> </td>
+		<%if @document!=nil%> <td> <%= link_to t("document_show"), document_path(@document) %> </td>
+		<%end%>
+	</tr>
+</table>
 <% end %>

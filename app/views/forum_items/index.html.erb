@@ -1,69 +1,45 @@
-<h1><%=t(:forum_item_list) %><%=h_count_objects(@forum_items) %></h1>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t(:new_forum_item), new_forum_item_path %>
-        </td>
-        <td>
-            <%= show_help("help_forum_items") %>
-        </td>
-    </tr>
-</table>
+<h1><%= t(:forum_item_list) %><%= h_count_objects(@forum_items) %></h1>
 <%= form_simple_query_helper('/forum_items', @forum_items) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t(:new_forum_item), new_forum_item_path %> </td>
+		<td> <%= show_help("help_forum_items") %> </td>
+	</tr>
+</table>
 <%= will_paginate(@forum_items[:recordset]) %>
 <table>
-    <tr>
-        <th>
-            <%= t(:label_id) %>
-        </th>
-        <th>
-            <%= t(:label_message) %>
-        </th>
-        <th>
-            <%= t(:label_subject) %>
-        </th>
-        <th>
-            <%= t(:label_parent) %>
-        </th>
-        <th>
-            <%= t(:label_author) %>
-        </th>
-    </tr>
-    <% @forum_items[:recordset].each do |forum_item| %>
-    <tr>
-        <td>
-            <%=h forum_item.id %>
-        </td>
-        <td>
-            <%=h forum_item.message %>
-        </td>
-        <td>
-            <% if forum_item.forum!=nil %>
-            <%=h forum_item.forum.id %>:<%=h forum_item.forum.subject %>
-            <% end %>
-        </td>
-        <td>
-            <% if forum_item.parent != nil %>
-            <%=h forum_item.parent.id %>
-            <% else %>
-            no parent<% end %>
-        </td>
-        <td>
-            <% if forum_item.author !=nil %>
-            <%=h forum_item.author.login %>
-            <% else %>
-            no author<%end %>
-        </td>
-        <td>
-            <%= link_to h_img_show.to_s, forum_item %>
-        </td>
-        <td>
-            <%= link_to h_img_edit.to_s, edit_forum_item_path(forum_item) %>
-        </td>
-        <td>
-            <%= link_to h_img_destroy.to_s, forum_item, :confirm => t(:msg_confirm), :method => :delete %>
-        </td>
-    </tr>
-    <% end %>
+	<tr>
+		<th> <%= t(:label_id) %> </th>
+		<th> <%= t(:label_message) %> </th>
+		<th> <%= t(:label_subject) %> </th>
+		<th> <%= t(:label_parent) %> </th>
+		<th> <%= t(:label_author) %> </th>
+	</tr>
+	<% @forum_items[:recordset].each do |forum_item| %>
+	<tr>
+		<td> <%= h forum_item.id %> </td>
+		<td> <%= h forum_item.message %> </td>
+		<td> <% if forum_item.forum!=nil %>
+		<%= h forum_item.forum.id %>:<%= h forum_item.forum.subject %>
+		<% end %> </td>
+		<td> <% if forum_item.parent != nil %>
+		<%= h forum_item.parent.id %>
+		<% else %>
+		no parent<% end %> </td>
+		<td> <% if forum_item.author !=nil %>
+		<%= h forum_item.author.login %>
+		<% else %>
+		no author<%end %> </td>
+		<td> <%= link_to h_img_show.to_s, forum_item %> </td>
+		<td> <%= link_to h_img_edit.to_s, edit_forum_item_path(forum_item) %> </td>
+		<td> <%= link_to h_img_destroy.to_s, forum_item, :confirm => t(:msg_confirm), :method => :delete %> </td>
+	</tr>
+	<% end %>
 </table>
 <%= will_paginate(@forum_items[:recordset]) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t(:new_forum_item), new_forum_item_path %> </td>
+		<td> <%= show_help("help_forum_items") %> </td>
+	</tr>
+</table>

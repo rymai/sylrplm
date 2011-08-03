@@ -58,7 +58,7 @@ class DatafilesController < ApplicationController
         format.html { redirect_to(@datafile) }
         format.xml  { render :xml => @datafile, :status => :created, :location => @datafile }
       else
-        flash[:notice] = t(:ctrl_object_not_created,:typeobj => t(:ctrl_datafile))
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj => t(:ctrl_datafile), :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @datafile.errors, :status => :unprocessable_entity }
       end

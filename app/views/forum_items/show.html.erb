@@ -1,32 +1,25 @@
-<h1><%=t(:forum_item_show) %></h1>
+<h1><%= t(:forum_item_show) %></h1>
 <p>
-  <b><%= t(:label_message) %></b>
-  <%=h @forum_item.message %>
+	<b><%= t(:label_message) %></b>
+	<%= h @forum_item.message %>
 </p>
-
 <p>
-  <b><%= t(:label_forum) %></b>
-  <%=h @forum_item.forum.subject%>
+	<b><%= t(:label_forum) %></b>
+	<%= h @forum_item.forum.subject%>
 </p>
-
 <p>
-  <b><%= t(:label_parent) %></b>
+	<b><%= t(:label_parent) %></b>
 	<%unless @forum_item.parent.nil?%>
-  <%=h @forum_item.parent.message %>
+	<%= h @forum_item.parent.message %>
 	<%end%>
 </p>
-
 <p>
-  <b><%= t(:label_author) %></b>
-  <%=h @forum_item.owner_id %>
+	<b><%= t(:label_author) %></b>
+	<%= h @forum_item.owner_id %>
 </p>
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t(:edit),edit_forum_item_path(@forum_item) %>
-        </td>
-        <td>
-            <%= link_to t(:list), forum_items_path %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= link_to t(:edit),edit_forum_item_path(@forum_item) %> </td>
+		<td> <%= link_to t(:list), forum_items_path %> </td>
+	</tr>
 </table>

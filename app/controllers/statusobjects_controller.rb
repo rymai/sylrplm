@@ -52,7 +52,7 @@ class StatusobjectsController < ApplicationController
         format.html { redirect_to(@statusobject) }
         format.xml  { render :xml => @statusobject, :status => :created, :location => @statusobject }
       else
-        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name, :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @statusobject.errors, :status => :unprocessable_entity }
       end

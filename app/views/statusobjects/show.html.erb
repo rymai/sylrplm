@@ -23,16 +23,7 @@
     <b><%=t(:label_demote) %></b>
     <%=h @statusobject.demote %>
 </p>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t(:edit), edit_statusobject_path(@statusobject) %>
-        </td>
-        <td>
-            <%= link_to t(:list), statusobjects_path %>
-        </td>
-    </tr>
-</table>
+
 <hr><h1><%=t(:document_list) %><%= @statusobject.documents.count %></h1>
 <table>
     <tr>
@@ -183,4 +174,14 @@
         </table>
     </tr>
     <% end %>
+</table>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= link_to t(:edit), edit_statusobject_path(@statusobject) %>
+        </td>
+        <td>
+            <%= link_to t(:list), statusobjects_path %>
+        </td>
+    </tr>
 </table>

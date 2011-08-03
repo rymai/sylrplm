@@ -1,16 +1,11 @@
-<h1><%=t(:notification_new) %></h1>
+<h1><%= t(:notification_new) %></h1>
 <% form_for(@notification) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "notifications/edit",:locals => { :f => f, :fonct=>"new" }) %>
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= f.submit t("create") %>
-        </td>
-        <td>
-            <%= link_to t("list"), notifications_path %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= f.submit t("create") %> </td>
+		<td> <%= link_to t("list"), notifications_path %> </td>
+	</tr>
 </table>
-<% end %>
-
+<% end %> 

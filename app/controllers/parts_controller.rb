@@ -69,7 +69,7 @@ class PartsController < ApplicationController
         format.html { redirect_to(@part) }
         format.xml  { render :xml => @part, :status => :created, :location => @part }
       else
-        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_part))
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_part), :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
       end
@@ -179,7 +179,7 @@ class PartsController < ApplicationController
               flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>nil)
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>link_[:msg])
           end
         end
         empty_favori_by_type("part")

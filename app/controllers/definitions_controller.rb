@@ -138,7 +138,7 @@ class DefinitionsController < ApplicationController
         }
 
       else
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_definition))
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_definition), :msg => nil)
         format.html {
           render(:action => 'new')
         }

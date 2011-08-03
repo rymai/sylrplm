@@ -61,7 +61,7 @@ class CustomersController < ApplicationController
         format.html { redirect_to(@customer) }
         format.xml  { render :xml => @customer, :status => :created, :location => @customer }
       else
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_customer))
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_customer), :msg => nil)
         format.html { render :action => :new }
         format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
       end
@@ -126,7 +126,7 @@ class CustomersController < ApplicationController
               flash[:notice] += t(:ctrl_object_not_added, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation, :msg => nil)
+            flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation, :msg => link_[:msg])
           end
         end
         empty_favori_by_type("document")
@@ -154,7 +154,7 @@ class CustomersController < ApplicationController
               flash[:notice] += t(:ctrl_object_not_added, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation, :msg => nil)
+            flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation, :msg => link_[:msg])
           end
         end
         empty_favori_by_type("project")

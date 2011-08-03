@@ -1,14 +1,12 @@
 <h1><%= t("document_new") %></h1>
 <% form_for(@document) do |f| %>
 <%= hidden_field :document , :revision %>
-
+<%= f.error_messages %>
+<%= render(:partial => "documents/edit",:locals => { :f => f, :fonct=>"new" }) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= f.submit t("create") %></td>
 		<td> <%= link_to t("list"), documents_path %></td>
 	</tr>
 </table>
-<%= f.error_messages %>
-<%= render(:partial => "documents/edit",:locals => { :f => f, :fonct=>"new" }) %>
-
 <% end %>

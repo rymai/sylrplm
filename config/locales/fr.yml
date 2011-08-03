@@ -79,6 +79,7 @@ fr:
   #group_definitions
   ctrl_group_definitions: Groupe-processus
   #link
+  ctrl_link: Relation
   ctrl_link_already_customer_project: Projet déja lié à ce client
   ctrl_link_already_project_user: Utilisateur déja acteur sur ce projet
   ctrl_link_already_project: Projet déja utilise ici ou ailleurs
@@ -125,6 +126,8 @@ fr:
   ctrl_process: Processus métier
   #projects
   ctrl_project: Projet
+  #questions
+  ctrl_question: Question
   #roles
   ctrl_role: Rôle
   #sequences
@@ -415,7 +418,7 @@ fr:
   project_edit: Edition projet
   project_list: Liste projets
   project_show: Détail projet
-  project_new: Nouvel projet
+  project_new: Nouveau projet
   label_customer: Client
   # fields questions
   questions_edit: Edition question
@@ -476,7 +479,7 @@ fr:
   user_show: Détail de l'utilisateur
   user_new: Nouvel utilisateur
   legend_user: Renseignez les propriétés de l'utilisateur
-  label_username: Nom
+  label_username: Identifiant
   label_password: Password
   label_confirm_password: Confirmation
   label_role: Rôle

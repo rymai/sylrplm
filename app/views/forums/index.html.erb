@@ -1,71 +1,43 @@
-<h1><%=t(:forum_list) %><%=h_count_objects(@forums) %></h1>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t("new_forum"), new_forum_path %>
-        </td>
-        <td>
-            <%= show_help("help_forums") %>
-        </td>
-    </tr>
-</table>
+<h1><%= t(:forum_list) %><%= h_count_objects(@forums) %></h1>
 <%= form_simple_query_helper('/forums', @forums) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t("new_forum"), new_forum_path %> </td>
+		<td> <%= show_help("help_forums") %> </td>
+	</tr>
+</table>
 <%= will_paginate(@forums[:recordset]) %>
 <table>
-    <tr>
-        <th>
-            <%=t(:label_type) %>
-        </th>
-        <th>
-            <%=t(:label_status) %>
-        </th>
-        <th>
-            <%=t(:label_subject) %>
-        </th>
-        <th>
-            <%=t(:label_description) %>
-        </th>
-        <th>
-            <%=t(:label_responsible) %>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-    </tr>
-    <% @forums[:recordset].each do |forum| %>
-    <tr>
-        <td>
-            <%=h forum.typesobject.name %>
-        </td>
-        <td>
-            <%=h forum.statusobject.name %>
-        </td>
-        <td>
-            <%=h forum.subject %>
-        </td>
-        <td>
-            <%=h forum.description %>
-        </td>
-        <td>
-            <% if forum.owner != nil %>
-            <%=h forum.owner.login %>
-            <% end %>
-        </td>
-        <td>
-            <%= link_to h_img_show.to_s, forum %>
-        </td>
-        <% unless forum.frozen? %>
-        <td>
-            <%= link_to h_img_edit.to_s, edit_forum_path(forum) %>
-        </td>
-        <td>
-            <%= link_to h_img_destroy, forum, :confirm => 'Are you sure?', :method => :delete %>
-        </td>
-        <% end %>
-    </tr>
-    <% end %>
+	<tr>
+		<th> <%= t(:label_type) %> </th>
+		<th> <%= t(:label_status) %> </th>
+		<th> <%= t(:label_subject) %> </th>
+		<th> <%= t(:label_description) %> </th>
+		<th> <%= t(:label_responsible) %> </th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	<% @forums[:recordset].each do |forum| %>
+	<tr>
+		<td> <%= h forum.typesobject.name %> </td>
+		<td> <%= h forum.statusobject.name %> </td>
+		<td> <%= h forum.subject %> </td>
+		<td> <%= h forum.description %> </td>
+		<td> <% if forum.owner != nil %>
+		<%= h forum.owner.login %>
+		<% end %> </td>
+		<td> <%= link_to h_img_show.to_s, forum %> </td>
+		<% unless forum.frozen? %> <td> <%= link_to h_img_edit.to_s, edit_forum_path(forum) %> </td>
+		<td> <%= link_to h_img_destroy, forum, :confirm => 'Are you sure?', :method => :delete %> </td>
+		<% end %>
+	</tr>
+	<% end %>
 </table>
 <%= will_paginate(@forums[:recordset]) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t("new_forum"), new_forum_path %> </td>
+		<td> <%= show_help("help_forums") %> </td>
+	</tr>
+</table>

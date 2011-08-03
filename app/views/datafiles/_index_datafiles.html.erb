@@ -1,100 +1,42 @@
 <table>
-    <tr>
-        <th<%= sort_td_class_helper :ident %>>
-            <%= sort_link_helper t(:label_ident), :ident %>
-        </th>
-        <th<%= sort_td_class_helper :revision %>>
-            <%= sort_link_helper t(:label_revision), :revision %>
-        </th>
-        <th<%= sort_td_class_helper :typesobject_id %>>
-            <%= sort_link_helper t(:label_typesobject), :typesobject_id %>
-        </th>
-        <th<%= sort_td_class_helper :volume_id %>>
-            <%= sort_link_helper t(:label_volume), :volume_id %>
-        </th>
-        <th<%= sort_td_class_helper :filename %>>
-            <%= sort_link_helper t(:label_filename), :filename %>
-        </th>
-        <th<%= sort_td_class_helper :content_type %>>
-            <%= sort_link_helper t(:label_content_type), :content_type %>
-        </th>
-        <th<%= sort_td_class_helper :owner %>>
-            <%= sort_link_helper t(:label_responsible), :owner %>
-        </th>
-        <th<%= sort_td_class_helper :document %>>
-            <%= sort_link_helper t(:label_document), :document %>
-        </th>
-        <th<%= sort_td_class_helper :created_at %>>
-            <%= sort_link_helper t(:label_date), :created_at %>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-    </tr>
-    <% @datafiles[:recordset].each do |datafile| %>
-    <tr>
-        <td>
-            <%=h datafile.ident %>
-        </td>
-        <td>
-            <%=h datafile.revision %>
-        </td>
-        <td>
-            <%=h datafile.typesobject.name %>
-        </td>
-        <td>
-            <%=h datafile.volume.name %>
-        </td>
-        <td>
-            <a href="<%= url_for(:controller=> 'datafiles',:action=>'show_file', :id => datafile.id) %>" title="<%= datafile.get_repository %>"><%=h datafile.filename %></a>
-        </td>
-        <td>
-            <% if datafile.content_type != nil %>
-            <%= datafile.content_type[0..20] %>
-            <%end %>
-        </td>
-        <td>
-            <%=h datafile.owner.login %>
-        </td>
-        <td>
-            <% unless datafile.document.nil? %>
-            <%=h datafile.document.ident %>
-            <%end %>
-        </td>
-        <td>
-            <%=l datafile.updated_at %>
-        </td>
-        <% if (document.nil? || !document.is_checked) && !datafile.filename.nil? %>
-        <td>
-            <%= link_to t(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %>
-        </td>
-        <%end %>
-        <% unless document.nil? %>
-        <td>
-            <%= link_to h_img_show.to_s, datafile_path(datafile, :doc => document.id) %>
-        </td>
-        <td>
-            <%= link_to h_img_edit.to_s, edit_datafile_path(datafile, :doc => document.id) %>
-        </td>
-        <td>
-            <%= link_to h_img_destroy.to_s, datafile_path(datafile, :doc => document.id), :method => :delete, :confirm => t("msg_confirm") %>
-        </td>
-        <%else %>
-        <td>
-            <%= link_to h_img_show.to_s, datafile, :controller=> "datafiles",  :action => :show %>
-        </td>
-        <td>
-            <%= link_to h_img_edit.to_s, edit_datafile_path(datafile), :controller=> "datafiles" %>
-        </td>
-        <td>
-            <%= link_to h_img_destroy.to_s, datafile, :controller=> "datafiles", :confirm => t("msg_confirm"), :method => :delete %>
-        </td>
-        <%end %>
-    </tr>
-    <% end %>
+	<tr>
+		<th <%= sort_td_class_helper :ident %>> <%= sort_link_helper t(:label_ident), :ident %> </th>
+		<th <%= sort_td_class_helper :revision %>> <%= sort_link_helper t(:label_revision), :revision %> </th>
+		<th <%= sort_td_class_helper :typesobject_id %>> <%= sort_link_helper t(:label_typesobject), :typesobject_id %> </th>
+		<th <%= sort_td_class_helper :volume_id %>> <%= sort_link_helper t(:label_volume), :volume_id %> </th>
+		<th <%= sort_td_class_helper :filename %>> <%= sort_link_helper t(:label_filename), :filename %> </th>
+		<th <%= sort_td_class_helper :content_type %>> <%= sort_link_helper t(:label_content_type), :content_type %> </th>
+		<th <%= sort_td_class_helper :owner %>> <%= sort_link_helper t(:label_responsible), :owner %> </th>
+		<th <%= sort_td_class_helper :document %>> <%= sort_link_helper t(:label_document), :document %> </th>
+		<th <%= sort_td_class_helper :created_at %>> <%= sort_link_helper t(:label_date), :created_at %> </th><th></th>
+		<th></th>
+		<th></th>
+		<th></th>
+	</tr>
+	<% @datafiles[:recordset].each do |datafile| %>
+	<tr>
+		<td> <%= h datafile.ident %> </td>
+		<td> <%= h datafile.revision %> </td>
+		<td> <%= h datafile.typesobject.name %> </td>
+		<td> <%= h datafile.volume.name %> </td>
+		<td><a href="<%= url_for(:controller=> 'datafiles',:action=>'show_file', :id => datafile.id) %>" title="<%= datafile.get_repository %>"><%= h datafile.filename %></a></td>
+		<td> <% if datafile.content_type != nil %>
+		<%= datafile.content_type[0..20] %>
+		<%end %> </td>
+		<td> <%= h datafile.owner.login %> </td>
+		<td> <% unless datafile.document.nil? %>
+		<%= h datafile.document.ident %>
+		<%end %> </td>
+		<td> <%= l datafile.updated_at %> </td>
+		<% if (document.nil? || !document.is_checked) && !datafile.filename.nil? %> <td> <%= link_to t(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %> </td>
+		<%end %>
+		<% unless document.nil? %> <td> <%= link_to h_img_show.to_s, datafile_path(datafile, :doc => document.id) %> </td>
+		<td> <%= link_to h_img_edit.to_s, edit_datafile_path(datafile, :doc => document.id) %> </td>
+		<td> <%= link_to h_img_destroy.to_s, datafile_path(datafile, :doc => document.id), :method => :delete, :confirm => t("msg_confirm") %> </td>
+		<%else %> <td> <%= link_to h_img_show.to_s, datafile, :controller=> "datafiles",  :action => :show %> </td>
+		<td> <%= link_to h_img_edit.to_s, edit_datafile_path(datafile), :controller=> "datafiles" %> </td>
+		<td> <%= link_to h_img_destroy.to_s, datafile, :controller=> "datafiles", :confirm => t("msg_confirm"), :method => :delete %> </td>
+		<%end %>
+	</tr>
+	<% end %>
 </table>

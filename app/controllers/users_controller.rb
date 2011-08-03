@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     @the_user = User.create_new
     @roles   = Role.all
     @themes  = get_themes(@theme)
-    @languages=get_languages(@language)
+    #@languages=get_languages
     @notifications=get_notifications(@notification)
     @time_zones=get_time_zones(@time_zone)
     @volumes = Volume.find_all
@@ -46,28 +46,31 @@ class UsersController < ApplicationController
     @the_user = User.find(params[:id])
     @roles   = Role.all
     @themes  = get_themes(@theme)
-    @languages = get_languages
+    #@languages = get_languages
     @notifications = get_notifications(@the_user.notification)
     @time_zones = get_time_zones(@the_user.time_zone)
     @volumes = Volume.find_all
   end
 
   def create
-    @the_user    = User.new(params[:user])
+    puts "users_controller.create:#{params["user"].inspect}"
+    @the_user    = User.new(params["user"])
     @roles   = Role.all
     @themes  = get_themes(@theme)
+    @notifications = get_notifications(@the_user.notification)
+    @time_zones = get_time_zones(@the_user.time_zone)
     @volumes = Volume.find_all
     puts "users_controller.create:#{@the_user.inspect}"
     respond_to do |format|
-      if @@the_user.save
+      if @the_user.save
         unless params[:role_id].nil?
           flash[:notice]=""
           @roles.each do |rid|
             role = Role.find(rid)
             if params[:role_id][role.id.to_s] == "1"
-              if @@the_user.roles.count(:all, :conditions => { :id => rid.id }) == 0
+              if @the_user.roles.count(:all, :conditions => { :id => rid.id }) == 0
                 flash[:notice] += "<br />" + t(:ctrl_user_role, :role => role.title)
-                @@the_user.roles << role
+                @the_user.roles << role
               end
             end
           end
@@ -89,7 +92,7 @@ class UsersController < ApplicationController
     @volumes = Volume.find_all
     @roles   = Role.all
     @themes = get_themes(@theme)
-    @languages = get_languages
+    #@languages = get_languages
     @notifications = get_notifications(@the_user.notification)
     @time_zones = get_time_zones(@the_user.time_zone)
     respond_to do |format|

@@ -1,44 +1,35 @@
 <p>
-  <b>Type:</b>
-  <%=h @forum.typesobject.name %>
+	<b>Type:</b>
+	<%= h @forum.typesobject.name %>
 </p>
-
 <p>
-  <b>Status:</b>
-  <%=h @forum.statusobject.name %>
+	<b>Status:</b>
+	<%= h @forum.statusobject.name %>
 </p>
-
 <p>
-  <b>Subject:</b>
-  <%=h @forum.subject %>
+	<b>Subject:</b>
+	<%= h @forum.subject %>
 </p>
-
 <p>
-  <b>Description:</b>
-  <%=h @forum.description %>
+	<b>Description:</b>
+	<%= h @forum.description %>
 </p>
-
 <p>
-  <b>Creator:</b>
-  <% if @forum.owner!= nil %>
-  	<%=h @forum.owner.login%>
-  <% end %>
+	<b>Creator:</b>
+	<% if @forum.owner!= nil %>
+	<%= h @forum.owner.login%>
+	<% end %>
 </p>
-
-<%=@forum.forum_item.count%> <%= t("forum_items")%> 
+<%= @forum.forum_item.count%> <%= t("forum_items")%>
 <% if @forum.forum_item.count >0 %>
-	<ul class='forum'>
-		<%= render(:partial => "forums/f_item", :collection => @forum.forum_item) %>
-	</ul>
+<ul class='forum'>
+	<%= render(:partial => "forums/f_item", :collection => @forum.forum_item) %>
+</ul>
 <% end %>
-
 <table class='menu_bas'>
-<tr>
-<% if @forum.frozen? %>
-	<td><%=t("freeze")%></td>
-<% else %>
-	<td><%= link_to t("edit"), edit_forum_path(@forum) %></td>
-<% end %>
-<td><%= link_to t("list"), forums_path %></td>
-</tr>
+	<tr>
+		<% if @forum.frozen? %> <td><%= t("freeze")%></td>
+		<% else %> <td><%= link_to t("edit"), edit_forum_path(@forum) %></td>
+		<% end %> <td><%= link_to t("list"), forums_path %></td>
+	</tr>
 </table>

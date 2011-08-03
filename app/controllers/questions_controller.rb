@@ -27,7 +27,7 @@ class QuestionsController < ApplicationController
         format.html { redirect_to(@faq) }
         format.xml  { render :xml => @faq, :status => :created, :location => @faq }
       else
-        flash[:notice] =t(:ctrl_object_not_created,:typeobj =>t(:ctrl_faq))
+        flash[:notice] =t(:ctrl_object_not_created, :typeobj =>t(:ctrl_faq), :msg => nil)
         format.html { render :action => :new }
         format.xml  { render :xml => @faq.errors, :status => :unprocessable_entity }
       end

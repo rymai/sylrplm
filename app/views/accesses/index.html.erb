@@ -1,52 +1,35 @@
-<h1><%=t("access_list") %><%=h_count_objects(@accesses)%> </h1>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t("new_access"), new_access_path %>
-        </td>
-				<td>
-            <%= show_help("help_access") %>
-        </td>
-    </tr>
-</table>
+<h1><%= t("access_list") %><%= h_count_objects(@accesses)%> </h1>
 <%= form_simple_query_helper('/accesses', @accesses) %>
+<%= f.error_messages %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t("new_access"), new_access_path %> </td>
+		<td> <%= show_help("help_access") %> </td>
+	</tr>
+</table>
 <%= will_paginate(@accesses[:recordset]) %>
 <table>
-    <tr>
-        <th <%= sort_td_class_helper "controller" %>>
-            <%= sort_link_helper t("label_controller"), "controller" %>
-        </th>
-        <th <%= sort_td_class_helper "action" %>>
-            <%= sort_link_helper t("label_action"), "action" %>
-        </th>
-        <th <%= sort_td_class_helper "roles" %>>
-            <%= sort_link_helper t("label_role"), "roles" %>
-        </th>
-        <th>
-          <%= t("edit") %>
-        </th>
-        <th>
-          <%= t("destroy") %>
-        </th>
-    </tr>
-    <% @accesses[:recordset].each do |access| %>
-    <tr>
-        <td>
-            <%=h access.controller %>
-        </td>
-        <td>
-            <%=h access.action %>
-        </td>
-        <td>
-            <%=h access.roles %>
-        </td>
-        <td>
-            <%= link_to h_img_edit.to_s, edit_access_path(access) %>
-        </td>
-        <td>
-            <%= link_to h_img_destroy.to_s, access, :confirm => t("msg_confirm"), :method => :delete %>
-        </td>
-    </tr>
-    <% end %>
+	<tr>
+		<th <%= sort_td_class_helper "controller" %>> <%= sort_link_helper t("label_controller"), "controller" %> </th>
+		<th <%= sort_td_class_helper "action" %>> <%= sort_link_helper t("label_action"), "action" %> </th>
+		<th <%= sort_td_class_helper "roles" %>> <%= sort_link_helper t("label_role"), "roles" %> </th>
+		<th> <%= t("edit") %> </th>
+		<th> <%= t("destroy") %> </th>
+	</tr>
+	<% @accesses[:recordset].each do |access| %>
+	<tr>
+		<td> <%= h access.controller %> </td>
+		<td> <%= h access.action %> </td>
+		<td> <%= h access.roles %> </td>
+		<td> <%= link_to h_img_edit.to_s, edit_access_path(access) %> </td>
+		<td> <%= link_to h_img_destroy.to_s, access, :confirm => t("msg_confirm"), :method => :delete %> </td>
+	</tr>
+	<% end %>
 </table>
 <%= will_paginate(@accesses[:recordset]) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t("new_access"), new_access_path %> </td>
+		<td> <%= show_help("help_access") %> </td>
+	</tr>
+</table>

@@ -7,7 +7,7 @@
 body {
 	font-family: "proxima-nova-1", "proxima-nova-2", Helvetica, Arial, sans-serif;
 	background: #000;
-	color: #999;
+	/*color: #ccc;*/
 	font-size: 14px;
 	text-rendering: optimizeLegibility;
 	max-width: 1000px;
@@ -15,10 +15,11 @@ body {
 	margin: 0 auto;
 	-webkit-text-size-adjust: auto;
 }
-a, span, p, li, ul {
+span, p, li, ul , legend {
 	text-decoration: none;
 	margin-left: 0px;
 	padding-left: 0px;
+	color: white;
 }
 ul {
 	margin-left: 5px;
@@ -30,13 +31,7 @@ li {
 	padding-left: 0px;
 	text-indent: 0px;
 }
-a {
-	color: #CCC;
-	text-decoration: underline;
-}
-legend {
-	color: white;
-}
+
 h1 {
 	font: bold 120% sans-serif;
 	color: white;
@@ -52,7 +47,7 @@ input, option, select, textarea {
 	margin: 0pt;
 	background-color: #DDDDDD;
 }
-input {
+label{
 	font-weight: bold;
 }
 input[type=submit] {
@@ -123,6 +118,7 @@ td {
 }
 #side fieldset {
 	padding: 5px;
+	margin-top: 10px;
 }
 #main {
 	float: left;
@@ -131,7 +127,7 @@ td {
 	padding: 20px;
 	background: #333;
 }
-#side a, div.favori-title {
+div.favori-title {
 	color: white;
 }
 /* input file*/
@@ -204,7 +200,10 @@ td.favori {
 /* END:favori */
 p.notice {
 	font-size: 14px;
-	border: 1px dotted black;
+	border: 1px solid #666;
+	color: white;
+	background-color: #888;
+	margin-bottom: 15px;
 }
 /* menus en bas des listes*/
 
@@ -217,7 +216,7 @@ table.menu_bas .menu_bas tr {
 	padding-left: 2px;
 	padding-right: 2px;
 }
-td a, th a, .menu_bas a, a.menu_bas, .menu_bas input, input.menu_bas {
+td a, th a, a.help_tr, .help a, .menu_bas a, a.menu, a.menu_bas, .menu_bas input, input.menu_bas {
 	border: 0px;
 	text-decoration: none;
 	cursor: pointer;
@@ -226,9 +225,10 @@ td a, th a, .menu_bas a, a.menu_bas, .menu_bas input, input.menu_bas {
 }
 /* end menus en bas des listes*/
 
-a:hover, input:hover, img.help_tr:hover {
-	/*  background-color:#AAAAAA;*/
-	color: #FFF;
+/* a:hover, input:hover, img.help_tr:hover {*/
+.help a:hover, a.help_tr:hover, a.menu:hover, a:hover, input:hover,  select:hover, img.help_tr:hover {
+	background-color:#AAAAAA;
+	color: #222222;
 	cursor: pointer;
 }
 .pagination {

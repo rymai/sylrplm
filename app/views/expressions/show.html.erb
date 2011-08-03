@@ -1,28 +1,23 @@
-<h1><%=t("expressions_show") %><%= h @expression.fei.wfid %></h1>
-<%= javascript_include_tag 'fluo-tred' %>
+<h1><%= t("expressions_show") %><%= h @expression.fei.wfid %></h1><%= javascript_include_tag 'fluo-tred' %>
+	<
+	script > linkToCss('fluo-tred');
 
-<script>
+	function repositionFooter() {
 
-  linkToCss('fluo-tred');
+		var e = byId('editor')
+		var f = byId('footer-block');
 
-  function repositionFooter () {
+		if(e.style.display == 'block') {
+			f.style.top = "" + (e.offsetTop + e.offsetHeight + 15) + "px";
+			f.style.position = 'absolute';
+		} else {
+			f.style.position = 'static';
+		}
+	}
 
-    var e = byId('editor')
-    var f = byId('footer-block');
-
-    if (e.style.display == 'block') {
-      f.style.top = "" + (e.offsetTop + e.offsetHeight + 15) + "px";
-      f.style.position = 'absolute';
-    }
-    else {
-      f.style.position = 'static';
-    }
-  }
-
-  function toggleEditor () {
-    repositionFooter(toggleVisibility('editor'));
-  }
-
+	function toggleEditor() {
+		repositionFooter(toggleVisibility('editor'));
+	}
 </script>
 
 <div style="float: left;">
@@ -49,9 +44,9 @@
       <tr class='button-row'>
         <td colspan='2'>
           <%= f.submit(
-            'cancel expression',
-            :title => 'cancels this expression, removes its branch from the process tree',
-            :confirm => 'Are you sure ?'
+          'cancel expression',
+          :title => 'cancels this expression, removes its branch from the process tree',
+          :confirm => 'Are you sure ?'
           ) %> |
           <%= link_to_function 'edit', 'toggleEditor()' %> |
           <%= link_to 'back', :back %>
@@ -83,10 +78,10 @@
       </div>
 
       <%= f.submit(
-        'update expression',
-        :title => 'modifies the expression directly (warning this may ruin your process instance)',
-        :confirm => 'Are you sure ?')
-      %> | 
+  'update expression',
+  :title => 'modifies the expression directly (warning this may ruin your process instance)',
+  :confirm => 'Are you sure ?')
+%> | 
       <%= link_to_function 'cancel', 'toggleEditor()' %> |
       <%= link_to_function 'reset', 'tredReset()' %> |
       <%= link_to_function 'undo', 'FluoTred.undo("tred")' %>
@@ -105,35 +100,35 @@
     :process => @process,
     :workitems => @process.workitem_expids,
     :expid => @expression.fei.expid)
-  %>
+%>
 
 </div>
 
 <script>
 
   var tred = byId('tred');
-  var originalTree = <%= @expression.raw_representation.to_json %>;
-  var treeField = byId('tree-field');
+  var originalTree = <%= @expression.raw_representation.to_json %>
+		;
+		var treeField = byId('tree-field');
 
-  tred.onOver = function (expid) {
-    FluoCan.highlight('editor-fluo', expid);
-  };
-  tred.onChange = function (tree) {
-    FluoCan.renderFlow('editor-fluo', tree);
-    FluoCan.crop('editor-fluo');
-    treeField.value = FluoTred.asJson(tred);
-    repositionFooter();
-  };
+		tred.onOver = function(expid) {
+			FluoCan.highlight('editor-fluo', expid);
+		};
+		tred.onChange = function(tree) {
+			FluoCan.renderFlow('editor-fluo', tree);
+			FluoCan.crop('editor-fluo');
+			treeField.value = FluoTred.asJson(tred);
+			repositionFooter();
+		};
+		function tredReset() {
+			FluoTred.renderFlow(tred, originalTree);
+			treeField.value = FluoTred.asJson(tred);
+			FluoCan.renderFlow('editor-fluo', originalTree);
+			FluoCan.crop('editor-fluo');
+			repositionFooter();
+		}
 
-  function tredReset () {
-    FluoTred.renderFlow(tred, originalTree);
-    treeField.value = FluoTred.asJson(tred);
-    FluoCan.renderFlow('editor-fluo', originalTree);
-    FluoCan.crop('editor-fluo');
-    repositionFooter();
-  }
-
-  tredReset();
+		tredReset();
 
 </script>
 

@@ -49,13 +49,13 @@ class VolumesController < ApplicationController
           format.html { redirect_to(@volume) }
           format.xml  { render :xml => @volume, :status => :created, :location => @volume }
         else
-          flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+dir)
+          flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+dir, :msg => nil)
           format.html { render :action => "new" }
           format.xml  { render :xml => @volume.errors, :status => :unprocessable_entity }
         end
       else
       #flash[:notice] = "Volume #{@volume.name} was not created on #{@volume.directory}."
-        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+@volume.directory)
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+@volume.directory, :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @volume.errors, :status => :unprocessable_entity }
       end

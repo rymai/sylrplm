@@ -1,35 +1,35 @@
-<H1><%=t("customer_show") %></H1>
+<H1><%= t("customer_show") %></H1>
 <p>
     <b><%= t("label_ident") %></b>
-    <%=h @customer.ident %>
+    <%= h @customer.ident %>
 </p>
 <p>
     <b><%= t("label_typesobject") %></b>
     <% if(@customer.typesobject != nil) %>
-    <%=h @customer.typesobject.name %>
+    <%= h @customer.typesobject.name %>
     <% end %>
 </p>
 <p>
     <b><%= t("label_designation") %></b>
-    <%=h @customer.designation %>
+    <%= h @customer.designation %>
 </p>
 <p>
     <b><%= t("label_description") %></b>
-    <%=h @customer.description %>
+    <%= h @customer.description %>
 </p>
 <p>
     <b><%= t("label_statusobject") %></b>
     <% if(@customer.statusobject != nil) %>
-    <%=h @customer.statusobject.name %>
+    <%= h @customer.statusobject.name %>
     <% end %>
 </p>
 <p>
     <b><%= t("label_responsible") %></b>
-    <%=h @customer.owner.login %>
+    <%= h @customer.owner.login %>
 </p>
 <p>
     <b><%= t("label_date") %></b>
-    <%=l @customer.date %>
+    <%= l @customer.date %>
 </p>
 <h1></h1>
 <%= h_sylrplm_tree %>

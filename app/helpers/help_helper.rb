@@ -45,14 +45,14 @@ module HelpHelper
             amsg[:el].text+=msg_ul
           end
           helem={:el=>amsg[:el], :main_elem=>element}
-          return helem
+        return helem
         end
       }
     else
       msg_ul=h_help_ul(el)
       puts "h_help_elem:msg_ul="+el.attribute(:key).to_s+":"+msg_ul
       if msg_ul!=""
-        el.text+=msg_ul
+      el.text+=msg_ul
       end
       helem={:el=>el, :main_elem=>elem}
     end
@@ -70,23 +70,23 @@ module HelpHelper
       if(msg[:el]!=nil)
         if(msg[:el].previous_element!=nil)
           previous_src=msg[:el].previous_element.attribute(:key).to_s
-          #previous_src="<a href='/help?help=#{previous_src}' title='previous'>"+img("previous")+"</a>"
+        #previous_src="<a href='/help?help=#{previous_src}' title='previous'>"+img("previous")+"</a>"
         end
         if(msg[:main_elem]!=nil)
           main_src=msg[:main_elem].attribute(:key).to_s
           if(main_src.to_s.strip()!="")
-            #main_src="<a href='/help?help=#{main_src.to_s}' title='main'>"+img("main")+"</a>"
+          #main_src="<a href='/help?help=#{main_src.to_s}' title='main'>"+img("main")+"</a>"
           end
         end
         if(msg[:el].parent!=nil)
           upper_src=msg[:el].parent.attribute(:key).to_s
           if(upper_src.to_s.strip()!="")
-            #upper_src="<a href='/help?help=#{upper_src.to_s}' title='upper'>"+img("upper")+"</a>"
+          #upper_src="<a href='/help?help=#{upper_src.to_s}' title='upper'>"+img("upper")+"</a>"
           end
         end
         if(msg[:el].next_element!=nil)
           next_src=msg[:el].next_element.attribute(:key).to_s
-          #next_src="<a href='/help?help=#{next_src}' title='next'>"+img("next")+"</a>"
+        #next_src="<a href='/help?help=#{next_src}' title='next'>"+img("next")+"</a>"
         end
       end
       childs_src=[]
@@ -106,7 +106,8 @@ module HelpHelper
   end
 
   def h_help_all
-    ret=read_help_file
+    ret=""
+    #TODO syl ret=read_help_file
     if ret==""
       ret=build_help_all
       #TODO syl pour eviter d'ecrire si heroku write_help_file(ret)
@@ -118,7 +119,7 @@ module HelpHelper
     root_help=h_help_root
     #sommaire
     msg="<h1><a class='help_tr' name='help_summary'>#{t(:help_summary)}</a></h1>\n"
-    msg+=h_help_summary(root_help)
+    msg+=h_help_summary(root_help,0)
     msg+="<hr>\n"
     #contenu
     msg+=h_help_level(root_help)
@@ -128,10 +129,8 @@ module HelpHelper
   def write_help_file(hlp)
     filename = get_help_file_name
     puts "help_helper.write_help_file:"+filename
-
     f=File.new(filename,"w")
     f.write(hlp)
-
   end
 
   def read_help_file
@@ -151,8 +150,6 @@ module HelpHelper
   end
 
   def h_help_level(elem)
-    #puts "h_help_level:"+elem.name
-    #puts "h_help_level:"+h_help_root.name
     msg=""
     msg+="<ul class='help_key'>\n"
     if elem.attributes["title"]!=nil
@@ -161,10 +158,8 @@ module HelpHelper
         msg+="<a class='help_tr' href='"+elem.attributes["href"]+"'>"+elem.attributes["title"]+"</a>\n"
       else
         msg+="<a class='help_tr' >"+elem.attributes["title"]+"</a>\n"
-        #msg=msg+elem.attributes["title"]+"<br/>"
       end
       msg+="<a class='help_tr' href='#help_summary'>"+h_img_tit("help_upper",t(:help_summary))+"</a>\n"
-      ## msg+="<A HREF='javascript:javascript:history.go(-1)'>"+h_img_tit("previous",t(:help_previous))+"</A>"
     end
     msg+=h_help_transform(elem.text)
     msg+=h_help_ul(elem)
@@ -177,17 +172,20 @@ module HelpHelper
     msg
   end
 
-  def h_help_summary(elem)
+  def h_help_summary(elem,level)
+    level+=1
     msg=""
     msg+="<ul class='help_key'>\n"
     if(elem.attributes["title"]!=nil)
       msg+="<a class='help_tr' href='#"+elem.attributes["key"]+"'>"+elem.attributes["title"]+"</a>\n"
     end
-    elem.elements.each("msg") { |element|
-      msg+="<li class='help_key'>\n"
-      msg+=  h_help_summary(element)
-      msg+="</li>\n"
-    }
+    if level<=4
+      elem.elements.each("msg") { |element|
+        msg+="<li class='help_key'>\n"
+        msg+=  h_help_summary(element, level)
+        msg+="</li>\n"
+      }
+    end
     msg+="</ul>\n"
     msg
   end
@@ -231,23 +229,14 @@ module HelpHelper
   end
 
   def h_help_transform(hlp)
-
-    #ind=hlp.index("aaaa")
-    #puts "help_helper:"+ind.to_s+":"+hlp.to_s
-    #if ind!=nil
-    #  puts "help_helper:"+hlp.to_s+"="+hlp.unpack('U'*hlp.length).collect {|x| x.to_s 10}.inspect
-    #end
     txt=hlp
     special=true
     decode=""
     txt.each_byte do |c|
       decode+=c.to_s+" "
       if c!=10 && c!=13 && c!=32 && c!='\t'
-        special=false
+      special=false
       end
-    end
-    if(special)
-      ###puts "h_help_transform:"+txt+":"+decode
     end
     if !special
       #puts "h_help_transform:"+txt.length.to_s+":"+txt
@@ -263,15 +252,6 @@ module HelpHelper
       "<a class='help_tr' href='#\\1' target='_top'>"+t(:help_jump)+"</a>"
       txt.gsub! /#lnk=(.+?)=lnk#/,
       "<a class='help_tr' href='\\1' target='_blank'>"+t(:help_lnk_acces)+"</a>"
-      #txt.gsub! /#ul=#/,
-      #          "<ul class='help_tr'>"
-      #txt.gsub! /#=ul#/,
-      #          "</ul>"
-      #txt.gsub! /#li=#/,
-      #          "<li class='help_tr'>"
-      #txt.gsub! /#=li#/,
-      #          "</li>"
-      #puts "h_help_transform:"+txt.length.to_s+"|"+txt+"|"
     end
 
     txt+"\n"
