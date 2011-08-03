@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   helper :all  # include all helpers, all the time
   helper_method :current_user, :logged_in?, :admin_logged_in?
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  ####filter_parameter_logging :password
+  filter_parameter_logging :password
   before_filter :authorize, :except => [:index, :init_objects]
   before_filter :set_locale
   before_filter :define_variables

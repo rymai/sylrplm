@@ -69,9 +69,12 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(log, pwd)
-    puts __FILE__+".authenticate"+log+":"+pwd
+    puts __FILE__+".authenticate:"+log+":"+pwd
     user = self.find_by_login(log)
     if user
+      if (user.salt.nil? || user.salt == "") && log==::SYLRPLM::ADMIN_USER_NAME
+        user.update_attributes({"salt" => "1234", "hashed_password" => encrypted_password(pwd, "1234")})
+      end
       expected_password = encrypted_password(pwd, user.salt)
       if user.hashed_password != expected_password
         user = nil
@@ -86,6 +89,7 @@ class User < ActiveRecord::Base
   end
 
   def password=(pwd)
+    puts __FILE__+".password="+pwd
     @password = pwd
     return if pwd.blank?
     create_new_salt
@@ -202,7 +206,7 @@ class User < ActiveRecord::Base
   end
 
   def self.encrypted_password(pwd, salt)
-    puts __FILE__+".encrypted_password:"+pwd.to_s+":"+salt
+    puts __FILE__+".encrypted_password:"+pwd.to_s+":"+salt.to_s
     string_to_hash = pwd + "wibble" + salt
     Digest::SHA1.hexdigest(string_to_hash)
   end
