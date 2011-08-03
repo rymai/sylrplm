@@ -46,7 +46,7 @@ class AccessesController < ApplicationController
     respond_to do |format|
       @access = Access.new(params[:access])
       if @access.save
-        flash[:notice] = '<br />'+ t(:ctrl_object_created, :typeobj => 'Access', :ident => @access.controller, :msg => nil))
+        flash[:notice] = '<br />'+ t(:ctrl_object_created, :typeobj => 'Access', :ident => @access.controller, :msg => nil)
         format.html { redirect_to(@access) }
         format.xml  { render :xml => @access, :status => :created, :location => @access }
       else
