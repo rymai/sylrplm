@@ -216,7 +216,7 @@ table.menu_bas .menu_bas tr {
 	padding-left: 2px;
 	padding-right: 2px;
 }
-td a, th a, a.help_tr, .help a, .menu_bas a, a.menu, a.menu_bas, .menu_bas input, input.menu_bas {
+a, td a, th a, a.help_tr, .help a, .menu_bas a, a.menu, a.menu_bas, .menu_bas input, input.menu_bas {
 	border: 0px;
 	text-decoration: none;
 	cursor: pointer;
@@ -226,7 +226,7 @@ td a, th a, a.help_tr, .help a, .menu_bas a, a.menu, a.menu_bas, .menu_bas input
 /* end menus en bas des listes*/
 
 /* a:hover, input:hover, img.help_tr:hover {*/
-.help a:hover, a.help_tr:hover, a.menu:hover, a:hover, input:hover,  select:hover, img.help_tr:hover {
+a:hover, .help a:hover, a.help_tr:hover, a.menu:hover, a:hover, input:hover,  select:hover, img.help_tr:hover {
 	background-color:#AAAAAA;
 	color: #222222;
 	cursor: pointer;

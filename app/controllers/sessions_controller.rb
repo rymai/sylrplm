@@ -12,7 +12,8 @@ class SessionsController < ApplicationController
   def create
     flash.now[:notice] = "post"
     if current_user.nil?
-      @current_user = User.authenticate(params[:login], params[:password])
+      puts __FILE__+".create:"+params.inspect
+      @current_user = User.authenticate(params["login"], params["password"])
       #@languages = get_languages
       respond_to do |format|
         if current_user

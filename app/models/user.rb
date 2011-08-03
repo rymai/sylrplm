@@ -1,5 +1,3 @@
-#require 'digest/sha1'
-
 class User < ActiveRecord::Base
   include Models::SylrplmCommon
 
@@ -38,12 +36,8 @@ class User < ActiveRecord::Base
     designation        = val
   end
   
-  def password=(val)
-    password        = val
-  end
- 
   def password_confirmation=(val)
-    password_confirmation        = val
+    @password_confirmation        = val
   end
   
   def self.create_new(params=nil)
@@ -207,6 +201,7 @@ class User < ActiveRecord::Base
   end
 
   def self.encrypted_password(password, salt)
+    puts __FILE__+".encrypted_password:"+password+":"+salt
     string_to_hash = password + "wibble" + salt
     Digest::SHA1.hexdigest(string_to_hash)
   end
