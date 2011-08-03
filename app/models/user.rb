@@ -68,10 +68,11 @@ class User < ActiveRecord::Base
     errors.add_to_base("Missing password") if hashed_password.blank?
   end
 
-  def self.authenticate(login, password)
-    user = self.find_by_login(login)
+  def self.authenticate(log, pwd)
+    puts __FILE__+".authenticate"+log+":"+pwd
+    user = self.find_by_login(log)
     if user
-      expected_password = encrypted_password(password, user.salt)
+      expected_password = encrypted_password(pwd, user.salt)
       if user.hashed_password != expected_password
         user = nil
       end
@@ -200,9 +201,9 @@ class User < ActiveRecord::Base
     self.salt = self.object_id.to_s + rand.to_s
   end
 
-  def self.encrypted_password(password, salt)
-    puts __FILE__+".encrypted_password:"+password+":"+salt
-    string_to_hash = password + "wibble" + salt
+  def self.encrypted_password(pwd, salt)
+    puts __FILE__+".encrypted_password:"+pwd.to_s+":"+salt
+    string_to_hash = pwd + "wibble" + salt
     Digest::SHA1.hexdigest(string_to_hash)
   end
 
