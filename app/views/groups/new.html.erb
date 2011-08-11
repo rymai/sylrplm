@@ -1,14 +1,18 @@
-<h1><%= t("groups_new") %></h1>
+<h1><%= t("group_new") %></h1>
 <% form_for(@group) do |f| %>
 <%= f.error_messages %>
-<table>
+<fieldset>
+	<legend>
+		<%= t(:legend_group) %>
+	</legend>
+	<%= f.label t("label_name") %>
+	<%= f.text_field :name %>
+	<br/>
+</fieldset>
+<table class='menu_bas'>
 	<tr>
-		<td>name</td>
-		<td><%= f.text_field :name %></td>
+		<td> <%= f.submit t("create") %> </td>
+		<td> <%= link_to t("list"), groups_path %> </td>
 	</tr>
-	<tr>
-		<td colspan='2'> <%= f.submit 'create' %>
-		<%= link_to 'back', groups_path %> </td>
-	</tr>
-	<table>
-		<% end %>
+</table>
+<% end %> 

@@ -1,10 +1,11 @@
-<p>
+<fieldset>
+	<legend>
+		<%= t(:legend_access) %>
+	</legend>
 	<%= f.label :controller_and_action, t("label_controller") %>
-	<br />
 	<%= f.collection_select(:controller_and_action, @controllers, :name_method, :name_method) %>
-</p>
-<p>
-	<%= f.label :roles, t("label_role") %>
 	<br />
+	<%= f.label :roles, t("label_role") %>
 	<%= f.text_field :roles %>
-</p>
+	<br />
+</fieldset>

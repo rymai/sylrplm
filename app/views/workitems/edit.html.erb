@@ -22,15 +22,7 @@
 
   <input type="hidden" name="state" id="state" value="" /><!-- :( -->
 
-  <table class='menu_bas'>
-		<tr class="nhover">
-      <td colspan='2'>
-        <%= link_to_function(t("update"), 'saveWi()') %> 
-        <%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> 
-        <%= link_to(t("list"), workitems_path) %>
-      <td>
-    </tr>
-</table>
+  
  <table>
     <%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem } %>
 
@@ -44,6 +36,15 @@
 	<%= render(:partial => "workitems/wi_links") %>
     
   </table>
+  <table class='menu_bas'>
+		<tr class="nhover">
+      <td colspan='2'>
+        <%= link_to_function(t("update"), 'saveWi()') %> 
+        <%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> 
+        <%= link_to(t("list"), workitems_path) %>
+      <td>
+    </tr>
+</table>
   <% end -%>
 
 </div>

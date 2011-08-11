@@ -1,6 +1,8 @@
 require 'ruote/participant'
 require 'openwfe/participants/participants'
 
+
+
 class Ruote::PlmParticipant
 
   include OpenWFE::LocalParticipant
@@ -33,7 +35,7 @@ class Ruote::PlmParticipant
       #puts "WfTest.consume:instance_id:"+fexpid.workflow_instance_id
       #puts "WfTest.consume:expression_id:"+fexpid.expression_id
       arworkitem = OpenWFE::Extras::ArWorkitem.find_by_wfid(fexpid.workflow_instance_id)
-      if(task=="promote" && (step == "init" || step == "review") )
+      if (task=="promote" && (step == "init" || step == "review") ) || (task=="revise" && step == "init")
         unless relation.nil?
           #prise en compte des objets transmis par le ar_workitem
           unless arworkitem.field_hash.nil?
@@ -58,48 +60,34 @@ class Ruote::PlmParticipant
           puts "PlmParticipant.consume: pas de relation=> abandon"
           get_engine.cancel_process(fexpid)
         end
-      elsif(task=="promote" && step == "exec")
+      elsif (task=="promote" || task=="revise") && step == "exec"
         #puts "PlmParticipant.consume:promote_exec:father_id="+arworkitem.id.to_s
-        Link.find_childs("history",arworkitem,"document").each do |link|
-          obj=Document.find(link.child_id)
-          puts "WfTest.consume:promote_exec:"+obj.to_s
-          obj.promote
+        obj=nil
+        begin
+          Link.find_childs("history",arworkitem,"document").each do |link|
+            obj=Document.find(link.child_id)
+          end
+          Link.find_childs("history",arworkitem,"part").each do |link|
+            obj=Part.find(link.child_id)
+          end
+          Link.find_childs("workitem",arworkitem,"document").each do |link|
+            obj=Document.find(link.child_id)
+          end
+          Link.find_childs("workitem",arworkitem,"part").each do |link|
+            obj=Part.find(link.child_id)
+          end
+          unless obj.nil?
+            eval obj.method(task).call
           obj.save
-          puts "PlmParticipant.consume:promote_exec:"+obj.to_s
+          end
+          puts "PlmParticipant.consume:"+task.to_s+"/"+step+":"+obj.to_s
+          reply_to_engine (workitem)
+        rescue Exception => e
+          puts "PlmParticipant.consume:"+task.to_s+"/"+step+":echec"+e.to_s+" sur "+obj.to_s
+          get_engine.cancel_process(fexpid)
         end
-        Link.find_childs("history",arworkitem,"part").each do |link|
-          obj=Part.find(link.child_id)
-          puts "WfTest.consume:promote_exec:"+obj.to_s
-          obj.promote
-          obj.save
-          puts "PlmParticipant.consume:promote_exec:"+obj.to_s
-        end
-        Link.find_childs("workitem",arworkitem,"document").each do |link|
-          obj=Document.find(link.child_id)
-          puts "WfTest.consume:promote_exec:"+obj.to_s
-          obj.promote
-          obj.save
-          puts "PlmParticipant.consume:promote_exec:"+obj.to_s
-        end
-        Link.find_childs("workitem",arworkitem,"part").each do |link|
-          obj=Part.find(link.child_id)
-          puts "WfTest.consume:promote_exec:"+obj.to_s
-          obj.promote
-          obj.save
-          puts "PlmParticipant.consume:promote_exec:"+obj.to_s
-        end
-        #      fields["/document/1"]=""
-        #      arworkitem.replace_fields(fields)
-        #      puts "WfTest.consume:fields="+arworkitem.field_hash.inspect
-        #      arworkitem.save!
-        #      params=workitem.attributes["params"]
-        #      params["/document/1"]=""
-        #      workitem.set_attribute("params",params)
-        #      puts "WfTest.consume:workitem="+workitem.inspect
-        #puts "WfTest.consume:fin de promote"
-        reply_to_engine (workitem)
       else
-        puts "PlmParticipant.consume: pas de tache=> abandon"
+        puts "PlmParticipant.consume: pas de tache ou tache/etape "+task.to_s+"/"+step+" non reconnue => abandon"
         get_engine.cancel_process(fexpid)
       end
     end
@@ -120,41 +108,6 @@ class Ruote::PlmParticipant
     link_
   end
 
-  #
-  #
-  #
-  #  def add_objects(workitem, favori, type_object, relation)
-  #    ret=0
-  #    unless favori.nil?
-  #      msg=""
-  #      #      puts "processes_controller.add_objects:workitem="+workitem.id.to_s+" rel="+relation.inspect+" favori="+favori.inspect
-  #      favori.items.each do |item|
-  #        link_=Link.create_new_byid("workitem", workitem.id, type_object, item.id, relation)
-  #        link=link_[:link]
-  #        if(link!=nil)
-  #          if(link.save)
-  #            msg += "\nLink added:"+type_object+":"+item.ident+"-"+relation+":"+link_[:msg]
-  #            ret+=1
-  #          else
-  #            msg += "\nLink not saved:"+type_object+":"+item.ident+"-"+relation+":"+link_[:msg]
-  #          end
-  #        else
-  #          if link_[:msg]==ctrl_link_already_workitem_document
-  #            msg += "\nLink reused:"+type_object+":"+item.ident+"-"+relation
-  #            ret+=1
-  #          else
-  #            msg += "\nLink not added:"+type_object+":"+item.ident+"-"+relation
-  #          end
-  #        end
-  #      end
-  #      #reset_favori_document
-  #    else
-  #      msg = "\nNothing to link:"+type_object
-  #    end
-  #    puts  "PlmParticipant.add_objects:"+type_object+"="+ret.to_s+":"+msg
-  #    ret
-  #  end
-
   def get_default_relation(task, step)
     puts  "PlmParticipant.get_default_relation:"+task+"."+step
     ret = case step
@@ -168,7 +121,7 @@ class Ruote::PlmParticipant
   def get_param(workitem, param, default=nil)
     ret=workitem.attributes["params"][param] unless workitem.attributes["params"][param].nil?
     if ret.nil?
-      ret=default
+    ret=default
     end
     ret
   end

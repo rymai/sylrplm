@@ -1,30 +1,29 @@
-<p>
-    <%= f.label t(:label_utility) %>
-    <br/>
-    <%= select_tag("sequence[utility]",@utilities) %>
-</p>
-<p>
-    <%= f.label t(:label_sequence) %>
-    <br/>
-    <%= f.check_box :sequence %>
-</p>
-<p>
-    <%= f.label t(:label_modify) %>
-    <br/>
-    <%= f.check_box :modify %>
-</p>
-<p>
-    <%= f.label t(:label_value) %>
-    <br/>
-    <%= f.text_field :value %>
-</p>
-<p>
-    <%= f.label t(:label_min) %>
-    <br/>
-    <%= f.text_field :min %>
-</p>
-<p>
-    <%= f.label t(:label_max) %>
-    <br/>
-    <%= f.text_field :max %>
-</p>
+<fieldset>
+	<legend>
+		<%= t(:legend_sequence) %>
+	</legend>
+	<%= f.label t(:label_utility) %>
+
+	<%= select_tag("sequence[utility]",@utilities) %>
+	<br/>
+	<%= f.label t(:label_sequence) %>
+
+	<%= f.check_box :sequence %>
+	<br/>
+	<%= f.label t(:label_modify) %>
+
+	<%= f.check_box :modify %>
+	<br/>
+	<%= f.label t(:label_value) %>
+
+	<%= f.text_field :value %>
+	<br/>
+	<%= f.label t(:label_min) %>
+
+	<%= f.text_field :min %>
+	<br/>
+	<%= f.label t(:label_max) %>
+
+	<%= f.text_field :max %>
+	<br/>
+</fieldset>

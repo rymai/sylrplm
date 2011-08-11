@@ -24,7 +24,6 @@
 
 
 class GroupsController < ApplicationController
-
   ###before_filter :login_required
 
   # GET /groups
@@ -32,7 +31,8 @@ class GroupsController < ApplicationController
   #
   def index
 
-    @groups = Group.find(:all)
+    
+    @groups = Group.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 
     respond_to do |format|
       format.html # index.html.erb
@@ -61,7 +61,7 @@ class GroupsController < ApplicationController
   def new
 
     @group = Group.new
-
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @group }

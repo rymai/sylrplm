@@ -1,6 +1,5 @@
 <h1><%= t("access_list") %><%= h_count_objects(@accesses)%> </h1>
 <%= form_simple_query_helper('/accesses', @accesses) %>
-<%= f.error_messages %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_access"), new_access_path %> </td>

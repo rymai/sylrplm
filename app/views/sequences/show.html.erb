@@ -1,39 +1,31 @@
-<h1><%=t(:sequence_show) %></h1>
-
+<h1><%= t(:sequence_show) %></h1>
 <p>
-    <b><%=t(:label_utility) %></b>
-		<%=h @sequence.utility %>
+	<b><%= t(:label_utility) %></b>
+	<%= h @sequence.utility %>
 </p>
 <p>
-  <b><%=t(:label_sequence) %></b>
-  <%=h @sequence.sequence %>
+	<b><%= t(:label_sequence) %></b>
+	<%= h @sequence.sequence %>
 </p>
 <p>
-    <b><%=t(:label_modify) %></b>
-    <%=h @sequence.modify %>
+	<b><%= t(:label_modify) %></b>
+	<%= h @sequence.modify %>
 </p>
 <p>
-  <b><%=t(:label_value) %></b>
-  <%=h @sequence.value %>
+	<b><%= t(:label_value) %></b>
+	<%= h @sequence.value %>
 </p>
-
 <p>
-  <b><%=t(:label_min) %></b>
-  <%=h @sequence.min %>
+	<b><%= t(:label_min) %></b>
+	<%= h @sequence.min %>
 </p>
-
 <p>
-  <b><%=t(:label_max) %></b>
-  <%=h @sequence.max %>
+	<b><%= t(:label_max) %></b>
+	<%= h @sequence.max %>
 </p>
-
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t(:edit), edit_sequence_path(@sequence)%>
-        </td>
-        <td>
-            <%= link_to t(:list), sequences_path %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= link_to t(:edit), edit_sequence_path(@sequence)%> </td>
+		<td> <%= link_to t(:list), sequences_path %> </td>
+	</tr>
 </table>

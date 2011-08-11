@@ -1,20 +1,17 @@
-<p>
-	<b><%= f.label t("label_message") %></b>
-	<br/>
-	<%= f.text_area :message %>
-</p>
-<p>
-	<b><%= f.label t("label_id") %></b>
-	<br/>
-	<%= f.text_field :forum_id %>
-</p>
-<p>
-	<b><%= f.label t("label_parent") %></b>
-	<br/>
-	<%= f.text_field :parent_id %>
-</p>
-<p>
-	<b><%= f.label t("label_author") %></b>
-	<br/>
-	<%= f.text_field :owner_id %>
-</p>
+<fieldset>
+	<legend>
+		<%= t(:legend_forum_item) %>
+	</legend>
+	<%= f.label t("label_message") %>
+<%= f.text_area :message %>
+<br/>
+<%= f.label t("label_id") %>
+<%= f.text_field :forum_id %>
+<br/>
+<%= f.label t("label_parent") %>
+<%= f.text_field :parent_id %>
+<br/>
+<%= f.label t("label_author") %>
+<%= f.text_field :owner_id %>
+<br/>
+</fieldset>

@@ -1,6 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  
   # renvoie la valeur de l'attribut att sur current si
   # 1- current n'a pas le meme identifiant que previous
   # 2- que les valeurs de l'attribut sont differentes entre les 2objets
@@ -97,7 +96,7 @@ module ApplicationHelper
 
   def h_img(name)
     ret="<img class=\"icone\" src=\"/images/"+name.to_s+".png\" title='"
-    ret<<t(name.to_s)
+    ret<<t(File.basename(name.to_s))
     ret<<"'></img>"
     ret.to_s
   end
@@ -292,7 +291,47 @@ module ApplicationHelper
     href
   end
 
-  
+  def select_inout(form, object, values, field)
+    html = ""
+    unless values.count == 0
+      #user
+      mdl_object=object.model_name
+      #group
+      mdl_assoc=values[0].model_name
+      #user_groups
+      select_id=mdl_object+"_"+mdl_assoc+"s"
+      #user[role_ids][]
+      select_name=mdl_object+"["+mdl_assoc+"_ids][]"
+      #role_ids
+      method=(mdl_assoc+"_ids").to_sym
+      the_selected=object.method(method).call
+      #label_user_groups_out, label_user_groups_in
+      label_out=t("label_"+select_id+"_out")
+      label_in=t("label_"+select_id+"_in")
+      nb=[values.count+1, 10].min
+      html += javascript_include_tag "select_inout"
+      html += "<div style='display: none;'>"
+      html += form.collection_select(method, values, :id, field, options = {}, html_options = {:id => select_id, :size => nb, :multiple => true, :name => select_name, :selected => the_selected})
+      html += "</div>"
+      html += "<table>"
+      html += "<tr>"
+      html += "<th>#{label_out}</th>"
+      html += "<th></th>"
+      html += "<th>#{label_in}</th>"
+      html += "</tr>"
+      html += "<tr>"
+      #html += "<td>mdl_object:#{mdl_object} mdl_assoc:#{mdl_assoc} select_id:#{select_id} select_name:#{select_name} method:#{method} : #{the_selected.inspect}</td>"
+      html += "<td><select id='#{select_id}_out' multiple='multiple' name='#{select_id}_out' size=#{nb}></select></td>"
+      html += "<td><a onclick=\"selectInOutAdd('#{select_id}'); return true;\" title=\"#{t('button_add')}\">#{h_img('select_inout/select_add')}</a>"
+      html += "<br/>"
+      html += "<a onclick= \"selectInOutRemove('#{select_id}'); return true;\" title=\"#{t('button_remove')}\">#{h_img('select_inout/select_remove')}</a></td>"
+      html += "<td><select id='#{select_id}_in' multiple='multiple' name='#{select_id}_in' size=#{nb}></select></td>"
+      html += "</tr>"
+      html += "</table>"
+      html += "<script>selectInOutFill('#{select_id}')</script>"
+    end
+    html
+  end
 
   #
   # FLUO
@@ -372,6 +411,5 @@ module ApplicationHelper
     link_to(v, (param_name || accessor) => v)
   end
 
-  
 end
 

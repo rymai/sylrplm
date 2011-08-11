@@ -1,47 +1,39 @@
-<p>
-	<b><%= f.label t("label_ident") %></b>
-	<br/>
+<fieldset>
+	<legend>
+		<%= t(:legend_document) %>
+	</legend>
+	<%= f.label t("label_ident") %>
 	<%= f.text_field :ident %>
-</p>
-<p>
-	<b><%= f.label t("label_type") %></b>
 	<br/>
+	<%= f.label t("label_type") %>
 	<%= f.collection_select(:typesobject_id, @types, :id, :name) %>
-</p>
-<p>
-	<b><%= f.label t("label_revision") %></b>
 	<br/>
-	<%= h @document.revision %>
-</p>
-<p>
-	<b><%= f.label t("label_designation") %></b>
+	<%= f.label t("label_revision") %>
+	<%= text_field_tag :revision, @document.revision, :disabled => true %>
 	<br/>
+	<%= f.label t("label_designation") %>
 	<%= f.text_field :designation %>
-</p>
-<p>
-	<b><%= f.label t("label_description") %></b>
 	<br/>
+	<%= f.label t("label_description") %>
 	<%= f.text_area :description , :rows => 10 %>
-</p>
-<%if (@document.statusobject.promote!=true || @document.statusobject.demote!=true ) && !@document.frozen? %> <b><%= f.label t("label_status") %></b>
-<br/>
-<% unless @document.statusobject.nil? %>
-<%= f.collection_select(:statusobject_id, @status, :id, :name) %>
-<% end %>
-<%else %> <b><%= f.label t("label_status") %></b>
-<br/>
-<% if(@document.statusobject != nil) %>
-<%= @document.statusobject.name %>
-<%end %>
-<%end %>
-</p>
-<p>
-	<b><%= f.label t("label_responsible") %></b>
 	<br/>
-	<%= @document.owner.login %>
-</p>
-<p>
-	<b><%= f.label t("label_date") %></b>
+	<%if (@document.statusobject.promote!=true || @document.statusobject.demote!=true ) && !@document.frozen? %>
+	<%= f.label t("label_status") %>
+	<% unless @document.statusobject.nil? %>
+	<%= f.collection_select(:statusobject_id, @status, :id, :name) %>
+	<% end %>
+	<%else %>
+	<%= f.label t("label_status") %>
+	<% if(@document.statusobject != nil) %>
+	<%= text_field_tag :status, @document.statusobject.name, :disabled => true %>
+	<%end %>
+	<%end %>
 	<br/>
+	<%= f.label t("label_responsible") %>
+	<%= text_field_tag :responsible, @document.owner.login, :disabled => true %>
+	<br/>
+	<%= f.label t("label_date") %>
+
 	<%= f.date_select :date %>
-</p>
+	<br/>
+</fieldset>

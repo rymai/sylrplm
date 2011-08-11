@@ -1,54 +1,40 @@
 <h1><%= t("definitions_edit") %>: "<%= h @definition.name %>"</h1>
-<div style='float: left;'>
-	<% form_for(@definition, :html => { :id => 'definition_form' }) do |f| %>
-	<%= f.error_messages %>
-	<fieldset>
-		<legend>
-			<%= t("label_process_definition")%>
-		</legend>
-		<table class="nhover">
-			<tr>
-				<td class="wide-first-col"><%= t("label_name")%></td>
-				<td><%= f.text_field :name %></td>
-			</tr>
-			<tr>
-				<td><%= t("label_description")%></td>
-				<td><%= f.text_field :description %></td>
-			</tr>
-			<tr>
-				<td><%= t("label_uri")%></td>
-				<td><%= f.text_field :uri %></td>
-			</tr>
-			<tr>
-				<td colspan="2"> <%= render(
-				:partial => @payload_partial,
-				:locals => {
-				:fields => @definition.launch_fields_hash,
-				:form_id => 'definition_form',
-				:textarea_name => 'definition[launch_fields]' }) %></td>
-			</tr>
-		</table>
-	</fieldset>
-	<table class='menu_bas'>
-		<tr>
-			<td> <%= f.submit t("update") %></td>
-			<td> <%= link_to t("explorer"),  @definition %></td>
-			<td> <%= link_to t("list"), definitions_path %></td>
-		</tr>
-	</table>
-	<% end %>
-</div>
-<div style='float: left; margin-left: 28px;'>
-	<%= render :partial => 'shared/definition_groups', :locals => @dg_locals %>
-</div>
-<div class='align-right'>
-	<%= render_fluo :definition => @definition %>
-</div>
-<div id="help" style="float: left">
-	<p>
-		Change the info about a [business] process definition here.
-	</p>
-	<p>
-		Two important things may be edited here : the initial payload for any launch and the list of user groups that may launch the process definition.
-	</p>
-</div>
+<% form_for(@definition, :html => { :id => 'definition_form' }) do |f| %>
+<%= f.error_messages %>
+<fieldset>
+	<legend>
+		<%= t("label_process_definition")%>
+	</legend>
+	<%= f.label t("label_name")%>
+	<%= f.text_field :name %>
+	<br/>
+	<%= f.label  t("label_description")%>
+	<%= f.text_field :description %>
+	<br/>
+	<%= f.label t("label_uri")%>
+	<%= render(
+	:partial => 'shared/ruote_forms',
+	:locals => {
+	:fields => @definition.launch_fields_hash,
+	:form_id => 'definition_form',
+	:textarea_name => 'definition[launch_fields]' }) %>
+	<br/>
+	<%= f.label t("label_groups_may_launch") %>
+	<%= select_inout(f, @definition, Group.all, :name) %>
+</fieldset>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= f.submit t("update") %></td>
+		<td> <%= link_to t("explorer"),  @definition %></td>
+		<td> <%= link_to t("list"), definitions_path %></td>
+	</tr>
+</table>
+<% end %>
+
+<%= render_fluo :definition => @definition %>
+<p>
+	Change the info about a [business] process definition here.
+</p>
+<p>
+	Two important things may be edited here : the initial payload for any launch and the list of user groups that may launch the process definition.
+</p>

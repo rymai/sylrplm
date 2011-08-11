@@ -32,49 +32,6 @@ class Notification < ActiveRecord::Base
   # ruby script/console
   # Notification.notify
   
-  def self.notify_all(id)
-    name="****************:"+self.class.name+"."+__method__.to_s+":"
-    ret={}
-    if id == "all"
-      notif=nil
-    else
-      notif=Notification.find(params[:id])
-    end
-    User.all.each do |user|
-      unless user.email==""
-      to_notify=[]
-      if notif.nil?
-        notifs=self.find(:all, :conditions => ["notify_date is null"])
-      else
-        notifs=[]
-        notifs<<notif
-      end
-      notifs.each do |notif|
-        if notif.responsible == user
-          to_notify << notif
-        end
-      end
-      puts "**********"+user.login+":"+to_notify.count.to_s
-      if to_notify.count > 0
-        puts to_notify.inspect
-        notifs={}
-        notifs[:recordset]=to_notify
-        email=PlmMailer.create_notify(notifs, SYLRPLM::ADMIN_MAIL, user)
-        unless email.nil?
-          email.set_content_type("text/html")
-          PlmMailer.deliver(email)
-          ret[user]=to_notify.count
-        else
-          puts name+" mail non cree pour #{user.login}"
-        end
-      end
-      else
-        puts name+" pas de email pour #{user.login}"
-      end
-    end
-    puts name+"ret="+ret.inspect
-    ret
-  end
   
   def notify_me
     Notification.notify_all(self)
@@ -119,4 +76,68 @@ class Notification < ActiveRecord::Base
       filter, filter,
       filter, filter] unless filter.nil?
   end
+  
+  def self.notify_all( id)
+    name=":"+self.class.name+"."+__method__.to_s+":"
+    ret=[]
+    if id.nil? || id == "all"
+      notifs=self.find(:all, :conditions => ["notify_date is null"])
+    else
+      notifs=Notification.find(params[:id])
+    end
+    the_notifs=[]
+    notifs.each do |notif|
+      the_notifs << {:notif => notif, :to_notify => false, :notify => true}
+    end
+    User.all.each do |user|
+      cnt=0
+      msg=nil;
+      unless user.email==""
+        to_notify=[]
+        the_notifs.each do |notif|
+          if notif[:notif].responsible == user
+            notif[:to_notify] = true
+            to_notify<<notif[:notif]
+          end
+        end
+        puts "******"+user.login+":"+to_notify.count.to_s
+        if to_notify.count > 0
+          puts to_notify.inspect
+          notifs={}
+          notifs[:recordset]=to_notify
+          email=PlmMailer.create_notify(notifs, SYLRPLM::ADMIN_MAIL, user)
+          unless email.nil?
+            email.set_content_type("text/html")
+            PlmMailer.deliver(email)
+            cnt = to_notify.count
+            msg = :ctrl_mail_created_and_delivered
+          else
+            puts name+" message non cree pour #{user.login}"
+            msg = :ctrl_mail_not_created
+          end
+        else
+          msg = :ctrl_nothing_to_notify
+        end
+      else
+        puts name+" pas de email pour #{user.login}"
+        msg=:ctrl_user_no_email
+      end
+      if cnt ==0
+        the_notifs.each do |notif|
+          if notif[:notif].responsible == user
+            notif[:notify]=false
+          end
+        end 
+      end
+      ret<< { :user => user, :count => cnt, :msg => msg }
+    end
+    the_notifs.each do |notif|
+      if notif[:notify] == true
+        notif[:notif].update_attributes({:notify_date => Time.now})      
+      end
+    end
+    #puts name+"ret="+ret.inspect
+    ret
+  end
+
 end

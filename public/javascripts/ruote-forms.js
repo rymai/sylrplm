@@ -513,7 +513,7 @@ var RuoteForms = function() {
 	}
 
 	function render(elt, data, options) {
-
+//alert('render:data='+data.length)
 		if (data == EmptyItem || data == null)
 			return render_new(elt, options);
 		var t = data['__class'] || (typeof data);
@@ -532,11 +532,12 @@ var RuoteForms = function() {
 	// fonction appellee par _ruote_forms.rb
 	function renderForm(container, data, options) {
 
-		//alert('renderForm:data=' + data)
+		
 		container = byId(container);
-
+//alert('renderForm:data=' + data.length+' cont='+container)
 		if (!container.className.match(/rform_root/))
 			container.className = container.className + ' rform_root';
+
 		if (!options)
 			options = {};
 
@@ -545,6 +546,7 @@ var RuoteForms = function() {
 		container.originalData = data;
 		container.originalOptions = options;
 		container.stack = [];
+		
 		render(container, data, options);
 	}
 

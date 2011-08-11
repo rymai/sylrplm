@@ -55,6 +55,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :documents, :collection => { :empty_favori => :get }
 
   map.connect(
+  'datafiles/:id/show_file',
+  :controller => 'datafiles',
+  :action => 'show_file')
+  
+  map.connect(
   'documents/:id/add_favori',
   :controller => 'documents',
   :action => 'add_favori',
@@ -66,8 +71,11 @@ ActionController::Routing::Routes.draw do |map|
   map.connect(
   'documents/:id/new_datafile',
   :controller => 'documents',
-  :action => 'new_datafile',
-  :conditions => { :method => :get })
+  :action => 'new_datafile')
+    map.connect(
+  'documents/:id/add_datafile',
+  :controller => 'documents',
+  :action => 'add_datafile')
   map.connect(
   'documents/:id/promote',
   :controller => 'documents',
@@ -86,13 +94,15 @@ ActionController::Routing::Routes.draw do |map|
   map.connect(
   'documents/:id/check_out',
   :controller => 'documents',
-  :action => 'check_out',
-  :conditions => { :method => :get })
+  :action => 'check_out')
   map.connect(
   'documents/:id/check_in',
   :controller => 'documents',
-  :action => 'check_in',
-  :conditions => { :method => :get })
+  :action => 'check_in')
+  map.connect(
+  'documents/:id/check_free',
+  :controller => 'documents',
+  :action => 'check_free')
 
   map.connect(
   'parts/:id/add_favori',

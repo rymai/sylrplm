@@ -19,6 +19,7 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.xml
   def show
+    puts __FILE__+"."+__method__.to_s+":"+params.inspect
     @document  = Document.find(params[:id])
     @datafiles = @document.get_datafiles
     @parts     = @document.parts
@@ -233,6 +234,7 @@ class DocumentsController < ApplicationController
   end
 
   def new_datafile
+    puts __FILE__+"."+__method__.to_s+":"+params.inspect
     @object = Document.find(params[:id])
     @types  = Typesobject.find_for("datafile")
     puts "DocumentsController.new_datafile:#{@object.inspect}"

@@ -61,7 +61,6 @@ class RolesController < ApplicationController
   # PUT /roles/1.xml
   def update
     @role = Role.find(params[:id])
-    
     respond_to do |format|
       if @role.update_attributes(params[:role])
         flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_role),:ident=>@role.title)

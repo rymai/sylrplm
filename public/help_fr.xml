@@ -3,10 +3,24 @@
     Bienvenue dans l'application SYLRPLM développée sur "Ruby On Rails"#img=rails.png=img##lnk=http://www.railsfrance.org/=lnk#"
     <msg key="help_presentation" title="Présentation générale">
         <msg key="help_banner" title="Bandeau">
+        		Au démarrage de l'application
             #img=help/bandeau.png=img#
-            Indique le nom de l'utilisateur et son rôle ()
-            Permet de se déconnecter.
-            Permet de changer le thème de présentation de l'application.
+            Permet de se connecter explicitement et de se déconnecter.
+            Indique le nom de l'utilisateur et son rôle quand il est connecté
+            #img=help/bandeau2.png=img#
+        </msg>
+        <msg key="help_banner" title="Date - Aide">
+        		#img=help/module_date.png=img#
+        		Affiche la date courante
+            Permet d'activer l'aide sur un menu: clic sur l'image help puis clic sur un menu.
+        </msg>
+        <msg key="help_theme" title="Thèmes">
+						#img=help/theme.png=img#
+						Permet de changer le thème de présentation de l'application.
+        </msg>
+        <msg key="help_language" title="Langues">
+						#img=help/langue.png=img#
+						Permet de changer la langue de l'application.
         </msg>
         <msg key="help_icones" title="Icones">
             <ul>
@@ -32,7 +46,7 @@
         </msg>
         <msg key="help_authorization" title="Autorisations/login">
                 Certains menus exigent que l'utilisateur ait certains droits sur les objets, il doit donc se connecter.
-                Cette connexion s'effectue en deux temps suite à l'activation d'un menu (il n'y a pas de menu connexion, on ne se connecte que si c'est indispensable):
+                Cette connexion s'effectue en deux temps soit sur demande (voir bandeau), soit suite à l'activation d'un menu :
                 <ul>
                     <li title="Connexion">#img=help/login_1.png=img#</li>
                     <li title="Choix du rôle">#img=help/login_2.png=img#</li>
@@ -99,8 +113,6 @@
             #img=help/module_acceuil.png=img#
             Acceuil: Permet de visualiser cette page d'aide.
             Mes actions: Permet de voir les actions à effectuer.
-            Permet de changer la langue.
-            Permet d'activer l'aide sur un menu: clic sur l'image help puis clic sur un menu.
         </msg>
         <msg key="help_objects" title="Les objets PLM">
             #img=help/module_objets.png=img#
@@ -407,6 +419,42 @@
                 Liste les contacts utiles pour l'utilisation de l'application.
             </msg>
         </msg>
+        <msg key="help_clipboard" title="Presse papiers">
+            #img=help/module_pressepapier.png=img#
+            Indique les objets copiés depuis les listes d'objets par le menu "Copier".
+            Ces objets peuvent être "collés" dans les autres objets par le menu "Explorer"
+            Ils peuvent également être enlevé du presse papier en activant la croix rouge.
+        </msg>
+        <msg key="help_processus" title="Processus métier">
+            #img=help/module_processus.png=img#
+            Ce module comprend les fonctions relatives aux processus métier: définition, exécution, suivi.
+            <msg key="help_definitions" title="Définition" href="/definitions">
+            	Liste et lancement des processus (bouton vert)
+            	#img=help/definitions_list.png=img#
+            	Détail:
+            	#img=help/definitions_show.png=img#
+            	Edition:
+            	#img=help/definitions_edit.png=img#
+            	Création:
+            	#img=help/definitions_new.png=img#
+            </msg>
+            <msg key="help_myactions" title="Mes actions" href="/workitems">
+            	Suivi des actions qui me sont affectées lors du déroulement des processus.
+            	Liste:
+            	#img=help/workflows_list.png=img#
+            	Détails:
+            	#img=help/workflows_show.png=img#
+            	Lancement:
+            	#img=help/workflows_edit.png=img#
+            </msg>
+            <msg key="help_curprocessus" title="Processus en cours" href="/processus">
+            	Liste des processus en cours d'exécution.
+            	#img=help/processus_list.png=img#
+            	Détails:
+            	#img=help/processus_show.png=img#
+            </msg>
+        </msg>
+
         <msg key="help_organization" title="L'organisation">
             #img=help/module_organisation.png=img#
             Le module "Organisation" permet de gérer:
@@ -464,6 +512,34 @@
                     </msg>
                     <msg key="help_users_new" title="Nouveau rôle" href="/roles/new">
                         #img=help/roles_new.png=img#
+                    </msg>
+                </msg>
+            </msg>
+            <msg key="help_groups" title="Groupes" href="/groups">
+                Un groupe comprend un ou plusieurs utilisateurs, ils permettent d'attribuer certains droits au groupe entier.
+                par exemple, exécuter un processus
+                <msg key="help_groups_attributs" title="Attributs">
+                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                        <li title="Nom">Nom du groupe.
+                        </li>
+                        <li title="Description">
+                        </li>
+                    </ul>
+                </msg>
+                <msg key="help_groups_functions" title="Fonctionnalités">
+                    Les principales fonctionnalités sur les groupes sont:
+                    <msg key="help_groups_list" title="Liste" href="/groups">
+                        #img=help/groups_list.png=img#
+                    </msg>
+                    <msg key="help_groups_show" title="Explorer" href="/groups/1">
+                        #img=help/groups_show.png=img#
+                    </msg>
+                    <msg key="help_groups_edit" title="Edition" href="/groups/1">
+                        #img=help/groups_edit.png=img#
+                    </msg>
+                    <msg key="help_users_new" title="Nouveau groupe" href="/groups/new">
+                        #img=help/groups_new.png=img#
                     </msg>
                 </msg>
             </msg>
@@ -614,11 +690,6 @@
             </msg>
         </msg>
         
-        <msg key="help_clipboard" title="Presse papiers">
-            #img=help/module_pressepapier.png=img#
-            Indique les objets copiés depuis les listes d'objets par le menu "Copier".
-            Ces objets peuvent être "collés" dans les autres objets par le menu "Explorer"
-        </msg>
         <msg key="help_debug" title="Debug">
             #img=help/module_debug.png=img#
             Permet de gérer les tables internes de l'application.

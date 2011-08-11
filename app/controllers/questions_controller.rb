@@ -1,5 +1,7 @@
 class QuestionsController < ApplicationController
   include Controllers::PlmObjectControllerModule
+  
+  skip_before_filter :authorize, :object_exists
   access_control (Access.find_for_controller(controller_class_name()))
   
   def index

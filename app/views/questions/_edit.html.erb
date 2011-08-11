@@ -1,10 +1,11 @@
-<p>
-    <%= f.label t(:label_question) %>
-    <br/>
-    <%= f.text_field :question %>
-</p>
-<p>
-    <%= f.label t(:label_answer) %>
-    <br/>
-    <%= f.text_field :answer %>
-</p>
+<fieldset>
+	<legend>
+		<%= t(:legend_question) %>
+	</legend>
+	<%= f.label t(:label_question) %>
+	<%= f.text_field :question %>
+	<br/>
+	<%= f.label t(:label_answer) %>
+	<%= f.text_field :answer %>
+	<br/>
+</fieldset>

@@ -1,56 +1,52 @@
-<%= hidden_field :datafile , :revision %>
-<%= hidden_field_tag "fonct" , fonct %>
-<%= f.error_messages %>
-<p>
-	<b><%= f.label t(:label_ident) %></b>
-	<br/>
+<fieldset>
+	<legend>
+		<%= t(:legend_datafile) %>
+	</legend>
+	<%= hidden_field :datafile , :revision %>
+	<%= hidden_field_tag :fonct , fonct %>
+	<%= f.label t(:label_ident) %>
 	<%= f.text_field :ident %>
-</p>
-<p>
-	<b><%= f.label t(:label_type) %></b>
 	<br/>
+	<%= f.label t(:label_type) %>
 	<%= f.collection_select(:typesobject_id, @types, :id, :name) %>
-</p>
-<p>
-	<b><%= f.label t(:label_revision) %></b>
 	<br/>
-	<%= h @datafile.revision %>
-</p>
-<p>
-	<b><%= f.label t(:label_volume) %></b>
+	<%= f.label t(:label_revision) %>
+	<%= text_field_tag :revision, @datafile.revision, :disabled => true
+%>
 	<br/>
-	<%= @datafile.volume.name %>
-</p>
-<p>
-	<b><%= f.label t(:label_filename) %>:</b>
-	<%= @datafile.filename %>
+	<%= f.label t(:label_volume) %>
+	<%= text_field_tag :volume, @datafile.volume.name, :disabled => true
+%>
+	<br/>
+	<%= f.label t(:label_filename) %>
+	<%= text_field_tag :filename, @datafile.filename, :disabled => true
+%>
 	<% unless document.nil? %>
 	<% if document.checked? %>
 	<br/>
+	<%= f.label "..." %>
 	<%= f.file_field(:uploaded_file) %>
 	<% if @datafile.get_revisions_files.length > 0 %>
 	<br/>
-	<b><%= f.label t(:label_restore_file) %></b>
-	<br/>
+	<%= f.label t(:label_restore_file) %>
 	<%= select_tag("restore_file",options_for_select(@datafile.get_revisions_files,@datafile.get_current_revision_file)) %>
 	<% end %>
 	<% end %>
 	<% else %>
 	<br/>
+	<%= f.label "..." %>
 	<%= f.file_field(:uploaded_file) %>
 	<br/>
-	<b><%= f.label t(:label_restore_file) %></b>
-	<br/>
+	<%= f.label t(:label_restore_file) %>
 	<%= select_tag("restore_file",options_for_select(@datafile.get_revisions_files,@datafile.get_current_revision_file)) %>
 	<% end %>
-</p>
-<p>
-	<b><%= f.label t(:label_content_type) %></b>
 	<br/>
-	<%= @datafile.content_type %>
-</p>
-<p>
-	<b><%= f.label t(:label_responsible) %></b>
+	<%= f.label t(:label_content_type) %>
+	<%= text_field_tag :content_type, @datafile.content_type, :disabled => true
+%>
 	<br/>
-	<%= @datafile.owner.login %>
-</p>
+	<%= f.label t(:label_responsible) %>
+	<%= text_field_tag :owner, @datafile.owner.login,  :disabled => true
+%>
+	<br/>
+</fieldset>

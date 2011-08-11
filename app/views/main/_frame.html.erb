@@ -67,7 +67,6 @@
         <%= h_menu("/processes", "help_flw_processes",t("mnu_flw_processes")) %>
       </fieldset>
 
-      <% if admin_logged_in? %>
         <fieldset>
           <%= content_tag(:legend, t(:legend_organization)) %>
           <%= h_menu("/users","help_users",t("mnu_users")) %>
@@ -77,6 +76,7 @@
           <%= h_menu("/volumes","help_volumes",t("mnu_volumes")) %>
         </fieldset>
 
+      <% if admin_logged_in? %>
         <fieldset>
           <%= content_tag(:legend, t(:legend_param)) %>
           <%= h_menu("/typesobjects","help_typesobjects",t("mnu_types_objects")) %>

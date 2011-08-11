@@ -1,25 +1,20 @@
-<p>
+<fieldset>
+	<legend>
+		<%= t(:legend_forum) %>
+	</legend>
 	<%= f.label :typesobject_id %>
-	<br/>
 	<%= f.collection_select(:typesobject_id, @types, :id, :name) %>
-</p>
-<p>
+	<br/>
 	<%= f.label :statusobject_id %>
-	<br/>
 	<%= f.collection_select(:statusobject_id, @status, :id, :name) %>
-</p>
-<p>
+	<br/>
 	<%= f.label :subject %>
-	<br/>
 	<%= f.text_field :subject %>
-</p>
-<p>
+	<br/>
 	<%= f.label :description %>
-	<br/>
 	<%= f.text_area :description %>
-</p>
-<p>
-	<%= label_tag :message %>
 	<br/>
+	<%= label_tag :message %>
 	<%= text_area_tag :message %>
-</p>
+	<br/>
+</fieldset>

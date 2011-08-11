@@ -89,9 +89,9 @@ class NotificationsController < ApplicationController
     notifs=""
     nb_users=0
     nb_total=0
-    st.each do |key,val|
-      notifs+="<br/>"+key.login+":"+val.to_s
-      nb_total+=st[key]
+    st.each do |cnt|
+      notifs+="<br/>"+cnt[:user].login+":"+cnt[:count].to_s+":"+t(cnt[:msg])
+      nb_total+=cnt[:count]
       nb_users+=1
     end
     puts name+nb_users.to_s+"."+nb_total.to_s+":"+notifs

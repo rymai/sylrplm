@@ -27,7 +27,7 @@
 # A group of users
 #
 class Group < ActiveRecord::Base
-
+include Models::SylrplmCommon
   has_many :user_groups, :dependent => :delete_all
   has_many :users, :through => :user_groups
 
@@ -48,5 +48,10 @@ class Group < ActiveRecord::Base
   def may_launch_embedded_process?
     self.definitions.detect { |d| d.name == '*embedded*' }
   end
+def self.get_conditions(filter)
+    filter=filter.gsub("*","%")
+    conditions = ["name LIKE ? ", filter ] unless filter.nil?
+  end
+  
 end
 

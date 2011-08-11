@@ -26,7 +26,8 @@
 # Process definitions are tracked via this record class.
 #
 class Definition < ActiveRecord::Base
-
+  include Models::SylrplmCommon
+  
   has_many :group_definitions, :dependent => :delete_all
   has_many :groups, :through => :group_definitions
 

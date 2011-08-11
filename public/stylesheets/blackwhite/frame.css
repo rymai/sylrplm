@@ -4,15 +4,15 @@
 	margin: 0;
 	padding: 0;
 }
-body {
+body {t
 	font-family: "proxima-nova-1", "proxima-nova-2", Helvetica, Arial, sans-serif;
 	background: #000;
 	/*color: #ccc;*/
-	font-size: 14px;
-	text-rendering: optimizeLegibility;
-	max-width: 1000px;
+	font-size: 12px;
+	/*text-rendering: optimizeLegibility; non trouve*/
+	/*max-width: 1600px;*/
 	position: relative;
-	margin: 0 auto;
+	margin: 5px;
 	-webkit-text-size-adjust: auto;
 }
 span, p, li, ul , legend {
@@ -43,16 +43,45 @@ h2 {
 	color: white;
 }
 input, option, select, textarea {
-	padding: 0pt;
-	margin: 0pt;
+	padding: 1pt;
+	margin: 1pt;
 	background-color: #DDDDDD;
+	/*border-bottom: thin solid #333333;
+	border-left: thin solid #333333;
+	border-right: none;
+	border-top: none;*/
 }
-label{
-	font-weight: bold;
+input:active, option:active, select:active, textarea:active {
+	outline: solid medium #CCCCFF;
+}
+input:focus, option:focus, select:focus, textarea:focus {
+	outline: solid medium #CCFFCC;
+}
+
+/* formulaire de saisie: new et edit principalement */
+br {
+	clear: left;
+}
+label {
+	/*font-weight: bold;*/
+	color: #FFFFFF;
+	text-align: right;
+	display: block;
+	float: left;
+	width: 180px;
+	margin-right: 5px;
+	margin-top: 5px;
+}
+input, option, select, textarea {
+	display: block;
+	float: left;
+	margin-left: 5px;
+	margin-top: 5px;
 }
 input[type=submit] {
 	background-color: #333333;
 }
+
 table {
 	border: 0px;
 	margin: 0px;
@@ -69,19 +98,20 @@ tr {
 }
 th {
 	font-weight: bold;
-	padding: 3px;
+	padding: 2px;
 	margin: 0;
 	background-color: #333;
 	border: 1px solid #DDD;
 	color: #FFF;
 }
 td {
-	padding: 3px;
+	padding: 2px;
 	margin: 0;
 	background-color: #444;
 	border: 1px solid #CCC;
 	color: #DDD;
 }
+
 /*header*/
 #container {
 	background: black;
@@ -101,32 +131,38 @@ td {
 }
 .title {
 	font-variant: small-caps;
-	font-size: 40px;
+	font-size: 25px;
 	color: white;
 }
 .banner {
-	font-size: 18px;
+	font-size: 14px;
 	color: white;
 }
 /*end header*/
+
+/* boites */
 #columns {
 }
+
 #side {
 	float: left;
-	padding-top: 3px;
-	width: 200px;
+	padding-top: 0px;
+	width: 180px;
 }
+
 #side fieldset {
 	padding: 5px;
-	margin-top: 10px;
+	margin-top: 8px;
 }
+
 #main {
-	float: left;
-	width: 740px;
-	margin: 10px;
-	padding: 20px;
+	padding-top: 8px;
+	padding-left: 8px;
+	margin: 0 0 0 180px;
 	background: #333;
 }
+/* fin des boites */
+
 div.favori-title {
 	color: white;
 }
@@ -206,7 +242,10 @@ p.notice {
 	margin-bottom: 15px;
 }
 /* menus en bas des listes*/
-
+table.menu_bas {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
 table.menu_bas .menu_bas tr {
 	border: 0px;
 }

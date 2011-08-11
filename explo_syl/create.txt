@@ -923,4 +923,18 @@ rackup
 
 
 --- bug dans openwfe/expressions/flowexpression.rb
-iv.delete(:@application_context) etait iv.delete('@application_context') ce qui entraiant une erruer sur Mutex
+iv.delete(:@application_context) etait iv.delete('@application_context') ce qui entraiant une erreur sur Mutex
+
+--- plugin barrcode
+sudo gem install rmagick
+sudo gem install gbarcode
+ruby script/plugin install http://barcode-generator.googlecode.com/svn/trunk/barcode_generator
+pb install des gems
+
+
+--- plugin pour associer des objets 
+ruby script/plugin install svn://rubyforge.org/var/svn/ambroseplugins/associated_list
+ne s'installe pas
+
+
+

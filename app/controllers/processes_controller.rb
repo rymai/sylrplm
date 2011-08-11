@@ -122,7 +122,7 @@ class ProcessesController < ApplicationController
 
     return error_reply('you are not allowed to launch this process', 403) unless @current_user.may_launch?(@definition)
 
-    @payload_partial = determine_payload_partial(@definition)
+    @payload_partial = 'shared/ruote_forms'
 
   end
 

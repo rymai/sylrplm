@@ -1,5 +1,4 @@
 <h1><%= t("definitions_show") %><%= h @definition.id %></h1>
-<div style="float: left;">
 	<table>
 		<tr>
 			<td class="wide-first-col"><%= t("label_name")%></td>
@@ -32,7 +31,5 @@
 			<td> <%= link_to t("list"), definitions_path %></td>
 		</tr>
 	</table>
-</div>
-<div class="align-right">
+
 	<%= render_fluo :definition => @definition %>
-</div>

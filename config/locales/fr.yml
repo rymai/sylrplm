@@ -22,6 +22,9 @@ fr:
   ctrl_object_no_validers: "%{typeobj} '%{ident}' non promu de %{current_rank} à %{new_rank} car pas de valideur(s)"
   ctrl_object_not_promoted: "%{typeobj} '%{ident}' non promu de %{current_rank} à %{new_rank}"
   ctrl_user_no_email: "L'utilisateur '%{user}' n'a pas d'adresse mail"
+  ctrl_nothing_to_notify: "Rien à notifier à cet utilisateur"
+  ctrl_mail_created_and_delivered: "Mail de notification crée et envoyé"
+  ctrl_mail_not_created: "Mail de notification non crée"
   ctrl_object_demoted: "%{typeobj} '%{ident}' rétrogradé de %{current_rank} à %{new_rank}, valideurs=%{validersMail}"
   ctrl_object_not_demoted: "%{typeobj} '%{ident}' non rétrogradé de %{current_rank} à %{new_rank}"
   ctrl_object_revised: "%{typeobj} '%{ident}' revisé de %{previous_rev} à %{revision}"
@@ -68,7 +71,7 @@ fr:
   ctrl_definition: Définition
   #documents
   ctrl_document: Document
-  ctrl_checkout_auto: Réservation automatique
+  ctrl_checkout_auto: Reservation automatique
   #faq
   ctrl_faq: Question
   #forums
@@ -215,7 +218,7 @@ fr:
   explorer: "Explorer"
   list: "Liste"
   query: "Filtre"
-  nb_items_per_page: Nombre par page
+  nb_items_per_page: par page
   filter: "Filtrer"
   FAQ: "Questions fréquentes"
   new_customer: "Nouveau client"
@@ -235,6 +238,7 @@ fr:
   new_sequence: Nouvelle valeur par défaut
   new_volume: Nouveau volume
   new_notification: Nouvelle notification 
+  new_group: Nouveau groupe
   #
   paste_users: Coller utilisateurs 
   paste_parts: Coller articles 
@@ -261,7 +265,10 @@ fr:
   label_created_at: Création
   label_updated_at: Modification
   label_date: Date
+  select_add: Ajouter à la sélection
+  select_remove: Enlever de la sélection
   # fields access
+  legend_access: Renseignez les propriétés de l'autorisation
   label_controller: Controleur
   label_action: Action
   label_role: Rôle
@@ -271,6 +278,7 @@ fr:
   access_new: Nouvel autorisation
   #
   # fields check
+  legend_check: Renseignez les propriétés du check
   check_edit: Edition check
   check_list: Liste des check
   check_show: Détail check
@@ -286,6 +294,7 @@ fr:
   label_in_user: Utilisateur libération
   label_local_dir: Répertoire local
   # fields customers
+  legend_customer: Renseignez les propriétés du client
   customer_edit: Edition client
   customer_list: Liste clients
   customer_show: Detail client
@@ -301,6 +310,7 @@ fr:
   label_description: Description
   label_typesobject: Type
   # fields datafile
+  legend_datafile: Renseignez les propriétés du fichier de données
   datafile_edit: Edition fichier
   datafile_list: Liste fichiers
   datafile_show: Détail fichier
@@ -311,13 +321,14 @@ fr:
   label_document: Document
   label_restore_file: Fichier à restaurer
   # definitions
+  legend_definition: Renseignez les propriétés de la définition de processus
   label_process_definition: Définition du processus
   label_uri: URI
   label_groups_may_launch: Affectation des groupes
   label_groups: Groupes
   label_launch_fields: Champs
-  label_belongs_to: Groupes pouvant lancer ce processus
-  label_not_belongs_to: Autres groupes pouvant être affectées
+  label_definition_groups_in: Groupes pouvant lancer ce processus
+  label_definition_groups_out: Autres groupes pouvant être affectées
   button_add: Ajouter
   button_remove: Enlever
   label_fields: Attributs
@@ -325,7 +336,9 @@ fr:
   button_swap: Echanger
   button_reset: Défaut
   button_undo: Annuler
+  label_definitions_attributs: Attributs
   # fields documents
+  legend_document: Renseignez les propriétés du document
   document_edit: Edition document
   document_list: Liste documents
   document_show: Détail document
@@ -343,6 +356,7 @@ fr:
   download: "Télécharger fichier"
   document_check: Réservation
   # fields forums
+  legend_forum: Renseignez les propriétés du forum
   forum_edit: Edition forum 
   forum_list: Liste des forums 
   forum_show: Détail du forum 
@@ -351,6 +365,7 @@ fr:
   label_subject: Sujet du forum
   label_message: Message de démarrage du forum
   # fields forum_items
+  legend_forum_item: Renseignez les propriétés du message
   forum_item_edit: Edition message forum
   forum_item_list: Liste message forum
   forum_item_show: Détail message forum
@@ -358,13 +373,19 @@ fr:
   label_parent: Prédécesseur
   label_author: Emetteur
   label_forum: Forum
-  # fields groups
-  groups_edit: Edition du groupe
-  groups_list: Liste des groupes
-  groups_show: Détail du groupe
-  groups_new: Nouveau groupe
   # fields help
   # fields info
+  # fields groups
+  legend_group: Renseignez les propriétés du groupe
+  group_edit: Edition du groupe
+  group_list: Liste des groupes
+  group_show: Détail du groupe
+  group_new: Nouveau groupe
+  label_group_users: Membres 
+  label_group_users_out: Autres utilisateurs
+  label_group_users_in: Utilisateurs
+  # fields link
+  legend_link: Relation
   # fields main
   legend_desktop: Mon bureau
   label_domain: Domaine
@@ -381,7 +402,16 @@ fr:
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM Nouveautés
   label_today: Date
+  legend_main: Accueil
+  legend_plm_objects: Objets PLM
+  legend_collab: Collaboratif
+  legend_organization: Organisation 
+  legend_param: Paramétrage
+  legend_debug: Debug
+  legend_clipboard: Presse papier
+  submit: GO
   # notifications
+  legend_notification: Renseignez les propriétés de la notification
   notification_edit: Edition notification 
   notification_list: Liste des notifications 
   notification_show: Détail notification 
@@ -391,16 +421,8 @@ fr:
   label_notify_date: Date de notification
   label_path: Chemins
   button_notify_all: Notifier tout
-  # main/_frame
-  legend_main: Accueil
-  legend_plm_objects: Objets PLM
-  legend_collab: Collaboratif
-  legend_organization: Organisation 
-  legend_param: Paramétrage
-  legend_debug: Debug
-  legend_clipboard: Presse papier
-  submit: GO
   # fields parts
+  legend_part: "Renseignez les propriétés de l'article"
   part_edit: Edition article
   part_list: Liste articles
   part_show: Détail article
@@ -415,12 +437,14 @@ fr:
   notification_notify: Notification des evenements concernant vos donnees
   button_notify: Voir la notification
   # fields projects
+  legend_project: "Renseignez les propriétés du projet"
   project_edit: Edition projet
   project_list: Liste projets
   project_show: Détail projet
   project_new: Nouveau projet
   label_customer: Client
   # fields questions
+  legend_question: "Renseignez les propriétés de la question"
   questions_edit: Edition question
   questions_list: Liste questions
   questions_show: Détail question
@@ -429,15 +453,20 @@ fr:
   label_answer: Réponse
   label_position: Position
   # fields roles
+  legend_role: "Renseignez les propriétés du role"
   role_list: Liste des rôles
   role_new: Nouveau rôle
   role_show: Détail du rôle
   role_edit:  Edition du rôle
+  label_role_users: Utilisateurs
+  label_role_users_in: Ayant ce rôle
+  label_role_users_out: Autres
   # fields sequences
-  sequence_list: Liste des valeurs/sequences
-  sequence_new: Nouvelle valeur/sequence
-  sequence_show: Détail de la valeur/sequence
-  sequence_edit:  Edition de la valeur/sequence
+  legend_sequence: "Renseignez les propriétés de la valeur/séquence"
+  sequence_list: Liste des valeurs/séquences
+  sequence_new: Nouvelle valeur/séquence
+  sequence_show: Détail de la valeur/séquence
+  sequence_edit:  Edition de la valeur/séquence
   label_value: Valeur 
   label_min: Valeur minimale
   label_max: Valeur maximale
@@ -445,6 +474,7 @@ fr:
   label_modify: Modifiable
   label_sequence: Séquence
   # fields statusobjects
+  legend_statusobject: "Renseignez les propriétés du statut d' objets"
   statusobjects_list: Liste des statuts d' objets
   statusobjects_new: Nouveau statut d' objet
   statusobjects_show: Détail du statut d' objet
@@ -463,6 +493,7 @@ fr:
   legend_login: Merci de vous connecter
   submit_login: Login
   # fields typesobjects
+  legend_typesobject: "Renseignez les propriétés du type d' objets"
   typesobjects_list: Liste des types d' objets
   typesobjects_new: Nouveau type d' objet
   typesobjects_show: Détail du type d' objet
@@ -474,11 +505,11 @@ fr:
   msg_define_types_customer: Définissez les types des clients
   msg_define_types_forum: Définissez les types des forums
   # fields users
+  legend_user: Renseignez les propriétés de l'utilisateur
   user_edit: Edition l'utilisateur
   user_list: Liste des utilisateurs
   user_show: Détail de l'utilisateur
   user_new: Nouvel utilisateur
-  legend_user: Renseignez les propriétés de l'utilisateur
   label_username: Identifiant
   label_password: Password
   label_confirm_password: Confirmation
@@ -500,7 +531,12 @@ fr:
   label_user_mail_option_none: Aucune notification
   language_fr: Français
   language_en: Anglais
+  label_user_roles_in: Attribués
+  label_user_roles_out: Non atribués
+  label_user_groups_in: " d'appartenance"
+  label_user_groups_out: Autres groupes
   # fields volumes
+  legend_volume: Renseignez les propriétés du volume
   volume_list: Liste des volumes
   volume_new: Nouveau volume
   volume_show: Détail du volume

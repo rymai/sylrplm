@@ -41,7 +41,7 @@
 <table class='menu_bas'>
 	<tr>
 		<td> 
-		<%= link_to t("add_datafile"), :url => {:controller => "documents", :action => "new_datafile", :id => @document.id}, :method => :get %>
+		<%= link_to t("add_datafile"), :action => :new_datafile, :id => @document.id %>
 		</td>
 	</tr>
 </table>
@@ -51,7 +51,7 @@
 <table class='menu_bas'>
 	<tr>
 		<% unless @favori.get('document').count==0 %>
-		<% form_for(@document, :url => {:id => @document.id, :action => "add_docs" }, :method => :get) do |f| %> <td> <%= select("relation","document",options_for_select(@relation_types_document)) %></td>
+		<% form_for(@document, :url => {:id => @document.id, :action => :add_docs }, :method => :get) do |f| %> <td> <%= select("relation","document",options_for_select(@relation_types_document)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
 		<% end %>
 		<%end%>
@@ -66,7 +66,7 @@
 	</tr>
 	<% else %>
 	<% if(@document.is_checked()==false) %>
-	<% form_for(@document, :url => {:id => @document.id, :action => :check_out }) do |f| %>
+	<% form_for(@document, :url => {:id => @document.id, :action => :check_out }, :method => :get) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_out") %></td>
 		<td> <%= label_tag t("label_out_reason") %></td>
@@ -76,7 +76,7 @@
 	<% else %> <td> <%= t("is_check_out") %></td>
 	<td> <%= t("label_out_reason") %></td>
 	<td> <%= @checkout.out_reason.force_encoding('utf-8') %> </td>
-	<% form_for(@document, :url => {:id => @document.id, :action => "check_in" },
+	<% form_for(@document, :url => {:id => @document.id, :action => :check_in }, :method => :get,
 	:html => { :multipart => true}) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_in") %></td>
@@ -84,7 +84,7 @@
 		<td> <%= text_field_tag :in_reason %></td>
 	</tr>
 	<% end %>
-	<% form_for(@document, :url => {:id => @document.id, :action => "check_free" }) do |f| %>
+	<% form_for(@document, :url => {:id => @document.id, :action => :check_free }, :method => :get) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_free") %></td>
 		<td> <%= label_tag t("label_in_reason") %></td>

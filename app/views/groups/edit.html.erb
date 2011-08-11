@@ -1,20 +1,21 @@
-<h1><%= t("groups_edit") %><%= h @group.name %></h1>
-<div class="column span-12 first">
-	<% form_for(@group) do |f| %>
-	<%= f.error_messages %>
-	<table>
-		<tr>
-			<td class="wide-first-col">name</td>
-			<td><%= f.text_field :name %></td>
-		</tr>
-		<tr class="button-row">
-			<td colspan='2'> <%= f.submit 'update' %> |
-			<%= link_to 'show', @group %> |
-			<%= link_to 'back', groups_path %> </td>
-		</tr>
-	</table>
-	<% end -%>
-</div>
-<div class="column span-12 last align-right">
-	<%= render :partial => 'shared/group_users', :locals => @ug_locals %>
-</div>
+<h1><%= t("group_edit") %><%= h @group.name %></h1>
+<% form_for(@group) do |f| %>
+<%= f.error_messages %>
+<fieldset>
+	<legend>
+		<%= t(:legend_group) %>
+	</legend>
+	<%= f.label t("label_name") %>
+	<%= f.text_field :name %>
+	<br/>
+	<%= f.label t("label_group_users") %>
+	<%= select_inout(f, @group, User.all, :login) %>
+</fieldset>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= f.submit t("update") %> </td>
+		<td> <%= link_to t("explorer"), @group %> </td>
+		<td> <%= link_to t("list"), groups_path %> </td>
+	</tr>
+</table>
+<% end %> 

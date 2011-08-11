@@ -1,38 +1,30 @@
-<p>
-	<b><%= f.label t("label_ident") %></b>
-	<br/>
+<fieldset>
+	<legend>
+		<%= t(:legend_customer) %>
+	</legend>
+	<%= f.label t("label_ident") %>
 	<%= f.text_field :ident %>
-</p>
-<p>
-	<b><%= f.label t("label_type") %></b>
 	<br/>
+	<%= f.label t("label_type") %>
 	<%= f.collection_select(:typesobject_id, @types, :id, :name) %>
-</p>
-<p>
-	<b><%= f.label t("label_designation") %></b>
 	<br/>
+	<%= f.label t("label_designation") %>
 	<%= f.text_field :designation %>
-</p>
-<p>
-	<b><%= f.label t("label_description") %></b>
 	<br/>
+	<%= f.label t("label_description") %>
 	<%= f.text_area :description , :rows => 10 %>
-</p>
-<p>
-	<%if (@customer.statusobject.promote!=true || @customer.statusobject.demote!=true) %> <b><%= f.label t("modif_status") %></b>
 	<br/>
+	<%if (@customer.statusobject.promote!=true || @customer.statusobject.demote!=true) %> <%= f.label t("modif_status") %>
 	<% if(@customer.statusobject != nil) %>
 	<%= f.collection_select(:statusobject_id, @status, :id, :name) %>
 	<% end %>
-	<%else %> <b><%= f.label t("label_status") %></b>
-	<br/>
+	<%else %> <%= f.label t("label_status") %>
 	<% if(@customer.statusobject != nil) %>
 	<%= @customer.statusobject.name %>
 	<%end %>
 	<%end %>
-</p>
-<p>
-	<b><%= f.label t("label_date") %></b>
 	<br/>
+	<%= f.label t("label_date") %>
 	<%= f.date_select :date %>
-</p>
+	<br/>
+</fieldset>

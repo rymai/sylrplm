@@ -1,30 +1,22 @@
-<p>
-    <%= f.label t(:label_object) %>
-    <br/>
-    <%= f.select(:object, @objectswithstatus) %>
-</p>
-<p>
-    <%= f.label t(:label_name) %>
-    <br/>
-    <%= f.text_field :name %>
-</p>
-<p>
-    <%= f.label t(:label_rank) %>
-    <br/>
-    <%= f.text_field :rank %>
-</p>
-<p>
-    <%= f.label t(:label_description) %>
-    <br/>
-    <%= f.text_area :description %>
-</p>
-<p>
-    <%= f.label t(:label_promote) %>
-    <br/>
-    <%= f.check_box :promote %>
-</p>
-<p>
-    <%= f.label t(:label_demote) %>
-    <br/>
-    <%= f.check_box :demote %>
-</p>
+<fieldset>
+	<legend>
+		<%= t(:legend_statusobject) %>
+	</legend>
+	<%= f.label t(:label_object) %>
+	<%= f.select(:object, @objectswithstatus) %>
+	<br/>
+	<%= f.label t(:label_name) %>
+	<%= f.text_field :name %>
+	<br/>
+	<%= f.label t(:label_rank) %>
+	<%= f.text_field :rank %>
+	<br/>
+	<%= f.label t(:label_description) %>
+	<%= f.text_area :description %>
+	<br/>
+	<%= f.label t(:label_promote) %>
+	<%= f.check_box :promote %>
+	<br/>
+	<%= f.label t(:label_demote) %>
+	<%= f.check_box :demote %>
+	<br/>

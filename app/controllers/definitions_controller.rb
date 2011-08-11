@@ -101,13 +101,13 @@ class DefinitionsController < ApplicationController
   def edit
 
     @definition = Definition.find(params[:id])
-
+puts __FILE__+".edit"+@definition.launch_fields_hash.inspect
     @dg_locals = {
       :in_groups => @definition.group_definitions,
       :out_groups => Group.find(:all) - @definition.groups
     }
 
-    @payload_partial = determine_payload_partial(@definition)
+    
   end
 
   # POST /definitions
@@ -160,7 +160,7 @@ class DefinitionsController < ApplicationController
     @definition = Definition.find(params[:id])
 
     respond_to do |format|
-
+puts __FILE__+".update:"+params.inspect
       if @definition.update_attributes(params[:definition])
 
         flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)

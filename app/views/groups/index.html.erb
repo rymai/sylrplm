@@ -1,25 +1,34 @@
-<h1><%= t("groups_list") %></h1>
-<div class='content_title'>
-	/groups
-</div>
+<h1><%= t("group_list") %></h1>
+<%= form_simple_query_helper('/groups', @groups) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t("new_group"), new_group_path %></td>
+		<td> <%= show_help("help_groups") %></td>
+	</tr>
+</table>
+	<%= will_paginate(@groups[:recordset]) %>
+<table>
 <table class='coll'>
 	<thead>
 		<tr>
-			<th>name</th>
-			<th>members</th>
+			<th <%= sort_td_class_helper "name" %>>
+		<%= sort_link_helper t("label_name"), "name" %></th>
+		<th> <%= t("label_group_users") %></th>
 		</tr>
 	</thead>
-	<% for group in @groups %>
+	<% for group in @groups[:recordset] %>
 	<tr class='group'>
-		<td class='group_name'><%= link_to h(group.name), group_path(group) %></td>
-		<td class='group_members'><%= comma_list(group.users, :login) %></td>
-		<!--td><%= link_to 'Show', group %></td-->
-		<td class='coll_buttons'> <%= link_to 'show', group_path(group) %> |
-		<%= link_to 'edit', edit_group_path(group) %> |
-		<%= link_to 'remove', group, :confirm => 'Are you sure ?', :method => :delete %> </td>
+		<td><%= h(group.name) %></td>
+		<td><%= comma_list(group.users, :login) %></td>
+		<td><%= link_to h_img_show.to_s, group_path(group) %> </td>
+		<td><%= link_to h_img_edit.to_s, edit_group_path(group) %> <td>
+		<td><%= link_to h_img_destroy.to_s, group, :confirm => t("msg_confirm"), :method => :delete %> </td>
 	</tr>
 	<% end %>
+</table>
+<table class='menu_bas'>
 	<tr>
-		<td class='coll_new_button' colspan='4'> <%= link_to 'new group', new_group_path %> </td>
+		<td> <%= link_to t("new_group"), new_group_path %></td>
+		<td> <%= show_help("help_groups") %></td>
 	</tr>
 </table>

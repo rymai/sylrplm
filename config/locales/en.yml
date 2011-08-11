@@ -22,6 +22,9 @@ en:
   ctrl_object_no_validers: "%{typeobj} %{ident} not promote from %{current_rank} to %{new_rank} because no validers(s)"
   ctrl_object_not_promoted: "%{typeobj} %{ident} not promote from %{current_rank} to %{new_rank}}"
   ctrl_user_no_email: "User %{user} have no mail"
+  ctrl_nothing_to_notify: "Nothing to notify"
+  ctrl_mail_created_and_delivered: "Mail created and send"
+  ctrl_mail_not_created: "Mail not created"
   ctrl_object_demoted: "%{typeobj} %{ident} was successfully demote from %{current_rank} to %{new_rank}, validers=%{validersMail}"
   ctrl_object_not_demoted: "%{typeobj} %{ident} not demote from %{current_rank} to %{new_rank}}"
   ctrl_object_revised: "%{typeobj} %{ident} was successfully revised from %{previous_rev} to %{revision}"
@@ -230,6 +233,7 @@ en:
   new_sequence: New sequence
   new_volume: New volume
   new_notification: New notification 
+  new_group: New groupe 
   #########################################
   #modules
   #########################################
@@ -260,7 +264,10 @@ en:
   modif_status: Modify the status
   label_created_at: Creation
   label_updated_at: Update
+  select_add: Add to selection
+  select_remove: Remove from selection
   # fields access
+  legend_access: Enter access details
   label_controller: Controler
   label_action: Action
   label_role: Role
@@ -270,6 +277,7 @@ en:
   access_new: New access
   #
   # fields check
+  legend_check: Enter check details
   check_edit: Editing check
   check_list: Listing checks
   check_show: Detail check
@@ -285,6 +293,7 @@ en:
   label_in_user: In user
   label_local_dir: Local dir
   # fields customers
+  legend_customer: Enter customer details
   customer_edit: Editing customer
   customer_list: Listing customers
   customer_show: Detail customer
@@ -300,6 +309,7 @@ en:
   label_statusobject: Status 
   label_typesobject: Type
   # fields datafile
+  legend_datafile: Enter datafile details
   datafile_edit: Editing file
   datafile_list: Listing files
   datafile_show: Detail file
@@ -310,12 +320,13 @@ en:
   label_document: Document
   label_restore_file: File to restore
   # definitions
+  legend_definition: Enter definition details
   label_uri: URI
   label_groups_may_launch: Group that may launch
   label_groups: Groups
   label_launch_fields: Launch fields
-  label_belongs_to: Groups
-  label_not_belongs_to: Other groups
+  label_definition_groups_in: Groups
+  label_definition_groups_out: Other groups
   button_add: Add
   button_remove: Remove
   label_fields: Attributs
@@ -323,7 +334,9 @@ en:
   button_swap: Echanger
   button_reset: Défaut
   button_undo: Annuler
+  label_definitions_attributs: Attributs
   # fields documents
+  legend_document: Enter document details
   document_edit: Editing document
   document_list: Listing documents
   document_show: Detail document
@@ -341,12 +354,8 @@ en:
   download: download file
   reason: Reason
   document_check: Check
-  # fields faq
-  faq_edit: Edition question
-  faq_list: Liste questions
-  faq_show: Details question
-  faq_new: New question 
   # fields forums
+  legend_forum: Enter forum details
   forum_edit: Forum edit
   forum_list: Forums list 
   forum_show: Forum detail 
@@ -355,6 +364,7 @@ en:
   label_subject: Forum subject
   label_message: First forum Message 
   # fields forum_items
+  legend_forum_item: Enter forum_item details
   forum_item_edit: Edition messag forum
   forum_item_list: List messag forum
   forum_item_show: Detail messag forum
@@ -363,12 +373,18 @@ en:
   label_author: Sender
   label_forum: Forum
   # fields help
-  # fields groups
-  groups_edit: Group editing
-  groups_list: List groups
-  groups_show: Detail group
-  groups_new: New groupe
   # fields info
+  # fields groups
+  legend_group: Enter group details
+  group_edit: Group editing
+  group_list: List groups
+  group_show: Detail group
+  group_new: New groupe
+  label_group_users: Members
+  label_group_users_out: Others users
+  label_group_users_in: Users
+  # fields links
+  legend_link: Relation
   # fields main
   legend_desktop: My desktop
   label_domain: Domain
@@ -385,7 +401,16 @@ en:
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM News
   label_today: Date
+  legend_main: Welcome
+  legend_plm_objects: PLM Objects
+  legend_collab: Collaboration
+  legend_admin: Administration
+  legend_organization: Organization 
+  legend_param: Customization
+  legend_debug: Debug
+  legend_clipboard: Clipboard  
   # notifications
+  legend_notification: Enter notification details
   notification_edit: Notification edit 
   notification_list: Liste des Notifications list 
   notification_show: Notification detail
@@ -395,16 +420,8 @@ en:
   label_notify_date: Notify date
   label_path: Paths
   button_notify_all: Notify all
-  # main/_frame
-  legend_main: Welcome
-  legend_plm_objects: PLM Objects
-  legend_collab: Collaboration
-  legend_admin: Administration
-  legend_organization: Organization 
-  legend_param: Customization
-  legend_debug: Debug
-  legend_clipboard: Clipboard  
   # fields parts
+  legend_part: Enter part details
   part_edit: Edition article
   part_list: List articles
   part_show: Detail article
@@ -419,6 +436,7 @@ en:
   notification_notify: Events notification
   button_notify: Notification
   # fields questions
+  legend_question: Enter question details
   questions_edit: Edition question
   questions_list: List questions
   questions_show: Detail question
@@ -427,17 +445,23 @@ en:
   label_answer: Answer
   label_position: Position
   # fields projects
+  legend_project: Enter project details
   project_edit: Edit a project
   project_list: Liste of projects
   project_show: Detail of project
   project_new: New project
   label_customer: Client
   # fields roles
+  legend_role: Enter role details
   role_list: Listing of roles
   role_new: New role
   role_show: Detail of role
   role_edit:  Edition of role
+  label_role_users: Users
+  label_role_users_in: Using
+  label_role_users_out: Others
   # fields sequences
+  legend_sequence: Enter sequence details
   sequence_list: Listing of sequences
   sequence_new: New sequence
   sequence_show: Detail of sequence
@@ -452,6 +476,7 @@ en:
   legend_login: Please Log In
   submit_login: Login
   # fields statusobjects
+  legend_statusobjects: Enter statusobjects details
   statusobjects_list: Listing of status 
   statusobjects_new: New status
   statusobjects_show: Detail of status
@@ -467,6 +492,7 @@ en:
   msg_define_status_customer: Please, define customers status
   msg_define_status_forum:  Please, define forums status
   # fields typesobjects
+  legend_typesobjects: Enter typesobjects details
   typesobjects_list: Listing of types 
   typesobjects_new: New type
   typesobjects_show: Detail of type
@@ -478,6 +504,7 @@ en:
   msg_define_types_customer: Please, define customers types
   msg_define_types_forum: Please, define forums types
   #fields users
+  legend_user: Enter user details
   user_edit: Edit user
   user_list: User list 
   user_show: User detail
@@ -496,17 +523,20 @@ en:
   label_notification: Notifications
   label_time_zone: Time zone
   label_show_mail: Show mail adress
-  
   label_user_mail_option_all: "For any event on all my projects"
   label_user_mail_option_selected: "For any event on the selected projects only..."
   label_user_mail_option_only_my_events: "Only for things I watch or I'm involved in"
   label_user_mail_option_only_assigned: "Only for things I am assigned to"
   label_user_mail_option_only_owner: "Only for things I am the owner of"
   label_user_mail_option_none: "No events"
-  
   language_fr: French
   language_en: English
+  label_user_roles_in: User roles 
+  label_user_roles_out: Other roles
+  label_user_groups_in: User groups
+  label_user_groups_out: Other groups
   # fields volumes
+  legend_volume: Enter volume details
   volume_list: Listing of volumes
   volume_new: New volume
   volume_show: Detail of volume

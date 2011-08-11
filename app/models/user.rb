@@ -6,11 +6,10 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   belongs_to :role
   belongs_to :volume
-  #has_many :documents, :foreign_key => "owner_id"
   has_many :user_groups, :dependent => :delete_all
   has_many :groups, :through => :user_groups
 
-  validates_presence_of     :login
+  validates_presence_of     :login, :password
   validates_uniqueness_of   :login
   
   validates_confirmation_of :password
@@ -69,7 +68,7 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(log, pwd)
-    puts __FILE__+".authenticate:"+log+":"+pwd
+    #puts __FILE__+".authenticate:"+log+":"+pwd
     user = self.find_by_login(log)
     if user
       if (user.salt.nil? || user.salt == "") && log==::SYLRPLM::ADMIN_USER_NAME
@@ -89,7 +88,7 @@ class User < ActiveRecord::Base
   end
 
   def password=(pwd)
-    puts __FILE__+".password="+pwd
+    #puts __FILE__+".password="+pwd
     @password = pwd
     return if pwd.blank?
     create_new_salt
@@ -206,7 +205,7 @@ class User < ActiveRecord::Base
   end
 
   def self.encrypted_password(pwd, salt)
-    puts __FILE__+".encrypted_password:"+pwd.to_s+":"+salt.to_s
+    #puts __FILE__+".encrypted_password:"+pwd.to_s+":"+salt.to_s
     string_to_hash = pwd + "wibble" + salt
     Digest::SHA1.hexdigest(string_to_hash)
   end

@@ -1,21 +1,18 @@
-<input type="hidden" name="olddir" value="<%= @volume.directory %>"/>
-<p>
-    <%= f.label t(:label_name) %>
-    <br/>
-    <%= f.text_field :name %>
-</p>
-<p>
-    <%= f.label t(:label_description) %>
-    <br/>
-    <%= f.text_area :description %>
-</p>
-<p>
-    <%= f.label t(:label_directory) %>
-    <br/>
-    <%= f.text_field :directory %>
-</p>
-<p>
-    <%= f.label t(:label_protocol) %>
-    <br/>
-    <%= f.text_field :protocole %>
-</p>
+<fieldset>
+	<legend>
+		<%= t(:legend_volume) %>
+	</legend>
+	<input type="hidden" name="olddir" value="<%= @volume.directory %>"/>
+	<%= f.label t(:label_name) %>
+	<%= f.text_field :name %>
+	<br/>
+	<%= f.label t(:label_description) %>
+	<%= f.text_area :description %>
+	<br/>
+	<%= f.label t(:label_directory) %>
+	<%= f.text_field :directory %>
+	<br/>
+	<%= f.label t(:label_protocol) %>
+	<%= f.text_field :protocole %>
+	<br/>
+</fieldset>
