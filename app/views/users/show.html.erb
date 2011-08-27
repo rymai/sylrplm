@@ -12,6 +12,12 @@
 	<%= h @the_user.last_name %>
 </p>
 <p>
+	<b><%= t(:label_type) %></b>
+	<% if(@the_user.typesobject != nil) 
+		h @the_user.typesobject.name  
+		end %>
+</p>
+<p>
 	<b><%= t(:label_language) %></b>
 	<%= h @the_user.language %>
 </p>

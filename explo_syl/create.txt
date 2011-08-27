@@ -936,5 +936,10 @@ pb install des gems
 ruby script/plugin install svn://rubyforge.org/var/svn/ambroseplugins/associated_list
 ne s'installe pas
 
-
+---
+--- relations
+---
+cmd="ruby script/generate scaffold relation name:string type:string designation:string father_plmtype:string child_plmtype:string father_type:integer child_type:integer cardin_occur_min:integer cardin_occur_max:integer cardin_use_min:integer cardin_use_max:integer"
+echo $cmd
+$cmd
 

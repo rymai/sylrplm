@@ -299,7 +299,7 @@ module ApplicationHelper
       #group
       mdl_assoc=values[0].model_name
       #user_groups
-      select_id=mdl_object+"_"+mdl_assoc+"s"
+      select_id=mdl_object+"_"+mdl_assoc+"_ids"
       #user[role_ids][]
       select_name=mdl_object+"["+mdl_assoc+"_ids][]"
       #role_ids
@@ -311,7 +311,7 @@ module ApplicationHelper
       nb=[values.count+1, 10].min
       html += javascript_include_tag "select_inout"
       html += "<div style='display: none;'>"
-      html += form.collection_select(method, values, :id, field, options = {}, html_options = {:id => select_id, :size => nb, :multiple => true, :name => select_name, :selected => the_selected})
+      html += form.collection_select(method, values, :id, field, {}, {:id => select_id, :size => nb, :multiple => :true, :name => select_name, :selected => the_selected})
       html += "</div>"
       html += "<table>"
       html += "<tr>"

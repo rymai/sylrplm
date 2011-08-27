@@ -27,7 +27,7 @@ class DocumentsController < ApplicationController
     @customers = @document.customers
     @checkout  = Check.get_checkout("document", @document)
     @tree_up      = create_tree_up(@document)
-    @relation_types_document = Typesobject.get_types_names(:relation_document)
+    @relations = Relation.relations_for(@document)
     @tree                    = create_tree(@document)
     @documents               = @document.documents
     respond_to do |format|
@@ -263,24 +263,25 @@ class DocumentsController < ApplicationController
 
   def add_docs
     @document = Document.find(params[:id])
-    relation=params[:relation][:document]
+    relation  = Relation.find(params[:relation][:document])
     respond_to do |format|
       unless @favori.get("document").nil?
         flash[:notice] = ""
-        params.each do |item|
-          #flash[:notice]+="_"+item.to_s
-        end
-        @favori.get("document").each do |item|
-          link_=Link.create_new("document", @document, "document", item, relation)
+        @favori.get("document").each_with_index do |item, idx|
+          link_ = Link.create_new(@document, item, relation)
           link=link_[:link]
+          puts "add_docs:idx="+idx.to_s
           if(link!=nil)
+            if idx > 0
+              flash[:notice] += "\n"
+            end
             if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
             else
-              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>link_[:msg])
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
           end
         end
         empty_favori_by_type("document")

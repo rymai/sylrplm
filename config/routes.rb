@@ -2,7 +2,17 @@ require 'ruote_routing'
 
 
 ActionController::Routing::Routes.draw do |map|
-
+  
+  map.resources :relations
+  map.connect(
+  'relations/update_father',
+  :controller => 'relations',
+  :action => 'update_father') 
+  map.connect(
+  'relations/update_child',
+  :controller => 'relations',
+  :action => 'update_child')
+  
   map.resources :notifications, :member => { :notify => :get }
 
   # syl 17/11/2010 : route par defaut
@@ -172,6 +182,10 @@ ActionController::Routing::Routes.draw do |map|
   'projects/:id/add_forum',
   :controller => 'projects',
   :action => 'add_forum')
+  map.connect(
+  'projects/:id/add_users',
+  :controller => 'projects',
+  :action => 'add_users')
 
   map.connect(
   'customers/:id/add_favori',

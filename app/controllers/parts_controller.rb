@@ -17,8 +17,7 @@ class PartsController < ApplicationController
   # GET /parts/1.xml
   def show
     @part                    = Part.find(params[:id])
-    @relation_types_document = Typesobject.get_types_names(:relation_document)
-    @relation_types_part     = Typesobject.get_types_names(:relation_part)
+    @relations               = Relation.relations_for(@part)
     @other_parts = Part.paginate(:page => params[:page],
     :conditions => ["id != #{@part.id}"],
     :order => 'ident ASC',
@@ -134,7 +133,7 @@ class PartsController < ApplicationController
 
   def add_docs
     @part = Part.find(params[:id])
-    relation=params[:relation][:document]
+    relation = Relation.find(params[:relation][:document])
     respond_to do |format|
       unless @favori.get("document").nil?
         flash[:notice] = ""
@@ -142,16 +141,16 @@ class PartsController < ApplicationController
           #flash[:notice]+="_"+item.to_s
         end
         @favori.get("document").each do |item|
-          link_=Link.create_new("part", @part, "document", item, relation)
+          link_ = Link.create_new(@part, item, relation)
           link=link_[:link]
           if(link!=nil)
             if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>t(link_[:msg]))
             else
-              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>nil)
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
           end
         end
         empty_favori_by_type("document")
@@ -165,21 +164,21 @@ class PartsController < ApplicationController
 
   def add_parts
     @part = Part.find(params[:id])
-    relation=params[:relation][:part]
+    relation= Relation.find(params[:relation][:part])
     respond_to do |format|
       unless @favori.get("part").nil?
         flash[:notice] = ""
         @favori.get("part").each do |item|
-          link_=Link.create_new("part", @part, "part", item, relation)
+          link_ = Link.create_new(@part, item, relation)
           link=link_[:link]
           if(link!=nil)
             if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>t(link_[:msg]))
             else
-              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>t(link_[:msg]))
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>link_[:msg])
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
           end
         end
         empty_favori_by_type("part")

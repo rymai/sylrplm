@@ -51,7 +51,8 @@
 <table class='menu_bas'>
 	<tr>
 		<% unless @favori.get('document').count==0 %>
-		<% form_for(@document, :url => {:id => @document.id, :action => :add_docs }, :method => :get) do |f| %> <td> <%= select("relation","document",options_for_select(@relation_types_document)) %></td>
+		<% form_for(@document, :url => {:id => @document.id, :action => :add_docs }, :method => :get) do |f| %> 
+		<td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :name)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
 		<% end %>
 		<%end%>

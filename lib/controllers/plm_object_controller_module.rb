@@ -209,7 +209,66 @@ module Controllers::PlmObjectControllerModule
       end
     end
   end
+  
+=begin
+  def ctrl_add_docs(object)
+    relation = Relation.find(params[:relation][:document])
+    respond_to do |format|
+      unless @favori.get("document").nil?
+        flash[:notice] = ""
+        @favori.get("document").each do |item|
+          link_ = Link.create_new(object, item, relation)
+          link=link_[:link]
+          if(link!=nil)
+            if(link.save)
+              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
+              empty_favori_by_type("document")
+            else
+              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
+            end
+          else
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
+          end
+        end
+      else
+        flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_document))
+      end
+      format.html { redirect_to(object) }
+      format.xml  { head :ok }
+    end
+  end
+=end
 
+  def ctrl_add_objects_from_favorites(object, child_plmtype)
+    puts __FILE__+"."+__method__.to_s+":"+object.inspect+":"+child_plmtype.to_s
+    relation = Relation.find(params[:relation][child_plmtype])
+    plmtype=child_plmtype.to_s
+    respond_to do |format|
+      unless @favori.get(plmtype).nil?
+        flash[:notice] = ""
+        @favori.get(plmtype).each do |item|
+          link_ = Link.create_new(object, item, relation)
+          link=link_[:link]
+          if(link!=nil)
+            if(link.save)
+              flash[:notice] += t(:ctrl_object_added,:typeobj =>t("ctrl_"+plmtype),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
+              empty_favori_by_type(plmtype)
+            else
+              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t("ctrl_"+plmtype),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
+            end
+          else
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t("ctrl_"+plmtype),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
+          end
+        end
+      else
+        flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t("ctrl_"+plmtype))
+      end
+      puts __FILE__+"."+__method__.to_s+":notice="+flash[:notice]
+      format.html { redirect_to(object) }
+      format.xml  { head :ok }
+    end
+  end
+    
   def tree_part(obj, link,ctrl)
     if(obj!=nil)
       url={:controller => 'parts', :action => 'show', :id => "#{obj.id}"}
@@ -224,7 +283,7 @@ module Controllers::PlmObjectControllerModule
       :id => link.id)
       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
       options={
-        :label  => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+":"+obj.ident+cut_a,
+        :label  => (link.relation.name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+":"+obj.ident+cut_a,
         :icon=>icone(obj),
         #:title => obj.id.to_s,
         :title => obj.designation,
@@ -246,7 +305,7 @@ module Controllers::PlmObjectControllerModule
       :id => link.id)
       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
       options={
-        :label  => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_project)+":"+obj.ident+cut_a,
+        :label  => (link.relation.name||t(:ctrl_no_relation))+'-'+t(:ctrl_project)+":"+obj.ident+cut_a,
         :icon=>icone(obj),
         :title => obj.designation,
         :open => false,
@@ -271,7 +330,7 @@ module Controllers::PlmObjectControllerModule
       :id => link.id)
       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
       options={
-        :label  => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+':'+child.ident+cut_a,
+        :label  => (link.relation.name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+':'+child.ident+cut_a,
         :icon=>icone(child),
         :icon_open=>icone(child),
         :title => child.designation,
@@ -339,7 +398,7 @@ module Controllers::PlmObjectControllerModule
       :id => "#{link.id}" )
       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
       options={
-        :label => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_document)+':'+d.ident + cut_a,
+        :label => (link.relation.name||t(:ctrl_no_relation))+'-'+t(:ctrl_document)+':'+d.ident + cut_a,
         :icon=>icone(d),
         #:icon_open=>icone(d),
         :title => d.designation,
@@ -361,7 +420,7 @@ module Controllers::PlmObjectControllerModule
       :id => "#{link.id}" )
       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
       options={
-        :label => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_user)+':'+d.ident + cut_a,
+        :label => (link.relation.name||t(:ctrl_no_relation))+'-'+t(:ctrl_user)+':'+d.ident + cut_a,
         #:icon=>icone(d),
         #:icon_open=>icone(d),
         :title => d.designation,
@@ -387,7 +446,7 @@ module Controllers::PlmObjectControllerModule
         cut_a = '<a href="'+destroy_url+'">'+img_cut+'</a>'
       end
       options = {
-        :label => (link.name||t(:ctrl_no_relation))+'-'+t(:ctrl_forum)+':'+d.subject + cut_a,
+        :label => (link.relation.name||t(:ctrl_no_relation))+'-'+t(:ctrl_forum)+':'+d.subject + cut_a,
         :icon => icone(d),
         #:icon_open=>icone(d),
         :title => d.subject,
@@ -402,13 +461,12 @@ module Controllers::PlmObjectControllerModule
   def remove_link
     link = Link.remove(params[:id])
     respond_to do |format|
-      #flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_document))
       format.html { redirect_to(session[:tree_object]) }
       format.xml  { head :ok }
     end
   end
 
-  def ctrl_add_forum(object,type)
+  def ctrl_add_forum(object, type)
     relation="forum"
     error=false
     respond_to do |format|
@@ -447,7 +505,6 @@ module Controllers::PlmObjectControllerModule
       if error==false
         format.html { redirect_to(object) }
       else
-        puts 'PlmObjectControllerModule.add_forum:id='+object.id.to_s+" "+object.model_name
         @types=Typesobject.find_for("forum")
         @status= Statusobject.find_for("forum")
         @object=object
@@ -479,13 +536,10 @@ module Controllers::PlmObjectControllerModule
   end
 
   def add_favori
-    puts "PlmObjectControllerModule.add_favori:#{params.inspect}"
-    model=get_model(params)
-    obj=model.find(params[:id])
-    puts "PlmObjectControllerModule.add_favori:#{obj.inspect}"
+    #puts "PlmObjectControllerModule.add_favori:#{params.inspect}"
+    model = get_model(params)
+    obj = model.find(params[:id])
     @favori.add(obj)
-    puts "PlmObjectControllerModule.add_favori:#{@favori.get_controller_from_model_type("user").inspect}"
-    puts "PlmObjectControllerModule.add_favori:#{@favori.get("user").inspect}"
   end
 
   def empty_favori_by_type(type=nil)
@@ -539,7 +593,7 @@ module Controllers::PlmObjectControllerModule
       f=model.find(link.father_id)
       url={:controller => get_controller_from_model_type(model_name), :action => 'show', :id => "#{f.id}"}
       options={
-        :label  => (link.name||t(:ctrl_no_relation))+'-'+t("ctrl_"+model_name)+':'+f.ident,
+        :label  => (link.relation.name||t(:ctrl_no_relation))+'-'+t("ctrl_"+model_name)+':'+f.ident,
         :icon=>icone(f),
         :title => f.designation,
         :url=>url_for(url),
@@ -579,5 +633,68 @@ module Controllers::PlmObjectControllerModule
   def img_cut
     img("cut")
   end
+    def get_themes(default)
+    #renvoie la liste des themes
+    dirname = "#{Rails.root}/public/stylesheets/*"
+    ret = ""
+    Dir[dirname].each do |dir|
+      if File.directory?(dir)
+        theme = File.basename(dir, '.*')
+        if theme == default
+          ret << "<option selected=\"selected\">#{theme}</option>"
+        else
+          ret << "<option>#{theme}</option>"
+        end
+      end
+    end
+    ret
+  end
 
+  def get_languages
+    #renvoie la liste des langues
+    dirname = "#{Rails.root}/config/locales/*.yml"
+    ret = []
+    Dir[dirname].each do |dir|
+      lng = File.basename(dir, '.*')
+      ret << [t("language_"+lng), lng]
+    end
+    #puts "application_controller.get_languages"+dirname+"="+ret.inspect
+    ret
+  end
+
+  def get_html_options(lst, default, translate=false)
+    ret=""
+    lst.each do |item|
+      if translate
+        val=t(item[1])
+      else
+      val=item[1]
+      end
+      if item[0].to_s == default.to_s
+        #puts "get_html_options:"+item.inspect+" = "+default.to_s
+        ret << "<option value=\"#{item[0]}\" selected=\"selected\">#{val}</option>"
+      else
+        ret << "<option value=\"#{item[0]}\">#{val}</option>"
+      end
+    end
+    #puts "application_controller.get_html_options:"+ret
+    ret
+  end
+
+  def html_models_and_columns(default = nil)
+    lst=[]
+    Dir.new("#{RAILS_ROOT}/app/models").entries.each do |model|
+      unless %w[. .. obsolete].include?(model)
+        mdl = model.camelize.gsub('.rb', '')
+        begin
+          mdl.constantize.content_columns.each do |col|
+            lst<<["#{mdl}.#{col.name}","#{mdl}.#{col.name}"] unless %w[created_at updated_at owner].include?(col.name)
+          end
+        rescue # do nothing
+        end
+      end
+    end
+    puts __FILE__+"."+__method__.to_s+":"+lst.inspect
+    get_html_options(lst, default)
+  end
 end

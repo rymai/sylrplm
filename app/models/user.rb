@@ -6,10 +6,11 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   belongs_to :role
   belongs_to :volume
+  belongs_to :typesobject
   has_many :user_groups, :dependent => :delete_all
   has_many :groups, :through => :user_groups
 
-  validates_presence_of     :login, :password
+  validates_presence_of     :login
   validates_uniqueness_of   :login
   
   validates_confirmation_of :password

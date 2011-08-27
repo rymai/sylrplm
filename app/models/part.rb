@@ -20,19 +20,19 @@ class Part < ActiveRecord::Base
   #has_and_belongs_to_many :documents, :join_table => "links",
   #:foreign_key => "father_id", :association_foreign_key => "child_id", :conditions => ["father_type='part' AND child_type='document'"]
 
-  has_many :links_documents, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='part' and child_type='document'"],:source=>'document'
-  has_many :documents , :through => :links_documents,:source=>'document'
+  has_many :links_documents, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='part' and child_plmtype='document'"]
+  has_many :documents , :through => :links_documents
 
-  has_many :links_workitems, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='part' and child_type='workitem'"]
+  has_many :links_workitems, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='part' and child_plmtype='workitem'"]
   has_many :workitems , :through => :links_workitems
 
-  has_many :links_parts, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='part' and child_type='part'"]
+  has_many :links_parts, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='part' and child_plmtype='part'"]
   has_many :parts , :through => :links_parts
 
-  has_many :links_projects, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='project' and child_type='part'"]
+  has_many :links_projects, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='project' and child_plmtype='part'"]
   has_many :projects , :through => :links_projects
 
-  has_many :links_customers, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='customer' and child_type='part'"]
+  has_many :links_customers, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='customer' and child_plmtype='part'"]
   has_many :customers , :through => :links_customers
 
   def to_s

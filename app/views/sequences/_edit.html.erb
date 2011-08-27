@@ -3,27 +3,21 @@
 		<%= t(:legend_sequence) %>
 	</legend>
 	<%= f.label t(:label_utility) %>
-
-	<%= select_tag("sequence[utility]",@utilities) %>
+	<%= f.select("utility", options_for_select(@utilities, @sequence.utility)) %>
 	<br/>
 	<%= f.label t(:label_sequence) %>
-
 	<%= f.check_box :sequence %>
 	<br/>
 	<%= f.label t(:label_modify) %>
-
 	<%= f.check_box :modify %>
 	<br/>
 	<%= f.label t(:label_value) %>
-
 	<%= f.text_field :value %>
 	<br/>
 	<%= f.label t(:label_min) %>
-
 	<%= f.text_field :min %>
 	<br/>
 	<%= f.label t(:label_max) %>
-
 	<%= f.text_field :max %>
 	<br/>
 </fieldset>

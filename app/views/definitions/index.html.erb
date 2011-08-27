@@ -24,18 +24,15 @@
 		<td class='coll_buttons'> <%= link_to(h_img_show.to_s, definition) %>
 		<%= link_to(
 		h_img_edit.to_s,
-		edit_definition_path(definition),
-		{ :title => 'edit this process definition' }) %>
+		edit_definition_path(definition)) %>
 		<%= link_to(
 		h_img_destroy.to_s,
 		definition,
-		{ :confirm => t("msg_confirm"),
-		:method => :delete,
-		:title => 'remove this definition' }) %>
+		:confirm => t("msg_confirm"),
+		:method => :delete) %>
 		<%= link_to(
 		h_img_launchthis.to_s,
-		new_process_path(:definition_id => definition.id),
-		{ :title => 'launch a new instance of this process' }) %> </td>
+		new_process_path(:definition_id => definition.id)) %> </td>
 	</tr>
 	<% end %>
 </table>

@@ -6,6 +6,8 @@ fr:
   #models (ko)
   ##############
   valid_ident: "L'identifiant d'un {{object} doit commencer par des lettres suivi de chiffres"
+  valid_relation_cardin_occur_max: "Le nombre d' occurence maxi doit être plus grand que le mini ou -1 (infini)"
+  valid_relation_cardin_use_max: "Le nombre d' utilisation maxi doit être plus grand que le mini ou -1 (infini)"
   #
   ##############
   #controllers
@@ -39,9 +41,9 @@ fr:
   ctrl_object_give_file: "Indiquez un nouveau fichier"
   ctrl_object_checkfree: "%{typeobj} '%{ident}' est libéré, raison:%{reason}" 
   ctrl_object_not_checkfree: "%{typeobj} '%{ident}' n'est pas libéré"
-  ctrl_object_added: "<br> %{typeobj} '%{ident}' a été ajouté, relation='%{relation}', message=%{msg}"
-  ctrl_object_not_added: "<br> %{typeobj} '%{ident}' n'a pas été ajouté, relation='%{relation}', messag=%{msg}"
-  ctrl_object_not_linked: "<br> %{typeobj} '%{ident}' n'a pas été relié, relation='%{relation}', messag=%{msg}"
+  ctrl_object_added: "%{typeobj} '%{ident}' a été ajouté, relation='%{relation}', message=%{msg}"
+  ctrl_object_not_added: "%{typeobj} '%{ident}' n'a pas été ajouté, relation='%{relation}', messag=%{msg}"
+  ctrl_object_not_linked: "%{typeobj} '%{ident}' n'a pas été relié, relation='%{relation}', messag=%{msg}"
   ctrl_object_not_existing: "L' objet '%{model}/%{id}' est inconnu: %{error}"
   ctrl_nothing_to_paste: "Pas de %{typeobj} à coller"
   ctrl_subject_forum: "Forum sur %{typeobj} '%{ident}'"
@@ -50,6 +52,7 @@ fr:
   ctrl_init_to_do: Initialisation à effectuer
   ctrl_init_done: Initialisation effectuée
   count_objects: " : %{number_begin}-%{number_end} / %{total}"
+  ctrl_show_no_relation: "%{child_plmtype}(s) à copier mais il n'existe pas de relation entre '%{father_plmtype}' et '%{child_plmtype}'"
   #access
   ctrl_object_no_controlers: Controleurs non trouvés
   #application
@@ -59,8 +62,7 @@ fr:
   link_project: "%{link}-Projet-%{ident}"
   link_customer: "%{link}-Client-%{ident}"
   user_unknown: Compte inconnu
-  user_not_connected: Non connecté
-  user_unknown_mail: unknownmail@laposte.net
+  user_unknown_mail: Unknown Mail
   #customers
   ctrl_customer: Client
   #ctrl_remove_project_ok: Project %{project} was successfully removed from %{typeobj}
@@ -117,6 +119,7 @@ fr:
   ctrl_user_not_updated: Utilisateur %{user} non modifié
   ctrl_user_deleted: "Utilisateur %{user} supprimé"
   ctrl_user_connected: "Utilisateur %{user} connecté !"
+  ctrl_user_not_connected: Non connecté
   ctrl_user_disconnected: "Utilisateur %{user} déconnecté !"
   ctrl_user_role: Rôle=%{role}
   #main
@@ -208,6 +211,7 @@ fr:
   mnu_datafiles: Fichiers de données
   mnu_groups: Groupes
   mnu_notifications: Notifications
+  mnu_relations: Relations
   #
   proceed: Valider cette tâche
   delegate: Déléguer cette tâche
@@ -239,6 +243,7 @@ fr:
   new_volume: Nouveau volume
   new_notification: Nouvelle notification 
   new_group: Nouveau groupe
+  new_relation: Nouvelle relation
   #
   paste_users: Coller utilisateurs 
   paste_parts: Coller articles 
@@ -327,8 +332,8 @@ fr:
   label_groups_may_launch: Affectation des groupes
   label_groups: Groupes
   label_launch_fields: Champs
-  label_definition_groups_in: Groupes pouvant lancer ce processus
-  label_definition_groups_out: Autres groupes pouvant être affectées
+  label_definition_group_ids_in: Groupes pouvant lancer ce processus
+  label_definition_group_ids_out: Autres groupes pouvant être affectées
   button_add: Ajouter
   button_remove: Enlever
   label_fields: Attributs
@@ -382,8 +387,8 @@ fr:
   group_show: Détail du groupe
   group_new: Nouveau groupe
   label_group_users: Membres 
-  label_group_users_out: Autres utilisateurs
-  label_group_users_in: Utilisateurs
+  label_group_user_ids_out: Autres utilisateurs
+  label_group_user_ids_in: Utilisateurs
   # fields link
   legend_link: Relation
   # fields main
@@ -459,8 +464,8 @@ fr:
   role_show: Détail du rôle
   role_edit:  Edition du rôle
   label_role_users: Utilisateurs
-  label_role_users_in: Ayant ce rôle
-  label_role_users_out: Autres
+  label_role_user_ids_in: Ayant ce rôle
+  label_role_user_ids_out: Autres
   # fields sequences
   legend_sequence: "Renseignez les propriétés de la valeur/séquence"
   sequence_list: Liste des valeurs/séquences
@@ -531,10 +536,10 @@ fr:
   label_user_mail_option_none: Aucune notification
   language_fr: Français
   language_en: Anglais
-  label_user_roles_in: Attribués
-  label_user_roles_out: Non atribués
-  label_user_groups_in: " d'appartenance"
-  label_user_groups_out: Autres groupes
+  label_user_role_ids_in: Attribués
+  label_user_role_ids_out: Non atribués
+  label_user_group_ids_in: " d'appartenance"
+  label_user_group_ids_out: Autres groupes
   # fields volumes
   legend_volume: Renseignez les propriétés du volume
   volume_list: Liste des volumes
@@ -762,7 +767,8 @@ fr:
         less_than_or_equal_to: "doit être inférieur ou égal à %{count}"
         odd: "doit être impair"
         even: "doit être pair"
-        
+        valid_relation_cardin_occur_max: "doit être plus grand que le mini ou -1 (infini)"
+        valid_relation_cardin_use_max: "doit être plus grand que le mini ou -1 (infini)"
   
         
  

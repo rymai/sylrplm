@@ -11,17 +11,19 @@
 		<th <%= sort_td_class_helper "login" %>
 		<%= sort_link_helper t(:label_username), "login" %>
 		</th>
-		<th <%= sort_td_class_helper "role" %>
-		<%= sort_link_helper t(:label_role), "role.title" %>
+		<th>
+		<%= t(:label_role) %>
 		</th>
 		<th <%= sort_td_class_helper "mail" %>
 		<%= sort_link_helper t(:label_email), "email" %>
 		</th>
+		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %> </th>
 		<th <%= sort_td_class_helper "language" %>
 		<%= sort_link_helper t(:label_language), "language" %>
 		</th>
-		<th <%= sort_td_class_helper "volume" %>
-		<%= sort_link_helper t(:label_volume), "volume.name" %></th>
+		<th>
+		<%= t(:label_volume)%>
+		</th>
 		<th <%= sort_td_class_helper "theme" %>
 		<%= sort_link_helper t(:label_theme), "theme" %>
 		</th>
@@ -34,23 +36,29 @@
 		<th <%= sort_td_class_helper "show_mail" %>
 		<%= sort_link_helper t(:label_show_mail), "show_mail" %>
 		</th>
-		<th></th>
-		<th></th>
+		<th><%= t(:label_groups) %> </th>
+		<th><%= t(:label_roles) %> </th>
 		<th></th>
 		</tr>
 		<% for user in @current_users[:recordset] %>
 		<tr>
-		<td> <%= h(user.login) %></td>
-		<td> <%if(user.role != nil) %>
-		<%= h(user.role.title) %>
+		<td> <%= user.login %></td>
+		<td><%if(user.role != nil) %>
+		<%= link_to user.role.title , user.role %>
 		<%end %></td>
-		<td> <%= h(user.email) %></td>
+		<td> <%= user.email %></td>
+		<td> <% if(user.typesobject != nil) %>
+			<%= h(user.typesobject.name) %>
+			<% end %>
+			</td>
 		<td> <%= h(user.language) %></td>
-		<td> <%= h(user.volume.name)unless user.volume.nil? %></td>
+		<td> <%= link_to user.volume.name, user.volume unless user.volume.nil? %></td>
 		<td> <%= h(user.theme) %></td>
 		<td> <%= t(user.v_notification) %></td>
 		<td> <%= h(user.v_time_zone) %></td>
 		<td> <%= h(user.show_mail) %></td>
+		<td><%= comma_list(user.groups, :name) %></td>
+		<td><%= comma_list(user.roles, :title) %></td>
 		<td> <%= link_to h_img_show.to_s, user %></td>
 		<td> <%= link_to h_img_edit.to_s, edit_user_path(user) %></td>
 		<td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td>

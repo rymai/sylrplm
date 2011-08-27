@@ -29,16 +29,22 @@ class ProjectsController < ApplicationController
   # arbre montrant la structure du projet: le client et les parts
   def show
     @project = Project.find(params[:id])
-    @relation_types_document=Typesobject.get_types_names(:relation_document)
-    @relation_types_part=Typesobject.get_types_names(:relation_part)
-    @relation_types_user=Typesobject.get_types_names(:relation_user)
+    @relations               = Relation.relations_for(@project)
     @tree=create_tree(@project)
     @tree_up=create_tree_up(@project)
-
     @documents=@project.documents
     @parts=@project.parts
     @customers=@project.customers
-
+    flash[:notice] = "" if flash[:notice].nil?
+    if @favori.get('document').count>0 && @relations["document"].count==0 
+      flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_document))
+    end
+    if @favori.get('part').count>0 && @relations["part"].count==0 
+      flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_part))
+    end
+    if @favori.get('user').count>0 && @relations["user"].count==0 
+      flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @project }
@@ -140,99 +146,76 @@ class ProjectsController < ApplicationController
   end
 
   def add_docs
-    define_variables
     @project = Project.find(params[:id])
-    relation=params[:relation][:document]
-    respond_to do |format|
-      unless @favori.get("document").nil?
-        flash[:notice] = ""
-        @favori.get("document").each do |item|
-          link_=Link.create_new("project", @project, "document", item, relation)
-          link=link_[:link]
-          if(link!=nil)
-            if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
-            else
-              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
-            end
-          else
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation,:msg=>link_[:msg])
-          end
-        end
-        empty_favori_by_type("document")
-      else
-        flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_document))
-      end
-      format.html { redirect_to(@project) }
-      format.xml  { head :ok }
-    end
+    ctrl_add_objects_from_favorites(@project, :document)
   end
-
+  
   def add_parts
-    define_variables
     @project = Project.find(params[:id])
-    relation=params[:relation][:part]
+    ctrl_add_objects_from_favorites(@project, :part)
+  end
+  
+  def add_parts_old
+    @project = Project.find(params[:id])
+    relation = Relation.find(params[:relation][:part])
     respond_to do |format|
       unless @favori.get("part").nil?
         flash[:notice] = ""
         @favori.get("part").each do |item|
-          #flash[:notice] += "<br>"+ item.ident.to_s
-          link_=Link.create_new("project", @project, "part", item, relation)
+          link_ = Link.create_new(@project, item, relation)
           link=link_[:link]
           if(link!=nil)
             if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
+              empty_favori_by_type("part")
             else
-              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>link_[:msg])
+            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
           end
         end
-        empty_favori_by_type("part")
       else
         flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_part))
       end
       format.html { redirect_to(@project) }
       format.xml  { head :ok }
     end
-    #redirect_to_index("add_docs termine")
-
   end
   
   def add_users
-      define_variables
+    @project = Project.find(params[:id])
+    ctrl_add_objects_from_favorites(@project, :user)
+  end
+  
+  def add_users_old
       @project = Project.find(params[:id])
-      relation=params[:relation][:user]
+      relation = Relation.find(params[:relation][:user])
       respond_to do |format|
         unless @favori.get("user").nil?
           flash[:notice] = ""
           @favori.get("user").each do |item|
-            #flash[:notice] += "<br>"+ item.ident.to_s
-            link_=Link.create_new("project", @project, "user", item, relation)
+            link_ = Link.create_new(@project, item, relation)
             link=link_[:link]
             if(link!=nil)
               if(link.save)
-                flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_user),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+                flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_user),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
+                empty_favori_by_type("user")
               else
-                flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_user),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+                flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_user),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
               end
             else
-              flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation,:msg=>t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
             end
           end
-          empty_favori_by_type("user")
         else
           flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_user))
         end
         format.html { redirect_to(@project) }
         format.xml  { head :ok }
       end
-      #redirect_to_index("add_docs termine")
-  
     end
-    
-
+   
   def promote
     ctrl_promote(Project,false)
   end
@@ -241,21 +224,6 @@ class ProjectsController < ApplicationController
     ctrl_demote(Project,false)
   end
 
-  #  def empty_favori_project
-  #      empty_favori("project")
-  #  end
-  #
-  #  def add_project_to_favori
-  #    project=Project.find(params[:id])
-  #    @favori_project.add_project(project)
-  #  end
-  #
-  #  def empty_favori_project
-  #    session[:favori_project]=nil
-  #    @favori_project=nil
-  #    #flash[:notice] ="Plus de favoris project"
-  #    ##redirect_to :action => :index
-  #  end
   def new_forum
     puts 'CustomerController.new_forum:id='+params[:id]
     @object = Project.find(params[:id])

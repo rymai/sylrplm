@@ -40,7 +40,8 @@
 <table class='menu_bas'>
 	<tr>
 		<% unless @favori.get('document').count==0 %>
-		<% form_for(@part, :url => {:id => @part.id, :action => "add_docs" }, :method => :get) do |f| %> <td> <%= select("relation","document",options_for_select(@relation_types_document)) %></td>
+		<% form_for(@part, :url => {:id => @part.id, :action => "add_docs" }, :method => :get) do |f| %> 
+		<td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :name)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
 		<% end %>
 		<%end%>
@@ -48,7 +49,8 @@
 	</td>
 	<tr>
 		<% unless @favori.get('part').count==0 %>
-		<% form_for(@part, :url => {:id => @part.id, :action => "add_parts" }, :method => :get) do |f| %> <td> <%= select("relation","part",options_for_select(@relation_types_part)) %></td>
+		<% form_for(@part, :url => {:id => @part.id, :action => "add_parts" }, :method => :get) do |f| %> 
+		<td> <%= select("relation","part", options_from_collection_for_select( @relations["part"], :id, :name)) %></td>
 		<td> <%= submit_tag t("paste_parts") %></td>
 		<% end %> <!--
 		<%= link_to h_img_add_parts.to_s+t("paste_parts"), :id => @part.id, :action => :add_parts %>

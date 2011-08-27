@@ -8,10 +8,14 @@ class Typesobject < ActiveRecord::Base
   has_many :projects
   has_many :customers
   
-  named_scope :order_default, :order=>"object,name ASC"
+  named_scope :order_default, :order=>"name ASC"
   named_scope :find_all , order_default.all
 
 
+  def self.get_all
+    order_default.find_all
+  end
+  
   def self.get_types(s_object)
     find(:all, :order=>"name",
       :conditions => ["object = '"+s_object.to_s+"'"])
@@ -27,7 +31,7 @@ class Typesobject < ActiveRecord::Base
   end
   
   def self.get_objects_with_type
-  		ret=["document","part","project","customer","forum","datafile","relation_document","relation_part","relation_project","relation_user"]
+  		ret=["document", "part", "project", "customer", "forum", "datafile", "relation", "user"].sort
   		ret
   end
   

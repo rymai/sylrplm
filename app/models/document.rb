@@ -2,7 +2,6 @@ class Document < ActiveRecord::Base
   include Models::PlmObject
   include Models::SylrplmCommon
 
-  
   attr_accessor :link_attributes
   validates_presence_of :ident , :designation
   validates_uniqueness_of :ident, :scope => :revision
@@ -16,17 +15,17 @@ class Document < ActiveRecord::Base
 
   has_many :datafile
   has_many :checks
-  
-  has_many :links_documents, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_type='document' and child_type='document'"],:source=>'document'
-  has_many :documents , :through => :links_documents,:source=>'document'
 
-  has_many :links_parts, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_type='part' and child_type='document'"]
+  has_many :links_documents, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='document' and child_plmtype='document'"]
+  has_many :documents , :through => :links_documents
+
+  has_many :links_parts, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='part' and child_plmtype='document'"]
   has_many :parts, :through => :links_parts
 
-  has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_type='project' and child_type='document'"]
+  has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='document'"]
   has_many :projects, :through => :links_projects
 
-  has_many :links_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_type='customer' and child_type='document'"]
+  has_many :links_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
   has_many :customers, :through => :links_customers
 
   def to_s

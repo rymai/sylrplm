@@ -26,7 +26,7 @@ class SequencesController < ApplicationController
   def new
     @sequence = Sequence.new
     #@objects=Sequence.getObjectsWithSequence
-    @utilities=get_models_and_columns
+    @utilities=html_models_and_columns(@sequence.utility)
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @sequence }
@@ -37,7 +37,7 @@ class SequencesController < ApplicationController
   def edit
     @sequence = Sequence.find(params[:id])
     #@objects=Sequence.getObjectsWithSequence
-    @utilities=get_models_and_columns()
+    @utilities=html_models_and_columns(@sequence.utility)
     
   end
   
@@ -46,7 +46,7 @@ class SequencesController < ApplicationController
   def create
     @sequence = Sequence.new(params[:sequence])
     #@objects=Sequence.getObjectsWithSequence
-    @utilities=get_models_and_columns()
+    @utilities=html_models_and_columns(@sequence.utility)
     respond_to do |format|
       if @sequence.save
         flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility)
@@ -65,7 +65,7 @@ class SequencesController < ApplicationController
   def update
     @sequence = Sequence.find(params[:id])
     #@objects=Sequence.getObjectsWithSequence
-    @utilities=get_models_and_columns()
+    @utilities=html_models_and_columns(@sequence.utility)
     respond_to do |format|
       if @sequence.update_attributes(params[:sequence])
         flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility)

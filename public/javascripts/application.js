@@ -110,6 +110,47 @@ function toggleHelp () {
   toggleVisibility(h);
 }
 
+function updateField(id, i_value) {
+	el = byId (id);
+	el.value=i_value;
+}
+
+function updateRelation() {
+	var relation_name = byId('relation_name');
+	var relation_father_plmtype = byId('relation_father_plmtype');
+	var relation_child_plmtype = byId('relation_child_plmtype');
+	var relation_father_type_id = byId('relation_father_type_id');
+	var relation_child_type_id = byId('relation_child_type_id');
+	if (relation_name==null) return;
+	if (relation_father_plmtype==null) return;
+	if (relation_child_plmtype==null) return;
+	if (relation_father_type_id==null) return;
+	if (relation_child_type_id==null) return;
+	
+	var sep_type = "."
+	var sep_child = "-"
+	
+	var father_selected = relation_father_type_id.options[0].text
+	for (i = 0; i < relation_father_type_id.length; i++) {
+    if (relation_father_type_id.options[i].value == relation_father_type_id.value) {
+    	father_selected = relation_father_type_id.options[i].text
+    }
+  }
+  var child_selected = relation_child_type_id.options[0].text
+	for (i = 0; i < relation_child_type_id.length; i++) {
+    if (relation_child_type_id.options[i].value == relation_child_type_id.value) {
+    	child_selected = relation_child_type_id.options[i].text
+    }
+  }
+	var val = relation_father_plmtype.value;
+	val = val + sep_type + father_selected;
+	val = val + sep_child + relation_child_plmtype.value ;
+	val = val + sep_type + child_selected;
+	//alert ('updateRelation val='+val);
+	if (relation_name.value.indexOf(val)==-1) {
+		relation_name.value = val;
+	}
+}
 
 
 

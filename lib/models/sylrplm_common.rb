@@ -5,11 +5,13 @@ module Models::SylrplmCommon
   end
 
   module ClassMethods
-    def get_object_controller(model_type)
+    
+    
+    def get_object_controller(model_name)
       # ajouter le 's' de fin
-      model_type+"s"
+      model_name+"s"
     end
-  
+   
     #utilise pour les filtres des objets (index)
     def qry_type
       "typesobject_id in (select id from typesobjects as t where t.name LIKE ?)"
@@ -87,23 +89,15 @@ module Models::SylrplmCommon
         else
           val=col.value
         end
-        puts "sylrplm_common.set_default_values:"+strcol+"="+old_value.to_s+" to "+val.to_s
-        #object.update_attribute(strcol,val)
+        #puts "sylrplm_common.set_default_values:"+strcol+"="+old_value.to_s+" to "+val.to_s
         self[strcol]=val
       end
     end
   end
-  
-  # renvoie le type de l'objet: nom de la classe en minuscule
-     #TODO compatibilite
-    #def object_type
-    # Part devient part
-    # model_name
-    #end
 
   def model_name()
     # Part devient part
-    self.class.name.downcase
+   self.class.name.downcase
   end
   
   def controller
@@ -114,10 +108,10 @@ module Models::SylrplmCommon
   def get_object(type, id)
     # parts devient Part
     name=self.class.name+"."+__method__.to_s+":"
-    puts name+type+"."+id.to_s
+    #puts name+type+"."+id.to_s
     mdl=eval type.capitalize
     begin
-    ret=mdl.find(id)
+      ret=mdl.find(id)
     rescue Exception => e
       LOG.warn("failed to find "+type+"."+id.to_s+" : #{e}")
       ret=nil
@@ -125,7 +119,7 @@ module Models::SylrplmCommon
     ret
   end
   
-   def follow_up(path)
+  def follow_up(path)
     name=self.class.name+"."+__method__.to_s+":"
     #puts name+path
     ret=[]
@@ -161,11 +155,11 @@ module Models::SylrplmCommon
     ret
   end
   
-  def get_model(model_type)
+  def get_model(model_name)
     begin
-      ret=eval model_type.capitalize
+      ret=eval model_name.capitalize
       rescue Exception => e
-        LOG.warn("failed to find "+model_type+" : #{e}")
+        LOG.warn("failed to find "+model_name+" : #{e}")
         ret=nil
       end
     ret

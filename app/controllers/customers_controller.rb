@@ -19,8 +19,7 @@ class CustomersController < ApplicationController
   # GET /customers/1.xml
   def show
     @customer                = Customer.find(params[:id])
-    @relation_types_document = Typesobject.get_types_names(:relation_document)
-    @relation_types_project  = Typesobject.get_types_names(:relation_project)
+    @relations               = Relation.relations_for(@customer)
     @tree                    = create_tree(@customer)
     @documents               = @customer.documents
     @projects                = @customer.projects
@@ -112,21 +111,21 @@ class CustomersController < ApplicationController
 
   def add_docs
     @customer = Customer.find(params[:id])
-    relation  = params[:relation][:document]
+    relation  = Relation.find(params[:relation][:document])
     respond_to do |format|
       unless @favori.get("document").nil?
         flash[:notice] = ""
         @favori.get("document").each do |item|
-          link_ = Link.create_new(:customer, @customer, :document, item, relation)
+          link_ = Link.create_new(@customer, item, relation)
           link  = link_[:link]
           unless link.nil?
             if link.save
-              flash[:notice] += t(:ctrl_object_added, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_added, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation.ident, :msg => link_[:msg])
             else
-              flash[:notice] += t(:ctrl_object_not_added, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_not_added, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation.ident, :msg => link_[:msg])
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation, :msg => link_[:msg])
+            flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation.ident, :msg => link_[:msg])
           end
         end
         empty_favori_by_type("document")
@@ -140,21 +139,21 @@ class CustomersController < ApplicationController
 
   def add_projects
     @customer = Customer.find(params[:id])
-    relation  = params[:relation][:project]
+    relation  = Relation.find(params[:relation][:project])
     respond_to do |format|
       unless @favori.get("project").nil?
           flash[:notice] = ""
           @favori.get("project").each do |item|
-          link_ = Link.create_new(:customer, @customer, :project, item, relation)
+          link_ = Link.create_new(@customer, item, relation)
           link  = link_[:link]
           unless link.nil?
             if link.save
-              flash[:notice] += t(:ctrl_object_added, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_added, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation.ident, :msg => link_[:msg])
             else
-              flash[:notice] += t(:ctrl_object_not_added, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation, :msg => t(link_[:msg]))
+              flash[:notice] += t(:ctrl_object_not_added, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation.ident, :msg => link_[:msg])
             end
           else
-            flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation, :msg => link_[:msg])
+            flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation.ident, :msg => link_[:msg])
           end
         end
         empty_favori_by_type("project")

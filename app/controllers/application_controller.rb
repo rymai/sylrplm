@@ -1,7 +1,5 @@
 require 'controllers/plm_object_controller_module'
 
-
-
 class ErrorReply < Exception
   attr_reader :status
   def initialize (msg, status=400)
@@ -10,21 +8,21 @@ class ErrorReply < Exception
   end
 end
 
-
-
 class ApplicationController < ActionController::Base
   include Controllers::PlmObjectControllerModule
+  
   helper :all  # include all helpers, all the time
   helper_method :current_user, :logged_in?, :admin_logged_in?
+  
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
+  
   filter_parameter_logging :password
+  
   before_filter :authorize, :except => [:index, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
   ## un peu brutal before_filter :object_exists, :only => [:show, :edit, :destroy]
   #
-  #access_control(Access.find_for_controller(controller_class_name))
-  #before_filter :event
   def event
     event_manager
   end
@@ -46,22 +44,6 @@ class ApplicationController < ActionController::Base
     def extend?(klass)
       !(superclass.nil? && (superclass == klass || superclass.extend?(klass)))
     end
-  end
-
-  def get_models_and_columns
-    ret = ""
-    Dir.new("#{RAILS_ROOT}/app/models").entries.each do |model|
-      unless %w[. .. obsolete].include?(model)
-        mdl = model.camelize.gsub('.rb', '')
-        begin
-          mdl.constantize.content_columns.each do |col|
-            ret += "<option>#{mdl}.#{col.name}</option>" unless %w[created_at updated_at owner].include?(col.name)
-          end
-        rescue # do nothing
-        end
-      end
-    end
-    ret
   end
 
   # definition de la langue
@@ -105,53 +87,6 @@ class ApplicationController < ActionController::Base
     LOG.info("__FILE__")
   end
 
-  def get_themes(default)
-    #renvoie la liste des themes
-    dirname = "#{Rails.root}/public/stylesheets/*"
-    ret = ""
-    Dir[dirname].each do |dir|
-      if File.directory?(dir)
-        theme = File.basename(dir, '.*')
-        if theme == default
-          ret << "<option selected=\"selected\">#{theme}</option>"
-        else
-          ret << "<option>#{theme}</option>"
-        end
-      end
-    end
-    ret
-  end
-
-  def get_languages
-    #renvoie la liste des langues
-    dirname = "#{Rails.root}/config/locales/*.yml"
-    ret = []
-    Dir[dirname].each do |dir|
-      lng = File.basename(dir, '.*')
-      ret << [t("language_"+lng), lng]
-    end
-    #puts "application_controller.get_languages"+dirname+"="+ret.inspect
-    ret
-  end
-
-  def get_html_options(lst, default, translate=false)
-    ret=""
-    lst.each do |item|
-      if translate
-        val=t(item[1])
-      else
-      val=item[1]
-      end
-      if item[0].to_s == default.to_s
-        #puts "get_html_options:"+item.inspect+" = "+default.to_s
-        ret << "<option value=\"#{item[0]}\" selected=\"selected\">#{val}</option>"
-      else
-        ret << "<option value=\"#{item[0]}\">#{val}</option>"
-      end
-    end
-    #puts "application_controller.get_html_options:"+ret
-    ret
-  end
 
   # nombre d'objets listes par page si pagination
   def cfg_items_per_page
@@ -226,8 +161,6 @@ class ApplicationController < ActionController::Base
     source = options.delete(:source) || @current_user.login
     OpenWFE::Extras::HistoryEntry.log!(source, event, options)
   end
-
-  
 
   def authorize
     unless session[:user_id] || User.find_by_id(session[:user_id])

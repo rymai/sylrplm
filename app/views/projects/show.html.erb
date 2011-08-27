@@ -37,27 +37,27 @@
 <%= render(:partial => "shared/object_workitems", :object =>@project) %>
 
 <table class='menu_bas'>
-	<% unless @favori.get('document').count==0 %>
+	<% unless @favori.get('document').count==0 || @relations["document"].count==0 %>
 	<tr>
 		<% form_for(@project, :url => {:id => @project.id, :action => "add_docs" }) do |f| %>
-		<td> <%= select("relation","document",options_for_select(@relation_types_document)) %></td>
+		<td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :name)) %></td>
 		<td> <%= submit_tag t("paste_documents") %></td>
 		<% end %>
 	</tr>
 	<% end %>
 
-	<% unless @favori.get('part').count==0 %>
+	<% unless @favori.get('part').count==0 || @relations["part"].count==0 %>
 	<tr>
 		<% form_for(@project, :url => {:id => @project.id, :action => "add_parts" }) do |f| %>
-		<td> <%= select("relation","part",options_for_select(@relation_types_part)) %></td>
+		<td> <%= select("relation","part", options_from_collection_for_select( @relations["part"], :id, :name)) %></td>
 		<td> <%= submit_tag t("paste_parts") %></td>
 		<% end %>
 	</tr>
 	<% end %>
-<% unless @favori.get('user').count==0 %>
+<% unless @favori.get('user').count==0 || @relations["user"].count==0 %>
 	<tr>
 		<% form_for(@project, :url => {:id => @project.id, :action => "add_users" }) do |f| %>
-		<td> <%= select("relation","user",options_for_select(@relation_types_user)) %></td>
+		<td> <%= select("relation","user", options_from_collection_for_select( @relations["user"], :id, :name)) %></td>
 		<td> <%= submit_tag t("paste_users") %></td>
 		<% end %>
 	</tr>

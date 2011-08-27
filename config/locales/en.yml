@@ -6,6 +6,8 @@ en:
   #models (ko)
   ##############
   valid_ident: "L'identifiant d'un %{typeobj} doit commencer par des lettres suivi de chiffres"
+  valid_relation_cardin_occur_max: "Occurence maxi must be greater than mini or -1 (no limit)"
+  valid_relation_cardin_use_max: "Usage maxi must be greater than mini or -1 (no limit)"
   #
   ##############
   #controllers
@@ -50,6 +52,7 @@ en:
   ctrl_init_to_do: Initialization to do
   ctrl_init_done: Initialization done
   count_objects: " : %{number_begin}-%{number_end} / %{total}"
+  ctrl_show_no_relation: "%{child_plmtype}(s) to copy but relation '%{father_plmtype}' to '%{child_plmtype}' does not exist"
   #access
   ctrl_object_no_controlers: "No controlers found"
   #application
@@ -58,7 +61,6 @@ en:
   link_project: "%{link}-Project-%{ident}"
   link_customer: "%{link}-Customer-%{ident}"
   user_unknown: User Unknown
-  user_not_connected: Not Connected
   user_unknown_mail: unknownmail@laposte.net
   #customers
   ctrl_customer: "Customer"
@@ -116,6 +118,7 @@ en:
   ctrl_user_not_updated: User %{user} not updated
   ctrl_user_deleted: User %{user} deleted
   ctrl_user_connected: User %{user} connected !
+  ctrl_user_not_connected: Not connected
   ctrl_user_disconnected: User %{user} disconnected !
   ctrl_user_role: Role=
   #main
@@ -203,6 +206,7 @@ en:
   mnu_datafiles: Data files
   mnu_groups: Groups
   mnu_notifications: Notifications
+  mnu_relations: Relations
   #
   proceed: Proceed this task
   delegate: Delegate this task
@@ -325,8 +329,8 @@ en:
   label_groups_may_launch: Group that may launch
   label_groups: Groups
   label_launch_fields: Launch fields
-  label_definition_groups_in: Groups
-  label_definition_groups_out: Other groups
+  label_definition_group_ids_in: Groups
+  label_definition_group_ids_out: Other groups
   button_add: Add
   button_remove: Remove
   label_fields: Attributs
@@ -381,8 +385,8 @@ en:
   group_show: Detail group
   group_new: New groupe
   label_group_users: Members
-  label_group_users_out: Others users
-  label_group_users_in: Users
+  label_group_user_ids_out: Others users
+  label_group_user_ids_in: Users
   # fields links
   legend_link: Relation
   # fields main
@@ -458,8 +462,8 @@ en:
   role_show: Detail of role
   role_edit:  Edition of role
   label_role_users: Users
-  label_role_users_in: Using
-  label_role_users_out: Others
+  label_role_user_ids_in: Using
+  label_role_user_ids_out: Others
   # fields sequences
   legend_sequence: Enter sequence details
   sequence_list: Listing of sequences
@@ -531,10 +535,10 @@ en:
   label_user_mail_option_none: "No events"
   language_fr: French
   language_en: English
-  label_user_roles_in: User roles 
-  label_user_roles_out: Other roles
-  label_user_groups_in: User groups
-  label_user_groups_out: Other groups
+  label_user_role_ids_in: User roles 
+  label_user_role_ids_out: Other roles
+  label_user_group_ids_in: User groups
+  label_user_group_ids_out: Other groups
   # fields volumes
   legend_volume: Enter volume details
   volume_list: Listing of volumes
