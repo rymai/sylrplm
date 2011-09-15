@@ -16,8 +16,8 @@ class LeaveRequest1 < OpenWFE::ProcessDefinition
   # users by their login names directly, but by their function
 
   set :v => "employee", :value => "${launcher}"
-  set :v => "boss", :value => "alice"
   set :v => "assistant", :value => "bob"
+  set :v => "boss", :value => "alice"
 
   #
   # the 'body' of the process definition
@@ -28,6 +28,7 @@ class LeaveRequest1 < OpenWFE::ProcessDefinition
     # the first participant is the employee (the user who
     # launched the process)
     #
+    set :f => "comment", :value => "cccc"
     employee
 
     #
@@ -35,8 +36,8 @@ class LeaveRequest1 < OpenWFE::ProcessDefinition
     # the boss will fill.
     #
     set :f => "granted", :value => "false"
-    set :f => "not_enough_info", :value => "false"
-    set :f => "boss_should_have_a_look", :value => "false"
+    set :f => "not_enough_info", :value => "true"
+    set :f => "boss_should_have_a_look", :value => "true"
 
     assistant
 

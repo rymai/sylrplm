@@ -1,19 +1,24 @@
 <h1><%= t("workitems_list") %></h1>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= request.query_string.size > 0 or params[:wfid] ? link_to( t("workitems_all"), :controller => 'workitems') : link_to( t("mnu_flw_workitems"), :controller => 'workitems') %> </td>
+	</tr>
+</table>
 <%= render(:partial => "workitems/workitems", :object =>  @workitems ) %>
-
 <% if request.query_string.size > 0 or params[:wfid] %>
-<div class="workitems_nav align-right">
-    <%= link_to t("workitems_all"), :controller => 'workitems' %>
-</div>
+<%= link_to t("workitems_all"), :controller => 'workitems' %>
 <% end %>
-<div class="processes_launch align-right">
-    <%= link_to(t("launch"), definitions_path, :title => 'launch a new process from a definition') %>
-</div>
+<table class='menu_bas'>
+	<tr>
+		<% if request.query_string.size > 0 or params[:wfid] %> <td> <%= link_to t("workitems_all"), :controller => 'workitems' %> </td>
+		<% end%>
+	</tr>
+</table>
 <div id="help">
-    <p>
-        A list of workitems (tasks) that your user may view or edit.
-    </p>
-    <p>
-        'pick' allows you to make a workitem yours (transferring it to your personal woritem store).
-    </p>
+	<p>
+		A list of workitems (tasks) that your user may view or edit.
+	</p>
+	<p>
+		'pick' allows you to make a workitem yours (transferring it to your personal woritem store).
+	</p>
 </div>

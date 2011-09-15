@@ -25,6 +25,8 @@
 require 'openwfe/representations'
 require 'ruote/sylrplm/workitems'
 
+
+
 class WorkitemsController < ApplicationController
   include Controllers::PlmObjectControllerModule
   before_filter :authorize, :except => nil
@@ -36,27 +38,21 @@ class WorkitemsController < ApplicationController
   # GET /workitems?p=:p || GET /workitems?participant=:p
   #
   def index
-    #    puts "workitems_controller.index:params="+params.inspect
+    #puts "workitems_controller.index:params="+params.inspect
     @workitems=[]
     unless @current_user.nil?
       @query = params[:q] || params[:query]
-      @workitems = if @query
-        #OpenWFE::Extras::ArWorkitem.search(
-        Ruote::SylArWorkitem.search(
-        @query,
-        @current_user.store_names)
-        #TODO syl @current_user.is_admin? ? nil : @current_user.store_names)
-        # TODO : paginate that !
-
+      #puts "workitems_controller.index:store_names="+@current_user.store_names.inspect
+      if @query
+        @workitems = OpenWFE::Extras::ArWorkitem.search(@query, @current_user.is_admin? ? nil : @current_user.store_names)
+      #TODO syl @current_user.is_admin? ? nil : @current_user.store_names)
+      #TODO : paginate that !
       else
-
         opts = { :order => 'dispatch_time DESC' }
         opts[:conditions] = { :store_name => @current_user.store_names }
-        #TODO syl opts[:conditions] = { :store_name => @current_user.store_names } \
-        #unless @current_user.is_admin?
         opts[:page] = (params[:page].nil? ? SYLRPLM::NB_ITEMS_PER_PAGE :  params[:page])
         #      puts "workitems_controller.index:page="+opts[:page].inspect
-        Ruote::SylArWorkitem.paginate_by_params(
+        @workitems = OpenWFE::Extras::ArWorkitem.paginate_by_params(
         [
           # parameter_name[, column_name]
           'wfid',
@@ -65,30 +61,25 @@ class WorkitemsController < ApplicationController
           [ 'participant', 'participant_name' ]
         ],
         params,
-        opts)
+      opts)
       end
-      @workitems.each do |en|
-        en.link_attributes={"relation"=>""}
-      end
-
-      # TODO : escape pagination for XML and JSON ??
-
-      respond_to do |format|
-
-        format.html
-        # => app/views/workitems/index.html.erb
-
-        format.json do
-          render(:json => OpenWFE::Json.workitems_to_h(
+    end
+    @workitems.each do |en|
+      en.link_attributes={"relation"=>""}
+    end
+    # TODO : escape pagination for XML and JSON ??
+    respond_to do |format|
+      format.html
+      # => app/views/workitems/index.html.erb
+      format.json do
+        render(:json => OpenWFE::Json.workitems_to_h(
           @workitems,
           :linkgen => linkgen).to_json)
-        end
-
-        format.xml do
-          render(:xml => OpenWFE::Xml.workitems_to_xml(
+      end
+      format.xml do
+        render(:xml => OpenWFE::Xml.workitems_to_xml(
           @workitems,
           :indent => 2, :linkgen => linkgen))
-        end
       end
     end
   end
@@ -98,19 +89,18 @@ class WorkitemsController < ApplicationController
   def edit
     #    puts "workitems_controller.edit:params="+params.inspect
     @workitem = find_ar_workitem
-    @wi_links=get_wi_links(@workitem)
+    @wi_links = get_wi_links(@workitem)
     nb=add_objects(@workitem, @favori.get("document"), "document")
     nb+=add_objects(@workitem, @favori.get("part"), "part")
     nb+=add_objects(@workitem, @favori.get("project"), "project")
     nb+=add_objects(@workitem, @favori.get("customer"), "customer")
-    if(nb>0)
-      @workitem.save
+    nb+=add_objects(@workitem, @favori.get("user"), "user")
+    if nb>0
+    @workitem.save
     end
-    @payload_partial = determine_payload_partial(@workitem)
-
     return error_reply('no workitem', 404) unless @workitem
 
-    # only responds in HTML...
+  # only responds in HTML...
   end
 
   # GET /workitems/:wfid/:expid
@@ -118,8 +108,7 @@ class WorkitemsController < ApplicationController
   def show
     #    puts "workitems_controller.show:params="+params.inspect
     @workitem = find_ar_workitem
-    @wi_links=get_wi_links(@workitem)
-    @payload_partial = determine_payload_partial(@workitem)
+    @wi_links = get_wi_links(@workitem)
 
     return error_reply('no workitem', 404) unless @workitem
 
@@ -135,22 +124,21 @@ class WorkitemsController < ApplicationController
   # PUT /workitems/:wfid/:expid
   #
   def update
-
-    #    puts "workitems_controller.update:params="+params.inspect
+    name=__FILE__+"."+__method__.to_s+":"
+    #puts "workitems_controller.update:params="+params.inspect
     # select du ArWorkitem
     ar_workitem = find_ar_workitem
     return error_reply('no workitem', 404) unless ar_workitem
-    puts "workitems_controller.update:ar_workitem="+ar_workitem.inspect
-    puts "workitems_controller.update:keywords="+ar_workitem.keywords.inspect
-    puts "workitems_controller.update:state="+params[:state].to_s+" store_name="+params[:store_name].to_s
+    #puts "workitems_controller.update:ar_workitem="+ar_workitem.inspect
     # creation du InFlowWorkItem depuis le ar_workitem
     in_flow_workitem = ar_workitem.to_owfe_workitem
-    puts "workitems_controller.update:in_flow_workitem="+in_flow_workitem.inspect
+    #puts "workitems_controller.update:in_flow_workitem="+in_flow_workitem.inspect
     # get WorkItem a partir des params du request
     workitem = parse_workitem
-    puts "workitems_controller.update:workitem="+workitem.inspect
+    #puts "workitems_controller.update:workitem="+workitem.inspect
     workitem_ident = "#{in_flow_workitem.fei.wfid}/#{OpenWFE.to_uscores(in_flow_workitem.fei.expid)}"
     if store_name = params[:store_name]
+      puts "workitems_controller.update:store="+store_name
       ar_workitem.store_name = store_name
       ar_workitem.save!
       flash[:notice] = t(:ctrl_workitem_delegated, :ident => workitem_ident, :store => store_name)
@@ -158,32 +146,46 @@ class WorkitemsController < ApplicationController
       'delegated',
       :fei => in_flow_workitem.fei, :message => "wi delegated to '#{store_name}'")
     elsif params[:state] == 'proceeded'
-
-      puts "workitems_controller.update:wfid="+params[:wfid]
+      puts "workitems_controller.update:proceeded:wfid="+params[:wfid]
       in_flow_workitem.attributes = workitem.attributes
-      puts "workitems_controller.update:in_flow_workitem proceeded********="+in_flow_workitem.inspect
-      RuotePlugin.ruote_engine.reply(in_flow_workitem)
-      flash[:notice] = t(:ctrl_workitem_proceeded, :ident => workitem_ident)
-      # sauve history
-      process = ruote_engine.process_status(params[:wfid])
-      unless process.nil?
+      #puts "workitems_controller.update:in_flow_workitem proceeded********="+in_flow_workitem.inspect
+      begin
+        RuotePlugin.ruote_engine.reply(in_flow_workitem)
+        flash[:notice] = t(:ctrl_workitem_proceeded, :ident => workitem_ident)
+        # sauve history
+        process = ruote_engine.process_status(params[:wfid])
+        unless process.nil?
         tree=process.current_tree
-      else
-        tree=nil
+        else
+          tree=nil
+        end
+        history_created=history_log('proceeded', :fei => in_flow_workitem.fei, :tree=>tree.to_json )
+        wi_links_update(ar_workitem, params[:wfid])
+      rescue Exception => e
+        LOG.error name+in_flow_workitem.inspect
+        LOG.error " error="+e.inspect
+        e.backtrace.each {|x| LOG.error x}
+        puts name+in_flow_workitem.inspect
+        puts " error="+e.inspect
+        e.backtrace.each {|x| puts x}
+        respond_to do |format|
+          flash[:notice] = t(:ctrl_workitem_not_updated, :ident => workitem_ident+":"+e.inspect)
+          format.html { redirect_to edit_workitem_url(workitem) }
+          format.xml  { render :xml => e, :status => :unprocessable_entity }
+        end
+      return
       end
-      history_created=history_log('proceeded', :fei => in_flow_workitem.fei, :tree=>tree.to_json )
-      wi_links_update(ar_workitem, params[:wfid])
     else
       puts "workitems_controller.update:att="+workitem.attributes.inspect
       ar_workitem.replace_fields(workitem.attributes)
       flash[:notice] = t(:ctrl_workitem_updated, :ident => workitem_ident)
-
       history_log('saved', :fei => in_flow_workitem.fei, :message => 'wi saved')
     end
     #puts "workitems_controller.update:fin"
     redirect_to :action => 'index'
-    #
-    # TODO : no need for a redirection in case of xml/json...
+  #
+  # TODO : no need for a redirection in case of xml/json...
+
   end
 
   private
@@ -197,89 +199,121 @@ class WorkitemsController < ApplicationController
     params[:wfid], OpenWFE.to_dots(params[:expid]))
     ret=@current_user.may_see?(workitem) ? workitem : nil
     #puts "workitems_controller.find_workitem:"+ret.inspect
-
     ret
   end
 
   def add_objects(workitem, favori, type_object)
-    fields = workitem.field_hash
-    #puts  "workitems_controller.add_objects:fields="+fields.inspect
     msg=""
     ret=0
     unless favori.nil?
-      relation="workflow_"+type_object
-      #      puts "processes_controller.add_objects:workitem="+workitem.id.to_s+" rel="+relation.inspect+" favori="+favori.inspect
+      fields = workitem.field_hash
+      if fields == nil
+        fields = {}
+        fields["params"] = {}
+      end
+      #puts "workitems_controller.add_objects:workitem="+workitem.id.to_s
+      #puts "workitems_controller.add_objects:favori="+favori.inspect
+      #puts "workitems_controller.add_objects:fields="+fields.inspect
       favori.each do |item|
-        url="/"+type_object+"s/"+item.id.to_s
-        label=type_object+":"+item.ident+"-"+relation
-        #puts  "workitems_controller.add_objects:params="+fields["params"].inspect
+        url="/"+type_object+"s" #bidouille
+        url+="/"+item.id.to_s
+        label=type_object+":"+item.ident
+        puts "workitems_controller.add_objects:url="+url+" label="+label+ " fields="+fields["params"].inspect
         fields["params"][url]=label
         msg += "\nField added:"+label
         ret+=1
       end
-      #reset_favori_document
+      workitem.replace_fields(fields)
+      empty_favori_by_type(type_object)
     else
       msg += "\nNothing to add:"+type_object
     end
-    workitem.replace_fields(fields)
     #puts  "workitems_controller.add_objects:"+workitem.field_hash.inspect
-    puts  "workitems_controller.add_objects:"+type_object+"="+ret.to_s+":"+msg
+    #puts  "workitems_controller.add_objects:"+type_object+"="+ret.to_s+":"+msg
     ret
   end
 
   def get_wi_links(workitem)
     ret=[]
     unless workitem.nil?
-      Link.find_childs("workitem",workitem,"document").each do |link|
+      Link.find_childs(workitem,"document").each do |link|
         ret<<{:typeobj =>Document.find(link.child_id), :link=>link}
       end
-      Link.find_childs("workitem",workitem,"part").each do |link|
+      Link.find_childs(workitem,"part").each do |link|
         ret<<{:typeobj =>Part.find(link.child_id), :link=>link}
       end
-      Link.find_childs("workitem",workitem,"product").each do |link|
+      Link.find_childs(workitem,"project").each do |link|
         ret<<{:typeobj =>Product.find(link.child_id), :link=>link}
       end
-      Link.find_childs("workitem",workitem,"customer").each do |link|
+      Link.find_childs(workitem,"customer").each do |link|
         ret<<{:typeobj =>Customer.find(link.child_id), :link=>link}
       end
-      puts "workitems_controller.get_wi_links="+ret.size.to_s+":"+workitem.id.to_s+":"+ret.inspect
+      Link.find_childs(workitem,"user").each do |link|
+        ret<<{:typeobj =>User.find(link.child_id), :link=>link}
+      end
+    #puts "workitems_controller.get_wi_links="+ret.size.to_s+":"+workitem.id.to_s+":"+ret.inspect
     end
     ret
   end
 
   def wi_links_update(cur_wi, wfid)
-    sleep 1.0
+    sleep 3.0
     OpenWFE::Extras::ArWorkitem.destroy(cur_wi.id)
-    new_wi = OpenWFE::Extras::ArWorkitem.find_by_wfid(wfid)
-    #    puts "workitems_controller.wi_links_update:cur_wi="+cur_wi.id.to_s+":"+cur_wi.wfid.to_s+":"+cur_wi.expid.to_s
-    unless new_wi.nil?
+    puts "workitems_controller.wi_links_update:cur_wi="+cur_wi.id.to_s+":"+cur_wi.wfid.to_s+":"+cur_wi.expid.to_s
+    news_wi_ = OpenWFE::Extras::ArWorkitem.find_by_wfid_(wfid)
+    #puts "workitems_controller.wi_links_update:news_wi_="+news_wi_.inspect
+    if news_wi_.count != 0
+      if news_wi_.is_a?(Array)
+        news_wi = news_wi_
+      else
+        news_wi = [news_wi_]
+      end
       # deroulement  du workflow, on relie les objets avec la tache en cours du workflow
-      Link.find_childs("workitem",cur_wi,"document").each do |link|
-        link.father_id=new_wi.id
-        link.save
-      end
-      Link.find_childs("workitem",cur_wi,"part").each do |link|
-        link.father_id=new_wi.id
-        link.save
-      end
+      wi_link_replace("document", cur_wi, news_wi)
+      wi_link_replace("part", cur_wi, news_wi)
+      wi_link_replace("project", cur_wi, news_wi)
+      wi_link_replace("customer", cur_wi, news_wi)
+      wi_link_replace("user", cur_wi, news_wi)
     else
       # fin du workflow, on relie les objets avec l' history du workflow
       opts={}
       opts[:page]=nil
       opts[:conditions]="wfid = '"+wfid+"' and event = 'proceeded'" #TODO
-      #puts "processes_controller.tree:opts="+opts.inspect
+      #puts "workitems_controller.wi_links_update:opts="+opts.inspect
       history = OpenWFE::Extras::HistoryEntry.paginate(opts).last
       #puts "workitems_controller.wi_links_update:history="+history.inspect
-      Link.find_childs("workitem",cur_wi,"document").each do |link|
-        link.father_type="history"
-        link.father_id=history.id
-        link.save
+      wi_link_history("document", cur_wi, history)
+      wi_link_history("part", cur_wi, history)
+      wi_link_history("project", cur_wi, history)
+      wi_link_history("customer", cur_wi, history)
+      wi_link_history("user", cur_wi, history)
+    end
+  end
+
+  def wi_link_replace(type, cur_wi, news_wi)
+    links=Link.find_childs(cur_wi, type)
+    puts "workitems_controller.wi_link_replace:"+type+" "+links.count.to_s+" links"
+    if links.count >= 1
+      link = links[0]
+    end
+    #puts "workitems_controller.wi_link_replace:link="+link.inspect
+    unless link.nil?
+      news_wi.each_with_index do |new_wi, idx|
+        #puts "workitems_controller.wi_links_update:new_wi("+idx.to_s+"/"+news_wi.count.to_s+" )="+new_wi.id.to_s+":"+new_wi.wfid.to_s+":"+new_wi.expid.to_s
+        new_link=link.clone
+        new_link.father_id = new_wi.id
+        new_link.save
       end
-      Link.find_childs("workitem",cur_wi,"part").each do |link|
-        link.father_type="history"
-        link.father_id=history.id
-        link.save
-      end
+      link.delete
+    end
+  end
+
+  def wi_link_history(type, cur_wi, history)
+    Link.find_childs( cur_wi, type).each do |link|
+      #puts "workitems_controller.wi_link_history"+link.inspect
+      link.father_plmtype = history.model_name
+      link.father_id = history.id
+      link.save
     end
   end
 
@@ -289,7 +323,6 @@ class WorkitemsController < ApplicationController
   def parse_workitem
 
     begin
-
       ct = request.content_type.to_s
       # TODO : deal with Atom[Pub]
       return OpenWFE::Xml::workitem_from_xml(request.body.read) \

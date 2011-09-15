@@ -11,11 +11,15 @@ class Project < ActiveRecord::Base
   belongs_to :owner,
   :class_name => "User"
 
-
   has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='project' and child_plmtype='document'"]
   has_many :documents , :through => :links_documents
+
   has_many :links_parts,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='project' and child_plmtype='part'"]
   has_many :parts , :through => :links_parts
+
+  has_many :links_users,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='project' and child_plmtype='user'"]
+  has_many :users , :through => :links_users
+
   has_many :links_customers,:class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
   has_many :customers , :through => :links_customers
 
@@ -35,7 +39,9 @@ class Project < ActiveRecord::Base
   def link_attributes=(att)
     @link_attributes = att
   end
-
+  def link_attributes
+    @link_attributes
+  end
   # modifie les attributs avant edition
   def self.find_edit(object_id)
     obj=find(object_id)

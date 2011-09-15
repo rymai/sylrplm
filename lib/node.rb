@@ -22,7 +22,9 @@ class Node
     :parent => '',
     :id => '',
     :link_to_remote => nil,
-    :link_to => nil
+    :link_to => nil,
+    #syl
+    :js_name => 'r'
   }
 
   include ActionView::Helpers::UrlHelper

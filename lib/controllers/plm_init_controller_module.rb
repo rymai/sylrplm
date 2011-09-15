@@ -1,9 +1,10 @@
 require 'active_record/fixtures'
 module Controllers::PlmInitControllerModule
  
+private
+ 
   def check_init_objects
     ret =""
-    
     #pour debug: forcer la reconstruction des access
     ya_acces=Access.count
     if ya_acces == 0
@@ -11,7 +12,7 @@ module Controllers::PlmInitControllerModule
       st=Access.init
       st=true
       if st
-        ret +="Acces  crees<br>"
+        ret +="Acces crees<br>"
       else
         ret +="ERREUR:Acces non crees completement<br>"
       end
@@ -38,7 +39,6 @@ module Controllers::PlmInitControllerModule
     if @types_forum.size==0
       ret +="Pas de types de forums<br>"
     end
-    
     @status_document= Statusobject.find_for("document")
     if @status_document.size==0
       ret +="Pas de statuts de documents<br>"

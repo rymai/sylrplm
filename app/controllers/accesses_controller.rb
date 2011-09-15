@@ -5,10 +5,12 @@ class AccessesController < ApplicationController
   before_filter :find_by_id, :only => [:show, :edit, :update, :destroy]
   before_filter :find_controllers, :only => [:new, :edit, :create, :update]
   
+  
+  
   # GET /accesses
   # GET /accesses.xml
   def index
-    @accesses = Access.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort] || 'id', :nb_items => get_nb_items(params[:nb_items]) })
+    @accesses = Access.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort] || 'controller, action', :nb_items => get_nb_items(params[:nb_items]) })
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @accesses[:recordset] }
@@ -86,6 +88,19 @@ class AccessesController < ApplicationController
     end
   end
   
+  def reset
+    #puts __FILE__+"."+__method__.to_s+":params="+params.inspect
+    #on refait les autorisations:
+    # - apres l'ajout d'un controller (rare et manuel)
+    # - apres ajout/suppression de role (peut etre automatise)
+    st=Access.reset
+    @accesses = Access.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort] || 'controller, action', :nb_items => get_nb_items(params[:nb_items]) })
+    respond_to do |format|
+      format.html { redirect_to(accesses_path)  }
+      format.xml  { render :xml => @accesses[:recordset] }
+    end
+  end
+  
   private
   
   def find_by_id
@@ -93,7 +108,7 @@ class AccessesController < ApplicationController
   end
   
   def find_controllers
-    @controllers = Controller.get_controllers
+    @controllers = Controller.get_controllers_and_methods
   end
   
 end

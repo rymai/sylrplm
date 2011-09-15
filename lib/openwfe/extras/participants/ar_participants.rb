@@ -204,6 +204,15 @@ module OpenWFE::Extras
           "#{wfid}%",
           participant_name ])
     end
+    
+   def self.find_by_wfid_ (wfid)
+
+      find(
+        :all,
+        :conditions => [
+          'wfid LIKE ? ',
+          "#{wfid}%" ])
+    end
 
     #
     # a very naive search functionality

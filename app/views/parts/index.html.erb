@@ -80,20 +80,18 @@
         <td>
           <%= link_to h_img_show.to_s, part %>
         </td>
-        <% if part.frozen? %>
-          <td>
-            <%= link_to h_img_revise.to_s, :id => part.id, :action => :revise , :confirm => t("msg_confirm") %>
-          </td>
-          <td></td>
-          
-        <% else %>
-          <td>
-            <%= link_to h_img_edit.to_s, edit_part_path(part) %>
-          </td>
-          <td>
-            <%= h_destroy(part) %>
-          </td>
-        <% end %>
+        	<% if part.revisable?  %>
+          	<td><%= link_to h_img_revise.to_s, :id => part.id, :action => :revise , :confirm => t("msg_confirm") %></td>
+          	<td></td>
+        	<% else %>
+						<% if part.frozen? == false %> 
+          		<td><%= link_to h_img_edit.to_s, edit_part_path(part) %></td>
+          		<td><%= h_destroy(part) %></td>
+        		<% else %>
+							<td></td>
+							<td></td>
+						<% end %>
+					<% end %>
         <td>
           <% if logged_in? %>
 		  <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => part.id}, :method => :get %>

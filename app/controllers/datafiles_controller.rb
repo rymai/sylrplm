@@ -121,12 +121,4 @@ class DatafilesController < ApplicationController
     @datafile.filename
   end
 
-  def show_file_data
-    @datafile = Datafile.find(params[:id])
-    send_data(@datafile.data,
-              :filename => @datafile.filename,
-              :type => @datafile.content_type,
-              :disposition => "inline")
-  end
-
 end

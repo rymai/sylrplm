@@ -4,18 +4,17 @@ class Access < ActiveRecord::Base
 
   attr_accessor :controller_and_action
   attr_accessible :controller_and_action, :roles
-  
+
   validates_presence_of :controller, :action, :roles
   validates_uniqueness_of :action, :scope => :controller
-  
   def before_create
     set_default_values(true)
   end
-    
+
   def controller_and_action
     "#{controller}.#{action}"
   end
-  
+
   def controller_and_action=(controller_and_action)
     controller_and_action        = controller_and_action.split('.')
     self.controller, self.action = controller_and_action.shift(2) if controller_and_action.size > 1
@@ -28,24 +27,39 @@ class Access < ActiveRecord::Base
     end
   end
 
+  def self.reset
+    #delete et remplissage des autorisations
+    delete_all
+    init
+  end
+
   #
   # remplissage initial des autorisations
   #
   def self.init
-    Controller.get_controllers.each do |controller|
-      roles = if %w[AccessesController LoginController RolesController RolesUsersController SequencesController].include?(controller.name)
+    acc_roles = Access.access_roles
+    Controller.get_controllers_and_methods.each do |controller|
+      if %w[AccessesController LoginController RolesController RolesUsersController SequencesController].include?(controller.name)
         # fonctions admin
-        "admin & (!designer | !consultant | !valider)"
+        roles = roles_yes(acc_roles[:cat_admins]) +"& ("+ roles_no(acc_roles[:cat_consultants]) +"!"+ roles_no(acc_roles[:cat_creators])+ ")"
+      #roles = "admin & (!designer | !consultant | !valider)"
       else
         if controller.name == "SessionsController"
           # tout le monde peut se deconnecter
-          "admin | designer | consultant | valider"
+          #roles = "admin | designer | consultant | valider"
+          roles = roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +" | "+ roles_yes(acc_roles[:cat_consultants])
+        elsif controller.name == "WorkitemsController"
+          # tout le monde peut se executer une tache sauf le consultant
+          #roles = "(admin | designer | valider) & !consultant"
+          roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
         else
-          # les fonctions plm
+        # les fonctions plm
           if controller.method == "show"
-            "admin | designer | valider | consultant"
+            #roles = "admin | designer | valider | consultant"
+            roles = roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +" | "+ roles_yes(acc_roles[:cat_consultants])
           else
-            "(admin | designer | valider) & !consultant"
+          #roles = "(admin | designer | valider) & !consultant"
+            roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
           end
         end
       end
@@ -55,6 +69,50 @@ class Access < ActiveRecord::Base
 
   def self.get_conditions(filter)
     ["controller LIKE ? or action LIKE ? or roles LIKE ?", filter, filter, filter] unless filter.gsub!("*","%").nil?
+  end
+
+  def ident
+    controller+"."+action
+  end
+
+private
+
+  #
+  # liste des roles par categories utilisables par access
+  # - admins:
+  # - consultants
+  # - modifier
+  #
+  def self.access_roles
+    ret={:cat_admins=>[], :cat_consultants=>[], :cat_creators=>[]}
+    admin = Role.find_by_name(::SYLRPLM::ADMIN_ROLE)
+    consultant = Role.find_by_name(::SYLRPLM::CONSULTANT_ROLE)
+    ret[:cat_admins] << admin.title unless admin.nil?
+    #ret[:cat_consultants] = cons.users.collect{ |u| u.login } unless cons.nil?
+    ret[:cat_consultants] << consultant.title unless consultant.nil?
+    ret[:cat_creators] = Role.all.collect { |r| r.title } 
+    ret[:cat_creators] -= ret[:cat_admins]
+    ret[:cat_creators] -= ret[:cat_consultants]
+    puts __method__.to_s+":"+ret.inspect
+    ret
+  end
+
+  def self.roles_yes(lst)
+    roles_prefixe(lst, "")
+  end
+
+  def self.roles_no(lst)
+    roles_prefixe(lst, "!")
+  end
+
+  #ecrit !_role pour chaque role
+  def self.roles_prefixe(lst, yes_no)
+    ret=""
+    lst.each_with_index do |r, i|
+      ret += " | " unless i == 0
+      ret += yes_no+r
+    end
+    ret
   end
 
 end

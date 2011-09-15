@@ -13,13 +13,32 @@ class Link < ActiveRecord::Base
     child.belongs_to :customer , :conditions => ["child_plmtype='customer'"], :class_name => "Customer"
     child.belongs_to :datafile , :conditions => ["child_plmtype='datafile'"], :class_name => "Datafile"
     child.belongs_to :workitem , :conditions => ["child_plmtype='workitem'"], :class_name => "Workitem"
-    child.belongs_to :historie , :conditions => ["child_plmtype='history'"], :class_name => "History"
+    child.belongs_to :history , :conditions => ["child_plmtype='history'"], :class_name => "HistoryEntry"
   end
 
+  def ident
+    father_plmtype+"."+father_type_id.to_s+"-"+Relation.find(relation_id).ident+"-"+child_plmtype+"."+child_type_id.to_s
+  end
+  
+  def relation_name
+    (self.relation ? self.relation.name : "")
+  end
+  
   def self.isvalid(father, child, relation)
-    father.model_name==relation.father_plmtype && child.model_name==relation.child_plmtype && father.typesobject==relation.father_type && child.typesobject==relation.child_type
+    father.model_name==relation.father_plmtype \
+    && child.model_name==relation.child_plmtype \
+    && father.typesobject.name==relation.father_type.name \
+    && child.typesobject.name==relation.child_type.name
   end
-
+  
+  def self.create_new_by_values(values)
+    link = Link.new(values)
+    msg="ctrl_link_"+link.ident
+    ret={:link => link,:msg => msg}
+    puts "link:create_new_by_values:"+ret.inspect
+    ret
+  end
+  
   def self.create_new(father, child, relation)
     #puts "link:create_new:"+father.inspect+"-"+child.inspect+"."+child.inspect
     if isvalid(father, child, relation)
@@ -36,7 +55,7 @@ class Link < ActiveRecord::Base
         link.father_id = father.id
         link.child_id = child.id
         link.relation_id = relation.id
-        msg="ctrl_link_"+link.father_plmtype+"_"+link.child_plmtype
+        msg="ctrl_link_"+link.ident
       else
         link=nil
         msg=:ctrl_link_too_many_used
@@ -44,106 +63,17 @@ class Link < ActiveRecord::Base
     else
       link=nil
       msg=:ctrl_link_not_valid
+      puts __FILE__+"."+__method__.to_s+":"+father.model_name+"=="+relation.father_plmtype + \
+      " "+child.model_name+"=="+relation.child_plmtype + \
+      " "+father.typesobject.to_s+"=="+relation.father_type.to_s + \
+      " "+child.typesobject.to_s+"=="+relation.child_type.to_s
+
     end 
     ret={:link => link,:msg => msg}
     puts "link:create_new:"+ret.inspect
     ret
   end
-
-  def self.create_new_byid_old(father_type, father, child_plmtype, child, relation)
-    ok=false
-    msg="ctrl_link_"+father_plmtype.to_s+"_"+child_plmtype.to_s
-    if father_plmtype.to_s=="customer" && child_plmtype.to_s=="project"
-      ok=true
-      if is_child_of(father_plmtype.to_s, father, child_plmtype.to_s, child)
-        ok=false
-        msg=:ctrl_link_already_customer_project.to_s
-      elsif nb_linked(child_plmtype, child)>0
-        ok=false
-        msg=:ctrl_link_already_project.to_s
-      end
-    end
-    if father_plmtype.to_s=="customer" && child_plmtype.to_s=="document"
-      ok=true
-      if is_child_of(father_plmtype.to_s, father, child_plmtype.to_s, child)
-        ok=false
-        msg=:ctrl_link_already_customer_document.to_s
-      end
-    end
-    if father_plmtype.to_s=="document" && child_plmtype.to_s=="document"
-    ok=true
-    end
-    if father_plmtype.to_s=="project" && child_plmtype.to_s=="part"
-    ok=true
-
-    end
-    if father_plmtype.to_s=="project" && child_plmtype.to_s=="user"
-      ok=true
-      if is_child_of(father_plmtype.to_s, father, child_plmtype.to_s, child)
-        ok=false
-        msg=:ctrl_link_already_project_user.to_s
-      end
-    end
-    if father_plmtype=="project" && child_plmtype=="document"
-      ok=true
-      if is_child_of(father_plmtype.to_s, father, child_plmtype.to_s, child)
-        ok=false
-        msg=:ctrl_link_already_project_document.to_s
-      end
-    end
-    if father_plmtype.to_s=="part" && child_plmtype.to_s=="part"
-      ok=true
-      if(father==child)
-        ok=false
-        msg=:ctrl_link_recursivity.to_s
-      end
-    end
-    if(father_plmtype.to_s=="part" && child_plmtype.to_s=="document")
-      ok=true
-      if(is_child_of(father_type.to_s, father, child_plmtype.to_s, child))
-        ok=false
-        msg=:ctrl_link_already_part_document.to_s
-      end
-    end
-    if(father_plmtype.to_s=="workitem" && child_plmtype.to_s=="document")
-      ok=true
-      if(is_child_of(father_plmtype.to_s, father, child_plmtype.to_s, child))
-        ok=false
-        msg=:ctrl_link_already_workitem_document.to_s
-      end
-    end
-    if(father_plmtype.to_s=="workitem" && child_plmtype.to_s=="part")
-      ok=true
-      if(is_child_of(father_plmtype.to_s, father, child_plmtype.to_s, child))
-        ok=false
-        msg=:ctrl_link_already_workitem_part.to_s
-      end
-    end
-    if(child_plmtype=="forum")
-    ok=true
-    end
-    if(child_plmtype=="datafile")
-    ok=true
-    end
-    link=nil
-    if(ok==true)
-      link = Link.new
-      link.father_plmtype=father_plmtype.to_s
-    link.child_plmtype=child_plmtype.to_s
-    link.father_type=father_type.to_s
-    link.child_plmtype=child_plmtype.to_s
-    link.father_id=father
-    link.child_id=child
-    link.name=relation
-    end
-    #puts "link:create_new:link="+link.inspect+" msg="+msg.to_s
-    {:link=>link,:msg=>msg}
-  end
-
-  def self.create_new_old(father_plmtype, father, child_plmtype, child, relation)
-    create_new_byid(father_plmtype, father.id, child_plmtype, child.id, relation)
-  end
-
+  
   #  def before_save
   #    puts "link.before_save:"+self.inspect
   #    # ##self.child_plmtype=self.child.class.to_s.underscore
@@ -158,16 +88,22 @@ class Link < ActiveRecord::Base
   #    c=child_cls.new(self.child_id)
   #  end
 
-  def self.find_childs(father_plmtype, father, child_plmtype=nil)
-    unless child_plmtype.nil?
+  def self.find_childs(father, child_plmtype=nil)
+    find_childs_with_father_type(father.model_name, father, child_plmtype)
+  end
+  
+  def self.find_childs_with_father_type(father_type, father, child_plmtype=nil)
+   ret= unless child_plmtype.nil?
       find(:all,
-      :conditions => ["father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and father_id =#{father.id}"],
+      :conditions => ["father_plmtype='#{father_type}' and child_plmtype='#{child_plmtype}' and father_id =#{father.id}"],
       :order=>"child_id")
     else
       find(:all,
-      :conditions => ["father_plmtype='#{father_plmtype}' and father_id =#{father.id}"],
+      :conditions => ["father_plmtype='#{father_type}' and father_id =#{father.id}"],
       :order=>"child_id")
     end
+    #puts "Link.find_childs_with_father_type:"+father_type+":"+father.model_name+"."+father.id.to_s+"="+ret.inspect
+    ret
   end
 
   def self.find_child(father_plmtype, father, child_plmtype, child)
@@ -236,4 +172,7 @@ class Link < ActiveRecord::Base
   def self.get_conditions(filter)
     nil
   end
+  
+  
+  
 end

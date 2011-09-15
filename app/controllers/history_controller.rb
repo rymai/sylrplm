@@ -45,8 +45,7 @@ class HistoryController < ApplicationController
     unless cs.first.empty?
     #puts "HistoryController.index:opts="+opts.inspect
     @all = (opts[:conditions] == nil)
-    #entries = OpenWFE::Extras::HistoryEntry.paginate(opts)
-    @entries = Ruote::SylHistoryEntry.paginate(opts) 
+    @entries = OpenWFE::Extras::HistoryEntry.paginate(opts) 
     @entries.each do |en|
       en.link_attributes={"relation"=>""}   
     end

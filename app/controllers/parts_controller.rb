@@ -109,6 +109,8 @@ class PartsController < ApplicationController
     ctrl_revise(Part)
   end
 
+private
+
   #  Now the explanation: The above code is constructing a navigation tree for a two-level hierarchy with a Parent Model
   #  and a Child Model.
   #  The Child Model has a parent_id attribute linking to the Parent table.
@@ -118,76 +120,27 @@ class PartsController < ApplicationController
   #  The base attribute is very important since that reference is used internally in the railstree plugin to
   #  callback so it better be not null.
   def create_tree(part)
-    tree = Tree.new({:label=>t(:ctrl_object_explorer,:typeobj =>t(:ctrl_part)),:open => true})
+    tree = Tree.new({:js_name=>"tree_down", :label=>t(:ctrl_object_explorer,:typeobj =>t(:ctrl_part)),:open => true})
     session[:tree_object]=part
-    follow_tree_part(tree, part, self)
+    follow_tree_part(tree, part)
     tree
   end
 
   def create_tree_up(part)
-    tree = Tree.new({:label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_part)),:open => true})
+    tree = Tree.new({:js_name=>"tree_up", :label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_part)),:open => true})
     session[:tree_object]=part
-    follow_tree_up_part(tree, part,self)
+    follow_tree_up_part(tree, part)
     tree
   end
 
   def add_docs
     @part = Part.find(params[:id])
-    relation = Relation.find(params[:relation][:document])
-    respond_to do |format|
-      unless @favori.get("document").nil?
-        flash[:notice] = ""
-        params.each do |item|
-          #flash[:notice]+="_"+item.to_s
-        end
-        @favori.get("document").each do |item|
-          link_ = Link.create_new(@part, item, relation)
-          link=link_[:link]
-          if(link!=nil)
-            if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>t(link_[:msg]))
-            else
-              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>t(link_[:msg]))
-            end
-          else
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
-          end
-        end
-        empty_favori_by_type("document")
-      else
-        flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_document))
-      end
-      format.html { redirect_to(@part) }
-      format.xml  { head :ok }
-    end
+    ctrl_add_objects_from_favorites(@part, :document)
   end
-
+  
   def add_parts
     @part = Part.find(params[:id])
-    relation= Relation.find(params[:relation][:part])
-    respond_to do |format|
-      unless @favori.get("part").nil?
-        flash[:notice] = ""
-        @favori.get("part").each do |item|
-          link_ = Link.create_new(@part, item, relation)
-          link=link_[:link]
-          if(link!=nil)
-            if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>t(link_[:msg]))
-            else
-              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>t(link_[:msg]))
-            end
-          else
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
-          end
-        end
-        empty_favori_by_type("part")
-      else
-        flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_part))
-      end
-      format.html { redirect_to(@part) }
-      format.xml  { head :ok }
-    end
+    ctrl_add_objects_from_favorites(@part, :part)
   end
 
   def new_forum
@@ -195,6 +148,7 @@ class PartsController < ApplicationController
     @object = Part.find(params[:id])
     @types=Typesobject.find_for("forum")
     @status= Statusobject.find_for("forum")
+    @relation_id = params[:relation][:forum]
     respond_to do |format|
       flash[:notice] = ""
       @forum=Forum.create_new(nil)
@@ -206,7 +160,7 @@ class PartsController < ApplicationController
 
   def add_forum
     @part = Part.find(params[:id])
-    ctrl_add_forum(@part,"part")
+    ctrl_add_forum(@part)
   end
 
   def promote
@@ -218,24 +172,5 @@ class PartsController < ApplicationController
     @part = Part.find(params[:id])
     ctrl_demote(@part)
   end
-
-  
-  
-  #  def empty_favori_part
-  #    #reset_favori(type)
-  #    empty_favori("part")
-  #  end
-  #
-  #  def add_part_to_favori
-  #    part=Part.find(params[:id])
-  #    @favori_part.add_part(part)
-  #  end
-  #
-  #  def empty_favori_part
-  #    session[:favori_part]=nil
-  #    @favori_part=nil
-  #    #flash[:notice] ="Plus de favoris part"
-  #    ##redirect_to :action => :index
-  #  end
 
 end

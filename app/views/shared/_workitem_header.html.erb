@@ -22,3 +22,23 @@
 	<td><%= t(:label_updated_at)%></td>
 	<td><%= display_time(workitem, :last_modified) %></td>
 </tr>
+<% unless @favori.get('document').count==0  %>
+<tr>
+	<td> <%= t("paste_documents") %> </td>
+</tr>
+<%end %>
+<% unless @favori.get('part').count==0  %>
+<tr>
+	<td> <%= t("paste_parts") %> </td>
+</tr>
+<% end %>
+<% unless @favori.get('project').count==0  %>
+<tr>
+	<td> <%= t("paste_projects") %> </td>
+</tr>
+<% end %>
+<% unless @favori.get('customer').count==0 %>
+<tr>
+	<td> <%= t("paste_projects") %> </td>
+</tr>
+<% end %> 

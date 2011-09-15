@@ -76,6 +76,8 @@ class ApplicationController < ActionController::Base
     @languages = get_languages
     @notification=SYLRPLM::NOTIFICATION_DEFAULT
     @time_zone=SYLRPLM::TIME_ZONE_DEFAULT
+    # mise n forme d'une tache (workitem)
+    @payload_partial = 'shared/ruote_forms'
     WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
     WillPaginate::ViewHelpers.pagination_options[:next_label] = t('label_next')
     WillPaginate::ViewHelpers.pagination_options[:page_links ] = true  # when false, only previous/next links are rendered (default: true)

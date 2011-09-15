@@ -1,10 +1,13 @@
 class Statusobject < ActiveRecord::Base
   include Models::SylrplmCommon
+  
   validates_presence_of :object, :name, :rank
+  
   has_many :documents
   has_many :parts
   has_many :projects
   has_many :customers
+  has_many :forums
   
   named_scope :order_default, :order=>"object,rank,name ASC"
   named_scope :order_desc, :order=>"object,rank,name DESC"
@@ -16,12 +19,12 @@ class Statusobject < ActiveRecord::Base
   end
   
   def self.find_for(object)
-    order_default.find_all_by_object(object)
+    Statusobject.order_default.find_all_by_object(object)
   end
   #  
   def self.get_first(object)
     #order_desc.find(:first, :order=>"object,rank ASC",  :conditions => ["object = '#{object}'"])
-    order_default.find_by_object(object)
+    Statusobject.find_by_object(object)
   end
   
   def self.get_last(object)
@@ -30,8 +33,26 @@ class Statusobject < ActiveRecord::Base
     order_default.find_last_by_object(object)
   end
   
+  def get_previous
+    if(rank > Statusobject.get_first(object).rank)
+      new_rank=current_status.rank-1
+      Statusobject.find(:first, :conditions => ["object = '#{object}' && rank=#{new_rank}"])
+    else
+      current_status
+    end
+  end
+  
+  def get_next
+    if(rank < Statusobject.get_last(object).rank)
+      new_rank = rank + 1
+      Statusobject.find(:first, :conditions => ["object = '#{object}' && rank=#{new_rank}"])
+    else
+      self
+    end
+  end
+  
   def self.find_next(object, current_status)
-    if(current_status.rank<get_last(object).rank)
+    if(current_status.rank < get_last(object).rank)
       new_rank=current_status.rank+1
       find(:first, :conditions => ["object = '#{object}' && rank=#{new_rank}"])
     else
@@ -40,13 +61,14 @@ class Statusobject < ActiveRecord::Base
   end
   
   def self.find_previous(object, current_status)
-    if(current_status.rank>get_first(object).rank)
-      new_rank=current_status.rank-1
+    if(rank > get_first(object).rank)
+      new_rank = rank-1
       find(:first, :conditions => ["object = '#{object}' && rank=#{new_rank}"])
     else
-      current_status
+      self
     end
   end
+  
   
   def self.get_conditions(filter)
     filter=filter.gsub("*","%")

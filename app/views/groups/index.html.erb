@@ -18,7 +18,7 @@
 	</thead>
 	<% for group in @groups[:recordset] %>
 	<tr class='group'>
-		<td><%= h(group.name) %></td>
+		<td><%= group.name %></td>
 		<td><%= comma_list(group.users, :login) %></td>
 		<td><%= link_to h_img_show.to_s, group_path(group) %> </td>
 		<td><%= link_to h_img_edit.to_s, edit_group_path(group) %> <td>

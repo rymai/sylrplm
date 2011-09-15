@@ -18,7 +18,9 @@ Rails::Initializer.run do |config|
   config.autoload_paths += %W(#{Rails.root}/lib/openwfe/expool #{Rails.root}/lib/openwfe/expressions)
   config.autoload_paths += %W(#{Rails.root}/lib/openwfe/extras #{Rails.root}/lib/openwfe/listeners)
   config.autoload_paths += %W(#{Rails.root}/lib/openwfe/participants #{Rails.root}/lib/openwfe/tools)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/extras/participants)
   config.autoload_paths += %W(#{Rails.root}/lib/openwfe/utils #{Rails.root}/lib/openwfe/worklist)
+  config.autoload_paths += %W(#{Rails.root}/lib/ruote/sylrplm)
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -60,8 +62,8 @@ Rails::Initializer.run do |config|
     #:password => xxx
   }
 
-  RUOTE_ENV = {:persist_as_yaml => false}
-  #RUOTE_ENV = {}
+  #RUOTE_ENV = {:persist_as_yaml => false}
+  RUOTE_ENV = {}
 # passing a hash of parameters (application context) to the ruote engine
 # (well via the ruote_plugin)
 

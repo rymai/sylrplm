@@ -1,76 +1,53 @@
-<h1><%=t("processes_show") %><%= h @process.wfid %></h1>
+<h1><%= t("processes_show") %><%= h @process.wfid %></h1>
 <% form_for(:process, @process, :html => { :method => :delete }) do |f| %>
+	
+	<table>
+		<tr>
+			<td class="wide-first-col">wfid</td>
+			<td><%= h @process.wfid %></td>
+		</tr>
+		<tr>
+			<td><%= t('label_workflow')%></td>
+			<td><%= h @process.wfname %> <%= h @process.wfrevision %></td>
+		</tr>
+		<tr>
+			<td><%= t('label_launch_time')%></td>
+			<td><%= h display_time(@process.launch_time) %></td>
+		</tr>
+		<tr>
+			<td><%= t('label_workitems')%></td>
+			<td><%= link_to @process.applied_workitems.size.to_s, workitems_path(@process.wfid) %></td>
+		</tr>
+		<% if @process.paused %>
+		<tr>
+			<td><%= t('label_paused')%></td>
+			<td><b><%= t(:val_true)%></b></td>
+		</tr>
+		<% end %>
+		<tr>
+			<td><%= t('label_errors')%></td>
+			<td><%= link_to @process.errors.size.to_s, errors_path(@process.wfid) %></td>
+		</tr>
+		<tr>
+			<td colspan="2">&nbsp;</td>
+		</tr>
+		<% for fexp in @process.all_expressions.select { |fexp| ! fexp.is_a?(OpenWFE::Environment) }.reverse %>
+		<tr>
+			<td><%= @shown ? '' : t('label_expressions') %></td>
+			<td
+			onmouseover="FluoCan.highlight('fluo', '<%= fexp.fei.expid %>')"
+			onmouseout="FluoCan.highlight('fluo', null)"
+			><%= link_to h(fexp.fei.to_web_s), expression_path(fexp) %></td>
+			<% @shown = true %>
+		</tr>
+		<% end %>
+	</table>
+	<table class="menu_bas">
+		<tr class='button-row'>
+			<% if @current_user.is_launcher?(@process) %> <td><%= f.submit(t('abort process'), :title => 'cancels (terminates) this process instance', :confirm => 'Are you sure ?') %></td>
+			<% end %> <td><%= link_to t("list"), :back %></td>
+		</tr>
+	</table>
+	<%= render_fluo :process => @process, :workitems => @process.workitem_expids %>
 
-<div style="float: left;">
-
-  <div class='content_title'><%= process_path(@process.wfid) %></div>
-
-  <table>
-
-    <tr>
-      <td class="wide-first-col">wfid</td>
-      <td><%= h @process.wfid %></td>
-    </tr>
-    <tr>
-      <td><%=t('label_workflow')%></td>
-      <td><%= h @process.wfname %> <%= h @process.wfrevision %></td>
-    </tr>
-    <tr>
-      <td><%=t('label_launch_time')%></td>
-      <td><%= h display_time(@process.launch_time) %></td>
-    </tr>
-    <tr>
-      <td><%=t('label_workitems')%></td>
-      <td><%= link_to @process.applied_workitems.size.to_s, workitems_path(@process.wfid) %></td>
-    </tr>
-
-    <% if @process.paused %>
-    <tr>
-      <td><%=t('label_paused')%></td>
-      <td><b><%=t(:val_true)%></b></td>
-    </tr>
-    <% end %>
-
-    <tr>
-      <td><%=t('label_errors')%></td>
-      <td><%= link_to @process.errors.size.to_s, errors_path(@process.wfid) %></td>
-    </tr>
-
-    <tr>
-      <td colspan="2">&nbsp;</td>
-    </tr>
-
-    <% for fexp in @process.all_expressions.select { |fexp| ! fexp.is_a?(OpenWFE::Environment) }.reverse %>
-    <tr>
-      <td><%= @shown ? '' : t('label_expressions') %></td>
-      <td
-        onmouseover="FluoCan.highlight('fluo', '<%= fexp.fei.expid %>')"
-        onmouseout="FluoCan.highlight('fluo', null)"
-      ><%= link_to h(fexp.fei.to_web_s), expression_path(fexp) %></td>
-      <% @shown = true %>
-    </tr>
-    <% end %>
-
-    <tr class='button-row'>
-      <td colspan='2'>
-
-        <% if @current_user.is_launcher?(@process) %>
-          <%= f.submit(t('abort process'), :title => 'cancels (terminates) this process instance', :confirm => 'Are you sure ?') %> |
-        <% end %>
-
-        <%= link_to t("list"), :back %>
-      <td>
-    </tr>
-
-  </table>
-
-</div>
-
-<div class="align-right">
-
-  <%= render_fluo :process => @process, :workitems => @process.workitem_expids %>
-
-</div>
-
-<% end %>
-
+<% end %> 

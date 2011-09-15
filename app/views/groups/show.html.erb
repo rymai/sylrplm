@@ -2,14 +2,14 @@
 <table>
   <tr>
     <td class="wide-first-col">id</td>
-    <td><%= h @group.id %></td>
+    <td><%= @group.id %></td>
   </tr>
   <tr>
     <td><%= t("label_name") %></td>
-    <td><%= h @group.name %></td>
+    <td><%= @group.name %></td>
   </tr>
   <tr>
-    <td><%= t("label_members") %></td>
+    <td><%= t("label_group_users") %></td>
     <td><%= comma_list(@group.users, :login) %></td>
   </tr>
   

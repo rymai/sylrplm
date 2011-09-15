@@ -114,78 +114,53 @@ class ProcessesController < ApplicationController
   def new
     #    puts "processes_controller.new:params="+params.inspect
     @definition = Definition.find(params[:definition_id])
-
-    @relation_types_document = Typesobject.get_types_names(:relation_document)
-    @relation_types_part     = Typesobject.get_types_names(:relation_part)
-    @relation_types_project  = Typesobject.get_types_names(:relation_project)
-    @relation_types_customer  = Typesobject.get_types_names(:relation_customer)
-
     return error_reply('you are not allowed to launch this process', 403) unless @current_user.may_launch?(@definition)
-
-    @payload_partial = 'shared/ruote_forms'
-
   end
 
   # POST /processes
   #
   def create
-    #    puts "processes_controller.create:params="+params.inspect
+    name=__FILE__+"."+__method__.to_s+":"
+    LOG.info name+params.inspect
     @definition = Definition.find(params[:definition_id])
     li = parse_launchitem
-
     options = { :variables => { 'launcher' => @current_user.login } }
-
     begin
       fei = RuotePlugin.ruote_engine.launch(li, options)
-    #    puts "processes_controller.create:fei("+fei.wfid+")"
-
-      rescue Exception => e
-        #puts __FILE__+".create:li="+li.inspect
-        #puts __FILE__+".create:options="+options.inspect
-        
-        e.backtrace.each {|x| puts x}
-
-        respond_to do |format|
-          flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => nil)
+      #puts name+" fei("+fei.wfid+") launched"
+      headers['Location'] = process_url(fei.wfid)
+      nb=0
+      workitem = nil
+      while nb<6 and workitem.nil?
+        #puts name+" boucle "+nb.to_s
+        sleep 1.0
+        nb+=1
+        workitem = OpenWFE::Extras::ArWorkitem.find_by_wfid(fei.wfid)
+      end
+      respond_to do |format|
+        unless workitem.nil?
+          flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")    
+          format.html {
+            redirect_to :action => 'show', :id => fei.wfid }
+          format.json {
+            render :json => "{\"wfid\":#{fei.wfid}}", :status => 201 }
+          format.xml {
+            render :xml => "<wfid>#{fei.wfid}</wfid>", :status => 201 }
+        else
+          flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")    
+          format.html { redirect_to new_process_path(:definition_id => @definition.id)}
+          format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
+        end
+      end
+    rescue Exception => e
+      LOG.error " fei not launched li="+li.inspect
+      puts name+" fei not launched li="+li.inspect
+      LOG.error " options="+options.inspect
+      e.backtrace.each {|x| puts x}
+      respond_to do |format|
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => nil)
           format.html { redirect_to new_process_path(:definition_id => @definition.id)}
           format.xml  { render :xml => e, :status => :unprocessable_entity }
-        end
-      return
-
-    end
-    
-    headers['Location'] = process_url(fei.wfid)
-    nb=0
-    workitem = nil
-    while nb<6 and workitem.nil?
-    sleep 1.0
-      nb+=1
-      workitem = OpenWFE::Extras::ArWorkitem.find_by_wfid(fei.wfid)
-    end
-    respond_to do |format|
-      unless workitem.nil?
-
-        flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")    
-
-        nb=add_objects(workitem, @favori.get("document"), "document")
-        nb+=add_objects(workitem, @favori.get("part"), "part")
-        nb+=add_objects(workitem, @favori.get("project"), "project")
-        nb+=add_objects(workitem, @favori.get("customer"), "customer")
-        if(nb>0)
-          workitem.save
-        end
-
-        format.html {
-          redirect_to :action => 'show', :id => fei.wfid }
-        format.json {
-          render :json => "{\"wfid\":#{fei.wfid}}", :status => 201 }
-        format.xml {
-          render :xml => "<wfid>#{fei.wfid}</wfid>", :status => 201 }
-
-      else
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")    
-        format.html { redirect_to new_process_path(:definition_id => @definition.id)}
-        format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -193,18 +168,27 @@ class ProcessesController < ApplicationController
   # DELETE /processes/:id
   #
   def destroy
+    name=__FILE__+"."+__method__.to_s+":"
     #    puts "processes_controller.destroy:params="+params.inspect
-    RuotePlugin.ruote_engine.cancel_process(params[:id])
-
-    sleep 0.200
-
-    redirect_to :controller => :processes, :action => :index
+    begin
+      RuotePlugin.ruote_engine.cancel_process(params[:id])
+      sleep 0.200
+      redirect_to :controller => :processes, :action => :index
+    rescue Exception => e
+      LOG.error name+" pb destroy "+params[:id]
+      e.backtrace.each {|x| LOG.error x}
+      respond_to do |format|
+            flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_process), :ident => params[:id])
+            format.html { redirect_to processes_path}
+      end
+    end
   end
 
   # GET /processes/:id/tree
   #
   def tree
-    #    puts "processes_controller.tree:params="+params.inspect
+    name=__FILE__+"."+__method__.to_s+":"
+    #puts name+" params="+params.inspect
     process = ruote_engine.process_status(params[:id])
     var = params[:var] || 'proc_tree'
     unless process.nil?
@@ -216,7 +200,7 @@ class ProcessesController < ApplicationController
       opts={}
       opts[:page]=nil
       opts[:conditions]="wfid = '"+params[:id]+"' and event = 'proceeded'" #TODO
-      puts "processes_controller.tree:opts="+opts.inspect
+      #puts name+" opts="+opts.inspect
       history = OpenWFE::Extras::HistoryEntry.paginate(opts)
       render(
       :text => "var #{var} = #{history.last.tree};",
@@ -230,120 +214,47 @@ class ProcessesController < ApplicationController
   private
 
   def parse_launchitem
-
+    name=__FILE__+"."+__method__.to_s+":"
     ct = request.content_type.to_s
-
     # TODO : deal with Atom[Pub]
     # TODO : sec checks !!!
-
     begin
-
       return OpenWFE::Xml::launchitem_from_xml(request.body.read) \
       if ct.match(/xml$/)
-
       return OpenWFE::Json.launchitem_from_h(request.body.read) \
       if ct.match(/json$/)
-
     rescue Exception => e
-
       raise ErrorReply.new(
       'failed to parse launchitem from request body', 400)
     end
-
-    #
     # then we have a form...
-
     if definition_id = params[:definition_id]
-
       # is the user allowed to launch that process [definition] ?
-
       definition = Definition.find(definition_id)
-
       raise ErrorReply.new(
       'you are not allowed to launch this process', 403
       ) unless @current_user.may_launch?(definition)
-
       params[:definition_url] = definition.local_uri if definition
-
     elsif definition_url = params[:definition_url]
-
       raise ErrorReply.new(
       'not allowed to launch process definitions from adhoc URIs', 400
       ) unless @current_user.may_launch_from_adhoc_uri?
-
     elsif definition = params[:definition]
-
       # is the user allowed to launch embedded process definitions ?
-
       raise ErrorReply.new(
       'not allowed to launch embedded process definitions', 400
       ) unless @current_user.may_launch_embedded_process?
-
     else
-
       raise ErrorReply.new(
       'failed to parse launchitem from request parameters', 400)
     end
-
     if fields = params[:fields]
       params[:fields] = ActiveSupport::JSON::decode(fields)
     end
-
-    puts "processes_controller.parse_launchitem:"+params.inspect
     ret=OpenWFE::LaunchItem.from_h(params)
     ret
   end
 
-  def add_objects(workitem, favori, type_object)
-    fields = workitem.field_hash
-    msg=""
-    ret=0
-    unless favori.nil? || params[:relation].nil? || params[:relation][type_object].nil?
-      relation=params[:relation][type_object]
-      #      puts "processes_controller.add_objects:workitem="+workitem.id.to_s+" rel="+relation.inspect+" favori="+favori.inspect
-      favori.each do |item|
-        url="/"+type_object+"s/"+item.id.to_s
-        label=type_object+":"+item.ident+"-"+relation
-        fields[:params][url]=label
-        msg += "\nField added:"+label
-        ret+=1
-      end
-      #reset_favori_document
-    else
-      msg += "\nNothing to add:"+type_object
-    end
-    workitem.replace_fields(fields)
-    puts  "processes_controller.add_objects:"+workitem.field_hash.inspect
-    puts  "processes_controller.add_objects:"+type_object+"="+ret.to_s+":"+msg
-    ret
-  end
-
-  def add_objects_old(workitem, favori, type_object)
-    unless favori.nil? || params[:relation].nil? || params[:relation][type_object].nil?
-      relation=params[:relation][:document]
-      ret=""
-      #      puts "processes_controller.add_objects:workitem="+workitem.id.to_s+" rel="+relation.inspect+" favori="+favori.inspect
-      params.each do |item|
-      end
-      favori.items.each do |item|
-        link_=Link.create_new_byid("workitem", workitem.id, type_object, item.id, relation)
-        link=link_[:link]
-        if(link!=nil)
-          if(link.save)
-            ret += t(:ctrl_object_added, :typeobj =>t("ctrl_"+type_object), :ident=>item.ident, :relation=>relation,:msg=>t(link_[:msg]))
-          else
-            ret += t(:ctrl_object_not_added, :typeobj =>t("ctrl_"+type_object), :ident=>item.ident, :relation=>relation,:msg=>t(link_[:msg]))
-          end
-        else
-          ret += t(:ctrl_object_not_linked, :typeobj =>t("ctrl_"+type_object), :ident=>item.ident, :relation=>relation, :msg=>nil)
-        end
-      end
-      #reset_favori_document
-    else
-      ret = t(:ctrl_nothing_to_paste,:typeobj =>t("ctrl_"+type_object))
-    end
-    ret
-  end
 
 end
 

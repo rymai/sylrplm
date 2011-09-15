@@ -19,7 +19,7 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.xml
   def show
-    puts __FILE__+"."+__method__.to_s+":"+params.inspect
+    #puts __FILE__+"."+__method__.to_s+":"+params.inspect
     @document  = Document.find(params[:id])
     @datafiles = @document.get_datafiles
     @parts     = @document.parts
@@ -39,7 +39,7 @@ class DocumentsController < ApplicationController
   # GET /documents/new
   # GET /documents/new.xml
   def new
-    puts "===DocumentsController.new:"+params.inspect+" user="+@current_user.inspect
+    #puts "===DocumentsController.new:"+params.inspect+" user="+@current_user.inspect
     @document = Document.create_new(nil, @current_user)
     @types    = Document.get_types_document
     @volumes  = Volume.find_all
@@ -52,7 +52,7 @@ class DocumentsController < ApplicationController
 
   # GET /documents/1/edit
   def edit
-    puts "===DocumentsController.edit:"+params.inspect
+    #puts "===DocumentsController.edit:"+params.inspect
     @document = Document.find_edit(params[:id])
     @types    = Typesobject.find_for("document")
     @volumes  = Volume.find_all
@@ -64,7 +64,7 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.xml
   def create
-    puts "===DocumentsController.create:"+params.inspect
+    #puts "===DocumentsController.create:"+params.inspect
     document = params[:document]
     #contournement pour faire le upload apres la creation pour avoir la revision dans
     #get_repository !!!!!!!!!!!!!!
@@ -165,7 +165,7 @@ class DocumentsController < ApplicationController
   end
 
   def check_out
-    puts "===DocumentsController.check_out:"+params.inspect
+    #puts "===DocumentsController.check_out:"+params.inspect
     @document = Document.find(params[:id])
     st=@document.check_out(params,@current_user)
     puts "===DocumentsController.check_out:st="+st
@@ -234,10 +234,10 @@ class DocumentsController < ApplicationController
   end
 
   def new_datafile
-    puts __FILE__+"."+__method__.to_s+":"+params.inspect
+    #puts __FILE__+"."+__method__.to_s+":"+params.inspect
     @object = Document.find(params[:id])
     @types  = Typesobject.find_for("datafile")
-    puts "DocumentsController.new_datafile:#{@object.inspect}"
+    #puts "DocumentsController.new_datafile:#{@object.inspect}"
     respond_to do |format|
       check     = Check.get_checkout("document", @object)
       if check.nil?
@@ -263,34 +263,7 @@ class DocumentsController < ApplicationController
 
   def add_docs
     @document = Document.find(params[:id])
-    relation  = Relation.find(params[:relation][:document])
-    respond_to do |format|
-      unless @favori.get("document").nil?
-        flash[:notice] = ""
-        @favori.get("document").each_with_index do |item, idx|
-          link_ = Link.create_new(@document, item, relation)
-          link=link_[:link]
-          puts "add_docs:idx="+idx.to_s
-          if(link!=nil)
-            if idx > 0
-              flash[:notice] += "\n"
-            end
-            if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
-            else
-              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
-            end
-          else
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_document),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
-          end
-        end
-        empty_favori_by_type("document")
-      else
-        flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_document))
-      end
-      format.html { redirect_to(@document) }
-      format.xml  { head :ok }
-    end
+    ctrl_add_objects_from_favorites(@document, :document)
   end
 
   def add_datafile
@@ -331,16 +304,16 @@ class DocumentsController < ApplicationController
   #  end
   #
   def create_tree(obj)
-    tree = Tree.new({ :label => t(:ctrl_object_explorer, :typeobj => t(:ctrl_document)), :open => true })
+    tree = Tree.new({:js_name=>"tree_down", :label => t(:ctrl_object_explorer, :typeobj => t(:ctrl_document)), :open => true })
     session[:tree_document] = obj
-    follow_tree_document(tree, obj, self)
+    follow_tree_document(tree, obj)
     tree
   end
 
   def create_tree_up(doc)
-    tree = Tree.new({:label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_document)),:open => true})
+    tree = Tree.new({:js_name=>"tree_up", :label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_document)),:open => true})
     session[:tree_object]=doc
-    follow_tree_up_document(tree, doc,self)
+    follow_tree_up_document(tree, doc)
     tree
   end
 

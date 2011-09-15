@@ -24,10 +24,10 @@
         <% for link in @wi_links %>
         <tr>
             <td class="nhover">
-                <%= h(link[:link].name) %>
+                <%= h(link[:link].relation_name) %>
             </td>
             <td class="nhover">
-                <%= h(link[:link].child_type) %>
+                <%= h(link[:link].child_plmtype) %>
             </td>
             <td class="nhover">
                 <%= h(link[:typeobj].designation) %>

@@ -3,6 +3,7 @@
 :action => "add_forum" ,
 :id => @object.id }, :method => :get ) do |f| %>
 <%= f.error_messages %>
+<%= hidden_field_tag :relation_id , @relation_id %>
 <%= render(:partial => "forums/edit",:locals => { :f => f, :fonct=>"add" }) %>
 <table class='menu_bas'>
 	<tr>

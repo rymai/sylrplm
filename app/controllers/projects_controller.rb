@@ -126,96 +126,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  #methode: creation de 'arbre du projet
-  def create_tree(obj)
-    tree = Tree.new({:label=>t(:ctrl_object_explorer,:typeobj =>t(:ctrl_project)),:open => true})
-    #cnode=tree_project(obj)
-    #tree << cnode
-    session[:tree_object]=obj
-    follow_tree_project(tree, obj,self)
-    tree
-  end
-
-  def create_tree_up(obj)
-    tree = Tree.new({:label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_project)),:open => true})
-    #cnode=tree_project(obj)
-    #tree << cnode
-    session[:tree_object]=obj
-    follow_tree_up_project(tree, obj,self)
-    tree
-  end
-
-  def add_docs
-    @project = Project.find(params[:id])
-    ctrl_add_objects_from_favorites(@project, :document)
-  end
-  
-  def add_parts
-    @project = Project.find(params[:id])
-    ctrl_add_objects_from_favorites(@project, :part)
-  end
-  
-  def add_parts_old
-    @project = Project.find(params[:id])
-    relation = Relation.find(params[:relation][:part])
-    respond_to do |format|
-      unless @favori.get("part").nil?
-        flash[:notice] = ""
-        @favori.get("part").each do |item|
-          link_ = Link.create_new(@project, item, relation)
-          link=link_[:link]
-          if(link!=nil)
-            if(link.save)
-              flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
-              empty_favori_by_type("part")
-            else
-              flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
-            end
-          else
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
-          end
-        end
-      else
-        flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_part))
-      end
-      format.html { redirect_to(@project) }
-      format.xml  { head :ok }
-    end
-  end
-  
-  def add_users
-    @project = Project.find(params[:id])
-    ctrl_add_objects_from_favorites(@project, :user)
-  end
-  
-  def add_users_old
-      @project = Project.find(params[:id])
-      relation = Relation.find(params[:relation][:user])
-      respond_to do |format|
-        unless @favori.get("user").nil?
-          flash[:notice] = ""
-          @favori.get("user").each do |item|
-            link_ = Link.create_new(@project, item, relation)
-            link=link_[:link]
-            if(link!=nil)
-              if(link.save)
-                flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_user),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
-                empty_favori_by_type("user")
-              else
-                flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_user),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
-              end
-            else
-              flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_part),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
-            end
-          end
-        else
-          flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t(:ctrl_user))
-        end
-        format.html { redirect_to(@project) }
-        format.xml  { head :ok }
-      end
-    end
-   
   def promote
     ctrl_promote(Project,false)
   end
@@ -229,6 +139,7 @@ class ProjectsController < ApplicationController
     @object = Project.find(params[:id])
     @types=Typesobject.find_for("forum")
     @status= Statusobject.find_for("forum")
+    @relation_id = params[:relation][:forum]
     respond_to do |format|
       flash[:notice] = ""
       @forum=Forum.create_new(nil)
@@ -240,7 +151,162 @@ class ProjectsController < ApplicationController
 
   def add_forum
     @object = Project.find(params[:id])
-    ctrl_add_forum(@object,"project")
+    ctrl_add_forum(@object)
+  end
+  
+  def add_docs
+    @project = Project.find(params[:id])
+    ctrl_add_objects_from_favorites(@project, :document)
+  end
+  
+  def add_parts
+    @project = Project.find(params[:id])
+    ctrl_add_objects_from_favorites(@project, :part)
+  end
+  
+  def add_users
+    @project = Project.find(params[:id])
+    ctrl_add_objects_from_favorites(@project, :user)
+  end
+  def check_init_objects
+    ret =""
+    
+    #pour debug: forcer la reconstruction des access
+    ya_acces=Access.count
+    if ya_acces == 0
+      ret +="Creation access<br>"
+      st=Access.init
+      st=true
+      if st
+        ret +="Acces  crees<br>"
+      else
+        ret +="ERREUR:Acces non crees completement<br>"
+      end
+    end
+    puts 'main_controller.index:ya_acces='+ya_acces.to_s+":"+ret
+    ret=""
+    @types_document=Typesobject.find_for('document')
+    if @types_document.size==0
+      ret +="Pas de types de documents<br>"
+    end
+    @types_part=Typesobject.find_for('part')
+    if @types_part.size==0
+      ret +="Pas de types d articles<br>"
+    end
+    @types_project=Typesobject.find_for('project')
+    if @types_project.size==0
+      ret +="Pas de types de projets<br>"
+    end
+    @types_customer=Typesobject.find_for('customer')
+    if @types_customer.size==0
+      ret +="Pas de types de clients<br>"
+    end
+    @types_forum=Typesobject.find_for('forum')
+    if @types_forum.size==0
+      ret +="Pas de types de forums<br>"
+    end
+    
+    @status_document= Statusobject.find_for("document")
+    if @status_document.size==0
+      ret +="Pas de statuts de documents<br>"
+    end
+    @status_part= Statusobject.find_for("part")
+    if @status_part.size==0
+      ret +="Pas de statuts d articles<br>"
+    end
+    @status_project= Statusobject.find_for("project")
+    if @status_project.size==0
+      ret +="Pas de statuts de projets<br>"
+    end
+    @status_customer= Statusobject.find_for("customer")
+    if @status_customer.size==0
+      ret +="Pas de statuts de clients<br>"
+    end
+    @status_forum= Statusobject.find_for("forum")
+    if @status_forum.size==0
+      ret +="Pas de statuts de forums<br>"
+    end
+    ret
+  end
+  
+  def check_init
+    ret=check_init_objects
+    if ret != ""
+      puts 'application_controller.check_init:message='+ret
+      flash[:notice]=t(:ctrl_init_to_do)
+      respond_to do |format|
+        format.html{redirect_to :controller=>"main" , :action => "init_objects"} # init.html.erb
+      end
+    end
+  end
+  
+  #appelle par main_controller.init_objects
+  def create_domain(domain)
+    puts "plm_init_controller.create_domain:"+domain
+    dirname=SYLRPLM::DIR_DOMAINS+domain+'/*.yml'
+    puts "plm_init_controller.create_domain:"+dirname
+    Dir.glob(dirname).each do |file|
+      dirfile=SYLRPLM::DIR_DOMAINS+domain
+      puts "plm_init_controller.create_domain:dirfile="+dirfile+" file="+File.basename(file, '.*')
+      Fixtures.create_fixtures(dirfile, File.basename(file, '.*'))
+    end
+  end
+  
+  #appelle par main_controller.init_objects
+  def create_admin
+    puts "plm_init_controller.create_admin:"
+    dirname=SYLRPLM::DIR_ADMIN+'*.yml'
+    puts "plm_init_controller.create_admin:"+dirname
+    Dir.glob(dirname).each do |file|
+      dirfile=SYLRPLM::DIR_ADMIN
+      puts "plm_init_controller.create_admin:dirfile="+dirfile+" file="+File.basename(file, '.*')
+      Fixtures.create_fixtures(dirfile, File.basename(file, '.*'))
+    end
+  end
+  
+  #renvoie la liste des domaines pour le chargement initial
+  #appelle par main_controller.init_objects
+  def get_domains
+    dirname=SYLRPLM::DIR_DOMAINS+'*'
+    ret=""
+    Dir.glob(dirname).each do |dir|
+      ret<<"<option>"<<File.basename(dir, '.*')<<"</option>"
+    end
+    puts "plm_init_controller.get_domains:"+dirname+"="+ret
+    ret
+  end
+  
+  #appelle par main_controller.init_objects
+  #maj le volume de depart id=1 defini dans le fichier db/fixtures/volume.yml et cree par create_domain 
+  def update_admin(dir)
+    puts "plm_init_controller.update_first_volume:dir="+dir
+    vol=Volume.find_first
+    puts "plm_init_controller.update_first_volume:volume="+vol.inspect
+    vol.update_attributes(:directory=>dir)
+    User.find_all.each do |auser|
+      auser.volume=vol
+      auser.password=auser.login
+      auser.save
+      puts "plm_init_controller.update_first_volume:user="+auser.inspect
+    end
+  end
+ 
+  #methode: creation de 'arbre du projet
+  def create_tree(obj)
+    tree = Tree.new({:js_name=>"tree_down", :label=>t(:ctrl_object_explorer,:typeobj =>t(:ctrl_project)),:open => true})
+    #cnode=tree_project(obj)
+    #tree << cnode
+    session[:tree_object]=obj
+    follow_tree_project(tree, obj)
+    tree
   end
 
+  def create_tree_up(obj)
+    tree = Tree.new({:js_name=>"tree_up", :label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_project)),:open => true})
+    #cnode=tree_project(obj)
+    #tree << cnode
+    session[:tree_object]=obj
+    follow_tree_up_project(tree, obj)
+    tree
+  end 
 end

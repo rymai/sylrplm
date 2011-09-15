@@ -48,6 +48,10 @@ class Document < ActiveRecord::Base
   def link_attributes=(att)
     @link_attributes = att
   end
+  
+  def link_attributes
+    @link_attributes
+  end
 
   # modifie les attributs avant edition
   def self.find_edit(object_id)
@@ -123,7 +127,7 @@ class Document < ActiveRecord::Base
     !(self.statusobject.nil? || Statusobject.get_last("document").nil?) &&
     self.statusobject.rank == Statusobject.get_last("document").rank
   end
-
+  
   # a valider si avant dernier status
   def is_to_validate
     !(self.statusobject.nil? || Statusobject.get_last("document").nil?) &&
@@ -151,7 +155,7 @@ class Document < ActiveRecord::Base
     ret=[]
     ret=self.datafile
     ret={:recordset=>ret,:total=>ret.length}
-    puts "document.get_datafiles:"+ret.inspect
+    #puts "document.get_datafiles:"+ret.inspect
     ret
   end
 
@@ -171,18 +175,22 @@ class Document < ActiveRecord::Base
     :order=>"ident")
   end
 
-  def find_last_revision(object)
-    Document.find(:last, :order=>"revision ASC",  :conditions => ["ident = '#{object.ident}'"])
+  def last_revision
+    Document.find(:last, :order=>"revision ASC",  :conditions => ["ident = '#{ident}'"])
   end
 
   def promote
-    self.statusobject=Statusobject.find_next("document",self.statusobject)
-    self
+    st_cur_name = statusobject.name
+    st_new = statusobject.get_next
+    update_attributes({:statusobject_id => st_new.id})
+    puts "Document.promote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
   end
 
   def demote
-    self.statusobject=Statusobject.find_previous("document",self.statusobject)
-    self
+    st_cur_name = statusobject.name
+    st_new = statusobject.get_previous
+    update_attributes({:statusobject_id => st_new.id})
+    puts "Document.demote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
   end
 
   def remove_datafile(item)

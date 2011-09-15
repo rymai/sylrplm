@@ -202,6 +202,8 @@ li.help_ul {
 img.icone {
 	border: none;
 	background: transparent;
+	width: 16px;
+	height: 16px;
 }
 .help {
 	font-weight: bold;
@@ -213,8 +215,8 @@ img.help {
 	height: 16px;
 }
 img.help_tr {
-	/*width: 16px;
-	 height: 16px;*/
+	width: auto;
+	height: auto;
 	background: #242424;
 	border: 2px solid white;
 }

@@ -13,6 +13,7 @@
 |--------------------------------------------------*/
 
 function Node(id, pid, name, url, event_name, title, target, icon, iconOpen, open) {
+	//alert ('Node:'+id+" "+pid+" "+url)
 	this.id = id;
 	this.pid = pid;
 	this.name = name;
@@ -76,9 +77,12 @@ dTree.prototype.add = function(id, pid, name, url, event_name, title, target, ic
 
 // Open/close all nodes
 dTree.prototype.openAll = function() {
+	//alert('openAll:'+this.root._io);
 	this.oAll(true);
 };
+
 dTree.prototype.closeAll = function() {
+	//alert('closeAll:'+this.root._io);
 	this.oAll(false);
 };
 
@@ -123,6 +127,7 @@ dTree.prototype.addNode = function(pNode) {
 
 // Creates the node icon, url and text
 dTree.prototype.node = function(node, nodeId) {
+	//alert ('dTree.prototype.node '+node.id+" "+node.name+" "+nodeId)
 	var str = '<div class="dTreeNode">' + this.indent(node, nodeId);
 	if (this.config.useIcons) {
 		if (!node.icon) node.icon = (this.root.id == node.pid) ? this.icon.root : ((node._hc) ? this.icon.folder : this.icon.node);
@@ -260,7 +265,7 @@ dTree.prototype.s = function(id) {
 // Toggle Open or close
 
 dTree.prototype.o = function(id) {
-
+	
 	var cn = this.aNodes[id];
 
 	this.nodeStatus(!cn._io, id, cn._ls);
@@ -290,7 +295,8 @@ dTree.prototype.oAll = function(status) {
 		}
 
 	}
-
+	//syl pour garder le statut de l arbre entier
+	this.root._io = status;
 	if (this.config.useCookies) this.updateCookie();
 
 };

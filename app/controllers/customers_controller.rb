@@ -97,74 +97,7 @@ class CustomersController < ApplicationController
       format.xml  { head :ok }
     end
   end
-
-  def remove_project
-    @project  = Project.find(params[:id])
-    @customer = Customer.find(@project.customer)
-    @customer.remove_project(@project)
-    if(@customer.save)
-      flash[:notice] = t(:ctrl_remove_project_ok, :project => @project.ident, :typeobj => @customer.ident)
-    else
-      flash[:notice] = t(:ctrl_remove_project_ko, :project => @project.ident, :typeobj => @customer.ident)
-    end
-  end
-
-  def add_docs
-    @customer = Customer.find(params[:id])
-    relation  = Relation.find(params[:relation][:document])
-    respond_to do |format|
-      unless @favori.get("document").nil?
-        flash[:notice] = ""
-        @favori.get("document").each do |item|
-          link_ = Link.create_new(@customer, item, relation)
-          link  = link_[:link]
-          unless link.nil?
-            if link.save
-              flash[:notice] += t(:ctrl_object_added, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation.ident, :msg => link_[:msg])
-            else
-              flash[:notice] += t(:ctrl_object_not_added, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation.ident, :msg => link_[:msg])
-            end
-          else
-            flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_document), :ident => item.ident, :relation => relation.ident, :msg => link_[:msg])
-          end
-        end
-        empty_favori_by_type("document")
-      else
-        flash[:notice] = t(:ctrl_nothing_to_paste, :typeobj => t(:ctrl_document))
-      end
-      format.html { redirect_to(@customer) }
-      format.xml  { head :ok }
-    end
-  end
-
-  def add_projects
-    @customer = Customer.find(params[:id])
-    relation  = Relation.find(params[:relation][:project])
-    respond_to do |format|
-      unless @favori.get("project").nil?
-          flash[:notice] = ""
-          @favori.get("project").each do |item|
-          link_ = Link.create_new(@customer, item, relation)
-          link  = link_[:link]
-          unless link.nil?
-            if link.save
-              flash[:notice] += t(:ctrl_object_added, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation.ident, :msg => link_[:msg])
-            else
-              flash[:notice] += t(:ctrl_object_not_added, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation.ident, :msg => link_[:msg])
-            end
-          else
-            flash[:notice] += t(:ctrl_object_not_linked, :typeobj => t(:ctrl_project), :ident => item.ident, :relation => relation.ident, :msg => link_[:msg])
-          end
-        end
-        empty_favori_by_type("project")
-      else
-        flash[:notice] = t(:ctrl_nothing_to_paste, :typeobj => t(:ctrl_project))
-      end
-      format.html { redirect_to(@customer) }
-      format.xml  { head :ok }
-    end
-  end
-
+  
   def promote
     ctrl_promote(Customer,false)
   end
@@ -178,6 +111,7 @@ class CustomersController < ApplicationController
     @object = Customer.find(params[:id])
     @types  = Typesobject.find_for("forum")
     @status = Statusobject.find_for("forum")
+    @relation_id = params[:relation][:forum]
     respond_to do |format|
       flash[:notice] = ""
       @forum         = Forum.create_new(nil)
@@ -189,14 +123,25 @@ class CustomersController < ApplicationController
 
   def add_forum
     @object = Customer.find(params[:id])
-    ctrl_add_forum(@object,"customer")
+    ctrl_add_forum(@object)
   end
+  
+  def add_docs
+    @customer = Customer.find(params[:id])
+    ctrl_add_objects_from_favorites(@customer, :document)
+  end
+  
+  def add_projects 
+    @customer = Customer.find(params[:id])
+    ctrl_add_objects_from_favorites(@customer, :project)
+  end
+  
   private
     
-    def create_tree(obj)
-      tree = Tree.new({ :label => t(:ctrl_object_explorer, :typeobj => t(:ctrl_customer)), :open => true })
-      session[:tree_object] = obj
-      follow_tree_customer(tree, obj, self)
-      tree
-    end
+  def create_tree(obj)
+    tree = Tree.new( { :js_name=>"tree_down", :label => t(:ctrl_object_explorer, :typeobj => t(:ctrl_customer)), :open => true })
+    session[:tree_object] = obj
+    follow_tree_customer(tree, obj)
+    tree
+  end
 end

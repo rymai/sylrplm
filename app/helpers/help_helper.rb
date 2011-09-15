@@ -40,7 +40,7 @@ module HelpHelper
         amsg=h_help_elem(element,key)
         if(amsg!=nil)
           msg_ul=h_help_ul(element)
-          puts "h_help_elem:msg_ul="+element.attribute(:key).to_s+":"+msg_ul
+          #puts "h_help_elem:msg_ul="+element.attribute(:key).to_s+":"+msg_ul
           if msg_ul!=""
             amsg[:el].text+=msg_ul
           end
@@ -50,7 +50,7 @@ module HelpHelper
       }
     else
       msg_ul=h_help_ul(el)
-      puts "h_help_elem:msg_ul="+el.attribute(:key).to_s+":"+msg_ul
+      #puts "h_help_elem:msg_ul="+el.attribute(:key).to_s+":"+msg_ul
       if msg_ul!=""
       el.text+=msg_ul
       end
@@ -100,7 +100,6 @@ module HelpHelper
   end
 
   def h_help_root
-    #xmlHelp = REXML::Document.new(File.new("/home/syl/trav/rubyonrails/sylrplm/public/help.xml"))
     xmlHelp = REXML::Document.new(File.new("public/help_#{session[:lng]}.xml"))
     root_help = xmlHelp.root
   end
@@ -135,11 +134,11 @@ module HelpHelper
 
   def read_help_file
     filename = get_help_file_name
-    puts "help_helper.read_help_file:"+filename
+    #puts "help_helper.read_help_file:"+filename
     if File.exist?(filename)
       ret=File.new(filename).read
     else
-      puts "read_help_file:pas de fichier help"
+      puts "read_help_file:pas de fichier help:"+filename
       ret=""
     end
   end

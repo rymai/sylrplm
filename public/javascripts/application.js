@@ -14,6 +14,10 @@ function hideTreeMenu(){
 	};
 };
 
+function openCloseAllTree(tree){
+ 	tree.oAll(!tree.root._io);
+};
+
 var helpWin;
 var helpClick;
 //
@@ -148,7 +152,7 @@ function updateRelation() {
 	val = val + sep_type + child_selected;
 	//alert ('updateRelation val='+val);
 	if (relation_name.value.indexOf(val)==-1) {
-		relation_name.value = val;
+		//syl:on garde le nom tel quel, relation_name.value = val;
 	}
 }
 

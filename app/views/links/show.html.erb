@@ -1,10 +1,10 @@
 <p>
-	<b>Father type:</b>
-	<%= h @link.father_type %>
+	<b>Father plm type:</b>
+	<%= h @link.father_plmtype %>
 </p>
 <p>
-	<b>Child type:</b>
-	<%= h @link.child_type %>
+	<b>Child plm type:</b>
+	<%= h @link.child_plmtype %>
 </p>
 <p>
 	<b>Father:</b>
@@ -16,15 +16,7 @@
 </p>
 <p>
 	<b>Name:</b>
-	<%= h @link.name %>
-</p>
-<p>
-	<b>Designation:</b>
-	<%= h @link.designation %>
-</p>
-<p>
-	<b>Description:</b>
-	<%= h @link.description %>
+	<%= h @link.relation.name %>
 </p>
 <p>
 	<b>Responsible:</b>

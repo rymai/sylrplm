@@ -48,15 +48,15 @@
 		<%end %></td>
 		<td> <%= user.email %></td>
 		<td> <% if(user.typesobject != nil) %>
-			<%= h(user.typesobject.name) %>
+			<%= user.typesobject.name %>
 			<% end %>
 			</td>
-		<td> <%= h(user.language) %></td>
+		<td> <%= user.language %></td>
 		<td> <%= link_to user.volume.name, user.volume unless user.volume.nil? %></td>
-		<td> <%= h(user.theme) %></td>
+		<td> <%= user.theme %></td>
 		<td> <%= t(user.v_notification) %></td>
-		<td> <%= h(user.v_time_zone) %></td>
-		<td> <%= h(user.show_mail) %></td>
+		<td> <%= user.v_time_zone %></td>
+		<td> <%= user.show_mail %></td>
 		<td><%= comma_list(user.groups, :name) %></td>
 		<td><%= comma_list(user.roles, :title) %></td>
 		<td> <%= link_to h_img_show.to_s, user %></td>

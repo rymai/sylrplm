@@ -206,20 +206,43 @@ module ApplicationHelper
 
   end
 
-  def h_sylrplm_tree
+  def h_show_tree
     bloc=""
     if (@tree || @tree_up)
-      bloc << "<table class='menu_bas' >"
-      bloc << "<tr>"
-      bloc<< "<td><a class='menu_bas' href='#' onclick='hideTreeMenu();'>"+t("h_show_hide_tree")+"</a></td>"
-      bloc << "</tr>"
-      bloc << "</table>"
+
+      #bloc << "<table class='menu_bas' >"
+      #bloc << "<tr>"
+      #bloc<< "<td><a class='menu_bas' href='#' onclick='hideTreeMenu();'>"+t("h_show_hide_tree")+"</a></td>"
+      #bloc << "</tr>"
+      #bloc << "</table>"
+
       bloc << "<div id='dtree'>"
+
       if (@tree)
-      bloc <<@tree.to_s
+        bloc << "<fieldset>"
+        bloc << "<legend>"
+        bloc << t(:legend_tree_down)
+        bloc << "</legend>"
+        bloc << "<table class='menu_bas' >"
+        bloc << "<tr>"
+        bloc<< "<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_down);'>"+t("h_open_close_all_tree")+"</a></td>"
+        bloc << "</tr>"
+        bloc << "</table>"
+        bloc << @tree.to_s
+        bloc << "</fieldset>"
       end
       if (@tree_up)
-      bloc <<@tree_up.to_s
+        bloc << "<fieldset>"
+        bloc << "<legend>"
+        bloc << t(:legend_tree_up)
+        bloc << "</legend>"
+        bloc << "<table class='menu_bas' >"
+        bloc << "<tr>"
+        bloc<< "<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_up);'>"+t("h_open_close_all_tree")+"</a></td>"
+        bloc << "</tr>"
+        bloc << "</table>"
+        bloc << @tree_up.to_s
+        bloc << "</fieldset>"
       end
 
       bloc << "</div>"
@@ -357,6 +380,7 @@ module ApplicationHelper
     end
     more=t('label_more')
     less=t('label_less')
+
     workitems = Array(opts[:workitems])
 
     %{
@@ -370,12 +394,15 @@ module ApplicationHelper
           // initial default value (overriden by following scripts)
       </script>
 
+      <div id='fluo_minor_toggle' style='cursor: pointer;'>
+            <table class='menu_bas'><tr><td><div id='fluo_toggle'>#{more}</div></td></tr></table>
+      </div>
+
       <a id='dataurl_link'>
         <canvas id="fluo" width="50" height="50"></canvas>
       </a>
-      <div  id='fluo_minor_toggle' style='cursor: pointer;'>
-            <table class='menu_bas'><tr><td><div id='fluo_toggle'>#{more}</div></td></tr></table>
-      </div>
+
+
       #{tree}
 
       <script>

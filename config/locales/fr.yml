@@ -3,15 +3,17 @@
 
 fr:
   ##############
-  #models (ko)
+  #models 
   ##############
+  # general
   valid_ident: "L'identifiant d'un {{object} doit commencer par des lettres suivi de chiffres"
+  # relation
   valid_relation_cardin_occur_max: "Le nombre d' occurence maxi doit être plus grand que le mini ou -1 (infini)"
   valid_relation_cardin_use_max: "Le nombre d' utilisation maxi doit être plus grand que le mini ou -1 (infini)"
-  #
   ##############
   #controllers
   ##############
+  # general
   ctrl_no_privilege: "Désolé, Votre rôle '%{role}' ne vous permet d'accéder à la fonction '%{controller}/%{action}'"
   ctrl_object_created: "%{typeobj} '%{ident}' crée avec succès"
   ctrl_object_not_created: "%{typeobj} non crée :%{msg}"
@@ -46,44 +48,43 @@ fr:
   ctrl_object_not_linked: "%{typeobj} '%{ident}' n'a pas été relié, relation='%{relation}', messag=%{msg}"
   ctrl_object_not_existing: "L' objet '%{model}/%{id}' est inconnu: %{error}"
   ctrl_nothing_to_paste: "Pas de %{typeobj} à coller"
-  ctrl_subject_forum: "Forum sur %{typeobj} '%{ident}'"
-  ctrl_object_explorer: "%{typeobj} Explorer"
+  # ne pas mettre de guillemet ici car pb creation tree
+  ctrl_subject_forum: "Forum sur %{typeobj} %{ident}"
+  ctrl_object_explorer: "%{typeobj} Exploreur"
   ctrl_object_referencer: "%{typeobj} Référenceur"
   ctrl_init_to_do: Initialisation à effectuer
   ctrl_init_done: Initialisation effectuée
   count_objects: " : %{number_begin}-%{number_end} / %{total}"
   ctrl_show_no_relation: "%{child_plmtype}(s) à copier mais il n'existe pas de relation entre '%{father_plmtype}' et '%{child_plmtype}'"
-  #access
+  # access
   ctrl_object_no_controlers: Controleurs non trouvés
-  #application
+  # application
   login_login: "Veuillez vous connecter"
   label_project: "Projet-"
   label_customer: "Client-"
   link_project: "%{link}-Projet-%{ident}"
   link_customer: "%{link}-Client-%{ident}"
   user_unknown: Compte inconnu
-  user_unknown_mail: Unknown Mail
-  #customers
+  user_unknown_mail: Mail inconnu
+  # customers
   ctrl_customer: Client
-  #ctrl_remove_project_ok: Project %{project} was successfully removed from %{typeobj}
-  #ctrl_remove_project_ko: Project %{project}  was not removed from %{typeobj}
-  #datafiles
+  # datafiles
   ctrl_datafile: Fichier
-  #definitions
+  # definitions
   ctrl_definition: Définition
-  #documents
+  # documents
   ctrl_document: Document
   ctrl_checkout_auto: Reservation automatique
-  #faq
+  # faq
   ctrl_faq: Question
-  #forums
-  #forum_items
+  # forums
+  # forum_items
   ctrl_forum_item: Message forum
-  #group
+  # group
   ctrl_group: Groupe
-  #group_definitions
+  # group_definitions
   ctrl_group_definitions: Groupe-processus
-  #link
+  # link
   ctrl_link: Relation
   ctrl_link_already_customer_project: Projet déja lié à ce client
   ctrl_link_already_project_user: Utilisateur déja acteur sur ce projet
@@ -106,9 +107,9 @@ fr:
   ctrl_link_project_forum: Relation projet / forum
   ctrl_link_customer_forum: Relation client / forum
   ctrl_link_document_datafile: Relation document / fichier
-  #info
+  # info
   info_object_not_found: SYLRPLM_ERROR-%{context}-%{typeobj} non trouvé(e) - %{id}
-  #login
+  # login
   ctrl_role_needed: Renseigner le rôle
   ctrl_invalid_login: Nom utilisateur ou mot de passe invalide
   ctrl_user_without_roles: Cet utilisateur n'a pas de rôles
@@ -122,47 +123,51 @@ fr:
   ctrl_user_not_connected: Non connecté
   ctrl_user_disconnected: "Utilisateur %{user} déconnecté !"
   ctrl_user_role: Rôle=%{role}
-  #main
-  #notification
+  # main
+  # notification
   ctrl_notify: "%{nb_total} Notifications effectuées à %{nb_users} utilisateurs : %{notifications} "
-  #parts
+  # parts
   ctrl_part: Article
   ctrl_forum: Forum
-  #process
+  # process
   ctrl_process: Processus métier
-  #projects
+  # projects
   ctrl_project: Projet
-  #questions
+  # questions
   ctrl_question: Question
-  #roles
+  # roles
   ctrl_role: Rôle
-  #sequences
+  # sequences
   ctrl_sequence: Valeur par défaut
-  #statusobjects
+  # statusobjects
   ctrl_statusobject: Statut objet
-  #typesobjects
+  # typesobjects
   ctrl_typesobject: Type objet
-  #users
+  # users
   ctrl_user: Utilisateur
-  #volumes
+  # volumes
   ctrl_volume: Volume
-  #workitems
+  ctrl_no_relation: no relation
+  # workitems
   ctrl_workitem_delegated: "Tâche %{ident} délégué à %{store}"
-  ctrl_workitem_proceeded: "workitem %{ident} exécutée"
-  ctrl_workitem_updated: "workitem %{ident} modifiée"
+  ctrl_workitem_proceeded: "Tâche %{ident} exécutée"
+  ctrl_workitem_updated: "Tâche %{ident} modifiée"
+  ctrl_workitem_not_updated: "Tâche %{ident} non modifiée"
   #########################################
-  #modules
+  # modules
   #########################################
-  #plm_object_controller_module
+  # plm_object_controller_module
   ctrl_datafile: Fichier
-  ctrl_no_relation: sans relation
   #########################################
-  #helpers
+  # helpers
   #########################################
-  #application
+  # application
   h_show_hide_tree: Montrer/Cacher arbre
   h_sort_by_field: Tri sur ce champ
-  #help
+  h_open_close_all_tree: Développer/Fermer tout
+  legend_tree_down: Exploreur
+  legend_tree_up: Référenceur
+  # help
   help_no_help_title: Aide absente
   help_no_help: Pas d'aide pour %{key}
   help_lnk_acces: Accès
@@ -173,46 +178,22 @@ fr:
   help_upper: Supérieur
   help_main: Début
   #########################################
-  #views
+  # views
   #########################################
+  # general
+  modif_status: Modifier le statut
+  label_created_at: Création
+  label_updated_at: Modification
+  label_date: Date
+  select_add: Ajouter à la sélection
+  select_remove: Enlever de la sélection
   as: " en tant que "
   hello: "Bienvenue"
   disconnect: "Se deconnecter"
   connect: "Se connecter"
   datas_in_database: Données actuellement en base
-  #langues
-  tit_language: "Langue:"
-  lng_english: "English"
-  lng_french: "French"
-  #
   context_info: "Informations sur le contexte:"
   no_item: Il n'y a rien à afficher.
-  #menus
-  mnu_main: Accueil
-  mnu_documents: Documents
-  mnu_parts: Articles
-  mnu_projects: Projets
-  mnu_customers: Clients
-  mnu_questions: Questions
-  mnu_news: Nouveautés
-  mnu_contact: Contacts
-  mnu_forums: Forums 
-  mnu_forum_items: Messages 
-  mnu_users: Utilisateurs
-  mnu_types_objects: Types objets
-  mnu_status_objects: Status objets
-  mnu_roles: Roles
-  mnu_volumes: Volumes
-  mnu_sequences: Valeurs par défaut
-  mnu_acces: Autorisations
-  mnu_links: Liens 
-  mnu_checks: Réservations 
-  mnu_roles_users: Roles/users
-  mnu_datafiles: Fichiers de données
-  mnu_groups: Groupes
-  mnu_notifications: Notifications
-  mnu_relations: Relations
-  #
   proceed: Valider cette tâche
   delegate: Déléguer cette tâche
   pick: Prendre cette tâche
@@ -244,7 +225,6 @@ fr:
   new_notification: Nouvelle notification 
   new_group: Nouveau groupe
   new_relation: Nouvelle relation
-  #
   paste_users: Coller utilisateurs 
   paste_parts: Coller articles 
   paste_documents: Coller documents
@@ -258,21 +238,48 @@ fr:
   destroy: "Supprimer"
   cancel: Annuler
   menu_action: Action(s)
-  #forums
-  forum_items: Messages
-  forum_follow: suites
-  forum_item_response: Répondre
-  ######################################################
-  # views
-  ######################################################
-  # general
-  modif_status: Modifier le statut
-  label_created_at: Création
-  label_updated_at: Modification
-  label_date: Date
-  select_add: Ajouter à la sélection
-  select_remove: Enlever de la sélection
-  # fields access
+  # attributs generaux
+  faq_question: Question
+  faq_answer: Réponse
+  updated_at: Mis à jour 
+  id: Id
+  # messages
+  msg_no_item_to_display: Il n'y a rien à afficher.
+  msg_confirm: Etes vous sûr ?
+  # langues
+  tit_language: "Langue:"
+  lng_english: "English"
+  lng_french: "French"
+  # menus
+  mnu_main: Accueil
+  mnu_documents: Documents
+  mnu_parts: Articles
+  mnu_projects: Projets
+  mnu_customers: Clients
+  mnu_questions: Questions
+  mnu_news: Nouveautés
+  mnu_contact: Contacts
+  mnu_forums: Forums 
+  mnu_forum_items: Messages 
+  mnu_users: Utilisateurs
+  mnu_types_objects: Types objets
+  mnu_status_objects: Status objets
+  mnu_roles: Roles
+  mnu_volumes: Volumes
+  mnu_sequences: Valeurs par défaut
+  mnu_acces: Autorisations
+  mnu_links: Liens 
+  mnu_checks: Réservations 
+  mnu_roles_users: Roles/users
+  mnu_datafiles: Fichiers de données
+  mnu_groups: Groupes
+  mnu_notifications: Notifications
+  mnu_relations: Relations
+  cut: "Couper"
+  revise: "Réviser"
+  promote: "Promouvoir"
+  demote: Rétrograder
+  # access
   legend_access: Renseignez les propriétés de l'autorisation
   label_controller: Controleur
   label_action: Action
@@ -281,8 +288,8 @@ fr:
   access_list: Liste des autorisations
   access_show: Détail autorisation
   access_new: Nouvel autorisation
-  #
-  # fields check
+  access_reset: Initialisation
+  # check
   legend_check: Renseignez les propriétés du check
   check_edit: Edition check
   check_list: Liste des check
@@ -298,7 +305,7 @@ fr:
   label_in_date: Date libération
   label_in_user: Utilisateur libération
   label_local_dir: Répertoire local
-  # fields customers
+  # customers
   legend_customer: Renseignez les propriétés du client
   customer_edit: Edition client
   customer_list: Liste clients
@@ -314,7 +321,7 @@ fr:
   label_date: Date
   label_description: Description
   label_typesobject: Type
-  # fields datafile
+  # datafile
   legend_datafile: Renseignez les propriétés du fichier de données
   datafile_edit: Edition fichier
   datafile_list: Liste fichiers
@@ -342,7 +349,7 @@ fr:
   button_reset: Défaut
   button_undo: Annuler
   label_definitions_attributs: Attributs
-  # fields documents
+  # documents
   legend_document: Renseignez les propriétés du document
   document_edit: Edition document
   document_list: Liste documents
@@ -360,7 +367,7 @@ fr:
   button_check_free: "Libérer"
   download: "Télécharger fichier"
   document_check: Réservation
-  # fields forums
+  # forums
   legend_forum: Renseignez les propriétés du forum
   forum_edit: Edition forum 
   forum_list: Liste des forums 
@@ -369,7 +376,10 @@ fr:
   part_new_forum: Nouveau forum sur cet article
   label_subject: Sujet du forum
   label_message: Message de démarrage du forum
-  # fields forum_items
+  forum_items: Messages
+  forum_follow: suites
+  forum_item_response: Répondre
+  # forum_items
   legend_forum_item: Renseignez les propriétés du message
   forum_item_edit: Edition message forum
   forum_item_list: Liste message forum
@@ -378,9 +388,7 @@ fr:
   label_parent: Prédécesseur
   label_author: Emetteur
   label_forum: Forum
-  # fields help
-  # fields info
-  # fields groups
+  # groups
   legend_group: Renseignez les propriétés du groupe
   group_edit: Edition du groupe
   group_list: Liste des groupes
@@ -389,9 +397,13 @@ fr:
   label_group_users: Membres 
   label_group_user_ids_out: Autres utilisateurs
   label_group_user_ids_in: Utilisateurs
-  # fields link
+  # help
+  help_title: Aide relative à l application SYLRPLM 
+  help_close_window: Fermer la fenêtre d'aide
+  # info
+  # link
   legend_link: Relation
-  # fields main
+  # main
   legend_desktop: Mon bureau
   label_domain: Domaine
   submit_create_domain: Créer le domaine  
@@ -426,13 +438,13 @@ fr:
   label_notify_date: Date de notification
   label_path: Chemins
   button_notify_all: Notifier tout
-  # fields parts
+  # parts
   legend_part: "Renseignez les propriétés de l'article"
   part_edit: Edition article
   part_list: Liste articles
   part_show: Détail article
   part_new: Nouvel article
-  # fields plm_mailer
+  # plm_mailer
   document_validated: "Le document suivant vient d'être validé par mes soins"
   part_validated: "La part suivante vient d'être validée par mes soins"
   document_tovalidate: "Ceci est une demande de validation pour le document"
@@ -441,138 +453,7 @@ fr:
   direct_access: "Accès direct"
   notification_notify: Notification des evenements concernant vos donnees
   button_notify: Voir la notification
-  # fields projects
-  legend_project: "Renseignez les propriétés du projet"
-  project_edit: Edition projet
-  project_list: Liste projets
-  project_show: Détail projet
-  project_new: Nouveau projet
-  label_customer: Client
-  # fields questions
-  legend_question: "Renseignez les propriétés de la question"
-  questions_edit: Edition question
-  questions_list: Liste questions
-  questions_show: Détail question
-  questions_new: Nouvelle question 
-  label_question: Question
-  label_answer: Réponse
-  label_position: Position
-  # fields roles
-  legend_role: "Renseignez les propriétés du role"
-  role_list: Liste des rôles
-  role_new: Nouveau rôle
-  role_show: Détail du rôle
-  role_edit:  Edition du rôle
-  label_role_users: Utilisateurs
-  label_role_user_ids_in: Ayant ce rôle
-  label_role_user_ids_out: Autres
-  # fields sequences
-  legend_sequence: "Renseignez les propriétés de la valeur/séquence"
-  sequence_list: Liste des valeurs/séquences
-  sequence_new: Nouvelle valeur/séquence
-  sequence_show: Détail de la valeur/séquence
-  sequence_edit:  Edition de la valeur/séquence
-  label_value: Valeur 
-  label_min: Valeur minimale
-  label_max: Valeur maximale
-  label_utility: Utilisation
-  label_modify: Modifiable
-  label_sequence: Séquence
-  # fields statusobjects
-  legend_statusobject: "Renseignez les propriétés du statut d' objets"
-  statusobjects_list: Liste des statuts d' objets
-  statusobjects_new: Nouveau statut d' objet
-  statusobjects_show: Détail du statut d' objet
-  statusobjects_edit: Edition du statut d' objet
-  label_name: Nom
-  label_rank: Rang de promotion
-  label_promote: Promotion
-  label_demote: Rétrogadation
-  # msg _check_status
-  msg_define_status_document: Définissez les statuts des documents
-  msg_define_status_part: Définissez les statuts des articles
-  msg_define_status_project: Définissez les statuts des projets
-  msg_define_status_customer: Définissez les statuts des clients
-  msg_define_status_forum: Définissez les statuts des forums
-   #fields session
-  legend_login: Merci de vous connecter
-  submit_login: Login
-  # fields typesobjects
-  legend_typesobject: "Renseignez les propriétés du type d' objets"
-  typesobjects_list: Liste des types d' objets
-  typesobjects_new: Nouveau type d' objet
-  typesobjects_show: Détail du type d' objet
-  typesobjects_edit:  Edition du type d' objet
-  # msg _check_types
-  msg_define_types_document: Définissez les types des documents
-  msg_define_types_part: Définissez les types des articles
-  msg_define_types_project: Définissez les types des projets
-  msg_define_types_customer: Définissez les types des clients
-  msg_define_types_forum: Définissez les types des forums
-  # fields users
-  legend_user: Renseignez les propriétés de l'utilisateur
-  user_edit: Edition l'utilisateur
-  user_list: Liste des utilisateurs
-  user_show: Détail de l'utilisateur
-  user_new: Nouvel utilisateur
-  label_username: Identifiant
-  label_password: Password
-  label_confirm_password: Confirmation
-  label_role: Rôle
-  label_email: Email
-  label_roles: Rôles
-  label_nb_items: Nombre de données par page
-  label_first_name: Prénom
-  label_last_name: Nom
-  label_language: Langue
-  label_notification: Notifications
-  label_time_zone: Fuseau horaire
-  label_show_mail: Montrer l'adresse mail
-  label_user_mail_option_all: "Pour tous les événements de tous mes projets"
-  label_user_mail_option_selected: "Pour tous les événements des projets sélectionnés..."
-  label_user_mail_option_only_my_events: Seulement pour ce que je surveille
-  label_user_mail_option_only_assigned: Seulement pour ce qui m'est assigné
-  label_user_mail_option_only_owner: Seulement pour ce que j'ai créé
-  label_user_mail_option_none: Aucune notification
-  language_fr: Français
-  language_en: Anglais
-  label_user_role_ids_in: Attribués
-  label_user_role_ids_out: Non atribués
-  label_user_group_ids_in: " d'appartenance"
-  label_user_group_ids_out: Autres groupes
-  # fields volumes
-  legend_volume: Renseignez les propriétés du volume
-  volume_list: Liste des volumes
-  volume_new: Nouveau volume
-  volume_show: Détail du volume
-  volume_edit:  Edition du volume
-  label_directory: Répertoire
-  label_protocol: Protocole
-  #
-  msg_confirm: Etes vous sûr ?
-  # attributs
-  faq_question: Question
-  faq_answer: Réponse
-  updated_at: Mis à jour 
-  id: Id
-  #
-  cut: "Couper"
-  revise: "Reviser"
-  promote: "Promouvoir"
-  demote: Rétrograder
-  # relations
-  no_relation: "-----"
-  specification: "Spécification"
-  notice: "Notice"
-  norme: "Norme"
-  reference: "Référence"
-  bom: "BOM"
-  research: "Recherche"
-  production: "Production"
-  forum: Forum
-  #
   # processes
-  #
   legend_processes: Processus
   mnu_flw_workitems: Mes actions
   mnu_flw_processes: Processus en cours
@@ -603,6 +484,125 @@ fr:
   label_errors: Erreurs
   launch_process: Lancer le processus
   abort process: Abandonner le processus
+  # projects
+  legend_project: "Renseignez les propriétés du projet"
+  project_edit: Edition projet
+  project_list: Liste projets
+  project_show: Détail projet
+  project_new: Nouveau projet
+  label_customer: Client
+  # questions
+  legend_question: "Renseignez les propriétés de la question"
+  questions_edit: Edition question
+  questions_list: Liste questions
+  questions_show: Détail question
+  questions_new: Nouvelle question 
+  label_question: Question
+  label_answer: Réponse
+  label_position: Position
+  # relation
+  legend_relation: Relation
+  # roles
+  legend_role: "Renseignez les propriétés du role"
+  role_list: Liste des rôles
+  role_new: Nouveau rôle
+  role_show: Détail du rôle
+  role_edit:  Edition du rôle
+  label_role_users: Utilisateurs
+  label_role_user_ids_in: Ayant ce rôle
+  label_role_user_ids_out: Autres
+  # sequences
+  legend_sequence: "Renseignez les propriétés de la valeur/séquence"
+  sequence_list: Liste des valeurs/séquences
+  sequence_new: Nouvelle valeur/séquence
+  sequence_show: Détail de la valeur/séquence
+  sequence_edit:  Edition de la valeur/séquence
+  label_value: Valeur 
+  label_min: Valeur minimale
+  label_max: Valeur maximale
+  label_utility: Utilisation
+  label_modify: Modifiable
+  label_sequence: Séquence
+  # session
+  legend_login: Merci de vous connecter
+  submit_login: Login
+  # statusobjects
+  legend_statusobject: "Renseignez les propriétés du statut d' objets"
+  statusobjects_list: Liste des statuts d' objets
+  statusobjects_new: Nouveau statut d' objet
+  statusobjects_show: Détail du statut d' objet
+  statusobjects_edit: Edition du statut d' objet
+  label_name: Nom
+  label_rank: Rang de promotion
+  label_promote: Promotion
+  label_demote: Rétrogadation
+  # msg _check_status
+  msg_define_status_document: Définissez les statuts des documents
+  msg_define_status_part: Définissez les statuts des articles
+  msg_define_status_project: Définissez les statuts des projets
+  msg_define_status_customer: Définissez les statuts des clients
+  msg_define_status_forum: Définissez les statuts des forums
+  # typesobjects
+  legend_typesobject: "Renseignez les propriétés du type d' objets"
+  typesobjects_list: Liste des types d' objets
+  typesobjects_new: Nouveau type d' objet
+  typesobjects_show: Détail du type d' objet
+  typesobjects_edit:  Edition du type d' objet
+  # msg _check_types
+  msg_define_types_document: Définissez les types des documents
+  msg_define_types_part: Définissez les types des articles
+  msg_define_types_project: Définissez les types des projets
+  msg_define_types_customer: Définissez les types des clients
+  msg_define_types_forum: Définissez les types des forums
+  # users
+  legend_user: Renseignez les propriétés de l'utilisateur
+  user_edit: Edition l'utilisateur
+  user_list: Liste des utilisateurs
+  user_show: Détail de l'utilisateur
+  user_new: Nouvel utilisateur
+  label_username: Identifiant
+  label_password: Password
+  label_confirm_password: Confirmation
+  label_role: Rôle
+  label_email: Email
+  label_roles: Rôles
+  label_nb_items: Nombre de données par page
+  label_first_name: Prénom
+  label_last_name: Nom
+  label_language: Langue
+  label_notification: Notifications
+  label_time_zone: Fuseau horaire
+  label_show_mail: Montrer l'adresse mail
+  label_user_mail_option_all: "Pour tous les événements de tous mes projets"
+  label_user_mail_option_selected: "Pour tous les événements des projets sélectionnés..."
+  label_user_mail_option_only_my_events: Seulement pour ce que je surveille
+  label_user_mail_option_only_assigned: Seulement pour ce qui m'est assigné
+  label_user_mail_option_only_owner: Seulement pour ce que j'ai créé
+  label_user_mail_option_none: Aucune notification
+  language_fr: Français
+  language_en: Anglais
+  label_user_role_ids_in: Attribués
+  label_user_role_ids_out: Non atribués
+  label_user_group_ids_in: " d'appartenance"
+  label_user_group_ids_out: Autres groupes
+  # volumes
+  legend_volume: Renseignez les propriétés du volume
+  volume_list: Liste des volumes
+  volume_new: Nouveau volume
+  volume_show: Détail du volume
+  volume_edit:  Edition du volume
+  label_directory: Répertoire
+  label_protocol: Protocole
+  # relations
+  no_relation: "-----"
+  specification: "Spécification"
+  notice: "Notice"
+  norme: "Norme"
+  reference: "Référence"
+  bom: "BOM"
+  research: "Recherche"
+  production: "Production"
+  forum: Forum
   # workitems
   label_relation: Relation
   label_wfid: Processus
@@ -613,25 +613,17 @@ fr:
   label_participant: Participant
   label_activity: Activité
   label_dispatch_time: Envoyé le
-  # help
-  help_title: Aide relative à l application SYLRPLM 
-  help_close_window: Fermer la fenêtre d'aide
-  # messages
-  msg_no_item_to_display: Il n'y a rien à afficher.
+  button_task_validate: Valider
   ###########################
   # helper
   ###########################
-  #
   # processes
-  #
   label_more: Détails
   label_less: Sans détails
   ###########################
   # plugins
   ###########################
-  ###########################
   # will_paginate
-  ###########################
   label_previous: Précédente
   label_next: Suivante
   ###########################

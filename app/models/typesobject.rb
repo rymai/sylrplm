@@ -11,7 +11,6 @@ class Typesobject < ActiveRecord::Base
   named_scope :order_default, :order=>"name ASC"
   named_scope :find_all , order_default.all
 
-
   def self.get_all
     order_default.find_all
   end
@@ -31,7 +30,7 @@ class Typesobject < ActiveRecord::Base
   end
   
   def self.get_objects_with_type
-  		ret=["document", "part", "project", "customer", "forum", "datafile", "relation", "user"].sort
+  		ret=["document", "part", "project", "customer", "forum", "definition", "datafile", "relation", "user", "workitem", "ar_workitem", "syl_ar_workitem"].sort
   		ret
   end
   

@@ -2,13 +2,18 @@ class User < ActiveRecord::Base
   include Models::SylrplmCommon
 
   attr_accessor :designation, :password, :password_confirmation
-
+  #
+  attr_accessor :link_attributes
+  #
   has_and_belongs_to_many :roles
   belongs_to :role
   belongs_to :volume
   belongs_to :typesobject
   has_many :user_groups, :dependent => :delete_all
   has_many :groups, :through => :user_groups
+  
+  has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='user'"]
+  has_many :projects , :through => :links_projects
 
   validates_presence_of     :login
   validates_uniqueness_of   :login
@@ -23,11 +28,12 @@ class User < ActiveRecord::Base
     [4, :label_user_mail_option_only_owner],
     [5, :label_user_mail_option_none]
   ]
-  #
-  # Used by is_admin?
-  #
-  ADMIN_GROUP_NAME = ::SYLRPLM::ADMIN_GROUP_NAME
-
+  def link_attributes=(att)
+    @link_attributes = att
+  end
+  def link_attributes
+    @link_attributes
+  end
   def designation
     self.login+" "+self.first_name.to_s+" "+self.last_name.to_s
   end
@@ -123,7 +129,7 @@ class User < ActiveRecord::Base
     #puts "is_admin:"+login+" ADMIN_USER_NAME"+::SYLRPLM::ADMIN_USER_NAME+" ADMIN_GROUP_NAME="+ADMIN_GROUP_NAME
     ret = login==::SYLRPLM::ADMIN_USER_NAME
     if ret==false
-      ret=group_names.include?(ADMIN_GROUP_NAME) 
+      ret=group_names.include?(::SYLRPLM::ADMIN_GROUP_NAME) 
     end
     ret
   end

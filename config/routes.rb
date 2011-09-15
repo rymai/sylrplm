@@ -3,6 +3,9 @@ require 'ruote_routing'
 
 ActionController::Routing::Routes.draw do |map|
   
+ # syl 17/11/2010 : route par defaut
+  map.root :controller => "main", :action => "index"
+  
   map.resources :relations
   map.connect(
   'relations/update_father',
@@ -14,9 +17,6 @@ ActionController::Routing::Routes.draw do |map|
   :action => 'update_child')
   
   map.resources :notifications, :member => { :notify => :get }
-
-  # syl 17/11/2010 : route par defaut
-  map.root :controller => "main", :action => "index"
 
   map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get }
 
@@ -32,8 +32,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :questions
 
-  map.resources :accesses
-
+  map.resources :accesses, :collection => { :reset => :get}
+  
+  
   map.resources :roles_users
 
   map.resources :forum_items

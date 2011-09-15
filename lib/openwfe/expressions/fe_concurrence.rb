@@ -152,7 +152,6 @@ module OpenWFE
       store_itself
 
       @children.each_with_index do |child, index|
-
         get_expression_pool.apply(child, get_workitem(workitem, index))
       end
 

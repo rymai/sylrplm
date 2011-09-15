@@ -210,14 +210,18 @@ module OpenWFE
     names :back, :skip, :continue, :break, :cancel, :rewind, :jump, :over
 
     def apply (workitem)
+#puts "fe_command.apply:workitem="+workitem.inspect
+#puts "fe_command.apply:fei="+fei.inspect
 
       conditional = eval_condition(:if, workitem, :unless)
+#puts "fe_command.apply:conditional="+conditional.inspect
         #
         # for example : <break if="${approved} == true"/>
 
       if conditional == nil or conditional
 
         command = @fei.expression_name
+#puts "fe_command.apply:command="+command.inspect
 
         step = lookup_attribute(A_STEP, workitem)
         step = fetch_text_content(workitem) unless step
@@ -225,6 +229,7 @@ module OpenWFE
         step = Integer(step)
 
         command = "#{command} #{step}" #if step != 1
+#puts "fe_command.apply:command="+command.inspect
 
         workitem.attributes[F_COMMAND] = command
       end

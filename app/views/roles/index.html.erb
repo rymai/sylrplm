@@ -17,8 +17,8 @@
 	</tr>
 	<% @roles[:recordset].each do |role| %>
 	<tr>
-		<td> <%= h role.title %> </td>
-		<td> <%= h role.description %> </td>
+		<td> <%= role.title %> </td>
+		<td> <%= role.description %> </td>
 		<td><%= comma_list(role.users, :login) %></td>
 		<td> <%= link_to h_img_show.to_s, role %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_role_path(role) %> </td>

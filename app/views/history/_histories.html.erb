@@ -20,7 +20,7 @@
 		sfei = fei ? "#{fei.sub_instance_id} #{fei.expname} #{fei.expid}" : ''
 		cat = entry.created_at.to_s %>
 		<tr>
-			<td><%= entry.link_attributes["relation"] %></td>
+			<td><%= entry.link_relation %></td>
 			<td class="created_at" title="<%= cat %>"><%= cat[0..18] %></td>
 			<td class="since"><%= display_since(entry, :created_at) %></td>
 			<td class="source"><%= view_link(entry, :source) %></td>

@@ -32,7 +32,7 @@
 	<%= l @project.date %>
 </p>
 <h1></h1>
-<%= h_sylrplm_tree %>
+<%= h_show_tree %>
 <h1></h1>
 <%= render(:partial => "shared/object_workitems", :object =>@project) %>
 
@@ -65,7 +65,12 @@
 </table>
 <table class='menu_bas'>
 	<tr>
-		<td> <%= link_to h_img_add_forum.to_s+t("add_forum"), :id => @project.id, :action => :new_forum %></td>
+		<% unless @relations["forum"].count==0 %>
+		<% form_for(@project, :url => {:id => @project.id, :action => :new_forum }) do |f| %> 
+		<td> <%= select("relation","forum", options_from_collection_for_select( @relations["forum"], :id, :name)) %></td>
+		<td><%= submit_tag t("add_forum") %></td>
+		<% end %>
+		<% end %>
 		<td> <%= link_to t("edit"), edit_project_path(@project) %></td>
 		<td> <%= link_to t("new_project"), new_project_path %></td>
 		<td> <%= link_to t("list"), projects_path %></td>

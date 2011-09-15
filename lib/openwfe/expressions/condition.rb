@@ -94,7 +94,12 @@ module OpenWFE
         conditional = lookup_attribute(attname, workitem)
         rconditional = lookup_attribute("r#{attname.to_s}", workitem)
 
-        return do_eval(rconditional, workitem) \
+       #puts __FILE__+"."+__method__.to_s+" workitem="+workitem.inspect
+       #puts __FILE__+"."+__method__.to_s+" attname="+attname.to_s
+       #puts __FILE__+"."+__method__.to_s+" conditional="+conditional.to_s
+       #puts __FILE__+"."+__method__.to_s+" rconditional="+rconditional.to_s
+
+         return do_eval(rconditional, workitem) \
           if rconditional and not conditional
 
         return nil if conditional.nil?
@@ -103,6 +108,8 @@ module OpenWFE
 
         r = eval_set(conditional)
         return r if r != nil
+       
+      #puts __FILE__+"."+__method__.to_s+" do_val="+do_eval(conditional, workitem)
 
         begin
           return to_boolean(do_eval(conditional, workitem))
@@ -155,6 +162,7 @@ module OpenWFE
         r = ! (o == nil || o == false || o == 'false' || o == '')
 
         ldebug { "to_boolean() o is _#{o}_ => #{r}" }
+        #puts __FILE__+"."+__method__.to_s+" to_boolean() o is _#{o}_ => #{r}" 
 
         r
       end

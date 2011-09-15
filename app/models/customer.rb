@@ -32,7 +32,9 @@ class Customer < ActiveRecord::Base
   def link_attributes=(att)
     @link_attributes = att
   end
-
+  def link_attributes
+    @link_attributes
+  end
   # modifie les attributs avant edition
   def self.find_edit(object_id)
     obj=find(object_id)

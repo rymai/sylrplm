@@ -66,8 +66,8 @@ module Models::SylrplmCommon
       recordset=self.paginate(:page => params[:page],
       :conditions => conditions,
       :order => params[:sort],
-      :per_page => params[:nb_items])
-      {:recordset=>recordset, :query=>params[:query], :page => params[:page], :total=>self.count(:conditions=>conditions), :nb_items=>params[:nb_items], :conditions=>conditions}
+      :per_page => params[:nb_items])     
+      {:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
     end
   end
 
@@ -95,12 +95,12 @@ module Models::SylrplmCommon
     end
   end
 
-  def model_name()
+  def model_name
     # Part devient part
    self.class.name.downcase
   end
   
-  def controller
+  def controller_name
     # Part devient parts
    self.class.name.downcase+"s"
   end
@@ -108,8 +108,8 @@ module Models::SylrplmCommon
   def get_object(type, id)
     # parts devient Part
     name=self.class.name+"."+__method__.to_s+":"
-    #puts name+type+"."+id.to_s
-    mdl=eval type.capitalize
+    puts name+type.camelize+"."+id.to_s
+    mdl=eval type.camelize
     begin
       ret=mdl.find(id)
     rescue Exception => e
@@ -157,7 +157,7 @@ module Models::SylrplmCommon
   
   def get_model(model_name)
     begin
-      ret=eval model_name.capitalize
+      ret=eval model_name.camelize
       rescue Exception => e
         LOG.warn("failed to find "+model_name+" : #{e}")
         ret=nil

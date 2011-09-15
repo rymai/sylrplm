@@ -59,8 +59,7 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
 
   #TODO syl
   #h[:engine_class] ||= OpenWFE::FsPersistedEngine
-
-  h[:engine_class] = OpenWFE::Extras::DbPersistedEngine
+  h[:engine_class] ||= OpenWFE::Extras::DbPersistedEngine
 
   unless h[:logger]
     h[:logger] = ActiveSupport::BufferedLogger.new("#{RAILS_ROOT}/log/ruote_#{RAILS_ENV}.log")

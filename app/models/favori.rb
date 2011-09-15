@@ -17,7 +17,11 @@ class Favori
     end
     #puts "favori.add:"+@items.inspect
   end
-
+  
+  def remove(obj)
+    @items[obj.model_name].remove(obj)
+  end
+  
   def reset(type=nil)
     unless type.nil?
       @items[type]=nil

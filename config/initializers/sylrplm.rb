@@ -7,8 +7,12 @@ module SYLRPLM
   TIME_ZONE_DEFAULT        = 1
   THEME_DEFAULT            = "blackwhite"
   NB_ITEMS_PER_PAGE        = 30
+  CONSULTANT_GROUP_NAME    = 'consultants'
+  CONSULTANT_USER_NAME     = 'consultant'
+  CONSULTANT_ROLE          = 'consultant'
   ADMIN_GROUP_NAME         = 'admins'
-  ADMIN_USER_NAME         = 'admin'
+  ADMIN_USER_NAME          = 'admin'
+  ADMIN_ROLE               = 'admin'
   # chargement initial, voir PlmInitControllerModule
   DIR_DOMAINS = "#{Rails.root}/db/fixtures/domains/"
   DIR_ADMIN   = "#{Rails.root}/db/fixtures/admin/"

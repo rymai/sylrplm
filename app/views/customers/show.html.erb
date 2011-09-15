@@ -32,7 +32,7 @@
     <%= l @customer.date %>
 </p>
 <h1></h1>
-<%= h_sylrplm_tree %>
+<%= h_show_tree %>
 
 <%= render(:partial => "shared/object_workitems", :object =>@customer) %>
 
@@ -65,9 +65,13 @@
         <h1></h1>
         <table class='menu_bas'>
             <tr>
-                <td>
-                    <%= link_to h_img_add_forum.to_s+t("add_forum"), :action => :new_forum , :id => @customer.id %>
-                </td>
+                
+								<% unless @relations["forum"].count==0 %>
+								<% form_for(@customer, :url => {:id => @customer.id, :action => :new_forum }) do |f| %> 
+									<td> <%= select("relation","forum", options_from_collection_for_select( @relations["forum"], :id, :name)) %></td>
+									<td><%= submit_tag t("add_forum") %></td>
+								<% end %>                
+								<% end %>		
                 <td>
                     <%= link_to t("edit"), edit_customer_path(@customer) %>
                 </td>

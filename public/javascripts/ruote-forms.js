@@ -10,6 +10,7 @@
  *
  *  John Mettraux
  */
+
 var RuoteForms = function() {
 
 	// TODO
@@ -18,29 +19,32 @@ var RuoteForms = function() {
 	// - rform_number validate onblur
 
 	var CONFIG = {
-		'img_moveup': '/images/btn-moveup.gif',
-		'img_movedown': '/images/btn-movedown.gif',
-		'img_cut': '/images/btn-cut.gif',
-		'img_change': '/images/btn-change.gif',
-		'img_add': '/images/btn-add.gif'
+		'img_moveup' : '/images/btn-moveup.gif',
+		'img_movedown' : '/images/btn-movedown.gif',
+		'img_cut' : '/images/btn-cut.gif',
+		'img_change' : '/images/btn-change.gif',
+		'img_add' : '/images/btn-add.gif'
 	}
 
 	//
 	// misc
 
 	function escapeHtml(s) {
-		return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;').replace(/"/g, '&quot;');
+		return s
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/'/g, '&#39;')
+		.replace(/"/g, '&quot;');
 	}
 
 	function toArray(a) {
 		var aa = [];
-		if (a.length) {
-			for (var i = 0; i < a.length; i++) {
-				aa.push(a[i]);
+		if(a.length) {
+			for(var i = 0; i < a.length; i++) { aa.push(a[i]);
 			}
 		} else {
-			for (var i in a) {
-				aa.push(a[i]);
+			for(var i in a) { aa.push(a[i]);
 			}
 		}
 		return aa;
@@ -53,31 +57,28 @@ var RuoteForms = function() {
 
 	function hclone(h) {
 		var n = {};
-		for (var k in h) {
+		for(var k in h) {
 			n[k] = h[k];
 		}
 		return n;
 	}
 
 	function byId(id) {
-		return ((typeof id) == 'string') ? document.getElementById(id) : id;
+		return (( typeof id) == 'string') ? document.getElementById(id) : id;
 	}
 
 	function clean(elt) {
-		while (elt.firstChild != null)
-			elt.removeChild(elt.firstChild);
+		while(elt.firstChild != null)elt.removeChild(elt.firstChild);
 	}
 
 	function create(container, tag, attributes, content) {
-		//alert( 'create:att='+attributes+' content='+content)
-		if (!attributes)
+		if(!attributes)
 			attributes = {};
 		var e = document.createElement(tag);
-		if (content)
+		if(content)
 			e.innerHTML = content;
-		for (var k in attributes)
-			e.setAttribute(k, attributes[k]);
-		if (container)
+		for(var k in attributes)e.setAttribute(k, attributes[k]);
+		if(container)
 			container.appendChild(e);
 		return e;
 	}
@@ -88,7 +89,7 @@ var RuoteForms = function() {
 	function moveUp() {
 		this.stack();
 		var ps = this.previousSibling;
-		if (!ps)
+		if(!ps)
 			return;
 		this.parentNode.insertBefore(this, ps);
 	}
@@ -96,10 +97,10 @@ var RuoteForms = function() {
 	function moveDown() {
 		this.stack();
 		var ns = this.nextSibling;
-		if (!ns)
+		if(!ns)
 			return;
 		var nns = ns.nextSibling;
-		if (nns)
+		if(nns)
 			this.parentNode.insertBefore(this, nns);
 		else
 			this.parentNode.appendChild(this);
@@ -116,9 +117,9 @@ var RuoteForms = function() {
 	// like the ruby inject, but 'return target' is implied
 	//
 	function inject(target, func) {
-		for (var i in this) {
+		for(var i in this) {
 			var e = this[i];
-			if ((typeof e) == 'function')
+			if(( typeof e) == 'function')
 				continue;
 			func(target, this[i]);
 		}
@@ -127,13 +128,13 @@ var RuoteForms = function() {
 
 	function childrenOfClass(container, className) {
 		var a = [];
-		for (var i in container.childNodes) {
+		for(var i in container.childNodes) {
 			var n = container.childNodes[i];
-			if (!n)
+			if(!n)
 				continue;
-			if (n.nodeType != 1)
+			if(n.nodeType != 1)
 				continue;
-			if (n.className != className)
+			if(n.className != className)
 				continue;
 			a.push(n);
 		}
@@ -149,11 +150,11 @@ var RuoteForms = function() {
 	}
 
 	function rformChild(container) {
-		for (var i in container.childNodes) {
+		for(var i in container.childNodes) {
 			var n = container.childNodes[i];
-			if (n.nodeType != 1)
+			if(n.nodeType != 1)
 				continue;
-			if (n.className.match(/rform\_/))
+			if(n.className.match(/rform\_/))
 				return n;
 		}
 		return null;
@@ -161,44 +162,44 @@ var RuoteForms = function() {
 
 	function toObject() {
 		var type = this.className.match(/rform\_([^ ]*)/)[1];
-		if (type == 'array') {
+		if(type == 'array') {
 			return childrenOfClass(this, 'rform_item').inject([], function(a, i) {
 				var v = i.toObject();
-				if (v != EmptyItem)
+				if(v != EmptyItem)
 					a.push(v);
 			});
 		}
-		if (type == 'item' || type == 'key' || type == 'value') {
+		if(type == 'item' || type == 'key' || type == 'value') {
 			var c = rformChild(this);
 			return c ? c.toObject() : null;
 		}
-		if (type == 'hash') {
+		if(type == 'hash') {
 			var h = {};
-			childrenOfClass(this, 'rform_entry').map( function(e) {
+			childrenOfClass(this, 'rform_entry').map(function(e) {
 				var entry = e.toObject();
 				var k = entry[0];
 				var v = entry[1];
-				if (v != EmptyItem)
+				if(v != EmptyItem)
 					h[k] = v;
 			});
 			return h;
 		}
-		if (type == 'entry') {
+		if(type == 'entry') {
 			return [childOfClass(this, 'rform_key').toObject(), childOfClass(this, 'rform_value').toObject()];
 		}
-		if (type == 'string') {
+		if(type == 'string') {
 			return this.firstChild.value;
 		}
-		if (type == 'number') {
+		if(type == 'number') {
 			return (new Number(this.firstChild.value)).valueOf();
 		}
-		if (type == 'boolean') {
+		if(type == 'boolean') {
 			return this.firstChild.checked;
 		}
-		if (type == 'new') {
+		if(type == 'new') {
 			return EmptyItem;
 		}
-		//alert("unknown type '" + type + "'");
+		alert("unknown type '" + type + "'");
 	}
 
 	function rcreate(container, tag, attributes, content) {
@@ -215,7 +216,7 @@ var RuoteForms = function() {
 	// undo / copy / paste / reset
 
 	function findRoot(elt) {
-		if (elt.className.match(/rform_root/))
+		if(elt.className.match(/rform_root/))
 			return elt;
 		return findRoot(elt.parentNode);
 	}
@@ -243,15 +244,15 @@ var RuoteForms = function() {
 	// focuses in the first input thing found in this element
 	//
 	function focusIn(elt) {
-		if (elt.nodeName.toLowerCase() == 'input') {
+		if(elt.nodeName.toLowerCase() == 'input') {
 			elt.focus();
 			return true;
 		}
-		for (var i in elt.childNodes) {
+		for(var i in elt.childNodes) {
 			var n = elt.childNodes[i];
-			if (n.nodeType != 1)
+			if(n.nodeType != 1)
 				continue;
-			if (focusIn(n))
+			if(focusIn(n))
 				return true;
 		}
 		return false;
@@ -274,22 +275,22 @@ var RuoteForms = function() {
 
 	function addItemButtons(elt) {
 		var e = create(elt, 'div', {
-			'class': 'rform_buttons',
+			'class' : 'rform_buttons',
 		});
 		create(e, 'img', {
-			'src': CONFIG.img_moveup,
-			'onclick': 'this.parentNode.parentNode.moveUp(); return false;'
+			'src' : CONFIG.img_moveup,
+			'onclick' : 'this.parentNode.parentNode.moveUp(); return false;'
 		});
 		create(e, 'img', {
-			'src': CONFIG.img_movedown,
-			'onclick': 'this.parentNode.parentNode.moveDown(); return false;'
+			'src' : CONFIG.img_movedown,
+			'onclick' : 'this.parentNode.parentNode.moveDown(); return false;'
 		});
 		create(e, 'img', {
-			'src': CONFIG.img_cut,
-			'onclick': 'this.parentNode.parentNode.cut(); return false;'
+			'src' : CONFIG.img_cut,
+			'onclick' : 'this.parentNode.parentNode.cut(); return false;'
 		});
 		var ec = create(e, 'img', {
-			'src': CONFIG.img_change
+			'src' : CONFIG.img_change
 		});
 		ec.onclick = function() {
 			var target = this.parentNode.parentNode;
@@ -308,10 +309,10 @@ var RuoteForms = function() {
 
 	function addArrayButtons(elt) {
 		var e = create(elt, 'div', {
-			'class': 'rform_buttons',
+			'class' : 'rform_buttons',
 		});
 		var ea = create(e, 'img', {
-			'src': CONFIG.img_add
+			'src' : CONFIG.img_add
 		});
 		ea.onclick = function() {
 			return addToCollection(render_item(e.parentNode, EmptyItem, {}));
@@ -320,14 +321,14 @@ var RuoteForms = function() {
 
 	function addEntryButtons(elt) {
 		var e = create(elt, 'div', {
-			'class': 'rform_buttons',
+			'class' : 'rform_buttons',
 		});
 		create(e, 'img', {
-			'src': CONFIG.img_cut,
-			'onclick': 'this.parentNode.parentNode.cut(); return false;'
+			'src' : CONFIG.img_cut,
+			'onclick' : 'this.parentNode.parentNode.cut(); return false;'
 		});
 		var ec = create(e, 'img', {
-			'src': CONFIG.img_change
+			'src' : CONFIG.img_change
 		});
 		ec.onclick = function() {
 			var target = this.parentNode.parentNode;
@@ -340,10 +341,10 @@ var RuoteForms = function() {
 
 	function addHashButtons(elt) {
 		var e = create(elt, 'div', {
-			'class': 'rform_buttons',
+			'class' : 'rform_buttons',
 		});
 		var ea = create(e, 'img', {
-			'src': CONFIG.img_add
+			'src' : CONFIG.img_add
 		});
 		ea.onclick = function() {
 			var ne = render_entry(e.parentNode, ['', EmptyItem], {});
@@ -354,9 +355,8 @@ var RuoteForms = function() {
 	}
 
 	function render_item(elt, data, options) {
-		//alert('render_item:data='+data)
 		var ei = rcreate(elt, 'div', {
-			'class': 'rform_item'
+			'class' : 'rform_item'
 		});
 		render(ei, data, options);
 		addItemButtons(ei);
@@ -365,11 +365,9 @@ var RuoteForms = function() {
 
 	function render_array(elt, data, options) {
 		var e = rcreate(elt, 'div', {
-			'class': 'rform_array'
+			'class' : 'rform_array'
 		});
-		//alert('render_array:data='+data[0]+"="+data[1])
-		for (var i = 0; i < data.length; i++) {
-			render_item(e, data[i], options);
+		for(var i = 0; i < data.length; i++) { render_item(e, data[i], options);
 		}
 		addArrayButtons(e);
 		return e;
@@ -377,37 +375,30 @@ var RuoteForms = function() {
 
 	function render_entry(elt, data, options) {
 		var e = rcreate(elt, 'div', {
-			'class': 'rform_entry'
+			'class' : 'rform_entry'
 		});
 		var ek = rcreate(e, 'div', {
-			'class': 'rform_key'
+			'class' : 'rform_key'
 		});
 		var ev = rcreate(e, 'div', {
-			'class': 'rform_value'
+			'class' : 'rform_value'
 		});
 		addEntryButtons(e);
-		//alert('render_entry:data=' + data[0] + "=" + data[1]+":"+data[0].charAt(0))
-		if (data[0].charAt(0) == '/') {
-			render_link(ek, data, options);
-		} else {
-			render(ek, data[0], options);
-			var evv = render(ev, data[1], options);
-		}
+		//syl ajout
+		options['read-only'] = true;
+		render(ek, data[0], options);
+		//syl ajout
+		options['read-only'] = false;
+		var evv = render(ev, data[1], options);
 		return e;
 	}
 
 	function render_object(elt, data, options) {
 		var e = rcreate(elt, 'div', {
-			'class': 'rform_hash'
+			'class' : 'rform_hash'
 		});
-		//var ks = [];
-		//for (var kk in data) {
-		//ks.push(kk);
-		//};
-		//ks = ks.sort();
-		for (var k in data) {
-			// alert('render_object:data='+data[k][0]+"="+data[k][1]);
-			render_entry(e, [k, data[k]], options);
+		//var ks = []; for (var kk in data) { ks.push(kk); }; ks = ks.sort();
+		for(var k in data) { render_entry(e, [k, data[k]], options);
 		}
 		addHashButtons(e);
 		return e;
@@ -416,16 +407,16 @@ var RuoteForms = function() {
 	function render_boolean(elt, data, options) {
 		var n = Math.random().toString();
 		var e = rcreate(elt, 'div', {
-			'class': 'rform_boolean'
+			'class' : 'rform_boolean'
 		});
 		var et = rcreate(e, 'input', {
-			'type': 'radio',
-			'name': n
+			'type' : 'radio',
+			'name' : n
 		});
 		var ett = rcreate(e, 'span', {}, 'true');
 		var ef = rcreate(e, 'input', {
-			'type': 'radio',
-			'name': n
+			'type' : 'radio',
+			'name' : n
 		});
 		var eff = rcreate(e, 'span', {}, 'false');
 		ett.onclick = function() {
@@ -434,7 +425,7 @@ var RuoteForms = function() {
 		eff.onclick = function() {
 			ef.checked = true;
 		}
-		if (data)
+		if(data)
 			et.checked = true;
 		else
 			ef.checked = true;
@@ -443,8 +434,8 @@ var RuoteForms = function() {
 
 	function render_new_type(elt, label, initialValue) {
 		var e = rcreate(elt, 'a', {
-			'class': 'rform_new_type',
-			'href': ''
+			'class' : 'rform_new_type',
+			'href' : ''
 		}, label);
 		e.onclick = function() {
 			var enew = this.parentNode;
@@ -458,7 +449,7 @@ var RuoteForms = function() {
 
 	function render_new(elt, options) {
 		var e = rcreate(elt, 'div', {
-			'class': 'rform_new'
+			'class' : 'rform_new'
 		});
 		render_new_type(e, 'string', '');
 		render_new_type(e, 'number', 0);
@@ -475,70 +466,69 @@ var RuoteForms = function() {
 	}
 
 	function render_string(elt, data, options) {
-		//alert('render_string:data='+data)
+		//alert('render_string:data='+data+':'+data.length)
 		var klass = options['class'] || 'rform_string';
 		var e = rcreate(elt, 'span', {
-			'class': klass
+			'class' : klass
 		});
-		if (options['read-only'])
-			e.innerHTML = escapeHtml(data);
-		else if (data.match(/\n/))
-			create(e, 'textarea', {
-				'type': 'text'
-			}, data);
-		else {
-			if(data.length<15)
-				create(e, 'input', {
-					'type': 'text',
-					'value': data
-				});
-			else
-				create(e, 'textarea', {
-					'type': 'text'
-				}, data);
+		opt = {}
+		//e.innerHTML = escapeHtml(data);
+		if(options['read-only'])
+			opt['readonly'] = 'true';
+		if(data.match(/\n/)) {
+			opt['type']='text';
+			create(e, 'textarea', opt, data);
+		} else {
+			if(data.length < 22) {
+				opt['type']='text';
+				opt['value']=data;
+				create(e, 'input', opt);
+			} else {
+				opt['type']='text';
+				create(e, 'textarea', opt, data);
+			}
 		}
 		return e;
 	}
 
-	function render_link(elt, data, options) {
-		//alert('render_link:data='+data)
+	function render_string_old(elt, data, options) {
 		var klass = options['class'] || 'rform_string';
 		var e = rcreate(elt, 'span', {
-			'class': klass
+			'class' : klass
 		});
-		create(e, 'A', {
-			'href': data[0]
-		}, data[1]);
+		if(options['read-only'])
+			e.innerHTML = escapeHtml(data);
+		else if(data.match(/\n/))
+			create(e, 'textarea', {
+				'type' : 'text'
+			}, data);
+		else
+			create(e, 'input', {
+				'type' : 'text',
+				'value' : data
+			});
 		return e;
 	}
 
 	function render(elt, data, options) {
-//alert('render:data='+data.length)
-		if (data == EmptyItem || data == null)
+		if(data == EmptyItem || data == null)
 			return render_new(elt, options);
-		var t = data['__class'] || (typeof data);
-
-		if (t == 'object') {
+		var t = data['__class'] || ( typeof data);
+		if(t == 'object') {
 			var l = data.length;
-			if (l || l == 0)
+			if(l || l == 0)
 				t = 'array';
 		}
-		//alert('render:class=' + t+":"+data.length)
 		var f = eval('render_' + t);
-
 		return f.call(null, elt, data, options);
 	}
 
-	// fonction appellee par _ruote_forms.rb
 	function renderForm(container, data, options) {
-
-		
 		container = byId(container);
-//alert('renderForm:data=' + data.length+' cont='+container)
-		if (!container.className.match(/rform_root/))
-			container.className = container.className + ' rform_root';
 
-		if (!options)
+		if(! container.className.match(/rform_root/))
+			container.className = container.className + ' rform_root';
+		if(!options)
 			options = {};
 
 		clean(container);
@@ -546,7 +536,7 @@ var RuoteForms = function() {
 		container.originalData = data;
 		container.originalOptions = options;
 		container.stack = [];
-		
+
 		render(container, data, options);
 	}
 
@@ -556,10 +546,10 @@ var RuoteForms = function() {
 	}
 
 	return {
-		CONFIG: CONFIG,
-		renderForm: renderForm,
-		resetForm: resetForm,
-		toJson: toJson,
-		undo: undo
+		CONFIG : CONFIG,
+		renderForm : renderForm,
+		resetForm : resetForm,
+		toJson : toJson,
+		undo : undo
 	};
 }();

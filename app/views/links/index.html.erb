@@ -4,24 +4,24 @@
 <%= will_paginate(@links[:recordset]) %>
 <table>
 	<tr>
+		<th>Father plm type</th>
+		<th>Child plm type</th>
 		<th>Father type</th>
 		<th>Child type</th>
 		<th>Father</th>
 		<th>Child</th>
 		<th>Name</th>
-		<th>Designation</th>
-		<th>Description</th>
 		<th>Responsible</th>
 	</tr>
 	<% @links[:recordset].each do |link| %>
 	<tr>
-		<td><%= h link.father_type %></td>
-		<td><%= h link.child_type %></td>
+		<td><%= h link.father_plmtype %></td>
+		<td><%= h link.child_plmtype %></td>
+		<td><%= h link.father_type_id %></td>
+		<td><%= h link.child_type_id %></td>
 		<td><%= h link.father_id %></td>
 		<td><%= h link.child_id %></td>
-		<td><%= h link.name %></td>
-		<td><%= h link.designation %></td>
-		<td><%= h link.description %></td>
+		<td><%= h link.relation.name %></td>
 		<td><%= h link.responsible %></td>
 		<td><%= link_to 'Show', link %></td>
 		<td><%= link_to 'Edit', edit_link_path(link) %></td>

@@ -42,12 +42,13 @@ class Tree < Node
       make(tn)   
     end
        
-    "<script>\nd = new dTree('d');\n#{@buffer_nodes}document.write(d);\n</script>"
+    #syl "<script>\nd = new dTree('d');\n#{@buffer_nodes}document.write(d);\n</script>"
+    "<script>\n#{@options[:js_name]} = new dTree('#{@options[:js_name]}');\n#{@buffer_nodes}document.write(#{@options[:js_name]});\n</script>"
   end
 
    
   def append(n)
-    @buffer_nodes+="d.add(#{n.id},#{n.parent},'#{n.label}',\"#{n.url}\",'#{n.event_name}','#{n.title}','#{n.target}','#{n.icon}','#{n.icon_open}',#{n.open});\n"
+    @buffer_nodes+="#{@options[:js_name]}.add(#{n.id},#{n.parent},'#{n.label}',\"#{n.url}\",'#{n.event_name}','#{n.title}','#{n.target}','#{n.icon}','#{n.icon_open}',#{n.open});\n"
   end
   
   def Tree.for(path)

@@ -28,11 +28,14 @@ class Part < ActiveRecord::Base
 
   has_many :links_parts, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='part' and child_plmtype='part'"]
   has_many :parts , :through => :links_parts
+  
+  has_many :links_parts_up, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='part' and child_plmtype='part'"]
+  has_many :parts_up , :through => :links_parts_up
 
-  has_many :links_projects, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='project' and child_plmtype='part'"]
+  has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='part'"]
   has_many :projects , :through => :links_projects
 
-  has_many :links_customers, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='customer' and child_plmtype='part'"]
+  has_many :links_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='part'"]
   has_many :customers , :through => :links_customers
 
   def to_s
@@ -55,7 +58,9 @@ class Part < ActiveRecord::Base
   def link_attributes=(att)
     @link_attributes = att
   end
-
+  def link_attributes
+    @link_attributes
+  end
   # modifie les attributs avant edition
   def self.find_edit(object_id)
     obj=find(object_id)
@@ -86,46 +91,8 @@ class Part < ActiveRecord::Base
     :conditions => ["object = 'part'"])
   end
 
-  def self.find_all
-    find(:all, :order=>"ident")
-  end
-
-  def self.find_others(part_id)
-    find(:all,
-    :conditions => ["id != #{part_id}"],
-    :order=>"ident")
-  end
-
-  def add_documents_from_favori(favori)
-    favori.items.each do |item|
-      documents << item
-    end
-  end
-
-  def remove_documents()
-    documents =nil
-  end
-
-  def remove_document(document)
-    documents.delete( document)
-  end
-
-  def add_projects_from_favori(favori)
-    favori.items.each do |item|
-      projects << item
-    end
-  end
-
-  def remove_projects()
-    projects =nil
-  end
-
-  def remove_project(item)
-    projects.delete( item)
-  end
-
-  def find_last_revision(object)
-    Part.find(:last, :order=>"revision ASC",  :conditions => ["ident = '#{object.ident}'"])
+  def last_revision
+    Part.find(:last, :order=>"revision ASC",  :conditions => ["ident = '#{ident}'"])
   end
 
   def promote
@@ -143,8 +110,8 @@ class Part < ActiveRecord::Base
       filter ] unless filter.nil?
   end
 
-  def consume(workitem)
-    puts self.Class.name+".consume"
+  def consume_obsolete(workitem)
+    #puts self.Class.name+".consume"
     h = workitem.to_h
     h['fei'] = workitem.fei.sid
     File.open("worklist/workitem_#{workitem.fei.sid}.yaml", wb) do |f|
