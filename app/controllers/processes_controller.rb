@@ -201,7 +201,7 @@ class ProcessesController < ApplicationController
       opts[:page]=nil
       opts[:conditions]="wfid = '"+params[:id]+"' and event = 'proceeded'" #TODO
       #puts name+" opts="+opts.inspect
-      history = OpenWFE::Extras::HistoryEntry.paginate(opts)
+      history = Ruote::Sylrplm::HistoryEntry.paginate(opts)
       render(
       :text => "var #{var} = #{history.last.tree};",
       :content_type => 'text/javascript')

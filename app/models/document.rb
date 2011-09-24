@@ -12,6 +12,7 @@ class Document < ActiveRecord::Base
   belongs_to :statusobject
   belongs_to :owner,
   :class_name => "User"
+  belongs_to :group
 
   has_many :datafile
   has_many :checks
@@ -41,6 +42,7 @@ class Document < ActiveRecord::Base
       doc.set_default_values(true)
     end
     doc.owner=user
+    doc.group=user.group
     doc.statusobject = Statusobject.get_first("document")
     doc
   end
@@ -128,12 +130,8 @@ class Document < ActiveRecord::Base
     self.statusobject.rank == Statusobject.get_last("document").rank
   end
   
-  # a valider si avant dernier status
-  def is_to_validate
-    !(self.statusobject.nil? || Statusobject.get_last("document").nil?) &&
-    self.statusobject.rank == Statusobject.get_last("document").rank-1
-  end
-
+  
+  
   def self.get_types_document
     Typesobject.find(:all, :order=>"name",
     :conditions => ["object = 'document'"])

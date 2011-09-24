@@ -45,7 +45,7 @@ class HistoryController < ApplicationController
     unless cs.first.empty?
     #puts "HistoryController.index:opts="+opts.inspect
     @all = (opts[:conditions] == nil)
-    @entries = OpenWFE::Extras::HistoryEntry.paginate(opts) 
+    @entries = Ruote::Sylrplm::HistoryEntry.paginate(opts) 
     @entries.each do |en|
       en.link_attributes={"relation"=>""}   
     end
@@ -55,7 +55,7 @@ class HistoryController < ApplicationController
   # GET /history
   # GET /history.xml
   def show
-    @entry = OpenWFE::Extras::HistoryEntry.find(params[:id])
+    @entry = Ruote::Sylrplm::HistoryEntry.find(params[:id])
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @entry }

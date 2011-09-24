@@ -12,6 +12,10 @@
     <td><%= t("label_group_users") %></td>
     <td><%= comma_list(@group.users, :login) %></td>
   </tr>
+  <tr>
+    <td><%= t("label_group_father") %></td>
+    <td><%= @group.father_name %></td>
+  </tr>
   
 </table>
 <table class='menu_bas'>
@@ -19,5 +23,6 @@
 <td><%= link_to t("edit"), edit_group_path(@group)  %></td>
 <td><%= link_to t("list"),  groups_path %></td>
 </tr>
-</table
+</table>
+<%= h_show_tree %>
 

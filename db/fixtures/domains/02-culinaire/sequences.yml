@@ -63,4 +63,42 @@
  value: DF0000000000
  utility: Datafile.ident
  modify: false
- sequence: true 
+ sequence: true
+ 
+  
+21: 
+    id: 21
+    value: 0
+    min: 
+    max: 
+    utility: Relation.cardin_occur_min
+    modify: 0
+    sequence: 0
+  
+22: 
+    id: 22
+    value: -1
+    min: 
+    max: 
+    utility: Relation.cardin_occur_max
+    modify: 0
+    sequence: 0
+  
+23: 
+    id: 23
+    value: 0
+    min: 
+    max: 
+    utility: Relation.cardin_use_min
+    modify: 0
+    sequence: 0
+  
+24: 
+    id: 24
+    value: -1
+    min: 
+    max: 
+    utility: Relation.cardin_use_max
+    modify: 0
+    sequence: 0
+   

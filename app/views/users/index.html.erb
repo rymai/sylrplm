@@ -14,6 +14,9 @@
 		<th>
 		<%= t(:label_role) %>
 		</th>
+		<th>
+		<%= t(:label_group) %>
+		</th>
 		<th <%= sort_td_class_helper "mail" %>
 		<%= sort_link_helper t(:label_email), "email" %>
 		</th>
@@ -46,11 +49,15 @@
 		<td><%if(user.role != nil) %>
 		<%= link_to user.role.title , user.role %>
 		<%end %></td>
+		<td><%if(user.group != nil) %>
+		<%= link_to user.group.name , user.group %>
+		<% else %>
+		<%=t(:msg_tobedefine)%><% end %></td>
 		<td> <%= user.email %></td>
 		<td> <% if(user.typesobject != nil) %>
-			<%= user.typesobject.name %>
-			<% end %>
-			</td>
+		<%= user.typesobject.name %>
+		<% end %>
+		</td>
 		<td> <%= user.language %></td>
 		<td> <%= link_to user.volume.name, user.volume unless user.volume.nil? %></td>
 		<td> <%= user.theme %></td>

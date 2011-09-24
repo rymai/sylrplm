@@ -2,14 +2,14 @@ class User < ActiveRecord::Base
   include Models::SylrplmCommon
 
   attr_accessor :designation, :password, :password_confirmation
-  #
   attr_accessor :link_attributes
   #
-  has_and_belongs_to_many :roles
   belongs_to :role
+  belongs_to :group
   belongs_to :volume
   belongs_to :typesobject
   has_many :user_groups, :dependent => :delete_all
+  has_and_belongs_to_many :roles
   has_many :groups, :through => :user_groups
   
   has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='user'"]
@@ -204,7 +204,7 @@ class User < ActiveRecord::Base
   def v_time_zone
     @time_zone ||= (self.time_zone.blank? ? nil : ActiveSupport::TimeZone[self.time_zone])
   end
-
+  
   private
 
   def create_new_salt

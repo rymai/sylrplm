@@ -7,6 +7,9 @@
 		<label for="role"> <%= t(:label_role) %> </label>
 		<%= form.collection_select(:role_id, @roles, :id, :title, :options => {}, :selected => @current_user.role_id) %>
 		<br/>
+		<label for="group"> <%= t(:label_group) %> </label>
+		<%= form.collection_select(:group_id, @groups, :id, :name, :options => {}, :selected => @current_user.group_id) %>
+		<br/>
 	</fieldset>
 	<table class='menu_bas'>
 		<tr>

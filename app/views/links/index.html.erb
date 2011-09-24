@@ -12,6 +12,7 @@
 		<th>Child</th>
 		<th>Name</th>
 		<th>Responsible</th>
+		<th>Group</th>
 	</tr>
 	<% @links[:recordset].each do |link| %>
 	<tr>
@@ -22,7 +23,8 @@
 		<td><%= h link.father_id %></td>
 		<td><%= h link.child_id %></td>
 		<td><%= h link.relation.name %></td>
-		<td><%= h link.responsible %></td>
+		<td><%= h link.owner.login %></td>
+		<td><%= h link.group.name %></td>
 		<td><%= link_to 'Show', link %></td>
 		<td><%= link_to 'Edit', edit_link_path(link) %></td>
 		<td><%= link_to 'Destroy', link, :confirm => 'Are you sure?', :method => :delete %></td>

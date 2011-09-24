@@ -6,6 +6,10 @@ class Link < ActiveRecord::Base
 
   belongs_to :relation
 
+  belongs_to :owner,
+    :class_name => "User"
+  belongs_to :group
+  
   with_options :foreign_key => 'child_id' do |child|
     child.belongs_to :document , :conditions => ["child_plmtype='document'"], :class_name => "Document"
     child.belongs_to :part , :conditions => ["child_plmtype='part'"], :class_name => "Part"
@@ -33,6 +37,8 @@ class Link < ActiveRecord::Base
   
   def self.create_new_by_values(values)
     link = Link.new(values)
+    link.owner=current_user
+    link.group=current_user.group
     msg="ctrl_link_"+link.ident
     ret={:link => link,:msg => msg}
     puts "link:create_new_by_values:"+ret.inspect
@@ -55,6 +61,8 @@ class Link < ActiveRecord::Base
         link.father_id = father.id
         link.child_id = child.id
         link.relation_id = relation.id
+        link.owner=current_user
+        link.group=current_user.group
         msg="ctrl_link_"+link.ident
       else
         link=nil
@@ -67,7 +75,6 @@ class Link < ActiveRecord::Base
       " "+child.model_name+"=="+relation.child_plmtype + \
       " "+father.typesobject.to_s+"=="+relation.father_type.to_s + \
       " "+child.typesobject.to_s+"=="+relation.child_type.to_s
-
     end 
     ret={:link => link,:msg => msg}
     puts "link:create_new:"+ret.inspect

@@ -159,4 +159,68 @@
   name: image
   description: fichier image (jpg,gif,bmp,...)
 
+87: 
+    id: 87
+    object: document
+    name: cdc
+    description: Cahier des charges
   
+88: 
+    id: 88
+    object: document
+    name: exb
+    description: Expression de besoin
+  
+89: 
+    id: 89
+    object: relation
+    name: exb_requirement
+    description: 
+  
+90: 
+    id: 90
+    object: relation
+    name: cdc_requirement
+    description: 
+  
+91: 
+    id: 91
+    object: user
+    name: virtuel
+    description: 
+  
+92: 
+    id: 92
+    object: user
+    name: personne physique
+    description: 
+  
+93: 
+    id: 93
+    object: definition
+    name: plm
+    description: 
+  
+94: 
+    id: 94
+    object: ar_workitem
+    name: ar_workitem
+    description: 
+  
+96: 
+    id: 96
+    object: syl_ar_workitem
+    name: syl_ar_workitem
+    description: 
+  
+97: 
+    id: 97
+    object: workitem
+    name: workitem
+    description: 
+  
+  
+
+  
+ 
+ 

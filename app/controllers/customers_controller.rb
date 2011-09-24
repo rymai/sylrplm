@@ -34,7 +34,7 @@ class CustomersController < ApplicationController
   def new
     @customer = Customer.create_new(nil, @current_user)
     @types    = Typesobject.get_types("customer")
-    @status   = Statusobject.find_for("customer")
+    @status   = Statusobject.find_for("customer", true)
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @customer }

@@ -35,7 +35,7 @@ class Ruote::PlmParticipant
         fexpid=workitem.flow_expression_id
         #puts "PlmParticipant.consume:instance_id:"+fexpid.workflow_instance_id
         #puts "PlmParticipant.consume:expression_id:"+fexpid.expression_id
-        arworkitem = OpenWFE::Extras::ArWorkitem.find_by_wfid(fexpid.workflow_instance_id)
+        arworkitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid(fexpid.workflow_instance_id)
         unless step == "exec" 
           #prise en compte des objets transmis par le ar_workitem
           unless arworkitem.field_hash.nil?

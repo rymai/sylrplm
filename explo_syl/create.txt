@@ -943,3 +943,11 @@ cmd="ruby script/generate scaffold relation name:string type:string designation:
 echo $cmd
 $cmd
 
+---
+--- recreer la base avec les migrations
+---
+rake db:drop
+rake db:create
+rake db:migrate
+
+

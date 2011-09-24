@@ -1,5 +1,5 @@
 <h1><%= t(:forum_new) %></h1>
-<% form_for( @forum, :url => { :controller => @object.controller,
+<% form_for( @forum, :url => { :controller => @object.controller_name,
 :action => "add_forum" ,
 :id => @object.id }, :method => :get ) do |f| %>
 <%= f.error_messages %>

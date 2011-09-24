@@ -1,6 +1,7 @@
 <h1><%= t(:hello) %></H1>
 <h2><%= t(:tit_language) %><%= I18n.locale.to_s %></h2>
-<h2><%= t(:datas_in_database) %></h2>
+
+<% unless User.count == 0 %> <h2><%= t(:datas_in_database) %></h2>
 <table>
 	<% @datas.each do |key,value| %>
 	<tr>
@@ -8,7 +9,6 @@
 		<td> <%= t("ctrl_#{key}") %></td>
 	</tr>
 	<% end %>
-	
 </table>
 <hr>
 <%= h_help_all %>
@@ -28,3 +28,29 @@
 	<%end %>
 	<% end %>
 </table>
+<% else %>
+
+<% unless @domains.nil? %>
+<% form_tag do |f| %>
+<fieldset>
+	<legend>
+		<%= t(:ctrl_init_to_do) %>
+	</legend>
+	<label for="domain"> <%= t(:label_domain) %> </label>
+	<%= select_tag("domain", @domains) %>
+	<br/>
+	<label for="directory"> <%= t(:label_directory) %> </label>
+	<%= text_field_tag :directory, @directory %>
+	<br/>
+</fieldset>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= submit_tag t(:submit_create_domain) %></td>
+	</tr>
+</table>
+<% end %>
+<hr>
+<%= h_help("help_init_db")[:text] %>
+<%end %>
+
+<% end %> 

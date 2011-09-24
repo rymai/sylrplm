@@ -1,7 +1,33 @@
-admins:
-  id: 1
-  name: Admins
+admins: 
+    id: 1
+    name: admins
+     
+marketing: 
+    id: 2
+    name: marketing
+  
+validers: 
+    id: 4
+    name: validers
+  
+SICM: 
+    id: 5
+    name: SICM
+  
+BE: 
+    id: 6
+    name: BE
+  
+BM: 
+    id: 7
+    name: BM
+  
+consultants: 
+    id: 8
+    name: consultants
+  
+creators: 
+    id: 9
+    name: creators
+  
 
-a_team:
-  id: 2
-  name: Team A

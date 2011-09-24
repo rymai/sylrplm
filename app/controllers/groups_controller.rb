@@ -24,6 +24,7 @@
 
 
 class GroupsController < ApplicationController
+  include Controllers::PlmObjectControllerModule
   ###before_filter :login_required
 
   # GET /groups
@@ -47,7 +48,7 @@ class GroupsController < ApplicationController
   def show
 
     @group = Group.find(params[:id])
-
+    @tree  = build_tree(@group)
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @group }
@@ -134,6 +135,7 @@ class GroupsController < ApplicationController
     end
   end
 
+  
  
 end
 

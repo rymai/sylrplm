@@ -9,10 +9,10 @@
 		<%= t(:freeze) %>
 		<% else %>
 		<% if @part.statusobject.promote %>
-		<%= link_to t(:promote), :id => @part.id, :action => :promote , :confirm => t(:msg_confirm) %>
+		<%= link_to t(:promote), :id => @part.id, :action => :promote  %>
 		<% end %>
 		<% if @part.statusobject.demote %>
-		<%= link_to t(:demote), :id => @part.id, :action => :demote , :confirm => t(:msg_confirm) %>
+		<%= link_to t(:demote), :id => @part.id, :action => :demote  %>
 		<% end %>
 		<% end %> </td>
 		<td> <%= link_to t("explorer"), @part %> </td>

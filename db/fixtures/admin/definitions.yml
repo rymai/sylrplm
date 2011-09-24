@@ -21,9 +21,16 @@ leave:
   description: "may I leave the office ?"
   launch_fields: "{\"employee\":\"\",\"from_date\":\"\",\"to_date\":\"\",\"reason\":\"\"}"
 
-promote:
+revision:
   id: 5
-  name: promote
-  uri: /definitions/promote.rb
-  description: promotion
+  name: revision
+  uri: /definitions/revise.rb
+  description: Revision d un objet PLM
+  launch_fields: "{}"
+
+validation:
+  id: 6
+  name: validation
+  uri: /definitions/validation.rb
+  description: Validation d un objet PLM
   launch_fields: "{}"

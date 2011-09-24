@@ -4,7 +4,14 @@ class Check < ActiveRecord::Base
   #validates_uniqueness_of [:object,:object_id,:status]
 
   belongs_to :documents , :conditions => ["object='document'"]
-
+  belongs_to :out_user,
+    :class_name => "User"
+  belongs_to :in_user,
+    :class_name => "User"
+  belongs_to :out_group,
+    :class_name => "Group"
+  belongs_to :in_group,
+    :class_name => "Group"
   #status:
   # 0=unknown
   # 1=out
@@ -16,7 +23,7 @@ class Check < ActiveRecord::Base
 
   def self.create_new(object_cls, object, params, user)
     if(params)
-      # commit genere par le view 
+      # commit genere par le view
       params.delete("commit")
       params.delete("authenticity_token")
       params.delete("_method")
@@ -30,6 +37,7 @@ class Check < ActiveRecord::Base
     obj.object_id=object.id
     obj.status=1
     obj.out_user=user
+    obj.out_group=user.group
     obj.out_date=DateTime.now
     obj.set_default_values(true)
     obj
@@ -38,8 +46,9 @@ class Check < ActiveRecord::Base
   def checkIn(params, user)
     self.status=2
     self.in_user=user
+    self.in_group=user.group
     if(params)
-      # commit genere par le view 
+      # commit genere par le view
       params.delete("commit")
       params.delete("authenticity_token")
       params.delete("_method")
@@ -54,7 +63,7 @@ class Check < ActiveRecord::Base
     self.status=3
     self.in_user=user
     if(params)
-      # commit genere par le view 
+      # commit genere par le view
       params.delete("commit")
       params.delete("authenticity_token")
       params.delete("_method")

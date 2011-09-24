@@ -14,12 +14,14 @@
 			<th <%= sort_td_class_helper "name" %>>
 		<%= sort_link_helper t("label_name"), "name" %></th>
 		<th> <%= t("label_group_users") %></th>
+		<th> <%= t("label_group_father") %></th>
 		</tr>
 	</thead>
 	<% for group in @groups[:recordset] %>
 	<tr class='group'>
 		<td><%= group.name %></td>
 		<td><%= comma_list(group.users, :login) %></td>
+		<td><%= group.father_name %></td>
 		<td><%= link_to h_img_show.to_s, group_path(group) %> </td>
 		<td><%= link_to h_img_edit.to_s, edit_group_path(group) %> <td>
 		<td><%= link_to h_img_destroy.to_s, group, :confirm => t("msg_confirm"), :method => :delete %> </td>

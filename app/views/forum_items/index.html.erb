@@ -14,6 +14,7 @@
 		<th> <%= t(:label_subject) %> </th>
 		<th> <%= t(:label_parent) %> </th>
 		<th> <%= t(:label_author) %> </th>
+		<th> <%= t(:label_group) %> </th>
 	</tr>
 	<% @forum_items[:recordset].each do |forum_item| %>
 	<tr>
@@ -28,6 +29,7 @@
 		no parent<% end %> </td>
 		<td> <% if forum_item.author !=nil %>
 		<%= h forum_item.author.login %>
+		<%= h forum_item.group.name %>
 		<% else %>
 		no author<%end %> </td>
 		<td> <%= link_to h_img_show.to_s, forum_item %> </td>

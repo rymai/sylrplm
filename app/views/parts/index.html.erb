@@ -34,6 +34,9 @@
         <th<%= sort_td_class_helper "owner" %>>
           <%= sort_link_helper t("label_responsible"), "owner" %>
         </th>
+        <th<%= sort_td_class_helper "group" %>>
+          <%= sort_link_helper t("label_group"), "group" %>
+        </th>
         <th<%= sort_td_class_helper "date" %>>
           <%= sort_link_helper t("label_date"), "date" %>
         </th>
@@ -75,13 +78,16 @@
           <%= h part.owner.login %>
         </td>
         <td>
+          <%= h part.group.name %>
+        </td>
+        <td>
           <%= l part.date %>
         </td>
         <td>
           <%= link_to h_img_show.to_s, part %>
         </td>
         	<% if part.revisable?  %>
-          	<td><%= link_to h_img_revise.to_s, :id => part.id, :action => :revise , :confirm => t("msg_confirm") %></td>
+		<td> <%= h_img_revise.to_s %></td>
           	<td></td>
         	<% else %>
 						<% if part.frozen? == false %> 

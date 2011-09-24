@@ -314,6 +314,19 @@ module ApplicationHelper
     href
   end
 
+  #
+  # combo box: select able to return null value
+  #
+  def select_with_empty(form, object, attribute, values, id, method)
+    # id du select = role_father_id
+    select_id = object.model_name+'_'+attribute.to_s
+    html = javascript_include_tag "select_extensions"
+    html += "<p>#{t(:label_select_active)}</p>"
+    html += check_box_tag(:select_active, "no", "false", :onclick=>"selectActive(this, '#{select_id}'); return true;")
+    html += form.collection_select(attribute, values, id, method)
+    html
+  end
+  
   def select_inout(form, object, values, field)
     html = ""
     unless values.count == 0
@@ -332,7 +345,7 @@ module ApplicationHelper
       label_out=t("label_"+select_id+"_out")
       label_in=t("label_"+select_id+"_in")
       nb=[values.count+1, 10].min
-      html += javascript_include_tag "select_inout"
+      html += javascript_include_tag "select_extensions"
       html += "<div style='display: none;'>"
       html += form.collection_select(method, values, :id, field, {}, {:id => select_id, :size => nb, :multiple => :true, :name => select_name, :selected => the_selected})
       html += "</div>"

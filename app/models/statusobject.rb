@@ -18,8 +18,8 @@ class Statusobject < ActiveRecord::Base
     ret=["document","part","project","customer","forum"]
   end
   
-  def self.find_for(object)
-    Statusobject.order_default.find_all_by_object(object)
+  def self.find_for(object, only_promote=false)
+    Statusobject.order_default.find_all_by_object_and_promote(object,only_promote)
   end
   #  
   def self.get_first(object)

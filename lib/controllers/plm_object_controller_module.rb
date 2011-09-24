@@ -128,7 +128,7 @@ module Controllers::PlmObjectControllerModule
           validers=Role.get_validers
           if validers.length>0
             if object.save
-              if object.is_to_validate
+              if object.could_validate?
                 validersMail=PlmMailer.listUserMail(validers)
                 email=PlmMailer.create_toValidate(object, current_user.email, @urlbase, validersMail)
               end
@@ -181,7 +181,7 @@ module Controllers::PlmObjectControllerModule
             askUserMail=object.owner.email
             email=nil
             validers=User.find_validers
-            if object.is_to_validate
+            if object.could_validate?
               validersMail=PlmMailer.listUserMail(validers)
               email=PlmMailer.create_docToValidate(object, current_user.email, @urlbase, validersMail)
             end
@@ -412,7 +412,7 @@ module Controllers::PlmObjectControllerModule
     docs.each do |link|
       d = Forum.find(link.child_id)
       url = { :controller => 'forums', :action => 'show', :id => "#{d.id}" }
-      destroy_url = url_for(:controller => father.controller,
+      destroy_url = url_for(:controller => father.controller_name,
       :action => "remove_link",
       :id => "#{link.id}")
       if d.frozen?
@@ -674,4 +674,38 @@ module Controllers::PlmObjectControllerModule
     puts __FILE__+"."+__method__.to_s+":"+lst.inspect
     get_html_options(lst, default)
   end
+
+  def build_tree(obj)   
+    tree = Tree.new({:js_name=>"tree_down", :label => t(:ctrl_object_explorer, :typeobj => t("ctrl_"+obj.model_name)), :open => true })
+    follow_tree(tree, obj)
+    tree
+  end
+  
+  def follow_tree(node, father)
+    url = {:controller => father.controller_name, :action => :show, :id => "#{father.id}"}
+    design = father.designation
+    design.gsub!('\n\n','\n')
+    design.gsub!('\n','<br/>')
+    design.gsub!(10.chr,'<br/>')
+    design.gsub!('\t','')
+    design.gsub!("'"," ")
+    design.gsub!('"',' ')
+    options = {
+        :label => t("ctrl_"+father.model_name)+':'+father.ident, 
+        :icon=>icone(father),
+        :icon_open=>icone(father),
+        :title => design,
+        :open => true,
+        :url=>url_for(url)
+    }
+    cnode = Node.new(options,nil)
+    node << cnode
+    childs = father.method(father.model_name+"s").call
+    #puts "follow_tree:"+childs.inspect
+    childs.each do |child|
+      follow_tree(cnode, child)
+    end
+    node
+  end
+  
 end

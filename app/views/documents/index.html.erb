@@ -21,8 +21,10 @@
 		<%= sort_link_helper t("label_designation"), "designation" %></th>
 		<th <%= sort_td_class_helper "statusobject_id" %>>
 		<%= sort_link_helper t("label_statusobject"), "statusobject_id" %></th>
-		<th <%= sort_td_class_helper "owner_id" %>>
-		<%= sort_link_helper t("label_responsible"), "owner_id" %></th>
+		<th <%= sort_td_class_helper "owner" %>>
+		<%= sort_link_helper t("label_responsible"), "owner" %></th>
+		<th <%= sort_td_class_helper "group" %>>
+		<%= sort_link_helper t("label_group"), "group" %></th>
 		<th> <%= t("label_nbfiles") %></th>
 		<th <%= sort_td_class_helper "date" %>>
 		<%= sort_link_helper t("label_date"), "date" %></th>
@@ -46,11 +48,12 @@
 		<%= h_if_differ(document , previous,  "statusobject.name") %>
 		<% end %></td>
 		<td>  <%= h_if_differ(document , previous,  "owner.login") %>
+		<td>  <%= h_if_differ(document , previous,  "group.name") %>
 		<td> <%= h document.datafile.length %></td>
 		<td> <%= h_if_differ(document , previous,  "date") %> </td>
 		<td> <%= link_to h_img_show.to_s, document %></td>
 		<% if document.revisable? %>
-		<td> <%= link_to h_img_revise.to_s, :id => document.id, :action => :revise , :confirm => t("msg_confirm") %></td>
+		<td> <%= h_img_revise.to_s %></td>
 		<td></td>
 		<% else %>
 		<% if document.frozen? == false %>

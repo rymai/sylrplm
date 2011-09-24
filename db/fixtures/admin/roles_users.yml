@@ -1,15 +1,48 @@
-admin:
-  role_id: 1
-  user_id: 1
-
-consultant:
-  role_id: 2
-  user_id: 2
-
-designer:
-  role_id: 3
-  user_id: 3
-
-valider:
-  role_id: 4
-  user_id: 4
+attributes1-1: 
+    role_id: 1
+    user_id: 1
+  
+attributes2-6: 
+    role_id: 2
+    user_id: 6
+  
+attributes1-2: 
+    role_id: 1
+    user_id: 2
+  
+attributes3-2: 
+    role_id: 3
+    user_id: 2
+  
+attributes4-2: 
+    role_id: 4
+    user_id: 2
+  
+attributes5-2: 
+    role_id: 5
+    user_id: 2
+  
+attributes4-7: 
+    role_id: 4
+    user_id: 7
+  
+attributes3-9: 
+    role_id: 3
+    user_id: 9
+  
+attributesé-5: 
+    role_id: 2
+    user_id: 5
+  
+attributes9-10: 
+    role_id: 9
+    user_id: 10
+  
+attributes-5-11: 
+    role_id: 5
+    user_id: 11
+  
+attributes3-11: 
+    role_id: 3
+    user_id: 11
+  

@@ -3,72 +3,12 @@ module Controllers::PlmInitControllerModule
  
 private
  
-  def check_init_objects
-    ret =""
-    #pour debug: forcer la reconstruction des access
-    ya_acces=Access.count
-    if ya_acces == 0
-      ret +="Creation access<br>"
-      st=Access.init
-      st=true
-      if st
-        ret +="Acces crees<br>"
-      else
-        ret +="ERREUR:Acces non crees completement<br>"
-      end
-    end
-    puts 'main_controller.index:ya_acces='+ya_acces.to_s+":"+ret
-    ret=""
-    @types_document=Typesobject.find_for('document')
-    if @types_document.size==0
-      ret +="Pas de types de documents<br>"
-    end
-    @types_part=Typesobject.find_for('part')
-    if @types_part.size==0
-      ret +="Pas de types d articles<br>"
-    end
-    @types_project=Typesobject.find_for('project')
-    if @types_project.size==0
-      ret +="Pas de types de projets<br>"
-    end
-    @types_customer=Typesobject.find_for('customer')
-    if @types_customer.size==0
-      ret +="Pas de types de clients<br>"
-    end
-    @types_forum=Typesobject.find_for('forum')
-    if @types_forum.size==0
-      ret +="Pas de types de forums<br>"
-    end
-    @status_document= Statusobject.find_for("document")
-    if @status_document.size==0
-      ret +="Pas de statuts de documents<br>"
-    end
-    @status_part= Statusobject.find_for("part")
-    if @status_part.size==0
-      ret +="Pas de statuts d articles<br>"
-    end
-    @status_project= Statusobject.find_for("project")
-    if @status_project.size==0
-      ret +="Pas de statuts de projets<br>"
-    end
-    @status_customer= Statusobject.find_for("customer")
-    if @status_customer.size==0
-      ret +="Pas de statuts de clients<br>"
-    end
-    @status_forum= Statusobject.find_for("forum")
-    if @status_forum.size==0
-      ret +="Pas de statuts de forums<br>"
-    end
-    ret
-  end
-  
   def check_init
-    ret=check_init_objects
-    if ret != ""
-      puts 'application_controller.check_init:message='+ret
+    if User.count == 0
+      puts 'application_controller.check_init:base vide'
       flash[:notice]=t(:ctrl_init_to_do)
       respond_to do |format|
-        format.html{redirect_to :controller=>"main" , :action => "init_objects"} # init.html.erb
+        format.html{redirect_to_main} 
       end
     end
   end
@@ -105,7 +45,7 @@ private
     Dir.glob(dirname).each do |dir|
       ret<<"<option>"<<File.basename(dir, '.*')<<"</option>"
     end
-    puts "plm_init_controller.get_domains:"+dirname+"="+ret
+    #puts "plm_init_controller.get_domains:"+dirname+"="+ret
     ret
   end
   

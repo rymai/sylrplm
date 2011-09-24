@@ -10,6 +10,7 @@ class Project < ActiveRecord::Base
   belongs_to :statusobject
   belongs_to :owner,
   :class_name => "User"
+  belongs_to :group
 
   has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='project' and child_plmtype='document'"]
   has_many :documents , :through => :links_documents
@@ -31,8 +32,9 @@ class Project < ActiveRecord::Base
       obj.set_default_values(true)
     end
     obj.owner=user
+    obj.group=user.group
     obj.statusobject = Statusobject.get_first("project")
-    puts obj.inspect
+    #puts obj.inspect
     obj
   end
 

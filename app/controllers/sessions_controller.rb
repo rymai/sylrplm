@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
 
   def edit
     @roles = current_user.roles
+    @groups=current_user.groups
   end
 
   def create
@@ -15,7 +16,9 @@ class SessionsController < ApplicationController
       respond_to do |format|
         if cur_user
           @roles = cur_user.roles
-          if @roles.count>0
+          @groups= cur_user.groups
+          puts "sessions_controllers:"+@groups.inspect
+          if @roles.count>0 && @groups.count>0
             @current_user = cur_user
             session[:user_id] = cur_user.id
             flash[:notice]    = t(:ctrl_role_needed)

@@ -1,19 +1,36 @@
-admin:
-  id: 1
-  title: admin
-  description: Administrateur
+1: 
+    id: 1
+    title: admin
+    description: Administrateur
+     
+2: 
+    id: 2
+    title: analyste
+    description: |
+      Effectue des etudes de marche et ecrit le cdc.
+      Elabore l'expression de besoin.
+      
+3: 
+    id: 3
+    title: designer
+    description: "Modelise les produits: 3D et plans"
 
-consultant:
-  id: 2
-  title: consultant
-  description: Consultant
+4: 
+    id: 4
+    title: valider
+    description: Valide les processus du cycle de vie des donnees
 
-designer:
-  id: 3
-  title: designer
-  description: Designer
+5: 
+    id: 5
+    title: CP
+    description: Responsable du planning, des ressources
 
-valider:
-  id: 4
-  title: valider
-  description: Valider
+6: 
+    id: 6
+    title: consultant
+    description: Peut voir les donnees sans pouvoir les modifier
+
+9: 
+    id: 9
+    title: concepteur
+    description: Ecrit les specifications des produits

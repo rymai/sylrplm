@@ -66,6 +66,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :documents, :collection => { :empty_favori => :get }
 
   map.connect(
+  'main/init_objects',
+  :controller => 'main',
+  :action => 'init_objects')  
+  
+  map.connect(
   'datafiles/:id/show_file',
   :controller => 'datafiles',
   :action => 'show_file')
@@ -156,7 +161,17 @@ ActionController::Routing::Routes.draw do |map|
   'parts/:id/add_forum',
   :controller => 'parts',
   :action => 'add_forum')
-
+  map.connect(
+  'parts/:id/promote',
+  :controller => 'parts',
+  :action => 'promote',
+  :conditions => { :method => :get })
+  map.connect(
+  'parts/:id/demote',
+  :controller => 'parts',
+  :action => 'demote',
+  :conditions => { :method => :get })
+  
   map.connect(
   'projects/:id/add_favori',
   :controller => 'projects',

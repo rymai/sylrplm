@@ -6,7 +6,6 @@ module Models::SylrplmCommon
 
   module ClassMethods
     
-    
     def get_object_controller(model_name)
       # ajouter le 's' de fin
       model_name+"s"
@@ -69,6 +68,13 @@ module Models::SylrplmCommon
       :per_page => params[:nb_items])     
       {:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
     end
+    
+    def truncate_words(text, len = 5, end_string = " ...")
+      return if text == nil
+      words = text.split()
+      words[0..(len-1)].join(' ') + (words.length > len ? end_string : '')
+    end
+
   end
 
   # attribution de valeurs par defaut suivant la table sequence
@@ -164,5 +170,6 @@ module Models::SylrplmCommon
       end
     ret
    end
+  
   
 end

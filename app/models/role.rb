@@ -3,12 +3,32 @@ class Role < ActiveRecord::Base
   has_and_belongs_to_many :users
   validates_presence_of :title
   validates_uniqueness_of :title
+
+  belongs_to :father, :class_name => "Role"
+  has_many :roles, :class_name => "Role", :foreign_key => "father_id"
   
   def self.find_by_name(name)
     find(:first , :conditions => ["title = '#{name}' "])
   end
+
   def self.findall_except_admin()
     find(:all , :conditions => ["title <> 'admin' "])
+  end
+
+  def father_name
+    (father ? father.title : "")
+  end
+
+  def ident
+    self.title
+  end
+  
+  def typesobject
+    Typesobject.find_by_object(model_name)
+  end
+  
+  def designation
+    Role.truncate_words(description, 5) 
   end
   
   #return the list of validers
@@ -21,10 +41,15 @@ class Role < ActiveRecord::Base
     end
     ret
   end
-  
+
   def self.get_conditions(filter)
     filter=filter.gsub("*","%")
-      conditions = ["title LIKE ? or description LIKE ? ",
+    conditions = ["title LIKE ? or description LIKE ? ",
       filter, filter] unless filter.nil?
   end
+  
+  def others
+    Role.all
+  end
+  
 end

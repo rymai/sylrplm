@@ -44,7 +44,7 @@ class WorkitemsController < ApplicationController
       @query = params[:q] || params[:query]
       #puts "workitems_controller.index:store_names="+@current_user.store_names.inspect
       if @query
-        @workitems = OpenWFE::Extras::ArWorkitem.search(@query, @current_user.is_admin? ? nil : @current_user.store_names)
+        @workitems = Ruote::Sylrplm::ArWorkitem.search(@query, @current_user.is_admin? ? nil : @current_user.store_names)
       #TODO syl @current_user.is_admin? ? nil : @current_user.store_names)
       #TODO : paginate that !
       else
@@ -52,7 +52,7 @@ class WorkitemsController < ApplicationController
         opts[:conditions] = { :store_name => @current_user.store_names }
         opts[:page] = (params[:page].nil? ? SYLRPLM::NB_ITEMS_PER_PAGE :  params[:page])
         #      puts "workitems_controller.index:page="+opts[:page].inspect
-        @workitems = OpenWFE::Extras::ArWorkitem.paginate_by_params(
+        @workitems = Ruote::Sylrplm::ArWorkitem.paginate_by_params(
         [
           # parameter_name[, column_name]
           'wfid',
@@ -195,7 +195,7 @@ class WorkitemsController < ApplicationController
   # see / update an off-limit workitem
   #
   def find_ar_workitem
-    workitem = OpenWFE::Extras::ArWorkitem.find_by_wfid_and_expid(
+    workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid_and_expid(
     params[:wfid], OpenWFE.to_dots(params[:expid]))
     ret=@current_user.may_see?(workitem) ? workitem : nil
     #puts "workitems_controller.find_workitem:"+ret.inspect
@@ -258,9 +258,9 @@ class WorkitemsController < ApplicationController
 
   def wi_links_update(cur_wi, wfid)
     sleep 3.0
-    OpenWFE::Extras::ArWorkitem.destroy(cur_wi.id)
+    Ruote::Sylrplm::ArWorkitem.destroy(cur_wi.id)
     puts "workitems_controller.wi_links_update:cur_wi="+cur_wi.id.to_s+":"+cur_wi.wfid.to_s+":"+cur_wi.expid.to_s
-    news_wi_ = OpenWFE::Extras::ArWorkitem.find_by_wfid_(wfid)
+    news_wi_ = Ruote::Sylrplm::ArWorkitem.find_by_wfid_(wfid)
     #puts "workitems_controller.wi_links_update:news_wi_="+news_wi_.inspect
     if news_wi_.count != 0
       if news_wi_.is_a?(Array)
@@ -280,7 +280,7 @@ class WorkitemsController < ApplicationController
       opts[:page]=nil
       opts[:conditions]="wfid = '"+wfid+"' and event = 'proceeded'" #TODO
       #puts "workitems_controller.wi_links_update:opts="+opts.inspect
-      history = OpenWFE::Extras::HistoryEntry.paginate(opts).last
+      history = Ruote::Sylrplm::HistoryEntry.paginate(opts).last
       #puts "workitems_controller.wi_links_update:history="+history.inspect
       wi_link_history("document", cur_wi, history)
       wi_link_history("part", cur_wi, history)

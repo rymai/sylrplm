@@ -1,26 +1,36 @@
 class MainController < ApplicationController
   include Controllers::PlmInitControllerModule
 
-  access_control(Access.find_for_controller(controller_class_name))
-    
+  #access_control(Access.find_for_controller(controller_class_name))
+  skip_before_filter :authorize
   #def infos
   #  request.env["PATH_INFO"] +":"+__FILE__+":"+__LINE__.to_s
   #end
-
   def index
     LOG.info("info")
     LOG.error("erreur")
     LOG.warn("attention")
     LOG.debug("debug")
     LOG.fatal("fatal")
-    message = check_init
+    unless params[:domain].blank?
+      # creation du domaine demande: status et types d'objets
+      create_admin
+      create_domain(params[:domain])
+      update_admin(params[:directory])
+      st=Access.init
+      flash[:notice] = t(:ctrl_init_done)
+    else
+      @domains = get_domains
+      @directory = SYLRPLM::VOLUME_DIRECTORY_DEFAULT
+      flash[:notice] = t(:ctrl_init_to_do)
+    end
     @datas = get_datas_count
     @themes = get_themes(@theme)
     unless params[:theme].nil?
       @theme = params[:theme]
       unless @current_user.nil?
-        @current_user.theme = @theme
-        st = @current_user.save
+      @current_user.theme = @theme
+      st = @current_user.save
       else
         session[:theme] = @theme
       end
@@ -28,38 +38,10 @@ class MainController < ApplicationController
     unless params[:locale].nil?
       set_locale
     end
-   
-    if message == ""
-      flash[:notice] = "#{message}</br>#{t(label_theme)}=#{@theme}"
-      respond_to do |format|
-        format.html # index.html.erb
-      end
+    respond_to do |format|
+      format.html # index.html.erb
     end
     LOG.info("<==")
-  end
-
-  # appelle si il manque des objets pour demarrer (user, role, types, status)
-  def init_objects
-    puts "main_controller.init_objects"
-    check_init_objects
-    @themes = get_themes(@theme)
-    create_admin
-    unless params[:domain].blank?
-      # creation du domaine demande: status et types d'objets
-      create_domain(params[:domain])
-      update_admin(params[:directory])
-      check_init
-      st=Access.init
-      @domains == nil
-      flash[:notice] = t(:ctrl_init_done)
-    else
-      @domains = get_domains
-      flash[:notice] = t(:ctrl_init_to_do)
-    end
-    @directory = SYLRPLM::VOLUME_DIRECTORY_DEFAULT
-    respond_to do |format|
-      format.html # init.html.erb
-    end
   end
 
 end

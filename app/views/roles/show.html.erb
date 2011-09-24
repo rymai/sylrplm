@@ -7,6 +7,10 @@
   <b><%=t(:label_description)%></b>
   <%=h @role.description %>
 </p>
+<p>
+  <b><%=t(:label_role_father)%></b>
+  <%=h @role.father_name %>
+</p>
 <table class='menu_bas'>
     <tr>
         <td>
@@ -17,3 +21,4 @@
         </td>
     </tr>
 </table>
+<%= h_show_tree %>

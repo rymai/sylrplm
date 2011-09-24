@@ -9,6 +9,7 @@ class Customer < ActiveRecord::Base
   belongs_to :statusobject
   belongs_to :owner,
   :class_name => "User"
+  belongs_to :group
   
 
   has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
@@ -24,6 +25,7 @@ class Customer < ActiveRecord::Base
       obj.set_default_values( true)
     end
     obj.owner=user
+    obj.group=user.group
     obj.statusobject = Statusobject.get_first("customer")
     puts obj.inspect
     obj
@@ -55,19 +57,6 @@ class Customer < ActiveRecord::Base
   def add_documents_from_favori(favori)
     favori.items.each do |item|
       documents << item
-    end
-  end
-
-  # a valider si avant dernier status
-  def is_to_validate
-    if(self.statusobject!=nil && Statusobject.get_last(:customer)!=nil)
-      if(self.statusobject.rank == Statusobject.get_last(:customer).rank-1)
-        true
-      else
-        false
-      end
-    else
-      false
     end
   end
 

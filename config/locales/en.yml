@@ -246,6 +246,7 @@ en:
   # messages
   msg.no_item_to_display: "There are no items to display."
   msg_confirm: Are you sure?
+  msg_tobedefine: To be define
   # langues
   tit_language: "Language:"
   lng_english: "English"
@@ -397,6 +398,7 @@ en:
   label_group_users: Members
   label_group_user_ids_out: Others users
   label_group_user_ids_in: Users
+  label_group_father: Father group 
   # help
   help_title: "Help on SYLRPLM application"
   help_close_window: Close the help window
@@ -511,6 +513,7 @@ en:
   label_role_users: Users
   label_role_user_ids_in: Using
   label_role_user_ids_out: Others
+  label_role_father: Father role 
   # sequences
   legend_sequence: Enter sequence details
   sequence_list: Listing of sequences

@@ -32,7 +32,7 @@
  id: 5 
  object: document 
  name: ready 
- rank: 1 
+ rank: 2
  promote: true 
  demote: false 
  description: Pret pour la validation	
@@ -40,7 +40,7 @@
  id: 6
  object: document 
  name: approved 
- rank: 2 
+ rank: 3 
  promote: false 
  demote: true 
  				
@@ -55,7 +55,7 @@
  id: 8 
  object: part 
  name: ready 
- rank: 1 	
+ rank: 2 	
  promote: true 
  demote: false 	 			
  description: Pret pour la validation	
@@ -63,7 +63,7 @@
  id: 9 
  object: part 
  name: validated 
- rank: 2 	
+ rank: 3 	
  promote: false 
  demote: true 
  	 				

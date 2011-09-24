@@ -7,6 +7,7 @@ class Forum < ActiveRecord::Base
   belongs_to :statusobject
   belongs_to :owner,
     :class_name => "User"
+  belongs_to :group
   
   has_many :forum_item,
   :conditions => ["parent_id is null"]
@@ -20,6 +21,7 @@ class Forum < ActiveRecord::Base
       forum = Forum.new(forum)
     end
     forum.owner = @current_user
+    forum.group = @current_user.group
     forum
   end
   

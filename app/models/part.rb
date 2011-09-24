@@ -15,6 +15,7 @@ class Part < ActiveRecord::Base
   belongs_to :statusobject
   belongs_to :owner,
   :class_name => "User"
+  belongs_to :group
   #
 
   #has_and_belongs_to_many :documents, :join_table => "links",
@@ -51,7 +52,8 @@ class Part < ActiveRecord::Base
     end
     p.statusobject=Statusobject.get_first("part")
     p.owner=user
-    puts "part.create_new:"+p.inspect
+    p.group=user.group
+    #puts "part.create_new:"+p.inspect
     p
   end
 
@@ -71,19 +73,6 @@ class Part < ActiveRecord::Base
   def frozen?
     !(self.statusobject.nil? || Statusobject.get_last("part").nil?) &&
     self.statusobject.rank == Statusobject.get_last("part").rank
-  end
-
-  # a valider si avant dernier status
-  def is_to_validate
-    if(self.statusobject!=nil && Statusobject.get_last("part")!=nil)
-      if(self.statusobject.rank == Statusobject.get_last("part").rank-1)
-        true
-      else
-        false
-      end
-    else
-      false
-    end
   end
 
   def self.get_types_part
@@ -108,28 +97,6 @@ class Part < ActiveRecord::Base
       filter, filter,
       filter, filter,
       filter ] unless filter.nil?
-  end
-
-  def consume_obsolete(workitem)
-    #puts self.Class.name+".consume"
-    h = workitem.to_h
-    h['fei'] = workitem.fei.sid
-    File.open("worklist/workitem_#{workitem.fei.sid}.yaml", wb) do |f|
-      f.puts(h.to_yaml)
-    end
-    reply_to_engine(workitem)
-  end
-
-  def cancel(fei, flavour)
-    FileUtils.rm("worklist/workitem_#{fei.sid}.yaml")
-  end
-
-  # A method called by external systems when they're done with a workitem
-  # hash, they hand it back to the engine via this method.
-  #
-  def self.reply(workitem_h)
-    FileUtils.rm("worklist/workitem_#{workitem_h['fei']}.yaml")
-    reply_to_engine(workitem)
   end
 
 end

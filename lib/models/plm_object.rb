@@ -2,8 +2,6 @@ require 'openwfe/representations'
 require 'ruote/sylrplm/workitems'
 
 module Models::PlmObject
-  #  include OpenWFE::Extras::ArWorkitem
-  #  include OpenWFE::Extras::HistoryEntry
   # modifie les attributs avant edition
   def self.included(base)
     base.extend(ClassMethods) # �a appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclue la lib
@@ -29,19 +27,6 @@ module Models::PlmObject
   def is_freeze
     if(self.statusobject!=nil && Statusobject.get_last(self.class.name)!=nil)
       if(self.statusobject.rank == Statusobject.get_last(self.class.name).rank)
-        true
-      else
-        false
-      end
-    else
-      false
-    end
-  end
-
-  # a valider si avant dernier status
-  def is_to_validate
-    if(self.statusobject!=nil && Statusobject.get_last(self.class.name)!=nil)
-      if(self.statusobject.rank == Statusobject.get_last(self.class.name).rank-1)
         true
       else
         false
@@ -97,6 +82,19 @@ module Models::PlmObject
     end
   end
   
+  # a valider si avant dernier status
+  def could_validate?
+    mdl=model_name
+    !(self.statusobject.nil? || Statusobject.get_last(mdl).nil?) &&
+    self.statusobject.rank == Statusobject.get_last(mdl).rank-1
+  end
+  
+  def validate
+    if could_validate?
+      promote
+    end
+  end
+  
   def link_relation
     if link_attributes["relation"] == "" 
       ""
@@ -111,7 +109,7 @@ module Models::PlmObject
     #puts "plm_object.get_workitems:links="+links.inspect
     links.each do |link|
       begin
-        father = OpenWFE::Extras::ArWorkitem.find(link.father_id) unless OpenWFE::Extras::ArWorkitem.count(link.father_id)==1
+        father = Ruote::Sylrplm::ArWorkitem.find(link.father_id) unless Ruote::Sylrplm::ArWorkitem.count(link.father_id)==1
         #puts "plm_object.get_workitems:workitem="+father.inspect
         father.link_attributes={"relation"=>link.relation}
         ret << father
@@ -129,7 +127,7 @@ module Models::PlmObject
     links = Link.find_fathers(self.model_name, self,  "history_entry")
     links.each do |link|
       begin
-        father = OpenWFE::Extras::HistoryEntry.find(link.father_id) unless OpenWFE::Extras::HistoryEntry.count(link.father_id)==1
+        father = Ruote::Sylrplm::HistoryEntry.find(link.father_id) unless Ruote::Sylrplm::HistoryEntry.count(link.father_id)==1
         #puts "plm_object.get_histories:history="+father.inspect
         father.link_attributes={"relation"=>link.relation}
         ret << father

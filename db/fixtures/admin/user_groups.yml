@@ -1,11 +1,100 @@
-alice:
-  user_id: 2
-  group_id: 2
-
-bob:
-  user_id: 3
-  group_id: 2
-
-charly:
-  user_id: 4
-  group_id: 2
+attributes1-1: 
+    user_id: 1
+    group_id: 1
+  
+attributes1-2: 
+    user_id: 1
+    group_id: 2
+  
+attributes1-4:
+    user_id: 1
+    group_id: 4
+  
+attributes1-5:
+    user_id: 1
+    group_id: 5
+  
+attributes1-6: 
+    user_id: 1
+    group_id: 6
+  
+attributes1-7:
+    user_id: 1
+    group_id: 7
+  
+attributes1-9:
+    user_id: 1
+    group_id: 9
+  
+attributes2-4:
+    user_id: 2
+    group_id: 4
+  
+attributes2-5: 
+    user_id: 2
+    group_id: 5
+  
+attributes2-9:
+    user_id: 2
+    group_id: 9
+  
+attributes5-5: 
+    user_id: 5
+    group_id: 5
+  
+attributes5-6:
+    user_id: 5
+    group_id: 6
+  
+attributes5-9: 
+    user_id: 5
+    group_id: 9
+  
+attributes6-2: 
+    user_id: 6
+    group_id: 2
+  
+attributes6-5: 
+    user_id: 6
+    group_id: 5
+  
+attributes6-9: 
+    user_id: 6
+    group_id: 9
+  
+attributes7-4: 
+    user_id: 7
+    group_id: 4
+  
+attributes7-9: 
+    user_id: 7
+    group_id: 9
+  
+attributes9-6: 
+    user_id: 9
+    group_id: 6
+  
+attributes9-9: 
+    user_id: 9
+    group_id: 9
+  
+attributes10-5:
+    user_id: 10
+    group_id: 5
+  
+attributes10-6: 
+    user_id: 10
+    group_id: 6
+  
+attributes10-8: 
+    user_id: 10
+    group_id: 8
+  
+attributes11-5: 
+    user_id: 11
+    group_id: 5
+  
+attributes11-8: 
+    user_id: 11
+    group_id: 8
+  

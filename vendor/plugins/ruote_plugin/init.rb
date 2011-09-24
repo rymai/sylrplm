@@ -87,10 +87,10 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
   RuotePlugin.engine_init(h)
 
   begin
-    require "#{RAILS_ROOT}/lib/ruote.rb"
-    puts ".. found #{RAILS_ROOT}/lib/ruote.rb"
+    require "#{RAILS_ROOT}/lib/ruote_utils.rb"
+    puts ".. found #{RAILS_ROOT}/lib/ruote_utils.rb"
   rescue LoadError => le
-    puts ".. couldn't load #{RAILS_ROOT}/lib/ruote.rb :\n#{le}"
+    puts ".. couldn't load #{RAILS_ROOT}/lib/ruote_utils.rb :\n#{le}"
   end
 
 end

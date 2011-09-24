@@ -8,6 +8,9 @@
 	<%= f.label t(:label_description) %>
 	<%= f.text_area :description %>
 	<br/>
+	<%= f.label t("label_role_father") %>
+	<%= f.collection_select(:father_id, @role.others, :id, :title,  {:include_blank => true}) %>
+	<br/>
 	<%= f.label t("label_role_users") %>
 	<%= select_inout(f, @role, User.all, :login) %>
 </fieldset>

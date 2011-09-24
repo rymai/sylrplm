@@ -1,7 +1,7 @@
 class DocumentsController < ApplicationController
   include Controllers::PlmObjectControllerModule
   include Controllers::PlmInitControllerModule
-  #before_filter :check_init, :only => :new
+  before_filter :check_init, :only => :new
   #droits d'acces suivant le controller et l'action demandee
   #administration par le menu Access
   #access_control (Document.controller_access())
@@ -43,7 +43,7 @@ class DocumentsController < ApplicationController
     @document = Document.create_new(nil, @current_user)
     @types    = Document.get_types_document
     @volumes  = Volume.find_all
-    @status   = Statusobject.find_for("document")
+    @status   = Statusobject.find_for("document", true)
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @document }
@@ -56,15 +56,14 @@ class DocumentsController < ApplicationController
     @document = Document.find_edit(params[:id])
     @types    = Typesobject.find_for("document")
     @volumes  = Volume.find_all
-    @status   = Statusobject.find_for("document")
-    puts "document.edit:type=#{@document.statusobject.inspect}"
-    puts "document.edit:status=#{@status.inspect}"
+    #seulement les statuts qui peuvenet etre promus sans process
+    @status   = Statusobject.find_for("document", true)
   end
 
   # POST /documents
   # POST /documents.xml
   def create
-    #puts "===DocumentsController.create:"+params.inspect
+    puts "===DocumentsController.create:"+params.inspect
     document = params[:document]
     #contournement pour faire le upload apres la creation pour avoir la revision dans
     #get_repository !!!!!!!!!!!!!!
@@ -73,11 +72,14 @@ class DocumentsController < ApplicationController
     @status   = Statusobject.find_for("document")
     #@volumes  = Volume.find_all
     respond_to do |format|
+      puts "===DocumentsController.create:"+@document.inspect
       if @document.save
+        puts "===DocumentsController.create:ok:"+@document.inspect
         flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_document), :ident => @document.ident)
         format.html { redirect_to(@document) }
         format.xml  { render :xml => @document, :status => :created, :location => @document }
       else
+        puts "===DocumentsController.create:ko:"+@document.inspect
         flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_document), :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @document.errors, :status => :unprocessable_entity }

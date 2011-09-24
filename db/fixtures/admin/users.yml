@@ -1,55 +1,160 @@
-admin:
-  id: 1
-  login: admin
-  email: sylvere.coutable@laposte.net
-  salt: 1234
-  hashed_password: <%= User.encrypted_password('admin', '1234') %>
-  volume_id: 1
+ 
+1:
+    id: 1
+    login: admin
+    salt: 1234
+    hashed_password: <%= User.encrypted_password('admin', '1234') %>
+    role_id: "1"
+    email: sylvere.coutable@laposte.net
+    theme: blackwhite
+    volume_id: "1"
+    nb_items: "200"
+    first_name: ""
+    last_name: ""
+    language: fr
+    notification: "0"
+    show_mail: "0"
+    time_zone: ""
+    typesobject_id: 
+  
 
-consultant:
-  id: 2
-  login: consultant
-  email: sylvere.coutable@laposte.net
-  salt: 1234
-  hashed_password: <%= User.encrypted_password('consultant', '1234') %>
-  volume_id: 1
+ 
+2: 
+    id: "2"
+    login: syl
+    salt: 1234
+    hashed_password: <%= User.encrypted_password('syl', '1234') %>
+    role_id: "1"
+    email: sylvere.coutable@laposte.net
+    theme: blackwhite
+    volume_id: "1"
+    nb_items: 
+    first_name: ""
+    last_name: ""
+    language: fr
+    notification: "0"
+    show_mail: "0"
+    time_zone: ""
+    typesobject_id: 
+  
 
-designer:
-  id: 3
-  login: designer
-  email: sylvere.coutable@laposte.net
-  salt: 1234
-  hashed_password: <%= User.encrypted_password('designer', '1234') %>
-  volume_id: 1
+ 
+3: 
+    id: "5"
+    login: alice
+    salt: 1234
+    hashed_password: <%= User.encrypted_password('alice', '1234') %>
+    role_id: "2"
+    email: alice@example.com
+    theme: blackwhite
+    volume_id: "1"
+    nb_items: 
+    first_name: ""
+    last_name: ""
+    language: fr
+    notification: "0"
+    show_mail: "0"
+    time_zone: ""
+    typesobject_id: 
+  
 
-valider:
-  id: 4
-  login: valider
-  email: sylvere.coutable@laposte.net
-  salt: 1234
-  hashed_password: <%= User.encrypted_password('valider', '1234') %>
-  volume_id: 1
+ 
+4: 
+    id: "6"
+    login: bob
+    salt: 1234
+    hashed_password: <%= User.encrypted_password('bob', '1234') %>
+    role_id: "2"
+    email: bob@example.com
+    theme: blackwhite
+    volume_id: "1"
+    nb_items: "1000"
+    first_name: ""
+    last_name: ""
+    language: fr
+    notification: "0"
+    show_mail: "0"
+    time_zone: ""
+    typesobject_id: 
+  
 
-alice:
-  id: 5
-  login: alice
-  email: alice@example.com
-  salt: 1234
-  hashed_password: <%= User.encrypted_password('alice', '1234') %>
-  volume_id: 1
+ 
+7: 
+    id: "7"
+    login: charly
+    salt: 1234
+    hashed_password: <%= User.encrypted_password('charly', '1234') %>
+    role_id: 
+    email: charly@example.com
+    theme: blackwhite
+    volume_id: "1"
+    nb_items: 
+    first_name: ""
+    last_name: ""
+    language: fr
+    notification: "0"
+    show_mail: "0"
+    time_zone: ""
+    typesobject_id: 
+  
 
-bob:
-  id: 6
-  login: bob
-  email: bob@example.com
-  salt: 1234
-  hashed_password: <%= User.encrypted_password('bob', '1234') %>
-  volume_id: 1
+ 
+9: 
+    id: "9"
+    login: robert
+    salt: 1234
+    hashed_password: <%= User.encrypted_password('1234', '1234') %>
+    role_id: 
+    email: ""
+    theme: blackwhite
+    volume_id: "1"
+    nb_items: 
+    first_name: Robert
+    last_name: Maxwell
+    language: fr
+    notification: "1"
+    show_mail: "0"
+    time_zone: Paris
+    typesobject_id: 
+  
 
-charly:
-  id: 7
-  login: charly
-  email: charly@example.com
-  salt: 1234
-  hashed_password: <%= User.encrypted_password('charly', '1234') %>
-  volume_id: 1
+ 
+10: 
+    id: "10"
+    login: sylvia
+    salt: 1234
+    hashed_password: <%= User.encrypted_password('sylvia', '1234') %>
+    role_id: 
+    email: ""
+    theme: blackwhite
+    volume_id: "1"
+    nb_items: 
+    first_name: ""
+    last_name: ""
+    language: fr
+    notification: "1"
+    show_mail: "1"
+    time_zone: ""
+    typesobject_id: 
+  
+
+ 
+11: 
+    id: "11"
+    login: peter
+    salt: 1234
+    hashed_password: <%= User.encrypted_password('peter', '1234') %>
+    role_id: "5"
+    email: ""
+    theme: blackwhite
+    volume_id: "1"
+    nb_items: 
+    first_name: ""
+    last_name: ""
+    language: fr
+    notification: "1"
+    show_mail: "0"
+    time_zone: ""
+    typesobject_id: "92"
+  
+

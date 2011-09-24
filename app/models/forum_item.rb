@@ -6,6 +6,7 @@ class ForumItem < ActiveRecord::Base
   belongs_to :author,
     :class_name => "User",
     :foreign_key => "owner_id"
+  belongs_to :group
   
   belongs_to :parent,
   :class_name => "ForumItem",
@@ -22,6 +23,7 @@ class ForumItem < ActiveRecord::Base
     item.forum=forum
     item.message=params[:message]
     item.author=@current_user
+    item.group=@current_user.group
     item
   end
   def self.get_conditions(filter)

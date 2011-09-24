@@ -23,7 +23,7 @@ class PLMValidation < OpenWFE::ProcessDefinition
    
     #_redo :ref => 'createur', :unless => '${f:comment} != "" '
     
-    plm Ruote::PlmParticipant, :task=>"promote",:step=>"init"
+    plm Ruote::PlmParticipant, :task=>"validate",:step=>"init"
     
     # taches paralleles, quorum=1
     set :f => "c_relecteur", :value => "commentaire du relecteur"
@@ -33,7 +33,7 @@ class PLMValidation < OpenWFE::ProcessDefinition
     end
     back  :if => '${f:c_relecteur} == ${f:vide}'
 
-    plm Ruote::PlmParticipant, :task=>"promote", :step=>"review"
+    plm Ruote::PlmParticipant, :task=>"validate", :step=>"review"
     
     set :f => "ok", :value => "true"
     set :f => "comment_valideur", :value => "commentaire du valideur"
@@ -42,7 +42,7 @@ class PLMValidation < OpenWFE::ProcessDefinition
     # back to the reviewers if editor not happy
     rewind :unless =>  '${f:ok}'
     
-    plm Ruote::PlmParticipant, :task=>"promote", :step=>"exec"
+    plm Ruote::PlmParticipant, :task=>"validate", :step=>"exec"
 
   end
 end

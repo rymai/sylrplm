@@ -42,7 +42,7 @@ class PartsController < ApplicationController
   def new
     @part = Part.create_new(nil, @current_user)
     @types= Part.get_types_part
-    @status= Statusobject.find_for("part")
+    @status= Statusobject.find_for("part", true)
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @part }
@@ -53,21 +53,26 @@ class PartsController < ApplicationController
   def edit
     @part = Part.find_edit(params[:id])
     @types=Part.get_types_part
-    @status= Statusobject.find_for("part")
+    #seulement les statuts qui peuvenet etre promus sans process
+    @status= Statusobject.find_for("part", true)
   end
 
   # POST /parts
   # POST /parts.xml
   def create
+    puts "===PartsController.create:"+params.inspect
     @part = Part.create_new(params[:part], @current_user)
     @types=Part.get_types_part
     @status= Statusobject.find_for("part")
     respond_to do |format|
+      puts "===PartsController.create:"+@part.inspect
       if @part.save
+      puts "===PartsController.create:ok:"+@part.inspect
         flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
         format.html { redirect_to(@part) }
         format.xml  { render :xml => @part, :status => :created, :location => @part }
       else
+      puts "===PartsController.create:ko:"+@part.inspect
         flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_part), :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
@@ -109,30 +114,6 @@ class PartsController < ApplicationController
     ctrl_revise(Part)
   end
 
-private
-
-  #  Now the explanation: The above code is constructing a navigation tree for a two-level hierarchy with a Parent Model
-  #  and a Child Model.
-  #  The Child Model has a parent_id attribute linking to the Parent table.
-  #  The default action when someone clicks on any node on the tree is to call the show Action for that node.
-  #  This is done by setting the pnode.link_to_remote and cnode.link_to_remote with the parameters as above.
-  #  The update attribute points to the div of the view to be updated when the node is clicked in the tree.
-  #  The base attribute is very important since that reference is used internally in the railstree plugin to
-  #  callback so it better be not null.
-  def create_tree(part)
-    tree = Tree.new({:js_name=>"tree_down", :label=>t(:ctrl_object_explorer,:typeobj =>t(:ctrl_part)),:open => true})
-    session[:tree_object]=part
-    follow_tree_part(tree, part)
-    tree
-  end
-
-  def create_tree_up(part)
-    tree = Tree.new({:js_name=>"tree_up", :label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_part)),:open => true})
-    session[:tree_object]=part
-    follow_tree_up_part(tree, part)
-    tree
-  end
-
   def add_docs
     @part = Part.find(params[:id])
     ctrl_add_objects_from_favorites(@part, :document)
@@ -171,6 +152,30 @@ private
   def demote
     @part = Part.find(params[:id])
     ctrl_demote(@part)
+  end
+  
+private
+
+  #  Now the explanation: The above code is constructing a navigation tree for a two-level hierarchy with a Parent Model
+  #  and a Child Model.
+  #  The Child Model has a parent_id attribute linking to the Parent table.
+  #  The default action when someone clicks on any node on the tree is to call the show Action for that node.
+  #  This is done by setting the pnode.link_to_remote and cnode.link_to_remote with the parameters as above.
+  #  The update attribute points to the div of the view to be updated when the node is clicked in the tree.
+  #  The base attribute is very important since that reference is used internally in the railstree plugin to
+  #  callback so it better be not null.
+  def create_tree(part)
+    tree = Tree.new({:js_name=>"tree_down", :label=>t(:ctrl_object_explorer,:typeobj =>t(:ctrl_part)),:open => true})
+    session[:tree_object]=part
+    follow_tree_part(tree, part)
+    tree
+  end
+
+  def create_tree_up(part)
+    tree = Tree.new({:js_name=>"tree_up", :label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_part)),:open => true})
+    session[:tree_object]=part
+    follow_tree_up_part(tree, part)
+    tree
   end
 
 end

@@ -246,6 +246,7 @@ fr:
   # messages
   msg_no_item_to_display: Il n'y a rien à afficher.
   msg_confirm: Etes vous sûr ?
+  msg_tobedefine: A définir
   # langues
   tit_language: "Langue:"
   lng_english: "English"
@@ -397,6 +398,7 @@ fr:
   label_group_users: Membres 
   label_group_user_ids_out: Autres utilisateurs
   label_group_user_ids_in: Utilisateurs
+  label_group_father: Groupe père 
   # help
   help_title: Aide relative à l application SYLRPLM 
   help_close_window: Fermer la fenêtre d'aide
@@ -511,6 +513,7 @@ fr:
   label_role_users: Utilisateurs
   label_role_user_ids_in: Ayant ce rôle
   label_role_user_ids_out: Autres
+  label_role_father: Rôle père 
   # sequences
   legend_sequence: "Renseignez les propriétés de la valeur/séquence"
   sequence_list: Liste des valeurs/séquences

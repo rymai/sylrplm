@@ -15,9 +15,11 @@
 		<th> <%= t("label_out_reason") %> </th>
 		<th> <%= t("label_out_date") %> </th>
 		<th> <%= t("label_out_user") %> </th>
+		<th> <%= t("label_out_group") %> </th>
 		<th> <%= t("label_in_reason") %> </th>
 		<th> <%= t("label_in_date") %> </th>
 		<th> <%= t("label_in_user") %> </th>
+		<th> <%= t("label_in_group") %> </th>
 		<th> <%= t("label_local_dir") %> </th>
 	</tr>
 	<% @checks[:recordset].each do |check| %>
@@ -27,12 +29,14 @@
 		<td> <%= h check.status %> </td>
 		<td> <%= h check.out_reason %> </td>
 		<td> <%= l check.out_date %> </td>
-		<td> <%= h check.out_user %> </td>
+		<td> <%= h check.out_user.login %> </td>
+		<td> <%= h check.out_group.name %> </td>
 		<td> <%= h check.in_reason %> </td>
 		<td> <%unless check.in_date.nil? %>
 		<%= l check.in_date %>
 		<%end %> </td>
-		<td> <%= h check.in_user %> </td>
+		<td> <%= h check.in_user.login %> </td>
+		<td> <%= h check.in_group.name %> </td>
 		<td> <%= h check.local_dir %> </td>
 		<td> <%= link_to h_img_show.to_s, check %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_check_path(check) %> </td>

@@ -17,3 +17,23 @@ team_a__leave_request:
 team_a__promotion:
   group_id: 2
   definition_id: 5
+  
+1-3:
+  group_id: 1
+  definition_id: 3
+
+1-6:
+  group_id: 1
+  definition_id: 6
+
+1-4:
+  group_id: 1
+  definition_id: 4
+
+1-7:
+  group_id: 1
+  definition_id: 7
+
+2-7:
+  group_id: 2
+  definition_id: 7

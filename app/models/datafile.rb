@@ -11,6 +11,7 @@ class Datafile < ActiveRecord::Base
   belongs_to :volume
   belongs_to :owner,
     :class_name => "User"
+  belongs_to :group
   
   FILE_REV_DELIMITER="__"
   
@@ -20,6 +21,7 @@ class Datafile < ActiveRecord::Base
       datafile.set_default_values(true)
       datafile.volume=user.volume
       datafile.owner=user
+      datafile.group=user.group
       datafile.revision="1"
       ret=true
     else
@@ -30,6 +32,7 @@ class Datafile < ActiveRecord::Base
       parameters.delete(:uploaded_file)
       parameters[:volume]=user.volume
       parameters[:owner]=user
+      parameters[:group]=user.group
       datafile=new(parameters)
       if datafile.save   
         # on sauve le fichier maintenant et le tour est joue
