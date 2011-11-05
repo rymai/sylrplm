@@ -30,7 +30,7 @@ class Typesobject < ActiveRecord::Base
   end
   
   def self.get_objects_with_type
-  		ret=["document", "part", "project", "customer", "forum", "definition", "datafile", "relation", "user", "workitem", "ar_workitem", "syl_ar_workitem"].sort
+  		ret=["document", "part", "project", "customer", "forum", "project_typeaccess" "definition", "datafile", "relation", "user", "workitem", "ar_workitem", "syl_ar_workitem"].sort
   		ret
   end
   
@@ -40,8 +40,13 @@ class Typesobject < ActiveRecord::Base
   end
   
   def self.get_conditions(filter)
-    filter=filter.gsub("*","%")
-      conditions = ["object LIKE ? or name LIKE ? or description LIKE ? ",
-      filter, filter, filter] unless filter.nil?
+    filter = filters.gsub("*","%")
+    ret={}
+    unless filter.nil?
+      ret[:qry] = "object LIKE :v_filter or name LIKE :v_filter or description LIKE :v_filter "
+      ret[:values]={:v_filter => filter}
+    end
+    ret
+      #conditions = ["object LIKE ? or name LIKE ? or description LIKE ? ",
   end
 end

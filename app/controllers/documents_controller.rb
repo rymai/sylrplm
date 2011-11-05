@@ -6,10 +6,12 @@ class DocumentsController < ApplicationController
   #administration par le menu Access
   #access_control (Document.controller_access())
   access_control(Access.find_for_controller(controller_class_name))
+  before_filter :check_user, :only => [:new, :edit]
   # GET /documents
   # GET /documents.xml
   def index
-    @documents = Document.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+    # puts __FILE__+"."+__method__.to_s+":"+params.inspect
+    @documents = Document.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @documents[:recordset] }
@@ -90,10 +92,12 @@ class DocumentsController < ApplicationController
   # PUT /documents/1
   # PUT /documents/1.xml
   def update
+    puts "documents_controller.update:"+params.inspect
     @document = Document.find(params[:id])
     @volumes  = Volume.find_all
     @types    = Typesobject.find_for("document")
     @status   = Statusobject.find_for("document")
+    @document.update_accessor(current_user)
     respond_to do |format|
       if @document.update_attributes(params[:document])
         flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_document), :ident => @document.ident)
@@ -197,6 +201,7 @@ class DocumentsController < ApplicationController
       if st!="no_reason"
         if st!="notyet_checkout"
           if st=="ok"
+            update_accessor(@document)
             @document.update_attributes(params[:document])
             flash[:notice] = t(:ctrl_object_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:in_reason])
           else

@@ -89,7 +89,7 @@ module Models::PlmObject
     self.statusobject.rank == Statusobject.get_last(mdl).rank-1
   end
   
-  def validate
+  def plm_validate
     if could_validate?
       promote
     end
@@ -206,6 +206,36 @@ module Models::PlmObject
     :order=>"ident")
   end
  
+  # si meme groupe ou confidentialite = public ou confidentiel
+  def ok_for_index?(user)
+    acc_public = ::Typesobject.find_by_object_and_name("project_typeaccess", "public")
+    acc_confidential = ::Typesobject.find_by_object_and_name("project_typeaccess", "confidential")
+    #puts "ok_for_index?:acc_public="+acc_public.inspect
+    #puts "ok_for_index?:acc_confidential="+acc_confidential.inspect
+    #puts "ok_for_index?:self="+self.inspect
+    #puts "ok_for_index?:user="+user.inspect
+    #index possible meme sans user connecte 
+    puts "ok_for_index? acc_public:"+self.projowner.typeaccess.name+"=="+acc_public.name
+    puts "ok_for_index? acc_confidential:"+self.projowner.typeaccess.name+"=="+acc_confidential.name
+    unless user.nil?
+      puts "ok_for_index? group:"+self.group.name+"=="+user.group.name
+      (self.group_id==user.group.id || self.projowner.typeaccess_id==acc_public.id || self.projowner.typeaccess_id==acc_confidential.id)
+    else
+      (self.projowner.typeaccess_id==acc_public.id || self.projowner.typeaccess_id==acc_confidential.id)
+    end
+    true
+  end
   
-  
+  # si meme groupe ou confidentialite = public 
+  def ok_for_show?(user)
+    acc_public = Typesobject.find_by_object_and_name("project_typeaccess", "public")
+    #index possible meme sans user connecte
+    puts "ok_for_show? acc_public:"+self.projowner.typeaccess.name+"=="+acc_public.name
+    unless user.nil?
+      puts "ok_for_show? group:"+self.group.name+"=="+user.group.name
+      (self.group_id==user.group.id || self.projowner.typeaccess_id==acc_public.id)
+    else
+      (self.projowner.typeaccess_id==acc_public.id)
+    end
+  end
 end

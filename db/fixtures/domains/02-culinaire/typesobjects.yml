@@ -1,18 +1,8 @@
 1:
   id: 1 
-  object: customer 
-  name: internal 
-  description: Service ou direction interne a l'entreprise 	  	
-2:
-  id: 2 
-  object: customer 
-  name: private
-  description: Client externe a acces restreint 		
-3:
-  id: 3 
-  object: customer 
-  name: public 
-  description: Client externe accessible a tous		
+  object: project 
+  name: default 
+  description: Projet par defaut   	
 4:
   id: 4 
   object: document 
@@ -83,11 +73,35 @@
   object: project 
   name: menu
   description: Projet de menu
+
 18:
   id: 18
   object: project 
   name: repas
   description: Projet de repas
+
+19:
+  id: 19
+  object: document 
+  name: norme
+  description: Norme applicable 
+
+21:
+  id: 21 
+  object: customer 
+  name: internal 
+  description: Service ou direction interne a l'entreprise      
+22:
+  id: 22 
+  object: customer 
+  name: private
+  description: Client externe a acces restreint     
+23:
+  id: 23 
+  object: customer 
+  name: public 
+  description: Client externe accessible a tous 
+  
 51:
   id: 51
   object: relation_document 

@@ -17,30 +17,16 @@
 		<th>
 		<%= t(:label_group) %>
 		</th>
+		<th>
+		<%= t(:label_project) %>
+		</th>
 		<th <%= sort_td_class_helper "mail" %>
 		<%= sort_link_helper t(:label_email), "email" %>
 		</th>
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %> </th>
-		<th <%= sort_td_class_helper "language" %>
-		<%= sort_link_helper t(:label_language), "language" %>
-		</th>
-		<th>
-		<%= t(:label_volume)%>
-		</th>
-		<th <%= sort_td_class_helper "theme" %>
-		<%= sort_link_helper t(:label_theme), "theme" %>
-		</th>
-		<th <%= sort_td_class_helper "notification" %>
-		<%= sort_link_helper t(:label_notification), "notification" %>
-		</th>
-		<th <%= sort_td_class_helper "time_zone" %>
-		<%= sort_link_helper t(:label_time_zone), "time_zone" %>
-		</th>
-		<th <%= sort_td_class_helper "show_mail" %>
-		<%= sort_link_helper t(:label_show_mail), "show_mail" %>
-		</th>
 		<th><%= t(:label_groups) %> </th>
 		<th><%= t(:label_roles) %> </th>
+		<th><%= t(:label_projects) %> </th>
 		<th></th>
 		</tr>
 		<% for user in @current_users[:recordset] %>
@@ -51,33 +37,29 @@
 		<%end %></td>
 		<td><%if(user.group != nil) %>
 		<%= link_to user.group.name , user.group %>
-		<% else %>
-		<%=t(:msg_tobedefine)%><% end %></td>
+		<% end %></td>
+		<td><%if(user.project != nil) %>
+		<%= link_to user.project.ident , user.project %>
+		<% end %></td>
 		<td> <%= user.email %></td>
 		<td> <% if(user.typesobject != nil) %>
 		<%= user.typesobject.name %>
 		<% end %>
 		</td>
-		<td> <%= user.language %></td>
-		<td> <%= link_to user.volume.name, user.volume unless user.volume.nil? %></td>
-		<td> <%= user.theme %></td>
-		<td> <%= t(user.v_notification) %></td>
-		<td> <%= user.v_time_zone %></td>
-		<td> <%= user.show_mail %></td>
-		<td><%= comma_list(user.groups, :name) %></td>
-		<td><%= comma_list(user.roles, :title) %></td>
+		<td><%= h_value_or_default(comma_list(user.groups, :name),t(:msg_tobedefine)) %></td>
+		<td><%= h_value_or_default(comma_list(user.roles, :title),t(:msg_tobedefine)) %></td>
+		<td><%= h_value_or_default(comma_list(user.projects, :ident),t(:msg_tobedefine)) %></td>
 		<td> <%= link_to h_img_show.to_s, user %></td>
 		<td> <%= link_to h_img_edit.to_s, edit_user_path(user) %></td>
-		<td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td>
-		<td><% if logged_in? %>
+		<td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td><td><% if logged_in? %>
 		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => user.id}, :method => :get %>
 		<%end%></td>
-		</tr>
-		<% end %>
-		</table>
-		<table class='menu_bas'>
-		<tr>
+	</tr>
+	<% end %>
+</table>
+<table class='menu_bas'>
+	<tr>
 		<td> <%= link_to t("new_user"), new_user_path %></td>
 		<td> <%= show_help("help_users") %></td>
-		</tr>
-		</table>
+	</tr>
+</table>

@@ -7,6 +7,8 @@ class ForumItem < ActiveRecord::Base
     :class_name => "User",
     :foreign_key => "owner_id"
   belongs_to :group
+  belongs_to :projowner,
+    :class_name => "Project"
   
   belongs_to :parent,
   :class_name => "ForumItem",
@@ -18,17 +20,26 @@ class ForumItem < ActiveRecord::Base
   :class_name => "ForumItem",
   :foreign_key => "parent_id"
   
-  def self.create_new(forum, params)
-    item=self.new 
-    item.forum=forum
-    item.message=params[:message]
-    item.author=@current_user
-    item.group=@current_user.group
-    item
+  def self.create_new(forum, params, user)
+    obj=self.new 
+    obj.forum=forum
+    obj.message=params[:message]
+    obj.author=user
+    obj.group=user.group
+    obj.projowner=user.project
+    obj
   end
   def self.get_conditions(filter)
-    filter=filter.gsub("*","%")
-    conditions = ["message LIKE ? or "+qry_owner_id+" or "+qry_parent+" or "+qry_forum,
-      filter, filter, filter, filter] unless filter.nil?
+    
+    filter = filters.gsub("*","%")
+    ret={}
+    unless filter.nil?
+      ret[:qry] = "message LIKE :v_filter or "+qry_owner_id+" or "+qry_parent+" or "+qry_forum
+      ret[:values]={:v_filter => filter}
+    end
+    ret
+      
+    #conditions = ["message LIKE ? or "+qry_owner_id+" or "+qry_parent+" or "+qry_forum,
+     
   end
 end

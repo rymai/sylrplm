@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.integer  "out_user_id"
     t.integer  "in_group_id"
     t.integer  "out_group_id"
+    t.integer  "projowner_id"
   end
 
   add_index "checks", ["object", "object_id"], :name => "index_checks_on_object_and_object_id"
@@ -74,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
+    t.integer  "projowner_id"
   end
 
   add_index "customers", ["ident"], :name => "index_customers_on_ident"
@@ -93,6 +95,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
+    t.integer  "projowner_id"
   end
 
   add_index "datafiles", ["document_id"], :name => "index_datafiles_on_document_id"
@@ -121,6 +124,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
+    t.integer  "projowner_id"
   end
 
   add_index "documents", ["ident"], :name => "index_documents_on_ident"
@@ -150,6 +154,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
+    t.integer  "projowner_id"
   end
 
   add_index "forum_items", ["forum_id"], :name => "index_forum_items_on_forum_id"
@@ -165,6 +170,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
+    t.integer  "projowner_id"
   end
 
   add_index "forums", ["owner_id"], :name => "index_forums_on_owner_id"
@@ -222,6 +228,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.integer  "relation_id"
     t.integer  "owner_id"
     t.integer  "group_id"
+    t.integer  "projowner_id"
   end
 
   add_index "links", ["child_plmtype", "child_id"], :name => "index_links_on_child_type_and_child_id"
@@ -250,6 +257,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
+    t.integer  "projowner_id"
   end
 
   add_index "parts", ["ident"], :name => "index_parts_on_ident"
@@ -279,6 +287,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "group_id"
+    t.integer  "typeaccess_id"
   end
 
   add_index "projects", ["ident"], :name => "index_projects_on_ident"
@@ -292,6 +301,8 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "asker_id"
+    t.integer  "responder_id"
   end
 
   create_table "relations", :force => true do |t|
@@ -398,6 +409,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "updated_at"
     t.integer  "typesobject_id"
     t.integer  "group_id"
+    t.integer  "project_id"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true

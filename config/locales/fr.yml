@@ -113,6 +113,8 @@ fr:
   ctrl_role_needed: Renseigner le rôle
   ctrl_invalid_login: Nom utilisateur ou mot de passe invalide
   ctrl_user_without_roles: Cet utilisateur n'a pas de rôles
+  ctrl_user_without_groups: Cet utilisateur n'est affecté à aucun groupe
+  ctrl_user_without_projects: Cet utilisateur collabore à aucun projet
   ctrl_user_needed: Renseigner l'utilisateur
   ctrl_user_created: Utilisateur %{user} crée
   ctrl_user_not_created: Utilisateur %{user} non crée
@@ -133,6 +135,9 @@ fr:
   ctrl_process: Processus métier
   # projects
   ctrl_project: Projet
+  label_project_users: Utilisateurs participant au projet
+  label_project_objects: Objets associés au projet
+  label_projowners: Objets crées par le projet
   # questions
   ctrl_question: Question
   # roles
@@ -181,6 +186,7 @@ fr:
   # views
   #########################################
   # general
+  label_projowner: Projet
   modif_status: Modifier le statut
   label_created_at: Création
   label_updated_at: Modification
@@ -251,6 +257,8 @@ fr:
   tit_language: "Langue:"
   lng_english: "English"
   lng_french: "French"
+  # main
+  label_preferences: Préférences
   # menus
   mnu_main: Accueil
   mnu_documents: Documents
@@ -306,6 +314,8 @@ fr:
   label_in_date: Date libération
   label_in_user: Utilisateur libération
   label_local_dir: Répertoire local
+  label_in_group: Groupe libérant 
+  label_out_group: Groupe réservant
   # customers
   legend_customer: Renseignez les propriétés du client
   customer_edit: Edition client
@@ -493,6 +503,8 @@ fr:
   project_show: Détail projet
   project_new: Nouveau projet
   label_customer: Client
+  label_users: Collaborateurs
+  label_typeaccess: Confidentialité
   # questions
   legend_question: "Renseignez les propriétés de la question"
   questions_edit: Edition question
@@ -502,6 +514,8 @@ fr:
   label_question: Question
   label_answer: Réponse
   label_position: Position
+  label_asker: Demandeur
+  label_responder: Répondeur
   # relation
   legend_relation: Relation
   # roles
@@ -588,6 +602,7 @@ fr:
   label_user_role_ids_out: Non atribués
   label_user_group_ids_in: " d'appartenance"
   label_user_group_ids_out: Autres groupes
+  label_projects: Projets
   # volumes
   legend_volume: Renseignez les propriétés du volume
   volume_list: Liste des volumes

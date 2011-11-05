@@ -15,6 +15,7 @@
 		<th> <%= t(:label_description) %> </th>
 		<th> <%= t(:label_responsible) %> </th>
 		<th> <%= t(:label_group) %> </th>
+		<th> <%= t(:label_projowner) %></th>
 		<th></th>
 		<th></th>
 		<th></th>
@@ -29,6 +30,7 @@
 		<%= h forum.owner.login %>
 		<% end %> </td>
 		<td><%= h forum.group.name %></td>
+		<td><%= h forum.projowner.ident %></td>
 		<td> <%= link_to h_img_show.to_s, forum %> </td>
 		<% unless forum.frozen? %> <td> <%= link_to h_img_edit.to_s, edit_forum_path(forum) %> </td>
 		<td> <%= link_to h_img_destroy, forum, :confirm => 'Are you sure?', :method => :delete %> </td>

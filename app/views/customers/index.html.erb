@@ -16,6 +16,7 @@
 		<th <%= sort_td_class_helper "statusobject_id" %>> <%= sort_link_helper t("label_statusobject"), "statusobject_id" %> </th>
 		<th <%= sort_td_class_helper "owner" %>> <%= sort_link_helper t("label_responsible"), "owner" %> </th>
 		<th <%= sort_td_class_helper "group" %>> <%= sort_link_helper t("label_group"), "group" %> </th>
+		<th <%= sort_td_class_helper "projowner" %>> <%= sort_link_helper t("label_projowner"), "projowner" %> </th>
 		<th <%= sort_td_class_helper "date" %>> <%= sort_link_helper t("label_date"), "date" %> </th>
 		<th></th>
 		<th></th>
@@ -32,6 +33,7 @@
 		<% else %> <td></td>
 		<% end %> <td> <%= h customer.owner.login %> </td>
 		<td> <%= h customer.group.name %> </td>
+		<td> <%= h customer.projowner.ident %> </td>
 		<td> <%= l customer.date %> </td>
 		<td> <%= link_to h_img_show.to_s, customer %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_customer_path(customer) %> </td>

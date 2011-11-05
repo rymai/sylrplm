@@ -3,7 +3,7 @@ class NotificationsController < ApplicationController
   # GET /notifications.xml
   def index
 
-    @notifications = Notification.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+    @notifications = Notification.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 
     respond_to do |format|
       format.html # index.html.erb
@@ -59,6 +59,7 @@ class NotificationsController < ApplicationController
   # PUT /notifications/1.xml
   def update
     @notification = Notification.find(params[:id])
+    @notification.update_accessor(current_user)
     @users=User.find(:all)
     respond_to do |format|
       if @notification.update_attributes(params[:notification])

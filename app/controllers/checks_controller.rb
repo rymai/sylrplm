@@ -1,11 +1,11 @@
 class ChecksController < ApplicationController
   include Controllers::PlmObjectControllerModule
   access_control(Access.find_for_controller(controller_class_name))
-
+  before_filter :check_user, :only => [:new, :edit]
   # GET /checks
   # GET /checks.xml
   def index
-    @checks = Check.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items])})
+    @checks = Check.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items])})
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @checks[:recordset] }
@@ -56,7 +56,8 @@ class ChecksController < ApplicationController
   # PUT /checks/1
   # PUT /checks/1.xml
   def update
-    @check = Check.find(params[:id])
+    @check = Check.find(params[:id]) 
+    @check.update_accessor(current_user)
     respond_to do |format|
       if @check.update_attributes(params[:check])
         flash[:notice] = 'Check was successfully updated.'

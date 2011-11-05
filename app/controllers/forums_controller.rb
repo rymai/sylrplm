@@ -1,11 +1,11 @@
 class ForumsController < ApplicationController
   include Controllers::PlmObjectControllerModule
   access_control(Access.find_for_controller(controller_class_name))
-
-  # GET /forums
+  before_filter :check_user, :only => [:new, :edit]
+    # GET /forums
   # GET /forums.xml
   def index
-    @forums = Forum.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+    @forums = Forum.find_paginate({ :user=> current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @forums }
@@ -44,12 +44,12 @@ class ForumsController < ApplicationController
   # POST /forums
   # POST /forums.xml
   def create
-    @forum  = Forum.create_new(params[:forum])
+    @forum  = Forum.create_new(params[:forum], current_user)
     @types  = Typesobject.find_for("forum")
     @status = Statusobject.find_for("forum")
     respond_to do |format|
       if @forum.save
-        @item = ForumItem.create_new(@forum, params)
+        @item = ForumItem.create_new(@forum, params, current_user)
         if(@item.save)
           flash[:notice] = 'Forum and item was successfully created.'
           format.html { redirect_to(@forum) }
@@ -69,6 +69,7 @@ class ForumsController < ApplicationController
   # PUT /forums/1.xml
   def update
     @forum = Forum.find(params[:id])
+    @forum.update_accessor(current_user)
     respond_to do |format|
       if @forum.update_attributes(params[:forum])
         flash[:notice] = 'Forum was successfully updated.'

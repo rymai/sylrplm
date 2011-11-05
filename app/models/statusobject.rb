@@ -69,10 +69,14 @@ class Statusobject < ActiveRecord::Base
     end
   end
   
-  
   def self.get_conditions(filter)
-    filter=filter.gsub("*","%")
-    conditions = ["object LIKE ? or name LIKE ? or description LIKE ? or rank LIKE ? or promote LIKE ? or demote LIKE ? ",
-      filter, filter, filter, filter, filter, filter] unless filter.nil?
+    filter = filters.gsub("*","%")
+    ret={}
+    unless filter.nil?
+      ret[:qry] = "object LIKE :v_filter or name LIKE :v_filter or description LIKE :v_filter or rank LIKE :v_filter or promote LIKE :v_filter or demote LIKE :v_filter "
+      ret[:values]={:v_filter => filter}
+    end
+    ret
+    #conditions = ["object LIKE ? or name LIKE ? or description LIKE ? or rank LIKE ? or promote LIKE ? or demote LIKE ? ",
   end
 end

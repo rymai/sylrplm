@@ -37,6 +37,7 @@
         <th<%= sort_td_class_helper "group" %>>
           <%= sort_link_helper t("label_group"), "group" %>
         </th>
+		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), :projowner %> </th>
         <th<%= sort_td_class_helper "date" %>>
           <%= sort_link_helper t("label_date"), "date" %>
         </th>
@@ -79,6 +80,9 @@
         </td>
         <td>
           <%= h part.group.name %>
+        </td>
+        <td>
+          <%= h part.projowner.ident %>
         </td>
         <td>
           <%= l part.date %>

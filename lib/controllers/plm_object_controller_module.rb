@@ -211,14 +211,14 @@ module Controllers::PlmObjectControllerModule
   end
 
   def ctrl_add_objects_from_favorites(object, child_plmtype)
-    puts __FILE__+"."+__method__.to_s+":"+object.inspect+":"+child_plmtype.to_s
+    #puts __FILE__+"."+__method__.to_s+":"+object.inspect+":"+child_plmtype.to_s
     relation = Relation.find(params[:relation][child_plmtype])
     plmtype=child_plmtype.to_s
     respond_to do |format|
       unless @favori.get(plmtype).nil?
         flash[:notice] = ""
         @favori.get(plmtype).each do |item|
-          link_ = Link.create_new(object, item, relation)
+          link_ = Link.create_new(object, item, relation, current_user)
           link=link_[:link]
           if(link!=nil)
             if(link.save)
@@ -234,12 +234,39 @@ module Controllers::PlmObjectControllerModule
       else
         flash[:notice] = t(:ctrl_nothing_to_paste,:typeobj =>t("ctrl_"+plmtype))
       end
-      puts __FILE__+"."+__method__.to_s+":notice="+flash[:notice]
+      #puts __FILE__+"."+__method__.to_s+":notice="+flash[:notice]
       format.html { redirect_to(object) }
       format.xml  { head :ok }
     end
   end
-    
+  
+  # params contient une ou deux listes: :childs et :fathers
+  # chacune contient une ou plusieurs liste par type d'objets a relier
+  # 
+  def ctrl_add_objects_from_params(params, object)
+    puts __FILE__+"."+__method__.to_s+":"+params[:childs].inspect
+    puts __FILE__+"."+__method__.to_s+":"+params[:fathers].inspect
+    ret=""
+    params[:childs].each do |plmtype, items_id|
+      relation = Relation.find_by_father_plmtype_and_child_plmtype(object.model_name, plmtype)
+      items_id.each do |item_id|
+        item=object.get_object(plmtype, item_id)
+        link_ = Link.create_new(object, item, relation, current_user)
+        link=link_[:link]
+        if(link!=nil)
+          if(link.save)
+            ret += t(:ctrl_object_added,:typeobj =>t("ctrl_"+plmtype),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])  
+          else
+            ret += t(:ctrl_object_not_added,:typeobj =>t("ctrl_"+plmtype),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
+          end
+        else
+          ret += t(:ctrl_object_not_linked,:typeobj =>t("ctrl_"+plmtype),:ident=>item.ident,:relation=>relation.ident,:msg=>link_[:msg])
+        end
+      end
+    end
+    ret
+  end
+
   def tree_part(obj, link)
     if(obj!=nil)
       url={:controller => 'parts', :action => 'show', :id => "#{obj.id}"}
@@ -254,7 +281,7 @@ module Controllers::PlmObjectControllerModule
       :id => link.id)
       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
       options={
-        :label  => (link.relation.name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+":"+obj.ident+cut_a,
+        :label  => (Relation.find(link.relation_id).name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+":"+obj.ident+cut_a,
         :icon=>icone(obj),
         :icon_open=>icone(obj),
         #:title => obj.id.to_s,
@@ -277,7 +304,7 @@ module Controllers::PlmObjectControllerModule
       :id => link.id)
       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
       options={
-        :label  => (link.relation.name||t(:ctrl_no_relation))+'-'+t(:ctrl_project)+":"+obj.ident+cut_a,
+        :label  => (Relation.find(link.relation_id).name||t(:ctrl_no_relation))+'-'+t(:ctrl_project)+":"+obj.ident+cut_a,
         :icon=>icone(obj),
         :icon_open=>icone(obj),
         :title => obj.designation,
@@ -292,11 +319,11 @@ module Controllers::PlmObjectControllerModule
   end
 
   def follow_tree_part(node, part)
-    puts 'follow_tree_part:'+part.inspect
+    #puts 'follow_tree_part:'+part.inspect
     tree_forums(node,"part",part)
     tree_documents(node,"part",part)
     links=Link.find_childs(part,  "part")
-    puts 'follow_tree_part:'+links.inspect
+    #puts 'follow_tree_part:'+links.inspect
     links.each do |link|
       child=Part.find(link.child_id)
       url={:controller => 'parts', :action => 'show', :id => "#{child.id}"}
@@ -305,7 +332,7 @@ module Controllers::PlmObjectControllerModule
       :id => link.id)
       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
       options={
-        :label  => (link.relation.name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+':'+child.ident+cut_a,
+        :label  => (Relation.find(link.relation_id).name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+':'+child.ident+cut_a,
         :icon=>icone(child),
         :icon_open=>icone(child),
         :title => child.designation,
@@ -347,10 +374,72 @@ module Controllers::PlmObjectControllerModule
   end
 
   def follow_tree_project(node, obj)
-    tree_users(node,"project",obj)
-    tree_documents(node,"project",obj)
-    tree_forums(node,"project",obj)
-    links=Link.find_childs( obj,  "part")
+    snode=tree_level(t(:label_project_users))
+    node<<snode
+    tree_users(snode,"project",obj)
+    
+    snode=tree_level(t(:label_project_objects))
+    node<<snode
+    tree_documents(snode,"project",obj)
+    tree_forums(snode,"project",obj)
+    tree_parts(snode, obj)
+    
+    snode=tree_level(t(:label_projowners))
+    node<<snode
+    tree_projowners(snode, obj)
+  end
+
+  def follow_tree_up_project(node, project)
+    follow_father("customer",node,project)
+  end
+  
+  def tree_projowners(node,  father)
+    tree_objects(node, Customer.find_by_projowner_id(father.id))
+    tree_objects(node, Part.find_by_projowner_id(father.id))
+    tree_objects(node, Document.find_by_projowner_id(father.id))
+  end
+  
+  def tree_objects(node, objs)
+    if objs.is_a?(Array)
+      objs.each do |obj|
+        pnode=tree_object(obj)
+        node<<pnode
+      end
+    else
+      unless objs.nil?
+        pnode=tree_object(objs)
+        node<<pnode
+      end
+    end
+  end
+    
+  def tree_level(title)
+    options={
+        :label => title
+        #:icon=>icone(obj),
+        #:icon_open=>icone(obj),
+        #:title => obj.designation,
+        #:open => false,
+        #:url=>url_for(url)
+    }
+    cnode = Node.new(options,nil)
+  end 
+  
+  def tree_object(obj)
+    url={:controller => obj.controller_name, :action => :show, :id => "#{obj.id}"}
+    options={
+        :label => t("ctrl_"+obj.model_name)+':'+obj.ident ,
+        :icon=>icone(obj),
+        :icon_open=>icone(obj),
+        :title => obj.designation,
+        :open => false,
+        :url=>url_for(url)
+    }
+    cnode = Node.new(options,nil)
+  end  
+  
+  def tree_parts(node,  father)
+    links=Link.find_childs( father,  "part")
     links.each do |link|
       child=Part.find(link.child_id)
       pnode=tree_part(child, link)
@@ -358,11 +447,7 @@ module Controllers::PlmObjectControllerModule
       follow_tree_part(pnode, child)
     end
   end
-
-  def follow_tree_up_project(node, project)
-    follow_father("customer",node,project)
-  end
-
+  
   def tree_documents(node, father_type, father)
     docs=Link.find_childs(father,  "document")
     docs.each do |link|
@@ -373,7 +458,7 @@ module Controllers::PlmObjectControllerModule
       :id => "#{link.id}" )
       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
       options={
-        :label => (link.relation.name||t(:ctrl_no_relation))+'-'+t(:ctrl_document)+':'+d.ident + cut_a,
+        :label => (Relation.find(link.relation_id).name||t(:ctrl_no_relation))+'-'+t(:ctrl_document)+':'+d.ident + cut_a,
         :icon=>icone(d),
         :icon_open=>icone(d),
         :title => d.designation,
@@ -386,19 +471,20 @@ module Controllers::PlmObjectControllerModule
   end
 
   def tree_users(node, father_type, father)
-    docs=Link.find_childs( father,  "user")
-    docs.each do |link|
-      d=User.find(link.child_id)
-      url={:controller => 'users', :action => 'show', :id => "#{d.id}"}
+    links=Link.find_childs( father,  "user")
+    links.each do |link|
+      child=User.find(link.child_id)
+      url={:controller => 'users', :action => 'show', :id => "#{child.id}"}
       destroy_url=url_for(:controller => "links",
       :action => "remove_link",
       :id => "#{link.id}" )
       cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
+      puts "tree_users:link="+link.id.to_s+" relation="+link.relation.inspect
       options={
-        :label => (link.relation.name||t(:ctrl_no_relation))+'-'+t(:ctrl_user)+':'+d.ident + cut_a,
-        :icon=>icone(d),
-        :icon_open=>icone(d),
-        :title => d.designation,
+        :label => child.ident + cut_a,
+        :icon=>icone(child),
+        :icon_open=>icone(child),
+        :title => child.designation,
         :open => false,
         :url=>url_for(url)
       }
@@ -421,7 +507,7 @@ module Controllers::PlmObjectControllerModule
         cut_a = '<a href="'+destroy_url+'">'+img_cut+'</a>'
       end
       options = {
-        :label => (link.relation.name||t(:ctrl_no_relation))+'-'+t(:ctrl_forum)+':'+d.subject + cut_a,
+        :label => (Relation.find(link.relation_id).name||t(:ctrl_no_relation))+'-'+t(:ctrl_forum)+':'+d.subject + cut_a,
         :icon => icone(d),
         :icon_open=>icone(d),
         :title => d.subject,
@@ -447,12 +533,12 @@ module Controllers::PlmObjectControllerModule
     error=false
     respond_to do |format|
       flash[:notice] = ""
-      @forum=Forum.new(params[:forum])
+      @forum=Forum.create_new(params[:forum], current_user)
       @forum.owner=@current_user
       if(@forum.save)
-        item=ForumItem.create_new(@forum, params)
+        item=ForumItem.create_new(@forum, params, current_user)
         if(item.save)
-          link_=Link.create_new(object, @forum, relation)
+          link_=Link.create_new(object, @forum, relation, current_user)
           link=link_[:link]
           if(link!=nil)
             if(link.save)
@@ -569,7 +655,7 @@ module Controllers::PlmObjectControllerModule
       f=model.find(link.father_id)
       url={:controller => get_controller_from_model_type(model_name), :action => 'show', :id => "#{f.id}"}
       options={
-        :label  => (link.relation.name||t(:ctrl_no_relation))+'-'+t("ctrl_"+model_name)+':'+f.ident,
+        :label  => (Relation.find(link.relation_id).name||t(:ctrl_no_relation))+'-'+t("ctrl_"+model_name)+':'+f.ident,
         :icon => icone(f),
         :icon_open=>icone(f),
         :title => f.designation,
@@ -700,11 +786,24 @@ module Controllers::PlmObjectControllerModule
     }
     cnode = Node.new(options,nil)
     node << cnode
-    childs = father.method(father.model_name+"s").call
-    #puts "follow_tree:"+childs.inspect
-    childs.each do |child|
-      follow_tree(cnode, child)
+    met=father.model_name+"s"
+    puts "follow_tree:met="+met.inspect
+    begin
+      childs=father.method(met).call
+    rescue Exception=>e
+      puts "follow_tree:erreur sur recherche des fils met="+met.inspect+":"+e.inspect
+      puts "follow_tree:father="+father.inspect
+      # bidouillage infame
+      if met=="groups"
+        childs=father.groups
+      end
     end
+    unless childs.nil?
+      childs.each do |child|
+        follow_tree(cnode, child)
+      end
+    end
+    
     node
   end
   

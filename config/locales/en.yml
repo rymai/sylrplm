@@ -113,6 +113,8 @@ en:
   ctrl_role_needed: Give the role
   ctrl_invalid_login: Invalid user/password combination
   ctrl_user_without_roles: This user have no roles
+  ctrl_user_without_groups: This user have no groups
+  ctrl_user_without_projects: This user have no projects
   ctrl_user_needed: Give the user
   ctrl_user_created: User %{user} created
   ctrl_user_not_created: User %{user} not created
@@ -133,6 +135,9 @@ en:
   ctrl_process: Process
   # projects
   ctrl_project: Project
+  label_project_users: Users
+  label_project_objects: Objects associate at project
+  label_projowners: Objets created by project
   # questions
   ctrl_question: Question
   # roles
@@ -181,6 +186,7 @@ en:
   # views
   #########################################
   # general
+  label_projowner: Project
   modif_status: Modify the status
   label_created_at: Creation
   label_updated_at: Update
@@ -251,6 +257,8 @@ en:
   tit_language: "Language:"
   lng_english: "English"
   lng_french: "French"
+  # main
+  label_preferences: Preferences
   # menus
   mnu_main: Welcome
   mnu_documents: Documents
@@ -306,6 +314,8 @@ en:
   label_in_date: In date
   label_in_user: In user
   label_local_dir: Local dir
+  label_in_group: Check in group 
+  label_out_group: Check out group 
   # customers
   legend_customer: Enter customer details
   customer_edit: Editing customer
@@ -493,6 +503,8 @@ en:
   project_show: Detail of project
   project_new: New project
   label_customer: Client
+  label_users: Collaborators
+  label_typeaccess: Confidentiality
   # questions
   legend_question: Enter question details
   questions_edit: Edition question
@@ -502,6 +514,8 @@ en:
   label_question: Question
   label_answer: Answer
   label_position: Position
+  label_asker: Asker
+  label_responder: Responder
   # relation
   legend_relation: Relation
   # roles
@@ -588,6 +602,7 @@ en:
   label_user_role_ids_out: Other roles
   label_user_group_ids_in: User groups
   label_user_group_ids_out: Other groups
+  label_projects: Projects
   # volumes
   legend_volume: Enter volume details
   volume_list: Listing of volumes

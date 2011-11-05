@@ -4,7 +4,7 @@ class RolesUsersController < ApplicationController
   # GET /roles_users
   # GET /roles_users.xml
   def index
-    @roles_users = RolesUser.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})  
+    @roles_users = RolesUser.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})  
     
     respond_to do |format|
       format.html # index.html.erb
@@ -59,7 +59,7 @@ class RolesUsersController < ApplicationController
   # PUT /roles_users/1.xml
   def update
     @roles_user = RolesUser.find(params[:id])
-    
+    @roles_user.update_accessor(current_user)
     respond_to do |format|
       if @roles_user.update_attributes(params[:roles_user])
         flash[:notice] = 'RolesUser was successfully updated.'

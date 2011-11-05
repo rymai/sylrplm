@@ -10,7 +10,7 @@ class AccessesController < ApplicationController
   # GET /accesses
   # GET /accesses.xml
   def index
-    @accesses = Access.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort] || 'controller, action', :nb_items => get_nb_items(params[:nb_items]) })
+    @accesses = Access.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort] || 'controller, action', :nb_items => get_nb_items(params[:nb_items]) })
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @accesses[:recordset] }
@@ -63,6 +63,7 @@ class AccessesController < ApplicationController
   # PUT /accesses/1
   # PUT /accesses/1.xml
   def update
+    @access.update_accessor(current_user)
     respond_to do |format|
       if @access.update_attributes(params[:access])
         flash[:notice] = t(:ctrl_object_updated, :typeobj => 'Access', :ident => @access.controller)

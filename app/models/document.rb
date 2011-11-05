@@ -13,6 +13,8 @@ class Document < ActiveRecord::Base
   belongs_to :owner,
   :class_name => "User"
   belongs_to :group
+  belongs_to :projowner,
+    :class_name => "Project"
 
   has_many :datafile
   has_many :checks
@@ -28,6 +30,10 @@ class Document < ActiveRecord::Base
 
   has_many :links_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
   has_many :customers, :through => :links_customers
+  #essai, appelle 10 fois par document !!!
+  def after_find
+    #puts "Document:after_find: ident="+ident+" type="+model_name+"."+typesobject.name+" proj="+projowner.ident+" group="+group.name
+  end
 
   def to_s
     "#{self.ident}/#{self.revision}-#{self.designation}-#{self.typesobject.try(:name)}-#{self.statusobject.try(:name)}"
@@ -35,22 +41,23 @@ class Document < ActiveRecord::Base
 
   def self.create_new(document, user)
     unless document.nil?
-      doc = Document.new(document)
+      obj = Document.new(document)
     else
-      #doc = user.documents.build(:ident => Sequence.get_next_seq("Document.ident"))
-      doc = Document.new()
-      doc.set_default_values(true)
+    #obj = user.documents.build(:ident => Sequence.get_next_seq("Document.ident"))
+      obj = Document.new()
+    obj.set_default_values(true)
     end
-    doc.owner=user
-    doc.group=user.group
-    doc.statusobject = Statusobject.get_first("document")
-    doc
+    obj.owner=user
+    obj.group=user.group
+    obj.projowner=user.project
+    obj.statusobject = Statusobject.get_first("document")
+    obj
   end
 
   def link_attributes=(att)
     @link_attributes = att
   end
-  
+
   def link_attributes
     @link_attributes
   end
@@ -86,6 +93,7 @@ class Document < ActiveRecord::Base
     check     = Check.get_checkout("document", self)
     unless params[:in_reason].blank?
       unless check.nil?
+        check.update_accessor(user)
         check.checkIn(params,user)
         if check.save
           self.update_attributes(params[:document])
@@ -106,6 +114,7 @@ class Document < ActiveRecord::Base
     check     = Check.get_checkout("document", self)
     unless params[:in_reason].blank?
       unless check.nil?
+        check.update_accessor(user)
         check.checkFree(params,user)
         if check.save
           self.update_attributes(params[:document])
@@ -129,9 +138,7 @@ class Document < ActiveRecord::Base
     !(self.statusobject.nil? || Statusobject.get_last("document").nil?) &&
     self.statusobject.rank == Statusobject.get_last("document").rank
   end
-  
-  
-  
+
   def self.get_types_document
     Typesobject.find(:all, :order=>"name",
     :conditions => ["object = 'document'"])
@@ -202,17 +209,30 @@ class Document < ActiveRecord::Base
     self.destroy
   end
 
-  def self.get_conditions(filter)
-    filter=filter.gsub("*","%")
-    conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
-      " or "+qry_owner+" or date LIKE ? ",
-      filter, filter,
-      filter, filter,
-      filter, filter,
-      filter ] unless filter.nil?
+  def self.get_conditions(filters)
+    filter = filters.gsub("*","%")
+    ret={}
+    unless filter.nil?
+      ret[:qry] = "ident LIKE :v_filter or revision LIKE :v_filter or designation LIKE :v_filter or date LIKE :v_filter "
+      ret[:values]={:v_filter => filter}
+    end
+    ret
   end
 
- 
- 
-  
+  def self.get_conditions_old(params)
+    filter = params[:query].gsub("*","%")
+    unless filter.nil?
+      ret = "ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
+      " or "+qry_owner+" or date LIKE ? ",
+    filter, filter,
+    filter, filter,
+    filter, filter,
+    filter
+    else
+      ret=""
+    end
+    puts self.model_name+".get_conditions:ret="+ret.to_s
+    ret
+  end
+
 end

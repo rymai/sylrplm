@@ -1,11 +1,14 @@
 require 'net/http'
+
+
+
 class DatafilesController < ApplicationController
   include Controllers::PlmObjectControllerModule
-
+  before_filter :check_user, :only => [:new, :edit]
   # GET /datafiles
   # GET /datafiles.xml
   def index
-    @datafiles = Datafile.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+    @datafiles = Datafile.find_paginate({ :user=> current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @datafiles[:recordset] }
@@ -71,6 +74,7 @@ class DatafilesController < ApplicationController
     @datafile = Datafile.find(params[:id])
     @types    = Typesobject.find_for("datafile")
     @document = Document.find(params["doc"]) if params["doc"]
+    update_accessor(@datafile)
     respond_to do |format|
       if @datafile.update_attributes_repos(params, @current_user)
         flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_datafile), :ident => @datafile.ident)
@@ -90,7 +94,7 @@ class DatafilesController < ApplicationController
     @datafile = Datafile.find(params[:id])
     if params["doc"]
       @document = Document.find(params["doc"])
-      @document.remove_datafile(@datafile)
+    @document.remove_datafile(@datafile)
     end
     @datafile.delete
     @types = Typesobject.find_for("datafile")

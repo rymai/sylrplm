@@ -202,7 +202,17 @@ ActionController::Routing::Routes.draw do |map|
   'projects/:id/add_users',
   :controller => 'projects',
   :action => 'add_users')
-
+  map.connect(
+  'projects/:id/promote',
+  :controller => 'projects',
+  :action => 'promote',
+  :conditions => { :method => :get })
+  map.connect(
+  'projects/:id/demote',
+  :controller => 'projects',
+  :action => 'demote',
+  :conditions => { :method => :get })
+  
   map.connect(
   'customers/:id/add_favori',
   :controller => 'customers',

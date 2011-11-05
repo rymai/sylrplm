@@ -20,6 +20,7 @@
 		<th> <%= t("label_in_date") %> </th>
 		<th> <%= t("label_in_user") %> </th>
 		<th> <%= t("label_in_group") %> </th>
+		<th> <%= t("label_projowner") %> </th>
 		<th> <%= t("label_local_dir") %> </th>
 	</tr>
 	<% @checks[:recordset].each do |check| %>
@@ -31,12 +32,18 @@
 		<td> <%= l check.out_date %> </td>
 		<td> <%= h check.out_user.login %> </td>
 		<td> <%= h check.out_group.name %> </td>
+		<%unless check.in_date.nil? %>
 		<td> <%= h check.in_reason %> </td>
-		<td> <%unless check.in_date.nil? %>
-		<%= l check.in_date %>
-		<%end %> </td>
+		<td> <%= l check.in_date %></td>
 		<td> <%= h check.in_user.login %> </td>
 		<td> <%= h check.in_group.name %> </td>
+		<%else%>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<%end %>
+		<td> <%= h check.projowner.ident %> </td>
 		<td> <%= h check.local_dir %> </td>
 		<td> <%= link_to h_img_show.to_s, check %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_check_path(check) %> </td>

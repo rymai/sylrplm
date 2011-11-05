@@ -5,7 +5,7 @@ class RolesController < ApplicationController
   # GET /roles.xml
   def index
     
-    @roles = Role.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])}) 
+    @roles = Role.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])}) 
     
     respond_to do |format|
       format.html # index.html.erb
@@ -61,6 +61,7 @@ class RolesController < ApplicationController
   # PUT /roles/1.xml
   def update
     @role = Role.find(params[:id])
+    @role.update_accessor(current_user)
     respond_to do |format|
       if @role.update_attributes(params[:role])
         flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_role),:ident=>@role.title)

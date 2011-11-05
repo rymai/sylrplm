@@ -4,7 +4,7 @@ class SequencesController < ApplicationController
   # GET /sequences
   # GET /sequences.xml
   def index
-   @sequences = Sequence.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})  
+   @sequences = Sequence.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})  
      respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @sequences }
@@ -66,6 +66,7 @@ class SequencesController < ApplicationController
     @sequence = Sequence.find(params[:id])
     #@objects=Sequence.getObjectsWithSequence
     @utilities=html_models_and_columns(@sequence.utility)
+    @sequence.update_accessor(current_user)
     respond_to do |format|
       if @sequence.update_attributes(params[:sequence])
         flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility)

@@ -15,7 +15,13 @@
 <table>
     <tr>
         <th>
+            <%=t(:label_asker) %>
+        </th>
+        <th>
             <%=t(:label_question) %>
+        </th>
+        <th>
+            <%=t(:label_responder) %>
         </th>
         <th>
             <%=t(:label_answer) %>
@@ -30,7 +36,15 @@
     <% @faqs[:recordset].each do |question| %>
     <tr>
         <td>
+            <%=h question.asker.login %>
+        </td>
+        <td>
             <%=h question.question %>
+        </td>
+        <td>
+            <%unless  question.responder.nil? %>
+            	<%=h question.responder.login %>
+           	<%end%>
         </td>
         <td>
             <%=h question.answer %>

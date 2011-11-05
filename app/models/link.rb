@@ -8,8 +8,12 @@ class Link < ActiveRecord::Base
 
   belongs_to :owner,
     :class_name => "User"
+    
   belongs_to :group
   
+  belongs_to :projowner,
+    :class_name => "Project"
+
   with_options :foreign_key => 'child_id' do |child|
     child.belongs_to :document , :conditions => ["child_plmtype='document'"], :class_name => "Document"
     child.belongs_to :part , :conditions => ["child_plmtype='part'"], :class_name => "Part"
@@ -18,69 +22,90 @@ class Link < ActiveRecord::Base
     child.belongs_to :datafile , :conditions => ["child_plmtype='datafile'"], :class_name => "Datafile"
     child.belongs_to :workitem , :conditions => ["child_plmtype='workitem'"], :class_name => "Workitem"
     child.belongs_to :history , :conditions => ["child_plmtype='history'"], :class_name => "HistoryEntry"
+    child.belongs_to :user , :conditions => ["child_plmtype='user'"], :class_name => "User"
+  end
+
+  def father
+    get_object(father_plmtype, father_id)
+  end
+
+  def child
+    get_object(child_plmtype, child_id)
   end
 
   def ident
     father_plmtype+"."+father_type_id.to_s+"-"+Relation.find(relation_id).ident+"-"+child_plmtype+"."+child_type_id.to_s
   end
-  
+
   def relation_name
     (self.relation ? self.relation.name : "")
   end
-  
+
   def self.isvalid(father, child, relation)
-    father.model_name==relation.father_plmtype \
+    puts "link."+__method__.to_s+":"
+    if true
+      puts father.model_name+"=="+relation.father_plmtype + \
+      " "+child.model_name+"=="+relation.child_plmtype + \
+      " "+father.typesobject.inspect+"=="+relation.id.to_s+"."+relation.father_type.inspect + \
+      " "+child.typesobject.inspect+"=="+relation.child_type.inspect
+    end
+    ret=father.model_name==relation.father_plmtype \
     && child.model_name==relation.child_plmtype \
     && father.typesobject.name==relation.father_type.name \
     && child.typesobject.name==relation.child_type.name
+    if ret==false
+      puts "link."+__method__.to_s+":"
+      puts father.model_name+"=="+relation.father_plmtype + \
+      " "+child.model_name+"=="+relation.child_plmtype + \
+      " "+father.typesobject.name+"=="+relation.father_type.name + \
+      " "+child.typesobject.name+"=="+relation.child_type.name
+    end
+    ret
   end
-  
+
   def self.create_new_by_values(values)
     link = Link.new(values)
     link.owner=current_user
     link.group=current_user.group
     msg="ctrl_link_"+link.ident
     ret={:link => link,:msg => msg}
-    puts "link:create_new_by_values:"+ret.inspect
+    puts "link.create_new_by_values:"+ret.inspect
     ret
   end
-  
-  def self.create_new(father, child, relation)
+
+  def self.create_new(father, child, relation, user)
     #puts "link:create_new:"+father.inspect+"-"+child.inspect+"."+child.inspect
     if isvalid(father, child, relation)
       nbused = self.nb_used(relation)
       nboccured = self.nb_occured(father, relation)
-      puts "link:create_new:"+nbused.to_s+ " "+child.model_name+"."+child.typesobject.name+" utilises dans relation "+relation.ident
-      puts "link:create_new:"+nboccured.to_s+ " "+child.model_name+"."+child.typesobject.name+" occurences "+" dans "+father.ident
+      puts "link.create_new:"+nbused.to_s+ " "+child.model_name+"."+child.typesobject.name+" utilises dans relation "+relation.ident
+      puts "link.create_new:"+nboccured.to_s+ " "+child.model_name+"."+child.typesobject.name+" occurences "+" dans "+father.ident
       if (nbused >= relation.cardin_use_min && (relation.cardin_use_max == -1 || nbused <= relation.cardin_use_max))
-        link = Link.new
-        link.father_plmtype = father.model_name
-        link.child_plmtype = child.model_name
-        link.father_type_id = father.typesobject_id
-        link.child_type_id = child.typesobject_id
-        link.father_id = father.id
-        link.child_id = child.id
-        link.relation_id = relation.id
-        link.owner=current_user
-        link.group=current_user.group
-        msg="ctrl_link_"+link.ident
+        obj = Link.new
+        obj.father_plmtype = father.model_name
+        obj.child_plmtype = child.model_name
+        obj.father_type_id = father.typesobject_id
+        obj.child_type_id = child.typesobject_id
+        obj.father_id = father.id
+        obj.child_id = child.id
+        obj.relation_id = relation.id
+        obj.owner=user
+        obj.group=user.group
+        obj.projowner=user.project
+        msg="ctrl_link_"+obj.ident
       else
-        link=nil
+        obj=nil
         msg=:ctrl_link_too_many_used
       end
     else
-      link=nil
+      obj=nil
       msg=:ctrl_link_not_valid
-      puts __FILE__+"."+__method__.to_s+":"+father.model_name+"=="+relation.father_plmtype + \
-      " "+child.model_name+"=="+relation.child_plmtype + \
-      " "+father.typesobject.to_s+"=="+relation.father_type.to_s + \
-      " "+child.typesobject.to_s+"=="+relation.child_type.to_s
-    end 
-    ret={:link => link,:msg => msg}
-    puts "link:create_new:"+ret.inspect
+    end
+    ret={:link => obj,:msg => msg}
+    puts "link.create_new:"+ret.inspect
     ret
   end
-  
+
   #  def before_save
   #    puts "link.before_save:"+self.inspect
   #    # ##self.child_plmtype=self.child.class.to_s.underscore
@@ -98,9 +123,9 @@ class Link < ActiveRecord::Base
   def self.find_childs(father, child_plmtype=nil)
     find_childs_with_father_type(father.model_name, father, child_plmtype)
   end
-  
+
   def self.find_childs_with_father_type(father_type, father, child_plmtype=nil)
-   ret= unless child_plmtype.nil?
+    ret= unless child_plmtype.nil?
       find(:all,
       :conditions => ["father_plmtype='#{father_type}' and child_plmtype='#{child_plmtype}' and father_id =#{father.id}"],
       :order=>"child_id")
@@ -179,7 +204,5 @@ class Link < ActiveRecord::Base
   def self.get_conditions(filter)
     nil
   end
-  
-  
-  
+
 end

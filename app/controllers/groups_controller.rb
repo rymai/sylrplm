@@ -33,7 +33,7 @@ class GroupsController < ApplicationController
   def index
 
     
-    @groups = Group.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+    @groups = Group.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 
     respond_to do |format|
       format.html # index.html.erb
@@ -105,9 +105,8 @@ class GroupsController < ApplicationController
   # PUT /groups/1.xml
   #
   def update
-
     @group = Group.find(params[:id])
-
+    @group.update_accessor(current_user)
     respond_to do |format|
       if @group.update_attributes(params[:group])
         flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_group), :ident => @group.name)    

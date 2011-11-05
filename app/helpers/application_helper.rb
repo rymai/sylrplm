@@ -1,5 +1,12 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  def h_value_or_default(value, default)
+    ret=default
+    unless value.nil?
+      ret=value unless value.size==0
+    end
+    ret
+  end
   # renvoie la valeur de l'attribut att sur current si
   # 1- current n'a pas le meme identifiant que previous
   # 2- que les valeurs de l'attribut sont differentes entre les 2objets
@@ -340,7 +347,9 @@ module ApplicationHelper
       select_name=mdl_object+"["+mdl_assoc+"_ids][]"
       #role_ids
       method=(mdl_assoc+"_ids").to_sym
-      the_selected=object.method(method).call
+      #the_selected=object.method(method).call: ko dans certains cas (securite!!)
+      the_selected=object.send(method)
+      #puts "select_inout:object="+object.model_name+" method="+method.to_s+" sel="+the_selected.inspect
       #label_user_groups_out, label_user_groups_in
       label_out=t("label_"+select_id+"_out")
       label_in=t("label_"+select_id+"_in")

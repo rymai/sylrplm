@@ -1,28 +1,33 @@
 class QuestionsController < ApplicationController
   include Controllers::PlmObjectControllerModule
-  
+
   skip_before_filter :authorize, :object_exists
   access_control (Access.find_for_controller(controller_class_name()))
-  
   def index
-    @faqs = Question.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])}) 
+    @faqs = Question.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
   end
-  
+
   def show
     @faq = Question.find params[:id]
   end
-  
+
   def new
-    @faq = Question.create_new
+    @faq = Question.create_new(nil, current_user)
     respond_to do |format|
-      #flash[:notice] = "#{@controllers.size()} controllers:1=#{@controllers[1].name}"
-      format.html # new.html.erb
-      format.xml  { render :xml => @faq }
+      unless @faq.nil?
+        #flash[:notice] = "#{@controllers.size()} controllers:1=#{@controllers[1].name}"
+        format.html # new.html.erb
+        format.xml  { render :xml => @faq }
+      else
+        flash[:notice] =t(:ctrl_object_not_created, :typeobj =>t(:ctrl_faq), :msg => nil)
+        format.html { redirect_to :controller => :questions, :action => :index }
+        format.xml  { head :ok }
+      end
     end
   end
-  
+
   def create
-    @faq = Question.new(params[:question])
+    @faq = Question.create_new(params[:question], current_user)
     respond_to do |format|
       if @faq.save
         flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_faq),:ident=>@faq.id)
@@ -34,18 +39,19 @@ class QuestionsController < ApplicationController
         format.xml  { render :xml => @faq.errors, :status => :unprocessable_entity }
       end
     end
-    
-    
+
   end
-  
+
   def edit
     @faq = Question.find(params[:id])
   end
-  
+
   def update
+    puts "questions_controller.update:"+params.inspect
     @faq = Question.find(params[:id])
+    @faq.update_accessor(current_user)
     respond_to do |format|
-      if @faq.update_attributes(params[:question])
+      if @faq.update_from_params(params[:question], current_user)
         flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_faq),:ident=>@faq.id)
         format.html { redirect_to(@faq) }
         format.xml  { head :ok }
@@ -56,7 +62,7 @@ class QuestionsController < ApplicationController
       end
     end
   end
-  
+
   def destroy
     @faq = Question.find params[:id]
     id=@faq.id

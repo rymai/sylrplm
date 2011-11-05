@@ -948,6 +948,6 @@ $cmd
 ---
 rake db:drop
 rake db:create
-rake db:migrate
-
-
+rake db:migrate (schema par les migrations)
+ou rake db:drop;rake db:create;rake db:load (schema+data, il faut db/data.yml
+ou rake db:drop;rake db:create;rake db:schema:load (schema seul, pas de data)

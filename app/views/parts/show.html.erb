@@ -41,7 +41,7 @@
 	<tr>
 		<% unless @favori.get('document').count==0 || @relations["document"].count==0 %>
 		<% form_for(@part, :url => {:id => @part.id, :action => "add_docs" }, :method => :get) do |f| %> 
-		<td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :name)) %></td>
+		<td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
 		<% end %>
 		<%end%>
@@ -50,7 +50,7 @@
 	<tr>
 		<% unless @favori.get('part').count==0 || @relations["part"].count==0 %>
 		<% form_for(@part, :url => {:id => @part.id, :action => "add_parts" }, :method => :get) do |f| %> 
-		<td> <%= select("relation","part", options_from_collection_for_select( @relations["part"], :id, :name)) %></td>
+		<td> <%= select("relation","part", options_from_collection_for_select( @relations["part"], :id, :ident)) %></td>
 		<td> <%= submit_tag t("paste_parts") %></td>
 		<% end %> <!--
 		<%= link_to h_img_add_parts.to_s+t("paste_parts"), :id => @part.id, :action => :add_parts %>
@@ -63,7 +63,7 @@
 	<tr>
 		<% unless @relations["forum"].count==0 %>
 		<% form_for(@part, :url => {:id => @part.id, :action => :new_forum }) do |f| %> 
-		<td> <%= select("relation","forum", options_from_collection_for_select( @relations["forum"], :id, :name)) %></td>
+		<td> <%= select("relation","forum", options_from_collection_for_select( @relations["forum"], :id, :ident)) %></td>
 		<td><%= submit_tag t("add_forum") %></td>
 		<% end %>
 		<%end%>

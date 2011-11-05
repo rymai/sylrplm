@@ -155,9 +155,8 @@ class DefinitionsController < ApplicationController
   # PUT /definitions/1.xml
   #
   def update
-
     @definition = Definition.find(params[:id])
-
+    @definition.update_accessor(current_user)
     respond_to do |format|
       if @definition.update_attributes(params[:definition])
 

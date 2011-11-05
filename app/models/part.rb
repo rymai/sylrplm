@@ -16,6 +16,8 @@ class Part < ActiveRecord::Base
   belongs_to :owner,
   :class_name => "User"
   belongs_to :group
+  belongs_to :projowner,
+    :class_name => "Project"
   #
 
   #has_and_belongs_to_many :documents, :join_table => "links",
@@ -45,16 +47,17 @@ class Part < ActiveRecord::Base
 
   def self.create_new(part,user)
     if(part!=nil)
-      p=Part.new(part)
+      obj=Part.new(part)
     else
-      p=Part.new
-      p.set_default_values(true)
+      obj=Part.new
+      obj.set_default_values(true)
     end
-    p.statusobject=Statusobject.get_first("part")
-    p.owner=user
-    p.group=user.group
+    obj.statusobject=Statusobject.get_first("part")
+    obj.owner=user
+    obj.group=user.group
+    obj.projowner=user.project
     #puts "part.create_new:"+p.inspect
-    p
+    obj
   end
 
   def link_attributes=(att)
@@ -90,13 +93,17 @@ class Part < ActiveRecord::Base
   end
 
   def self.get_conditions(filter)
-    filter=filter.gsub("*","%")
-    conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
-      " or "+qry_owner+" or date LIKE ? ",
-      filter, filter,
-      filter, filter,
-      filter, filter,
-      filter ] unless filter.nil?
+    
+    filter = filters.gsub("*","%")
+    ret={}
+    unless filter.nil?
+      ret[:qry] = "ident LIKE :v_filter or "+qry_type+" or revision LIKE :v_filter or designation LIKE :v_filter or "+qry_status+
+      " or "+qry_owner+" or date LIKE :v_filter "
+      ret[:values]={:v_filter => filter}
+    end
+    ret
+    #conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
+    #  " or "+qry_owner+" or date LIKE ? "
   end
 
 end

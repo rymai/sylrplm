@@ -12,11 +12,14 @@
 		<th></th>
 		<th <%= sort_td_class_helper "ident" %>> <%= sort_link_helper t(:label_ident), "ident" %> </th>
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t(:label_typesobject), "typesobject_id" %> </th>
+		<th <%= sort_td_class_helper "typeaccess_id" %>> <%= sort_link_helper t(:label_typeaccess), "typeaccess_id" %> </th>
 		<th <%= sort_td_class_helper "designation" %>> <%= sort_link_helper t(:label_designation), "designation" %> </th>
 		<th <%= sort_td_class_helper "statusobject_id" %>> <%= sort_link_helper t(:label_statusobject), "statusobject_id" %> </th>
 		<th <%= sort_td_class_helper  "owner" %>> <%= sort_link_helper t(:label_responsible), "owner" %> </th>
 		<th <%= sort_td_class_helper  "group" %>> <%= sort_link_helper t(:label_group), "group" %> </th>
-		<th <%= sort_td_class_helper  "date" %>> <%= sort_link_helper t(:label_date) , "date" %> </th><th></th>
+		<th <%= sort_td_class_helper  "date" %>> <%= sort_link_helper t(:label_date) , "date" %> </th>
+		<th <%= sort_td_class_helper  "users" %>> <%= sort_link_helper t(:label_users) , "users" %> </th>
+		<th></th>
 		<th></th>
 		<th></th>
 		<th></th>
@@ -27,12 +30,15 @@
 		<td> <%= h project.ident %> </td>
 		<% if(project.typesobject != nil) %> <td> <%= h project.typesobject.name %> </td>
 		<% else %> <td></td>
-		<% end %> <td> <%= h project.designation %> </td>
+		<% end %> 
+		<td> <%= h project.typeaccess.name %> </td>
+		<td> <%= h project.designation %> </td>
 		<% if(project.statusobject != nil) %> <td> <%= h project.statusobject.name %> </td>
 		<% else %> <td></td>
 		<% end %> <td> <%= h project.owner.login %> </td>
 		<td> <%= h project.group.name %> </td>
 		<td> <%= l project.date %> </td>
+		<td><%= comma_list(project.users, :login) %></td>
 		<td> <%= link_to h_img_show.to_s, project %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_project_path(project) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, project, :confirm => t(:msg_confirm), :method => :delete %> </td>

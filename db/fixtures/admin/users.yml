@@ -15,10 +15,8 @@
     notification: "0"
     show_mail: "0"
     time_zone: ""
-    typesobject_id: 
-  
-
- 
+    typesobject_id:
+      
 2: 
     id: "2"
     login: syl
@@ -37,8 +35,6 @@
     time_zone: ""
     typesobject_id: 
   
-
- 
 3: 
     id: "5"
     login: alice
@@ -57,8 +53,6 @@
     time_zone: ""
     typesobject_id: 
   
-
- 
 4: 
     id: "6"
     login: bob
@@ -77,8 +71,6 @@
     time_zone: ""
     typesobject_id: 
   
-
- 
 7: 
     id: "7"
     login: charly
@@ -97,8 +89,6 @@
     time_zone: ""
     typesobject_id: 
   
-
- 
 9: 
     id: "9"
     login: robert
@@ -117,8 +107,6 @@
     time_zone: Paris
     typesobject_id: 
   
-
- 
 10: 
     id: "10"
     login: sylvia
@@ -137,8 +125,6 @@
     time_zone: ""
     typesobject_id: 
   
-
- 
 11: 
     id: "11"
     login: peter
@@ -156,5 +142,21 @@
     show_mail: "0"
     time_zone: ""
     typesobject_id: "92"
-  
-
+    
+12: 
+    id: "12"
+    login: visiteur
+    salt: 1234
+    hashed_password: <%= User.encrypted_password('visiteur', '1234') %>
+    role_id: "6"
+    email: ""
+    theme: blackwhite
+    volume_id: "1"
+    nb_items: 
+    first_name: ""
+    last_name: ""
+    language: fr
+    notification: "1"
+    show_mail: "0"
+    time_zone: ""
+    typesobject_id: "91"

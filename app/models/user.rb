@@ -13,8 +13,11 @@ class User < ActiveRecord::Base
   has_many :groups, :through => :user_groups
   
   has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='user'"]
-  has_many :projects , :through => :links_projects
-
+  #TODO ne envoie rien => voir la fonction projects 
+  #has_many :projects, :through => :links_projects
+  
+  belongs_to :project
+  
   validates_presence_of     :login
   validates_uniqueness_of   :login
   
@@ -37,7 +40,9 @@ class User < ActiveRecord::Base
   def designation
     self.login+" "+self.first_name.to_s+" "+self.last_name.to_s
   end
-  
+  def projects
+    links_projects.collect { |p| p.father }
+  end
   def designation=(val)
     designation        = val
   end
@@ -65,9 +70,11 @@ class User < ActiveRecord::Base
   def model_name
     "user"
   end
-
+  def typesobject
+    Typesobject.find_by_object(model_name)
+  end
   def ident
-    self.login
+    self.login+"/"+(self.role.nil? ? " " :self.role.title)+"/"+(self.group.nil? ? " " : self.group.name)
   end
 
   def validate

@@ -4,7 +4,7 @@ class TypesobjectsController < ApplicationController
   # GET /typesobjects
   # GET /typesobjects.xml
   def index
-    @typesobjects = Typesobject.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+    @typesobjects = Typesobject.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @typesobjects }
@@ -63,6 +63,7 @@ class TypesobjectsController < ApplicationController
   def update
     @typesobject = Typesobject.find(params[:id])
     @objectswithtype=Typesobject.get_objects_with_type
+    @typesobject.update_accessor(current_user)
     respond_to do |format|
       if @typesobject.update_attributes(params[:typesobject])
         flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_typesobject),:ident=>@typesobject.name)

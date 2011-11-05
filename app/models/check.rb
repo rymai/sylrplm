@@ -12,6 +12,8 @@ class Check < ActiveRecord::Base
     :class_name => "Group"
   belongs_to :in_group,
     :class_name => "Group"
+  belongs_to :projowner,
+    :class_name => "Project"
   #status:
   # 0=unknown
   # 1=out
@@ -39,6 +41,7 @@ class Check < ActiveRecord::Base
     obj.out_user=user
     obj.out_group=user.group
     obj.out_date=DateTime.now
+    obj.projowner=user.project
     obj.set_default_values(true)
     obj
   end
@@ -47,6 +50,7 @@ class Check < ActiveRecord::Base
     self.status=2
     self.in_user=user
     self.in_group=user.group
+    self.project=user.project
     if(params)
       # commit genere par le view
       params.delete("commit")

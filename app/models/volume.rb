@@ -125,8 +125,13 @@ class Volume < ActiveRecord::Base
     File.join(self.directory,self.name)
   end
   def self.get_conditions(filter)
-    filter=filter.gsub("*","%")
-      conditions = ["name LIKE ? or description LIKE ? or directory LIKE ? or protocole LIKE ?",
-      filter, filter, filter, filter] unless filter.nil?
+        filter = filters.gsub("*","%")
+    ret={}
+    unless filter.nil?
+      ret[:qry] = "name LIKE :v_filter or description LIKE :v_filter or directory LIKE :v_filter or protocole LIKE :v_filter"
+      ret[:values]={:v_filter => filter}
+    end
+    ret
+    #conditions = ["name LIKE ? or description LIKE ? or directory LIKE ? or protocole LIKE ?"
   end
 end

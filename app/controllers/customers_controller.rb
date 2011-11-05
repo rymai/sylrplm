@@ -4,11 +4,11 @@ class CustomersController < ApplicationController
   before_filter :check_init, :only => :new
 
   access_control(Access.find_for_controller(controller_class_name))
-
+  before_filter :check_user, :only => [:new, :edit]
   # GET /customers
   # GET /customers.xml
   def index
-    @customers = Customer.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+    @customers = Customer.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @customers[:recordset] }
@@ -73,6 +73,7 @@ class CustomersController < ApplicationController
     @customer = Customer.find(params[:id])
     @types    = Typesobject.get_types(:customer)
     @status   = Statusobject.find_for(:customer)
+    @customer.update_accessor(current_user)
     respond_to do |format|
       if @customer.update_attributes(params[:customer])
         flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
@@ -97,7 +98,7 @@ class CustomersController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def promote
     ctrl_promote(Customer,false)
   end
@@ -114,7 +115,7 @@ class CustomersController < ApplicationController
     @relation_id = params[:relation][:forum]
     respond_to do |format|
       flash[:notice] = ""
-      @forum         = Forum.create_new(nil)
+      @forum         = Forum.create_new(nil, current_user)
       @forum.subject = t(:ctrl_subject_forum, :typeobj => t(:ctrl_customer), :ident => @object.ident)
       format.html { render :action => :new_forum, :id => @object.id }
       format.xml  { head :ok }
@@ -125,19 +126,19 @@ class CustomersController < ApplicationController
     @object = Customer.find(params[:id])
     ctrl_add_forum(@object)
   end
-  
+
   def add_docs
     @customer = Customer.find(params[:id])
     ctrl_add_objects_from_favorites(@customer, :document)
   end
-  
-  def add_projects 
+
+  def add_projects
     @customer = Customer.find(params[:id])
     ctrl_add_objects_from_favorites(@customer, :project)
   end
-  
+
   private
-    
+
   def create_tree(obj)
     tree = Tree.new( { :js_name=>"tree_down", :label => t(:ctrl_object_explorer, :typeobj => t(:ctrl_customer)), :open => true })
     session[:tree_object] = obj

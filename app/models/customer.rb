@@ -10,6 +10,8 @@ class Customer < ActiveRecord::Base
   belongs_to :owner,
   :class_name => "User"
   belongs_to :group
+  belongs_to :projowner,
+    :class_name => "Project"
   
 
   has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
@@ -26,6 +28,7 @@ class Customer < ActiveRecord::Base
     end
     obj.owner=user
     obj.group=user.group
+    obj.projowner=user.project
     obj.statusobject = Statusobject.get_first("customer")
     puts obj.inspect
     obj
@@ -71,11 +74,20 @@ class Customer < ActiveRecord::Base
   end
 
   def self.get_conditions(filter)
+    filter = filters.gsub("*","%")
+    ret={}
+    unless filter.nil?
+      ret[:qry] = "ident LIKE :v_filter or designation LIKE :v_filter or "+qry_type+" or "+qry_status+" or "+qry_owner
+      ret[:values] = {:v_filter => filter}
+    end
+    ret
+=begin  TODO  
     filter=filter.gsub("*","%")
     ["ident LIKE ? or "+qry_type+" or designation LIKE ? or "+qry_status+
       " or "+qry_owner+" or date LIKE ? ",
       filter, filter,
       filter, filter,
       filter, filter ] unless filter.nil?
+=end
   end
 end

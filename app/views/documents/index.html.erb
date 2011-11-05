@@ -1,5 +1,4 @@
 <h1><%= t("document_list") %><%= h_count_objects(@documents) %></h1>
-
 <%= form_simple_query_helper('/documents', @documents) %>
 <table class='menu_bas'>
 	<tr>
@@ -7,27 +6,20 @@
 		<td> <%= show_help("help_documents") %></td>
 	</tr>
 </table>
-	<%= will_paginate(@documents[:recordset]) %>
+<%= will_paginate(@documents[:recordset]) %>
 <table>
 	<tr>
 		<th></th>
-		<th <%= sort_td_class_helper "ident" %>>
-		<%= sort_link_helper t("label_ident"), "ident" %></th>
-		<th <%= sort_td_class_helper "typesobject_id" %>>
-		<%= sort_link_helper t("label_typesobject"), "typesobject_id" %></th>
-		<th <%= sort_td_class_helper "revision" %>>
-		<%= sort_link_helper t("label_revision"), "revision" %></th>
-		<th <%= sort_td_class_helper "designation" %>>
-		<%= sort_link_helper t("label_designation"), "designation" %></th>
-		<th <%= sort_td_class_helper "statusobject_id" %>>
-		<%= sort_link_helper t("label_statusobject"), "statusobject_id" %></th>
-		<th <%= sort_td_class_helper "owner" %>>
-		<%= sort_link_helper t("label_responsible"), "owner" %></th>
-		<th <%= sort_td_class_helper "group" %>>
-		<%= sort_link_helper t("label_group"), "group" %></th>
+		<th <%= sort_td_class_helper "ident" %>> <%= sort_link_helper t("label_ident"), "ident" %></th>
+		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %></th>
+		<th <%= sort_td_class_helper "revision" %>> <%= sort_link_helper t("label_revision"), "revision" %></th>
+		<th <%= sort_td_class_helper "designation" %>> <%= sort_link_helper t("label_designation"), "designation" %></th>
+		<th <%= sort_td_class_helper "statusobject_id" %>> <%= sort_link_helper t("label_statusobject"), "statusobject_id" %></th>
+		<th <%= sort_td_class_helper "owner" %>> <%= sort_link_helper t("label_responsible"), "owner" %></th>
+		<th <%= sort_td_class_helper "group" %>> <%= sort_link_helper t("label_group"), "group" %></th>
+		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), :projowner %> </th>
 		<th> <%= t("label_nbfiles") %></th>
-		<th <%= sort_td_class_helper "date" %>>
-		<%= sort_link_helper t("label_date"), "date" %></th>
+		<th <%= sort_td_class_helper "date" %>> <%= sort_link_helper t("label_date"), "date" %></th>
 		<th></th>
 		<th></th>
 		<th></th>
@@ -35,10 +27,10 @@
 	</tr>
 	<% previous=nil
 	@documents[:recordset].each do |document| %>
+	
 	<tr>
 		<td> <%= icone(document) %></td>
-		<td> <%= h_if_differ(document , previous,  "ident") %>
-		</td>
+		<td> <%= h_if_differ(document , previous,  "ident") %> </td>
 		<td> <% if(document.typesobject != nil) %>
 		<%= h_if_differ(document , previous,  "typesobject.name") %>
 		<% end %></td>
@@ -47,30 +39,32 @@
 		<td> <% if(document.statusobject != nil) %>
 		<%= h_if_differ(document , previous,  "statusobject.name") %>
 		<% end %></td>
-		<td>  <%= h_if_differ(document , previous,  "owner.login") %>
-		<td>  <%= h_if_differ(document , previous,  "group.name") %>
+		<td> <%= h_if_differ(document , previous,  "owner.login") %></td>
+		<td> <%= h_if_differ(document , previous,  "group.name") %></td>
+		<td> <%= h_if_differ(document , previous,  "projowner.ident") %>
+			(<%= document.projowner.typeaccess.name%>)
+		</td>
 		<td> <%= h document.datafile.length %></td>
 		<td> <%= h_if_differ(document , previous,  "date") %> </td>
-		<td> <%= link_to h_img_show.to_s, document %></td>
-		<% if document.revisable? %>
-		<td> <%= h_img_revise.to_s %></td>
+		<td> <% if document.ok_for_show?(current_user) %>
+		<%= link_to h_img_show.to_s, document %>
+		<% end %> </td>
+		<% if document.revisable? %> <td> <%= h_img_revise.to_s %></td>
 		<td></td>
 		<% else %>
-		<% if document.frozen? == false %>
-		<td> <%= link_to h_img_edit.to_s, edit_document_path(document) %></td>
+		<% if document.frozen? == false %> <td> <%= link_to h_img_edit.to_s, edit_document_path(document) %></td>
 		<td> <%= link_to h_img_destroy.to_s, document, :confirm => t("msg_confirm"), :method => :delete %></td>
-		<% else %>
-		<td></td>
+		<% else %> <td></td>
 		<td></td>
 		<% end %>
 		<% end %>
-		</td>
-		<td><% if logged_in? %>
+		</td> <td><% if logged_in? %>
 		<%= link_to_remote h_img(:copy).to_s, :url => {:controller => "documents", :action => "add_favori", :id => document.id}, :method => :get  %>
 		<%end%></td>
 	</tr>
 	<% previous=document %>
 	<% end %>
+	
 </table>
 <%= will_paginate(@documents[:recordset]) %>
 <table class='menu_bas'>

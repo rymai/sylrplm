@@ -4,7 +4,7 @@ class StatusobjectsController < ApplicationController
   # GET /statusobjects
   # GET /statusobjects.xml
   def index
-    @statusobjects = Statusobject.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+    @statusobjects = Statusobject.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @statusobjects }
@@ -64,6 +64,7 @@ class StatusobjectsController < ApplicationController
   def update
     @statusobject = Statusobject.find(params[:id])
     @objectswithstatus=Statusobject.get_objects_with_status
+    @statusobject.update_accessor(current_user)
     respond_to do |format|
       if @statusobject.update_attributes(params[:statusobject])
         flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)

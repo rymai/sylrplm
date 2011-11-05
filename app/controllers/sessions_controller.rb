@@ -1,24 +1,25 @@
 class SessionsController < ApplicationController
 
-  skip_before_filter :authorize, :object_exists
+  skip_before_filter :authorize, :object_exists, :check_user
   def new
+    puts "sessions_controller.new"+params.inspect
   end
 
   def edit
-    @roles = current_user.roles
-    @groups=current_user.groups
+    puts "sessions_controller.edit"+params.inspect
   end
 
   def create
-    flash.now[:notice] = "post"
+    puts "sessions_controller.create"+params.inspect
+    flash.now[:notice] = "post" 
     if current_user.nil?
       cur_user = User.authenticate(params["login"], params["password"])
       respond_to do |format|
         if cur_user
           @roles = cur_user.roles
           @groups= cur_user.groups
-          puts "sessions_controllers:"+@groups.inspect
-          if @roles.count>0 && @groups.count>0
+          @projects = cur_user.projects
+          if @roles.count > 0 && @groups.count > 0 && @projects.count > 0
             @current_user = cur_user
             session[:user_id] = cur_user.id
             flash[:notice]    = t(:ctrl_role_needed)
@@ -26,14 +27,20 @@ class SessionsController < ApplicationController
           else
             @current_user=nil
             session[:user_id] = nil
-            flash[:notice] = t(:ctrl_user_without_roles)
+            flash[:notice] =""
+            flash[:notice] += t(:ctrl_user_without_roles) unless @roles.count>0
+            flash[:notice] += ", "+t(:ctrl_user_without_groups) unless @groups.count>0
+            flash[:notice] += ", "+t(:ctrl_user_without_projects) unless @projects.count>0
+            puts "sessions_controller.create:"+flash[:notice]
             format.html { render :new }
+            format.xml  {render :xml => errs, :status => :unprocessable_entity }
           end
         else
           @current_user=nil
           session[:user_id] = nil
-          flash[:notice] = t(:ctrl_invalid_login)
+          flash[:notice] =t(:ctrl_invalid_login)
           format.html { render :new }
+          format.xml  { render :xml => errs, :status => :unprocessable_entity }
         end
       end
     else
@@ -47,7 +54,7 @@ class SessionsController < ApplicationController
           format.xml  { head :ok }
         else
           errs=@current_user.errors
-          flash.now[:notice] = t(:ctrl_user_not_connected, :user => @current_user.login)
+          flash[:notice] = t(:ctrl_user_not_connected, :user => @current_user.login)
           @current_user=nil
           session[:user_id] = nil
           format.html { render :new }
@@ -55,6 +62,11 @@ class SessionsController < ApplicationController
         end
       end
     end
+    
+  end
+
+  def update
+    puts "sessions_controller.update"+params.inspect
   end
 
   def destroy

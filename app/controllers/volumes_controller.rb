@@ -4,7 +4,7 @@ class VolumesController < ApplicationController
   # GET /volumes
   # GET /volumes.xml
   def index
-    @volumes = Volume.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+    @volumes = Volume.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @volumes }
@@ -66,6 +66,7 @@ class VolumesController < ApplicationController
   # PUT /volumes/1.xml
   def update
     @volume = Volume.find(params[:id])
+    @volume.update_accessor(current_user)
     respond_to do |format|
       if @volume.update_attributes(params[:volume])
         dir=@volume.create_dir(params[:olddir])

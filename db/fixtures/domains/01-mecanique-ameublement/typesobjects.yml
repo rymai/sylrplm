@@ -1,18 +1,21 @@
-1:
-  id: 1 
-  object: customer 
-  name: internal 
-  description: Service ou direction interne a l'entreprise 	  	
-2:
-  id: 2 
-  object: customer 
-  name: private
-  description: Client externe a acces restreint 		
-3:
-  id: 3 
-  object: customer 
-  name: public 
-  description: Client externe accessible a tous		
+10001:
+  id: 10001 
+  object: project 
+  name: default 
+  description: Projet par defaut 
+10002:
+  id: 10002
+  object: project_typeaccess
+  name: public
+10003:
+  id: 10003
+  object: project_typeaccess
+  name: confidential
+10004:
+  id: 10004
+  object: project_typeaccess
+  name: secret 
+    	
 4:
   id: 4 
   object: document 
@@ -83,11 +86,6 @@
   object: project 
   name: sub-assembly
   description: Projet pour un sous ensemble
-19:
-  id: 19 
-  object: document 
-  name: norme
-  description: Norme    
 18:
   id: 18
   object: project 
@@ -100,6 +98,22 @@
   name: norme
   description: Norme applicable
   
+21:
+  id: 21 
+  object: customer 
+  name: internal 
+  description: Service ou direction interne a l'entreprise      
+22:
+  id: 22 
+  object: customer 
+  name: private
+  description: Client externe a acces restreint     
+23:
+  id: 23 
+  object: customer 
+  name: public 
+  description: Client externe accessible a tous 
+
 51:
   id: 51
   object: relation_document 

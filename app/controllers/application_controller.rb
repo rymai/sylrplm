@@ -21,8 +21,24 @@ class ApplicationController < ActionController::Base
   before_filter :authorize, :except => [:index, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
+
   ## un peu brutal before_filter :object_exists, :only => [:show, :edit, :destroy]
   #
+  def update_accessor(obj)
+    mdl_name = obj.model_name
+    params[mdl_name][:owner_id]=current_user.id if obj.instance_variable_defined?(:owner_id)
+    params[mdl_name][:group_id]=current_user.group_id if obj.instance_variable_defined?(:group_id)
+    params[mdl_name][:projowner_id]=current_user.project_id if obj.instance_variable_defined?(:projowner_id)
+    puts "update_accessor:"+params.inspect
+  end
+  
+  def check_user
+    if current_user.role.nil? || current_user.group.nil? || current_user.project.nil?
+      flash[:notice] = t(:ctrl_user_not_complete )
+      redirect_to(:action => "index")
+    end
+  end
+  
   def event
     event_manager
   end
@@ -165,12 +181,22 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize
-    unless session[:user_id] || User.find_by_id(session[:user_id])
-      puts "application_controller.request.request_uri="+request.request_uri
-      puts "application_controller.request.new_sessions_url="+new_sessions_url
+    user_id = session[:user_id] || User.find_by_id(session[:user_id])
+    if user_id.nil? 
+      puts "application_controller.authorize.request_uri="+request.request_uri
+      puts "application_controller.authorize.new_sessions_url="+new_sessions_url
       session[:original_uri] = request.request_uri
       flash[:notice] = t(:login_login)
       redirect_to new_sessions_url
+    else
+      user=User.find(user_id)
+      unless user.is_admin? 
+        if user.roles.nil? || user.volume.nil? || user.groups.nil? || user.projects.nil?
+          session[:original_uri] = request.request_uri
+          flash[:notice] = t(:login_login)
+          redirect_to new_sessions_url
+        end
+      end
     end
   end
 

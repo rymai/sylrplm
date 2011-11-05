@@ -65,19 +65,26 @@ class Notification < ActiveRecord::Base
     id.to_s+" "+event_type+" "+object_type+":"+object_id.to_s+" at "+event_date.to_s+" by "+responsible.login+" => "+notify_date.to_s
   end
 
-  def self.get_conditions(filter)
-    filter=filter.gsub("*","%")
-    conditions = ["object_type LIKE ? "+
+  def self.get_conditions(filter)  
+    filter = filters.gsub("*","%")
+    ret={}
+    unless filter.nil?
+      ret[:qry] = "object_type LIKE :v_filter "+
       " or "+qry_responsible+
       " or "+qrys_object_ident+
-      " or event_type LIKE ? "+
-      " or event_date LIKE ? or notify_date LIKE ? ",
-      filter, filter,
-      filter, filter,
-      filter, filter] unless filter.nil?
+      " or event_type LIKE :v_filter "+
+      " or event_date LIKE :v_filter or notify_date LIKE :v_filter "
+      ret[:values]={:v_filter => filter}
+    end
+    ret
+    #conditions = ["object_type LIKE ? "+
+    #  " or "+qry_responsible+
+    #  " or "+qrys_object_ident+
+    #  " or event_type LIKE ? "+
+    #  " or event_date LIKE ? or notify_date LIKE ? ",
   end
   
-  def self.notify_all( id)
+  def self.notify_all(id)
     name=":"+self.class.name+"."+__method__.to_s+":"
     ret=[]
     if id.nil? || id == "all"

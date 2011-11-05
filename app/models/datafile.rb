@@ -12,17 +12,20 @@ class Datafile < ActiveRecord::Base
   belongs_to :owner,
     :class_name => "User"
   belongs_to :group
+  belongs_to :projowner,
+    :class_name => "Project"
   
   FILE_REV_DELIMITER="__"
   
   def self.create_new(params,user)
     if(params==nil)   
-      datafile=new 
-      datafile.set_default_values(true)
-      datafile.volume=user.volume
-      datafile.owner=user
-      datafile.group=user.group
-      datafile.revision="1"
+      obj=new 
+      obj.set_default_values(true)
+      obj.volume=user.volume
+      obj.owner=user
+      obj.group=user.group
+      obj.projowner=user.project
+      obj.revision="1"
       ret=true
     else
       parameters=params[:datafile]
@@ -33,18 +36,19 @@ class Datafile < ActiveRecord::Base
       parameters[:volume]=user.volume
       parameters[:owner]=user
       parameters[:group]=user.group
-      datafile=new(parameters)
-      if datafile.save   
+      parameters[:projowner]=user.project
+      obj=new(parameters)
+      if obj.save   
         # on sauve le fichier maintenant et le tour est joue
-        datafile.create_dir
+        obj.create_dir
         if uploaded_file
-          datafile.update_attributes(:uploaded_file=>uploaded_file)
-          datafile.save
+          obj.update_attributes(:uploaded_file=>uploaded_file)
+          #obj.save
         end
       end
     end
-    #puts __FILE__+":"+datafile.inspect
-    datafile
+    puts "datafile.create_new:"+obj.inspect
+    obj
   end
   
   def update_attributes_repos(params, user)
@@ -222,13 +226,19 @@ class Datafile < ActiveRecord::Base
   end 
   
   def self.get_conditions(filter)
-    filter=filter.gsub("*","%")
-    ["ident LIKE ? or "+qry_type+" or revision LIKE ? "+
-      " or "+qry_owner_id+" or updated_at LIKE ? or "+qry_volume,
-      filter, 
-    filter, filter, 
-    filter, filter, 
-    filter ] unless filter.nil?
+    
+    filter = filters.gsub("*","%")
+    ret={}
+    unless filter.nil?
+      ret[:qry] = "ident LIKE :v_filter or revision LIKE :v_filter or updated_at LIKE :v_filter or "+qry_owner_id+" or "+qry_type+" or "+qry_volume
+      ret[:values]={:v_filter => filter}
+    end
+    ret
+    
+    
+    #["ident LIKE ? or "+qry_type+" or revision LIKE ? "+
+    #  " or "+qry_owner_id+" or updated_at LIKE ? or "+qry_volume,
+     
   end
   
 end

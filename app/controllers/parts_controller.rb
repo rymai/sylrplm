@@ -3,10 +3,11 @@ class PartsController < ApplicationController
   include Controllers::PlmInitControllerModule
   before_filter :check_init, :only => :new
   access_control(Access.find_for_controller(controller_class_name))
-  # GET /parts
+  before_filter :check_user, :only => [:new, :edit]
+    # GET /parts
   # GET /parts.xml
   def index
-    @parts = Part.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+    @parts = Part.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @parts[:recordset] }
@@ -67,12 +68,12 @@ class PartsController < ApplicationController
     respond_to do |format|
       puts "===PartsController.create:"+@part.inspect
       if @part.save
-      puts "===PartsController.create:ok:"+@part.inspect
+        puts "===PartsController.create:ok:"+@part.inspect
         flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
         format.html { redirect_to(@part) }
         format.xml  { render :xml => @part, :status => :created, :location => @part }
       else
-      puts "===PartsController.create:ko:"+@part.inspect
+        puts "===PartsController.create:ko:"+@part.inspect
         flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_part), :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
@@ -84,7 +85,7 @@ class PartsController < ApplicationController
   # PUT /parts/1.xml
   def update
     @part = Part.find(params[:id])
-
+    @part.update_accessor(current_user)
     respond_to do |format|
       if @part.update_attributes(params[:part])
         flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
@@ -118,7 +119,7 @@ class PartsController < ApplicationController
     @part = Part.find(params[:id])
     ctrl_add_objects_from_favorites(@part, :document)
   end
-  
+
   def add_parts
     @part = Part.find(params[:id])
     ctrl_add_objects_from_favorites(@part, :part)
@@ -132,7 +133,7 @@ class PartsController < ApplicationController
     @relation_id = params[:relation][:forum]
     respond_to do |format|
       flash[:notice] = ""
-      @forum=Forum.create_new(nil)
+      @forum=Forum.create_new(nil, current_user)
       @forum.subject=t(:ctrl_subject_forum,:typeobj =>t(:ctrl_part),:ident=>@object.ident)
       format.html {render :action=>:new_forum, :id=>@object.id }
       format.xml  { head :ok }
@@ -153,7 +154,7 @@ class PartsController < ApplicationController
     @part = Part.find(params[:id])
     ctrl_demote(@part)
   end
-  
+
 private
 
   #  Now the explanation: The above code is constructing a navigation tree for a two-level hierarchy with a Parent Model

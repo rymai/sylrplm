@@ -1,25 +1,11 @@
 1: 
  id: 1 
- object: customer 
- name: active 
- rank: 1 
+ object: project 
+ name: default 
+ rank: 0 
  description: 
- promote: false 
- demote: false 	
-2:
- id: 2 
- object: customer 
- name: inactive 
- rank: 2 	
- promote: false 
- demote: false 				
-3:
- id: 3 
- object: customer 
- name: hasbeen 
- rank: 3 	
- promote: false 
- demote: false  	
+ promote: true 
+ demote: true   
  			
 4:
  id: 4 
@@ -102,4 +88,28 @@
  name: close 
  rank: 2 	
  promote: false 
- demote: false 	 	
+ demote: false 
+ 
+ 21: 
+ id: 21 
+ object: customer 
+ name: active 
+ rank: 1 
+ description: 
+ promote: false 
+ demote: false  
+22:
+ id: 22
+ object: customer 
+ name: inactive 
+ rank: 2  
+ promote: false 
+ demote: false        
+23:
+ id: 23 
+ object: customer 
+ name: hasbeen 
+ rank: 3  
+ promote: false 
+ demote: false    
+ 	 	

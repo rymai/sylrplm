@@ -4,8 +4,8 @@ class ProjectsController < ApplicationController
   include Controllers::PlmObjectControllerModule
   include Controllers::PlmInitControllerModule
   before_filter :check_init, :only=>[:new]
-  access_control (Access.find_for_controller(controller_class_name()))
-
+  #access_control (Access.find_for_controller(controller_class_name()))
+  
   #before_filter :authorize, :only => [ :show, :edit , :new, :destroy ]
 
   # GET /projects
@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
   # les objets sont filtres d'apres le parametre query (requete simple d'egalite
   #   sur tous les attributs)
   def index
-    @projects = Project.find_paginate({:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+    @projects = Project.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @projects[:recordset] }
@@ -58,8 +58,10 @@ class ProjectsController < ApplicationController
   # on definit les listes de valeur pour le type et le statut
   def new
     @project = Project.create_new(nil, @current_user)
-    @types=Project.get_types_project
+    @types = Project.get_types_project
+    @types_access    = Typesobject.get_types("project_typeaccess")
     @status= Statusobject.find_for("project", true)
+    @users_all  = User.all
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @project }
@@ -71,7 +73,9 @@ class ProjectsController < ApplicationController
   def edit
     @project = Project.find_edit(params[:id])
     @types=Project.get_types_project
+    @types_access    = Typesobject.get_types("project_typeaccess")
     @status= Statusobject.find_for("project")
+    @users_all  = User.all
   end
 
   # POST /projects
@@ -80,7 +84,9 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.create_new(params[:project], @current_user)
     @types=Project.get_types_project
+    @types_access    = Typesobject.get_types("project_typeaccess")
     @status= Statusobject.find_for("project")
+    @users_all  = User.all
     respond_to do |format|
       if @project.save
         flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
@@ -100,7 +106,10 @@ class ProjectsController < ApplicationController
   def update
     @project = Project.find(params[:id])
     @types=Project.get_types_project
+    @types_access    = Typesobject.get_types("project_typeaccess")
     @status= Statusobject.find_for("project")
+    @users_all  = User.all
+    @project.update_accessor(current_user)
     respond_to do |format|
       if @project.update_attributes(params[:project])
         flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
@@ -142,7 +151,7 @@ class ProjectsController < ApplicationController
     @relation_id = params[:relation][:forum]
     respond_to do |format|
       flash[:notice] = ""
-      @forum=Forum.create_new(nil)
+      @forum=Forum.create_new(nil, current_user)
       @forum.subject=t(:ctrl_subject_forum,:typeobj =>t(:ctrl_project),:ident=>@object.ident)
       format.html {render :action=>:new_forum, :id=>@object.id }
       format.xml  { head :ok }

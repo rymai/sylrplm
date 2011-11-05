@@ -1,9 +1,9 @@
 class Role < ActiveRecord::Base
   include Models::SylrplmCommon
-  has_and_belongs_to_many :users
   validates_presence_of :title
   validates_uniqueness_of :title
 
+  has_and_belongs_to_many :users
   belongs_to :father, :class_name => "Role"
   has_many :roles, :class_name => "Role", :foreign_key => "father_id"
   
@@ -43,9 +43,14 @@ class Role < ActiveRecord::Base
   end
 
   def self.get_conditions(filter)
-    filter=filter.gsub("*","%")
-    conditions = ["title LIKE ? or description LIKE ? ",
-      filter, filter] unless filter.nil?
+    filter = filters.gsub("*","%")
+    ret={}
+    unless filter.nil?
+      ret[:qry] = "title LIKE :v_filter or description LIKE :v_filter "
+      ret[:values]={:v_filter => filter}
+    end
+    ret
+    #conditions = ["title LIKE ? or description LIKE ? "
   end
   
   def others

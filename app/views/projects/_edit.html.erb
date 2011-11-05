@@ -3,40 +3,43 @@
 		<%= t(:legend_project) %>
 	</legend>
 	<%= f.label t(:label_ident) %>
-
 	<%= f.text_field :ident %>
 	<br/>
+	
 	<%= f.label t(:label_type) %>
-
 	<%= f.collection_select(:typesobject_id, @types, :id, :name) %>
 	<br/>
+	
+	<%= f.label t(:label_typeaccess) %>
+	<%= f.collection_select(:typeaccess_id, @types_access, :id, :name) %>
+	<br/>
+	
 	<%= f.label t(:label_designation) %>
-
 	<%= f.text_field :designation %>
 	<br/>
+	
 	<%= f.label t(:label_description) %>
-
 	<%= f.text_area :description , :rows => 10 %>
 	<br/>
+	
 	<%if (@project.statusobject.promote!=true || @project.statusobject.demote!=true) %>
 	<%= f.label t("modif_status") %>
-
 	<% if(@project.statusobject != nil) %>
 	<%= f.collection_select(:statusobject_id, @status, :id, :name) %>
 	<% end %>
 	<%else %>
 	<%= f.label t("label_status") %>
-
 	<% if(@project.statusobject != nil) %>
-	<%= @project.statusobject.name %>
+	<%= f.collection_select(:statusobject_id, @status, :id, :name) %>
 	<%end %>
 	<%end %>
 	<br/>
+	
 	<%= f.label t(:label_responsible) %>
 	<%= text_field_tag :responsible,  @project.owner.login, :disabled => true %>
 	<br/>
+	
 	<%= f.label t(:label_date) %>
-
 	<%= f.date_select :date %>
 	<br/>
 </fieldset>

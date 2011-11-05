@@ -52,23 +52,37 @@ class Access < ActiveRecord::Base
           # tout le monde peut se executer une tache sauf le consultant
           #roles = "(admin | designer | valider) & !consultant"
           roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
+        elsif controller.name == "QuestionsController"
+          # tout le monde peut poser une question, le consultant ne peut repondre
+          roles=nil
+          if controller.method == "edit"
+            #roles = "(admin | designer | valider) & !consultant"
+            roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
+          end
         else
         # les fonctions plm
           if controller.method == "show"
             #roles = "admin | designer | valider | consultant"
             roles = roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +" | "+ roles_yes(acc_roles[:cat_consultants])
+            roles=nil
           else
           #roles = "(admin | designer | valider) & !consultant"
             roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
           end
         end
       end
-      create(:controller_and_action => "#{controller.name}.#{controller.method}", :roles => roles)
+      create(:controller_and_action => "#{controller.name}.#{controller.method}", :roles => roles) unless roles.nil?
     end
   end
 
   def self.get_conditions(filter)
-    ["controller LIKE ? or action LIKE ? or roles LIKE ?", filter, filter, filter] unless filter.gsub!("*","%").nil?
+    filter = filters.gsub("*","%")
+    ret={}
+    unless filter.nil?
+      ret[:qry] = "controller LIKE :v_filter or action LIKE :v_filter or roles LIKE :v_filter"
+      ret[:values]={:v_filter => filter}
+    end
+    ret
   end
 
   def ident
@@ -90,7 +104,7 @@ private
     ret[:cat_admins] << admin.title unless admin.nil?
     #ret[:cat_consultants] = cons.users.collect{ |u| u.login } unless cons.nil?
     ret[:cat_consultants] << consultant.title unless consultant.nil?
-    ret[:cat_creators] = Role.all.collect { |r| r.title } 
+    ret[:cat_creators] = Role.all.collect { |r| r.title }
     ret[:cat_creators] -= ret[:cat_admins]
     ret[:cat_creators] -= ret[:cat_consultants]
     puts __method__.to_s+":"+ret.inspect

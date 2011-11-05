@@ -1,11 +1,11 @@
 class ForumItemsController < ApplicationController
   include Controllers::PlmObjectControllerModule
   access_control(Access.find_for_controller(controller_class_name))
-
-  # GET /forum_items
+  before_filter :check_user, :only => [:new, :edit]
+    # GET /forum_items
   # GET /forum_items.xml
   def index
-    @forum_items = ForumItem.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+    @forum_items = ForumItem.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @forum_items }
@@ -66,6 +66,7 @@ class ForumItemsController < ApplicationController
   # PUT /forum_items/1.xml
   def update
     @forum_item = ForumItem.find(params[:id])
+    @forum_item.update_accessor(current_user)
     respond_to do |format|
       if @forum_item.update_attributes(params[:forum_item])
         flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_forum_item), :ident => @forum_item.id)

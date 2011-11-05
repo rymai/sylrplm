@@ -3,9 +3,17 @@
 		<%= t(:legend_question) %>
 	</legend>
 	<%= f.label t(:label_question) %>
+	<% if fonct== "new"%>
 	<%= f.text_field :question %>
+	<%else%>
+	<%= f.text_field :question %>
+	<%end%>
 	<br/>
 	<%= f.label t(:label_answer) %>
+	<% if fonct== "edit"%>
 	<%= f.text_field :answer %>
+	<%else%>
+	<%= f.text_field :answer %>
+	<%end%>
 	<br/>
 </fieldset>

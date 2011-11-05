@@ -8,6 +8,7 @@
 		<th <%= sort_td_class_helper :content_type %>> <%= sort_link_helper t(:label_content_type), :content_type %> </th>
 		<th <%= sort_td_class_helper :owner %>> <%= sort_link_helper t(:label_responsible), :owner %> </th>
 		<th <%= sort_td_class_helper :group %>> <%= sort_link_helper t(:label_group), :group %> </th>
+		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), :projowner %> </th>
 		<th <%= sort_td_class_helper :document %>> <%= sort_link_helper t(:label_document), :document %> </th>
 		<th <%= sort_td_class_helper :created_at %>> <%= sort_link_helper t(:label_date), :created_at %> </th><th></th>
 		<th></th>
@@ -25,7 +26,8 @@
 		<%= datafile.content_type[0..20] %>
 		<%end %> </td>
 		<td> <%= h datafile.owner.login %> </td>
-		<td> <%= h datafile.group.login %> </td>
+		<td> <%= h datafile.group.name %> </td>
+		<td> <%= h datafile.projowner.ident %> </td>
 		<td> <% unless datafile.document.nil? %>
 		<%= h datafile.document.ident %>
 		<%end %> </td>
