@@ -1,6 +1,7 @@
 #require 'ruote/participant'
 #require 'openwfe/participants/participants'
 #require 'openwfe/extras/participants/ar_participants'
+require 'ruote'
 
 class Ruote::PlmParticipant
   include OpenWFE::LocalParticipant
