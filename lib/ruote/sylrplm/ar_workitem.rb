@@ -1,9 +1,9 @@
 require 'openwfe/extras/participants/ar_participants'
-require 'models/plm_object'
+#require 'models/plm_object'
 module Ruote
   module Sylrplm
     class ArWorkitem < OpenWFE::Extras::ArWorkitem
-      include Models::PlmObject
+      #include Models::PlmObject
       attr_accessor :link_attributes
       def link_attributes=(att)
         @link_attributes = att
