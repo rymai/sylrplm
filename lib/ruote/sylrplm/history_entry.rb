@@ -3,7 +3,7 @@ require 'openwfe/extras/expool/db_history'
 module Ruote
   module Sylrplm
     class HistoryEntry < OpenWFE::Extras::HistoryEntry
-      include Models::PlmObject
+      #include Models::PlmObject
       include Models::SylrplmCommon
 
       attr_accessor :link_attributes
