@@ -1,0 +1,45 @@
+<%= hidden_field :fonct , fonct %>
+<%= javascript_include_tag "combo-box" %>
+<fieldset>
+	<legend>
+		<%= t(:legend_relation) %>
+	</legend>
+	<%= f.label :name %>
+	<%= f.select( :name, Relation.names, {}, {:onkeypress=>"edit(event);", :onblur=>"this.editing=false;"}) %>
+	<br/>
+	<%= f.label :type %>
+	<%= f.collection_select(:type_id, @types, :id, :name) %>
+	<br/>
+	<%= f.label :father_plmtype %>
+	<%= f.select(
+    :father_plmtype, @types_plm, {},
+    {
+      :onchange => "#{remote_function(:url => {:controller => 'relations', :action => 'update_father'}, :with => "'father_plmtype='+value")}"
+    }
+    ) %>
+	<br/>
+	<%= render(:partial => "relations/father_types") %>
+
+	<%= f.label :child_plmtype %>
+	<%= f.select(
+    :child_plmtype, @types_plm, {},
+    {
+      :onchange => "#{remote_function(:url =>  {:controller => 'relations', :action => 'update_child'}, :with => "'child_plmtype='+value")}"
+    }
+    ) %>
+	<br/>
+	<%= render(:partial => "relations/child_types") %>
+
+	<%= f.label :cardin_occur_min %>
+	<%= f.text_field :cardin_occur_min %>
+	<br/>
+	<%= f.label :cardin_occur_max %>
+	<%= f.text_field :cardin_occur_max %>
+	<br/>
+	<%= f.label :cardin_use_min %>
+	<%= f.text_field :cardin_use_min %>
+	<br/>
+	<%= f.label :cardin_use_max %>
+	<%= f.text_field :cardin_use_max %>
+	<br/>
+</fieldset>

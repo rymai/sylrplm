@@ -1,0 +1,403 @@
+#!/bin/sh
+cmd="rails -d mysql $1"
+echo $cmd
+$cmda
+cd $1
+
+eof:
+
+mysqladmin -u root password xxxx
+modifier /etc/my.cnf
+datadir = /home/mysql/data 
+
+cmd="mysqladmin -u root -p create $1_development"
+echo $cmd
+$cmd
+
+
+
+cmd="mysqladmin -u root -p create $1_production"
+echo $cmd
+$cmd
+
+cmd="rake db:migrate"
+echo $cmd
+# $cmd
+
+cmd="ruby script/generate scaffold document ident:string type:string revision:string designation:string description:text extension:string repository:string status:string responsible:string group:string date:date"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate model document"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate controller document"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate scaffold part ident:string type:string revision:string designation:string description:text status:string responsible:string group:string date:date"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate model part"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate controller part"
+echo $cmd
+$cmd
+
+
+cmd="ruby script/generate scaffold project ident:string type:string designation:string description:text status:string responsible:string group:string date:date"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate model project"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate controller project"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate scaffold customer ident:string type:string designation:string description:text responsible:string group:string date:date"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate model customer"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate controller customer"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate model favori"
+echo $cmd
+echo cree trop de fichiers
+#$cmd
+
+cmd="rake db:sessions:create
+echo $cmd
+$cmd
+
+cmd="rake db:migrate"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate scaffold partslinks father_id:integer child_id:integer designation:string description:text quantity:float responsible:string group:string date:date"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate scaffold typesobject object:string name:string description:text"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate scaffold statusobject object:string name:string rank:integer description:text"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate scaffold role name:string description:text"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate scaffold volume name:string description:text directory:string protocole:string"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate mailer PLMMailer toValidate validated"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate scaffold sequence object:string value:string min:string max:string"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate scaffold links father_object:string child_object:string father_id:integer child_id:integer name:string designation:string description:text responsible:string group:string date:date"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate scaffold checks object:string object_id:integer status:integer out_reason:string out_date:date out_user:integer in_reason:string in_date:date in_user:integer local_dir:string"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate scaffold access controller:string action:integer role_id:integer"
+echo $cmd
+$cmd
+
+
+# plugin pour la pagination 
+#ruby script/plugin install svn://errtheblog.com/svn/plugins/classic_pagination
+#script/plugin install git://github.com/mislav/will_paginate.git
+#To enable the library your Rails 2.1 (or later) project, use the gem configuration method in ?config/environment.rb?
+#Rails::Initializer.run do |config|
+#  config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
+#end
+#To install this gem (and all other missing gem dependencies), run rake gems:install (use sudo if necessary). Also, don?t forget to #restart your webserver after editing environment.rb.
+
+#creer le premier user
+ruby script/console
+User.create(:login=> "dave", :password=>"secret",:password_confirmation => "secret", :role_id=>1, :email=>"sylvani@laposte.net")
+User.count
+exit
+
+---
+--- plugin faq
+---
+
+./script/plugin install http://vorlich.ath.cx/code/excited/plugins/faq_u
+./script/generate faq
+rake db:migrate
+atttention, en fait, je l'ai remanie (les vues) pour enlever le format haml
+cmd="ruby script/generate scaffold question question:string answer:string position:integer"
+echo $cmd
+$cmd
+---
+--- forums
+--- 
+cmd="ruby script/generate scaffold forum typesobject_id:integer statusobject_id:integer subject:string description:text owner_id:integer"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate scaffold forum_item message:text forum_id:integer parent_id:integer owner_id:integer"
+echo $cmd
+$cmd
+
+cmd="ruby script/generate scaffold roles_users role_id:integer user_id:integer"
+echo $cmd
+$cmd
+attention, c'est une table de jointure, il faut supprimer la colonne id (par mysql admin)
+
+---
+--- plugin de gestion d'autorisations
+---
+ruby script/plugin install http://opensvn.csie.org/ezra/rails/plugins/dev/acl_system2
+
+---
+--- plugin fenetre popup, ne marche pas vraiment
+--- http://blog.craigambrose.com/articles/2006/08/16/redbox-a-rails-compatible-lightbox
+---
+script/plugin install svn://rubyforge.org/var/svn/ambroseplugins/redbox
+recopier les .css et .js dans public
+abandonne
+
+---
+--- methode render_component supprimee en 2.3 et utilise par redbox ci dessus
+---
+--- ko script/plugin install git://github.com/lackac/render_component.git -r -garde rails 
+script/plugin install git://github.com/Rails/render_component.git 
+
+---
+--- plugin de gestion du help avec les messages en base
+---
+abandonne
+script/plugin install svn://rubyforge.org//var/svn/helpengine
+
+---
+--- help perso
+---
+cmd="ruby script/generate controller help"
+echo $cmd
+$cmd
+
+---
+--- doc
+---
+rake doc:app
+
+production:
+
+rake db:migrate RAILS_ENV=production
+si pb:
+You probably forgot to do: rake db:create:all.
+But anyway, read the first lines of schema.rb, for the first time on a production environment you should use: 
+rake db:schema:load RAILS_ENV=production
+
+creer la base
+cmd="mysqladmin -u root create $1_production"
+echo $cmd
+$cmd
+charger le schema
+rake db:schema:load RAILS_ENV=production
+
+revenir en arriere
+rake db:migrate:down VERSION=timestamp
+rake db:migrate:reset
+
+deploiement
+utiliser github
+
+doc sur rake
+rake -T [db test tmp routes stats rails log notes gems doc]
+
+#non utilise
+cmd="ruby script/generate model utilities"
+echo $cmd
+$cmd
+ruby script/destroy model utilities
+
+=======================================================
+github
+
+Global setup:
+
+ Download and install Git: http://kernel.org/pub/software/scm/git/RPMS/i386/git-all-1.7.3.2-1.fc11.i386.rpm
+ 
+  git config --global user.name "Your Name"
+  git config --global user.email sylvani@laposte.net
+  Add your public key: https://github.com/account#keys
+        
+
+Next steps:
+
+  mkdir sylrplm
+  cd sylrplm
+  git init
+  touch README
+  git add README
+  git commit -m 'first commit'
+  git remote add origin git@github.com:sylvani/sylrplm.git
+  git push origin master
+      
+  git add .gitignore
+  git commit -m 'second commit'
+  git push origin master
+  
+  git add .
+  git commit -m 'all commit'
+  git push origin master
+  
+  
+Existing Git Repo?
+
+  cd existing_git_repo
+  git remote add origin git@github.com:sylvani/sylrplm.git
+  git push origin master
+  
+  
+  git pull origin master
+      
+=======================================================
+
+cmd="ruby script/generate scaffold document ident:string type:string revision:string designation:string description:text extension:string repository:string status:string responsible:string group:string date:date"
+
+cmd="ruby script/generate scaffold datafile ident:string filename:string revision:integer typesobject_id:integer content_type:string owner_id:integer volume_id:integer"
+echo $cmd
+$cmd
+
+=========================================================
+
+action flow
+script/plugin install svn://rubyforge.org/var/svn/actionflow/trunk/action_flow
+trop vieux
+
+generateur de schemas
+gem install railroad
+dans config linux: install de graphviz pour dot
+railroad -a -i -M | dot -Tsvg > public/mdd/models.svg
+railroad -a -i -C | dot -Tsvg > public/mdd/controllers.svg
+ou
+railroad -a -i -M | neato -Tpng > public/mdd/models.png
+railroad -a -i -C | neato -Tpng > public/mdd/controllers.png
+
+site hebergement heroku.com
+
+===========================================================
+test
+===========================================================
+
+#creation de la base
+cmd="mysqladmin -u root -p create sylrplm_test"
+echo $cmd
+$cmd
+
+#creation du schema
+echo $PATH
+/home/syl/.gem/ruby/1.8/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/lib/qt4/bin
+
+export PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/lib/qt4/bin
+rake db:test:prepare
+
+copie de vendor/plugins/acl_system2/lib/caboose dans lib !!!
+
+#test
+ruby test/unit/document_test.rb
+1) Error:
+test_the_truth(DocumentTest):
+ActiveRecord::StatementInvalid: Mysql::Error: Table 'sylrplm_test.utilities' doesn't exist: DELETE FROM `utilities`
+
+ruby script/destroy model utilities
+
+ruby test/unit/document_test.rb
+ActiveRecord::StatementInvalid: Mysql::Error: Table 'sylrplm_test.partslinks' doesn't exist: DELETE FROM `partslinks`
+1 tests, 0 assertions, 0 failures, 1 errors
+[syl@localhost sylrplm]$ ruby script/destroy model partslinks
+
+ruby test/unit/document_test.rb
+test_the_truth(DocumentTest):
+ActiveRecord::StatementInvalid: Mysql::Error: Table 'sylrplm_test.favoris' doesn't exist: DELETE FROM `favoris`  
+1 tests, 0 assertions, 0 failures, 1 errors
+[syl@localhost sylrplm]$ ruby script/destroy model favoris
+
+ruby test/unit/document_test.rb
+test_the_truth(DocumentTest):
+ActiveRecord::StatementInvalid: Mysql::Error: Unknown column 'name' in 'field list': INSERT INTO `roles` (`name`, `created_at`, `updated_at`, `id`, `description`) VALUES ('MyString', '2010-12-23 11:37:54', '2010-12-23 11:37:54', 298486374, 'MyText')
+modif de test/fixtures/roles.yml et remplacer name par title
+
+ruby test/unit/document_test.rb
+test_the_truth(DocumentTest):
+ActiveRecord::StatementInvalid: Mysql::Error: Unknown column 'object' in 'field list': INSERT INTO `sequences` (`created_at`, `updated_at`, `max`, `id`, `value`, `min`, `object`) VALUES ('2010-12-23 11:40:51', '2010-12-23 11:40:51', 'MyString', 298486374, 'MyString', 'MyString', 'MyString')
+modif de test/fixtures/sequences.yml et remplacer object par utility
+modif de test/fixtures/forums.yml et remplacer typeobjects_id par typesobject_id
+modif de test/fixtures/accesses.yml et remplacer role_id par roles
+
+<%= select(:user, "role", @roles.collect {|p| [ p.title, p.id ] } ) %>
+
+exporter la base en yml
+charger le plugin
+script/plugin install git://github.com/adamwiggins/yaml_db.git 
+#exporter toute la base dans db/data.yml
+rake db:data:dump 
+#recharger la base
+rake db:data:load 
+# Create YAML test fixtures from data in an existing database. 
+rake db:fixtures:dump 
+    
+
+--------------------------------------------------------
+lancer une tache regulierement
+-------------------------------
+> On a *nix server, you'll want to use cron. On a Windows server, you
+> might be able to use Scheduled Tasks.
+
+As suggested above, you can use Unix cron / Windows scheduled tasks to
+run a Rails rake task.
+
+0 * * * * wget -O - -q http://www.domain.tld/maintenance
+
+http://www.fallenrogue.com/articles/168-Script-vs-Rake
+
+Create a new file in lib/tasks with the extension .rake with your
+required task. To invoke it simply cd to your rails directory and run
+rake with your task name (optionally specify the Rails environment).
+The code inside the task will have full access to your Rails
+environment including models.
+
+cd /path/to/rails/application
+rake <task_name> RAILS_ENV=production
+
+voir aussi , plus moderne
+http://www.igvita.com/2007/03/29/scheduling-tasks-in-ruby-rails/
+
+https://github.com/jmettraux/rufus-scheduler/
+gem install rufus-scheduler
+
+
+---
+--- notifications
+--- 
+ruby script/generate scaffold notification object_type:string object_id:integer event_date:date event_type:text responsible_id:integer notify_date:date
+
+
+

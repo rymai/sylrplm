@@ -1,0 +1,13 @@
+default:
+    id: 1
+    owner_id: 1
+    typesobject_id: 16
+    typeaccess_id: 10002
+    statusobject_id: 1
+    ident: "#DEF_PROJECT"
+    designation: "Projet par defaut"
+    group_id: 1
+    date: <%= DateTime.now %>
+    
+    
+      

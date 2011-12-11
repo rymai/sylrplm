@@ -1,0 +1,57 @@
+<fieldset>
+	<legend>
+		<%= t(:legend_user) %>
+	</legend>
+	<label for="user_name"> <%= t(:label_username) %> </label>
+	<%= form.text_field :login, :size => 40 %>
+	<br/>
+	<label for="user_password"> <%= t(:label_password) %> </label>
+	<%= form.password_field :password, :size => 40 %>
+	<br/>
+	<label for="user_password_confirmation"> <%= t(:label_confirm_password) %> </label>
+	<%= form.password_field :password_confirmation, :size => 40 %>
+	<br/>
+	<label for="user_first_name"> <%= t(:label_first_name) %> </label>
+	<%= form.text_field :first_name, :size => 40 %>
+	<br/>
+	<label for="user_last_name"> <%= t(:label_last_name) %> </label>
+	<%= form.text_field :last_name, :size => 40 %>
+	<br/>
+	<% if @types != nil %>
+	<%= form.label t(:label_type) %>
+	<%= form.collection_select(:typesobject_id, @types, :id, :name) %>
+	<br/>
+	<% end %>
+	<%= form.label t(:label_email) %>
+	<%= form.text_field :email, :size => 40 %>
+	<br/>
+	<%= form.label t(:label_language) %>
+	<%= form.select(:language, options_for_select(@languages)) %>
+	<br/>
+	<%= form.label t(:label_volume) %>
+	<%= form.collection_select(:volume_id, @volumes, :id, :name) %>
+	<br/>
+	<% if @themes != nil %>
+	<%= form.label t(:label_theme) %>
+	<%= form.select(:theme,options_for_select(@themes)) %>
+	<br/>
+	<% end %>
+	<%= form.label t(:label_notification) %>
+	<%= form.select(:notification, options_for_select(@notifications)) %>
+	<br/>
+	<%= form.label t(:label_time_zone) %>
+	<%= form.select(:time_zone, options_for_select(User.time_zones, @the_user.time_zone), :include_blank => true) %>
+	<br/>
+	<%= form.label t(:label_show_mail) %>
+	<% if @the_user.show_mail==true %>
+	<%= check_box(:user,:show_mail,{:checked=>"checked"}) %>
+	<%else%>
+	<%= check_box(:user,:show_mail) %>
+	<%end%>
+	<br/>
+	<label for="user_roles"> <%= t(:label_roles) %> </label>
+	<%= select_inout(form, @the_user, @roles, :title) %>
+	<br/>
+	<label for="user_groups"> <%= t(:label_groups) %> </label>
+	<%= select_inout(form, @the_user, @groups, :name) %>
+</fieldset>

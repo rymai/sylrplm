@@ -1,0 +1,44 @@
+<h1>Listing relations</h1>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t(:new_relation), new_relation_path %> </td>
+		<td> <%= show_help("help_relations") %> </td>
+	</tr>
+</table>
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Father plmtype</th>
+		<th>Child plmtype</th>
+		<th>Father type</th>
+		<th>Child type</th>
+		<th>Cardin occur min</th>
+		<th>Cardin occur max</th>
+		<th>Cardin use min</th>
+		<th>Cardin use max</th>
+	</tr>
+	<% @relations.each do |relation| %>
+	<tr>
+		<td><%= h relation.name %></td>
+		<td><%= h relation.type.name %></td>
+		<td><%= h relation.father_plmtype %></td>
+		<td><%= h relation.child_plmtype %></td>
+		<td><%= h relation.father_type.name %></td>
+		<td><%= h relation.child_type.name %></td>
+		<td><%= h relation.cardin_occur_min %></td>
+		<td><%= h relation.cardin_occur_max %></td>
+		<td><%= h relation.cardin_use_min %></td>
+		<td><%= h relation.cardin_use_max %></td>
+		<td> <%= link_to h_img_show.to_s, relation %> </td>
+		<td> <%= link_to h_img_edit.to_s, edit_relation_path(relation) %> </td>
+		<td> <%= link_to h_img_destroy.to_s, relation, :confirm => t(:msg_confirm), :method => :delete %> </td>
+	</tr>
+	<% end %>
+</table>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t(:new_relation), new_relation_path %> </td>
+		<td> <%= show_help("help_relations") %> </td>
+	</tr>
+</table>

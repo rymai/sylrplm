@@ -1,0 +1,51 @@
+<p>
+	<b>Ident:</b>
+	<%= h @relation.ident %>
+</p>
+<p>
+	<b>Name:</b>
+	<%= h @relation.name %>
+</p>
+<p>
+	<b>Type:</b>
+	<%= h @relation.type.name %>
+</p>
+<p>
+	<b>Father plmtype:</b>
+	<%= h @relation.father_plmtype %>
+</p>
+<p>
+	<b>Child plmtype:</b>
+	<%= h @relation.child_plmtype %>
+</p>
+<p>
+	<b>Father type:</b>
+	<%= h @relation.father_type.name %>
+</p>
+<p>
+	<b>Child type:</b>
+	<%= h @relation.child_type.name %>
+</p>
+<p>
+	<b>Cardin occur min:</b>
+	<%= h @relation.cardin_occur_min %>
+</p>
+<p>
+	<b>Cardin occur max:</b>
+	<%= h @relation.cardin_occur_max %>
+</p>
+<p>
+	<b>Cardin use min:</b>
+	<%= h @relation.cardin_use_min %>
+</p>
+<p>
+	<b>Cardin use max:</b>
+	<%= h @relation.cardin_use_max %>
+</p>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t("edit"), edit_relation_path(@relation) %></td>
+		<td> <%= link_to t("new_relation"), new_relation_path %></td>
+		<td> <%= link_to t("list"), relations_path %></td>
+	</tr>
+</table>

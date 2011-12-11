@@ -1,0 +1,18 @@
+<h1>Editing relation</h1>
+<% form_for(@relation) do |f| %>
+<%= f.error_messages %>
+<%= render(:partial => "relations/edit",:locals => { :f => f, :fonct=>"edit" }) %>
+<table class='menu_bas'>
+    <tr>
+        <td>
+            <%= f.submit t("update") %>
+        </td>      
+        <td>
+            <%= link_to t("explorer"), @relation %>
+        </td>
+        <td>
+            <%= link_to t("list"), relations_path %>
+        </td>
+    </tr>
+</table>
+<% end %>

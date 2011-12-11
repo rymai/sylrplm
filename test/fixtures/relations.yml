@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  name: MyString
+  type: MyString
+  designation: MyString
+  father_plmtype: MyString
+  child_plmtype: MyString
+  father_type: 1
+  child_type: 1
+  cardin_occur_min: 1
+  cardin_occur_max: 1
+  cardin_use_min: 1
+  cardin_use_max: 1
+
+two:
+  name: MyString
+  type: MyString
+  designation: MyString
+  father_plmtype: MyString
+  child_plmtype: MyString
+  father_type: 1
+  child_type: 1
+  cardin_occur_min: 1
+  cardin_occur_max: 1
+  cardin_use_min: 1
+  cardin_use_max: 1
