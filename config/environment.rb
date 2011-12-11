@@ -13,14 +13,24 @@ Rails::Initializer.run do |config|
 
   # config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
   # Add additional load paths for your own custom dirs
-  config.autoload_paths += %W(#{Rails.root}/lib #{Rails.root}/lib/classes #{Rails.root}/lib/controllers #{Rails.root}/lib/models #{Rails.root}/lib/ruote #{Rails.root}/lib/openwfe)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/engine)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/expool #{Rails.root}/lib/openwfe/expressions)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/extras #{Rails.root}/lib/openwfe/listeners)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/participants #{Rails.root}/lib/openwfe/tools)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/extras/participants)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/utils #{Rails.root}/lib/openwfe/worklist)
+  config.autoload_paths += %W(#{Rails.root}/lib)
+  config.autoload_paths += %W(#{Rails.root}/lib/classes)
+  config.autoload_paths += %W(#{Rails.root}/lib/controllers)
+  config.autoload_paths += %W(#{Rails.root}/lib/models)
+  config.autoload_paths += %W(#{Rails.root}/lib/ruote)
   config.autoload_paths += %W(#{Rails.root}/lib/ruote/sylrplm)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/engine)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/expool)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/expressions)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/extras)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/extras/participants)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/listeners)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/participants)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/tools)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/utils)
+  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/worklist)
+  
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

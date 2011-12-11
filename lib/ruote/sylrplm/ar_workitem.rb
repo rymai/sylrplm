@@ -1,4 +1,5 @@
 require 'openwfe/extras/participants/ar_participants'
+require 'models/plm_object'
 module Ruote
   module Sylrplm
     class ArWorkitem < OpenWFE::Extras::ArWorkitem
