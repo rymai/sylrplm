@@ -94,6 +94,7 @@ class ApplicationController < ActionController::Base
     @time_zone=SYLRPLM::TIME_ZONE_DEFAULT
     # mise n forme d'une tache (workitem)
     @payload_partial = 'shared/ruote_forms'
+
     WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
     WillPaginate::ViewHelpers.pagination_options[:next_label] = t('label_next')
     WillPaginate::ViewHelpers.pagination_options[:page_links ] = true  # when false, only previous/next links are rendered (default: true)
@@ -102,6 +103,7 @@ class ApplicationController < ActionController::Base
     WillPaginate::ViewHelpers.pagination_options[:inner_window] = 10 # how many links are shown around the current page (default: 4)
     WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
     WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
+
     LOG.info("__FILE__")
   end
 
