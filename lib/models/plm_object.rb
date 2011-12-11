@@ -1,5 +1,5 @@
-require 'openwfe/representations'
-require 'ruote/sylrplm/workitems'
+#require 'openwfe/representations'
+#require 'ruote/sylrplm/workitems'
 
 module Models::PlmObject
   # modifie les attributs avant edition

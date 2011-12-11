@@ -16,3 +16,4 @@ scheduler.cron '0 21 * * 1-5' do
   # every day of the week at 21:00
   Notification.notify_all(nil)
 end
+puts 'Scheduler started'
