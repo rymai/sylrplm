@@ -6,15 +6,15 @@
  description: 
  promote: true 
  demote: true   
-
- 			
+	
 4:
  id: 4 
  object: document 
  name: inwork 
  rank: 1 
  promote: true 
- demote: false 	
+ demote: false 
+ 	
 5:
  id: 5 
  object: document 
@@ -23,6 +23,7 @@
  promote: true 
  demote: false 
  description: Pret pour la validation	
+ 
 6:
  id: 6
  object: document 
@@ -37,7 +38,8 @@
  name: inprogress 
  rank: 1 	
  promote: true 
- demote: false 	 			
+ demote: false 
+ 	 			
 8:
  id: 8 
  object: part 
@@ -46,6 +48,7 @@
  promote: true 
  demote: false 	 			
  description: Pret pour la validation	
+ 
 9:
  id: 9 
  object: part 
@@ -60,14 +63,16 @@
  name: started 
  rank: 1 
  promote: false 
- demote: false 	
+ demote: false 
+ 	
 11:
  id: 11	
  object: project 
  name: finished 
  rank: 2 	
  promote: false 
- demote: false 					
+ demote: false 
+ 					
 12:
  id: 12 
  object: project 
@@ -82,7 +87,8 @@
  name: open 
  rank: 1 	
  promote: false 
- demote: false 	 				 	
+ demote: false 	
+  				 	
 14:
  id: 14 
  object: forum 
@@ -98,14 +104,16 @@
  rank: 1 
  description: 
  promote: false 
- demote: false  
+ demote: false 
+  
 22:
  id: 22
  object: customer 
  name: inactive 
  rank: 2  
  promote: false 
- demote: false        
+ demote: false  
+       
 23:
  id: 23 
  object: customer 

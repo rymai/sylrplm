@@ -1,21 +1,3 @@
-10001:
-  id: 10001 
-  object: project 
-  name: default 
-  description: Projet par defaut 
-10002:
-  id: 10002
-  object: project_typeaccess
-  name: public
-10003:
-  id: 10003
-  object: project_typeaccess
-  name: confidential
-10004:
-  id: 10004
-  object: project_typeaccess
-  name: secret 
-    	
 4:
   id: 4 
   object: document 
@@ -114,51 +96,6 @@
   name: public 
   description: Client externe accessible a tous 
 
-51:
-  id: 51
-  object: relation_document 
-  name: need
-  description: Expression de besoin
-52:
-  id: 52
-  object: relation_document 
-  name: spec-fonctionnelles
-  description: Specifications fonctionnelles
-53:
-  id: 53
-  object: relation_document 
-  name: spec-detaillees
-  description: Specifications detaillees
-54:
-  id: 54
-  object: relation_document 
-  name: num3D
-  description: Numerisation 3D
-55:
-  id: 55
-  object: relation_document 
-  name: num2D
-  description: Numerisation 2D
-61:
-  id: 61
-  object: relation_part 
-  name: reference
-  description: Lien de reference
-62:
-  id: 62
-  object: relation_part 
-  name: bom
-  description: Lien de nomenclature
-72:
-  id: 72
-  object: relation_project
-  name: production
-  description: Projet de production
-73:
-  id: 73
-  object: relation_user
-  name: project_actor
-  description: Participant au projet
 
 81:
   id: 81
@@ -239,18 +176,29 @@
     name: ar_workitem
     description: 
   
-96: 
-    id: 96
-    object: syl_ar_workitem
-    name: syl_ar_workitem
-    description: 
-  
 97: 
     id: 97
     object: workitem
     name: workitem
     description: 
-  
+      
+10001:
+  id: 10001 
+  object: project 
+  name: default 
+  description: Projet par defaut 
+10002:
+  id: 10002
+  object: project_typeaccess
+  name: public
+10003:
+  id: 10003
+  object: project_typeaccess
+  name: confidential
+10004:
+  id: 10004
+  object: project_typeaccess
+  name: secret   
   
 
   

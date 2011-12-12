@@ -63,9 +63,8 @@
  value: DF0000000000
  utility: Datafile.ident
  modify: false
- sequence: true
+ sequence: true 
  
-  
 21: 
     id: 21
     value: 0
@@ -101,4 +100,4 @@
     utility: Relation.cardin_use_max
     modify: 0
     sequence: 0
-   
+  
