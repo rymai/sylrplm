@@ -118,11 +118,15 @@ class DatafilesController < ApplicationController
 
   def download_file
     @datafile = Datafile.find(params[:id])
-    send_data(@datafile.read_file,
+    ret=nil
+    if @datafile.file_exists?
+      send_data(@datafile.read_file,
               :filename => @datafile.filename,
               :type => @datafile.content_type,
               :disposition => "attachment")
-    @datafile.filename
+      ret=@datafile.filename
+    end
+    ret
   end
 
 end

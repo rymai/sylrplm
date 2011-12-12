@@ -2,10 +2,10 @@
 class Datafile < ActiveRecord::Base
   include Models::PlmObject
   include Models::SylrplmCommon
-  
+
   validates_presence_of :ident , :typesobject
   validates_uniqueness_of :ident, :scope => :revision
-  
+
   belongs_to :document
   belongs_to :typesobject
   belongs_to :volume
@@ -14,19 +14,18 @@ class Datafile < ActiveRecord::Base
   belongs_to :group
   belongs_to :projowner,
     :class_name => "Project"
-  
+
   FILE_REV_DELIMITER="__"
-  
   def self.create_new(params,user)
-    if(params==nil)   
-      obj=new 
+    if(params==nil)
+      obj=new
       obj.set_default_values(true)
       obj.volume=user.volume
       obj.owner=user
       obj.group=user.group
       obj.projowner=user.project
       obj.revision="1"
-      ret=true
+    ret=true
     else
       parameters=params[:datafile]
       uploaded_file=parameters[:uploaded_file]
@@ -38,19 +37,19 @@ class Datafile < ActiveRecord::Base
       parameters[:group]=user.group
       parameters[:projowner]=user.project
       obj=new(parameters)
-      if obj.save   
+      if obj.save
         # on sauve le fichier maintenant et le tour est joue
         obj.create_dir
         if uploaded_file
           obj.update_attributes(:uploaded_file=>uploaded_file)
-          #obj.save
+        #obj.save
         end
       end
     end
     puts "datafile.create_new:"+obj.inspect
     obj
   end
-  
+
   def update_attributes_repos(params, user)
     parameters=params[:datafile]
     uploaded_file=parameters[:uploaded_file]
@@ -72,17 +71,17 @@ class Datafile < ActiveRecord::Base
           self.update_attributes(parameters)
           move_file(params[:restore_file])
         else
-          self.update_attributes(parameters)
+        self.update_attributes(parameters)
         end
-        
+
       end
     end
   end
-  
+
   def move_file(from)
     File.rename(File.join(get_dir_repository,from), get_repository)
   end
-  
+
   def uploaded_file=(file_field)
     puts "plm_object.uploaded_file=:file_field="+file_field.inspect
     puts "plm_object.uploaded_file=:self="+self.inspect
@@ -93,15 +92,15 @@ class Datafile < ActiveRecord::Base
       write_file(content)
     end
   end
-  
+
   def base_part_of(file_name)
-    File.basename(file_name).gsub(/[^\w._-]/, '')    
+    File.basename(file_name).gsub(/[^\w._-]/, '')
   end
-  
+
   def get_dir_repository
     File.join self.volume.get_dir_name, self.class.name, self.ident
   end
-  
+
   def get_repository
     # on prend le volume du fichier lui meme
     repos=get_dir_repository
@@ -110,89 +109,95 @@ class Datafile < ActiveRecord::Base
     end
     repos
   end
-  
+
   def get_filename_repository
     unless self.revision.nil?
       FILE_REV_DELIMITER+self.revision.to_s+FILE_REV_DELIMITER+self.filename.to_s
     else
-      self.filename.to_s
+    self.filename.to_s
     end
   end
-  
+
   def get_revisions_files
     ret=[]
     dir=get_dir_repository
     if File.exists?(dir)
       repos=get_filename_repository
       Dir.foreach(dir) { |file|
-        #unless file == repos
+      #unless file == repos
         filename=file.split(FILE_REV_DELIMITER)[2]
         revision=file.split(FILE_REV_DELIMITER)[1]
         unless filename.nil? && revision.nil?
-          #puts "plm_object.get_revisions;file="+file+" name="+filename.to_s+" rev="+revision.to_s
-          ret<<file.to_s
-          end
-        #end
+        #puts "plm_object.get_revisions;file="+file+" name="+filename.to_s+" rev="+revision.to_s
+        ret<<file.to_s
+        end
+      #end
       }
     end
-#    if ret.length==0
-#      nil
-#    else
-#      ret
-#    end
+    #    if ret.length==0
+    #      nil
+    #    else
+    #      ret
+    #    end
     puts "plm_object.get_revisions:"+ret.length.to_s
 
     ret
   end
-  
+
   def self.get_revision_from_file(_filename)
     _filename.split(FILE_REV_DELIMITER)[1]
   end
-  
+
   def self.get_filename_from_file(_filename)
     _filename.split(FILE_REV_DELIMITER)[2]
   end
-  
+
   def get_current_revision_file
     #puts "get_current_revision_file:"+self.revision.to_s+" filename="+self.filename.to_s
     ret=""
-    unless self.revision.blank? && self.filename.blank?  
+    unless self.revision.blank? && self.filename.blank?
       ret=FILE_REV_DELIMITER
       ret+=self.revision.to_s
       ret+=FILE_REV_DELIMITER
-      ret+=self.filename.to_s
+    ret+=self.filename.to_s
     end
     ret
   end
-  
+
   def read_file
     data = ''
-    f = File.open(get_repository, "r") 
-    f.each_line do |line|
-      data += line
+    if File.exists?(get_repository)
+      f = File.open(get_repository, "r")
+      f.each_line do |line|
+        data += line
+      end
     end
     data
   end
-  
+
   def create_dir
     FileUtils.mkdir_p(get_dir_repository)
   end
-  
+
   def write_file(content)
-    f = File.open(get_repository, "w") 
+    f = File.open(get_repository, "w")
     puts "write_file:"+get_repository
     f.puts(content)
-    f.close          
-  end  
-  
+    f.close
+  end
+
+  def file_exists?
+    File.exists?(get_repository)
+  end
+
   def remove_file
     repos=get_repository
     if(repos!=nil)
       if (File.exists?(repos))
         begin
           File.unlink(repos)
-        rescue 
-          return self
+        rescue
+        return self
         end
       end
     else
@@ -200,17 +205,17 @@ class Datafile < ActiveRecord::Base
     end
     self
   end
-  
+
   def delete
     self.remove_files
     self.destroy
   end
-  
+
   def remove_files
     dir=get_dir_repository
     puts "datafile.remove_files:"+dir
     if File.exists?(dir)
-      Dir.foreach(dir) { |file| 
+      Dir.foreach(dir) { |file|
         repos=File.join(dir,file)
         puts "datafile.remove_files:"+repos
         if File.file?(repos)
@@ -220,13 +225,13 @@ class Datafile < ActiveRecord::Base
       Dir.rmdir(dir)
     end
   end
-  
+
   def find_col_for(strcol)
     Sequence.find_col_for(self.class.name,strcol)
-  end 
-  
+  end
+
   def self.get_conditions(filter)
-    
+
     filter = filters.gsub("*","%")
     ret={}
     unless filter.nil?
@@ -234,11 +239,10 @@ class Datafile < ActiveRecord::Base
       ret[:values]={:v_filter => filter}
     end
     ret
-    
-    
-    #["ident LIKE ? or "+qry_type+" or revision LIKE ? "+
-    #  " or "+qry_owner_id+" or updated_at LIKE ? or "+qry_volume,
-     
+
+  #["ident LIKE ? or "+qry_type+" or revision LIKE ? "+
+  #  " or "+qry_owner_id+" or updated_at LIKE ? or "+qry_volume,
+
   end
-  
+
 end
