@@ -74,6 +74,10 @@ ActionController::Routing::Routes.draw do |map|
   'datafiles/:id/show_file',
   :controller => 'datafiles',
   :action => 'show_file')
+  map.connect(
+  'datafiles/:id/download_file',
+  :controller => 'datafiles',
+  :action => 'download_file')
   
   map.connect(
   'documents/:id/add_favori',
