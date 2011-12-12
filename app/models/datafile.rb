@@ -165,12 +165,14 @@ class Datafile < ActiveRecord::Base
   end
 
   def read_file
-    data = ''
     if File.exists?(get_repository)
+      data=''
       f = File.open(get_repository, "r")
       f.each_line do |line|
         data += line
       end
+    else
+      data=nil
     end
     data
   end
