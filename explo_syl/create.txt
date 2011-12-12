@@ -10,120 +10,59 @@ mysqladmin -u root password xxxx
 modifier /etc/my.cnf
 datadir = /home/mysql/data 
 
-cmd="mysqladmin -u root -p create $1_development"
-echo $cmd
-$cmd
+mysqladmin -u root -p create $1_development
 
-cmd="mysqladmin -u root -p create $1_production"
-echo $cmd
-$cmd
+mysqladmin -u root -p create $1_production
 
-cmd="rake db:migrate"
-echo $cmd
-# $cmd
+rake db:migrate
 
-cmd="ruby script/generate scaffold document ident:string type:string revision:string designation:string description:text extension:string repository:string status:string responsible:string group:string date:date"
-echo $cmd
-$cmd
+ruby script/generate scaffold document ident:string type:string revision:string designation:string description:text extension:string repository:string status:string responsible:string group:string date:date
+ruby script/generate model document
+ruby script/generate controller document
+ruby script/generate scaffold part ident:string type:string revision:string designation:string description:text status:string responsible:string group:string date:date
+ruby script/generate model part
+ruby script/generate controller part
+ruby script/generate scaffold project ident:string type:string designation:string description:text status:string responsible:string group:string date:date
+ruby script/generate model project
+ruby script/generate controller project
+ruby script/generate scaffold customer ident:string type:string designation:string description:text responsible:string group:string date:date
+ruby script/generate model customer
+ruby script/generate controller customer
+ruby script/generate model favori
 
-cmd="ruby script/generate model document"
-echo $cmd
-$cmd
+rake db:sessions:create
 
-cmd="ruby script/generate controller document"
-echo $cmd
-$cmd
+ruby script/generate scaffold partslinks father_id:integer child_id:integer designation:string description:text quantity:float responsible:string group:string date:date
+ruby script/generate scaffold typesobject object:string name:string description:text
+ruby script/generate scaffold statusobject object:string name:string rank:integer description:text
+ruby script/generate scaffold role name:string description:text
+ruby script/generate scaffold volume name:string description:text directory:string protocole:string
+ruby script/generate mailer PLMMailer toValidate validated
+ruby script/generate scaffold sequence object:string value:string min:string max:string
+ruby script/generate scaffold links father_object:string child_object:string father_id:integer child_id:integer name:string designation:string description:text responsible:string group:string date:date
+ruby script/generate scaffold checks object:string object_id:integer status:integer out_reason:string out_date:date out_user:integer in_reason:string in_date:date in_user:integer local_dir:string
+ruby script/generate scaffold access controller:string action:integer role_id:integer
+---
+--- forums
+--- 
+ruby script/generate scaffold forum typesobject_id:integer statusobject_id:integer subject:string description:text owner_id:integer
+ruby script/generate scaffold forum_item message:text forum_id:integer parent_id:integer owner_id:integer
 
-cmd="ruby script/generate scaffold part ident:string type:string revision:string designation:string description:text status:string responsible:string group:string date:date"
-echo $cmd
-$cmd
+ruby script/generate scaffold roles_users role_id:integer user_id:integer
+attention, c'est une table de jointure, il faut supprimer la colonne id (par mysql admin)
 
-cmd="ruby script/generate model part"
-echo $cmd
-$cmd
+ruby script/generate scaffold document ident:string type:string revision:string designation:string description:text extension:string repository:string status:string responsible:string group:string date:date
+ruby script/generate scaffold datafile ident:string filename:string revision:integer typesobject_id:integer content_type:string owner_id:integer volume_id:integer
 
-cmd="ruby script/generate controller part"
-echo $cmd
-$cmd
+---
+--- notifications
+--- 
+ruby script/generate scaffold notification object_type:string object_id:integer event_date:date event_type:text responsible_id:integer notify_date:date
 
-
-cmd="ruby script/generate scaffold project ident:string type:string designation:string description:text status:string responsible:string group:string date:date"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate model project"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate controller project"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate scaffold customer ident:string type:string designation:string description:text responsible:string group:string date:date"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate model customer"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate controller customer"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate model favori"
-echo $cmd
-echo cree trop de fichiers
-#$cmd
-
-cmd="rake db:sessions:create
-echo $cmd
-$cmd
-
-cmd="rake db:migrate"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate scaffold partslinks father_id:integer child_id:integer designation:string description:text quantity:float responsible:string group:string date:date"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate scaffold typesobject object:string name:string description:text"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate scaffold statusobject object:string name:string rank:integer description:text"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate scaffold role name:string description:text"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate scaffold volume name:string description:text directory:string protocole:string"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate mailer PLMMailer toValidate validated"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate scaffold sequence object:string value:string min:string max:string"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate scaffold links father_object:string child_object:string father_id:integer child_id:integer name:string designation:string description:text responsible:string group:string date:date"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate scaffold checks object:string object_id:integer status:integer out_reason:string out_date:date out_user:integer in_reason:string in_date:date in_user:integer local_dir:string"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate scaffold access controller:string action:integer role_id:integer"
-echo $cmd
-$cmd
-
+---
+--- relations
+---
+ruby script/generate scaffold relation name:string type:string designation:string father_plmtype:string child_plmtype:string father_type:integer child_type:integer cardin_occur_min:integer cardin_occur_max:integer cardin_use_min:integer cardin_use_max:integer
 
 # plugin pour la pagination 
 #script/plugin install git://github.com/mislav/will_paginate.git
@@ -150,37 +89,6 @@ atttention, en fait, je l'ai remanie (les vues) pour enlever le format haml
 cmd="ruby script/generate scaffold question question:string answer:string position:integer"
 echo $cmd
 $cmd
-
----
---- forums
---- 
-cmd="ruby script/generate scaffold forum typesobject_id:integer statusobject_id:integer subject:string description:text owner_id:integer"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate scaffold forum_item message:text forum_id:integer parent_id:integer owner_id:integer"
-echo $cmd
-$cmd
-
-cmd="ruby script/generate scaffold roles_users role_id:integer user_id:integer"
-echo $cmd
-$cmd
-attention, c'est une table de jointure, il faut supprimer la colonne id (par mysql admin)
-
-ruby script/generate scaffold document ident:string type:string revision:string designation:string description:text extension:string repository:string status:string responsible:string group:string date:date
-
-ruby script/generate scaffold datafile ident:string filename:string revision:integer typesobject_id:integer content_type:string owner_id:integer volume_id:integer
-
----
---- notifications
---- 
-ruby script/generate scaffold notification object_type:string object_id:integer event_date:date event_type:text responsible_id:integer notify_date:date
-
----
---- relations
----
-ruby script/generate scaffold relation name:string type:string designation:string father_plmtype:string child_plmtype:string father_type:integer child_type:integer cardin_occur_min:integer cardin_occur_max:integer cardin_use_min:integer cardin_use_max:integer
-
 
 ---
 --- plugin de gestion d'autorisations
@@ -595,7 +503,10 @@ ruby script/plugin install http://barcode-generator.googlecode.com/svn/trunk/bar
 pb install des gems
 (non utilise)
 
-
+-----------------
+vider la base
+-----------------
+heroku rake db:reset
 
 ---
 --- recreer la base avec les migrations

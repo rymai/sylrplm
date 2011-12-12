@@ -55,7 +55,7 @@ private
     puts "plm_init_controller.update_first_volume:dir="+dir
     vol=Volume.find_first
     puts "plm_init_controller.update_first_volume:volume="+vol.inspect
-    vol.update_attributes(:directory=>dir)
+    vol.update_attributes(:directory=>dir) unless vol.nil?
     User.find_all.each do |auser|
       auser.volume=vol
       auser.password=auser.login
@@ -63,6 +63,5 @@ private
       puts "plm_init_controller.update_first_volume:user="+auser.inspect
     end
   end
-  
-  
+ 
 end
