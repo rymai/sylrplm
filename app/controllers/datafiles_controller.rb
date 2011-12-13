@@ -110,30 +110,29 @@ class DatafilesController < ApplicationController
 
   def show_file
     @datafile = Datafile.find(params[:id])
-    content=@datafile.read_file
-    unless content.nil?
-      send_data(content,
+    begin
+       send_file(@datafile.get_repository,
               :filename => @datafile.filename,
               :type => @datafile.content_type,
               :disposition => "inline")  
-    else
+    rescue Exception => e
       respond_to do |format|
         flash[:notice] = t(:ctrl_object_not_found,:typeobj => t(:ctrl_datafile),  :ident => @datafile.ident)
         format.html { render :action => "show" }
         format.xml  { render :xml => @datafile.errors, :status => :unprocessable_entity }
       end
     end
+
   end
 
   def download_file
     @datafile = Datafile.find(params[:id])
     ret=nil
     if @datafile.file_exists?
-      content=@datafile.read_file
-      send_data(content,
+      send_file(@datafile.get_repository,
               :filename => @datafile.filename,
               :type => @datafile.content_type,
-              :disposition => "attachment") unless content.nil?
+              :disposition => "attachment") 
       ret=@datafile.filename
     end
     ret

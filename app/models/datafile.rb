@@ -182,10 +182,15 @@ class Datafile < ActiveRecord::Base
     if File.exists?(get_repository)
       data=''
       f = File.open(get_repository, "r")
+      puts "debut lecture "+get_repository
+      nc=0
       f.each_byte do |ch|
         data += ch.chr
+        nc+=1
+        #puts " "+nc.to_s
       end
       f.close
+      puts "fin lecture "+get_repository
     else
       data=nil
     end
