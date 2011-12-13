@@ -164,12 +164,13 @@ class Datafile < ActiveRecord::Base
     ret
   end
 
-  def read_file
+  def read_file_by_lines
     if File.exists?(get_repository)
       data=''
       f = File.open(get_repository, "r")
       f.each_line do |line|
         data += line
+        puts "datafile.read_file a line"
       end
     else
       data=nil
@@ -177,6 +178,20 @@ class Datafile < ActiveRecord::Base
     data
   end
 
+  def read_file
+    if File.exists?(get_repository)
+      data=''
+      f = File.open(get_repository, "r")
+      f.each_byte do |ch|
+        data += ch.chr
+      end
+      f.close
+    else
+      data=nil
+    end
+    data
+  end
+  
   def create_dir
     FileUtils.mkdir_p(get_dir_repository)
   end

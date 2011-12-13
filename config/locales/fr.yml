@@ -19,6 +19,7 @@ fr:
   ctrl_object_not_created: "%{typeobj} non crée :%{msg}"
   ctrl_object_updated: "%{typeobj} '%{ident}' modifié avec succès"
   ctrl_object_not_saved: "%{typeobj} '%{ident}' non sauvegardé"
+  ctrl_object_not_found: "%{typeobj} '%{ident}' non trouvé"
   ctrl_object_not_updated: "%{typeobj} '%{ident}' non modifié"
   ctrl_object_deleted: "%{typeobj} '%{ident}' supprimé avec succès"
   ctrl_object_not_deleted: "%{typeobj} '%{ident}' ne peut être supprimé"
@@ -343,6 +344,8 @@ fr:
   label_content_type: Type de contenu
   label_document: Document
   label_restore_file: Fichier à restaurer
+  datafile_show_file: Voir le fichier
+  datafile_download_file: Télécharger le fichier
   # definitions
   legend_definition: Renseignez les propriétés de la définition de processus
   label_process_definition: Définition du processus

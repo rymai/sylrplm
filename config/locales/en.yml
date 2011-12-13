@@ -19,6 +19,7 @@ en:
   ctrl_object_not_created: "%{typeobj} not created :%{msg}"
   ctrl_object_updated: "%{typeobj} %{ident} was successfully updated"
   ctrl_object_not_saved: "%{typeobj} %{ident} not saved"
+  ctrl_object_not_found: "%{typeobj} '%{ident}' not found"
   ctrl_object_not_updated: "%{typeobj} %{ident} not updated"
   ctrl_object_deleted: "%{typeobj} %{ident} successfully deleted"
   ctrl_object_not_deleted: "%{typeobj} %{ident} could not be deleted"
@@ -343,6 +344,8 @@ en:
   label_content_type: Mime type
   label_document: Document
   label_restore_file: File to restore
+  datafile_show_file: Show the file
+  datafile_download_file: Download the file
   # definitions
   legend_definition: Enter definition details
   label_uri: URI
