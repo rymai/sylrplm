@@ -3,19 +3,21 @@
 * {
 	margin: 0;
 	padding: 0;
+	font: 10px sans-serif;
 }
-body {t
-	font-family: "proxima-nova-1", "proxima-nova-2", Helvetica, Arial, sans-serif;
+body {
+	t
+	font-family: "proxima-nova-1", "proxima-nova-2", "Helvetica", "Arial", "sans-serif";
 	background: #000;
 	/*color: #ccc;*/
-	font-size: 12px;
+
 	/*text-rendering: optimizeLegibility; non trouve*/
 	/*max-width: 1600px;*/
 	position: relative;
-	margin: 5px;
+	margin: 2px;
 	-webkit-text-size-adjust: auto;
 }
-span, p, li, ul , legend {
+span, p, li, ul, legend {
 	text-decoration: none;
 	margin-left: 0px;
 	padding-left: 0px;
@@ -31,33 +33,16 @@ li {
 	padding-left: 0px;
 	text-indent: 0px;
 }
-
 h1 {
 	font: bold 120% sans-serif;
 	color: white;
-	border-bottom: 1px solid #666;
-	margin-bottom: 15px;
+	border-top: 2px solid #666;
+	margin-bottom: 1px;
 }
 h2 {
 	font: bold 100% sans-serif;
 	color: white;
 }
-input, option, select, textarea {
-	padding: 1pt;
-	margin: 1pt;
-	background-color: #DDDDDD;
-	/*border-bottom: thin solid #333333;
-	border-left: thin solid #333333;
-	border-right: none;
-	border-top: none;*/
-}
-input:active, option:active, select:active, textarea:active {
-	outline: solid medium #CCCCFF;
-}
-input:focus, option:focus, select:focus, textarea:focus {
-	outline: solid medium #CCFFCC;
-}
-
 /* formulaire de saisie: new et edit principalement */
 br {
 	clear: left;
@@ -69,18 +54,18 @@ label {
 	display: block;
 	float: left;
 	width: 180px;
-	margin-right: 5px;
-	margin-top: 5px;
+	margin-right: 2px;
+	margin-top: 2px;
 }
-input, option, select, textarea {
-	display: block;
-	float: left;
-	margin-left: 5px;
-	margin-top: 5px;
-}
-input[type=submit] {
-	background-color: #333333;
-}
+/*
+ input, option, select, textarea {
+ display: block;
+ float: left;
+ margin-left: 2px;
+ margin-top: 2px;
+ text-decoration: none;
+ }
+ */
 
 table {
 	border: 0px;
@@ -98,20 +83,19 @@ tr {
 }
 th {
 	font-weight: bold;
-	padding: 2px;
+	padding: 1px;
 	margin: 0;
 	background-color: #333;
 	border: 1px solid #DDD;
 	color: #FFF;
 }
 td {
-	padding: 2px;
+	padding: 1px;
 	margin: 0;
-	background-color: #444;
-	border: 1px solid #CCC;
-	color: #DDD;
+	background-color: #BBBBBB;
+	border: 1px solid #CCCCCC;
+	color: #000;
 }
-
 /*header*/
 #container {
 	background: black;
@@ -120,7 +104,7 @@ td {
 	background: black;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	border-bottom: 2px solid white;
+	border-bottom: 1px solid white;
 	text-align: center;
 	height: 10%;
 	margin: 0px;
@@ -143,21 +127,18 @@ td {
 /* boites */
 #columns {
 }
-
 #side {
 	float: left;
 	padding-top: 0px;
 	width: 180px;
 }
-
 #side fieldset {
-	padding: 5px;
-	margin-top: 8px;
+	padding: 1px;
+	margin-top: 5px;
 }
-
 #main {
-	padding-top: 8px;
-	padding-left: 8px;
+	padding-top: 5px;
+	padding-left: 5px;
 	margin: 0 0 0 180px;
 	background: #333;
 }
@@ -223,11 +204,9 @@ img.help_tr {
 /* Styles for the favori in the sidebar */
 
 li.favori {
-	font-size: 12px;
 	color: white;
 }
 td.favori {
-	font-size: 12px;
 	color: white;
 }
 #favori table {
@@ -237,39 +216,76 @@ td.favori {
 }
 /* END:favori */
 p.notice {
-	font-size: 14px;
 	border: 1px solid #666;
 	color: white;
 	background-color: #888;
 	margin-bottom: 15px;
 }
 /* menus en bas des listes*/
+
 table.menu_bas {
-	margin-top: 5px;
-	margin-bottom: 5px;
+	margin-top: 1px;
+	margin-bottom: 1px;
 }
 table.menu_bas .menu_bas tr {
 	border: 0px;
 }
-.menu_bas td {
-	background-color: #333333;
-	border: 2px solid;
-	padding-left: 2px;
-	padding-right: 2px;
-}
-a, td a, th a, a.help_tr, .help a, .menu_bas a, a.menu, a.menu_bas, .menu_bas input, input.menu_bas {
+a, th a, a.help_tr, .help a, a.menu, a.menu_bas, .menu_bas input, input.menu_bas {
 	border: 0px;
 	text-decoration: none;
 	cursor: pointer;
 	color: white;
 	font-weight: bold;
 }
+.menu_bas td {
+	background: #333;
+	border: 0px;
+	height: 25px;
+	color: white;
+}
+.menu_bas a {
+	padding: 2px;
+	margin: 0px;
+	border: none;
+	color: #222222;
+	background: transparent url('/images/button_submit.png') repeat center center;
+	height: 25px;
+}
+.menu_bas a:hover {
+	background: transparent url('/images/button_submit_hover.png') repeat center center;
+	color: #EEEEEE;
+}
+input, option, select, textarea {
+	padding: 1pt;
+	margin: 1pt;
+	background-color: #A0A0A0;
+	color: black;
+}
+input[type=submit] {
+	padding: 0px;
+	margin: 0px;
+	border: none;
+	color: #222222;
+	background: transparent url('/images/button_submit.png') no-repeat center center;
+	height: 25px;
+}
+input[type=submit]:hover {
+	background: transparent url('/images/button_submit_hover.png') no-repeat center center;
+	color: #EEEEEE;
+}
+input:active, option:active, select:active, textarea:active {
+	outline: solid medium #CCCCFF;
+}
+input:focus, option:focus, select:focus, textarea:focus {
+	outline: solid medium #CCFFCC;
+}
 /* end menus en bas des listes*/
 
 /* a:hover, input:hover, img.help_tr:hover {*/
-a:hover, .help a:hover, a.help_tr:hover, a.menu:hover, a:hover, input:hover,  select:hover, img.help_tr:hover {
-	background-color:#AAAAAA;
-	color: #222222;
+
+a:hover, .help a:hover, a.help_tr:hover, a.menu:hover, a:hover, input:hover, select:hover, img.help_tr:hover {
+	/*background-color:#717171;*/
+	color: white;
 	cursor: pointer;
 }
 .pagination {

@@ -170,10 +170,10 @@ module Models::SylrplmCommon
     end
     links=Link.get_all_fathers(self)    
     links.each do |lnk|
-      mdl=get_model(lnk.father_type)
+      mdl=get_model(lnk.father_plmtype)
       unless mdl.nil?
         f = mdl.find(lnk.father_id)
-        p=f.get_path(lnk.name)
+        p=f.get_path(lnk.relation.name)
         paths=f.follow_up(p)
         paths.each do |pp|
           ret<<path+pp

@@ -40,19 +40,16 @@
 <% unless @document.frozen? %>
 <table class='menu_bas'>
 	<tr>
-		<td> 
-		<%= link_to t("add_datafile"), :action => :new_datafile, :id => @document.id %>
-		</td>
+		<td> <%= link_to t("add_datafile"), :action => :new_datafile, :id => @document.id %> </td>
 	</tr>
 </table>
 <%end %>
-<h1></h1>
-<%= h_show_tree %> <h1></h1>
+
+<%= h_show_tree %>
 <table class='menu_bas'>
 	<tr>
 		<% unless @favori.get('document').count==0 %>
-		<% form_for(@document, :url => {:id => @document.id, :action => :add_docs }, :method => :get) do |f| %> 
-		<td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %></td>
+		<% form_for(@document, :url => {:id => @document.id, :action => :add_docs }, :method => :get) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
 		<% end %>
 		<%end%>
@@ -74,9 +71,12 @@
 		<td> <%= text_field_tag :out_reason %></td>
 	</tr>
 	<%end %>
-	<% else %> <td> <%= t("is_check_out") %></td>
-	<td> <%= t("label_out_reason") %></td>
-	<td> <%= @checkout.out_reason.force_encoding('utf-8') %> </td>
+	<% else %>
+	<tr>
+		<td> <%= t("is_check_out") %></td>
+		<td> <%= t("label_out_reason") %></td>
+		<td> <%= @checkout.out_reason.force_encoding('utf-8') %> </td>
+	</tr>
 	<% form_for(@document, :url => {:id => @document.id, :action => :check_in }, :method => :get,
 	:html => { :multipart => true}) do |f| %>
 	<tr>
@@ -95,6 +95,7 @@
 	<%end %>
 	<% end %>
 </table>
+<h1></h1>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("edit"), edit_document_path(@document) %></td>

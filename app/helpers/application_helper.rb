@@ -3,10 +3,11 @@ module ApplicationHelper
   def h_value_or_default(value, default)
     ret=default
     unless value.nil?
-      ret=value unless value.size==0
+    ret=value unless value.size==0
     end
     ret
   end
+
   # renvoie la valeur de l'attribut att sur current si
   # 1- current n'a pas le meme identifiant que previous
   # 2- que les valeurs de l'attribut sont differentes entre les 2objets
@@ -215,41 +216,37 @@ module ApplicationHelper
 
   def h_show_tree
     bloc=""
-    if (@tree || @tree_up)
-
-      #bloc << "<table class='menu_bas' >"
-      #bloc << "<tr>"
-      #bloc<< "<td><a class='menu_bas' href='#' onclick='hideTreeMenu();'>"+t("h_show_hide_tree")+"</a></td>"
-      #bloc << "</tr>"
-      #bloc << "</table>"
-
+    if ((@tree && @tree.size>0) || (@tree_up && @tree_up.size>0))
+      bloc << "<h1></h1>"
       bloc << "<div id='dtree'>"
 
-      if (@tree)
-        bloc << "<fieldset>"
-        bloc << "<legend>"
-        bloc << t(:legend_tree_down)
-        bloc << "</legend>"
+      if (@tree && @tree.size>0)
+        #bloc << "<fieldset>"
+        #bloc << "<legend>"
+        #bloc << t(:legend_tree_down)
+        #bloc << "</legend>"
+
         bloc << "<table class='menu_bas' >"
         bloc << "<tr>"
         bloc<< "<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_down);'>"+t("h_open_close_all_tree")+"</a></td>"
         bloc << "</tr>"
         bloc << "</table>"
-        bloc << @tree.to_s
-        bloc << "</fieldset>"
+      bloc << @tree.to_s
+      #bloc << "</fieldset>"
       end
-      if (@tree_up)
-        bloc << "<fieldset>"
-        bloc << "<legend>"
-        bloc << t(:legend_tree_up)
-        bloc << "</legend>"
+      if (@tree_up && @tree_up.size>0)
+        #bloc << "<fieldset>"
+        #bloc << "<legend>"
+        #bloc << t(:legend_tree_up)
+        #bloc << "</legend>"
+
         bloc << "<table class='menu_bas' >"
         bloc << "<tr>"
         bloc<< "<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_up);'>"+t("h_open_close_all_tree")+"</a></td>"
         bloc << "</tr>"
         bloc << "</table>"
-        bloc << @tree_up.to_s
-        bloc << "</fieldset>"
+      bloc << @tree_up.to_s
+      #bloc << "</fieldset>"
       end
 
       bloc << "</div>"
@@ -333,7 +330,7 @@ module ApplicationHelper
     html += form.collection_select(attribute, values, id, method)
     html
   end
-  
+
   def select_inout(form, object, values, field)
     html = ""
     unless values.count == 0
@@ -423,7 +420,6 @@ module ApplicationHelper
       <a id='dataurl_link'>
         <canvas id="fluo" width="50" height="50"></canvas>
       </a>
-
 
       #{tree}
 
