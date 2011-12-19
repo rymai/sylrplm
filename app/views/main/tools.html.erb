@@ -1,0 +1,15 @@
+<H1><%= t(:title_tools)%></H1>
+<% form_tag :controller=>:main, :action=>:index, :method=>:get do %>
+<fieldset>
+	<legend>
+		<%= t(:legend_preferences) %>
+	</legend>
+	<%= label_tag t(:label_theme) %>
+	<%= select_tag(:theme, @themes) %>
+	<br/>
+	<%= label_tag t(:label_language) %>
+	<%= select_tag(:locale, options_for_select(@languages)) %>
+	<br/>
+</fieldset>
+<%= h_img_sub(:submit) %>
+<% end %>

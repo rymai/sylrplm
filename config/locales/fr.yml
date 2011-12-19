@@ -285,6 +285,7 @@ fr:
   mnu_groups: Groupes
   mnu_notifications: Notifications
   mnu_relations: Relations
+  mnu_tools: Outils
   cut: "Couper"
   revise: "Réviser"
   promote: "Promouvoir"
@@ -562,6 +563,9 @@ fr:
   msg_define_status_project: Définissez les statuts des projets
   msg_define_status_customer: Définissez les statuts des clients
   msg_define_status_forum: Définissez les statuts des forums
+  # tools
+  title_tools: Outils
+  legend_preferences: Préférences
   # typesobjects
   legend_typesobject: "Renseignez les propriétés du type d' objets"
   typesobjects_list: Liste des types d' objets

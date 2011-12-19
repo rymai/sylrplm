@@ -18,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.resources :notifications, :member => { :notify => :get }
 
-  map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get }
+  map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get, :tools => :get }
 
   map.resources :help, :only => [:index]
 

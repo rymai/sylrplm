@@ -285,6 +285,7 @@ en:
   mnu_groups: Groups
   mnu_notifications: Notifications
   mnu_relations: Relations
+  mnu_tools: Tools
   cut: "Cut"
   revise: "Revise"
   promote: "Promote"
@@ -562,6 +563,9 @@ en:
   msg_define_status_project: Please, define projects status
   msg_define_status_customer: Please, define customers status
   msg_define_status_forum:  Please, define forums status
+  # tools
+  title_tools: Tools
+  legend_preferences: Preferences
   # typesobjects
   legend_typesobjects: Enter typesobjects details
   typesobjects_list: Listing of types 
