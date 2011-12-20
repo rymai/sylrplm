@@ -41,7 +41,7 @@
 	<% for workitem in workitems %>
 	<% fei = workitem.full_fei%>
 	<tr class="workitem">
-		<td> <%= workitem.link_relation %> </td>
+		<td> <%= workitem.link_attributes["relation"] %> </td>
 		<td> <%= workitem.id %> </td>
 		<td> <%= link_to h(fei.wfid), workitems_path(fei.wfid) %> </td>
 		<td> <%= link_to_slice(workitem, :wfname, :workflow) %><%= h workitem.wfrevision %> </td>

@@ -150,7 +150,7 @@ module Models::SylrplmCommon
   def get_object(type, id)
     # parts devient Part
     name=self.class.name+"."+__method__.to_s+":"
-    puts name+type.camelize+"."+id.to_s
+    #puts name+type.camelize+"."+id.to_s
     mdl=eval type.camelize
     begin
       ret=mdl.find(id)

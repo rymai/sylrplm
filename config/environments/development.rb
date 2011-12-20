@@ -12,18 +12,12 @@ config.whiny_nils = true
 config.action_controller.consider_all_requests_local = true
 config.action_view.debug_rjs                         = true
 config.action_controller.perform_caching             = false
-
 config.action_view.cache_template_loading            = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = true
-
+config.action_mailer.default_url_options = {
+    :host => "localhost:3000"
+  }
 # See everything in the log (default is :info)
-config.log_level = :debug
-
-# INUTILE (parole d'expert)
-# pour recharger un fichier particulier
-# require_dependency RAILS_ROOT + "/lib/classes/toto.rb"
-# config.load_paths += %W( #{RAILS_ROOT}/lib/classes )
-# config.load_paths += %W( #{RAILS_ROOT}/lib/controllers )
-# config.load_paths += %W( #{RAILS_ROOT}/lib/models )
+config.log_level = :error

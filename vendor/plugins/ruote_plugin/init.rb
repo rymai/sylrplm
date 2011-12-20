@@ -46,8 +46,8 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
   # lets the engine start for "rake test" anyway
 
   require 'ruote_plugin'
-  require 'ruote/worker'
-  require 'ruote/storage/fs_storage'
+  #require 'ruote/worker'
+  #require 'ruote/storage/fs_storage'
 
   #
   # init ruote engine
@@ -55,11 +55,8 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
   h = defined?(RUOTE_ENV) ? RUOTE_ENV : {}
 
   # the type of engine to use
-  #h[:engine_class] = Ruote::Engine
-
-  #TODO syl
-  #h[:engine_class] ||= OpenWFE::FsPersistedEngine
-  h[:engine_class] ||= OpenWFE::Extras::DbPersistedEngine
+  h[:engine_class] ||= OpenWFE::FsPersistedEngine
+  #h[:engine_class] ||= OpenWFE::Extras::DbPersistedEngine
 
   unless h[:logger]
     h[:logger] = ActiveSupport::BufferedLogger.new("#{RAILS_ROOT}/log/ruote_#{RAILS_ENV}.log")
@@ -67,8 +64,8 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
   end
 
   #TODO syl
-  #h[:work_directory] ||= "#{RAILS_ROOT}/work_#{RAILS_ENV}"
-  h[:work_directory] ||= "#{RAILS_ROOT}/tmp"
+  h[:work_directory] ||= "#{RAILS_ROOT}/work_#{RAILS_ENV}"
+  #h[:work_directory] ||= "#{RAILS_ROOT}/tmp"
 
   h[:ruby_eval_allowed] ||= true
   # the 'reval' expression and the ${r:some_ruby_code} notation are allowed
@@ -78,19 +75,18 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
 
   h[:definition_in_launchitem_allowed] ||= true
   # launchitems (process_items) may contain process definitions
-
-  h[:persist_as_yaml] ||= false
+  
   #worker=Ruote::Worker.new(Ruote::FsStorage.new(h[:work_directory]))
   #puts "init:worker="+worker.inspect
-  #puts "init:appel RuotePlugin.engine_init:"+h.inspect
-
+  
+  puts "init:appel RuotePlugin.engine_init:"+h.inspect
   RuotePlugin.engine_init(h)
 
   begin
-    require "#{RAILS_ROOT}/lib/ruote_utils.rb"
-    puts ".. found #{RAILS_ROOT}/lib/ruote_utils.rb"
+    require "#{RAILS_ROOT}/lib/ruote.rb"
+    puts ".. found #{RAILS_ROOT}/lib/ruote.rb"
   rescue LoadError => le
-    puts ".. couldn't load #{RAILS_ROOT}/lib/ruote_utils.rb :\n#{le}"
+    puts ".. couldn't load #{RAILS_ROOT}/lib/ruote.rb :\n#{le}"
   end
 
 end

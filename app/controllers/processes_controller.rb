@@ -120,19 +120,19 @@ class ProcessesController < ApplicationController
   # POST /processes
   #
   def create
-    name=__FILE__+"."+__method__.to_s+":"
+    name="process_controllers."+__method__.to_s+":"
     LOG.info name+params.inspect
     @definition = Definition.find(params[:definition_id])
     li = parse_launchitem
     options = { :variables => { 'launcher' => @current_user.login } }
     begin
       fei = RuotePlugin.ruote_engine.launch(li, options)
-      #puts name+" fei("+fei.wfid+") launched"
+      puts name+" fei("+fei.wfid+") launched"
       headers['Location'] = process_url(fei.wfid)
       nb=0
       workitem = nil
-      while nb<6 and workitem.nil?
-        #puts name+" boucle "+nb.to_s
+      while nb<5 and workitem.nil?
+        puts name+" boucle "+nb.to_s+":"+fei.wfid
         sleep 1.0
         nb+=1
         workitem = OpenWFE::Extras::ArWorkitem.find_by_wfid(fei.wfid)

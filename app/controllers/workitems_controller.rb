@@ -138,7 +138,7 @@ class WorkitemsController < ApplicationController
     #puts "workitems_controller.update:workitem="+workitem.inspect
     workitem_ident = "#{in_flow_workitem.fei.wfid}/#{OpenWFE.to_uscores(in_flow_workitem.fei.expid)}"
     if store_name = params[:store_name]
-      puts "workitems_controller.update:store="+store_name
+      #puts "workitems_controller.update:store="+store_name
       ar_workitem.store_name = store_name
       ar_workitem.save!
       flash[:notice] = t(:ctrl_workitem_delegated, :ident => workitem_ident, :store => store_name)
@@ -146,7 +146,7 @@ class WorkitemsController < ApplicationController
       'delegated',
       :fei => in_flow_workitem.fei, :message => "wi delegated to '#{store_name}'")
     elsif params[:state] == 'proceeded'
-      puts "workitems_controller.update:proceeded:wfid="+params[:wfid]
+      #puts "workitems_controller.update:proceeded:wfid="+params[:wfid]
       in_flow_workitem.attributes = workitem.attributes
       #puts "workitems_controller.update:in_flow_workitem proceeded********="+in_flow_workitem.inspect
       begin
@@ -176,7 +176,7 @@ class WorkitemsController < ApplicationController
       return
       end
     else
-      puts "workitems_controller.update:att="+workitem.attributes.inspect
+      #puts "workitems_controller.update:att="+workitem.attributes.inspect
       ar_workitem.replace_fields(workitem.attributes)
       flash[:notice] = t(:ctrl_workitem_updated, :ident => workitem_ident)
       history_log('saved', :fei => in_flow_workitem.fei, :message => 'wi saved')
@@ -218,7 +218,7 @@ class WorkitemsController < ApplicationController
         url="/"+type_object+"s" #bidouille
         url+="/"+item.id.to_s
         label=type_object+":"+item.ident
-        puts "workitems_controller.add_objects:url="+url+" label="+label+ " fields="+fields["params"].inspect
+        #puts "workitems_controller.add_objects:url="+url+" label="+label+ " fields="+fields["params"].inspect
         fields["params"][url]=label
         msg += "\nField added:"+label
         ret+=1
@@ -259,7 +259,7 @@ class WorkitemsController < ApplicationController
   def wi_links_update(cur_wi, wfid)
     sleep 3.0
     Ruote::Sylrplm::ArWorkitem.destroy(cur_wi.id)
-    puts "workitems_controller.wi_links_update:cur_wi="+cur_wi.id.to_s+":"+cur_wi.wfid.to_s+":"+cur_wi.expid.to_s
+    #puts "workitems_controller.wi_links_update:cur_wi="+cur_wi.id.to_s+":"+cur_wi.wfid.to_s+":"+cur_wi.expid.to_s
     news_wi_ = Ruote::Sylrplm::ArWorkitem.find_by_wfid_(wfid)
     #puts "workitems_controller.wi_links_update:news_wi_="+news_wi_.inspect
     if news_wi_.count != 0
@@ -292,7 +292,7 @@ class WorkitemsController < ApplicationController
 
   def wi_link_replace(type, cur_wi, news_wi)
     links=Link.find_childs(cur_wi, type)
-    puts "workitems_controller.wi_link_replace:"+type+" "+links.count.to_s+" links"
+    #puts "workitems_controller.wi_link_replace:"+type+" "+links.count.to_s+" links"
     if links.count >= 1
       link = links[0]
     end

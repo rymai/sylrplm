@@ -54,7 +54,6 @@ class Link < ActiveRecord::Base
     && father.typesobject.name==relation.father_type.name \
     && child.typesobject.name==relation.child_type.name
     if ret==false
-      puts "link."+__method__.to_s+":"
       puts father.model_name+"=="+relation.father_plmtype + \
       " "+child.model_name+"=="+relation.child_plmtype + \
       " "+father.typesobject.name+"=="+relation.father_type.name + \
@@ -69,7 +68,7 @@ class Link < ActiveRecord::Base
     link.group=current_user.group
     msg="ctrl_link_"+link.ident
     ret={:link => link,:msg => msg}
-    puts "link.create_new_by_values:"+ret.inspect
+    #puts "link.create_new_by_values:"+ret.inspect
     ret
   end
 
@@ -78,8 +77,8 @@ class Link < ActiveRecord::Base
     if isvalid(father, child, relation)
       nbused = self.nb_used(relation)
       nboccured = self.nb_occured(father, relation)
-      puts "link.create_new:"+nbused.to_s+ " "+child.model_name+"."+child.typesobject.name+" utilises dans relation "+relation.ident
-      puts "link.create_new:"+nboccured.to_s+ " "+child.model_name+"."+child.typesobject.name+" occurences "+" dans "+father.ident
+      #puts "link.create_new:"+nbused.to_s+ " "+child.model_name+"."+child.typesobject.name+" utilises dans relation "+relation.ident
+      #puts "link.create_new:"+nboccured.to_s+ " "+child.model_name+"."+child.typesobject.name+" occurences "+" dans "+father.ident
       if (nbused >= relation.cardin_use_min && (relation.cardin_use_max == -1 || nbused <= relation.cardin_use_max))
         obj = Link.new
         obj.father_plmtype = father.model_name
@@ -157,7 +156,7 @@ class Link < ActiveRecord::Base
     ret=find(:all,
     :conditions => [cond],
     :order=>"child_id")
-    puts name+child_plmtype+" cond="+cond+":"+ret.inspect
+    #puts name+child_plmtype+" cond="+cond+":"+ret.inspect
     ret
   end
 
