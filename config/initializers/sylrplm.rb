@@ -18,6 +18,9 @@ module SYLRPLM
   DIR_ADMIN   = "#{Rails.root}/db/fixtures/admin/"
   ADMIN_MAIL  = "sylvere.coutable@laposte.net"
 
+  FOG_ACCESS_KEY    = "W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j"
+  FOG_ACCESS_KEY_ID = "AKIAIUTZHUXCXNUFDRHQ"
+  
   # environneemnt specifique a l'admin de l'application sylrplm
   VOLUME_DIRECTORY_DEFAULT = case OsFunctions.os
   when "linux"

@@ -63,7 +63,7 @@
 		<td> <%= t("freeze") %></td>
 	</tr>
 	<% else %>
-	<% if(@document.is_checked()==false) %>
+	<% if !@document.checked? %>
 	<% form_for(@document, :url => {:id => @document.id, :action => :check_out }, :method => :get) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_out") %></td>

@@ -451,7 +451,8 @@ module Controllers::PlmObjectControllerModule
   def tree_documents(node, father_type, father)
     docs=Link.find_childs(father,  "document")
     docs.each do |link|
-      d=Document.find(link.child_id)
+      begin
+        d=Document.find(link.child_id)
       url={:controller => 'documents', :action => 'show', :id => "#{d.id}"}
       destroy_url=url_for(:controller => "links",
       :action => "remove_link",
@@ -467,35 +468,45 @@ module Controllers::PlmObjectControllerModule
       }
       cnode = Node.new(options,nil)
       node<<cnode
+      rescue Exception => e
+        LOG.error e
+        puts "tree_documents:"+e.inspect
+      end
     end
   end
 
   def tree_users(node, father_type, father)
     links=Link.find_childs( father,  "user")
     links.each do |link|
-      child=User.find(link.child_id)
-      url={:controller => 'users', :action => 'show', :id => "#{child.id}"}
-      destroy_url=url_for(:controller => "links",
+      begin
+        child=User.find(link.child_id)
+        url={:controller => 'users', :action => 'show', :id => "#{child.id}"}
+        destroy_url=url_for(:controller => "links",
       :action => "remove_link",
       :id => "#{link.id}" )
-      cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
-      puts "tree_users:link="+link.id.to_s+" relation="+link.relation.inspect
-      options={
-        :label => child.ident + cut_a,
-        :icon=>icone(child),
-        :icon_open=>icone(child),
-        :title => child.designation,
-        :open => false,
-        :url=>url_for(url)
-      }
-      cnode = Node.new(options,nil)
-      node<<cnode
+        cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
+        puts "tree_users:link="+link.id.to_s+" relation="+link.relation.inspect
+        options={
+          :label => child.ident + cut_a,
+          :icon=>icone(child),
+          :icon_open=>icone(child),
+          :title => child.designation,
+          :open => false,
+          :url=>url_for(url)
+        }
+        cnode = Node.new(options,nil)
+        node<<cnode
+      rescue Exception => e
+        LOG.error e
+        puts "tree_users"+e.inspect
+      end
     end
   end
 
   def tree_forums(node, father_type, father)
     docs = Link.find_childs( father,  "forum")
     docs.each do |link|
+      begin
       d = Forum.find(link.child_id)
       url = { :controller => 'forums', :action => 'show', :id => "#{d.id}" }
       destroy_url = url_for(:controller => father.controller_name,
@@ -516,6 +527,10 @@ module Controllers::PlmObjectControllerModule
       }
       cnode = Node.new(options,nil)
       node << cnode
+       rescue Exception => e
+        LOG.error e
+        puts "tree_forums"+e.inspect
+      end
     end
   end
 
@@ -529,7 +544,12 @@ module Controllers::PlmObjectControllerModule
 
   def ctrl_add_forum(object)
     type=object.model_name
-    relation = Relation.find(params["relation_id"])
+    unless params["relation_id"] == ""
+      forum_type=Typesobject.find(params[:forum][:typesobject_id])
+      relation=Relation.by_types(type, "forum", object.typesobject.id, forum_type.id)
+    else
+      relation = Relation.find(params["relation_id"])
+    end
     error=false
     respond_to do |format|
       flash[:notice] = ""

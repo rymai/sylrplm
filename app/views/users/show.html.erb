@@ -23,7 +23,7 @@
 </p>
 <p>
 	<b><%= t(:label_volume) %></b>
-	<%= h @the_user.volume.name %>
+	<%= h @the_user.volume.name unless @the_user.volume.nil? %>
 </p>
 <p>
 	<b><%= t(:label_theme) %></b>

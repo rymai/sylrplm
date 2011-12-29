@@ -1,19 +1,18 @@
-<div class="depot-form">
-	<fieldset>
-		<legend>
-			<%= t(:legend_login) %>
-		</legend>
-		<% form_for :session, :url => {:controller=>:sessions , :action=>:create} do |form| %> <label for="name"> <%= t(:label_username) %> </label>
-		<%= text_field_tag :login, params[:login] %>
-		<br/>
-		<label for="password"> <%= t(:label_password) %> </label>
-		<%= password_field_tag :password, params[:password] %>
-		<br/>
-	</fieldset>
-	<table class='menu_bas'>
-		<tr>
-			<td> <%= submit_tag t(:submit_login) %> </td>
-		</tr>
-	</table>
-	<% end %>
-</div>
+<% form_for :session, :url => {:controller=>:sessions , :action=>:create} do |form| %> 
+<fieldset>
+	<legend>
+		<%= t(:legend_login) %>
+	</legend>
+	<label for="name"> <%= t(:label_username) %> </label>
+	<%= text_field_tag :login, params[:login] %>
+	<br/>
+	<label for="password"> <%= t(:label_password) %> </label>
+	<%= password_field_tag :password, params[:password] %>
+	<br/>
+</fieldset>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= submit_tag t(:submit_login) %> </td>
+	</tr>
+</table>
+<% end %> 

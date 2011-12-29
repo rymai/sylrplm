@@ -22,7 +22,7 @@ class MainController < ApplicationController
     else
       @domains = get_domains
       @directory = SYLRPLM::VOLUME_DIRECTORY_DEFAULT
-      flash[:notice] = t(:ctrl_init_to_do)
+      #flash[:notice] = t(:ctrl_init_to_do)
     end
     @datas = get_datas_count
     @themes = get_themes(@theme)

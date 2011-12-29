@@ -4,12 +4,14 @@
 	</legend>
 	<label for="user_name"> <%= t(:label_username) %> </label>
 	<%= form.text_field :login, :size => 40 %>
+	<% if fonct == "add" %>
 	<br/>
 	<label for="user_password"> <%= t(:label_password) %> </label>
 	<%= form.password_field :password, :size => 40 %>
 	<br/>
 	<label for="user_password_confirmation"> <%= t(:label_confirm_password) %> </label>
 	<%= form.password_field :password_confirmation, :size => 40 %>
+	<% end%>
 	<br/>
 	<label for="user_first_name"> <%= t(:label_first_name) %> </label>
 	<%= form.text_field :first_name, :size => 40 %>

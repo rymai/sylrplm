@@ -10,6 +10,11 @@ en:
   # relation
   valid_relation_cardin_occur_max: "Occurence maxi must be greater than mini or -1 (no limit)"
   valid_relation_cardin_use_max: "Usage maxi must be greater than mini or -1 (no limit)"
+  #volume
+  valid_volume_directory_needed: "Protocol necessary for %{protocol} protocol"
+  check_volume_is_used: "Volume is used by a user or contains some files"
+  check_volume_no_dir: "Directory %{dir} of volume %{name} no more existing"
+  check_volume_no_rmdir: "Directory %{dir} of volume %{name} can't be deleted"
   ##############
   # controllers
   ##############
@@ -17,6 +22,7 @@ en:
   ctrl_no_privilege: "Your role '%{role}' don't give access to '%{controller}/%{action}'"
   ctrl_object_created: "%{typeobj} %{ident} was successfully created"
   ctrl_object_not_created: "%{typeobj} not created :%{msg}"
+  ctrl_object_not_completed: "%{typeobj} not completed :%{msg}"
   ctrl_object_updated: "%{typeobj} %{ident} was successfully updated"
   ctrl_object_not_saved: "%{typeobj} %{ident} not saved"
   ctrl_object_not_found: "%{typeobj} '%{ident}' not found"
@@ -60,7 +66,7 @@ en:
   # access
   ctrl_object_no_controlers: "No controlers found"
   # application
-  login_login: "Please, login"
+  login_login: "Please, login or give a username/password"
   label_project: "Project-"
   label_customer: "Customer-"
   link_project: "%{link}-Project-%{ident}"
@@ -173,6 +179,8 @@ en:
   h_open_close_all_tree: Expand/Close all
   legend_tree_down: Explorer
   legend_tree_up: Referencer
+  img_checkout: Checkout
+  img_checkin: Checkin
   # help
   help_no_help_title: Help missing
   help_no_help: No help for %{key}
@@ -566,6 +574,7 @@ en:
   # tools
   title_tools: Tools
   legend_preferences: Preferences
+  legend_account: My account
   # typesobjects
   legend_typesobjects: Enter typesobjects details
   typesobjects_list: Listing of types 
@@ -581,6 +590,7 @@ en:
   # users
   legend_user: Enter user details
   user_edit: Edit user
+  user_edit_password: Update account informations
   user_list: User list 
   user_show: User detail
   user_new: New User

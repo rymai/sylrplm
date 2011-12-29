@@ -9,6 +9,8 @@ class DatafilesController < ApplicationController
   # GET /datafiles.xml
   def index
     @datafiles = Datafile.find_paginate({ :user=> current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+    #pour voir la liste des fichiers stockes sur le fog
+    dirs=SylrplmFog.instance.directories(true)
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @datafiles[:recordset] }
@@ -109,31 +111,32 @@ class DatafilesController < ApplicationController
   end
 
   def show_file
+    send_file_content("inline")
+  end
+
+  def download_file
+    send_file_content("attachment")
+  end
+
+private
+
+  def send_file_content(disposition)
     @datafile = Datafile.find(params[:id])
+    ret=nil
     begin
-       send_file(@datafile.get_repository,
+      content=@datafile.read_file
+      puts "datafiles_controller.send_file_content"+content.length.to_s
+      send_data(content,
               :filename => @datafile.filename,
               :type => @datafile.content_type,
-              :disposition => "inline")  
+              :disposition => disposition)
+      ret=@datafile.filename
     rescue Exception => e
       respond_to do |format|
         flash[:notice] = t(:ctrl_object_not_found,:typeobj => t(:ctrl_datafile),  :ident => @datafile.ident)
         format.html { render :action => "show" }
         format.xml  { render :xml => @datafile.errors, :status => :unprocessable_entity }
       end
-    end
-
-  end
-
-  def download_file
-    @datafile = Datafile.find(params[:id])
-    ret=nil
-    if @datafile.file_exists?
-      send_file(@datafile.get_repository,
-              :filename => @datafile.filename,
-              :type => @datafile.content_type,
-              :disposition => "attachment") 
-      ret=@datafile.filename
     end
     ret
   end

@@ -8,11 +8,11 @@ eof:
 
 mysqladmin -u root password xxxx
 modifier /etc/my.cnf
-datadir = /home/mysql/data 
+datadir = /home/mysql 
 
-mysqladmin -u root -p create $1_development
+mysqladmin -u root -p create sylrplm_development
 
-mysqladmin -u root -p create $1_production
+mysqladmin -u root -p create sylrplm_production
 
 rake db:migrate
 
@@ -519,8 +519,86 @@ ou rake db:drop;rake db:create;rake db:schema:load (schema seul, pas de data)
 heroku rake db:drop;heroku rake db:create;heroku rake db:schema:load 
 heroku open;heroku logs -n 500
 
--------
+======================================================
 charger des fichiers dans heroku
--------
+======================================================
 http://devcenter.heroku.com/articles/s3
 http://webtempest.com/how-to-allow-image-uploads-in-rails-on-heroku/
+
+------
+utiliser aws-s3 (amazon) pour stocker les vaults
+ou fog + carrierwave (gestion des fichiers)
+------
+creer un compte amazon
+http://aws.amazon.com/s3
+
+installer le gem
+ajouter dans Gemfile:
+	gem "aws-s3"
+	ou
+	gem "fog", "~> 1.1.2"
+bundle update
+livrer
+Identifiant de clé d’accès: AKIAIUTZHUXCXNUFDRHQ
+Clé d’accès secrète: W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j
+
+======================================================
+re-installer tout le framework apres un crash disque
+======================================================
+
+---
+git
+---
+telecharger git-1.7.8.1.tar.gz
+decompresser
+cd git-1.7.8.1
+./configure
+make
+su
+make install
+
+---
+ruby
+---
+depuis http://www.ruby-lang.org/fr/downloads/
+telecharger ruby-1.9.2-p290.tar.gz
+decompresser
+cd ruby-1.9.2-p290
+./configure
+make
+su
+make install
+
+---
+rubygems
+---
+depuis http://rubyforge.org/frs/?group_id=126
+telecharger rubygems-1.8.12.tgz
+decompresser
+cd rubygems-1.8.12
+su
+ruby setup.rb
+
+---
+bundler
+---
+su
+gem install bundler
+
+---
+prise en compte des gems pre requis dans le Gemfile
+---
+dans "control center": installer libxml2 et libxslt
+bundle install
+
+======================================================
+Empêcher akonadi de démarrer avec KDE 4.5
+======================================================
+Akonadi quand il démarre prend beaucoup de ressource (surement parce qu’il lance aussi nepomukserver), 
+pour empêcher qu’il démarre il faut aller dans: 
+~/.config/akonadi/akonadiserverrc
+et modifier:
+StartServer=true => StartServer=false
+Pour stopper nepomuk passer le gestionnaire de services dans le centre de configuration et décocher nepomuk.
+
+

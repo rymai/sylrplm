@@ -122,6 +122,12 @@ module ApplicationHelper
   def h_img_destroy
     h_img("destroy")
   end
+  def h_img_checkout
+    h_img("img_checkout")
+  end
+  def h_img_checkin
+    h_img("img_checkin")
+  end
 
   def h_img_edit
     h_img("edit")

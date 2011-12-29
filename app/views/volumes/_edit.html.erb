@@ -13,6 +13,6 @@
 	<%= f.text_field :directory %>
 	<br/>
 	<%= f.label t(:label_protocol) %>
-	<%= f.text_field :protocole %>
+	<%= f.select( :protocole, Volume.protocole_values) %>
 	<br/>
 </fieldset>

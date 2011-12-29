@@ -6,10 +6,10 @@ class LinksController < ApplicationController
   # GET /links.xml
   def index
     @links = Link.find_paginate({ :user=> current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
-    puts "links.index:"
-    @links[:recordset].each do |link|
-      puts link.inspect
-    end
+    #puts "links.index:"
+    #@links[:recordset].each do |link|
+    #  puts link.inspect
+    #end
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @links }

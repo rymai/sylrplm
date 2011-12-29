@@ -26,10 +26,10 @@
 	<br/>
 	<%= f.label "..." %>
 	<%= f.file_field(:uploaded_file) %>
-	<% if @datafile.get_revisions_files.length > 0 %>
+	<% if @datafile.revisions_files.length > 0 %>
 	<br/>
 	<%= f.label t(:label_restore_file) %>
-	<%= select_tag("restore_file",options_for_select(@datafile.get_revisions_files,@datafile.get_current_revision_file)) %>
+	<%= select_tag("restore_file",options_for_select(@datafile.revisions_files,@datafile.current_revision_file)) %>
 	<% end %>
 	<% end %>
 	<% else %>
@@ -38,7 +38,7 @@
 	<%= f.file_field(:uploaded_file) %>
 	<br/>
 	<%= f.label t(:label_restore_file) %>
-	<%= select_tag("restore_file",options_for_select(@datafile.get_revisions_files,@datafile.get_current_revision_file)) %>
+	<%= select_tag("restore_file",options_for_select(@datafile.revisions_files,@datafile.current_revision_file)) %>
 	<% end %>
 	<br/>
 	<%= f.label t(:label_content_type) %>

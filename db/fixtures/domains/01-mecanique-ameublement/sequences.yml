@@ -102,3 +102,11 @@
     modify: false
     sequence: false
    
+31:
+  id:31
+  value: "local_vault"
+  min: 
+  max: 
+  utility: Volume.protocole
+  modify: false
+  sequence: false

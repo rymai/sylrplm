@@ -24,7 +24,7 @@ class VolumesController < ApplicationController
   # GET /volumes/new
   # GET /volumes/new.xml
   def new
-    @volume = Volume.create_new
+    @volume = Volume.new
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @volume }
@@ -39,25 +39,18 @@ class VolumesController < ApplicationController
   # POST /volumes
   # POST /volumes.xml
   def create
+    puts "volumes_controller.create:"+params.inspect
     @volume = Volume.new(params[:volume])
-    dir=@volume.create_dir(nil)
+    #puts "volumes_controller.create:errors="+@volume.errors.count.to_s+":"+@volume.errors.inspect
     respond_to do |format|
-      if(dir!=nil)
-        if @volume.save
-          #flash[:notice] = "Volume #{@volume.name} was successfully created on #{dir}"
-          flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+dir)
-          format.html { redirect_to(@volume) }
-          format.xml  { render :xml => @volume, :status => :created, :location => @volume }
-        else
-          flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+dir, :msg => nil)
-          format.html { render :action => "new" }
-          format.xml  { render :xml => @volume.errors, :status => :unprocessable_entity }
-        end
+      if @volume.save
+        flash[:notice] = t(:ctrl_object_created,:typeobj => t(:ctrl_volume), :ident=>@volume.name)
+        format.html { redirect_to(@volume) }
+        format.xml  { render :xml => @volume, :status => :created, :location => @volume }
       else
-      #flash[:notice] = "Volume #{@volume.name} was not created on #{@volume.directory}."
-        flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+@volume.directory, :msg => nil)
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @volume.errors, :status => :unprocessable_entity }
+        flash[:notice] = t(:ctrl_object_not_created,:typeobj => t(:ctrl_volume), :ident=>@volume.name, :msg => nil)
+        format.html { render :controller => :volume, :action => "new" }
+        format.xml  { render :xml => the_errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -65,16 +58,12 @@ class VolumesController < ApplicationController
   # PUT /volumes/1
   # PUT /volumes/1.xml
   def update
+    puts params[:id].to_s+":"+Volume.count(:conditions => "id=#{params[:id]}").to_s
     @volume = Volume.find(params[:id])
     @volume.update_accessor(current_user)
     respond_to do |format|
       if @volume.update_attributes(params[:volume])
-        dir=@volume.create_dir(params[:olddir])
-        if(dir!=nil)
-          flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+dir)
-        else
-          flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_volume),:ident=>@volume.name)
-        end
+        flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_volume),:ident=>@volume.name)
         format.html { redirect_to(@volume) }
         format.xml  { head :ok }
       else
@@ -89,14 +78,12 @@ class VolumesController < ApplicationController
   # DELETE /volumes/1.xml
   def destroy
     @volume = Volume.find(params[:id])
-    dirsave=@volume.directory
     st=@volume.destroy_volume
-    #puts "volumes_controller.destroy:st="+st.to_s
-    if(st==nil)
-      flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+dirsave)
+    puts "volumes_controller.destroy:errors="+@volume.errors.inspect
+    if st
+      flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_volume), :ident=>@volume.name+":"+@volume.directory)
     else
-    #flash[:notice] = "Volume #{@volume.name} was not deleted on #{dirsave}, files found: #{st.gsub("\n","<br/>")}."
-      flash[:notice] = t(:ctrl_object_not_deleted,:typeobj =>t(:ctrl_volume),:ident=>@volume.name+":"+dirsave)+":"+st.gsub("\n","<br/>")
+      flash[:notice] = t(:ctrl_object_not_deleted,:typeobj =>t(:ctrl_volume), :ident=>@volume.name+":"+@volume.directory)
     end
     respond_to do |format|
       format.html { redirect_to(volumes_url) }

@@ -10,6 +10,11 @@ fr:
   # relation
   valid_relation_cardin_occur_max: "Le nombre d' occurence maxi doit être plus grand que le mini ou -1 (infini)"
   valid_relation_cardin_use_max: "Le nombre d' utilisation maxi doit être plus grand que le mini ou -1 (infini)"
+  #volume
+  valid_volume_directory_needed: "Le répertoire est nécessaire pour le protocole %{protocol}"
+  check_volume_is_used: "Le volume %{ident} est affecté à un user ou contient déja des fichiers"
+  check_volume_no_dir: "Le répertoire %{dir} du volume %{name} n'existe pas ou plus"
+  check_volume_no_rmdir: "Le répertoire %{dir} du volume %{name} ne peut être supprimé"
   ##############
   #controllers
   ##############
@@ -17,6 +22,7 @@ fr:
   ctrl_no_privilege: "Désolé, Votre rôle '%{role}' ne vous permet d'accéder à la fonction '%{controller}/%{action}'"
   ctrl_object_created: "%{typeobj} '%{ident}' crée avec succès"
   ctrl_object_not_created: "%{typeobj} non crée :%{msg}"
+  ctrl_object_not_completed: "%{typeobj} non complété :%{msg}"
   ctrl_object_updated: "%{typeobj} '%{ident}' modifié avec succès"
   ctrl_object_not_saved: "%{typeobj} '%{ident}' non sauvegardé"
   ctrl_object_not_found: "%{typeobj} '%{ident}' non trouvé"
@@ -60,7 +66,7 @@ fr:
   # access
   ctrl_object_no_controlers: Controleurs non trouvés
   # application
-  login_login: "Veuillez vous connecter"
+  login_login: "Veuillez vous connecter ou vous identifier pour activer cette fonctionnalité"
   label_project: "Projet-"
   label_customer: "Client-"
   link_project: "%{link}-Projet-%{ident}"
@@ -173,6 +179,8 @@ fr:
   h_open_close_all_tree: Développer/Fermer tout
   legend_tree_down: Exploreur
   legend_tree_up: Référenceur
+  img_checkout: Réservé
+  img_checkin: Non réservé
   # help
   help_no_help_title: Aide absente
   help_no_help: Pas d'aide pour %{key}
@@ -303,7 +311,7 @@ fr:
   # check
   legend_check: Renseignez les propriétés du check
   check_edit: Edition check
-  check_list: Liste des check
+  check_list: Liste des checks
   check_show: Détail check
   check_new: Nouveau check
   label_object: Objet
@@ -488,7 +496,7 @@ fr:
   processes_show: Détail du processus
   processes_new: Nouveau processus
   workitems_edit: Edition tâche
-  workitems_list: Liste des tâches
+  workitems_list: Liste des actions
   workitems_show: Détail de la tâche
   new_definition: Nouvelle définition de processus
   new_process: Nouveau processus
@@ -545,7 +553,7 @@ fr:
   label_modify: Modifiable
   label_sequence: Séquence
   # session
-  legend_login: Merci de vous connecter
+  legend_login: Indiquer votre identifiant/mot de passe, si il n'existe pas, il sera crée
   submit_login: Login
   # statusobjects
   legend_statusobject: "Renseignez les propriétés du statut d' objets"
@@ -566,6 +574,7 @@ fr:
   # tools
   title_tools: Outils
   legend_preferences: Préférences
+  legend_account: Mon compte
   # typesobjects
   legend_typesobject: "Renseignez les propriétés du type d' objets"
   typesobjects_list: Liste des types d' objets
@@ -581,6 +590,7 @@ fr:
   # users
   legend_user: Renseignez les propriétés de l'utilisateur
   user_edit: Edition l'utilisateur
+  user_edit_password: Changement informations du compte
   user_list: Liste des utilisateurs
   user_show: Détail de l'utilisateur
   user_new: Nouvel utilisateur

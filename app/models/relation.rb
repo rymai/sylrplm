@@ -9,6 +9,7 @@ class Relation < ActiveRecord::Base
   attr_accessor :link_attributes
   #
   RELATION_NICK={:datafile=>"F", :document => "D", :part => "A", :project =>"P", :customer => "C", :user => "U"}
+  #
   belongs_to :type,
   :class_name => "Typesobject"
   belongs_to :father_type,
@@ -91,6 +92,13 @@ class Relation < ActiveRecord::Base
 
   def self.by_values(father_plmtype, child_plmtype, father_type, child_type, name)
     cond="father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and name='#{name}'"
+    puts __FILE__+"."+__method__.to_s+":"+cond
+    find(:first,
+      :conditions => [ cond ])
+  end
+  
+  def self.by_types(father_plmtype, child_plmtype, father_type_id, child_type_id)
+    cond="father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and father_type_id='#{father_type_id}' and child_type_id='#{child_type_id}' "
     puts __FILE__+"."+__method__.to_s+":"+cond
     find(:first,
       :conditions => [ cond ])

@@ -21,7 +21,7 @@
 		<td> <%= h datafile.revision %> </td>
 		<td> <%= h datafile.typesobject.name %> </td>
 		<td> <%= h datafile.volume.name %> </td>
-		<td><a href="<%= url_for(:controller=> 'datafiles',:action=>'show_file', :id => datafile.id) %>" title="<%= datafile.get_repository %>"><%= h datafile.filename %></a></td>
+		<td><a href="<%= url_for(:controller=> 'datafiles',:action=>'show_file', :id => datafile.id) %>" title="<%= datafile.repository %>"><%= h datafile.filename %></a></td>
 		<td> <% if datafile.content_type != nil %>
 		<%= datafile.content_type[0..20] %>
 		<%end %> </td>
@@ -32,7 +32,7 @@
 		<%= h datafile.document.ident %>
 		<%end %> </td>
 		<td> <%= l datafile.updated_at %> </td>
-		<% if (document.nil? || !document.is_checked) && !datafile.filename.nil? %> <td> <%= link_to t(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %> </td>
+		<% if (document.nil? || !document.checked?) && !datafile.filename.nil? %> <td> <%= link_to t(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %> </td>
 		<%end %>
 		<% unless document.nil? %> <td> <%= link_to h_img_show.to_s, datafile_path(datafile, :doc => document.id) %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_datafile_path(datafile, :doc => document.id) %> </td>

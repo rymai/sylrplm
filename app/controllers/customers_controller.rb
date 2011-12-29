@@ -124,6 +124,7 @@ class CustomersController < ApplicationController
 
   def add_forum
     @object = Customer.find(params[:id])
+    
     ctrl_add_forum(@object)
   end
 

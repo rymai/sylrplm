@@ -79,7 +79,7 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
   #worker=Ruote::Worker.new(Ruote::FsStorage.new(h[:work_directory]))
   #puts "init:worker="+worker.inspect
   
-  puts "init:appel RuotePlugin.engine_init:"+h.inspect
+  #puts "init:appel RuotePlugin.engine_init:"+h.inspect
   RuotePlugin.engine_init(h)
 
   begin

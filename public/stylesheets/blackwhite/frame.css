@@ -219,9 +219,10 @@ td.favori {
 }
 /* END:favori */
 p.notice {
+	font: 140% sans-serif;
 	border: 1px solid #666;
-	color: white;
-	background-color: #888;
+	color: red;
+	background-color: #DDD;
 	margin-bottom: 15px;
 }
 /* menus en bas des listes*/
@@ -251,11 +252,11 @@ a, th a, a.help_tr, .help a, a.menu, a.menu_bas, .menu_bas input, input.menu_bas
 	margin: 0px;
 	border: none;
 	color: #222222;
-	background: transparent url('/images/button_submit.png') repeat center center;
+	background: transparent url('/images/btn_submit.png') repeat center center;
 	height: 25px;
 }
 .menu_bas a:hover {
-	background: transparent url('/images/button_submit_hover.png') repeat center center;
+	background: transparent url('/images/btn_submit_hover.png') repeat center center;
 	color: #EEEEEE;
 }
 input, option, select, textarea {
@@ -269,11 +270,11 @@ input[type=submit] {
 	margin: 0px;
 	border: none;
 	color: #222222;
-	background: transparent url('/images/button_submit.png') no-repeat center center;
+	background: transparent url('/images/btn_submit.png') no-repeat center center;
 	height: 25px;
 }
 input[type=submit]:hover {
-	background: transparent url('/images/button_submit_hover.png') no-repeat center center;
+	background: transparent url('/images/btn_submit_hover.png') no-repeat center center;
 	color: #EEEEEE;
 }
 input:active, option:active, select:active, textarea:active {

@@ -249,11 +249,21 @@ ActionController::Routing::Routes.draw do |map|
   :action => 'add_forum')
 
   map.connect(
+  'users/:id/edit_password',
+  :controller => 'users',
+  :action => 'edit_password')
+  
+  map.connect(
+  'users/:id/update_password',
+  :controller => 'users',
+  :action => 'update_password')
+  
+  map.connect(
   'users/:id/add_favori',
   :controller => 'users',
   :action => 'add_favori',
   :conditions => { :method => :get })
-
+  
   map.connect(
   'links/:id/remove_link',
   :controller => 'links',

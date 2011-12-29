@@ -16,7 +16,7 @@ class Document < ActiveRecord::Base
   belongs_to :projowner,
     :class_name => "Project"
 
-  has_many :datafile
+  has_many :datafile, :dependent => :delete_all
   has_many :checks
 
   has_many :links_documents, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='document' and child_plmtype='document'"]

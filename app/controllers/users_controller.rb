@@ -53,6 +53,11 @@ class UsersController < ApplicationController
     @types    = Typesobject.get_types("user")
     #puts __FILE__+"."+__method__.to_s+":"+@roles.inspect
   end
+  
+  # GET /users/1/edit_password
+  def edit_password
+    @the_user = User.find(params[:id])
+  end
 
   def create
     #puts "users_controller.create:#{params["user"].inspect}"
@@ -100,6 +105,23 @@ class UsersController < ApplicationController
       end
     end
   end
+  
+  def update_password
+    puts "users_controller.update_password:params="+params.inspect
+    @the_user    = User.find(params[:id])
+    respond_to do |format|
+      if @the_user.update_attributes(params[:user])
+        flash[:notice] = t(:ctrl_user_updated, :user => @the_user.login)
+        format.html { redirect_to(@the_user) }
+        format.xml  { head :ok }
+      else
+        flash.now[:notice] = t(:ctrl_user_not_updated, :user => @the_user.login)
+        format.html { render :action => "edit_password" }
+        format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
 
   def destroy
     id = params[:id]

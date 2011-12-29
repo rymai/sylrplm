@@ -68,7 +68,7 @@ class DocumentsController < ApplicationController
     puts "===DocumentsController.create:"+params.inspect
     document = params[:document]
     #contournement pour faire le upload apres la creation pour avoir la revision dans
-    #get_repository !!!!!!!!!!!!!!
+    #repository !!!!!!!!!!!!!!
     @document = Document.create_new(document,@current_user)
     @types    = Document.get_types_document
     @status   = Statusobject.find_for("document")

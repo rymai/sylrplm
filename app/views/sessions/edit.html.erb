@@ -5,14 +5,14 @@
 		</legend>
 		<% form_for :session, :url => {:controller=>:sessions , :action=>:create}  do |form| %>
 		<label for="role"> <%= t(:label_role) %> </label>
-		<%= form.collection_select(:role_id, @roles, :id, :title, :options => {}, :selected => @current_user.role_id) %>
+		<%= form.collection_select(:role_id, @current_user.roles, :id, :title, :options => {}, :selected => @current_user.role_id) %>
 		<br/>
 		<label for="group"> <%= t(:label_group) %> </label>
-		<%= form.collection_select(:group_id, @groups, :id, :name, :options => {}, :selected => @current_user.group_id) %>
+		<%= form.collection_select(:group_id, @current_user.groups, :id, :name, :options => {}, :selected => @current_user.group_id) %>
 		<br/>
 		<% unless @projects.nil? %>
 		<label for="project"> <%= t(:label_project) %> </label>
-		<%= form.collection_select(:project_id, @projects, :id, :ident, :options => {}, :selected => @current_user.project_id) %>
+		<%= form.collection_select(:project_id, @current_user.projects, :id, :ident, :options => {}, :selected => @current_user.project_id) %>
 		<br/>
 		<% end %>
 	</fieldset>

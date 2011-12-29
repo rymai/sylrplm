@@ -24,10 +24,10 @@
 		<th></th>
 		<th></th>
 		<th></th>
+		<th></th>
 	</tr>
 	<% previous=nil
 	@documents[:recordset].each do |document| %>
-	
 	<tr>
 		<td> <%= icone(document) %></td>
 		<td> <%= h_if_differ(document , previous,  "ident") %> </td>
@@ -42,10 +42,14 @@
 		<td> <%= h_if_differ(document , previous,  "owner.login") %></td>
 		<td> <%= h_if_differ(document , previous,  "group.name") %></td>
 		<td> <%= h_if_differ(document , previous,  "projowner.ident") %>
-			(<%= document.projowner.typeaccess.name%>)
-		</td>
+		(<%= document.projowner.typeaccess.name%>) </td>
 		<td> <%= h document.datafile.length %></td>
 		<td> <%= h_if_differ(document , previous,  "date") %> </td>
+		<td> <% if document.checked? %>
+		<%= h_img_checkout.to_s %>
+		<%else%>
+		<%= h_img_checkin.to_s %>
+		<% end%> </td>
 		<td> <% if document.ok_for_show?(current_user) %>
 		<%= link_to h_img_show.to_s, document %>
 		<% end %> </td>
@@ -64,7 +68,6 @@
 	</tr>
 	<% previous=document %>
 	<% end %>
-	
 </table>
 <%= will_paginate(@documents[:recordset]) %>
 <table class='menu_bas'>

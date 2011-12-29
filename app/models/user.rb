@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   has_many :groups, :through => :user_groups
   
   has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='user'"]
-  #TODO ne envoie rien => voir la fonction projects 
+  #TODO ne renvoie rien => voir la fonction projects 
   #has_many :projects, :through => :links_projects
   
   belongs_to :project

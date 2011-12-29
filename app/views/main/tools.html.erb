@@ -1,5 +1,13 @@
 <H1><%= t(:title_tools)%></H1>
 <% form_tag :controller=>:main, :action=>:index, :method=>:get do %>
+<% if logged_in? %>
+<fieldset>
+	<legend>
+		<%= t(:legend_account) %>
+	</legend>
+	<%= link_to t("user_edit_password"), :id => current_user.id, :controller=>:users, :action=>:edit_password %>
+</fieldset>
+<%end%>
 <fieldset>
 	<legend>
 		<%= t(:legend_preferences) %>

@@ -26,9 +26,9 @@ class ApplicationController < ActionController::Base
   #
   def update_accessor(obj)
     mdl_name = obj.model_name
-    params[mdl_name][:owner_id]=current_user.id if obj.instance_variable_defined?(:owner_id)
-    params[mdl_name][:group_id]=current_user.group_id if obj.instance_variable_defined?(:group_id)
-    params[mdl_name][:projowner_id]=current_user.project_id if obj.instance_variable_defined?(:projowner_id)
+    params[mdl_name][:owner_id]=current_user.id if obj.instance_variable_defined?(:@owner_id)
+    params[mdl_name][:group_id]=current_user.group_id if obj.instance_variable_defined?(:@group_id)
+    params[mdl_name][:projowner_id]=current_user.project_id if obj.instance_variable_defined?(:@projowner_id)
     puts "update_accessor:"+params.inspect
   end
   
