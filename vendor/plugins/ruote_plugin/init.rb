@@ -64,8 +64,8 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
   end
 
   #TODO syl
-  h[:work_directory] ||= "#{RAILS_ROOT}/work_#{RAILS_ENV}"
-  #h[:work_directory] ||= "#{RAILS_ROOT}/tmp"
+  #interdit sur heroku h[:work_directory] ||= "#{RAILS_ROOT}/work_#{RAILS_ENV}"
+  h[:work_directory] ||= "#{RAILS_ROOT}/tmp"
 
   h[:ruby_eval_allowed] ||= true
   # the 'reval' expression and the ${r:some_ruby_code} notation are allowed
