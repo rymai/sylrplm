@@ -7,12 +7,17 @@
 	<%= f.text_field :name , :readonly=>(fonct=="edit")%>
 	<br/>
 	<%= f.label t(:label_directory) %>
-	<%= f.text_field :directory , :readonly=>(fonct=="edit") %>
+	<%= f.text_field :directory , :readonly=>(fonct=="edit")%>
 	<br/>
 	<%= f.label t(:label_protocol) %>
-	<%= f.select( :protocole, Volume.protocole_values, :html_options=>{:readonly=>(fonct=="edit")}) %>
+	<% if fonct=="edit" %>
+	<%= f.text_field :protocole , :readonly=>(fonct=="edit") %>
+	<% else %> 
+	<%= f.select( :protocole, Volume.protocole_values) %>
+	<% end %>
 	<br/>
 	<%= f.label t(:label_description) %>
 	<%= f.text_area :description %>
 	<br/>
 </fieldset>
+

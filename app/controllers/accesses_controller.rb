@@ -5,8 +5,6 @@ class AccessesController < ApplicationController
   before_filter :find_by_id, :only => [:show, :edit, :update, :destroy]
   before_filter :find_controllers, :only => [:new, :edit, :create, :update]
   
-  
-  
   # GET /accesses
   # GET /accesses.xml
   def index

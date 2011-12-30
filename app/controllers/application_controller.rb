@@ -1,5 +1,7 @@
 require 'controllers/plm_object_controller_module'
 
+
+
 class ErrorReply < Exception
   attr_reader :status
   def initialize (msg, status=400)
@@ -8,20 +10,21 @@ class ErrorReply < Exception
   end
 end
 
+
+
 class ApplicationController < ActionController::Base
   include Controllers::PlmObjectControllerModule
-  
+
   helper :all  # include all helpers, all the time
   helper_method :current_user, :logged_in?, :admin_logged_in?
-  
+
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-  
+
   filter_parameter_logging :password
-  
+
   before_filter :authorize, :except => [:index, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
-
   ## un peu brutal before_filter :object_exists, :only => [:show, :edit, :destroy]
   #
   def update_accessor(obj)
@@ -31,14 +34,33 @@ class ApplicationController < ActionController::Base
     params[mdl_name][:projowner_id]=current_user.project_id if obj.instance_variable_defined?(:@projowner_id)
     puts "update_accessor:"+params.inspect
   end
-  
-  def check_user
-    if current_user.role.nil? || current_user.group.nil? || current_user.project.nil?
-      flash[:notice] = t(:ctrl_user_not_complete )
-      redirect_to(:action => "index")
+
+  def check_user(redirect=true)
+    flash[:notice] = nil
+    if !current_user.may_access?
+      flash[:notice] =""
+      flash[:notice] += t(:ctrl_user_without_roles )+" " if current_user.role.nil?
+      flash[:notice] += t(:ctrl_user_without_groups )+" " if current_user.group.nil?
+      flash[:notice] += t(:ctrl_user_without_projects )+" " if current_user.project.nil?
+      #puts "check_user:"+redirect.to_s+":"+flash[:notice]
+      redirect_to(:action => "index") if redirect && !flash[:notice].empty?
     end
+    flash[:notice]
   end
-  
+
+  def check_user_connect(user)
+    flash[:notice] = nil
+    if !user.may_connect?
+      flash[:notice] =""
+      flash[:notice] += t(:ctrl_user_without_roles )+" " if user.roles.empty?
+      flash[:notice] += t(:ctrl_user_without_groups )+" " if user.groups.empty?
+      flash[:notice] += t(:ctrl_user_without_projects )+" " if user.projects.empty?
+      flash[:notice] = nil if flash[:notice].empty?
+    end
+    #puts "check_user_connect:"+flash[:notice].to_s
+    flash[:notice]
+  end
+
   def event
     event_manager
   end
@@ -106,7 +128,6 @@ class ApplicationController < ActionController::Base
 
     LOG.info("__FILE__")
   end
-
 
   # nombre d'objets listes par page si pagination
   def cfg_items_per_page
@@ -184,7 +205,7 @@ class ApplicationController < ActionController::Base
 
   def authorize
     user_id = session[:user_id] || User.find_by_id(session[:user_id])
-    if user_id.nil? 
+    if user_id.nil?
       puts "application_controller.authorize.request_uri="+request.request_uri
       puts "application_controller.authorize.new_sessions_url="+new_sessions_url
       session[:original_uri] = request.request_uri
@@ -192,7 +213,7 @@ class ApplicationController < ActionController::Base
       redirect_to new_sessions_url
     else
       user=User.find(user_id)
-      unless user.is_admin? 
+      unless user.is_admin?
         if user.roles.nil? || user.volume.nil? || user.groups.nil? || user.projects.nil?
           session[:original_uri] = request.request_uri
           flash[:notice] = t(:login_login)

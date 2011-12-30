@@ -16,16 +16,13 @@ class SessionsController < ApplicationController
       cur_user = User.authenticate(params["login"], params["password"])
       respond_to do |format|
         if cur_user
-           if cur_user.roles.count > 0 && cur_user.groups.count > 0 && cur_user.projects.count > 0
+          flash[:notice] = check_user_connect(cur_user)
+          if flash[:notice].nil?
             @current_user = cur_user
             session[:user_id] = cur_user.id
             flash[:notice]    = t(:ctrl_role_needed)
             format.html { render :action => "edit" }
           else
-            flash[:notice] =""
-            flash[:notice] += t(:ctrl_user_without_roles) unless cur_user.roles.count>0
-            flash[:notice] += ", "+t(:ctrl_user_without_groups) unless cur_user.groups.count>0
-            flash[:notice] += ", "+t(:ctrl_user_without_projects) unless cur_user.projects.count>0
             @current_user=nil
             session[:user_id] = nil
             format.html { render :new }
@@ -59,16 +56,13 @@ class SessionsController < ApplicationController
               relation = Relation.by_types(proj.model_name, cur_user.model_name, proj.typesobject.id, cur_user.typesobject.id)
               link = Link.create_new(proj, cur_user, relation, cur_user)
               link[:link].save
-              if cur_user.roles.count > 0 && cur_user.groups.count > 0 && cur_user.projects.count > 0
+              flash[:notice] = check_user_connect(cur_user)
+              if flash[:notice].nil?                
                 @current_user = cur_user
                 session[:user_id] = cur_user.id
                 flash[:notice]    = t(:ctrl_role_needed)
                 format.html { render :action => "edit" }
-              else    
-                flash[:notice] =""
-                flash[:notice] += t(:ctrl_user_without_roles) unless cur_user.roles.count>0
-                flash[:notice] += ", "+t(:ctrl_user_without_groups) unless cur_user.groups.count>0
-                flash[:notice] += ", "+t(:ctrl_user_without_projects) unless cur_user.projects.count>0
+              else
                 @current_user=nil
                 session[:user_id] = nil
                 format.html { render :new }

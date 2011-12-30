@@ -2,6 +2,8 @@ require 'rubygems'
 require 'fog'
 require 'classes/sylrplm_fog'
 
+
+
 class Volume < ActiveRecord::Base
   include Models::SylrplmCommon
   #
@@ -19,11 +21,21 @@ class Volume < ActiveRecord::Base
 
   def initialize(params_volume=nil)
     super
-    self.set_default_values(true) if params_volume.nil?
+    if params_volume.nil?
+    self.set_default_values(true)
+    end
     self
   end
 
   def before_save
+    self.set_directory(directory_was)
+  end
+  
+  def set_directory(directory_was=nil)
+    #recherche des repertoires fog
+    if self.protocole == "fog"
+      self.directory="sylrplm-"+Rails.env.slice(0,4)+"-"+Time.now.to_i.to_s
+    end
     dir = self.create_dir(directory_was)
     if dir.nil?
       self.errors.add_to_base I18n.t(:ctrl_object_not_created,:typeobj => I18n.t(:ctrl_volume), :ident=>self.name, :msg => nil)
@@ -130,7 +142,7 @@ class Volume < ActiveRecord::Base
   end
 
   def dir_name
-    ret=File.join(self.directory+"-"+ENV["RAILS_ENV"].slice(0,4), self.name)
+    ret=File.join(self.directory, self.name)
     #puts "Volume.dir_name:"+ret
     ret
   end

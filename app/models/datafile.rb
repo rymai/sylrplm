@@ -287,7 +287,7 @@ class Datafile < ActiveRecord::Base
       dir=SylrplmFog.instance.directory(dir_repository)
       unless dir.nil?
         dir.files.each do |file|
-          puts "datafile.remove_files:file="+repos
+          puts "datafile.remove_files:file="+file
           file.destroy
         end
       dir.destroy

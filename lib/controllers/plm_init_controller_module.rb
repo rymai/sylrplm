@@ -52,12 +52,14 @@ private
   #appelle par main_controller.init_objects
   #maj le volume de depart id=1 defini dans le fichier db/fixtures/volume.yml et cree par create_domain 
   def update_admin(dir)
-    puts "plm_init_controller.update_first_volume:dir="+dir
+    puts "plm_init_controller.update_first_volume:dir="+dir.to_s
     vol=Volume.find_first
     puts "plm_init_controller.update_first_volume:volume="+vol.inspect
-    ##vol.update_attributes(:directory=>dir) unless vol.nil?
+    #vol.update_attributes(:directory=>dir) unless vol.nil?
+    vol.set_directory unless vol.nil?
+    vol.save
     User.find_all.each do |auser|
-      auser.volume=vol
+      auser.volume=vol unless vol.nil?
       auser.password=auser.login
       auser.save
       puts "plm_init_controller.update_first_volume:user="+auser.inspect

@@ -76,10 +76,10 @@ class Access < ActiveRecord::Base
   end
 
   def self.get_conditions(filter)
-    filter = filters.gsub("*","%")
+    filter = filter.gsub("*","%")
     ret={}
     unless filter.nil?
-      ret[:qry] = "controller LIKE :v_filter or action LIKE :v_filter or roles LIKE :v_filter"
+      ret[:qry] = " controller LIKE :v_filter or action LIKE :v_filter or roles LIKE :v_filter "
       ret[:values]={:v_filter => filter}
     end
     ret

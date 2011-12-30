@@ -183,6 +183,19 @@ class User < ActiveRecord::Base
   def may_see? (workitem)
     is_admin? || store_names.include?(workitem.store_name)
   end
+  
+  # peut creer des objets avec accessor
+  def may_access?
+    !self.role.nil? && !self.group.nil? && !self.project.nil?
+  end
+  
+  # peut se connecter
+  def may_connect?
+    #puts "user.may_connect:"+ self.roles.empty?.to_s + "." + self.groups.empty?.to_s + "." + self.projects.empty?.to_s
+    ret=!self.roles.empty? && !self.groups.empty? && !self.projects.empty?
+    #puts "user.may_connect:"+ret.to_s
+    ret
+  end
 
   def self.notifications
     MAIL_NOTIFICATION_OPTIONS

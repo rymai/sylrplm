@@ -41,6 +41,7 @@ class PartsController < ApplicationController
   # GET /parts/new
   # GET /parts/new.xml
   def new
+    #puts "===PartsController.new:"+params.inspect+" user="+@current_user.inspect
     @part = Part.create_new(nil, @current_user)
     @types= Part.get_types_part
     @status= Statusobject.find_for("part", true)

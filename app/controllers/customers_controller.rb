@@ -32,6 +32,7 @@ class CustomersController < ApplicationController
   # GET /customers/new
   # GET /customers/new.xml
   def new
+    #puts "===CustomersController.new:"+params.inspect+" user="+@current_user.inspect
     @customer = Customer.create_new(nil, @current_user)
     @types    = Typesobject.get_types("customer")
     @status   = Statusobject.find_for("customer", true)
