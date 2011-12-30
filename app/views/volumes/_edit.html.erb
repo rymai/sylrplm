@@ -4,15 +4,15 @@
 	</legend>
 	<input type="hidden" name="olddir" value="<%= @volume.directory %>"/>
 	<%= f.label t(:label_name) %>
-	<%= f.text_field :name %>
+	<%= f.text_field :name , :readonly=>(fonct=="edit")%>
+	<br/>
+	<%= f.label t(:label_directory) %>
+	<%= f.text_field :directory , :readonly=>(fonct=="edit") %>
+	<br/>
+	<%= f.label t(:label_protocol) %>
+	<%= f.select( :protocole, Volume.protocole_values, :html_options=>{:readonly=>(fonct=="edit")}) %>
 	<br/>
 	<%= f.label t(:label_description) %>
 	<%= f.text_area :description %>
-	<br/>
-	<%= f.label t(:label_directory) %>
-	<%= f.text_field :directory %>
-	<br/>
-	<%= f.label t(:label_protocol) %>
-	<%= f.select( :protocole, Volume.protocole_values) %>
 	<br/>
 </fieldset>

@@ -95,45 +95,6 @@ class Volume < ActiveRecord::Base
     end
   end
 
-  def create_dir_old(olddir)
-    if (!File.exists?(self.directory))
-      begin
-        Dir.mkdir(self.directory)
-      rescue
-        return nil
-      end
-    end
-    if(olddir!=nil)
-      dirfrom=File.join(olddir,self.name)
-      if(File.exists?(dirfrom))
-        dirto=self.directory
-        catto=File.join(olddir,dirto)
-        if(catto!=dirto)
-          begin
-            FileUtils.mv(dirfrom, dirto)
-            dir=File.join(self.directory,self.name)
-            dir
-          rescue
-            return nil
-          end
-        end
-      else
-        return nil
-      end
-    else
-    #1ere creation
-      dir=File.join(self.directory,self.name)
-      if !File.exists?(dir)
-        begin
-          Dir.mkdir(dir)
-          return dir
-        rescue
-          return nil
-        end
-      end
-    end
-  end
-
   def destroy_volume
     if !is_used
       if self.protocole == "fog"
