@@ -301,6 +301,10 @@ Creating freezing-stone-916... done, stack is bamboo-mri-1.9.2
 http://freezing-stone-916.heroku.com/ | git@heroku.com:freezing-stone-916.git
 Git remote heroku added
 
+renommer l'appli freezing-stone-916.heroku.com en sylrplm sur le site heroku https://api.heroku.com/myapps/sylrplm
+modifier l'url dans le fichier sylrplm/heroku/.git/config 
+url=git@heroku.com:sylrplm.git
+
 ---
 --- Push your application to Heroku
 ---
@@ -318,7 +322,6 @@ Total 3224 (delta 1993), reused 2983 (delta 1863)
 
 To git@heroku.com:freezing-stone-916.git
  * [new branch]      master -> master
-[syl@localhost sylrplm (master)]$ 
 
 ---
 --- Bootstrap your database
@@ -520,7 +523,7 @@ heroku rake db:drop;heroku rake db:create;heroku rake db:schema:load
 heroku open;heroku logs -n 500
 
 ======================================================
-charger des fichiers dans heroku
+charger des fichiers dans amazon 
 ======================================================
 http://devcenter.heroku.com/articles/s3
 http://webtempest.com/how-to-allow-image-uploads-in-rails-on-heroku/
