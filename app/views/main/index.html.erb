@@ -1,14 +1,22 @@
-<h1><%= t(:hello) %></H1>
+<h1><%= t(:hello) %></h1>
 <h2><%= t(:tit_language) %><%= I18n.locale.to_s %></h2>
-
 <% unless User.count == 0 %> <h2><%= t(:datas_in_database) %></h2>
 <table>
-	<% @datas.each do |key,value| %>
 	<tr>
-		<td> <%= @datas[key] %></td>
-		<td> <%= t("ctrl_#{key}") %></td>
+		<% @datas.each do |domain, values| %> <th> <%= t("ctrl_#{domain}") %></th>
+		<% end %>
 	</tr>
-	<% end %>
+	<tr>
+		<% @datas.each do |domain, values| %> <td>
+		<table>
+			<% @datas[domain].each do |key, value| %>
+			<tr>
+				<td> <%= @datas[domain][key] %></td>
+				<td> <%= t("ctrl_#{key}") %></td>
+			</tr>
+			<% end %>
+		</table> <% end %> </td>
+	</tr>
 </table>
 <hr>
 <%= h_help_all %>
@@ -38,7 +46,8 @@
 	</legend>
 	<label for="domain"> <%= t(:label_domain) %> </label>
 	<%= select_tag("domain", @domains) %>
-	<br/><br/>
+	<br/>
+	<br/>
 	<!--
 	<label for="directory"> <%= t(:label_directory) %> </label>
 	<%= text_field_tag :directory, @directory %>

@@ -133,6 +133,12 @@ fr:
   ctrl_user_disconnected: "Utilisateur %{user} déconnecté !"
   ctrl_user_role: Rôle=%{role}
   # main
+  ctrl_plm_objects: Objets PLM
+  ctrl_collab_objects: Objets de collaboration
+  ctrl_internal_objects: Objets internes
+  ctrl_admin: Objets d'administration
+  ctrl_workflow_objects: Définitions de processus
+  ctrl_relation: Types de relation
   # notification
   ctrl_notify: "%{nb_total} Notifications effectuées à %{nb_users} utilisateurs : %{notifications} "
   # parts

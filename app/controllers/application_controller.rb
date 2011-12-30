@@ -148,19 +148,26 @@ class ApplicationController < ActionController::Base
 
   def get_datas_count
     {
-      :datafile => Datafile.count,
-      :document => Document.count,
-      :part => Part.count,
-      :project => Project.count,
-      :customer => Customer.count,
-      :forum => Forum.count,
-      :question => Question.count,
-      :link => Link.count,
-      :user => User.count,
-      :role => Role.count,
-      :group => Group.count,
-      :volume => Volume.count,
-      :definition => Definition.count
+      :plm_objects => {
+        :datafile => Datafile.count,
+        :document => Document.count,
+        :part => Part.count,
+        :project => Project.count,
+        :customer => Customer.count},
+      :collab_objects => {
+        :forum => Forum.count,
+        :question => Question.count},
+      :internal_objects => {
+        :link => Link.count,
+        :relation => Relation.count},
+      :admin => {
+        :user => User.count,
+        :role => Role.count,
+        :group => Group.count,
+        :volume => Volume.count},
+      :workflow_objects => {
+        :definition => Definition.count
+      }
     }
   end
 
