@@ -350,6 +350,7 @@ fr:
   datafile_new: Nouveau fichier
   label_filename: Fichier
   label_volume: Volume
+  label_repository: Nom complet
   label_content_type: Type de contenu
   label_document: Document
   label_restore_file: Fichier à restaurer

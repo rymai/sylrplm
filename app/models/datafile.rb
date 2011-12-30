@@ -104,12 +104,12 @@ class Datafile < ActiveRecord::Base
 
   def dir_repository
     if self.volume.protocole == "fog"
-      ret=self.volume.dir_name.gsub("/",".")+"-"+self.class.name+"-"+self.ident
+      ret=self.volume.dir_name.gsub("/",".").gsub("_","-")+"-"+self.class.name+"-"+self.ident
       if ret.start_with?(".")
       ret=ret[1,ret.length-1]
       end
     else
-      ret=File.join self.volume.dir_name, self.class.name, self.ident
+      ret=File.join self.volume.dir_name.gsub("_","-"), self.class.name, self.ident
     end
     ret
   end

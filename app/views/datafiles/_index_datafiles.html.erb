@@ -22,22 +22,32 @@
 		<td> <%= h datafile.typesobject.name %> </td>
 		<td> <%= h datafile.volume.name %> </td>
 		<td><a href="<%= url_for(:controller=> 'datafiles',:action=>'show_file', :id => datafile.id) %>" title="<%= datafile.repository %>"><%= h datafile.filename %></a></td>
-		<td> <% if datafile.content_type != nil %>
+		<td> 
+		<% if datafile.content_type != nil %>
 		<%= datafile.content_type[0..20] %>
-		<%end %> </td>
+		<%end %> 
+		</td>
 		<td> <%= h datafile.owner.login %> </td>
 		<td> <%= h datafile.group.name %> </td>
 		<td> <%= h datafile.projowner.ident %> </td>
-		<td> <% unless datafile.document.nil? %>
+		<td> 
+		<% unless datafile.document.nil? %>
 		<%= h datafile.document.ident %>
-		<%end %> </td>
-		<td> <%= l datafile.updated_at %> </td>
-		<% if (document.nil? || !document.checked?) && !datafile.filename.nil? %> <td> <%= link_to t(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %> </td>
+		<%end %> 
+		</td>
+		<td> 
+		<%= l datafile.updated_at %> </td>
+		<td>
+		<% if (document.nil? || !document.checked?) && !datafile.filename.nil? %> 
+		<%= link_to t(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %> 
 		<%end %>
-		<% unless document.nil? %> <td> <%= link_to h_img_show.to_s, datafile_path(datafile, :doc => document.id) %> </td>
+		</td>
+		<% unless document.nil? %> 
+		<td> <%= link_to h_img_show.to_s, datafile_path(datafile, :doc => document.id) %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_datafile_path(datafile, :doc => document.id) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, datafile_path(datafile, :doc => document.id), :method => :delete, :confirm => t("msg_confirm") %> </td>
-		<%else %> <td> <%= link_to h_img_show.to_s, datafile, :controller=> "datafiles",  :action => :show %> </td>
+		<%else %> 
+		<td> <%= link_to h_img_show.to_s, datafile, :controller=> "datafiles",  :action => :show %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_datafile_path(datafile), :controller=> "datafiles" %> </td>
 		<td> <%= link_to h_img_destroy.to_s, datafile, :controller=> "datafiles", :confirm => t("msg_confirm"), :method => :delete %> </td>
 		<%end %>

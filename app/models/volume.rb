@@ -169,7 +169,9 @@ class Volume < ActiveRecord::Base
   end
 
   def dir_name
-    File.join(self.directory, self.name)
+    ret=File.join(self.directory+"-"+ENV["RAILS_ENV"].slice(0,4), self.name)
+    #puts "Volume.dir_name:"+ret
+    ret
   end
 
   def self.get_conditions(filter)

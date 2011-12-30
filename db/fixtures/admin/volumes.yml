@@ -1,6 +1,6 @@
-volume1:
+volfog1:
   id: 1
-  name: volume1
+  name: volfog1
   description: volume de depart
   directory:
-  protocole: ror
+  protocole: fog

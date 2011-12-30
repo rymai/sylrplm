@@ -350,6 +350,7 @@ en:
   datafile_new: New file
   label_filename: File
   label_volume: Volume
+  label_repository: Repository
   label_content_type: Mime type
   label_document: Document
   label_restore_file: File to restore
