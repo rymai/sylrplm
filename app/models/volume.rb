@@ -5,8 +5,7 @@ require 'classes/sylrplm_fog'
 class Volume < ActiveRecord::Base
   include Models::SylrplmCommon
   #
-  validates_presence_of :name, :volume 
-  validates_presence_of :protocole
+  validates_presence_of :name, :protocole
   validates_format_of :name, :with =>/^([a-z]|[A-Z]|[0-9]||[.-])+$/
   validates_uniqueness_of :name
   #
