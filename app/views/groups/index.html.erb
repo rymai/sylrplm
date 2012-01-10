@@ -13,6 +13,8 @@
 		<tr>
 			<th <%= sort_td_class_helper "name" %>>
 		<%= sort_link_helper t("label_name"), "name" %></th>
+			<th <%= sort_td_class_helper "internal" %>>
+		<%= sort_link_helper t("label_internal"), "internal" %></th>
 		<th> <%= t("label_group_users") %></th>
 		<th> <%= t("label_group_father") %></th>
 		</tr>
@@ -20,6 +22,7 @@
 	<% for group in @groups[:recordset] %>
 	<tr class='group'>
 		<td><%= group.name %></td>
+		<td><%= group.internal %></td>
 		<td><%= comma_list(group.users, :login) %></td>
 		<td><%= group.father_name %></td>
 		<td><%= link_to h_img_show.to_s, group_path(group) %> </td>

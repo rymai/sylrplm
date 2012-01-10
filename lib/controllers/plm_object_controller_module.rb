@@ -115,7 +115,7 @@ module Controllers::PlmObjectControllerModule
     puts "plm_object_controller.ctrl_promote:"+object.inspect+" "+withMail.to_s
     email_ok=true
     if withMail==true
-      email_ok=PlmMailer.could_send(object.owner)
+      email_ok=object.owner.may_send_email?
     end
     respond_to do |format|
       if email_ok==true
@@ -130,11 +130,11 @@ module Controllers::PlmObjectControllerModule
             if object.save
               if object.could_validate?
                 validersMail=PlmMailer.listUserMail(validers)
-                email=PlmMailer.create_toValidate(object, current_user.email, @urlbase, validersMail)
+                email=PlmMailer.create_toValidate(object, current_user, @urlbase, validersMail)
               end
               if object.is_freeze
                 validersMail=PlmMailer.listUserMail(validers, current_user)
-                email=PlmMailer.create_validated(object, current_user.email, @urlbase, validersMail)
+                email=PlmMailer.create_validated(object, current_user, @urlbase, validersMail)
               end
               unless email.blank?
                 email.set_content_type("text/html")
@@ -183,11 +183,11 @@ module Controllers::PlmObjectControllerModule
             validers=User.find_validers
             if object.could_validate?
               validersMail=PlmMailer.listUserMail(validers)
-              email=PlmMailer.create_docToValidate(object, current_user.email, @urlbase, validersMail)
+              email=PlmMailer.create_docToValidate(object, current_user, @urlbase, validersMail)
             end
             if object.frozen?
               validersMail=PlmMailer.listUserMail(validers, current_user)
-              email=PlmMailer.create_docValidated(object, current_user.email, @urlbase, askUserMail, validersMail)
+              email=PlmMailer.create_docValidated(object, current_user, @urlbase, askUserMail, validersMail)
             end
             if(email!=nil)
               email.set_content_type("text/html")

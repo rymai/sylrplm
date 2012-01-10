@@ -1,3 +1,6 @@
+<% require 'yaml' %>
+<%= ::YAML::include("#{Rails.root}/db/fixtures/typesobjects.yml") %>
+
 4:
   id: 4 
   object: document 
@@ -147,18 +150,6 @@
     name: cdc_requirement
     description: 
   
-91: 
-    id: 91
-    object: user
-    name: virtuel
-    description: 
-  
-92: 
-    id: 92
-    object: user
-    name: personne physique
-    description: 
-  
 93: 
     id: 93
     object: definition
@@ -177,6 +168,7 @@
     name: workitem
     description: 
   
+
   
 
   

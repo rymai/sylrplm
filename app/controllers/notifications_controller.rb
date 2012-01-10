@@ -2,9 +2,7 @@ class NotificationsController < ApplicationController
   # GET /notifications
   # GET /notifications.xml
   def index
-
     @notifications = Notification.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @notifications[:recordset] }
@@ -15,7 +13,6 @@ class NotificationsController < ApplicationController
   # GET /notifications/1.xml
   def show
     @notification = Notification.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @notification }
@@ -90,8 +87,10 @@ class NotificationsController < ApplicationController
     notifs=""
     nb_users=0
     nb_total=0
+    # message sur le nombre de notifs par user
     st.each do |cnt|
-      notifs+="<br/>"+cnt[:user].login+":"+cnt[:count].to_s+":"+t(cnt[:msg])
+      notifs+="<br/>" if nb_users > 0
+      notifs+=cnt[:user].login+":"+cnt[:count].to_s+":"+t(cnt[:msg])
       nb_total+=cnt[:count]
       nb_users+=1
     end

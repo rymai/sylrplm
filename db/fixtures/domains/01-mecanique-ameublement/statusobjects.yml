@@ -1,12 +1,4 @@
-1: 
- id: 1 
- object: project 
- name: default 
- rank: 0 
- description: 
- promote: true 
- demote: true   
-	
+
 4:
  id: 4 
  object: document 

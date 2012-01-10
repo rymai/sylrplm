@@ -3,31 +3,35 @@
 * {
 	margin: 0;
 	padding: 0;
-	font: 10px sans-serif;
+	font: 11px sans-serif;
 }
 body {
-	t
-	font-family: "proxima-nova-1", "proxima-nova-2", "Helvetica", "Arial", "sans-serif";
+	/*font-family: "proxima-nova-1", "proxima-nova-2", "Helvetica", "Arial", "sans-serif";*/
 	background: #000;
 	position: relative;
 	margin: 2px;
 	-webkit-text-size-adjust: auto;
 }
-span, p, li, ul, legend {
+span, p, li, ul, dl, dt, dd, legend {
 	text-decoration: none;
 	margin-left: 0px;
 	padding-left: 0px;
 	color: white;
 }
-ul {
-	margin-left: 5px;
+ul, dl {
+	
+	margin-left: 1px;
 	padding-left: 0px;
 	text-indent: 0px;
 }
-li {
+li, dt {
+	font: bold 120% sans-serif;
 	margin-left: 0px;
 	padding-left: 0px;
-	text-indent: 0px;
+	text-indent: 5px;
+}
+dl {
+	text-indent: 10px;
 }
 h1 {
 	font: bold 120% sans-serif;
@@ -84,6 +88,7 @@ th {
 	background-color: #333;
 	border: 1px solid #DDD;
 	color: #FFF;
+	text-align: left;
 }
 td {
 	padding: 1px;
@@ -91,6 +96,7 @@ td {
 	background-color: #BBBBBB;
 	border: 1px solid #CCCCCC;
 	color: #000;
+	text-align: left;
 }
 /*header*/
 #container {
@@ -186,8 +192,8 @@ li.help_ul {
 img.icone {
 	border: none;
 	background: transparent;
-	width: 16px;
-	height: 16px;
+	width: 12px;
+	height: 12px;
 }
 .help {
 	font-weight: bold;

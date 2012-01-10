@@ -1,48 +1,33 @@
-attributes1-1: 
+admin-admins: 
     role_id: 1
     user_id: 1
   
-attributes2-6: 
+attributes2-101: 
     role_id: 2
-    user_id: 6
+    user_id: 101
   
-attributes1-2: 
-    role_id: 1
-    user_id: 2
-  
-attributes3-2: 
-    role_id: 3
-    user_id: 2
-  
-attributes4-2: 
-    role_id: 4
-    user_id: 2
-  
-attributes5-2: 
-    role_id: 5
-    user_id: 2
-  
-attributes4-7: 
-    role_id: 4
-    user_id: 7
-  
-attributes3-9: 
-    role_id: 3
-    user_id: 9
-  
-attributesé-5: 
+attributes2-102: 
     role_id: 2
-    user_id: 5
+    user_id: 102
   
-attributes9-10: 
-    role_id: 9
-    user_id: 10
+attributes2-103: 
+    role_id: 2
+    user_id: 103
   
-attributes-5-11: 
-    role_id: 5
-    user_id: 11
+attributes2-104: 
+    role_id: 2
+    user_id: 104
   
-attributes3-11: 
-    role_id: 3
-    user_id: 11
+attributes2-105: 
+    role_id: 2
+    user_id: 105
   
+attributes2-106: 
+    role_id: 2
+    user_id: 106
+  
+attributes2-107: 
+    role_id: 2
+    user_id: 107
+  
+

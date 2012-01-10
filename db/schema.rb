@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.string   "action"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "internal"
   end
 
   add_index "accesses", ["controller"], :name => "index_accesses_on_controller"
@@ -60,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.integer  "in_group_id"
     t.integer  "out_group_id"
     t.integer  "projowner_id"
+    t.boolean  "internal"
   end
 
   add_index "checks", ["object", "object_id"], :name => "index_checks_on_object_and_object_id"
@@ -76,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "updated_at"
     t.integer  "group_id"
     t.integer  "projowner_id"
+    t.boolean  "internal"
   end
 
   add_index "customers", ["ident"], :name => "index_customers_on_ident"
@@ -96,6 +99,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "updated_at"
     t.integer  "group_id"
     t.integer  "projowner_id"
+    t.boolean  "internal"
   end
 
   add_index "datafiles", ["document_id"], :name => "index_datafiles_on_document_id"
@@ -108,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.text     "launch_fields"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "internal"
   end
 
   add_index "definitions", ["name"], :name => "index_definitions_on_name", :unique => true
@@ -125,6 +130,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "updated_at"
     t.integer  "group_id"
     t.integer  "projowner_id"
+    t.boolean  "internal"
   end
 
   add_index "documents", ["ident"], :name => "index_documents_on_ident"
@@ -155,6 +161,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "updated_at"
     t.integer  "group_id"
     t.integer  "projowner_id"
+    t.boolean  "internal"
   end
 
   add_index "forum_items", ["forum_id"], :name => "index_forum_items_on_forum_id"
@@ -171,6 +178,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "updated_at"
     t.integer  "group_id"
     t.integer  "projowner_id"
+    t.boolean  "internal"
   end
 
   add_index "forums", ["owner_id"], :name => "index_forums_on_owner_id"
@@ -191,6 +199,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "father_id"
+    t.boolean  "internal"
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name", :unique => true
@@ -229,6 +238,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.integer  "owner_id"
     t.integer  "group_id"
     t.integer  "projowner_id"
+    t.boolean  "internal"
   end
 
   add_index "links", ["child_plmtype", "child_id"], :name => "index_links_on_child_type_and_child_id"
@@ -258,6 +268,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "updated_at"
     t.integer  "group_id"
     t.integer  "projowner_id"
+    t.boolean  "internal"
   end
 
   add_index "parts", ["ident"], :name => "index_parts_on_ident"
@@ -288,6 +299,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "updated_at"
     t.integer  "group_id"
     t.integer  "typeaccess_id"
+    t.boolean  "internal"
   end
 
   add_index "projects", ["ident"], :name => "index_projects_on_ident"
@@ -303,6 +315,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "updated_at"
     t.integer  "asker_id"
     t.integer  "responder_id"
+    t.boolean  "internal"
   end
 
   create_table "relations", :force => true do |t|
@@ -318,6 +331,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.integer  "cardin_use_max"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "internal"
   end
 
   create_table "roles", :force => true do |t|
@@ -326,6 +340,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "father_id"
+    t.boolean  "internal"
   end
 
   create_table "roles_users", :id => false, :force => true do |t|
@@ -346,6 +361,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.boolean  "sequence"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "internal"
   end
 
   add_index "sequences", ["utility"], :name => "index_sequences_on_utility", :unique => true
@@ -369,6 +385,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.boolean  "demote"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "internal"
   end
 
   add_index "statusobjects", ["object", "rank", "name"], :name => "index_statusobjects_on_object_and_rank_and_name", :unique => true
@@ -379,6 +396,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "internal"
   end
 
   add_index "typesobjects", ["object", "name"], :name => "index_typesobjects_on_object_and_name", :unique => true
@@ -410,6 +428,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.integer  "typesobject_id"
     t.integer  "group_id"
     t.integer  "project_id"
+    t.boolean  "internal"
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
@@ -417,10 +436,11 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
   create_table "volumes", :force => true do |t|
     t.string   "name"
     t.string   "directory"
-    t.string   "protocole"
+    t.string   "protocol"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "internal"
   end
 
 end

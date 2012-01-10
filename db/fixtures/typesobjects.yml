@@ -1,0 +1,53 @@
+new_account: 
+  id: 1
+  object: user
+  name: "<%= ::SYLRPLM::TYPE_USER_NEW_ACCOUNT %>"
+  description: "Type donne au compte en attendant sa validation"
+  internal: true
+    
+proj_account: 
+  id: 2
+  object: project
+  name: "<%= ::SYLRPLM::TYPE_PROJ_ACCOUNT %>" 
+  description: "Type de projet affecte automatiquement a la creation du compte."
+  internal: true
+    
+user_person: 
+  id: 3
+  object: person
+  name: "<%= ::SYLRPLM::TYPE_USER_PERSON %>"
+  description: "personne physique."
+  internal: true 
+    
+user_virtual:
+  id: 4
+  object: virtual
+  name: "<%= ::SYLRPLM::TYPE_USER_VIRTUAL %>"
+  description: "user virtuel, pour batchs..."
+  internal: true
+    
+generic_generic:
+  id: 5
+  object: "<%= ::SYLRPLM::PLMTYPE_GENERIC %>"
+  name: "<%= ::SYLRPLM::TYPE_GENERIC %>"
+  description: "type generique"
+  internal: true
+    
+project_typeaccess_public:
+  id: 6
+  object: project_typeaccess
+  name: "<%= ::SYLRPLM::TYPEACCESS_PUBLIC %>"
+  internal: true 
+
+project_typeaccess_confidential:
+  id: 7
+  object: project_typeaccess
+  name: "<%= ::SYLRPLM::TYPEACCESS_CONFIDENTIAL %>"
+  internal: true
+
+project_typeaccess_secret:
+  id: 8
+  object: project_typeaccess
+  name: "<%= ::SYLRPLM::TYPEACCESS_SECRET %>"
+  internal: true   
+  

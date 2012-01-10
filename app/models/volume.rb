@@ -7,7 +7,7 @@ require 'classes/sylrplm_fog'
 class Volume < ActiveRecord::Base
   include Models::SylrplmCommon
   #
-  validates_presence_of :name, :protocole
+  validates_presence_of :name, :protocol
   validates_format_of :name, :with =>/^([a-z]|[A-Z]|[0-9]||[.-])+$/
   validates_uniqueness_of :name
   #
@@ -16,7 +16,7 @@ class Volume < ActiveRecord::Base
   #
   def validate
     puts "Volume.validate"
-    errors.add_to_base I18n.t("valid_volume_directory_needed", :protocol=>protocole) if protocole != "fog" && directory.blank?
+    errors.add_to_base I18n.t("valid_volume_directory_needed", :protocol=>protocol) if protocol != "fog" && directory.blank?
   end
 
   def initialize(params_volume=nil)
@@ -33,7 +33,7 @@ class Volume < ActiveRecord::Base
   
   def set_directory(directory_was=nil)
     #recherche des repertoires fog
-    if self.protocole == "fog"
+    if self.protocol == "fog"
       self.directory="sylrplm-"+Rails.env.slice(0,4)+"-"+Time.now.to_i.to_s
     end
     dir = self.create_dir(directory_was)
@@ -45,8 +45,8 @@ class Volume < ActiveRecord::Base
     end
   end
 
-  def self.protocole_values
-    ["fog", "local_vault"].sort
+  def self.protocol_values
+    ["fog", "file_system"].sort
   end
 
   def self.find_all
@@ -63,8 +63,8 @@ class Volume < ActiveRecord::Base
 
   def create_dir(olddir)
     puts "Volume.create_dir"+self.inspect
-    if self.protocole == "fog"
-    return self.protocole
+    if self.protocol == "fog"
+    return self.protocol
     else
       if (!File.exists?(self.directory))
         begin
@@ -109,7 +109,7 @@ class Volume < ActiveRecord::Base
 
   def destroy_volume
     if !is_used
-      if self.protocole == "fog"
+      if self.protocol == "fog"
       ret=self.destroy
       else
         stdel=self.destroy
@@ -151,17 +151,17 @@ class Volume < ActiveRecord::Base
     filter = filters.gsub("*","%")
     ret={}
     unless filter.nil?
-      ret[:qry] = "name LIKE :v_filter or description LIKE :v_filter or directory LIKE :v_filter or protocole LIKE :v_filter"
+      ret[:qry] = "name LIKE :v_filter or description LIKE :v_filter or directory LIKE :v_filter or protocol LIKE :v_filter"
       ret[:values]={:v_filter => filter}
     end
     ret
-  #conditions = ["name LIKE ? or description LIKE ? or directory LIKE ? or protocole LIKE ?"
+  #conditions = ["name LIKE ? or description LIKE ? or directory LIKE ? or protocol LIKE ?"
   end
 
 private
 
   def _list_files_
-    if self.protocole == "fog"
+    if self.protocol == "fog"
       ret="files stored in cloud by fog"
     else
       dir=File.join(self.directory,self.name)

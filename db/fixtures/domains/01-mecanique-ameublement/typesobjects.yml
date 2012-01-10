@@ -1,205 +1,176 @@
-4:
-  id: 4 
+<% require 'yaml' %>
+<%= ::YAML::include("#{Rails.root}/db/fixtures/typesobjects.yml") %>
+
+document_calculsheet:
+  id: 101
   object: document 
   name: calculsheet
   description: Feuille de calcul		
-5:
-  id: 5 
+document_m3d:
+  id: 102
   object: document 
   name: m3d 
   description: Numerisation 3D		
-6:
-  id: 6 
+document_p2d:
+  id: 103
   object: document 
   name: p2d 	
   description: Numerisation 2D	
-7:
-  id: 7 
+document_fmat:
+  id: 104
   object: document 
   name: fmat
-  description: Fiche matiere 		
-8:
-  id: 8 
+  description: Fiche matiere 
+document_norme:
+  id: 105
+  object: document 
+  name: norme
+  description: Norme applicable
+document_cdc:
+  id: 106 
+  object: document
+  name: cdc
+  description: Cahier des charges
+document_exb: 
+  id: 107
+  object: document
+  name: exb
+  description: Expression de besoin
+   		
+forum_requirements:
+  id: 111
   object: forum 
   name: requirements 
-  description: Forum sur les exigences 		
-9:
-  id: 9 
+  description: "Forum sur les exigences" 		
+forum_needs:
+  id: 112
   object: forum 
   name: needs
-  description: Forum sur les besoins
-10:
-  id: 10 
+  description: "Forum sur les besoins"
+forum_specifs:
+  id: 113
   object: forum 
   name: specifs 
-  description: Forum sur les specifications		
-11:
-  id: 11 
+  description: "Forum sur les specifications"		
+forum_design:
+  id: 114
   object: forum 
   name: design 
-  description: Forum sur la conception		
-12:
-  id: 12 
+  description: "Forum sur la conception"		
+forum_tests:
+  id: 115
   object: forum 
   name: tests 
-  description: Forum sur les tests	
-13:
-  id: 13 
+  description: "Forum sur les tests"	
+  
+part_electronic:
+  id: 121
   object: part 
   name: electronic
-  description: Composant/ensemble electronique 
-14:
-  id: 14
+  description: Composant ou ensemble electronique 
+part_electric:
+  id: 122
   object: part 
   name: electric 		
-  description: Composant/ensemble electrique 
-15:
-  id: 15 
+  description: Composant ou ensemble electrique 
+part_mecanic:
+  id: 123
   object: part 
   name: mecanic 		
-  description: Composant/ensemble mecanique 
-16:
-  id: 16 
+  description: Composant ou ensemble mecanique 
+
+project_standard:
+  id: 131
   object: project 
   name: standard
-  description: Projet pour articles standards/catalogues 		
-17:
-  id: 17
+  description: Projet pour articles standards ou catalogues 		
+project_sub-assembly:
+  id: 132
   object: project 
   name: sub-assembly
   description: Projet pour un sous ensemble
-18:
-  id: 18
+project_product:
+  id: 133
   object: project 
   name: product
   description: Projet pour un produit
   
-19:
-  id: 19
-  object: document 
-  name: norme
-  description: Norme applicable
-  
-21:
-  id: 21 
+customer_internal:
+  id: 141
   object: customer 
   name: internal 
   description: Service ou direction interne a l'entreprise      
-22:
-  id: 22 
+customer_private:
+  id: 142
   object: customer 
   name: private
   description: Client externe a acces restreint     
-23:
-  id: 23 
+customer_public:
+  id: 143
   object: customer 
   name: public 
-  description: Client externe accessible a tous 
-
-
-81:
-  id: 81
+  description: "Client externe accessible a tous" 
+datafile_catia:
+  id: 144
   object: datafile
   name: catia
-  description: CAO Catia
-
-82:
-  id: 82
+  description: "CAO Catia"
+datafile_autocad:
+  id: 145
   object: datafile
   name: autocad
   description: DAO Autocad
-83:
-  id: 83
+datafile_text:
+  id: 146
   object: datafile
   name: text
   description: Fichier texte
-84:
-  id: 84
+datafile_writer:
+  id: 147
   object: datafile
   name: writer
   description: Traitement de texte
-85:
-  id: 85
+datafile_spreadsheet:
+  id: 148
   object: datafile
   name: spreadsheet
-  description: Projet de production
-86:
-  id: 86
+  description: Fichier tableur
+datafile_image:
+  id: 149
   object: datafile
   name: image
-  description: fichier image (jpg,gif,bmp,...)
-87: 
-    id: 87
-    object: document
-    name: cdc
-    description: Cahier des charges
-  
-88: 
-    id: 88
-    object: document
-    name: exb
-    description: Expression de besoin
-  
-89: 
-    id: 89
-    object: relation
-    name: exb_requirement
-    description: 
-  
-90: 
-    id: 90
-    object: relation
-    name: cdc_requirement
-    description: 
-  
-91: 
-    id: 91
-    object: user
-    name: virtuel
-    description: 
-  
-92: 
-    id: 92
-    object: user
-    name: personne physique
-    description: 
-  
-93: 
-    id: 93
-    object: definition
-    name: plm
-    description: 
-  
-94: 
-    id: 94
-    object: ar_workitem
-    name: ar_workitem
-    description: 
-  
-97: 
-    id: 97
-    object: workitem
-    name: workitem
-    description: 
-      
-10001:
-  id: 10001 
-  object: project 
-  name: default 
-  description: Projet par defaut 
-10002:
-  id: 10002
-  object: project_typeaccess
-  name: public
-10003:
-  id: 10003
-  object: project_typeaccess
-  name: confidential
-10004:
-  id: 10004
-  object: project_typeaccess
-  name: secret   
-  
+  description: fichier image jpg gif bmp
 
+relation_exb_requirement:
+  id: 161 
+  object: relation
+  name: exb_requirement
+  description: Exigences de l'expression d ebesoin'
+relation_cdc_requirement:
+  id: 162 
+  object: relation
+  name: cdc_requirement
+  description: Exigences du cahier des charges
+relation_generic:
+  id: 163 
+  object: relation
+  name: "<%= ::SYLRPLM::NAME_GENERIC %>"
+  description: Relation generique 
+   
+definition_plm:
+  id: 171 
+  object: definition
+  name: plm
+  description: 
   
- 
+ar_workitem:
+  id: 181 
+  object: ar_workitem
+  name: ar_workitem
+  description: 
+  
+workitem:
+  id: 182 
+  object: workitem
+  name: workitem
+  description: 

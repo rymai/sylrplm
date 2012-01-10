@@ -44,7 +44,29 @@ class RolesGroupsFather < ActiveRecord::Migration
     add_column :questions, :asker_id, :integer
     add_column :questions, :responder_id, :integer
 
-
+    rename_column :volumes, :protocole, :protocol
+    
+    add_column :accesses, :internal, :boolean
+    add_column :checks, :internal, :boolean
+    add_column :customers, :internal, :boolean
+    add_column :datafiles, :internal, :boolean
+    add_column :definitions, :internal, :boolean
+    add_column :documents, :internal, :boolean
+    add_column :forum_items, :internal, :boolean
+    add_column :forums, :internal, :boolean
+    add_column :groups, :internal, :boolean
+    add_column :links, :internal, :boolean
+    add_column :parts, :internal, :boolean
+    add_column :projects, :internal, :boolean
+    add_column :questions, :internal, :boolean
+    add_column :relations, :internal, :boolean
+    add_column :roles, :internal, :boolean
+    add_column :sequences, :internal, :boolean
+    add_column :statusobjects, :internal, :boolean
+    add_column :typesobjects, :internal, :boolean
+    add_column :users, :internal, :boolean
+    add_column :volumes, :internal, :boolean
+    
   end
 
   def self.down
@@ -91,6 +113,29 @@ class RolesGroupsFather < ActiveRecord::Migration
     
     remove_column :questions, :asker_id
     remove_column :questions, :responder_id
+
+    rename_column :volumes, :protocol, :protocole
+    
+    remove_column :accesses, :internal
+    remove_column :checks, :internal
+    remove_column :customers, :internal
+    remove_column :datafiles, :internal
+    remove_column :definitions, :internal
+    remove_column :documents, :internal
+    remove_column :forum_items, :internal
+    remove_column :forums, :internal
+    remove_column :groups, :internal
+    remove_column :links, :internal
+    remove_column :parts, :internal
+    remove_column :projects, :internal
+    remove_column :questions, :internal
+    remove_column :relations, :internal
+    remove_column :roles, :internal
+    remove_column :sequences, :internal
+    remove_column :statusobjects, :internal
+    remove_column :typesobjects, :internal
+    remove_column :users, :internal
+    remove_column :volumes, :internal
     
   end
 end

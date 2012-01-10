@@ -1,25 +1,24 @@
-<div class="depot-form">
-	<fieldset>
-		<legend>
-			<%= t(:legend_login) %>
-		</legend>
-		<% form_for :session, :url => {:controller=>:sessions , :action=>:create}  do |form| %>
-		<label for="role"> <%= t(:label_role) %> </label>
-		<%= form.collection_select(:role_id, @current_user.roles, :id, :title, :options => {}, :selected => @current_user.role_id) %>
-		<br/>
-		<label for="group"> <%= t(:label_group) %> </label>
-		<%= form.collection_select(:group_id, @current_user.groups, :id, :name, :options => {}, :selected => @current_user.group_id) %>
-		<br/>
-		<% unless @current_user.projects.nil? %>
-		<label for="project"> <%= t(:label_project) %> </label>
-		<%= form.collection_select(:project_id, @current_user.projects, :id, :ident, :options => {}, :selected => @current_user.project_id) %>
-		<br/>
-		<% end %>
-	</fieldset>
+<% form_for :session, :url => {:controller => :sessions , :action => :login}  do |form| %> 
+<%= hidden_field_tag :user_id , @current_user.id %>
+<fieldset>
+	<legend>
+		<%= t(:legend_login) %>
+	</legend>
+	<%= form.label t(:label_role) %> 
+	<%= form.collection_select(:role_id, @current_user.roles, :id, :title, :options => {}, :selected => @current_user.role_id) %>
+	<br/>
+	<%= form.label t(:label_group) %> 
+	<%= form.collection_select(:group_id, @current_user.groups, :id, :name, :options => {}, :selected => @current_user.group_id) %>
+	<br/>
+	<% unless @current_user.projects.nil? %> 
+	<%= form.label t(:label_project) %> 
+	<%= form.collection_select(:project_id, @current_user.projects, :id, :ident, :options => {}, :selected => @current_user.project_id) %>
+	<br/>
+	<% end %>
 	<table class='menu_bas'>
 		<tr>
 			<td> <%= submit_tag t(:submit_login) %> </td>
 		</tr>
 	</table>
-	<% end %>
-</div>
+</fieldset>
+<% end %> 

@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password
 
-  before_filter :authorize, :except => [:index, :init_objects]
+  before_filter :authorize, :except => [:index, :show, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
   ## un peu brutal before_filter :object_exists, :only => [:show, :edit, :destroy]
@@ -50,15 +50,32 @@ class ApplicationController < ActionController::Base
 
   def check_user_connect(user)
     flash[:notice] = nil
-    if !user.may_connect?
-      flash[:notice] =""
-      flash[:notice] += t(:ctrl_user_without_roles )+" " if user.roles.empty?
-      flash[:notice] += t(:ctrl_user_without_groups )+" " if user.groups.empty?
-      flash[:notice] += t(:ctrl_user_without_projects )+" " if user.projects.empty?
-      flash[:notice] = nil if flash[:notice].empty?
+    if false
+      if !user.may_connect?
+        flash[:notice] =""
+        flash[:notice] += t(:ctrl_user_not_valid,:user=>user )+" " if user.typesobject.nil?
+        flash[:notice] += t(:ctrl_user_without_roles )+" " if user.roles.empty?
+        flash[:notice] += t(:ctrl_user_without_groups )+" " if user.groups.empty?
+        flash[:notice] += t(:ctrl_user_without_projects )+" " if user.projects.empty?
+        flash[:notice] = nil if flash[:notice].empty?
+      end
     end
-    #puts "check_user_connect:"+flash[:notice].to_s
+    flash[:notice] = t(:ctrl_user_not_valid,:user=>user ) unless user.may_connect?
+    puts "check_user_connect:"+user.inspect+":"+flash[:notice].to_s
+    if user.login==::SYLRPLM::USER_ADMIN
+      flash[:notice] = nil
+    end
     flash[:notice]
+  end
+
+  def check_init
+    if User.count == 0
+      puts 'application_controller.check_init:base vide'
+      flash[:notice]=t(:ctrl_init_to_do)
+      respond_to do |format|
+        format.html{redirect_to_main}
+      end
+    end
   end
 
   def event
@@ -158,13 +175,15 @@ class ApplicationController < ActionController::Base
         :forum => Forum.count,
         :question => Question.count},
       :internal_objects => {
-        :link => Link.count,
-        :relation => Relation.count},
+        :link => Link.count},
       :admin => {
         :user => User.count,
         :role => Role.count,
         :group => Group.count,
-        :volume => Volume.count},
+        :volume => Volume.count,
+        :typesobject => Typesobject.count,
+        :statusobject => Statusobject.count,
+        :relation => Relation.count},
       :workflow_objects => {
         :definition => Definition.count
       }
@@ -213,8 +232,8 @@ class ApplicationController < ActionController::Base
   def authorize
     user_id = session[:user_id] || User.find_by_id(session[:user_id])
     if user_id.nil?
-      puts "application_controller.authorize.request_uri="+request.request_uri
-      puts "application_controller.authorize.new_sessions_url="+new_sessions_url
+      #puts "application_controller.authorize.request_uri="+request.request_uri
+      #puts "application_controller.authorize.new_sessions_url="+new_sessions_url
       session[:original_uri] = request.request_uri
       flash[:notice] = t(:login_login)
       redirect_to new_sessions_url

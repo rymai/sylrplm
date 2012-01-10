@@ -1,29 +1,45 @@
 require 'ruote_routing'
 
+
 ActionController::Routing::Routes.draw do |map|
-  
- # syl 17/11/2010 : route par defaut
+
+# syl 17/11/2010 : route par defaut
   map.root :controller => "main", :action => "index"
-  
+
   map.resources :relations
   map.connect(
   'relations/update_father',
   :controller => 'relations',
-  :action => 'update_father') 
+  :action => 'update_father')
   map.connect(
   'relations/update_child',
   :controller => 'relations',
   :action => 'update_child')
-  
+
   map.resources :notifications, :member => { :notify => :get }
 
   map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get, :tools => :get }
 
   map.resources :help, :only => [:index]
 
-  map.resource :sessions, :only => [:new, :create,  :destroy]
+  map.resource :sessions, :only => [:new, :create , :destroy]
   #map.resource :sessions, :only => [:new, :create, :update, :destroy], :member => { :choose_role => :get }
   # map.resource :sessions, :only => [:new, :create, :update, :destroy]
+  map.connect(
+  'sessions/create_new_account',
+  :controller => 'sessions',
+  :action => 'create_new_account')
+  
+  map.connect(
+  'sessions/login',
+  :controller => 'sessions',
+  :action => 'login')
+  
+
+  map.connect(
+  'sessions/:id/activate',
+  :controller => 'sessions',
+  :action => 'activate')
 
   map.resources :users, :collection => { :empty_favori => :get }
 
@@ -32,8 +48,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :questions
 
   map.resources :accesses, :collection => { :reset => :get}
-  
-  
+
   map.resources :roles_users
 
   map.resources :forum_items
@@ -67,8 +82,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect(
   'main/init_objects',
   :controller => 'main',
-  :action => 'init_objects')  
-  
+  :action => 'init_objects')
+
   map.connect(
   'datafiles/:id/show_file',
   :controller => 'datafiles',
@@ -77,7 +92,7 @@ ActionController::Routing::Routes.draw do |map|
   'datafiles/:id/download_file',
   :controller => 'datafiles',
   :action => 'download_file')
-  
+
   map.connect(
   'documents/:id/add_favori',
   :controller => 'documents',
@@ -91,7 +106,7 @@ ActionController::Routing::Routes.draw do |map|
   'documents/:id/new_datafile',
   :controller => 'documents',
   :action => 'new_datafile')
-    map.connect(
+  map.connect(
   'documents/:id/add_datafile',
   :controller => 'documents',
   :action => 'add_datafile')
@@ -174,7 +189,7 @@ ActionController::Routing::Routes.draw do |map|
   :controller => 'parts',
   :action => 'demote',
   :conditions => { :method => :get })
-  
+
   map.connect(
   'projects/:id/add_favori',
   :controller => 'projects',
@@ -215,7 +230,7 @@ ActionController::Routing::Routes.draw do |map|
   :controller => 'projects',
   :action => 'demote',
   :conditions => { :method => :get })
-  
+
   map.connect(
   'customers/:id/add_favori',
   :controller => 'customers',
@@ -251,18 +266,23 @@ ActionController::Routing::Routes.draw do |map|
   'users/:id/edit_password',
   :controller => 'users',
   :action => 'edit_password')
-  
+
   map.connect(
   'users/:id/update_password',
   :controller => 'users',
   :action => 'update_password')
-  
+
+  map.connect(
+  'users/:id/activate',
+  :controller => 'users',
+  :action => 'activate')
+
   map.connect(
   'users/:id/add_favori',
   :controller => 'users',
   :action => 'add_favori',
   :conditions => { :method => :get })
-  
+
   map.connect(
   'links/:id/remove_link',
   :controller => 'links',

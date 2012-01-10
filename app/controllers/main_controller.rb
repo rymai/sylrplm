@@ -1,5 +1,7 @@
+require 'classes/controller'
+
 class MainController < ApplicationController
-  include Controllers::PlmInitControllerModule
+  
 
   #access_control(Access.find_for_controller(controller_class_name))
   skip_before_filter :authorize
@@ -14,15 +16,11 @@ class MainController < ApplicationController
     LOG.fatal("fatal")
     unless params[:domain].blank?
       # creation du domaine demande: status et types d'objets
-      create_admin
-      create_domain(params[:domain])
-      update_admin(params[:directory])
-      st=Access.init
+      st=Controller.init_db(params)
       flash[:notice] = t(:ctrl_init_done)
     else
-      @domains = get_domains
+      @domains = Controller.get_domains
       @directory = SYLRPLM::VOLUME_DIRECTORY_DEFAULT
-      #flash[:notice] = t(:ctrl_init_to_do)
     end
     @datas = get_datas_count
     @themes = get_themes(@theme)

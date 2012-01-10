@@ -27,16 +27,17 @@ function helpTip() {
 }
 
 function helpPopup(which, href) {
-	//alert ('which='+which+' helpWin='+helpWin+' helpClick='+helpClick+' href='+href);
+	//alert ('helpPopup:which='+which+' helpWin='+helpWin+' helpClick='+helpClick+' href='+href);
 	if(helpClick!=1 && href!=null) {
-		
 	    Element.setStyle('menu', {cursor: "pointer"});
 		window.location=href;
 	} else {
 		
 		if (which==null) which = "help_contents_help";
 		if ((!helpWin)||(helpWin.closed)) {
-			helpWin = window.open('/help?help='+which,'','left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
+			//alert ('helpPopup:open which='+which+' helpWin='+helpWin+' helpClick='+helpClick+' href='+href);
+			//helpWin = window.open("/help?help="+which, which,"location=no, menubar=no, status=no, scrollbars=no, resizable=no, directories=yes, menubar=no, toolbar=no, width=500, height=320, left=50, top=50");
+			helpWin = window.open("/help?help="+which, which,"width=500,height=320,left=50,top=50, scrollbars=yes,resizable=yes, directories=yes");
 		} else {
 			helpWin.location = '/help?help='+which;
 		}

@@ -116,28 +116,12 @@ en:
   ctrl_link_document_datafile: Relation document / file
   # info
   info_object_not_found: SYLRPLM_ERROR-%{context}-%{typeobj} not found - %{id}
-  # login
-  ctrl_role_needed: Give the role
-  ctrl_invalid_login: Invalid user/password combination
-  ctrl_user_without_roles: This user have no roles
-  ctrl_user_without_groups: This user have no groups
-  ctrl_user_without_projects: This user have no projects
-  ctrl_user_needed: Give the user
-  ctrl_user_created: User %{user} created
-  ctrl_user_not_created: User %{user} not created
-  ctrl_user_updated: User %{user} updated
-  ctrl_user_not_updated: User %{user} not updated
-  ctrl_user_deleted: User %{user} deleted
-  ctrl_user_connected: User %{user} connected !
-  ctrl_user_not_connected: Not connected
-  ctrl_user_disconnected: User %{user} disconnected !
-  ctrl_user_role: Role=
   # main
   ctrl_plm_objects: PLM objects 
   ctrl_collab_objects: Collaboration objects 
   ctrl_internal_objects: Internal objects
   ctrl_admin: Administration objects
-  ctrl_workflow_objects: Workflow definitions
+  ctrl_workflow_objects: Workflows 
   ctrl_relation: Relation types
   # notification
   ctrl_notify: "%{nb_total} Notifications send to %{nb_users} users : %{notifications} "
@@ -157,6 +141,25 @@ en:
   ctrl_role: Role
   # sequences
   ctrl_sequence: Sequence
+  # session
+  ctrl_role_needed: Give the role
+  ctrl_invalid_login: Invalid user/password combination
+  ctrl_user_without_roles: This user have no roles
+  ctrl_user_without_groups: This user have no groups
+  ctrl_user_without_projects: This user have no projects
+  ctrl_user_needed: Fill the user
+  ctrl_user_created: User %{user} created
+  ctrl_user_not_created: User %{user} not created
+  ctrl_user_not_valid: User %{user} not yet validated
+  ctrl_new_account_not_created: New user %{user} not created
+  ctrl_user_updated: User %{user} updated
+  ctrl_user_not_updated: User %{user} not updated
+  ctrl_user_deleted: User %{user} deleted
+  ctrl_user_connected: User %{user} connected !
+  ctrl_user_not_connected: Not connected
+  ctrl_user_disconnected: User %{user} disconnected !
+  ctrl_user_role: Role=
+  ctrl_account_needed: Fill the account
   # statusobjects
   ctrl_statusobject: Object status
   # typesobjects
@@ -201,6 +204,7 @@ en:
   # views
   #########################################
   # general
+  label_internal: Internal
   label_projowner: Project
   modif_status: Modify the status
   label_created_at: Creation
@@ -256,7 +260,8 @@ en:
   update: Update
   create: Create
   copy: Copy
-  destroy: Remove
+  destroy: Destroy
+  remove_all: Remove all
   cancel: Cancel
   menu_action: Action(s)
   # attributs generaux
@@ -457,7 +462,10 @@ en:
   legend_organization: Organization 
   legend_param: Customization
   legend_debug: Debug
-  legend_clipboard: Clipboard  
+  legend_clipboard: Clipboard 
+  submit: GO 
+  help_first_use: To begin
+  CV: Curriculum vitae
   # notifications
   legend_notification: Enter notification details
   notification_edit: Notification edit 
@@ -484,6 +492,7 @@ en:
   direct_access: Direct access
   notification_notify: Events notification
   button_notify: Notification
+  label_object_type: Data type
   # processes
   legend_processes: Processes
   mnu_flw_workitems: My actions
@@ -561,7 +570,12 @@ en:
   label_sequence: Sequence
   # session
   legend_login: Please Log In
+  legend_new_account: Fill your account properties 
+  submit_account: Validate account
   submit_login: Login
+  submit_new_account: New account
+  submit_create_account: Account creation
+  label_new_email: Mail for new user
   # statusobjects
   legend_statusobjects: Enter statusobjects details
   statusobjects_list: Listing of status 

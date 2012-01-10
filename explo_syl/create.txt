@@ -514,9 +514,7 @@ heroku rake db:reset
 ---
 --- recreer la base avec les migrations
 ---
-rake db:drop
-rake db:create
-rake db:migrate (schema par les migrations)
+rake db:drop;rake db:create;rake db:migrate (schema par les migrations)
 ou rake db:drop;rake db:create;rake db:load (schema+data, il faut db/data.yml
 ou rake db:drop;rake db:create;rake db:schema:load (schema seul, pas de data)
 heroku rake db:drop;heroku rake db:create;heroku rake db:schema:load 

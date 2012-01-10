@@ -8,9 +8,9 @@ class Link < ActiveRecord::Base
 
   belongs_to :owner,
     :class_name => "User"
-    
+
   belongs_to :group
-  
+
   belongs_to :projowner,
     :class_name => "Project"
 
@@ -41,23 +41,17 @@ class Link < ActiveRecord::Base
     (self.relation ? self.relation.name : "")
   end
 
-  def self.isvalid(father, child, relation)
-    puts "link."+__method__.to_s+":"
-    if true
-      puts father.model_name+"=="+relation.father_plmtype + \
-      " "+child.model_name+"=="+relation.child_plmtype + \
-      " "+father.typesobject.inspect+"=="+relation.id.to_s+"."+relation.father_type.inspect + \
-      " "+child.typesobject.inspect+"=="+relation.child_type.inspect
-    end
-    ret=father.model_name==relation.father_plmtype \
-    && child.model_name==relation.child_plmtype \
-    && father.typesobject.name==relation.father_type.name \
-    && child.typesobject.name==relation.child_type.name
+  def self.valid?(father, child, relation)
+    name= "Link."+__method__.to_s+":"
+    ret=(father.model_name==relation.father_plmtype || relation.father_plmtype == ::SYLRPLM::PLMTYPE_GENERIC) \
+    && (child.model_name==relation.child_plmtype || relation.child_plmtype == ::SYLRPLM::PLMTYPE_GENERIC) \
+    && (father.typesobject.name==relation.father_type.name || relation.father_type.name == ::SYLRPLM::TYPE_GENERIC) \
+    && (child.typesobject.name==relation.child_type.name || relation.child_type.name == ::SYLRPLM::TYPE_GENERIC)
     if ret==false
-      puts father.model_name+"=="+relation.father_plmtype + \
+      puts name+father.model_name+"=="+relation.father_plmtype + \
       " "+child.model_name+"=="+relation.child_plmtype + \
-      " "+father.typesobject.name+"=="+relation.father_type.name + \
-      " "+child.typesobject.name+"=="+relation.child_type.name
+      " "+father.typesobject.ident+"=="+relation.id.to_s+"."+relation.father_type.ident + \
+      " "+child.typesobject.ident+"=="+relation.child_type.ident
     end
     ret
   end
@@ -74,7 +68,7 @@ class Link < ActiveRecord::Base
 
   def self.create_new(father, child, relation, user)
     #puts "link:create_new:"+father.inspect+"-"+child.inspect+"."+child.inspect
-    if isvalid(father, child, relation)
+    if valid?(father, child, relation)
       nbused = self.nb_used(relation)
       nboccured = self.nb_occured(father, relation)
       #puts "link.create_new:"+nbused.to_s+ " "+child.model_name+"."+child.typesobject.name+" utilises dans relation "+relation.ident
@@ -101,7 +95,7 @@ class Link < ActiveRecord::Base
       msg=:ctrl_link_not_valid
     end
     ret={:link => obj,:msg => msg}
-    puts "link.create_new:"+ret.inspect
+    #puts "link.create_new:"+ret.inspect
     ret
   end
 

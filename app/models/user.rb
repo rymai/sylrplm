@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   
   belongs_to :project
   
-  validates_presence_of     :login
+  validates_presence_of     :login, :typesobject
   validates_uniqueness_of   :login
   
   validates_confirmation_of :password
@@ -31,6 +31,7 @@ class User < ActiveRecord::Base
     [4, :label_user_mail_option_only_owner],
     [5, :label_user_mail_option_none]
   ]
+  
   def link_attributes=(att)
     @link_attributes = att
   end
@@ -40,9 +41,15 @@ class User < ActiveRecord::Base
   def designation
     self.login+" "+self.first_name.to_s+" "+self.last_name.to_s
   end
+  
   def projects
-    links_projects.collect { |p| p.father }
+    ret = links_projects.collect { 
+      |p| p.father 
+    }
+    puts "User.projects:user="+self.id.to_s+":"+self.designation+":"+ret.inspect
+    ret
   end
+  
   def designation=(val)
     designation        = val
   end
@@ -62,7 +69,107 @@ class User < ActiveRecord::Base
     end
     user
   end
+  
+  # 
+  # creation d'un nouveau compte sur demande depuis la fenetre de login par exemple
+  # argums:
+  #   - aparams: tablo contenant le login et le password et le new_email du compte a creer
+  #   - urlbase: url de base de l'appli sylrplm
+  # return:
+  #   - le user cree avec les proprietes suivantes:
+  #     * le type "#NEW_ACCOUNT" qui devra etre modifie pour que le user puisse se connecter
+  #     * le volume par defaut , id=1
+  #     * le groupe des consultants lui est affecté
+  #     * le role consultant lui est affecté 
+  #     * un projet par defaut est cree pour lui: PROJET-login, ce projet lui est associé 
+  #     * 
+  #     *
+  #     *
+  #     *
+  #     *
 
+  #   - nil si le user ne peut etre cree
+  # fonctionnement:
+  #
+  #
+  def self.create_new_login(aparams, urlbase)
+    name="User.create_new_login:"
+    type=Typesobject.find_by_object_and_name(User.model_name, ::SYLRPLM::TYPE_USER_NEW_ACCOUNT)
+    group_consultants=Group.find_by_name(::SYLRPLM::GROUP_CONSULTANTS)
+    role_consultant=Role.find_by_title(::SYLRPLM::ROLE_CONSULTANT)
+    admin = User.find_by_login(::SYLRPLM::USER_ADMIN)
+    proj=Project.create_new(nil, admin)
+    type_proj=Typesobject.find_by_object_and_name(Project.model_name, ::SYLRPLM::TYPE_PROJ_ACCOUNT)
+    typeacc_proj=Typesobject.find_by_object_and_name("project_typeaccess", ::SYLRPLM::TYPEACCESS_PUBLIC)  
+    unless group_consultants.nil? || role_consultant.nil? || proj.nil? || type.nil? || type_proj.nil? || typeacc_proj.nil?
+      proj.ident=Project::for_user(aparams["login"])
+      proj.typesobject=type_proj
+      proj.typeaccess=typeacc_proj
+      puts name+" proj="+proj.inspect
+      if proj.save
+        params={}
+        params["typesobject_id"]=type.id
+        params["volume_id"]=1
+        #params["group_id"]=group_consultants.id
+        #params["role_id"]=role_consultant.id
+        #params["project_id"]=proj.id
+        params["login"]=aparams["login"]
+        params["password"]=aparams["password"]
+        params["email"]=aparams["new_email"]
+        new_user = User.new(params)
+        if new_user.save
+          new_user.groups<<group_consultants
+          new_user.roles<<role_consultant
+          puts name+" new_user="+new_user.inspect
+          puts name+" rel="+proj.model_name+","+ new_user.model_name+","+ proj.typesobject.inspect+","+ new_user.typesobject.inspect
+          relation = Relation.by_types(proj.model_name, new_user.model_name, proj.typesobject.id, new_user.typesobject.id)
+          unless relation.nil?
+            link = Link.create_new(proj, new_user, relation, new_user)
+            unless link[:link].nil?
+              link[:link].save 
+              puts name+"urlbase="+urlbase
+              email=PlmMailer.create_new_login(new_user, new_user, new_user, urlbase)
+              unless email.nil?
+                email.set_content_type("text/html")
+                PlmMailer.deliver(email)
+                msg = :ctrl_mail_created_and_delivered
+                puts name+" message cree et envoye pour #{new_user.login}"
+              else
+                puts name+" message non cree pour #{new_user.login}"
+                msg = :ctrl_mail_not_created
+                new_user.destroy
+                new_user=nil
+              end
+            else
+              puts name+" lien non cree pour #{new_user.login}"
+              new_user=nil
+            end  
+          else
+            puts name+" relation non trouvee pour #{new_user.login}"
+            new_user=nil
+          end  
+        else
+          puts name+" user non sauve: #{new_user.login}"
+          new_user=nil 
+        end
+      else
+        puts name+" projet "+proj.inspect+" non sauve"
+        new_user=nil
+      end
+    else
+      puts name+" manque des objets associes"
+      puts name+"admin="+admin.inspect 
+      puts name+"group_consultants="+group_consultants.inspect 
+      puts name+"role_consultant="+role_consultant.inspect 
+      puts name+"proj="+proj.inspect 
+      puts name+"type user="+type.inspect 
+      puts name+"type_proj="+type_proj.inspect 
+      puts name+"typeacc_proj="+typeacc_proj.inspect 
+      new_user=nil
+    end
+    new_user
+  end
+  
   def self.find_by_name(name)
     find(:first , :conditions => ["login = '#{name}' "])
   end
@@ -70,9 +177,9 @@ class User < ActiveRecord::Base
   def model_name
     "user"
   end
-  def typesobject
-    Typesobject.find_by_object(model_name)
-  end
+  #def typesobject
+  #  Typesobject.find_by_object(model_name)
+  #end
   def ident
     self.login+"/"+(self.role.nil? ? " " :self.role.title)+"/"+(self.group.nil? ? " " : self.group.name)
   end
@@ -85,7 +192,7 @@ class User < ActiveRecord::Base
     #puts __FILE__+".authenticate:"+log+":"+pwd
     user = self.find_by_login(log)
     if user
-      if (user.salt.nil? || user.salt == "") && log==::SYLRPLM::ADMIN_USER_NAME
+      if (user.salt.nil? || user.salt == "") && log==::SYLRPLM::USER_ADMIN
         user.update_attributes({"salt" => "1234", "hashed_password" => encrypted_password(pwd, "1234")})
       end
       expected_password = encrypted_password(pwd, user.salt)
@@ -134,9 +241,9 @@ class User < ActiveRecord::Base
   #
   def is_admin?
     #puts "is_admin:"+login+" ADMIN_USER_NAME"+::SYLRPLM::ADMIN_USER_NAME+" ADMIN_GROUP_NAME="+ADMIN_GROUP_NAME
-    ret = login==::SYLRPLM::ADMIN_USER_NAME
+    ret = login==::SYLRPLM::USER_ADMIN
     if ret==false
-      ret=group_names.include?(::SYLRPLM::ADMIN_GROUP_NAME) 
+      ret=group_names.include?(::SYLRPLM::GROUP_ADMINS) 
     end
     ret
   end
@@ -184,6 +291,19 @@ class User < ActiveRecord::Base
     is_admin? || store_names.include?(workitem.store_name)
   end
   
+  #
+  # Returns true if the user can send email
+  #
+  def may_send_email?
+    ret = true
+    askUserMail=self.email
+    if askUserMail.blank?
+      puts "User.may_send_email? :pas de mail"
+      ret=false
+    end
+    ret
+  end
+  
   # peut creer des objets avec accessor
   def may_access?
     !self.role.nil? && !self.group.nil? && !self.project.nil?
@@ -191,10 +311,12 @@ class User < ActiveRecord::Base
   
   # peut se connecter
   def may_connect?
-    #puts "user.may_connect:"+ self.roles.empty?.to_s + "." + self.groups.empty?.to_s + "." + self.projects.empty?.to_s
-    ret=!self.roles.empty? && !self.groups.empty? && !self.projects.empty?
-    #puts "user.may_connect:"+ret.to_s
+    return true
+    puts "user.may_connect:type:"+ self.typesobject.name + ".role:"+ self.roles.empty?.to_s + ".group:" + self.groups.empty?.to_s + ".proj:" + self.projects.empty?.to_s
+    ret=!self.typesobject.nil? && self.typesobject.name != ::SYLRPLM::TYPE_USER_NEW_ACCOUNT && !self.roles.empty? && !self.groups.empty? && !self.projects.empty?
+    puts "user.may_connect:"+ret.to_s
     ret
+    
   end
 
   def self.notifications

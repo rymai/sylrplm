@@ -1,4 +1,15 @@
-<%= t(:notification_notify)%>
-<br>
-<%= render(:partial => "notifications/index", :locals=>{:fonct=>"notify"}) %>
-
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+		<title><%= controller.action_name %></title>
+		<%= stylesheet_link_tag @theme+"/frame", :media => "all" %>
+	</head>
+	<body id="sylrplm">
+		<div id="container">
+			<h1><%= t(:notification_notify)%></h1>
+			<br>
+			<%= render(:partial => "notifications/index", :locals=>{:fonct=>"notify"}) %>
+		</div>
+	</body>
+</html>

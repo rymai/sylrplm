@@ -49,4 +49,8 @@ class Typesobject < ActiveRecord::Base
     ret
       #conditions = ["object LIKE ? or name LIKE ? or description LIKE ? ",
   end
+  
+  def ident
+    object+"."+name
+  end
 end

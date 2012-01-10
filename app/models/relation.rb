@@ -22,12 +22,15 @@ class Relation < ActiveRecord::Base
     errors.add_to_base I18n.t("valid_relation_cardin_occur_max") if cardin_occur_max != -1 && cardin_occur_max < cardin_occur_min
     errors.add_to_base I18n.t("valid_relation_cardin_use_max") if cardin_use_max != -1 && cardin_use_max < cardin_use_min
   end
+
   def link_attributes=(att)
     @link_attributes = att
   end
+
   def link_attributes
     @link_attributes
   end
+
   def self.create_new(params)
     if(params!=nil)
       obj=Relation.new(params)
@@ -61,15 +64,19 @@ class Relation < ActiveRecord::Base
   end
 
   def self.relations_for_type(type_object)
+    name="Relations."+__method__.to_s+":"
     ret={}
+    ret[::SYLRPLM::PLMTYPE_GENERIC] = []
     Typesobject.get_objects_with_type.each do |t|
       ret[t] = []
     end
+    cond="father_plmtype = '"+type_object.to_s+"' or father_plmtype = '"+::SYLRPLM::PLMTYPE_GENERIC+"'"
+    #puts name+cond
     find(:all, :order => "name",
-      :conditions => ["father_plmtype = '"+type_object.to_s+"'"]).each do |rel|
-      ret[rel.child_plmtype] << rel
+      :conditions => [cond]).each do |rel|
+      ret[type_object] << rel
     end
-    #puts __FILE__+"."+__method__.to_s+":"+ret.inspect
+    #puts name+ret.inspect
     ret
   end
 
@@ -96,7 +103,7 @@ class Relation < ActiveRecord::Base
     find(:first,
       :conditions => [ cond ])
   end
-  
+
   def self.by_types(father_plmtype, child_plmtype, father_type_id, child_type_id)
     cond="father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and father_type_id='#{father_type_id}' and child_type_id='#{child_type_id}' "
     puts __FILE__+"."+__method__.to_s+":"+cond
@@ -110,5 +117,5 @@ class Relation < ActiveRecord::Base
     ret["types_child"]=types_child
     ret
   end
-  
+
 end

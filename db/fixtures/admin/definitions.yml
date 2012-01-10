@@ -2,11 +2,13 @@ embedded:
   id: 1
   name: "*embedded*"
   description: the right to start processes embedded in launch items
+  internal: true
 
 untracked:
   id: 2
   name: "*untracked*"
   description: the right to launch processes from any URI
+  internal: true
 
 simple:
   id: 3

@@ -1,6 +1,5 @@
 class DocumentsController < ApplicationController
   include Controllers::PlmObjectControllerModule
-  include Controllers::PlmInitControllerModule
   before_filter :check_init, :only => :new
   #droits d'acces suivant le controller et l'action demandee
   #administration par le menu Access

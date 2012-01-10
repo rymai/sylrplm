@@ -99,8 +99,8 @@ private
   #
   def self.access_roles
     ret={:cat_admins=>[], :cat_consultants=>[], :cat_creators=>[]}
-    admin = Role.find_by_name(::SYLRPLM::ADMIN_ROLE)
-    consultant = Role.find_by_name(::SYLRPLM::CONSULTANT_ROLE)
+    admin = Role.find_by_name(::SYLRPLM::ROLE_ADMIN)
+    consultant = Role.find_by_name(::SYLRPLM::ROLE_CONSULTANT)
     ret[:cat_admins] << admin.title unless admin.nil?
     #ret[:cat_consultants] = cons.users.collect{ |u| u.login } unless cons.nil?
     ret[:cat_consultants] << consultant.title unless consultant.nil?

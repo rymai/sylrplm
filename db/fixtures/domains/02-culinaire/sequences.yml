@@ -104,7 +104,7 @@
    
 31:
   id: 31
-  value: "local_vault"
+  value: fog
   min: 
   max: 
   utility: Volume.protocole

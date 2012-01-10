@@ -1,36 +1,43 @@
-1: 
+admin: 
     id: 1
-    title: admin
-    description: Administrateur
-     
-2: 
+    title: <%= ::SYLRPLM::ROLE_ADMIN %>
+    description: "Administrateur"
+    internal: true
+
+consultant: 
     id: 2
-    title: analyste
-    description: |
-      Effectue des etudes de marche et ecrit le cdc.
-      Elabore l'expression de besoin.
-      
-3: 
+    title: "<%= ::SYLRPLM::ROLE_CONSULTANT %>"
+    description: "Peut voir les donnees sans pouvoir les modifier"
+    internal: true
+    
+creator: 
     id: 3
-    title: designer
-    description: "Modelise les produits: 3D et plans"
+    title: <%= ::SYLRPLM::ROLE_CREATOR %>
+    description: "Ecrit les specifications des produits"
+    internal: true
 
-4: 
-    id: 4
-    title: valider
-    description: Valide les processus du cycle de vie des donnees
+analyst: 
+    id: 101
+    title: <%= ::SYLRPLM::ROLE_ANALYST %>
+    description: |
+      "Effectue des etudes de marche et ecrit le cdc.
+      Elabore l'expression de besoin."
+      
+designer: 
+    id: 102
+    title: <%= ::SYLRPLM::ROLE_DESIGNER %>
+    description: "Modelise les produits"
+    internal: true
 
-5: 
-    id: 5
-    title: CP
-    description: Responsable du planning, des ressources
+valider: 
+    id: 103
+    title: <%= ::SYLRPLM::ROLE_VALIDER %>
+    description: "Valide les processus du cycle de vie des donnees"
+    internal: true
 
-6: 
-    id: 6
-    title: consultant
-    description: Peut voir les donnees sans pouvoir les modifier
+project_manager: 
+    id: 104
+    title: <%= ::SYLRPLM::ROLE_PROJECT_MANAGER %>
+    description: "Responsable du planning, des ressources"
+    internal: true
 
-9: 
-    id: 9
-    title: concepteur
-    description: Ecrit les specifications des produits

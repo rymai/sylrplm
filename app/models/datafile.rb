@@ -103,7 +103,7 @@ class Datafile < ActiveRecord::Base
   end
 
   def dir_repository
-    if self.volume.protocole == "fog"
+    if self.volume.protocol == "fog"
       ret=self.volume.dir_name.gsub("/",".").gsub("_","-")+"-"+self.class.name+"-"+self.ident
       if ret.start_with?(".")
       ret=ret[1,ret.length-1]
@@ -117,7 +117,7 @@ class Datafile < ActiveRecord::Base
   def repository
     # on prend le volume du fichier lui meme
     if(self.filename!=nil)
-      if self.volume.protocole == "fog"
+      if self.volume.protocol == "fog"
         ret = dir_repository+"."+filename_repository
       else
         ret = File.join(dir_repository, filename_repository)
@@ -137,7 +137,7 @@ class Datafile < ActiveRecord::Base
   # renvoie les differentes revisions du fichier existantes dans le repository
   def revisions_files
     ret=[]
-    if self.volume.protocole == "fog"
+    if self.volume.protocol == "fog"
       dir=SylrplmFog.instance.directory(dir_repository)
       dir.files.each do |file|
         ret<<file.key.to_s
@@ -195,7 +195,7 @@ class Datafile < ActiveRecord::Base
   end
 
   def read_file
-    if self.volume.protocole == "fog"
+    if self.volume.protocol == "fog"
       fog_file=SylrplmFog.instance.retrieve(self.dir_repository, self.filename_repository)
       data=nil
     data=fog_file.body unless fog_file.nil?
@@ -220,7 +220,7 @@ class Datafile < ActiveRecord::Base
   end
 
   def create_dir
-    if self.volume.protocole == "fog"
+    if self.volume.protocol == "fog"
       dir=SylrplmFog.instance.create_directory(dir_repository)
     else
       FileUtils.mkdir_p(dir_repository)
@@ -229,7 +229,7 @@ class Datafile < ActiveRecord::Base
 
   def write_file(content)
     repos=self.repository
-    if self.volume.protocole == "fog"
+    if self.volume.protocol == "fog"
       fog_file=SylrplmFog.instance.upload_content(dir_repository, self.filename_repository, content)
       puts "write_file:"+fog_file.inspect
     else
@@ -283,7 +283,7 @@ class Datafile < ActiveRecord::Base
 
   end
   def remove_files
-    if self.volume.protocole == "fog"
+    if self.volume.protocol == "fog"
       dir=SylrplmFog.instance.directory(dir_repository)
       unless dir.nil?
         dir.files.each do |file|

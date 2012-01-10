@@ -230,9 +230,9 @@ module Models::PlmObject
   def ok_for_show?(user)
     acc_public = Typesobject.find_by_object_and_name("project_typeaccess", "public")
     #index possible meme sans user connecte
-    puts "ok_for_show? acc_public:"+self.projowner.typeaccess.name+"=="+acc_public.name
+    #puts "ok_for_show? acc_public:"+self.projowner.typeaccess.name+"=="+acc_public.name
     unless user.nil?
-      puts "ok_for_show? group:"+self.group.name+"=="+user.group.name
+      #puts "ok_for_show? group:"+self.group.name+"=="+user.group.name
       (self.group_id==user.group.id || self.projowner.typeaccess_id==acc_public.id)
     else
       (self.projowner.typeaccess_id==acc_public.id)

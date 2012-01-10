@@ -1,0 +1,12 @@
+<%= t(:hello)%>
+<br>
+<p>
+	<b><%= t(:label_username)%></b>
+	<%= h @user.login %>
+</p>
+<p>
+	<b><%= t(:label_email)%></b>
+	<%= h @user.email %>
+</p>
+<b><%= "Activer ce compte:"%> </b>
+<a href="<%= @urlbase %><%= url_for(:controller=>'sessions', :action=>'activate', :id => @user.id) %>" title="<%= @user.login %>" ><%= @user.login %> </a>

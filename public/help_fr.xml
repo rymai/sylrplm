@@ -1,6 +1,12 @@
 <sylrplm_help >
     <msg key="help_main" title="Documentation de l'application SYLPLM">
     Bienvenue dans l'application SYLRPLM développée sur "Ruby On Rails"#img=rails.png=img##lnk=http://www.railsfrance.org/=lnk#"
+    <msg key="help_first_use" title="Prise en main">
+    	Pour une première prise en main, vous pouvez parcourir, en tant que visiteur, les différents menus de gauche pour consulter les données gérées par l'application.
+    	Certains des menus vous demanderons de vous connecter car ils permettent de voir plus de données et d'en modifier certaines.
+    	Vous pourrez alors soit donner un identifiant et mot de passe que vous possédez ou indiquer celui que vous voulez créer.
+    	Ceci vous permettra, dans un premier temps en tant que consultant, de voir plus de données. 
+    </msg>
     <msg key="help_presentation" title="Présentation générale">
         <msg key="help_banner" title="Bandeau">
         		Au démarrage de l'application

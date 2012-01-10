@@ -18,7 +18,7 @@ class Sequence < ActiveRecord::Base
     Module.constants.select do |constant_name|
       constant = eval constant_name
       isClass=constant.is_a? Class
-      puts 'ApplicationController.get_constants='+constant.to_s+' class='+isClass.to_s
+      puts 'Sequence.get_constants='+constant.to_s+' class='+isClass.to_s
       #if not constant.nil? && isClass && constant.extend? ActiveRecord::Base
       
     end

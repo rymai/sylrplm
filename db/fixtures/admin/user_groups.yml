@@ -1,100 +1,67 @@
-attributes1-1: 
+admin-1:
     user_id: 1
     group_id: 1
   
-attributes1-2: 
+admin-2: 
     user_id: 1
     group_id: 2
   
-attributes1-4:
+admin-3:
+    user_id: 1
+    group_id: 3
+  
+admin-4:
     user_id: 1
     group_id: 4
   
-attributes1-5:
+admin-101:
     user_id: 1
-    group_id: 5
+    group_id: 101
   
-attributes1-6: 
+admin-102:
     user_id: 1
-    group_id: 6
+    group_id: 102
   
-attributes1-7:
+admin-103:
     user_id: 1
-    group_id: 7
-  
-attributes1-9:
+    group_id: 103
+
+admin-104:
     user_id: 1
-    group_id: 9
+    group_id: 104
   
-attributes2-4:
-    user_id: 2
-    group_id: 4
-  
-attributes2-5: 
-    user_id: 2
-    group_id: 5
-  
-attributes2-9:
-    user_id: 2
-    group_id: 9
-  
-attributes5-5: 
-    user_id: 5
-    group_id: 5
-  
-attributes5-6:
-    user_id: 5
-    group_id: 6
-  
-attributes5-9: 
-    user_id: 5
-    group_id: 9
-  
-attributes6-2: 
-    user_id: 6
+syl-2:
+    user_id: 101
     group_id: 2
   
-attributes6-5: 
-    user_id: 6
-    group_id: 5
+syl-3:
+    user_id: 101
+    group_id: 3
   
-attributes6-9: 
-    user_id: 6
-    group_id: 9
-  
-attributes7-4: 
-    user_id: 7
+syl-4:
+    user_id: 101
     group_id: 4
   
-attributes7-9: 
-    user_id: 7
-    group_id: 9
+102-2: 
+    user_id: 102
+    group_id: 2
   
-attributes9-6: 
-    user_id: 9
-    group_id: 6
-  
-attributes9-9: 
-    user_id: 9
-    group_id: 9
-  
-attributes10-5:
-    user_id: 10
-    group_id: 5
-  
-attributes10-6: 
-    user_id: 10
-    group_id: 6
-  
-attributes10-8: 
-    user_id: 10
-    group_id: 8
-  
-attributes11-5: 
-    user_id: 11
-    group_id: 5
-  
-attributes11-8: 
-    user_id: 11
-    group_id: 8
-  
+103-2: 
+    user_id: 103
+    group_id: 2
+    
+104-2: 
+    user_id: 104
+    group_id: 2
+    
+105-2: 
+    user_id: 105
+    group_id: 2
+    
+106-2: 
+    user_id: 106
+    group_id: 2
+    
+107-2: 
+    user_id: 107
+    group_id: 2

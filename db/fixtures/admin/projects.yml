@@ -1,13 +1,14 @@
-default:
+def_project:
     id: 1
+    ident: <%= ::SYLRPLM::USER_PROJECT_IDENT %><%= ::SYLRPLM::USER_ADMIN %>
+    designation: "Projet par defaut pour l'administrateur"
     owner_id: 1
-    typesobject_id: 16
-    typeaccess_id: 10002
-    statusobject_id: 1
-    ident: "#DEF_PROJECT"
-    designation: "Projet par defaut"
+    typesobject_id: 2
+    typeaccess_id: 5
+    statusobject_id: 10
     group_id: 1
     date: <%= DateTime.now %>
+    internal: true
     
     
       

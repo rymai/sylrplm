@@ -46,6 +46,12 @@ class Project < ActiveRecord::Base
   def link_attributes
     @link_attributes
   end
+  
+  # renvoie le nom du projet affecte par defaut au user
+  def for_user(username)
+    ::SYLRPLM::USER_PROJECT_IDENT+username
+  end
+  
   # modifie les attributs avant edition
   def self.find_edit(object_id)
     obj=find(object_id)

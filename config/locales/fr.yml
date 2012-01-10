@@ -116,28 +116,12 @@ fr:
   ctrl_link_document_datafile: Relation document / fichier
   # info
   info_object_not_found: SYLRPLM_ERROR-%{context}-%{typeobj} non trouvé(e) - %{id}
-  # login
-  ctrl_role_needed: Renseigner le rôle
-  ctrl_invalid_login: Nom utilisateur ou mot de passe invalide
-  ctrl_user_without_roles: Cet utilisateur n'a pas de rôles
-  ctrl_user_without_groups: Cet utilisateur n'est affecté à aucun groupe
-  ctrl_user_without_projects: Cet utilisateur collabore à aucun projet
-  ctrl_user_needed: Renseigner l'utilisateur
-  ctrl_user_created: Utilisateur %{user} crée
-  ctrl_user_not_created: Utilisateur %{user} non crée
-  ctrl_user_updated: Utilisateur %{user} modifié
-  ctrl_user_not_updated: Utilisateur %{user} non modifié
-  ctrl_user_deleted: "Utilisateur %{user} supprimé"
-  ctrl_user_connected: "Utilisateur %{user} connecté !"
-  ctrl_user_not_connected: Non connecté
-  ctrl_user_disconnected: "Utilisateur %{user} déconnecté !"
-  ctrl_user_role: Rôle=%{role}
   # main
   ctrl_plm_objects: Objets PLM
   ctrl_collab_objects: Objets de collaboration
   ctrl_internal_objects: Objets internes
   ctrl_admin: Objets d'administration
-  ctrl_workflow_objects: Définitions de processus
+  ctrl_workflow_objects: Processus
   ctrl_relation: Types de relation
   # notification
   ctrl_notify: "%{nb_total} Notifications effectuées à %{nb_users} utilisateurs : %{notifications} "
@@ -157,6 +141,25 @@ fr:
   ctrl_role: Rôle
   # sequences
   ctrl_sequence: Valeur par défaut
+  # session
+  ctrl_role_needed: Renseigner le rôle
+  ctrl_invalid_login: Nom utilisateur ou mot de passe invalide
+  ctrl_user_without_roles: Cet utilisateur n'a pas de rôles
+  ctrl_user_without_groups: Cet utilisateur n'est affecté à aucun groupe
+  ctrl_user_without_projects: Cet utilisateur collabore à aucun projet
+  ctrl_user_needed: Renseigner l'utilisateur
+  ctrl_user_created: Utilisateur %{user} crée
+  ctrl_user_not_created: Utilisateur %{user} non crée
+  ctrl_user_not_valid: Utilisateur %{user} en cours de validation
+  ctrl_new_account_not_created: Nouveau compte %{user} non crée, réessayer ultérieurement puis ecrivez à l'administrateur
+  ctrl_user_updated: Utilisateur %{user} modifié
+  ctrl_user_not_updated: Utilisateur %{user} non modifié
+  ctrl_user_deleted: "Utilisateur %{user} supprimé"
+  ctrl_user_connected: "Utilisateur %{user} connecté !"
+  ctrl_user_not_connected: Non connecté
+  ctrl_user_disconnected: "Utilisateur %{user} déconnecté !"
+  ctrl_user_role: Rôle=%{role}
+  ctrl_account_needed: Renseigner le compte 
   # statusobjects
   ctrl_statusobject: Statut objet
   # typesobjects
@@ -201,6 +204,7 @@ fr:
   # views
   #########################################
   # general
+  label_internal: Interne
   label_projowner: Projet
   modif_status: Modifier le statut
   label_created_at: Création
@@ -257,6 +261,7 @@ fr:
   create: Créer 
   copy: Copier
   destroy: "Supprimer"
+  remove_all: "Vider"
   cancel: Annuler
   menu_action: Action(s)
   # attributs generaux
@@ -453,11 +458,14 @@ fr:
   legend_main: Accueil
   legend_plm_objects: Objets PLM
   legend_collab: Collaboratif
+  legend_admin: Administration
   legend_organization: Organisation 
   legend_param: Paramétrage
   legend_debug: Debug
   legend_clipboard: Presse papier
-  submit: GO
+  submit: GO 
+  CV: Curriculum vitae
+  help_first_use: Si vous débutez, vous pouvez profiter de la prise en main avant de lire complètement la documentation ci dessous
   # notifications
   legend_notification: Renseignez les propriétés de la notification
   notification_edit: Edition notification 
@@ -482,8 +490,9 @@ fr:
   part_tovalidate: "Ceci est une demande de validation pour la part"
   check_object_and_promote: "Merci de verifier cet objet et d'effectuer une promotion par le menu suivant"
   direct_access: "Accès direct"
-  notification_notify: Notification des evenements concernant vos donnees
+  notification_notify: Notification des évènements concernant vos données
   button_notify: Voir la notification
+  label_object_type: Type de donnée
   # processes
   legend_processes: Processus
   mnu_flw_workitems: Mes actions
@@ -560,8 +569,13 @@ fr:
   label_modify: Modifiable
   label_sequence: Séquence
   # session
-  legend_login: Indiquer votre identifiant/mot de passe, si il n'existe pas, il sera crée
+  legend_login: Indiquez votre identifiant et mot de passe ou demandez un compte
+  legend_new_account: Renseignez les informations nécessaires à la création de votre compte 
+  submit_account: Valider le compte
   submit_login: Login
+  submit_new_account: Demande de compte
+  submit_create_account: Création du compte
+  label_new_email: Adresse de messagerie 
   # statusobjects
   legend_statusobject: "Renseignez les propriétés du statut d' objets"
   statusobjects_list: Liste des statuts d' objets

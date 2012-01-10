@@ -1,5 +1,8 @@
 <h1><%= t(:hello) %></h1>
-<h2><%= t(:tit_language) %><%= I18n.locale.to_s %></h2>
+<!-- <h2><%= t(:tit_language) %><%= I18n.locale.to_s %></h2> -->
+<p class='notice'>
+	<%= t(:help_first_use)%><%= show_help(:help_first_use,true) %>
+</p>
 <% unless User.count == 0 %> <h2><%= t(:datas_in_database) %></h2>
 <table>
 	<tr>
@@ -61,8 +64,9 @@
 	</tr>
 </table>
 <% end %>
-<hr>
-<%= h_help("help_init_db")[:text] %>
+<H1><%= h_help("help_init_db")[:title] %></H1>
+<p><%= h_help("help_init_db")[:text] %></p>
+
 <%end %>
 
 <% end %> 

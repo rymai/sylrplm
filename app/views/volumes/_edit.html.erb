@@ -11,9 +11,9 @@
 	<br/>
 	<%= f.label t(:label_protocol) %>
 	<% if fonct=="edit" %>
-	<%= f.text_field :protocole , :readonly=>(fonct=="edit") %>
+	<%= f.text_field :protocol , :readonly=>(fonct=="edit") %>
 	<% else %> 
-	<%= f.select( :protocole, Volume.protocole_values) %>
+	<%= f.select( :protocol, Volume.protocol_values) %>
 	<% end %>
 	<br/>
 	<%= f.label t(:label_description) %>

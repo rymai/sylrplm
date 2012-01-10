@@ -10,4 +10,5 @@ admin_project:
   owner_id: 1
   group_id: 1
   projowner_id: 1
+  internal: true
   

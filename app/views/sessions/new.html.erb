@@ -1,18 +1,19 @@
-<% form_for :session, :url => {:controller=>:sessions , :action=>:create} do |form| %> 
+<% form_for :session, :url => {:controller=>:sessions , :action=>:create} do |form| %>
 <fieldset>
 	<legend>
 		<%= t(:legend_login) %>
 	</legend>
-	<label for="name"> <%= t(:label_username) %> </label>
-	<%= text_field_tag :login, params[:login] %>
+	<%= form.label t(:label_username) %>
+	<%= form.text_field :login %> <%= submit_tag t(:submit_new_account) %>
 	<br/>
-	<label for="password"> <%= t(:label_password) %> </label>
-	<%= password_field_tag :password, params[:password] %>
+	<%= form.label t(:label_password) %>
+	<%= form.password_field :password %>
 	<br/>
+	<table class='menu_bas'>
+		<tr>
+			<td> <%= submit_tag t(:submit_account) %> </td>
+			<td></td>
+		</tr>
+	</table>
 </fieldset>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= submit_tag t(:submit_login) %> </td>
-	</tr>
-</table>
 <% end %> 

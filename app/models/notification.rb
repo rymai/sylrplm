@@ -86,6 +86,7 @@ class Notification < ActiveRecord::Base
   
   def self.notify_all(id)
     name=":"+self.class.name+"."+__method__.to_s+":"
+    from=User.find_by_login(::SYLRPLM::USER_ADMIN)
     ret=[]
     if id.nil? || id == "all"
       notifs=self.find(:all, :conditions => ["notify_date is null"])
@@ -112,7 +113,7 @@ class Notification < ActiveRecord::Base
           puts to_notify.inspect
           notifs={}
           notifs[:recordset]=to_notify
-          email=PlmMailer.create_notify(notifs, SYLRPLM::ADMIN_MAIL, user)
+          email=PlmMailer.create_notify(notifs, from, user)
           unless email.nil?
             email.set_content_type("text/html")
             PlmMailer.deliver(email)

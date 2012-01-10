@@ -52,11 +52,15 @@ module ApplicationHelper
     bloc
   end
 
-  def show_help(key)
-    txt=t(key)
+  def show_help(key, with_img = true)
+    txt=t(key.to_s)
     bloc=""
-    bloc<<"<img class=\"help\" id=\"#{key}\"  src=\"/images/help.png\"
-    onclick=\"return helpPopup('#{key}');\">"
+    if with_img
+      bloc<<"<img class=\"help\" id=\"#{key.to_s}\"  src=\"/images/help.png\" 
+    onclick=\"return helpPopup('#{key.to_s}');\" >"
+    else
+      bloc<<"<a href='/help?help="+key.to_s+"' onclick=\"return helpPopup('#{key.to_s}');\">"+txt+"</a>"
+    end
     bloc
   end
 
@@ -93,7 +97,8 @@ module ApplicationHelper
   end
 
   def icone(object)
-    type=object.model_name.to_s+"_"+object.typesobject.name.to_s
+    type=object.model_name.to_s
+    type+="_"+object.typesobject.name.to_s unless object.typesobject.nil?
     fic="images/"+type+".png"
     if !File.exists?(fic)
       type=object.model_name.to_s
@@ -122,9 +127,11 @@ module ApplicationHelper
   def h_img_destroy
     h_img("destroy")
   end
+
   def h_img_checkout
     h_img("img_checkout")
   end
+
   def h_img_checkin
     h_img("img_checkin")
   end

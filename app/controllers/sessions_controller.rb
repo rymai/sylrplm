@@ -9,19 +9,96 @@ class SessionsController < ApplicationController
     #puts "sessions_controller.edit"+params.inspect
   end
 
+  # activation d'un nouveau compte
+  # appelle depuis un mail envoye par PLMMailer.new_login
+  def activate
+    puts "sessions_controller.activate"+params.inspect
+    user = User.find(params[:id])
+    unless user.nil?
+      type=Typesobject.find_by_object_and_name(User.model_name, User.USER_TYPE_PERSON)
+      user.typesobject=type
+      if user.save
+        @current_user = user
+        session[:user_id] = user.id
+        flash[:notice]    = t(:ctrl_role_needed)
+        respond_to do |format|
+          format.html { render :action => :edit }
+          format.xml  { head :ok }
+        end
+      else
+        flash[:notice]    = t(:ctrl_new_account_not_created, :user=>user.login)
+        format.html { render :new }
+        format.xml  {render :xml => errs, :status => :unprocessable_entity }
+      end
+    end
+  end
+
   def create
-    #puts "sessions_controller.create"+params.inspect
-    flash.now[:notice] = "post"
-    if current_user.nil?
-      cur_user = User.authenticate(params["login"], params["password"])
+    par=params[:session]
+    puts "sessions_controller.create"+params.inspect
+    if params["commit"]  == t(:submit_account)
+      # compte renseigne (new)
+      cur_user = User.authenticate(par["login"], par["password"])
+      unless cur_user.nil?
+        # use reconnu, verif si il peut se connecter (role, groupe, projet, ...)
+        flash[:notice] = check_user_connect(cur_user)
+        if flash[:notice].nil?
+          @current_user = cur_user
+          session[:user_id] = cur_user.id
+          flash[:notice]    = t(:ctrl_role_needed)
+          respond_to do |format|
+            format.html { render :action => :edit }
+            format.xml  { head :ok }
+          end
+        else
+          @current_user=nil
+          session[:user_id] = nil
+          respond_to do |format|
+            format.html { render :new }
+            format.xml  {render :xml => errs, :status => :unprocessable_entity }
+          end
+        end
+      end
+
+    elsif params[:commit] == t(:submit_new_account)
+      # demande de compte, on demande plus d'infos
+      flash[:notice]    = t(:ctrl_account_needed)
       respond_to do |format|
-        if cur_user
+        format.html { render :action => :new_account }
+        format.xml  { head :ok }
+
+      end
+    end
+    puts "sessions_controller.create:fin"
+  end
+
+  def create_new_account
+    puts "sessions_controller.create_new_account"+params.inspect
+    puts "create:validation du compte"
+    par=params[:session]
+    # validation du compte
+    # nouvel utilisateur potentiel
+    respond_to do |format|
+      if par["login"].empty? || par["password"].empty? || par["new_email"].empty? || par["language"].empty?
+        puts "create:validation du compte ko"
+        @current_user=nil
+        session[:user_id] = nil
+        flash[:notice] =t(:ctrl_invalid_login)
+        format.html { render :new }
+        format.xml  { render :xml => errs, :status => :unprocessable_entity }
+      else
+        puts "create:validation du compte ok"
+        # tout est saisis: creation du nouveau compte
+        cur_user=User.create_new_login(par, @urlbase)
+        puts "sessions_controller.create:cur_user="+cur_user.inspect
+        unless cur_user.nil?
           flash[:notice] = check_user_connect(cur_user)
           if flash[:notice].nil?
             @current_user = cur_user
             session[:user_id] = cur_user.id
             flash[:notice]    = t(:ctrl_role_needed)
             format.html { render :action => "edit" }
+            format.xml  { head :ok }
           else
             @current_user=nil
             session[:user_id] = nil
@@ -29,73 +106,52 @@ class SessionsController < ApplicationController
             format.xml  {render :xml => errs, :status => :unprocessable_entity }
           end
         else
-        # nouvel utilisateur potentiel
-          if params["login"].empty? || params["password"].empty?
-            @current_user=nil
-            session[:user_id] = nil
-            flash[:notice] =t(:ctrl_invalid_login)
-            format.html { render :new }
-            format.xml  { render :xml => errs, :status => :unprocessable_entity }
-          else
-          # username et password saisis: nouvel utilisateur
-            params.delete("authenticity_token")
-            params.delete("commit")
-            params.delete("controller")
-            params.delete("action")
-            params["volume_id"]=1
-            group_consultants=Group.find_by_name("consultants")
-            role_consultant=Role.find_by_title("consultant")
-            proj=Project.find_by_ident("PROJET")
-            params["group_id"]=group_consultants.id
-            params["role_id"]=role_consultant.id
-            params["project_id"]=proj.id
-            cur_user=User.create_new(params)
-            if cur_user.save
-              cur_user.groups<<group_consultants
-              cur_user.roles<<role_consultant
-              relation = Relation.by_types(proj.model_name, cur_user.model_name, proj.typesobject.id, cur_user.typesobject.id)
-              link = Link.create_new(proj, cur_user, relation, cur_user)
-              link[:link].save
-              flash[:notice] = check_user_connect(cur_user)
-              if flash[:notice].nil?                
-                @current_user = cur_user
-                session[:user_id] = cur_user.id
-                flash[:notice]    = t(:ctrl_role_needed)
-                format.html { render :action => "edit" }
-              else
-                @current_user=nil
-                session[:user_id] = nil
-                format.html { render :new }
-                format.xml  {render :xml => errs, :status => :unprocessable_entity }
-              end
-            end
-          end
-        end
-      end
-    else
-      respond_to do |format|
-        if @current_user.update_attributes(params[:session])
-          session[:user_id] = @current_user.id
-          uri=session[:original_uri]
-          session[:original_uri]=nil
-          flash[:notice] = t(:ctrl_user_connected, :user => current_user.login)
-          format.html { redirect_to_main(uri) }
-          format.xml  { head :ok }
-        else
-          errs=@current_user.errors
-          flash[:notice] = t(:ctrl_user_not_connected, :user => @current_user.login)
-          @current_user=nil
-          session[:user_id] = nil
+          flash[:notice]    = t(:ctrl_new_account_not_created, :user=>par["login"])
           format.html { render :new }
-          format.xml  { render :xml => errs, :status => :unprocessable_entity }
+          format.xml  {render :xml => errs, :status => :unprocessable_entity }
         end
       end
     end
 
   end
 
-  def update
-    #puts "sessions_controller.update"+params.inspect
+  def login
+    puts "sessions_controller.login"+params.inspect
+    par=params[:session]
+    if params[:commit] == t(:submit_login)
+      cur_user = User.find(params[:user_id])
+      # user reconnu (vue edit) : prise en compte du role, groupe, projet
+      unless cur_user.nil?
+        @current_user = cur_user
+        session[:user_id] = cur_user.id
+        if @current_user.update_attributes(par)
+          session[:user_id] = @current_user.id
+          uri=session[:original_uri]
+          session[:original_uri]=nil
+          flash[:notice] = t(:ctrl_user_connected, :user => current_user.login)
+          respond_to do |format|
+            format.html { redirect_to_main(uri) }
+            format.xml  { head :ok }
+          end
+        else
+          errs=@current_user.errors
+          flash[:notice] = t(:ctrl_user_not_connected, :user => @current_user.login)
+          @current_user=nil
+          session[:user_id] = nil
+          respond_to do |format|
+            format.html { render :new }
+            format.xml  { render :xml => errs, :status => :unprocessable_entity }
+          end
+        end
+      else
+        @current_user=nil
+        session[:user_id] = nil
+        respond_to do |format|
+          format.html { render :new }
+          format.xml  {render :xml => errs, :status => :unprocessable_entity }
+        end
+      end
+    end
   end
 
   def destroy

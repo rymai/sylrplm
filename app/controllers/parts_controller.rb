@@ -1,6 +1,5 @@
 class PartsController < ApplicationController
   include Controllers::PlmObjectControllerModule
-  include Controllers::PlmInitControllerModule
   before_filter :check_init, :only => :new
   access_control(Access.find_for_controller(controller_class_name))
   before_filter :check_user, :only => [:new, :edit]

@@ -69,7 +69,7 @@ class QuestionsController < ApplicationController
     @faq.destroy
     flash[:message] = flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_faq),:ident=>id)
     respond_to do |format|
-      format.html { redirect_to(faqs_url) }
+      format.html { redirect_to(:questions) }
       format.xml  { head :ok }
     end
   end

@@ -107,6 +107,6 @@
   value: "local_vault"
   min: 
   max: 
-  utility: Volume.protocole
+  utility: Volume.protocol
   modify: false
   sequence: false
