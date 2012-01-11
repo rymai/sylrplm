@@ -16,7 +16,6 @@ class RelationsController < ApplicationController
   # GET /relations/1.xml
   def show
     @relation = Relation.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @relation }
@@ -26,11 +25,9 @@ class RelationsController < ApplicationController
   # GET /relations/new
   # GET /relations/new.xml
   def new
-    puts __FILE__+"."+__method__.to_s+":"+params.inspect
+    #puts __FILE__+"."+__method__.to_s+":"+params.inspect
     @relation = Relation.create_new(nil)
     @datas = @relation.datas
-    @types_plm = Typesobject.get_objects_with_type
-    @types    = Typesobject.get_types("relation")
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @relation }
@@ -42,19 +39,15 @@ class RelationsController < ApplicationController
     #puts __FILE__+"."+__method__.to_s+":"+params.inspect
     @relation = Relation.find(params[:id])
     @datas = @relation.datas
-    @types_plm = Typesobject.get_objects_with_type
-    @types    = Typesobject.get_types("relation")
   end
 
   # POST /relations
   # POST /relations.xml
   def create
-     puts __FILE__+"."+__method__.to_s+":"+params.inspect
+    #puts __FILE__+"."+__method__.to_s+":"+params.inspect
     @relation = Relation.create_new(params[:relation])
     @datas = @relation.datas
-    @types_plm = Typesobject.get_objects_with_type
-    @types_all = Typesobject.get_all
-    @types    = Typesobject.get_types("relation")
+    ###@types_all = Typesobject.get_all
     respond_to do |format|
       if @relation.save
         format.html { redirect_to(@relation, :notice => 'Relation was successfully created.') }
@@ -71,10 +64,8 @@ class RelationsController < ApplicationController
   def update
     @relation = Relation.find(params[:id])
     @datas=@relation.datas
-    @objectswithtype = Typesobject.get_objects_with_type
-    @types_plm = Typesobject.get_objects_with_type
-    @types_all = Typesobject.get_all
-    @types     = Typesobject.get_types("relation")
+    #@objectswithtype = Typesobject.get_objects_with_type
+    #@types_all = Typesobject.get_all
     @relation.update_accessor(current_user)
     respond_to do |format|
       if @relation.update_attributes(params[:relation])

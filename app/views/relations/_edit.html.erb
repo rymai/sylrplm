@@ -8,11 +8,11 @@
 	<%= f.select( :name, Relation.names, {}, {:onkeypress=>"edit(event);", :onblur=>"this.editing=false;"}) %>
 	<br/>
 	<%= f.label :type %>
-	<%= f.collection_select(:type_id, @types, :id, :name) %>
+	<%= f.collection_select(:type_id, @datas[:types], :id, :name) %>
 	<br/>
 	<%= f.label :father_plmtype %>
 	<%= f.select(
-    :father_plmtype, @types_plm, {},
+    :father_plmtype, @datas[:types_plm], {},
     {
       :onchange => "#{remote_function(:url => {:controller => 'relations', :action => 'update_father'}, :with => "'father_plmtype='+value")}"
     }
@@ -22,7 +22,7 @@
 
 	<%= f.label :child_plmtype %>
 	<%= f.select(
-    :child_plmtype, @types_plm, {},
+    :child_plmtype, @datas[:types_plm], {},
     {
       :onchange => "#{remote_function(:url =>  {:controller => 'relations', :action => 'update_child'}, :with => "'child_plmtype='+value")}"
     }

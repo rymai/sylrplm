@@ -311,12 +311,13 @@ class User < ActiveRecord::Base
   
   # peut se connecter
   def may_connect?
-    return true
-    puts "user.may_connect:type:"+ self.typesobject.name + ".role:"+ self.roles.empty?.to_s + ".group:" + self.groups.empty?.to_s + ".proj:" + self.projects.empty?.to_s
     ret=!self.typesobject.nil? && self.typesobject.name != ::SYLRPLM::TYPE_USER_NEW_ACCOUNT && !self.roles.empty? && !self.groups.empty? && !self.projects.empty?
-    puts "user.may_connect:"+ret.to_s
+    puts "user.may_connect:type:"+ self.typesobject.name + 
+    ".role:"+ self.roles.empty?.to_s +
+    ".group:" + self.groups.empty?.to_s +
+    ".project:" + self.projects.empty?.to_s +
+    ":"+ret.to_s
     ret
-    
   end
 
   def self.notifications

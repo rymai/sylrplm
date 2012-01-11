@@ -29,8 +29,25 @@ class Typesobject < ActiveRecord::Base
       ret
   end
   
+  # liste des objets pouvant entrer dans une relation
+  # ils doivent avoir les caracteristiques suivantes:
+  # => association avec l'objet Typesobject. belongs_to :typesobject
+  # => ou methode typesobject
+  # => methode model_name utilisee par l'objet Link entre autre
+  # => methode ident utilisee par l'objet Link
+  # => exemple pour ar_workitem dont le schema est externe (module openwfe)
+  # def typesobject
+  #   Typesobject.find_by_object(model_name)
+  # end
+  # def model_name
+  #   "ar_workitem"
+  # end
+  # def ident
+  #   fei+"_"+wfid+"_"+expid+"_"+wfname
+  # end
   def self.get_objects_with_type
-  		ret=["document", "part", "project", "customer", "forum", "project_typeaccess" "definition", "datafile", "relation", "user", "workitem", "ar_workitem", "syl_ar_workitem"].sort
+      #ret=["document", "part", "project", "customer", "forum", "definition", "datafile", "relation", "user", "workitem", "ar_workitem", "project_typeaccess"].sort
+      ret=["document", "part", "project", "customer", "forum", "definition", "datafile", "relation", "user", "ar_workitem", "history"].sort
   		ret
   end
   

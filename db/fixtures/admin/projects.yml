@@ -4,7 +4,7 @@ def_project:
     designation: "Projet par defaut pour l'administrateur"
     owner_id: 1
     typesobject_id: 2
-    typeaccess_id: 5
+    typeaccess_id: 7
     statusobject_id: 10
     group_id: 1
     date: <%= DateTime.now %>

@@ -5,7 +5,7 @@ class Project < ActiveRecord::Base
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident
   attr_accessor :link_attributes
-  
+
   belongs_to :typesobject
   belongs_to :typeaccess,
   :class_name => "Typesobject"
@@ -26,12 +26,16 @@ class Project < ActiveRecord::Base
   has_many :links_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
   has_many :customers , :through => :links_customers
 
+  def name 
+    self.ident
+  end
+  #
   def self.create_new(project, user)
     if(project!=nil)
       obj=Project.new(project)
     else
       obj=Project.new
-      obj.set_default_values(true)
+    obj.set_default_values(true)
     end
     obj.owner=user
     obj.group=user.group
@@ -43,15 +47,16 @@ class Project < ActiveRecord::Base
   def link_attributes=(att)
     @link_attributes = att
   end
+
   def link_attributes
     @link_attributes
   end
-  
+
   # renvoie le nom du projet affecte par defaut au user
   def for_user(username)
     ::SYLRPLM::USER_PROJECT_IDENT+username
   end
-  
+
   # modifie les attributs avant edition
   def self.find_edit(object_id)
     obj=find(object_id)
@@ -97,8 +102,8 @@ class Project < ActiveRecord::Base
       ret[:values]={:v_filter => filter}
     end
     ret
-    #conditions = ["ident LIKE ? or "+qry_type+" or designation LIKE ? or "+qry_status+
-    #  " or "+qry_owner+" or date LIKE ? "
+  #conditions = ["ident LIKE ? or "+qry_type+" or designation LIKE ? or "+qry_status+
+  #  " or "+qry_owner+" or date LIKE ? "
   end
 
 end

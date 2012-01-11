@@ -40,19 +40,19 @@ class Relation < ActiveRecord::Base
       obj.father_plmtype=Typesobject.get_objects_with_type.first
       obj.child_plmtype=Typesobject.get_objects_with_type.first
     end
-    puts __FILE__+"."+__method__.to_s+":"+obj.inspect
+    #puts "Relations."+__method__.to_s+":"+obj.inspect
     obj
   end
 
   def types_father
     ret = Typesobject.get_types(father_plmtype)
-    #puts __FILE__+"."+__method__.to_s+":"+father_plmtype.to_s+":"+ret.inspect
+    #puts "Relations."+__method__.to_s+":"+father_plmtype.to_s+":"+ret.inspect
     ret
   end
 
   def types_child
     ret = Typesobject.get_types(child_plmtype)
-    #puts __FILE__+"."+__method__.to_s+":"+child_plmtype.to_s+":"+ret.inspect
+    #puts "Relations."+__method__.to_s+":"+child_plmtype.to_s+":"+ret.inspect
     ret
   end
 
@@ -84,37 +84,43 @@ class Relation < ActiveRecord::Base
     Relation.relations_for_type(object.model_name)
   end
 
-  def self.datas_by_params(params)
-    ret={}
-    ret["types_father"]=Typesobject.get_types(params["father_plmtype"])unless params["father_plmtype"].nil?
-    ret["types_child"]=Typesobject.get_types(params["child_plmtype"])unless params["child_plmtype"].nil?
-    ret
-  end
-
   def self.names
     ret=Relation.connection.select_rows("SELECT DISTINCT name FROM #{Relation.table_name}").flatten.uniq
-    puts __FILE__+"."+__method__.to_s+":"+ret.inspect
+    #puts "Relations."+__method__.to_s+":"+ret.inspect
     ret
   end
 
   def self.by_values(father_plmtype, child_plmtype, father_type, child_type, name)
     cond="father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and name='#{name}'"
-    puts __FILE__+"."+__method__.to_s+":"+cond
+    #puts "Relations."+__method__.to_s+":"+cond
     find(:first,
       :conditions => [ cond ])
   end
 
   def self.by_types(father_plmtype, child_plmtype, father_type_id, child_type_id)
     cond="father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and father_type_id='#{father_type_id}' and child_type_id='#{child_type_id}' "
-    puts __FILE__+"."+__method__.to_s+":"+cond
+    #puts "Relations."+__method__.to_s+":"+cond
     find(:first,
       :conditions => [ cond ])
   end
 
   def datas
     ret={}
-    ret["types_father"]=types_father
-    ret["types_child"]=types_child
+    ret[:types_father]= types_father
+    ret[:types_child] = types_child
+    ret[:types_plm]   = Typesobject.get_objects_with_type
+    ret[:types]       = Typesobject.get_types("relation")
+    #puts "Relation.datas:types_father="+ret[:types_father].inspect
+    #puts "Relation.datas:types_child="+ret[:types_child].inspect
+    #puts "Relation.datas:types_plm="+ret[:types_plm].inspect
+    #puts "Relation.datas:types="+ret[:types].inspect
+    ret
+  end
+  
+    def self.datas_by_params(params)
+    ret={}
+    ret[:types_father]=Typesobject.get_types(params["father_plmtype"])unless params["father_plmtype"].nil?
+    ret[:types_child]=Typesobject.get_types(params["child_plmtype"])unless params["child_plmtype"].nil?
     ret
   end
 

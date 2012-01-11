@@ -3,93 +3,49 @@
 <%= form_simple_query_helper('/parts', @parts) %>
 <table class='menu_bas'>
   <tr>
-    <td>
-      <%= link_to t("new_part"), new_part_path %>
-    </td>
-    <td>
-      <%= show_help("help_parts") %>
-    </td>
+    <td><%= link_to t("new_part"), new_part_path %></td>
+    <td><%= show_help("help_parts") %></td>
   </tr>
 </table>
 <%= will_paginate(@parts[:recordset]) %>
 <table>
     <tr>
-        <th>
-        </th>
-        <th<%= sort_td_class_helper "ident" %>>
-          <%= sort_link_helper t("label_ident"), "ident" %>
-        </th>
-        <th<%= sort_td_class_helper "typesobject_id" %>>
-          <%= sort_link_helper t("label_typesobject"), "typesobject_id" %>
-        </th>
-        <th<%= sort_td_class_helper "revision" %>>
-          <%= sort_link_helper t("label_revision"), "revision" %>
-        </th>
-        <th<%= sort_td_class_helper "designation" %>>
-          <%= sort_link_helper t("label_designation"), "designation" %>
-        </th>
-        <th<%= sort_td_class_helper "statusobject_id" %>>
-          <%= sort_link_helper t("label_statusobject"), "statusobject_id" %>
-        </th>
-        <th<%= sort_td_class_helper "owner" %>>
-          <%= sort_link_helper t("label_responsible"), "owner" %>
-        </th>
-        <th<%= sort_td_class_helper "group" %>>
-          <%= sort_link_helper t("label_group"), "group" %>
-        </th>
-		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), :projowner %> </th>
-        <th<%= sort_td_class_helper "date" %>>
-          <%= sort_link_helper t("label_date"), "date" %>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
+        <th></th>
+        <th <%= sort_td_class_helper "ident" %>><%= sort_link_helper t("label_ident"), "ident" %></th>
+        <th <%= sort_td_class_helper "revision" %>><%= sort_link_helper t("label_revision"), "revision" %></th>
+        <th <%= sort_td_class_helper "typesobject_id" %>><%= sort_link_helper t("label_typesobject"), "typesobject_id" %></th>
+        <th <%= sort_td_class_helper "designation" %>><%= sort_link_helper t("label_designation"), "designation" %></th>
+        <th <%= sort_td_class_helper "statusobject_id" %>><%= sort_link_helper t("label_statusobject"), "statusobject_id" %></th>
+        <th <%= sort_td_class_helper "owner" %>><%= sort_link_helper t("label_responsible"), "owner" %></th>
+        <th <%= sort_td_class_helper "group" %>><%= sort_link_helper t("label_group"), "group" %></th>
+				<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), :projowner %> </th>
+        <th <%= sort_td_class_helper "date" %>><%= sort_link_helper t("label_date"), "date" %></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
     </tr>
     <% @parts[:recordset].each do |part| %>
       <tr>
+        <td><%= icone(part) %></td>
+        <td><%= part.ident %></td>
+        <td><%= part.revision %></td>
         <td>
-          <%= icone(part) %>
-        </td
-        
-        <td>
-          <%= h part.ident %>
-        </td>
-        <td>
-          <% unless part.typesobject.nil? %>
-            <%= h part.typesobject.name %>
+        	<% unless part.typesobject.nil? %>
+            <%= part.typesobject.name %>
           <% end %>
         </td>
-        <td>
-          <%= h part.revision %>
-        </td>
-        <td>
-          <%= h part.designation %>
-        </td>
+        <td><%= part.designation %></td>
         <td>
           <% unless part.statusobject.nil? %>
-            <%= h part.statusobject.name %>
+            <%= part.statusobject.name %>
           <% end %>
         </td>
-        <td>
-          <%= h part.owner.login %>
-        </td>
-        <td>
-          <%= h part.group.name %>
-        </td>
-        <td>
-          <%= h part.projowner.ident %>
-        </td>
-        <td>
-          <%= l part.date %>
-        </td>
-        <td>
-          <%= link_to h_img_show.to_s, part %>
-        </td>
+        <td><%= part.owner.login %></td>
+        <td><%= part.group.name %></td>
+        <td><%= part.projowner.ident %></td>
+        <td><%= l part.date %></td>
+        <td><%= link_to h_img_show.to_s, part %></td>
         	<% if part.revisable?  %>
 		<td> <%= h_img_revise.to_s %></td>
           	<td></td>
@@ -113,11 +69,7 @@
 <%= will_paginate(@parts[:recordset]) %>
 <table class='menu_bas'>
   <tr>
-    <td>
-      <%= link_to t("new_part"), new_part_path %>
-    </td>
-    <td>
-      <%= show_help("help_parts") %>
-    </td>
+    <td><%= link_to t("new_part"), new_part_path %></td>
+    <td><%= show_help("help_parts") %></td>
   </tr>
 </table>

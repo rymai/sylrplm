@@ -27,6 +27,10 @@ class Forum < ActiveRecord::Base
     obj
   end
 
+  def ident
+    self.model_name+"-"+self.subject
+  end
+  
   def find_root_items
     ForumItem.find(:all, :order=>"updated_at DESC",
     :conditions => ["forum_id = '#{self.id}' and parent_id is null"]

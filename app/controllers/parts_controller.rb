@@ -3,7 +3,7 @@ class PartsController < ApplicationController
   before_filter :check_init, :only => :new
   access_control(Access.find_for_controller(controller_class_name))
   before_filter :check_user, :only => [:new, :edit]
-    # GET /parts
+  # GET /parts
   # GET /parts.xml
   def index
     @parts = Part.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })

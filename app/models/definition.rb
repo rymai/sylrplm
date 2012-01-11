@@ -27,44 +27,26 @@
 #
 class Definition < ActiveRecord::Base
   include Models::SylrplmCommon
-  
+  include LinksMixin
   has_many :group_definitions, :dependent => :delete_all
   has_many :groups, :through => :group_definitions
-
-
-  include LinksMixin
-  
-
-  #
-  # Finds all the definitions the user has the right to see
-  #
-  def self.find_all_for (user)
-
-    all = find(:all)
-    #TODO syl: user.is_admin? ? all : all.select { |d| ! d.is_special? }
-  end
-
   #
   # validations
-
   validates_presence_of :name, :uri
-
+  #
+  
   def validate
     super
     validate_uri
   end
 
   def validate_uri
-
     content = (open(local_uri).read rescue nil)
-
     unless content
       errors.add_to_base("#{full_uri} points to nothing")
       return
     end
-
     @_tree = (RuotePlugin.ruote_engine.get_def_parser.parse(content) rescue nil)
-
     errors.add_to_base(
     "#{full_uri} seems not to contain a process definition"
     ) unless @_tree
@@ -74,16 +56,24 @@ class Definition < ActiveRecord::Base
   # Fetching the process description
   #
   def before_save
-
     self.description ||= OpenWFE::ExpressionTree.get_description(@_tree)
   end
-
+  
+  def ident
+    self.name
+  end
+  #
+  # Finds all the definitions the user has the right to see
+  #
+  def self.find_all_for (user)
+    all = find(:all)
+    user.is_admin? ? all : all.select { |d| ! d.is_special? }
+  end
   #
   # Returns true if the definition is special (ie it represents the right
   # to launch an embedded or an untracked definition)
   #
   def is_special?
-
     [ '*embedded*', '*untracked*' ].include?(self.name)
   end
 
@@ -91,7 +81,6 @@ class Definition < ActiveRecord::Base
   # The URI for web links
   #
   def full_uri
-
     return nil unless self.uri
     self.uri.index('/') ? self.uri : "/definitions/#{self.uri}"
   end
@@ -100,7 +89,6 @@ class Definition < ActiveRecord::Base
   # The URI for launching
   #
   def local_uri
-
     return nil unless self.uri
     u = full_uri
     u[0, 1] == '/' ? "#{RAILS_ROOT}/public#{u}" : u
@@ -110,13 +98,11 @@ class Definition < ActiveRecord::Base
   # Returns the initial workitem payload at launch time (launchitem)
   #
   def launch_fields_hash_ori
-
     launch_fields ?
     ActiveSupport::JSON.decode(launch_fields) : { 'attribut_0' => 'valeur_0' , 'attribut_1' => 'valeur_1'}
   end
 
   def launch_fields_hash
-
     unless launch_fields.nil?
       ret= ActiveSupport::JSON.decode(launch_fields)
     else
@@ -132,10 +118,8 @@ class Definition < ActiveRecord::Base
   end
 
   def definition= (s)
-
 #    puts "definition.definition("+s.inspect+")"
     return if s.blank?
-
     pref = "#{RAILS_ROOT}/public"
     base = "/definitions/#{OpenWFE.ensure_for_filename(self.name)}"
     i = ''

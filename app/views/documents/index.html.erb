@@ -1,5 +1,4 @@
 <h1><%= t("document_list") %><%= h_count_objects(@documents) %></h1>
-
 <%= form_simple_query_helper('/documents', @documents) %>
 <table class='menu_bas'>
 	<tr>
@@ -12,8 +11,8 @@
 	<tr>
 		<th></th>
 		<th <%= sort_td_class_helper "ident" %>> <%= sort_link_helper t("label_ident"), "ident" %></th>
-		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %></th>
 		<th <%= sort_td_class_helper "revision" %>> <%= sort_link_helper t("label_revision"), "revision" %></th>
+		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %></th>
 		<th <%= sort_td_class_helper "designation" %>> <%= sort_link_helper t("label_designation"), "designation" %></th>
 		<th <%= sort_td_class_helper "statusobject_id" %>> <%= sort_link_helper t("label_statusobject"), "statusobject_id" %></th>
 		<th <%= sort_td_class_helper "owner" %>> <%= sort_link_helper t("label_responsible"), "owner" %></th>
@@ -32,14 +31,10 @@
 	<tr>
 		<td> <%= icone(document) %></td>
 		<td> <%= h_if_differ(document , previous,  "ident") %> </td>
-		<td> <% if(document.typesobject != nil) %>
-		<%= h_if_differ(document , previous,  "typesobject.name") %>
-		<% end %></td>
 		<td> <%= h_if_differ(document , previous,  "revision") %> </td>
+		<td> <%= h_if_differ(document , previous,  "typesobject.name" ) unless document.typesobject.nil? %></td>
 		<td> <%= h_if_differ(document , previous,  "designation") %> </td>
-		<td> <% if(document.statusobject != nil) %>
-		<%= h_if_differ(document , previous,  "statusobject.name") %>
-		<% end %></td>
+		<td> <%= h_if_differ(document , previous,  "statusobject.name") unless document.statusobject.nil?  %></td>
 		<td> <%= h_if_differ(document , previous,  "owner.login") %></td>
 		<td> <%= h_if_differ(document , previous,  "group.name") %></td>
 		<td> <%= h_if_differ(document , previous,  "projowner.ident") %>
@@ -47,13 +42,11 @@
 		<td> <%= h document.datafile.length %></td>
 		<td> <%= h_if_differ(document , previous,  "date") %> </td>
 		<td> <% if document.checked? %>
-		<%= h_img_checkout.to_s %>
+		<%= h_img_checkout.to_s if document.checked? %>
 		<%else%>
 		<%= h_img_checkin.to_s %>
 		<% end%> </td>
-		<td> <% if document.ok_for_show?(current_user) %>
-		<%= link_to h_img_show.to_s, document %>
-		<% end %> </td>
+		<td> <%= link_to h_img_show.to_s, document if document.ok_for_show?(current_user)%> </td>
 		<% if document.revisable? %> <td> <%= h_img_revise.to_s %></td>
 		<td></td>
 		<% else %>
@@ -63,9 +56,9 @@
 		<td></td>
 		<% end %>
 		<% end %>
-		</td> <td><% if logged_in? %>
-		<%= link_to_remote h_img(:copy).to_s, :url => {:controller => "documents", :action => "add_favori", :id => document.id}, :method => :get  %>
-		<%end%></td>
+		</td>
+		<% if logged_in? %> <td><%= link_to_remote  h_img(:copy).to_s, :url => {:controller => "documents", :action => "add_favori", :id => document.id}, :method => :get  %></td>
+		<% end %>
 	</tr>
 	<% previous=document %>
 	<% end %>

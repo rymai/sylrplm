@@ -1,7 +1,7 @@
-<% unless @datas["types_father"].nil? %>
+<% unless @datas[:types_father].nil? %>
 <div id="father_types">
 	<%= label_tag :father_type %>
-	<%= collection_select(:relation, :father_type_id, @datas["types_father"], :id, :name, {}, {:onchange => 'updateRelation();'} ) %>
+	<%= collection_select(:relation, :father_type_id, @datas[:types_father], :id, :name, {}, {:onchange => 'updateRelation();'} ) %>
 	<br/>
 	<%= render(:partial => "relations/update") %>
 </div>

@@ -13,16 +13,20 @@ class Link < ActiveRecord::Base
 
   belongs_to :projowner,
     :class_name => "Project"
-
+      
+  #objets pouvant etre relies:"document", "part", "project", "customer", "forum", "definition", "datafile", "relation", "user", "ar_workitem", "history"
   with_options :foreign_key => 'child_id' do |child|
     child.belongs_to :document , :conditions => ["child_plmtype='document'"], :class_name => "Document"
     child.belongs_to :part , :conditions => ["child_plmtype='part'"], :class_name => "Part"
     child.belongs_to :project , :conditions => ["child_plmtype='project'"], :class_name => "Project"
     child.belongs_to :customer , :conditions => ["child_plmtype='customer'"], :class_name => "Customer"
+    child.belongs_to :forum , :conditions => ["child_plmtype='forum'"], :class_name => "Forum"
+    child.belongs_to :definition , :conditions => ["child_plmtype='definition'"], :class_name => "Definition"
     child.belongs_to :datafile , :conditions => ["child_plmtype='datafile'"], :class_name => "Datafile"
-    child.belongs_to :workitem , :conditions => ["child_plmtype='workitem'"], :class_name => "Workitem"
-    child.belongs_to :history , :conditions => ["child_plmtype='history'"], :class_name => "HistoryEntry"
+    child.belongs_to :relation , :conditions => ["child_plmtype='relation'"], :class_name => "Relation"
     child.belongs_to :user , :conditions => ["child_plmtype='user'"], :class_name => "User"
+    child.belongs_to :ar_workitem , :conditions => ["child_plmtype='ar_workitem'"], :class_name => "ArWorkitem"
+    child.belongs_to :history , :conditions => ["child_plmtype='history'"], :class_name => "HistoryEntry"
   end
 
   def father
