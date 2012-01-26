@@ -1,0 +1,19 @@
+<h1><%= t("definitions_list") %></h1>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t("new_definition"), new_definition_path %> </td>
+		<td> <%= show_help("help_definitions") %> </td>
+	</tr>
+</table>
+<%= render(:partial => "definitions/index",:locals => { :fonct=>"index" }) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t("new_definition"), new_definition_path %> </td>
+		<td> <%= show_help("help_definitions") %> </td>
+	</tr>
+</table>
+<div id="help">
+	<p>
+		[Business] process definitions. Edit them (or their initial payload) or launch them.
+	</p>
+</div>
