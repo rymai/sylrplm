@@ -31,7 +31,6 @@ class DefinitionsController < ApplicationController
   def index
 
     @definitions = Definition.find_all_for(@current_user)
-    #puts "DefinitionsController.index:def="+@definitions.inspect+":"+@definitions.length.to_s
     unless @definitions.length==0
       respond_to do |format|
         format.html # index.html.erb
@@ -41,6 +40,20 @@ class DefinitionsController < ApplicationController
     
     end
   end
+  
+  def new_process
+  LOG 
+    @definitions = Definition.find_all_for(@current_user)
+    unless @definitions.length==0
+      respond_to do |format|
+        format.html # new_process.html.erb
+        format.xml { render :xml => @definitions.to_xml(:request => request) }
+        format.json { render :json => @definitions.to_json(:request => request) }
+      end
+    
+    end
+  end
+  
 
   # GET /definitions/1
   # GET /definitions/1.xml
@@ -60,7 +73,7 @@ class DefinitionsController < ApplicationController
   # GET /definitions/:id/tree.js
   #
   def tree
-
+    name="DefinitionsControlle.tree:"
     @definition = Definition.find(params[:id])
 
     uri = @definition.local_uri
@@ -76,7 +89,7 @@ class DefinitionsController < ApplicationController
     tree = pdef ?
     RuotePlugin.ruote_engine.get_def_parser.parse(pdef) :
     nil
-
+    puts name+"tree="+tree.inspect
     render(
     :text => "var #{var} = #{tree.to_json};",
     :content_type => 'text/javascript')
@@ -86,9 +99,7 @@ class DefinitionsController < ApplicationController
   # GET /definitions/new.xml
   #
   def new
-
     @definition = Definition.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml { render :xml => @definition.to_xml(:request => request) }
@@ -99,13 +110,12 @@ class DefinitionsController < ApplicationController
   # GET /definitions/1/edit
   #
   def edit
-
+    
     @definition = Definition.find(params[:id])
     @dg_locals = {
       :in_groups => @definition.group_definitions,
       :out_groups => Group.find(:all) - @definition.groups
     }
-
     
   end
 
@@ -137,6 +147,8 @@ class DefinitionsController < ApplicationController
         }
 
       else
+        LOG.error @definition.errors.inspect
+        LOG.error @definition.inspect
         flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_definition), :msg => nil)
         format.html {
           render(:action => 'new')
@@ -166,6 +178,8 @@ class DefinitionsController < ApplicationController
         format.json { head :ok }
 
       else # there is an error
+        LOG.error @definition.errors.inspect
+        LOG.error @definition.inspect
         flash[:notice] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)
 
         p @definition.errors
@@ -187,7 +201,6 @@ class DefinitionsController < ApplicationController
   # DELETE /definitions/1.xml
   #
   def destroy
-
     @definition = Definition.find(params[:id])
     @definition.destroy
     flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_definition), :ident => @definition.name)
@@ -197,17 +210,6 @@ class DefinitionsController < ApplicationController
       format.json { head :ok }
     end
   end
-
-  protected
-
-  #
-  # Only an admin can add or remove definitions
-  #
-#  def authorized?
-#
-#    return false unless @current_user
-#
-#    %w{ show index tree }.include?(action_name) || @current_user.is_admin?
-#  end
+  
 end
 

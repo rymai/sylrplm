@@ -1,5 +1,11 @@
 <h1><%= t("processes_list") %></h1>
-
+<table class='menu_bas'>
+	<tr>
+		<% if (params[:workflow] or params[:launcher]) %> <td> <%= link_to( t(:workitems_all), processes_path)  %> </td>
+		<% end%> 
+		<td> <%= link_to(t("launch"), {:controller=>"definitions",:action=>"new_process"}, :title => 'launch a new process from a definition') %> </td>
+	</tr>
+</table>
 <table class='coll'>
 	<thead>
 		<tr>
@@ -31,13 +37,8 @@
 <table class='menu_bas'>
 	<tr>
 		<% if (params[:workflow] or params[:launcher]) %> <td> <%= link_to( t(:workitems_all), processes_path)  %> </td>
-		<% end%> <td> <%= link_to(t("launch"), definitions_path, :title => 'launch a new process from a definition') %> </td>
-	</tr>
-</table>
-<table class='menu_bas'>
-	<tr>
-		<% if (params[:workflow] or params[:launcher]) %> <td> <%= link_to( t(:workitems_all), processes_path)  %> </td>
-		<% end%> <td> <%= link_to(t("launch"), definitions_path, :title => 'launch a new process from a definition') %> </td>
+		<% end%> 
+		<td> <%= link_to(t("launch"), {:controller=>"definitions",:action=>"new_process"}, :title => 'launch a new process from a definition') %> </td>
 	</tr>
 </table>
 <div id="help">

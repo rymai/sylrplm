@@ -374,6 +374,7 @@ var RuoteForms = function() {
 	}
 
 	function render_entry(elt, data, options) {
+		//alert ('render_entry:'+elt+":"+data)
 		var e = rcreate(elt, 'div', {
 			'class' : 'rform_entry'
 		});
@@ -394,6 +395,7 @@ var RuoteForms = function() {
 	}
 
 	function render_object(elt, data, options) {
+		//alert ('render_object:'+elt+":"+data)
 		var e = rcreate(elt, 'div', {
 			'class' : 'rform_hash'
 		});
@@ -520,10 +522,12 @@ var RuoteForms = function() {
 				t = 'array';
 		}
 		var f = eval('render_' + t);
+		
 		return f.call(null, elt, data, options);
 	}
 
 	function renderForm(container, data, options) {
+		
 		container = byId(container);
 
 		if(! container.className.match(/rform_root/))

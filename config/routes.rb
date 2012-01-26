@@ -57,7 +57,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :checks
 
-  map.resources :links
+  map.resources :links, :collection => { :reset => :get}
 
   map.resources :sequences
 
@@ -313,12 +313,13 @@ ActionController::Routing::Routes.draw do |map|
   :action => 'update_tree',
   :conditions => { :method => :put })
 
-  map.resources :definitions
+  map.resources :definitions, :collection => { :new_process => :get}
 
   map.connect(
   'definitions/:id/tree.js',
   :controller => 'definitions',
   :action => 'tree')
+  
 
   map.resources :processes
 

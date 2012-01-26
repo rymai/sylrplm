@@ -64,7 +64,7 @@ class DocumentsController < ApplicationController
   # POST /documents
   # POST /documents.xml
   def create
-    puts "===DocumentsController.create:"+params.inspect
+    #puts "===DocumentsController.create:"+params.inspect
     document = params[:document]
     #contournement pour faire le upload apres la creation pour avoir la revision dans
     #repository !!!!!!!!!!!!!!
@@ -73,14 +73,14 @@ class DocumentsController < ApplicationController
     @status   = Statusobject.find_for("document")
     #@volumes  = Volume.find_all
     respond_to do |format|
-      puts "===DocumentsController.create:"+@document.inspect
+    #puts "===DocumentsController.create:"+@document.inspect
       if @document.save
-        puts "===DocumentsController.create:ok:"+@document.inspect
+        #puts "===DocumentsController.create:ok:"+@document.inspect
         flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_document), :ident => @document.ident)
         format.html { redirect_to(@document) }
         format.xml  { render :xml => @document, :status => :created, :location => @document }
       else
-        puts "===DocumentsController.create:ko:"+@document.inspect
+      #puts "===DocumentsController.create:ko:"+@document.inspect
         flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_document), :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @document.errors, :status => :unprocessable_entity }
@@ -91,7 +91,7 @@ class DocumentsController < ApplicationController
   # PUT /documents/1
   # PUT /documents/1.xml
   def update
-    puts "documents_controller.update:"+params.inspect
+    #puts "documents_controller.update:"+params.inspect
     @document = Document.find(params[:id])
     @volumes  = Volume.find_all
     @types    = Typesobject.find_for("document")
@@ -114,15 +114,24 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1.xml
   def destroy
     @document= Document.find(params[:id])
-    unless @document.nil?
-      @document.delete
-      flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_document), :ident => @document.ident)
-    else
-      flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_document), :ident => @document.ident)
-    end
     respond_to do |format|
-      format.html { redirect_to(documents_url) }
-      format.xml  { head :ok }
+      unless @document.nil?
+        if @document.delete
+          flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_document), :ident => @document.ident)
+          format.html { redirect_to(documents_url) }
+          format.xml  { head :ok }
+        else
+          flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_document), :ident => @document.ident)
+          @types    = Typesobject.find_for("document")
+          @volumes  = Volume.find_all
+          #seulement les statuts qui peuvenet etre promus sans process
+          @status   = Statusobject.find_for("document", true)
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @document.errors, :status => :unprocessable_entity }
+        end
+      else
+        flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_document), :ident => @document.ident)
+      end
     end
   end
 

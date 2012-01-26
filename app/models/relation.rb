@@ -2,13 +2,11 @@ class Relation < ActiveRecord::Base
   include Models::SylrplmCommon
   #validates_presence_of :type, :name, cardin_occur_min, cardin_occur_max, cardin_use_min, cardin_use_max
   validates_presence_of :type, :name
-  #validates_uniqueness_of :name
+  validates_uniqueness_of :name
   validates_numericality_of :cardin_occur_min,  { :only_integer => true, :greater_than_or_equal_to => 0}
   validates_numericality_of :cardin_use_min, { :only_integer => true, :greater_than_or_equal_to => 0 }
   #
   attr_accessor :link_attributes
-  #
-  RELATION_NICK={:datafile=>"F", :document => "D", :part => "A", :project =>"P", :customer => "C", :user => "U"}
   #
   belongs_to :type,
   :class_name => "Typesobject"
@@ -17,6 +15,8 @@ class Relation < ActiveRecord::Base
   belongs_to :child_type,
   :class_name => "Typesobject"
 
+  has_many :links
+  
   #
   def validate
     errors.add_to_base I18n.t("valid_relation_cardin_occur_max") if cardin_occur_max != -1 && cardin_occur_max < cardin_occur_min
@@ -57,10 +57,19 @@ class Relation < ActiveRecord::Base
   end
 
   def ident
+    aname="Relations."+__method__.to_s+":"
     sep_type  = ":"
     sep_child = "."
     sep_name  = " - "
-    child_plmtype+ sep_type+ child_type.name+ sep_name+ name+ sep_name+ father_plmtype+ sep_type+ father_type.name
+    #puts aname+ "relation="+self.inspect
+    ret=child_plmtype + sep_type
+    ret+=child_type.name unless child_type.nil?
+    ret+=sep_name + self.name 
+    ret+=sep_name + father_plmtype + sep_type
+    #puts aname+ "father_type="+father_type.inspect 
+    ret+=father_type.name unless father_type.nil? 
+    ret=name+"."+type.name unless type.nil?
+    ret
   end
 
   def self.relations_for_type(type_object)
@@ -74,7 +83,7 @@ class Relation < ActiveRecord::Base
     #puts name+cond
     find(:all, :order => "name",
       :conditions => [cond]).each do |rel|
-      ret[type_object] << rel
+      ret[rel.child_plmtype] << rel
     end
     #puts name+ret.inspect
     ret
@@ -90,8 +99,11 @@ class Relation < ActiveRecord::Base
     ret
   end
 
-  def self.by_values(father_plmtype, child_plmtype, father_type, child_type, name)
-    cond="father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and name='#{name}'"
+  def self.by_values_and_name(father_plmtype, child_plmtype, father_type, child_type, name)
+    cond="(father_plmtype='#{father_plmtype}' or father_plmtype='#{::SYLRPLM::PLMTYPE_GENERIC}')"
+    cond+=" and"
+    cond+=" (child_plmtype='#{child_plmtype}' or child_plmtype='#{::SYLRPLM::PLMTYPE_GENERIC}')"
+    cond+=" and name='#{name}'"
     #puts "Relations."+__method__.to_s+":"+cond
     find(:first,
       :conditions => [ cond ])

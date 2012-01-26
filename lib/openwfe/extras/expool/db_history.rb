@@ -99,13 +99,16 @@ module OpenWFE::Extras
       opts[:event] = event.to_s
 
       #self.new(opts).save!
-      self.new(opts).save_without_transactions!
+      ret=self.new(opts)
+      st=ret.save_without_transactions!
       #begin
       #  self.new(opts).save!
       #rescue Exception => e
       #  puts ; puts e
       #  self.new(opts).save! rescue nil
       #end
+      #_syl_ pour recuperer l'entry
+      (st ? ret : nil)
     end
   end
 

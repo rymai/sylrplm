@@ -137,7 +137,7 @@ module OpenWFE::Extras
       end
     end
 
-    protected
+    # _syl_ protected
 
       #
       # This is the inner method used by the error journal to

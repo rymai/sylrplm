@@ -1,7 +1,5 @@
 require 'controllers/plm_object_controller_module'
 
-
-
 class ErrorReply < Exception
   attr_reader :status
   def initialize (msg, status=400)
@@ -10,7 +8,11 @@ class ErrorReply < Exception
   end
 end
 
-
+class LogDefinitionFilter
+  def self.filter(controller)
+      LOG.progname=controller.controller_class_name+"."+controller.action_name
+  end
+end
 
 class ApplicationController < ActionController::Base
   include Controllers::PlmObjectControllerModule
@@ -21,7 +23,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   filter_parameter_logging :password
-
+  
+  before_filter LogDefinitionFilter
+  
   before_filter :authorize, :except => [:index, :show, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
@@ -143,7 +147,6 @@ class ApplicationController < ActionController::Base
     WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
     WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
 
-    LOG.info("__FILE__")
   end
 
   # nombre d'objets listes par page si pagination
@@ -226,7 +229,7 @@ class ApplicationController < ActionController::Base
   #
   def history_log (event, options={})
     source = options.delete(:source) || @current_user.login
-    OpenWFE::Extras::HistoryEntry.log!(source, event, options)
+    Ruote::Sylrplm::HistoryEntry.log!(source, event, options)
   end
 
   def authorize

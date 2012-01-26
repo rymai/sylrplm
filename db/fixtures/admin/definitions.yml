@@ -32,7 +32,7 @@ revision:
 
 validation:
   id: 6
-  name: validation
-  uri: /definitions/validation.rb
-  description: Validation d un objet PLM
+  name: promotion
+  uri: /definitions/promote.rb
+  description: Promotion d un objet PLM
   launch_fields: "{}"

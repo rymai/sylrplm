@@ -1,3 +1,4 @@
+require 'classes/plm_services'
 module Models::SylrplmCommon
   def self.included(base)
     # �a appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclue la lib
@@ -65,7 +66,7 @@ module Models::SylrplmCommon
     end
 
     def find_paginate(params)
-      #puts self.model_name+"."+__method__.to_s+":"+params.inspect
+      #puts self.model_name+"."+__method__.to_s+":debut:"+params.inspect
       user=params[:user]
       filter_access={}
       filter_access[:values]={}
@@ -92,7 +93,11 @@ module Models::SylrplmCommon
       unless params[:query].nil? || params[:query]==""
         cond = get_conditions(params[:query])
         #puts self.model_name+".find_paginate:cond="+filter_access.inspect
-        values=filter_access[:values].merge(cond[:values])
+        unless cond.nil?
+          values=filter_access[:values].merge(cond[:values])
+        else
+          values=filter_access[:values]
+        end
         conditions = [filter_access[:qry]+" and ("+cond[:qry] +")", values]
       else
         conditions = [filter_access[:qry], filter_access[:values]] 
@@ -101,7 +106,8 @@ module Models::SylrplmCommon
       recordset=self.paginate(:page => params[:page],
       :conditions => conditions,
       :order => params[:sort],
-      :per_page => params[:nb_items])     
+      :per_page => params[:nb_items])  
+      #puts self.model_name+"."+__method__.to_s+":fin"   
       {:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
     end
     
@@ -110,7 +116,14 @@ module Models::SylrplmCommon
       words = text.split()
       words[0..(len-1)].join(' ') + (words.length > len ? end_string : '')
     end
-
+    
+    def reset
+      cond="internal is null or internal is false"
+      objs = Link.find(:all, :conditions => [cond])
+      #LOG.info "reset:"+objs.inspect
+      objs.each { |o| o.destroy }
+    end
+    
   end
 
   # attribution de valeurs par defaut suivant la table sequence
@@ -148,17 +161,7 @@ module Models::SylrplmCommon
   end
   
   def get_object(type, id)
-    # parts devient Part
-    name=self.class.name+"."+__method__.to_s+":"
-    #puts name+type.camelize+"."+id.to_s
-    mdl=eval type.camelize
-    begin
-      ret=mdl.find(id)
-    rescue Exception => e
-      LOG.warn("failed to find "+type+"."+id.to_s+" : #{e}")
-      ret=nil
-    end
-    ret
+    PlmServices.get_object(type, id)
   end
   
   def follow_up(path)

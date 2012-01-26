@@ -1,18 +1,15 @@
 <h1>Listing links <%= h_count_objects(@links)%> </h1>
-<%= link_to 'New link', new_link_path %>
+<%= link_to 'New link', new_link_path %> | <%= link_to 'Reset', reset_links_path %>
 <%= form_simple_query_helper('/links', @links) %>
 <%= will_paginate(@links[:recordset]) %>
 <table>
 	<tr>
 		<th>ID</th>
+		<th>Ident</th>
 		<th>Internal</th>
 		<th>Father</th>
-		<th>Father plm type</th>
-		<th>Father type</th>
+		<th>Relation</th>
 		<th>Child</th>
-		<th>Child plm type</th>
-		<th>Child type</th>
-		<th>Relation Name</th>
 		<th>Responsible</th>
 		<th>Group</th>
 		<th> <%= t(:label_projowner) %> </th>
@@ -20,17 +17,14 @@
 		<% @links[:recordset].each do |link| %>
 		<tr>
 		<td><%= h link.id %></td>
+		<td><%= h link.ident %></td>
 		<td><%= h link.internal %></td>
-		<td><%= h link.father.ident %></td>
-		<td><%= h link.father.model_name %></td>
-		<td><%= h link.father.typesobject.name %></td>
-		<td><%= h link.child.ident %></td>
-		<td><%= h link.child.model_name %></td>
-		<td><%= h link.child.typesobject.name %></td>
-		<td><%= h link.relation_name %></td>
+		<td><%= h link.father_ident %></td>
+		<td><%= h link.relation_ident %></td>
+		<td><%= h link.child_ident %></td>
 		<td><%= h link.owner.login unless link.owner.nil? %></td>
-		<td><%= h link.group.name %></td>
-		<td><%= h link.projowner.ident %></td>
+		<td><%= h link.group.name unless link.group.nil? %></td>
+		<td><%= h link.projowner.ident unless link.projowner.nil? %></td>
 		<td><%= link_to 'Show', link %></td>
 		<td><%= link_to 'Edit', edit_link_path(link) %></td>
 		<td><%= link_to 'Destroy', link, :confirm => 'Are you sure?', :method => :delete %></td>

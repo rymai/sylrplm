@@ -1,7 +1,5 @@
 require 'active_record/fixtures'
 
-
-
 class Controller
   attr_accessor :id, :name, :method
   def initialize(i_id,i_name,i_method)

@@ -44,9 +44,11 @@ h2 {
 	color: white;
 }
 /* formulaire de saisie: new et edit principalement */
-br {
+/*
+ br {
 	clear: left;
 }
+*/
 label {
 	/*font-weight: bold;*/
 	color: #FFFFFF;

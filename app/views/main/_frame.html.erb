@@ -34,8 +34,8 @@
 			</fieldset>
 			<fieldset>
 				<%= content_tag(:legend, t(:legend_processes)) %>
-				<%= h_menu("/definitions", "help_flw_definitions",t("mnu_flw_definitions")) %>
 				<%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
+				<%= h_menu("/definitions/new_process", "help_flw_processes",t("mnu_flw_new_process")) %>
 				<%= h_menu("/processes", "help_flw_processes",t("mnu_flw_processes")) %>
 			</fieldset>
 			<fieldset>
@@ -71,6 +71,7 @@
 				<%= h_menu("/statusobjects","help_statusobjects",t("mnu_status_objects")) %>
 				<%= h_menu("/sequences","help_sequences",t("mnu_sequences")) %>
 				<%= h_menu("/relations","help_relations",t("mnu_relations")) %>
+				<%= h_menu("/definitions", "help_flw_definitions",t("mnu_flw_definitions")) %>
 			</fieldset>
 			<% end %>
 			<% if admin_logged_in? %>

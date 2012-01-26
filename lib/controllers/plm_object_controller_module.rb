@@ -62,6 +62,8 @@ module Controllers::PlmObjectControllerModule
         puts name+"role_title="+role_title+" controller="+c.controller_name+" action="+c.action_name
       end
     end
+    
+
   end # ClassMethods
 
   def object_exists
@@ -76,10 +78,6 @@ module Controllers::PlmObjectControllerModule
         redirect_to(:action => "index")
       end
     end
-#    if obj.nil?
-#      flash[:notice] = t(:ctrl_record_error)
-#      redirect_to(:action => "index")
-#    end
 
   end
 
@@ -115,6 +113,35 @@ module Controllers::PlmObjectControllerModule
     puts "plm_object_controller.ctrl_promote:"+object.inspect+" "+withMail.to_s
     email_ok=true
     if withMail==true
+      email_ok=current_user.may_send_email?
+    end
+    respond_to do |format|
+      if email_ok==true
+        current_rank=object.statusobject.name
+        object.promote
+        new_rank=object.statusobject.name
+        current_rank!=new_rank   
+          if object.save
+            flash[:notice] = t(:ctrl_object_promoted,:typeobj =>t(:ctrl_.to_s+object.class.name.downcase!),:ident=>object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>nil)
+            format.html { redirect_to(object) }
+            format.xml  { head :ok }
+          else
+            flash[:notice] = t(:ctrl_object_not_promoted,:typeobj =>t(:ctrl_.to_s+object.class.name.downcase!),:ident=>object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>validersMail)
+            format.html { render :action => "edit" }
+            format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
+          end
+      else
+        flash[:notice] = t(:ctrl_user_no_email,:user=>current_user.login)
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
+  def ctrl_promote_old(object, withMail=true)
+    puts "plm_object_controller.ctrl_promote:"+object.inspect+" "+withMail.to_s
+    email_ok=true
+    if withMail==true
       email_ok=object.owner.may_send_email?
     end
     respond_to do |format|
@@ -126,7 +153,8 @@ module Controllers::PlmObjectControllerModule
         if withMail==true
           email=nil
           validers=Role.get_validers
-          if validers.length>0
+          puts "plm_object_controller.ctrl_promote:"+validers.inspect
+          if validers.length > 0
             if object.save
               if object.could_validate?
                 validersMail=PlmMailer.listUserMail(validers)
@@ -244,8 +272,8 @@ module Controllers::PlmObjectControllerModule
   # chacune contient une ou plusieurs liste par type d'objets a relier
   # 
   def ctrl_add_objects_from_params(params, object)
-    puts __FILE__+"."+__method__.to_s+":"+params[:childs].inspect
-    puts __FILE__+"."+__method__.to_s+":"+params[:fathers].inspect
+    #puts __FILE__+"."+__method__.to_s+":"+params[:childs].inspect
+    #puts __FILE__+"."+__method__.to_s+":"+params[:fathers].inspect
     ret=""
     params[:childs].each do |plmtype, items_id|
       relation = Relation.find_by_father_plmtype_and_child_plmtype(object.model_name, plmtype)

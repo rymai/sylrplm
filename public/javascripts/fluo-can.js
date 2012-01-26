@@ -41,7 +41,7 @@ var FluoCanvas = function() {
 	// draws centered text
 	//
 	function drawText (c, text, bwidth, bheight, symbolFuncName) {
-
+//alert ('drawText:'+text)
 		var SW = FluoCon.SYMBOL_WIDTH; // symbol width
 
 		c.save();
@@ -914,7 +914,7 @@ var FluoCan = function() {
 	}
 
 	function renderFlow (context, flow, options) {
-
+	
 		if ( ! options)
 			options = {};
 
@@ -931,7 +931,7 @@ var FluoCan = function() {
 		setOption(context, options, 'horizontal');
 
 		context.save();
-
+//alert('renderFlow:'+context+":\n flow=******************"+flow)
 		if (context.canvas.horizontal == true) {
 			context.translate(0, flow.width + 2);
 			context.rotate(-Math.PI/2);
@@ -999,7 +999,7 @@ var FluoCan = function() {
 	}
 
 	function renderExp (c, exp) {
-
+//alert('renderExp:'+exp)
 		var handler = getHandler(c, exp);
 
 		if (handler.adjust && ! exp.adjusted) {
@@ -1088,10 +1088,12 @@ var FluoCan = function() {
 		//};
 		if (window.navigator.userAgent.match(/Firefox/)) {
 			c.write = function (t) {
-				this.mozDrawText(t);
+				//_syl_ this.mozDrawText(t);
+				this.fillText(t, 0, 0);
 			}
 			c.measure = function (t) {
-				return this.mozMeasureText(t);
+				//_syl_ return this.mozMeasureText(t);
+				return this.measureText(t).width;
 			}
 		} else { // Safari 4
 			c.write = function (t) {

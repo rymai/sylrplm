@@ -26,37 +26,51 @@
 <table class='coll'>
 	<thead>
 		<tr>
+			<% if current_user.is_admin?%> <th> <%= t(:label_id)%> </th>
+			<% end %> 
+			<% if fonct == "show_only" %>
+			
 			<th> <%= t(:label_relation)%> </th>
-			<th> <%= t(:label_id)%> </th>
+			<% end %>
 			<th> <%= t(:label_wfid)%> </th>
+			<th> <%= t(:label_expid)%> </th>
+			<th> <%= t(:label_wfrevision)%> </th>
 			<th> <%= t(:label_workflow)%> </th>
 			<th> <%= t(:label_since)%> </th>
-			<th> <%= t(:label_expid)%> </th>
 			<th> <%= t(:label_store)%> </th>
 			<th> <%= t(:label_participant)%> </th>
 			<th> <%= t(:label_activity)%> </th>
-			<th class="align-right"> <%= workitems.size %>workitems </th>
 		</tr>
 	</thead>
 	<% for workitem in workitems %>
 	<% fei = workitem.full_fei%>
 	<tr class="workitem">
-		<td> <%= workitem.link_attributes["relation"] %> </td>
-		<td> <%= workitem.id %> </td>
+		<% if current_user.is_admin?%> <td> <%= workitem.id %> </td>
+		<% end %> 
+		<% if fonct == "show_only" %>
+		<td> <%= workitem.link_attributes["relation"].name %> </td>
+		<% end %>
 		<td> <%= link_to h(fei.wfid), workitems_path(fei.wfid) %> </td>
-		<td> <%= link_to_slice(workitem, :wfname, :workflow) %><%= h workitem.wfrevision %> </td>
+		<td> <%= workitem.full_fei.expid %> </td>
+		<td> <%= workitem.wfrevision %> </td>
+		<td> <%= link_to_slice(workitem, :wfname, :workflow) %> </td>
 		<td> <%= display_since(workitem, :dispatch_time) %> </td>
-		<td> <%= h workitem.full_fei.expid %> </td>
 		<td> <%= link_to_slice(workitem, :store_name, :store) %> </td>
 		<td> <%= link_to_slice(workitem, :participant_name, :participant) %> </td>
 		<td> <%= h workitem.activity %> </td>
-		<td class="coll_buttons"> <%= link_to h_img_show.to_s, workitem_url(workitem) %>
-		<%= link_to_if current_user.may_see?(workitem), h_img_edit_task, edit_workitem_url(workitem) %>
-		<%= link_to_function h_img_pick, "pick('#{workitem_url(workitem)}');" %> </td>
+		<td > <%= link_to h_img_show.to_s, workitem_url(workitem) %></td>
+		<td > <% if fonct != "show_only" %>
+		<%= link_to_if current_user.may_see?(workitem) , t("edit_task"), edit_workitem_url(workitem) %>
+		<% end %> </td>
+		<td > <% if fonct != "show_only" %>
+		<%= link_to_function t("pick"), "pick('#{workitem_url(workitem)}');" %>
+		<% end %> </td>
+		<td><% if fonct != "show_only" %>
+		<%= link_to_if @current_user.is_admin? , h_img_destroy.to_s, workitem_url(workitem), :method => :delete , :confirm =>t(:msg_confirm)  %>
+		<% end %> </td>
 	</tr>
 	<% end -%>
 </table>
-
 <% form_tag(
 '/none',
 :id => 'workitem_delegation_form',

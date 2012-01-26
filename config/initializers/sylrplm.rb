@@ -19,7 +19,7 @@ module SYLRPLM
   GROUP_CONSULTANTS         = 'consultants'
   GROUP_CREATORS            = 'creators'
   GROUP_VALIDERS            = 'validers'
-  # Roles 
+  # Roles
   ROLE_ADMIN                = 'admin'
   ROLE_CONSULTANT           = 'consultant'
   ROLE_CREATOR              = 'creator'
@@ -40,9 +40,9 @@ module SYLRPLM
   TYPE_USER_NEW_ACCOUNT     = '#NEW_ACCOUNT'
   # type du projet affecte par defaut a un user lors de sa creation
   TYPE_PROJ_ACCOUNT         = '#PROJ_ACCOUNT'
-  # n'importe quel type 
+  # n'importe quel type
   TYPE_GENERIC              = '_generic_type'
-  # valeurs des types d'acces a un  projet 
+  # valeurs des types d'acces a un  projet
   TYPEACCESS_PUBLIC         = 'public'
   TYPEACCESS_CONFIDENTIAL   = 'confidential'
   TYPEACCESS_SECRET         = 'secret'
@@ -71,14 +71,15 @@ end
 #
 logfile       = File.join(Rails.root, 'log', 'sylrplm.log')
 LOG           = Logger.new(logfile, 'daily')
-LOG.level     = Logger::DEBUG #DEBUG INFO WARN ERROR FATAL ANY
+LOG.level     = Logger::DEBUG #DEBUG INFO WARN ERROR FATAL
 LOG.formatter = Classes::AppClasses::LogFormatter.new  # Install custom formatter!
 #@logger.datetime_format = "%Y-%m-%d %H:%M:%S"
-LOG.info("Lancement SYLRPLM")
-LOG.info("logs dans: #{logfile}")
-LOG.info("Constantes du module SYLRPLM:")
-SYLRPLM.constants.each do |c|
+LOG.info("sylrplm"){"Lancement SYLRPLM"}
+LOG.info("sylrplm"){"logs dans: #{logfile}"}
+LOG.progname="constantes"
+LOG.info {"Constantes du module SYLRPLM:"}
+SYLRPLM.constants.sort.each do |c|
   v = SYLRPLM.const_get(c)
-  LOG.info("#{c}=#{v}")
+  LOG.debug("sylrplm"){"#{c}\t\t= #{v}"}
 end
-LOG.info("--------------------------------------------")
+LOG.info {"--------------------------------------------"}

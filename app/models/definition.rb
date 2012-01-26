@@ -94,6 +94,11 @@ class Definition < ActiveRecord::Base
     u[0, 1] == '/' ? "#{RAILS_ROOT}/public#{u}" : u
   end
 
+  def usable?
+    f=local_uri
+    LOG.info {"local_uri="+f.to_s}
+    File.exists?(f) unless f.nil?
+  end
   #
   # Returns the initial workitem payload at launch time (launchitem)
   #

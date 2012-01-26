@@ -14,13 +14,10 @@
 	<b>Child:</b>
 	<%= h @link.child_id%>
 </p>
-<p>
-	<b>Name:</b>
-	<%= h @link.relation.name %>
-</p>
+
 <p>
 	<b>Responsible:</b>
-	<%= h @link.responsible %>
+	<%= h @link.owner.login unless @link.owner.nil? %>
 </p>
 <%= link_to 'Edit', edit_link_path(@link) %> |
 <%= link_to 'Back', links_path %>

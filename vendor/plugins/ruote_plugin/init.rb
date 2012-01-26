@@ -55,8 +55,8 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
   h = defined?(RUOTE_ENV) ? RUOTE_ENV : {}
 
   # the type of engine to use
-  h[:engine_class] ||= OpenWFE::FsPersistedEngine
-  #h[:engine_class] ||= OpenWFE::Extras::DbPersistedEngine
+  #h[:engine_class] ||= OpenWFE::FsPersistedEngine
+  h[:engine_class] ||= OpenWFE::Extras::DbPersistedEngine
 
   unless h[:logger]
     h[:logger] = ActiveSupport::BufferedLogger.new("#{RAILS_ROOT}/log/ruote_#{RAILS_ENV}.log")

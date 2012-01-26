@@ -199,18 +199,32 @@
     id: 115
     name: applicable
     type_id: 162
-    father_plmtype: ar_workitem
-    child_plmtype: document
-    father_type_id: 181
-    child_type_id: 101
+    father_plmtype: history_entry
+    child_plmtype: "<%= ::SYLRPLM::PLMTYPE_GENERIC %>"
+    father_type_id: 12
+    child_type_id: 5
     cardin_occur_min: "0"
     cardin_occur_max: "-1"
     cardin_use_min: "0"
     cardin_use_max: "-1"
     internal: true
- 
+    
 116: 
     id: 116
+    name: reference
+    type_id: 162
+    father_plmtype: history_entry
+    child_plmtype: "<%= ::SYLRPLM::PLMTYPE_GENERIC %>"
+    father_type_id: 12
+    child_type_id: 5
+    cardin_occur_min: "0"
+    cardin_occur_max: "-1"
+    cardin_use_min: "0"
+    cardin_use_max: "-1"
+    internal: true
+    
+117: 
+    id: 117
     name: collaborate_at
     type_id: 162
     father_plmtype: project
@@ -223,8 +237,8 @@
     cardin_use_max: -1
     internal: true
      
-117: 
-    id: 117
+118: 
+    id: 118
     name: collaborate_at
     type_id: 162
     father_plmtype: project
@@ -237,8 +251,8 @@
     cardin_use_max: -1 
     internal: true
     
-118: 
-    id: 118
+119: 
+    id: 119
     name: collaborate_at
     type_id: 162
     father_plmtype: project

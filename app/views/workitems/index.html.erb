@@ -4,7 +4,9 @@
 		<td> <%= request.query_string.size > 0 or params[:wfid] ? link_to( t("workitems_all"), :controller => 'workitems') : link_to( t("mnu_flw_workitems"), :controller => 'workitems') %> </td>
 	</tr>
 </table>
-<%= render(:partial => "workitems/workitems", :object =>  @workitems ) %>
+
+<%= render(:partial => "workitems/workitems", :object =>  @workitems, :locals => {  :fonct=>"index" } ) %>
+
 <% if request.query_string.size > 0 or params[:wfid] %>
 <%= link_to t("workitems_all"), :controller => 'workitems' %>
 <% end %>

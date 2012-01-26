@@ -163,14 +163,3 @@ definition_plm:
   name: plm
   description: 
   
-ar_workitem:
-  id: 181 
-  object: ar_workitem
-  name: ar_workitem
-  description: 
-  
-workitem:
-  id: 182 
-  object: workitem
-  name: workitem
-  description: 

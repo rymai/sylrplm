@@ -238,4 +238,14 @@ module Models::PlmObject
       (self.projowner.typeaccess_id==acc_public.id)
     end
   end
+  
+  def before_destroy
+    #unless Favori.get(self.model_name).count.zero?
+    #  raise "Can't delete because of links:"+self.ident
+    #end
+    if Link.linked?(self)
+      raise "Can't delete because of links:"+self.ident
+    end
+  end
+  
 end

@@ -20,7 +20,9 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.boolean  "internal"
   end
 
+  add_index "accesses", ["roles"], :name => "index_accesses_on_roles"
   add_index "accesses", ["controller"], :name => "index_accesses_on_controller"
+  add_index "accesses", ["action"], :name => "index_accesses_on_action"
 
   create_table "ar_workitems", :force => true do |t|
     t.string   "fei"
@@ -37,13 +39,13 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "last_modified"
   end
 
-  add_index "ar_workitems", ["expid"], :name => "index_ar_workitems_on_expid"
   add_index "ar_workitems", ["fei"], :name => "index_ar_workitems_on_fei", :unique => true
-  add_index "ar_workitems", ["participant_name"], :name => "index_ar_workitems_on_participant_name"
-  add_index "ar_workitems", ["store_name"], :name => "index_ar_workitems_on_store_name"
   add_index "ar_workitems", ["wfid"], :name => "index_ar_workitems_on_wfid"
+  add_index "ar_workitems", ["expid"], :name => "index_ar_workitems_on_expid"
   add_index "ar_workitems", ["wfname"], :name => "index_ar_workitems_on_wfname"
   add_index "ar_workitems", ["wfrevision"], :name => "index_ar_workitems_on_wfrevision"
+  add_index "ar_workitems", ["participant_name"], :name => "index_ar_workitems_on_participant_name"
+  add_index "ar_workitems", ["store_name"], :name => "index_ar_workitems_on_store_name"
 
   create_table "checks", :force => true do |t|
     t.string   "object"
@@ -65,6 +67,11 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
   end
 
   add_index "checks", ["object", "object_id"], :name => "index_checks_on_object_and_object_id"
+  add_index "checks", ["in_user_id"], :name => "index_checks_on_in_user_id"
+  add_index "checks", ["out_user_id"], :name => "index_checks_on_out_user_id"
+  add_index "checks", ["in_group_id"], :name => "index_checks_on_in_group_id"
+  add_index "checks", ["out_group_id"], :name => "index_checks_on_out_group_id"
+  add_index "checks", ["projowner_id"], :name => "index_checks_on_projowner_id"
 
   create_table "customers", :force => true do |t|
     t.integer  "owner_id"
@@ -85,6 +92,8 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
   add_index "customers", ["owner_id"], :name => "index_customers_on_owner_id"
   add_index "customers", ["statusobject_id"], :name => "index_customers_on_statusobject_id"
   add_index "customers", ["typesobject_id"], :name => "index_customers_on_typesobject_id"
+  add_index "customers", ["group_id"], :name => "index_customers_on_group_id"
+  add_index "customers", ["projowner_id"], :name => "index_customers_on_projowner_id"
 
   create_table "datafiles", :force => true do |t|
     t.integer  "owner_id"
@@ -103,7 +112,10 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
   end
 
   add_index "datafiles", ["document_id"], :name => "index_datafiles_on_document_id"
-  add_index "datafiles", ["ident"], :name => "index_datafiles_on_ident"
+  add_index "datafiles", ["typesobject_id"], :name => "index_datafiles_on_typesobject_id"
+  add_index "datafiles", ["volume_id"], :name => "index_datafiles_on_volume_id"
+  add_index "datafiles", ["group_id"], :name => "index_datafiles_on_group_id"
+  add_index "datafiles", ["projowner_id"], :name => "index_datafiles_on_projowner_id"
 
   create_table "definitions", :force => true do |t|
     t.string   "name"
@@ -137,6 +149,8 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
   add_index "documents", ["owner_id"], :name => "index_documents_on_owner_id"
   add_index "documents", ["statusobject_id"], :name => "index_documents_on_statusobject_id"
   add_index "documents", ["typesobject_id"], :name => "index_documents_on_typesobject_id"
+  add_index "documents", ["group_id"], :name => "index_documents_on_group_id"
+  add_index "documents", ["projowner_id"], :name => "index_documents_on_projowner_id"
 
   create_table "expressions", :force => true do |t|
     t.string "fei",       :null => false
@@ -167,6 +181,8 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
   add_index "forum_items", ["forum_id"], :name => "index_forum_items_on_forum_id"
   add_index "forum_items", ["owner_id"], :name => "index_forum_items_on_owner_id"
   add_index "forum_items", ["parent_id"], :name => "index_forum_items_on_parent_id"
+  add_index "forum_items", ["group_id"], :name => "index_forum_items_on_group_id"
+  add_index "forum_items", ["projowner_id"], :name => "index_forum_items_on_projowner_id"
 
   create_table "forums", :force => true do |t|
     t.integer  "owner_id"
@@ -184,6 +200,8 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
   add_index "forums", ["owner_id"], :name => "index_forums_on_owner_id"
   add_index "forums", ["statusobject_id"], :name => "index_forums_on_statusobject_id"
   add_index "forums", ["typesobject_id"], :name => "index_forums_on_typesobject_id"
+  add_index "forums", ["group_id"], :name => "index_forums_on_group_id"
+  add_index "forums", ["projowner_id"], :name => "index_forums_on_projowner_id"
 
   create_table "group_definitions", :id => false, :force => true do |t|
     t.integer  "group_id"
@@ -203,6 +221,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
   end
 
   add_index "groups", ["name"], :name => "index_groups_on_name", :unique => true
+  add_index "groups", ["father_id"], :name => "index_groups_father_id", :unique => true
 
   create_table "history", :force => true do |t|
     t.string   "source",      :null => false
@@ -243,6 +262,12 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
 
   add_index "links", ["child_plmtype", "child_id"], :name => "index_links_on_child_type_and_child_id"
   add_index "links", ["father_plmtype", "father_id"], :name => "index_links_on_father_type_and_father_id"
+  add_index "links", ["father_type_id"], :name => "index_links_on_father_type_id"
+  add_index "links", ["child_type_id"], :name => "index_links_on_child_type_id"
+  add_index "links", ["relation_id"], :name => "index_links_on_relation_id"
+  add_index "links", ["owner_id"], :name => "index_links_on_owner_id"
+  add_index "links", ["group_id"], :name => "index_links_on_group_id"
+  add_index "links", ["projowner_id"], :name => "index_links_on_projowner_id"
 
   create_table "notifications", :force => true do |t|
     t.string   "object_type"
@@ -254,6 +279,8 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+  add_index "notifications", ["object_type", "object_id"], :name => "index_notifications_on_object_type_and_object_id"
+  add_index "notifications", ["responsible_id"], :name => "index_notifications_on_responsible_id"
 
   create_table "parts", :force => true do |t|
     t.integer  "owner_id"
@@ -275,6 +302,8 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
   add_index "parts", ["owner_id"], :name => "index_parts_on_owner_id"
   add_index "parts", ["statusobject_id"], :name => "index_parts_on_statusobject_id"
   add_index "parts", ["typesobject_id"], :name => "index_parts_on_typesobject_id"
+  add_index "parts", ["group_id"], :name => "index_parts_on_group_id"
+  add_index "parts", ["projowner_id"], :name => "index_parts_on_projowner_id"
 
   create_table "process_errors", :force => true do |t|
     t.string   "wfid",       :null => false
@@ -306,6 +335,8 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
   add_index "projects", ["owner_id"], :name => "index_projects_on_owner_id"
   add_index "projects", ["statusobject_id"], :name => "index_projects_on_statusobject_id"
   add_index "projects", ["typesobject_id"], :name => "index_projects_on_typesobject_id"
+  add_index "projects", ["typeaccess_id"], :name => "index_projects_on_typeaccess_id"
+  add_index "projects", ["group_id"], :name => "index_projects_on_group_id"
 
   create_table "questions", :force => true do |t|
     t.string   "question"
@@ -317,6 +348,8 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.integer  "responder_id"
     t.boolean  "internal"
   end
+  add_index "questions", ["asker_id"], :name => "index_questions_on_asker_id"
+  add_index "questions", ["responder_id"], :name => "index_questions_on_responder_id"
 
   create_table "relations", :force => true do |t|
     t.string   "name"
@@ -333,6 +366,10 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "updated_at"
     t.boolean  "internal"
   end
+  add_index "relations", ["name"], :name => "index_relations_on_name"
+  add_index "relations", ["type_id"], :name => "index_relations_on_type_id"
+  add_index "relations", ["father_plmtype", "father_type_id"], :name => "index_relations_on_father_plmtype_and_father_type_id"
+  add_index "relations", ["child_plmtype", "child_type_id"], :name => "index_relations_on_child_plmtype_and_child_type_id"
 
   create_table "roles", :force => true do |t|
     t.string   "title"
@@ -342,6 +379,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.integer  "father_id"
     t.boolean  "internal"
   end
+  add_index "roles", ["father_id"], :name => "index_roles_on_father_id"
 
   create_table "roles_users", :id => false, :force => true do |t|
     t.integer  "role_id"
@@ -432,6 +470,11 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
   end
 
   add_index "users", ["login"], :name => "index_users_on_login", :unique => true
+  add_index "users", ["role_id"], :name => "index_users_on_role_id"
+  add_index "users", ["volume_id"], :name => "index_users_on_volume_id"
+  add_index "users", ["typesobject_id"], :name => "index_users_on_typesobject_id"
+  add_index "users", ["group_id"], :name => "index_users_on_group_id"
+  add_index "users", ["project_id"], :name => "index_users_on_project_id"
 
   create_table "volumes", :force => true do |t|
     t.string   "name"
@@ -442,5 +485,6 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.datetime "updated_at"
     t.boolean  "internal"
   end
+  add_index "volumes", ["name"], :name => "index_volumes_on_name", :unique => true
 
 end

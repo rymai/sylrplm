@@ -174,6 +174,7 @@ fr:
   ctrl_workitem_proceeded: "Tâche %{ident} exécutée"
   ctrl_workitem_updated: "Tâche %{ident} modifiée"
   ctrl_workitem_not_updated: "Tâche %{ident} non modifiée"
+  ctrl_workitem_canceled: "Tâche %{ident} annullée"
   #########################################
   # modules
   #########################################
@@ -222,7 +223,7 @@ fr:
   proceed: Valider cette tâche
   delegate: Déléguer cette tâche
   pick: Prendre cette tâche
-  edit_task: Editer/valider cette tâche
+  edit_task: Traiter cette tâche
   launchthis: Lancer ce processus
   launch: Lancer un nouveau processus
   explorer: "Explorer"
@@ -393,7 +394,7 @@ fr:
   label_revision: Révision
   label_extension: Extension
   add_datafile: Ajouter fichier
-  document_datafiles: Fichiers du document
+  document_datafiles: Fichiers associés 
   datafile_add: Ajout d'un fichier au document
   label_nbfiles: Nb fichiers
   button_check_out: "Réserver"
@@ -402,6 +403,8 @@ fr:
   button_check_free: "Libérer"
   download: "Télécharger fichier"
   document_check: Réservation
+  workitems_assoc: Tâches en cours
+  history_assoc: Traitements effectués sur cet objet
   # forums
   legend_forum: Renseignez les propriétés du forum
   forum_edit: Edition forum 
@@ -497,6 +500,7 @@ fr:
   legend_processes: Processus
   mnu_flw_workitems: Mes actions
   mnu_flw_processes: Processus en cours
+  mnu_flw_new_process: Lancer un Processus
   mnu_flw_errors: Erreurs processus
   mnu_flw_history: Historique processus
   mnu_flw_definitions: Définitions processus
@@ -512,9 +516,9 @@ fr:
   processes_show: Détail du processus
   processes_new: Nouveau processus
   workitems_edit: Edition tâche
-  workitems_list: Liste des actions
+  workitems_list: Liste des tâches 
   workitems_show: Détail de la tâche
-  new_definition: Nouvelle définition de processus
+  new_definition: Nouvelle définition
   new_process: Nouveau processus
   workitems_all: Toutes les tâches
   label_expressions: Expressions
@@ -665,6 +669,7 @@ fr:
   label_workflow: Définition
   label_since: Depuis
   label_expid: Expression
+  label_wfrevision: Révision
   label_store: Store
   label_participant: Participant
   label_activity: Activité

@@ -2,16 +2,20 @@ class LinksController < ApplicationController
   include Controllers::PlmObjectControllerModule
   access_control(Access.find_for_controller(controller_class_name))
   before_filter :check_user, :only => [:new, :edit]
-    # GET /links
+  # GET /links
   # GET /links.xml
   def index
     @links = Link.find_paginate({ :user=> current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
-    #puts "links.index:"
-    #@links[:recordset].each do |link|
-    #  puts link.inspect
-    #end
     respond_to do |format|
       format.html # index.html.erb
+      format.xml  { render :xml => @links }
+    end
+  end
+  
+  def reset 
+    Link.reset
+    respond_to do |format|
+      format.html { redirect_to(links_url) }
       format.xml  { render :xml => @links }
     end
   end

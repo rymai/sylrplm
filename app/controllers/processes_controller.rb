@@ -79,8 +79,9 @@ class ProcessesController < ApplicationController
   #
   def show
     #    puts "processes_controller.show:"
-    @process = ruote_engine.process_status(params[:id])
-
+    
+      @process = ruote_engine.process_status(params[:id])
+    
     respond_to do |format|
 
       if @process
@@ -121,7 +122,7 @@ class ProcessesController < ApplicationController
   #
   def create
     name="process_controllers."+__method__.to_s+":"
-    LOG.info name+params.inspect
+    LOG.info {params.inspect}
     @definition = Definition.find(params[:definition_id])
     li = parse_launchitem
     options = { :variables => { 'launcher' => @current_user.login } }
@@ -153,10 +154,10 @@ class ProcessesController < ApplicationController
         end
       end
     rescue Exception => e
-      LOG.error " fei not launched li="+li.inspect
-      puts name+" fei not launched li="+li.inspect
-      LOG.error " options="+options.inspect
-      e.backtrace.each {|x| puts x}
+      LOG.error { "fei not launched error="+e.inspect}
+      LOG.error {" fei not launched li="+li.inspect}
+      LOG.error {" options="+options.inspect}
+      e.backtrace.each {|x| LOG.error {x}}
       respond_to do |format|
         flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => nil)
           format.html { redirect_to new_process_path(:definition_id => @definition.id)}
@@ -168,14 +169,15 @@ class ProcessesController < ApplicationController
   # DELETE /processes/:id
   #
   def destroy
-    name=__FILE__+"."+__method__.to_s+":"
     #    puts "processes_controller.destroy:params="+params.inspect
     begin
+      @process = ruote_engine.process_status(params[:id])
+      ::Ruote::Sylrplm::ArWorkitem.destroy_process(@process.wfid)
       RuotePlugin.ruote_engine.cancel_process(params[:id])
       sleep 0.200
       redirect_to :controller => :processes, :action => :index
     rescue Exception => e
-      LOG.error name+" pb destroy "+params[:id]
+      LOG.error " pb destroy "+params[:id]
       e.backtrace.each {|x| LOG.error x}
       respond_to do |format|
             flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_process), :ident => params[:id])

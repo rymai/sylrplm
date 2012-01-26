@@ -40,14 +40,14 @@ class Typesobject < ActiveRecord::Base
   #   Typesobject.find_by_object(model_name)
   # end
   # def model_name
-  #   "ar_workitem"
+  #   "history_entry"
   # end
   # def ident
   #   fei+"_"+wfid+"_"+expid+"_"+wfname
   # end
   def self.get_objects_with_type
       #ret=["document", "part", "project", "customer", "forum", "definition", "datafile", "relation", "user", "workitem", "ar_workitem", "project_typeaccess"].sort
-      ret=["document", "part", "project", "customer", "forum", "definition", "datafile", "relation", "user", "ar_workitem", "history"].sort
+      ret=["document", "part", "project", "customer", "forum", "definition", "datafile", "relation", "user", "history_entry"].sort
   		ret
   end
   

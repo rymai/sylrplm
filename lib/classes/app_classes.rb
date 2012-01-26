@@ -4,18 +4,21 @@ module Classes::AppClasses
     # Provide a call() method that returns the formatted message.
     def call(severity, time, program_name, message)
       datetime      = time.strftime("%Y-%m-%d %H:%M")
-      if severity == "ERROR"
+      if severity == "toto" #"ERROR"
         print_message = "!!! #{String(message)} (#{datetime}) !!!"
         border        = "!" * print_message.length
-        [border, print_message, border].join("\n") + "\n"
+        ret=[border, print_message, border].join("\n") + "\n"
       else
-        #super
-        [severity.ljust(5), "date:"+datetime.to_s, "prg:"+program_name.to_s, "msg:"+message.to_s].join("_") + "\n"
+        print_message =[severity.ljust(5), datetime.to_s, program_name.to_s, message.to_s].join("|")
+        ret= print_message + "\n"
       end
+      puts print_message
+      ret
     end
   end
 end
 
+# pour les fixtures
 module YAML
     def YAML.include file_name
       require 'erb'

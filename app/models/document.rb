@@ -3,6 +3,7 @@ class Document < ActiveRecord::Base
   include Models::SylrplmCommon
 
   attr_accessor :link_attributes
+
   validates_presence_of :ident , :designation
   validates_uniqueness_of :ident, :scope => :revision
   #validates_format_of :ident, :with =>/^(doc|img)[0-9]+$/, :message=>" doit commencer par doc ou img suivi de chiffres"
@@ -30,6 +31,9 @@ class Document < ActiveRecord::Base
 
   has_many :links_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
   has_many :customers, :through => :links_customers
+
+  has_many :links_histories, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='document'"]
+  has_many :histories, :through => :links_histories
   #essai, appelle 10 fois par document !!!
   def after_find
     #puts "Document:after_find: ident="+ident+" type="+model_name+"."+typesobject.name+" proj="+projowner.ident+" group="+group.name
@@ -185,17 +189,18 @@ class Document < ActiveRecord::Base
   end
 
   def promote
-    st_cur_name = statusobject.name
-    st_new = statusobject.get_next
-    update_attributes({:statusobject_id => st_new.id})
-    puts "Document.promote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
+    #st_cur_name = statusobject.name
+    st = self.statusobject.get_next
+    #st=StatusObject.next(statusobject)
+    update_attributes({:statusobject_id => st.id})
+  #puts "Document.promote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
   end
 
   def demote
-    st_cur_name = statusobject.name
-    st_new = statusobject.get_previous
-    update_attributes({:statusobject_id => st_new.id})
-    puts "Document.demote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
+    #st_cur_name = statusobject.name
+    st = self.statusobject.get_previous
+    update_attributes({:statusobject_id => st.id})
+  #puts "Document.demote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
   end
 
   def remove_datafile(item)
@@ -203,10 +208,17 @@ class Document < ActiveRecord::Base
   end
 
   def delete
-    self.datafile.each { |file|
-      self.remove_datafile(file)
-    }
-    self.destroy
+    begin
+      self.datafile.each { |file|
+        self.remove_datafile(file)
+      }
+      self.destroy
+      return true
+    rescue Exception => e
+      #puts "Document.delete:"+e.inspect
+      self.errors.add_to_base e.inspect
+      return false
+    end
   end
 
   def self.get_conditions(filters)

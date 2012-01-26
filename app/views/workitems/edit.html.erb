@@ -21,11 +21,11 @@ workitem_path(@workitem),
 <input type="hidden" name="state" id="state" value="" />
 <!-- :( -->
 <table>
-	<%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem } %>
+	<%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem, :fonct=>"edit" } %>
 	<tr class="nhover">
-		<td colspan="2"> <%= render :partial => @payload_partial, :locals => { :fields => @workitem.field_hash } %> </td>
+		<td colspan="2"> <%= render :partial => @payload_partial, :locals => { :fields => @workitem.field_hash , :fonct=>"edit"} %> </td>
 	</tr>
-	<%= render(:partial => "workitems/wi_links") %>
+	<%= render(:partial => "workitems/wi_links", :locals => { :fonct=>"edit" } ) %>
 </table>
 <% end -%>
 <table class='menu_bas'>

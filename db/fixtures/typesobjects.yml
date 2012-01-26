@@ -49,5 +49,21 @@ project_typeaccess_secret:
   id: 8
   object: project_typeaccess
   name: "<%= ::SYLRPLM::TYPEACCESS_SECRET %>"
-  internal: true   
+  internal: true 
+  
+ar_workitem:
+  id: 11 
+  object: ar_workitem
+  name: ar_workitem
+  description: 
+    
+history_entry:
+  id: 12
+  object: history_entry
+  name: history_entry
+  description: 
+    
+    
+    
+      
   

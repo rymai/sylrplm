@@ -1,16 +1,16 @@
 <h1><%= t("workitems_show") %><%= workitem_path(@workitem) %></h1>
 
 <table>
-	<%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem } %>
+	<%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem, :fonct=>"show"  } %>
 	<tr>
 		<td> <%= t(:label_fields)%> </td>
 		<td>		<pre><%= h @workitem.field_hash.to_json.gsub(/,/, ",\n") %></pre></td>
 	</tr>
-	<%= render(:partial => "workitems/wi_links") %>
+	<%= render(:partial => "workitems/wi_links", :locals => { :fonct=>"show" }) %>
 </table>
 <table class='menu_bas'>
 	<tr >
-		<td colspan='2'> <%= link_to t('edit'), edit_workitem_path(@workitem) %>|<%= link_to t('list'), workitems_path %> </td>
+		<td colspan='2'> <%= link_to t('edit_task'), edit_workitem_path(@workitem) %>|<%= link_to t('list'), workitems_path %> </td>
 	</tr>
 </table>
 <%= render_fluo :wfid => @workitem.wfid, :workitems => [ @workitem.expid ] %> 

@@ -1,10 +1,13 @@
 class Link < ActiveRecord::Base
   include Models::SylrplmCommon
+  #include Ruote::Sylrplm::ArWorkitem
   # une seule occurence d'un fils de type donne dans un pere de type donne
   ### verif par soft dans create_new validates_uniqueness_of :child_id, :scope => [:child_plmtype, :father_id, :father_type ]
   #validates_presence_of :name
 
-  belongs_to :relation
+  belongs_to :relation,
+    :class_name => "Relation",
+    :foreign_key => "relation_id"
 
   belongs_to :owner,
     :class_name => "User"
@@ -13,21 +16,33 @@ class Link < ActiveRecord::Base
 
   belongs_to :projowner,
     :class_name => "Project"
-      
-  #objets pouvant etre relies:"document", "part", "project", "customer", "forum", "definition", "datafile", "relation", "user", "ar_workitem", "history"
+
+  #objets pouvant etre fils:"document", "part", "project", "customer", "forum", "datafile", "user"
   with_options :foreign_key => 'child_id' do |child|
     child.belongs_to :document , :conditions => ["child_plmtype='document'"], :class_name => "Document"
     child.belongs_to :part , :conditions => ["child_plmtype='part'"], :class_name => "Part"
     child.belongs_to :project , :conditions => ["child_plmtype='project'"], :class_name => "Project"
     child.belongs_to :customer , :conditions => ["child_plmtype='customer'"], :class_name => "Customer"
     child.belongs_to :forum , :conditions => ["child_plmtype='forum'"], :class_name => "Forum"
-    child.belongs_to :definition , :conditions => ["child_plmtype='definition'"], :class_name => "Definition"
     child.belongs_to :datafile , :conditions => ["child_plmtype='datafile'"], :class_name => "Datafile"
-    child.belongs_to :relation , :conditions => ["child_plmtype='relation'"], :class_name => "Relation"
+    #child.belongs_to :relation , :conditions => ["child_plmtype='relation'"], :class_name => "Relation"
     child.belongs_to :user , :conditions => ["child_plmtype='user'"], :class_name => "User"
-    child.belongs_to :ar_workitem , :conditions => ["child_plmtype='ar_workitem'"], :class_name => "ArWorkitem"
-    child.belongs_to :history , :conditions => ["child_plmtype='history'"], :class_name => "HistoryEntry"
+    child.belongs_to  :history , :conditions => ["child_plmtype='history_entry'"], :class_name => "Ruote::Sylrplm::HistoryEntry"
   end
+  
+    #objets pouvant etre pere:"document", "part", "project", "customer", "forum", "definition", "user",  "history"
+  with_options :foreign_key => 'father_id' do |father|
+    father.belongs_to :document , :conditions => ["father_plmtype='document'"], :class_name => "Document"
+    father.belongs_to :part , :conditions => ["father_plmtype='part'"], :class_name => "Part"
+    father.belongs_to :project , :conditions => ["father_plmtype='project'"], :class_name => "Project"
+    father.belongs_to :customer , :conditions => ["father_plmtype='customer'"], :class_name => "Customer"
+    father.belongs_to :forum , :conditions => ["father_plmtype='forum'"], :class_name => "Forum"
+    father.belongs_to :definition , :conditions => ["father_plmtype='definition'"], :class_name => "Definition"
+    father.belongs_to :user , :conditions => ["father_plmtype='user'"], :class_name => "User"
+    father.belongs_to :history_entry , :conditions => ["father_plmtype='history_entry'"], :class_name => "Ruote::Sylrplm::HistoryEntry"
+  end
+
+
 
   def father
     get_object(father_plmtype, father_id)
@@ -37,12 +52,46 @@ class Link < ActiveRecord::Base
     get_object(child_plmtype, child_id)
   end
 
+  def father_ident
+    ret=self.father_id.to_s+":"+self.father_plmtype+"."+self.father_type_id.to_s
+    ret+="="+self.father.ident unless self.father.nil?
+    ret
+  end
+  
+  def child_ident
+    ret=self.child_id.to_s+":"+self.child_plmtype+"."+self.child_type_id.to_s
+    ret+="="+self.child.ident unless self.child.nil?
+  end
+  
+  def relation_ident
+    rel = Relation.find(self.relation_id) unless self.relation_id.nil?
+    relation_id.to_s+(rel.ident unless rel.nil?)
+  end
+
   def ident
-    father_plmtype+"."+father_type_id.to_s+"-"+Relation.find(relation_id).ident+"-"+child_plmtype+"."+child_type_id.to_s
+    #child_ident = child.ident unless child.nil?
+    father_id.to_s+":"+father_plmtype.to_s+"."+father_type_id.to_s+"-"+relation_id.to_s+"-"+child_id.to_s+":"+child_plmtype.to_s+"."+child_type_id.to_s
+  end
+
+  def exists?
+    cond="father_plmtype='#{self.father_plmtype}' and child_plmtype='#{self.child_plmtype}' and father_type_id =#{self.father_type_id} and child_type_id =#{self.child_type_id} and relation_id =#{self.relation_id}"
+    nb=0
+    idt = self.ident
+    Link.find(:all, :conditions => [cond]).each do |link|
+      #puts idt+" ==? "+self.ident
+      nb += 1 if idt == link.ident
+    end
+    LOG.info {nb.to_s+" liens identiques:"+cond}
+    nb > 0
+  end
+
+  # bidouille infame car l'association ne marche pas
+  def relation
+    Relation.find(relation_id)
   end
 
   def relation_name
-    (self.relation ? self.relation.name : "")
+    (self.relation.nil? ? "nil" : self.relation.name )
   end
 
   def self.valid?(father, child, relation)
@@ -60,10 +109,14 @@ class Link < ActiveRecord::Base
     ret
   end
 
-  def self.create_new_by_values(values)
+  # link creation with values
+  # calls from PLMParticipant
+  def self.create_new_by_values(values, user = nil)
     link = Link.new(values)
-    link.owner=current_user
-    link.group=current_user.group
+    unless user.nil?
+      link.owner=current_user
+      link.group=current_user.group
+    end
     msg="ctrl_link_"+link.ident
     ret={:link => link,:msg => msg}
     #puts "link.create_new_by_values:"+ret.inspect
@@ -117,21 +170,28 @@ class Link < ActiveRecord::Base
   #    c=child_cls.new(self.child_id)
   #  end
 
-  def self.find_childs(father, child_plmtype=nil)
-    find_childs_with_father_type(father.model_name, father, child_plmtype)
+  def self.find_childs(father, child_plmtype=nil, relation_name=nil)
+    find_childs_with_father_plmtype(father.model_name, father, child_plmtype, relation_name)
   end
 
-  def self.find_childs_with_father_type(father_type, father, child_plmtype=nil)
-    ret= unless child_plmtype.nil?
-      find(:all,
-      :conditions => ["father_plmtype='#{father_type}' and child_plmtype='#{child_plmtype}' and father_id =#{father.id}"],
-      :order=>"child_id")
+  def self.find_childs_with_father_plmtype(father_plmtype, father, child_plmtype=nil, relation_name=nil)
+    unless child_plmtype.nil?
+      cond="father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and father_id =#{father.id}"
     else
-      find(:all,
-      :conditions => ["father_plmtype='#{father_type}' and father_id =#{father.id}"],
-      :order=>"child_id")
+      cond="father_plmtype='#{father_plmtype}' and father_id =#{father.id}"
     end
-    #puts "Link.find_childs_with_father_type:"+father_type+":"+father.model_name+"."+father.id.to_s+"="+ret.inspect
+    links = Link.find(:all,
+    :conditions => [cond],
+    :order=>"child_id DESC")
+    unless relation_name.nil?
+      ret=[]
+      links.each do |lnk|
+        ret<<lnk unless lnk.relation.name==relation_name
+      end
+    else
+    ret=links
+    end
+    #puts "Link.find_childs_with_father_plmtype"+father_type+":"+father.model_name+"."+father.id.to_s+"="+ret.inspect
     ret
   end
 
@@ -157,7 +217,15 @@ class Link < ActiveRecord::Base
     #puts name+child_plmtype+" cond="+cond+":"+ret.inspect
     ret
   end
-
+  
+  def self.find_by_father_plmtype_(plmtype)
+    name=self.class.name+"."+__method__.to_s+":"
+    #puts name+plmtype
+    find(:all,
+    :conditions => ["father_plmtype='#{plmtype}'"],
+    :order=>"father_id DESC , child_id DESC")
+  end
+  
   def self.is_child_of(father_plmtype, father, child_plmtype, child)
     ret=false
     #childs=find_childs(father_type, father, child_plmtype)
@@ -187,6 +255,7 @@ class Link < ActiveRecord::Base
 
   def self.nb_used(relation)
     ret=0
+    puts "Link.nb_used:"+relation.child_plmtype+":"+relation.child_type_id.to_s
     links = find(:all, :include => :relation, :conditions => ["relations.child_plmtype = ? and relations.child_type_id = ?", relation.child_plmtype, relation.child_type_id])
     ret = links.count unless links.nil?
     ret
@@ -202,4 +271,9 @@ class Link < ActiveRecord::Base
     nil
   end
 
+  def self.linked?(obj)
+    ret = count(:all,
+    :conditions => ["child_id = #{obj.id} or father_id = #{obj.id}"] )
+    ret>0
+  end
 end
