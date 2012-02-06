@@ -5,6 +5,10 @@
 #  Created by Sylvère on 2012-02-02.
 #  Copyright 2012 Sylvère. All rights reserved.
 #
+############################################################################
+# ATTENTION: ne pas utiliser le logger (LOG) ici car il n'est pas serialisable 
+# alors que cette classe est stockee par ruote
+############################################################################
 require 'ruote'
 require 'ruote/sylrplm/plm_process_exception'
 
