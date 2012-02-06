@@ -29,8 +29,8 @@ class Link < ActiveRecord::Base
     child.belongs_to :user , :conditions => ["child_plmtype='user'"], :class_name => "User"
     child.belongs_to  :history , :conditions => ["child_plmtype='history_entry'"], :class_name => "Ruote::Sylrplm::HistoryEntry"
   end
-  
-    #objets pouvant etre pere:"document", "part", "project", "customer", "forum", "definition", "user",  "history"
+
+  #objets pouvant etre pere:"document", "part", "project", "customer", "forum", "definition", "user",  "history"
   with_options :foreign_key => 'father_id' do |father|
     father.belongs_to :document , :conditions => ["father_plmtype='document'"], :class_name => "Document"
     father.belongs_to :part , :conditions => ["father_plmtype='part'"], :class_name => "Part"
@@ -41,8 +41,6 @@ class Link < ActiveRecord::Base
     father.belongs_to :user , :conditions => ["father_plmtype='user'"], :class_name => "User"
     father.belongs_to :history_entry , :conditions => ["father_plmtype='history_entry'"], :class_name => "Ruote::Sylrplm::HistoryEntry"
   end
-
-
 
   def father
     get_object(father_plmtype, father_id)
@@ -57,15 +55,19 @@ class Link < ActiveRecord::Base
     ret+="="+self.father.ident unless self.father.nil?
     ret
   end
-  
+
   def child_ident
     ret=self.child_id.to_s+":"+self.child_plmtype+"."+self.child_type_id.to_s
     ret+="="+self.child.ident unless self.child.nil?
   end
-  
+
   def relation_ident
-    rel = Relation.find(self.relation_id) unless self.relation_id.nil?
-    relation_id.to_s+(rel.ident unless rel.nil?)
+    begin
+      rel = Relation.find(self.relation_id) unless self.relation_id.nil?
+      relation_id.to_s+(rel.ident unless rel.nil?)
+    rescue Exception=>e
+      relation_id.to_s
+    end
   end
 
   def ident
@@ -78,7 +80,7 @@ class Link < ActiveRecord::Base
     nb=0
     idt = self.ident
     Link.find(:all, :conditions => [cond]).each do |link|
-      #puts idt+" ==? "+self.ident
+    #puts idt+" ==? "+self.ident
       nb += 1 if idt == link.ident
     end
     LOG.info {nb.to_s+" liens identiques:"+cond}
@@ -217,7 +219,7 @@ class Link < ActiveRecord::Base
     #puts name+child_plmtype+" cond="+cond+":"+ret.inspect
     ret
   end
-  
+
   def self.find_by_father_plmtype_(plmtype)
     name=self.class.name+"."+__method__.to_s+":"
     #puts name+plmtype
@@ -225,7 +227,7 @@ class Link < ActiveRecord::Base
     :conditions => ["father_plmtype='#{plmtype}'"],
     :order=>"father_id DESC , child_id DESC")
   end
-  
+
   def self.is_child_of(father_plmtype, father, child_plmtype, child)
     ret=false
     #childs=find_childs(father_type, father, child_plmtype)

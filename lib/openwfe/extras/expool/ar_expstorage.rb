@@ -117,11 +117,12 @@ module OpenWFE::Extras
         #e.wfname = fei.wfname
       end
 
-      e.exp_class = flow_expression.class.name 
+      e.exp_class = flow_expression.class.name
+     # puts  "ExpressionTables.[]=:flow=#{flow_expression.inspect}"
       e.svalue = @persist_as_yaml ?
         YAML::dump(flow_expression) :
         Base64.encode64(Marshal.dump(flow_expression))
-
+      #puts  "ExpressionTables.[]=:e=#{e.svalue.size}"
       e.save_without_transactions!
     end
 

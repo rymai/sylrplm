@@ -141,7 +141,7 @@ class WorkitemsController < ApplicationController
         nb=0
         arw = ar_workitem
         while nb < 7 and !arw.nil? and (arw.last_modified == ar_workitem.last_modified)
-          LOG.info (name){" boucle #{nb}:#{arw.last_modified}"}
+          ##LOG.info (name){" boucle #{nb}:#{arw.last_modified}"}
           sleep 1.0
           nb+=1
           arw = find_ar_workitem
@@ -290,19 +290,19 @@ class WorkitemsController < ApplicationController
 
   #
   def create_links(cur_wi, wfid, history)
-    name="WorkitemsController."+__method__.to_s+":"
-    #puts name+"cur_wi="+cur_wi.id.to_s+":"+cur_wi.wfid.to_s+":"+cur_wi.expid.to_s
+    fname="WorkitemsController."+__method__.to_s+":"
+    #puts fname+"cur_wi="+cur_wi.id.to_s+":"+cur_wi.wfid.to_s+":"+cur_wi.expid.to_s
     params = cur_wi.field_hash[:params]
-    #LOG.info {name+"params="+params.inspect}
+    #LOG.info (fname){"params="+params.inspect}
     unless params.nil?
       params.keys.each do |url|
         v = params[url]
         sv = v.split("#")
         if sv.size == 2
           sp = url.split("/")
-          #puts name+"sp "+sp.size.to_s+":"+sp[0].to_s
+          #puts fname+"sp "+sp.size.to_s+":"+sp[0].to_s
           if sp.size == 3 && sp[0] != url
-            #puts name+sp[1]+"("+sp[1].size.to_s+"):"+sp[2]
+            #puts fname+sp[1]+"("+sp[1].size.to_s+"):"+sp[2]
             cls=sp[1].chop
             id=sp[2]
             relation_name=sv[0]
@@ -315,14 +315,14 @@ class WorkitemsController < ApplicationController
   end
 
   def link_object(workitem, type_object, item_id, relation_name)
-    name="WorkitemsController."+__method__.to_s+":"
-    #puts name+"workitem="+workitem.ident
+    fname="WorkitemsController."+__method__.to_s+":"
+    #puts fname+"workitem="+workitem.ident
     item = PlmServices.get_object(type_object, item_id)
-    #puts name+"item="+item.inspect
+    #puts fname+"item="+item.inspect
     link_={:link=>nil, :msg=>nil}
     unless item.nil?
       relation = Relation.by_values_and_name(workitem.model_name, item.model_name, workitem.model_name, type_object, relation_name)
-      #puts name+"relation="+relation.inspect
+      #puts fname+"relation="+relation.inspect
       unless relation.nil?
         values={}
         values["father_plmtype"] = workitem.model_name
@@ -333,7 +333,7 @@ class WorkitemsController < ApplicationController
         values["child_id"]       = item.id
         values["relation_id"]    = relation.id
         link_= Link.create_new_by_values(values, nil)
-      #puts name+"link_="+link_.inspect
+      #puts fname+"link_="+link_.inspect
       else
         link_[:msg] = name+"Pas de relation de nom "+relation_name
         raise PlmProcessException.new(
@@ -342,19 +342,19 @@ class WorkitemsController < ApplicationController
       unless link_[:link].nil?
         #unless link_[:link].exists?
         if link_[:link].save
-          LOG.info(name){"save ok:link id="+link_[:link].id.to_s}
+          LOG.info(fname){"save ok:link id="+link_[:link].id.to_s}
         else
-          LOG.error(name){"error save :"+link_[:link].errors.inspect}
+          LOG.error(fname){"error save :"+link_[:link].errors.inspect}
           raise PlmProcessException.new(
-        name+"error save :"+link_[:link].errors.inspect, 10002)
+        fname+"error save :"+link_[:link].errors.inspect, 10002)
         end
       #else
       #  puts  "PlmParticipant.add_object:link existant deja :"+link_[:link].inspect
       #end
       else
-        LOG.error(name){"error create:link="+link_.inspect}
+        LOG.error(fname){"error create:link="+link_.inspect}
         raise PlmProcessException.new(
-        name+"error create:link="+link_.inspect, 10003)
+        fname+"error create:link="+link_.inspect, 10003)
       end
     end
     link_

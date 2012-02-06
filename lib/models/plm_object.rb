@@ -113,6 +113,7 @@ module Models::PlmObject
   end
   
   def promote_by?(choice)
+    #puts "#{__method__} #{self.ident}: promote_id=#{self.statusobject.promote_id} choice#{choice}"
     ( (self.respond_to? (:statusobject)) ? self.statusobject.promote_id == choice : false)
   end
   

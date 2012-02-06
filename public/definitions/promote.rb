@@ -8,20 +8,13 @@ class PLMPromote < OpenWFE::ProcessDefinition
   set :v => "valideur", :value => "chef"
   set :v => "publish", :value => "assistant"
 
-  #set :v => "f" , :value => { :in => [{ :fields => '/^private_/', :remove => true }], :out => [{ :fields => '/^private_/', :restore => true },{ :fields => '/^protected_/', :restore => true }]}
-
   cursor do
-  #filter "protected_priorite", :type => "number", :in => [1,2,3]
-  #set :f => "protected_priorite", :value => 1
-  #set :f => "protected_comment", :value => ""
-  #jump :to => 'partdocument'
 
     set :f => "comment_createur", :value => "comment demandeur"
-    demandeur :activity =>  "Copier auparavant l objet(s), ajouter un commentaire "
+    demandeur :activity =>  "Copier auparavant l objet(s), ajouter un commentaire"
     back :unless => '${f:comment_createur} != ""'
-    #_redo :ref => 'createur', :unless => '${f:comment} != "" '
 
-    plm Ruote::PlmParticipant, :task=>"promote",:step=>"init",:relation=>"applicable"
+    plm Ruote::PlmParticipant, :task => "promote", :step => "init", :relation => "applicable"
 
     # taches paralleles, quorum=1
     set :f => "comment_relecteur", :value => "comment relecteur"
@@ -31,7 +24,7 @@ class PLMPromote < OpenWFE::ProcessDefinition
     end
     back :unless => '${f:comment_relecteur} != ""'
 
-    plm Ruote::PlmParticipant, :task=>"promote", :step=>"review",:relation=>"reference"
+    plm Ruote::PlmParticipant, :task => "promote", :step => "review", :relation => "reference"
 
     set :f => "ok", :value => "true"
     set :f => "comment_valideur", :value => "comment valideur"
@@ -40,7 +33,7 @@ class PLMPromote < OpenWFE::ProcessDefinition
     # back to the reviewers if editor not happy
     rewind :unless =>  '${f:ok}'
 
-    plm Ruote::PlmParticipant, :task=>"promote", :step=>"exec",:relation=>"applicable"
+    plm Ruote::PlmParticipant, :task => "promote", :step => "exec", :relation => "applicable"
 
   end
 end

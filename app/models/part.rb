@@ -31,7 +31,7 @@ class Part < ActiveRecord::Base
 
   has_many :links_parts, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='part' and child_plmtype='part'"]
   has_many :parts , :through => :links_parts
-  
+
   has_many :links_parts_up, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='part' and child_plmtype='part'"]
   has_many :parts_up , :through => :links_parts_up
 
@@ -40,7 +40,6 @@ class Part < ActiveRecord::Base
 
   has_many :links_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='part'"]
   has_many :customers , :through => :links_customers
-
   def to_s
     self.ident+"/"+self.revision+"-"+self.designation+"-"+self.typesobject.name+"-"+self.statusobject.name
   end
@@ -50,7 +49,7 @@ class Part < ActiveRecord::Base
       obj=Part.new(part)
     else
       obj=Part.new
-      obj.set_default_values(true)
+    obj.set_default_values(true)
     end
     obj.statusobject=Statusobject.get_first("part")
     obj.owner=user
@@ -63,9 +62,11 @@ class Part < ActiveRecord::Base
   def link_attributes=(att)
     @link_attributes = att
   end
+
   def link_attributes
     @link_attributes
   end
+
   # modifie les attributs avant edition
   def self.find_edit(object_id)
     obj=find(object_id)
@@ -92,8 +93,13 @@ class Part < ActiveRecord::Base
     self
   end
 
+  def demote
+    self.statusobject=Statusobject.find_previous(:project,statusobject)
+    self
+  end
+
   def self.get_conditions(filter)
-    
+
     filter = filters.gsub("*","%")
     ret={}
     unless filter.nil?
@@ -102,8 +108,8 @@ class Part < ActiveRecord::Base
       ret[:values]={:v_filter => filter}
     end
     ret
-    #conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
-    #  " or "+qry_owner+" or date LIKE ? "
+  #conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
+  #  " or "+qry_owner+" or date LIKE ? "
   end
 
 end
