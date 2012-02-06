@@ -6,7 +6,7 @@ class PartsController < ApplicationController
   # GET /parts
   # GET /parts.xml
   def index
-    @parts = Part.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+    index_
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @parts[:recordset] }
@@ -43,7 +43,7 @@ class PartsController < ApplicationController
     #puts "===PartsController.new:"+params.inspect+" user="+@current_user.inspect
     @part = Part.create_new(nil, @current_user)
     @types= Part.get_types_part
-    @status= Statusobject.find_for("part", true)
+    @status= Statusobject.find_for("part", 2)
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @part }
@@ -55,7 +55,7 @@ class PartsController < ApplicationController
     @part = Part.find_edit(params[:id])
     @types=Part.get_types_part
     #seulement les statuts qui peuvenet etre promus sans process
-    @status= Statusobject.find_for("part", true)
+    @status= Statusobject.find_for("part", 2)
   end
 
   # POST /parts
@@ -103,11 +103,21 @@ class PartsController < ApplicationController
   # DELETE /parts/1.xml
   def destroy
     @part = Part.find(params[:id])
-    @part.destroy
-    flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
     respond_to do |format|
-      format.html { redirect_to(parts_url) }
-      format.xml  { head :ok }
+      unless @part.nil?
+        if @part.destroy
+          flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_part), :ident => @part.ident)
+          format.html { redirect_to(parts_url) }
+          format.xml  { head :ok }
+        else
+          flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_part), :ident => @part.ident)
+          index_
+          format.html { render :action => "index" }
+          format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
+        end
+      else
+        flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_part), :ident => @part.ident)
+      end
     end
   end
 
@@ -155,7 +165,11 @@ class PartsController < ApplicationController
     ctrl_demote(@part)
   end
 
-private
+  private
+
+  def index_
+    @parts = Part.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+  end
 
   #  Now the explanation: The above code is constructing a navigation tree for a two-level hierarchy with a Parent Model
   #  and a Child Model.

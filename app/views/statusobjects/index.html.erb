@@ -1,5 +1,9 @@
 <h1><%= t(:statusobjects_list) %><%= h_count_objects(@statusobjects)%> </h1>
-
+<% unless @statusobject.nil? %>
+<% form_for(@statusobject) do |f| %>
+<%= f.error_messages %>
+<% end %>
+<% end %>
 <%= form_simple_query_helper('/statusobjects', @statusobjects) %>
 <table class='menu_bas'>
 	<tr>

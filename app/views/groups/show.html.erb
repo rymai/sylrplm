@@ -10,7 +10,7 @@
   </tr>
   <tr>
     <td><%= t("label_group_users") %></td>
-    <td><%= comma_list(@group.users, :login) %></td>
+    <td><%= comma_links(@group.users, :login) %></td>
   </tr>
   <tr>
     <td><%= t("label_group_father") %></td>

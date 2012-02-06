@@ -21,7 +21,7 @@
 		<td> <%= link_to h(definition.name), definition %> </td>
 		<td title="<%= h definition.description %>"> <%= h truncate(definition.description, :length => 40) %> </td>
 		<td> <%= link_to h(definition.uri), definition.full_uri %> </td>
-		<td> <%= comma_list(definition.groups) %> </td>
+		<td> <%= comma_links(definition.groups,:name) %> </td>
 		<td> <%= definition.internal %> </td>
 		<% if fonct != "new_process" %> 
 		<td> <%= link_to(h_img_show.to_s, definition) %></td>
@@ -34,7 +34,7 @@
 		:confirm => t("msg_confirm"),
 		:method => :delete) %></td>
 		<% else %>
-		<td><%= link_to(
+		<td class='menu_bas'><%= link_to(
 		t("launchthis"),
 		new_process_path(:definition_id => definition.id)) if definition.usable? %> 
 		</td>

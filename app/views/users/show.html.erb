@@ -1,50 +1,30 @@
 <h1><%= t(:user_show) %></h1>
-<p>
-	<b><%= t(:label_username) %></b>
-	<%= h @the_user.login %>
-</p>
-<p>
-	<b><%= t(:label_first_name) %></b>
-	<%= h @the_user.first_name %>
-</p>
-<p>
-	<b><%= t(:label_last_name) %></b>
-	<%= h @the_user.last_name %>
-</p>
-<p>
-	<b><%= t(:label_type) %></b>
-	<% if(@the_user.typesobject != nil) 
-		h @the_user.typesobject.name  
-		end %>
-</p>
-<p>
-	<b><%= t(:label_language) %></b>
-	<%= h @the_user.language %>
-</p>
-<p>
-	<b><%= t(:label_volume) %></b>
-	<%= h @the_user.volume.name unless @the_user.volume.nil? %>
-</p>
-<p>
-	<b><%= t(:label_theme) %></b>
-	<%= h @the_user.theme %>
-</p>
-<p>
-	<b><%= t(:label_notification) %></b>
-	<%= h t(@the_user.v_notification) %>
-</p>
-<p>
-	<b><%= t(:label_time_zone) %></b>
-	<%= h @the_user.v_time_zone %>
-</p>
-<p>
-	<b><%= t(:label_email) %></b>
-	<%= h @the_user.email %>
-</p>
-<p>
-	<b><%= t(:label_show_mail) %></b>
-	<%= h @the_user.show_mail %>
-</p>
+<table>
+	<%= h_attribut_trtd(@the_user, :id) %>
+	<%= h_attribut_trtd(@the_user, :login) %>
+	<%= h_attribut_trtd(@the_user, :first_name) %>
+	<%= h_attribut_trtd(@the_user, :last_name) %>
+	<%= h_attribut_trtd(@the_user, "typesobject.name") %>
+	<%= h_attribut_trtd(@the_user, :language) %>
+	<%= h_attribut_trtd(@the_user, "volume.name") %>
+	<%= h_attribut_trtd(@the_user, :theme) %>
+	<%= h_attribut_trtd(@the_user, :notification) %>
+	<%= h_attribut_trtd(@the_user, :time_zone) %>
+	<%= h_attribut_trtd(@the_user, :email) %>
+	<%= h_attribut_trtd(@the_user, :show_mail) %>
+	<tr>
+		<td><%= t(:label_roles) %></td>
+		<td><%= comma_links(@the_user.roles, :title) %></td>
+	</tr>
+	<tr>
+		<td><%= t(:label_groups) %></td>
+		<td><%= comma_links(@the_user.groups, :name) %></td>
+	</tr>
+	<tr>
+		<td><%= t(:label_projects) %></td>
+		<td><%= comma_links(@the_user.projects, :ident) %></td>
+	</tr>
+</table>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t(:edit), edit_user_path(@the_user) %> </td>

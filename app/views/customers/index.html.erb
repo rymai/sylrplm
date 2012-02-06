@@ -1,4 +1,9 @@
 <h1><%= t("customer_list") %><%= h_count_objects(@customers) %></h1>
+<% unless @customer.nil? %>
+<% form_for(@customer) do |f| %>
+<%= f.error_messages %>
+<% end %>
+<% end %>
 <%= form_simple_query_helper('/customers', @customers) %>
 <table class='menu_bas'>
 	<tr>

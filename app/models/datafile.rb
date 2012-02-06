@@ -143,7 +143,7 @@ class Datafile < ActiveRecord::Base
         ret<<file.key.to_s
       end unless dir.nil?
     else
-      dir=dir_repository
+      dir=self.dir_repository
       if File.exists?(dir)
         repos=filename_repository
         Dir.foreach(dir) { |file|

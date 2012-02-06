@@ -6,6 +6,8 @@
 <table class='menu_bas'>
 	<tr>
 		<td><%= f.submit t("create") %></td>
+		<td> <%= link_to t("list"), datafiles_path %> </td>
+		<td> <%= link_to t("document_show"), document_path(@object) %> </td>
 	</tr>
 </table>
 <% end %>

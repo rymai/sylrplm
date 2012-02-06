@@ -272,8 +272,10 @@ class Link < ActiveRecord::Base
   end
 
   def self.linked?(obj)
+    cond="child_id = #{obj.id} or father_id = #{obj.id}"
+    puts "linked cond="+cond
     ret = count(:all,
-    :conditions => ["child_id = #{obj.id} or father_id = #{obj.id}"] )
+    :conditions => [cond] )
     ret>0
   end
 end

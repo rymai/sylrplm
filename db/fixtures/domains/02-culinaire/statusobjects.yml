@@ -4,7 +4,7 @@
  name: default 
  rank: 0 
  description: 
- promote: true 
+ promote_id: 2 
  demote: true   
  			
 4:
@@ -12,7 +12,7 @@
  object: document 
  name: inwork 
  rank: 1 
- promote: true 
+ promote_id: 2 
  demote: false 	
  
 5:
@@ -20,7 +20,7 @@
  object: document 
  name: ready 
  rank: 2
- promote: true 
+ promote_id: 2 
  demote: false 
  description: Pret pour la validation	
  
@@ -29,7 +29,7 @@
  object: document 
  name: approved 
  rank: 3 
- promote: false 
+ promote_id: 1 
  demote: true 
  				
 7:
@@ -37,7 +37,7 @@
  object: part 
  name: inprogress 
  rank: 1 	
- promote: true 
+ promote_id: 2 
  demote: false 	 	
  		
 8:
@@ -45,7 +45,7 @@
  object: part 
  name: ready 
  rank: 2 	
- promote: true 
+ promote_id: 2 
  demote: false 	 			
  description: Pret pour la validation	
  
@@ -54,7 +54,7 @@
  object: part 
  name: validated 
  rank: 3 	
- promote: false 
+ promote_id: 1 
  demote: true 
  	 				
 10:
@@ -62,7 +62,7 @@
  object: project 
  name: started 
  rank: 1 
- promote: false 
+ promote_id: 1 
  demote: false 	
  
 11:
@@ -70,7 +70,7 @@
  object: project 
  name: finished 
  rank: 2 	
- promote: false 
+ promote_id: 1 
  demote: false 	
  				
 12:
@@ -78,7 +78,7 @@
  object: project 
  name: hasbeen 
  rank: 3 
- promote: false 
+ promote_id: 1 
  demote: false 
  
 13:
@@ -86,7 +86,7 @@
  object: forum 
  name: open 
  rank: 1 	
- promote: false 
+ promote_id: 1 
  demote: false 	 	
  			 	
 14:
@@ -94,7 +94,7 @@
  object: forum 
  name: close 
  rank: 2 	
- promote: false 
+ promote_id: 1 
  demote: false 
  
 21: 
@@ -103,7 +103,7 @@
  name: active 
  rank: 1 
  description: 
- promote: false 
+ promote_id: 1 
  demote: false  
  
 22:
@@ -111,7 +111,7 @@
  object: customer 
  name: inactive 
  rank: 2  
- promote: false 
+ promote_id: 1 
  demote: false    
     
 23:
@@ -119,6 +119,6 @@
  object: customer 
  name: hasbeen 
  rank: 3  
- promote: false 
+ promote_id: 1 
  demote: false    
  	 	

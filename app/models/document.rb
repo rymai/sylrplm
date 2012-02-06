@@ -17,23 +17,26 @@ class Document < ActiveRecord::Base
   belongs_to :projowner,
     :class_name => "Project"
 
-  has_many :datafile, :dependent => :delete_all
+  has_many :datafile, :dependent => :destroy
   has_many :checks
 
-  has_many :links_documents, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='document' and child_plmtype='document'"]
-  has_many :documents , :through => :links_documents
+  has_many :links_childs_documents, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='document' and child_plmtype='document'"]
+  has_many :childs_documents , :through => :links_childs_documents , :source => :document
+  has_many :links_fathers_documents, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='document' and child_plmtype='document'"]
+  has_many :fathers_documents , :through => :links_fathers_documents, :source => :document
 
-  has_many :links_parts, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='part' and child_plmtype='document'"]
-  has_many :parts, :through => :links_parts
+  has_many :links_fathers_parts, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='part' and child_plmtype='document'"]
+  has_many :fathers_parts, :through => :links_fathers_parts, :source => :part
 
-  has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='document'"]
-  has_many :projects, :through => :links_projects
+  has_many :links_fathers_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='document'"]
+  has_many :fathers_projects, :through => :links_fathers_projects, :source => :project
 
-  has_many :links_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
-  has_many :customers, :through => :links_customers
+  has_many :links_fathers_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
+  has_many :fathers_customers, :through => :links_fathers_customers, :source => :customer
 
-  has_many :links_histories, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='document'"]
-  has_many :histories, :through => :links_histories
+  has_many :links_fathers_histories, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='document'"]
+  has_many :fathers_histories, :through => :links_fathers_histories, :source => :history_entry
+
   #essai, appelle 10 fois par document !!!
   def after_find
     #puts "Document:after_find: ident="+ident+" type="+model_name+"."+typesobject.name+" proj="+projowner.ident+" group="+group.name
@@ -207,20 +210,6 @@ class Document < ActiveRecord::Base
     self.datafile.delete(item)
   end
 
-  def delete
-    begin
-      self.datafile.each { |file|
-        self.remove_datafile(file)
-      }
-      self.destroy
-      return true
-    rescue Exception => e
-      #puts "Document.delete:"+e.inspect
-      self.errors.add_to_base e.inspect
-      return false
-    end
-  end
-
   def self.get_conditions(filters)
     filter = filters.gsub("*","%")
     ret={}
@@ -231,20 +220,32 @@ class Document < ActiveRecord::Base
     ret
   end
 
-  def self.get_conditions_old(params)
-    filter = params[:query].gsub("*","%")
-    unless filter.nil?
-      ret = "ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
-      " or "+qry_owner+" or date LIKE ? ",
-    filter, filter,
-    filter, filter,
-    filter, filter,
-    filter
-    else
-      ret=""
+  def before_destroy_obsolete
+    begin
+      self.datafile.each { |file|
+        self.remove_datafile(file)
+      }
+      #self.destroy
+      return true
+    rescue Exception => e
+      puts "Document.delete:"+e.inspect
+    self.errors.add_to_base e.inspect
+    return false
     end
-    puts self.model_name+".get_conditions:ret="+ret.to_s
-    ret
+  end
+
+  def delete_old_obsolete
+    begin
+      self.datafile.each { |file|
+        self.remove_datafile(file)
+      }
+      self.destroy
+      return true
+    rescue Exception => e
+      puts "Document.delete:"+e.inspect
+    self.errors.add_to_base e.inspect
+    return false
+    end
   end
 
 end

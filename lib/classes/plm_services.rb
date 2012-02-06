@@ -8,7 +8,7 @@ class PlmServices
     begin
       mdl = eval typec
     rescue Exception => e
-      LOG.warn{aname+e.message}
+      #LOG.warn{aname+e.message}
       begin
         typec ="Ruote::Sylrplm::"+typec
         mdl = eval typec

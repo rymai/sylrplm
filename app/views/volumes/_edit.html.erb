@@ -4,14 +4,14 @@
 	</legend>
 	<input type="hidden" name="olddir" value="<%= @volume.directory %>"/>
 	<%= f.label t(:label_name) %>
-	<%= f.text_field :name , :readonly=>(fonct=="edit")%>
+	<%= f.text_field :name , :readonly=>(fonct=="edit" && !admin_logged_in?)%>
 	<br/>
 	<%= f.label t(:label_directory) %>
-	<%= f.text_field :directory , :readonly=>(fonct=="edit")%>
+	<%= f.text_field :directory , :readonly=>(fonct=="edit" && !admin_logged_in?)%>
 	<br/>
 	<%= f.label t(:label_protocol) %>
-	<% if fonct=="edit" %>
-	<%= f.text_field :protocol , :readonly=>(fonct=="edit") %>
+	<% if fonct=="edit" && !admin_logged_in? %>
+	<%= f.text_field :protocol , :readonly=>(true) %>
 	<% else %> 
 	<%= f.select( :protocol, Volume.protocol_values) %>
 	<% end %>

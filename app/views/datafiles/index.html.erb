@@ -1,4 +1,9 @@
 <h1><%= t(:datafile_list) %><%= h_count_objects(@datafiles)%> </h1>
+<% unless @datafile.nil? %>
+<% form_for(@datafile) do |f| %>
+<%= f.error_messages %>
+<% end %>
+<% end %>
 <%= form_simple_query_helper('/datafiles', @datafiles) %>
 <table class='menu_bas'>
 	<tr>
@@ -7,7 +12,7 @@
 	</tr>
 </table>
 <%= will_paginate(@datafiles[:recordset]) %>
-<%= render(:partial => "datafiles/index_datafiles", :locals=>{:document=>nil}) %>
+<%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>@datafiles, :document=>nil}) %>
 <%= will_paginate(@datafiles[:recordset]) %>
 <table class='menu_bas'>
 	<tr>

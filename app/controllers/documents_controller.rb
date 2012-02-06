@@ -10,7 +10,7 @@ class DocumentsController < ApplicationController
   # GET /documents.xml
   def index
     # puts __FILE__+"."+__method__.to_s+":"+params.inspect
-    @documents = Document.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+    index_
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @documents[:recordset] }
@@ -20,17 +20,17 @@ class DocumentsController < ApplicationController
   # GET /documents/1
   # GET /documents/1.xml
   def show
+    name=self.class.name+"."+__method__.to_s+":"
     #puts __FILE__+"."+__method__.to_s+":"+params.inspect
     @document  = Document.find(params[:id])
-    @datafiles = @document.get_datafiles
-    @parts     = @document.parts
-    @projects  = @document.projects
-    @customers = @document.customers
+    #@datafiles = @document.get_datafiles
+    #@parts     = @document.parts
+    #@projects  = @document.projects
+    #@customers = @document.customers
     @checkout  = Check.get_checkout("document", @document)
-    @tree_up      = create_tree_up(@document)
+    @tree      = create_tree(@document)
+    @tree_up   = create_tree_up(@document)
     @relations = Relation.relations_for(@document)
-    @tree                    = create_tree(@document)
-    @documents               = @document.documents
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @document }
@@ -44,7 +44,7 @@ class DocumentsController < ApplicationController
     @document = Document.create_new(nil, @current_user)
     @types    = Document.get_types_document
     @volumes  = Volume.find_all
-    @status   = Statusobject.find_for("document", true)
+    @status   = Statusobject.find_for("document", 2)
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @document }
@@ -57,8 +57,8 @@ class DocumentsController < ApplicationController
     @document = Document.find_edit(params[:id])
     @types    = Typesobject.find_for("document")
     @volumes  = Volume.find_all
-    #seulement les statuts qui peuvenet etre promus sans process
-    @status   = Statusobject.find_for("document", true)
+    #seulement les statuts qui peuvent etre promus ou retrograde par le menu
+    @status   = Statusobject.find_for(@document, 1)
   end
 
   # POST /documents
@@ -95,7 +95,7 @@ class DocumentsController < ApplicationController
     @document = Document.find(params[:id])
     @volumes  = Volume.find_all
     @types    = Typesobject.find_for("document")
-    @status   = Statusobject.find_for("document")
+    @status   = Statusobject.find_for(@document)
     @document.update_accessor(current_user)
     respond_to do |format|
       if @document.update_attributes(params[:document])
@@ -116,17 +116,14 @@ class DocumentsController < ApplicationController
     @document= Document.find(params[:id])
     respond_to do |format|
       unless @document.nil?
-        if @document.delete
+        if @document.destroy
           flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_document), :ident => @document.ident)
           format.html { redirect_to(documents_url) }
           format.xml  { head :ok }
         else
           flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_document), :ident => @document.ident)
-          @types    = Typesobject.find_for("document")
-          @volumes  = Volume.find_all
-          #seulement les statuts qui peuvenet etre promus sans process
-          @status   = Statusobject.find_for("document", true)
-          format.html { render :action => "edit" }
+          index_
+          format.html { render :action => "index" }
           format.xml  { render :xml => @document.errors, :status => :unprocessable_entity }
         end
       else
@@ -300,6 +297,10 @@ class DocumentsController < ApplicationController
   end
 
   private
+
+  def index_
+    @documents = Document.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+  end
   #  def add_document_to_favori
   #    puts "===DocumentsController.add_document_to_favori:id="+params[:id].to_s
   #    document = Document.find(params[:id])

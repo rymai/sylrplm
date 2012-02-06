@@ -21,7 +21,7 @@ class PLMPromote < OpenWFE::ProcessDefinition
     back :unless => '${f:comment_createur} != ""'
     #_redo :ref => 'createur', :unless => '${f:comment} != "" '
 
-    plm Ruote::PlmParticipant, :task=>"promote",:step=>"init"
+    plm Ruote::PlmParticipant, :task=>"promote",:step=>"init",:relation=>"applicable"
 
     # taches paralleles, quorum=1
     set :f => "comment_relecteur", :value => "comment relecteur"
@@ -31,7 +31,7 @@ class PLMPromote < OpenWFE::ProcessDefinition
     end
     back :unless => '${f:comment_relecteur} != ""'
 
-    plm Ruote::PlmParticipant, :task=>"promote", :step=>"review"
+    plm Ruote::PlmParticipant, :task=>"promote", :step=>"review",:relation=>"reference"
 
     set :f => "ok", :value => "true"
     set :f => "comment_valideur", :value => "comment valideur"
@@ -40,7 +40,7 @@ class PLMPromote < OpenWFE::ProcessDefinition
     # back to the reviewers if editor not happy
     rewind :unless =>  '${f:ok}'
 
-    plm Ruote::PlmParticipant, :task=>"promote", :step=>"exec"
+    plm Ruote::PlmParticipant, :task=>"promote", :step=>"exec",:relation=>"applicable"
 
   end
 end

@@ -20,8 +20,9 @@ class Project < ActiveRecord::Base
   has_many :links_parts, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='project' and child_plmtype='part'"]
   has_many :parts , :through => :links_parts
 
-  has_many :links_users, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='project' and child_plmtype='user'"]
-  has_many :users , :through => :links_users
+  has_and_belongs_to_many :users
+  #has_many :links_users, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='project' and child_plmtype='user'"]
+  #has_many :users , :through => :links_users
 
   has_many :links_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
   has_many :customers , :through => :links_customers

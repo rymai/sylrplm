@@ -138,65 +138,7 @@ module Controllers::PlmObjectControllerModule
     end
   end
   
-  def ctrl_promote_old(object, withMail=true)
-    puts "plm_object_controller.ctrl_promote:"+object.inspect+" "+withMail.to_s
-    email_ok=true
-    if withMail==true
-      email_ok=object.owner.may_send_email?
-    end
-    respond_to do |format|
-      if email_ok==true
-        current_rank=object.statusobject.name
-        object.promote
-        new_rank=object.statusobject.name
-        current_rank!=new_rank
-        if withMail==true
-          email=nil
-          validers=Role.get_validers
-          puts "plm_object_controller.ctrl_promote:"+validers.inspect
-          if validers.length > 0
-            if object.save
-              if object.could_validate?
-                validersMail=PlmMailer.listUserMail(validers)
-                email=PlmMailer.create_toValidate(object, current_user, @urlbase, validersMail)
-              end
-              if object.is_freeze
-                validersMail=PlmMailer.listUserMail(validers, current_user)
-                email=PlmMailer.create_validated(object, current_user, @urlbase, validersMail)
-              end
-              unless email.blank?
-                email.set_content_type("text/html")
-                PlmMailer.deliver(email)
-              end
-              flash[:notice] = t(:ctrl_object_promoted,:typeobj =>t(:ctrl_.to_s+object.class.name.downcase!),:ident=>object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>validersMail)
-              format.html { redirect_to(object) }
-              format.xml  { head :ok }
-            end
-          else
-            flash[:notice] = t(:ctrl_object_no_validers,:typeobj =>t(:ctrl_.to_s+object.class.name.downcase!),:ident=>object.ident,:current_rank=>current_rank,:new_rank=>new_rank)
-            format.html { redirect_to(object) }
-            format.xml  { head :ok }
-
-          end
-        else
-          if object.save
-            flash[:notice] = t(:ctrl_object_promoted,:typeobj =>t(:ctrl_.to_s+object.class.name.downcase!),:ident=>object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>validersMail)
-            format.html { redirect_to(object) }
-            format.xml  { head :ok }
-          else
-            flash[:notice] = t(:ctrl_object_not_promoted,:typeobj =>t(:ctrl_.to_s+object.class.name.downcase!),:ident=>object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>validersMail)
-            format.html { render :action => "edit" }
-            format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
-          end
-        end
-      else
-        flash[:notice] = t(:ctrl_user_no_email,:user=>object.owner.login)
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
+  
   def ctrl_demote(model, withMail=true)
     object = model.find(params[:id])
     current_rank=object.statusobject.name
@@ -497,13 +439,32 @@ module Controllers::PlmObjectControllerModule
       cnode = Node.new(options,nil)
       node<<cnode
       rescue Exception => e
-        LOG.error e
-        puts "tree_documents:"+e.inspect
+        LOG.error (__method__.to_s){e}
       end
     end
   end
 
   def tree_users(node, father_type, father)
+    begin
+      father.users.each do |child|
+        url={:controller => 'users', :action => 'show', :id => child.id}
+        options={
+          :label => child.ident ,
+          :icon  => icone(child),
+          :icon_open => icone(child),
+          :title => child.designation,
+          :open => false,
+          :url  => url_for(url)
+        }
+        cnode = Node.new(options, nil)
+        node << cnode
+      end
+    rescue Exception => e
+      LOG.error (__method__.to_s){e}
+    end
+  end
+  
+  def tree_users_obsolete(node, father_type, father)
     links=Link.find_childs( father,  "user")
     links.each do |link|
       begin
@@ -513,7 +474,7 @@ module Controllers::PlmObjectControllerModule
       :action => "remove_link",
       :id => "#{link.id}" )
         cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
-        puts "tree_users:link="+link.id.to_s+" relation="+link.relation.inspect
+        #puts "tree_users:link="+link.id.to_s+" relation="+link.relation.inspect
         options={
           :label => child.ident + cut_a,
           :icon=>icone(child),
@@ -525,11 +486,11 @@ module Controllers::PlmObjectControllerModule
         cnode = Node.new(options,nil)
         node<<cnode
       rescue Exception => e
-        LOG.error e
-        puts "tree_users"+e.inspect
+        LOG.error (__method__.to_s){e}
       end
     end
   end
+  
 
   def tree_forums(node, father_type, father)
     docs = Link.find_childs( father,  "forum")
@@ -556,8 +517,7 @@ module Controllers::PlmObjectControllerModule
       cnode = Node.new(options,nil)
       node << cnode
        rescue Exception => e
-        LOG.error e
-        puts "tree_forums"+e.inspect
+        LOG.error (__method__.to_s){e}
       end
     end
   end
@@ -657,7 +617,7 @@ module Controllers::PlmObjectControllerModule
   end
 
   def empty_favori
-    puts "===PlmObjectControllerModule.empty_favori"+params.inspect
+    #puts "===PlmObjectControllerModule.empty_favori"+params.inspect
     empty_favori_by_type(get_model_type(params))
   end
 
@@ -795,7 +755,7 @@ module Controllers::PlmObjectControllerModule
   def html_models_and_columns(default = nil)
     lst=[]
     Dir.new("#{RAILS_ROOT}/app/models").entries.each do |model|
-      unless %w[. .. obsolete].include?(model)
+      unless %w[. .. _obsolete _old Copy].include?(model)
         mdl = model.camelize.gsub('.rb', '')
         begin
           mdl.constantize.content_columns.each do |col|
@@ -805,7 +765,7 @@ module Controllers::PlmObjectControllerModule
         end
       end
     end
-    puts __FILE__+"."+__method__.to_s+":"+lst.inspect
+    #puts __FILE__+"."+__method__.to_s+":"+lst.inspect
     get_html_options(lst, default)
   end
 
@@ -835,13 +795,12 @@ module Controllers::PlmObjectControllerModule
     cnode = Node.new(options,nil)
     node << cnode
     met=father.model_name+"s"
-    puts "follow_tree:met="+met.inspect
     begin
       childs=father.method(met).call
     rescue Exception=>e
       puts "follow_tree:erreur sur recherche des fils met="+met.inspect+":"+e.inspect
       puts "follow_tree:father="+father.inspect
-      # bidouillage infame
+      # bidouillage infame TODO
       if met=="groups"
         childs=father.groups
       end
@@ -851,7 +810,6 @@ module Controllers::PlmObjectControllerModule
         follow_tree(cnode, child)
       end
     end
-    
     node
   end
   

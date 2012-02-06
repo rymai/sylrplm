@@ -32,13 +32,13 @@ class Relation < ActiveRecord::Base
   end
 
   def self.create_new(params)
-    if(params!=nil)
+    unless params.nil?
       obj=Relation.new(params)
     else
       obj=Relation.new
-      obj.set_default_values( true)
       obj.father_plmtype=Typesobject.get_objects_with_type.first
       obj.child_plmtype=Typesobject.get_objects_with_type.first
+      obj.set_default_values( true)
     end
     #puts "Relations."+__method__.to_s+":"+obj.inspect
     obj

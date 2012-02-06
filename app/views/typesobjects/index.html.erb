@@ -1,5 +1,9 @@
 <h1><%=t(:typesobjects_list) %><%=h_count_objects(@typesobjects)%> </h1>
-
+<% unless @typesobject.nil? %>
+<% form_for(@typesobject) do |f| %>
+<%= f.error_messages %>
+<% end %>
+<% end %>
 <%= form_simple_query_helper('/typesobjects', @typesobjects) %>
 <table class='menu_bas'>
     <tr>

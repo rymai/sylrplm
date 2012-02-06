@@ -1,3 +1,10 @@
+#
+#  plm_participant.rb
+#  sylrplm
+#
+#  Created by Sylvère on 2012-02-02.
+#  Copyright 2012 Sylvère. All rights reserved.
+#
 require 'ruote'
 require 'ruote/sylrplm/plm_process_exception'
 
@@ -10,12 +17,12 @@ class Ruote::PlmParticipant
   #
   def do_not_thread
     name="PlmParticipant.do_not_thread:"
-    puts name
     true
   end
 
   def initialize(work=nil, opts=nil)
-    puts "PlmParticipant.initialize:opts="+opts.nil?.to_s+" work="+work.inspect
+    name="PlmParticipant.initialize"
+    LOG.info (name){"opts="+opts.nil?.to_s+" work="+work.inspect}
     @opts = opts
   end
 
@@ -29,57 +36,23 @@ class Ruote::PlmParticipant
         unless workitem.attributes["params"].nil?
           task = get_param(workitem, "task")
           step = get_param(workitem, "step")
-          relation_name = get_param(workitem, "relation", get_default_relation(task, step))
+          relation_name = get_param(workitem, "relation", nil)
         end
       end
-      puts name+"task="+task.to_s+" step="+step.to_s
-      unless task.nil? || step.nil?
+      msg="task(#{task}), step(#{step}), relation(#{relation_name})"
+      LOG.info(name){msg}
+      unless task.nil? || step.nil? || relation_name.nil?
         fexpid=workitem.flow_expression_id
-        puts name+"instance_id:"+fexpid.workflow_instance_id
-        puts name+"expression_id:"+fexpid.expression_id
-        Ruote::Sylrplm::ArWorkitem.all.each { |ar| puts ar.wfid }
+        #puts name+"instance_id:"+fexpid.workflow_instance_id
+        #puts name+"expression_id:"+fexpid.expression_id
+        #Ruote::Sylrplm::ArWorkitem.all.each { |ar| puts ar.wfid }
         arworkitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid(fexpid.workflow_instance_id)
         unless arworkitem.nil?
           unless step == "exec"
             #
             # tout sauf exec
             #
-            #prise en compte des objets transmis par le ar_workitem
-            unless arworkitem.field_hash.nil?
-              fields = arworkitem.field_hash
-              puts name+"arworkitem avant replace params="+fields["params"].inspect
-              # voir workitems_controller pour la construction de ce parametre
-              # /activity : rien a faire
-              # /documents/3 : document(3)
-              # apres split:
-              # 0 = ""
-              # 1 = plmtype de l'objet, par exemple "document"
-              # 2 = id de l'objet, par exemple 3
-              #puts "PlmParticipant.consume:url="+url
-              fields["params"].keys.each do |url|
-                v = fields["params"][url]
-                sv = v.split("#")
-                # url non encore traitee
-                if sv.size == 1
-                  sp = url.split("/")
-                  #puts "PlmParticipant.consume:sp "+sp.size.to_s+":"+sp[0].to_s
-                  if sp.size == 3 && sp[0] != url
-                    #puts "PlmParticipant.consume:"+sp[1]+"("+sp[1].size.to_s+"):"+sp[2]
-                    cls=sp[1].chop
-                    id=sp[2]
-                    #rel=sp[3]
-                    #puts "v.consume:cls=#{cls.inspect} id=#{id.inspect}"
-                    #link_=add_object(arworkitem, cls, id, relation_name)
-                    v = relation_name+"#"+v
-                    fields["params"][url] = v
-                  end
-                end
-              # enlever le parametre pour ne pas le retrouver sur les taches suivantes
-              ###fields["params"].delete(url)
-              end
-              puts name+"arworkitem apres replace params="+fields["params"].inspect
-            arworkitem.replace_fields(fields)
-            end
+            check_objects(arworkitem, task, step, relation_name)
             reply_to_engine (workitem)
           else
           #
@@ -92,22 +65,21 @@ class Ruote::PlmParticipant
             # liens dont le pere est une tache
             execute(task, Link.find_by_father_plmtype_(Ruote::Sylrplm::HistoryEntry.model_name), arworkitem, relation_name)
             reply_to_engine (workitem)
-          #else
-          #  puts name+"pas de tache ou tache/etape "+task.to_s+"/"+step+" non reconnue => abandon"
-          #  get_engine.cancel_process(fexpid)
           end
         else
           msg=name+"arworkitem("+fexpid.workflow_instance_id+") non trouve"
-          raise PlmProcessException.new(msg, 10004)
+          raise PlmProcessException.new(msg, 10008)
         end
+      else
+        msg=name+"task(#{task}) or step(#{step}) or relation(#{relation_name}) undefined"
+        raise PlmProcessException.new(msg, 10009)
       end
     rescue Exception => e
-      puts name+"exception:"+task.to_s+"/"+step+":err="+e.to_s
       stack=""
       e.backtrace.each do |x|
         stack+= x+"\n"
       end
-      puts name+"stack="+stack
+      LOG.error (name){"exception:#{task}/#{step}:err=#{e}:stack=\n#{stack}"}
       pe = get_error_journal.record_error(OpenWFE::ProcessError.new(fexpid, e.to_s, workitem, "fatal", stack))
       get_engine.replay_at_error(pe)
       get_engine.cancel_process(fexpid)
@@ -116,6 +88,80 @@ class Ruote::PlmParticipant
   end
 
   private
+
+  def check_objects(arworkitem, task, step, relation_name)
+    name="#{self.class.name}.#{__method__}"
+    #prise en compte des objets transmis par le ar_workitem
+    nb_applicable=0
+    unless arworkitem.field_hash.nil?
+      fields = arworkitem.field_hash
+      LOG.info(name){"params avant replace=#{fields['params'].inspect}"}
+      # voir workitems_controller pour la construction de ce parametre
+      # /activity : rien a faire
+      # /documents/3 : document(3)
+      # apres split:
+      # 0 = ""
+      # 1 = plmtype de l'objet, par exemple "document"
+      # 2 = id de l'objet, par exemple 3
+      #puts "PlmParticipant.consume:url="+url
+      fields["params"].keys.each do |url|
+        v = fields["params"][url]
+        sv = v.split("#")
+        # url non encore traitee
+        if sv.size == 1
+          sp = url.split("/")
+          #puts "PlmParticipant.consume:sp "+sp.size.to_s+":"+sp[0].to_s
+          if sp.size == 3 && sp[0] != url
+            #puts "PlmParticipant.consume:"+sp[1]+"("+sp[1].size.to_s+"):"+sp[2]
+            cls=sp[1].chop
+            id=sp[2]
+            #rel=sp[3]
+            #puts "v.consume:cls=#{cls.inspect} id=#{id.inspect}"
+            #link_=add_object(arworkitem, cls, id, relation_name)
+            v = relation_name+"#"+v
+            # verif si on peut appliquer la methode sur l'objet
+            if relation_name=="applicable"
+              obj = get_object(cls, id)
+              unless obj.nil?
+                tst=task+"_by_action?"
+                if obj.respond_to?(tst)
+                  if obj.send(tst)
+                    fields["params"][url] = v
+                  nb_applicable+=1
+                  else
+                    msg="Object #{url} could not be #{task} by action flow"
+                    LOG.info(name){msg}
+                  end
+                else
+                  msg=name+"Check Method #{tst} is missing for Object #{url}"
+                  LOG.info(name){msg}
+                # ce n'est pas bloquant, on executera la fonction quand meme dans execute
+                #raise PlmProcessException.new(msg, 10004)
+                end
+              else
+                msg=name+"Object #{url} does not exist"
+                raise PlmProcessException.new(msg, 10005)
+              end
+            else
+              fields["params"][url] = v
+              nb_applicable+=1
+            end
+          end
+        end
+      # enlever le parametre pour ne pas le retrouver sur les taches suivantes
+      ###fields["params"].delete(url)
+      end
+    end
+    LOG.info(name){"params avant replace=#{fields['params'].inspect} nb_applicable=#{nb_applicable}"}
+    #
+    # on doit avoir au moins un objet sur lequel s'applique le processus
+    #
+    if step!= "exec" && relation_name == "applicable" && nb_applicable==0
+      msg=name+"No applicable object for task(#{task}) and step(#{step})"
+      raise PlmProcessException.new(msg, 10006)
+    end
+    arworkitem.replace_fields(fields) unless fields.nil?
+  end
 
   def execute(task, alinks, arworkitem, relation_name)
     name="PlmParticipant.execute:"
@@ -128,7 +174,7 @@ class Ruote::PlmParticipant
     end
     #puts name+arworkitem.wfid+":"+relation_name+":"+links.count.to_s+" links"
     links.each do |link|
-      #puts name+"link="+link.ident
+    #puts name+"link="+link.ident
       father = get_object(link.father_plmtype, link.father_id)
       #puts name+"father="+father.wfid + "==" + arworkitem.wfid
       # bon wfid du pere
@@ -136,68 +182,22 @@ class Ruote::PlmParticipant
         # bonne relation
         if link.relation.name == relation_name
           obj = get_object(link.child_plmtype, link.child_id)
-          #puts name+"avant exec:obj="+obj.inspect
+          LOG.info(name){"avant exec:obj="+obj.inspect}
           unless obj.nil?
-            #obj.promote
-            #obj.method(task).call
             obj.send(task)
             obj.save
-            LOG.info{name+"apres exec:obj="+obj.inspect}
+            LOG.info(name){"apres exec:obj="+obj.inspect}
+          else
+            msg=name+"Object #{url} does not exist"
+            raise PlmProcessException.new(msg, 10010)
           end
+        else
+        #LOG.info(name){"link.relation.name(#{link.relation.name}) != relation_name(#{relation_name})"}
         end
-      end
-    end
-  end
-
-  def add_object_obsolete(workitem, type_object, item_id, relation_name)
-    item = get_object(type_object, item_id)
-    relation = Relation.by_values_and_name(workitem.model_name, item.model_name, "ar_workitem", type_object, relation_name)
-    #puts "PlmParticipant.add_object:workitem="+workitem.id.to_s+" relation="+relation.id.to_s
-    #puts "PlmParticipant.add_object:workitem="+workitem.inspect
-    puts "PlmParticipant.add_object:relation="+relation.ident
-    link_={:link=>nil, :msg=>nil}
-    unless relation.nil?
-      values={}
-      values["father_plmtype"] = workitem.model_name
-      values["child_plmtype"]  = item.model_name
-      values["father_type_id"] = Typesobject.find_by_name("ar_workitem").id
-      values["child_type_id"]  = item.typesobject_id
-      values["father_id"]      = workitem.id
-      values["child_id"]       = item.id
-      values["relation_id"]    = relation.id
-      link_= Link.create_new_by_values(values, nil)
-      puts "PlmParticipant.add_object:link_="+link_.inspect
-    else
-      link_[:msg] = "PlmParticipant.add_object:Pas de relation de nom "+relation_name
-      raise PlmProcessException.new(
-      "Pas de relation de nom '"+relation_name+"'", 10001)
-    end
-    unless link_[:link].nil?
-      #unless link_[:link].exists?
-      if link_[:link].save
-        puts  "PlmParticipant.add_object:save ok:link id="+link_[:link].id.to_s
       else
-        raise PlmProcessException.new(
-      "PlmParticipant.add_object:error save :"+link_[:link].errors.inspect, 10002)
+      #LOG.info(name){"father(#{father.to_s})=nil or father.wfid(#{father.wfid}) != arworkitem.wfid(#{arworkitem.wfid})" }
       end
-    #else
-    #  puts  "PlmParticipant.add_object:link existant deja :"+link_[:link].inspect
-    #end
-    else
-      puts  "PlmParticipant.add_object:error create:link="+link_.inspect
-      raise PlmProcessException.new(
-      "PlmParticipant.add_object:error create:link="+link_.inspect, 10003)
     end
-    link_
-  end
-
-  def get_default_relation(task, step)
-    ret = case step
-    when "review" then "reference"
-    else "applicable"
-    end
-    #puts  "PlmParticipant.get_default_relation:"+task.to_s+"."+step.to_s+"="+ret.to_s
-    ret
   end
 
   def get_param(workitem, param, default=nil)
@@ -205,7 +205,6 @@ class Ruote::PlmParticipant
     if ret.nil?
     ret=default
     end
-
     ret
   end
 

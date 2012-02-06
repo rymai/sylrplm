@@ -4,9 +4,8 @@ class ProjectsController < ApplicationController
   include Controllers::PlmObjectControllerModule
   before_filter :check_init, :only=>[:new]
   #access_control (Access.find_for_controller(controller_class_name()))
-  
-  #before_filter :authorize, :only => [ :show, :edit , :new, :destroy ]
 
+  #before_filter :authorize, :only => [ :show, :edit , :new, :destroy ]
   # GET /projects
   # GET /projects.xml
   # liste de tous les projets
@@ -14,7 +13,7 @@ class ProjectsController < ApplicationController
   # les objets sont filtres d'apres le parametre query (requete simple d'egalite
   #   sur tous les attributs)
   def index
-    @projects = Project.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+    index_
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @projects[:recordset] }
@@ -35,13 +34,13 @@ class ProjectsController < ApplicationController
     @parts=@project.parts
     @customers=@project.customers
     flash[:notice] = "" if flash[:notice].nil?
-    if @favori.get('document').count>0 && @relations["document"].count==0 
+    if @favori.get('document').count>0 && @relations["document"].count==0
       flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_document))
     end
-    if @favori.get('part').count>0 && @relations["part"].count==0 
+    if @favori.get('part').count>0 && @relations["part"].count==0
       flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_part))
     end
-    if @favori.get('user').count>0 && @relations["user"].count==0 
+    if @favori.get('user').count>0 && @relations["user"].count==0
       flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
     end
     respond_to do |format|
@@ -60,7 +59,7 @@ class ProjectsController < ApplicationController
     @types = Project.get_types_project
     @types_access    = Typesobject.get_types("project_typeaccess")
     @status= Statusobject.find_for("project", true)
-    @users_all  = User.all
+    @users  = User.all
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @project }
@@ -74,7 +73,7 @@ class ProjectsController < ApplicationController
     @types=Project.get_types_project
     @types_access    = Typesobject.get_types("project_typeaccess")
     @status= Statusobject.find_for("project")
-    @users_all  = User.all
+    @users  = User.all
   end
 
   # POST /projects
@@ -85,7 +84,7 @@ class ProjectsController < ApplicationController
     @types=Project.get_types_project
     @types_access    = Typesobject.get_types("project_typeaccess")
     @status= Statusobject.find_for("project")
-    @users_all  = User.all
+    @users  = User.all
     respond_to do |format|
       if @project.save
         flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
@@ -107,7 +106,7 @@ class ProjectsController < ApplicationController
     @types=Project.get_types_project
     @types_access    = Typesobject.get_types("project_typeaccess")
     @status= Statusobject.find_for("project")
-    @users_all  = User.all
+    @users  = User.all
     @project.update_accessor(current_user)
     respond_to do |format|
       if @project.update_attributes(params[:project])
@@ -126,12 +125,23 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1.xml
   def destroy
     @project = Project.find(params[:id])
-    @project.destroy
     respond_to do |format|
-      flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
-      format.html { redirect_to(projects_url) }
-      format.xml  { head :ok }
+      unless @project.nil?
+        if @project.destroy
+          flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_project), :ident => @project.ident)
+          format.html { redirect_to(projects_url) }
+          format.xml  { head :ok }
+        else
+          flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_project), :ident => @project.ident)
+          index_
+          format.html { render :action => "index" }
+          format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
+        end
+      else
+        flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_project), :ident => @project.ident)
+      end
     end
+
   end
 
   def promote
@@ -161,22 +171,28 @@ class ProjectsController < ApplicationController
     @object = Project.find(params[:id])
     ctrl_add_forum(@object)
   end
-  
+
   def add_docs
     @project = Project.find(params[:id])
     ctrl_add_objects_from_favorites(@project, :document)
   end
-  
+
   def add_parts
     @project = Project.find(params[:id])
     ctrl_add_objects_from_favorites(@project, :part)
   end
-  
+
   def add_users
     @project = Project.find(params[:id])
     ctrl_add_objects_from_favorites(@project, :user)
   end
-  
+
+  private
+
+  def index_
+    @projects = Project.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+  end
+
   #methode: creation de 'arbre du projet
   def create_tree(obj)
     tree = Tree.new({:js_name=>"tree_down", :label=>t(:ctrl_object_explorer,:typeobj =>t(:ctrl_project)),:open => true})
@@ -194,5 +210,5 @@ class ProjectsController < ApplicationController
     session[:tree_object]=obj
     follow_tree_up_project(tree, obj)
     tree
-  end 
+  end
 end

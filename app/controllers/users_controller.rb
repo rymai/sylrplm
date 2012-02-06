@@ -43,9 +43,11 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    #puts "users_controller.edit:#{params["user"].inspect}"
     @the_user = User.find(params[:id])
     @roles   = Role.all
     @groups  = Group.all
+    @projects  = Project.all
     @themes  = get_themes(@theme)
     @notifications = get_notifications(@the_user.notification)
     @time_zones = get_time_zones(@the_user.time_zone)
@@ -64,6 +66,7 @@ class UsersController < ApplicationController
     @the_user    = User.new(params["user"])
     @roles   = Role.all
     @groups   = Group.all
+    @projects  = Project.all
     @themes  = get_themes(@theme)
     @notifications = get_notifications(@the_user.notification)
     @time_zones = get_time_zones(@the_user.time_zone)
@@ -87,6 +90,7 @@ class UsersController < ApplicationController
     @the_user    = User.find(params[:id])
     @volumes = Volume.find_all
     @roles   = Role.all
+    @projects  = Project.all
     @groups   = Group.all
     @themes = get_themes(@theme)
     @notifications = get_notifications(@the_user.notification)

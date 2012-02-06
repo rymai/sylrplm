@@ -1,4 +1,9 @@
 <h1><%= t(:project_list) %><%= h_count_objects(@projects) %></h1>
+<% unless @project.nil? %>
+<% form_for(@project) do |f| %>
+<%= f.error_messages %>
+<% end %>
+<% end %>
 <%= form_simple_query_helper('/projects', @projects) %>
 <table class='menu_bas'>
 	<tr>
@@ -35,7 +40,7 @@
 		<td> <%= h project.owner.login %> </td>
 		<td> <%= h project.group.name %> </td>
 		<td> <%= l project.date unless project.date.nil? %> </td>
-		<td><%= comma_list(project.users, :login) %></td>
+		<td> <%= comma_links(project.users, :login) %></td>
 		<td> <%= link_to h_img_show.to_s, project %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_project_path(project) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, project, :confirm => t(:msg_confirm), :method => :delete %> </td>

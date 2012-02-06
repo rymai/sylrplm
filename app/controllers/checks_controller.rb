@@ -56,7 +56,7 @@ class ChecksController < ApplicationController
   # PUT /checks/1
   # PUT /checks/1.xml
   def update
-    @check = Check.find(params[:id]) 
+    @check = Check.find(params[:id])
     @check.update_accessor(current_user)
     respond_to do |format|
       if @check.update_attributes(params[:check])

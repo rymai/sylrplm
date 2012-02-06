@@ -56,7 +56,7 @@ module ApplicationHelper
     txt=t(key.to_s)
     bloc=""
     if with_img
-      bloc<<"<img class=\"help\" id=\"#{key.to_s}\"  src=\"/images/help.png\" 
+      bloc<<"<img class=\"help\" id=\"#{key.to_s}\"  src=\"/images/help.png\"
     onclick=\"return helpPopup('#{key.to_s}');\" >"
     else
       bloc<<"<a href='/help?help="+key.to_s+"' onclick=\"return helpPopup('#{key.to_s}');\">"+txt+"</a>"
@@ -296,15 +296,57 @@ module ApplicationHelper
 
     d = Time.now - t
 
-    Rufus::to_duration_string(d, :drop_seconds => true)
+    Rufus::to_duration_string(d, :drop_seconds => false)
   end
 
-  def comma_list (objects, accessor=:name)
+  def h_attribut_trtd(obj, accessor)
+    fname=self.class.name+"."+__method__.to_s
+    final_obj=obj
+    final_acc=accessor.to_s
+    # recherche de l'objet final dans l'accesseur: 
+    # typesobject.name = typesoject
+    # child.statusobject.name = statusobject
+    #
+    fields = final_acc.split(".")
+    0.upto (fields.count-2) { |i|
+      final_obj = final_obj.send(fields[i].to_s)
+      final_acc = fields[i+1].to_s
+    }
+    labacc=final_acc.to_s.tr('.','_')
+    ret="<tr>"
+    ret+="<td>"
+    ret+=t("label_"+labacc.to_s)
+    ret+="</td>"
+    ret+="<td>"
+    begin
+      vacc="v_"+final_acc.to_s
+      LOG.info (fname){"final_obj="+final_obj.to_s+" final_acc="+final_acc}
+      if final_obj.respond_to?(vacc)
+        val=final_obj.send(vacc).to_s
+      else
+        val=final_obj.send(final_acc).to_s
+      end
+      ret+=val
+    rescue Exception => e
+      LOG.warn (fname){e}
+      ret+="???"
+    end
+    ret+="</td>"
+    ret+="</tr>"
+    ret
+  end
 
+  def comma_links (objects, accessor=:name)
     objects.collect { |o|
       name = o.send(accessor)
       path = send "#{o.class.to_s.downcase}_path", o
       link_to(h(name), path)
+    }.join(', ')
+  end
+
+  def comma_string (objects, accessor=:name)
+    objects.collect { |o|
+      o.send(accessor)
     }.join(', ')
   end
 
@@ -401,6 +443,8 @@ module ApplicationHelper
       "<script src=\"/processes/#{i}/tree.js?var=proc_tree\"></script>"
     elsif t = opts[:tree]
       "<script>var proc_tree = #{t.to_json};</script>"
+    elsif t = opts[:tree_json]
+      "<script>var proc_tree = #{t};</script>"
     else
       '<script>var proc_tree = null;</script>'
     end
@@ -410,8 +454,8 @@ module ApplicationHelper
     else
       ''
     end
-    more=t('label_more')
-    less=t('label_less')
+    more="<a class=\"menu_bas\">#{t('label_more')}</a>"
+    less="<a class=\"menu_bas\">#{t('label_less')}</a>"
 
     workitems = Array(opts[:workitems])
 
@@ -427,7 +471,7 @@ module ApplicationHelper
       </script>
 
       <div id='fluo_minor_toggle' style='cursor: pointer;'>
-            <table class='menu_bas'><tr><td><div id='fluo_toggle'>#{more}</div></td></tr></table>
+            <table><tr><td class='menu_bas'><div id='fluo_toggle'>#{more}</div></td></tr></table>
       </div>
 
       <a id='dataurl_link'>

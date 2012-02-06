@@ -42,4 +42,9 @@
 	<%= f.label t(:label_date) %>
 	<%= f.date_select :date %>
 	<br/>
+
+	<label for="project_users"> <%= t(:label_users) %> </label>
+	<%= select_inout(f, @project, @users, :login) %>
+	<br/>
+	
 </fieldset>

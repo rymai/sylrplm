@@ -15,6 +15,15 @@ en:
   check_volume_is_used: "Volume is used by a user or contains some files"
   check_volume_no_dir: "Directory %{dir} of volume %{name} no more existing"
   check_volume_no_rmdir: "Directory %{dir} of volume %{name} can't be deleted"
+  # statusobject
+  status_promote_0: forbidden
+  status_promote_1: free
+  status_promote_2: menu
+  status_promote_3: action
+  status_demote_0: forbidden
+  status_demote_1: free
+  status_demote_2: menu
+  status_demote_3: action
   ##############
   # controllers
   ##############
@@ -537,6 +546,8 @@ en:
   label_customer: Client
   label_users: Collaborators
   label_typeaccess: Confidentiality
+  label_project_user_ids_in: Affected
+  label_project_user_ids_out: Unaffected 
   # questions
   legend_question: Enter question details
   questions_edit: Edition question
@@ -605,7 +616,8 @@ en:
   typesobjects_list: Listing of types 
   typesobjects_new: New type
   typesobjects_show: Detail of type
-  typesobjects_edit: Edit the type 
+  typesobjects_edit: Edit the type
+  label_typesobject_name: Type 
   # msg _check_types
   msg_define_types_document: Please, define documents types
   msg_define_types_part: Please, define parts types
@@ -619,7 +631,7 @@ en:
   user_list: User list 
   user_show: User detail
   user_new: New User
-  label_username: Name
+  label_login: Name
   label_password: Password
   label_confirm_password: Confirm
   label_role: Role
@@ -644,6 +656,8 @@ en:
   label_user_role_ids_out: Other roles
   label_user_group_ids_in: User groups
   label_user_group_ids_out: Other groups
+  label_user_project_ids_in: Affected 
+  label_user_project_ids_out: Unaffected
   label_projects: Projects
   # volumes
   legend_volume: Enter volume details
@@ -653,6 +667,7 @@ en:
   volume_edit:  Edition of volume
   label_directory: Directory
   label_protocol: Protocol
+  label_volume_name: Volume
   # relations
   no_relation: "-----"
   specification: "Specification"

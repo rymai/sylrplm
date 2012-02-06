@@ -1,4 +1,9 @@
 <h1><%= t("document_list") %><%= h_count_objects(@documents) %></h1>
+<% unless @document.nil? %>
+<% form_for(@document) do |f| %>
+<%= f.error_messages %>
+<% end %>
+<% end %>
 <%= form_simple_query_helper('/documents', @documents) %>
 <table class='menu_bas'>
 	<tr>

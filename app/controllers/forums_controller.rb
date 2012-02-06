@@ -2,10 +2,10 @@ class ForumsController < ApplicationController
   include Controllers::PlmObjectControllerModule
   access_control(Access.find_for_controller(controller_class_name))
   before_filter :check_user, :only => [:new, :edit]
-    # GET /forums
+  # GET /forums
   # GET /forums.xml
   def index
-    @forums = Forum.find_paginate({ :user=> current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+    index_
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @forums }
@@ -86,11 +86,27 @@ class ForumsController < ApplicationController
   # DELETE /forums/1.xml
   def destroy
     @forum = Forum.find(params[:id])
-    @forum.destroy
     respond_to do |format|
-      format.html { redirect_to(forums_url) }
-      format.xml  { head :ok }
+      unless @forum.nil?
+        if @forum.destroy
+          flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_forum), :ident => @forum.ident)
+          format.html { redirect_to(forums_url) }
+          format.xml  { head :ok }
+        else
+          flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_forum), :ident => @forum.ident)
+          index_
+          format.html { render :action => "index" }
+          format.xml  { render :xml => @forum.errors, :status => :unprocessable_entity }
+        end
+      else
+        flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_forum), :ident => @forum.ident)
+      end
     end
   end
 
+  private
+
+  def index_
+    @forums = Forum.find_paginate({ :user=> current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+  end
 end

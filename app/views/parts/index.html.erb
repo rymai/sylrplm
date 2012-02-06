@@ -1,5 +1,9 @@
 <h1><%= t(:part_list) %><%= h_count_objects(@parts) %></h1>
-
+<% unless @part.nil? %>
+<% form_for(@part) do |f| %>
+<%= f.error_messages %>
+<% end %>
+<% end %>
 <%= form_simple_query_helper('/parts', @parts) %>
 <table class='menu_bas'>
   <tr>

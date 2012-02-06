@@ -59,13 +59,13 @@
 		<td> <%= link_to_slice(workitem, :participant_name, :participant) %> </td>
 		<td> <%= h workitem.activity %> </td>
 		<td > <%= link_to h_img_show.to_s, workitem_url(workitem) %></td>
-		<td > <% if fonct != "show_only" %>
+		<td class='menu_bas'> <% if fonct != "show_only" %>
 		<%= link_to_if current_user.may_see?(workitem) , t("edit_task"), edit_workitem_url(workitem) %>
 		<% end %> </td>
-		<td > <% if fonct != "show_only" %>
+		<td class='menu_bas'> <% if fonct != "show_only" %>
 		<%= link_to_function t("pick"), "pick('#{workitem_url(workitem)}');" %>
 		<% end %> </td>
-		<td><% if fonct != "show_only" %>
+		<td class='menu_bas'><% if fonct != "show_only" %>
 		<%= link_to_if @current_user.is_admin? , h_img_destroy.to_s, workitem_url(workitem), :method => :delete , :confirm =>t(:msg_confirm)  %>
 		<% end %> </td>
 	</tr>

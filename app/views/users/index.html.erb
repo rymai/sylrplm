@@ -1,4 +1,9 @@
 <h1><%= t(:user_list) %><%= h_count_objects(@current_users)%> </h1>
+<% unless @user.nil? %>
+<% form_for(@user) do |f| %>
+<%= f.error_messages %>
+<% end %>
+<% end %>
 <%= form_simple_query_helper('/users', @current_users) %>
 <table class='menu_bas'>
 	<tr>
@@ -9,7 +14,7 @@
 <table>
 	<tr>
 		<th <%= sort_td_class_helper "login" %>
-		<%= sort_link_helper t(:label_username), "login" %>
+		<%= sort_link_helper t(:label_login), "login" %>
 		</th>
 		<th>
 		<%= t(:label_role) %>
@@ -46,9 +51,9 @@
 		<%= user.typesobject.name %>
 		<% end %>
 		</td>
-		<td><%= h_value_or_default(comma_list(user.groups, :name),t(:msg_tobedefine)) %></td>
-		<td><%= h_value_or_default(comma_list(user.roles, :title),t(:msg_tobedefine)) %></td>
-		<td><%= h_value_or_default(comma_list(user.projects, :ident),t(:msg_tobedefine)) %></td>
+		<td><%= h_value_or_default(comma_links(user.groups, :name),t(:msg_tobedefine)) %></td>
+		<td><%= h_value_or_default(comma_links(user.roles, :title),t(:msg_tobedefine)) %></td>
+		<td><%= h_value_or_default(comma_links(user.projects, :ident),t(:msg_tobedefine)) %></td>
 		<td> <%= link_to h_img_show.to_s, user %></td>
 		<td> <%= link_to h_img_edit.to_s, edit_user_path(user) %></td>
 		<td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td><td><% if logged_in? %>

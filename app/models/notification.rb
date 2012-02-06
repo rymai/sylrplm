@@ -1,3 +1,10 @@
+# 
+#  notification.rb
+#  sylrplm
+#  
+#  Created by Sylvère on 2012-02-04.
+#  Copyright 2012 Sylvère. All rights reserved.
+# 
 require 'link'
 require 'models/plm_object'
 require 'models/sylrplm_common'
@@ -39,7 +46,6 @@ class Notification < ActiveRecord::Base
   
   def path
     name=self.class.name+"."+__method__.to_s+":"
-    
     #p get_controller_from_model_type("document")
     obj=object
     unless obj.nil?
@@ -57,7 +63,7 @@ class Notification < ActiveRecord::Base
   def object
     name=self.class.name+"."+__method__.to_s+":"
     ret=get_object(self.object_type, self.object_id)
-    puts name +" object="+ret.inspect
+    #puts name +" object="+ret.inspect
     ret
   end
 
@@ -108,9 +114,9 @@ class Notification < ActiveRecord::Base
             to_notify<<notif[:notif]
           end
         end
-        puts "******"+user.login+":"+to_notify.count.to_s
+        LOG.info(name){to_notify.count.to_s+" notification for "+user.login}
         if to_notify.count > 0
-          puts to_notify.inspect
+          #puts to_notify.inspect
           notifs={}
           notifs[:recordset]=to_notify
           email=PlmMailer.create_notify(notifs, from, user)
@@ -120,14 +126,14 @@ class Notification < ActiveRecord::Base
             cnt = to_notify.count
             msg = :ctrl_mail_created_and_delivered
           else
-            puts name+" message non cree pour #{user.login}"
+            LOG.warn (name){"message non cree pour #{user.login}"}
             msg = :ctrl_mail_not_created
           end
         else
           msg = :ctrl_nothing_to_notify
         end
       else
-        puts name+" pas de email pour #{user.login}"
+        LOG.warn (name){"pas de email pour #{user.login}"}
         msg=:ctrl_user_no_email
       end
       if cnt ==0

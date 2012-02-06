@@ -1,4 +1,9 @@
 <h1><%= t(:forum_list) %><%= h_count_objects(@forums) %></h1>
+<% unless @forum.nil? %>
+<% form_for(@forum) do |f| %>
+<%= f.error_messages %>
+<% end %>
+<% end %>
 <%= form_simple_query_helper('/forums', @forums) %>
 <table class='menu_bas'>
 	<tr>

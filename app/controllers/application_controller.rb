@@ -267,7 +267,7 @@ class ApplicationController < ActionController::Base
     if logged_in?
       #puts "admin_connected: connected is_admin="+@current_user.is_admin?.to_s
       if current_user.is_admin?
-        ret=true if current_user.is_admin?
+        ret = current_user.is_admin?
       end
     end
     ret

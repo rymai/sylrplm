@@ -1,7 +1,16 @@
+# 
+#  plm_object.rb
+#  sylrplm
+#  
+#  Created by Sylvère on 2012-02-02.
+#  Copyright 2012 Sylvère. All rights reserved.
+# 
 #require 'openwfe/representations'
 #require 'ruote/sylrplm/workitems'
 
 module Models::PlmObject
+  
+  
   # modifie les attributs avant edition
   def self.included(base)
     base.extend(ClassMethods) # �a appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclue la lib
@@ -25,8 +34,8 @@ module Models::PlmObject
   end
 
   def is_freeze
-    if(self.statusobject!=nil && Statusobject.get_last(self.class.name)!=nil)
-      if(self.statusobject.rank == Statusobject.get_last(self.class.name).rank)
+    if(self.statusobject!=nil && ::Statusobject.get_last(self.class.name)!=nil)
+      if(self.statusobject.rank == ::Statusobject.get_last(self.class.name).rank)
         true
       else
         false
@@ -37,7 +46,7 @@ module Models::PlmObject
   end
 
   def checked?
-    check = Check.get_checkout(self.class.name, self)
+    check = ::Check.get_checkout(self.class.name, self)
     #file=self.filename
     if check.nil?
       #non reserve
@@ -66,7 +75,7 @@ module Models::PlmObject
       if(revisable?)
         obj=clone()
         obj.revision=rev_cur.next
-        obj.statusobject=Statusobject.get_first(self.class.name)
+        obj.statusobject=::Statusobject.get_first(self.class.name)
         if self.has_attribute?(:filename)
           if(self.filename!=nil)
             content=self.read_file
@@ -85,8 +94,8 @@ module Models::PlmObject
   # a valider si avant dernier status
   def could_validate?
     mdl=model_name
-    !(self.statusobject.nil? || Statusobject.get_last(mdl).nil?) &&
-    self.statusobject.rank == Statusobject.get_last(mdl).rank-1
+    !(self.statusobject.nil? || ::Statusobject.get_last(mdl).nil?) &&
+    self.statusobject.rank == ::Statusobject.get_last(mdl).rank-1
   end
   
   def plm_validate
@@ -95,6 +104,46 @@ module Models::PlmObject
     end
   end
   
+  def promote?
+    (self.respond_to? (:statusobject) ? self.statusobject.promote_id !=0 : false)
+  end
+  
+  def demote?
+    (self.respond_to? (:statusobject) ? self.statusobject.demote_id !=0 : false)
+  end
+  
+  def promote_by?(choice)
+    ( (self.respond_to? (:statusobject)) ? self.statusobject.promote_id == choice : false)
+  end
+  
+  def demote_by?(choice)
+    ( (self.respond_to? (:statusobject)) ? self.statusobject.demote_id == choice : false)
+  end
+
+  def promote_by_select?
+    promote_by?(1)
+  end
+  
+  def demote_by_select?
+    demote_by?(1)
+  end
+
+  def promote_by_menu?
+    promote_by?(2)
+  end
+  
+  def demote_by_menu?
+    demote_by?(2)
+  end
+
+  def promote_by_action?
+    promote_by?(3)
+  end
+  
+  def demote_by_action?
+    demote_by?(3)
+  end
+
   def link_relation
     if link_attributes["relation"] == "" 
       ""
@@ -105,7 +154,7 @@ module Models::PlmObject
   
   def get_workitems
     ret = []
-    links = Link.find_fathers(self.model_name, self,  "ar_workitem")
+    links = ::Link.find_fathers(self.model_name, self,  "ar_workitem")
     #puts "plm_object.get_workitems:links="+links.inspect
     links.each do |link|
       begin
@@ -124,7 +173,7 @@ module Models::PlmObject
 
   def get_histories
     ret = []
-    links = Link.find_fathers(self.model_name, self,  "history_entry")
+    links = ::Link.find_fathers(self.model_name, self,  "history_entry")
     links.each do |link|
       begin
         father = Ruote::Sylrplm::HistoryEntry.find(link.father_id) unless Ruote::Sylrplm::HistoryEntry.count(link.father_id)==1
@@ -228,7 +277,7 @@ module Models::PlmObject
   
   # si meme groupe ou confidentialite = public 
   def ok_for_show?(user)
-    acc_public = Typesobject.find_by_object_and_name("project_typeaccess", "public")
+    acc_public = ::Typesobject.find_by_object_and_name("project_typeaccess", "public")
     #index possible meme sans user connecte
     #puts "ok_for_show? acc_public:"+self.projowner.typeaccess.name+"=="+acc_public.name
     unless user.nil?
@@ -243,8 +292,10 @@ module Models::PlmObject
     #unless Favori.get(self.model_name).count.zero?
     #  raise "Can't delete because of links:"+self.ident
     #end
-    if Link.linked?(self)
-      raise "Can't delete because of links:"+self.ident
+    if ::Link.linked?(self)
+      #raise "Can't delete "+self.ident+" because of links:"
+      self.errors.add_to_base "Can't delete "+self.ident+" because of links"
+      return false
     end
   end
   

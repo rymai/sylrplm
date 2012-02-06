@@ -17,14 +17,14 @@
 	<%= f.label t("label_description") %>
 	<%= f.text_area :description , :rows => 10 %>
 	<br/>
-	<%if (@document.statusobject.promote!=true || @document.statusobject.demote!=true ) && !@document.frozen? %>
+	<%if (@document.promote_by_select? || @document.demote_by_select? == 1) && !@document.frozen? %>
 	<%= f.label t("label_status") %>
 	<% unless @document.statusobject.nil? %>
 	<%= f.collection_select(:statusobject_id, @status, :id, :name) %>
 	<% end %>
 	<%else %>
 	<%= f.label t("label_status") %>
-	<% if(@document.statusobject != nil) %>
+	<% unless @document.statusobject.nil? %>
 	<%= text_field_tag :status, @document.statusobject.name, :disabled => true %>
 	<%end %>
 	<%end %>

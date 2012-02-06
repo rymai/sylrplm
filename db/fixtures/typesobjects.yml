@@ -14,14 +14,14 @@ proj_account:
     
 user_person: 
   id: 3
-  object: person
+  object: user
   name: "<%= ::SYLRPLM::TYPE_USER_PERSON %>"
   description: "personne physique."
   internal: true 
     
 user_virtual:
   id: 4
-  object: virtual
+  object: user
   name: "<%= ::SYLRPLM::TYPE_USER_VIRTUAL %>"
   description: "user virtuel, pour batchs..."
   internal: true

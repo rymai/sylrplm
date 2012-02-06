@@ -9,7 +9,7 @@ class Volume < ActiveRecord::Base
   #
   validates_presence_of :name, :protocol
   validates_format_of :name, :with =>/^([a-z]|[A-Z]|[0-9]||[.-])+$/
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :directory
   #
   has_many :users
   has_many :datafiles

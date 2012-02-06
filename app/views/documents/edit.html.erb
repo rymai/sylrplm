@@ -8,10 +8,10 @@
 		<td> <% if @document.frozen? %>
 		<%= t("freeze") %>
 		<% else %>
-		<%if @document.statusobject.promote==true %>
+		<%if @document.promote_by_menu? %>
 		<%= link_to t("promote"), :id => @document.id, :action => :promote  %>
 		<%end %>
-		<%if @document.statusobject.demote==true %>
+		<%if @document.demote_by_menu? %>
 		<%= link_to t("demote"), :id => @document.id, :action => :demote  %>
 		<%end %>
 		<% end %> </td>

@@ -1,10 +1,9 @@
 class AccessesController < ApplicationController
   include Controllers::PlmObjectControllerModule
   access_control(Access.find_for_controller(controller_class_name))
-  
+
   before_filter :find_by_id, :only => [:show, :edit, :update, :destroy]
   before_filter :find_controllers, :only => [:new, :edit, :create, :update]
-  
   # GET /accesses
   # GET /accesses.xml
   def index
@@ -86,7 +85,7 @@ class AccessesController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def reset
     #puts __FILE__+"."+__method__.to_s+":params="+params.inspect
     #on refait les autorisations:
@@ -99,15 +98,15 @@ class AccessesController < ApplicationController
       format.xml  { render :xml => @accesses[:recordset] }
     end
   end
-  
+
   private
-  
+
   def find_by_id
     @access = Access.find(params[:id])
   end
-  
+
   def find_controllers
     @controllers = Controller.get_controllers_and_methods
   end
-  
+
 end

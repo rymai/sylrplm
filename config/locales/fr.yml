@@ -15,6 +15,15 @@ fr:
   check_volume_is_used: "Le volume %{ident} est affecté à un user ou contient déja des fichiers"
   check_volume_no_dir: "Le répertoire %{dir} du volume %{name} n'existe pas ou plus"
   check_volume_no_rmdir: "Le répertoire %{dir} du volume %{name} ne peut être supprimé"
+  # statusobject
+  status_promote_0: interdit
+  status_promote_1: libre
+  status_promote_2: menu
+  status_promote_3: action
+  status_demote_0: interdit
+  status_demote_1: libre
+  status_demote_2: menu
+  status_demote_3: action
   ##############
   #controllers
   ##############
@@ -537,6 +546,8 @@ fr:
   label_customer: Client
   label_users: Collaborateurs
   label_typeaccess: Confidentialité
+  label_project_user_ids_in: Affecté 
+  label_project_user_ids_out: Non affecté 
   # questions
   legend_question: "Renseignez les propriétés de la question"
   questions_edit: Edition question
@@ -606,6 +617,7 @@ fr:
   typesobjects_new: Nouveau type d' objet
   typesobjects_show: Détail du type d' objet
   typesobjects_edit:  Edition du type d' objet
+  label_typesobject_name: Type
   # msg _check_types
   msg_define_types_document: Définissez les types des documents
   msg_define_types_part: Définissez les types des articles
@@ -619,7 +631,7 @@ fr:
   user_list: Liste des utilisateurs
   user_show: Détail de l'utilisateur
   user_new: Nouvel utilisateur
-  label_username: Identifiant
+  label_login: Identifiant
   label_password: Password
   label_confirm_password: Confirmation
   label_role: Rôle
@@ -644,6 +656,8 @@ fr:
   label_user_role_ids_out: Non atribués
   label_user_group_ids_in: " d'appartenance"
   label_user_group_ids_out: Autres groupes
+  label_user_project_ids_in: Affecté à
+  label_user_project_ids_out: Non affecté à
   label_projects: Projets
   # volumes
   legend_volume: Renseignez les propriétés du volume
@@ -653,6 +667,7 @@ fr:
   volume_edit:  Edition du volume
   label_directory: Répertoire
   label_protocol: Protocole
+  label_volume_name: Nom du volume
   # relations
   no_relation: "-----"
   specification: "Spécification"

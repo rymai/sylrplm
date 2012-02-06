@@ -23,7 +23,7 @@
 	<tr class='group'>
 		<td><%= group.name %></td>
 		<td><%= group.internal %></td>
-		<td><%= comma_list(group.users, :login) %></td>
+		<td><%= comma_links(group.users, :login) %></td>
 		<td><%= group.father_name %></td>
 		<td><%= link_to h_img_show.to_s, group_path(group) %> </td>
 		<td><%= link_to h_img_edit.to_s, edit_group_path(group) %> <td>

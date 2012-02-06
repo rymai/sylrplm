@@ -7,7 +7,7 @@ class CustomersController < ApplicationController
   # GET /customers
   # GET /customers.xml
   def index
-    @customers = Customer.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+    index_
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @customers[:recordset] }
@@ -34,7 +34,7 @@ class CustomersController < ApplicationController
     #puts "===CustomersController.new:"+params.inspect+" user="+@current_user.inspect
     @customer = Customer.create_new(nil, @current_user)
     @types    = Typesobject.get_types("customer")
-    @status   = Statusobject.find_for("customer", true)
+    @status   = Statusobject.find_for("customer", 2)
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @customer }
@@ -45,7 +45,7 @@ class CustomersController < ApplicationController
   def edit
     @customer = Customer.find_edit(params[:id])
     @types    = Typesobject.get_types("customer")
-    @status   = Statusobject.find_for("customer")
+    @status   = Statusobject.find_for(@customer)
   end
 
   # POST /customers
@@ -53,7 +53,7 @@ class CustomersController < ApplicationController
   def create
     @customer = Customer.create_new(params[:customer], @current_user)
     @types    = Typesobject.get_types("customer")
-    @status   = Statusobject.find_for("customer")
+    @status   = Statusobject.find_for(@customer)
     respond_to do |format|
       if @customer.save
         flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
@@ -72,7 +72,7 @@ class CustomersController < ApplicationController
   def update
     @customer = Customer.find(params[:id])
     @types    = Typesobject.get_types(:customer)
-    @status   = Statusobject.find_for(:customer)
+    @status   = Statusobject.find_for(@customer)
     @customer.update_accessor(current_user)
     respond_to do |format|
       if @customer.update_attributes(params[:customer])
@@ -91,11 +91,19 @@ class CustomersController < ApplicationController
   # DELETE /customers/1.xml
   def destroy
     @customer = Customer.find(params[:id])
-    @customer.destroy
-    flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
-    respond_to do |format|
-      format.html { redirect_to(customers_url) }
-      format.xml  { head :ok }
+    unless @customer.nil?
+      if @customer.destroy
+        flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+        format.html { redirect_to(customers_url) }
+        format.xml  { head :ok }
+      else
+        flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+        index_
+        format.html { render :action => "index" }
+        format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
+      end
+    else
+      flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
     end
   end
 
@@ -124,7 +132,7 @@ class CustomersController < ApplicationController
 
   def add_forum
     @object = Customer.find(params[:id])
-    
+
     ctrl_add_forum(@object)
   end
 
@@ -139,7 +147,11 @@ class CustomersController < ApplicationController
   end
 
   private
-
+  
+  def index_
+    @customers = Customer.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+  end
+  
   def create_tree(obj)
     tree = Tree.new( { :js_name=>"tree_down", :label => t(:ctrl_object_explorer, :typeobj => t(:ctrl_customer)), :open => true })
     session[:tree_object] = obj

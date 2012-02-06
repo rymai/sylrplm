@@ -1,3 +1,10 @@
+# 
+#  statusobjects_controller.rb
+#  sylrplm
+#  
+#  Created by Sylvère on 2012-02-02.
+#  Copyright 2012 Sylvère. All rights reserved.
+# 
 class StatusobjectsController < ApplicationController
   include Controllers::PlmObjectControllerModule
   access_control (Access.find_for_controller(controller_class_name()))
@@ -10,7 +17,7 @@ class StatusobjectsController < ApplicationController
       format.xml  { render :xml => @statusobjects }
     end
   end
-  
+
   # GET /statusobjects/1
   # GET /statusobjects/1.xml
   def show
@@ -83,7 +90,6 @@ class StatusobjectsController < ApplicationController
   def destroy
     @statusobject = Statusobject.find(params[:id])
     @statusobject.destroy
-
     respond_to do |format|
       flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
       format.html { redirect_to(statusobjects_url) }

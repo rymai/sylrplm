@@ -15,7 +15,7 @@
 		<th></th>
 		<th></th>
 	</tr>
-	<% @datafiles[:recordset].each do |datafile| %>
+	<% datafiles[:recordset].each do |datafile| %>
 	<tr>
 		<td> <%= h datafile.ident %> </td>
 		<td> <%= h datafile.revision %> </td>

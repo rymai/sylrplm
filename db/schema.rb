@@ -338,6 +338,16 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
   add_index "projects", ["typeaccess_id"], :name => "index_projects_on_typeaccess_id"
   add_index "projects", ["group_id"], :name => "index_projects_on_group_id"
 
+create_table "projects_users", :id => false, :force => true do |t|
+    t.integer "project_id", :null => false
+    t.integer "user_id",  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  add_index "projects_users", ["user_id", "project_id"], :name => "index_projects_users_on_user_id_and_project_id", :unique => true
+  add_index "projects_users", ["project_id", "user_id" ], :name => "index_projects_users_on_project_id_and_user_id", :unique => true
+
+
   create_table "questions", :force => true do |t|
     t.string   "question"
     t.string   "answer"
@@ -419,8 +429,8 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.string   "name"
     t.text     "description"
     t.integer  "rank"
-    t.boolean  "promote"
-    t.boolean  "demote"
+    t.integer  "promote_id"
+    t.integer  "demote_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "internal"
@@ -443,9 +453,9 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.integer "user_id",  :null => false
     t.integer "group_id", :null => false
   end
-
+  
   add_index "user_groups", ["user_id", "group_id"], :name => "index_user_groups_on_user_id_and_group_id", :unique => true
-
+  
   create_table "users", :force => true do |t|
     t.string   "email"
     t.string   "login"

@@ -12,6 +12,7 @@ datadir = /home/mysql
 
 mysqladmin -u root -p create sylrplm_development
 
+mysqladmin -u root -p create sylrplm_test
 mysqladmin -u root -p create sylrplm_production
 
 rake db:migrate

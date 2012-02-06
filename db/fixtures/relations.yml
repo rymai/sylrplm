@@ -1,16 +1,3 @@
-1: 
-    id: 1
-    name: collaborate_at
-    type_id: 162
-    father_plmtype: project
-    child_plmtype: user
-    father_type_id: 2
-    child_type_id: 1
-    cardin_occur_min: 0
-    cardin_occur_max: -1
-    cardin_use_min: 0
-    cardin_use_max: -1
-    internal: true
  
 # pour generaliser les relations
 101: 
@@ -223,48 +210,8 @@
     cardin_use_max: "-1"
     internal: true
     
-117: 
-    id: 117
-    name: collaborate_at
-    type_id: 162
-    father_plmtype: project
-    child_plmtype: user
-    father_type_id: 131
-    child_type_id: 3
-    cardin_occur_min: 0
-    cardin_occur_max: -1
-    cardin_use_min: 0
-    cardin_use_max: -1
-    internal: true
-     
-118: 
-    id: 118
-    name: collaborate_at
-    type_id: 162
-    father_plmtype: project
-    child_plmtype: user
-    father_type_id: 131
-    child_type_id: 3
-    cardin_occur_min: 0
-    cardin_occur_max: -1
-    cardin_use_min: 0
-    cardin_use_max: -1 
-    internal: true
-    
-119: 
-    id: 119
-    name: collaborate_at
-    type_id: 162
-    father_plmtype: project
-    child_plmtype: user
-    father_type_id: 131
-    child_type_id: 3
-    cardin_occur_min: 0
-    cardin_occur_max: -1
-    cardin_use_min: 0
-    cardin_use_max: -1
-    internal: true 
-    
+
+
 
 
 

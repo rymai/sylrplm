@@ -1,3 +1,10 @@
+# 
+#  sylrplm.rb
+#  sylrplm
+#  
+#  Created by Sylvère on 2012-02-04.
+#  Copyright 2012 Sylvère. All rights reserved.
+# 
 require 'classes/app_classes'
 
 module SYLRPLM
@@ -12,8 +19,8 @@ module SYLRPLM
   #
   # nom de certains objets plm
   #
-  # n'importe quel object
-  PLMTYPE_GENERIC           = '_generic_object'
+  # n'importe quel object plm
+  PLMTYPE_GENERIC           = '_generic_plm'
   # groupes
   GROUP_ADMINS              = 'admins'
   GROUP_CONSULTANTS         = 'consultants'
@@ -82,4 +89,4 @@ SYLRPLM.constants.sort.each do |c|
   v = SYLRPLM.const_get(c)
   LOG.debug("sylrplm"){"#{c}\t\t= #{v}"}
 end
-LOG.info {"--------------------------------------------"}
+LOG.info ("sylrplm"){"--------------------------------------------"}

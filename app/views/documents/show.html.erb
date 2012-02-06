@@ -1,4 +1,6 @@
 <h1><%= t("document_show") %></h1>
+<% form_for(@document) do |f| %>
+<%= f.error_messages %>
 <p>
 	<b><%= t("label_ident") %></b>
 	<%= h @document.ident %>
@@ -36,7 +38,7 @@
 	<%= l @document.date %>
 </p>
 <h1><%= t("document_datafiles") %></h1>
-<%= render(:partial => "datafiles/index_datafiles", :locals=>{:document=>@document}) %>
+<%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>@document.get_datafiles, :document=>@document}) %>
 <% unless @document.frozen? %>
 <table class='menu_bas'>
 	<tr>
@@ -46,6 +48,55 @@
 <%end %>
 
 <%= h_show_tree %>
+
+Documents Fils
+<table class='menu_bas'>
+	<% @document.childs_documents.each do |obj| %>
+	<tr>
+		<td><%= obj.ident %></td>
+	</tr>
+	<% end %>
+</table>
+Documents Peres
+<table class='menu_bas'>
+	<% @document.fathers_documents.each do |obj| %>
+	<tr>
+		<td><%= obj.ident %></td>
+	</tr>
+	<% end %>
+</table>
+Parts Peres
+<table class='menu_bas'>
+	<% @document.fathers_parts.each do |obj| %>
+	<tr>
+		<td><%= obj.ident %></td>
+	</tr>
+	<% end %>
+</table>
+Projects Peres
+<table class='menu_bas'>
+	<% @document.fathers_projects.each do |obj| %>
+	<tr>
+		<td><%= obj.ident %></td>
+	</tr>
+	<% end %>
+</table>
+Customers Peres
+<table class='menu_bas'>
+	<% @document.fathers_customers.each do |obj| %>
+	<tr>
+		<td><%= obj.ident %></td>
+	</tr>
+	<% end %>
+</table>
+Histories Peres
+<table class='menu_bas'>
+	<% @document.fathers_histories.each do |obj| %>
+	<tr>
+		<td><%= obj.ident %></td>
+	</tr>
+	<% end %>
+</table>
 <table class='menu_bas'>
 	<tr>
 		<% unless @favori.get('document').count==0 %>
@@ -103,3 +154,4 @@
 		<td> <%= link_to t("list"), documents_path %></td>
 	</tr>
 </table>
+<% end %> 

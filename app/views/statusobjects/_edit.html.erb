@@ -15,8 +15,8 @@
 	<%= f.text_area :description %>
 	<br/>
 	<%= f.label t(:label_promote) %>
-	<%= f.check_box :promote %>
+	<%= select(:statusobject, :promote_id, Statusobject.promote_choice) %>
 	<br/>
 	<%= f.label t(:label_demote) %>
-	<%= f.check_box :demote %>
+	<%= select(:statusobject, :demote_id, Statusobject.demote_choice) %>
 	<br/>

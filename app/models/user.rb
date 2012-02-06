@@ -6,17 +6,20 @@ class User < ActiveRecord::Base
   #
   belongs_to :role
   belongs_to :group
+  belongs_to :project
   belongs_to :volume
   belongs_to :typesobject
+  
   has_many :user_groups, :dependent => :delete_all
-  has_and_belongs_to_many :roles
   has_many :groups, :through => :user_groups
   
-  has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='user'"]
+  has_and_belongs_to_many :roles
+  has_and_belongs_to_many :projects
+  
+  
+  ######has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='user'"]
   #TODO ne renvoie rien => voir la fonction projects 
   #has_many :projects, :through => :links_projects
-  
-  belongs_to :project
   
   validates_presence_of     :login, :typesobject
   validates_uniqueness_of   :login
@@ -42,7 +45,7 @@ class User < ActiveRecord::Base
     self.login+" "+self.first_name.to_s+" "+self.last_name.to_s
   end
   
-  def projects
+  def projects_obsolete
     ret = links_projects.collect { 
       |p| p.father 
     }
@@ -181,7 +184,7 @@ class User < ActiveRecord::Base
   #  Typesobject.find_by_object(model_name)
   #end
   def ident
-    self.login+"/"+(self.role.nil? ? " " :self.role.title)+"/"+(self.group.nil? ? " " : self.group.name)
+    self.login+"/"+(self.role.nil? ? " " :self.role.title)+"/"+(self.group.nil? ? " " : self.group.name)+"/"
   end
 
   def validate
@@ -240,11 +243,9 @@ class User < ActiveRecord::Base
   # Returns true if the username is "admin" or user is member of the administrators group
   #
   def is_admin?
-    #puts "is_admin:"+login+" ADMIN_USER_NAME"+::SYLRPLM::ADMIN_USER_NAME+" ADMIN_GROUP_NAME="+ADMIN_GROUP_NAME
+    #puts "is_admin:"+login+" USER_ADMIN"+::SYLRPLM::USER_ADMIN+":"+login+" GROUP_ADMINS="+::SYLRPLM::GROUP_ADMINS+":"+group_names.to_s
     ret = login==::SYLRPLM::USER_ADMIN
-    if ret==false
-      ret=group_names.include?(::SYLRPLM::GROUP_ADMINS) 
-    end
+    ret = group_names.include?(::SYLRPLM::GROUP_ADMINS) unless ret
     ret
   end
 
@@ -333,7 +334,7 @@ class User < ActiveRecord::Base
     unless ret.nil?
       ret=ret[1]
     end
-    ret
+    I18n.t(ret) unless ret.nil?
   end
 
   #renvoie la liste des time zone tries sur le nom ([[texte,nom]])
@@ -378,87 +379,6 @@ class User < ActiveRecord::Base
     #          :conditions => "roles.title like 'valid%'",
     #          :joins => "inner join roles on users.role_id = roles.id")
   end
-
-  #  def self.check_admin
-  #    true
-  #  end
-
-  #  def self.check_admin_old
-  #    admin_user=find_by_name('admin')
-  #    if admin_user.nil?
-  #      params={
-  #        :login=>'admin',
-  #        :password=>'admin',
-  #        :password_confirmation=>'admin'
-  #      }
-  #      admin_user=new(params)
-  #      puts "User.check_admin:admin_user="+admin_user.inspect
-  #    end
-  #    admin_role=Role.find_by_name('admin')
-  #    unless admin_role.nil?
-  #      if admin_user.roles.index(admin_role).nil?
-  #        admin_user.roles<<admin_role
-  #        admin_user.role=admin_role
-  #      end
-  #    else
-  #      params={
-  #        :title=>'admin',:description=>'role admin'
-  #      }
-  #      admin_role=Role.new(params)
-  #      admin_role.save
-  #      admin_user.roles<<admin_role
-  #      admin_user.role=admin_role
-  #    end
-  #    admin_role=Role.find_by_name('valider')
-  #    unless admin_role.nil?
-  #      if admin_user.roles.index(admin_role).nil?
-  #        admin_user.roles<<admin_role
-  #        admin_user.role=admin_role
-  #      end
-  #    else
-  #      params={
-  #        :title=>'valider',:description=>'role valider'
-  #      }
-  #      admin_role=Role.new(params)
-  #      admin_role.save
-  #      admin_user.roles<<admin_role
-  #      admin_user.role=admin_role
-  #    end
-  #    admin_user.save
-  #    auser=find_by_name('designer')
-  #    if auser.nil?
-  #      #creation designer et consultant
-  #      params={
-  #        :login=>'designer',
-  #        :password=>'designer',
-  #        :password_confirmation=>'designer'
-  #      }
-  #      auser=new(params)
-  #      params={:title=>'designer',:description=>'role designer'}
-  #      arole=Role.new(params)
-  #      arole.save
-  #      auser.roles<<arole
-  #      auser.role=arole
-  #      auser.save
-  #    end
-  #    auser=find_by_name('consultant')
-  #    if auser.nil?
-  #      #
-  #      params={
-  #        :login=>'consultant',
-  #        :password=>'consultant',
-  #        :password_confirmation=>'consultant'
-  #      }
-  #      auser=new(params)
-  #      params={:title=>'consultant',:description=>'role consultant'}
-  #      arole=Role.new(params)
-  #      arole.save
-  #      auser.roles<<arole
-  #      auser.role=arole
-  #      auser.save
-  #    end
-  #    true
-  #  end
 
   # recherche du theme
   def self.find_theme(session)
