@@ -56,6 +56,9 @@ class HistoryController < ApplicationController
   # GET /history.xml
   def show
     @entry = Ruote::Sylrplm::HistoryEntry.find(params[:id])
+    unless params[:obj_id].nil? || params[:obj_type].nil?
+      @object = PlmServices.get_object(params[:obj_type], params[:obj_id])
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @entry }

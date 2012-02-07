@@ -1,9 +1,12 @@
 class Customer < ActiveRecord::Base
   include Models::SylrplmCommon
   include Models::PlmObject
+  #
   attr_accessor :link_attributes
+  #
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident
+  #
   has_many :projects
   belongs_to :typesobject
   belongs_to :statusobject
@@ -12,13 +15,11 @@ class Customer < ActiveRecord::Base
   belongs_to :group
   belongs_to :projowner,
     :class_name => "Project"
-  
-
-  has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
-  has_many :documents , :through => :links_documents
-  has_many :links_projects,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
-  has_many :projects , :through => :links_projects
-
+  has_many :links_childs_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
+  has_many :childs_documents , :through => :links_childs_documents, :source => :document
+  has_many :links_childs_projects,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
+  has_many :childs_projects , :through => :links_childs_projects, :source => :project
+  #
   def self.create_new(customer,user)
     if(customer!=nil)
       obj=Customer.new(customer)
@@ -37,9 +38,11 @@ class Customer < ActiveRecord::Base
   def link_attributes=(att)
     @link_attributes = att
   end
+  
   def link_attributes
     @link_attributes
   end
+  
   # modifie les attributs avant edition
   def self.find_edit(object_id)
     obj=find(object_id)

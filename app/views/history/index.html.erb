@@ -1,6 +1,6 @@
 <h1><%= t("history_list") %></h1>
 <%= will_paginate(@entries) %>
-<%= render(:partial => "history/histories", :object => @entries ) %>
+<%= render(:partial => "history/histories", :object => @entries, :locals => { :fonct => "all", :obj => nil }  ) %>
 <div class="align-right">
 	<%= @all ? '' : link_to('all', :controller => 'history') %>
 </div>
