@@ -1,0 +1,18 @@
+<h1><%= t("link_edit_in_tree") %>
+<% fonct="edit_in_tree"
+  form_id=fonct+"_link" %>
+<% form_for(@link, :html => { :id => form_id }) do |f| %>
+<%= f.error_messages %>
+<%= render(
+:partial => "links/edit",
+:locals => {
+:form => f,
+:fonct => fonct,
+:form_id => form_id }
+) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= f.submit t("update") %></td>
+		<td> <%= link_to t("back_to_object")+@object_in_explorer.ident, object_path(@object_in_explorer) %> </td>
+	</tr>
+</table> <% end %> 

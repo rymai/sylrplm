@@ -1,0 +1,24 @@
+<script src="/javascripts/ruote-forms.js"></script>
+<script src="/javascripts/fluo-json.js"></script>
+<script src="/javascripts/forms-ext.js"></script>
+<table class='menu_bas'>
+	<tr>
+		<td><a href="" onclick="swapForm(); return false;"><%= t(:button_swap)%></a></span></td>
+		<td><span id="rf_buttons"><a href="" onclick="RuoteForms.resetForm('rform'); return false;"><%= t(:button_reset)%></a>
+		<a href="" onclick="RuoteForms.undo('rform'); return false;"><%= t(:button_undo)%></a></span></td>
+	</tr>
+</table>
+<div id="fields_ta" style="display: none;">
+	<textarea id="fields" name="<%= textarea_name %>"><%= fields.to_json -%></textarea>
+</div>
+<div id="fields_rf">
+	<div id="rform"></div>
+</div>
+<div class="fieldhead">
+	<script>
+		byId('<%= form_id ||= 'fields' %>').onsubmit = function () {
+		swapForm();
+		return true;
+		};
+		RuoteForms.renderForm('rform', <%= fields %><%= (","+options.to_json) unless options.nil? %>);</script>
+</div>
