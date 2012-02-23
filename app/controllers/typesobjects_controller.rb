@@ -43,6 +43,8 @@ class TypesobjectsController < ApplicationController
   # POST /typesobjects
   # POST /typesobjects.xml
   def create
+    fname="#{self.class.name}.#{__method__}"
+    LOG.info (fname){"params=#{params}"}
     @typesobject = Typesobject.new(params[:typesobject])
     @objectswithtype=Typesobject.get_objects_with_type
     respond_to do |format|
