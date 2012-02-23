@@ -27,7 +27,7 @@ class DocumentsController < ApplicationController
     #@parts     = @document.parts
     #@projects  = @document.projects
     #@customers = @document.customers
-    @checkout  = Check.get_checkout("document", @document)
+    @checkout  = Check.get_checkout(@document)
     @tree      = create_tree(@document)
     @tree_up   = create_tree_up(@document)
     @relations = Relation.relations_for(@document)
@@ -251,7 +251,7 @@ class DocumentsController < ApplicationController
     @types  = Typesobject.find_for("datafile")
     #puts "DocumentsController.new_datafile:#{@object.inspect}"
     respond_to do |format|
-      check     = Check.get_checkout("document", @object)
+      check     = Check.get_checkout(@object)
       if check.nil?
         params_chk={}
         params_chk[:out_reason]=t("ctrl_checkout_auto")

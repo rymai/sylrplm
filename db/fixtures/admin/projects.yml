@@ -1,4 +1,4 @@
-def_project:
+project_admin:
     id: 1
     ident: <%= ::SYLRPLM::USER_PROJECT_IDENT %><%= ::SYLRPLM::USER_ADMIN %>
     designation: "Projet par defaut pour l'administrateur"

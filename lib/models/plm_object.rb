@@ -1,19 +1,9 @@
-# 
-#  plm_object.rb
-#  sylrplm
-#  
-#  Created by Sylvère on 2012-02-02.
-#  Copyright 2012 Sylvère. All rights reserved.
-# 
-#require 'openwfe/representations'
-#require 'ruote/sylrplm/workitems'
-
 module Models::PlmObject
-  
   
   # modifie les attributs avant edition
   def self.included(base)
-    base.extend(ClassMethods) # �a appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclue la lib
+    base.extend(ClassMethods) 
+    # a appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclue la lib
   end
 
   module ClassMethods
@@ -46,7 +36,7 @@ module Models::PlmObject
   end
 
   def checked?
-    check = ::Check.get_checkout(self.class.name, self)
+    check = ::Check.get_checkout(self)
     #file=self.filename
     if check.nil?
       #non reserve
@@ -57,6 +47,33 @@ module Models::PlmObject
     end
   end
   
+  def frozen?
+    !(self.statusobject.nil? || ::Statusobject.get_last(self.class.name).nil?) &&
+    self.statusobject.rank == ::Statusobject.get_last(self.class.name).rank
+  end
+
+  def last_revision
+    eval(self.class.name).send(find(:last, :order=>"revision ASC",  :conditions => ["ident = '#{ident}'"]))
+  end
+
+  def first_revision
+    eval (selfclass.name).send(find(:first, :order=>"revision ASC",  :conditions => ["ident = '#{ident}'"]))
+  end
+
+  def promote
+    #st_cur_name = statusobject.name
+    st = self.statusobject.get_next
+    #st=StatusObject.next(statusobject)
+    update_attributes({:statusobject_id => st.id})
+  #puts "Document.promote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
+  end
+
+  def demote
+    #st_cur_name = statusobject.name
+    st = self.statusobject.get_previous
+    update_attributes({:statusobject_id => st.id})
+  #puts "Document.demote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
+  end
   def last_revision?
     ret = (self.revision == self.last_revision.revision)
     ret

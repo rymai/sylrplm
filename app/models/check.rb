@@ -19,8 +19,8 @@ class Check < ActiveRecord::Base
   # 1=out
   # 2=in
   # 3=free
-  def self.get_checkout(object_cls, object)
-    find(:last, :conditions => ["object = '#{object_cls}' and object_id=#{object.id} and status=1"])
+  def self.get_checkout(object)
+    find(:last, :conditions => ["object = '#{object.class.name}' and object_id=#{object.id} and status=1"])
   end
 
   def self.create_new(object_cls, object, params, user)

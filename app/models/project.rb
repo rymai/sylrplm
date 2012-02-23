@@ -84,16 +84,6 @@ class Project < ActiveRecord::Base
     parts.delete(item)
   end
 
-  def promote
-    self.statusobject=Statusobject.find_next(:project,statusobject)
-    self
-  end
-
-  def demote
-    self.statusobject=Statusobject.find_previous(:project,statusobject)
-    self
-  end
-
   def self.get_conditions(filter)
     filter = filters.gsub("*","%")
     ret={}

@@ -11,8 +11,8 @@ class LinksController < ApplicationController
       format.xml  { render :xml => @links }
     end
   end
-  
-  def reset 
+
+  def reset
     Link.reset
     respond_to do |format|
       format.html { redirect_to(links_url) }
@@ -45,11 +45,20 @@ class LinksController < ApplicationController
     @link = Link.find(params[:id])
   end
 
+  # GET /links/1/edit_in_tree
+  def edit_in_tree
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname){"params=#{params.inspect}"}
+    @link = Link.find(params[:id])
+    @object_in_explorer=PlmServices.get_object(params[:object_model], params[:object_id]) 
+  end
+
   # POST /links
   # POST /links.xml
   def create
     @link = Link.new(params[:link])
     respond_to do |format|
+    #@link.values=params[:link][:values].to_json unless params[:link][:values].nil?
       if @link.save
         flash[:notice] = 'Link was successfully created.'
         format.html { redirect_to(@link) }
@@ -64,9 +73,13 @@ class LinksController < ApplicationController
   # PUT /links/1
   # PUT /links/1.xml
   def update
+    fname="#{self.class.name}.#{__method__}"
+    LOG.info(fname){"params=#{params}"}
     @link = Link.find(params[:id])
     @link.update_accessor(current_user)
     respond_to do |format|
+      values = OpenWFE::Json::from_json(params[:link][:values])
+      LOG.info(fname){"values=#{values}"}
       if @link.update_attributes(params[:link])
         flash[:notice] = 'Link was successfully updated.'
         format.html { redirect_to(@link) }

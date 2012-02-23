@@ -136,11 +136,12 @@ class PartsController < ApplicationController
   end
 
   def new_forum
-    puts 'PartController.new_forum:part_id='+params[:id]
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname){"params=#{params.inspect}"}
     @object = Part.find(params[:id])
     @types=Typesobject.find_for("forum")
     @status= Statusobject.find_for("forum")
-    @relation_id = params[:relation][:forum]
+    @relation_id = params["relation"]["forum"]
     respond_to do |format|
       flash[:notice] = ""
       @forum=Forum.create_new(nil, current_user)
@@ -151,6 +152,8 @@ class PartsController < ApplicationController
   end
 
   def add_forum
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname){"params=#{params.inspect}"}
     @part = Part.find(params[:id])
     ctrl_add_forum(@part)
   end

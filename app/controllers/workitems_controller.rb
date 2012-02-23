@@ -364,7 +364,6 @@ class WorkitemsController < ApplicationController
   # parsing incoming workitems
   #
   def parse_workitem
-
     begin
       ct = request.content_type.to_s
       # TODO : deal with Atom[Pub]

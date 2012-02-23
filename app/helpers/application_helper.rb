@@ -202,15 +202,12 @@ module ApplicationHelper
   end
 
   def sort_td_class_helper(param)
-
     result = 'class="sortup"' if params[:sort] == param
     result = 'class="sortdown"' if params[:sort] == param.to_s + " DESC"
     result
-
   end
 
   def sort_link_helper(text, param)
-
     key = param
     key += " DESC" if params[:sort] == param
     options = {
@@ -224,7 +221,6 @@ module ApplicationHelper
       :href => url_for(:action => 'index', :params => params.merge({:sort => key, :page => nil}))
     }
     link_to_remote(text, options, html_options)
-
   end
 
   def h_show_tree
@@ -232,13 +228,11 @@ module ApplicationHelper
     if ((@tree && @tree.size>0) || (@tree_up && @tree_up.size>0))
       bloc << "<h1></h1>"
       bloc << "<div id='dtree'>"
-
       if (@tree && @tree.size>0)
         #bloc << "<fieldset>"
         #bloc << "<legend>"
         #bloc << t(:legend_tree_down)
         #bloc << "</legend>"
-
         bloc << "<table class='menu_bas' >"
         bloc << "<tr>"
         bloc<< "<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_down);'>"+t("h_open_close_all_tree")+"</a></td>"
@@ -252,7 +246,6 @@ module ApplicationHelper
         #bloc << "<legend>"
         #bloc << t(:legend_tree_up)
         #bloc << "</legend>"
-
         bloc << "<table class='menu_bas' >"
         bloc << "<tr>"
         bloc<< "<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_up);'>"+t("h_open_close_all_tree")+"</a></td>"
@@ -261,9 +254,7 @@ module ApplicationHelper
       bloc << @tree_up.to_s
       #bloc << "</fieldset>"
       end
-
       bloc << "</div>"
-
     end
     bloc
   end
@@ -276,11 +267,8 @@ module ApplicationHelper
   #         # => Sat Mar 1 20:29:44 2008 (1d16h18m)
   #
   def display_time (object, accessor=nil)
-
     t = accessor ?  object.send(accessor) : object
-
     return "" unless t
-
     "#{t.ctime} (#{display_since(t)})"
   end
 
@@ -289,21 +277,21 @@ module ApplicationHelper
   #         # => 1d16h18m
   #
   def display_since (object, accessor=nil)
-
     t = accessor ? object.send(accessor) : object
-
     return "" unless t
-
     d = Time.now - t
-
     Rufus::to_duration_string(d, :drop_seconds => false)
+  end
+
+  def object_path(obj)
+    path = send "#{obj.class.to_s.downcase}_path", obj
   end
 
   def h_attribut_trtd(obj, accessor)
     fname=self.class.name+"."+__method__.to_s
     final_obj=obj
     final_acc=accessor.to_s
-    # recherche de l'objet final dans l'accesseur: 
+    # recherche de l'objet final dans l'accesseur:
     # typesobject.name = typesoject
     # child.statusobject.name = statusobject
     #
@@ -322,9 +310,9 @@ module ApplicationHelper
       vacc="v_"+final_acc.to_s
       LOG.info (fname){"final_obj="+final_obj.to_s+" final_acc="+final_acc}
       if final_obj.respond_to?(vacc)
-        val=final_obj.send(vacc).to_s
+      val=final_obj.send(vacc).to_s
       else
-        val=final_obj.send(final_acc).to_s
+      val=final_obj.send(final_acc).to_s
       end
       ret+=val
     rescue Exception => e

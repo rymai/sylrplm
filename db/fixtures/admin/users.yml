@@ -1,4 +1,4 @@
-admin:
+user_admin:
     id: 1
     login:  <%= ::SYLRPLM::USER_ADMIN %>
     salt: 1234
@@ -17,7 +17,7 @@ admin:
     internal: true
        
 
-syl: 
+user_syl: 
     id: 101
     login: syl
     salt: 1234
@@ -34,7 +34,7 @@ syl:
     time_zone: ""
     typesobject_id: 3
   
-alice: 
+user_alice: 
     id: 102
     login: alice
     salt: 1234
@@ -51,7 +51,7 @@ alice:
     time_zone: ""
     typesobject_id: 3
   
-bob: 
+user_bob: 
     id: 103
     login: bob
     salt: 1234
@@ -68,7 +68,7 @@ bob:
     time_zone: ""
     typesobject_id: 3
   
-charly: 
+user_charly: 
     id: 104
     login: charly
     salt: 1234
@@ -85,7 +85,7 @@ charly:
     time_zone: ""
     typesobject_id: 3
   
-robert: 
+user_robert: 
     id: 105
     login: robert
     salt: 1234
@@ -102,7 +102,7 @@ robert:
     time_zone: Paris
     typesobject_id: 3
   
-sylvia: 
+user_sylvia: 
     id: 106
     login: sylvia
     salt: 1234
@@ -119,7 +119,7 @@ sylvia:
     time_zone: ""
     typesobject_id: 3 
   
-peter: 
+user_peter: 
     id: 107
     login: peter
     salt: 1234

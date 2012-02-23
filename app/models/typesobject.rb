@@ -10,6 +10,18 @@ class Typesobject < ActiveRecord::Base
 
   named_scope :order_default, :order=>"name ASC"
   named_scope :find_all , order_default.all
+  #
+  def initialize(params=nil)
+    super(params)
+    fname="#{self.class.name}.#{__method__}"
+    #LOG.info (fname){"params=#{params}:\n#{params.nil?}:#{self.inspect}"}
+    if params.nil?
+      # new
+      self.fields={} 
+    end
+    #LOG.info (fname){"#{self.inspect}"}
+  end
+  
   def self.get_all
     order_default.find_all
   end
@@ -50,11 +62,10 @@ class Typesobject < ActiveRecord::Base
     #   +objets ayant les methodes adequates: "ar_workitem", "history_entry"
     #   +objets generiques: ::SYLRPLM::PLMTYPE_GENERIC
     # objets non pris en compte:
-    #   relation : pas de relation sur une relation !!
     #   ar_workitem: pas de besoin
     #   definition: pas de besoin
     #   user: pas de besoin
-    ret=[::SYLRPLM::PLMTYPE_GENERIC, "document", "part", "project", "customer", "forum", "datafile",  "history_entry"].sort
+    ret=[::SYLRPLM::PLMTYPE_GENERIC, "document", "part", "project", "customer", "forum", "datafile", "relation",  "history_entry"].sort
     ret
   end
 

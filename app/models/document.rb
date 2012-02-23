@@ -17,7 +17,7 @@ class Document < ActiveRecord::Base
   belongs_to :projowner,
     :class_name => "Project"
 
-  has_many :datafile, :dependent => :destroy
+  has_many :datafiles, :dependent => :destroy
   has_many :checks
 
   has_many :links_childs_documents, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='document' and child_plmtype='document'"]
@@ -36,16 +36,10 @@ class Document < ActiveRecord::Base
 
   has_many :links_fathers_histories, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='document'"]
   has_many :fathers_histories, :through => :links_fathers_histories, :source => :history_entry
-
   #essai, appelle 10 fois par document !!!
-  def after_find
-    #puts "Document:after_find: ident="+ident+" type="+model_name+"."+typesobject.name+" proj="+projowner.ident+" group="+group.name
-  end
-
-  def to_s
-    "#{self.ident}/#{self.revision}-#{self.designation}-#{self.typesobject.try(:name)}-#{self.statusobject.try(:name)}"
-  end
-
+  #def after_find
+  #puts "Document:after_find: ident="+ident+" type="+model_name+"."+typesobject.name+" proj="+projowner.ident+" group="+group.name
+  #end
   def self.create_new(document, user)
     unless document.nil?
       obj = Document.new(document)
@@ -59,6 +53,41 @@ class Document < ActiveRecord::Base
     obj.projowner=user.project
     obj.statusobject = Statusobject.get_first("document")
     obj
+  end
+
+  def self.get_conditions(filters)
+    filter = filters.gsub("*","%")
+    ret={}
+    unless filter.nil?
+      ret[:qry] = "ident LIKE :v_filter or revision LIKE :v_filter or designation LIKE :v_filter or date LIKE :v_filter "
+      ret[:values]={:v_filter => filter}
+    end
+    ret
+  end
+
+  def self.get_types_document
+    Typesobject.find(:all, :order=>"name",
+    :conditions => ["object = 'document'"])
+  end
+
+  def self.find_all
+    find(:all, :order=>"ident ASC, revision ASC")
+  end
+
+  def self.find_with_part
+    find(:all,
+    :conditions => ["part_id IS NOT NULL"],
+    :order=>"ident")
+  end
+
+  def self.find_without_part
+    find(:all,
+    :conditions => ["part_id IS NULL"],
+    :order=>"ident")
+  end
+
+  def to_s
+    "#{self.ident}/#{self.revision}-#{self.designation}-#{self.typesobject.try(:name)}-#{self.statusobject.try(:name)}"
   end
 
   def link_attributes=(att)
@@ -78,7 +107,7 @@ class Document < ActiveRecord::Base
 
   def check_out(params,user)
     ret=""
-    check     = Check.get_checkout("document", self)
+    check     = Check.get_checkout(self)
     if check.nil?
       unless params[:out_reason].blank?
         check = Check.create_new("document", self, params, user)
@@ -97,7 +126,7 @@ class Document < ActiveRecord::Base
 
   def check_in(params,user)
     ret=""
-    check     = Check.get_checkout("document", self)
+    check     = Check.get_checkout(self)
     unless params[:in_reason].blank?
       unless check.nil?
         check.update_accessor(user)
@@ -118,7 +147,7 @@ class Document < ActiveRecord::Base
 
   def check_free(params,user)
     ret=""
-    check     = Check.get_checkout("document", self)
+    check     = Check.get_checkout(self)
     unless params[:in_reason].blank?
       unless check.nil?
         check.update_accessor(user)
@@ -138,24 +167,14 @@ class Document < ActiveRecord::Base
   end
 
   def checked?
-    !Check.get_checkout("document", self).nil?
-  end
-
-  def frozen?
-    !(self.statusobject.nil? || Statusobject.get_last("document").nil?) &&
-    self.statusobject.rank == Statusobject.get_last("document").rank
-  end
-
-  def self.get_types_document
-    Typesobject.find(:all, :order=>"name",
-    :conditions => ["object = 'document'"])
+    !Check.get_checkout(self).nil?
   end
 
   def add_datafile(params,user)
     ret=""
     datafile = Datafile.create_new(params, user)
     if datafile.save
-      self.datafile << datafile
+      self.datafiles << datafile
       self.save
       ret="ok"
     else
@@ -163,89 +182,16 @@ class Document < ActiveRecord::Base
     end
   end
 
-  def get_datafiles
-    ret=[]
-    ret=self.datafile
-    ret={:recordset=>ret,:total=>ret.length}
-    #puts "document.get_datafiles:"+ret.inspect
-    ret
-  end
-
-  def self.find_all
-    find(:all, :order=>"ident ASC, revision ASC")
-  end
-
-  def self.find_with_part
-    find(:all,
-    :conditions => ["part_id IS NOT NULL"],
-    :order=>"ident")
-  end
-
-  def self.find_without_part
-    find(:all,
-    :conditions => ["part_id IS NULL"],
-    :order=>"ident")
-  end
-
-  def last_revision
-    Document.find(:last, :order=>"revision ASC",  :conditions => ["ident = '#{ident}'"])
-  end
-
-  def promote
-    #st_cur_name = statusobject.name
-    st = self.statusobject.get_next
-    #st=StatusObject.next(statusobject)
-    update_attributes({:statusobject_id => st.id})
-  #puts "Document.promote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
-  end
-
-  def demote
-    #st_cur_name = statusobject.name
-    st = self.statusobject.get_previous
-    update_attributes({:statusobject_id => st.id})
-  #puts "Document.demote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
-  end
-
   def remove_datafile(item)
     self.datafile.delete(item)
   end
 
-  def self.get_conditions(filters)
-    filter = filters.gsub("*","%")
-    ret={}
-    unless filter.nil?
-      ret[:qry] = "ident LIKE :v_filter or revision LIKE :v_filter or designation LIKE :v_filter or date LIKE :v_filter "
-      ret[:values]={:v_filter => filter}
-    end
+  def get_datafiles
+    ret=[]
+    ret=self.datafiles
+    ret={:recordset=>ret,:total=>ret.length}
+    #puts "document.get_datafiles:"+ret.inspect
     ret
-  end
-
-  def before_destroy_obsolete
-    begin
-      self.datafile.each { |file|
-        self.remove_datafile(file)
-      }
-      #self.destroy
-      return true
-    rescue Exception => e
-      puts "Document.delete:"+e.inspect
-    self.errors.add_to_base e.inspect
-    return false
-    end
-  end
-
-  def delete_old_obsolete
-    begin
-      self.datafile.each { |file|
-        self.remove_datafile(file)
-      }
-      self.destroy
-      return true
-    rescue Exception => e
-      puts "Document.delete:"+e.inspect
-    self.errors.add_to_base e.inspect
-    return false
-    end
   end
 
 end

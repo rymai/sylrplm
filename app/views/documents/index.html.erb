@@ -44,7 +44,7 @@
 		<td> <%= h_if_differ(document , previous,  "group.name") %></td>
 		<td> <%= h_if_differ(document , previous,  "projowner.ident") %>
 		(<%= document.projowner.typeaccess.name%>) </td>
-		<td> <%= h document.datafile.length %></td>
+		<td> <%= h document.datafiles.length %></td>
 		<td> <%= h_if_differ(document , previous,  "date") %> </td>
 		<td> <% if document.checked? %>
 		<%= h_img_checkout.to_s if document.checked? %>

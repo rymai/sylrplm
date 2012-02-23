@@ -274,6 +274,7 @@ fr:
   remove_all: "Vider"
   cancel: Annuler
   menu_action: Action(s)
+  back_to_object: "Retour à :"
   # attributs generaux
   faq_question: Question
   faq_answer: Réponse
@@ -450,7 +451,12 @@ fr:
   help_close_window: Fermer la fenêtre d'aide
   # info
   # link
+  link_edit: Edition du lien
+  link_edit_in_tree: Edition du lien de l'instance
   legend_link: Relation
+  legend_link_values: Attributs 
+  legend_link_father: Père
+  legend_link_child: Fils
   # main
   legend_desktop: Mon bureau
   label_domain: Domaine

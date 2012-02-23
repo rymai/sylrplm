@@ -1,6 +1,5 @@
 require 'ruote_routing'
 
-
 ActionController::Routing::Routes.draw do |map|
 
 # syl 17/11/2010 : route par defaut
@@ -29,12 +28,11 @@ ActionController::Routing::Routes.draw do |map|
   'sessions/create_new_account',
   :controller => 'sessions',
   :action => 'create_new_account')
-  
+
   map.connect(
   'sessions/login',
   :controller => 'sessions',
   :action => 'login')
-  
 
   map.connect(
   'sessions/:id/activate',
@@ -58,6 +56,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :checks
 
   map.resources :links, :collection => { :reset => :get}
+  map.connect(
+  'links/:id/edit_in_tree',
+  :controller => 'links',
+  :action => 'edit_in_tree',
+  :conditions => { :method => :get })
 
   map.resources :sequences
 
@@ -283,12 +286,6 @@ ActionController::Routing::Routes.draw do |map|
   :action => 'add_favori',
   :conditions => { :method => :get })
 
-  map.connect(
-  'links/:id/remove_link',
-  :controller => 'links',
-  :action => 'remove_link',
-  :conditions => { :method => :get })
-
   map.resources :groups
 
   map.resources :user_groups
@@ -319,7 +316,6 @@ ActionController::Routing::Routes.draw do |map|
   'definitions/:id/tree.js',
   :controller => 'definitions',
   :action => 'tree')
-  
 
   map.resources :processes
 

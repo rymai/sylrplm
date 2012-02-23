@@ -2,13 +2,23 @@
 	<legend>
 		<%= t(:legend_typesobject) %>
 	</legend>
-	<%= f.label t(:label_object) %>
-	<%= f.select(:object, @objectswithtype) %>
+	<%= form.label t(:label_object) %>
+	<%= form.select(:object, @objectswithtype) %>
 	<br/>
-	<%= f.label t(:label_name) %>
-	<%= f.text_field :name %>
+	<%= form.label t(:label_name) %>
+	<%= form.text_field :name %>
 	<br/>
-	<%= f.label t(:label_description) %>
-	<%= f.text_area :description %>
+	<%= form.label t(:label_description) %>
+	<%= form.text_area :description %>
+		<br/>
+	<%= form.label t(:label_fields) %>
 	<br/>
 </fieldset>
+<%= render(
+:partial => "shared/form_json",
+:locals => {
+:fields => @typesobject.fields ||="{}",
+:form_id => form_id,
+:textarea_name => 'typesobject[fields]',
+:options => {"buttons" => "all"} }
+) %>

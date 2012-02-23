@@ -254,6 +254,7 @@ ActiveRecord::Schema.define(:version => 20110920222430) do
     t.integer  "father_type_id"
     t.integer  "child_type_id"
     t.integer  "relation_id"
+    t.string   "values"
     t.integer  "owner_id"
     t.integer  "group_id"
     t.integer  "projowner_id"
@@ -441,6 +442,7 @@ create_table "projects_users", :id => false, :force => true do |t|
   create_table "typesobjects", :force => true do |t|
     t.string   "object"
     t.string   "name"
+    t.string   "fields"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"

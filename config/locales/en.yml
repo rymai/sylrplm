@@ -274,6 +274,7 @@ en:
   remove_all: Remove all
   cancel: Cancel
   menu_action: Action(s)
+  back_to_object: "Back to :"
   # attributs generaux
   faq_question: Question
   faq_answer: answer
@@ -450,7 +451,12 @@ en:
   help_close_window: Close the help window
   # info
   # links
+  link_edit: Edition du lien
+  link_edit_in_tree: Edition du lien de l'instance
   legend_link: Relation
+  legend_link_values: Attributs 
+  legend_link_father: Father
+  legend_link_child: Child
   # main
   legend_desktop: My desktop
   label_domain: Domain

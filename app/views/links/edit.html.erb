@@ -1,7 +1,15 @@
 <h1>Editing link</h1>
-<% form_for(@link) do |f| %>
+<% fonct="edit"
+form_id=fonct+"_link" %>
+<% form_for(@link, :html => { :id => form_id }) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "links/edit",:locals => { :f => f, :fonct=>"edit" }) %>
+<%= render(
+:partial => "links/edit",
+:locals => {
+:form => f,
+:fonct => fonct,
+:form_id => form_id }
+) %>
 <p>
 	<%= f.submit 'Update' %>
 </p>

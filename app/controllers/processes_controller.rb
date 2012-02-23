@@ -196,25 +196,25 @@ class ProcessesController < ApplicationController
   # GET /processes/:id/tree
   #
   def tree
-    name=__FILE__+"."+__method__.to_s+":"
-    #puts name+" params="+params.inspect
+    fname=__FILE__+"."+__method__.to_s+":"
+    #puts fname+" params="+params.inspect
     process = ruote_engine.process_status(params[:id])
     var = params[:var] || 'proc_tree'
     unless process.nil?
       # TODO : use Rails callback
-      render(
-      :text => "var #{var} = #{process.current_tree.to_json};",
-      :content_type => 'text/javascript')
+      render_text="var #{var} = #{process.current_tree.to_json};"
     else
       opts={}
       opts[:page]=nil
       opts[:conditions]="wfid = '"+params[:id]+"' and event = 'proceeded'" #TODO
-      #puts name+" opts="+opts.inspect
+      #puts fname+" opts="+opts.inspect
       history = Ruote::Sylrplm::HistoryEntry.paginate(opts)
-      render(
-      :text => "var #{var} = #{history.last.tree};",
-      :content_type => 'text/javascript')
+      render_text = "var #{var} = #{history.last.tree};"
     end
+    LOG.info (fname){"render_text=#{render_text}"}
+    render(
+      :text => render_text,
+      :content_type => 'text/javascript')
   end
 
   #

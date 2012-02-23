@@ -23,6 +23,7 @@
 		<th <%= sort_td_class_helper "object" %>> <%= sort_link_helper t(:label_object), "object" %> </th>
 		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t(:label_name), "name" %> </th>
 		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
+		<th <%= sort_td_class_helper "fields" %>> <%= sort_link_helper t(:label_fields), "fields" %> </th>
 
 				<th></th><th></th><th></th>
      </tr>
@@ -39,6 +40,9 @@
         </td>
         <td>
             <%=h typesobject.name %>
+        </td>
+        <td>
+            <%=h typesobject.fields %>
         </td>
         <td>
             <%=h typesobject.description %>

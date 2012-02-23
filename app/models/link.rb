@@ -97,16 +97,17 @@ class Link < ActiveRecord::Base
   end
 
   def self.valid?(father, child, relation)
-    name= "Link."+__method__.to_s+":"
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.info(fname) {"relation=#{relation.inspect}"}
     ret=(father.model_name==relation.father_plmtype || relation.father_plmtype == ::SYLRPLM::PLMTYPE_GENERIC) \
     && (child.model_name==relation.child_plmtype || relation.child_plmtype == ::SYLRPLM::PLMTYPE_GENERIC) \
     && (father.typesobject.name==relation.father_type.name || relation.father_type.name == ::SYLRPLM::TYPE_GENERIC) \
     && (child.typesobject.name==relation.child_type.name || relation.child_type.name == ::SYLRPLM::TYPE_GENERIC)
     if ret==false
-      puts name+father.model_name+"=="+relation.father_plmtype + \
-      " "+child.model_name+"=="+relation.child_plmtype + \
-      " "+father.typesobject.ident+"=="+relation.id.to_s+"."+relation.father_type.ident + \
-      " "+child.typesobject.ident+"=="+relation.child_type.ident
+      LOG.info(fname) {father.model_name+"=="+relation.father_plmtype + \
+        " "+child.model_name+"=="+relation.child_plmtype + \
+        " "+father.typesobject.name+"=="+relation.father_type.name + \
+        " "+child.typesobject.name+"=="+relation.child_type.name}
     end
     ret
   end
@@ -126,6 +127,7 @@ class Link < ActiveRecord::Base
   end
 
   def self.create_new(father, child, relation, user)
+    fname= "#{self.class.name}.#{__method__}"
     #puts "link:create_new:"+father.inspect+"-"+child.inspect+"."+child.inspect
     if valid?(father, child, relation)
       nbused = self.nb_used(relation)

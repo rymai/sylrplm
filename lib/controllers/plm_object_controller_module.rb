@@ -289,24 +289,37 @@ module Controllers::PlmObjectControllerModule
   end
 
   def follow_tree_part(node, part)
-    #puts 'follow_tree_part:'+part.inspect
+    fname= "#{self.class.name}.#{__method__}"
     tree_forums(node,"part",part)
     tree_documents(node,"part",part)
     links=Link.find_childs(part,  "part")
     #puts 'follow_tree_part:'+links.inspect
     links.each do |link|
       child=Part.find(link.child_id)
-      url={:controller => 'parts', :action => 'show', :id => "#{child.id}"}
-      destroy_url=url_for(:controller => 'parts',
+      # edit du lien 
+      edit_link_url=url_for(:controller => 'links',
+      :action => "edit_in_tree",
+      :id => link.id,
+      :object_model=>child.model_name, 
+      :object_id=>child.id)
+      link_values=link.values.gsub('\\','').gsub('"','')
+      edit_link_a="<a href=#{edit_link_url} title=\""+link_values+"\">#{Relation.find(link.relation_id).name}</a>"
+      LOG.info (fname){"edit_link_a=#{edit_link_a}"}
+      # destroy du lien
+      remove_link_url=url_for(:controller => 'parts',
       :action => "remove_link",
       :id => link.id)
-      cut_a='<a href="'+destroy_url+'">'+img_cut+'</a>'
+      remove_link_a='<a href="'+remove_link_url+'">'+img_cut+'</a>'
+      # show child
+      show_child_url={:controller => 'parts', 
+        :action => 'show', 
+        :id => "#{child.id}"}
       options={
-        :label  => (Relation.find(link.relation_id).name||t(:ctrl_no_relation))+'-'+t(:ctrl_part)+':'+child.ident+cut_a,
+        :label  => edit_link_a+"-"+t(:ctrl_part)+':'+child.ident+remove_link_a,
         :icon=>icone(child),
         :icon_open=>icone(child),
         :title => child.designation,
-        :url=>url_for(url),
+        :url=>url_for(show_child_url),
         :open => false
       }
       cnode = Node.new(options)
@@ -531,34 +544,43 @@ module Controllers::PlmObjectControllerModule
   end
 
   def ctrl_add_forum(object)
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname){"params=#{params.inspect}"}
     type=object.model_name
-    unless params["relation_id"] == ""
+    if params["relation_id"] == ""
       forum_type=Typesobject.find(params[:forum][:typesobject_id])
-      relation=Relation.by_types(type, "forum", object.typesobject.id, forum_type.id)
+      relation = Relation.by_types(type, "forum", object.typesobject.id, forum_type.id)
     else
       relation = Relation.find(params["relation_id"])
     end
     error=false
     respond_to do |format|
       flash[:notice] = ""
+      
       @forum=Forum.create_new(params[:forum], current_user)
       @forum.owner=@current_user
-      if(@forum.save)
+      if @forum.save
         item=ForumItem.create_new(@forum, params, current_user)
-        if(item.save)
-          link_=Link.create_new(object, @forum, relation, current_user)
-          link=link_[:link]
-          if(link!=nil)
-            if(link.save)
-               flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>t(link_[:msg]))
+        if item.save
+          unless relation.nil?
+            link_=Link.create_new(object, @forum, relation, current_user)
+            link=link_[:link]
+            unless link.nil?
+              if link.save
+                 flash[:notice] += t(:ctrl_object_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>t(link_[:msg]))
+              else
+                flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>t(link_[:msg]))
+                @forum.destroy
+                error=true
+              end
             else
-               flash[:notice] += t(:ctrl_object_not_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>t(link_[:msg]))
+              msg=$!
+              flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>msg)
               @forum.destroy
               error=true
             end
           else
-            msg=$!
-            flash[:notice] += t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>msg)
+            flash[:notice] += t(:ctrl_object_not_created,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>"no relation",:msg=>nil)
             @forum.destroy
             error=true
           end
@@ -569,7 +591,7 @@ module Controllers::PlmObjectControllerModule
           error=true
         end
       else
-         flash[:notice] += t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation,:msg=>nil)
+         flash[:notice] += t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>nil)
         error=true
       end
       if error==false

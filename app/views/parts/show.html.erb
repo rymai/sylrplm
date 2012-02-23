@@ -1,4 +1,4 @@
-<h1><%= t(:part_show) %></h1>
+<% form_for(@part, :url => {:id => @part.id, :action => :new_forum }) do |f| %> <h1><%= t(:part_show) %></h1>
 <p>
 	<b><%= t(:label_ident) %></b>
 	<%= h @part.ident %>
@@ -35,13 +35,11 @@
 	<b><%= t(:label_date) %></b>
 	<%= l @part.date %>
 </p>
-
-<%= h_show_tree %> 
+<%= h_show_tree %>
 <table class='menu_bas'>
 	<tr>
 		<% unless @favori.get('document').count==0 || @relations["document"].count==0 %>
-		<% form_for(@part, :url => {:id => @part.id, :action => "add_docs" }, :method => :get) do |f| %> 
-		<td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %></td>
+		<% form_for(@part, :url => {:id => @part.id, :action => "add_docs" }, :method => :get) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
 		<% end %>
 		<%end%>
@@ -49,8 +47,7 @@
 	</td>
 	<tr>
 		<% unless @favori.get('part').count==0 || @relations["part"].count==0 %>
-		<% form_for(@part, :url => {:id => @part.id, :action => "add_parts" }, :method => :get) do |f| %> 
-		<td> <%= select("relation","part", options_from_collection_for_select( @relations["part"], :id, :ident)) %></td>
+		<% form_for(@part, :url => {:id => @part.id, :action => "add_parts" }, :method => :get) do |f| %> <td> <%= select("relation","part", options_from_collection_for_select( @relations["part"], :id, :ident)) %></td>
 		<td> <%= submit_tag t("paste_parts") %></td>
 		<% end %> <!--
 		<%= link_to h_img_add_parts.to_s+t("paste_parts"), :id => @part.id, :action => :add_parts %>
@@ -59,20 +56,26 @@
 	</tr>
 </table>
 <%= render(:partial => "shared/object_workitems", :object =>@part) %>
-<table class='menu_bas'>
+
+<% unless @relations["forum"].count==0 %>
+<hr/>
+	
+</tr><table class='menu_bas'>
 	<tr>
-		<% unless @relations["forum"].count==0 %>
-		<% form_for(@part, :url => {:id => @part.id, :action => :new_forum }) do |f| %> 
 		<td> <%= select("relation","forum", options_from_collection_for_select( @relations["forum"], :id, :ident)) %></td>
 		<td><%= submit_tag t("add_forum") %></td>
-		<% end %>
-		<%end%>
+	</tr>
+</table>
+<% end %>
+<hr/>
+<table class='menu_bas'>
+	<tr>
 		<td> <% if @part.frozen? %>
 		<%= t("freeze") %>
 		<% else %>
-		<%= link_to t("edit"), edit_part_path(@part) %>
-		<% end %></td>
-		<td> <%= link_to t("new_part"), new_part_path %></td>
+		<%= link_to t("edit"), edit_part_path(@part) %> </td>
+		<%end%> <td> <%= link_to t("new_part"), new_part_path %></td>
 		<td> <%= link_to t("list"), parts_path %></td>
 	</tr>
 </table>
+<% end %> 

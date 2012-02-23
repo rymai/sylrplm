@@ -1,20 +1,45 @@
 <fieldset>
 	<legend>
-		<%= t(:legend_link) %>
+		<%= t(:legend_link_father) %>
 	</legend>
-	<%= f.label :father_plmtype %>
-	<%= f.text_field :father_plmtype %>
+	<%= form.label :father_plmtype %>
+	<%= text_field_tag :father_plmtype, @link.father_plmtype , :readonly=>:true %>
 	<br/>
-	<%= f.label :child_plmtype %>
-	<%= f.text_field :child_plmtype %>
+	<%= form.label :father_type %>
+	<%= text_field_tag :father_type, @link.father.typesobject.name , :readonly=>:true %>
 	<br/>
-	<%= f.label :father_id %>
-	<%= f.text_field :father_id %>
+	<%= form.label :father %>
+	<%= text_field_tag :father, @link.father.ident, :readonly=>:true %>
+	<%= link_to @link.father.ident, object_path(@link.father) %>
+</fieldset>
+<fieldset>
+	<legend>
+		<%= t(:legend_link_values) %>
+	</legend>
+	<%= render(
+	:partial => "shared/form_json",
+	:locals => {
+	:fields => @link.values,
+	:form_id => form_id,
+	:textarea_name => 'link[values]',
+	:options => {"buttons" => "position"} }
+	) %>
+	<%= form.label :owner %>
+	<%= text_field_tag :owner, @link.owner.login , :readonly=>:true %>
+</fieldset>
+<fieldset>
+	<legend>
+		<%= t(:legend_link_child) %>
+	</legend>
+	<%= form.label :child_plmtype %>
+	<%= text_field_tag :child_plmtype, @link.child_plmtype , :readonly=>:true %>
 	<br/>
-	<%= f.label :child_id %>
-	<%= f.text_field :child_id %>
+	<%= form.label :child_type %>
+	<%= text_field_tag :child_type, @link.child.typesobject.name , :readonly=>:true %>
 	<br/>
-	<%= f.label :owner_id %>
-	<%= f.text_field :owner_id %>
+	<%= form.label :child %>
+	<%= text_field_tag :child, @link.child.ident , :readonly=>:true %>
+	<%= link_to @link.child.ident, object_path(@link.child) %>
 	<br/>
+	
 </fieldset>

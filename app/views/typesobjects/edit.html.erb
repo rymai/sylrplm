@@ -1,19 +1,18 @@
-<h1><%=t(:typesobjects_edit) %></h1>
-<% form_for(@typesobject) do |f| %>
+<h1><%= t(:typesobjects_edit) %></h1>
+<% fonct="edit"
+  form_id=fonct+"_typesobject" %>
+<% form_for(@typesobject, :html => { :id => form_id }) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "typesobjects/edit",:locals => { :f => f, :fonct=>"edit" }) %>
-
+<%= render(:partial => "typesobjects/edit",:locals => {
+:form => f,
+:fonct => fonct,
+:form_id => form_id })
+%>
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= f.submit t("update") %>
-        </td>
-        <td>
-            <%= link_to t("explorer"), @typesobject %>
-        </td>
-        <td>
-            <%= link_to t("list"), typesobjects_path %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= f.submit t("update") %> </td>
+		<td> <%= link_to t("explorer"), @typesobject %> </td>
+		<td> <%= link_to t("list"), typesobjects_path %> </td>
+	</tr>
 </table>
-<% end %>
+<% end %> 

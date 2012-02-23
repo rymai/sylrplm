@@ -66,16 +66,6 @@ class Customer < ActiveRecord::Base
     end
   end
 
-  def promote
-    self.statusobject=Statusobject.find_next(:customer,statusobject)
-    self
-  end
-
-  def demote
-    self.statusobject=Statusobject.find_previous(:customer,statusobject)
-    self
-  end
-
   def self.get_conditions(filter)
     filter = filters.gsub("*","%")
     ret={}

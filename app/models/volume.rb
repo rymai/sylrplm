@@ -2,8 +2,6 @@ require 'rubygems'
 require 'fog'
 require 'classes/sylrplm_fog'
 
-
-
 class Volume < ActiveRecord::Base
   include Models::SylrplmCommon
   #
@@ -30,7 +28,7 @@ class Volume < ActiveRecord::Base
   def before_save
     self.set_directory(directory_was)
   end
-  
+
   def set_directory(directory_was=nil)
     #recherche des repertoires fog
     if self.protocol == "fog"
@@ -142,7 +140,12 @@ class Volume < ActiveRecord::Base
   end
 
   def dir_name
-    ret=File.join(self.directory, self.name)
+    self_dir=self.directory
+    unless self_dir.nil?
+      ret=File.join(self_dir, self.name)
+    else
+      ret=self.name
+    end
     #puts "Volume.dir_name:"+ret
     ret
   end
@@ -158,7 +161,7 @@ class Volume < ActiveRecord::Base
   #conditions = ["name LIKE ? or description LIKE ? or directory LIKE ? or protocol LIKE ?"
   end
 
-private
+  private
 
   def _list_files_
     if self.protocol == "fog"

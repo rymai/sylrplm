@@ -74,29 +74,11 @@ class Part < ActiveRecord::Base
     obj
   end
 
-  def frozen?
-    !(self.statusobject.nil? || Statusobject.get_last("part").nil?) &&
-    self.statusobject.rank == Statusobject.get_last("part").rank
-  end
-
   def self.get_types_part
     Typesobject.find(:all, :order=>"name",
     :conditions => ["object = 'part'"])
   end
 
-  def last_revision
-    Part.find(:last, :order=>"revision ASC",  :conditions => ["ident = '#{ident}'"])
-  end
-
-  def promote
-    self.statusobject=Statusobject.find_next("part",self.statusobject)
-    self
-  end
-
-  def demote
-    self.statusobject=Statusobject.find_previous(:project,statusobject)
-    self
-  end
 
   def self.get_conditions(filter)
 

@@ -10,18 +10,20 @@
 		<th>Father</th>
 		<th>Relation</th>
 		<th>Child</th>
+		<th>Values</th>
 		<th>Responsible</th>
 		<th>Group</th>
 		<th> <%= t(:label_projowner) %> </th>
-		</tr>
-		<% @links[:recordset].each do |link| %>
-		<tr>
+	</tr>
+	<% @links[:recordset].each do |link| %>
+	<tr>
 		<td><%= h link.id %></td>
 		<td><%= h link.ident %></td>
 		<td><%= h link.internal %></td>
 		<td><%= h link.father_ident %></td>
 		<td><%= h link.relation_ident %></td>
 		<td><%= h link.child_ident %></td>
+		<td><%= h link.values %></td>
 		<td><%= h link.owner.login unless link.owner.nil? %></td>
 		<td><%= h link.group.name unless link.group.nil? %></td>
 		<td><%= h link.projowner.ident unless link.projowner.nil? %></td>

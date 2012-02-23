@@ -6,8 +6,6 @@
 		var ffl = byId('fields');
 		var frf = byId('fields_rf');
 		var brf = byId('rf_buttons');
-		//alert ('swap: fta='+fta+' ffl='+ffl+' frf='+frf+' brf='+brf)
-		//alert('swap:fta.style.display=' + fta.style.display)
 		if(fta.style.display == 'block') {
 			RuoteForms.renderForm('rform', fluoFromJson(ffl.value));
 			fta.style.display = 'none';
