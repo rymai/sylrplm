@@ -24,22 +24,23 @@ class Part < ActiveRecord::Base
   #:foreign_key => "father_id", :association_foreign_key => "child_id", :conditions => ["father_type='part' AND child_type='document'"]
 
   has_many :links_documents, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='part' and child_plmtype='document'"]
-  has_many :documents , :through => :links_documents
+  has_many :documents , :through => :links_documents, :source => :document
 
-  has_many :links_workitems, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='part' and child_plmtype='workitem'"]
-  has_many :workitems , :through => :links_workitems
+  #has_many :links_workitems, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='part' and child_plmtype='workitem'"]
+  #has_many :workitems , :through => :links_workitems
 
   has_many :links_parts, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='part' and child_plmtype='part'"]
-  has_many :parts , :through => :links_parts
+  has_many :parts , :through => :links_parts, :source => :part
 
   has_many :links_parts_up, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='part' and child_plmtype='part'"]
-  has_many :parts_up , :through => :links_parts_up
+  has_many :parts_up , :through => :links_parts_up, :source => :part
 
-  has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='part'"]
-  has_many :projects , :through => :links_projects
+  has_many :links_projects_up, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='part'"]
+  has_many :projects_up , :through => :links_projects_up, :source => :project
 
-  has_many :links_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='part'"]
-  has_many :customers , :through => :links_customers
+  has_many :links_customers_up, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='part'"]
+  has_many :customers_up , :through => :links_customers_up, :source => :customer
+  #
   def to_s
     self.ident+"/"+self.revision+"-"+self.designation+"-"+self.typesobject.name+"-"+self.statusobject.name
   end

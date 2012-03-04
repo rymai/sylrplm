@@ -181,7 +181,8 @@ module Controllers::PlmObjectControllerModule
   end
 
   def ctrl_add_objects_from_favorites(object, child_plmtype)
-    #puts __FILE__+"."+__method__.to_s+":"+object.inspect+":"+child_plmtype.to_s
+    fname="#{self.class.name}.#{__method__}:"
+    LOG.info(fname){"#{object.inspect}.#{child_plmtype}"}
     relation = Relation.find(params[:relation][child_plmtype])
     plmtype=child_plmtype.to_s
     respond_to do |format|
@@ -302,8 +303,8 @@ module Controllers::PlmObjectControllerModule
       :id => link.id,
       :object_model=>child.model_name, 
       :object_id=>child.id)
-      link_values=link.values.gsub('\\','').gsub('"','')
-      edit_link_a="<a href=#{edit_link_url} title=\""+link_values+"\">#{Relation.find(link.relation_id).name}</a>"
+      link_values=link.values.gsub('\\','').gsub('"','') unless link.values.nil?
+      edit_link_a="<a href=#{edit_link_url} title=\"#{link_values}\">#{Relation.find(link.relation_id).name}</a>"
       LOG.info (fname){"edit_link_a=#{edit_link_a}"}
       # destroy du lien
       remove_link_url=url_for(:controller => 'parts',

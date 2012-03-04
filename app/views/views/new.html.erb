@@ -1,0 +1,17 @@
+<h1><%= t(:views_new) %></h1>
+<% fonct="new"
+  form_id=fonct+"_view" %>
+<% form_for(@view, :html => { :id => form_id }) do |f| %>
+<%= f.error_messages %>
+<%= render(:partial => "views/edit",:locals => {
+:form => f,
+:fonct => fonct,
+:form_id => form_id })
+%>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= f.submit t("create") %> </td>
+		<td> <%= link_to t("list"), views_path %> </td>
+	</tr>
+</table>
+<% end %> 

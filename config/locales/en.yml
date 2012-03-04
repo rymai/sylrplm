@@ -175,6 +175,8 @@ en:
   ctrl_typesobject: Object type
   # users
   ctrl_user: User
+  # views
+  ctrl_view: View
   # volumes
   ctrl_volume: Volume
   ctrl_no_relation: no relation
@@ -260,6 +262,7 @@ en:
   new_notification: New notification 
   new_group: New group
   new_relation: New relation
+  new_view: New view
   paste_users: Paste users 
   paste_part: Paste parts 
   paste_documents: Paste documents
@@ -316,6 +319,7 @@ en:
   mnu_notifications: Notifications
   mnu_relations: Relations
   mnu_tools: Tools
+  mnu_views: Views
   cut: "Cut"
   revise: "Revise"
   promote: "Promote"
@@ -665,6 +669,12 @@ en:
   label_user_project_ids_in: Affected 
   label_user_project_ids_out: Unaffected
   label_projects: Projects
+  #views
+  legend_view: Enter view details
+  views_list: Listing of views
+  views_new: New view
+  views_show: View detail
+  views_edit:  View editing
   # volumes
   legend_volume: Enter volume details
   volume_list: Listing of volumes

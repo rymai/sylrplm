@@ -1,6 +1,10 @@
 require 'ruote_routing'
 
 ActionController::Routing::Routes.draw do |map|
+  map.resources :views
+
+  map.resources :views
+
 
 # syl 17/11/2010 : route par defaut
   map.root :controller => "main", :action => "index"

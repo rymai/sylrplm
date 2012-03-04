@@ -175,6 +175,8 @@ fr:
   ctrl_typesobject: Type objet
   # users
   ctrl_user: Utilisateur
+  # views
+  ctrl_view: Vue
   # volumes
   ctrl_volume: Volume
   ctrl_no_relation: no relation
@@ -260,6 +262,7 @@ fr:
   new_notification: Nouvelle notification 
   new_group: Nouveau groupe
   new_relation: Nouvelle relation
+  new_view: Nouvelle vue
   paste_users: Coller utilisateurs 
   paste_parts: Coller articles 
   paste_documents: Coller documents
@@ -316,6 +319,7 @@ fr:
   mnu_notifications: Notifications
   mnu_relations: Relations
   mnu_tools: Outils
+  mnu_views: Vues
   cut: "Couper"
   revise: "Réviser"
   promote: "Promouvoir"
@@ -665,6 +669,12 @@ fr:
   label_user_project_ids_in: Affecté à
   label_user_project_ids_out: Non affecté à
   label_projects: Projets
+  #views
+  legend_view: "Renseignez les propriétés de la vue"
+  views_list: Liste des vues
+  views_new: Nouvelle vue
+  views_show: Détail de la vue
+  views_edit:  Edition de la vue
   # volumes
   legend_volume: Renseignez les propriétés du volume
   volume_list: Liste des volumes

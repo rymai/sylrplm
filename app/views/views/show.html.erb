@@ -1,0 +1,15 @@
+<h1><%= t(:views_show) %></h1>
+<p>
+	<b><%= t(:label_name) %></b>
+	<%= h @view.name %>
+</p>
+<p>
+	<b><%= t(:label_description) %></b>
+	<%= h @view.description %>
+</p>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t(:edit), edit_view_path(@view)  %> </td>
+		<td> <%= link_to t(:list), views_path %> </td>
+	</tr>
+</table>

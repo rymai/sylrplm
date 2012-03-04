@@ -1,4 +1,7 @@
-<% form_for(@part, :url => {:id => @part.id, :action => :new_forum }) do |f| %> <h1><%= t(:part_show) %></h1>
+<h1><%= t(:part_show) %></h1>
+<% form_for(@part) do |f| %>
+<%= f.error_messages %>
+<% end %>
 <p>
 	<b><%= t(:label_ident) %></b>
 	<%= h @part.ident %>
@@ -37,36 +40,34 @@
 </p>
 <%= h_show_tree %>
 <table class='menu_bas'>
+	<% unless @favori.get('document').count==0 || @relations["document"].count==0 %>
 	<tr>
-		<% unless @favori.get('document').count==0 || @relations["document"].count==0 %>
 		<% form_for(@part, :url => {:id => @part.id, :action => "add_docs" }, :method => :get) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
+		<!--<%= link_to h_img_add_parts.to_s+t("paste_documents"), :id => @part.id, :action => :add_docs %>-->
 		<% end %>
-		<%end%>
 	</tr>
-	</td>
+	<%end%>
+	<% unless @favori.get('part').count==0 || @relations["part"].count==0 %>
 	<tr>
-		<% unless @favori.get('part').count==0 || @relations["part"].count==0 %>
 		<% form_for(@part, :url => {:id => @part.id, :action => "add_parts" }, :method => :get) do |f| %> <td> <%= select("relation","part", options_from_collection_for_select( @relations["part"], :id, :ident)) %></td>
 		<td> <%= submit_tag t("paste_parts") %></td>
-		<% end %> <!--
-		<%= link_to h_img_add_parts.to_s+t("paste_parts"), :id => @part.id, :action => :add_parts %>
-		-->
 		<% end %>
 	</tr>
+	<% end %>
 </table>
 <%= render(:partial => "shared/object_workitems", :object =>@part) %>
-
 <% unless @relations["forum"].count==0 %>
 <hr/>
-	
-</tr><table class='menu_bas'>
+<table class='menu_bas'>
+	<% unless @relations["forum"].count==0 %>
 	<tr>
-		<td> <%= select("relation","forum", options_from_collection_for_select( @relations["forum"], :id, :ident)) %></td>
+		<% form_for(@part, :url => {:id => @part.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @relations["forum"], :id, :ident)) %></td>
 		<td><%= submit_tag t("add_forum") %></td>
+		<% end %>
 	</tr>
+	<% end %>
 </table>
-<% end %>
 <hr/>
 <table class='menu_bas'>
 	<tr>

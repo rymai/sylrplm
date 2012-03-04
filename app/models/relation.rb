@@ -16,7 +16,7 @@ class Relation < ActiveRecord::Base
   :class_name => "Typesobject"
 
   has_many :links
-  
+  has_and_belongs_to_many :views
   #
   def validate
     errors.add_to_base I18n.t("valid_relation_cardin_occur_max") if cardin_occur_max != -1 && cardin_occur_max < cardin_occur_min
@@ -72,25 +72,29 @@ class Relation < ActiveRecord::Base
     ret
   end
 
-  def self.relations_for_type(type_object)
-    name="Relations."+__method__.to_s+":"
+  def self.relations_for(father)
+    fname="Relations.#{__method__}:#{father.model_name}:"
     ret={}
     ret[::SYLRPLM::PLMTYPE_GENERIC] = []
     Typesobject.get_objects_with_type.each do |t|
       ret[t] = []
     end
-    cond="father_plmtype = '"+type_object.to_s+"' or father_plmtype = '"+::SYLRPLM::PLMTYPE_GENERIC+"'"
-    #puts name+cond
+    cond="father_plmtype = '#{father.model_name}' or father_plmtype = '#{::SYLRPLM::PLMTYPE_GENERIC}'"
     find(:all, :order => "name",
       :conditions => [cond]).each do |rel|
-      ret[rel.child_plmtype] << rel
+      if rel.child_plmtype==::SYLRPLM::PLMTYPE_GENERIC
+        # ok pour tous les types de fils
+        Typesobject.get_objects_with_type.each do |t|
+          ret[t] <<rel
+        end
+      else
+        ret[rel.child_plmtype] << rel
+      end
     end
-    #puts name+ret.inspect
+    
+    LOG.info (fname){"cond=#{cond}"}
+    ret.each {|r| r.each {|rel| LOG.info rel}}
     ret
-  end
-
-  def self.relations_for(object)
-    Relation.relations_for_type(object.model_name)
   end
 
   def self.names

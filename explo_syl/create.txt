@@ -30,10 +30,7 @@ ruby script/generate scaffold customer ident:string type:string designation:stri
 ruby script/generate model customer
 ruby script/generate controller customer
 ruby script/generate model favori
-
 rake db:sessions:create
-
-ruby script/generate scaffold partslinks father_id:integer child_id:integer designation:string description:text quantity:float responsible:string group:string date:date
 ruby script/generate scaffold typesobject object:string name:string description:text
 ruby script/generate scaffold statusobject object:string name:string rank:integer description:text
 ruby script/generate scaffold role name:string description:text
@@ -605,5 +602,12 @@ pour empêcher qu’il démarre il faut aller dans:
 et modifier:
 StartServer=true => StartServer=false
 Pour stopper nepomuk passer le gestionnaire de services dans le centre de configuration et décocher nepomuk.
+
+======================================================
+gestion des vues
+une vue comporte 0 a n relations
+a l'affichage d'un objet, on affiche toutes les vues possibles 
+======================================================
+ruby script/generate scaffold view name:string description:text
 
 

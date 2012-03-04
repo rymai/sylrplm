@@ -51,7 +51,7 @@
 
 Documents Fils
 <table class='menu_bas'>
-	<% @document.childs_documents.each do |obj| %>
+	<% @document.documents.each do |obj| %>
 	<tr>
 		<td><%= obj.ident %></td>
 	</tr>
@@ -59,7 +59,7 @@ Documents Fils
 </table>
 Documents Peres
 <table class='menu_bas'>
-	<% @document.fathers_documents.each do |obj| %>
+	<% @document.documents_up.each do |obj| %>
 	<tr>
 		<td><%= obj.ident %></td>
 	</tr>
@@ -67,7 +67,7 @@ Documents Peres
 </table>
 Parts Peres
 <table class='menu_bas'>
-	<% @document.fathers_parts.each do |obj| %>
+	<% @document.parts_up.each do |obj| %>
 	<tr>
 		<td><%= obj.ident %></td>
 	</tr>
@@ -75,7 +75,7 @@ Parts Peres
 </table>
 Projects Peres
 <table class='menu_bas'>
-	<% @document.fathers_projects.each do |obj| %>
+	<% @document.projects_up.each do |obj| %>
 	<tr>
 		<td><%= obj.ident %></td>
 	</tr>
@@ -83,7 +83,7 @@ Projects Peres
 </table>
 Customers Peres
 <table class='menu_bas'>
-	<% @document.fathers_customers.each do |obj| %>
+	<% @document.customers_up.each do |obj| %>
 	<tr>
 		<td><%= obj.ident %></td>
 	</tr>
@@ -91,7 +91,7 @@ Customers Peres
 </table>
 Histories Peres
 <table class='menu_bas'>
-	<% @document.fathers_histories.each do |obj| %>
+	<% @document.histories_up.each do |obj| %>
 	<tr>
 		<td><%= obj.ident %></td>
 	</tr>

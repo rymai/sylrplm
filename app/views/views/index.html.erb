@@ -1,0 +1,38 @@
+<h1><%= t(:views_list) %><%= h_count_objects(@views)%> </h1>
+<% unless @view.nil? %>
+<% form_for(@view) do |f| %>
+<%= f.error_messages %>
+<% end %>
+<% end %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t(:new_view), new_view_path %> </td>
+		<td> <%= show_help("help_views") %> </td>
+	</tr>
+</table>
+<%= will_paginate(@views[:recordset]) %>
+<table>
+	<tr>
+		<th <%= sort_td_class_helper "id" %>> <%= sort_link_helper t(:label_id), "id" %> </th>
+		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t(:label_name), "name" %> </th>
+		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
+		<th></th><th></th><th></th>
+	</tr>
+	<% @views[:recordset].each do |view| %>
+	<tr>
+		<td> <%= h view.id %> </td>
+		<td> <%= h view.name %> </td>
+		<td> <%= h view.description %> </td>
+		<td> <%= link_to h_img_show.to_s, view %> </td>
+		<td> <%= link_to h_img_edit.to_s, edit_view_path(view)  %> </td>
+		<td> <%= link_to h_img_destroy.to_s, view, :confirm => t(:msg_confirm), :method => :delete %> </td>
+	</tr>
+	<% end %>
+</table>
+<%= will_paginate(@views[:recordset]) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t(:new_view), new_view_path %> </td>
+		<td> <%= show_help("help_views") %> </td>
+	</tr>
+</table>

@@ -26,7 +26,7 @@ class Link < ActiveRecord::Base
     child.belongs_to :forum , :conditions => ["child_plmtype='forum'"], :class_name => "Forum"
     child.belongs_to :datafile , :conditions => ["child_plmtype='datafile'"], :class_name => "Datafile"
     #child.belongs_to :relation , :conditions => ["child_plmtype='relation'"], :class_name => "Relation"
-    child.belongs_to :user , :conditions => ["child_plmtype='user'"], :class_name => "User"
+    #child.belongs_to :user , :conditions => ["child_plmtype='user'"], :class_name => "User"
     child.belongs_to  :history , :conditions => ["child_plmtype='history_entry'"], :class_name => "Ruote::Sylrplm::HistoryEntry"
   end
 
@@ -38,7 +38,7 @@ class Link < ActiveRecord::Base
     father.belongs_to :customer , :conditions => ["father_plmtype='customer'"], :class_name => "Customer"
     father.belongs_to :forum , :conditions => ["father_plmtype='forum'"], :class_name => "Forum"
     father.belongs_to :definition , :conditions => ["father_plmtype='definition'"], :class_name => "Definition"
-    father.belongs_to :user , :conditions => ["father_plmtype='user'"], :class_name => "User"
+    #father.belongs_to :user , :conditions => ["father_plmtype='user'"], :class_name => "User"
     father.belongs_to :history_entry , :conditions => ["father_plmtype='history_entry'"], :class_name => "Ruote::Sylrplm::HistoryEntry"
   end
 
@@ -97,7 +97,7 @@ class Link < ActiveRecord::Base
   end
 
   def self.valid?(father, child, relation)
-    fname= "#{self.class.name}.#{__method__}"
+    fname= "Link.#{__method__}"
     LOG.info(fname) {"relation=#{relation.inspect}"}
     ret=(father.model_name==relation.father_plmtype || relation.father_plmtype == ::SYLRPLM::PLMTYPE_GENERIC) \
     && (child.model_name==relation.child_plmtype || relation.child_plmtype == ::SYLRPLM::PLMTYPE_GENERIC) \
@@ -106,8 +106,8 @@ class Link < ActiveRecord::Base
     if ret==false
       LOG.info(fname) {father.model_name+"=="+relation.father_plmtype + \
         " "+child.model_name+"=="+relation.child_plmtype + \
-        " "+father.typesobject.name+"=="+relation.father_type.name + \
-        " "+child.typesobject.name+"=="+relation.child_type.name}
+        " "+father.typesobject.name+"=="+relation.father_type.name +  \
+        " "+child.typesobject.name+"=="+relation.child_type.name }
     end
     ret
   end

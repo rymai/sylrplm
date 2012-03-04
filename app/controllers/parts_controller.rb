@@ -29,7 +29,7 @@ class PartsController < ApplicationController
 
     @documents = @part.documents
     @parts     = @part.parts
-    @projects  = @part.projects
+    @projects  = @part.projects_up
 
     respond_to do |format|
       format.html # show.html.erb
