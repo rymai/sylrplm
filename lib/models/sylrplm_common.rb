@@ -125,7 +125,12 @@ module Models::SylrplmCommon
     end
     
   end
-
+  
+  def frozen?
+    !(self.statusobject.nil? || ::Statusobject.get_last(self.class.name).nil?) &&
+    self.statusobject.rank == ::Statusobject.get_last(self.class.name).rank
+  end
+  
   # attribution de valeurs par defaut suivant la table sequence
   def set_default_values(next_seq)
     #find_cols_for(model).each do |strcol|

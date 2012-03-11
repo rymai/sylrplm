@@ -324,6 +324,28 @@ fr:
   revise: "Réviser"
   promote: "Promouvoir"
   demote: Rétrograder
+  # tree (dans views show)
+  label_document_document: Documents associés 
+  label_part_document: Documents associés 
+  label_project_document: Documents associés 
+  label_customer_document: Documents associés 
+  label_document_part: Articles associés 
+  label_part_part: Articles associés 
+  label_project_part: Articles associés 
+  label_customer_part: Articles associés
+  label_document_project: Projets associés 
+  label_part_project: Projets associés 
+  label_project_project: Projets associés 
+  label_customer_project: Projets associés  
+  label_document_user: Utilisateurs associés 
+  label_part_user: Utilisateurs associés 
+  label_project_user: Utilisateurs associés 
+  label_customer_user: Utilisateurs associés  
+  label_document_forum: Forums associés 
+  label_part_forum: Forums associés 
+  label_project_forum: Forums associés 
+  label_customer_forum: Forums associés  
+  # fin general
   # access
   legend_access: Renseignez les propriétés de l'autorisation
   label_controller: Controleur
@@ -456,11 +478,17 @@ fr:
   # info
   # link
   link_edit: Edition du lien
+  link_list: Liste liens
+  link_show: Détail lien
+  link_new: Nouveau lien
+  link_reset: Suppression des liens !!! 
   link_edit_in_tree: Edition du lien de l'instance
   legend_link: Relation
   legend_link_values: Attributs 
   legend_link_father: Père
   legend_link_child: Fils
+  label_father: Père
+  label_child: Fils
   # main
   legend_desktop: Mon bureau
   label_domain: Domaine
@@ -571,6 +599,17 @@ fr:
   label_responder: Répondeur
   # relation
   legend_relation: Relation
+  label_father_plmtype: PLMType du père
+  label_father_type: Type du père
+  label_child_plmtype: PLMType du fils
+  label_child_type: Type du fils
+  label_cardin_occur_min: Occurence minimale 
+  label_cardin_occur_max: Occurence maximale 
+  label_cardin_use_min: Usage minimal 
+  label_cardin_use_max: Usage maximal 
+  label_views: Vues 
+  label_relation_view_ids_in: Vues attachées
+  label_relation_view_ids_out: Autres vues
   # roles
   legend_role: "Renseignez les propriétés du role"
   role_list: Liste des rôles
@@ -675,6 +714,9 @@ fr:
   views_new: Nouvelle vue
   views_show: Détail de la vue
   views_edit:  Edition de la vue
+  label_relations: Relations 
+  label_view_relation_ids_in: Prises en compte
+  label_view_relation_ids_out: Autres relations
   # volumes
   legend_volume: Renseignez les propriétés du volume
   volume_list: Liste des volumes

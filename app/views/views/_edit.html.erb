@@ -2,14 +2,16 @@
 	<legend>
 		<%= t(:legend_view) %>
 	</legend>
-	<p>
-		<%= form.label t(:label_name) %>
-		<br />
-		<%= form.text_field :name %>
-	</p>
-	<p>
-		<%= form.label t(:label_description) %>
-		<br />
-		<%= form.text_area :description %>
-	</p>
+	<%= form.label t(:label_name) %>
+	<%= form.text_field :name %>
+	<br />
+	
+	<%= form.label t(:label_description) %>
+	<%= form.text_area :description %>
+	<br />
+	
+	<%= form.label t(:label_relations) %>
+	<%= select_inout(form, @view, @relations, :ident) %>
+	<br/>
+	
 </fieldset>

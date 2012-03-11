@@ -1,12 +1,13 @@
 <h1><%= t(:views_show) %></h1>
-<p>
-	<b><%= t(:label_name) %></b>
-	<%= h @view.name %>
-</p>
-<p>
-	<b><%= t(:label_description) %></b>
-	<%= h @view.description %>
-</p>
+<table>
+	<%= h_attribut_trtd(@view, :id) %>
+	<%= h_attribut_trtd(@view, :name) %>
+	<%= h_attribut_trtd(@view, :description) %>
+	<tr>
+		<td><%= t(:label_relations) %></td>
+		<td><%= comma_links(@view.relations, :name) %></td>
+	</tr>
+</table>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t(:edit), edit_view_path(@view)  %> </td>

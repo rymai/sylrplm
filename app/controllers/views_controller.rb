@@ -26,7 +26,7 @@ class ViewsController < ApplicationController
   # GET /views/new.xml
   def new
     @view = View.new
-
+    @relations=Relation.all
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @view }
@@ -35,14 +35,16 @@ class ViewsController < ApplicationController
 
   # GET /views/1/edit
   def edit
+
     @view = View.find(params[:id])
+    @relations=Relation.all
   end
 
   # POST /views
   # POST /views.xml
   def create
     @view = View.new(params[:view])
-
+    @relations=Relation.all
     respond_to do |format|
       if @view.save
         flash[:notice] = t(:ctrl_object_created,:typeobj => t(:ctrl_view), :ident=>@view.name)
@@ -60,7 +62,7 @@ class ViewsController < ApplicationController
   # PUT /views/1.xml
   def update
     @view = View.find(params[:id])
-
+    @relations=Relation.all
     respond_to do |format|
       if @view.update_attributes(params[:view])
         flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_view),:ident=>@view.name)

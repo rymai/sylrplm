@@ -16,14 +16,27 @@ class Project < ActiveRecord::Base
 
   has_and_belongs_to_many :users
 
-  has_many :links_documents, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='project' and child_plmtype='document'"]
-  has_many :documents , :through => :links_documents
+  has_many :links_documents, 
+    :class_name => "Link", 
+    :foreign_key => "father_id", 
+    :conditions => ["father_plmtype='project' and child_plmtype='document'"]
+  has_many :documents , 
+    :through => :links_documents
 
-  has_many :links_parts, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='project' and child_plmtype='part'"]
-  has_many :parts , :through => :links_parts
+  has_many :links_parts, 
+    :class_name => "Link", 
+    :foreign_key => "father_id", 
+    :conditions => ["father_plmtype='project' and child_plmtype='part'"]
+  has_many :parts , 
+    :through => :links_parts
 
-  has_many :links_customers_up, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
-  has_many :customers_up , :through => :links_customers_up
+  has_many :links_customers_up, 
+    :class_name => "Link", 
+    :foreign_key => "child_id", 
+    :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
+  has_many :customers_up , 
+    :through => :links_customers_up, 
+    :source => :customer_up
 
   def name 
     self.ident

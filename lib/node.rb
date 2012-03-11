@@ -103,7 +103,8 @@ class Node
 
   def to_s
 
-    @nodes.to_s
+    #syl @nodes.to_s
+    "#{@nodes.count}:#{@nodes}"
   end
 
   private

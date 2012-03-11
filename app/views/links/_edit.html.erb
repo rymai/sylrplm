@@ -2,13 +2,13 @@
 	<legend>
 		<%= t(:legend_link_father) %>
 	</legend>
-	<%= form.label :father_plmtype %>
+	<%= form.label t(:label_father_plmtype) %>
 	<%= text_field_tag :father_plmtype, @link.father_plmtype , :readonly=>:true %>
 	<br/>
-	<%= form.label :father_type %>
+	<%= form.label t(:label_father_type) %>
 	<%= text_field_tag :father_type, @link.father.typesobject.name , :readonly=>:true %>
 	<br/>
-	<%= form.label :father %>
+	<%= form.label t(:label_father) %>
 	<%= text_field_tag :father, @link.father.ident, :readonly=>:true %>
 	<%= link_to @link.father.ident, object_path(@link.father) %>
 </fieldset>
@@ -31,13 +31,13 @@
 	<legend>
 		<%= t(:legend_link_child) %>
 	</legend>
-	<%= form.label :child_plmtype %>
+	<%= form.label t(:label_child_plmtype) %>
 	<%= text_field_tag :child_plmtype, @link.child_plmtype , :readonly=>:true %>
 	<br/>
-	<%= form.label :child_type %>
+	<%= form.label t(:label_child_type) %>
 	<%= text_field_tag :child_type, @link.child.typesobject.name , :readonly=>:true %>
 	<br/>
-	<%= form.label :child %>
+	<%= form.label t(:label_child) %>
 	<%= text_field_tag :child, @link.child.ident , :readonly=>:true %>
 	<%= link_to @link.child.ident, object_path(@link.child) %>
 	<br/>

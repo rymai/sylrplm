@@ -29,7 +29,6 @@ class ApplicationController < ActionController::Base
   before_filter :authorize, :except => [:index, :show, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
-  ## un peu brutal before_filter :object_exists, :only => [:show, :edit, :destroy]
   #
   def update_accessor(obj)
     mdl_name = obj.model_name
@@ -272,5 +271,29 @@ class ApplicationController < ActionController::Base
     end
     ret
   end
+  
+  def icone(obj)
+    unless obj.model_name.nil? || obj.typesobject.nil?
+      ret = "/images/#{obj.model_name}_#{obj.typesobject.name}.png"
+      unless File.exist?("#{RAILS_ROOT}/public#{ret}")
+        ret = "/images/#{obj.model_name}.png"
+        unless File.exist?("#{RAILS_ROOT}/public#{ret}")
+          ret = ""
+        end
+      end
+    else
+      ret = ""
+    end
+    ret
+  end
+  
+  def icone_plmtype(plmtype)
+    ret = "/images/#{plmtype}.png"
+    unless File.exist?("#{RAILS_ROOT}/public#{ret}")
+      ret = ""
+    end
+    ret
+  end
+  
 end
 

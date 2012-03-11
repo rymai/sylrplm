@@ -17,9 +17,9 @@ class Typesobject < ActiveRecord::Base
     #LOG.info (fname){"params=#{params}:\n#{params.nil?}:#{self.inspect}"}
     if params.nil?
       # new
-      self.fields={} 
+      self.fields={:p1=>v1} 
     end
-    #LOG.info (fname){"#{self.inspect}"}
+    LOG.info (fname){"#{self.inspect}"}
   end
   
   def self.get_all

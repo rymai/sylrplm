@@ -1,5 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  
   def h_value_or_default(value, default)
     ret=default
     unless value.nil?
@@ -28,7 +29,6 @@ module ApplicationHelper
     blk="obj="+obj.class.name+".find("+obj.id.to_s+")\nobj."+att
     #puts "blk="+blk
     ret = eval blk
-
     ret
   end
 
@@ -97,27 +97,22 @@ module ApplicationHelper
   end
 
   def icone(object)
-    type=object.model_name.to_s
-    type+="_"+object.typesobject.name.to_s unless object.typesobject.nil?
-    fic="images/"+type+".png"
+    type = "#{object.model_name}_#{object.typesobject.name}" unless object.typesobject.nil?
+    fic="/images/#{type}.png"
     if !File.exists?(fic)
-      type=object.model_name.to_s
-      fic="images/"+type+".png"
+      type="#{object.model_name}"
+      fic="/images/#{type}.png"
     end
-    "<img class='icone' src='"+fic+"' title='"+t("ctrl_"+type.downcase)+"'></img>"
+    mdl_name=t("ctrl_#{type.downcase}")
+    "<img class='icone' src='#{fic}' title='#{mdl_name}'></img>"
   end
-
+ 
   def h_img(name)
-    ret="<img class=\"icone\" src=\"/images/"+name.to_s+".png\" title='"
-    ret<<t(File.basename(name.to_s))
-    ret<<"'></img>"
-    ret.to_s
+    "<img class=\"icone\" src=\"/images/#{name}.png\" title='#{t(File.basename(name.to_s))}'></img>"
   end
 
   def h_img_tit(name,title)
-    ret="<img class=\"icone\" src=\"/images/"+name.to_s+".png\" title='"
-    ret<<title.to_s
-    ret<<"'></img>"
+    "<img class=\"icone\" src=\"/images/#{name}.png\" title='#{title}'></img>"
   end
 
   def h_img_cut

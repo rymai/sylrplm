@@ -14,24 +14,7 @@ Rails::Initializer.run do |config|
   config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
   # Add additional load paths for your own custom dirs
 
-=begin
   config.autoload_paths += %W(#{Rails.root}/lib/classes)
-  config.autoload_paths += %W(#{Rails.root}/lib/controllers)
-  config.autoload_paths += %W(#{Rails.root}/lib/models)
-  config.autoload_paths += %W(#{Rails.root}/lib/ruote/sylrplm)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe)
-  
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/engine)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/expool)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/expressions)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/extras)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/extras/participants)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/listeners)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/participants)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/tools)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/utils)
-  config.autoload_paths += %W(#{Rails.root}/lib/openwfe/worklist)
-=end
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
@@ -60,7 +43,6 @@ Rails::Initializer.run do |config|
   config.action_mailer.perform_deliveries    = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_charset       = 'utf-8'
-  
 
   config.action_mailer.smtp_settings = {
     :address => "smtp.free.fr",
@@ -73,10 +55,11 @@ Rails::Initializer.run do |config|
 
   ##RUOTE_ENV = {:persist_as_yaml => false}
   RUOTE_ENV = {}
-# passing a hash of parameters (application context) to the ruote engine
-# (well via the ruote_plugin)
+  # passing a hash of parameters (application context) to the ruote engine
+  # (well via the ruote_plugin)
 
-#$:.unshift('~/ruote/lib')
-# using the local 'ruote', comment that out if you're using ruote as a gem
-
+  #$:.unshift('~/ruote/lib')
+  # using the local 'ruote', comment that out if you're using ruote as a gem
+  
 end
+

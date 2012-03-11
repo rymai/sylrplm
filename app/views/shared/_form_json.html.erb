@@ -20,5 +20,5 @@
 		swapForm();
 		return true;
 		};
-		RuoteForms.renderForm('rform', <%= fields %><%= (","+options.to_json) unless options.nil? %>);</script>
+		RuoteForms.renderForm('rform', <%= fields.to_json %><%= (","+options.to_json) unless options.nil? %>);</script>
 </div>

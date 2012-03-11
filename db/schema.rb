@@ -245,15 +245,15 @@ ActiveRecord::Schema.define(:version => 20120304180015) do
   add_index "history", ["wfrevision"], :name => "index_history_on_wfrevision"
 
   create_table "links", :force => true do |t|
-    t.string   "father_plmtype"
-    t.string   "child_plmtype"
-    t.integer  "father_id"
-    t.integer  "child_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "father_type_id"
-    t.integer  "child_type_id"
-    t.integer  "relation_id"
+    t.string   "father_plmtype",      :null => false
+    t.string   "child_plmtype",      :null => false
+    t.integer  "father_id",      :null => false
+    t.integer  "child_id",      :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "father_type_id",      :null => false
+    t.integer  "child_type_id",      :null => false
+    t.integer  "relation_id",      :null => false
     t.string   "values"
     t.integer  "owner_id"
     t.integer  "group_id"
@@ -261,10 +261,10 @@ ActiveRecord::Schema.define(:version => 20120304180015) do
     t.boolean  "internal"
   end
 
-  add_index "links", ["child_plmtype", "child_id"], :name => "index_links_on_child_type_and_child_id"
-  add_index "links", ["child_type_id"], :name => "index_links_on_child_type_id"
-  add_index "links", ["father_plmtype", "father_id"], :name => "index_links_on_father_type_and_father_id"
+  add_index "links", ["father_plmtype"], :name => "index_links_on_father_plmtype"
   add_index "links", ["father_type_id"], :name => "index_links_on_father_type_id"
+  add_index "links", ["child_plmtype"], :name => "index_links_on_child_plmtype"
+  add_index "links", ["child_type_id"], :name => "index_links_on_child_type_id"
   add_index "links", ["group_id"], :name => "index_links_on_group_id"
   add_index "links", ["owner_id"], :name => "index_links_on_owner_id"
   add_index "links", ["projowner_id"], :name => "index_links_on_projowner_id"

@@ -28,8 +28,8 @@ class DocumentsController < ApplicationController
     #@projects  = @document.projects
     #@customers = @document.customers
     @checkout  = Check.get_checkout(@document)
-    @tree      = create_tree(@document)
-    @tree_up   = create_tree_up(@document)
+    @tree      = build_tree(@document)
+    @tree_up   = build_tree_up(@document)
     @relations = Relation.relations_for(@document)
     respond_to do |format|
       format.html # show.html.erb
@@ -285,7 +285,7 @@ class DocumentsController < ApplicationController
       flash[:notice] = ""
       if st!="ok"
         flash[:notice] += t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
-        puts "plm_object_controller.add_datafile:id=#{@object.id}"
+        puts "document_controller.add_datafile:id=#{@object.id}"
         @types = Typesobject.find_for("datafile")
         @datafile = Datafile.create_new(nil,@current_user)
         format.html { render  :action => :new_datafile, :id => @object.id   }
@@ -319,14 +319,14 @@ class DocumentsController < ApplicationController
   #    @favori.add(obj)
   #  end
   #
-  def create_tree(obj)
+  def create_tree_old(obj)
     tree = Tree.new({:js_name=>"tree_down", :label => t(:ctrl_object_explorer, :typeobj => t(:ctrl_document)), :open => true })
     session[:tree_document] = obj
     follow_tree_document(tree, obj)
     tree
   end
 
-  def create_tree_up(doc)
+  def create_tree_up_old(doc)
     tree = Tree.new({:js_name=>"tree_up", :label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_document)),:open => true})
     session[:tree_object]=doc
     follow_tree_up_document(tree, doc)

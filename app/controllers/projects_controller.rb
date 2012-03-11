@@ -28,11 +28,11 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @relations               = Relation.relations_for(@project)
-    @tree=create_tree(@project)
-    @tree_up=create_tree_up(@project)
+    @tree=build_tree(@project)
+    @tree_up=build_tree_up(@project)
     @documents=@project.documents
     @parts=@project.parts
-    @customers=@project.customers
+    @customers=@project.customers_up
     flash[:notice] = "" if flash[:notice].nil?
     if @favori.get('document').count>0 && @relations["document"].count==0
       flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_document))
@@ -194,7 +194,7 @@ class ProjectsController < ApplicationController
   end
 
   #methode: creation de 'arbre du projet
-  def create_tree(obj)
+  def create_tree_old(obj)
     tree = Tree.new({:js_name=>"tree_down", :label=>t(:ctrl_object_explorer,:typeobj =>t(:ctrl_project)),:open => true})
     #cnode=tree_project(obj)
     #tree << cnode
@@ -203,7 +203,7 @@ class ProjectsController < ApplicationController
     tree
   end
 
-  def create_tree_up(obj)
+  def create_tree_up_old(obj)
     tree = Tree.new({:js_name=>"tree_up", :label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_project)),:open => true})
     #cnode=tree_project(obj)
     #tree << cnode

@@ -15,10 +15,22 @@ class Customer < ActiveRecord::Base
   belongs_to :group
   belongs_to :projowner,
     :class_name => "Project"
-  has_many :links_documents,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
-  has_many :documents , :through => :links_documents, :source => :document
-  has_many :links_projects,:class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
-  has_many :projects , :through => :links_projects, :source => :project
+  
+  has_many :links_documents,
+    :class_name => "Link", 
+    :foreign_key => "father_id", 
+    :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
+  has_many :documents , 
+    :through => :links_documents, 
+    :source => :document
+  
+  has_many :links_projects,
+    :class_name => "Link", 
+    :foreign_key => "father_id", 
+    :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
+  has_many :projects , 
+    :through => :links_projects, 
+    :source => :project
   #
   def self.create_new(customer,user)
     if(customer!=nil)

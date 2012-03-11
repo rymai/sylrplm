@@ -28,6 +28,7 @@ class RelationsController < ApplicationController
     #puts __FILE__+"."+__method__.to_s+":"+params.inspect
     @relation = Relation.create_new(nil)
     @datas = @relation.datas
+    @views = View.all
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @relation }
@@ -39,6 +40,7 @@ class RelationsController < ApplicationController
     #puts __FILE__+"."+__method__.to_s+":"+params.inspect
     @relation = Relation.find(params[:id])
     @datas = @relation.datas
+    @views = View.all
   end
 
   # POST /relations
@@ -47,6 +49,7 @@ class RelationsController < ApplicationController
     #puts __FILE__+"."+__method__.to_s+":"+params.inspect
     @relation = Relation.create_new(params[:relation])
     @datas = @relation.datas
+    @views = View.all
     ###@types_all = Typesobject.get_all
     respond_to do |format|
       if @relation.save
@@ -64,6 +67,7 @@ class RelationsController < ApplicationController
   def update
     @relation = Relation.find(params[:id])
     @datas=@relation.datas
+    @views = View.all
     #@objectswithtype = Typesobject.get_objects_with_type
     #@types_all = Typesobject.get_all
     @relation.update_accessor(current_user)

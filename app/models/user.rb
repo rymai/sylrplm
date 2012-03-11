@@ -16,11 +16,6 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :projects
   
-  
-  ######has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='user'"]
-  #TODO ne renvoie rien => voir la fonction projects 
-  #has_many :projects, :through => :links_projects
-  
   validates_presence_of     :login, :typesobject
   validates_uniqueness_of   :login
   

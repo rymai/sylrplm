@@ -20,23 +20,54 @@ class Document < ActiveRecord::Base
   has_many :datafiles, :dependent => :destroy
   has_many :checks
 
-  has_many :links_documents, :class_name => "Link", :foreign_key => "father_id", :conditions => ["father_plmtype='document' and child_plmtype='document'"]
-  has_many :documents , :through => :links_documents , :source => :document
+  has_many :links_documents, 
+    :class_name => "Link", 
+    :foreign_key => "father_id", 
+    :conditions => ["father_plmtype='document' and child_plmtype='document'"]
+  has_many :documents , 
+    :through => :links_documents , 
+    :source => :document
   
-  has_many :links_documents_up, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='document' and child_plmtype='document'"]
-  has_many :documents_up , :through => :links_documents_up, :source => :document
+  has_many :links_documents_up, 
+    :class_name => "Link", 
+    :foreign_key => "child_id", 
+    :conditions => ["father_plmtype='document' and child_plmtype='document'"]
+  has_many :documents_up , 
+    :through => :links_documents_up, 
+    :source => :document_up
 
-  has_many :links_parts_up, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='part' and child_plmtype='document'"]
-  has_many :parts_up, :through => :links_parts_up, :source => :part
+  has_many :links_parts_up, 
+    :class_name => "Link", 
+    :foreign_key => "child_id", 
+    :conditions => ["father_plmtype='part' and child_plmtype='document'"]
+  has_many :parts_up, 
+    :through => :links_parts_up, 
+    :source => :part_up
 
-  has_many :links_projects_up, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='project' and child_plmtype='document'"]
-  has_many :projects_up, :through => :links_projects_up, :source => :project
+  has_many :links_projects_up, 
+    :class_name => "Link", 
+    :foreign_key => "child_id", 
+    :conditions => ["father_plmtype='project' and child_plmtype='document'"]
+  has_many :projects_up, 
+    :through => :links_projects_up, 
+    :source => :project_up
 
-  has_many :links_customers_up, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
-  has_many :customers_up, :through => :links_customers_up, :source => :customer
+  has_many :links_customers_up, 
+    :class_name => "Link", 
+    :foreign_key => "child_id", 
+    :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
+  has_many :customers_up, 
+    :through => :links_customers_up, 
+    :source => :customer_up
 
-  has_many :links_histories_up, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='document'"]
-  has_many :histories_up, :through => :links_histories_up, :source => :history_entry
+  has_many :links_histories_up, 
+    :class_name => "Link", 
+    :foreign_key => "child_id", 
+    :conditions => ["father_plmtype='history_entry' and child_plmtype='document'"]
+  has_many :histories_up, 
+    :through => :links_histories_up, 
+    :source => :history_up
+    
   #essai, appelle 10 fois par document !!!
   #def after_find
   #puts "Document:after_find: ident="+ident+" type="+model_name+"."+typesobject.name+" proj="+projowner.ident+" group="+group.name

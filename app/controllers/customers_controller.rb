@@ -19,7 +19,7 @@ class CustomersController < ApplicationController
   def show
     @customer                = Customer.find(params[:id])
     @relations               = Relation.relations_for(@customer)
-    @tree                    = create_tree(@customer)
+    @tree                    = build_tree(@customer)
     @documents               = @customer.documents
     @projects                = @customer.projects
     respond_to do |format|
@@ -152,7 +152,7 @@ class CustomersController < ApplicationController
     @customers = Customer.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
   end
   
-  def create_tree(obj)
+  def create_tree_old(obj)
     tree = Tree.new( { :js_name=>"tree_down", :label => t(:ctrl_object_explorer, :typeobj => t(:ctrl_customer)), :open => true })
     session[:tree_object] = obj
     follow_tree_customer(tree, obj)

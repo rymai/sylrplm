@@ -50,7 +50,7 @@ class LinksController < ApplicationController
     fname= "#{self.class.name}.#{__method__}"
     LOG.info (fname){"params=#{params.inspect}"}
     @link = Link.find(params[:id])
-    @object_in_explorer=PlmServices.get_object(params[:object_model], params[:object_id]) 
+    @object_in_explorer=PlmServices.get_object(params[:object_model], params[:object_id])
   end
 
   # POST /links
@@ -97,7 +97,12 @@ class LinksController < ApplicationController
     @link = Link.find(params[:id])
     @link.destroy
     respond_to do |format|
-      format.html { redirect_to(links_url) }
+      redir = unless session[:tree_object].nil?
+        session[:tree_object]
+      else
+        links_url
+      end
+      format.html { redirect_to(redir) }
       format.xml  { head :ok }
     end
   end

@@ -17,7 +17,7 @@ class Link < ActiveRecord::Base
   belongs_to :projowner,
     :class_name => "Project"
 
-  #objets pouvant etre fils:"document", "part", "project", "customer", "forum", "datafile", "user"
+  #objets pouvant etre fils:"document", "part", "project", "customer", "forum", "datafile"
   with_options :foreign_key => 'child_id' do |child|
     child.belongs_to :document , :conditions => ["child_plmtype='document'"], :class_name => "Document"
     child.belongs_to :part , :conditions => ["child_plmtype='part'"], :class_name => "Part"
@@ -25,21 +25,16 @@ class Link < ActiveRecord::Base
     child.belongs_to :customer , :conditions => ["child_plmtype='customer'"], :class_name => "Customer"
     child.belongs_to :forum , :conditions => ["child_plmtype='forum'"], :class_name => "Forum"
     child.belongs_to :datafile , :conditions => ["child_plmtype='datafile'"], :class_name => "Datafile"
-    #child.belongs_to :relation , :conditions => ["child_plmtype='relation'"], :class_name => "Relation"
-    #child.belongs_to :user , :conditions => ["child_plmtype='user'"], :class_name => "User"
-    child.belongs_to  :history , :conditions => ["child_plmtype='history_entry'"], :class_name => "Ruote::Sylrplm::HistoryEntry"
   end
 
-  #objets pouvant etre pere:"document", "part", "project", "customer", "forum", "definition", "user",  "history"
+  #objets pouvant etre pere:"document", "part", "project", "customer", "definition", "history"
   with_options :foreign_key => 'father_id' do |father|
-    father.belongs_to :document , :conditions => ["father_plmtype='document'"], :class_name => "Document"
-    father.belongs_to :part , :conditions => ["father_plmtype='part'"], :class_name => "Part"
-    father.belongs_to :project , :conditions => ["father_plmtype='project'"], :class_name => "Project"
-    father.belongs_to :customer , :conditions => ["father_plmtype='customer'"], :class_name => "Customer"
-    father.belongs_to :forum , :conditions => ["father_plmtype='forum'"], :class_name => "Forum"
-    father.belongs_to :definition , :conditions => ["father_plmtype='definition'"], :class_name => "Definition"
-    #father.belongs_to :user , :conditions => ["father_plmtype='user'"], :class_name => "User"
-    father.belongs_to :history_entry , :conditions => ["father_plmtype='history_entry'"], :class_name => "Ruote::Sylrplm::HistoryEntry"
+    father.belongs_to :document_up , :conditions => ["father_plmtype='document'"], :class_name => "Document"
+    father.belongs_to :part_up , :conditions => ["father_plmtype='part'"], :class_name => "Part"
+    father.belongs_to :project_up , :conditions => ["father_plmtype='project'"], :class_name => "Project"
+    father.belongs_to :customer_up , :conditions => ["father_plmtype='customer'"], :class_name => "Customer"
+    father.belongs_to :definition_up , :conditions => ["father_plmtype='definition'"], :class_name => "Definition"
+    father.belongs_to :history_up , :conditions => ["father_plmtype='history_entry'"], :class_name => "Ruote::Sylrplm::HistoryEntry"
   end
 
   def father
@@ -195,7 +190,7 @@ class Link < ActiveRecord::Base
     else
     ret=links
     end
-    #puts "Link.find_childs_with_father_plmtype"+father_type+":"+father.model_name+"."+father.id.to_s+"="+ret.inspect
+    #puts "Link.find_childs_with_father_plmtype:"+father.model_name+"."+father.id.to_s+"."+child_plmtype+":'"+cond+"'= "+ret.inspect
     ret
   end
 
@@ -263,12 +258,6 @@ class Link < ActiveRecord::Base
     links = find(:all, :include => :relation, :conditions => ["relations.child_plmtype = ? and relations.child_type_id = ?", relation.child_plmtype, relation.child_type_id])
     ret = links.count unless links.nil?
     ret
-  end
-
-  def self.remove(id)
-    link=self.find(id)
-    link.destroy
-    nil
   end
 
   def self.get_conditions(filter)

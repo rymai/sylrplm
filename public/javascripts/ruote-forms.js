@@ -23,7 +23,7 @@ var RuoteForms = function() {
 		'img_cut' : '/images/btn-cut.gif',
 		'img_change' : '/images/btn-change.gif',
 		'img_add' : '/images/btn-add.gif',
-		'with_buttons' : 'all' // 'position','none'
+		'with_buttons' : 'all' // ou 'position' ou 'none'
 	}
 
 	//
@@ -273,6 +273,7 @@ var RuoteForms = function() {
 	}
 
 	function addItemButtons(elt) {
+		//alert ('addItemButtons:'+elt);
 		var e = create(elt, 'div', {
 			'class' : 'rform_buttons',
 		});
@@ -313,6 +314,7 @@ var RuoteForms = function() {
 
 	function addArrayButtons(elt) {
 
+		//alert ('addArrayButtons:'+elt);
 		var e = create(elt, 'div', {
 			'class' : 'rform_buttons',
 		});
@@ -328,6 +330,7 @@ var RuoteForms = function() {
 	}
 
 	function addEntryButtons(elt) {
+		//alert ('addEntryButtons:'+elt);
 		var e = create(elt, 'div', {
 			'class' : 'rform_buttons',
 		});
@@ -350,6 +353,7 @@ var RuoteForms = function() {
 	}
 
 	function addHashButtons(elt) {
+		//alert ('addHashButtons:'+elt)
 		var e = create(elt, 'div', {
 			'class' : 'rform_buttons',
 		});
@@ -367,6 +371,7 @@ var RuoteForms = function() {
 	}
 
 	function render_item(elt, data, options) {
+		//alert ('render_item:'+elt+":"+data);
 		var ei = rcreate(elt, 'div', {
 			'class' : 'rform_item'
 		});
@@ -376,6 +381,7 @@ var RuoteForms = function() {
 	}
 
 	function render_array(elt, data, options) {
+		//alert ('render_array:'+elt+":"+data);
 		var e = rcreate(elt, 'div', {
 			'class' : 'rform_array'
 		});
@@ -387,7 +393,7 @@ var RuoteForms = function() {
 	}
 
 	function render_entry(elt, data, options) {
-		//alert ('render_entry:'+elt+":"+data)
+		//alert ('render_entry:'+elt+":"+data);
 		var e = rcreate(elt, 'div', {
 			'class' : 'rform_entry'
 		});
@@ -527,6 +533,7 @@ var RuoteForms = function() {
 	}
 
 	function render(elt, data, options) {
+		//alert('render:data='+data+':'+data.length+",opt="+options)
 		if(data == EmptyItem || data == null)
 			return render_new(elt, options);
 		var t = data['__class'] || ( typeof data);
@@ -536,7 +543,7 @@ var RuoteForms = function() {
 				t = 'array';
 		}
 		var f = eval('render_' + t);
-
+		//alert('render:f='+f+' t='+t);
 		return f.call(null, elt, data, options);
 	}
 

@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 
-  skip_before_filter :authorize, :object_exists, :check_user
+  skip_before_filter :authorize,  :check_user
   def new
     #puts "sessions_controller.new"+params.inspect
   end

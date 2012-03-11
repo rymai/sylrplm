@@ -23,7 +23,7 @@ module Models::PlmObject
     self.date=DateTime::now()
   end
 
-  def is_freeze
+  def is_freeze_old
     if(self.statusobject!=nil && ::Statusobject.get_last(self.class.name)!=nil)
       if(self.statusobject.rank == ::Statusobject.get_last(self.class.name).rank)
         true
@@ -45,11 +45,6 @@ module Models::PlmObject
       #reserve
       true
     end
-  end
-  
-  def frozen?
-    !(self.statusobject.nil? || ::Statusobject.get_last(self.class.name).nil?) &&
-    self.statusobject.rank == ::Statusobject.get_last(self.class.name).rank
   end
 
   def last_revision
@@ -85,7 +80,7 @@ module Models::PlmObject
   end
   
   def revise
-    if(self.is_freeze)
+    if(self.frozen?)
       # recherche si c'est la derniere revision
       rev_cur=self.revision
       last_rev=last_revision

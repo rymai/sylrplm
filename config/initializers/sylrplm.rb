@@ -71,22 +71,10 @@ module SYLRPLM
   when "windows"
     "C:\\sylrplm_data"
   end
+  # ordre des constituants de l'arbre
+  TREE_ORDER                = ["forum", "document", "part", "project", "customer" ]
+  TREE_UP_ORDER             = ["document", "part", "project", "customer" ]
+  # regroupement des composants d'un objet 
+  TREE_GROUP                = true
 end
 
-#
-# fichier de log specifique
-#
-logfile       = File.join(Rails.root, 'log', 'sylrplm.log')
-LOG           = Logger.new(logfile, 'daily')
-LOG.level     = Logger::DEBUG #DEBUG INFO WARN ERROR FATAL
-LOG.formatter = Classes::AppClasses::LogFormatter.new  # Install custom formatter!
-#@logger.datetime_format = "%Y-%m-%d %H:%M:%S"
-LOG.info("sylrplm"){"Lancement SYLRPLM"}
-LOG.info("sylrplm"){"logs dans: #{logfile}"}
-LOG.progname="constantes"
-LOG.info {"Constantes du module SYLRPLM:"}
-SYLRPLM.constants.sort.each do |c|
-  v = SYLRPLM.const_get(c)
-  LOG.debug("sylrplm"){"#{c}\t\t= #{v}"}
-end
-LOG.info ("sylrplm"){"--------------------------------------------"}

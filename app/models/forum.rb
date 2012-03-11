@@ -13,6 +13,10 @@ class Forum < ActiveRecord::Base
 
   has_many :forum_item,
   :conditions => ["parent_id is null"]
+  def designation
+    self.subject
+  end
+  
   def self.create_new(forum, user)
     if forum.nil?
       obj = Forum.new
@@ -35,11 +39,6 @@ class Forum < ActiveRecord::Base
     ForumItem.find(:all, :order=>"updated_at DESC",
     :conditions => ["forum_id = '#{self.id}' and parent_id is null"]
     )
-  end
-
-  def frozen?
-    !(self.statusobject.nil? || Statusobject.get_last("forum").nil?) &&
-    self.statusobject.rank == Statusobject.get_last("forum").rank
   end
 
   def self.get_conditions(filter)

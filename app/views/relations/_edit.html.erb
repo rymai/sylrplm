@@ -4,13 +4,13 @@
 	<legend>
 		<%= t(:legend_relation) %>
 	</legend>
-	<%= f.label :name %>
+	<%= f.label t(:label_name) %>
 	<%= f.select( :name, Relation.names, {}, {:onkeypress=>"edit(event);", :onblur=>"this.editing=false;"}) %>
 	<br/>
-	<%= f.label :type %>
+	<%= f.label t(:label_type) %>
 	<%= f.collection_select(:type_id, @datas[:types], :id, :name) %>
 	<br/>
-	<%= f.label :father_plmtype %>
+	<%= f.label t(:label_father_plmtype) %>
 	<%= f.select(
     :father_plmtype, @datas[:types_plm], {},
     {
@@ -20,7 +20,7 @@
 	<br/>
 	<%= render(:partial => "relations/father_types") %>
 
-	<%= f.label :child_plmtype %>
+	<%= f.label t(:label_child_plmtype) %>
 	<%= f.select(
     :child_plmtype, @datas[:types_plm], {},
     {
@@ -30,16 +30,19 @@
 	<br/>
 	<%= render(:partial => "relations/child_types") %>
 
-	<%= f.label :cardin_occur_min %>
+	<%= f.label t(:label_cardin_occur_min) %>
 	<%= f.text_field :cardin_occur_min %>
 	<br/>
-	<%= f.label :cardin_occur_max %>
+	<%= f.label t(:label_cardin_occur_max) %>
 	<%= f.text_field :cardin_occur_max %>
 	<br/>
-	<%= f.label :cardin_use_min %>
+	<%= f.label t(:label_cardin_use_min) %>
 	<%= f.text_field :cardin_use_min %>
 	<br/>
-	<%= f.label :cardin_use_max %>
+	<%= f.label t(:label_cardin_use_max) %>
 	<%= f.text_field :cardin_use_max %>
+	<br/>
+	<%= f.label t(:label_views) %>
+	<%= select_inout(f, @relation, @views, :name) %>
 	<br/>
 </fieldset>

@@ -24,8 +24,8 @@ class PartsController < ApplicationController
     :per_page => cfg_items_per_page)
     @first_status = Statusobject.get_first("part")
 
-    @tree         = create_tree(@part)
-    @tree_up      = create_tree_up(@part)
+    @tree         = build_tree(@part)
+    @tree_up      = build_tree_up(@part)
 
     @documents = @part.documents
     @parts     = @part.parts
@@ -182,14 +182,14 @@ class PartsController < ApplicationController
   #  The update attribute points to the div of the view to be updated when the node is clicked in the tree.
   #  The base attribute is very important since that reference is used internally in the railstree plugin to
   #  callback so it better be not null.
-  def create_tree(part)
+  def create_tree_old(part)
     tree = Tree.new({:js_name=>"tree_down", :label=>t(:ctrl_object_explorer,:typeobj =>t(:ctrl_part)),:open => true})
     session[:tree_object]=part
     follow_tree_part(tree, part)
     tree
   end
 
-  def create_tree_up(part)
+  def create_tree_up_old(part)
     tree = Tree.new({:js_name=>"tree_up", :label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_part)),:open => true})
     session[:tree_object]=part
     follow_tree_up_part(tree, part)

@@ -324,6 +324,28 @@ en:
   revise: "Revise"
   promote: "Promote"
   demote: Demote
+  # tree (dans views show)
+  label_document_document: Documents  
+  label_part_document: Documents  
+  label_project_document: Documents  
+  label_customer_document: Documents  
+  label_document_part: Parts  
+  label_part_part: Parts  
+  label_project_part: Parts  
+  label_customer_part: Parts 
+  label_document_project: Projects  
+  label_part_project: Projects  
+  label_project_project: Projects  
+  label_customer_project: Projects  
+  label_document_user:  Users
+  label_part_user: Users 
+  label_project_user: Users
+  label_customer_user: Users 
+  label_document_forum: Forums  
+  label_part_forum: Forums  
+  label_project_forum: Forums  
+  label_customer_forum: Forums      
+  # fin general
   # access
   legend_access: Enter access details
   label_controller: Controler
@@ -455,12 +477,18 @@ en:
   help_close_window: Close the help window
   # info
   # links
-  link_edit: Edition du lien
-  link_edit_in_tree: Edition du lien de l'instance
+  link_edit: Link editing
+  link_list: Links list
+  link_show: Link detail
+  link_new: New link
+  link_reset: Links Reset !!! 
+  link_edit_in_tree: Edit instance link
   legend_link: Relation
   legend_link_values: Attributs 
   legend_link_father: Father
   legend_link_child: Child
+  label_father: Father
+  label_child: Child
   # main
   legend_desktop: My desktop
   label_domain: Domain
@@ -571,6 +599,17 @@ en:
   label_responder: Responder
   # relation
   legend_relation: Relation
+  label_father_plmtype: Father PLMType 
+  label_father_type: Father type 
+  label_child_plmtype: Child PLMType
+  label_child_type: Child type
+  label_cardin_occur_min: Minimal occurence 
+  label_cardin_occur_max: Maximal occurence 
+  label_cardin_use_min: Minimal usage  
+  label_cardin_use_max: Maximal usage 
+  label_views: Views 
+  label_relation_view_ids_in: Attached views 
+  label_relation_view_ids_out: Others
   # roles
   legend_role: Enter role details
   role_list: Listing of roles
@@ -675,6 +714,9 @@ en:
   views_new: New view
   views_show: View detail
   views_edit:  View editing
+  label_relations: Relations
+  label_view_relation_ids_in: Managed
+  label_view_relation_ids_out: Others 
   # volumes
   legend_volume: Enter volume details
   volume_list: Listing of volumes
