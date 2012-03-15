@@ -1,14 +1,14 @@
 project_admin:
-    id: 1
-    ident: <%= ::SYLRPLM::USER_PROJECT_IDENT %><%= ::SYLRPLM::USER_ADMIN %>
-    designation: "Projet par defaut pour l'administrateur"
-    owner_id: 1
-    typesobject_id: 2
-    typeaccess_id: 7
-    statusobject_id: 10
-    group_id: 1
-    date: <%= DateTime.now %>
-    internal: true
+  id: 1
+  ident: <%= ::SYLRPLM::USER_PROJECT_IDENT %><%= ::SYLRPLM::USER_ADMIN %>
+  designation: "Projet par defaut pour l'administrateur"
+  owner_id: 1
+  typesobject: type_proj_account
+  typeaccess_id: 7
+  statusobject_id: 10
+  group_id: 1
+  date: <%= DateTime.now %>
+  internal: true
     
     
       

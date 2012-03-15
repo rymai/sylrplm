@@ -1,0 +1,131 @@
+type_user_new: 
+  id: 1
+  object: user
+  name: "<%= ::SYLRPLM::TYPE_USER_NEW_ACCOUNT %>"
+  description: "Type donné au compte à sa création, en attendant sa validation."
+  internal: true
+    
+type_proj_account: 
+  id: 2
+  object: project
+  name: "<%= ::SYLRPLM::TYPE_PROJ_ACCOUNT %>" 
+  description: "Type de projet affecté automatiquement à la création du compte."
+  internal: true
+    
+type_user_person: 
+  id: 3
+  object: user
+  name: "<%= ::SYLRPLM::TYPE_USER_PERSON %>"
+  description: "Personne physique."
+  internal: true 
+    
+type_user_virtual:
+  id: 4
+  object: user
+  name: "<%= ::SYLRPLM::TYPE_USER_VIRTUAL %>"
+  description: "Utilisateur virtuel, pour les batchs ..."
+  internal: true
+    
+type_generic_generic:
+  object: "<%= ::SYLRPLM::PLMTYPE_GENERIC %>"
+  name: "<%= ::SYLRPLM::TYPE_GENERIC %>"
+  description: Type générique
+  internal: true
+    
+type_project_typeaccess_public:
+  object: project_typeaccess
+  name: "<%= ::SYLRPLM::TYPEACCESS_PUBLIC %>"
+  description: Projet public
+  internal: true 
+
+type_project_typeaccess_confidential:
+  object: project_typeaccess
+  name: "<%= ::SYLRPLM::TYPEACCESS_CONFIDENTIAL %>"
+  description: Projet confidentiel
+  internal: true
+
+type_project_typeaccess_secret:
+  object: project_typeaccess
+  name: "<%= ::SYLRPLM::TYPEACCESS_SECRET %>"
+  description: Projet secret
+  internal: true 
+  
+type_ar_workitem:
+  object: ar_workitem
+  name: ar_workitem
+  description: Tache de processus
+  internal: true 
+    
+type_history_entry:
+  object: history_entry
+  name: history_entry
+  description: Historique de processus
+  internal: true
+    
+type_relation_generic:
+  object: relation
+  name: "<%= ::SYLRPLM::TYPE_RELATION_GENERIC %>"
+  description: Relation générique 
+  
+type_relation_document_document:
+  object: relation
+  name: document_document
+  internal: true
+type_relation_document_forum:
+  object: relation
+  name: document_forum
+  internal: true
+
+type_relation_part_document:
+  object: relation
+  name: part_document
+  internal: true
+type_relation_part_part:
+  object: relation
+  name: part_part
+  internal: true
+type_relation_part_forum:
+  object: relation
+  name: part_forum
+  internal: true
+
+type_relation_project_document:
+  object: relation
+  name: project_document
+  internal: true
+type_relation_project_part:
+  object: relation
+  name: project_part
+  internal: true
+type_relation_project_forum:
+  object: relation
+  name: project_forum
+  internal: true
+  
+type_relation_customer_document:
+  object: relation
+  name: customer_document
+  internal: true
+type_relation_customer_project:
+  object: relation
+  name: customer_project
+  internal: true
+type_relation_customer_customer:
+  object: relation
+  name: customer_customer
+  internal: true
+type_relation_customer_forum:
+  object: relation
+  name: customer_forum
+  internal: true
+   
+type_relation_history_entry:
+  object: relation
+  name: history_entry
+  internal: true
+  
+    
+
+    
+      
+  

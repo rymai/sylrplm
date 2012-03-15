@@ -6,15 +6,15 @@ admins__untracked:
   group_id: 1
   definition_id: 2
 
-team_a__simple_sequence:
+team_a_simple_sequence:
   group_id: 2
   definition_id: 3
 
-team_a__leave_request:
+team_a_leave_request:
   group_id: 2
   definition_id: 4
 
-team_a__promotion:
+team_a_promotion:
   group_id: 2
   definition_id: 5
   

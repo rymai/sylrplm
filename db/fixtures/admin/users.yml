@@ -2,7 +2,7 @@ user_admin:
     id: 1
     login:  <%= ::SYLRPLM::USER_ADMIN %>
     salt: 1234
-    hashed_password: <%= User.encrypted_password('admin', '1234') %>
+    hashed_password: <%= User.encrypted_password(::SYLRPLM::USER_ADMIN, '1234') %>
     email: <%= ::SYLRPLM::MAIL_ADMIN %>
     theme: blackwhite
     volume_id: "1"
@@ -117,7 +117,7 @@ user_sylvia:
     notification: "1"
     show_mail: "1"
     time_zone: ""
-    typesobject_id: 3 
+    typesobject_id: 3
   
 user_peter: 
     id: 107
