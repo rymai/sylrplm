@@ -1,0 +1,4 @@
+<% require 'yaml' %>
+<%= ::YAML::include("db/fixtures/admin/groups.yml") %>
+<%= ::YAML::include("db/fixtures/admin/definitions.yml") %>
+<%= ::YAML::include("db/fixtures/admin/group_definitions.yml") %>

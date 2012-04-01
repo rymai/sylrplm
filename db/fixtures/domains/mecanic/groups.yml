@@ -1,0 +1,13 @@
+<% require 'yaml' %>
+<%= ::YAML::include("db/fixtures/admin/groups.yml") %>
+group_marketing: 
+    name: marketing
+    
+group_SICM: 
+    name: SICM
+  
+group_BE: 
+    name: BE
+  
+group_BM: 
+    name: BM

@@ -1,5 +1,9 @@
-project_admin_user_admin: 
-    project_id: 1
-    user_id: 1
+# on utilise les id car la tache rake sylrplm:load_domain["mecanic"] ne marche pas 
+# si on reference le nom des fixtures:
+#   project: project_admin
+#   user: user_admin
+p_admin_u_admin:
+  project_id: 1
+  user_id: 1
   
 
