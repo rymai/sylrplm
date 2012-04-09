@@ -21,6 +21,7 @@
 		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
 		<th <%= sort_td_class_helper "promote" %>> <%= sort_link_helper t(:label_promote), "promote" %> </th>
 		<th <%= sort_td_class_helper "demote" %>> <%= sort_link_helper t(:label_demote), "demote" %> </th><th></th><th></th><th></th>
+		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_demote), "domain" %> </th><th></th><th></th><th></th>
 	</tr>
 	<% @statusobjects[:recordset].each do |statusobject| %>
 	<tr>
@@ -31,6 +32,7 @@
 		<td> <%= h statusobject.description %> </td>
 		<td> <%= h statusobject.promote %> </td>
 		<td> <%= h statusobject.demote %> </td>
+		<td> <%= h statusobject.domain %> </td>
 		<td> <%= link_to h_img_show.to_s, statusobject %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_statusobject_path(statusobject) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, statusobject, :confirm => t(:msg_confirm), :method => :delete %> </td>

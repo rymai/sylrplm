@@ -20,3 +20,5 @@
 	<%= f.label t(:label_demote) %>
 	<%= select(:statusobject, :demote_id, Statusobject.demote_choice) %>
 	<br/>
+	<%= h_input_text(f ,:domain) %>
+	<br />

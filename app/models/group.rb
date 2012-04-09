@@ -3,7 +3,7 @@
 #
 class Group < ActiveRecord::Base
   include Models::SylrplmCommon
-  
+
   has_many :user_groups, :dependent => :delete_all
   has_many :users, :through => :user_groups
 
@@ -13,7 +13,6 @@ class Group < ActiveRecord::Base
   has_many :groups, :class_name => "Group", :foreign_key => "father_id"
 
   belongs_to :father, :class_name => "Group"
-  
   #
   # User and Group share this method, which returns login and name respectively
   #

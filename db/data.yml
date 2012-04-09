@@ -1,1291 +1,5 @@
 
 --- 
-accesses: 
-  columns: 
-  - id
-  - roles
-  - controller
-  - action
-  - created_at
-  - updated_at
-  - internal
-  records: 
-  - - "1"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ForumItemsController
-    - create
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "2"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ForumItemsController
-    - destroy
-    - 2012-03-13 18:46:01
-    - 2012-03-13 18:46:01
-    - false
-  - - "3"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ForumItemsController
-    - edit
-    - 2012-03-13 18:46:01
-    - 2012-03-13 18:46:01
-    - false
-  - - "4"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ForumItemsController
-    - new
-    - 2012-03-13 18:46:01
-    - 2012-03-13 18:46:01
-    - false
-  - - "5"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ForumItemsController
-    - update
-    - 2012-03-13 18:46:01
-    - 2012-03-13 18:46:01
-    - false
-  - - "6"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DatafilesController
-    - create
-    - 2012-03-13 18:46:01
-    - 2012-03-13 18:46:01
-    - false
-  - - "7"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DatafilesController
-    - destroy
-    - 2012-03-13 18:46:01
-    - 2012-03-13 18:46:01
-    - false
-  - - "8"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DatafilesController
-    - download_file
-    - 2012-03-13 18:46:01
-    - 2012-03-13 18:46:01
-    - false
-  - - "9"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DatafilesController
-    - edit
-    - 2012-03-13 18:46:01
-    - 2012-03-13 18:46:01
-    - false
-  - - "10"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DatafilesController
-    - new
-    - 2012-03-13 18:46:01
-    - 2012-03-13 18:46:01
-    - false
-  - - "11"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DatafilesController
-    - show_file
-    - 2012-03-13 18:46:01
-    - 2012-03-13 18:46:01
-    - false
-  - - "12"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DatafilesController
-    - update
-    - 2012-03-13 18:46:02
-    - 2012-03-13 18:46:02
-    - false
-  - - "13"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - RolesUsersController
-    - create
-    - 2012-03-13 18:46:02
-    - 2012-03-13 18:46:02
-    - false
-  - - "14"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - RolesUsersController
-    - destroy
-    - 2012-03-13 18:46:02
-    - 2012-03-13 18:46:02
-    - false
-  - - "15"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - RolesUsersController
-    - edit
-    - 2012-03-13 18:46:02
-    - 2012-03-13 18:46:02
-    - false
-  - - "16"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - RolesUsersController
-    - new
-    - 2012-03-13 18:46:02
-    - 2012-03-13 18:46:02
-    - false
-  - - "17"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - RolesUsersController
-    - show
-    - 2012-03-13 18:46:02
-    - 2012-03-13 18:46:02
-    - false
-  - - "18"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - RolesUsersController
-    - update
-    - 2012-03-13 18:46:02
-    - 2012-03-13 18:46:02
-    - false
-  - - "19"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - SequencesController
-    - create
-    - 2012-03-13 18:46:02
-    - 2012-03-13 18:46:02
-    - false
-  - - "20"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - SequencesController
-    - destroy
-    - 2012-03-13 18:46:03
-    - 2012-03-13 18:46:03
-    - false
-  - - "21"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - SequencesController
-    - edit
-    - 2012-03-13 18:46:03
-    - 2012-03-13 18:46:03
-    - false
-  - - "22"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - SequencesController
-    - new
-    - 2012-03-13 18:46:03
-    - 2012-03-13 18:46:03
-    - false
-  - - "23"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - SequencesController
-    - show
-    - 2012-03-13 18:46:03
-    - 2012-03-13 18:46:03
-    - false
-  - - "24"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - SequencesController
-    - update
-    - 2012-03-13 18:46:03
-    - 2012-03-13 18:46:03
-    - false
-  - - "25"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProjectsController
-    - add_docs
-    - 2012-03-13 18:46:03
-    - 2012-03-13 18:46:03
-    - false
-  - - "26"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProjectsController
-    - add_forum
-    - 2012-03-13 18:46:03
-    - 2012-03-13 18:46:03
-    - false
-  - - "27"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProjectsController
-    - add_parts
-    - 2012-03-13 18:46:03
-    - 2012-03-13 18:46:03
-    - false
-  - - "28"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProjectsController
-    - add_users
-    - 2012-03-13 18:46:03
-    - 2012-03-13 18:46:03
-    - false
-  - - "29"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProjectsController
-    - create
-    - 2012-03-13 18:46:03
-    - 2012-03-13 18:46:03
-    - false
-  - - "30"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProjectsController
-    - demote
-    - 2012-03-13 18:46:03
-    - 2012-03-13 18:46:03
-    - false
-  - - "31"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProjectsController
-    - destroy
-    - 2012-03-13 18:46:03
-    - 2012-03-13 18:46:03
-    - false
-  - - "32"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProjectsController
-    - edit
-    - 2012-03-13 18:46:03
-    - 2012-03-13 18:46:03
-    - false
-  - - "33"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProjectsController
-    - new
-    - 2012-03-13 18:46:04
-    - 2012-03-13 18:46:04
-    - false
-  - - "34"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProjectsController
-    - new_forum
-    - 2012-03-13 18:46:04
-    - 2012-03-13 18:46:04
-    - false
-  - - "35"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProjectsController
-    - promote
-    - 2012-03-13 18:46:04
-    - 2012-03-13 18:46:04
-    - false
-  - - "36"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProjectsController
-    - update
-    - 2012-03-13 18:46:04
-    - 2012-03-13 18:46:04
-    - false
-  - - "37"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ExpressionsController
-    - destroy
-    - 2012-03-13 18:46:04
-    - 2012-03-13 18:46:04
-    - false
-  - - "38"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ExpressionsController
-    - show_tree
-    - 2012-03-13 18:46:04
-    - 2012-03-13 18:46:04
-    - false
-  - - "39"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ExpressionsController
-    - update
-    - 2012-03-13 18:46:04
-    - 2012-03-13 18:46:04
-    - false
-  - - "40"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ExpressionsController
-    - update_tree
-    - 2012-03-13 18:46:04
-    - 2012-03-13 18:46:04
-    - false
-  - - "41"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DefinitionsController
-    - create
-    - 2012-03-13 18:46:04
-    - 2012-03-13 18:46:04
-    - false
-  - - "42"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DefinitionsController
-    - destroy
-    - 2012-03-13 18:46:04
-    - 2012-03-13 18:46:04
-    - false
-  - - "43"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DefinitionsController
-    - edit
-    - 2012-03-13 18:46:04
-    - 2012-03-13 18:46:04
-    - false
-  - - "44"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DefinitionsController
-    - new
-    - 2012-03-13 18:46:04
-    - 2012-03-13 18:46:04
-    - false
-  - - "45"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DefinitionsController
-    - new_process
-    - 2012-03-13 18:46:04
-    - 2012-03-13 18:46:04
-    - false
-  - - "46"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DefinitionsController
-    - tree
-    - 2012-03-13 18:46:05
-    - 2012-03-13 18:46:05
-    - false
-  - - "47"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DefinitionsController
-    - update
-    - 2012-03-13 18:46:05
-    - 2012-03-13 18:46:05
-    - false
-  - - "48"
-    - admin | creator | analyst | designer | valider | project_manager | consultant
-    - SessionsController
-    - activate
-    - 2012-03-13 18:46:05
-    - 2012-03-13 18:46:05
-    - false
-  - - "49"
-    - admin | creator | analyst | designer | valider | project_manager | consultant
-    - SessionsController
-    - create
-    - 2012-03-13 18:46:05
-    - 2012-03-13 18:46:05
-    - false
-  - - "50"
-    - admin | creator | analyst | designer | valider | project_manager | consultant
-    - SessionsController
-    - create_new_account
-    - 2012-03-13 18:46:05
-    - 2012-03-13 18:46:05
-    - false
-  - - "51"
-    - admin | creator | analyst | designer | valider | project_manager | consultant
-    - SessionsController
-    - destroy
-    - 2012-03-13 18:46:05
-    - 2012-03-13 18:46:05
-    - false
-  - - "52"
-    - admin | creator | analyst | designer | valider | project_manager | consultant
-    - SessionsController
-    - edit
-    - 2012-03-13 18:46:05
-    - 2012-03-13 18:46:05
-    - false
-  - - "53"
-    - admin | creator | analyst | designer | valider | project_manager | consultant
-    - SessionsController
-    - login
-    - 2012-03-13 18:46:05
-    - 2012-03-13 18:46:05
-    - false
-  - - "54"
-    - admin | creator | analyst | designer | valider | project_manager | consultant
-    - SessionsController
-    - new
-    - 2012-03-13 18:46:05
-    - 2012-03-13 18:46:05
-    - false
-  - - "55"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ChecksController
-    - create
-    - 2012-03-13 18:46:05
-    - 2012-03-13 18:46:05
-    - false
-  - - "56"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ChecksController
-    - destroy
-    - 2012-03-13 18:46:05
-    - 2012-03-13 18:46:05
-    - false
-  - - "57"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ChecksController
-    - edit
-    - 2012-03-13 18:46:06
-    - 2012-03-13 18:46:06
-    - false
-  - - "58"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ChecksController
-    - new
-    - 2012-03-13 18:46:06
-    - 2012-03-13 18:46:06
-    - false
-  - - "59"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ChecksController
-    - update
-    - 2012-03-13 18:46:06
-    - 2012-03-13 18:46:06
-    - false
-  - - "60"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ViewsController
-    - create
-    - 2012-03-13 18:46:06
-    - 2012-03-13 18:46:06
-    - false
-  - - "61"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ViewsController
-    - destroy
-    - 2012-03-13 18:46:06
-    - 2012-03-13 18:46:06
-    - false
-  - - "62"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ViewsController
-    - edit
-    - 2012-03-13 18:46:07
-    - 2012-03-13 18:46:07
-    - false
-  - - "63"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ViewsController
-    - new
-    - 2012-03-13 18:46:07
-    - 2012-03-13 18:46:07
-    - false
-  - - "64"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ViewsController
-    - update
-    - 2012-03-13 18:46:07
-    - 2012-03-13 18:46:07
-    - false
-  - - "65"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - QuestionsController
-    - edit
-    - 2012-03-13 18:46:07
-    - 2012-03-13 18:46:07
-    - false
-  - - "66"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - RolesController
-    - create
-    - 2012-03-13 18:46:07
-    - 2012-03-13 18:46:07
-    - false
-  - - "67"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - RolesController
-    - destroy
-    - 2012-03-13 18:46:07
-    - 2012-03-13 18:46:07
-    - false
-  - - "68"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - RolesController
-    - edit
-    - 2012-03-13 18:46:08
-    - 2012-03-13 18:46:08
-    - false
-  - - "69"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - RolesController
-    - new
-    - 2012-03-13 18:46:08
-    - 2012-03-13 18:46:08
-    - false
-  - - "70"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - RolesController
-    - show
-    - 2012-03-13 18:46:08
-    - 2012-03-13 18:46:08
-    - false
-  - - "71"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - RolesController
-    - update
-    - 2012-03-13 18:46:08
-    - 2012-03-13 18:46:08
-    - false
-  - - "72"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - WorkitemsController
-    - destroy
-    - 2012-03-13 18:46:08
-    - 2012-03-13 18:46:08
-    - false
-  - - "73"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - WorkitemsController
-    - edit
-    - 2012-03-13 18:46:08
-    - 2012-03-13 18:46:08
-    - false
-  - - "74"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - WorkitemsController
-    - show
-    - 2012-03-13 18:46:08
-    - 2012-03-13 18:46:08
-    - false
-  - - "75"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - WorkitemsController
-    - update
-    - 2012-03-13 18:46:08
-    - 2012-03-13 18:46:08
-    - false
-  - - "76"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - UsersController
-    - create
-    - 2012-03-13 18:46:08
-    - 2012-03-13 18:46:08
-    - false
-  - - "77"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - UsersController
-    - destroy
-    - 2012-03-13 18:46:08
-    - 2012-03-13 18:46:08
-    - false
-  - - "78"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - UsersController
-    - edit
-    - 2012-03-13 18:46:08
-    - 2012-03-13 18:46:08
-    - false
-  - - "79"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - UsersController
-    - edit_password
-    - 2012-03-13 18:46:08
-    - 2012-03-13 18:46:08
-    - false
-  - - "80"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - UsersController
-    - new
-    - 2012-03-13 18:46:08
-    - 2012-03-13 18:46:08
-    - false
-  - - "81"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - UsersController
-    - update
-    - 2012-03-13 18:46:09
-    - 2012-03-13 18:46:09
-    - false
-  - - "82"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - UsersController
-    - update_password
-    - 2012-03-13 18:46:09
-    - 2012-03-13 18:46:09
-    - false
-  - - "83"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - NotificationsController
-    - create
-    - 2012-03-13 18:46:09
-    - 2012-03-13 18:46:09
-    - false
-  - - "84"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - NotificationsController
-    - destroy
-    - 2012-03-13 18:46:09
-    - 2012-03-13 18:46:09
-    - false
-  - - "85"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - NotificationsController
-    - edit
-    - 2012-03-13 18:46:09
-    - 2012-03-13 18:46:09
-    - false
-  - - "86"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - NotificationsController
-    - new
-    - 2012-03-13 18:46:09
-    - 2012-03-13 18:46:09
-    - false
-  - - "87"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - NotificationsController
-    - notify
-    - 2012-03-13 18:46:09
-    - 2012-03-13 18:46:09
-    - false
-  - - "88"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - NotificationsController
-    - update
-    - 2012-03-13 18:46:09
-    - 2012-03-13 18:46:09
-    - false
-  - - "89"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ForumsController
-    - create
-    - 2012-03-13 18:46:09
-    - 2012-03-13 18:46:09
-    - false
-  - - "90"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ForumsController
-    - destroy
-    - 2012-03-13 18:46:09
-    - 2012-03-13 18:46:09
-    - false
-  - - "91"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ForumsController
-    - edit
-    - 2012-03-13 18:46:09
-    - 2012-03-13 18:46:09
-    - false
-  - - "92"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ForumsController
-    - new
-    - 2012-03-13 18:46:10
-    - 2012-03-13 18:46:10
-    - false
-  - - "93"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ForumsController
-    - update
-    - 2012-03-13 18:46:10
-    - 2012-03-13 18:46:10
-    - false
-  - - "94"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - RelationsController
-    - create
-    - 2012-03-13 18:46:10
-    - 2012-03-13 18:46:10
-    - false
-  - - "95"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - RelationsController
-    - destroy
-    - 2012-03-13 18:46:10
-    - 2012-03-13 18:46:10
-    - false
-  - - "96"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - RelationsController
-    - edit
-    - 2012-03-13 18:46:10
-    - 2012-03-13 18:46:10
-    - false
-  - - "97"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - RelationsController
-    - new
-    - 2012-03-13 18:46:10
-    - 2012-03-13 18:46:10
-    - false
-  - - "98"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - RelationsController
-    - update
-    - 2012-03-13 18:46:10
-    - 2012-03-13 18:46:10
-    - false
-  - - "99"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - RelationsController
-    - update_child
-    - 2012-03-13 18:46:10
-    - 2012-03-13 18:46:10
-    - false
-  - - "100"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - RelationsController
-    - update_father
-    - 2012-03-13 18:46:10
-    - 2012-03-13 18:46:10
-    - false
-  - - "101"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - GroupDefinitionsController
-    - create
-    - 2012-03-13 18:46:10
-    - 2012-03-13 18:46:10
-    - false
-  - - "102"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - GroupDefinitionsController
-    - destroy
-    - 2012-03-13 18:46:10
-    - 2012-03-13 18:46:10
-    - false
-  - - "103"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - TypesobjectsController
-    - create
-    - 2012-03-13 18:46:10
-    - 2012-03-13 18:46:10
-    - false
-  - - "104"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - TypesobjectsController
-    - destroy
-    - 2012-03-13 18:46:11
-    - 2012-03-13 18:46:11
-    - false
-  - - "105"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - TypesobjectsController
-    - edit
-    - 2012-03-13 18:46:11
-    - 2012-03-13 18:46:11
-    - false
-  - - "106"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - TypesobjectsController
-    - new
-    - 2012-03-13 18:46:11
-    - 2012-03-13 18:46:11
-    - false
-  - - "107"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - TypesobjectsController
-    - update
-    - 2012-03-13 18:46:11
-    - 2012-03-13 18:46:11
-    - false
-  - - "108"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - LinksController
-    - create
-    - 2012-03-13 18:46:11
-    - 2012-03-13 18:46:11
-    - false
-  - - "109"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - LinksController
-    - destroy
-    - 2012-03-13 18:46:11
-    - 2012-03-13 18:46:11
-    - false
-  - - "110"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - LinksController
-    - edit
-    - 2012-03-13 18:46:11
-    - 2012-03-13 18:46:11
-    - false
-  - - "111"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - LinksController
-    - edit_in_tree
-    - 2012-03-13 18:46:11
-    - 2012-03-13 18:46:11
-    - false
-  - - "112"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - LinksController
-    - new
-    - 2012-03-13 18:46:11
-    - 2012-03-13 18:46:11
-    - false
-  - - "113"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - LinksController
-    - remove_link
-    - 2012-03-13 18:46:11
-    - 2012-03-13 18:46:11
-    - false
-  - - "114"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - LinksController
-    - reset
-    - 2012-03-13 18:46:11
-    - 2012-03-13 18:46:11
-    - false
-  - - "115"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - LinksController
-    - update
-    - 2012-03-13 18:46:12
-    - 2012-03-13 18:46:12
-    - false
-  - - "116"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - StatusobjectsController
-    - create
-    - 2012-03-13 18:46:12
-    - 2012-03-13 18:46:12
-    - false
-  - - "117"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - StatusobjectsController
-    - destroy
-    - 2012-03-13 18:46:12
-    - 2012-03-13 18:46:12
-    - false
-  - - "118"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - StatusobjectsController
-    - edit
-    - 2012-03-13 18:46:12
-    - 2012-03-13 18:46:12
-    - false
-  - - "119"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - StatusobjectsController
-    - new
-    - 2012-03-13 18:46:12
-    - 2012-03-13 18:46:12
-    - false
-  - - "120"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - StatusobjectsController
-    - update
-    - 2012-03-13 18:46:12
-    - 2012-03-13 18:46:12
-    - false
-  - - "121"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - VolumesController
-    - create
-    - 2012-03-13 18:46:12
-    - 2012-03-13 18:46:12
-    - false
-  - - "122"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - VolumesController
-    - destroy
-    - 2012-03-13 18:46:12
-    - 2012-03-13 18:46:12
-    - false
-  - - "123"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - VolumesController
-    - edit
-    - 2012-03-13 18:46:12
-    - 2012-03-13 18:46:12
-    - false
-  - - "124"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - VolumesController
-    - new
-    - 2012-03-13 18:46:12
-    - 2012-03-13 18:46:12
-    - false
-  - - "125"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - VolumesController
-    - update
-    - 2012-03-13 18:46:13
-    - 2012-03-13 18:46:13
-    - false
-  - - "126"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - CustomersController
-    - add_docs
-    - 2012-03-13 18:46:13
-    - 2012-03-13 18:46:13
-    - false
-  - - "127"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - CustomersController
-    - add_forum
-    - 2012-03-13 18:46:13
-    - 2012-03-13 18:46:13
-    - false
-  - - "128"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - CustomersController
-    - add_projects
-    - 2012-03-13 18:46:13
-    - 2012-03-13 18:46:13
-    - false
-  - - "129"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - CustomersController
-    - create
-    - 2012-03-13 18:46:13
-    - 2012-03-13 18:46:13
-    - false
-  - - "130"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - CustomersController
-    - demote
-    - 2012-03-13 18:46:13
-    - 2012-03-13 18:46:13
-    - false
-  - - "131"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - CustomersController
-    - destroy
-    - 2012-03-13 18:46:13
-    - 2012-03-13 18:46:13
-    - false
-  - - "132"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - CustomersController
-    - edit
-    - 2012-03-13 18:46:13
-    - 2012-03-13 18:46:13
-    - false
-  - - "133"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - CustomersController
-    - new
-    - 2012-03-13 18:46:13
-    - 2012-03-13 18:46:13
-    - false
-  - - "134"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - CustomersController
-    - new_forum
-    - 2012-03-13 18:46:13
-    - 2012-03-13 18:46:13
-    - false
-  - - "135"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - CustomersController
-    - promote
-    - 2012-03-13 18:46:13
-    - 2012-03-13 18:46:13
-    - false
-  - - "136"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - CustomersController
-    - update
-    - 2012-03-13 18:46:13
-    - 2012-03-13 18:46:13
-    - false
-  - - "137"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ErrorsController
-    - destroy
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "138"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - UserGroupsController
-    - create
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "139"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - UserGroupsController
-    - destroy
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "140"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProcessesController
-    - create
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "141"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProcessesController
-    - destroy
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "142"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProcessesController
-    - new
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "143"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - ProcessesController
-    - tree
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "144"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - GroupsController
-    - create
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "145"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - GroupsController
-    - destroy
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "146"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - GroupsController
-    - edit
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "147"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - GroupsController
-    - new
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "148"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - GroupsController
-    - update
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "149"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - PartsController
-    - add_docs
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "150"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - PartsController
-    - add_forum
-    - 2012-03-13 18:46:14
-    - 2012-03-13 18:46:14
-    - false
-  - - "151"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - PartsController
-    - add_parts
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "152"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - PartsController
-    - create
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "153"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - PartsController
-    - demote
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "154"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - PartsController
-    - destroy
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "155"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - PartsController
-    - edit
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "156"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - PartsController
-    - new
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "157"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - PartsController
-    - new_forum
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "158"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - PartsController
-    - promote
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "159"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - PartsController
-    - revise
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "160"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - PartsController
-    - update
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "161"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - InfoController
-    - which_documents
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "162"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - add_datafile
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "163"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - add_docs
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "164"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - check_free
-    - 2012-03-13 18:46:15
-    - 2012-03-13 18:46:15
-    - false
-  - - "165"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - check_in
-    - 2012-03-13 18:46:16
-    - 2012-03-13 18:46:16
-    - false
-  - - "166"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - check_out
-    - 2012-03-13 18:46:16
-    - 2012-03-13 18:46:16
-    - false
-  - - "167"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - create
-    - 2012-03-13 18:46:16
-    - 2012-03-13 18:46:16
-    - false
-  - - "168"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - demote
-    - 2012-03-13 18:46:16
-    - 2012-03-13 18:46:16
-    - false
-  - - "169"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - destroy
-    - 2012-03-13 18:46:16
-    - 2012-03-13 18:46:16
-    - false
-  - - "170"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - edit
-    - 2012-03-13 18:46:16
-    - 2012-03-13 18:46:16
-    - false
-  - - "171"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - new
-    - 2012-03-13 18:46:16
-    - 2012-03-13 18:46:16
-    - false
-  - - "172"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - new_datafile
-    - 2012-03-13 18:46:16
-    - 2012-03-13 18:46:16
-    - false
-  - - "173"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - promote
-    - 2012-03-13 18:46:16
-    - 2012-03-13 18:46:16
-    - false
-  - - "174"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - revise
-    - 2012-03-13 18:46:16
-    - 2012-03-13 18:46:16
-    - false
-  - - "175"
-    - (admin | creator | analyst | designer | valider | project_manager) & (!consultant)
-    - DocumentsController
-    - update
-    - 2012-03-13 18:46:16
-    - 2012-03-13 18:46:16
-    - false
-  - - "176"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - AccessesController
-    - create
-    - 2012-03-13 18:46:16
-    - 2012-03-13 18:46:16
-    - false
-  - - "177"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - AccessesController
-    - destroy
-    - 2012-03-13 18:46:17
-    - 2012-03-13 18:46:17
-    - false
-  - - "178"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - AccessesController
-    - edit
-    - 2012-03-13 18:46:17
-    - 2012-03-13 18:46:17
-    - false
-  - - "179"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - AccessesController
-    - new
-    - 2012-03-13 18:46:17
-    - 2012-03-13 18:46:17
-    - false
-  - - "180"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - AccessesController
-    - reset
-    - 2012-03-13 18:46:17
-    - 2012-03-13 18:46:17
-    - false
-  - - "181"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - AccessesController
-    - show
-    - 2012-03-13 18:46:17
-    - 2012-03-13 18:46:17
-    - false
-  - - "182"
-    - admin& (!consultant!!creator | !analyst | !designer | !valider | !project_manager)
-    - AccessesController
-    - update
-    - 2012-03-13 18:46:18
-    - 2012-03-13 18:46:18
-    - false
-
---- 
 definitions: 
   columns: 
   - id
@@ -1295,105 +9,24 @@ definitions:
   - launch_fields
   - created_at
   - updated_at
-  - internal
+  - domain
   records: 
-  - - "1"
+  - - "257670514"
     - "*embedded*"
     - the right to start processes embedded in launch items
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
-  - - "2"
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
+  - - "993990783"
     - "*untracked*"
     - the right to launch processes from any URI
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
-  - - "3"
-    - simple sequence
-    - a simple sequence
-    - sequence1.rb
-    - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
-  - - "4"
-    - leave request
-    - may I leave the office ?
-    - leave_request1.rb
-    - "{\"employee\":\"\",\"from_date\":\"\",\"to_date\":\"\",\"reason\":\"\"}"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
-  - - "5"
-    - revision
-    - Revision d un objet PLM
-    - /definitions/revise.rb
-    - "{}"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
-  - - "6"
-    - promotion
-    - Promotion d un objet PLM
-    - /definitions/promote.rb
-    - "{}"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
-
---- 
-group_definitions: 
-  columns: 
-  - group_id
-  - definition_id
-  - created_at
-  - updated_at
-  records: 
-  - - "1"
-    - "1"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "1"
-    - "7"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "1"
-    - "4"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "1"
-    - "6"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "1"
-    - "3"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "1"
-    - "2"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "2"
-    - "5"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "2"
-    - "4"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "2"
-    - "3"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "2"
-    - "7"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
 
 --- 
 groups: 
@@ -1403,56 +36,32 @@ groups:
   - created_at
   - updated_at
   - father_id
-  - internal
+  - domain
   records: 
   - - "1"
     - admins
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
     - 
-    - true
+    - admin
   - - "2"
     - consultants
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
     - 
-    - true
+    - admin
   - - "3"
     - creators
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
     - 
-    - true
+    - admin
   - - "4"
     - validers
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
     - 
-    - true
-  - - "101"
-    - marketing
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - 
-    - false
-  - - "102"
-    - SICM
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - 
-    - false
-  - - "103"
-    - BE
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - 
-    - false
-  - - "104"
-    - BM
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - 
-    - false
+    - admin
 
 --- 
 projects: 
@@ -1469,34 +78,21 @@ projects:
   - updated_at
   - group_id
   - typeaccess_id
-  - internal
+  - domain
   records: 
   - - "1"
     - "1"
     - "997141214"
-    - "10"
+    - "852666442"
     - PROJECT-admin
-    - Projet par defaut pour l'administrateur
+    - Projet par defaut pour l administrateur
     - 
-    - "2012-03-13"
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
+    - "2012-04-07"
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
     - "1"
-    - "7"
-    - true
-
---- 
-projects_users: 
-  columns: 
-  - project_id
-  - user_id
-  - created_at
-  - updated_at
-  records: 
-  - - "1"
-    - "1"
-    - 
-    - 
+    - "678514879"
+    - admin
 
 --- 
 relations: 
@@ -1514,162 +110,162 @@ relations:
   - cardin_use_max
   - created_at
   - updated_at
-  - internal
+  - domain
   records: 
   - - "104805023"
     - describe_by
     - "749051069"
     - any_plmtype
     - document
-    - "5"
-    - "5"
+    - "473241593"
+    - "473241593"
     - "0"
     - "-1"
     - "0"
     - "-1"
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - admin
   - - "125139104"
     - any_relation
     - "413872662"
     - any_plmtype
     - any_plmtype
-    - "5"
-    - "5"
+    - "473241593"
+    - "473241593"
     - "0"
     - "-1"
     - "0"
     - "-1"
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - admin
   - - "330870412"
     - hierarchic_to
     - "905287875"
     - customer
     - customer
-    - "141"
-    - "141"
+    - "453460665"
+    - "453460665"
     - "0"
     - "-1"
     - "0"
     - "-1"
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - admin
   - - "447638310"
     - modify_by
     - "989626521"
     - any_plmtype
     - document
-    - "5"
-    - "5"
+    - "473241593"
+    - "473241593"
     - "0"
     - "-1"
     - "0"
     - "-1"
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - admin
   - - "453977618"
     - link_doc
     - "262221517"
     - document
     - document
-    - "5"
-    - "5"
+    - "473241593"
+    - "473241593"
     - "0"
     - "-1"
     - "0"
     - "-1"
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - admin
   - - "533675056"
     - contains
     - "913245371"
     - project
     - part
-    - "5"
-    - "5"
+    - "473241593"
+    - "473241593"
     - "0"
     - "-1"
     - "0"
     - "-1"
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - admin
   - - "644429538"
     - ask_for
     - "672869653"
     - customer
     - project
-    - "5"
-    - "5"
+    - "473241593"
+    - "473241593"
     - "0"
     - "1"
     - "0"
     - "2"
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - admin
   - - "747117003"
     - applicable
     - "382640329"
     - history_entry
     - any_plmtype
-    - "12"
-    - "5"
+    - "41165346"
+    - "473241593"
     - "0"
     - "-1"
     - "0"
     - "-1"
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - admin
   - - "986750168"
     - discuss_by
     - "841581186"
     - any_plmtype
     - forum
-    - "5"
-    - "5"
+    - "473241593"
+    - "473241593"
     - "0"
     - "-1"
     - "0"
     - "-1"
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - admin
   - - "1027996074"
     - bom_part
     - "291198241"
     - part
     - part
-    - "5"
-    - "5"
+    - "473241593"
+    - "473241593"
     - "0"
     - "-1"
     - "0"
     - "-1"
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - admin
   - - "1062605010"
     - reference
     - "382640329"
     - history_entry
     - any_plmtype
-    - "12"
-    - "5"
+    - "41165346"
+    - "473241593"
     - "0"
     - "-1"
     - "0"
     - "-1"
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - admin
 
 --- 
 roles: 
@@ -1680,276 +276,60 @@ roles:
   - created_at
   - updated_at
   - father_id
-  - internal
+  - domain
   records: 
   - - "1"
     - admin
     - Administrateur
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
     - 
-    - true
-  - - "2"
-    - consultant
-    - Peut voir les donnees sans pouvoir les modifier
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - 
-    - true
-  - - "3"
+    - admin
+  - - "13324184"
     - creator
     - Ecrit les specifications des produits
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
     - 
-    - true
-  - - "101"
+    - admin
+  - - "187099280"
+    - consultant
+    - Peut voir les donnees sans pouvoir les modifier
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - 
+    - admin
+  - - "426981484"
+    - designer
+    - Modelise les produits
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - 
+    - admin
+  - - "503483810"
+    - valider
+    - Valide les processus du cycle de vie des donnees
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - 
+    - admin
+  - - "593922426"
     - analyst
     - |
       "Effectue des etudes de marche et ecrit le cdc.
       Elabore l'expression de besoin."
 
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
     - 
-    - false
-  - - "102"
-    - designer
-    - Modelise les produits
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - 
-    - true
-  - - "103"
-    - valider
-    - Valide les processus du cycle de vie des donnees
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - 
-    - true
-  - - "104"
+    - admin
+  - - "602486136"
     - project_manager
     - Responsable du planning, des ressources
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
     - 
-    - true
-
---- 
-roles_users: 
-  columns: 
-  - role_id
-  - user_id
-  - created_at
-  - updated_at
-  records: 
-  - - "1"
-    - "1"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "2"
-    - "101"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "2"
-    - "102"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "2"
-    - "103"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "2"
-    - "104"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "2"
-    - "105"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "2"
-    - "106"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-  - - "2"
-    - "107"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-
---- 
-sequences: 
-  columns: 
-  - id
-  - value
-  - min
-  - max
-  - utility
-  - modify
-  - sequence
-  - created_at
-  - updated_at
-  - internal
-  records: 
-  - - "1"
-    - DOC000000
-    - 
-    - 
-    - Document.ident
-    - false
-    - true
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "2"
-    - PRT000000
-    - 
-    - 
-    - Part.ident
-    - false
-    - true
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "3"
-    - PROJET
-    - 
-    - 
-    - Project.ident
-    - true
-    - false
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "4"
-    - CUSTOMER
-    - 
-    - 
-    - Customer.ident
-    - true
-    - false
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "5"
-    - Designation document
-    - 
-    - 
-    - Document.designation
-    - true
-    - false
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "6"
-    - Designation article
-    - 
-    - 
-    - Part.designation
-    - true
-    - false
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "7"
-    - Designation projet
-    - 
-    - 
-    - Project.designation
-    - true
-    - false
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "8"
-    - Designation client
-    - 
-    - 
-    - Customer.designation
-    - true
-    - false
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "9"
-    - "0"
-    - 
-    - 
-    - Document.revision
-    - false
-    - false
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "10"
-    - AAA
-    - 
-    - 
-    - Part.revision
-    - false
-    - false
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "20"
-    - DF0000000000
-    - 
-    - 
-    - Datafile.ident
-    - false
-    - true
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "21"
-    - "0"
-    - 
-    - 
-    - Relation.cardin_occur_min
-    - false
-    - false
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "22"
-    - "-1"
-    - 
-    - 
-    - Relation.cardin_occur_max
-    - false
-    - false
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "23"
-    - "0"
-    - 
-    - 
-    - Relation.cardin_use_min
-    - false
-    - false
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "24"
-    - "-1"
-    - 
-    - 
-    - Relation.cardin_use_max
-    - false
-    - false
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
-  - - "31"
-    - local_vault
-    - 
-    - 
-    - Volume.protocol
-    - false
-    - false
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - false
+    - admin
 
 --- 
 sessions: 
@@ -1961,17 +341,16 @@ sessions:
   - updated_at
   records: 
   - - "1"
-    - f7f6a9f67a0a0549be04b884bf44f028
+    - 249602e26ce326a712c310473f0e796d
     - |
       BAh7CjoIbG5nOgdmcjoLZmF2b3JpbzoLRmF2b3JpBjoLQGl0ZW1zewA6EF9j
-      c3JmX3Rva2VuSSIxTHpTRVZzZkVhVHlBVi9XQVRsM2JWU2EvdC9hMXR1b294
-      V3IvWkNSaXBOUT0GOgZFRkkiCmZsYXNoBjsLRklDOidBY3Rpb25Db250cm9s
-      bGVyOjpGbGFzaDo6Rmxhc2hIYXNoewY6C25vdGljZUkiIlV0aWxpc2F0ZXVy
-      IGFkbWluIGNvbm5lY3TDqSAhBjsLVAY6CkB1c2VkewY7DVQ6DHVzZXJfaWRp
-      Bg==
+      c3JmX3Rva2VuSSIxd0RkMkxsNnpwaURBdERzYWFUZm5vSnIwckN0bktwUkIz
+      bmRid0xoMFlnWT0GOgZFRjoMdXNlcl9pZGkGSSIKZmxhc2gGOwtGSUM6J0Fj
+      dGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoLbm90aWNlSSIY
+      UmVuc2VpZ25lciBsZSByw7RsZQY7C1QGOgpAdXNlZHsGOw5G
 
-    - 2012-03-13 18:45:56
-    - 2012-03-13 18:46:37
+    - 2012-04-07 07:14:04
+    - 2012-04-07 07:14:27
 
 --- 
 statusobjects: 
@@ -1985,7 +364,7 @@ statusobjects:
   - demote_id
   - created_at
   - updated_at
-  - internal
+  - domain
   records: 
   - - "4"
     - document
@@ -1994,9 +373,9 @@ statusobjects:
     - "1"
     - "2"
     - "0"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
+    - 2012-04-07 07:13:55
+    - 2012-04-07 07:13:55
+    - admin
   - - "5"
     - document
     - ready
@@ -2004,9 +383,9 @@ statusobjects:
     - "2"
     - "3"
     - "1"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
+    - 2012-04-07 07:13:55
+    - 2012-04-07 07:13:55
+    - admin
   - - "6"
     - document
     - approved
@@ -2014,9 +393,9 @@ statusobjects:
     - "3"
     - "0"
     - "0"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
+    - 2012-04-07 07:13:55
+    - 2012-04-07 07:13:55
+    - admin
   - - "7"
     - part
     - inprogress
@@ -2024,9 +403,9 @@ statusobjects:
     - "1"
     - "2"
     - "0"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
+    - 2012-04-07 07:13:55
+    - 2012-04-07 07:13:55
+    - admin
   - - "8"
     - part
     - ready
@@ -2034,9 +413,9 @@ statusobjects:
     - "2"
     - "3"
     - "1"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
+    - 2012-04-07 07:13:55
+    - 2012-04-07 07:13:55
+    - admin
   - - "9"
     - part
     - validated
@@ -2044,19 +423,9 @@ statusobjects:
     - "3"
     - "0"
     - "0"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
-  - - "10"
-    - project
-    - started
-    - 
-    - "1"
-    - "1"
-    - "1"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
+    - 2012-04-07 07:13:55
+    - 2012-04-07 07:13:55
+    - admin
   - - "11"
     - project
     - finished
@@ -2064,9 +433,9 @@ statusobjects:
     - "2"
     - "1"
     - "1"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
+    - 2012-04-07 07:13:55
+    - 2012-04-07 07:13:55
+    - admin
   - - "12"
     - project
     - hasbeen
@@ -2074,19 +443,9 @@ statusobjects:
     - "3"
     - "1"
     - "1"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
-  - - "13"
-    - forum
-    - open
-    - 
-    - "1"
-    - "1"
-    - "1"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
+    - 2012-04-07 07:13:55
+    - 2012-04-07 07:13:55
+    - admin
   - - "14"
     - forum
     - close
@@ -2094,9 +453,9 @@ statusobjects:
     - "2"
     - "1"
     - "1"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
+    - 2012-04-07 07:13:55
+    - 2012-04-07 07:13:55
+    - admin
   - - "21"
     - customer
     - active
@@ -2104,9 +463,9 @@ statusobjects:
     - "1"
     - "1"
     - "1"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
+    - 2012-04-07 07:13:55
+    - 2012-04-07 07:13:55
+    - admin
   - - "22"
     - customer
     - inactive
@@ -2114,19 +473,19 @@ statusobjects:
     - "2"
     - "1"
     - "1"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
-  - - "23"
-    - customer
-    - hasbeen
+    - 2012-04-07 07:13:55
+    - 2012-04-07 07:13:55
+    - admin
+  - - "852666442"
+    - project
+    - started
     - 
-    - "3"
     - "1"
     - "1"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
+    - "1"
+    - 2012-04-07 07:13:55
+    - 2012-04-07 07:13:55
+    - admin
 
 --- 
 typesobjects: 
@@ -2138,241 +497,200 @@ typesobjects:
   - description
   - created_at
   - updated_at
-  - internal
+  - domain
   records: 
-  - - "1"
-    - user
-    - $NEW_ACCOUNT
-    - 
-    - "Type donn\xC3\xA9 au compte \xC3\xA0 sa cr\xC3\xA9ation, en attendant sa validation."
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
-  - - "2"
-    - project
-    - $PROJ_ACCOUNT
-    - 
-    - "Type de projet affect\xC3\xA9 automatiquement \xC3\xA0 la cr\xC3\xA9ation du compte."
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
-  - - "3"
-    - user
-    - person_
-    - 
-    - Personne physique.
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
-  - - "4"
-    - user
-    - virtual_
-    - 
-    - Utilisateur virtuel, pour les batchs ...
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
   - - "41165346"
     - history_entry
     - history_entry
     - 
     - Historique de processus
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "138668910"
     - project_typeaccess
     - confidential
     - 
     - Projet confidentiel
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
+  - - "218759731"
+    - user
+    - $NEW_ACCOUNT
+    - 
+    - Type donne au compte a sa creation, en attendant sa validation.
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "258446918"
     - project_typeaccess
     - secret
     - 
     - Projet secret
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "262221517"
     - relation
     - document_document
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "291198241"
     - relation
     - part_part
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "382640329"
     - relation
     - history_entry
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "413872662"
     - relation
     - any_relation_type
     - 
-    - "Relation g\xC3\xA9n\xC3\xA9rique"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - false
+    - Relation generique
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
+  - - "446111194"
+    - user
+    - person_
+    - 
+    - Personne physique.
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "473241593"
     - any_plmtype
     - any_type
     - 
-    - "Type g\xC3\xA9n\xC3\xA9rique"
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - Type PLM generique
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "502955464"
     - relation
     - document_forum
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "598687896"
     - ar_workitem
     - ar_workitem
     - 
     - Tache de processus
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "672869653"
     - relation
     - customer_project
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "678514879"
     - project_typeaccess
     - public
     - 
     - Projet public
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "728513243"
     - relation
     - part_document
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "749051069"
     - relation
     - customer_document
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
+  - - "804690363"
+    - user
+    - virtual_
+    - 
+    - Utilisateur virtuel, pour les batchs ...
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "841581186"
     - relation
     - project_forum
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "905287875"
     - relation
     - customer_customer
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "913245371"
     - relation
     - project_part
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "980319875"
     - relation
     - customer_forum
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "989626521"
     - relation
     - part_forum
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
+  - - "997141214"
+    - project
+    - $PROJ_ACCOUNT
+    - 
+    - Type de projet affecte automatiquement a la creation du compte.
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
   - - "1045584111"
     - relation
     - project_document
     - 
     - 
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - true
-
---- 
-user_groups: 
-  columns: 
-  - user_id
-  - group_id
-  records: 
-  - - "1"
-    - "1"
-  - - "1"
-    - "2"
-  - - "1"
-    - "3"
-  - - "1"
-    - "4"
-  - - "1"
-    - "101"
-  - - "1"
-    - "102"
-  - - "1"
-    - "103"
-  - - "1"
-    - "104"
-  - - "101"
-    - "2"
-  - - "101"
-    - "3"
-  - - "101"
-    - "4"
-  - - "102"
-    - "2"
-  - - "103"
-    - "2"
-  - - "104"
-    - "2"
-  - - "105"
-    - "2"
-  - - "106"
-    - "2"
-  - - "107"
-    - "2"
+    - 2012-04-07 07:13:54
+    - 2012-04-07 07:13:54
+    - admin
 
 --- 
 users: 
@@ -2397,176 +715,29 @@ users:
   - typesobject_id
   - group_id
   - project_id
-  - internal
+  - domain
   records: 
   - - "1"
     - sylvere.coutable@laposte.net
     - admin
-    - ""
-    - ""
+    - 
+    - 
     - fr
-    - ""
+    - 
     - blackwhite
     - a1730405a15d17e73c9e962f9f0bf1f456b973b8
     - "1234"
-    - "1"
-    - "1"
+    - 
+    - "60318548"
     - "200"
     - "0"
     - false
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:46:37
-    - "3"
-    - "1"
-    - "1"
-    - true
-  - - "101"
-    - sylvere.coutable@laposte.net
-    - syl
-    - ""
-    - ""
-    - fr
-    - ""
-    - blackwhite
-    - 98f7177b50203d053df24f153712229a23030f2e
-    - "1234"
-    - 
-    - "1"
-    - 
-    - "0"
-    - false
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - "3"
+    - 2012-04-07 07:13:55
+    - 2012-04-07 07:13:55
+    - "446111194"
     - 
     - 
-    - false
-  - - "102"
-    - alice@example.com
-    - alice
-    - ""
-    - ""
-    - fr
-    - ""
-    - blackwhite
-    - 8e75d5d0e60f6893ffda3a6fd03716f738c56748
-    - "1234"
-    - 
-    - "1"
-    - 
-    - "0"
-    - false
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - "3"
-    - 
-    - 
-    - false
-  - - "103"
-    - bob@example.com
-    - bob
-    - ""
-    - ""
-    - fr
-    - ""
-    - blackwhite
-    - 45baf464fcf9f445919555197cbbce1516146106
-    - "1234"
-    - 
-    - "1"
-    - "1000"
-    - "0"
-    - false
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - "3"
-    - 
-    - 
-    - false
-  - - "104"
-    - charly@example.com
-    - charly
-    - ""
-    - ""
-    - fr
-    - ""
-    - blackwhite
-    - ae41ca2ce64f955ae2000c50c0654a083a64f578
-    - "1234"
-    - 
-    - "1"
-    - 
-    - "0"
-    - false
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - "3"
-    - 
-    - 
-    - false
-  - - "105"
-    - robert@example.com
-    - robert
-    - Robert
-    - Maxwell
-    - fr
-    - Paris
-    - blackwhite
-    - acf828308f24af131e59c84d0cf2ee8b65111a73
-    - "1234"
-    - 
-    - "1"
-    - 
-    - "1"
-    - false
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - "3"
-    - 
-    - 
-    - false
-  - - "106"
-    - sylvia@example.com
-    - sylvia
-    - ""
-    - ""
-    - fr
-    - ""
-    - blackwhite
-    - 851099f53bb9ca407186cef1e665b2fd4c9da822
-    - "1234"
-    - 
-    - "1"
-    - 
-    - "1"
-    - true
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - "3"
-    - 
-    - 
-    - false
-  - - "107"
-    - peter@example.com
-    - peter
-    - ""
-    - ""
-    - fr
-    - ""
-    - blackwhite
-    - d53e167030805511f46ee272cdfbc9b76f379447
-    - "1234"
-    - 
-    - "1"
-    - 
-    - "1"
-    - false
-    - 2012-03-13 18:45:59
-    - 2012-03-13 18:45:59
-    - "3"
-    - 
-    - 
-    - false
+    - admin
 
 --- 
 volumes: 
@@ -2578,21 +749,21 @@ volumes:
   - description
   - created_at
   - updated_at
-  - internal
+  - domain
   records: 
-  - - "1"
+  - - "60318548"
     - vol_fog_01
     - 
     - fog
     - volume de depart sur fog
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - true
-  - - "2"
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - admin
+  - - "499013587"
     - vol_local_01
     - 
     - file_system
     - volume en local sur le serveur
-    - 2012-03-13 18:46:00
-    - 2012-03-13 18:46:00
-    - true
+    - 2012-04-07 07:13:56
+    - 2012-04-07 07:13:56
+    - admin

@@ -15,13 +15,9 @@ class Typesobject < ActiveRecord::Base
     super(params)
     fname="#{self.class.name}.#{__method__}"
     #LOG.info (fname){"params=#{params}:\n#{params.nil?}:#{self.inspect}"}
-    if params.nil?
-      # new
-      self.fields={:p1=>v1} 
-    end
-    LOG.info (fname){"#{self.inspect}"}
+    #LOG.info (fname){"#{self.inspect}"}
   end
-  
+
   def self.get_all
     order_default.find_all
   end

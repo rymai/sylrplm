@@ -5,136 +5,17 @@ user_admin:
     hashed_password: <%= User.encrypted_password(::SYLRPLM::USER_ADMIN, '1234') %>
     email: <%= ::SYLRPLM::MAIL_ADMIN %>
     theme: blackwhite
-    volume_id: "1"
-    nb_items: "200"
-    first_name: ""
-    last_name: ""
+    volume: vol_fog_01
+    nb_items: 200
+    first_name: 
+    last_name: 
     language: fr
-    notification: "0"
-    show_mail: "0"
-    time_zone: ""
-    typesobject_id: 3
-    internal: true
+    notification: 0
+    show_mail: false
+    typesobject: type_user_person
+    domain: admin
        
 
-user_syl: 
-    id: 101
-    login: syl
-    salt: 1234
-    hashed_password: <%= User.encrypted_password('syl', '1234') %>
-    email: sylvere.coutable@laposte.net
-    theme: blackwhite
-    volume_id: "1"
-    nb_items: 
-    first_name: ""
-    last_name: ""
-    language: fr
-    notification: "0"
-    show_mail: "0"
-    time_zone: ""
-    typesobject_id: 3
-  
-user_alice: 
-    id: 102
-    login: alice
-    salt: 1234
-    hashed_password: <%= User.encrypted_password('alice', '1234') %>
-    email: alice@example.com
-    theme: blackwhite
-    volume_id: "1"
-    nb_items: 
-    first_name: ""
-    last_name: ""
-    language: fr
-    notification: "0"
-    show_mail: "0"
-    time_zone: ""
-    typesobject_id: 3
-  
-user_bob: 
-    id: 103
-    login: bob
-    salt: 1234
-    hashed_password: <%= User.encrypted_password('bob', '1234') %>
-    email: bob@example.com
-    theme: blackwhite
-    volume_id: "1"
-    nb_items: "1000"
-    first_name: ""
-    last_name: ""
-    language: fr
-    notification: "0"
-    show_mail: "0"
-    time_zone: ""
-    typesobject_id: 3
-  
-user_charly: 
-    id: 104
-    login: charly
-    salt: 1234
-    hashed_password: <%= User.encrypted_password('charly', '1234') %>
-    email: charly@example.com
-    theme: blackwhite
-    volume_id: "1"
-    nb_items: 
-    first_name: ""
-    last_name: ""
-    language: fr
-    notification: "0"
-    show_mail: "0"
-    time_zone: ""
-    typesobject_id: 3
-  
-user_robert: 
-    id: 105
-    login: robert
-    salt: 1234
-    hashed_password: <%= User.encrypted_password('robert', '1234') %>
-    email: robert@example.com
-    theme: blackwhite
-    volume_id: "1"
-    nb_items: 
-    first_name: Robert
-    last_name: Maxwell
-    language: fr
-    notification: "1"
-    show_mail: "0"
-    time_zone: Paris
-    typesobject_id: 3
-  
-user_sylvia: 
-    id: 106
-    login: sylvia
-    salt: 1234
-    hashed_password: <%= User.encrypted_password('sylvia', '1234') %>
-    email: sylvia@example.com
-    theme: blackwhite
-    volume_id: "1"
-    nb_items: 
-    first_name: ""
-    last_name: ""
-    language: fr
-    notification: "1"
-    show_mail: "1"
-    time_zone: ""
-    typesobject_id: 3
-  
-user_peter: 
-    id: 107
-    login: peter
-    salt: 1234
-    hashed_password: <%= User.encrypted_password('peter', '1234') %>
-    email: peter@example.com
-    theme: blackwhite
-    volume_id: "1"
-    nb_items: 
-    first_name: ""
-    last_name: ""
-    language: fr
-    notification: "1"
-    show_mail: "0"
-    time_zone: ""
-    typesobject_id: 3
-    
+
 
   

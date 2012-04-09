@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :projects
+  #has_many :projects_users, :dependent => :delete_all
+  #has_many :projects, :through => :projects_users
   
   validates_presence_of     :login, :typesobject
   validates_uniqueness_of   :login

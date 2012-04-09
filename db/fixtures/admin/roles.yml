@@ -1,43 +1,38 @@
-admin: 
-    id: 1
+role_admin:
+    id: 1 
     title: <%= ::SYLRPLM::ROLE_ADMIN %>
     description: "Administrateur"
-    internal: true
+    domain: admin
 
-consultant: 
-    id: 2
+role_consultant: 
     title: "<%= ::SYLRPLM::ROLE_CONSULTANT %>"
     description: "Peut voir les donnees sans pouvoir les modifier"
-    internal: true
+    domain: admin
     
-creator: 
-    id: 3
+role_creator: 
     title: <%= ::SYLRPLM::ROLE_CREATOR %>
     description: "Ecrit les specifications des produits"
-    internal: true
+    domain: admin
 
-analyst: 
-    id: 101
+role_analyst: 
     title: <%= ::SYLRPLM::ROLE_ANALYST %>
     description: |
       "Effectue des etudes de marche et ecrit le cdc.
       Elabore l'expression de besoin."
+    domain: admin
       
-designer: 
-    id: 102
+role_designer: 
     title: <%= ::SYLRPLM::ROLE_DESIGNER %>
     description: "Modelise les produits"
-    internal: true
+    domain: admin
 
-valider: 
-    id: 103
+role_valider: 
     title: <%= ::SYLRPLM::ROLE_VALIDER %>
     description: "Valide les processus du cycle de vie des donnees"
-    internal: true
+    domain: admin
 
-project_manager: 
-    id: 104
+role_project_manager: 
     title: <%= ::SYLRPLM::ROLE_PROJECT_MANAGER %>
     description: "Responsable du planning, des ressources"
-    internal: true
+    domain: admin
 

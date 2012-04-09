@@ -17,11 +17,13 @@
 	:locals => {
 	:fields => @definition.launch_fields_hash,
 	:form_id => 'definition_form',
-	:textarea_name => 'definition[launch_fields]'
+	:textarea_name => 'definition[launch_fields]'}
 	) %>
 	<br/>
 	<%= f.label t("label_groups_may_launch") %>
 	<%= select_inout(f, @definition, Group.all, :name) %>
+	<%= h_input_text(f ,:domain) %>
+	<br />
 </fieldset>
 <table class='menu_bas'>
 	<tr>

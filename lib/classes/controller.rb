@@ -43,37 +43,37 @@ class Controller
     create_admin
     create_domain(params[:domain])
     update_admin(params[:directory])
-    st=Access.init
-  end
-
-  #appelle par main_controller.init_objects
-  def self.create_domain(domain)
-    #puts "Controller.create_domain:"+domain
-    dirname=SYLRPLM::DIR_DOMAINS+domain+'/*.yml'
-    puts "Controller.create_domain:"+dirname
-    Dir.glob(dirname).each do |file|
-      dirfile=SYLRPLM::DIR_DOMAINS+domain
-      puts "Controller.create_domain:dirfile="+dirfile+" file="+File.basename(file, '.*')
-      Fixtures.create_fixtures(dirfile, File.basename(file, '.*'))
-    end
+  ###st=Access.init
   end
 
   #appelle par main_controller.init_objects
   def self.create_admin
     puts "Controller.create_admin:"
-    dirname=SYLRPLM::DIR_ADMIN+'*.yml'
+    dirname="#{SYLRPLM::DIR_FIXTURES}/admin/*.yml"
     puts "Controller.create_admin:"+dirname
     Dir.glob(dirname).each do |file|
-      dirfile=SYLRPLM::DIR_ADMIN
+      dirfile="#{SYLRPLM::DIR_FIXTURES}/admin"
       puts "Controller.create_admin:dirfile="+dirfile+" file="+File.basename(file, '.*')
       Fixtures.create_fixtures(dirfile, File.basename(file, '.*'))
     end
   end
 
+  def self.create_domain(domain)
+    puts "Controller.create_domain:"+domain
+    dirname="#{SYLRPLM::DIR_FIXTURES}/domains/#{domain}/*.yml"
+    puts "Controller.create_domain:"+dirname
+    Dir.glob(dirname).each do |file|
+      dirfile = "#{SYLRPLM::DIR_FIXTURES}/domains/#{domain}"
+      puts "Controller.create_domain:dirfile="+dirfile+" file="+File.basename(file, '.*')
+      Fixtures.create_fixtures(dirfile, File.basename(file, '.*'))
+    end
+
+  end
+
   #renvoie la liste des domaines pour le chargement initial
   #appelle par main_controller.init_objects
   def self.get_domains
-    dirname=SYLRPLM::DIR_DOMAINS+'*'
+    dirname="#{SYLRPLM::DIR_FIXTURES}/domains/*"
     ret=""
     Dir.glob(dirname).each do |dir|
       ret<<"<option>"<<File.basename(dir, '.*')<<"</option>"
@@ -96,7 +96,7 @@ class Controller
         auser.volume=vol
         ##auser.password=auser.login
         auser.save
-        #puts "Controller.update_admin="+auser.inspect
+      #puts "Controller.update_admin="+auser.inspect
       end
     end
   end

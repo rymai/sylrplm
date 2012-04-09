@@ -38,7 +38,7 @@
 		<td><%= h forum.projowner.ident %></td>
 		<td> <%= link_to h_img_show.to_s, forum %> </td>
 		<% unless forum.frozen? %> <td> <%= link_to h_img_edit.to_s, edit_forum_path(forum) %> </td>
-		<td> <%= link_to h_img_destroy, forum, :confirm => 'Are you sure?', :method => :delete %> </td>
+		<td> <%= link_to h_img_destroy, forum, :confirm => t("msg_confirm"), :method => :delete %> </td>
 		<% end %>
 	</tr>
 	<% end %>

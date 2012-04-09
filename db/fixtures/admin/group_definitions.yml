@@ -1,39 +1,24 @@
-admins__embedded:
-  group_id: 1
-  definition_id: 1
+admins_embedded:
+  group: group_admins
+  definition: def_embedded
 
-admins__untracked:
-  group_id: 1
-  definition_id: 2
+admins_untracked:
+  group: group_admins
+  definition: def_untracked
 
-team_a_simple_sequence:
-  group_id: 2
-  definition_id: 3
+creators_simple_sequence:
+  group: group_creators
+  definition: def_simple
 
-team_a_leave_request:
-  group_id: 2
-  definition_id: 4
+creators_leave_request:
+  group: group_creators
+  definition: def_leave
 
-team_a_promotion:
-  group_id: 2
-  definition_id: 5
+creators_promotion:
+  group: group_creators
+  definition: def_revision
   
-1-3:
-  group_id: 1
-  definition_id: 3
-
-1-6:
-  group_id: 1
-  definition_id: 6
-
-1-4:
-  group_id: 1
-  definition_id: 4
-
-1-7:
-  group_id: 1
-  definition_id: 7
-
-2-7:
-  group_id: 2
-  definition_id: 7
+creators_promotion:
+  group: group_creators
+  definition: def_promotion
+ 

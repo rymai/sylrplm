@@ -32,7 +32,7 @@ class Forum < ActiveRecord::Base
   end
 
   def ident
-    self.model_name+"-"+self.subject
+    self.subject
   end
   
   def find_root_items

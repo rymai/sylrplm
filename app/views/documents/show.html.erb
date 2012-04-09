@@ -1,6 +1,7 @@
 <h1><%= t("document_show") %></h1>
 <% form_for(@document) do |f| %>
 <%= f.error_messages %>
+<%end %>
 <p>
 	<b><%= t("label_ident") %></b>
 	<%= h @document.ident %>
@@ -100,7 +101,7 @@ Histories Peres
 <table class='menu_bas'>
 	<tr>
 		<% unless @favori.get('document').count==0 %>
-		<% form_for(@document, :url => {:id => @document.id, :action => :add_docs }, :method => :get) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %></td>
+		<% form_for(@document, :url => {:id => @document.id, :action => :add_docs }) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
 		<% end %>
 		<%end%>
@@ -147,6 +148,7 @@ Histories Peres
 	<% end %>
 </table>
 <h1></h1>
+<% form_for(@document) do |f| %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("edit"), edit_document_path(@document) %></td>

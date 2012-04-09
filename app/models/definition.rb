@@ -28,6 +28,7 @@
 class Definition < ActiveRecord::Base
   include Models::SylrplmCommon
   include LinksMixin
+  #
   has_many :group_definitions, :dependent => :delete_all
   has_many :groups, :through => :group_definitions
   #

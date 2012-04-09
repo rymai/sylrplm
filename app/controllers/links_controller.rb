@@ -94,6 +94,21 @@ class LinksController < ApplicationController
   # DELETE /links/1
   # DELETE /links/1.xml
   def destroy
+    fname="#{self.class.name}.#{__method__}"
+    LOG.info(fname){"params=#{params}"}
+    @link = Link.find(params[:id])
+    @link.destroy
+    respond_to do |format|
+      format.html { redirect_to(links_url) }
+      format.xml  { head :ok }
+    end
+  end
+  
+   # DELETE /links/1
+  # DELETE /links/1.xml
+  def remove_link
+    fname="#{self.class.name}.#{__method__}"
+    LOG.info(fname){"params=#{params}"}
     @link = Link.find(params[:id])
     @link.destroy
     respond_to do |format|

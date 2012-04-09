@@ -5,9 +5,7 @@
 </p>
 <p>
 	<b><%= t("label_typesobject") %></b>
-	<% if(@datafile.typesobject != nil) %>
-	<%= h @datafile.typesobject.name %>
-	<% end %>
+	<%= h @datafile.typesobject.name unless @datafile.typesobject.nil? %>
 </p>
 <p>
 	<b><%= t("label_revision") %></b>
@@ -15,7 +13,7 @@
 </p>
 <p>
 	<b><%= t("label_volume") %></b>
-	<%= h @datafile.volume.name %>
+	<%= link_to @datafile.volume.name, volume_path(@datafile.volume) %>
 </p>
 <p>
 	<b><%= t("label_filename") %></b>

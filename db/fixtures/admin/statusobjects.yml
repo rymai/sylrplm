@@ -5,7 +5,8 @@
  name: inwork 
  rank: 1 
  promote_id: 2
- demote_id: 0 
+ demote_id: 0
+ domain: admin 
  	
 5:
  id: 5 
@@ -14,7 +15,8 @@
  rank: 2
  promote_id: 3
  demote_id: 1 
- description: Pret pour la validation	
+ description: "Pret pour la validation"
+ domain: admin
  
 6:
  id: 6
@@ -22,7 +24,8 @@
  name: approved 
  rank: 3 
  promote_id: 0 
- demote_id: 0 
+ demote_id: 0
+ domain: admin
  				
 7:
  id: 7 
@@ -30,7 +33,8 @@
  name: inprogress 
  rank: 1 	
  promote_id: 2 
- demote_id: 0 
+ demote_id: 0
+ domain: admin 
  	 			
 8:
  id: 8 
@@ -39,7 +43,8 @@
  rank: 2 	
  promote_id: 3 
  demote_id: 1 	 			
- description: Pret pour la validation	
+ description: "Pret pour la validation"
+ domain: admin
  
 9:
  id: 9 
@@ -48,14 +53,15 @@
  rank: 3 	
  promote_id: 0 
  demote_id: 0
+ domain: admin
  	 				
-10:
- id: 10 
+status_project_started:
  object: project 
  name: started 
  rank: 1 
  promote_id: 1 
- demote_id: 1 
+ demote_id: 1
+ domain: admin
  	
 11:
  id: 11	
@@ -63,7 +69,8 @@
  name: finished 
  rank: 2 	
  promote_id: 1 
- demote_id: 1 
+ demote_id: 1
+ domain: admin
  					
 12:
  id: 12 
@@ -71,7 +78,8 @@
  name: hasbeen 
  rank: 3 
  promote_id: 1 
- demote_id: 1 
+ demote_id: 1
+ domain: admin
  
 13:
  id: 13 
@@ -79,7 +87,8 @@
  name: open 
  rank: 1 	
  promote_id: 1 
- demote_id: 1 	
+ demote_id: 1
+ domain: admin
   				 	
 14:
  id: 14 
@@ -87,7 +96,8 @@
  name: close 
  rank: 2 	
  promote_id: 1 
- demote_id: 1 	
+ demote_id: 1
+ domain: admin
  
 21: 
  id: 21 
@@ -96,7 +106,8 @@
  rank: 1 
  description: 
  promote_id: 1 
- demote_id: 1 
+ demote_id: 1
+ domain: admin 
   
 22:
  id: 22
@@ -104,7 +115,8 @@
  name: inactive 
  rank: 2  
  promote_id: 1 
- demote_id: 1  
+ demote_id: 1
+ domain: admin 
        
 23:
  id: 23 
@@ -112,5 +124,6 @@
  name: hasbeen 
  rank: 3  
  promote_id: 1 
- demote_id: 1    
+ demote_id: 1
+ domain: admin  
   	

@@ -5,13 +5,12 @@
 	<%= form.label t(:label_name) %>
 	<%= form.text_field :name %>
 	<br />
-	
 	<%= form.label t(:label_description) %>
 	<%= form.text_area :description %>
 	<br />
-	
 	<%= form.label t(:label_relations) %>
 	<%= select_inout(form, @view, @relations, :ident) %>
-	<br/>
-	
+
+	<%= h_input_text(form ,:domain) %>
+	<br />
 </fieldset>

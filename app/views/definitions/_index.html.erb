@@ -10,7 +10,7 @@
 			<th> <%= t("label_description")%> </th>
 			<th> <%= t("label_uri")%> </th>
 			<th> <%= t("label_groups")%> </th>
-			<th> <%= t("label_internal")%> </th>
+			<th> <%= t("label_domain")%> </th>
 		</tr>
 	</thead>
 	<% for definition in @definitions %>
@@ -22,7 +22,7 @@
 		<td title="<%= h definition.description %>"> <%= h truncate(definition.description, :length => 40) %> </td>
 		<td> <%= link_to h(definition.uri), definition.full_uri %> </td>
 		<td> <%= comma_links(definition.groups,:name) %> </td>
-		<td> <%= definition.internal %> </td>
+		<td> <%= definition.domain %> </td>
 		<% if fonct != "new_process" %> 
 		<td> <%= link_to(h_img_show.to_s, definition) %></td>
 		<td><%= link_to(

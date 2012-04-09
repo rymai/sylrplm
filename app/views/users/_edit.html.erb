@@ -60,4 +60,6 @@
 	<label for="user_projects"> <%= t(:label_projects) %> </label>
 	<%= select_inout(form, @the_user, @projects, :ident) %>
 	<br/>
+	<%= h_input_text(form ,:domain) %>
+	<br />
 </fieldset>

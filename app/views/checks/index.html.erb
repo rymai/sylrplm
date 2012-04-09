@@ -5,7 +5,7 @@
 		<td> <%= link_to t("new_check"), new_check_path %> </td>
 		<td> <%= show_help("help_checks") %> </td>
 	</tr>
-</table> 
+</table>
 <%= will_paginate(@checks[:recordset]) %>
 <table>
 	<tr>
@@ -32,18 +32,15 @@
 		<td> <%= l check.out_date %> </td>
 		<td> <%= h check.out_user.login %> </td>
 		<td> <%= h check.out_group.name %> </td>
-		<%unless check.in_date.nil? %>
-		<td> <%= h check.in_reason %> </td>
+		<%unless check.in_date.nil? %> <td> <%= h check.in_reason %> </td>
 		<td> <%= l check.in_date %></td>
-		<td> <%= h check.in_user.login %> </td>
-		<td> <%= h check.in_group.name %> </td>
-		<%else%>
+		<td> <%= h check.in_user.login unless check.in_user.nil? %> </td>
+		<td> <%= h check.in_group.name unless check.in_group.nil? %> </td>
+		<%else%> <td></td>
 		<td></td>
 		<td></td>
 		<td></td>
-		<td></td>
-		<%end %>
-		<td> <%= h check.projowner.ident %> </td>
+		<%end %> <td> <%= h check.projowner.ident %> </td>
 		<td> <%= h check.local_dir %> </td>
 		<td> <%= link_to h_img_show.to_s, check %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_check_path(check) %> </td>
@@ -57,4 +54,4 @@
 		<td> <%= link_to t("new_check"), new_check_path %> </td>
 		<td> <%= show_help("help_checks") %> </td>
 	</tr>
-</table> 
+</table>

@@ -1,27 +1,36 @@
+<h1><%= t("link_show") %></h1>
+<% form_for(@link) do |f| %>
+<%= f.error_messages %>
 <p>
-	<b>Father plm type:</b>
+	<b><%= t(:label_father_plmtype) %></b>
 	<%= h @link.father_plmtype %>
 </p>
 <p>
-	<b>Child plm type:</b>
+	<b><%= t(:label_child_plmtype) %></b>
 	<%= h @link.child_plmtype %>
 </p>
 <p>
-	<b>Father:</b>
-	<%= h @link.father_id %>
+	<b><%= t(:label_father) %></b>
+	<%= h @link.father.ident %>
 </p>
 <p>
-	<b>Child:</b>
-	<%= h @link.child_id%>
+	<b><%= t(:label_child) %></b>
+	<%= h @link.child.ident %>
 </p>
 <p>
-	<b>Values:</b>
+	<b><%= t(:label_values) %></b>
 	<%= h @link.values%>
 </p>
 
 <p>
-	<b>Responsible:</b>
+	<b><%= t(:label_responsible) %></b>
 	<%= h @link.owner.login unless @link.owner.nil? %>
 </p>
-<%= link_to 'Edit', edit_link_path(@link) %> |
-<%= link_to 'Back', links_path %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t("edit"), edit_link_path(@link) %></td>
+		<td> <%= link_to t("link_new"), new_link_path %></td>
+		<td> <%= link_to t("list"), links_path %></td>
+	</tr>
+</table>
+<% end %>

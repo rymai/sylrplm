@@ -33,7 +33,8 @@
 	<%= text_field_tag :responsible, @document.owner.login, :disabled => true %>
 	<br/>
 	<%= f.label t("label_date") %>
-
 	<%= f.date_select :date %>
+	<br />
+	<%= h_input_text(f ,:domain) %>
 	<br/>
 </fieldset>

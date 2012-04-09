@@ -8,7 +8,7 @@
 	<%= f.select( :name, Relation.names, {}, {:onkeypress=>"edit(event);", :onblur=>"this.editing=false;"}) %>
 	<br/>
 	<%= f.label t(:label_type) %>
-	<%= f.collection_select(:type_id, @datas[:types], :id, :name) %>
+	<%= f.collection_select(:typesobject_id, @datas[:types], :id, :name, { :selected => @relation.typesobject.id }) %>
 	<br/>
 	<%= f.label t(:label_father_plmtype) %>
 	<%= f.select(
@@ -42,7 +42,10 @@
 	<%= f.label t(:label_cardin_use_max) %>
 	<%= f.text_field :cardin_use_max %>
 	<br/>
+	<%= h_input_text(f ,:domain) %>
+	<br />
 	<%= f.label t(:label_views) %>
 	<%= select_inout(f, @relation, @views, :name) %>
 	<br/>
+	
 </fieldset>

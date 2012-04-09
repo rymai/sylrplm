@@ -1,13 +1,11 @@
 vol_fog_01:
-  id: 1
   name: vol_fog_01
   description: volume de depart sur fog
   protocol: fog
-  internal: true
+  domain: admin
   
 vol_local_01:
-  id: 2
   name: vol_local_01
   description: volume en local sur le serveur 
   protocol: file_system
-  internal: true
+  domain: admin

@@ -66,8 +66,8 @@ en:
   ctrl_nothing_to_paste: "No %{typeobj} to paste"
   # ne pas mettre de guillemet ici car pb creation tree
   ctrl_subject_forum: "Forum on %{typeobj} %{ident}"
-  ctrl_object_explorer: "%{typeobj} Explorer"
-  ctrl_object_referencer: "%{typeobj} Referencer"
+  ctrl_object_explorer: "Explorer: %{typeobj}-%{ident}"
+  ctrl_object_referencer: "Referencer: %{typeobj}-%{ident}"
   ctrl_init_to_do: Initialization to do
   ctrl_init_done: Initialization done
   count_objects: " : %{number_begin}-%{number_end} / %{total}"
@@ -489,6 +489,7 @@ en:
   legend_link_child: Child
   label_father: Father
   label_child: Child
+  label_values: Values
   # main
   legend_desktop: My desktop
   label_domain: Domain

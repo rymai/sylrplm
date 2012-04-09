@@ -47,10 +47,10 @@ class Check < ActiveRecord::Base
   end
 
   def checkIn(params, user)
-    self.status=2
-    self.in_user=user
-    self.in_group=user.group
-    self.project=user.project
+    self.status = 2
+    self.in_user = user
+    self.in_group = user.group
+    self.projowner = user.project
     if(params)
       # commit genere par le view
       params.delete("commit")
@@ -58,7 +58,7 @@ class Check < ActiveRecord::Base
       params.delete("_method")
       params.delete("action")
       params.delete("controller")
-      self.in_reason=params[:reason]
+      self.in_reason = params[:in_reason]
     end
     self.in_date=DateTime.now
   end
@@ -73,7 +73,7 @@ class Check < ActiveRecord::Base
       params.delete("_method")
       params.delete("action")
       params.delete("controller")
-      self.in_reason=params[:reason]
+      self.in_reason = params[:in_reason]
     end
     self.in_date=DateTime.now
   end

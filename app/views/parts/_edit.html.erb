@@ -25,7 +25,7 @@
 	<% else %>
 	<%= f.label t("label_status") %>
 	<% unless @part.statusobject.nil? %>
-	<%= @part.statusobject.name %>
+	<%= text_field_tag :statusobject,  @part.statusobject.name, :disabled => true %>
 	<% end %>
 	<% end %>
 	<br/>
@@ -35,4 +35,6 @@
 	<%= f.label t(:label_date) %>
 	<%= f.date_select :date %>
 	<br/>
+	<%= h_input_text(f ,:domain) %>
+	<br />
 </fieldset>

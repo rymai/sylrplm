@@ -11,6 +11,8 @@
 	<%= form.label t(:label_father) %>
 	<%= text_field_tag :father, @link.father.ident, :readonly=>:true %>
 	<%= link_to @link.father.ident, object_path(@link.father) %>
+	<%= h_input_text(form ,:domain) %>
+	<br />
 </fieldset>
 <fieldset>
 	<legend>

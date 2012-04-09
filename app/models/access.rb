@@ -4,6 +4,9 @@ class Access < ActiveRecord::Base
 
   attr_accessor :controller_and_action
   attr_accessible :controller_and_action, :roles
+  # for task rake sylrplm:import_internal_data
+
+  attr_accessible :id, :controller, :action
 
   validates_presence_of :controller, :action, :roles
   validates_uniqueness_of :action, :scope => :controller
@@ -89,7 +92,7 @@ class Access < ActiveRecord::Base
     controller+"."+action
   end
 
-private
+  private
 
   #
   # liste des roles par categories utilisables par access
@@ -123,8 +126,8 @@ private
   def self.roles_prefixe(lst, yes_no)
     ret=""
     lst.each_with_index do |r, i|
-      ret += " | " unless i == 0
-      ret += yes_no+r
+      ret << " | " unless i == 0
+      ret << yes_no + r unless r.nil?
     end
     ret
   end

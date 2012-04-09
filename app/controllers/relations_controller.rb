@@ -50,7 +50,6 @@ class RelationsController < ApplicationController
     @relation = Relation.create_new(params[:relation])
     @datas = @relation.datas
     @views = View.all
-    ###@types_all = Typesobject.get_all
     respond_to do |format|
       if @relation.save
         format.html { redirect_to(@relation, :notice => 'Relation was successfully created.') }
@@ -68,8 +67,6 @@ class RelationsController < ApplicationController
     @relation = Relation.find(params[:id])
     @datas=@relation.datas
     @views = View.all
-    #@objectswithtype = Typesobject.get_objects_with_type
-    #@types_all = Typesobject.get_all
     @relation.update_accessor(current_user)
     respond_to do |format|
       if @relation.update_attributes(params[:relation])

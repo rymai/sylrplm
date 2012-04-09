@@ -26,11 +26,11 @@
 	<% @relations.each do |relation| %>
 	<tr>
 		<td><%= h relation.name %></td>
-		<td><%= h relation.type.name unless relation.type.nil? %></td>
+		<td><%= h relation.typesobject.name unless relation.typesobject.nil? %></td>
 		<td><%= h relation.father_plmtype %></td>
 		<td><%= h relation.child_plmtype  %></td>
-		<td><%= h relation.father_type.name unless relation.father_type.nil? %></td>
-		<td><%= h relation.child_type.name unless relation.child_type.nil? %></td>
+		<td><%= h relation.father_typesobject.name unless relation.father_typesobject.nil? %></td>
+		<td><%= h relation.child_typesobject.name unless relation.child_typesobject.nil? %></td>
 		<td><%= h relation.cardin_occur_min %></td>
 		<td><%= h relation.cardin_occur_max %></td>
 		<td><%= h relation.cardin_use_min %></td>

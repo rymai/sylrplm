@@ -7,7 +7,7 @@ class Volume < ActiveRecord::Base
   #
   validates_presence_of :name, :protocol
   validates_format_of :name, :with =>/^([a-z]|[A-Z]|[0-9]||[.-])+$/
-  validates_uniqueness_of :name, :directory
+  validates_uniqueness_of :name
   #
   has_many :users
   has_many :datafiles
@@ -20,7 +20,8 @@ class Volume < ActiveRecord::Base
   def initialize(params_volume=nil)
     super
     if params_volume.nil?
-    self.set_default_values(true)
+      self.set_default_values(true)
+      self.directory = SYLRPLM::VOLUME_DIRECTORY_DEFAULT
     end
     self
   end
@@ -144,7 +145,7 @@ class Volume < ActiveRecord::Base
     unless self_dir.nil?
       ret=File.join(self_dir, self.name)
     else
-      ret=self.name
+    ret=self.name
     end
     #puts "Volume.dir_name:"+ret
     ret
@@ -165,7 +166,7 @@ class Volume < ActiveRecord::Base
 
   def _list_files_
     if self.protocol == "fog"
-      ret="files stored in cloud by fog"
+      ret="files are stored in cloud by fog"
     else
       dir=File.join(self.directory,self.name)
       ret=""

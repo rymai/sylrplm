@@ -13,18 +13,15 @@
 	<br/>
 	<%= form.label t(:label_fields) %>
 	<br/>
-	:<%=@typesobject.fields%>:<%=@typesobject.fields == "\"\""%>
-	<% if @typesobject.fields.nil? || @typesobject.fields.empty? || @typesobject.fields=="\"\""  
-		fields = {:d1=>:v1}
-	else 
-		fields = @typesobject.fields
-	end %>
+	<!--:<%= @typesobject.fields%>:<%= @typesobject.fields == "\"\""%>-->
 	<%= render(
 	:partial => "shared/form_json",
 	:locals => {
-	:fields => fields ,
+	:fields => @typesobject.fields ,
 	:form_id => form_id,
 	:textarea_name => 'typesobject[fields]',
 	:options => {"buttons" => "all"} }
 	) %>
+	<%= h_input_text(form ,:domain) %>
+	<br />
 </fieldset>

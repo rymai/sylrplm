@@ -21,13 +21,10 @@
 #
 # Made in Japan.
 #++
-
-
 #
 # Between groups and definitions
 #
 class GroupDefinition < ActiveRecord::Base
-
   belongs_to :group
   belongs_to :definition
 end

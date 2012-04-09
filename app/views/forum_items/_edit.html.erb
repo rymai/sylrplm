@@ -3,15 +3,17 @@
 		<%= t(:legend_forum_item) %>
 	</legend>
 	<%= f.label t("label_message") %>
-<%= f.text_area :message %>
-<br/>
-<%= f.label t("label_id") %>
-<%= f.text_field :forum_id %>
-<br/>
-<%= f.label t("label_parent") %>
-<%= f.text_field :parent_id %>
-<br/>
-<%= f.label t("label_author") %>
-<%= f.text_field :owner_id %>
-<br/>
+	<%= f.text_area :message %>
+	<br/>
+	<%= f.label t("label_id") %>
+	<%= f.text_field :forum_id %>
+	<br/>
+	<%= f.label t("label_parent") %>
+	<%= f.text_field :parent_id %>
+	<br/>
+	<%= f.label t("label_author") %>
+	<%= f.text_field :owner_id %>
+	<br/>
+	<%= h_input_text(f ,:domain) %>
+	<br />
 </fieldset>

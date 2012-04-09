@@ -1,11 +1,10 @@
-
-
 def empty_favori_by_type(type=nil)
+  puts "===PlmObjectControllerModule.empty_favori_by_type"+type.to_s
   @favori.reset(type)
 end
 
 def empty_favori
-  #puts "===PlmObjectControllerModule.empty_favori"+params.inspect
+  puts "===PlmObjectControllerModule.empty_favori"+params.inspect
   empty_favori_by_type(get_model_type(params))
 end
 

@@ -28,8 +28,8 @@ class ProjectsController < ApplicationController
   def show
     @project = Project.find(params[:id])
     @relations               = Relation.relations_for(@project)
-    @tree=build_tree(@project)
-    @tree_up=build_tree_up(@project)
+    @tree=build_tree(@project,params)
+    @tree_up=build_tree_up(@project,params)
     @documents=@project.documents
     @parts=@project.parts
     @customers=@project.customers_up
@@ -186,29 +186,15 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
     ctrl_add_objects_from_favorites(@project, :user)
   end
-
+  def empty_favori
+    puts "#{self.class.name}.#{__method__}:#{params.inspect}"
+    empty_favori_by_type(get_model_type(params))
+  end
   private
 
   def index_
     @projects = Project.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
   end
 
-  #methode: creation de 'arbre du projet
-  def create_tree_old(obj)
-    tree = Tree.new({:js_name=>"tree_down", :label=>t(:ctrl_object_explorer,:typeobj =>t(:ctrl_project)),:open => true})
-    #cnode=tree_project(obj)
-    #tree << cnode
-    session[:tree_object]=obj
-    follow_tree_project(tree, obj)
-    tree
-  end
 
-  def create_tree_up_old(obj)
-    tree = Tree.new({:js_name=>"tree_up", :label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_project)),:open => true})
-    #cnode=tree_project(obj)
-    #tree << cnode
-    session[:tree_object]=obj
-    follow_tree_up_project(tree, obj)
-    tree
-  end
 end

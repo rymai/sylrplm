@@ -1,38 +1,22 @@
-admins: 
-    id: 1
+group_admins:
+    id: 1 
     name: <%= ::SYLRPLM::GROUP_ADMINS %>
-    internal: true
+    domain: admin
     
-consultants: 
-    id: 2
+group_consultants:
+    id: 2  
     name: <%= ::SYLRPLM::GROUP_CONSULTANTS %>
-    internal: true
+    domain: admin
   
-creators: 
-    id: 3
+group_creators: 
+    id: 3 
     name: <%= ::SYLRPLM::GROUP_CREATORS %>
-    internal: true     
+    domain: admin     
 
-validers: 
+group_validers: 
     id: 4
     name: <%= ::SYLRPLM::GROUP_VALIDERS %>
-    internal: true
-  
-marketing: 
-    id: 101
-    name: marketing
-    
-SICM: 
-    id: 102
-    name: SICM
-  
-BE: 
-    id: 103
-    name: BE
-  
-BM: 
-    id: 104
-    name: BM
+    domain: admin
   
 
   

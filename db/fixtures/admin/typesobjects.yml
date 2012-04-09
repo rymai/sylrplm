@@ -1,131 +1,122 @@
 type_user_new: 
-  id: 1
   object: user
-  name: "<%= ::SYLRPLM::TYPE_USER_NEW_ACCOUNT %>"
-  description: "Type donné au compte à sa création, en attendant sa validation."
-  internal: true
+  name: <%= ::SYLRPLM::TYPE_USER_NEW_ACCOUNT %>
+  description: "Type donne au compte a sa creation, en attendant sa validation."
+  domain: admin
     
 type_proj_account: 
-  id: 2
   object: project
-  name: "<%= ::SYLRPLM::TYPE_PROJ_ACCOUNT %>" 
-  description: "Type de projet affecté automatiquement à la création du compte."
-  internal: true
+  name: <%= ::SYLRPLM::TYPE_PROJ_ACCOUNT %> 
+  description: "Type de projet affecte automatiquement a la creation du compte."
+  domain: admin
     
 type_user_person: 
-  id: 3
   object: user
-  name: "<%= ::SYLRPLM::TYPE_USER_PERSON %>"
+  name: <%= ::SYLRPLM::TYPE_USER_PERSON %>
   description: "Personne physique."
-  internal: true 
+  domain: admin 
     
 type_user_virtual:
-  id: 4
   object: user
-  name: "<%= ::SYLRPLM::TYPE_USER_VIRTUAL %>"
+  name: <%= ::SYLRPLM::TYPE_USER_VIRTUAL %>
   description: "Utilisateur virtuel, pour les batchs ..."
-  internal: true
+  domain: admin
     
 type_generic_generic:
-  object: "<%= ::SYLRPLM::PLMTYPE_GENERIC %>"
-  name: "<%= ::SYLRPLM::TYPE_GENERIC %>"
-  description: Type générique
-  internal: true
+  object: <%= ::SYLRPLM::PLMTYPE_GENERIC %>
+  name: <%= ::SYLRPLM::TYPE_GENERIC %>
+  description: "Type PLM generique"
+  domain: admin
     
 type_project_typeaccess_public:
   object: project_typeaccess
-  name: "<%= ::SYLRPLM::TYPEACCESS_PUBLIC %>"
-  description: Projet public
-  internal: true 
+  name: <%= ::SYLRPLM::TYPEACCESS_PUBLIC %>
+  description: "Projet public"
+  domain: admin 
 
 type_project_typeaccess_confidential:
   object: project_typeaccess
-  name: "<%= ::SYLRPLM::TYPEACCESS_CONFIDENTIAL %>"
-  description: Projet confidentiel
-  internal: true
+  name: <%= ::SYLRPLM::TYPEACCESS_CONFIDENTIAL %>
+  description: "Projet confidentiel"
+  domain: admin
 
 type_project_typeaccess_secret:
   object: project_typeaccess
-  name: "<%= ::SYLRPLM::TYPEACCESS_SECRET %>"
-  description: Projet secret
-  internal: true 
+  name: <%= ::SYLRPLM::TYPEACCESS_SECRET %>
+  description: "Projet secret"
+  domain: admin 
   
 type_ar_workitem:
   object: ar_workitem
   name: ar_workitem
-  description: Tache de processus
-  internal: true 
+  description: "Tache de processus"
+  domain: admin 
     
 type_history_entry:
   object: history_entry
   name: history_entry
-  description: Historique de processus
-  internal: true
+  description: "Historique de processus"
+  domain: admin
     
 type_relation_generic:
   object: relation
-  name: "<%= ::SYLRPLM::TYPE_RELATION_GENERIC %>"
-  description: Relation générique 
+  name: <%= ::SYLRPLM::TYPE_RELATION_GENERIC %>
+  description: "Relation generique"  
+  domain: admin
   
 type_relation_document_document:
   object: relation
   name: document_document
-  internal: true
+  domain: admin
 type_relation_document_forum:
   object: relation
   name: document_forum
-  internal: true
+  domain: admin
 
 type_relation_part_document:
   object: relation
   name: part_document
-  internal: true
+  domain: admin
 type_relation_part_part:
   object: relation
   name: part_part
-  internal: true
+  domain: admin
 type_relation_part_forum:
   object: relation
   name: part_forum
-  internal: true
+  domain: admin
 
 type_relation_project_document:
   object: relation
   name: project_document
-  internal: true
+  domain: admin
 type_relation_project_part:
   object: relation
   name: project_part
-  internal: true
+  domain: admin
 type_relation_project_forum:
   object: relation
   name: project_forum
-  internal: true
+  domain: admin
   
 type_relation_customer_document:
   object: relation
   name: customer_document
-  internal: true
+  domain: admin
 type_relation_customer_project:
   object: relation
   name: customer_project
-  internal: true
+  domain: admin
 type_relation_customer_customer:
   object: relation
   name: customer_customer
-  internal: true
+  domain: admin
 type_relation_customer_forum:
   object: relation
   name: customer_forum
-  internal: true
+  domain: admin
    
 type_relation_history_entry:
   object: relation
   name: history_entry
-  internal: true
-  
-    
-
-    
-      
-  
+  domain: admin

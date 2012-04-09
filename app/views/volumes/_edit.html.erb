@@ -12,12 +12,13 @@
 	<%= f.label t(:label_protocol) %>
 	<% if fonct=="edit" && !admin_logged_in? %>
 	<%= f.text_field :protocol , :readonly=>(true) %>
-	<% else %> 
+	<% else %>
 	<%= f.select( :protocol, Volume.protocol_values) %>
 	<% end %>
 	<br/>
 	<%= f.label t(:label_description) %>
 	<%= f.text_area :description %>
 	<br/>
+	<%= h_input_text(f ,:domain) %>
+	<br />
 </fieldset>
-

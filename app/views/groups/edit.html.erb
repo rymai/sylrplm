@@ -13,6 +13,8 @@
 	<br/>
 	<%= f.label t("label_group_users") %>
 	<%= select_inout(f, @group, User.all, :login) %>
+	<%= h_input_text(f ,:domain) %>
+	<br />
 </fieldset>
 <table class='menu_bas'>
 	<tr>

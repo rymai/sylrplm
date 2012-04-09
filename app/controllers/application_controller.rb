@@ -1,3 +1,7 @@
+require 'controllers/plm_event'
+require 'controllers/plm_favorites'
+require 'controllers/plm_lifecycle'
+require 'controllers/plm_tree'
 require 'controllers/plm_object_controller_module'
 
 class ErrorReply < Exception
@@ -37,7 +41,7 @@ class ApplicationController < ActionController::Base
     params[mdl_name][:projowner_id]=current_user.project_id if obj.instance_variable_defined?(:@projowner_id)
     puts "update_accessor:"+params.inspect
   end
-
+	
   def check_user(redirect=true)
     flash[:notice] = nil
     if !current_user.may_access?
@@ -273,17 +277,23 @@ class ApplicationController < ActionController::Base
   end
   
   def icone(obj)
+  	fname="#{controller_class_name}.#{__method__}"
+  	
     unless obj.model_name.nil? || obj.typesobject.nil?
       ret = "/images/#{obj.model_name}_#{obj.typesobject.name}.png"
       unless File.exist?("#{RAILS_ROOT}/public#{ret}")
         ret = "/images/#{obj.model_name}.png"
         unless File.exist?("#{RAILS_ROOT}/public#{ret}")
-          ret = ""
-        end
+          ret = "/images/default_object.png"
+          unless File.exist?("#{RAILS_ROOT}/public#{ret}")
+        	  ret = ""
+        	end
+      	end
       end
     else
       ret = ""
     end
+    LOG.info  (fname){"#{obj.model_name}:#{obj.typesobject.name}:#{ret}"}
     ret
   end
   

@@ -1,6 +1,5 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  
   def h_value_or_default(value, default)
     ret=default
     unless value.nil?
@@ -106,7 +105,7 @@ module ApplicationHelper
     mdl_name=t("ctrl_#{type.downcase}")
     "<img class='icone' src='#{fic}' title='#{mdl_name}'></img>"
   end
- 
+
   def h_img(name)
     "<img class=\"icone\" src=\"/images/#{name}.png\" title='#{t(File.basename(name.to_s))}'></img>"
   end
@@ -224,30 +223,20 @@ module ApplicationHelper
       bloc << "<h1></h1>"
       bloc << "<div id='dtree'>"
       if (@tree && @tree.size>0)
-        #bloc << "<fieldset>"
-        #bloc << "<legend>"
-        #bloc << t(:legend_tree_down)
-        #bloc << "</legend>"
         bloc << "<table class='menu_bas' >"
         bloc << "<tr>"
         bloc<< "<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_down);'>"+t("h_open_close_all_tree")+"</a></td>"
         bloc << "</tr>"
         bloc << "</table>"
       bloc << @tree.to_s
-      #bloc << "</fieldset>"
       end
       if (@tree_up && @tree_up.size>0)
-        #bloc << "<fieldset>"
-        #bloc << "<legend>"
-        #bloc << t(:legend_tree_up)
-        #bloc << "</legend>"
         bloc << "<table class='menu_bas' >"
         bloc << "<tr>"
         bloc<< "<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_up);'>"+t("h_open_close_all_tree")+"</a></td>"
         bloc << "</tr>"
         bloc << "</table>"
       bloc << @tree_up.to_s
-      #bloc << "</fieldset>"
       end
       bloc << "</div>"
     end
@@ -280,6 +269,14 @@ module ApplicationHelper
 
   def object_path(obj)
     path = send "#{obj.class.to_s.downcase}_path", obj
+  end
+
+  def h_input_text(f ,field)
+    if admin_logged_in?
+      ret=f.label field, t("label_#{field}")
+    ret+=f.text_field field
+    end
+    ret
   end
 
   def h_attribut_trtd(obj, accessor)

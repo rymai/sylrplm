@@ -19,7 +19,7 @@ module Controllers
       obj = model.find(params[:id])
       @favori.add(obj)
     end
-    
+
     require 'controllers/plm_favorites'
     require 'controllers/plm_lifecycle'
 

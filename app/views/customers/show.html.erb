@@ -1,84 +1,63 @@
 <H1><%= t("customer_show") %></H1>
 <p>
-    <b><%= t("label_ident") %></b>
-    <%= h @customer.ident %>
+	<b><%= t("label_ident") %></b>
+	<%= h @customer.ident %>
 </p>
 <p>
-    <b><%= t("label_typesobject") %></b>
-    <% if(@customer.typesobject != nil) %>
-    <%= h @customer.typesobject.name %>
-    <% end %>
+	<b><%= t("label_typesobject") %></b>
+	<% if(@customer.typesobject != nil) %>
+	<%= h @customer.typesobject.name %>
+	<% end %>
 </p>
 <p>
-    <b><%= t("label_designation") %></b>
-    <%= h @customer.designation %>
+	<b><%= t("label_designation") %></b>
+	<%= h @customer.designation %>
 </p>
 <p>
-    <b><%= t("label_description") %></b>
-    <%= h @customer.description %>
+	<b><%= t("label_description") %></b>
+	<%= h @customer.description %>
 </p>
 <p>
-    <b><%= t("label_statusobject") %></b>
-    <% if(@customer.statusobject != nil) %>
-    <%= h @customer.statusobject.name %>
-    <% end %>
+	<b><%= t("label_statusobject") %></b>
+	<% if(@customer.statusobject != nil) %>
+	<%= h @customer.statusobject.name %>
+	<% end %>
 </p>
 <p>
-    <b><%= t("label_responsible") %></b>
-    <%= h @customer.owner.login %>
+	<b><%= t("label_responsible") %></b>
+	<%= h @customer.owner.login %>
 </p>
 <p>
-    <b><%= t("label_date") %></b>
-    <%= l @customer.date %>
+	<b><%= t("label_date") %></b>
+	<%= l @customer.date %>
 </p>
 <%= h_show_tree %>
 
 <%= render(:partial => "shared/object_workitems", :object =>@customer) %>
-
 <table class='menu_bas'>
-    <tr>
-        <% unless @favori.get("document").count==0 %>
-        <% form_for(@customer, :url => {:id => @customer.id, :action => "add_docs" }) do |f| %>
-        <td>
-        	<%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %>
-        </td>
-        <td>
-            <%= submit_tag t("paste_documents") %>
-            <td>
-            <% end %>
-            </tr>
-            <tr>
-                <% end %>
-                <% unless @favori.get("project").count==0 %>
-                <% form_for(@customer, :url => {:id => @customer.id, :action => "add_projects" }) do |f| %>
-                <td>
-        				<%= select("relation","project", options_from_collection_for_select( @relations["project"], :id, :ident)) %>
-                </td>
-                <td>
-                    <%= submit_tag t("paste_projects") %>
-                </td>
-                <% end %>
-                <% end %>
-            </tr>
-        </table>
-        <h1></h1>
-        <table class='menu_bas'>
-            <tr>
-                
-								<% unless @relations["forum"].count==0 %>
-								<% form_for(@customer, :url => {:id => @customer.id, :action => :new_forum }) do |f| %> 
-									<td> <%= select("relation","forum", options_from_collection_for_select( @relations["forum"], :id, :name)) %></td>
-									<td><%= submit_tag t("add_forum") %></td>
-								<% end %>                
-								<% end %>		
-                <td>
-                    <%= link_to t("edit"), edit_customer_path(@customer) %>
-                </td>
-                <td>
-                    <%= link_to t("new_customer"), new_customer_path %>
-                </td>
-                <td>
-                    <%= link_to t("list"), customers_path %>
-                </td>
-            </tr>
-        </table
+	<tr>
+		<% unless @favori.get("document").count==0 %>
+		<% form_for(@customer, :url => {:id => @customer.id, :action => "add_docs" }) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %> </td>
+		<td> <%= submit_tag t("paste_documents") %> <td> <% end %>
+	</tr>
+	<tr>
+		<% end %>
+		<% unless @favori.get("project").count==0 %>
+		<% form_for(@customer, :url => {:id => @customer.id, :action => "add_projects" }) do |f| %> <td> <%= select("relation","project", options_from_collection_for_select( @relations["project"], :id, :ident)) %> </td>
+		<td> <%= submit_tag t("paste_projects") %> </td>
+		<% end %>
+		<% end %>
+	</tr>
+</table>
+<h1></h1>
+<table class='menu_bas'>
+	<tr>
+		<% unless @relations["forum"].count==0 %>
+		<% form_for(@customer, :url => {:id => @customer.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @relations["forum"], :id, :name)) %></td>
+		<td><%= submit_tag t("add_forum") %></td>
+		<% end %>
+		<% end %> <td> <%= link_to t("edit"), edit_customer_path(@customer) %> </td>
+		<td> <%= link_to t("new_customer"), new_customer_path %> </td>
+		<td> <%= link_to t("list"), customers_path %> </td>
+	</tr>
+</table

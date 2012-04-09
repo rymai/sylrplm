@@ -20,47 +20,9 @@ rake db:migrate
 ruby script/generate scaffold document ident:string type:string revision:string designation:string description:text extension:string repository:string status:string responsible:string group:string date:date
 ruby script/generate model document
 ruby script/generate controller document
-ruby script/generate scaffold part ident:string type:string revision:string designation:string description:text status:string responsible:string group:string date:date
-ruby script/generate model part
-ruby script/generate controller part
-ruby script/generate scaffold project ident:string type:string designation:string description:text status:string responsible:string group:string date:date
-ruby script/generate model project
-ruby script/generate controller project
-ruby script/generate scaffold customer ident:string type:string designation:string description:text responsible:string group:string date:date
-ruby script/generate model customer
-ruby script/generate controller customer
-ruby script/generate model favori
 rake db:sessions:create
-ruby script/generate scaffold typesobject object:string name:string description:text
-ruby script/generate scaffold statusobject object:string name:string rank:integer description:text
-ruby script/generate scaffold role name:string description:text
-ruby script/generate scaffold volume name:string description:text directory:string protocole:string
 ruby script/generate mailer PLMMailer toValidate validated
 ruby script/generate scaffold sequence object:string value:string min:string max:string
-ruby script/generate scaffold links father_object:string child_object:string father_id:integer child_id:integer name:string designation:string description:text responsible:string group:string date:date
-ruby script/generate scaffold checks object:string object_id:integer status:integer out_reason:string out_date:date out_user:integer in_reason:string in_date:date in_user:integer local_dir:string
-ruby script/generate scaffold access controller:string action:integer role_id:integer
----
---- forums
---- 
-ruby script/generate scaffold forum typesobject_id:integer statusobject_id:integer subject:string description:text owner_id:integer
-ruby script/generate scaffold forum_item message:text forum_id:integer parent_id:integer owner_id:integer
-
-ruby script/generate scaffold roles_users role_id:integer user_id:integer
-attention, c'est une table de jointure, il faut supprimer la colonne id (par mysql admin)
-
-ruby script/generate scaffold document ident:string type:string revision:string designation:string description:text extension:string repository:string status:string responsible:string group:string date:date
-ruby script/generate scaffold datafile ident:string filename:string revision:integer typesobject_id:integer content_type:string owner_id:integer volume_id:integer
-
----
---- notifications
---- 
-ruby script/generate scaffold notification object_type:string object_id:integer event_date:date event_type:text responsible_id:integer notify_date:date
-
----
---- relations
----
-ruby script/generate scaffold relation name:string type:string designation:string father_plmtype:string child_plmtype:string father_type:integer child_type:integer cardin_occur_min:integer cardin_occur_max:integer cardin_use_min:integer cardin_use_max:integer
 
 # plugin pour la pagination 
 #script/plugin install git://github.com/mislav/will_paginate.git
@@ -97,8 +59,6 @@ ruby script/plugin install http://opensvn.csie.org/ezra/rails/plugins/dev/acl_sy
 --- help perso
 ---
 cmd="ruby script/generate controller help"
-echo $cmd
-$cmd
 
 ---
 --- doc
@@ -183,7 +143,6 @@ test
 #creation de la base
 mysqladmin -u root -p create sylrplm_test
 
-
 #creation du schema
 echo $PATH
 /home/syl/.gem/ruby/1.8/bin:/sbin:/usr/sbin:/bin:/usr/bin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin:/usr/lib/qt4/bin
@@ -238,7 +197,6 @@ rake db:data:load
 # Create YAML test fixtures from data in an existing database. 
 rake db:fixtures:dump 
     
-
 --------------------------------------------------------
 lancer une tache regulierement
 -------------------------------
@@ -510,14 +468,20 @@ vider la base
 heroku rake db:reset
 
 ---
---- recreer la base avec les migrations
+--- recreer la base avec ou sans les migrations
 ---
-rake db:drop;rake db:create;rake db:schema:load (schema seul, pas de data)
-ou
-rake db:drop;rake db:create;rake db:migrate (schema par les migrations)
-ou 
-rake db:drop;rake db:create;rake db:load (schema+data, il faut db/data.yml
+--- (schema seul, pas de data, sans les migrations)
+rake db:drop;rake db:create;rake db:schema:load 
 
+--- ou (schema par les migrations)
+rake db:drop;rake db:create;rake db:migrate 
+
+--- ou (schema+data, il faut db/data.yml)
+rake db:drop;rake db:create;rake db:load 
+
+---
+--- recreer la base sur heroku
+---
 heroku rake db:drop;heroku rake db:create;heroku rake db:schema:load 
 heroku open;heroku logs -n 500
 
@@ -610,4 +574,10 @@ a l'affichage d'un objet, on affiche toutes les vues possibles
 ======================================================
 ruby script/generate scaffold view name:string description:text
 
+---
+--- chargement des fixtures
+---
+rake db:fixtures:load FIXTURES_PATH=db/fixtures/admin
+rake db:fixtures:load FIXTURES_PATH=db/fixtures/domains/01-mecanique-ameublement/
 
+tests auto: voir capybara

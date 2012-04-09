@@ -21,90 +21,90 @@
 #
 # Made in Japan.
 #++
-
-
 #
 # Opening Rails Mapper to add a wfid_resources method
 #
-class ActionController::Routing::RouteSet::Mapper
+module ActionController
+  module Routing
+    class RouteSet
+      class Mapper
+        def wfid_resources (controller_name)
 
-  def wfid_resources (controller_name)
+          controller_name = controller_name.to_s
 
-    controller_name = controller_name.to_s
-
-    # GET
-    #
-    connect(
+          # GET
+          #
+          connect(
       controller_name,
       :controller => controller_name,
       :action => 'index',
       :conditions => { :method => :get })
-    connect(
+          connect(
       "#{controller_name}.:format",
       :controller => controller_name,
       :action => 'index',
       :conditions => { :method => :get })
 
-    connect(
+          connect(
       "#{controller_name}/:wfid",
       :controller => controller_name,
       :action => 'index',
       :conditions => { :method => :get })
 
-    connect(
+          connect(
       "#{controller_name}/:wfid/:expid",
       :controller => controller_name,
       :action => 'show',
       :conditions => { :method => :get })
-    connect(
+          connect(
       "#{controller_name}/:wfid/:expid.:format",
       :controller => controller_name,
       :action => 'show',
       :conditions => { :method => :get })
 
-    connect(
+          connect(
       "#{controller_name}/:wfid/:expid/edit",
       :controller => controller_name,
       :action => 'edit',
       :conditions => { :method => :get })
 
-    # (no POST)
+          # (no POST)
 
-    # PUT
-    #
-    connect(
+          # PUT
+          #
+          connect(
       "#{controller_name}/:wfid/:expid",
       :controller => controller_name,
       :action => 'update',
       :conditions => { :method => :put })
-    connect(
+          connect(
       "#{controller_name}/:wfid/:expid.:format",
       :controller => controller_name,
       :action => 'update',
       :conditions => { :method => :put })
 
-    # DELETE
-    #
-    connect(
+          # DELETE
+          #
+          connect(
       "#{controller_name}/:wfid/:expid",
       :controller => controller_name,
       :action => 'destroy',
       :conditions => { :method => :delete })
-    connect(
+          connect(
       "#{controller_name}/:wfid/:expid.:format",
       :controller => controller_name,
       :action => 'destroy',
       :conditions => { :method => :delete })
 
-    #
-    # paths and URLs
+          #
+          # paths and URLs
 
-    plural = controller_name
-    singular = plural.singularize
+          plural = controller_name
+          singular = plural.singularize
 
-    # ... where to add ?
+          # ... where to add ?
 
-    ActionView::Base.class_eval <<-EOS
+          ActionView::Base.class_eval <<-EOS
       #
       # paths
       #
@@ -132,6 +132,9 @@ class ActionController::Routing::RouteSet::Mapper
         "\#{ request.protocol + request.host_with_port }\#{edit_#{singular}_path(o)}"
       end
     EOS
+        end
+      end
+    end
   end
 end
 
@@ -139,7 +142,6 @@ end
 # adding Links to models' to_xml / to_json
 #
 module LinksMixin
-
   def to_xml (opts={})
     super(opts) do |xml|
       xml.links do

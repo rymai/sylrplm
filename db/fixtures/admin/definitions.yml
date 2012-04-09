@@ -1,37 +1,31 @@
 def_embedded:
-  id: 1
   name: "*embedded*"
   description: the right to start processes embedded in launch items
-  internal: true
+  domain: admin
 
 def_untracked:
-  id: 2
   name: "*untracked*"
   description: the right to launch processes from any URI
-  internal: true
+  domain: admin
 
 def_simple:
-  id: 3
   name: simple sequence
   uri: sequence1.rb
   description: a simple sequence
 
 def_leave:
-  id: 4
   name: leave request
   uri: leave_request1.rb
   description: "may I leave the office ?"
   launch_fields: "{\"employee\":\"\",\"from_date\":\"\",\"to_date\":\"\",\"reason\":\"\"}"
 
 def_revision:
-  id: 5
   name: revision
   uri: /definitions/revise.rb
   description: Revision d un objet PLM
   launch_fields: "{}"
 
-def_validation:
-  id: 6
+def_promote:
   name: promotion
   uri: /definitions/promote.rb
   description: Promotion d un objet PLM

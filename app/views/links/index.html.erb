@@ -10,24 +10,24 @@
 <%= will_paginate(@links[:recordset]) %>
 <table>
 	<tr>
-		<th>t(:label_id)</th>
-		<th>t(:label_ident)</th>
-		<th>t(:label_internal)</th>
-		<th>t(:label_father)</th>
-		<th>t(:label_relation)</th>
-		<th>t(:label_child)</th>
-		<th>t(:label_values)</th>
-		<th>t(:label_responsible)</th>
-		<th>t(:label_group)</th>
+		<th><%= t(:label_id) %> </th>
+		<th><%= t(:label_ident) %> </th>
+		<th><%= t(:label_domain) %> </th>
+		<th><%= t(:label_father) %> </th>
+		<th><%= t(:label_relation) %> </th>
+		<th><%= t(:label_child) %> </th>
+		<th><%= t(:label_values) %> </th>
+		<th><%= t(:label_responsible) %> </th>
+		<th><%= t(:label_group) %> </th>
 		<th> <%= t(:label_projowner) %> </th>
 	</tr>
 	<% @links[:recordset].each do |link| %>
 	<tr>
 		<td><%= h link.id %></td>
 		<td><%= h link.ident %></td>
-		<td><%= h link.internal %></td>
+		<td><%= h link.domain %></td>
 		<td><%= h link.father_ident %></td>
-		<td><%= h link.relation_ident %></td>
+		<td><%= h link.relation_ident %></td>		
 		<td><%= h link.child_ident %></td>
 		<td><%= h link.values %></td>
 		<td><%= h link.owner.login unless link.owner.nil? %></td>

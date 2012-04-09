@@ -28,8 +28,8 @@ class DocumentsController < ApplicationController
     #@projects  = @document.projects
     #@customers = @document.customers
     @checkout  = Check.get_checkout(@document)
-    @tree      = build_tree(@document)
-    @tree_up   = build_tree_up(@document)
+    @tree      = build_tree(@document,params)
+    @tree_up   = build_tree_up(@document,params)
     @relations = Relation.relations_for(@document)
     respond_to do |format|
       format.html # show.html.erb
@@ -91,7 +91,7 @@ class DocumentsController < ApplicationController
   # PUT /documents/1
   # PUT /documents/1.xml
   def update
-    #puts "documents_controller.update:"+params.inspect
+    puts "documents_controller.update:"+params.inspect
     @document = Document.find(params[:id])
     @volumes  = Volume.find_all
     @types    = Typesobject.find_for("document")
@@ -274,6 +274,7 @@ class DocumentsController < ApplicationController
   end
 
   def add_docs
+    puts "#{self.class.name}.#{__method__}:#{params.inspect}"
     @document = Document.find(params[:id])
     ctrl_add_objects_from_favorites(@document, :document)
   end
@@ -295,42 +296,14 @@ class DocumentsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-
+  def empty_favori
+    puts "#{self.class.name}.#{__method__}:#{params.inspect}"
+    empty_favori_by_type(get_model_type(params))
+  end
   private
 
   def index_
     @documents = Document.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
-  end
-  #  def add_document_to_favori
-  #    puts "===DocumentsController.add_document_to_favori:id="+params[:id].to_s
-  #    document = Document.find(params[:id])
-  #    puts "===DocumentsController.add_document_to_favori:#{document.inspect}"
-  #    @favori_document.add_document(document)
-  #  end
-  #
-  #  def empty_favori_document
-  #    session[:favori_document] = nil
-  #    @favori_document          = nil
-  #  end
-
-  #  def add_document_to_favori
-  #    obj=Document.find(params[:id])
-  #    puts "DocumentsController.add_document_to_favori:#{obj.inspect}"
-  #    @favori.add(obj)
-  #  end
-  #
-  def create_tree_old(obj)
-    tree = Tree.new({:js_name=>"tree_down", :label => t(:ctrl_object_explorer, :typeobj => t(:ctrl_document)), :open => true })
-    session[:tree_document] = obj
-    follow_tree_document(tree, obj)
-    tree
-  end
-
-  def create_tree_up_old(doc)
-    tree = Tree.new({:js_name=>"tree_up", :label=>t(:ctrl_object_referencer,:typeobj =>t(:ctrl_document)),:open => true})
-    session[:tree_object]=doc
-    follow_tree_up_document(tree, doc)
-    tree
   end
 
 end
