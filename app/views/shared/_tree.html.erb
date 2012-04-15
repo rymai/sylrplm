@@ -1,0 +1,27 @@
+<% if ((@tree && @tree.size>0) || (@tree_up && @tree_up.size>0)) %> <!-- -->
+<h1></h1>
+<tr>
+	<% form_for(object, :url => {:id => object.id, :action => "select_view" }) do |f| %> <!-- -->
+	<td><%= select_tag("view", options_from_collection_for_select( @views, :id, :name))%></td>
+	<td><%= submit_tag t("select_view")%></td>
+	<% end %>
+</tr>
+<div id='dtree'>
+	<% if @tree && @tree.size>0 %>
+	<table class='menu_bas'>
+		<tr>
+			<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_down);'><%= t("h_open_close_all_tree")%></a></td>
+		</tr>
+	</table>
+	<%= @tree.to_s %>
+	<% end %>
+	<% if @tree_up && @tree_up.size>0 %>
+	<table class='menu_bas'>
+		<tr>
+			<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_up);'><%= t("h_open_close_all_tree")%></a></td>"
+		</tr>
+	</table>
+	<%= @tree_up.to_s %>
+	<% end %>
+</div>
+<% end %> 
