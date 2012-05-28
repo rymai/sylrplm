@@ -8,25 +8,26 @@
 	<%= f.select( :name, Relation.names, {}, {:onkeypress=>"edit(event);", :onblur=>"this.editing=false;"}) %>
 	<br/>
 	<%= f.label t(:label_type) %>
-	<%= f.collection_select(:typesobject_id, @datas[:types], :id, :name, { :selected => @relation.typesobject.id }) %>
+
+	<%= f.collection_select(:typesobject_id, @datas[:types], :id, :name) %>
 	<br/>
 	<%= f.label t(:label_father_plmtype) %>
 	<%= f.select(
-    :father_plmtype, @datas[:types_plm], {},
-    {
-      :onchange => "#{remote_function(:url => {:controller => 'relations', :action => 'update_father'}, :with => "'father_plmtype='+value")}"
-    }
-    ) %>
+		:father_plmtype, @datas[:types_plm], {},
+		{
+			:onchange => "#{remote_function(:url => {:controller => 'relations', :action => 'update_father'}, :with => "'father_plmtype='+value")}"
+		}
+		) %>
 	<br/>
 	<%= render(:partial => "relations/father_types") %>
 
 	<%= f.label t(:label_child_plmtype) %>
 	<%= f.select(
-    :child_plmtype, @datas[:types_plm], {},
-    {
-      :onchange => "#{remote_function(:url =>  {:controller => 'relations', :action => 'update_child'}, :with => "'child_plmtype='+value")}"
-    }
-    ) %>
+		:child_plmtype, @datas[:types_plm], {},
+		{
+			:onchange => "#{remote_function(:url =>  {:controller => 'relations', :action => 'update_child'}, :with => "'child_plmtype='+value")}"
+		}
+		) %>
 	<br/>
 	<%= render(:partial => "relations/child_types") %>
 
@@ -47,5 +48,4 @@
 	<%= f.label t(:label_views) %>
 	<%= select_inout(f, @relation, @views, :name) %>
 	<br/>
-	
 </fieldset>
