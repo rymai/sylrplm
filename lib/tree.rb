@@ -70,6 +70,10 @@ class Tree < Node
 
   end
   
+   #syl
+	def nodes=(new_nodes)
+		@nodes=new_nodes
+	end
   
    
 end

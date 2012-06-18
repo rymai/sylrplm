@@ -74,9 +74,9 @@ module SYLRPLM
     "C:\\sylrplm_data_#{Rails.env}"
   end
   # ordre des constituants de l'arbre
-  TREE_ORDER                = ["forum", "document", "part", "project", "customer" ]
+ TREE_ORDER                = ["forum", "document", "part", "project", "customer" ]
   TREE_UP_ORDER             = ["document", "part", "project", "customer" ]
-  # regroupement des composants d'un objet 
-  TREE_GROUP                = true
+  # regroupement des composants d'un objet dans l'explorer
+  TREE_GROUP                = false
 end
 

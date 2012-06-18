@@ -1,7 +1,7 @@
 class Relation < ActiveRecord::Base
 	include Models::SylrplmCommon
 	#validates_presence_of :type, :name, cardin_occur_min, cardin_occur_max, cardin_use_min, cardin_use_max
-	validates_presence_of :type, :name
+	validates_presence_of :typesobject, :name
 	validates_uniqueness_of :name
 	validates_numericality_of :cardin_occur_min,  { :only_integer => true, :greater_than_or_equal_to => 0}
 	validates_numericality_of :cardin_use_min, { :only_integer => true, :greater_than_or_equal_to => 0 }
@@ -91,7 +91,7 @@ class Relation < ActiveRecord::Base
 		end
 
 		LOG.info (fname){"cond=#{cond}"}
-		ret.each {|r| r.each {|rel| LOG.info rel}}
+		 ret.each {|r| r.each {|rel| LOG.info rel}}
 		ret
 	end
 
@@ -119,15 +119,16 @@ class Relation < ActiveRecord::Base
 	end
 
 	def datas
+		fname="Relations.#{__method__}:"
 		ret={}
 		ret[:types_father]= types_father
 		ret[:types_child] = types_child
 		ret[:types_plm]   = Typesobject.get_objects_with_type
-		ret[:types]       = Typesobject.get_types("relation")
-		#puts "Relation.datas:types_father="+ret[:types_father].inspect
-		#puts "Relation.datas:types_child="+ret[:types_child].inspect
-		#puts "Relation.datas:types_plm="+ret[:types_plm].inspect
-		#puts "Relation.datas:types="+ret[:types].inspect
+		ret[:types]       = Typesobject.get_types(:relation)
+		LOG.debug (fname) {"types_father=#{ret[:types_father]}"}
+		LOG.debug (fname) {"types_child=#{ret[:types_child]}"}
+		LOG.debug (fname) {"types_plm=#{ret[:types_plm]}"}
+		LOG.debug (fname) {"types=#{ret[:types].inspect}"}
 		ret
 	end
 

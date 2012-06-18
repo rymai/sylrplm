@@ -1,8 +1,16 @@
 class View < ActiveRecord::Base
-  include Models::SylrplmCommon
+	include Models::SylrplmCommon
 
-  validates_presence_of     :name
-  validates_uniqueness_of   :name
-  #
-  has_and_belongs_to_many :relations
+	validates_presence_of     :name
+	validates_uniqueness_of   :name
+	#
+	has_and_belongs_to_many :relations
+	def to_s
+		ret = "View(#{id}), relations=[\n"
+		relations.each do |rel|
+			ret << "\t#{rel.ident}\n"
+		end
+		ret << "]"
+		ret
+	end
 end

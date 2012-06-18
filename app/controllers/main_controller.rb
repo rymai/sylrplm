@@ -36,7 +36,7 @@ class MainController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
     end
-    #LOG.info("<==")
+    LOG.debug("<==")
   end
 
 end

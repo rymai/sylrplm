@@ -38,12 +38,7 @@
 	<b><%= t(:label_date) %></b>
 	<%= l @part.date %>
 </p>
-<tr>
-	<% form_for(@part, :url => {:id => @part.id, :action => "select_view" }, :method => :get) do |f| %> <td> <%= select("relation","view", options_from_collection_for_select( @views, :id, :name)) %></td>
-	<td><%= submit_tag t("select_view") %></td>
-	<% end %>
-</tr>
-<%= h_show_tree %>
+<%= render(:partial => "shared/tree", :object => @part ) %>
 <table class='menu_bas'>
 	<% unless @favori.get('document').count==0 || @relations["document"].count==0 %>
 	<tr>
@@ -83,4 +78,4 @@
 		<td> <%= link_to t("list"), parts_path %></td>
 	</tr>
 </table>
-<% end %>
+<% end %> 

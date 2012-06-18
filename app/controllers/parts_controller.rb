@@ -25,12 +25,19 @@ class PartsController < ApplicationController
 
 	def select_view
 		show_
+		#respond_to do |format|
+		#	format.html { redirect_to(@part) }
+		#end
 		respond_to do |format|
-			format.html { redirect_to(@part) }
+			format.html { render :action => "show" }
+			format.xml  { render :xml => @part }
 		end
 	end
 
 	def show_
+		fname= "#{controller_class_name}.#{__method__}"
+		LOG.debug (fname){"begin:params=#{params}"}
+		define_view
 		@part                    = Part.find(params[:id])
 		@relations               = Relation.relations_for(@part)
 		@other_parts = Part.paginate(:page => params[:page],
@@ -38,12 +45,12 @@ class PartsController < ApplicationController
 		:order => 'ident ASC',
 		:per_page => cfg_items_per_page)
 		@first_status = Statusobject.get_first("part")
-		@tree         = build_tree(@part,params,params)
-		@tree_up      = build_tree_up(@part,params,params)
+		@tree         = build_tree(@part, @view_id)
+		@tree_up      = build_tree_up(@part, @view_id)
 		@documents = @part.documents
 		@parts     = @part.parts
 		@projects  = @part.projects_up
-		@views = View.all
+		LOG.debug (fname){"end:view=#{View.find(@view_id).to_s}"}
 	end
 
 	# GET /parts/new

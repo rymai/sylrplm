@@ -2,7 +2,7 @@
 <h1></h1>
 <tr>
 	<% form_for(object, :url => {:id => object.id, :action => "select_view" }) do |f| %> <!-- -->
-	<td><%= select_tag("view", options_from_collection_for_select( @views, :id, :name))%></td>
+	<td><%= select_tag("view_id", options_from_collection_for_select( @views, :id, :name, @view_id.to_i))%></td>
 	<td><%= submit_tag t("select_view")%></td>
 	<% end %>
 </tr>

@@ -120,9 +120,18 @@ class ProcessesController < ApplicationController
   # GET /processes/new
   #
   def new
-    #    puts "processes_controller.new:params="+params.inspect
+    fname= "#{controller_class_name}.#{__method__}"
+		LOG.debug (fname){"begin:params=#{params}"}
     @definition = Definition.find(params[:definition_id])
-    return error_reply('you are not allowed to launch this process', 403) unless @current_user.may_launch?(@definition)
+		respond_to do |format|
+			if current_user.may_launch?(@definition)
+				flash[:notice] = t(:user_allowed_to_launch_process, :login => current_user.login, :definition => @definition.description)
+				format.html 
+			else
+				flash[:notice] = t(:user_not_allowed_to_launch_process, :login => current_user.login, :definition => @definition.description)
+				format.html { redirect_to(:controller=> "definitions", :action=> "new_process")}
+			end
+		end
   end
 
   # POST /processes
@@ -196,9 +205,9 @@ class ProcessesController < ApplicationController
   # GET /processes/:id/tree
   #
   def tree
-    fname=__FILE__+"."+__method__.to_s+":"
-    #puts fname+" params="+params.inspect
-    process = ruote_engine.process_status(params[:id])
+   	fname= "#{controller_class_name}.#{__method__}"
+		LOG.debug (fname){"begin:params=#{params}"}
+    proc ess = ruote_engine.process_status(params[:id])
     var = params[:var] || 'proc_tree'
     unless process.nil?
       # TODO : use Rails callback

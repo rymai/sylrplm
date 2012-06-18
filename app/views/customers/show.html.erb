@@ -31,7 +31,7 @@
 	<b><%= t("label_date") %></b>
 	<%= l @customer.date %>
 </p>
-<%= h_show_tree %>
+<%= h_show_tree @customer%>
 
 <%= render(:partial => "shared/object_workitems", :object =>@customer) %>
 <table class='menu_bas'>

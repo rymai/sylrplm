@@ -139,6 +139,8 @@ fr:
   ctrl_forum: Forum
   # process
   ctrl_process: Processus métier
+  user_allowed_to_launch_process: "L' utilisateur '%{login}' est autorisé à lancer le processus '%{definition}'"
+  user_not_allowed_to_launch_process: "L' utilisateur '%{login}' n'est pas autorisé à lancer le processus '%{definition}'"
   # projects
   ctrl_project: Projet
   label_project_users: Utilisateurs participant au projet
@@ -202,6 +204,7 @@ fr:
   legend_tree_up: Référenceur
   img_checkout: Réservé
   img_checkin: Non réservé
+  select_view: Choix de la vue
   # help
   help_no_help_title: Aide absente
   help_no_help: Pas d'aide pour %{key}

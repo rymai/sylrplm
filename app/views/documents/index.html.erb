@@ -52,7 +52,8 @@
 		<%= h_img_checkin.to_s %>
 		<% end%> </td>
 		<td> <%= link_to h_img_show.to_s, document if document.ok_for_show?(current_user)%> </td>
-		<% if document.revisable? %> <td> <%= h_img_revise.to_s %></td>
+		<% if document.revisable? %> <td><% unless document.revise_by_action? %>
+		<%= h_img_revise.to_s %><% end %></td>
 		<td></td>
 		<% else %>
 		<% if document.frozen? == false %> <td> <%= link_to h_img_edit.to_s, edit_document_path(document) %></td>

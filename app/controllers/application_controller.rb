@@ -278,7 +278,6 @@ class ApplicationController < ActionController::Base
   
   def icone(obj)
   	fname="#{controller_class_name}.#{__method__}"
-  	
     unless obj.model_name.nil? || obj.typesobject.nil?
       ret = "/images/#{obj.model_name}_#{obj.typesobject.name}.png"
       unless File.exist?("#{RAILS_ROOT}/public#{ret}")
@@ -293,7 +292,7 @@ class ApplicationController < ActionController::Base
     else
       ret = ""
     end
-    LOG.info  (fname){"#{obj.model_name}:#{obj.typesobject.name}:#{ret}"}
+    LOG.debug  (fname){"#{obj.model_name}:#{obj.typesobject.name}:#{ret}"}
     ret
   end
   
@@ -305,5 +304,19 @@ class ApplicationController < ActionController::Base
     ret
   end
   
+  
+  #
+  # controle des vues et de la vue active
+  # 
+  def define_view
+  	# views: liste des vues possibles est utilisee dans la view ruby show
+		@views = View.all
+		# view_id: id de la vue selectionnee est utilisee dans la view ruby show
+		if params["view_id"].nil?
+		@view_id = @views.first.id
+		else
+			@view_id = params["view_id"]
+		end
+	end
 end
 

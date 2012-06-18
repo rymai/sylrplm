@@ -21,120 +21,125 @@
 #
 # Made in Japan.
 #++
-
-
 class GroupsController < ApplicationController
-  include Controllers::PlmObjectControllerModule
-  ###before_filter :login_required
+	include Controllers::PlmObjectControllerModule
+	###before_filter :login_required
+	# GET /groups
+	# GET /groups.xml
+	#
+	def index
 
-  # GET /groups
-  # GET /groups.xml
-  #
-  def index
+		@groups = Group.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 
-    
-    @groups = Group.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		respond_to do |format|
+			format.html # index.html.erb
+			format.xml { render :xml => @groups }
+			format.json { render :json => @groups }
+		end
+	end
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml { render :xml => @groups }
-      format.json { render :json => @groups }
-    end
-  end
+	# GET /groups/1
+	# GET /groups/1.xml
+	#
+	def show
+		show_
+		respond_to do |format|
+			format.html # show.html.erb
+			format.xml  { render :xml => @group }
+			format.json  { render :json => @group }
+		end
+	end
 
-  # GET /groups/1
-  # GET /groups/1.xml
-  #
-  def show
+	def select_view
+		show_
+		respond_to do |format|
+			format.html { redirect_to(@group) }
+		end
+	end
 
-    @group = Group.find(params[:id])
-    @tree  = build_tree(@group,params)
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @group }
-      format.json  { render :json => @group }
-    end
-  end
+	def show_
+		define_view
+		@group = Group.find(params[:id])
+		@tree  = build_tree(@group, @view_id)
+	end
 
-  # GET /groups/new
-  # GET /groups/new.xml
-  #
-  def new
+	# GET /groups/new
+	# GET /groups/new.xml
+	#
+	def new
 
-    @group = Group.new
-    
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @group }
-      format.json  { render :json => @group }
-    end
-  end
+		@group = Group.new
 
-  # GET /groups/1/edit
-  #
-  def edit
+		respond_to do |format|
+			format.html # new.html.erb
+			format.xml  { render :xml => @group }
+			format.json  { render :json => @group }
+		end
+	end
 
-    @group = Group.find(params[:id])
-    @ug_locals = {
-      :in_elements => @group.user_groups || [],
-      :out_elements => User.find(:all) - @group.users
-    }
-  end
+	# GET /groups/1/edit
+	#
+	def edit
 
-  # POST /groups
-  # POST /groups.xml
-  #
-  def create
+		@group = Group.find(params[:id])
+		@ug_locals = {
+			:in_elements => @group.user_groups || [],
+			:out_elements => User.find(:all) - @group.users
+		}
+	end
 
-    @group = Group.new(params[:group])
+	# POST /groups
+	# POST /groups.xml
+	#
+	def create
 
-    respond_to do |format|
-      if @group.save
-        flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_group), :ident => @group.name)    
-        format.html { redirect_to(@group) }
-        format.xml  { render :xml => @group, :status => :created, :location => @group }
-      else
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group), :msg => nil)   
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @group.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
+		@group = Group.new(params[:group])
 
-  # PUT /groups/1
-  # PUT /groups/1.xml
-  #
-  def update
-    @group = Group.find(params[:id])
-    @group.update_accessor(current_user)
-    respond_to do |format|
-      if @group.update_attributes(params[:group])
-        flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_group), :ident => @group.name)    
-        format.html { redirect_to(@group) }
-        format.xml  { head :ok }
-      else
-        flash[:notice] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_group), :ident => @group.name)    
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @group.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
+		respond_to do |format|
+			if @group.save
+				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_group), :ident => @group.name)
+				format.html { redirect_to(@group) }
+				format.xml  { render :xml => @group, :status => :created, :location => @group }
+			else
+				flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group), :msg => nil)
+				format.html { render :action => "new" }
+				format.xml  { render :xml => @group.errors, :status => :unprocessable_entity }
+			end
+		end
+	end
 
-  # DELETE /groups/1
-  # DELETE /groups/1.xml
-  #
-  def destroy
+	# PUT /groups/1
+	# PUT /groups/1.xml
+	#
+	def update
+		@group = Group.find(params[:id])
+		@group.update_accessor(current_user)
+		respond_to do |format|
+			if @group.update_attributes(params[:group])
+				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_group), :ident => @group.name)
+				format.html { redirect_to(@group) }
+				format.xml  { head :ok }
+			else
+				flash[:notice] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_group), :ident => @group.name)
+				format.html { render :action => "edit" }
+				format.xml  { render :xml => @group.errors, :status => :unprocessable_entity }
+			end
+		end
+	end
 
-    @group = Group.find(params[:id])
-    @group.destroy
+	# DELETE /groups/1
+	# DELETE /groups/1.xml
+	#
+	def destroy
 
-    respond_to do |format|
-      format.html { redirect_to(groups_url) }
-      format.xml  { head :ok }
-    end
-  end
+		@group = Group.find(params[:id])
+		@group.destroy
 
-  
- 
+		respond_to do |format|
+			format.html { redirect_to(groups_url) }
+			format.xml  { head :ok }
+		end
+	end
+
 end
 

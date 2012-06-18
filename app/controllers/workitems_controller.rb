@@ -68,7 +68,7 @@ class WorkitemsController < ApplicationController
   #
   def edit
     name= "workitems_controller.edit:"
-    #LOG.info {name+"params="+params.inspect}
+    LOG.debug {name+"params="+params.inspect}
     @workitem = find_ar_workitem
     @wi_links = @workitem.get_wi_links
     nb=0
@@ -128,8 +128,8 @@ class WorkitemsController < ApplicationController
     elsif params[:state] == 'proceeded'
       LOG.info {name+":debut proceeded:wfid="+params[:wfid]}
       in_flow_workitem.attributes = workitem.attributes
-      #LOG.info name+"ar_workitem="+ar_workitem.inspect
-      #LOG.info name+"in_flow_workitem="+in_flow_workitem.inspect
+      LOG.debug name+"ar_workitem="+ar_workitem.inspect
+      LOG.debug name+"in_flow_workitem="+in_flow_workitem.inspect
       begin
         RuotePlugin.ruote_engine.reply(in_flow_workitem)
         #
@@ -141,7 +141,7 @@ class WorkitemsController < ApplicationController
         nb=0
         arw = ar_workitem
         while nb < 7 and !arw.nil? and (arw.last_modified == ar_workitem.last_modified)
-          ##LOG.info (name){" boucle #{nb}:#{arw.last_modified}"}
+          #LOG.debug (name){" boucle #{nb}:#{arw.last_modified}"}
           sleep 1.0
           nb+=1
           arw = find_ar_workitem
@@ -251,7 +251,7 @@ class WorkitemsController < ApplicationController
     params[:wfid], OpenWFE.to_dots(params[:expid])
     )
     ret=current_user.may_see?(ar_workitem) ? ar_workitem : nil unless ar_workitem.nil?
-    #LOG.info {ret.inspect}
+    LOG.debug {ret.inspect}
     ret
   end
 
@@ -293,7 +293,7 @@ class WorkitemsController < ApplicationController
     fname="WorkitemsController."+__method__.to_s+":"
     #puts fname+"cur_wi="+cur_wi.id.to_s+":"+cur_wi.wfid.to_s+":"+cur_wi.expid.to_s
     params = cur_wi.field_hash[:params]
-    #LOG.info (fname){"params="+params.inspect}
+    LOG.debug (fname){"params="+params.inspect}
     unless params.nil?
       params.keys.each do |url|
         v = params[url]

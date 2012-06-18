@@ -46,7 +46,7 @@
 		<td><%= part.projowner.ident %></td>
 		<td><%= l part.date %></td>
 		<td><%= link_to h_img_show.to_s, part %></td>
-		<% if part.revisable?  %> <td> <%= h_img_revise.to_s %></td>
+		<% if part.revisable?  %> <td> <% unless document.revise_by_action? %><%= h_img_revise.to_s %><% end %></td>
 		<td></td>
 		<% else %>
 		<% if part.frozen? == false %> <td><%= link_to h_img_edit.to_s, edit_part_path(part) %></td>

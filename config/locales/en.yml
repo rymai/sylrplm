@@ -139,6 +139,8 @@ en:
   ctrl_forum: Forum
   # process
   ctrl_process: Process
+  user_allowed_to_launch_process: "User '%{login}' is allowed to launch the process '%{definition}'"
+  user_not_allowed_to_launch_process: "User '%{login}' is not allowed to launch the process '%{definition}'"
   # projects
   ctrl_project: Project
   label_project_users: Users
@@ -202,6 +204,7 @@ en:
   legend_tree_up: Referencer
   img_checkout: Checkout
   img_checkin: Checkin
+  select_view: Viwe selection
   # help
   help_no_help_title: Help missing
   help_no_help: No help for %{key}

@@ -21,195 +21,192 @@
 #
 # Made in Japan.
 #++
-
 class DefinitionsController < ApplicationController
+	# GET /definitions
+	# GET /definitions.xml
+	#
+	def index
 
-  
-  # GET /definitions
-  # GET /definitions.xml
-  #
-  def index
+		@definitions = Definition.find_all_for(@current_user)
+		unless @definitions.length==0
+			respond_to do |format|
+				format.html # index.html.erb
+				format.xml { render :xml => @definitions.to_xml(:request => request) }
+				format.json { render :json => @definitions.to_json(:request => request) }
+			end
 
-    @definitions = Definition.find_all_for(@current_user)
-    unless @definitions.length==0
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml { render :xml => @definitions.to_xml(:request => request) }
-        format.json { render :json => @definitions.to_json(:request => request) }
-      end
-    
-    end
-  end
-  
-  def new_process
-  LOG 
-    @definitions = Definition.find_all_for(@current_user)
-    unless @definitions.length==0
-      respond_to do |format|
-        format.html # new_process.html.erb
-        format.xml { render :xml => @definitions.to_xml(:request => request) }
-        format.json { render :json => @definitions.to_json(:request => request) }
-      end
-    
-    end
-  end
-  
+		end
+	end
 
-  # GET /definitions/1
-  # GET /definitions/1.xml
-  #
-  def show
+	def new_process
+		LOG
+		@definitions = Definition.find_all_for(@current_user)
+		unless @definitions.length==0
+			respond_to do |format|
+				format.html # new_process.html.erb
+				format.xml { render :xml => @definitions.to_xml(:request => request) }
+				format.json { render :json => @definitions.to_json(:request => request) }
+			end
 
-    @definition = Definition.find(params[:id])
+		end
+	end
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml { render :xml => @definition.to_xml(:request => request) }
-      format.json { render :json => @definition.to_json(:request => request) }
-    end
-  end
+	# GET /definitions/1
+	# GET /definitions/1.xml
+	#
+	def show
 
-  # GET /definitions/:id/tree
-  # GET /definitions/:id/tree.js
-  #
-  def tree
-    name="DefinitionsControlle.tree:"
-    @definition = Definition.find(params[:id])
+		@definition = Definition.find(params[:id])
 
-    uri = @definition.local_uri
+		respond_to do |format|
+			format.html # show.html.erb
+			format.xml { render :xml => @definition.to_xml(:request => request) }
+			format.json { render :json => @definition.to_json(:request => request) }
+		end
+	end
 
-    # TODO : reject outside definitions ?
+	# GET /definitions/:id/tree
+	# GET /definitions/:id/tree.js
+	#
+	def tree
+		fname= "#{controller_class_name}.#{__method__}"
+		LOG.debug (fname){"begin:params=#{params}"}
+		@definition = Definition.find(params[:id])
+		LOG.debug (fname){"def=#{@definition.inspect}"}
+		uri = @definition.local_uri
 
-    pdef = (open(uri).read rescue nil)
+		# TODO : reject outside definitions ?
 
-    var = params[:var] || 'proc_tree'
+		pdef = (open(uri).read rescue nil)
+		LOG.debug (fname){"pdef=#{pdef}"}
+		var = params[:var] || 'proc_tree'
 
-    # TODO : use Rails callback thing (:callback)
+		# TODO : use Rails callback thing (:callback)
 
-    tree = pdef ?
-    RuotePlugin.ruote_engine.get_def_parser.parse(pdef) :
-    nil
-    puts name+"tree="+tree.inspect
-    render(
+		tree = pdef ?
+			RuotePlugin.ruote_engine.get_def_parser.parse(pdef) :
+			nil
+		LOG.debug (fname){"tree=#{tree.inspect}"}
+		render(
     :text => "var #{var} = #{tree.to_json};",
     :content_type => 'text/javascript')
-  end
+	end
 
-  # GET /definitions/new
-  # GET /definitions/new.xml
-  #
-  def new
-    @definition = Definition.new
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml { render :xml => @definition.to_xml(:request => request) }
-      format.json { render :json => @definition.to_json(:request => request) }
-    end
-  end
+	# GET /definitions/new
+	# GET /definitions/new.xml
+	#
+	def new
+		@definition = Definition.new
+		respond_to do |format|
+			format.html # new.html.erb
+			format.xml { render :xml => @definition.to_xml(:request => request) }
+			format.json { render :json => @definition.to_json(:request => request) }
+		end
+	end
 
-  # GET /definitions/1/edit
-  #
-  def edit
-    
-    @definition = Definition.find(params[:id])
-    @dg_locals = {
-      :in_groups => @definition.group_definitions,
-      :out_groups => Group.find(:all) - @definition.groups
-    }
-    
-  end
+	# GET /definitions/1/edit
+	#
+	def edit
 
-  # POST /definitions
-  # POST /definitions.xml
-  #
-  def create
+		@definition = Definition.find(params[:id])
+		@dg_locals = {
+			:in_groups => @definition.group_definitions,
+			:out_groups => Group.find(:all) - @definition.groups
+		}
 
-    @definition = Definition.new(params[:definition])
+	end
 
-    respond_to do |format|
+	# POST /definitions
+	# POST /definitions.xml
+	#
+	def create
 
-      if @definition.save
-        flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_definition), :ident => @definition.name)    
-        format.html {
-          redirect_to(@definition)
-        }
-        format.xml {
-          render(
+		@definition = Definition.new(params[:definition])
+
+		respond_to do |format|
+
+			if @definition.save
+				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_definition), :ident => @definition.name)
+				format.html {
+					redirect_to(@definition)
+				}
+				format.xml {
+					render(
           :xml => @definition.to_xml(:request => request),
           :status => :created,
           :location => @definition)
-        }
-        format.json {
-          render(
+				}
+				format.json {
+					render(
           :json => @definition.to_json(:request => request),
           :status => :created,
           :location => @definition)
-        }
+				}
 
-      else
-        LOG.error @definition.errors.inspect
-        LOG.error @definition.inspect
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_definition), :msg => nil)
-        format.html {
-          render(:action => 'new')
-        }
-        format.xml {
-          render(:xml => @definition.errors, :status => :unprocessable_entity)
-        }
-        format.json {
-          render(:json => @definition.errors, :status => :unprocessable_entity)
-        }
-      end
-    end
-  end
+			else
+				LOG.error @definition.errors.inspect
+				LOG.error @definition.inspect
+				flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_definition), :msg => nil)
+				format.html {
+					render(:action => 'new')
+				}
+				format.xml {
+					render(:xml => @definition.errors, :status => :unprocessable_entity)
+				}
+				format.json {
+					render(:json => @definition.errors, :status => :unprocessable_entity)
+				}
+			end
+		end
+	end
 
-  # PUT /definitions/1
-  # PUT /definitions/1.xml
-  #
-  def update
-    @definition = Definition.find(params[:id])
-    @definition.update_accessor(current_user)
-    respond_to do |format|
-      if @definition.update_attributes(params[:definition])
+	# PUT /definitions/1
+	# PUT /definitions/1.xml
+	#
+	def update
+		@definition = Definition.find(params[:id])
+		@definition.update_accessor(current_user)
+		respond_to do |format|
+			if @definition.update_attributes(params[:definition])
 
-        flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)
-        format.html { redirect_to :action => 'index' }
-        format.xml { head :ok }
-        format.json { head :ok }
+				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)
+				format.html { redirect_to :action => 'index' }
+				format.xml { head :ok }
+				format.json { head :ok }
 
-      else # there is an error
-        LOG.error @definition.errors.inspect
-        LOG.error @definition.inspect
-        flash[:notice] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)
+			else # there is an error
+				LOG.error @definition.errors.inspect
+				LOG.error @definition.inspect
+				flash[:notice] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)
 
-        p @definition.errors
+				p @definition.errors
 
-        format.html {
-          render(:action => 'edit')
-        }
-        format.xml {
-          render(:xml => @definition.errors, :status => :unprocessable_entity)
-        }
-        format.json {
-          render(:json => @definition.errors, :status => :unprocessable_entity)
-        }
-      end
-    end
-  end
+				format.html {
+					render(:action => 'edit')
+				}
+				format.xml {
+					render(:xml => @definition.errors, :status => :unprocessable_entity)
+				}
+				format.json {
+					render(:json => @definition.errors, :status => :unprocessable_entity)
+				}
+			end
+		end
+	end
 
-  # DELETE /definitions/1
-  # DELETE /definitions/1.xml
-  #
-  def destroy
-    @definition = Definition.find(params[:id])
-    @definition.destroy
-    flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_definition), :ident => @definition.name)
-    respond_to do |format|
-      format.html { redirect_to(definitions_url) }
-      format.xml { head :ok }
-      format.json { head :ok }
-    end
-  end
-  
+	# DELETE /definitions/1
+	# DELETE /definitions/1.xml
+	#
+	def destroy
+		@definition = Definition.find(params[:id])
+		@definition.destroy
+		flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_definition), :ident => @definition.name)
+		respond_to do |format|
+			format.html { redirect_to(definitions_url) }
+			format.xml { head :ok }
+			format.json { head :ok }
+		end
+	end
+
 end
 

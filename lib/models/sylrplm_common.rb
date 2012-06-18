@@ -121,7 +121,7 @@ module Models
 			def reset
 				cond="internal is null or internal is false"
 				objs = Link.find(:all, :conditions => [cond])
-				#LOG.info "reset:"+objs.inspect
+				LOG.debug "reset:"+objs.inspect
 				objs.each { |o| o.destroy }
 			end
 
