@@ -204,7 +204,7 @@ fr:
   legend_tree_up: Référenceur
   img_checkout: Réservé
   img_checkin: Non réservé
-  select_view: Choix de la vue
+  select_context: Choix de la vue et de la variante
   # help
   help_no_help_title: Aide absente
   help_no_help: Pas d'aide pour %{key}
@@ -266,6 +266,7 @@ fr:
   new_group: Nouveau groupe
   new_relation: Nouvelle relation
   new_view: Nouvelle vue
+  new_link: Nouveau lien
   paste_users: Coller utilisateurs 
   paste_parts: Coller articles 
   paste_documents: Coller documents
@@ -347,7 +348,9 @@ fr:
   label_document_forum: Forums associés 
   label_part_forum: Forums associés 
   label_project_forum: Forums associés 
-  label_customer_forum: Forums associés  
+  label_customer_forum: Forums associés       
+  label_view: Vue
+  label_variant: Variante 
   # fin general
   # access
   legend_access: Renseignez les propriétés de l'autorisation
@@ -490,6 +493,7 @@ fr:
   legend_link_values: Attributs 
   legend_link_father: Père
   legend_link_child: Fils
+  legend_link_effectivities: Effectivités
   label_father: Père
   label_child: Fils
   label_values: Valeurs
@@ -506,6 +510,7 @@ fr:
   favoris_project: Projets
   favoris_customer: Clients
   favoris_user: Utilisateurs
+  favoris_link: Liens
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM Nouveautés
   label_today: Date

@@ -99,7 +99,11 @@ module Models
 					else
 						values=filter_access[:values]
 					end
-					conditions = [filter_access[:qry]+" and ("+cond[:qry] +")", values]
+					if filter_access[:qry] != ""
+						conditions = [filter_access[:qry]+" and ("+cond[:qry] +")", values]
+					else
+						conditions = [cond[:qry], values]
+					end
 				else
 					conditions = [filter_access[:qry], filter_access[:values]]
 				end
@@ -291,7 +295,7 @@ module Models
 
 		def tooltip
 			fname="#{self.class.name}.#{__method__}:"
-			"#{label}(#{model_name}:#{ident})"
+			"#{label}(#{model_name}:#{id}.#{ident})"
 		end
 
 	end

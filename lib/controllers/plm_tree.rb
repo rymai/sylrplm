@@ -87,7 +87,7 @@ def follow_tree(node, father, relations, level)
 			end
 			if show_relation
 				LOG.info (fname){"show_relation:#{relation.id}.#{relation.ident}, type=#{relation.typesobject.ident}"}
-				img_rel="<img class=\"icone\" src=\"#{icone(link)}\" title=\"#{clean_text_for_tree(link.tooltip)}\" />"
+				img_rel="<img class=\"icone\" src=\"#{icone(link)}\" title=\"#{link.id}.#{clean_text_for_tree(link.tooltip)}\" />"
 				unless relation.typesobject.fields.nil?
 					link_values = link.values.gsub('\\','').gsub('"','') unless link.values.nil?
 					edit_link_url = url_for(:controller => 'links',
@@ -120,7 +120,7 @@ def follow_tree(node, father, relations, level)
 				if ico.empty?
 					img=t(ctrl_name)
 				else
-					img = "<img class=\"icone\" src=\"#{ico}\" title=\"#{child.tooltip}\" />"
+					img = "<img class=\"icone\" src=\"#{ico}\" title=\"#{link.id}.#{child.tooltip}\" />"
 				end
 				show_a="<a href=\"#{url_for(show_url)}\">#{img}-#{child.label}</a>"
 				options={

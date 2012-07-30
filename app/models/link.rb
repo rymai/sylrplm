@@ -37,6 +37,10 @@ class Link < ActiveRecord::Base
 		father.belongs_to :history_up , :conditions => ["father_plmtype='history_entry'"], :class_name => "Ruote::Sylrplm::HistoryEntry"
 	end
 
+	def designation
+		"#{type}.#{id}"
+	end
+
 	def after_find
 		fname= "#{self.class.name}.#{__method__}"
 		if self.values.nil?
@@ -48,6 +52,10 @@ class Link < ActiveRecord::Base
 
 	def typesobject
 		relation.typesobject
+	end
+
+	def type
+		"link"
 	end
 
 	# creation

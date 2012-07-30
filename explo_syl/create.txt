@@ -1,17 +1,17 @@
-﻿#!/bin/sh
-cmd="rails -d mysql $1"
-echo $cmd
-$cmda
-cd $1
-
-eof:
+﻿--- install ruby 1.9
+telecharger ruby-1.9.2-p290.tar.gz
+dezipper
+cd dans le repertoire
+modifier le fichier ext/Setup en activant des modules
+./configure
+make
+make install
 
 mysqladmin -u root password xxxx
 modifier /etc/my.cnf
 datadir = /home/mysql 
 
 mysqladmin -u root -p create sylrplm_development
-
 mysqladmin -u root -p create sylrplm_test
 mysqladmin -u root -p create sylrplm_production
 
@@ -65,7 +65,7 @@ cmd="ruby script/generate controller help"
 ---
 rake doc:app
 
-production:
+mise en production:
 
 rake db:migrate RAILS_ENV=production
 si pb:
@@ -116,16 +116,11 @@ Next steps:
   git commit -m 'all commit'
   git push origin master
   
-  
-Existing Git Repo?
-
-  cd existing_git_repo
-  git remote add origin git@github.com:sylvani/sylrplm.git
-  git push origin master
-  
-  git pull origin master
-     
+    
+===========================================================
 generateur de schemas
+===========================================================
+
 gem install railroad
 dans config linux: install de graphviz pour dot
 railroad -a -i -M | dot -Tsvg > public/mdd/models.svg
@@ -133,8 +128,6 @@ railroad -a -i -C | dot -Tsvg > public/mdd/controllers.svg
 ou
 railroad -a -i -M | neato -Tpng > public/mdd/models.png
 railroad -a -i -C | neato -Tpng > public/mdd/controllers.png
-
-site hebergement heroku.com
 
 ===========================================================
 test
@@ -418,16 +411,6 @@ http://sylrplm.heroku.com/
 heroku logs -n 500
 erreur sur fichier pooltool.ru manquant dans /app/lib
 copy du work_development/pooltool.ru dans sylrplm/lib
-
-
---- install ruby 1.9
-telecharger ruby-1.9.2-p290.tar.gz
-dezipper
-cd dans le repertoire
-modifier le fichier ext/Setup en activant des modules
-./configure
-make
-make install
 
 -- notes sur modifs de remy
 Gemfile

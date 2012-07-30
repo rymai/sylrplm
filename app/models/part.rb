@@ -19,7 +19,6 @@ class Part < ActiveRecord::Base
 	belongs_to :projowner,
     :class_name => "Project"
 	#
-
 	#has_and_belongs_to_many :documents, :join_table => "links",
 	#:foreign_key => "father_id", :association_foreign_key => "child_id", :conditions => ["father_type='part' AND child_type='document'"]
 
@@ -104,11 +103,11 @@ class Part < ActiveRecord::Base
 
 	def self.get_conditions(filter)
 
-		filter = filters.gsub("*","%")
+		filter = filter.gsub("*","%")
 		ret={}
 		unless filter.nil?
-			ret[:qry] = "ident LIKE :v_filter or "+qry_type+" or revision LIKE :v_filter or designation LIKE :v_filter or "+qry_status+
-			" or "+qry_owner+" or date LIKE :v_filter "
+			ret[:qry] = "ident LIKE :v_filter or revision LIKE :v_filter or designation LIKE :v_filter or date LIKE :v_filter or "+qry_type+" or "+qry_status+
+			" or "+qry_owner_id
 			ret[:values]={:v_filter => filter}
 		end
 		ret
@@ -116,4 +115,19 @@ class Part < ActiveRecord::Base
 	#  " or "+qry_owner+" or date LIKE ? "
 	end
 
+	def relations
+		Relation.relations_for(self)
+	end
+	
+	def variants
+		fname= "#{self.class.name}.#{__method__}"
+		ret=[]
+		parts.each do |part|
+			LOG.info (fname){"part:#part.ident}"}
+			if part.typesobject.name == "VAR"
+				ret << part
+			end
+		end
+		ret
+	end
 end

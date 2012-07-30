@@ -59,14 +59,14 @@ class Typesobject < ActiveRecord::Base
 	# end
 	def self.get_objects_with_type
 		# liste complete potentielle:
-		#   objets du schema: "document", "part", "project", "customer", "forum", "definition", "datafile", "relation", "user"
+		#   objets du schema: "document", "part", "project", "customer", "forum", "definition", "datafile", "relation", "user", "link" (pour la conf)
 		#   +objets ayant les methodes adequates: "ar_workitem", "history_entry"
 		#   +objets generiques: ::SYLRPLM::PLMTYPE_GENERIC
 		# objets non pris en compte:
 		#   ar_workitem: pas de besoin
 		#   definition: pas de besoin
 		#   user: pas de besoin
-		ret=[::SYLRPLM::PLMTYPE_GENERIC, "document", "part", "project", "customer", "forum", "datafile", "relation",  "history_entry"].sort
+		ret=[::SYLRPLM::PLMTYPE_GENERIC, "document", "part", "project", "customer", "forum", "datafile", "relation", "link", "history_entry"].sort
 		ret
 	end
 

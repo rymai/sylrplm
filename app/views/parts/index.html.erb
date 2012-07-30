@@ -34,13 +34,13 @@
 		<td><%= icone(part) %></td>
 		<td><%= part.ident %></td>
 		<td><%= part.revision %></td>
-		<td> <% unless part.typesobject.nil? %>
-		<%= part.typesobject.name %>
-		<% end %> </td>
+		<td> 
+		<%= part.typesobject.name unless part.typesobject.nil? %>
+		</td>
 		<td><%= part.designation %></td>
-		<td> <% unless part.statusobject.nil? %>
-		<%= part.statusobject.name %>
-		<% end %> </td>
+		<td> 
+		<%= part.statusobject.name unless part.statusobject.nil? %>
+		 </td>
 		<td><%= part.owner.login %></td>
 		<td><%= part.group.name %></td>
 		<td><%= part.projowner.ident %></td>

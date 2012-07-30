@@ -204,7 +204,7 @@ en:
   legend_tree_up: Referencer
   img_checkout: Checkout
   img_checkin: Checkin
-  select_view: Viwe selection
+  select_context: Context selection
   # help
   help_no_help_title: Help missing
   help_no_help: No help for %{key}
@@ -266,6 +266,7 @@ en:
   new_group: New group
   new_relation: New relation
   new_view: New view
+  new_link: New link
   paste_users: Paste users 
   paste_part: Paste parts 
   paste_documents: Paste documents
@@ -347,7 +348,9 @@ en:
   label_document_forum: Forums  
   label_part_forum: Forums  
   label_project_forum: Forums  
-  label_customer_forum: Forums      
+  label_customer_forum: Forums 
+  label_view: View
+  label_variant: Variant     
   # fin general
   # access
   legend_access: Enter access details
@@ -490,6 +493,7 @@ en:
   legend_link_values: Attributs 
   legend_link_father: Father
   legend_link_child: Child
+  legend_link_effectivities: Effectivities
   label_father: Father
   label_child: Child
   label_values: Values
@@ -506,6 +510,7 @@ en:
   favoris_project: Projects
   favoris_customer: Customers
   favoris_user: Users
+  favoris_link: Links
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM News
   label_today: Date

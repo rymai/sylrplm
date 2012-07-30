@@ -55,6 +55,11 @@
 				<div id="favori_user">
 					<%= render(:partial => "main/favori_user", :object => @favori.get("user")) %>
 				</div>
+				<% if admin_logged_in? %>
+				<div id="favori_link">
+					<%= render(:partial => "main/favori_link", :object => @favori.get("link")) %>
+				</div>
+				<% end %>
 			</fieldset>
 			<fieldset>
 				<%= content_tag(:legend, t(:legend_organization)) %>

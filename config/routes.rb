@@ -65,7 +65,7 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.resources :typesobjects
 
-	map.resources :links, :collection => { :reset => :get}
+	map.resources :links, :collection => { :reset => :get, :empty_favori => :get}
 	map.connect(
 	'links/:id/edit_in_tree',
 	:controller => 'links',
@@ -75,6 +75,11 @@ ActionController::Routing::Routes.draw do |map|
 	'links/:id/remove_link',
 	:controller => 'links',
 	:action => 'remove_link')
+	map.connect(
+	'links/:id/add_favori',
+	:controller => 'links',
+	:action => 'add_favori',
+	:conditions => { :method => :get })
 
 	map.connect(
 	'main/init_objects',
