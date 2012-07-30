@@ -22,6 +22,7 @@
 		<th>Cardin occur max</th>
 		<th>Cardin use min</th>
 		<th>Cardin use max</th>
+		<th> <%= t(:label_domain) %> </th>
 	</tr>
 	<% @relations.each do |relation| %>
 	<tr>
@@ -35,6 +36,7 @@
 		<td><%= h relation.cardin_occur_max %></td>
 		<td><%= h relation.cardin_use_min %></td>
 		<td><%= h relation.cardin_use_max %></td>
+		<td><%= h relation.domain %></td>
 		<td> <%= link_to h_img_show.to_s, relation %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_relation_path(relation) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, relation, :confirm => t(:msg_confirm), :method => :delete %> </td>

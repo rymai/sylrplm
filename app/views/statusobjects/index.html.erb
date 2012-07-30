@@ -20,8 +20,8 @@
 		<th <%= sort_td_class_helper "rank" %>> <%= sort_link_helper t(:label_rank), "rank" %> </th>
 		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
 		<th <%= sort_td_class_helper "promote" %>> <%= sort_link_helper t(:label_promote), "promote" %> </th>
-		<th <%= sort_td_class_helper "demote" %>> <%= sort_link_helper t(:label_demote), "demote" %> </th><th></th><th></th><th></th>
-		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_demote), "domain" %> </th><th></th><th></th><th></th>
+		<th <%= sort_td_class_helper "demote" %>> <%= sort_link_helper t(:label_demote), "demote" %> </th>
+		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %> </th><th></th><th></th><th></th>
 	</tr>
 	<% @statusobjects[:recordset].each do |statusobject| %>
 	<tr>
