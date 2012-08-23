@@ -50,7 +50,15 @@ class LinksController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.info (fname){"params=#{params.inspect}"}
 		@link = Link.find(params[:id])
-		@object_in_explorer=PlmServices.get_object(params[:object_model], params[:object_id])
+		@object_in_explorer = PlmServices.get_object(params[:object_model], params[:object_id])
+		@root = PlmServices.get_object(params[:root_model], params[:root_id])
+		LOG.info (fname){"link=#{@link.inspect}"}
+		LOG.info (fname){"owner=#{@link.owner.inspect}"}
+		LOG.info (fname){"link effectivities=#{@link.links_effectivities}"}
+		LOG.info (fname){"effectivities=#{@link.effectivities}"}
+		LOG.info (fname){"effectivities_mdlid=#{@link.effectivities_mdlid}"}
+		LOG.info (fname){"object_in_explorer=#{@object_in_explorer.inspect}"}
+		LOG.info (fname){"root=#{@root.inspect}"}
 	end
 
 	# POST /links
@@ -72,11 +80,84 @@ class LinksController < ApplicationController
 
 	# PUT /links/1
 	# PUT /links/1.xml
+	def update_in_tree
+		fname="#{self.class.name}.#{__method__}"
+		LOG.info(fname){"params=#{params}"}
+		@link = Link.find(params[:id])
+		@link.update_accessor(current_user)
+		err = false
+		respond_to do |format|
+			values = OpenWFE::Json::from_json(params[:link][:values])
+			LOG.info(fname){"values=#{values}"}
+			if @link.update_attributes(params[:link])
+				flash[:notice] = 'Link was successfully updated.'
+				LOG.info(fname){"effectivities=#{params[:effectivities]}"}
+				unless params[:effectivities].nil?
+					if params[:effectivities].is_a?(Array)
+						par_effs=params[:effectivities]
+					else
+						par_effs=[]
+						par_effs<<params[:effectivities]
+					end
+					relation = Relation.find_by_name("link_effectivity")
+					unless relation.nil?
+						# menage des autres effectivites
+						@link.clean_eff(par_effs)
+						par_effs.each do |par_eff|
+							eff = PlmServices.get_object_by_mdlid(par_eff)
+							LOG.info(fname){"eff:#{eff}"}
+							link_eff_ = Link.create_new(@link, eff, relation, current_user) unless eff.nil?
+							LOG.info(fname){"link_eff#{link_eff_}"}
+							link_eff = link_eff_[:link]
+							unless link_eff.nil?
+								unless link_eff.exists?
+									if link_eff.save
+										ctrltype=t("ctrl_#{eff.model_name}")
+										flash[:notice] << t(:ctrl_object_added,
+		                  :typeobj => ctrltype,
+		                  :ident => eff.ident,
+		                  :relation => relation.ident,
+		                  :msg => link_eff_[:msg])
+									else
+									# lien link-effectivite non sauve
+									err = true
+									end
+								end
+							else
+							# lien link-effectivite non cree
+							err = true
+							end
+						end
+					else
+					# relation link_effectivity non trouvee
+					err = true
+					end
+				end
+			else
+			# lien non modifie
+			err = true
+			end
+
+			LOG.info(fname){"err=#{err}"}
+			@object_in_explorer = PlmServices.get_object(params[:object_model], params[:object_id])
+			@root = PlmServices.get_object(params[:root_model], params[:root_id])
+			if err == false
+				#format.html { redirect_to(@link) }
+				format.html { render :action => "edit_in_tree"}
+				format.xml  { head :ok }
+			else
+				format.html { render :action => "edit_in_tree" }
+				format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
+			end
+		end
+	end
+
 	def update
 		fname="#{self.class.name}.#{__method__}"
 		LOG.info(fname){"params=#{params}"}
 		@link = Link.find(params[:id])
 		@link.update_accessor(current_user)
+		err = false
 		respond_to do |format|
 			values = OpenWFE::Json::from_json(params[:link][:values])
 			LOG.info(fname){"values=#{values}"}
@@ -85,9 +166,11 @@ class LinksController < ApplicationController
 				format.html { redirect_to(@link) }
 				format.xml  { head :ok }
 			else
+			# lien non modifie
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
 			end
+
 		end
 	end
 

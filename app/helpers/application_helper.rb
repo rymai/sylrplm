@@ -190,9 +190,26 @@ module ApplicationHelper
 		image_submit_tag(name.to_s+".png",:title=>t(name), :class=>"submit")
 	end
 
+	def h_explorer (obj, method = nil)
+		h_link_to("explorer", obj, method)
+	end
+
+	def h_link_to (name, obj, method = nil)
+
+		if !method.nil? && obj.respond_to?(method)
+		txt = obj.send(method)
+		else
+		txt = obj.ident
+		end
+
+		if txt.nil? || txt == ""
+		txt = obj.to_s
+		end
+		link_to( txt, obj, {:title => t(name)} )
+	end
+
 	def h_destroy(obj)
-		img=h_img_destroy
-		link_to(img.to_s , obj, :confirm => t(:msg_confirm), :method => :delete)
+		link_to( h_img_destroy.to_s, obj, :confirm => t(:msg_confirm), :method => :delete)
 	end
 
 	def sort_td_class_helper(param)
@@ -220,13 +237,13 @@ module ApplicationHelper
 	def h_show_tree(obj)
 		bloc=""
 		if ((@tree && @tree.size>0) || (@tree_up && @tree_up.size>0))
-			bloc << "<h1></h1>"
-			bloc << "<tr>"
-			form_for(obj, :url => {:id => obj.id, :action => "select_view" }) do |f|
-				bloc <<	"<td>#{select("relation","view", options_from_collection_for_select( @views, :id, :name))}</td>"
-				bloc << "<td>#{submit_tag t("select_view")}</td>"
-			end
-			bloc << "</tr>"
+			#bloc << "<h1></h1>"
+			#bloc << "<tr>"
+			#form_for(obj, :url => {:id => obj.id, :action => "select_view" }) do |f|
+			#	bloc <<	"<td>#{select("relation","view", options_from_collection_for_select( @views, :id, :name))}</td>"
+			#	bloc << "<td>#{submit_tag t("select_view")}</td>"
+			#end
+			#bloc << "</tr>"
 			bloc << "<div id='dtree'>"
 			if (@tree && @tree.size>0)
 				bloc << "<table class='menu_bas' >"

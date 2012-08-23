@@ -22,6 +22,22 @@ class Part < ActiveRecord::Base
 	#has_and_belongs_to_many :documents, :join_table => "links",
 	#:foreign_key => "father_id", :association_foreign_key => "child_id", :conditions => ["father_type='part' AND child_type='document'"]
 
+	has_many :links_prd_effectivities,
+    :class_name => "Link",
+    :foreign_key => "father_id",
+    :conditions => ["father_plmtype='part' and child_plmtype='part' and father_typesobject_id in (select id from typesobjects where name='PRD') and child_typesobject_id in (select id from typesobjects where name='EFF')"]
+	has_many :prd_effectivities ,
+    :through => :links_prd_effectivities,
+    :source => :part
+
+	has_many :links_var_effectivities,
+    :class_name => "Link",
+    :foreign_key => "father_id",
+    :conditions => ["father_plmtype='part' and child_plmtype='part' and father_typesobject_id in (select id from typesobjects where name='VAR') and child_typesobject_id in (select id from typesobjects where name='EFF')"]
+	has_many :var_effectivities ,
+    :through => :links_var_effectivities,
+    :source => :part
+
 	has_many :links_documents,
     :class_name => "Link",
     :foreign_key => "father_id",
@@ -118,14 +134,14 @@ class Part < ActiveRecord::Base
 	def relations
 		Relation.relations_for(self)
 	end
-	
+
 	def variants
 		fname= "#{self.class.name}.#{__method__}"
 		ret=[]
 		parts.each do |part|
-			LOG.info (fname){"part:#part.ident}"}
 			if part.typesobject.name == "VAR"
-				ret << part
+				LOG.info (fname){"part:#{part}"}
+			ret << part
 			end
 		end
 		ret

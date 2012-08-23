@@ -327,5 +327,10 @@ module Models
 			return false
 			end
 		end
+
+		# identifiant informatique : model + id
+		def mdlid
+			model_name+"."+id.to_s
+		end
 	end
 end

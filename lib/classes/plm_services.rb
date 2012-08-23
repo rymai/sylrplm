@@ -1,4 +1,14 @@
 class PlmServices
+	
+	def self.get_object_by_mdlid(mdlid)
+		fields = mdlid.split(".")
+		if fields.size == 2
+			get_object(fields[0], fields[1])
+		else
+			nil
+		end
+	end
+
 	def self.get_object(type, id)
 		# parts devient Part
 		fname = "PlmServices.#{__method__}(#{type},#{id})"

@@ -1,28 +1,25 @@
 <h1><%= t("group_show") %><%= h @group.name %></h1>
 <table>
-  <tr>
-    <td class="wide-first-col">id</td>
-    <td><%= @group.id %></td>
-  </tr>
-  <tr>
-    <td><%= t("label_name") %></td>
-    <td><%= @group.name %></td>
-  </tr>
-  <tr>
-    <td><%= t("label_group_users") %></td>
-    <td><%= comma_links(@group.users, :login) %></td>
-  </tr>
-  <tr>
-    <td><%= t("label_group_father") %></td>
-    <td><%= @group.father_name %></td>
-  </tr>
-  
+	<tr>
+		<td class="wide-first-col">id</td>
+		<td><%= @group.id %></td>
+	</tr>
+	<tr>
+		<td><%= t("label_name") %></td>
+		<td><%= @group.name %></td>
+	</tr>
+	<tr>
+		<td><%= t("label_group_users") %></td>
+		<td><%= comma_links(@group.users, :login) %></td>
+	</tr>
+	<tr>
+		<td><%= t("label_group_father") %></td>
+		<td><%= @group.father_name %></td>
+	</tr>
 </table>
 <table class='menu_bas'>
-<tr>
-<td><%= link_to t("edit"), edit_group_path(@group)  %></td>
-<td><%= link_to t("list"),  groups_path %></td>
-</tr>
-</table>
-<%= h_show_tree %>
-
+	<tr>
+		<td><%= link_to t("edit"), edit_group_path(@group)  %></td>
+		<td><%= link_to t("list"),  groups_path %></td>
+	</tr>
+</table><%= h_show_tree @group %>

@@ -72,6 +72,10 @@ ActionController::Routing::Routes.draw do |map|
 	:action => 'edit_in_tree',
 	:conditions => { :method => :get })
 	map.connect(
+	'links/:id/update_in_tree',
+	:controller => 'links',
+	:action => 'update_in_tree')
+	map.connect(
 	'links/:id/remove_link',
 	:controller => 'links',
 	:action => 'remove_link')

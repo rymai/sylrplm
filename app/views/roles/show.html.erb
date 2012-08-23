@@ -1,24 +1,20 @@
-<h1><%=t(:role_show) %></h1>
+<h1><%= t(:role_show) %></h1>
 <p>
-  <b><%=t(:label_name) %></b>
-  <%=h @role.title %>
+	<b><%= t(:label_name) %></b>
+	<%= h @role.title %>
 </p>
 <p>
-  <b><%=t(:label_description)%></b>
-  <%=h @role.description %>
+	<b><%= t(:label_description)%></b>
+	<%= h @role.description %>
 </p>
 <p>
-  <b><%=t(:label_role_father)%></b>
-  <%=h @role.father_name %>
+	<b><%= t(:label_role_father)%></b>
+	<%= h @role.father_name %>
 </p>
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= button_to t(:edit), edit_role_path(@role)%>
-        </td>
-        <td>
-            <%= button_to t(:list), roles_path %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= button_to t(:edit), edit_role_path(@role)%> </td>
+		<td> <%= button_to t(:list), roles_path %> </td>
+	</tr>
 </table>
-<%= h_show_tree %>
+<%= h_show_tree @role %> 

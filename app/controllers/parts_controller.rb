@@ -1,5 +1,5 @@
 class PartsController < ApplicationController
-	 include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectControllerModule
 	before_filter :check_init, :only => :new
 	access_control(Access.find_for_controller(controller_class_name))
 	before_filter :check_user, :only => [:new, :edit]
@@ -36,7 +36,7 @@ class PartsController < ApplicationController
 
 	def show_
 		fname= "#{controller_class_name}.#{__method__}"
-		#LOG.debug (fname){"begin:params=#{params}"}
+		LOG.debug (fname){"begin:params=#{params}"}
 		define_view
 		@part                    = Part.find(params[:id])
 		#@relations               = Relation.relations_for(@part)
@@ -44,13 +44,16 @@ class PartsController < ApplicationController
 		:conditions => ["id != #{@part.id}"],
 		:order => 'ident ASC',
 		:per_page => cfg_items_per_page)
-		@first_status = Statusobject.get_first("part") 
-		@tree         = build_tree(@part, @view_id)
+		@first_status = Statusobject.get_first("part")
+		@variant = PlmServices.get_object_by_mdlid(params[:variant]) unless params[:variant].nil?
+		@tree         = build_tree(@part, @view_id, @variant)
 		@tree_up      = build_tree_up(@part, @view_id)
 		#@documents = @part.documents
 		#@parts     = @part.parts
 		#@projects  = @part.projects_up
-		#LOG.debug (fname){"end:view=#{View.find(@view_id).to_s}"}
+		LOG.info (fname){"variant=#{@variant}"}
+		LOG.info (fname){"variant eff=#{@variant.var_effectivities}"} unless @variant.nil?
+		LOG.debug (fname){"end:view=#{View.find(@view_id).to_s}"}
 	end
 
 	# GET /parts/new

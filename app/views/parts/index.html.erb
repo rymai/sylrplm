@@ -32,17 +32,13 @@
 	<% @parts[:recordset].each do |part| %>
 	<tr>
 		<td><%= icone(part) %></td>
-		<td><%= part.ident %></td>
+		<td><%= h_explorer part %></td>
 		<td><%= part.revision %></td>
-		<td> 
-		<%= part.typesobject.name unless part.typesobject.nil? %>
-		</td>
+		<td><%= h_explorer part.typesobject, :name unless part.typesobject.nil? %> </td>
 		<td><%= part.designation %></td>
-		<td> 
-		<%= part.statusobject.name unless part.statusobject.nil? %>
-		 </td>
-		<td><%= part.owner.login %></td>
-		<td><%= part.group.name %></td>
+		<td><%= h_explorer part.statusobject, :name unless part.statusobject.nil? %> </td>
+		<td><%= h_explorer part.owner, :login %></td>
+		<td><%= h_explorer part.group, :name %></td>
 		<td><%= part.projowner.ident %></td>
 		<td><%= l part.date %></td>
 		<td><%= link_to h_img_show.to_s, part %></td>

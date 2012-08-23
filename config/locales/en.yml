@@ -282,6 +282,7 @@ en:
   cancel: Cancel
   menu_action: Action(s)
   back_to_object: "Back to :"
+  back_to_root: "Back to root :"
   # attributs generaux
   faq_question: Question
   faq_answer: answer
@@ -497,6 +498,7 @@ en:
   label_father: Father
   label_child: Child
   label_values: Values
+  label_effectivities: Effectivities
   # main
   legend_desktop: My desktop
   label_domain: Domain

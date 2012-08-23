@@ -27,7 +27,7 @@ class Link < ActiveRecord::Base
 		child.belongs_to :datafile , :conditions => ["child_plmtype='datafile'"], :class_name => "Datafile"
 	end
 
-	#objets pouvant etre pere:"document", "part", "project", "customer", "definition", "history"
+	#objets pouvant etre pere:"document", "part", "project", "customer", "definition", "history", "link"(pour les effectivites)
 	with_options :foreign_key => 'father_id' do |father|
 		father.belongs_to :document_up , :conditions => ["father_plmtype='document'"], :class_name => "Document"
 		father.belongs_to :part_up , :conditions => ["father_plmtype='part'"], :class_name => "Part"
@@ -35,10 +35,40 @@ class Link < ActiveRecord::Base
 		father.belongs_to :customer_up , :conditions => ["father_plmtype='customer'"], :class_name => "Customer"
 		father.belongs_to :definition_up , :conditions => ["father_plmtype='definition'"], :class_name => "Definition"
 		father.belongs_to :history_up , :conditions => ["father_plmtype='history_entry'"], :class_name => "Ruote::Sylrplm::HistoryEntry"
+		father.belongs_to :link_up , :conditions => ["father_plmtype='link'"], :class_name => "Link"
 	end
+
+	has_many :links_effectivities ,
+    :class_name => "Link",
+    :foreign_key => "father_id",
+    :conditions => ["father_plmtype='link' and child_plmtype='part' and child_typesobject_id in (select id from typesobjects as t where t.name='EFF')"]
+	has_many :effectivities ,
+    :through => :links_effectivities,
+    :source => :part
 
 	def designation
 		"#{type}.#{id}"
+	end
+
+	def effectivities_mdlid
+		ret=[]
+		self.effectivities.each do |eff|
+			ret << eff.mdlid
+		end
+		ret
+	end
+
+	#menage des effectivites non presentes dans effs_mdlid: [part.24, part.22]
+	def clean_eff(effs_mdlid)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.info (fname) {"effs_mdlid=#{effs_mdlid}"}
+		links_effectivities.each do |link_eff_cur|
+			LOG.info (fname) {"link_eff_cur=#{link_eff_cur.ident} : #{link_eff_cur.child.mdlid}"}
+			unless effs_mdlid.include?(link_eff_cur.child.mdlid)
+				LOG.info (fname) {"destroy:#{link_eff_cur.ident}"}
+			link_eff_cur.destroy
+			end
+		end
 	end
 
 	def after_find
@@ -48,6 +78,10 @@ class Link < ActiveRecord::Base
 			self.values = fields unless fields.nil?
 			LOG.info (fname) {"#{fields} : #{self.values}"}
 		end
+	end
+
+	def typesobject_id
+		relation.typesobject_id
 	end
 
 	def typesobject
@@ -142,6 +176,7 @@ class Link < ActiveRecord::Base
 	end
 
 	def exists?
+		fname= "#{self.class.name}.#{__method__}"
 		cond="father_plmtype='#{self.father_plmtype}' and child_plmtype='#{self.child_plmtype}' and father_typesobject_id =#{self.father_typesobject_id} and child_typesobject_id =#{self.child_typesobject_id} and relation_id =#{self.relation_id}"
 		nb=0
 		idt = self.ident
@@ -149,7 +184,7 @@ class Link < ActiveRecord::Base
 		#puts idt+" ==? "+self.ident
 			nb += 1 if idt == link.ident
 		end
-		LOG.info {nb.to_s+" liens identiques:"+cond}
+		LOG.info (fname){nb.to_s+" liens identiques:"+cond}
 		nb > 0
 	end
 

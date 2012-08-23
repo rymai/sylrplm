@@ -282,6 +282,7 @@ fr:
   cancel: Annuler
   menu_action: Action(s)
   back_to_object: "Retour à :"
+  back_to_root: "Retour au sommet :"
   # attributs generaux
   faq_question: Question
   faq_answer: Réponse
@@ -497,6 +498,7 @@ fr:
   label_father: Père
   label_child: Fils
   label_values: Valeurs
+  label_effectivities: Effectivités
   # main
   legend_desktop: Mon bureau
   label_domain: Domaine
