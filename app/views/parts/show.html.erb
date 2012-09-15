@@ -38,8 +38,9 @@
 	<b><%= t(:label_date) %></b>
 	<%= l @part.date %>
 </p>
-<%= render(:partial => "shared/tree", :object => @part ) %>
+<h1></h1>
 <table class='menu_bas'>
+	<%= render(:partial => "shared/tree", :object => @part ) %>
 	<% unless @favori.get('document').count==0 || @part.relations["document"].count==0 %>
 	<tr>
 		<% form_for(@part, :url => {:id => @part.id, :action => "add_docs" }, :method => :get) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @part.relations["document"], :id, :ident)) %></td>
@@ -54,8 +55,8 @@
 		<% end %>
 	</tr>
 	<% end %>
+	<%= render(:partial => "shared/object_workitems", :object =>@part) %>
 </table>
-<%= render(:partial => "shared/object_workitems", :object =>@part) %>
 <% unless @part.relations["forum"].count==0 %>
 <hr/>
 <table class='menu_bas'>

@@ -20,11 +20,10 @@
 		<th <%= sort_td_class_helper "typesobject_id" %>><%= sort_link_helper t("label_typesobject"), "typesobject_id" %></th>
 		<th <%= sort_td_class_helper "designation" %>><%= sort_link_helper t("label_designation"), "designation" %></th>
 		<th <%= sort_td_class_helper "statusobject_id" %>><%= sort_link_helper t("label_statusobject"), "statusobject_id" %></th>
-		<th <%= sort_td_class_helper "owner" %>><%= sort_link_helper t("label_responsible"), "owner" %></th>
-		<th <%= sort_td_class_helper "group" %>><%= sort_link_helper t("label_group"), "group" %></th>
-		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), :projowner %> </th>
+		<th <%= sort_td_class_helper "owner" %>><%= sort_link_helper t("label_responsible"), "owner_id" %></th>
+		<th <%= sort_td_class_helper "group" %>><%= sort_link_helper t("label_group"), "group_id" %></th>
+		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), "projowner_id" %> </th>
 		<th <%= sort_td_class_helper "date" %>><%= sort_link_helper t("label_date"), "date" %></th>
-		<th></th>
 		<th></th>
 		<th></th>
 		<th></th>
@@ -39,9 +38,8 @@
 		<td><%= h_explorer part.statusobject, :name unless part.statusobject.nil? %> </td>
 		<td><%= h_explorer part.owner, :login %></td>
 		<td><%= h_explorer part.group, :name %></td>
-		<td><%= part.projowner.ident %></td>
+		<td><%= h_explorer part.projowner %></td>
 		<td><%= l part.date %></td>
-		<td><%= link_to h_img_show.to_s, part %></td>
 		<% if part.revisable?  %> <td> <% unless document.revise_by_action? %><%= h_img_revise.to_s %><% end %></td>
 		<td></td>
 		<% else %>

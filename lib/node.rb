@@ -129,11 +129,14 @@ class Node
 
 	def equals?(other_node)
 		fname="Node:#{__method__}"
-		ret = self.obj_child.ident == other_node.obj_child.ident
-		if ret == false
-		ret = self.label == other_node.label
+		#LOG.debug(fname){"#{other_node.obj_child} equals?(#{self.obj_child})"}
+		unless self.obj_child.nil? ||  other_node.obj_child.nil?
+			ret = self.obj_child.ident == other_node.obj_child.ident
+			if ret == false
+			ret = self.label == other_node.label
+			end
 		end
-		LOG.debug(fname){"#{other_node.obj_child.ident} == #{self.obj_child.ident} = #{ret}"} if ret
+		#LOG.debug(fname){"#{other_node.obj_child.ident} == #{self.obj_child.ident} = #{ret}"} if ret
 		ret
 	end
 

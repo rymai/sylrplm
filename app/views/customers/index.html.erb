@@ -19,28 +19,24 @@
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %> </th>
 		<th <%= sort_td_class_helper "designation" %>> <%= sort_link_helper t("label_designation"), "designation" %> </th>
 		<th <%= sort_td_class_helper "statusobject_id" %>> <%= sort_link_helper t("label_statusobject"), "statusobject_id" %> </th>
-		<th <%= sort_td_class_helper "owner" %>> <%= sort_link_helper t("label_responsible"), "owner" %> </th>
-		<th <%= sort_td_class_helper "group" %>> <%= sort_link_helper t("label_group"), "group" %> </th>
-		<th <%= sort_td_class_helper "projowner" %>> <%= sort_link_helper t("label_projowner"), "projowner" %> </th>
+		<th <%= sort_td_class_helper "owner" %>> <%= sort_link_helper t("label_responsible"), "owner_id" %> </th>
+		<th <%= sort_td_class_helper "group" %>> <%= sort_link_helper t("label_group"), "group_id" %> </th>
+		<th <%= sort_td_class_helper "projowner" %>> <%= sort_link_helper t("label_projowner"), "projowner_id" %> </th>
 		<th <%= sort_td_class_helper "date" %>> <%= sort_link_helper t("label_date"), "date" %> </th>
-		<th></th>
 		<th></th>
 		<th></th>
 	</tr>
 	<% @customers[:recordset].each do |customer| %>
 	<tr>
 		<td> <%= icone(customer) %> </td>
-		<td> <%= h customer.ident %> </td>
-		<% if(customer.typesobject != nil) %> <td> <%= h customer.typesobject.name %> </td>
-		<% else %> <td></td>
-		<% end %> <td> <%= h customer.designation %> </td>
-		<% if(customer.statusobject != nil) %> <td> <%= h customer.statusobject.name %> </td>
-		<% else %> <td></td>
-		<% end %> <td> <%= h customer.owner.login %> </td>
-		<td> <%= h customer.group.name %> </td>
-		<td> <%= h customer.projowner.ident %> </td>
+		<td> <%= h_explorer customer %> </td>
+		<td> <%= h_explorer customer.typesobject, :name unless customer.typesobject.nil? %> </td>
+		<td> <%= h customer.designation %> </td>
+		<td> <%= h_explorer customer.statusobject, :name unless customer.statusobject.nil? %> </td>
+		<td> <%= h_explorer customer.owner, :login %> </td>
+		<td> <%= h_explorer customer.group, :name %> </td>
+		<td> <%= h_explorer customer.projowner %> </td>
 		<td> <%= l customer.date %> </td>
-		<td> <%= link_to h_img_show.to_s, customer %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_customer_path(customer) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, customer, :confirm => t("msg_confirm"), :method => :delete %> </td>
 		<td> <% if logged_in? %>

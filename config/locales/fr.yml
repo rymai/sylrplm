@@ -204,7 +204,7 @@ fr:
   legend_tree_up: Référenceur
   img_checkout: Réservé
   img_checkin: Non réservé
-  select_context: Choix de la vue et de la variante
+  select_context: Choix vue et variante
   # help
   help_no_help_title: Aide absente
   help_no_help: Pas d'aide pour %{key}
@@ -241,6 +241,7 @@ fr:
   launchthis: Lancer ce processus
   launch: Lancer un nouveau processus
   explorer: "Explorer"
+  explorer_obj: "Explorer %{obj}"
   list: "Liste"
   query: "Filtre"
   nb_items_per_page: par page
@@ -352,6 +353,7 @@ fr:
   label_customer_forum: Forums associés       
   label_view: Vue
   label_variant: Variante 
+  btn_select: Sélectionner
   # fin general
   # access
   legend_access: Renseignez les propriétés de l'autorisation

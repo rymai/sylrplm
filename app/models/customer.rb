@@ -32,6 +32,9 @@ class Customer < ActiveRecord::Base
     :through => :links_projects, 
     :source => :project
   #
+  
+  
+  
   def self.create_new(customer,user)
     if(customer!=nil)
       obj=Customer.new(customer)

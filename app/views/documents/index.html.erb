@@ -20,9 +20,9 @@
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %></th>
 		<th <%= sort_td_class_helper "designation" %>> <%= sort_link_helper t("label_designation"), "designation" %></th>
 		<th <%= sort_td_class_helper "statusobject_id" %>> <%= sort_link_helper t("label_statusobject"), "statusobject_id" %></th>
-		<th <%= sort_td_class_helper "owner" %>> <%= sort_link_helper t("label_responsible"), "owner" %></th>
-		<th <%= sort_td_class_helper "group" %>> <%= sort_link_helper t("label_group"), "group" %></th>
-		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), :projowner %> </th>
+		<th <%= sort_td_class_helper "owner" %>> <%= sort_link_helper t("label_responsible"), "owner_id" %></th>
+		<th <%= sort_td_class_helper "group" %>> <%= sort_link_helper t("label_group"), "group_id" %></th>
+		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), "projowner_id" %> </th>
 		<th> <%= t("label_nbfiles") %></th>
 		<th <%= sort_td_class_helper "date" %>> <%= sort_link_helper t("label_date"), "date" %></th>
 		<th></th>
@@ -35,17 +35,17 @@
 	@documents[:recordset].each do |document| %>
 	<tr>
 		<td> <%= icone(document) %></td>
-		<td> <%= h_if_differ(document , previous,  "ident") %> </td>
-		<td> <%= h_if_differ(document , previous,  "revision") %> </td>
-		<td> <%= h_if_differ(document , previous,  "typesobject.name" ) unless document.typesobject.nil? %></td>
-		<td> <%= h_if_differ(document , previous,  "designation") %> </td>
-		<td> <%= h_if_differ(document , previous,  "statusobject.name") unless document.statusobject.nil?  %></td>
-		<td> <%= h_if_differ(document , previous,  "owner.login") %></td>
-		<td> <%= h_if_differ(document , previous,  "group.name") %></td>
-		<td> <%= h_if_differ(document , previous,  "projowner.ident") %>
+		<td> <%= h_if_differ( (h_explorer document, :ident), (h_explorer previous, :ident) ) %> </td>
+		<td> <%= document.revision %> </td>
+		<td> <%= h_if_differ( (h_explorer document.typesobject, :name) , ((h_explorer previous.typesobject, :name) unless previous.nil?) ) unless document.typesobject.nil? %></td>
+		<td> <%= h_if_differ( document.designation , (previous.designation unless previous.nil?)) %> </td>
+		<td> <%= h_if_differ( (h_explorer document.statusobject, :name) , ((h_explorer previous.statusobject, :name) unless previous.nil?)) unless document.statusobject.nil?  %></td>
+		<td> <%= h_explorer document.owner, :login %></td>
+		<td> <%= h_explorer document.group, :name %></td>
+		<td> <%= h_explorer document.projowner %>
 		(<%= document.projowner.typeaccess.name%>) </td>
 		<td> <%= h document.datafiles.length %></td>
-		<td> <%= h_if_differ(document , previous,  "date") %> </td>
+		<td> <%= document.date %> </td>
 		<td> <% if document.checked? %>
 		<%= h_img_checkout.to_s if document.checked? %>
 		<%else%>

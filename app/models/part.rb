@@ -78,9 +78,9 @@ class Part < ActiveRecord::Base
     :through => :links_customers_up,
     :source => :customer_up
 	#
-	def to_s
-		self.ident+"/"+self.revision+"-"+self.designation+"-"+self.typesobject.name+"-"+self.statusobject.name
-	end
+	#def to_s
+	#	self.ident+"/"+self.revision+"-"+self.designation+"-"+self.typesobject.name+"-"+self.statusobject.name
+	#end
 
 	def self.create_new(part,user)
 		if(part!=nil)

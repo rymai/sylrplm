@@ -14,15 +14,13 @@
 		<th> <%= t(:label_role_father) %> </th>
 		<th> <%= t(:label_role_users) %> </th>
 		<th></th>
-		<th></th><th></th>
+		<th></th>
 	</tr>
 	<% @roles[:recordset].each do |role| %>
 	<tr>
 		<td> <%= role.title %> </td>
 		<td> <%= role.description %> </td>
-		<td> <%= role.father_name %> </td>
-		<td><%= comma_links(role.users, :login) %></td>
-		<td> <%= link_to h_img_show.to_s, role %> </td>
+		<td> <%= h_explorer role.father, :name unless role.father.nil? %> <td><%= comma_links(role.users, :login) %></td>
 		<td> <%= link_to h_img_edit.to_s, edit_role_path(role) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, role, :confirm => t(:msg_confirm), :method => :delete %> </td>
 	</tr>

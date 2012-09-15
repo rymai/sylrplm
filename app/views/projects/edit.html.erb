@@ -1,27 +1,15 @@
-<h1><%=t(:project_edit) %></h1>
+<h1><%= t(:project_edit) %></h1>
 <% form_for(@project) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "projects/edit",:locals => { :f => f, :fonct=>"edit" }) %>
-
 <table class='menu_bas'>
-    <tr>
-        <td>
-            <%= f.submit t("update") %>
-        </td>
-        
-            <%if @project.statusobject.promote==true %>
-            <td><%= link_to t(:promote), :id => @project.id, :action => :promote , :confirm => t("msg_confirm") %></td>
-            <%end %>
-            <%if @project.statusobject.demote==true %>
-            <td><%= link_to t(:demote), :id => @project.id, :action => :demote , :confirm => t("msg_confirm") %></td>
-            <%end %>
-        
-        <td>
-            <%= link_to t("explorer"), @project %>
-        </td>
-        <td>
-            <%= link_to t("list"), projects_path %>
-        </td>
-    </tr>
+	<tr>
+		<td> <%= f.submit t("update") %> </td>
+		<%if @project.statusobject.promote==true %> <td><%= link_to t(:promote), :id => @project.id, :action => :promote , :confirm => t("msg_confirm") %></td>
+		<%end %>
+		<%if @project.statusobject.demote==true %> <td><%= link_to t(:demote), :id => @project.id, :action => :demote , :confirm => t("msg_confirm") %></td>
+		<%end %> <td> <%= link_to t("explorer"), @project %> </td>
+		<td> <%= link_to t("list"), projects_path %> </td>
+	</tr>
 </table>
 <% end %>

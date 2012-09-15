@@ -9,7 +9,8 @@
 		<%= stylesheet_link_tag @theme+"/tree" %>
 		<%= javascript_include_tag "tree" %>
 	</head>
-	<body id="sylrplm">
+	<body id="sylrplm" ONLOAD=doLoad('<%= controller.params.to_json %>');>
+		>
 		<div id="container">
 			<%= render "main/frame" %>
 		</div>

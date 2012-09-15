@@ -1,5 +1,4 @@
 <% if ((@tree && @tree.size>0) || (@tree_up && @tree_up.size>0)) %> <!-- -->
-<h1></h1>
 <% form_for(object, :url => {:id => object.id, :action => "select_view" }) do |f| %> <!-- -->
 <input type='hidden' name='root_id' value='<%= @part.id%>'>
 <input type='hidden' name='root_model' value='<%= @part.model_name%>'>
@@ -8,8 +7,10 @@
 	<%= select_tag("view_id", options_from_collection_for_select( @views, :id, :name, @view_id.to_i))%>
 	<br/>
 	<%= f.label t(:label_variant) %>
-	<%= select_tag( "variant", options_from_collection_for_select(@part.variants, :mdlid, :to_s)) %> </td>
-	<td><%= submit_tag t("select_context") %> </td>
+	<%= select_tag( "variant", options_from_collection_for_select(@part.variants, :mdlid, :to_s, (@variant.mdlid unless @variant.nil?))) %>
+	<br/>
+	<%= f.label "" %>
+	<%= submit_tag t("select_context") %> </td>
 </tr>
 <% end %>
 <div id='dtree'>

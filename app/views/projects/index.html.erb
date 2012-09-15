@@ -20,11 +20,10 @@
 		<th <%= sort_td_class_helper "typeaccess_id" %>> <%= sort_link_helper t(:label_typeaccess), "typeaccess_id" %> </th>
 		<th <%= sort_td_class_helper "designation" %>> <%= sort_link_helper t(:label_designation), "designation" %> </th>
 		<th <%= sort_td_class_helper "statusobject_id" %>> <%= sort_link_helper t(:label_statusobject), "statusobject_id" %> </th>
-		<th <%= sort_td_class_helper "owner" %>> <%= sort_link_helper t(:label_responsible), "owner" %> </th>
-		<th <%= sort_td_class_helper "group" %>> <%= sort_link_helper t(:label_group), "group" %> </th>
+		<th <%= sort_td_class_helper "owner" %>> <%= sort_link_helper t(:label_responsible), "owner_id" %> </th>
+		<th <%= sort_td_class_helper "group" %>> <%= sort_link_helper t(:label_group), "group_id" %> </th>
 		<th <%= sort_td_class_helper "date" %>> <%= sort_link_helper t(:label_date) , "date" %> </th>
 		<th <%= sort_td_class_helper "users" %>> <%= sort_link_helper t(:label_users) , "users" %> </th>
-		<th></th>
 		<th></th>
 		<th></th>
 		<th></th>
@@ -32,16 +31,15 @@
 	<% @projects[:recordset].each do |project| %>
 	<tr>
 		<td> <%= icone(project) %> </td>
-		<td> <%= h project.ident %> </td>
-		<td> <%= h project.typesobject.name unless project.typesobject.nil? %></td>
-		<td> <%= h project.typeaccess.name unless project.typeaccess.nil? %> </td>
+		<td> <%= h_explorer project %> </td>
+		<td> <%= h_explorer project.typesobject, :name unless project.typesobject.nil? %></td>
+		<td> <%= h_explorer project.typeaccess, :name unless project.typeaccess.nil? %> </td>
 		<td> <%= h project.designation %> </td>
-		<td> <%= h project.statusobject.name unless project.statusobject.nil? %> </td>
-		<td> <%= h project.owner.login %> </td>
-		<td> <%= h project.group.name %> </td>
+		<td> <%= h_explorer project.statusobject, :name unless project.statusobject.nil? %> </td>
+		<td> <%= h_explorer project.owner :login %> </td>
+		<td> <%= h_explorer project.group  %> </td>
 		<td> <%= l project.date unless project.date.nil? %> </td>
 		<td> <%= comma_links(project.users, :login) %></td>
-		<td> <%= link_to h_img_show.to_s, project %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_project_path(project) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, project, :confirm => t(:msg_confirm), :method => :delete %> </td>
 		<td> <% if logged_in? %>

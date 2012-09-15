@@ -157,6 +157,35 @@ function updateRelation() {
 	}
 }
 
+function doLoad(i_params) {
+	var params = JSON.parse(i_params)
+	//alert('params=' + params+' ,controller='+params.controller+' ,action='+params.action+' ,id='+params.id);
+		
+}
+
+function doUnload() {
+            // Do something when document is about to be unloaded.
+}
+/*
+ * met a jour un champ de la fenetre appelante
+ * appelle par les vues index utilisees en mode (todo) select
+ * @param html_ident: id (au sens html) du champ a mettre a jour
+ * @param id: id (au sens bd) du champ a mettre a jour
+ * @param display: valeur a afficher dans le champ
+ */
+function callSelect(html_ident, id, display) {
+	win=top.opener;
+	field_id=win.document.getElementById(html_ident+'_id');
+	field_display=win.document.getElementById(html_ident+'_display');
+	//alert ('win='+win+' html_ident='+html_ident+':'+field_id.value+' display='+field_display.value);
+	field_id.value=id;
+	field_display.value=display;
+	window.close();
+	win.focus();
+	alert (' id='+field_id.value+' display='+field_display.value);
+}
+
+
 
 
 

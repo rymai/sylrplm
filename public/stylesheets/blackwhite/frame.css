@@ -19,7 +19,7 @@ span, p, li, ul, dl, dt, dd, legend {
 	color: white;
 }
 ul, dl {
-	
+
 	margin-left: 1px;
 	padding-left: 0px;
 	text-indent: 0px;
@@ -46,9 +46,9 @@ h2 {
 /* formulaire de saisie: new et edit principalement */
 /*
  br {
-	clear: left;
-}
-*/
+ clear: left;
+ }
+ */
 label {
 	/*font-weight: bold;*/
 	color: #FFFFFF;
@@ -152,7 +152,7 @@ td {
 #menu fieldset legend {
 	color: #BBBBBB;
 	font-weight: bold;
-} 
+}
 /* fin des boites */
 
 div.favori-title {
@@ -190,6 +190,10 @@ ul.help_ul {
 }
 li.help_ul {
 	margin-top: 3px;
+}
+img {
+	width: auto;
+	height: auto;
 }
 img.icone {
 	border: none;
@@ -242,7 +246,7 @@ table.menu_bas {
 table.menu_bas .menu_bas tr {
 	border: 0px;
 }
-a, th a, a.help_tr, .help a, a.menu, a.menu_bas, .menu_bas input, input.menu_bas {
+a, th a, a.help_tr, .help a, a.menu, .menu_bas input, input.menu_bas {
 	border: 0px;
 	text-decoration: none;
 	cursor: pointer;
@@ -255,7 +259,7 @@ a, th a, a.help_tr, .help a, a.menu, a.menu_bas, .menu_bas input, input.menu_bas
 	height: 25px;
 	color: white;
 }
-.menu_bas a {
+.menu_bas a, a.menu_bas {
 	padding: 2px;
 	margin: 0px;
 	border: none;

@@ -29,3 +29,5 @@ gem "mail", "2.3.0"
 #gem "treetop", "1.4.9"
 #gem "taps", "0.3.23"
 gem "fog", "~> 1.1.2"
+#syl pour EasyAgile
+gem "gruff"

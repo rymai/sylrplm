@@ -12,10 +12,20 @@ module ApplicationHelper
 	# 1- current n'a pas le meme identifiant que previous
 	# 2- que les valeurs de l'attribut sont differentes entre les 2objets
 	# att peut etre un attribut "compose" tel que owner.login
-	def h_if_differ(current, previous,  att)
+	def h_if_differ_old(current, previous,  att)
 		ret=get_val(current,att)
 		unless previous.nil?
 			if current.ident == previous.ident && ret == get_val(previous, att)
+				ret= ""
+			end
+		end
+		ret
+	end
+
+	def h_if_differ(current, previous)
+		ret = current
+		unless previous.nil?
+			if current == previous
 				ret= ""
 			end
 		end
@@ -75,9 +85,23 @@ module ApplicationHelper
 		t("count_objects",:number_begin=>num_begin,:number_end=>num_end,:total=>objects[:total])
 	end
 
-	def form_simple_query_helper(url,objects)
-		bloc=""
-		bloc<<form_tag(url, :method=>:get)
+	# pour compatibilite seulement
+	def form_simple_query_helper(url, objects)
+		h_form_simple_query(url, objects)
+	end
+
+	def h_form_simple_query(url, objects)
+		bloc = ""
+		bloc << form_tag(url, :method=>:get)
+		bloc << h_simple_query(objects)
+		bloc << hidden_field_tag("todo" , @myparams["todo"]) unless @myparams.nil?
+		bloc << hidden_field_tag("html_ident" , @myparams["html_ident"]) unless @myparams.nil?
+		bloc << "</form>"
+		bloc
+	end
+
+	def h_simple_query(objects)
+		bloc = ""
 		bloc << "<table><tr>"
 		bloc << "<td>"
 		bloc << t("query")
@@ -110,7 +134,11 @@ module ApplicationHelper
 		"<img class=\"icone\" src=\"/images/#{name}.png\" title='#{t(File.basename(name.to_s))}'></img>"
 	end
 
-	def h_img_tit(name,title)
+	def h_img_btn(name)
+		"<img class=\"btn\" src=\"/images/#{name}.png\" title='#{t(File.basename(name.to_s))}'></img>"
+	end
+
+	def h_img_tit(name, title)
 		"<img class=\"icone\" src=\"/images/#{name}.png\" title='#{title}'></img>"
 	end
 
@@ -195,17 +223,27 @@ module ApplicationHelper
 	end
 
 	def h_link_to (name, obj, method = nil)
+		fname=self.class.name+"."+__method__.to_s
+		LOG.info (fname){"obj=#{obj}, method=#{method}"}
+		ret=""
+		unless obj.nil?
 
-		if !method.nil? && obj.respond_to?(method)
-		txt = obj.send(method)
-		else
-		txt = obj.ident
-		end
+			if method.nil?
+				method = "ident"
+			end
+			if obj.respond_to?(method)
+			txt = obj.send(method)
+			else
+			txt = obj.ident
+			end
 
-		if txt.nil? || txt == ""
-		txt = obj.to_s
+			if txt.nil? || txt == ""
+			txt = obj.to_s
+			end
+			title = t(name, :obj => obj)
+			LOG.info (fname){"title=#{title}"}
+			link_to( txt, obj, {:title => title } )
 		end
-		link_to( txt, obj, {:title => t(name)} )
 	end
 
 	def h_destroy(obj)

@@ -276,6 +276,7 @@ ActionController::Routing::Routes.draw do |map|
 	:controller => 'customers',
 	:action => 'add_forum')
 
+	
 	map.connect(
 	'users/:id/edit_password',
 	:controller => 'users',
@@ -297,6 +298,11 @@ ActionController::Routing::Routes.draw do |map|
 	:action => 'add_favori',
 	:conditions => { :method => :get })
 
+	map.connect(
+	'users/browse',
+	:controller => 'users',
+	:action => 'browse')
+	
 	map.resources :groups
 
 	map.resources :user_groups

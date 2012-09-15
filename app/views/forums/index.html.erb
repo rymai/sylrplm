@@ -23,20 +23,18 @@
 		<th> <%= t(:label_projowner) %></th>
 		<th></th>
 		<th></th>
-		<th></th>
 	</tr>
 	<% @forums[:recordset].each do |forum| %>
 	<tr>
-		<td> <%= h forum.typesobject.name %> </td>
-		<td> <%= h forum.statusobject.name %> </td>
+		<td> <%= h_explorer forum.typesobject, :name %> </td>
+		<td> <%= h_explorer forum.statusobject, :name %> </td>
 		<td> <%= h forum.subject %> </td>
 		<td> <%= h forum.description %> </td>
 		<td> <% if forum.owner != nil %>
-		<%= h forum.owner.login %>
+		<%= h_explorer forum.owner, :login %>
 		<% end %> </td>
-		<td><%= h forum.group.name %></td>
-		<td><%= h forum.projowner.ident %></td>
-		<td> <%= link_to h_img_show.to_s, forum %> </td>
+		<td><%= h_explorer forum.group, :name %></td>
+		<td><%= h_explorer forum.projowner %></td>
 		<% unless forum.frozen? %> <td> <%= link_to h_img_edit.to_s, edit_forum_path(forum) %> </td>
 		<td> <%= link_to h_img_destroy, forum, :confirm => t("msg_confirm"), :method => :delete %> </td>
 		<% end %>

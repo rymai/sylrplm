@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   include Controllers::PlmObjectControllerModule
 
   helper :all  # include all helpers, all the time
-  helper_method :current_user, :logged_in?, :admin_logged_in?
+  helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
@@ -131,16 +131,15 @@ class ApplicationController < ActionController::Base
   # definition des variables globales.
   def define_variables
     @favori      = session[:favori] ||= Favori.new
-    @urlbase          = "http://"+request.env["HTTP_HOST"]
     @theme            = User.find_theme(session)
-    @themes = get_themes(@theme)
     @language=SYLRPLM::LOCAL_DEFAULT
+	  @urlbase          = "http://"+request.env["HTTP_HOST"]
+    @themes = get_themes(@theme)
     @languages = get_languages
     @notification=SYLRPLM::NOTIFICATION_DEFAULT
     @time_zone=SYLRPLM::TIME_ZONE_DEFAULT
     # mise n forme d'une tache (workitem)
     @payload_partial = 'shared/ruote_forms'
-
     WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
     WillPaginate::ViewHelpers.pagination_options[:next_label] = t('label_next')
     WillPaginate::ViewHelpers.pagination_options[:page_links ] = true  # when false, only previous/next links are rendered (default: true)
@@ -149,9 +148,9 @@ class ApplicationController < ActionController::Base
     WillPaginate::ViewHelpers.pagination_options[:inner_window] = 10 # how many links are shown around the current page (default: 4)
     WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
     WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
-
+  	@myparams = params
   end
-
+  
   # nombre d'objets listes par page si pagination
   def cfg_items_per_page
     SYLRPLM::NB_ITEMS_PER_PAGE
@@ -318,5 +317,14 @@ class ApplicationController < ActionController::Base
 			@view_id = params["view_id"]
 		end
 	end
+	
+	#
+	# verifie qu'un parametre http existe avec la bonne valeur
+	#
+	def param_equals?(key, value)
+		ret = @myparams.include?(key) && @myparams[key] == value
+		puts "#{controller_name}.#{__method__}:#{key}.#{value}=#{ret}"
+		ret
+	end	
 end
 

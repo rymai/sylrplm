@@ -93,7 +93,7 @@ module Models
 				#puts self.model_name+".find_paginate:filter_access="+filter_access.inspect
 				unless params[:query].nil? || params[:query]==""
 					cond = get_conditions(params[:query])
-					#puts self.model_name+".find_paginate:cond="+filter_access.inspect
+					puts self.model_name+".find_paginate:cond="+cond.inspect
 					unless cond.nil?
 						values=filter_access[:values].merge(cond[:values])
 					else
@@ -168,6 +168,16 @@ module Models
 				self[strcol]=val
 				end
 			end
+		end
+
+		def to_s
+			ret = "#{I18n.t("ctrl_"+model_name)}"
+			ret+= "/#{typesobject.name}" if self.respond_to?("typesobject") && !self.typesobject.nil?
+			ret+= ":#{ident}"
+			ret+= "/#{revision}" if self.respond_to?("revision")
+			ret+= ">#{designation}" if self.respond_to?("designation")
+			ret+= "<#{statusobject.name}" if self.respond_to?("statusobject") && !self.statusobject.nil?
+			ret
 		end
 
 		def model_name

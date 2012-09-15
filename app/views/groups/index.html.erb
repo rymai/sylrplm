@@ -6,34 +6,31 @@
 		<td> <%= show_help("help_groups") %></td>
 	</tr>
 </table>
-	<%= will_paginate(@groups[:recordset]) %>
+<%= will_paginate(@groups[:recordset]) %>
 <table>
-<table class='coll'>
-	<thead>
-		<tr>
-			<th <%= sort_td_class_helper "name" %>>
-		<%= sort_link_helper t("label_name"), "name" %></th>
-			<th <%= sort_td_class_helper "internal" %>>
-		<%= sort_link_helper t("label_domain"), "internal" %></th>
-		<th> <%= t("label_group_users") %></th>
-		<th> <%= t("label_group_father") %></th>
+	<table class='coll'>
+		<thead>
+			<tr>
+				<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t("label_name"), "name" %></th>
+				<th <%= sort_td_class_helper "internal" %>> <%= sort_link_helper t("label_domain"), "internal" %></th>
+				<th> <%= t("label_group_users") %></th>
+				<th> <%= t("label_group_father") %></th><th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<% for group in @groups[:recordset] %>
+		<tr class='group'>
+			<td><%= group.name %></td>
+			<td><%= group.domain %></td>
+			<td><%= comma_links(group.users, :login) %></td>
+			<td><%= h_explorer group.father, :name unless group.father.nil? %></td>
+			<td><%= link_to h_img_edit.to_s, edit_group_path(group) %> </td><td><%= link_to h_img_destroy.to_s, group, :confirm => t("msg_confirm"), :method => :delete %> </td>
 		</tr>
-	</thead>
-	<% for group in @groups[:recordset] %>
-	<tr class='group'>
-		<td><%= group.name %></td>
-		<td><%= group.domain %></td>
-		<td><%= comma_links(group.users, :login) %></td>
-		<td><%= group.father_name %></td>
-		<td><%= link_to h_img_show.to_s, group_path(group) %> </td>
-		<td><%= link_to h_img_edit.to_s, edit_group_path(group) %> <td>
-		<td><%= link_to h_img_destroy.to_s, group, :confirm => t("msg_confirm"), :method => :delete %> </td>
-	</tr>
-	<% end %>
-</table>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("new_group"), new_group_path %></td>
-		<td> <%= show_help("help_groups") %></td>
-	</tr>
-</table>
+		<% end %>
+	</table>
+	<table class='menu_bas'>
+		<tr>
+			<td> <%= link_to t("new_group"), new_group_path %></td>
+			<td> <%= show_help("help_groups") %></td>
+		</tr>
+	</table>

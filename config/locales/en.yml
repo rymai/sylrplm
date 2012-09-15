@@ -240,7 +240,8 @@ en:
   edit_task: Edit/proceed this task
   launchthis: Launch this process
   launch: Launch a new process
-  explorer: "Explorer"
+  explorer: "Explore"
+  explorer_obj: "Explore %{obj}"
   list: "List"
   query: "Filter"
   nb_items_per_page: Items number in page
@@ -351,7 +352,8 @@ en:
   label_project_forum: Forums  
   label_customer_forum: Forums 
   label_view: View
-  label_variant: Variant     
+  label_variant: Variant 
+  btn_select: Browser     
   # fin general
   # access
   legend_access: Enter access details

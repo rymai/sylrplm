@@ -30,7 +30,9 @@
 	<% end %>
 	<br/>
 	<%= f.label t(:label_responsible) %>
-	<%= text_field_tag :responsible,  @part.owner.login, :disabled => true %>
+	<%= hidden_field :part , :owner_id %>
+	<%= text_field_tag "part_owner_display", @part.owner.login, :disabled => true %>
+	<%= link_to h_img_btn("btn_select").to_s, {:controller => "users", :todo => "select", :html_ident => "part_owner"} , {:target => "_blank", :class => 'menu_bas'}%> </td>
 	<br/>
 	<%= f.label t(:label_date) %>
 	<%= f.date_select :date %>

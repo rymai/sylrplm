@@ -31,8 +31,8 @@ def group_tree(thenode, level)
 		thenode.nodes = []
 		# parcours des fils
 		old_nodes.each do |node|
-		###LOG.debug (fname) {"#{tab}node=#{node.id}:#{node.obj_child.ident}:#{node.quantity}"}
-		# on ajoute la 1ere occurence de ce noeud
+			###LOG.debug (fname) {"#{tab}node=#{node.id}:#{node.obj_child.ident}:#{node.quantity}"}
+			# on ajoute la 1ere occurence de ce noeud
 			if node.quantity.nil?
 			node.quantity = 1
 			thenode << node
@@ -70,7 +70,7 @@ end
 #
 def  follow_tree(root, node, father, relations, var_effectivities, level)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	##LOG.info (fname) {"tree or node=#{node} , father=#{father.ident}, relations=#{relations}"}
+	#LOG.info (fname) {"tree or node=#{node} , father=#{father.ident}, relations=#{relations}"}
 	usersnode = tree_level(t("label_#{father.model_name}_user"), icone_plmtype("user"), icone_plmtype("user"))
 	tree_users(usersnode, father)
 	LOG.debug (fname) {"usersnode.size=#{usersnode.size}"}
@@ -106,15 +106,19 @@ def  follow_tree(root, node, father, relations, var_effectivities, level)
 			LOG.info (fname){"var_effectivities=#{var_effectivities}"}
 			LOG.info (fname){"=> link_to_show=#{link_to_show}"}
 			if(link_to_show == true)
-
 				child = PlmServices.get_object(link.child_plmtype, link.child_id)
 				# edit du lien
 				relation = Relation.find(link.relation_id)
 				LOG.info (fname){"relation=#{relation.id}.#{relation.ident}"}
 				if relations.nil?
-				show_relation = false
+				show_relation =  false
 				else
-				show_relation = relations.include?(relation)
+				# pas de relations demandees => toutes
+					unless relations.nil? || relations.count>0
+					show_relation = relations.include?(relation)
+					else
+					show_relation=true
+					end
 				end
 				if show_relation
 					LOG.info (fname){"show_relation:#{relation.id}.#{relation.ident}, type=#{relation.typesobject.ident}"}

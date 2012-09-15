@@ -4,13 +4,17 @@
 <%= f.error_messages %>
 <% end %>
 <% end %>
-<%= form_simple_query_helper('/users', @current_users) %>
+
+<%= h_form_simple_query('/users',@current_users) %>
+
+<% if !param_equals?("todo", "select") %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_user"), new_user_path %></td>
 		<td> <%= show_help("help_users") %></td>
 	</tr>
 </table>
+<% end %>
 <table>
 	<tr>
 		<th <%= sort_td_class_helper "login" %>
@@ -32,39 +36,31 @@
 		<th><%= t(:label_groups) %> </th>
 		<th><%= t(:label_roles) %> </th>
 		<th><%= t(:label_projects) %> </th>
-		<th></th>
 		</tr>
 		<% for user in @current_users[:recordset] %>
 		<tr>
-		<td> <%= user.login %></td>
-		<td><%if(user.role != nil) %>
-		<%= link_to user.role.title , user.role %>
-		<%end %></td>
-		<td><%if(user.group != nil) %>
-		<%= link_to user.group.name , user.group %>
-		<% end %></td>
-		<td><%if(user.project != nil) %>
-		<%= link_to user.project.ident , user.project %>
-		<% end %></td>
+		<td> <%= h_explorer user, :login %></td>
+		<td><%= h_explorer user.role unless user.role.nil? %></td>
+		<td><%= h_explorer user.group unless user.group.nil? %></td>
+		<td><%= h_explorer user.project unless user.project.nil? %></td>
 		<td> <%= user.email %></td>
-		<td> <% if(user.typesobject != nil) %>
-		<%= user.typesobject.name %>
-		<% end %>
-		</td>
+		<td> <%= h_explorer user.typesobject, :name %></td>
 		<td><%= h_value_or_default(comma_links(user.groups, :name),t(:msg_tobedefine)) %></td>
 		<td><%= h_value_or_default(comma_links(user.roles, :title),t(:msg_tobedefine)) %></td>
 		<td><%= h_value_or_default(comma_links(user.projects, :ident),t(:msg_tobedefine)) %></td>
-		<td> <%= link_to h_img_show.to_s, user %></td>
+		<% if !param_equals?("todo", "select") %>
 		<td> <%= link_to h_img_edit.to_s, edit_user_path(user) %></td>
-		<td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td><td><% if logged_in? %>
-		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => user.id}, :method => :get %>
-		<%end%></td>
+		<td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td><td> <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => user.id}, :method => :get if logged_in? %></td> <% else %> <td>
+		<input type="button" value="select" class="btn-select" onclick="callSelect('<%= @myparams["html_ident"]%>','<%= user.id%>','<%= user.login%>')" />
+		</td> <% end %>
 	</tr>
 	<% end %>
 </table>
+<% if !param_equals?("todo", "select") %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_user"), new_user_path %></td>
 		<td> <%= show_help("help_users") %></td>
 	</tr>
 </table>
+<% end %> 
