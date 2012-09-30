@@ -6,6 +6,9 @@
 	<td> <%= f.label t(:label_view) %>
 	<%= select_tag("view_id", options_from_collection_for_select( @views, :id, :name, @view_id.to_i))%>
 	<br/>
+	<%= f.label t(:label_all_variants) %>
+	<%= check_box_tag :all_variants %>
+	<br/>
 	<%= f.label t(:label_variant) %>
 	<%= select_tag( "variant", options_from_collection_for_select(@part.variants, :mdlid, :to_s, (@variant.mdlid unless @variant.nil?))) %>
 	<br/>
@@ -13,22 +16,24 @@
 	<%= submit_tag t("select_context") %> </td>
 </tr>
 <% end %>
-<div id='dtree'>
-	<% if @tree && @tree.size>0 %>
-	<table class='menu_bas'>
-		<tr>
-			<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_down);'><%= t("h_open_close_all_tree")%></a></td>
-		</tr>
-	</table>
-	<%= @tree.to_s %>
-	<% end %>
-	<% if @tree_up && @tree_up.size>0 %>
-	<table class='menu_bas'>
-		<tr>
-			<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_up);'><%= t("h_open_close_all_tree")%></a></td>"
-		</tr>
-	</table>
-	<%= @tree_up.to_s %>
-	<% end %>
-</div>
+<tr>
+	<div id='dtree'>
+		<% if @tree && @tree.size>0 %>
+		<table class='menu_bas'>
+			<tr>
+				<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_down);'><%= t("h_open_close_all_tree")%></a></td>
+			</tr>
+		</table>
+		<%= @tree.to_s %>
+		<% end %>
+		<% if @tree_up && @tree_up.size>0 %>
+		<table class='menu_bas'>
+			<tr>
+				<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_up);'><%= t("h_open_close_all_tree")%></a></td>"
+			</tr>
+		</table>
+		<%= @tree_up.to_s %>
+		<% end %>
+	</div>
+</tr>
 <% end %> 

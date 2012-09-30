@@ -72,11 +72,11 @@ class Notification < ActiveRecord::Base
   end
 
   def self.get_conditions(filter)  
-    filter = filters.gsub("*","%")
+    filter = filter.gsub("*","%")
     ret={}
     unless filter.nil?
       ret[:qry] = "object_type LIKE :v_filter "+
-      " or "+qry_responsible+
+      " or "+qry_responsible_id+
       " or "+qrys_object_ident+
       " or event_type LIKE :v_filter "+
       " or event_date LIKE :v_filter or notify_date LIKE :v_filter "

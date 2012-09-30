@@ -10,7 +10,10 @@ Rails::Initializer.run do |config|
 # Settings in config/environments/* take precedence over those specified here.
 # Application configuration should go into files in config/initializers
 # -- all .rb files in that directory are automatically loaded.
-
+	
+	Encoding.default_external = Encoding::UTF_8
+Encoding.default_internal = Encoding::UTF_8
+  
   config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
   # Add additional load paths for your own custom dirs
 

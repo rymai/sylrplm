@@ -1,10 +1,9 @@
 <sylrplm_help >
-    <msg key="help_main" title="Documentation de l'application SYLPLM">
     Bienvenue dans l'application SYLRPLM développée sur "Ruby On Rails"#img=rails.png=img##lnk=http://www.railsfrance.org/=lnk#"
     <msg key="help_first_use" title="Prise en main">
     	Pour une première prise en main, vous pouvez parcourir, en tant que visiteur, les différents menus de gauche pour consulter les données gérées par l'application.
     	Certains des menus vous demanderons de vous connecter car ils permettent de voir plus de données et d'en modifier certaines.
-    	Vous pourrez alors soit donner un identifiant et mot de passe que vous possédez ou indiquer celui que vous voulez créer.
+    	Vous pourrez alors soit donner un identifiant et un mot de passe que vous possédez ou indiquer celui que vous voulez créer.
     	Ceci vous permettra, dans un premier temps en tant que consultant, de voir plus de données. 
     </msg>
     <msg key="help_presentation" title="Présentation générale">
@@ -95,8 +94,8 @@
                 </li>
             </ul>
         </msg>
-        <msg key="help_notice_error" title="Notifications et erreurs">
-            Après chaque opération de modification d'un objet, une ou plusieurs lignes de notification apparaissent sur l'écran suivant.
+        <msg key="help_notice_error" title="Informations et erreurs">
+            Après chaque opération de modification d'un objet, une ou plusieurs lignes d' information apparaissent sur l'écran suivant.
             Elles indiquent le résultat de l'action précédente: succès, échec, information importante...
             De plus, spécifiquement pour les écrans de saisie d'attributs, un affichage des erreurs éventuelles de saisie s'affiche.
             Voici un exemple pour la création d'un document.
@@ -111,6 +110,34 @@
                 </li>
             </ul>
         </msg>
+        <msg key="help_notifications" title="Notifications">
+            	Chaque modification d'une donnée (create/update/delete/add_*/del_*) est enregistrée.
+            	<ul>A intervalle régulier et paramétrable, une notification est créee et envoyée aux destinataires: 			
+ 								<li>Notifier les  proprietaires des donnees impactees par la modif de cet objet: 
+ 								  - remonter les relations pour trouver les proprio des objets superieurs
+ 									  - conserver le chemin
+ 									  - chercher le proprio 
+ 								    - lui envoyer un mail avec l'info du chemin et de l'action effectuée 
+            		</li>
+            		<li>Notifier les participants aux projets auxquelles appartiennent les objets modifies:
+            		  - remonter les relations pour trouver le ou les projets
+            		  - conserver le chemin
+            		  - lister les users du projet
+            		  - leur envoyer un mail avec l'info du chemin et de l'action effectuée 
+            		</li>
+            	</ul>
+            	<msg key="help_notifications_attributs" title="Attributs">
+            		<ul>Les Attributs de l' objet notification, tous obligatoires sauf notify_date, sont les suivants
+            		<li> id</li>
+            		<li> object_type : document/part/project/customer</li>
+            		<li> object_id : id de l'objet modifie</li>
+            		<li> event_date : date de la modif</li>
+            		<li> event_type : type de la modif</li>
+            		<li> responsible_id : modifieur</li>
+           			<li> notify_date : date de la notification (null si pas encore fait)</li>
+            	</ul>
+            	</msg>		
+    		</msg>   		
     </msg>
     
     <msg key="help_modules" title="Modules">
@@ -755,33 +782,10 @@
             
         </ul>
     </msg>
+    
     <msg key="help_todo" title="Reste à faire">
         <ul>
             <li>IMPROV:Vues:prendre en compte l'attribut fixe o/n sur les valeurs par défaut pour permettre ou non la modif de la valeur par le user</li>
-            <li>Notifications:
-            	* A chaque modification d'une donnee (create/update/delete/add_*/del_*), Dans l'observer, ajouter un objet notification
- 							* Regulierement(frequence parametrable)
- 								= Notifier les  proprietaires des donnees impactees par la modif de cet objet: 
- 								  - remonter les relations pour trouver les proprio des objets superieurs
- 									  - conserver le chemin
- 									  - chercher le proprio 
- 								    - lui envoyer un mail avec l'info du chemin et de l'action effectuée 
-            		= Notifier les participants aux projets auxquelles appartiennent les objets modifies:
-            		  - remonter les relations pour trouver le ou les projets
-            		  - conserver le chemin
-            		  - lister les users du projet
-            		  - leur envoyer un mail avec l'info du chemin et de l'action effectuée 
-            	* Attributs de l' objet notification, tous obligatoires sauf notify_date
-            	<ul>
-            		<li> id</li>
-            		<li> object_type : document/part/project/customer</li>
-            		<li> object_id : id de l'objet modifie</li>
-            		<li> event_date : date de la modif</li>
-            		<li> event_type : type de la modif</li>
-            		<li> responsible_id : modifieur</li>
-           			<li> notify_date : date de la notification (null si pas encore fait)</li>
-            	</ul>
-        		</li>
         </ul>
     </msg>
     <msg key="help_about" title="A propos de SYLRPLM">
@@ -803,6 +807,6 @@
             </ul>
         </msg>
     </msg>
-    </msg>
+    
     
 </sylrplm_help>

@@ -30,12 +30,8 @@ module Models
 				"statusobject_id in (select id from statusobjects as s where s.name LIKE :v_filter)"
 			end
 
-			def qry_owner
-				"owner in(select id from users where login LIKE :v_filter)"
-			end
-
-			def qry_responsible
-				"responsible in(select id from users where login LIKE :v_filter)"
+			def qry_responsible_id
+				"responsible_id in(select id from users where login LIKE :v_filter)"
 			end
 
 			def qry_owner_id

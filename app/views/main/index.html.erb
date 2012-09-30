@@ -1,9 +1,9 @@
 <h1><%= t(:hello) %></h1>
 <!-- <h2><%= t(:tit_language) %><%= I18n.locale.to_s %></h2> -->
 <p class='notice'>
-	<%= t(:help_first_use)%><%= show_help(:help_first_use,true) %>
+	<%= t(:help_first_use,:help => show_help(:help_first_use,true))%>
 </p>
-<% unless User.count == 0 %> <h2><%= t(:datas_in_database) %></h2>
+<% unless User.count == 0 %> <h1><%= t(:datas_in_database) %></h1>
 <table>
 	<tr>
 		<% @datas.each do |domain, values| %> <th> <%= t("ctrl_#{domain}") %></th>

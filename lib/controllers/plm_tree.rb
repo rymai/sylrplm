@@ -6,13 +6,14 @@ def  build_tree(obj, view_id, variant=nil)
 	lab=t(:ctrl_object_explorer, :typeobj => t("ctrl_"+obj.model_name), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_down", :label => lab, :open => true })
 	relations = View.find(view_id).relations unless  view_id.nil?
-	LOG.debug (fname) {"view_id=#{view_id}"}
+
 	relations.each {|rel| LOG.debug (fname){"#{rel.id}.#{rel.ident}"}} unless relations.nil?
 	unless variant.nil?
 	var_effectivities = variant.var_effectivities
 	else
 	var_effectivities = []
 	end
+	LOG.debug (fname) {"view_id=#{view_id}, #{var_effectivities.count} effectivites"}
 	follow_tree(obj, tree, obj, relations, var_effectivities, 0)
 	group_tree(tree, 0)
 	tree
@@ -31,8 +32,8 @@ def group_tree(thenode, level)
 		thenode.nodes = []
 		# parcours des fils
 		old_nodes.each do |node|
-			###LOG.debug (fname) {"#{tab}node=#{node.id}:#{node.obj_child.ident}:#{node.quantity}"}
-			# on ajoute la 1ere occurence de ce noeud
+		###LOG.debug (fname) {"#{tab}node=#{node.id}:#{node.obj_child.ident}:#{node.quantity}"}
+		# on ajoute la 1ere occurence de ce noeud
 			if node.quantity.nil?
 			node.quantity = 1
 			thenode << node
@@ -94,7 +95,7 @@ def  follow_tree(root, node, father, relations, var_effectivities, level)
 			if link_effectivities.count>0
 				link_to_show = false
 				link_effectivities.each do |link_eff|
-					if var_effectivities.include?(link_eff)
+					if var_effectivities.count==0 || var_effectivities.include?(link_eff)
 					link_to_show = true
 					end
 				end

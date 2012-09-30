@@ -15,7 +15,7 @@
 				<%= content_tag(:legend, t(:legend_desktop)) %>
 				<%= h_menu("/main","help_main",t("mnu_main")) %>
 				<%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
-				<%= h_menu("/notifications", "help_notifications",t("mnu_notifications")) %>
+				<%= h_menu("/notifications?current_user", "help_notifications",t("mnu_my_notifications")) %>
 				<%= h_menu("/main/tools", "help_tools",t("mnu_tools")) %>
 			</fieldset>
 			<fieldset>

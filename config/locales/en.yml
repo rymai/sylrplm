@@ -132,6 +132,8 @@ en:
   ctrl_admin: Administration objects
   ctrl_workflow_objects: Workflows 
   ctrl_relation: Relation types
+  ctrl_organization: Organization   
+  ctrl_parametrization: Parametrization
   # notification
   ctrl_notify: "%{nb_total} Notifications send to %{nb_users} users : %{notifications} "
   # parts
@@ -205,6 +207,7 @@ en:
   img_checkout: Checkout
   img_checkin: Checkin
   select_context: Context selection
+  help_root_title: SYLRPLM Documentation 
   # help
   help_no_help_title: Help missing
   help_no_help: No help for %{key}
@@ -323,6 +326,7 @@ en:
   mnu_datafiles: Data files
   mnu_groups: Groups
   mnu_notifications: Notifications
+  mnu_my_notifications: My notifications
   mnu_relations: Relations
   mnu_tools: Tools
   mnu_views: Views
@@ -527,7 +531,7 @@ en:
   legend_debug: Debug
   legend_clipboard: Clipboard 
   submit: GO 
-  help_first_use: To begin
+  help_first_use: "To begin (%{help})"
   CV: Curriculum vitae
   # notifications
   legend_notification: Enter notification details

@@ -132,6 +132,8 @@ fr:
   ctrl_admin: Objets d'administration
   ctrl_workflow_objects: Processus
   ctrl_relation: Types de relation
+  ctrl_organization: Organisation   
+  ctrl_parametrization: Paramétrages
   # notification
   ctrl_notify: "%{nb_total} Notifications effectuées à %{nb_users} utilisateurs : %{notifications} "
   # parts
@@ -206,6 +208,7 @@ fr:
   img_checkin: Non réservé
   select_context: Choix vue et variante
   # help
+  help_root_title: Documentation de l'application SYLPLM
   help_no_help_title: Aide absente
   help_no_help: Pas d'aide pour %{key}
   help_lnk_acces: Accès
@@ -323,6 +326,7 @@ fr:
   mnu_datafiles: Fichiers de données
   mnu_groups: Groupes
   mnu_notifications: Notifications
+  mnu_my_notifications: Mes notifications
   mnu_relations: Relations
   mnu_tools: Outils
   mnu_views: Vues
@@ -528,7 +532,7 @@ fr:
   legend_clipboard: Presse papier
   submit: GO 
   CV: Curriculum vitae
-  help_first_use: Si vous débutez, vous pouvez profiter de la prise en main avant de lire complètement la documentation ci dessous
+  help_first_use: Si vous débutez, vous pouvez profiter de la prise en main (%{help}) avant de lire complètement la documentation ci dessous
   # notifications
   legend_notification: Renseignez les propriétés de la notification
   notification_edit: Edition notification 

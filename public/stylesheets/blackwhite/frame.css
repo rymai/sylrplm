@@ -10,7 +10,7 @@ body {
 	background: #000;
 	position: relative;
 	margin: 2px;
-	-webkit-text-size-adjust: auto;
+	/*-webkit-text-size-adjust: auto;*/
 }
 span, p, li, ul, dl, dt, dd, legend {
 	text-decoration: none;
@@ -34,7 +34,7 @@ dl {
 	text-indent: 10px;
 }
 h1 {
-	font: bold 120% sans-serif;
+	font: bold 200% sans-serif;
 	color: white;
 	border-top: 2px solid #666;
 	margin-bottom: 1px;
@@ -148,6 +148,7 @@ td {
 	padding-left: 5px;
 	margin: 0 0 0 180px;
 	background: #333;
+	border-top: 1px solid white;
 }
 #menu fieldset legend {
 	color: #BBBBBB;
@@ -174,7 +175,7 @@ li.help {
 ul.help_key {
 	list-style: decimal-leading-zero;
 	margin-top: 3px;
-	margin-left: 5px;
+	margin-left: 30px;
 	padding-left: 0px;
 	text-indent: 0px;
 }

@@ -45,7 +45,11 @@ class PartsController < ApplicationController
 		:order => 'ident ASC',
 		:per_page => cfg_items_per_page)
 		@first_status = Statusobject.get_first("part")
-		@variant = PlmServices.get_object_by_mdlid(params[:variant]) unless params[:variant].nil?
+		if params[:all_variant] == 0
+			@variant = PlmServices.get_object_by_mdlid(params[:variant]) unless params[:variant].nil?
+		else
+			@variant = nil
+		end
 		@tree         = build_tree(@part, @view_id, @variant)
 		@tree_up      = build_tree_up(@part, @view_id)
 		#@documents = @part.documents

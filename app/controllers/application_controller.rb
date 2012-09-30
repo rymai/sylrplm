@@ -169,30 +169,41 @@ class ApplicationController < ActionController::Base
   end
 
   def get_datas_count
-    {
-      :plm_objects => {
-        :datafile => Datafile.count,
-        :document => Document.count,
-        :part => Part.count,
-        :project => Project.count,
-        :customer => Customer.count},
-      :collab_objects => {
-        :forum => Forum.count,
-        :question => Question.count},
-      :internal_objects => {
-        :link => Link.count},
-      :admin => {
-        :user => User.count,
-        :role => Role.count,
-        :group => Group.count,
-        :volume => Volume.count,
-        :typesobject => Typesobject.count,
-        :statusobject => Statusobject.count,
-        :relation => Relation.count},
-      :workflow_objects => {
+  	ret = {}
+    ret[:plm_objects] = {
+	      :datafile => Datafile.count,
+	      :document => Document.count,
+	      :part => Part.count,
+	      :project => Project.count,
+	      :customer => Customer.count
+	    }
+    
+   	ret[:collab_objects] = {
+      	:forum => Forum.count,
+      	:question => Question.count
+     	}
+    
+    ret[:organization] = {
+	      :user => User.count,
+	      :role => Role.count,
+	      :group => Group.count,
+	      :volume => Volume.count
+      }
+    
+    ret[:parametrization] = {
+	      :typesobject => Typesobject.count,
+	      :statusobject => Statusobject.count,
+	      :relation => Relation.count,
         :definition => Definition.count
       }
-    }
+    
+    if admin_logged_in? 
+      ret[:internal_objects] = {
+        	:link => Link.count
+      		}
+      
+    end
+    ret
   end
 
   def error_reply (error_message, status=400)
