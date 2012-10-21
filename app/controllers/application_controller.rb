@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   
   before_filter LogDefinitionFilter
   
-  before_filter :authorize, :except => [:index, :show, :init_objects]
+  before_filter :authorize, :except => [:index, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
   #
@@ -302,7 +302,7 @@ class ApplicationController < ActionController::Base
     else
       ret = ""
     end
-    LOG.debug  (fname){"#{obj.model_name}:#{obj.typesobject.name}:#{ret}"}
+    #LOG.debug  (fname){"icone:#{obj.model_name}:#{obj.typesobject.name}:#{ret}"}
     ret
   end
   
@@ -314,7 +314,6 @@ class ApplicationController < ActionController::Base
     ret
   end
   
-  
   #
   # controle des vues et de la vue active
   # 
@@ -322,11 +321,13 @@ class ApplicationController < ActionController::Base
   	# views: liste des vues possibles est utilisee dans la view ruby show
 		@views = View.all
 		# view_id: id de la vue selectionnee est utilisee dans la view ruby show
-		if params["view_id"].nil?
-		@view_id = @views.first.id
-		else
-			@view_id = params["view_id"]
+		#@myparams[:view_id] = @views.first.id if @myparams[:view_id].nil?
+		if @myparams[:view_id].nil?
+			if logged_in?
+			@myparams[:view_id] = current_user.get_default_view.id 
+			end
 		end
+		#puts "#{controller_name}.#{__method__}:view=#{@myparams[:view_id]}"
 	end
 	
 	#

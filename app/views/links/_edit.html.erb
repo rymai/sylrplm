@@ -47,7 +47,7 @@
 		<%= t(:legend_link_effectivities) %>
 	</legend>
 	<label for="part_effectivities"> <%= t(:label_effectivities) %> </label>
-	<%= select_tag(:effectivities, options_from_collection_for_select( @root.prd_effectivities, :mdlid, :to_s, @link.effectivities_mdlid), {:multiple => :true}) %>
+	<%= select_tag(:effectivities, options_from_collection_for_select( @root.prd_effectivities, :mdlid, :to_s, @link.effectivities_mdlid), {:multiple => :true, :size => 15 }) %>
 	<br/>
 </fieldset>
 <fieldset>

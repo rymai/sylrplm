@@ -122,9 +122,11 @@ module ApplicationHelper
 	def icone(object)
 		type = "#{object.model_name}_#{object.typesobject.name}" unless object.typesobject.nil?
 		fic="/images/#{type}.png"
-		if !File.exists?(fic)
+		
+		if !File.exists?("#{RAILS_ROOT}/public#{fic}")
 			type="#{object.model_name}"
 			fic="/images/#{type}.png"
+			
 		end
 		mdl_name=t("ctrl_#{type.downcase}")
 		"<img class='icone' src='#{fic}' title='#{mdl_name}'></img>"

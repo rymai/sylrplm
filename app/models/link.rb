@@ -46,10 +46,6 @@ class Link < ActiveRecord::Base
     :through => :links_effectivities,
     :source => :part
 
-	def designation
-		"#{type}.#{id}"
-	end
-
 	def effectivities_mdlid
 		ret=[]
 		self.effectivities.each do |eff|
@@ -172,7 +168,7 @@ class Link < ActiveRecord::Base
 
 	def ident
 		#father_id.to_s+":"+father_plmtype.to_s+"."+father_typesobject_id.to_s+"-"+relation_id.to_s+"-"+child_id.to_s+":"+child_plmtype.to_s+"."+child_typesobject_id.to_s
-		"#{father.ident}-#{relation.ident}-#{child.ident}-#{values}"
+		"#{(father.nil? ? "father null" : father.ident)}-#{(relation.nil? ? "relation null" : relation.ident)}-#{(child.nil? ? "child null" : child.ident)}-#{values}"
 	end
 
 	def exists?
@@ -323,10 +319,10 @@ class Link < ActiveRecord::Base
 	end
 
 	def self.linked?(obj)
-		cond="child_id = #{obj.id} or father_id = #{obj.id}"
-		puts "linked cond="+cond
+		cond="(child_typesobject_id=#{obj.typesobject_id} and child_id = #{obj.id}) or (father_typesobject_id=#{obj.typesobject_id} and father_id = #{obj.id})"
 		ret = count(:all,
     :conditions => [cond] )
+		puts "linked cond=#{cond} nb=#{ret}"
 		ret>0
 	end
 end

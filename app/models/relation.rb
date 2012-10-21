@@ -77,7 +77,8 @@ class Relation < ActiveRecord::Base
 		Typesobject.get_objects_with_type.each do |t|
 			ret[t] = []
 		end
-		cond="father_plmtype = '#{father.model_name}' or father_plmtype = '#{::SYLRPLM::PLMTYPE_GENERIC}'"
+		cond="(father_plmtype = '#{father.model_name}' or father_plmtype = '#{::SYLRPLM::PLMTYPE_GENERIC}' )"
+		## ko car show incomplet !!! cond+=" and (father_typesobject_id = '#{father.typesobject_id}')"
 		find(:all, :order => "name",
       :conditions => [cond]).each do |rel|
 			if rel.child_plmtype==::SYLRPLM::PLMTYPE_GENERIC
@@ -89,9 +90,8 @@ class Relation < ActiveRecord::Base
 			ret[rel.child_plmtype] << rel
 			end
 		end
-
-		LOG.info (fname){"cond=#{cond}"}
-		 ret.each {|r| r.each {|rel| LOG.info rel}}
+		LOG.info (fname){"cond=#{cond}, #{ret.count} relations trouvees"}
+		ret.each {|r| r.each {|rel| LOG.debug rel}}
 		ret
 	end
 

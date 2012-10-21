@@ -1,5 +1,4 @@
 class PlmServices
-	
 	def self.get_object_by_mdlid(mdlid)
 		fields = mdlid.split(".")
 		if fields.size == 2
@@ -17,19 +16,19 @@ class PlmServices
 		begin
 			mdl = eval typec
 		rescue Exception => e
-		#LOG.warn{aname+e.message}
+		#LOG.warn{fname+e.message}
 			begin
 				typec ="Ruote::Sylrplm::"+typec
 				mdl = eval typec
 			rescue Exception => e
-				LOG.error{aname+e.message}
+				LOG.error{fname+e.message}
 			end
 		end
 		unless mdl.nil?
 			begin
 				ret = mdl.find(id)
 			rescue Exception => e
-				LOG.error{aname+e.message}
+				LOG.error{fname+e.message}
 			end
 		end
 		LOG.debug (fname){"ret=#{(ret.nil? ? "" : ret.ident)}"}

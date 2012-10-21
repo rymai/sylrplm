@@ -25,9 +25,6 @@ class PartsController < ApplicationController
 
 	def select_view
 		show_
-		#respond_to do |format|
-		#	format.html { redirect_to(@part) }
-		#end
 		respond_to do |format|
 			format.html { render :action => "show" }
 			format.xml  { render :xml => @part }
@@ -39,25 +36,28 @@ class PartsController < ApplicationController
 		LOG.debug (fname){"begin:params=#{params}"}
 		define_view
 		@part                    = Part.find(params[:id])
-		#@relations               = Relation.relations_for(@part)
 		@other_parts = Part.paginate(:page => params[:page],
 		:conditions => ["id != #{@part.id}"],
 		:order => 'ident ASC',
 		:per_page => cfg_items_per_page)
 		@first_status = Statusobject.get_first("part")
-		if params[:all_variant] == 0
-			@variant = PlmServices.get_object_by_mdlid(params[:variant]) unless params[:variant].nil?
-		else
+		all_variant=(params[:all_variants].nil? ? "no" : params[:all_variants])
+		if all_variant == "on"
 			@variant = nil
+		else
+			if params[:variant].nil?
+				@variant = nil
+			else
+				LOG.debug (fname){"all_variant=#{all_variant}, variante=#{params[:variant]} => on filtre"}
+				@variant = PlmServices.get_object_by_mdlid(params[:variant])
+			end
 		end
-		@tree         = build_tree(@part, @view_id, @variant)
-		@tree_up      = build_tree_up(@part, @view_id)
-		#@documents = @part.documents
-		#@parts     = @part.parts
-		#@projects  = @part.projects_up
-		LOG.info (fname){"variant=#{@variant}"}
-		LOG.info (fname){"variant eff=#{@variant.var_effectivities}"} unless @variant.nil?
-		LOG.debug (fname){"end:view=#{View.find(@view_id).to_s}"}
+		@tree         = build_tree(@part, @myparams[:view_id] , @variant)
+		@tree_up      = build_tree_up(@part, @myparams[:view_id] )
+		LOG.debug (fname){"taille tree=#{@tree.size}"}
+		#LOG.debug (fname){"variant=#{@variant}"}
+		#LOG.debug (fname){"variant eff=#{@variant.var_effectivities}"} unless @variant.nil?
+		#LOG.debug (fname){"end:view=#{View.find(@myparams[:view_id]).to_s}"}
 	end
 
 	# GET /parts/new

@@ -1,10 +1,12 @@
 class NotificationsController < ApplicationController
 	# GET /notifications
 	# GET /notifications.xml
+	before_filter :authorize, :except => nil
 	def index
 		fname="#{controller_name }.#{__method__}:"
 		LOG.info (fname) {"params=#{params.inspect}"}
 		if params.include? :current_user
+			authorize
 			params[:query] = current_user.login
 		end
 		@notifications = Notification.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })

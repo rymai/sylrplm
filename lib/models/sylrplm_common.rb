@@ -285,13 +285,14 @@ module Models
 
 		def label
 			fname="#{self.class.name}.#{__method__}:"
+			ret=""
 			if self.respond_to?(:name)
-			ret = self.name
-			else if self.respond_to?(:title)
-				ret = self.title
-				else if self.respond_to?(:designation)
-					ret = self.designation
-					else
+				ret = self.name
+				else if self.respond_to?(:title)
+					ret = self.title
+					else if self.respond_to?(:designation)
+						ret = self.designation
+						else
 						ret = ""
 					end
 				end

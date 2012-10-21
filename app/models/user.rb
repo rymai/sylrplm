@@ -353,6 +353,10 @@ class User < ActiveRecord::Base
 		@time_zone ||= (self.time_zone.blank? ? nil : ActiveSupport::TimeZone[self.time_zone])
 	end
 
+	def get_default_view
+		View.find_by_name("Conception")
+	end
+
 	private
 
 	def create_new_salt

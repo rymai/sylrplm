@@ -31,15 +31,12 @@
 	<b><%= t(:label_date) %></b>
 	<%= l @project.date %>
 </p>
-
 <%= h_show_tree @project %>
 <%= render(:partial => "shared/object_workitems", :object =>@project) %>
-
 <table class='menu_bas'>
 	<% unless @favori.get('document').count==0 || @relations["document"].count==0 %>
 	<tr>
-		<% form_for(@project, :url => {:id => @project.id, :action => "add_docs" }) do |f| %>
-		<td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %></td>
+		<% form_for(@project, :url => {:id => @project.id, :action => "add_docs" }) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %></td>
 		<td> <%= submit_tag t("paste_documents") %></td>
 		<% end %>
 	</tr>
@@ -47,16 +44,14 @@
 
 	<% unless @favori.get('part').count==0 || @relations["part"].count==0 %>
 	<tr>
-		<% form_for(@project, :url => {:id => @project.id, :action => "add_parts" }) do |f| %>
-		<td> <%= select("relation","part", options_from_collection_for_select( @relations["part"], :id, :ident)) %></td>
+		<% form_for(@project, :url => {:id => @project.id, :action => "add_parts" }) do |f| %> <td> <%= select("relation","part", options_from_collection_for_select( @relations["part"], :id, :ident)) %></td>
 		<td> <%= submit_tag t("paste_parts") %></td>
 		<% end %>
 	</tr>
 	<% end %>
-<% unless @favori.get('user').count==0 || @relations["user"].count==0 %>
+	<% unless @favori.get('user').count==0 || @relations["user"].count==0 %>
 	<tr>
-		<% form_for(@project, :url => {:id => @project.id, :action => "add_users" }) do |f| %>
-		<td> <%= select("relation","user", options_from_collection_for_select( @relations["user"], :id, :ident)) %></td>
+		<% form_for(@project, :url => {:id => @project.id, :action => "add_users" }) do |f| %> <td> <%= select("relation","user", options_from_collection_for_select( @relations["user"], :id, :ident)) %></td>
 		<td> <%= submit_tag t("paste_users") %></td>
 		<% end %>
 	</tr>
@@ -65,11 +60,14 @@
 <table class='menu_bas'>
 	<tr>
 		<% unless @relations["forum"].count==0 %>
-		<% form_for(@project, :url => {:id => @project.id, :action => :new_forum }) do |f| %> 
-		<td> <%= select("relation","forum", options_from_collection_for_select( @relations["forum"], :id, :ident)) %></td>
+		<% form_for(@project, :url => {:id => @project.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @relations["forum"], :id, :ident)) %></td>
 		<td><%= submit_tag t("add_forum") %></td>
 		<% end %>
 		<% end %>
+	</tr>
+</table>
+<table class='menu_bas'>
+	<tr>
 		<td> <%= link_to t("edit"), edit_project_path(@project) %></td>
 		<td> <%= link_to t("new_project"), new_project_path %></td>
 		<td> <%= link_to t("list"), projects_path %></td>
