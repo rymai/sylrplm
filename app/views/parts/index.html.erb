@@ -24,6 +24,7 @@
 		<th <%= sort_td_class_helper "group" %>><%= sort_link_helper t("label_group"), "group_id" %></th>
 		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), "projowner_id" %> </th>
 		<th <%= sort_td_class_helper "date" %>><%= sort_link_helper t("label_date"), "date" %></th>
+		<th <%= sort_td_class_helper "domain" %>><%= sort_link_helper t("label_domain"), "domain" %></th>
 		<th></th>
 		<th></th>
 		<th></th>
@@ -40,6 +41,7 @@
 		<td><%= h_explorer part.group, :name %></td>
 		<td><%= h_explorer part.projowner %></td>
 		<td><%= l part.date %></td>
+		<td><%= part.domain %></td>
 		<% if part.revisable?  %> <td> <% unless document.revise_by_action? %><%= h_img_revise.to_s %><% end %></td>
 		<td></td>
 		<% else %>

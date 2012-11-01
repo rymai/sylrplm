@@ -354,7 +354,7 @@ class User < ActiveRecord::Base
 	end
 
 	def get_default_view
-		View.find_by_name("Conception")
+		View.find_by_name("Standard")
 	end
 
 	private

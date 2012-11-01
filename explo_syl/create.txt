@@ -275,8 +275,7 @@ To git@heroku.com:freezing-stone-916.git
 ---
 --- Bootstrap your database
 ---
-[syl@localhost sylrplm (master)]$ heroku rake db:migrate
-
+$ heroku rake db:migrate
 (in /app)
 
 ---
@@ -465,7 +464,9 @@ rake db:drop;rake db:create;rake db:load
 ---
 --- recreer la base sur heroku
 ---
-heroku rake db:drop;heroku rake db:create;heroku rake db:schema:load 
+heroku run rake db:reset;
+#heroku run rake db:create;
+#heroku run rake db:schema:load 
 heroku open;heroku logs -n 500
 
 ======================================================

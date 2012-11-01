@@ -23,6 +23,7 @@
 		<th <%= sort_td_class_helper "group" %>> <%= sort_link_helper t("label_group"), "group_id" %> </th>
 		<th <%= sort_td_class_helper "projowner" %>> <%= sort_link_helper t("label_projowner"), "projowner_id" %> </th>
 		<th <%= sort_td_class_helper "date" %>> <%= sort_link_helper t("label_date"), "date" %> </th>
+		<th <%= sort_td_class_helper "domain" %>><%= sort_link_helper t("label_domain"), "domain" %></th>
 		<th></th>
 		<th></th>
 	</tr>
@@ -37,6 +38,7 @@
 		<td> <%= h_explorer customer.group, :name %> </td>
 		<td> <%= h_explorer customer.projowner %> </td>
 		<td> <%= l customer.date %> </td>
+		<td> <%= h customer.domain %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_customer_path(customer) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, customer, :confirm => t("msg_confirm"), :method => :delete %> </td>
 		<td> <% if logged_in? %>

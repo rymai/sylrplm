@@ -25,6 +25,7 @@
 		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), "projowner_id" %> </th>
 		<th> <%= t("label_nbfiles") %></th>
 		<th <%= sort_td_class_helper "date" %>> <%= sort_link_helper t("label_date"), "date" %></th>
+		<th <%= sort_td_class_helper "domain" %>><%= sort_link_helper t("label_domain"), "domain" %></th>
 		<th></th>
 		<th></th>
 		<th></th>
@@ -46,6 +47,7 @@
 		(<%= document.projowner.typeaccess.name%>) </td>
 		<td> <%= h document.datafiles.length %></td>
 		<td> <%= document.date %> </td>
+		<td> <%= document.domain %> </td>
 		<td> <% if document.checked? %>
 		<%= h_img_checkout.to_s if document.checked? %>
 		<%else%>

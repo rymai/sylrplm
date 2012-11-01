@@ -60,9 +60,13 @@ class Link < ActiveRecord::Base
 		LOG.info (fname) {"effs_mdlid=#{effs_mdlid}"}
 		links_effectivities.each do |link_eff_cur|
 			LOG.info (fname) {"link_eff_cur=#{link_eff_cur.ident} : #{link_eff_cur.child.mdlid}"}
-			unless effs_mdlid.include?(link_eff_cur.child.mdlid)
-				LOG.info (fname) {"destroy:#{link_eff_cur.ident}"}
+			if effs_mdlid.nil?
 			link_eff_cur.destroy
+			else
+				unless effs_mdlid.include?(link_eff_cur.child.mdlid)
+					LOG.info (fname) {"destroy:#{link_eff_cur.ident}"}
+				link_eff_cur.destroy
+				end
 			end
 		end
 	end
@@ -72,7 +76,7 @@ class Link < ActiveRecord::Base
 		if self.values.nil?
 			fields = self.relation.typesobject.fields
 			self.values = fields unless fields.nil?
-			LOG.info (fname) {"#{fields} : #{self.values}"}
+			LOG.info (fname) {"#{fields} : #{self.values}"} unless self.values!=""
 		end
 	end
 
@@ -201,10 +205,10 @@ class Link < ActiveRecord::Base
 		&& (father.typesobject.name==relation.father_typesobject.name || relation.father_typesobject.name == ::SYLRPLM::TYPE_GENERIC) \
 		&& (child.typesobject.name==relation.child_typesobject.name || relation.child_typesobject.name == ::SYLRPLM::TYPE_GENERIC)
 		if ret == false
-			LOG.info(fname) {father.model_name+"=="+relation.father_plmtype + \
-				" "+child.model_name+"=="+relation.child_plmtype + \
-				" "+father.typesobject.name+"=="+relation.father_typesobject.name +  \
-				" "+child.typesobject.name+"=="+relation.child_typesobject.name }
+			LOG.info(fname) {"father_plmtype:"+father.model_name+"=="+relation.father_plmtype + \
+				" child_plmtype:"+child.model_name+"=="+relation.child_plmtype + \
+				" father_type:"+father.typesobject.name+"=="+relation.father_typesobject.name +  \
+				" child_type:"+child.typesobject.name+"=="+relation.child_typesobject.name }
 		end
 		ret
 	end

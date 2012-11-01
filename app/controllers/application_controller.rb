@@ -256,11 +256,16 @@ class ApplicationController < ActionController::Base
     else
       user=User.find(user_id)
       unless user.is_admin?
-        if user.roles.nil? || user.volume.nil? || user.groups.nil? || user.projects.nil?
+        if user.roles.nil? || user.groups.nil? || user.projects.nil?
           session[:original_uri] = request.request_uri
           flash[:notice] = t(:login_login)
           redirect_to new_sessions_url
         end
+      end
+      if user.role.nil? || user.volume.nil? || user.group.nil? || user.project.nil?
+          session[:original_uri] = request.request_uri
+          flash[:notice] = t(:login_login)
+          redirect_to new_sessions_url
       end
     end
   end

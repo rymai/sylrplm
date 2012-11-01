@@ -82,30 +82,32 @@ class LinksController < ApplicationController
 	# PUT /links/1.xml
 	def update_in_tree
 		fname="#{self.class.name}.#{__method__}"
-		LOG.info(fname){"params=#{params}"}
+		LOG.info(fname){"begin params=#{params}"}
 		@link = Link.find(params[:id])
 		@link.update_accessor(current_user)
 		err = false
 		respond_to do |format|
 			values = OpenWFE::Json::from_json(params[:link][:values])
-			LOG.info(fname){"values=#{values}"}
+			LOG.info(fname){"params[:link][:values]=#{values}"}
 			if @link.update_attributes(params[:link])
-				flash[:notice] = 'Link was successfully updated.'
-				LOG.info(fname){"effectivities=#{params[:effectivities]}"}
+				flash[:notice] = "Link parameters are successfully updated."
+				LOG.info(fname){"params[:effectivities]=#{params[:effectivities]}"}
 				unless params[:effectivities].nil?
 					if params[:effectivities].is_a?(Array)
 						par_effs=params[:effectivities]
 					else
 						par_effs=[]
-						par_effs<<params[:effectivities]
+						par_effs << params[:effectivities]
 					end
-					relation = Relation.find_by_name("link_effectivity")
-					unless relation.nil?
-						# menage des autres effectivites
-						@link.clean_eff(par_effs)
+				end
+				relation = Relation.find_by_name("LINK_EFF")
+				unless relation.nil?
+					# menage des effectivites actuelles
+					@link.clean_eff(par_effs)
+					unless par_effs.nil?
 						par_effs.each do |par_eff|
 							eff = PlmServices.get_object_by_mdlid(par_eff)
-							LOG.info(fname){"eff:#{eff}"}
+							LOG.info(fname){"effectivity to link:#{eff}"}
 							link_eff_ = Link.create_new(@link, eff, relation, current_user) unless eff.nil?
 							LOG.info(fname){"link_eff#{link_eff_}"}
 							link_eff = link_eff_[:link]
@@ -115,29 +117,34 @@ class LinksController < ApplicationController
 										ctrltype=t("ctrl_#{eff.model_name}")
 										flash[:notice] << t(:ctrl_object_added,
 		                  :typeobj => ctrltype,
-		                  :ident => eff.ident,
-		                  :relation => relation.ident,
+		                  :ident => eff,
+		                  :relation => relation,
 		                  :msg => link_eff_[:msg])
 									else
 									# lien link-effectivite non sauve
-									err = true
+										err = true
+										flash[:notice] << t(:ctrl_object_not_saved, :typeobj =>t(:ctrl_link), :ident=>link_eff )
+									#"<br/>Link from #{@link} to #{eff} by #{relation} <br>not saved"
 									end
 								end
 							else
 							# lien link-effectivite non cree
-							err = true
+								err = true
+								flash[:notice] << t(:ctrl_object_not_created, :typeobj =>t(:ctrl_link), :msg =>link_eff_[:msg] )
+							#"<br/>Link from #{@link} to #{eff} by #{relation} <br>not created"
 							end
 						end
-					else
-					# relation link_effectivity non trouvee
-					err = true
 					end
+				else
+				# relation link_effectivity non trouvee
+					err = true
+					flash[:notice] << t(:ctrl_object_not_created, :typeobj =>t(:ctrl_link), :msg =>"Relation link_effectivity not found" )
 				end
+
 			else
 			# lien non modifie
 			err = true
 			end
-
 			LOG.info(fname){"err=#{err}"}
 			@object_in_explorer = PlmServices.get_object(params[:object_model], params[:object_id])
 			@root = PlmServices.get_object(params[:root_model], params[:root_id])

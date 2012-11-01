@@ -24,7 +24,7 @@ namespace :sylrplm do
     $stdout.puts "Database configuration=#{ActiveRecord::Base.configurations}"
   end
 
-  desc 'import domain objects : ""=["admin"] or ["mecanic"] or ["cooking"] '
+  desc 'import domain objects : [db/fixtures,admin"] or [db/fixtures,mecanic] or [db/fixtures,cooking] '
   task :import_domain, [:path, :domain] => [:connect, :environment] do |t, args|
     #args.with_defaults(:domain => :admin)
     domain = args.domain.to_s
@@ -32,14 +32,14 @@ namespace :sylrplm do
     puts "path is #{path}, domain is #{domain}"
     fixtures_path = "#{path}/#{domain}"
     unless domain.empty?
-      truncate
+      ###truncate
       #Rake::Task["db:fixtures:load FIXTURES_PATH=#{fixtures_path}"].invoke
       ENV["FIXTURES_PATH"] = fixtures_path
       puts "fixtures_path=#{ENV['FIXTURES_PATH']}"
       Rake::Task["db:fixtures:load"].invoke
       ::Access.reset
     else
-      $stdout.puts "Domain is mandatory"
+      $stdout.puts "Path and Domain are mandatory"
     end
   end
 

@@ -119,8 +119,9 @@ module Models
 			end
 
 			def reset
-				cond="internal is null or internal is false"
-				objs = Link.find(:all, :conditions => [cond])
+				#cond=[]
+				#objs = Link.find(:all, :conditions => [cond])
+				objs=Link.all
 				LOG.debug "reset:"+objs.inspect
 				objs.each { |o| o.destroy }
 			end
@@ -169,10 +170,10 @@ module Models
 		def to_s
 			ret = "#{I18n.t("ctrl_"+model_name)}"
 			ret+= "/#{typesobject.name}" if self.respond_to?("typesobject") && !self.typesobject.nil?
-			ret+= ":#{ident}"
+			ret+= ".#{ident}"
 			ret+= "/#{revision}" if self.respond_to?("revision")
-			ret+= ">#{designation}" if self.respond_to?("designation")
-			ret+= "<#{statusobject.name}" if self.respond_to?("statusobject") && !self.statusobject.nil?
+			ret+= " #{designation}" if self.respond_to?("designation")
+			ret+= " (#{statusobject.name})" if self.respond_to?("statusobject") && !self.statusobject.nil?
 			ret
 		end
 
@@ -287,12 +288,12 @@ module Models
 			fname="#{self.class.name}.#{__method__}:"
 			ret=""
 			if self.respond_to?(:name)
-				ret = self.name
-				else if self.respond_to?(:title)
-					ret = self.title
-					else if self.respond_to?(:designation)
-						ret = self.designation
-						else
+			ret = self.name
+			else if self.respond_to?(:title)
+				ret = self.title
+				else if self.respond_to?(:designation)
+					ret = self.designation
+					else
 						ret = ""
 					end
 				end
