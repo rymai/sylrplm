@@ -1,0 +1,18 @@
+view_standard:
+  id: 1
+  name: standard
+  domain: admin
+
+view_configuration:
+  id: 2
+  name: configuration
+  domain: admin
+  
+view_conception:
+  id: 3
+  name: conception
+  domain: admin
+
+
+
+  

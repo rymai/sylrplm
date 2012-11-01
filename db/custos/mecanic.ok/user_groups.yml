@@ -1,0 +1,55 @@
+admin-1:
+    user_id: 1
+    group_id: 1
+    
+admin-101:
+    user_id: 1
+    group_id: 101
+  
+admin-102:
+    user_id: 1
+    group_id: 102
+  
+admin-103:
+    user_id: 1
+    group_id: 103
+
+admin-104:
+    user_id: 1
+    group_id: 104
+  
+syl-2:
+    user_id: 101
+    group_id: 2
+  
+syl-3:
+    user_id: 101
+    group_id: 3
+  
+syl-4:
+    user_id: 101
+    group_id: 4
+  
+102-2:
+    user_id: 102
+    group_id: 2
+  
+103-2:
+    user_id: 103
+    group_id: 2
+    
+104-2: 
+    user_id: 104
+    group_id: 2
+    
+105-2:
+    user_id: 105
+    group_id: 2
+    
+106-2:
+    user_id: 106
+    group_id: 2
+    
+107-2:
+    user_id: 107
+    group_id: 2

@@ -1,0 +1,21 @@
+
+User_1: 
+  id: "1"
+  email: sylvere.coutable@laposte.net
+  login: admin
+  first_name: 
+  last_name: 
+  language: fr
+  time_zone: 
+  theme: blackwhite
+  hashed_password: a1730405a15d17e73c9e962f9f0bf1f456b973b8
+  salt: "1234"
+  role_id: "1"
+  volume_id: "60318548"
+  nb_items: "20"
+  notification: "0"
+  show_mail: "0"
+  typesobject_id: "446111194"
+  group_id: "1"
+  project_id: "1"
+  domain: admin

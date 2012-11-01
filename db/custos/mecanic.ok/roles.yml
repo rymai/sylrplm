@@ -1,0 +1,52 @@
+
+Role_1: 
+  id: "1"
+  title: admin
+  description: Administrateur
+  father_id: 
+  domain: admin
+
+Role_13324184: 
+  id: "2"
+  title: creator
+  description: Ecrit les specifications des produits
+  father_id: 
+  domain: admin
+
+Role_187099280: 
+  id: "3"
+  title: consultant
+  description: Peut voir les donnees sans pouvoir les modifier
+  father_id: 
+  domain: admin
+
+Role_426981484: 
+  id: "4"
+  title: designer
+  description: Modelise les produits
+  father_id: 
+  domain: admin
+
+Role_503483810: 
+  id: "5"
+  title: valider
+  description: Valide les processus du cycle de vie des donnees
+  father_id: 
+  domain: admin
+
+Role_593922426: 
+  id: "6"
+  title: analyst
+  description: |
+    "Effectue des etudes de marche et ecrit le cdc.
+    Elabore l'expression de besoin."
+
+  father_id: 
+  domain: admin
+
+Role_602486136: 
+  id: "7"
+  title: project_manager
+  description: Responsable du planning, des ressources
+  father_id: 
+  domain: admin

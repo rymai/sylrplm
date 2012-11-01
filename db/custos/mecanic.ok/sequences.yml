@@ -1,0 +1,120 @@
+1:
+ value: DOC000000 
+ utility: Document.ident
+ modify: false
+ sequence: true
+ domain: mecanic
+ 
+2: 
+ value: PRT000000 
+ utility: Part.ident
+ modify: false
+ sequence: true
+ domain: mecanic
+ 
+3: 
+ value: PROJET
+ utility: Project.ident
+ modify: true
+ sequence: false
+ domain: mecanic
+ 
+4: 
+ value: CUSTOMER
+ utility: Customer.ident
+ modify: true
+ sequence: false
+ domain: mecanic
+ 
+5: 
+ value: Designation document 
+ utility: Document.designation
+ modify: true
+ sequence: false
+ domain: mecanic
+ 
+6: 
+ value: Designation article 
+ utility: Part.designation
+ modify: true
+ sequence: false
+ domain: mecanic
+ 
+7: 
+ value: Designation projet 
+ utility: Project.designation
+ modify: true
+ sequence: false
+ domain: mecanic
+ 
+8: 
+ value: Designation client 
+ utility: Customer.designation
+ modify: true
+ sequence: false
+ domain: mecanic
+ 
+9: 
+ value: 000
+ utility: Document.revision
+ modify: false
+ sequence: false
+ 
+10: 
+ value: AAA
+ utility: Part.revision
+ modify: false
+ sequence: false
+ domain: mecanic
+ 
+20:
+ value: DF0000000000
+ utility: Datafile.ident
+ modify: false
+ sequence: true
+ domain: mecanic
+
+21: 
+    value: 0
+    min: 
+    max: 
+    utility: Relation.cardin_occur_min
+    modify: false
+    sequence: false
+    domain: mecanic
+  
+22: 
+    value: -1
+    min: 
+    max: 
+    utility: Relation.cardin_occur_max
+    modify: false
+    sequence: false
+    domain: mecanic
+  
+23: 
+    value: 0
+    min: 
+    max: 
+    utility: Relation.cardin_use_min
+    modify: false
+    sequence: false
+    domain: mecanic
+  
+24: 
+    value: -1
+    min: 
+    max: 
+    utility: Relation.cardin_use_max
+    modify: false
+    sequence: false
+    domain: mecanic
+   
+31:
+  value: "local_vault"
+  min: 
+  max: 
+  utility: Volume.protocol
+  modify: false
+  sequence: false
+  domain: mecanic

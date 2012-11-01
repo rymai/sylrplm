@@ -1,0 +1,44 @@
+
+Group_1: 
+  id: "1"
+  name: admins
+  father_id: 
+  domain: admin
+
+Group_2: 
+  id: "2"
+  name: consultants
+  father_id: 
+  domain: admin
+
+Group_3: 
+  id: "3"
+  name: creators
+  father_id: 
+  domain: admin
+
+Group_4: 
+  id: "4"
+  name: validers
+  father_id: 
+  domain: admin
+  
+group_marketing: 
+  id: "101" 
+  name: marketing
+  domain: mecanic
+    
+group_SICM: 
+  id: "102" 
+  name: SICM
+  domain: mecanic
+  
+group_BE: 
+  id: "103" 
+  name: BE
+  domain: mecanic
+  
+group_BM: 
+  id: "104" 
+  name: BM
+  domain: mecanic

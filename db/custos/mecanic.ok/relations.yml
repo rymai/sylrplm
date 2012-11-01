@@ -1,0 +1,263 @@
+
+rel1: 
+  id: "1"
+  name: describe_by
+  typesobject_id: "749051069"
+  father_plmtype: any_plmtype
+  child_plmtype: document
+  father_typesobject_id: "473241593"
+  child_typesobject_id: "473241593"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+rel2: 
+  id: "2"
+  name: any_relation
+  typesobject_id: "413872662"
+  father_plmtype: any_plmtype
+  child_plmtype: any_plmtype
+  father_typesobject_id: "473241593"
+  child_typesobject_id: "473241593"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+rel3: 
+  id: "3"
+  name: hierarchic_to
+  typesobject_id: "905287875"
+  father_plmtype: customer
+  child_plmtype: customer
+  father_typesobject_id: "453460665"
+  child_typesobject_id: "453460665"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+rel4: 
+  id: "4"
+  name: modify_by
+  typesobject_id: "989626521"
+  father_plmtype: any_plmtype
+  child_plmtype: document
+  father_typesobject_id: "473241593"
+  child_typesobject_id: "473241593"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+rel5: 
+  id: "5"
+  name: link_doc
+  typesobject_id: "262221517"
+  father_plmtype: document
+  child_plmtype: document
+  father_typesobject_id: "473241593"
+  child_typesobject_id: "473241593"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+rel6: 
+  id: "6"
+  name: contains
+  typesobject_id: "913245371"
+  father_plmtype: project
+  child_plmtype: part
+  father_typesobject_id: "473241593"
+  child_typesobject_id: "473241593"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+rel7: 
+  id: "7"
+  name: ask_for
+  typesobject_id: "672869653"
+  father_plmtype: customer
+  child_plmtype: project
+  father_typesobject_id: "473241593"
+  child_typesobject_id: "473241593"
+  cardin_occur_min: "0"
+  cardin_occur_max: "1"
+  cardin_use_min: "0"
+  cardin_use_max: "2"
+  domain: admin
+
+rel8: 
+  id: "8"
+  name: applicable
+  typesobject_id: "382640329"
+  father_plmtype: history_entry
+  child_plmtype: any_plmtype
+  father_typesobject_id: "41165346"
+  child_typesobject_id: "473241593"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+rel9: 
+  id: "9"
+  name: discuss_by
+  typesobject_id: "841581186"
+  father_plmtype: any_plmtype
+  child_plmtype: forum
+  father_typesobject_id: "473241593"
+  child_typesobject_id: "473241593"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+rel10: 
+  id: "10"
+  name: bom_part
+  typesobject_id: "291198241"
+  father_plmtype: part
+  child_plmtype: part
+  father_typesobject_id: "473241593"
+  child_typesobject_id: "473241593"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+rel11: 
+  id: "11"
+  name: reference
+  typesobject_id: "382640329"
+  father_plmtype: history_entry
+  child_plmtype: any_plmtype
+  father_typesobject_id: "41165346"
+  child_typesobject_id: "473241593"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+  
+rel_prd_eff: 
+  id: 20
+  name: PRD_EFF
+  typesobject_id: "989626530"
+  father_plmtype: part
+  child_plmtype: part
+  father_typesobject_id: "989626522"
+  child_typesobject_id: "989626524"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+rel_PRD_VAR: 
+  id: 21
+  name: PRD_VAR
+  typesobject_id: "989626530"
+  father_plmtype: part
+  child_plmtype: part
+  father_typesobject_id: "989626522"
+  child_typesobject_id: "989626523"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+    
+rel_var_eff: 
+  id: 22
+  name: VAR_EFF
+  typesobject_id: "989626530"
+  father_plmtype: part
+  child_plmtype: part
+  father_typesobject_id: "989626523"
+  child_typesobject_id: "989626524"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+rel_link_eff: 
+  id: 23
+  name: LINK_EFF
+  typesobject_id: "989626530"
+  father_plmtype: link
+  child_plmtype: part
+  father_typesobject_id: "989626531"
+  child_typesobject_id: "989626524"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+    
+#
+# conception
+#
+rel_PRD_STR: 
+  id: 24
+  name: PRD_STR
+  typesobject_id: "989626531"
+  father_plmtype: part
+  child_plmtype: part
+  father_typesobject_id: "989626522"
+  child_typesobject_id: "989626526"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+rel_STR_STR: 
+  id: 25
+  name: STR_STR
+  typesobject_id: "989626531"
+  father_plmtype: part
+  child_plmtype: part
+  father_typesobject_id: "989626526"
+  child_typesobject_id: "989626526"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+  
+rel_STR_PIE: 
+  id: 26
+  name: STR_PIE
+  typesobject_id: "989626531"
+  father_plmtype: part
+  child_plmtype: part
+  father_typesobject_id: "989626526"
+  child_typesobject_id: "989626525"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+  
+
+  
+
+  
+  
+  
+  
