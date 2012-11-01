@@ -6,35 +6,35 @@ Role_1:
   father_id: 
   domain: admin
 
-Role_13324184: 
+Role_2: 
   id: "2"
   title: creator
   description: Ecrit les specifications des produits
   father_id: 
   domain: admin
 
-Role_187099280: 
+Role_3: 
   id: "3"
   title: consultant
   description: Peut voir les donnees sans pouvoir les modifier
   father_id: 
   domain: admin
 
-Role_426981484: 
+Role_4: 
   id: "4"
   title: designer
   description: Modelise les produits
   father_id: 
   domain: admin
 
-Role_503483810: 
+Role_5: 
   id: "5"
   title: valider
   description: Valide les processus du cycle de vie des donnees
   father_id: 
   domain: admin
 
-Role_593922426: 
+Role_6: 
   id: "6"
   title: analyst
   description: |
@@ -44,7 +44,7 @@ Role_593922426:
   father_id: 
   domain: admin
 
-Role_602486136: 
+Role_7: 
   id: "7"
   title: project_manager
   description: Responsable du planning, des ressources

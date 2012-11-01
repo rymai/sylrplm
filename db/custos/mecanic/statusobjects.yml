@@ -59,6 +59,16 @@ Statusobject_9:
   demote_id: "0"
   domain: admin
 
+Statusobject_10: 
+  id: "10"
+  object: project
+  name: started
+  description: 
+  rank: "1"
+  promote_id: "1"
+  demote_id: "1"
+  domain: admin
+
 Statusobject_11: 
   id: "11"
   object: project
@@ -88,7 +98,7 @@ Statusobject_14:
   promote_id: "1"
   demote_id: "1"
   domain: admin
-  
+
 Statusobject_15: 
   id: "15"
   object: forum
@@ -115,16 +125,6 @@ Statusobject_22:
   name: inactive
   description: 
   rank: "2"
-  promote_id: "1"
-  demote_id: "1"
-  domain: admin
-
-Statusobject_852666442: 
-  id: "10"
-  object: project
-  name: started
-  description: 
-  rank: "1"
   promote_id: "1"
   demote_id: "1"
   domain: admin

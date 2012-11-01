@@ -564,4 +564,12 @@ ruby script/generate scaffold view name:string description:text
 rake db:fixtures:load FIXTURES_PATH=db/fixtures/admin
 rake db:fixtures:load FIXTURES_PATH=db/fixtures/domains/01-mecanique-ameublement/
 
+---
+--- export et import des custos
+---
+--- mini: domaine admin 
+rake sylrplm:import_domain[db/custos,admin]
+--- rake sylrplm:export_domain[db/custos,sample.table]
+rake sylrplm:export_domain[db/custos,mecanic.ok]
+
 tests auto: voir capybara

@@ -1,48 +1,48 @@
 
-Definition_257670514: 
-  id: 1
+Definition_1: 
+  id: "1"
   name: "*embedded*"
   description: the right to start processes embedded in launch items
   uri: 
   launch_fields: 
   domain: admin
 
-Definition_993990783: 
-  id: 2
+Definition_2: 
+  id: "2"
   name: "*untracked*"
   description: the right to launch processes from any URI
   uri: 
   launch_fields: 
   domain: admin
-  
-def_simple: 
-  id: 3
+
+Definition_3: 
+  id: "3"
   name: simple sequence
+  description: a simple sequence
   uri: sequence1.rb
-  description: a simple sequence 
+  launch_fields: 
   domain: admin
 
-def_leave: 
-  id: 4
+Definition_4: 
+  id: "4"
   name: leave request
+  description: may I leave the office ?
   uri: leave_request1.rb
-  description: "may I leave the office ?"
-  launch_fields: "{\"employee\":\"\",\"from_date\":\"\",\"to_date\":\"\",\"reason\":\"\"}" 
+  launch_fields: "{\"employee\":\"\",\"from_date\":\"\",\"to_date\":\"\",\"reason\":\"\"}"
   domain: admin
 
-def_revision: 
-  id: 5
+Definition_5: 
+  id: "5"
   name: revision
-  uri: /definitions/revise.rb
   description: Revision d un objet PLM
-  launch_fields: "{}" 
-  domain: mecanic
+  uri: /definitions/revise.rb
+  launch_fields: "{}"
+  domain: custo.sicm
 
-def_promote: 
-  id: 6
+Definition_6: 
+  id: "6"
   name: promotion
-  uri: /definitions/promote.rb
   description: Promotion d un objet PLM
-  launch_fields: "{}" 
-  domain: mecanic
-  
+  uri: /definitions/promote.rb
+  launch_fields: "{}"
+  domain: custo.sicm

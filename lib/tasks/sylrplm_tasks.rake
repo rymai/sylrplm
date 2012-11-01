@@ -3,7 +3,7 @@ require 'active_record'
 require 'action_controller'
 require 'application_controller'
 require 'plugins/acl_system2/lib/caboose/access_control'
-
+require 'main_helper'
 #
 require 'models/sylrplm_common'
 require 'models/plm_object'

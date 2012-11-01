@@ -1,5 +1,5 @@
 
-rel1: 
+Relation_1: 
   id: "1"
   name: describe_by
   typesobject_id: "749051069"
@@ -13,7 +13,7 @@ rel1:
   cardin_use_max: "-1"
   domain: admin
 
-rel2: 
+Relation_2: 
   id: "2"
   name: any_relation
   typesobject_id: "413872662"
@@ -27,7 +27,7 @@ rel2:
   cardin_use_max: "-1"
   domain: admin
 
-rel3: 
+Relation_3: 
   id: "3"
   name: hierarchic_to
   typesobject_id: "905287875"
@@ -41,7 +41,7 @@ rel3:
   cardin_use_max: "-1"
   domain: admin
 
-rel4: 
+Relation_4: 
   id: "4"
   name: modify_by
   typesobject_id: "989626521"
@@ -55,7 +55,7 @@ rel4:
   cardin_use_max: "-1"
   domain: admin
 
-rel5: 
+Relation_5: 
   id: "5"
   name: link_doc
   typesobject_id: "262221517"
@@ -69,7 +69,7 @@ rel5:
   cardin_use_max: "-1"
   domain: admin
 
-rel6: 
+Relation_6: 
   id: "6"
   name: contains
   typesobject_id: "913245371"
@@ -83,7 +83,7 @@ rel6:
   cardin_use_max: "-1"
   domain: admin
 
-rel7: 
+Relation_7: 
   id: "7"
   name: ask_for
   typesobject_id: "672869653"
@@ -97,7 +97,7 @@ rel7:
   cardin_use_max: "2"
   domain: admin
 
-rel8: 
+Relation_8: 
   id: "8"
   name: applicable
   typesobject_id: "382640329"
@@ -111,7 +111,7 @@ rel8:
   cardin_use_max: "-1"
   domain: admin
 
-rel9: 
+Relation_9: 
   id: "9"
   name: discuss_by
   typesobject_id: "841581186"
@@ -125,7 +125,7 @@ rel9:
   cardin_use_max: "-1"
   domain: admin
 
-rel10: 
+Relation_10: 
   id: "10"
   name: bom_part
   typesobject_id: "291198241"
@@ -139,7 +139,7 @@ rel10:
   cardin_use_max: "-1"
   domain: admin
 
-rel11: 
+Relation_11: 
   id: "11"
   name: reference
   typesobject_id: "382640329"
@@ -152,9 +152,9 @@ rel11:
   cardin_use_min: "0"
   cardin_use_max: "-1"
   domain: admin
-  
-rel_prd_eff: 
-  id: 20
+
+Relation_20: 
+  id: "20"
   name: PRD_EFF
   typesobject_id: "989626530"
   father_plmtype: part
@@ -167,8 +167,8 @@ rel_prd_eff:
   cardin_use_max: "-1"
   domain: admin
 
-rel_PRD_VAR: 
-  id: 21
+Relation_21: 
+  id: "21"
   name: PRD_VAR
   typesobject_id: "989626530"
   father_plmtype: part
@@ -180,9 +180,9 @@ rel_PRD_VAR:
   cardin_use_min: "0"
   cardin_use_max: "-1"
   domain: admin
-    
-rel_var_eff: 
-  id: 22
+
+Relation_22: 
+  id: "22"
   name: VAR_EFF
   typesobject_id: "989626530"
   father_plmtype: part
@@ -195,8 +195,8 @@ rel_var_eff:
   cardin_use_max: "-1"
   domain: admin
 
-rel_link_eff: 
-  id: 23
+Relation_23: 
+  id: "23"
   name: LINK_EFF
   typesobject_id: "989626530"
   father_plmtype: link
@@ -208,12 +208,9 @@ rel_link_eff:
   cardin_use_min: "0"
   cardin_use_max: "-1"
   domain: admin
-    
-#
-# conception
-#
-rel_PRD_STR: 
-  id: 24
+
+Relation_24: 
+  id: "24"
   name: PRD_STR
   typesobject_id: "989626531"
   father_plmtype: part
@@ -226,8 +223,8 @@ rel_PRD_STR:
   cardin_use_max: "-1"
   domain: admin
 
-rel_STR_STR: 
-  id: 25
+Relation_25: 
+  id: "25"
   name: STR_STR
   typesobject_id: "989626531"
   father_plmtype: part
@@ -239,9 +236,9 @@ rel_STR_STR:
   cardin_use_min: "0"
   cardin_use_max: "-1"
   domain: admin
-  
-rel_STR_PIE: 
-  id: 26
+
+Relation_26: 
+  id: "26"
   name: STR_PIE
   typesobject_id: "989626531"
   father_plmtype: part
@@ -253,11 +250,3 @@ rel_STR_PIE:
   cardin_use_min: "0"
   cardin_use_max: "-1"
   domain: admin
-  
-
-  
-
-  
-  
-  
-  
