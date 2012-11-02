@@ -914,21 +914,6 @@ Link_98:
   projowner_id: "1"
   domain: sample.table
 
-Link_115: 
-  id: "115"
-  father_plmtype: link
-  child_plmtype: part
-  father_id: "97"
-  child_id: "16"
-  father_typesobject_id: "291198241"
-  child_typesobject_id: "989626524"
-  relation_id: "23"
-  values: 
-  owner_id: "1"
-  group_id: "1"
-  projowner_id: "1"
-  domain: sample.table
-
 Link_117: 
   id: "117"
   father_plmtype: link
@@ -1118,6 +1103,111 @@ Link_132:
   father_typesobject_id: "997141214"
   child_typesobject_id: "989626522"
   relation_id: "2"
+  values: 
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+
+Link_152: 
+  id: "152"
+  father_plmtype: customer
+  child_plmtype: project
+  father_id: "1"
+  child_id: "3"
+  father_typesobject_id: "1027958329"
+  child_typesobject_id: "997141214"
+  relation_id: "7"
+  values: 
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+
+Link_153: 
+  id: "153"
+  father_plmtype: part
+  child_plmtype: part
+  father_id: "4"
+  child_id: "26"
+  father_typesobject_id: "989626526"
+  child_typesobject_id: "989626526"
+  relation_id: "25"
+  values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+
+Link_154: 
+  id: "154"
+  father_plmtype: link
+  child_plmtype: part
+  father_id: "153"
+  child_id: "16"
+  father_typesobject_id: "989626531"
+  child_typesobject_id: "989626524"
+  relation_id: "23"
+  values: 
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+
+Link_155: 
+  id: "155"
+  father_plmtype: part
+  child_plmtype: part
+  father_id: "3"
+  child_id: "25"
+  father_typesobject_id: "989626526"
+  child_typesobject_id: "989626525"
+  relation_id: "26"
+  values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+
+Link_156: 
+  id: "156"
+  father_plmtype: link
+  child_plmtype: part
+  father_id: "155"
+  child_id: "16"
+  father_typesobject_id: "989626531"
+  child_typesobject_id: "989626524"
+  relation_id: "23"
+  values: 
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+
+Link_157: 
+  id: "157"
+  father_plmtype: link
+  child_plmtype: part
+  father_id: "97"
+  child_id: "13"
+  father_typesobject_id: "989626531"
+  child_typesobject_id: "989626524"
+  relation_id: "23"
+  values: 
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+
+Link_158: 
+  id: "158"
+  father_plmtype: link
+  child_plmtype: part
+  father_id: "97"
+  child_id: "18"
+  father_typesobject_id: "989626531"
+  child_typesobject_id: "989626524"
+  relation_id: "23"
   values: 
   owner_id: "1"
   group_id: "1"
