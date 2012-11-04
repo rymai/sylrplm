@@ -16,7 +16,7 @@ def  build_tree(obj, view_id, variant=nil)
 	else
 	var_effectivities = []
 	end
-	LOG.debug (fname) {"view_id=#{view_id}, variante=#{variant},  #{var_effectivities.count} effectivites de variante"}
+	LOG.debug (fname) {"view_id=#{view_id}, variante=#{variant}, var_effectivities=#{var_effectivities.inspect}"}
 	follow_tree(obj, tree, obj, relations, var_effectivities, 0)
 	### a mettre en option group_tree(tree, 0)
 	LOG.debug (fname) {"tree size=#{tree.size}"}
@@ -57,6 +57,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level)
 		links = Link.find_childs(father,  mdl_child)
 		LOG.debug (fname) {"links(#{mdl_child})=#{links.inspect}"}
 		links.each do |link|
+
 		#
 		# on teste si une des effectivites du lien est comprise dans la variante en cours
 		#
@@ -67,15 +68,15 @@ def follow_tree(root, node, father, relations, var_effectivities, level)
 			else
 				LOG.debug (fname){"link=#{link.ident}, link_effectivities=#{link_effectivities}"}
 				LOG.debug (fname){"var_effectivities=#{var_effectivities}"}
-				link_to_show = false
 				if var_effectivities.count==0
 					link_to_show = true
 					LOG.debug (fname){" pas d'effectivites de variante => on affiche"}
 				else
+					link_to_show = true
 					link_effectivities.each do |link_eff|
-						if var_effectivities.include?(link_eff)
-							link_to_show = true
-							LOG.debug (fname){"link=#{link.ident}, effectivite du lien requise pour la variante => on affiche"}
+						LOG.debug (fname){"link=#{link.ident}:effectivite #{link_eff} requise pour variante : #{var_effectivities.include?(link_eff)}"}
+						unless var_effectivities.include?(link_eff)
+						link_to_show = false
 						end
 					end
 				end
@@ -87,7 +88,6 @@ def follow_tree(root, node, father, relations, var_effectivities, level)
 				# edit du lien
 				relation = Relation.find(link.relation_id)
 				LOG.debug (fname){"relation=#{relation.id}.#{relation.ident}"}
-
 				# pas de relations demandees => toutes
 				if relations.nil? || relations.count==0
 				show_relation=true

@@ -42,6 +42,7 @@
 	<%= form.label t(:label_child) %>
 	<%= text_field_tag :child, @link.child.to_s , :readonly=>:true , :size => 50  %>
 </fieldset>
+<% unless @root.nil? %>
 <fieldset>
 	<legend>
 		<%= t(:legend_link_effectivities) %>
@@ -50,6 +51,7 @@
 	<%= select_tag(:effectivities, options_from_collection_for_select( @root.prd_effectivities, :mdlid, :to_s, @link.effectivities_mdlid), {:multiple => true, :size => 15 }) %>
 	<br/>
 </fieldset>
+<% end %>
 <fieldset>
 	<%= form.label t(:label_domain) %>
 	<%= form.text_field(:domain) %>

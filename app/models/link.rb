@@ -46,6 +46,14 @@ class Link < ActiveRecord::Base
     :through => :links_effectivities,
     :source => :part
 
+	def before_save
+		fname= "#{self.class.name}.#{__method__}"
+		if self.domain.nil? || self.domain.empty?
+			self.domain = father.domain
+		end
+		LOG.debug (fname) {"father.domain=#{father.domain}: child.domain=#{child.domain}: => domain=#{self.domain}:"}
+	end
+
 	def effectivities_mdlid
 		ret=[]
 		self.effectivities.each do |eff|
@@ -199,7 +207,9 @@ class Link < ActiveRecord::Base
 
 	def self.valid?(father, child, relation)
 		fname= "Link.#{__method__}"
-		LOG.info(fname) {"relation=#{relation.inspect}"}
+		LOG.info(fname) {"father=#{father}:#{father.typesobject.inspect}"}
+		LOG.info(fname) {"relation=#{relation.father_typesobject.inspect} #{relation.child_typesobject.inspect}"}
+		LOG.info(fname) {"child=#{child.typesobject.inspect}"}
 		ret=(father.model_name==relation.father_plmtype || relation.father_plmtype == ::SYLRPLM::PLMTYPE_GENERIC) \
 		&& (child.model_name==relation.child_plmtype || relation.child_plmtype == ::SYLRPLM::PLMTYPE_GENERIC) \
 		&& (father.typesobject.name==relation.father_typesobject.name || relation.father_typesobject.name == ::SYLRPLM::TYPE_GENERIC) \

@@ -120,7 +120,6 @@ namespace :sylrplm do
   def export_domain (adomain, fixtures_path)
     if load_models
       #
-      
       FileUtils.remove(Dir.glob("#{fixtures_path}/*"))
       assocs = {}
       domains = []
@@ -165,7 +164,8 @@ namespace :sylrplm do
                         assocs[r.options[:join_table]] =[] if assocs[r.options[:join_table]].nil?
                         trouve=false
                         assocs[r.options[:join_table]].each do |arel|
-                          if arel[r.association_foreign_key] == obj.id && arel[r.primary_key_name] == ext_id
+                          if arel[r.association_foreign_key] == obj.id && arel[r.primary_key_name] == ext_id ||
+                          arel[r.primary_key_name] == obj.id && arel[r.association_foreign_key] == ext_id
                             trouve=true
                           end
                         end
@@ -211,6 +211,14 @@ namespace :sylrplm do
           #puts "#{str}\n"
         end
         out_yml.close unless out_yml.nil?
+      end
+      # suppression des fichiers vides
+      Dir.glob("#{fixtures_path}/*.yml").each do |afile|
+      	asize=File.size(afile)
+      	$stdout.puts "#{__method__}:output file:#{afile}:#{asize}"
+      	if asize == 0
+      		File.unlink(afile)
+      	end
       end
     end
     $stdout.puts "#{__method__}:end"
