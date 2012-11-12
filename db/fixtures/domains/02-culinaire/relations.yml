@@ -1,2 +1,0 @@
-<% require 'yaml' %>
-<%= ::YAML::include("#{Rails.root}/db/fixtures/relations.yml") %>

@@ -1,5 +1,0 @@
-<% require 'yaml' %>
-<%= ::YAML::include("dirname(#{__FILE__})/../../admin/index_admin.yml") %>
-<%= ::YAML::include("dirname(#{__FILE__})/typesobjects.yml") %>
-<%= ::YAML::include("dirname(#{__FILE__})/statusobjects.yml") %>
-<%= ::YAML::include("dirname(#{__FILE__})/sequences.yml") %>

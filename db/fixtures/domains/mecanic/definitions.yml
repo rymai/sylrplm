@@ -1,2 +1,0 @@
-<% require 'yaml' %>
-<%= ::YAML::include("db/fixtures/admin/definitions.yml") %>
