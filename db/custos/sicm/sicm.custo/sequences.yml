@@ -8,6 +8,15 @@ Sequence_64810937:
   modify: "0"
   sequence: "1"
   domain: custo.sicm
+Sequence_64810938: 
+  id: "64810938"
+  value: 000
+  min: 
+  max: 
+  utility: Document.revision
+  modify: "0"
+  sequence: "1"
+  domain: custo.sicm
 
 Sequence_78719920: 
   id: "78719920"

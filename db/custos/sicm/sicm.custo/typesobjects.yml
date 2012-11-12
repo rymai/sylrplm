@@ -253,7 +253,7 @@ Typesobject_17665305:
   name: tests
   fields: 
   description: Forum sur les tests
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_59219424: 
   id: "59219424"
@@ -261,7 +261,7 @@ Typesobject_59219424:
   name: electric
   fields: 
   description: Composant ou ensemble electrique
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_64093143: 
   id: "64093143"
@@ -269,7 +269,7 @@ Typesobject_64093143:
   name: fmat
   fields: 
   description: Fiche matiere
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_89393353: 
   id: "89393353"
@@ -293,7 +293,7 @@ Typesobject_117029505:
   name: norme
   fields: 
   description: Norme applicable
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_251879061: 
   id: "251879061"
@@ -301,7 +301,7 @@ Typesobject_251879061:
   name: specifs
   fields: 
   description: Forum sur les specifications
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_304033590: 
   id: "304033590"
@@ -309,7 +309,7 @@ Typesobject_304033590:
   name: cdc_requirement
   fields: 
   description: Exigences du cahier des charges
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_312726501: 
   id: "312726501"
@@ -317,7 +317,7 @@ Typesobject_312726501:
   name: design
   fields: 
   description: Forum sur la conception
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_314246312: 
   id: "314246312"
@@ -325,7 +325,7 @@ Typesobject_314246312:
   name: sub-assembly
   fields: 
   description: Projet pour un sous ensemble
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_353569266: 
   id: "353569266"
@@ -333,7 +333,7 @@ Typesobject_353569266:
   name: m3d
   fields: 
   description: Numerisation 3D
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_360315624: 
   id: "360315624"
@@ -341,7 +341,7 @@ Typesobject_360315624:
   name: autocad
   fields: 
   description: DAO Autocad
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_401521250: 
   id: "401521250"
@@ -349,7 +349,7 @@ Typesobject_401521250:
   name: mecanic
   fields: 
   description: Composant ou ensemble mecanique
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_418777236: 
   id: "418777236"
@@ -357,23 +357,7 @@ Typesobject_418777236:
   name: p2d
   fields: 
   description: Numerisation 2D
-  domain: custo.sicm
-
-Typesobject_423945440: 
-  id: "423945440"
-  object: customer
-  name: private
-  fields: 
-  description: Client externe a acces restreint
-  domain: custo.sicm
-
-Typesobject_453460665: 
-  id: "453460665"
-  object: customer
-  name: internal
-  fields: 
-  description: Service ou direction interne a l'entreprise
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_472785393: 
   id: "472785393"
@@ -381,7 +365,7 @@ Typesobject_472785393:
   name: electronic
   fields: 
   description: Composant ou ensemble electronique
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_557092610: 
   id: "557092610"
@@ -389,7 +373,7 @@ Typesobject_557092610:
   name: exb_requirement
   fields: 
   description: Exigences de l'expression de besoin
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_569273268: 
   id: "569273268"
@@ -397,7 +381,7 @@ Typesobject_569273268:
   name: exb
   fields: 
   description: Expression de besoin
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_646247456: 
   id: "646247456"
@@ -405,7 +389,7 @@ Typesobject_646247456:
   name: text
   fields: 
   description: Fichier texte
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_788606013: 
   id: "788606013"
@@ -413,7 +397,7 @@ Typesobject_788606013:
   name: requirements
   fields: 
   description: Forum sur les exigences
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_802476987: 
   id: "802476987"
@@ -421,7 +405,7 @@ Typesobject_802476987:
   name: spreadsheet
   fields: 
   description: Fichier tableur
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_873691851: 
   id: "873691851"
@@ -429,7 +413,7 @@ Typesobject_873691851:
   name: cdc
   fields: 
   description: Cahier des charges
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_889037033: 
   id: "889037033"
@@ -437,7 +421,7 @@ Typesobject_889037033:
   name: writer
   fields: 
   description: Traitement de texte
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_942363587: 
   id: "942363587"
@@ -445,7 +429,7 @@ Typesobject_942363587:
   name: catia
   fields: 
   description: CAO Catia
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_959762344: 
   id: "959762344"
@@ -453,7 +437,7 @@ Typesobject_959762344:
   name: needs
   fields: 
   description: Forum sur les besoins
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_975625710: 
   id: "975625710"
@@ -461,7 +445,7 @@ Typesobject_975625710:
   name: standard
   fields: 
   description: Projet pour articles standards ou catalogues
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_994999514: 
   id: "994999514"
@@ -469,7 +453,7 @@ Typesobject_994999514:
   name: image
   fields: 
   description: fichier image jpg gif bmp
-  domain: custo.sicm
+  domain: custo_sicm
 
 Typesobject_1016696961: 
   id: "1016696961"
@@ -477,12 +461,28 @@ Typesobject_1016696961:
   name: calculsheet
   fields: 
   description: Feuille de calcul
-  domain: custo.sicm
+  domain: custo_sicm
 
-Typesobject_1027958329: 
-  id: "1027958329"
+Typesobject_customer_private: 
+  id: "423945440"
+  object: customer
+  name: private
+  fields: 
+  description: Client externe a acces restreint
+  domain: custo_sicm
+
+Typesobject_customer_internal: 
+  id: "423945441"
+  object: customer
+  name: internal
+  fields: 
+  description: Service ou direction interne a l'entreprise
+  domain: custo_sicm
+  
+Typesobject_customer_public: 
+  id: "423945442"
   object: customer
   name: public
   fields: 
   description: Client externe accessible a tous
-  domain: custo.sicm
+  domain: custo_sicm

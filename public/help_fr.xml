@@ -137,7 +137,15 @@
            			<li> notify_date : date de la notification (null si pas encore fait)</li>
             	</ul>
             	</msg>		
-    		</msg>   		
+    		</msg>
+    		<msg key="help_domain" title="Domaine">
+            	La notion de domaine d'utilisation permet de definir l'ensemble des composants permettant de parametrer l'application 
+            	suivant les exigences d'une organisation. 
+            	Pour ceci, la plupart des objets comportent l'attribut Domaine qui permet de specifier le domaine pour lequel il a ete cree.
+            	Cas particulier: Le domaine nommé "admin" comporte tous les objets indispensables au fonctionnement de l'application, 
+            	En consequence, ces objets ne doivent pas etre supprimes.
+            	Voir le chapitre sur le paramétrage pour maitriser son utilisation.
+        </msg>	   		
     </msg>
     
     <msg key="help_modules" title="Modules">
@@ -274,12 +282,21 @@
                 </msg>
                 <msg key="help_parts_functions" title="Fonctionnalités">
                     Les principales fonctionnalités sur les articles sont:
+                    <msg key="help_parts_bom" title="Nomenclature" href="/parts">
+                        Une fonction importante est la nomenclature (bom)
+                        Elle représente les instances d'articles avec leurs liens.
+                        
+                    </msg>
+                    
                     <msg key="help_parts_list" title="Liste" href="/parts">
                         #img=help/parts_list.png=img#
                     </msg>
                     <msg key="help_parts_show" title="Explorer" href="/parts/1">
                         <ul>
                             <li title="Page d'exploration">#img=help/parts_show.png=img#
+                            	Le choix de la vue permet d'afficher seulement les relations qui lui sont associées.
+                            	Voir le paramétrage des vues pour exploiter cette notion.	
+                            	Le choix de la variante permet d'exploiter la notion de configuration de nomenclature (nomenclature configurée)
                             </li>
                             <li title="Ajout forum">#img=help/parts_add_forum.png=img#
                             </li>
@@ -460,17 +477,8 @@
         </msg>
         <msg key="help_processus" title="Processus métier">
             #img=help/module_processus.png=img#
-            Ce module comprend les fonctions relatives aux processus métier: définition, exécution, suivi.
-            <msg key="help_definitions" title="Définition" href="/definitions">
-            	Liste et lancement des processus (bouton vert)
-            	#img=help/definitions_list.png=img#
-            	Détail:
-            	#img=help/definitions_show.png=img#
-            	Edition:
-            	#img=help/definitions_edit.png=img#
-            	Création:
-            	#img=help/definitions_new.png=img#
-            </msg>
+            Ce module comprend les fonctions relatives a l'execution des processus métier: exécution, suivi.
+            
             <msg key="help_myactions" title="Mes actions" href="/workitems">
             	Suivi des actions qui me sont affectées lors du déroulement des processus.
             	Liste:
@@ -480,7 +488,15 @@
             	Lancement:
             	#img=help/workflows_edit.png=img#
             </msg>
-            <msg key="help_curprocessus" title="Processus en cours" href="/processus">
+            <msg key="help_run_processus" title="Lancer un Processus" href="/definitions/new_process">
+            	Lancer un processus.
+            	#img=help/new_process.png=img#
+            	Activer un des processus
+            	#img=help/new_process1.png=img#
+            	Lancer le processus 
+            	#img=help/new_process2.png=img#
+            </msg>
+            <msg key="help_cur_processus" title="Processus en cours" href="/processus">
             	Liste des processus en cours d'exécution.
             	#img=help/processus_list.png=img#
             	Détails:
@@ -703,6 +719,74 @@
                     </li>
                 </ul>
             </msg>
+
+            <msg key="help_relations" title="Relations" href="/relations">
+                Définit les différentes relations utilisées par l'application lors de la création de lienx entre objets
+                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                    <li title="Nom">Nom de la relation.
+                    </li>
+                    <li title="Type">Type de la relation.
+                    </li>
+                    <li title="Type PLM du père">Type PLM possible de l'objet père de la relation.
+                    </li>
+                    <li title="Type PLM du fils">Type PLM possible de l'objet fils de la relation.
+                    </li>
+                     <li title="Type du père">Type possible de l'objet père de la relation.
+                    </li>
+                    <li title="Type du fils">Type possible de l'objet fils de la relation.
+                    </li>
+                    <li title="Cardin occur mini">Cardinalité d'occurence mini de la relation.
+                    </li>
+                    <li title="Cardin occur maxi">Cardinalité d'occurence maxi de la relation.
+                    </li>
+                    <li title="Cardin use mini">Cardinalité d'utilisation mini de la relation.
+                    </li>
+                    <li title="Cardin use maxi">Cardinalité d'utilisation maxi de la relation.
+                    </li>
+                </ul>
+            </msg>
+
+            <msg key="help_views" title="Vues" href="/views">
+                Définit les différentes vues utilisées par l'application lors de l'affichage des nomenclatures d'articles par l'explorateur, 
+                voir les commandes Explorateur des objets concernes: Article, Projet et Client.
+                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                    <li title="Nom">
+                    </li>
+                    <li title="Description">
+                    </li>
+                    <li title="Relations">Liste des relations que la vue affichera dans l'explorateur
+                    </li>
+                   
+                </ul>
+            </msg>
+            
+            <msg key="help_definitions" title="Définitions de processus" href="/definitions">
+                Définit les différentes processus utilisées par l'application 
+                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+                    <li title="Nom">
+                    </li>
+                    <li title="Description">
+                    </li>
+                    <li title="URL">
+                    </li>
+                    <li title="Groupes">
+                    </li>
+                </ul>
+                <msg key="help_definitions" title="Définition" href="/definitions">
+		            	Liste et lancement des processus (bouton vert)
+		            	#img=help/definitions_list.png=img#
+		            	Détail:
+		            	#img=help/definitions_show.png=img#
+		            	Edition:
+		            	#img=help/definitions_edit.png=img#
+		            	Création:
+		            	#img=help/definitions_new.png=img#
+            		</msg>
+            </msg>
+
             <msg key="help_config" title="Configuration">
                 Il est possible de configurer l'application à l'aide paramètres à définir dans le fichier sylrplm.rb du répertoire config
                 Toute modification de ce fichier requiert un redémarrage du serveur http.
@@ -721,6 +805,7 @@
                     </li>
                 </ul>
             </msg>
+            
         </msg>
         
         <msg key="help_debug" title="Debug">
@@ -728,6 +813,25 @@
             Permet de gérer les tables internes de l'application.
             Pour administrateur très éclairé seulement.
         </msg>
+        
+        <msg key="help_custo_integration" title="Integration du parametrage">
+            La commande "rake sylrplm:export_domain" permet d'exporter et importer un parametrage suivant un domaine particulier
+ 						<ul title="Export-Import">Les differentes utilisation possibles sont:
+                    <li title="Export custo societe sicm">
+                        rake sylrplm:export_domain[db/custos_export,sicm.custo]
+                    </li>
+                    <li title="Export exemple table">
+                        rake sylrplm:export_domain[db/custos_export,sample.table]
+                    </li>
+                    <li title="Import custo societe sicm">
+                        rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
+                    </li>
+                    <li title="Import exemple table">
+                        rake sylrplm:import_domain[db/custos/sicm,sample.table]
+                    </li>
+            </ul>
+        </msg>
+        
     </msg>
     <msg key="help_technical_doc" title="Documentation technique">
         La documentation technique de l'application décrit les classes,fichiers source et méthodes:#lnk=doc/app/index.html=lnk#

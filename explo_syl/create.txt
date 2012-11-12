@@ -567,9 +567,20 @@ rake db:fixtures:load FIXTURES_PATH=db/fixtures/domains/01-mecanique-ameublement
 ---
 --- export et import des custos
 ---
---- mini: domaine admin 
-rake sylrplm:import_domain[db/custos,admin]
---- rake sylrplm:export_domain[db/custos,sample.table]
-rake sylrplm:export_domain[db/custos,mecanic.ok]
+rake sylrplm:export_domain[db/custos_export,sample.table]
+
+--- verifier et deplacer dans une custo par besoin
+rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
+rake sylrplm:import_domain[db/custos/sicm,sample.table]
+#pour heroku, mettre au debut: heroku run 
 
 tests auto: voir capybara
+
+todo: 
+ajouter la sequence Document.revision dans la custo:fait maison
+associer des groupes aux utilisateurs dans la custo (pas facile car pas de domain sur assoc)
+modifier/creer le disque local en donnant un chemin windows et unix , dans sicm.custo (serveur unix ou windows)
+
+prendre en compte sylrplm_fog.rb (rescue):fait maison
+
+

@@ -1,4 +1,6 @@
 # acces au serveur de fichier fog sur le cloud
+require 'fog'
+
 class SylrplmFog
 
 private
@@ -43,16 +45,21 @@ public
   def directories(log=false)
     # list directories
     #puts "sylrplm_fog.directories:"+self.storage.inspect
-    ret=self.storage.directories
-    if log
-      puts "sylrplm_fog.directories="
-      ret.each do |ddd|
-        puts "directory:"+ddd.key
-        ddd.files.each do |s3_file|
-          puts "\tfile:"+s3_file.key
-        end
-      end
-    end
+    ret=[]
+	begin
+		ret=self.storage.directories
+	    if log
+	      puts "sylrplm_fog.directories="
+	      ret.each do |ddd|
+	        puts "directory:"+ddd.key
+	        ddd.files.each do |s3_file|
+	          puts "\tfile:"+s3_file.key
+	        end
+	      end
+	    end
+	rescue Exception=>e
+		puts "fog access error:#{e}"
+	end
     ret
   end
 
