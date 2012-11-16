@@ -577,10 +577,12 @@ rake sylrplm:import_domain[db/custos/sicm,sample.table]
 tests auto: voir capybara
 
 todo: 
-ajouter la sequence Document.revision dans la custo:fait maison
+ajouter la sequence Document.revision dans la custo:fait 12/11/2012
 associer des groupes aux utilisateurs dans la custo (pas facile car pas de domain sur assoc)
 modifier/creer le disque local en donnant un chemin windows et unix , dans sicm.custo (serveur unix ou windows)
 
 prendre en compte sylrplm_fog.rb (rescue):fait maison
+
+sur mandriva: kdewallet , compte=dsone\s45, mot de passe=syl91.ani
 
 
