@@ -31,7 +31,7 @@ class PlmServices
 				LOG.error{fname+e.message}
 			end
 		end
-		LOG.debug (fname){"ret=#{(ret.nil? ? "" : ret.ident)}"}
+		#LOG.debug (fname){"ret=#{(ret.nil? ? "" : ret.ident)}"}
 		ret
 	end
 end

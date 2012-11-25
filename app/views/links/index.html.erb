@@ -17,6 +17,7 @@
 		<th><%= t(:label_relation) %> </th>
 		<th><%= t(:label_child) %> </th>
 		<th><%= t(:label_values) %> </th>
+		<th><%= t("label_domain") %></th>
 		
 	</tr>
 	<% @links[:recordset].each do |link| %>
@@ -28,6 +29,7 @@
 		<td><%= h link.relation_ident %></td>
 		<td><%= h link.child_ident %></td>
 		<td><%= h link.values %></td>
+		<td><%= h link.domain %></td>
 		
 		<td><%= link_to h_img_show.to_s, link %> </td>
 		<td><%= link_to h_img_edit.to_s, edit_link_path(link) %> </td>

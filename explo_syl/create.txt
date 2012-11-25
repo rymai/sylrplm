@@ -275,8 +275,7 @@ To git@heroku.com:freezing-stone-916.git
 ---
 --- Bootstrap your database
 ---
-[syl@localhost sylrplm (master)]$ heroku rake db:migrate
-
+$ heroku rake db:migrate
 (in /app)
 
 ---
@@ -465,7 +464,9 @@ rake db:drop;rake db:create;rake db:load
 ---
 --- recreer la base sur heroku
 ---
-heroku rake db:drop;heroku rake db:create;heroku rake db:schema:load 
+heroku run rake db:reset;
+#heroku run rake db:create;
+#heroku run rake db:schema:load 
 heroku open;heroku logs -n 500
 
 ======================================================
@@ -563,4 +564,25 @@ ruby script/generate scaffold view name:string description:text
 rake db:fixtures:load FIXTURES_PATH=db/fixtures/admin
 rake db:fixtures:load FIXTURES_PATH=db/fixtures/domains/01-mecanique-ameublement/
 
+---
+--- export et import des custos
+---
+rake sylrplm:export_domain[db/custos_export,sample.table]
+
+--- verifier et deplacer dans une custo par besoin
+rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
+rake sylrplm:import_domain[db/custos/sicm,sample.table]
+#pour heroku, mettre au debut: heroku run 
+
 tests auto: voir capybara
+
+todo: 
+ajouter la sequence Document.revision dans la custo:fait 12/11/2012
+associer des groupes aux utilisateurs dans la custo (pas facile car pas de domain sur assoc)
+modifier/creer le disque local en donnant un chemin windows et unix , dans sicm.custo (serveur unix ou windows)
+
+prendre en compte sylrplm_fog.rb (rescue):fait maison
+
+sur mandriva: kdewallet , compte=dsone\s45, mot de passe=syl91.ani
+
+

@@ -55,9 +55,9 @@ class PartsController < ApplicationController
 		@tree         = build_tree(@part, @myparams[:view_id] , @variant)
 		@tree_up      = build_tree_up(@part, @myparams[:view_id] )
 		LOG.debug (fname){"taille tree=#{@tree.size}"}
-		#LOG.debug (fname){"variant=#{@variant}"}
-		#LOG.debug (fname){"variant eff=#{@variant.var_effectivities}"} unless @variant.nil?
-		#LOG.debug (fname){"end:view=#{View.find(@myparams[:view_id]).to_s}"}
+	#LOG.debug (fname){"variant=#{@variant}"}
+	#LOG.debug (fname){"variant eff=#{@variant.var_effectivities}"} unless @variant.nil?
+	#LOG.debug (fname){"end:view=#{View.find(@myparams[:view_id]).to_s}"}
 	end
 
 	# GET /parts/new

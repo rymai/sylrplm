@@ -31,7 +31,9 @@
 	<b><%= t(:label_date) %></b>
 	<%= l @project.date %>
 </p>
+
 <%= h_show_tree @project %>
+
 <%= render(:partial => "shared/object_workitems", :object =>@project) %>
 <table class='menu_bas'>
 	<% unless @favori.get('document').count==0 || @relations["document"].count==0 %>

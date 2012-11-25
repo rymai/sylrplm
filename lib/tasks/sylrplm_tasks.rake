@@ -3,7 +3,7 @@ require 'active_record'
 require 'action_controller'
 require 'application_controller'
 require 'plugins/acl_system2/lib/caboose/access_control'
-
+require 'main_helper'
 #
 require 'models/sylrplm_common'
 require 'models/plm_object'
@@ -24,7 +24,7 @@ namespace :sylrplm do
     $stdout.puts "Database configuration=#{ActiveRecord::Base.configurations}"
   end
 
-  desc 'import domain objects : ""=["admin"] or ["mecanic"] or ["cooking"] '
+  desc 'import domain objects : [db/fixtures,admin"] or [db/fixtures,mecanic] or [db/fixtures,cooking] '
   task :import_domain, [:path, :domain] => [:connect, :environment] do |t, args|
     #args.with_defaults(:domain => :admin)
     domain = args.domain.to_s
@@ -32,14 +32,14 @@ namespace :sylrplm do
     puts "path is #{path}, domain is #{domain}"
     fixtures_path = "#{path}/#{domain}"
     unless domain.empty?
-      truncate
+      ###truncate
       #Rake::Task["db:fixtures:load FIXTURES_PATH=#{fixtures_path}"].invoke
       ENV["FIXTURES_PATH"] = fixtures_path
       puts "fixtures_path=#{ENV['FIXTURES_PATH']}"
       Rake::Task["db:fixtures:load"].invoke
       ::Access.reset
     else
-      $stdout.puts "Domain is mandatory"
+      $stdout.puts "Path and Domain are mandatory"
     end
   end
 
@@ -120,7 +120,6 @@ namespace :sylrplm do
   def export_domain (adomain, fixtures_path)
     if load_models
       #
-      
       FileUtils.remove(Dir.glob("#{fixtures_path}/*"))
       assocs = {}
       domains = []
@@ -165,7 +164,8 @@ namespace :sylrplm do
                         assocs[r.options[:join_table]] =[] if assocs[r.options[:join_table]].nil?
                         trouve=false
                         assocs[r.options[:join_table]].each do |arel|
-                          if arel[r.association_foreign_key] == obj.id && arel[r.primary_key_name] == ext_id
+                          if arel[r.association_foreign_key] == obj.id && arel[r.primary_key_name] == ext_id ||
+                          arel[r.primary_key_name] == obj.id && arel[r.association_foreign_key] == ext_id
                             trouve=true
                           end
                         end
@@ -211,6 +211,14 @@ namespace :sylrplm do
           #puts "#{str}\n"
         end
         out_yml.close unless out_yml.nil?
+      end
+      # suppression des fichiers vides
+      Dir.glob("#{fixtures_path}/*.yml").each do |afile|
+      	asize=File.size(afile)
+      	$stdout.puts "#{__method__}:output file:#{afile}:#{asize}"
+      	if asize == 0
+      		File.unlink(afile)
+      	end
       end
     end
     $stdout.puts "#{__method__}:end"

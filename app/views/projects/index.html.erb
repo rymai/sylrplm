@@ -24,7 +24,7 @@
 		<th <%= sort_td_class_helper "group" %>> <%= sort_link_helper t(:label_group), "group_id" %> </th>
 		<th <%= sort_td_class_helper "date" %>> <%= sort_link_helper t(:label_date) , "date" %> </th>
 		<th <%= sort_td_class_helper "users" %>> <%= sort_link_helper t(:label_users) , "users" %> </th>
-		<th></th>
+		<th <%= sort_td_class_helper "domain" %>><%= sort_link_helper t("label_domain"), "domain" %></th><th></th>
 		<th></th>
 		<th></th>
 	</tr>
@@ -40,6 +40,7 @@
 		<td> <%= h_explorer project.group  %> </td>
 		<td> <%= l project.date unless project.date.nil? %> </td>
 		<td> <%= comma_links(project.users, :login) %></td>
+		<td> <%= project.domain %></td>
 		<td> <%= link_to h_img_edit.to_s, edit_project_path(project) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, project, :confirm => t(:msg_confirm), :method => :delete %> </td>
 		<td> <% if logged_in? %>

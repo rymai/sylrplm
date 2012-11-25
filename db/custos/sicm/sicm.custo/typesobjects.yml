@@ -1,0 +1,488 @@
+
+Typesobject_41165346: 
+  id: "41165346"
+  object: history_entry
+  name: history_entry
+  fields: 
+  description: Historique de processus
+  domain: admin
+
+Typesobject_138668910: 
+  id: "138668910"
+  object: project_typeaccess
+  name: confidential
+  fields: 
+  description: Projet confidentiel
+  domain: admin
+
+Typesobject_218759731: 
+  id: "218759731"
+  object: user
+  name: $NEW_ACCOUNT
+  fields: 
+  description: Type donne au compte a sa creation, en attendant sa validation.
+  domain: admin
+
+Typesobject_258446918: 
+  id: "258446918"
+  object: project_typeaccess
+  name: secret
+  fields: 
+  description: Projet secret
+  domain: admin
+
+Typesobject_262221517: 
+  id: "262221517"
+  object: relation
+  name: document_document
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_291198241: 
+  id: "291198241"
+  object: relation
+  name: bom
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_382640329: 
+  id: "382640329"
+  object: relation
+  name: history_entry
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_413872662: 
+  id: "413872662"
+  object: relation
+  name: any_relation_type
+  fields: 
+  description: Relation generique
+  domain: admin
+
+Typesobject_446111194: 
+  id: "446111194"
+  object: user
+  name: person_
+  fields: 
+  description: Personne physique.
+  domain: admin
+
+Typesobject_473241593: 
+  id: "473241593"
+  object: any_plmtype
+  name: any_type
+  fields: 
+  description: Type PLM generique
+  domain: admin
+
+Typesobject_502955464: 
+  id: "502955464"
+  object: relation
+  name: document_forum
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_598687896: 
+  id: "598687896"
+  object: ar_workitem
+  name: ar_workitem
+  fields: 
+  description: Tache de processus
+  domain: admin
+
+Typesobject_672869653: 
+  id: "672869653"
+  object: relation
+  name: customer_project
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_678514879: 
+  id: "678514879"
+  object: project_typeaccess
+  name: public
+  fields: 
+  description: Projet public
+  domain: admin
+
+Typesobject_728513243: 
+  id: "728513243"
+  object: relation
+  name: part_document
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_749051069: 
+  id: "749051069"
+  object: relation
+  name: customer_document
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_804690363: 
+  id: "804690363"
+  object: user
+  name: virtual_
+  fields: 
+  description: Utilisateur virtuel, pour les batchs ...
+  domain: admin
+
+Typesobject_841581186: 
+  id: "841581186"
+  object: relation
+  name: project_forum
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_905287875: 
+  id: "905287875"
+  object: relation
+  name: customer_customer
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_913245371: 
+  id: "913245371"
+  object: relation
+  name: project_part
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_980319875: 
+  id: "980319875"
+  object: relation
+  name: customer_forum
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_989626521: 
+  id: "989626521"
+  object: relation
+  name: part_forum
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_989626522: 
+  id: "989626522"
+  object: part
+  name: PRD
+  fields: 
+  description: Produit
+  domain: admin
+
+Typesobject_989626523: 
+  id: "989626523"
+  object: part
+  name: VAR
+  fields: 
+  description: Variante de produit
+  domain: admin
+
+Typesobject_989626524: 
+  id: "989626524"
+  object: part
+  name: EFF
+  fields: 
+  description: Effectivite, liee au produit, a la variante et au link
+  domain: admin
+
+Typesobject_989626525: 
+  id: "989626525"
+  object: part
+  name: PIE
+  fields: 
+  description: Piece
+  domain: admin
+
+Typesobject_989626526: 
+  id: "989626526"
+  object: part
+  name: STR
+  fields: 
+  description: Structure
+  domain: admin
+
+Typesobject_989626530: 
+  id: "989626530"
+  object: relation
+  name: configuration
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_989626531: 
+  id: "989626531"
+  object: link
+  name: bom
+  fields: 
+  description: pour definir les relations from link de type bom
+  domain: admin
+
+Typesobject_997141214: 
+  id: "997141214"
+  object: project
+  name: $PROJ_ACCOUNT
+  fields: 
+  description: Type de projet affecte automatiquement a la creation du compte.
+  domain: admin
+
+Typesobject_1045584111: 
+  id: "1045584111"
+  object: relation
+  name: project_document
+  fields: 
+  description: 
+  domain: admin
+
+Typesobject_17665305: 
+  id: "17665305"
+  object: forum
+  name: tests
+  fields: 
+  description: Forum sur les tests
+  domain: custo_sicm
+
+Typesobject_59219424: 
+  id: "59219424"
+  object: part
+  name: electric
+  fields: 
+  description: Composant ou ensemble electrique
+  domain: custo_sicm
+
+Typesobject_64093143: 
+  id: "64093143"
+  object: document
+  name: fmat
+  fields: 
+  description: Fiche matiere
+  domain: custo_sicm
+
+Typesobject_89393353: 
+  id: "89393353"
+  object: project
+  name: product
+  fields: 
+  description: Projet pour un produit
+  domain: admin
+
+Typesobject_109967184: 
+  id: "109967184"
+  object: definition
+  name: plm
+  fields: 
+  description: 
+  domain: admin
+  
+Typesobject_117029505: 
+  id: "117029505"
+  object: document
+  name: norme
+  fields: 
+  description: Norme applicable
+  domain: custo_sicm
+
+Typesobject_251879061: 
+  id: "251879061"
+  object: forum
+  name: specifs
+  fields: 
+  description: Forum sur les specifications
+  domain: custo_sicm
+
+Typesobject_304033590: 
+  id: "304033590"
+  object: relation
+  name: cdc_requirement
+  fields: 
+  description: Exigences du cahier des charges
+  domain: custo_sicm
+
+Typesobject_312726501: 
+  id: "312726501"
+  object: forum
+  name: design
+  fields: 
+  description: Forum sur la conception
+  domain: custo_sicm
+
+Typesobject_314246312: 
+  id: "314246312"
+  object: project
+  name: sub-assembly
+  fields: 
+  description: Projet pour un sous ensemble
+  domain: custo_sicm
+
+Typesobject_353569266: 
+  id: "353569266"
+  object: document
+  name: m3d
+  fields: 
+  description: Numerisation 3D
+  domain: custo_sicm
+
+Typesobject_360315624: 
+  id: "360315624"
+  object: datafile
+  name: autocad
+  fields: 
+  description: DAO Autocad
+  domain: custo_sicm
+
+Typesobject_401521250: 
+  id: "401521250"
+  object: part
+  name: mecanic
+  fields: 
+  description: Composant ou ensemble mecanique
+  domain: custo_sicm
+
+Typesobject_418777236: 
+  id: "418777236"
+  object: document
+  name: p2d
+  fields: 
+  description: Numerisation 2D
+  domain: custo_sicm
+
+Typesobject_472785393: 
+  id: "472785393"
+  object: part
+  name: electronic
+  fields: 
+  description: Composant ou ensemble electronique
+  domain: custo_sicm
+
+Typesobject_557092610: 
+  id: "557092610"
+  object: relation
+  name: exb_requirement
+  fields: 
+  description: Exigences de l'expression de besoin
+  domain: custo_sicm
+
+Typesobject_569273268: 
+  id: "569273268"
+  object: document
+  name: exb
+  fields: 
+  description: Expression de besoin
+  domain: custo_sicm
+
+Typesobject_646247456: 
+  id: "646247456"
+  object: datafile
+  name: text
+  fields: 
+  description: Fichier texte
+  domain: custo_sicm
+
+Typesobject_788606013: 
+  id: "788606013"
+  object: forum
+  name: requirements
+  fields: 
+  description: Forum sur les exigences
+  domain: custo_sicm
+
+Typesobject_802476987: 
+  id: "802476987"
+  object: datafile
+  name: spreadsheet
+  fields: 
+  description: Fichier tableur
+  domain: custo_sicm
+
+Typesobject_873691851: 
+  id: "873691851"
+  object: document
+  name: cdc
+  fields: 
+  description: Cahier des charges
+  domain: custo_sicm
+
+Typesobject_889037033: 
+  id: "889037033"
+  object: datafile
+  name: writer
+  fields: 
+  description: Traitement de texte
+  domain: custo_sicm
+
+Typesobject_942363587: 
+  id: "942363587"
+  object: datafile
+  name: catia
+  fields: 
+  description: CAO Catia
+  domain: custo_sicm
+
+Typesobject_959762344: 
+  id: "959762344"
+  object: forum
+  name: needs
+  fields: 
+  description: Forum sur les besoins
+  domain: custo_sicm
+
+Typesobject_975625710: 
+  id: "975625710"
+  object: project
+  name: standard
+  fields: 
+  description: Projet pour articles standards ou catalogues
+  domain: custo_sicm
+
+Typesobject_994999514: 
+  id: "994999514"
+  object: datafile
+  name: image
+  fields: 
+  description: fichier image jpg gif bmp
+  domain: custo_sicm
+
+Typesobject_1016696961: 
+  id: "1016696961"
+  object: document
+  name: calculsheet
+  fields: 
+  description: Feuille de calcul
+  domain: custo_sicm
+
+Typesobject_customer_private: 
+  id: "423945440"
+  object: customer
+  name: private
+  fields: 
+  description: Client externe a acces restreint
+  domain: custo_sicm
+
+Typesobject_customer_internal: 
+  id: "423945441"
+  object: customer
+  name: internal
+  fields: 
+  description: Service ou direction interne a l'entreprise
+  domain: custo_sicm
+  
+Typesobject_customer_public: 
+  id: "423945442"
+  object: customer
+  name: public
+  fields: 
+  description: Client externe accessible a tous
+  domain: custo_sicm

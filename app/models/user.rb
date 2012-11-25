@@ -334,7 +334,8 @@ class User < ActiveRecord::Base
 	end
 
 	def get_default_view
-		View.find_by_name("Conception")
+		# cette vue standard doit exister
+		View.find_by_name("standard")
 	end
 
 	private

@@ -1,0 +1,130 @@
+
+Statusobject_4: 
+  id: "4"
+  object: document
+  name: inwork
+  description: 
+  rank: "1"
+  promote_id: "2"
+  demote_id: "0"
+  domain: admin
+
+Statusobject_5: 
+  id: "5"
+  object: document
+  name: ready
+  description: Pret pour la validation
+  rank: "2"
+  promote_id: "3"
+  demote_id: "1"
+  domain: admin
+
+Statusobject_6: 
+  id: "6"
+  object: document
+  name: approved
+  description: 
+  rank: "3"
+  promote_id: "0"
+  demote_id: "0"
+  domain: admin
+
+Statusobject_7: 
+  id: "7"
+  object: part
+  name: inprogress
+  description: 
+  rank: "1"
+  promote_id: "2"
+  demote_id: "0"
+  domain: admin
+
+Statusobject_8: 
+  id: "8"
+  object: part
+  name: ready
+  description: Pret pour la validation
+  rank: "2"
+  promote_id: "3"
+  demote_id: "1"
+  domain: admin
+
+Statusobject_9: 
+  id: "9"
+  object: part
+  name: validated
+  description: 
+  rank: "3"
+  promote_id: "0"
+  demote_id: "0"
+  domain: admin
+
+Statusobject_10: 
+  id: "10"
+  object: project
+  name: started
+  description: 
+  rank: "1"
+  promote_id: "1"
+  demote_id: "1"
+  domain: admin
+
+Statusobject_11: 
+  id: "11"
+  object: project
+  name: finished
+  description: 
+  rank: "2"
+  promote_id: "1"
+  demote_id: "1"
+  domain: admin
+
+Statusobject_12: 
+  id: "12"
+  object: project
+  name: hasbeen
+  description: 
+  rank: "3"
+  promote_id: "1"
+  demote_id: "1"
+  domain: admin
+
+Statusobject_14: 
+  id: "14"
+  object: forum
+  name: open
+  description: 
+  rank: "2"
+  promote_id: "1"
+  demote_id: "1"
+  domain: admin
+
+Statusobject_15: 
+  id: "15"
+  object: forum
+  name: close
+  description: 
+  rank: "2"
+  promote_id: "1"
+  demote_id: "1"
+  domain: admin
+
+Statusobject_21: 
+  id: "21"
+  object: customer
+  name: active
+  description: 
+  rank: "1"
+  promote_id: "1"
+  demote_id: "1"
+  domain: admin
+
+Statusobject_22: 
+  id: "22"
+  object: customer
+  name: inactive
+  description: 
+  rank: "2"
+  promote_id: "1"
+  demote_id: "1"
+  domain: admin

@@ -6,13 +6,17 @@ def  build_tree(obj, view_id, variant=nil)
 	lab=t(:ctrl_object_explorer, :typeobj => t("ctrl_"+obj.model_name), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_down", :label => lab, :open => true })
 	relations = View.find(view_id).relations unless  view_id.nil?
-	relations.each {|rel| LOG.debug (fname){"#{rel.id}.#{rel.ident}"}} unless relations.nil?
+	unless relations.nil?
+		relations.each {|rel| LOG.debug (fname){"relations a afficher:#{rel.id}.#{rel.ident}"}}
+	else
+		LOG.debug (fname){"toutes les relations a afficher"}
+	end
 	unless variant.nil?
 	var_effectivities = variant.var_effectivities
 	else
 	var_effectivities = []
 	end
-	LOG.debug (fname) {"view_id=#{view_id}, variante=#{variant},  #{var_effectivities.count} effectivites de variante"}
+	LOG.debug (fname) {"view_id=#{view_id}, variante=#{variant}, var_effectivities=#{var_effectivities.inspect}"}
 	follow_tree(obj, tree, obj, relations, var_effectivities, 0)
 	### a mettre en option group_tree(tree, 0)
 	LOG.debug (fname) {"tree size=#{tree.size}"}
@@ -53,6 +57,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level)
 		links = Link.find_childs(father,  mdl_child)
 		LOG.debug (fname) {"links(#{mdl_child})=#{links.inspect}"}
 		links.each do |link|
+
 		#
 		# on teste si une des effectivites du lien est comprise dans la variante en cours
 		#
@@ -61,53 +66,51 @@ def follow_tree(root, node, father, relations, var_effectivities, level)
 				LOG.debug (fname){"link=#{link.ident}, pas d'effectivites sur le lien => on affiche"}
 			link_to_show = true
 			else
-				link_to_show = false
+				LOG.debug (fname){"link=#{link.ident}, link_effectivities=#{link_effectivities}"}
+				LOG.debug (fname){"var_effectivities=#{var_effectivities}"}
 				if var_effectivities.count==0
 					link_to_show = true
 					LOG.debug (fname){" pas d'effectivites de variante => on affiche"}
 				else
+					link_to_show = true
 					link_effectivities.each do |link_eff|
-						if var_effectivities.include?(link_eff)
-							link_to_show = true
-							LOG.debug (fname){"link=#{link.ident}, effectivite du lien requise pour la variante => on affiche"}
+						LOG.debug (fname){"link=#{link.ident}:effectivite #{link_eff} requise pour variante : #{var_effectivities.include?(link_eff)}"}
+						unless var_effectivities.include?(link_eff)
+						link_to_show = false
 						end
 					end
 				end
 			end
-			LOG.debug (fname){"link=#{link.ident}, link_effectivities=#{link_effectivities}"}
-			LOG.debug (fname){"var_effectivities=#{var_effectivities}"}
+
 			LOG.debug (fname){"=> link_to_show=#{link_to_show}"}
 			if(link_to_show == true)
 				child = PlmServices.get_object(link.child_plmtype, link.child_id)
 				# edit du lien
 				relation = Relation.find(link.relation_id)
 				LOG.debug (fname){"relation=#{relation.id}.#{relation.ident}"}
-				if relations.nil?
-				show_relation =  false
-				else
 				# pas de relations demandees => toutes
-					if relations.nil? || relations.count==0
-					show_relation=true
-					else
-					show_relation = relations.include?(relation)
-					end
+				if relations.nil? || relations.count==0
+				show_relation=true
+				else
+				show_relation = relations.include?(relation)
 				end
+
 				if show_relation
 					LOG.debug (fname){"show_relation:#{relation.id}.#{relation.ident}, type=#{relation.typesobject.ident}"}
 					img_rel="<img class=\"icone\" src=\"#{icone(link)}\" title=\"#{clean_text_for_tree(link.tooltip)}\" />"
-					unless relation.typesobject.fields.nil?
-						link_values = link.values.gsub('\\','').gsub('"','') unless link.values.nil?
-						edit_link_url = url_for(:controller => 'links',
+					#unless relation.typesobject.fields.nil?
+					link_values = link.values.gsub('\\','').gsub('"','') unless link.values.nil?
+					edit_link_url = url_for(:controller => 'links',
               :action => "edit_in_tree",
               :id => link.id,
               :object_model => father.model_name,
               :object_id => father.id,
               :root_model => root.model_name,
               :root_id => root.id)
-						edit_link_a = "<a href=#{edit_link_url} title=\"#{link_values}\">#{img_rel}</a>"
-					else
-						edit_link_a = "#{img_rel}"
-					end
+					edit_link_a = "<a href=#{edit_link_url} title=\"#{link_values}\">#{img_rel}</a>"
+					#else
+					#	edit_link_a = "#{img_rel}"
+					#end
 					LOG.debug (fname){"edit_link_a=#{edit_link_a}"}
 					# destroy du lien
 					if child.frozen?
@@ -149,7 +152,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level)
 						LOG.debug (fname) {"node size 3=#{node.size}"}
 					end
 				else
-				# on parcoure la branche sans afficher ce noeud
+				# on parcours la branche sans afficher ce noeud
 					LOG.debug (fname){"no show_relation:#{relation.id}.#{relation.ident}, type=#{relation.typesobject.ident}"}
 					unless snode.nil?
 					thenode=snode
@@ -271,7 +274,7 @@ def follow_father(model_name, node, obj, relations)
 	links=Link.find_fathers(get_model_name(obj), obj,  model_name)
 	links.each do |link|
 		father = model.find(link.father_id)
-		url = {:controller => get_controller_from_model_type(model_name), :action => 'show', :id => "#{father.id}"}	
+		url = {:controller => get_controller_from_model_type(model_name), :action => 'show', :id => "#{father.id}"}
 		relation = Relation.find(link.relation_id)
 		ctrl_name="ctrl_#{father.model_name}"
 		img_rel="<img class=\"icone\" src=\"#{icone(link)}\" title=\"#{link.tooltip}\" />"

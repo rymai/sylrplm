@@ -1,0 +1,3 @@
+page.replace_html("favori_link", 
+:partial => "main/favori_link", 
+:object => @favori.get("link"))
