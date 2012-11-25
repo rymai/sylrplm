@@ -142,6 +142,6 @@ class Statusobject < ActiveRecord::Base
 	end
 
 	def ident
-		object+"."+name
+		"#{object}.#{name}"
 	end
 end

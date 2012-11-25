@@ -1,36 +1,13 @@
-#--
-# Copyright (c) 2008-2009, John Mettraux, jmettraux@gmail.com
 #
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
-#
-# Made in Japan.
-#++
-# 
 #  processes_controller.rb
 #  sylrplm
-#  
+#
 #  Created by Sylvère on 2012-02-04.
 #  Copyright 2012 Sylvère. All rights reserved.
-# 
+#
 
 require 'openwfe/representations'
-
+require 'error_reply'
 #require 'ruote/sylrplm'
 
 class ProcessesController < ApplicationController
@@ -86,9 +63,9 @@ class ProcessesController < ApplicationController
   #
   def show
     #    puts "processes_controller.show:"
-    
+
       @process = ruote_engine.process_status(params[:id])
-    
+
     respond_to do |format|
 
       if @process
@@ -126,7 +103,7 @@ class ProcessesController < ApplicationController
 		respond_to do |format|
 			if current_user.may_launch?(@definition)
 				flash[:notice] = t(:user_allowed_to_launch_process, :login => current_user.login, :definition => @definition.description)
-				format.html 
+				format.html
 			else
 				flash[:notice] = t(:user_not_allowed_to_launch_process, :login => current_user.login, :definition => @definition.description)
 				format.html { redirect_to(:controller=> "definitions", :action=> "new_process")}
@@ -156,7 +133,7 @@ class ProcessesController < ApplicationController
       end
       respond_to do |format|
         unless workitem.nil?
-          flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")    
+          flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")
           format.html {
             redirect_to :action => 'show', :id => fei.wfid }
           format.json {
@@ -164,7 +141,7 @@ class ProcessesController < ApplicationController
           format.xml {
             render :xml => "<wfid>#{fei.wfid}</wfid>", :status => 201 }
         else
-          flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")    
+          flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")
           format.html { redirect_to new_process_path(:definition_id => @definition.id)}
           format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
         end

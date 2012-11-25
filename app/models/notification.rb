@@ -1,7 +1,6 @@
 #
 #  notification.rb
 #  sylrplm
-#  
 #
 #  Created by Sylvère on 2012-02-04.
 #  Copyright 2012 Sylvère. All rights reserved.
@@ -17,7 +16,9 @@ class Notification < ActiveRecord::Base
   :class_name => "User"
 
   def initialize(*args)
+    super
     self.set_default_values(true)
+  end
 
   def init_mdd
     create_table "notifications", :force => true do |t|
@@ -39,12 +40,12 @@ class Notification < ActiveRecord::Base
   # utilisation:
   # ruby script/console
   # Notification.notify
-  
-  
+
+
   def notify_me
     Notification.notify_all(self)
   end
-  
+
   def path
     name=self.class.name+"."+__method__.to_s+":"
     #p get_controller_from_model_type("document")
@@ -60,7 +61,7 @@ class Notification < ActiveRecord::Base
     end
     ret
   end
-  
+
   def object
     name=self.class.name+"."+__method__.to_s+":"
     ret=get_object(self.object_type, self.object_id)
@@ -72,25 +73,20 @@ class Notification < ActiveRecord::Base
     id.to_s+" "+event_type+" "+object_type+":"+object_id.to_s+" at "+event_date.to_s+" by "+responsible.login+" => "+notify_date.to_s
   end
 
-  def self.get_conditions(filter)  
+  def self.get_conditions(filter)
     filter = filter.gsub("*","%")
-    ret={}
-    unless filter.nil?
-      ret[:qry] = "object_type LIKE :v_filter "+
-      " or "+qry_responsible_id+
-      " or "+qrys_object_ident+
-      " or event_type LIKE :v_filter "+
+    ret = {}
+    if filter.present?
+      ret[:qry] = "object_type LIKE :v_filter " +
+      " or #{qry_responsible_id}" +
+      " or #{qrys_object_ident}" +
+      " or event_type LIKE :v_filter " +
       " or event_date LIKE :v_filter or notify_date LIKE :v_filter "
-      ret[:values]={:v_filter => filter}
+      ret[:values] = { v_filter: filter }
     end
     ret
-    #conditions = ["object_type LIKE ? "+
-    #  " or "+qry_responsible+
-    #  " or "+qrys_object_ident+
-    #  " or event_type LIKE ? "+
-    #  " or event_date LIKE ? or notify_date LIKE ? ",
   end
-  
+
   def self.notify_all(id)
     name=":"+self.class.name+"."+__method__.to_s+":"
     from=User.find_by_login(::SYLRPLM::USER_ADMIN)
@@ -142,13 +138,13 @@ class Notification < ActiveRecord::Base
           if notif[:notif].responsible == user
             notif[:notify]=false
           end
-        end 
+        end
       end
       ret<< { :user => user, :count => cnt, :msg => msg }
     end
     the_notifs.each do |notif|
       if notif[:notify] == true
-        notif[:notif].update_attributes({:notify_date => Time.now})      
+        notif[:notif].update_attributes({:notify_date => Time.now})
       end
     end
     #puts name+"ret="+ret.inspect

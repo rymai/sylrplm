@@ -1,4 +1,5 @@
 require 'active_record/fixtures'
+require 'populate'
 
 class Controller
   attr_accessor :id, :name, :method
@@ -43,7 +44,7 @@ class Controller
     create_admin
     create_domain(params[:domain])
     update_admin(params[:directory])
-  ###st=Access.init
+  ###st=Populate.access
   end
 
   #appelle par main_controller.init_objects

@@ -4,14 +4,14 @@ require 'classes/sylrplm_fog'
 
 class Volume < ActiveRecord::Base
   include Models::SylrplmCommon
-  #
+
   validates_presence_of :name, :protocol
   validates_format_of :name, :with =>/^([a-z]|[A-Z]|[0-9]||[.-])+$/
   validates_uniqueness_of :name
-  #
+
   has_many :users
   has_many :datafiles
-  #
+
   def validate
     puts "Volume.validate"
     errors.add_to_base I18n.t("valid_volume_directory_needed", :protocol=>protocol) if protocol != "fog" && directory.blank?

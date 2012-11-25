@@ -6,66 +6,64 @@ class Document < ActiveRecord::Base
 
   validates_presence_of :ident , :designation
   validates_uniqueness_of :ident, :scope => :revision
-  #validates_format_of :ident, :with =>/^(doc|img)[0-9]+$/, :message=>" doit commencer par doc ou img suivi de chiffres"
-  validates_format_of :ident, :with =>/^([a-z]|[A-Z])+[0-9]+$/ #, :message=>t(:valid_ident,:typeobj =>:ctrl_document)
+  #validates_format_of :ident, :with => /^(doc|img)[0-9]+$/, :message=>" doit commencer par doc ou img suivi de chiffres"
+  validates_format_of :ident, :with => /^([a-z]|[A-Z])+[0-9]+$/ #, :message=>t(:valid_ident,:typeobj =>:ctrl_document)
 
   belongs_to :typesobject
   belongs_to :statusobject
-  belongs_to :owner,
-  :class_name => "User"
+  belongs_to :owner, :class_name => "User"
   belongs_to :group
-  belongs_to :projowner,
-    :class_name => "Project"
+  belongs_to :projowner, :class_name => "Project"
 
   has_many :datafiles, :dependent => :destroy
   has_many :checks
 
-  has_many :links_documents, 
-    :class_name => "Link", 
-    :foreign_key => "father_id", 
-    :conditions => ["father_plmtype='document' and child_plmtype='document'"]
-  has_many :documents , 
-    :through => :links_documents , 
+  has_many :links_documents,
+    :class_name => "Link",
+    :foreign_key => "father_id",
+    :conditions => { father_plmtype: 'document', child_plmtype: 'document' }
+  has_many :documents,
+    :through => :links_documents,
     :source => :document
-  
-  has_many :links_documents_up, 
-    :class_name => "Link", 
-    :foreign_key => "child_id", 
-    :conditions => ["father_plmtype='document' and child_plmtype='document'"]
-  has_many :documents_up , 
-    :through => :links_documents_up, 
+
+  has_many :links_documents_up,
+    :class_name => "Link",
+    :foreign_key => "child_id",
+    :conditions => { father_plmtype: 'document', child_plmtype: 'document' }
+  has_many :documents_up ,
+    :through => :links_documents_up,
     :source => :document_up
 
-  has_many :links_parts_up, 
-    :class_name => "Link", 
-    :foreign_key => "child_id", 
-    :conditions => ["father_plmtype='part' and child_plmtype='document'"]
-  has_many :parts_up, 
-    :through => :links_parts_up, 
+  has_many :links_parts_up,
+    :class_name => "Link",
+    :foreign_key => "child_id",
+    :conditions => { father_plmtype: 'part', child_plmtype: 'document' }
+  has_many :parts_up,
+    :through => :links_parts_up,
     :source => :part_up
 
-  has_many :links_projects_up, 
-    :class_name => "Link", 
-    :foreign_key => "child_id", 
-    :conditions => ["father_plmtype='project' and child_plmtype='document'"]
-  has_many :projects_up, 
-    :through => :links_projects_up, 
+  has_many :links_projects_up,
+    :class_name => "Link",
+    :foreign_key => "child_id",
+    :conditions => { father_plmtype: 'project', child_plmtype: 'document' }
+  has_many :projects_up,
+    :through => :links_projects_up,
     :source => :project_up
 
-  has_many :links_customers_up, 
-    :class_name => "Link", 
-    :foreign_key => "child_id", 
-    :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
-  has_many :customers_up, 
-    :through => :links_customers_up, 
+  has_many :links_customers_up,
+    :class_name => "Link",
+    :foreign_key => "child_id",
+    :conditions => { father_plmtype: 'customer', child_plmtype: 'document' }
+  has_many :customers_up,
+    :through => :links_customers_up,
     :source => :customer_up
 
-  has_many :links_histories_up, 
-    :class_name => "Link", 
-    :foreign_key => "child_id", 
-    :conditions => ["father_plmtype='history_entry' and child_plmtype='document'"]
-  has_many :histories_up, 
-    :through => :links_histories_up, 
+  has_many :links_histories_up,
+    :class_name => "Link",
+    :foreign_key => "child_id",
+    :conditions => { father_plmtype: 'history_entry', child_plmtype: 'document' }
+  has_many :histories_up,
+    :through => :links_histories_up,
     :source => :history_up
 
   def initialize(*args)
@@ -142,13 +140,13 @@ class Document < ActiveRecord::Base
     ret = ""
     if Check.get_checkout(self).nil?
       unless params[:out_reason].blank?
-          ret="ok"
         if Check.create(params.merge(object: self, user: user))
+          ret = "ok"
         else
-          ret="notcheckout"
           ret = "notcheckout"
         end
       else
+        ret = "no_reason"
       end
     else
       ret = "already_checkout"
@@ -156,16 +154,14 @@ class Document < ActiveRecord::Base
   end
 
   def check_in(params,user)
-    unless params[:in_reason].blank?
-        check.update_accessor(user)
-        check.checkIn(params,user)
-        if check.save
-          self.update_attributes(params[:document])
-          ret="ok"
-        else
-          ret="notcheckin"
+    if check = Check.get_checkout(self)
+      check.update_accessor(user)
       check.checkIn(params, user)
+      if check.save
+        self.update_attributes(params[:document])
+        "ok"
       else
+        check.errors[:in_reason].present? ? "no_reason" : "notcheckin"
       end
     else
       "notyet_checkout"
@@ -173,15 +169,12 @@ class Document < ActiveRecord::Base
   end
 
   def check_free(params,user)
-      unless check.nil?
-        check.checkFree(params,user)
-        if check.save
-          ret="ok"
-        else
-        end
     if check = Check.get_checkout(self)
+      check.update_accessor(user)
       check.checkFree(params,user)
+      if check.save
         self.update_attributes(params[:document])
+        "ok"
       else
         check.errors[:in_reason].present? ? "no_reason" : "notcheckfree"
       end
@@ -195,13 +188,13 @@ class Document < ActiveRecord::Base
   end
 
   def add_datafile(params,user)
-    datafile = Datafile.create_new(params, user)
     datafile = Datafile.new(params.merge(user: user))
     if datafile.save
       self.datafiles << datafile
       self.save
       "ok"
     else
+      "datafile_not_saved"
     end
   end
 
@@ -210,9 +203,9 @@ class Document < ActiveRecord::Base
   end
 
   def get_datafiles
-    ret={:recordset=>ret,:total=>ret.length}
     ret = []
     ret = self.datafiles
+    ret = { :recordset => ret, :total => ret.length }
 
     ret
   end

@@ -1,8 +1,6 @@
 require 'ruote/sylrplm/participants'
 require 'openwfe/participants/participants'
 
-
-
 if RuotePlugin.ruote_engine
   puts "participants:loading participants"
   # only enter this block if the engine is running
@@ -18,4 +16,3 @@ if RuotePlugin.ruote_engine
 
   RuotePlugin.ruote_engine.reload
 end
-

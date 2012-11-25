@@ -13,27 +13,20 @@ class Group < ActiveRecord::Base
   has_many :groups, :class_name => "Group", :foreign_key => "father_id"
 
   belongs_to :father, :class_name => "Group"
+
   #
   # User and Group share this method, which returns login and name respectively
   #
-  def system_name
-    self.name
-  end
-
-  def ident
-    self.name
-  end
+  alias_method :ident, :name
+  alias_method :system_name, :name
+  alias_method :designation, :name
 
   def typesobject
     Typesobject.find_by_object(model_name)
   end
 
-  def designation
-    name #truncate(description, :length => 20)
-  end
-
   def father_name
-    (father ? father.name : "")
+    father.try(:name) || ''
   end
 
   def may_launch_untracked_process?
@@ -46,13 +39,12 @@ class Group < ActiveRecord::Base
 
   def self.get_conditions(filter)
     filter = filters.gsub("*","%")
-    ret={}
+    ret = {}
     unless filter.nil?
-      ret[:qry] = "name LIKE :v_filter "
-      ret[:values]={:v_filter => filter}
+      ret[:qry]    = "name LIKE :v_filter "
+      ret[:values] = { v_filter: filter }
     end
     ret
-  #conditions = ["name LIKE ? ", filter ] unless filter.nil?
   end
 
   def others
@@ -60,4 +52,3 @@ class Group < ActiveRecord::Base
   end
 
 end
-

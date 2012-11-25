@@ -8,6 +8,7 @@ class ProjectUser < ActiveRecord::Base
 
   belongs_to :project
   belongs_to :user
+
   def self.get_conditions(filter)
     nil
   end

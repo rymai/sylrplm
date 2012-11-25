@@ -76,19 +76,20 @@ class PartsController < ApplicationController
 
 	# GET /parts/1/edit
 	def edit
-		@part = Part.find_edit(params[:id])
-		@types=Part.get_types_part
+		@part   = Part.find_edit(params[:id])
+		@types  = Part.get_types_part
 		#seulement les statuts qui peuvenet etre promus sans process
-		@status= Statusobject.find_for("part", 2)
+		@status = Statusobject.find_for("part", 2)
 	end
 
 	# POST /parts
 	# POST /parts.xml
 	def create
 		puts "===PartsController.create:"+params.inspect
-		@part = Part.create_new(params[:part], @current_user)
-		@types=Part.get_types_part
-		@status= Statusobject.find_for("part")
+		@part   = Part.new(params[:part].merge(user: @current_user))
+		@types  = Part.get_types_part
+		@status = Statusobject.find_for("part")
+
 		respond_to do |format|
 			puts "===PartsController.create:"+@part.inspect
 			if @part.save
@@ -161,12 +162,12 @@ class PartsController < ApplicationController
 	end
 
 	def new_forum
-		fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname){"params=#{params.inspect}"}
+		LOG.info ("#{self.class.name}.#{__method__}") { "params=#{params.inspect}" }
 		@object = Part.find(params[:id])
-		@types=Typesobject.find_for("forum")
-		@status= Statusobject.find_for("forum")
+		@types = Typesobject.find_for("forum")
+		@status = Statusobject.find_for("forum")
 		@relation_id = params["relation"]["forum"]
+
 		respond_to do |format|
 			flash[:notice] = ""
 			@forum = Forum.new(user: current_user)
@@ -177,8 +178,7 @@ class PartsController < ApplicationController
 	end
 
 	def add_forum
-		fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname){"params=#{params.inspect}"}
+		LOG.info ("#{self.class.name}.#{__method__}") { "params=#{params.inspect}" }
 		@part = Part.find(params[:id])
 		ctrl_add_forum(@part)
 	end
@@ -194,7 +194,7 @@ class PartsController < ApplicationController
 	end
 
 	def empty_favori
-		puts "#{self.class.name}.#{__method__}:#{params.inspect}"
+		LOG.info ("#{self.class.name}.#{__method__}") { "params=#{params.inspect}" }
 		empty_favori_by_type(get_model_type(params))
 	end
 	private

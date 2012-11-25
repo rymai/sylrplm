@@ -82,9 +82,7 @@ class Part < ActiveRecord::Base
 	#def to_s
 	#	self.ident+"/"+self.revision+"-"+self.designation+"-"+self.typesobject.name+"-"+self.statusobject.name
 	#end
-		end
 
-	end
   def initialize(*args)
     super
     self.set_default_values(true) if args.empty?
@@ -94,6 +92,7 @@ class Part < ActiveRecord::Base
   def user=(user)
     self.owner     = user
     self.group     = user.group
+    self.projowner = user.project
   end
 
   def self.create_new(part, user)

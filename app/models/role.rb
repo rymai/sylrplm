@@ -6,7 +6,7 @@ class Role < ActiveRecord::Base
   has_and_belongs_to_many :users
   belongs_to :father, :class_name => "Role"
   has_many :roles, :class_name => "Role", :foreign_key => "father_id"
-  
+
   def self.find_by_name(name)
     find(:first , :conditions => ["title = '#{name}' "])
   end
@@ -19,18 +19,16 @@ class Role < ActiveRecord::Base
     (father ? father.title : "")
   end
 
-  def ident
-    self.title
-  end
-  
+  alias_method :title, :ident
+
   def typesobject
     Typesobject.find_by_object(model_name)
   end
-  
+
   def designation
-    Role.truncate_words(description, 5) 
+    Role.truncate_words(description, 5)
   end
-  
+
   #return the list of validers
   def self.get_validers
     ret=[]
@@ -52,9 +50,9 @@ class Role < ActiveRecord::Base
     ret
     #conditions = ["title LIKE ? or description LIKE ? "
   end
-  
+
   def others
     Role.all
   end
-  
+
 end
