@@ -3,6 +3,8 @@ class Datafile < ActiveRecord::Base
   include Models::PlmObject
   include Models::SylrplmCommon
 
+  attr_accessor :user
+
   validates_presence_of :ident , :typesobject
   validates_uniqueness_of :ident, :scope => :revision
 
@@ -14,40 +16,26 @@ class Datafile < ActiveRecord::Base
   belongs_to :group
   belongs_to :projowner,
     :class_name => "Project"
-  #
-  FILE_REV_DELIMITER="--"
-  #
-  def self.create_new(params,user)
-    if(params==nil)
-      obj=new
-      obj.set_default_values(true)
-      obj.volume=user.volume
-      obj.owner=user
-      obj.group=user.group
-      obj.projowner=user.project
-      obj.revision="1"
-    ret=true
-    else
-      parameters=params[:datafile]
-      uploadedfile=parameters[:uploaded_file]
-      #contournement pour faire le upload apres la creation pour avoir la revision dans
-      #repository !!!!!!!!!!!!!!
-      parameters.delete(:uploaded_file)
-      parameters[:volume]=user.volume
-      parameters[:owner]=user
-      parameters[:group]=user.group
-      parameters[:projowner]=user.project
-      obj=new(parameters)
-      if obj.save
-        # on sauve le fichier maintenant et le tour est joue
-        obj.create_dir
-        if uploadedfile
-          obj.update_attributes(:uploaded_file => uploadedfile)
-        end
-      end
+
+  FILE_REV_DELIMITER = "--"
+
+  def initialize(*args)
+    super
+    if args.empty?
+      self.set_default_values(true)
+      self.revision = "1"
     end
-    puts "datafile.create_new:"+obj.inspect
-    obj
+  end
+
+  def user=(user)
+    self.owner     = user
+    self.group     = user.group
+    self.projowner = user.project
+    self.volume    = user.volume
+  end
+
+  def self.create_new(params, user)
+    raise Exception.new "Don't use this method!"
   end
 
   def update_attributes_repos(params, user)

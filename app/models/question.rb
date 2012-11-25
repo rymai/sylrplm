@@ -7,31 +7,30 @@ class Question < ActiveRecord::Base
 
   belongs_to :responder,
   :class_name => "User"
-  def self.create_new(params, user)
-    #puts "create_new:"+params.inspect
-    unless params.nil?
-      obj=Question.new(params)
-    else
-      obj=Question.new
-    end
-    obj.set_default_values( true)
+
+  def initialize(*args)
+    super
+    self.set_default_values(true)
+  end
+
+  def user=(user)
+    super
     if user.nil?
       begin
-        user=User.find_by_login("visiteur")
+        self.user_id = User.find_by_login("visiteur").id
       rescue Exception => e
         puts "user visiteur non trouve:"+e.inspect
       end
     end
+
     unless user.nil?
-      obj.asker=user
-      unless obj.answer.nil?
-        obj.responder=user
-      end
-    else
-      obj=nil
+      self.asker = user
+      self.responder = user if self.answer.present?
     end
-    #puts "create_new:"+obj.inspect
-    obj
+  end
+
+  def self.create_new(params, user)
+    raise Exception.new "Don't use this method!"
   end
 
   def self.get_conditions(filter)

@@ -1,17 +1,18 @@
-#require 'lib/models/sylrplm_common'
+require_dependency 'lib/models/sylrplm_common'
+
 class Access < ActiveRecord::Base
   include Models::SylrplmCommon
 
   attr_accessor :controller_and_action
-  attr_accessible :controller_and_action, :roles
-  # for task rake sylrplm:import_internal_data
 
-  attr_accessible :id, :controller, :action
+  attr_accessible :controller_and_action, :roles, :id, :controller, :action
 
   validates_presence_of :controller, :action, :roles
   validates_uniqueness_of :action, :scope => :controller
-  def before_create
-    set_default_values(true)
+
+  def initialize(*args)
+    super
+    self.set_default_values(true) if args.empty?
   end
 
   def controller_and_action

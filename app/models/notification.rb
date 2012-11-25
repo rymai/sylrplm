@@ -1,10 +1,11 @@
-# 
+#
 #  notification.rb
 #  sylrplm
 #  
+#
 #  Created by Sylvère on 2012-02-04.
 #  Copyright 2012 Sylvère. All rights reserved.
-# 
+#
 require 'link'
 require 'models/plm_object'
 require 'models/sylrplm_common'
@@ -14,7 +15,10 @@ class Notification < ActiveRecord::Base
   validates_presence_of :object_type, :object_id,  :event_date, :event_type
   belongs_to :responsible,
   :class_name => "User"
-  
+
+  def initialize(*args)
+    self.set_default_values(true)
+
   def init_mdd
     create_table "notifications", :force => true do |t|
       t.string   "object_type"
@@ -29,10 +33,7 @@ class Notification < ActiveRecord::Base
   end
 
   def self.create_new(params)
-    obj=Notification.new(params)
-    obj.set_default_values( true)
-    #puts obj.inspect
-    obj
+    raise Exception.new "Don't use this method!"
   end
 
   # utilisation:

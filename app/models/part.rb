@@ -6,10 +6,11 @@ class Part < ActiveRecord::Base
 	include Ruote::LocalParticipant
 	include Models::PlmObject
 	include Models::SylrplmCommon
+
 	validates_presence_of :ident, :designation
 	validates_uniqueness_of :ident, :scope => :revision
 
-	attr_accessor :link_attributes
+	attr_accessor :user, :link_attributes
 
 	belongs_to :typesobject
 	belongs_to :statusobject
@@ -81,27 +82,22 @@ class Part < ActiveRecord::Base
 	#def to_s
 	#	self.ident+"/"+self.revision+"-"+self.designation+"-"+self.typesobject.name+"-"+self.statusobject.name
 	#end
-	def self.create_new(part,user)
-		if(part!=nil)
-			obj=Part.new(part)
-		else
-			obj=Part.new
-		obj.set_default_values(true)
 		end
-		obj.statusobject = Statusobject.get_first("part")
-		obj.owner=user
-		obj.group=user.group
-		obj.projowner=user.project
-		#puts "part.create_new:"+p.inspect
-		obj
-	end
 
-	def link_attributes=(att)
-		@link_attributes = att
 	end
+  def initialize(*args)
+    super
+    self.set_default_values(true) if args.empty?
+    self.statusobject = Statusobject.get_first("part")
+  end
 
-	def link_attributes
-		@link_attributes
+  def user=(user)
+    self.owner     = user
+    self.group     = user.group
+  end
+
+  def self.create_new(part, user)
+    raise Exception.new "Don't use this method!"
 	end
 
 	# modifie les attributs avant edition

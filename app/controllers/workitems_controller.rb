@@ -315,49 +315,35 @@ class WorkitemsController < ApplicationController
   end
 
   def link_object(workitem, type_object, item_id, relation_name)
-    fname="WorkitemsController."+__method__.to_s+":"
-    #puts fname+"workitem="+workitem.ident
-    item = PlmServices.get_object(type_object, item_id)
-    #puts fname+"item="+item.inspect
-    link_={:link=>nil, :msg=>nil}
-    unless item.nil?
+    fname = "WorkitemsController."+__method__.to_s+":"
+
+    if item = PlmServices.get_object(type_object, item_id)
       relation = Relation.by_values_and_name(workitem.model_name, item.model_name, workitem.model_name, type_object, relation_name)
       #puts fname+"relation="+relation.inspect
       unless relation.nil?
-        values={}
-        values["father_plmtype"] = workitem.model_name
-        values["child_plmtype"]  = item.model_name
+        values = {}
+        values["father_plmtype"]        = workitem.model_name
+        values["child_plmtype"]         = item.model_name
         values["father_typesobject_id"] = Typesobject.find_by_name(workitem.model_name).id
         values["child_typesobject_id"]  = item.typesobject_id
-        values["father_id"]      = workitem.id
-        values["child_id"]       = item.id
-        values["relation_id"]    = relation.id
-        link_= Link.create_new_by_values(values, nil)
-      #puts fname+"link_="+link_.inspect
+        values["father_id"]             = workitem.id
+        values["child_id"]              = item.id
+        values["relation_id"]           = relation.id
+        link = Link.new(values.merge(user: nil))
       else
-        link_[:msg] = name+"Pas de relation de nom "+relation_name
         raise PlmProcessException.new(
         "Pas de relation de nom '"+relation_name+"'", 10001)
       end
-      unless link_[:link].nil?
-        #unless link_[:link].exists?
-        if link_[:link].save
-          LOG.info(fname){"save ok:link id="+link_[:link].id.to_s}
-        else
-          LOG.error(fname){"error save :"+link_[:link].errors.inspect}
-          raise PlmProcessException.new(
-        fname+"error save :"+link_[:link].errors.inspect, 10002)
-        end
-      #else
-      #  puts  "PlmParticipant.add_object:link existant deja :"+link_[:link].inspect
-      #end
+
+      if link.save
+        LOG.info(fname){"save ok:link id="+link.id.to_s}
+
+        { link: link, msg: "ctrl_link_#{obj.ident}" }
       else
-        LOG.error(fname){"error create:link="+link_.inspect}
-        raise PlmProcessException.new(
-        fname+"error create:link="+link_.inspect, 10003)
+        LOG.error(fname){"error save :"+link.errors.inspect}
+        raise PlmProcessException.new(fname+"error save :"+link.errors.inspect, 10002)
       end
     end
-    link_
   end
 
   #

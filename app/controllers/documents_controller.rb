@@ -54,7 +54,7 @@ class DocumentsController < ApplicationController
 	# GET /documents/new.xml
 	def new
 		#puts "===DocumentsController.new:"+params.inspect+" user="+@current_user.inspect
-		@document = Document.create_new(nil, @current_user)
+		@document = Document.new(user: current_user)
 		@types    = Document.get_types_document
 		@volumes  = Volume.find_all
 		@status   = Statusobject.find_for("document", 2)
@@ -78,10 +78,9 @@ class DocumentsController < ApplicationController
 	# POST /documents.xml
 	def create
 		#puts "===DocumentsController.create:"+params.inspect
-		document = params[:document]
 		#contournement pour faire le upload apres la creation pour avoir la revision dans
 		#repository !!!!!!!!!!!!!!
-		@document = Document.create_new(document,@current_user)
+		@document = Document.new(params[:document].merge(user: @current_user))
 		@types    = Document.get_types_document
 		@status   = Statusobject.find_for("document")
 		#@volumes  = Volume.find_all
@@ -214,11 +213,11 @@ class DocumentsController < ApplicationController
 
 	def check_in
 		@document = Document.find(params[:id])
-		st=@document.check_in(params,@current_user)
+		st = @document.check_in(params, current_user)
 		respond_to do |format|
-			if st!="no_reason"
-				if st!="notyet_checkout"
-					if st=="ok"
+			if st != "no_reason"
+				if st != "notyet_checkout"
+					if st == "ok"
 						update_accessor(@document)
 						@document.update_attributes(params[:document])
 						flash[:notice] = t(:ctrl_object_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:in_reason])
@@ -238,11 +237,12 @@ class DocumentsController < ApplicationController
 
 	def check_free
 		@document = Document.find(params[:id])
-		st=@document.check_free(params,@current_user)
+		st = @document.check_free(params, current_user)
+
 		respond_to do |format|
-			if st!="no_reason"
-				if st!="notyet_checkout"
-					if st=="ok"
+			if st != "no_reason"
+				if st != "notyet_checkout"
+					if st == "ok"
 						flash[:notice] = t(:ctrl_object_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:in_reason])
 					else
 						flash[:notice] = t(:ctrl_object_not_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident)
@@ -259,28 +259,25 @@ class DocumentsController < ApplicationController
 	end
 
 	def new_datafile
-		#puts __FILE__+"."+__method__.to_s+":"+params.inspect
 		@object = Document.find(params[:id])
 		@types  = Typesobject.find_for("datafile")
-		#puts "DocumentsController.new_datafile:#{@object.inspect}"
+
 		respond_to do |format|
-			check     = Check.get_checkout(@object)
-			if check.nil?
-				params_chk={}
-				params_chk[:out_reason]=t("ctrl_checkout_auto")
-				check = Check.create_new("document", @object, params_chk, @current_user)
+			if check = Check.get_checkout(@object)
+				flash[:notice] = t(:ctrl_object_already_checkout, :typeobj => t(:ctrl_document), :ident => @object.ident, :reason => check.out_reason)
+			else
+				check = Check.new(object: @object, user: current_user, out_reason: t("ctrl_checkout_auto"))
 				if check.save
 					flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @object.ident, :reason => check.out_reason)
 				else
 					flash[:notice] = t(:ctrl_object_notcheckout, :typeobj => t(:ctrl_document), :ident => @object.ident)
-					check=nil
+					check = nil
 				end
-			else
-				flash[:notice] = t(:ctrl_object_already_checkout, :typeobj => t(:ctrl_document), :ident => @object.ident, :reason => check.out_reason)
 			end
+
 			unless check.nil?
-				@datafile = Datafile.create_new(nil,@current_user)
-				format.html {render :action => :new_datafile, :id => @object.id }
+				@datafile = Datafile.new(user: current_user)
+				format.html { render :action => :new_datafile, :id => @object.id }
 				format.xml  { head :ok }
 			end
 		end
@@ -301,7 +298,7 @@ class DocumentsController < ApplicationController
 				flash[:notice] += t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
 				puts "document_controller.add_datafile:id=#{@object.id}"
 				@types = Typesobject.find_for("datafile")
-				@datafile = Datafile.create_new(nil,@current_user)
+				@datafile = Datafile.new(user: current_user)
 				format.html { render  :action => :new_datafile, :id => @object.id   }
 			else
 				format.html { redirect_to(@object) }

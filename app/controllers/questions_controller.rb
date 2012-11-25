@@ -12,7 +12,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @faq = Question.create_new(nil, current_user)
+    @faq = Question.new(user: current_user)
     respond_to do |format|
       unless @faq.nil?
         #flash[:notice] = "#{@controllers.size()} controllers:1=#{@controllers[1].name}"
@@ -27,7 +27,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @faq = Question.create_new(params[:question], current_user)
+    @faq = Question.new(params[:question].merge(user: current_user))
     respond_to do |format|
       if @faq.save
         flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_faq),:ident=>@faq.id)

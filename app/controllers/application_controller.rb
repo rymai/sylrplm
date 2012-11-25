@@ -1,22 +1,9 @@
+require 'filters/log_definition_filter'
 require 'controllers/plm_event'
 require 'controllers/plm_favorites'
 require 'controllers/plm_lifecycle'
-require 'controllers/plm_tree'
 require 'controllers/plm_object_controller_module'
-
-class ErrorReply < Exception
-  attr_reader :status
-  def initialize (msg, status=400)
-    super(msg)
-    @status = status
-  end
-end
-
-class LogDefinitionFilter
-  def self.filter(controller)
-      LOG.progname=controller.controller_class_name+"."+controller.action_name
-  end
-end
+require 'controllers/plm_tree'
 
 class ApplicationController < ActionController::Base
   include Controllers::PlmObjectControllerModule
@@ -27,9 +14,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   filter_parameter_logging :password
-  
+
   before_filter LogDefinitionFilter
-  
+
   before_filter :authorize, :except => [:index, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
@@ -41,7 +28,7 @@ class ApplicationController < ActionController::Base
     params[mdl_name][:projowner_id]=current_user.project_id if obj.instance_variable_defined?(:@projowner_id)
     puts "update_accessor:"+params.inspect
   end
-	
+
   def check_user(redirect=true)
     flash[:notice] = nil
     if !current_user.may_access?
@@ -150,7 +137,7 @@ class ApplicationController < ActionController::Base
     WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
   	@myparams = params
   end
-  
+
   # nombre d'objets listes par page si pagination
   def cfg_items_per_page
     SYLRPLM::NB_ITEMS_PER_PAGE
@@ -177,31 +164,31 @@ class ApplicationController < ActionController::Base
 	      :project => Project.count,
 	      :customer => Customer.count
 	    }
-    
+
    	ret[:collab_objects] = {
       	:forum => Forum.count,
       	:question => Question.count
      	}
-    
+
     ret[:organization] = {
 	      :user => User.count,
 	      :role => Role.count,
 	      :group => Group.count,
 	      :volume => Volume.count
       }
-    
+
     ret[:parametrization] = {
 	      :typesobject => Typesobject.count,
 	      :statusobject => Statusobject.count,
 	      :relation => Relation.count,
         :definition => Definition.count
       }
-    
-    if admin_logged_in? 
+
+    if admin_logged_in?
       ret[:internal_objects] = {
         	:link => Link.count
       		}
-      
+
     end
     ret
   end
@@ -285,7 +272,7 @@ class ApplicationController < ActionController::Base
     end
     ret
   end
-  
+
   def icone(obj)
   	fname="#{controller_class_name}.#{__method__}"
     unless obj.model_name.nil? || obj.typesobject.nil?
@@ -305,7 +292,7 @@ class ApplicationController < ActionController::Base
     #LOG.debug  (fname){"icone:#{obj.model_name}:#{obj.typesobject.name}:#{ret}"}
     ret
   end
-  
+
   def icone_plmtype(plmtype)
     ret = "/images/#{plmtype}.png"
     unless File.exist?("#{RAILS_ROOT}/public#{ret}")
@@ -313,10 +300,10 @@ class ApplicationController < ActionController::Base
     end
     ret
   end
-  
+
   #
   # controle des vues et de la vue active
-  # 
+  #
   def define_view
   	# views: liste des vues possibles est utilisee dans la view ruby show
 		@views = View.all
@@ -324,12 +311,12 @@ class ApplicationController < ActionController::Base
 		#@myparams[:view_id] = @views.first.id if @myparams[:view_id].nil?
 		if @myparams[:view_id].nil?
 			if logged_in?
-			@myparams[:view_id] = current_user.get_default_view.id 
+			@myparams[:view_id] = current_user.get_default_view.id
 			end
 		end
 		#puts "#{controller_name}.#{__method__}:view=#{@myparams[:view_id]}"
 	end
-	
+
 	#
 	# verifie qu'un parametre http existe avec la bonne valeur
 	#
@@ -337,6 +324,6 @@ class ApplicationController < ActionController::Base
 		ret = @myparams.include?(key) && @myparams[key] == value
 		puts "#{controller_name}.#{__method__}:#{key}.#{value}=#{ret}"
 		ret
-	end	
+	end
 end
 

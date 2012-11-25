@@ -1,13 +1,14 @@
 class Customer < ActiveRecord::Base
   include Models::SylrplmCommon
   include Models::PlmObject
-  #
-  attr_accessor :link_attributes
-  #
+
+  attr_accessor :link_attributes, :user
+
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident
-  #
+
   has_many :projects
+
   belongs_to :typesobject
   belongs_to :statusobject
   belongs_to :owner,
@@ -31,33 +32,23 @@ class Customer < ActiveRecord::Base
   has_many :projects , 
     :through => :links_projects, 
     :source => :project
-  #
-  
-  
-  
-  def self.create_new(customer,user)
-    if(customer!=nil)
-      obj=Customer.new(customer)
-    else
-      obj=Customer.new
-      obj.set_default_values( true)
-    end
-    obj.owner=user
-    obj.group=user.group
-    obj.projowner=user.project
-    obj.statusobject = Statusobject.get_first("customer")
-    puts obj.inspect
-    obj
+
+  def initialize(*args)
+    super
+    self.set_default_values(true) if args.empty?
+    self.statusobject = Statusobject.get_first("customer")
   end
 
-  def link_attributes=(att)
-    @link_attributes = att
+  def user=(user)
+    self.owner     = user
+    self.group     = user.group
+    self.projowner = user.project
   end
-  
-  def link_attributes
-    @link_attributes
+
+  def self.create_new(customer, user)
+    raise Exception.new "Don't use this method!"
   end
-  
+
   # modifie les attributs avant edition
   def self.find_edit(object_id)
     obj=find(object_id)

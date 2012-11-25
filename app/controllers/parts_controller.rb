@@ -64,9 +64,10 @@ class PartsController < ApplicationController
 	# GET /parts/new.xml
 	def new
 		#puts "===PartsController.new:"+params.inspect+" user="+@current_user.inspect
-		@part = Part.create_new(nil, @current_user)
-		@types= Part.get_types_part
-		@status= Statusobject.find_for("part", 2)
+		@part   = Part.new(user: @current_user)
+		@types  = Part.get_types_part
+		@status = Statusobject.find_for("part", 2)
+
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @part }
@@ -168,9 +169,9 @@ class PartsController < ApplicationController
 		@relation_id = params["relation"]["forum"]
 		respond_to do |format|
 			flash[:notice] = ""
-			@forum=Forum.create_new(nil, current_user)
-			@forum.subject=t(:ctrl_subject_forum,:typeobj =>t(:ctrl_part),:ident=>@object.ident)
-			format.html {render :action=>:new_forum, :id=>@object.id }
+			@forum = Forum.new(user: current_user)
+			@forum.subject = t(:ctrl_subject_forum, :typeobj => t(:ctrl_part), :ident => @object.ident)
+			format.html { render :action => :new_forum, :id => @object.id }
 			format.xml  { head :ok }
 		end
 	end

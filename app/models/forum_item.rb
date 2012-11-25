@@ -1,34 +1,37 @@
 class ForumItem < ActiveRecord::Base
   include Models::SylrplmCommon
-  
-  validates_presence_of :forum_id,:message
-  
+
+  attr_accessor :user
+
+  validates_presence_of :forum_id, :message
+
   belongs_to :author,
     :class_name => "User",
     :foreign_key => "owner_id"
   belongs_to :group
   belongs_to :projowner,
     :class_name => "Project"
-  
+
   belongs_to :parent,
   :class_name => "ForumItem",
   :foreign_key => "parent_id"
   
+
   belongs_to :forum
-  
+
   has_many :forum_item,
   :class_name => "ForumItem",
   :foreign_key => "parent_id"
-  
-  def self.create_new(forum, params, user)
-    obj=self.new 
-    obj.forum=forum
-    obj.message=params[:message]
-    obj.author=user
-    obj.group=user.group
-    obj.projowner=user.project
-    obj
+
+  def user=(user)
+    self.author    = user
+    self.group     = user.group
   end
+
+  def self.create_new(forum, params, user)
+    raise Exception.new "Don't use this method!"
+  end
+
   def self.get_conditions(filter)
     
     filter = filters.gsub("*","%")

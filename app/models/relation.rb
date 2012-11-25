@@ -9,37 +9,28 @@ class Relation < ActiveRecord::Base
 	attr_accessor :link_attributes
 	#
 	belongs_to :typesobject
-	belongs_to :father_typesobject,
-  :class_name => "Typesobject"
-	belongs_to :child_typesobject,
-  :class_name => "Typesobject"
+	belongs_to :father_typesobject, class_name: "Typesobject"
+	belongs_to :child_typesobject, class_name: "Typesobject"
 
 	has_many :links
 	has_and_belongs_to_many :views
+
 	def validate
 		errors.add_to_base I18n.t("valid_relation_cardin_occur_max") if cardin_occur_max != -1 && cardin_occur_max < cardin_occur_min
 		errors.add_to_base I18n.t("valid_relation_cardin_use_max") if cardin_use_max != -1 && cardin_use_max < cardin_use_min
 	end
 
-	def link_attributes=(att)
-		@link_attributes = att
-	end
-
-	def link_attributes
-		@link_attributes
-	end
+  def initialize(*args)
+    super
+    if args.empty?
+    	self.set_default_values(true)
+    	self.father_plmtype = Typesobject.get_objects_with_type.first
+			self.child_plmtype  = Typesobject.get_objects_with_type.first
+		end
+  end
 
 	def self.create_new(params)
-		unless params.nil?
-			obj=Relation.new(params)
-		else
-			obj=Relation.new
-			obj.father_plmtype=Typesobject.get_objects_with_type.first
-			obj.child_plmtype=Typesobject.get_objects_with_type.first
-		obj.set_default_values( true)
-		end
-		#puts "Relations."+__method__.to_s+":"+obj.inspect
-		obj
+    raise Exception.new "Don't use this method!"
 	end
 
 	def types_father

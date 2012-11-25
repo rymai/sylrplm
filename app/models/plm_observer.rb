@@ -85,13 +85,9 @@ class PlmObserver < ActiveRecord::Observer
       params[:event_date] = object.updated_at
       params[:event_type] = event_type
       params[:responsible] = object.owner
-      notif=Notification.create_new(params)
-      #puts name+notif.inspect
-      unless notif.nil?
-        notif.save
-      end
+
+      Notification.create(params)
     end
-    notif
   end
 
 end

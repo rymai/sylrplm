@@ -1,3 +1,5 @@
+require_dependency 'lib/models/sylrplm_common'
+
 class Check < ActiveRecord::Base
   include Models::SylrplmCommon
   #validates_presence_of :out_reason
@@ -14,6 +16,8 @@ class Check < ActiveRecord::Base
     :class_name => "Group"
   belongs_to :projowner,
     :class_name => "Project"
+  attr_accessor :user
+
   #status:
   # 0=unknown
   # 1=out
@@ -21,29 +25,28 @@ class Check < ActiveRecord::Base
   # 3=free
   def self.get_checkout(object)
     find(:last, :conditions => ["object = '#{object.class.name}' and object_id=#{object.id} and status=1"])
+
+  def initialize(*args)
+    super
+    self.status    = 1
+    self.out_date  = Time.now.utc
+    self.set_default_values(true) if args.empty?
+  end
+
+  def user=(user)
+    self.out_user  = user
+    self.out_group = user.group
+    self.projowner = user.project
   end
 
   def self.create_new(object_cls, object, params, user)
     if(params)
-      # commit genere par le view
-      params.delete("commit")
-      params.delete("authenticity_token")
-      params.delete("_method")
       params.delete("action")
-      params.delete("controller")
-      obj=Check.new(params)
     else
-      obj=Check.new
     end
-    obj.object=object_cls
     obj.object_id=object.id
     obj.status=1
-    obj.out_user=user
-    obj.out_group=user.group
-    obj.out_date=DateTime.now
-    obj.projowner=user.project
-    obj.set_default_values(true)
-    obj
+    raise Exception.new "Don't use this method!"
   end
 
   def checkIn(params, user)

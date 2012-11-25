@@ -26,7 +26,7 @@ class RelationsController < ApplicationController
 	# GET /relations/new.xml
 	def new
 		fname= "#{controller_class_name}.#{__method__}"
-		@relation = Relation.create_new(nil)
+		@relation = Relation.new
 		@datas = @relation.datas
 		@views = View.all
 		LOG.debug (fname) {"#{typesobject=@relation.typesobject}"}
@@ -49,7 +49,7 @@ class RelationsController < ApplicationController
 	# POST /relations.xml
 	def create
 		#puts __FILE__+"."+__method__.to_s+":"+params.inspect
-		@relation = Relation.create_new(params[:relation])
+		@relation = Relation.new(params[:relation])
 		@datas = @relation.datas
 		@views = View.all
 		respond_to do |format|
