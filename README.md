@@ -1,27 +1,27 @@
-Application SylRPLM : Product Life Management
+# Application SylRPLM : Product Life Management
 
-- Pré-requis
+* Pré-requis
   - RubyGems : https://rubygems.org/pages/download
-  - Ruby 1.9.2
+  - Ruby >= 1.9.2
 
-- Mise en place
+* Mise en place
   - Cloner le repository git hébergé sur GitHub :
 
-      $> git clone git://github.com/sylvani/sylrplm.git
+        $> git clone git://github.com/sylvani/sylrplm.git
 
   ou
 
   - Télécharger le zip (https://github.com/sylvani/sylrplm/zipball/master) puis le décompresser :
 
-      $> unzip sylrplm.zip -d sylrplm
+        $> unzip sylrplm.zip -d sylrplm
 
   - Se placer dans la racine de l'application
 
-      $> cd sylrplm
+        $> cd sylrplm
 
 - Installation des gems
 
-      $> bundle install
+        $> bundle install
 
 - Environnement windows
   - Ajouter le chemin de mysql/bin au PATH
@@ -32,11 +32,11 @@ Application SylRPLM : Product Life Management
 
   - Créer et charger le schéma de la base de données
 
-      $> alias be="bundle exec"
-      $> be rake db:drop && be rake db:create && be rake db:migrate && be rake db:populate
+        $> alias be="bundle exec"
+        $> be rake db:drop && be rake db:create && be rake db:migrate && be rake db:populate
 
 - Installation de l'application sur Heroku
 
   - Charger le schéma de la base de données (chaque app est créée avec une base)
 
-      $> bundle exec heroku rake db:migrate
+        $> bundle exec heroku rake db:migrate
