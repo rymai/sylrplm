@@ -7,7 +7,6 @@
 #
 
 require 'openwfe/representations'
-require 'error_reply'
 #require 'ruote/sylrplm'
 
 class ProcessesController < ApplicationController

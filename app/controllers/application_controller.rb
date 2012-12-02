@@ -4,6 +4,7 @@ require 'controllers/plm_favorites'
 require 'controllers/plm_lifecycle'
 require 'controllers/plm_object_controller_module'
 require 'controllers/plm_tree'
+require 'error_reply'
 
 class ApplicationController < ActionController::Base
   include Controllers::PlmObjectControllerModule
