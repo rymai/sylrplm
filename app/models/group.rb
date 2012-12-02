@@ -17,9 +17,9 @@ class Group < ActiveRecord::Base
   #
   # User and Group share this method, which returns login and name respectively
   #
-  alias_method :ident, :name
-  alias_method :system_name, :name
-  alias_method :designation, :name
+  def ident; name; end
+  def system_name; name; end
+  def designation; name; end
 
   def typesobject
     Typesobject.find_by_object(model_name)

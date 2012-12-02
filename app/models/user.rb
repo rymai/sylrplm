@@ -32,6 +32,12 @@ class User < ActiveRecord::Base
 		[5, :label_user_mail_option_none]
 	]
 
+	#
+	# User and Group share this method, which returns login and name respectively
+	#
+  def ident; login; end
+  def system_name; login; end
+
 	def designation
 		self.login+" "+self.first_name.to_s+" "+self.last_name.to_s
 	end
@@ -173,8 +179,6 @@ class User < ActiveRecord::Base
 	def to_s
 		self.login+"/"+(self.role.nil? ? " " :self.role.title)+"/"+(self.group.nil? ? " " : self.group.name)+"/"
 	end
-
-	alias_method :ident, :login
 
 	def validate
 		errors.add_to_base("Missing password") if hashed_password.blank?
@@ -472,10 +476,5 @@ class User < ActiveRecord::Base
 		end
 		ret
 	end
-
-	#
-	# User and Group share this method, which returns login and name respectively
-	#
-	alias_method :system_name, :login
 
 end
