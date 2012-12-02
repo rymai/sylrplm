@@ -174,7 +174,7 @@ class User < ActiveRecord::Base
 		self.login+"/"+(self.role.nil? ? " " :self.role.title)+"/"+(self.group.nil? ? " " : self.group.name)+"/"
 	end
 
-	alias_method :login, :ident
+	alias_method :ident, :login
 
 	def validate
 		errors.add_to_base("Missing password") if hashed_password.blank?
