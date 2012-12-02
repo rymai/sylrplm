@@ -60,7 +60,7 @@ class Definition < ActiveRecord::Base
     self.description ||= OpenWFE::ExpressionTree.get_description(@_tree)
   end
 
-  alias_method :ident, :name
+  def ident; name; end
 
   #
   # Finds all the definitions the user has the right to see

@@ -29,8 +29,8 @@ class Forum < ActiveRecord::Base
     raise Exception.new "Don't call this method! Use Forum.new(params[:forum].merge(user: current_user)) instead!"
   end
 
-  alias_method :ident, :subject
-  alias_method :designation, :subject
+  def ident; subject; end
+  def designation; subject; end
 
   def find_root_items
     ForumItem.all(order: "updated_at DESC", conditions: ["forum_id = '#{id}' and parent_id is null"])

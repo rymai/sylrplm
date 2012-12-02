@@ -19,7 +19,7 @@ class Role < ActiveRecord::Base
     (father ? father.title : "")
   end
 
-  alias_method :ident, :title
+  def ident; title; end
 
   def typesobject
     Typesobject.find_by_object(model_name)

@@ -41,7 +41,6 @@ class Project < ActiveRecord::Base
     :through => :links_customers_up,
     :source => :customer_up
 
-  alias_method :ident, :name
 
   def initialize(*args)
     super
@@ -53,6 +52,8 @@ class Project < ActiveRecord::Base
     self.owner = user
     self.group = user.group
   end
+
+  def ident; name; end
 
   def self.create_new(project, user)
     raise Exception.new "Don't use this method!"
