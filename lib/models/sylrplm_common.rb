@@ -2,7 +2,11 @@ require 'classes/plm_services'
 
 module Models
 	module SylrplmCommon
-	  extend ActiveSupport::Concern
+		# extend ActiveSupport::Concern # only in Rails 3.x ...
+		def self.included(base)
+			# ça appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclu la lib
+			base.extend(ClassMethods)
+		end
 
 		module ClassMethods
 			def get_object_controller(model_name)

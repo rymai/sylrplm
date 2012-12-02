@@ -30,7 +30,7 @@ class Forum < ActiveRecord::Base
   end
 
   alias_method :ident, :subject
-  alias_method :designation, :ident
+  alias_method :designation, :subject
 
   def find_root_items
     ForumItem.all(order: "updated_at DESC", conditions: ["forum_id = '#{id}' and parent_id is null"])
