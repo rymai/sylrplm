@@ -1,34 +1,31 @@
-source :rubygems
+source 'https://rubygems.org'
 source :rubyforge
-source :gemcutter
-###source "https://github.com/jmettraux/ruote/"
-###source "http://www.sqlite.org/"
-###source "http://rubygems.org/gems/sqlite3"
-#source "http://rubyforge.org/projects/datamapper/"
-gem 'rake', "0.8.7"
-gem "rails", "2.3.12"
-#gem "sqlite3", ">= 1.3.3"
-#gem "sqlite-ruby"
-gem "rdoc", "3.8"
-gem "ruote", "2.2.0"
-###gem "ruote-dm", "2.2.0"
-###gem "datamapper"
-###gem "dm-mysql-adapter"
-gem "rufus-verbs", "1.0.0"
-gem "will_paginate" , "~> 2.3.16"
-gem "atom-tools" , "2.0.5"
-#gros pbs avec ruote gem 'mysql2', '~> 0.2.7'
-gem "mysql", "2.8.1"
-gem "yajl-ruby", "0.8.2"
-gem "haml", "3.1.2"
-###gem "heroku", "2.4.0"
-#gem "i18n","0.6.0"
-gem "json", "1.5.3"
-gem "mail", "2.3.0"
-#gem "tzinfo", "0.3.29"
-#gem "treetop", "1.4.9"
-#gem "taps", "0.3.23"
-gem "fog", "~> 1.1.2"
+
+ruby '1.9.3'
+
+gem 'bundler'
+
+gem 'rails', '2.3.12'
+gem 'mail', '2.3.0'
+gem 'json', '1.5.3'
+
+# Databases
+gem 'pg'
+
+# gem 'rdoc', '3.8'
+
+gem 'ruote', '2.2.0'
+gem 'yajl-ruby', '0.8.2'
+gem 'rufus-verbs', '1.0.0'
+gem 'fog', '~> 1.1.2'
+gem 'atom-tools' , '2.0.5'
+
+# Views
+gem 'haml', '3.1.2'
+gem 'will_paginate' , '~> 2.3.16'
+
+#gem 'i18n','0.6.0'
+#gem 'tzinfo', '0.3.29'
+#gem 'treetop', '1.4.9'
 #syl pour EasyAgile
-###gem "gruff"
-gem "pg"
+###gem 'gruff'
