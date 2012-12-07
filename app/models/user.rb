@@ -59,9 +59,9 @@ class User < ActiveRecord::Base
 			user = User.new(params)
 		else
 			user = User.new
-			user.set_default_values(true)
 			user.nb_items = ::SYLRPLM::NB_ITEMS_PER_PAGE
 			user.volume = Volume.find(1)
+			user.set_default_values(true)
 		end
 		user
 	end

@@ -44,8 +44,8 @@ class Project < ActiveRecord::Base
 
   def initialize(*args)
     super
-    self.set_default_values(true) if args.empty?
     self.statusobject = Statusobject.get_first("project")
+    self. set_default_values(true) if args.length==1
   end
 
   def user=(user)
@@ -53,7 +53,7 @@ class Project < ActiveRecord::Base
     self.group = user.group
   end
 
-  def ident; name; end
+  ##def name; ident; end
 
   def self.create_new(project, user)
     raise Exception.new "Don't use this method!"

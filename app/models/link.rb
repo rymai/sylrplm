@@ -50,9 +50,9 @@ class Link < ActiveRecord::Base
     :through => :links_effectivities,
     :source => :part
 
-  validates_uniqueness_of :child_id, scope: [:child_plmtype, :father_id, :father_type]
-  validates :link_uniqueness, :validity
-
+  ###non validates_uniqueness_of :child_id, scope: [:child_plmtype, :father_id, :father_type]
+  ###validates :link_uniqueness, :validity
+before_save :link_uniqueness, :validity
   # note sure what this does...
   def link_uniqueness
     cond = ["father_plmtype = '?' and child_plmtype = '?' and father_typesobject_id = ? and child_typesobject_id = ? and relation_id = ? and ident = ?", father_plmtype, child_plmtype, father_typesobject_id, child_typesobject_id, relation_id, ident]

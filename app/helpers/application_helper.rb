@@ -22,7 +22,7 @@ module ApplicationHelper
 		ret
 	end
 
-	def h_if_differ(current, previous)
+	def h_if_differ_trop_general(current, previous)
 		ret = current
 		unless previous.nil?
 			if current == previous
@@ -31,6 +31,11 @@ module ApplicationHelper
 		end
 		ret
 	end
+	
+	def h_if_differ(current, previous)
+		current
+	end
+	
 
 	# renvoie la valeur de l'attribut att sur l'objet
 	# att peut etre un attribut "compose" tel que owner.login, d'ou l'utilisation de eval

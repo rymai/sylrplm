@@ -19,14 +19,14 @@ class Check < ActiveRecord::Base
   # 2=in
   # 3=free
   def self.get_checkout(object)
-    find(:last, :conditions => ["object = '?' and object_id = ? and status = 1", object.class.name, object.id])
+    find(:last, :conditions => ["object = ? and object_id = ? and status = 1", object.model_name, object.id])
   end
 
   def initialize(*args)
     super
     self.status    = 1
     self.out_date  = Time.now.utc
-    self.set_default_values(true) if args.empty?
+    self.set_default_values(true) if args.length==1
   end
 
   def user=(user)

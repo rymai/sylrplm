@@ -254,7 +254,7 @@ class Datafile < ActiveRecord::Base
   end
 
   def find_col_for(strcol)
-    Sequence.find_col_for(self.class.name,strcol)
+    Sequence.find_col_for(self.model_name,strcol)
   end
 
   def self.get_conditions(filter)

@@ -68,11 +68,15 @@ class Document < ActiveRecord::Base
 
   def initialize(*args)
     super
-    self.set_default_values(true) if args.empty?
-    self.statusobject = Statusobject.get_first("document")
+    fname= "#{self.class.name}.#{__method__}"
+		LOG.info (fname){"args=#{args.length}:#{args.inspect}"}
+    self.statusobject = Statusobject.get_first("document") 
+		self.set_default_values(true) if args.length==1
   end
 
   def user=(user)
+  	fname= "#{self.class.name}.#{__method__}"
+		LOG.info (fname){"user=#{user.inspect}"}
     self.owner     = user
     self.group     = user.group
     self.projowner = user.project

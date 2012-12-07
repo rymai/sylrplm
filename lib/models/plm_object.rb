@@ -88,7 +88,7 @@ module Models
 				if(revisable?)
 					obj=clone()
 					obj.revision=rev_cur.next
-					obj.statusobject=::Statusobject.get_first(self.class.name)
+					obj.statusobject=::Statusobject.get_first(self.model_name)
 					if self.has_attribute?(:filename)
 						if(self.filename!=nil)
 						content=self.read_file

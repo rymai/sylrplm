@@ -23,9 +23,9 @@ class Relation < ActiveRecord::Base
   def initialize(*args)
     super
     if args.empty?
-    	self.set_default_values(true)
     	self.father_plmtype = Typesobject.get_objects_with_type.first
 			self.child_plmtype  = Typesobject.get_objects_with_type.first
+			self.set_default_values(true)
 		end
   end
 

@@ -146,11 +146,10 @@ module Models
 
 		# attribution de valeurs par defaut suivant la table sequence
 		def set_default_values(next_seq)
-			#find_cols_for(model).each do |strcol|
-			# object.column_for_attribute(strcol)=
-			#get_constants
-			self.attribute_names().each do |strcol|
-				old_value=self[strcol]
+			fname= "#{self.class.name}.#{__method__}"
+		LOG.info (fname){"next_seq=#{next_seq}, model_name=#{model_name}"}
+		self.attribute_names().each do |strcol|
+				old_value=  self[strcol]
 				#col=self.find_col_for(strcol)
 				col = ::Sequence.find_col_for(self.class.name,strcol)
 				val=old_value

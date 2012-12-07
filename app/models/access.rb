@@ -12,7 +12,7 @@ class Access < ActiveRecord::Base
 
   def initialize(*args)
     super
-    self.set_default_values(true) if args.empty?
+    self.set_default_values(true) if args.length==1
   end
 
   def controller_and_action

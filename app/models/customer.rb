@@ -33,8 +33,8 @@ class Customer < ActiveRecord::Base
 
   def initialize(*args)
     super
-    self.set_default_values(true) if args.empty?
     self.statusobject = Statusobject.get_first("customer")
+    self.set_default_values(true) if args.length==1
   end
 
   def user=(user)
