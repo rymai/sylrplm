@@ -29,6 +29,7 @@ class UsersController < ApplicationController
 		@the_user = User.create_new
 		@roles   = Role.all
 		@groups  = Group.all
+		@projects  = Project.all
 		@themes  = get_themes(@theme)
 		@notifications=get_notifications(@notification)
 		@time_zones=get_time_zones(@time_zone)

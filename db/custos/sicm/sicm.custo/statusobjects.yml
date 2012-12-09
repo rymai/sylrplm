@@ -94,7 +94,7 @@ Statusobject_14:
   object: forum
   name: open
   description: 
-  rank: "2"
+  rank: "1"
   promote_id: "1"
   demote_id: "1"
   domain: admin

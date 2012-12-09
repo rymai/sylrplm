@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source :rubyforge
 
-ruby '1.9.3'
+#ruby '1.9.3'
 
 gem 'bundler'
 
@@ -10,8 +10,8 @@ gem 'mail', '2.3.0'
 gem 'json', '1.5.3'
 
 # Databases
-gem 'pg'
-
+#gem 'pg'
+gem "mysql", "2.8.1"
 # gem 'rdoc', '3.8'
 
 gem 'ruote', '2.2.0'

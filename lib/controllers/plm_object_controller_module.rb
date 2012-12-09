@@ -14,7 +14,10 @@ module Controllers
 		end
 
 		def ctrl_add_forum(object)
-			LOG.info ("#{self.class.name}.#{__method__}") { "params=#{params.inspect}" }
+			fname = "#{self.class.name}.#{__method__}"
+			LOG.info (fname) { "params=#{params.inspect}" }
+			LOG.info (fname) { "object=#{object.inspect} " }
+			LOG.info (fname) { "typesobject=#{object.typesobject.inspect}" }
 
 			relation = if params["relation_id"].empty?
 				forum_type = Typesobject.find(params[:forum][:typesobject_id])
@@ -29,7 +32,12 @@ module Controllers
 				@forum = Forum.new(params[:forum].merge(user: current_user))
 				@forum.owner = current_user
 				if @forum.save
-					item = ForumItem.create_new(@forum, params, current_user)
+					#item = ForumItem.create_new(@forum, params, current_user)
+					args={}
+					args[:forum]=@forum
+					args[:user]=current_user
+					args[:message]=params[:message]
+					item = ForumItem.new(args)
 					if item.save
 						if relation.nil?
 							flash[:notice] << t(:ctrl_object_not_created,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>"no relation",:msg=>nil)
@@ -38,9 +46,10 @@ module Controllers
 						else
 							link = Link.new(father: object, child: @forum, relation: relation, user: current_user)
 							if link.save
-								flash[:notice] << t(:ctrl_object_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>t(link_[:msg]))
+								flash[:notice] << t(:ctrl_object_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>nil)
 							else
-								flash[:notice] << t(:ctrl_object_not_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>t(link_[:msg]))
+								msg=link.errors.inspect
+								flash[:notice] << t(:ctrl_object_not_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>msg)
 								@forum.destroy
 								error = true
 							end
@@ -52,7 +61,7 @@ module Controllers
 							# end
 						end
 					else
-						msg=$!
+						msg=item.errors.inspect
 						flash[:notice] << t(:ctrl_object_not_created, :typeobj =>t(:ctrl_forum_item),:msg=>msg)
 						@forum.destroy
 						error = true

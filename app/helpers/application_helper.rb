@@ -436,7 +436,7 @@ module ApplicationHelper
 
 	def select_inout(form, object, values, field)
 		html = ""
-		unless values.count == 0
+		unless values.nil? || values.count == 0
 			#user
 			mdl_object=object.model_name
 			#group

@@ -224,6 +224,7 @@ fr:
   # general
   label_internal: Interne
   label_projowner: Projet
+  label_forum_items: Messages
   modif_status: Modifier le statut
   label_created_at: Création
   label_updated_at: Modification

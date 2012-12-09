@@ -12,6 +12,8 @@ module SYLRPLM
   #include Classes::AppClasses::LogFormatter
   LOCAL_DEFAULT             = "fr"
   NOTIFICATION_DEFAULT      = 1
+  # nom du volume attribue par defaut au user
+  VOLUME_NAME_DEFAULT       = "vol_local_01"
   TIME_ZONE_DEFAULT         = 1
   THEME_DEFAULT             = "blackwhite"
   NB_ITEMS_PER_PAGE         = 30
@@ -59,6 +61,7 @@ module SYLRPLM
   #
   # Prefixe du nom du projet attribué automatiquement a un nouvel utilisateur
   USER_PROJECT_IDENT        = 'PROJECT-'
+  
   # repertoires des chargement initial, voir Controller
   DIR_FIXTURES               = "#{Rails.root}/db/fixtures"
   MAIL_ADMIN                = "sylvere.coutable@laposte.net"

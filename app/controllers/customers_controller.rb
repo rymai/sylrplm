@@ -103,7 +103,8 @@ class CustomersController < ApplicationController
 	# DELETE /customers/1.xml
 	def destroy
 		@customer = Customer.find(params[:id])
-		unless @customer.nil?
+		respond_to do |format|
+			unless @customer.nil?
 			if @customer.destroy
 				flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
 				format.html { redirect_to(customers_url) }
@@ -116,6 +117,7 @@ class CustomersController < ApplicationController
 			end
 		else
 			flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+		end
 		end
 	end
 

@@ -85,7 +85,7 @@ class Statusobject < ActiveRecord::Base
 	#
 	def self.get_first(object)
 		#order_desc.find(:first, :order=>"object,rank ASC",  :conditions => ["object = '#{object}'"])
-		Statusobject.find_by_object(object)
+		order_default.find_by_object(object)
 	end
 
 	def self.get_last(object)
