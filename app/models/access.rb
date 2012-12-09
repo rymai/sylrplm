@@ -86,5 +86,47 @@ class Access < ActiveRecord::Base
       memo
     end.join(' | ')
   end
+  
+  #
+  # remplissage initial des autorisations
+  #
+  def self.init
+    acc_roles = Access.access_roles
+    Controller.get_controllers_and_methods.each do |controller|
+      if %w[AccessesController LoginController RolesController RolesUsersController SequencesController].include?(controller.name)
+        # fonctions admin
+        roles = roles_yes(acc_roles[:cat_admins]) +"& ("+ roles_no(acc_roles[:cat_consultants]) +"!"+ roles_no(acc_roles[:cat_creators])+ ")"
+      #roles = "admin & (!designer | !consultant | !valider)"
+      else
+        if controller.name == "SessionsController"
+          # tout le monde peut se deconnecter
+          #roles = "admin | designer | consultant | valider"
+          roles = roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +" | "+ roles_yes(acc_roles[:cat_consultants])
+        elsif controller.name == "WorkitemsController"
+          # tout le monde peut se executer une tache sauf le consultant
+          #roles = "(admin | designer | valider) & !consultant"
+          roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
+        elsif controller.name == "QuestionsController"
+          # tout le monde peut poser une question, le consultant ne peut repondre
+          roles=nil
+          if controller.method == "edit"
+            #roles = "(admin | designer | valider) & !consultant"
+            roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
+          end
+        else
+        # les fonctions plm
+          if controller.method == "show"
+            #roles = "admin | designer | valider | consultant"
+            roles = roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +" | "+ roles_yes(acc_roles[:cat_consultants])
+            roles=nil
+          else
+          #roles = "(admin | designer | valider) & !consultant"
+            roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
+          end
+        end
+      end
+      create(:controller_and_action => "#{controller.name}.#{controller.method}", :roles => roles) unless roles.nil?
+    end
+  end
 
 end
