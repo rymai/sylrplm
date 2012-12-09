@@ -236,6 +236,7 @@ class ApplicationController < ActionController::Base
   def authorize
     user_id = session[:user_id] || User.find_by_id(session[:user_id])
     if user_id.nil?
+      puts "authorize:user is nil"
       #puts "application_controller.authorize.request_uri="+request.request_uri
       #puts "application_controller.authorize.new_sessions_url="+new_sessions_url
       session[:original_uri] = request.request_uri
@@ -243,6 +244,7 @@ class ApplicationController < ActionController::Base
       redirect_to new_sessions_url
     else
       user=User.find(user_id)
+      puts "authorize:user=#{user} admin?=#{user.is_admin?}"
       unless user.is_admin?
         if user.roles.nil? || user.groups.nil? || user.projects.nil?
           session[:original_uri] = request.request_uri
@@ -251,7 +253,8 @@ class ApplicationController < ActionController::Base
         end
       end
       if user.role.nil? || user.volume.nil? || user.group.nil? || user.project.nil?
-          session[:original_uri] = request.request_uri
+          puts "authorize:role=#{user.role} volume=#{user.volume} group=#{user.volume} project=#{user.project}"
+	  session[:original_uri] = request.request_uri
           flash[:notice] = t(:login_login)
           redirect_to new_sessions_url
       end
