@@ -188,13 +188,12 @@ class DocumentsController < ApplicationController
 	end
 
 	def check_out
-		#puts "===DocumentsController.check_out:"+params.inspect
-		@document = Document.find(params[:id])
-		st=@document.check_out(params,@current_user)
-		puts "===DocumentsController.check_out:st="+st
-		if st!="already_checkout"
-			if st!="no_reason"
-				if st=="ok"
+    #puts "***********************************************DocumentsController.check_out:"+params.inspect
+ 		@document = Document.find(params[:id])
+		st=@document.check_out(params[:check],@current_user)
+		if st != "already_checkout"
+			if st != "no_reason"
+				if st == "ok"
 					flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:out_reason])
 				else
 					flash[:notice] = t(:ctrl_object_notcheckout, :typeobj => t(:ctrl_document), :ident => @document.ident)
@@ -213,7 +212,7 @@ class DocumentsController < ApplicationController
 
 	def check_in
 		@document = Document.find(params[:id])
-		st = @document.check_in(params, current_user)
+		st = @document.check_in(params[:check], current_user)
 		respond_to do |format|
 			if st != "no_reason"
 				if st != "notyet_checkout"
@@ -237,7 +236,7 @@ class DocumentsController < ApplicationController
 
 	def check_free
 		@document = Document.find(params[:id])
-		st = @document.check_free(params, current_user)
+		st = @document.check_free(params[:check], current_user)
 
 		respond_to do |format|
 			if st != "no_reason"

@@ -102,7 +102,7 @@ class Document < ActiveRecord::Base
 
   def self.get_types_document
     Typesobject.find(:all, :order => "name",
-    :conditions => ["object = 'document'"])
+    :conditions => ["forobject = 'document'"])
   end
 
   def self.find_all
@@ -141,10 +141,19 @@ class Document < ActiveRecord::Base
   end
 
   def check_out(params, user)
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname){"params=#{params}, user=#{user.inspect}"} 
     ret = ""
     if Check.get_checkout(self).nil?
       unless params[:out_reason].blank?
-        if Check.create(params.merge(object: self, user: user))
+        args={}
+        args[:out_reason] = params[:out_reason]
+        #args[:object] = self.model_name
+        args[:forobject_id] = self.id
+        args[:user] = user
+        
+       ## if Check.create(params.merge(object_to_check: self, user: user))
+        if Check.create(args)
           ret = "ok"
         else
           ret = "notcheckout"
@@ -155,6 +164,8 @@ class Document < ActiveRecord::Base
     else
       ret = "already_checkout"
     end
+    LOG.info (fname){"ret=#{ret}"} 
+    ret
   end
 
   def check_in(params,user)

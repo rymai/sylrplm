@@ -329,6 +329,8 @@ class WorkitemsController < ApplicationController
         values["father_id"]             = workitem.id
         values["child_id"]              = item.id
         values["relation_id"]           = relation.id
+        # en attendant mieux: user processus ou recup user en cours ...
+        user=User.find_by_name(SYLRPLM::USER_ADMIN)
         link = Link.new(values.merge(user: nil))
       else
         raise PlmProcessException.new(
@@ -338,7 +340,7 @@ class WorkitemsController < ApplicationController
       if link.save
         LOG.info(fname){"save ok:link id="+link.id.to_s}
 
-        { link: link, msg: "ctrl_link_#{obj.ident}" }
+        { link: link, msg: "ctrl_link_#{item.ident}" }
       else
         LOG.error(fname){"error save :"+link.errors.inspect}
         raise PlmProcessException.new(fname+"error save :"+link.errors.inspect, 10002)

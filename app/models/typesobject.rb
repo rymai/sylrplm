@@ -1,6 +1,6 @@
 class Typesobject < ActiveRecord::Base
 	include Models::SylrplmCommon
-	validates_presence_of :object, :name
+	validates_presence_of :forobject, :name
 
 	has_many :datafiles
 	has_many :documents
@@ -24,7 +24,7 @@ class Typesobject < ActiveRecord::Base
 
 	def self.get_types(s_object)
 		fname="Typesobject.#{__method__}(#{s_object})"
-		ret=find_all_by_object(s_object.to_s, :order => :name)
+		ret=find_all_by_forobject(s_object.to_s, :order => :name)
 		unless ret.is_a?(Array)
 			ret = [ret]
 		end
@@ -72,7 +72,7 @@ class Typesobject < ActiveRecord::Base
 
 	def self.find_for(object)
 		#find(:all, :order=>"object,name", :conditions => ["object = '#{object}' "])
-		order_default.find_all_by_object(object)
+		order_default.find_all_by_forobject(object)
 	end
 
 	def self.get_conditions(filter)
@@ -87,6 +87,6 @@ class Typesobject < ActiveRecord::Base
 	end
 
 	def ident
-		object+"."+name
+		"#{forobject}.#{name}"
 	end
 end

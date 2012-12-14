@@ -183,7 +183,7 @@ class ProcessesController < ApplicationController
   def tree
    	fname= "#{controller_class_name}.#{__method__}"
 		LOG.debug (fname){"begin:params=#{params}"}
-    proc ess = ruote_engine.process_status(params[:id])
+    process = ruote_engine.process_status(params[:id])
     var = params[:var] || 'proc_tree'
     unless process.nil?
       # TODO : use Rails callback

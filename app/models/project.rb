@@ -73,7 +73,7 @@ class Project < ActiveRecord::Base
 
   def self.get_types_project
     Typesobject.find(:all, :order=>"name",
-    :conditions => ["object = 'project'"])
+    :conditions => ["forobject = 'project'"])
   end
 
   def add_parts_from_favori(favori)

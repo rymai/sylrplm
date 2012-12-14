@@ -11,7 +11,7 @@
 class Statusobject < ActiveRecord::Base
 	include Models::SylrplmCommon
 
-	validates_presence_of :object, :name, :rank
+	validates_presence_of :forobject, :name, :rank
 
 	has_many :documents
 	has_many :parts
@@ -19,9 +19,9 @@ class Statusobject < ActiveRecord::Base
 	has_many :customers
 	has_many :forums
 
-	named_scope :order_default, :order=>"object,rank,name ASC"
-	named_scope :order_desc, :order=>"object,rank,name DESC"
-	named_scope :cond_object, lambda{|obj| {:conditions=> ["object = ?",obj] }}
+	named_scope :order_default, :order=>"forobject,rank,name ASC"
+	named_scope :order_desc, :order=>"forobject,rank,name DESC"
+	named_scope :cond_object, lambda{|obj| {:conditions=> ["forobject = ?",obj] }}
 	named_scope :find_all , order_default.all
 
 	PREFIX_PROMOTE="status_promote_"
@@ -59,7 +59,7 @@ class Statusobject < ActiveRecord::Base
 			stat_cur = object.statusobject
 			LOG.info(fname){"choice(#{choice}),promote_id(#{stat_cur.promote_id}),demote_id(#{stat_cur.demote_id})"}
 			#cond="object = '#{object.model_name}' && ((demote_id = #{choice} && rank <= #{stat_cur.rank}) || (promote_id = #{choice} && rank >= #{stat_cur.rank})) "
-			cond_object="object = '#{object.model_name}'"
+			cond_object="forobject = '#{object.model_name}'"
 			cond_promote="rank >= #{stat_cur.rank}" if stat_cur.promote_id == choice
 			cond_demote="rank <= #{stat_cur.rank}" if stat_cur.demote_id == choice
 			if !cond_promote.nil? &&  !cond_demote.nil?
@@ -76,7 +76,7 @@ class Statusobject < ActiveRecord::Base
 			end
 		else
 		# object est une string
-			cond="object = '#{object}'"
+			cond="forobject = '#{object}'"
 		end
 		LOG.info(fname){"choice(#{choice})=>cond_promote(#{cond_promote}),cond_demote(#{cond_demote}),cond(#{cond})"}
 		Statusobject.order_default.find(:all, :conditions => [cond]) unless cond.nil?
@@ -85,37 +85,37 @@ class Statusobject < ActiveRecord::Base
 	#
 	def self.get_first(object)
 		#order_desc.find(:first, :order=>"object,rank ASC",  :conditions => ["object = '#{object}'"])
-		order_default.find_by_object(object)
+		order_default.find_by_forobject(object)
 	end
 
 	def self.get_last(object)
 		#find(:first, :order=>"object,rank DESC",  :conditions => ["object = '#{object}'"])
 		#order_default.cond_object(object).last
-		order_default.find_last_by_object(object)
+		order_default.find_last_by_forobject(object)
 	end
 
 	def get_previous
-		if(rank > Statusobject.get_first(object).rank)
+		if(rank > get_first(forobject).rank)
 			new_rank=current_status.rank-1
-			Statusobject.find(:first, :conditions => ["object = '#{object}' && rank=#{new_rank}"])
+			Statusobject.find(:first, :conditions => ["forobject = '#{forobject}' && rank=#{new_rank}"])
 		else
 			current_status
 		end
 	end
 
 	def get_next
-		if(rank < Statusobject.get_last(object).rank)
+		if(rank < Statusobject.get_last(forobject).rank)
 			new_rank = rank + 1
-			Statusobject.find(:first, :conditions => ["object = '#{object}' && rank=#{new_rank}"])
+			Statusobject.find(:first, :conditions => ["forobject = '#{forobject}' && rank=#{new_rank}"])
 		else
 		self
 		end
 	end
 
 	def self.find_next(object, current_status)
-		if(current_status.rank < get_last(object).rank)
+		if(current_status.rank < Statusobject.get_last(object).rank)
 			new_rank=current_status.rank+1
-			find(:first, :conditions => ["object = '#{object}' && rank=#{new_rank}"])
+			find(:first, :conditions => ["forobject = '#{object}' && rank=#{new_rank}"])
 		else
 		current_status
 		end
@@ -124,7 +124,7 @@ class Statusobject < ActiveRecord::Base
 	def self.find_previous(object, current_status)
 		if(rank > get_first(object).rank)
 			new_rank = rank-1
-			find(:first, :conditions => ["object = '#{object}' && rank=#{new_rank}"])
+			find(:first, :conditions => ["forobject = '#{object}' && rank=#{new_rank}"])
 		else
 		self
 		end
@@ -142,6 +142,6 @@ class Statusobject < ActiveRecord::Base
 	end
 
 	def ident
-		"#{object}.#{name}"
+		"#{forobject}.#{name}"
 	end
 end

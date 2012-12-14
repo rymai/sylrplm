@@ -5,13 +5,12 @@ class Check < ActiveRecord::Base
 
   attr_accessor :user
 
-  belongs_to :documents , :conditions => { :object => 'document' }
   belongs_to :out_user, :class_name => "User"
   belongs_to :in_user, :class_name => "User"
   belongs_to :out_group, :class_name => "Group"
   belongs_to :in_group, :class_name => "Group"
   belongs_to :projowner, :class_name => "Project"
-  belongs_to :object, :polymorphic => true
+  ##belongs_to :checkobject, :polymorphic => true
 
   #status:
   # 0=unknown
@@ -19,20 +18,32 @@ class Check < ActiveRecord::Base
   # 2=in
   # 3=free
   def self.get_checkout(object)
-    find(:last, :conditions => ["object = ? and object_id = ? and status = 1", object.model_name, object.id])
+    find(:last, :conditions => ["checkobject = ? and checkobject_id = ? and status = 1", object.model_name, object.id])
   end
 
   def initialize(*args)
+     fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname) {"args=#{args}"} 
     super
+   
     self.status    = 1
     self.out_date  = Time.now.utc
     self.set_default_values(true) if args.length==1
   end
 
   def user=(user)
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname) {"user=#{user}"} 
     self.out_user  = user
     self.out_group = user.group
     self.projowner = user.project
+  end
+  
+  def object_to_check=(obj)
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname) {"obj=#{obj}"} 
+    self.checkobject  = obj.model_name
+    self.checkobject_id = obj.id
   end
 
   def self.create_new(object_cls, object, params, user)

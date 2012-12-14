@@ -81,12 +81,14 @@ module Models
 		end
 
 		def revise
+			fname= "#{self.model_name}.#{__method__}"
+			LOG.debug (fname){"#{self.ident}"}
 			if(self.frozen?)
 				# recherche si c'est la derniere revision
 				rev_cur=self.revision
 				last_rev=last_revision
 				if(revisable?)
-					obj=clone()
+					obj = clone()
 					obj.revision=rev_cur.next
 					obj.statusobject=::Statusobject.get_first(self.model_name)
 					if self.has_attribute?(:filename)
@@ -280,14 +282,14 @@ module Models
 
 		def self.find_others(object_id)
 			find(:all,
-    :conditions => ["id != #{object_id}"],
+    :conditions => ["id != #{forobject_id}"],
     :order=>"ident")
 		end
 
 		# si meme groupe ou confidentialite = public ou confidentiel
 		def ok_for_index?(user)
-			acc_public = ::Typesobject.find_by_object_and_name("project_typeaccess", "public")
-			acc_confidential = ::Typesobject.find_by_object_and_name("project_typeaccess", "confidential")
+			acc_public = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "public")
+			acc_confidential = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "confidential")
 			#puts "ok_for_index?:acc_public="+acc_public.inspect
 			#puts "ok_for_index?:acc_confidential="+acc_confidential.inspect
 			#puts "ok_for_index?:self="+self.inspect
@@ -306,7 +308,7 @@ module Models
 
 		# si meme groupe ou confidentialite = public
 		def ok_for_show?(user)
-			acc_public = ::Typesobject.find_by_object_and_name("project_typeaccess", "public")
+			acc_public = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "public")
 			#index possible meme sans user connecte
 			#puts "ok_for_show? acc_public:"+self.projowner.typeaccess.name+"=="+acc_public.name
 			unless user.nil?

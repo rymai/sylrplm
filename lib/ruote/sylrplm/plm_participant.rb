@@ -99,7 +99,7 @@ class Ruote::PlmParticipant
     nb_applicable=0
     unless arworkitem.field_hash.nil?
       fields = arworkitem.field_hash
-      puts fname+"params avant replace=#{fields['params'].inspect}"
+      LOG.info (fname) {"params avant replace=#{fields['params'].inspect}"}
       # voir workitems_controller pour la construction de ce parametre
       # /activity : rien a faire
       # /documents/3 : document(3)
@@ -133,16 +133,16 @@ class Ruote::PlmParticipant
                     #tout est ok
                     fields["params"][url] = v
                     msg="Object #{url} could be #{task} by action flow"
-                    puts fname+msg
+                    LOG.info (fname) {msg}
                   nb_applicable+=1
                   else
                     msg="#{tst}=false on Object #{url} which could not be #{task} by action flow"
-                    puts fname+msg
+                    LOG.info (fname) {msg}
                   nb_applicable+=1
                   end
                 else
                   msg="Check Method #{tst} is missing for Object #{url}"
-                  puts fname+msg
+                  LOG.info (fname) {msg}
                 nb_applicable+=1
                 # ce n'est pas bloquant, on executera la fonction quand meme dans execute
                 #raise PlmProcessException.new(msg, 10004)
@@ -161,12 +161,12 @@ class Ruote::PlmParticipant
       ###fields["params"].delete(url)
       end
     end
-    puts fname+"params apres replace=#{fields['params'].inspect} nb_applicable=#{nb_applicable}"
+    LOG.info (fname) {"params apres replace=#{fields['params'].inspect} nb_applicable=#{nb_applicable}"}
     #
     # on doit avoir au moins un objet sur lequel s'applique le processus
     #
     if step!= "exec" && relation_name == "applicable" && nb_applicable==0
-      msg=fname+"No applicable object for task(#{task}) and step(#{step})"
+      msg = fname+":No applicable object for task(#{task}) and step(#{step}) and relation(#{relation_name})"
       raise PlmProcessException.new(msg, 10006)
     end
     arworkitem.replace_fields(fields) unless fields.nil?
@@ -193,12 +193,23 @@ class Ruote::PlmParticipant
           obj = get_object(link.child_plmtype, link.child_id)
           puts fname+"avant exec:obj="+obj.inspect
           unless obj.nil?
-            obj.send(task)
-            obj.save
-            puts fname+"apres exec:obj="+obj.inspect
+            objnew = obj.send(task)
+            puts fname+"apres exec:objnew="+objnew.inspect
+            unless objnew.nil?
+              begin
+                objnew.save
+              rescue Exception => e
+                msg=fname+"Object #{objnew} not saved:Error=#{e}"
+                raise PlmProcessException.new(msg, 10010)
+              end
+            else
+              msg=fname+"Object #{obj} not modified"
+              raise PlmProcessException.new(msg, 10010)
+            end
+            
           else
             msg=fname+"Object #{url} does not exist"
-            raise PlmProcessException.new(msg, 10010)
+            raise PlmProcessException.new(msg, 10011)
           end
         else
         #puts fname+"link.relation.name(#{link.relation.name}) != relation_name(#{relation_name})"

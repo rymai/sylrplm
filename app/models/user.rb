@@ -90,13 +90,13 @@ class User < ActiveRecord::Base
 	#
 	def self.create_new_login(aparams, urlbase)
 		name="User.create_new_login:"
-		type=Typesobject.find_by_object_and_name(User.model_name, ::SYLRPLM::TYPE_USER_NEW_ACCOUNT)
+		type=Typesobject.find_by_forobject_and_name(User.model_name, ::SYLRPLM::TYPE_USER_NEW_ACCOUNT)
 		group_consultants=Group.find_by_name(::SYLRPLM::GROUP_CONSULTANTS)
 		role_consultant=Role.find_by_title(::SYLRPLM::ROLE_CONSULTANT)
 		admin = User.find_by_login(::SYLRPLM::USER_ADMIN)
 		proj = Project.new(user: admin)
-		type_proj=Typesobject.find_by_object_and_name(Project.model_name, ::SYLRPLM::TYPE_PROJ_ACCOUNT)
-		typeacc_proj=Typesobject.find_by_object_and_name("project_typeaccess", ::SYLRPLM::TYPEACCESS_PUBLIC)
+		type_proj=Typesobject.find_by_forobject_and_name(Project.model_name, ::SYLRPLM::TYPE_PROJ_ACCOUNT)
+		typeacc_proj=Typesobject.find_by_forobject_and_name("project_typeaccess", ::SYLRPLM::TYPEACCESS_PUBLIC)
 		unless group_consultants.nil? || role_consultant.nil? || proj.nil? || type.nil? || type_proj.nil? || typeacc_proj.nil?
 			proj.ident=Project::for_user(aparams["login"])
 			proj.typesobject=type_proj

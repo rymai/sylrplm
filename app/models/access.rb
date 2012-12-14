@@ -66,7 +66,12 @@ class Access < ActiveRecord::Base
     ret[:cat_admins] << admin.title unless admin.nil?
     #ret[:cat_consultants] = cons.users.collect{ |u| u.login } unless cons.nil?
     ret[:cat_consultants] << consultant.title unless consultant.nil?
-    ret[:cat_creators] = Role.all.collect { |r| r.title } - [ret[:cat_admins], ret[:cat_consultants]]
+    #puts "#{__method__.to_s}:cat_admins=#{ret[:cat_admins]}"
+    #puts "#{__method__.to_s}:cat_consultants=#{ret[:cat_consultants]}"
+    ret[:cat_creators] = Role.all.collect { |r| r.title } 
+    #puts "#{__method__.to_s}:roles=#{ret[:cat_creators]}"
+    ret[:cat_creators]-= ret[:cat_admins]
+    ret[:cat_creators]-= ret[:cat_consultants]
     puts "#{__method__.to_s}:#{ret.inspect}"
     ret
   end
@@ -87,27 +92,45 @@ class Access < ActiveRecord::Base
     end.join(' | ')
   end
   
+  #ecrit !_role pour chaque role
+  def self.roles_prefixe(lst, yes_no)
+    ret=""
+    lst.each_with_index do |r, i|
+      ret << " | " unless i == 0
+      ret << yes_no + r unless r.nil?
+    end
+    ret
+  end
+  
+  def self.roles_prefixe_remy(lst, yes_no)
+    lst.inject([]) do |memo, r|
+      memo << r unless r.nil?
+      memo
+    end.join(' | ')
+  end
+  
   #
   # remplissage initial des autorisations
   #
   def self.init
+    puts "acces.init:remplissage initial des autorisations"
     acc_roles = Access.access_roles
     Controller.get_controllers_and_methods.each do |controller|
       if %w[AccessesController LoginController RolesController RolesUsersController SequencesController].include?(controller.name)
-        # fonctions admin
+        #puts "acces.init: fonctions admin"
         roles = roles_yes(acc_roles[:cat_admins]) +"& ("+ roles_no(acc_roles[:cat_consultants]) +"!"+ roles_no(acc_roles[:cat_creators])+ ")"
       #roles = "admin & (!designer | !consultant | !valider)"
       else
         if controller.name == "SessionsController"
-          # tout le monde peut se deconnecter
+          #puts "acces.init: tout le monde peut se deconnecter"
           #roles = "admin | designer | consultant | valider"
           roles = roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +" | "+ roles_yes(acc_roles[:cat_consultants])
         elsif controller.name == "WorkitemsController"
-          # tout le monde peut se executer une tache sauf le consultant
+          #puts "acces.init: tout le monde peut executer une tache sauf le consultant"
           #roles = "(admin | designer | valider) & !consultant"
           roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
         elsif controller.name == "QuestionsController"
-          # tout le monde peut poser une question, le consultant ne peut repondre
+          #puts "acces.init: tout le monde peut poser une question, le consultant ne peut repondre"
           roles=nil
           if controller.method == "edit"
             #roles = "(admin | designer | valider) & !consultant"
@@ -116,10 +139,12 @@ class Access < ActiveRecord::Base
         else
         # les fonctions plm
           if controller.method == "show"
+            #puts "acces.init: fonctions plm:show"
             #roles = "admin | designer | valider | consultant"
             roles = roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +" | "+ roles_yes(acc_roles[:cat_consultants])
             roles=nil
           else
+          #puts "acces.init: fonctions plm:autres:#{controller.method}"
           #roles = "(admin | designer | valider) & !consultant"
             roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
           end

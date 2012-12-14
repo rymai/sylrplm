@@ -93,9 +93,14 @@ class Link < ActiveRecord::Base
 	end
 
 	def user=(user)
+	  fname = "#{self.class.name}.#{__method__}"
+	  LOG.debug (fname) {"user=#{user.inspect}"}
+	  #on accepte sans user (voir workitems_controller)
+    unless user.nil?
 		self.author    = user
-		self.group     = user.group
-		self.projowner = user.project
+		  self.group     = user.group
+		  self.projowner = user.project
+		end
 	end
 
 	def father=(father)

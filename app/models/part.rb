@@ -108,7 +108,7 @@ class Part < ActiveRecord::Base
 
 	def self.get_types_part
 		Typesobject.find(:all, :order=>"name",
-		:conditions => ["object = 'part'"])
+		:conditions => ["forobject = 'part'"])
 	end
 
 	def self.get_conditions(filter)

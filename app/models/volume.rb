@@ -107,7 +107,7 @@ class Volume < ActiveRecord::Base
 						Dir.mkdir(dir)
 						ret = dir
 					rescue Exception => e
-						obj.errors.add_to_base e.inspect
+						self.errors.add_to_base e.inspect
 					end
 				else
 					ret = dir

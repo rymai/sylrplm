@@ -22,7 +22,7 @@ class Group < ActiveRecord::Base
   def designation; name; end
 
   def typesobject
-    Typesobject.find_by_object(model_name)
+    Typesobject.find_by_forobject(model_name)
   end
 
   def father_name

@@ -80,8 +80,8 @@ class PlmObserver < ActiveRecord::Observer
     #puts name+event_type+":"+object.inspect
     unless object.model_name==self.model_name
       params={}
-      params[:object_type] = object.model_name
-      params[:object_id] = object.id
+      params[:forobject_type] = object.model_name
+      params[:forobject_id] = object.id
       params[:event_date] = object.updated_at
       params[:event_type] = event_type
       params[:responsible] = object.owner

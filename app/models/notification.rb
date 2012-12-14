@@ -11,7 +11,7 @@ require 'models/sylrplm_common'
 class Notification < ActiveRecord::Base
   #pour get_controller_from_model_type
   include Models::SylrplmCommon
-  validates_presence_of :object_type, :object_id,  :event_date, :event_type
+  validates_presence_of :forobject_type, :forobject_id,  :event_date, :event_type
   belongs_to :responsible,
   :class_name => "User"
 
@@ -22,8 +22,8 @@ class Notification < ActiveRecord::Base
 
   def init_mdd
     create_table "notifications", :force => true do |t|
-      t.string   "object_type"
-      t.integer  "object_id"
+      t.string   "forobject_type"
+      t.integer  "forobject_id"
       t.date     "event_date"
       t.text     "event_type"
       t.integer  "responsible_id"
@@ -64,20 +64,20 @@ class Notification < ActiveRecord::Base
 
   def object
     name=self.class.name+"."+__method__.to_s+":"
-    ret=get_object(self.object_type, self.object_id)
+    ret=get_object(self.forobject_type, self.forobject_id)
     #puts name +" object="+ret.inspect
     ret
   end
 
   def to_s
-    id.to_s+" "+event_type+" "+object_type+":"+object_id.to_s+" at "+event_date.to_s+" by "+responsible.login+" => "+notify_date.to_s
+    id.to_s+" "+event_type+" "+forobject_type+":"+forobject_id.to_s+" at "+event_date.to_s+" by "+responsible.login+" => "+notify_date.to_s
   end
 
   def self.get_conditions(filter)
     filter = filter.gsub("*","%")
     ret = {}
     if filter.present?
-      ret[:qry] = "object_type LIKE :v_filter " +
+      ret[:qry] = "forobject_type LIKE :v_filter " +
       " or #{qry_responsible_id}" +
       " or #{qrys_object_ident}" +
       " or event_type LIKE :v_filter " +

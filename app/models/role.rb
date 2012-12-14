@@ -22,7 +22,7 @@ class Role < ActiveRecord::Base
   def ident; title; end
 
   def typesobject
-    Typesobject.find_by_object(model_name)
+    Typesobject.find_by_forobject(model_name)
   end
 
   def designation
