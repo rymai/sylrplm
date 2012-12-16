@@ -3,6 +3,8 @@ source :rubyforge
 
 #ruby '1.9.3'
 
+gem 'rake'
+
 gem 'bundler'
 
 gem 'rails', '2.3.12'

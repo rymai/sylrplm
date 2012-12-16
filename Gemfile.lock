@@ -51,7 +51,7 @@ GEM
       activeresource (= 2.3.12)
       activesupport (= 2.3.12)
       rake (>= 0.8.3)
-    rake (0.8.7)
+    rake (10.0.3)
     ruby-hmac (0.4.0)
     ruby2ruby (2.0.1)
       ruby_parser (~> 3.0.0)
@@ -103,6 +103,7 @@ DEPENDENCIES
   mail (= 2.3.0)
   mysql (= 2.8.1)
   rails (= 2.3.12)
+  rake
   rufus-verbs (= 1.0.0)
   ruote (= 2.2.0)
   will_paginate (~> 2.3.16)
