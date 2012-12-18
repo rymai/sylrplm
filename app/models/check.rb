@@ -13,20 +13,21 @@ class Check < ActiveRecord::Base
   ##belongs_to :checkobject, :polymorphic => true
 
   #status:
-  # 0=unknown
-  # 1=out
-  # 2=in
-  # 3=free
+  CHECK_STATUS_UNKNOWN = 0 
+  CHECK_STATUS_OUT     = 1
+  CHECK_STATUS_IN      = 2
+  CHECK_STATUS_FREE    = 3
+  
+  #
   def self.get_checkout(object)
-    find(:last, :conditions => ["checkobject = ? and checkobject_id = ? and status = 1", object.model_name, object.id])
+    find(:last, :conditions => ["checkobject = ? and checkobject_id = ? and status = ?", object.model_name, object.id, CHECK_STATUS_OUT])
   end
 
   def initialize(*args)
-     fname= "#{self.class.name}.#{__method__}"
-    LOG.info (fname) {"args=#{args}"} 
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname) {"nbargs=#{args.length}, args=#{args}"} 
     super
-   
-    self.status    = 1
+    self.status    = CHECK_STATUS_OUT
     self.out_date  = Time.now.utc
     self.set_default_values(true) if args.length==1
   end
@@ -52,7 +53,7 @@ class Check < ActiveRecord::Base
 
   def checkIn(params, user)
     self.attributes = params
-    self.status = 2
+    self.status = CHECK_STATUS_IN
     self.in_user = user
     self.in_group = user.group
     self.projowner = user.project
@@ -73,7 +74,7 @@ class Check < ActiveRecord::Base
 
   def checkFree(params, user)
     self.attributes = params
-    self.status = 3
+    self.status = CHECK_STATUS_FREE
     self.in_user = user
     self.in_date = Time.now.utc
 

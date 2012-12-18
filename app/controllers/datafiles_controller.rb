@@ -10,7 +10,7 @@ class DatafilesController < ApplicationController
   def index
     @datafiles = Datafile.find_paginate({ :user=> current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
     #pour voir la liste des fichiers stockes sur le fog
-    dirs=SylrplmFog.instance.directories(true) if admin_logged_in?
+    ####dirs=SylrplmFog.instance.directories(true) if admin_logged_in?
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @datafiles[:recordset] }

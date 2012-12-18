@@ -278,14 +278,14 @@ ActionController::Routing::Routes.draw do |map|
 
 	
 	map.connect(
-	'users/:id/edit_password',
+	'users/:id/edit_account',
 	:controller => 'users',
-	:action => 'edit_password')
+	:action => 'edit_account')
 
 	map.connect(
-	'users/:id/update_password',
+	'users/:id/update_account',
 	:controller => 'users',
-	:action => 'update_password')
+	:action => 'update_account')
 
 	map.connect(
 	'users/:id/activate',

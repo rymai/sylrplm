@@ -30,7 +30,6 @@
 		<th></th>
 		<th></th>
 		<th></th>
-		<th></th>
 	</tr>
 	<% previous=nil
 	@documents[:recordset].each do |document| %>
@@ -53,7 +52,6 @@
 		<%else%>
 		<%= h_img_checkin.to_s %>
 		<% end%> </td>
-		<td> <%= link_to h_img_show.to_s, document if document.ok_for_show?(current_user)%> </td>
 		<% if document.revisable? %> <td><% unless document.revise_by_action? %>
 		<%= h_img_revise.to_s %><% end %></td>
 		<td></td>

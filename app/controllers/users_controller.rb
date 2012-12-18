@@ -57,8 +57,11 @@ class UsersController < ApplicationController
 	end
 
 	# GET /users/1/edit_password
-	def edit_password
+	def edit_account
 		@the_user = User.find(params[:id])
+		@themes  = get_themes(@theme)
+    @notifications = get_notifications(@the_user.notification)
+    @time_zones = get_time_zones(@the_user.time_zone)
 	end
 
 	def create
@@ -110,17 +113,20 @@ class UsersController < ApplicationController
 		end
 	end
 
-	def update_password
+	def update_account
 		puts "users_controller.update_password:params="+params.inspect
 		@the_user    = User.find(params[:id])
-		respond_to do |format|
+		@themes  = get_themes(@theme)
+    @notifications = get_notifications(@the_user.notification)
+    @time_zones = get_time_zones(@the_user.time_zone)
+    respond_to do |format|
 			if @the_user.update_attributes(params[:user])
 				flash[:notice] = t(:ctrl_user_updated, :user => @the_user.login)
-				format.html { redirect_to(@the_user) }
+				format.html { redirect_to("/main/tools") }
 				format.xml  { head :ok }
 			else
 				flash.now[:notice] = t(:ctrl_user_not_updated, :user => @the_user.login)
-				format.html { render :action => "edit_password" }
+				format.html { render :action => "edit_account" }
 				format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
 			end
 		end

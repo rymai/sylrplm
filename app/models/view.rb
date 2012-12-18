@@ -8,7 +8,7 @@ class View < ActiveRecord::Base
 
 	def to_s
 		ret = "View(#{id}), relations=[\n"
-		relations.each do |rel|
+		relations.sort! { |a,b| a.typesobject.name <=> b.typesobject.name  }.each do |rel|
 			ret << "\t#{rel.ident}\n"
 		end
 		ret << "]"

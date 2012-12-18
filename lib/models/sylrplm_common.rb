@@ -168,12 +168,14 @@ module Models
 		end
 
 		def to_s
+		  fname = "#{self.class.name}.#{__method__}"
 			ret = "#{I18n.t("ctrl_"+model_name)}"
 			ret+= "/#{typesobject.name}" if self.respond_to?("typesobject") && !self.typesobject.nil?
 			ret+= ".#{ident}"
 			ret+= "/#{revision}" if self.respond_to?("revision")
 			ret+= " #{designation}" if self.respond_to?("designation")
 			ret+= " (#{statusobject.name})" if self.respond_to?("statusobject") && !self.statusobject.nil?
+			LOG.debug (fname){"ret=#{ret}"}
 			ret
 		end
 
@@ -298,6 +300,8 @@ module Models
 					end
 				end
 			end
+			ret="#{self.ident}:#{ret}"
+			LOG.debug (fname) {"ret={ret}"}
 			ret
 		end
 

@@ -1,30 +1,5 @@
 <h1><%= t(:user_show) %></h1>
-<table>
-	<%= h_attribut_trtd(@the_user, :id) %>
-	<%= h_attribut_trtd(@the_user, :login) %>
-	<%= h_attribut_trtd(@the_user, :first_name) %>
-	<%= h_attribut_trtd(@the_user, :last_name) %>
-	<%= h_attribut_trtd(@the_user, "typesobject.name") %>
-	<%= h_attribut_trtd(@the_user, :language) %>
-	<%= h_attribut_trtd(@the_user, "volume.name") %>
-	<%= h_attribut_trtd(@the_user, :theme) %>
-	<%= h_attribut_trtd(@the_user, :notification) %>
-	<%= h_attribut_trtd(@the_user, :time_zone) %>
-	<%= h_attribut_trtd(@the_user, :email) %>
-	<%= h_attribut_trtd(@the_user, :show_mail) %>
-	<tr>
-		<td><%= t(:label_roles) %></td>
-		<td><%= comma_links(@the_user.roles, :title) %></td>
-	</tr>
-	<tr>
-		<td><%= t(:label_groups) %></td>
-		<td><%= comma_links(@the_user.groups, :name) %></td>
-	</tr>
-	<tr>
-		<td><%= t(:label_projects) %></td>
-		<td><%= comma_links(@the_user.projects, :ident) %></td>
-	</tr>
-</table>
+<%= render(:partial => "users/show",:locals => { :user => @the_user, :fonct => "show" }) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t(:edit), edit_user_path(@the_user) %> </td>

@@ -57,18 +57,20 @@ class Relation < ActiveRecord::Base
 		ret+=sep_name + father_plmtype + sep_type
 		#puts aname+ "father_type="+father_type.inspect
 		ret+=father_typesobject.name unless father_typesobject.nil?
-		ret=name+"."+typesobject.name unless typesobject.nil?
+		# on recommence plus simplement
+		ret="#{typesobject.name}.#{name}" unless typesobject.nil?
 		ret
 	end
 
 	def self.relations_for(father)
 		fname="Relations.#{__method__}:#{father.model_name}:"
 		ret={}
-		ret[::SYLRPLM::PLMTYPE_GENERIC] = []
+		## pas de ret[::SYLRPLM::PLMTYPE_GENERIC] = []
 		Typesobject.get_objects_with_type.each do |t|
 			ret[t] = []
 		end
-		cond="(father_plmtype = '#{father.model_name}' or father_plmtype = '#{::SYLRPLM::PLMTYPE_GENERIC}' )"
+    ##cond="(father_plmtype = '#{father.model_name}' or father_plmtype = '#{::SYLRPLM::PLMTYPE_GENERIC}' )"
+    cond="(father_plmtype = '#{father.model_name}' )"
 		## ko car show incomplet !!! cond+=" and (father_typesobject_id = '#{father.typesobject_id}')"
 		find(:all, :order => "name",
       :conditions => [cond]).each do |rel|
@@ -88,12 +90,13 @@ class Relation < ActiveRecord::Base
 
 	def self.names
 		ret=Relation.connection.select_rows("SELECT DISTINCT name FROM #{Relation.table_name}").flatten.uniq
-		#puts "Relations."+__method__.to_s+":"+ret.inspect
+		###puts "Relations."+__method__.to_s+":"+ret.inspect
 		ret
 	end
 
 	def self.by_values_and_name(father_plmtype, child_plmtype, father_type, child_type, name)
-		cond="(father_plmtype='#{father_plmtype}' or father_plmtype='#{::SYLRPLM::PLMTYPE_GENERIC}')"
+    ###cond="(father_plmtype='#{father_plmtype}' or father_plmtype='#{::SYLRPLM::PLMTYPE_GENERIC}')"
+    cond="(father_plmtype='#{father_plmtype}')"
 		cond+=" and"
 		cond+=" (child_plmtype='#{child_plmtype}' or child_plmtype='#{::SYLRPLM::PLMTYPE_GENERIC}')"
 		cond+=" and name='#{name}'"
@@ -124,9 +127,12 @@ class Relation < ActiveRecord::Base
 	end
 
 	def self.datas_by_params(params)
+		fname="Relations.#{__method__}:"
 		ret={}
 		ret[:types_father]=Typesobject.get_types(params["father_plmtype"])unless params["father_plmtype"].nil?
 		ret[:types_child]=Typesobject.get_types(params["child_plmtype"])unless params["child_plmtype"].nil?
+    ###ret[:types_father]<<::SYLRPLM::PLMTYPE_GENERIC
+    ret[:types_child]<<::SYLRPLM::PLMTYPE_GENERIC
 		ret
 	end
 

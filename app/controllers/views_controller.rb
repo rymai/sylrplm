@@ -15,7 +15,6 @@ class ViewsController < ApplicationController
   # GET /views/1.xml
   def show
     @view = View.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @view }
@@ -35,9 +34,10 @@ class ViewsController < ApplicationController
 
   # GET /views/1/edit
   def edit
-
+    fname = "#{self.class.name}.#{__method__}"
     @view = View.find(params[:id])
     @relations=Relation.all
+    LOG.debug (fname){"@view=#{@view}"}
   end
 
   # POST /views

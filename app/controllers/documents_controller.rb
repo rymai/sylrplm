@@ -9,7 +9,6 @@ class DocumentsController < ApplicationController
 	# GET /documents
 	# GET /documents.xml
 	def index
-		# puts __FILE__+"."+__method__.to_s+":"+params.inspect
 		index_
 		respond_to do |format|
 			format.html # index.html.erb
@@ -35,7 +34,8 @@ class DocumentsController < ApplicationController
 	end
 
 	def show_
-		name=self.class.name+"."+__method__.to_s+":"
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
 		define_view
 		#puts __FILE__+"."+__method__.to_s+":"+params.inspect
 		@document  = Document.find(params[:id])
@@ -47,13 +47,16 @@ class DocumentsController < ApplicationController
 		@tree      = build_tree(@document, @view_id)
 		@tree_up   = build_tree_up(@document, @view_id)
 		@relations = Relation.relations_for(@document)
-
+		@tree         = build_tree(@document, @view_id, nil)
+    @tree_up      = build_tree_up(@document, @view_id)
+    LOG.debug (fname){"taille tree=#{@tree.size}"}
 	end
 
 	# GET /documents/new
 	# GET /documents/new.xml
 	def new
-		#puts "===DocumentsController.new:"+params.inspect+" user="+@current_user.inspect
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
 		@document = Document.new(user: current_user)
 		@types    = Document.get_types_document
 		@volumes  = Volume.find_all
@@ -66,7 +69,8 @@ class DocumentsController < ApplicationController
 
 	# GET /documents/1/edit
 	def edit
-		#puts "===DocumentsController.edit:"+params.inspect
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
 		@document = Document.find_edit(params[:id])
 		@types    = Typesobject.find_for("document")
 		@volumes  = Volume.find_all
@@ -77,7 +81,8 @@ class DocumentsController < ApplicationController
 	# POST /documents
 	# POST /documents.xml
 	def create
-		#puts "===DocumentsController.create:"+params.inspect
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
 		#contournement pour faire le upload apres la creation pour avoir la revision dans
 		#repository !!!!!!!!!!!!!!
 		@document = Document.new(params[:document].merge(user: @current_user))
@@ -103,7 +108,8 @@ class DocumentsController < ApplicationController
 	# PUT /documents/1
 	# PUT /documents/1.xml
 	def update
-		puts "documents_controller.update:"+params.inspect
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		@volumes  = Volume.find_all
 		@types    = Typesobject.find_for("document")
@@ -125,7 +131,9 @@ class DocumentsController < ApplicationController
 	# DELETE /documents/1
 	# DELETE /documents/1.xml
 	def destroy
-		@document= Document.find(params[:id])
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
+    @document= Document.find(params[:id])
 		respond_to do |format|
 			unless @document.nil?
 				if @document.destroy
@@ -145,7 +153,9 @@ class DocumentsController < ApplicationController
 	end
 
 	def promote
-		@document = Document.find(params[:id])
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
+    @document = Document.find(params[:id])
 		@volumes  = Volume.find_all
 		@types    = Typesobject.find_for("document")
 		@status   = Statusobject.find_for("document")
@@ -153,7 +163,9 @@ class DocumentsController < ApplicationController
 	end
 
 	def demote
-		@document = Document.find(params[:id])
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
+    @document = Document.find(params[:id])
 		@volumes  = Volume.find_all
 		@types    = Typesobject.find_for("document")
 		@status   = Statusobject.find_for("document")
@@ -161,7 +173,8 @@ class DocumentsController < ApplicationController
 	end
 
 	def revise
-		define_variables
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
 		document     = Document.find(params[:id])
 		previous_rev = document.revision
 		@document    = document.revise
@@ -188,8 +201,9 @@ class DocumentsController < ApplicationController
 	end
 
 	def check_out
-    #puts "***********************************************DocumentsController.check_out:"+params.inspect
- 		@document = Document.find(params[:id])
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
+    @document = Document.find(params[:id])
 		st=@document.check_out(params[:check],@current_user)
 		if st != "already_checkout"
 			if st != "no_reason"
@@ -211,7 +225,9 @@ class DocumentsController < ApplicationController
 	end
 
 	def check_in
-		@document = Document.find(params[:id])
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
+    @document = Document.find(params[:id])
 		st = @document.check_in(params[:check], current_user)
 		respond_to do |format|
 			if st != "no_reason"
@@ -235,7 +251,9 @@ class DocumentsController < ApplicationController
 	end
 
 	def check_free
-		@document = Document.find(params[:id])
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
+    @document = Document.find(params[:id])
 		st = @document.check_free(params[:check], current_user)
 
 		respond_to do |format|
@@ -258,15 +276,17 @@ class DocumentsController < ApplicationController
 	end
 
 	def new_datafile
-		@object = Document.find(params[:id])
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
+    @object = Document.find(params[:id])
 		@types  = Typesobject.find_for("datafile")
-
 		respond_to do |format|
 			if check = Check.get_checkout(@object)
 				flash[:notice] = t(:ctrl_object_already_checkout, :typeobj => t(:ctrl_document), :ident => @object.ident, :reason => check.out_reason)
 			else
-				check = Check.new(object: @object, user: current_user, out_reason: t("ctrl_checkout_auto"))
+				check = Check.new(object_to_check: @object, user: current_user, out_reason: t("ctrl_checkout_auto"))
 				if check.save
+				  LOG.debug (fname){"check saved=#{check.inspect}"}
 					flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @object.ident, :reason => check.out_reason)
 				else
 					flash[:notice] = t(:ctrl_object_notcheckout, :typeobj => t(:ctrl_document), :ident => @object.ident)
@@ -283,14 +303,17 @@ class DocumentsController < ApplicationController
 	end
 
 	def add_docs
-		puts "#{self.class.name}.#{__method__}:#{params.inspect}"
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		ctrl_add_objects_from_favorites(@document, :document)
 	end
 
 	def add_datafile
-		@object = Document.find(params[:id])
-		st=@object.add_datafile(params, @current_user)
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
+    @object = Document.find(params[:id])
+		st=@object.add_datafile(params[:datafile], @current_user)
 		respond_to do |format|
 			flash[:notice] = ""
 			if st!="ok"
@@ -307,13 +330,16 @@ class DocumentsController < ApplicationController
 	end
 
 	def empty_favori
-		puts "#{self.class.name}.#{__method__}:#{params.inspect}"
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
 		empty_favori_by_type(get_model_type(params))
 	end
 	private
 
 	def index_
-		@documents = Document.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
+    @documents = Document.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 	end
 
 end

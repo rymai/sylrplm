@@ -22,6 +22,7 @@ module SYLRPLM
   #
   # n'importe quel object plm
   PLMTYPE_GENERIC           = 'any_plmtype'
+ 
   # groupes
   GROUP_ADMINS              = 'admins'
   GROUP_CONSULTANTS         = 'consultants'
@@ -42,8 +43,6 @@ module SYLRPLM
   #
   # n'importe quel type
   TYPE_GENERIC              = 'any_type'
-  # n'importe quelle relation
-  TYPE_RELATION_GENERIC     = 'any_relation_type'
   # type de user: personne physique.
   TYPE_USER_PERSON          = 'person_'
   # type de user: user virtuel, pour batchs...

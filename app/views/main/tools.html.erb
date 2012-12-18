@@ -5,7 +5,14 @@
 	<legend>
 		<%= t(:legend_account) %>
 	</legend>
-	<%= link_to t("user_edit_password"), :id => current_user.id, :controller=>:users, :action=>:edit_password %>
+	<%= render(:partial => "users/show",:locals => { :user => current_user, :fonct => "show" }) %>
+	<table class='menu_bas'>
+	<tr>
+		<td> <%= link_to t("edit_account"), :id => current_user.id, :controller=>:users, :action=>:edit_account %> </td>
+	</tr>
+</table>
+
+
 </fieldset>
 <%end%>
 <fieldset>

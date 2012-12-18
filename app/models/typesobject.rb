@@ -65,8 +65,7 @@ class Typesobject < ActiveRecord::Base
 		# objets non pris en compte:
 		#   ar_workitem: pas de besoin
 		#   definition: pas de besoin
-		#   user: pas de besoin
-		ret=[::SYLRPLM::PLMTYPE_GENERIC, "document", "part", "project", "customer", "forum", "datafile", "relation", "link", "history_entry"].sort
+		ret=[::SYLRPLM::PLMTYPE_GENERIC, "document", "part", "project", "customer", "forum", "datafile", "relation", "link", "history_entry", "relation", "user"].sort
 		ret
 	end
 

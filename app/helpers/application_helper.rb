@@ -362,9 +362,9 @@ module ApplicationHelper
 		}
 		labacc=final_acc.to_s.tr('.','_')
 		ret="<tr>"
-		ret+="<td>"
+		ret+="<th>"
 		ret+=t("label_"+labacc.to_s)
-		ret+="</td>"
+		ret+="</th>"
 		ret+="<td>"
 		begin
 			vacc="v_"+final_acc.to_s
@@ -435,6 +435,9 @@ module ApplicationHelper
 	end
 
 	def select_inout(form, object, values, field)
+	  fname = "#{self.class.name}.#{__method__}"
+    ##LOG.debug (fname){"object=#{object}"}
+    ##LOG.debug (fname){"values=#{values}"}
 		html = ""
 		unless values.nil? || values.count == 0
 			#user
@@ -447,6 +450,7 @@ module ApplicationHelper
 			select_name=mdl_object+"["+mdl_assoc+"_ids][]"
 			#role_ids
 			method=(mdl_assoc+"_ids").to_sym
+      LOG.debug (fname){"method=#{method}"}
 			#the_selected=object.method(method).call: ko dans certains cas (securite!!)
 			the_selected=object.send(method)
 			#puts "select_inout:object="+object.model_name+" method="+method.to_s+" sel="+the_selected.inspect

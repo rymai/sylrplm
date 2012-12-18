@@ -5,7 +5,7 @@ class RelationsController < ApplicationController
 	# GET /relations
 	# GET /relations.xml
 	def index
-		@relations = Relation.all
+	  @relations = Relation.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @relations }

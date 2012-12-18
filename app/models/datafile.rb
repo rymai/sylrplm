@@ -21,13 +21,15 @@ class Datafile < ActiveRecord::Base
 
   def initialize(*args)
     super
-    if args.empty?
-      self.set_default_values(true)
+    puts "datafile.initialize:args="+args.inspect
+    if args.length==1
       self.revision = "1"
+      self.set_default_values(true)
     end
   end
 
   def user=(user)
+    #puts "datafile.user:user="+user.inspect
     self.owner     = user
     self.group     = user.group
     self.projowner = user.project
@@ -50,7 +52,6 @@ class Datafile < ActiveRecord::Base
       self.update_attributes(:uploaded_file => uploaded_file)
     else
       unless params[:restore_file].nil?
-        puts "plm_object.update_attributes_repos:restore_file="+params[:restore_file]
         from_rev=Datafile.revision_from_file(params[:restore_file])
         if from_rev!=self.revision.to_s
           if false
@@ -91,22 +92,26 @@ class Datafile < ActiveRecord::Base
   end
 
   def dir_repository
+    ret=""
     if self.volume.protocol == "fog"
       ret=self.volume.dir_name.gsub("/",".").gsub("_","-")+"-"+self.class.name+"-"+self.ident
       if ret.start_with?(".")
       ret=ret[1,ret.length-1]
       end
     else
-      ret=File.join self.volume.dir_name.gsub("_","-"), self.class.name, self.ident
+      unless self.volume.dir_name.nil? || self.ident.nil?
+        ret=File.join self.volume.dir_name.gsub("_","-"), self.class.name, self.ident
+      end
     end
     ret
   end
 
   def repository
     # on prend le volume du fichier lui meme
-    if(self.filename!=nil)
+    puts "datafile.repository:#{self.inspect}"
+    unless self.filename.nil?
       if self.volume.protocol == "fog"
-        ret = dir_repository+"."+filename_repository
+        ret = "#{dir_repository}.#{filename_repository}"
       else
         ret = File.join(dir_repository, filename_repository)
       end

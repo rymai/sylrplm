@@ -1,40 +1,9 @@
-user_id_1_project_id_1:
-  user_id: 1
-  project_id: 1
+<% require 'yaml' %>
+<%= ::YAML::include("db/custos/sicm/sicm.custo/projects_users.yml") %>
 
 user_id_1_project_id_3:
   user_id: 1
   project_id: 3
-
-project_id_2_user_id_101:
-  project_id: 2
-  user_id: 101
-
-project_id_2_user_id_102:
-  project_id: 2
-  user_id: 102
-
-project_id_2_user_id_103:
-  project_id: 2
-  user_id: 103
-
-project_id_2_user_id_104:
-  project_id: 2
-  user_id: 104
-
-project_id_2_user_id_105:
-  project_id: 2
-  user_id: 105
-
-project_id_2_user_id_106:
-  project_id: 2
-  user_id: 106
-
-project_id_2_user_id_107:
-  project_id: 2
-  user_id: 107
-
-
 
 project_id_3_user_id_101:
   project_id: 3
