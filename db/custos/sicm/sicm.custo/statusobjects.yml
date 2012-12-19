@@ -1,7 +1,7 @@
 
 Statusobject_4: 
   id: "4"
-  object: document
+  forobject: document
   name: inwork
   description: 
   rank: "1"
@@ -11,7 +11,7 @@ Statusobject_4:
 
 Statusobject_5: 
   id: "5"
-  object: document
+  forobject: document
   name: ready
   description: Pret pour la validation
   rank: "2"
@@ -21,7 +21,7 @@ Statusobject_5:
 
 Statusobject_6: 
   id: "6"
-  object: document
+  forobject: document
   name: approved
   description: 
   rank: "3"
@@ -31,7 +31,7 @@ Statusobject_6:
 
 Statusobject_7: 
   id: "7"
-  object: part
+  forobject: part
   name: inprogress
   description: 
   rank: "1"
@@ -41,7 +41,7 @@ Statusobject_7:
 
 Statusobject_8: 
   id: "8"
-  object: part
+  forobject: part
   name: ready
   description: Pret pour la validation
   rank: "2"
@@ -51,7 +51,7 @@ Statusobject_8:
 
 Statusobject_9: 
   id: "9"
-  object: part
+  forobject: part
   name: validated
   description: 
   rank: "3"
@@ -61,7 +61,7 @@ Statusobject_9:
 
 Statusobject_10: 
   id: "10"
-  object: project
+  forobject: project
   name: started
   description: 
   rank: "1"
@@ -71,7 +71,7 @@ Statusobject_10:
 
 Statusobject_11: 
   id: "11"
-  object: project
+  forobject: project
   name: finished
   description: 
   rank: "2"
@@ -81,7 +81,7 @@ Statusobject_11:
 
 Statusobject_12: 
   id: "12"
-  object: project
+  forobject: project
   name: hasbeen
   description: 
   rank: "3"
@@ -91,17 +91,17 @@ Statusobject_12:
 
 Statusobject_14: 
   id: "14"
-  object: forum
+  forobject: forum
   name: open
   description: 
-  rank: "2"
+  rank: "1"
   promote_id: "1"
   demote_id: "1"
   domain: admin
 
 Statusobject_15: 
   id: "15"
-  object: forum
+  forobject: forum
   name: close
   description: 
   rank: "2"
@@ -111,7 +111,7 @@ Statusobject_15:
 
 Statusobject_21: 
   id: "21"
-  object: customer
+  forobject: customer
   name: active
   description: 
   rank: "1"
@@ -121,7 +121,7 @@ Statusobject_21:
 
 Statusobject_22: 
   id: "22"
-  object: customer
+  forobject: customer
   name: inactive
   description: 
   rank: "2"

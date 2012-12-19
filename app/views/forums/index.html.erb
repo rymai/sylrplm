@@ -14,6 +14,7 @@
 <%= will_paginate(@forums[:recordset]) %>
 <table>
 	<tr>
+		<th> <%= t(:label_forum) %> </th>
 		<th> <%= t(:label_type) %> </th>
 		<th> <%= t(:label_status) %> </th>
 		<th> <%= t(:label_subject) %> </th>
@@ -21,11 +22,13 @@
 		<th> <%= t(:label_responsible) %> </th>
 		<th> <%= t(:label_group) %> </th>
 		<th> <%= t(:label_projowner) %></th>
+		<th> <%= t(:label_forum_items) %> </th>
 		<th></th>
 		<th></th>
 	</tr>
 	<% @forums[:recordset].each do |forum| %>
 	<tr>
+		<td> <%= h_explorer forum, :subject %> </td>
 		<td> <%= h_explorer forum.typesobject, :name %> </td>
 		<td> <%= h_explorer forum.statusobject, :name %> </td>
 		<td> <%= h forum.subject %> </td>
@@ -35,6 +38,7 @@
 		<% end %> </td>
 		<td><%= h_explorer forum.group, :name %></td>
 		<td><%= h_explorer forum.projowner %></td>
+		<td><%= forum.forum_items.length %></td>
 		<% unless forum.frozen? %> <td> <%= link_to h_img_edit.to_s, edit_forum_path(forum) %> </td>
 		<td> <%= link_to h_img_destroy, forum, :confirm => t("msg_confirm"), :method => :delete %> </td>
 		<% end %>

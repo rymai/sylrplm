@@ -1,16 +1,18 @@
 class FavoriPart
+
   attr_reader :items
+
   def initialize
-    @items=[]   
+    @items = []
   end
-  
+
   def add_part(part)
-    current_item=@items.find { |item| item.id==part.id }
-    if(not current_item) 
-      @items << part
-    end
+    current_item = @items.detect { |item| item.id == part.id }
+    @items << part unless current_item
   end
+
   def empty
-    @items.size==0
+    @items.empty?
   end
+
 end

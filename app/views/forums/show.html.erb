@@ -20,10 +20,10 @@
 	<%= h @forum.owner.login%>
 	<% end %>
 </p>
-<%= @forum.forum_item.count%> <%= t("forum_items")%>
-<% if @forum.forum_item.count >0 %>
+<%= @forum.forum_items.count%> <%= t("forum_items")%>
+<% if @forum.forum_items.count >0 %>
 <ul class='forum'>
-	<%= render(:partial => "forums/f_item", :collection => @forum.forum_item) %>
+	<%= render(:partial => "forums/f_item", :collection => @forum.forum_items) %>
 </ul>
 <% end %>
 <table class='menu_bas'>

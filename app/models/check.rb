@@ -1,81 +1,94 @@
+require_dependency 'lib/models/sylrplm_common'
+
 class Check < ActiveRecord::Base
   include Models::SylrplmCommon
-  #validates_presence_of :out_reason
-  #validates_uniqueness_of [:object,:object_id,:status]
 
-  belongs_to :documents , :conditions => ["object='document'"]
-  belongs_to :out_user,
-    :class_name => "User"
-  belongs_to :in_user,
-    :class_name => "User"
-  belongs_to :out_group,
-    :class_name => "Group"
-  belongs_to :in_group,
-    :class_name => "Group"
-  belongs_to :projowner,
-    :class_name => "Project"
+  attr_accessor :user
+
+  belongs_to :out_user, :class_name => "User"
+  belongs_to :in_user, :class_name => "User"
+  belongs_to :out_group, :class_name => "Group"
+  belongs_to :in_group, :class_name => "Group"
+  belongs_to :projowner, :class_name => "Project"
+  ##belongs_to :checkobject, :polymorphic => true
+
   #status:
-  # 0=unknown
-  # 1=out
-  # 2=in
-  # 3=free
+  CHECK_STATUS_UNKNOWN = 0 
+  CHECK_STATUS_OUT     = 1
+  CHECK_STATUS_IN      = 2
+  CHECK_STATUS_FREE    = 3
+  
+  #
   def self.get_checkout(object)
-    find(:last, :conditions => ["object = '#{object.class.name}' and object_id=#{object.id} and status=1"])
+    find(:last, :conditions => ["checkobject = ? and checkobject_id = ? and status = ?", object.model_name, object.id, CHECK_STATUS_OUT])
+  end
+
+  def initialize(*args)
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname) {"nbargs=#{args.length}, args=#{args}"} 
+    super
+    self.status    = CHECK_STATUS_OUT
+    self.out_date  = Time.now.utc
+    self.set_default_values(true) if args.length==1
+  end
+
+  def user=(user)
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname) {"user=#{user}"} 
+    self.out_user  = user
+    self.out_group = user.group
+    self.projowner = user.project
+  end
+  
+  def object_to_check=(obj)
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname) {"obj=#{obj}"} 
+    self.checkobject  = obj.model_name
+    self.checkobject_id = obj.id
   end
 
   def self.create_new(object_cls, object, params, user)
-    if(params)
-      # commit genere par le view
-      params.delete("commit")
-      params.delete("authenticity_token")
-      params.delete("_method")
-      params.delete("action")
-      params.delete("controller")
-      obj=Check.new(params)
-    else
-      obj=Check.new
-    end
-    obj.object=object_cls
-    obj.object_id=object.id
-    obj.status=1
-    obj.out_user=user
-    obj.out_group=user.group
-    obj.out_date=DateTime.now
-    obj.projowner=user.project
-    obj.set_default_values(true)
-    obj
+    raise Exception.new "Don't use this method!"
   end
 
   def checkIn(params, user)
-    self.status = 2
+    self.attributes = params
+    self.status = CHECK_STATUS_IN
     self.in_user = user
     self.in_group = user.group
     self.projowner = user.project
-    if(params)
-      # commit genere par le view
-      params.delete("commit")
-      params.delete("authenticity_token")
-      params.delete("_method")
-      params.delete("action")
-      params.delete("controller")
-      self.in_reason = params[:in_reason]
-    end
-    self.in_date=DateTime.now
+    self.in_date = Time.now.utc
+
+    self.errors.add(:in_reason, "must be present!") if in_reason.blank?
+
+    # if(params)
+    #   # commit genere par le view
+    #   params.delete("commit")
+    #   params.delete("authenticity_token")
+    #   params.delete("_method")
+    #   params.delete("action")
+    #   params.delete("controller")
+    #   self.in_reason = params[:in_reason]
+    # end
   end
 
   def checkFree(params, user)
-    self.status=3
-    self.in_user=user
-    if(params)
-      # commit genere par le view
-      params.delete("commit")
-      params.delete("authenticity_token")
-      params.delete("_method")
-      params.delete("action")
-      params.delete("controller")
-      self.in_reason = params[:in_reason]
-    end
-    self.in_date=DateTime.now
+    self.attributes = params
+    self.status = CHECK_STATUS_FREE
+    self.in_user = user
+    self.in_date = Time.now.utc
+
+    self.errors.add(:in_reason, "must be present!") if in_reason.blank?
+
+    # if(params)
+    #   # commit genere par le view
+    #   params.delete("commit")
+    #   params.delete("authenticity_token")
+    #   params.delete("_method")
+    #   params.delete("action")
+    #   params.delete("controller")
+    #   self.in_reason = params[:in_reason]
+    # end
   end
 
   def self.get_conditions(filter)

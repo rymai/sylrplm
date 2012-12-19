@@ -12,6 +12,8 @@ module SYLRPLM
   #include Classes::AppClasses::LogFormatter
   LOCAL_DEFAULT             = "fr"
   NOTIFICATION_DEFAULT      = 1
+  # nom du volume attribue par defaut au user
+  VOLUME_NAME_DEFAULT       = "vol_local_01"
   TIME_ZONE_DEFAULT         = 1
   THEME_DEFAULT             = "blackwhite"
   NB_ITEMS_PER_PAGE         = 30
@@ -20,6 +22,7 @@ module SYLRPLM
   #
   # n'importe quel object plm
   PLMTYPE_GENERIC           = 'any_plmtype'
+ 
   # groupes
   GROUP_ADMINS              = 'admins'
   GROUP_CONSULTANTS         = 'consultants'
@@ -40,8 +43,6 @@ module SYLRPLM
   #
   # n'importe quel type
   TYPE_GENERIC              = 'any_type'
-  # n'importe quelle relation
-  TYPE_RELATION_GENERIC     = 'any_relation_type'
   # type de user: personne physique.
   TYPE_USER_PERSON          = 'person_'
   # type de user: user virtuel, pour batchs...
@@ -59,6 +60,7 @@ module SYLRPLM
   #
   # Prefixe du nom du projet attribué automatiquement a un nouvel utilisateur
   USER_PROJECT_IDENT        = 'PROJECT-'
+  
   # repertoires des chargement initial, voir Controller
   DIR_FIXTURES               = "#{Rails.root}/db/fixtures"
   MAIL_ADMIN                = "sylvere.coutable@laposte.net"

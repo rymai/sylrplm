@@ -12,19 +12,21 @@
 </table>
 <table>
 	<tr>
-		<th>Name</th>
-		<th>Type</th>
-		<th>Father plmtype</th>
-		<th>Child plmtype</th>
-		<th>Father type</th>
-		<th>Child type</th>
+		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t("label_name"), "name" %></th>
+		<th <%= sort_td_class_helper "typesobject" %>> <%= sort_link_helper t(:label_typesobject), "typesobject_id" %></th>
+		<th <%= sort_td_class_helper "father_plmtype" %>> <%= sort_link_helper t("label_father_plmtype"), "father_plmtype" %></th>
+		<th <%= sort_td_class_helper "child_plmtype" %>> <%= sort_link_helper t("label_child_plmtype"), "child_plmtype" %></th>
+		<th <%= sort_td_class_helper "father_typesobject" %>> <%= sort_link_helper t("label_father_type"), "father_typesobject_id" %></th>
+		<th <%= sort_td_class_helper "child_typesobject" %>> <%= sort_link_helper t("label_child_type"), "child_typesobject_id" %></th>
 		<th>Cardin occur min</th>
 		<th>Cardin occur max</th>
 		<th>Cardin use min</th>
 		<th>Cardin use max</th>
-		<th> <%= t(:label_domain) %> </th>
+		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %></th>
+		
+		
 	</tr>
-	<% @relations.each do |relation| %>
+	<% @relations[:recordset].each do |relation| %>
 	<tr>
 		<td><%= h relation.name %></td>
 		<td><%= h relation.typesobject.name unless relation.typesobject.nil? %></td>

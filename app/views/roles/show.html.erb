@@ -13,8 +13,9 @@
 </p>
 <table class='menu_bas'>
 	<tr>
-		<td> <%= button_to t(:edit), edit_role_path(@role)%> </td>
-		<td> <%= button_to t(:list), roles_path %> </td>
+		<td> <%= link_to t("edit"), edit_role_path(@role) %></td>
+		<td> <%= link_to t("new_role"), new_role_path %></td>
+		<td> <%= link_to t("list"), roles_path %></td>
 	</tr>
 </table>
 <%= h_show_tree @role %> 

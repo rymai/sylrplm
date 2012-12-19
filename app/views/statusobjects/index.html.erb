@@ -15,7 +15,7 @@
 <table>
 	<tr>
 		<th <%= sort_td_class_helper "id" %>> <%= sort_link_helper t(:label_id), "id" %> </th>
-		<th <%= sort_td_class_helper "object" %>> <%= sort_link_helper t(:label_object), "object" %> </th>
+		<th <%= sort_td_class_helper "forobject" %>> <%= sort_link_helper t(:label_object), "forobject" %> </th>
 		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t(:label_name), "name" %> </th>
 		<th <%= sort_td_class_helper "rank" %>> <%= sort_link_helper t(:label_rank), "rank" %> </th>
 		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
@@ -26,7 +26,7 @@
 	<% @statusobjects[:recordset].each do |statusobject| %>
 	<tr>
 		<td> <%= h statusobject.id %> </td>
-		<td> <%= h statusobject.object %> </td>
+		<td> <%= h statusobject.forobject %> </td>
 		<td> <%= h statusobject.name %> </td>
 		<td> <%= h statusobject.rank %> </td>
 		<td> <%= h statusobject.description %> </td>

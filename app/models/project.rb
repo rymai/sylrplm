@@ -4,14 +4,14 @@ class Project < ActiveRecord::Base
   include Models::SylrplmCommon
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident
-  attr_accessor :link_attributes
+
+  attr_accessor :user, :link_attributes
 
   belongs_to :typesobject
   belongs_to :typeaccess,
   :class_name => "Typesobject"
   belongs_to :statusobject
-  belongs_to :owner,
-  :class_name => "User"
+  belongs_to :owner, :class_name => "User"
   belongs_to :group
 
   has_and_belongs_to_many :users
@@ -40,31 +40,23 @@ class Project < ActiveRecord::Base
   has_many :customers_up ,
     :through => :links_customers_up,
     :source => :customer_up
-  def name
-    self.ident
+
+
+  def initialize(*args)
+    super
+    self.statusobject = Statusobject.get_first("project")
+    self. set_default_values(true) if args.length==1
   end
 
-  #
+  def user=(user)
+    self.owner = user
+    self.group = user.group
+  end
+
+  ##def name; ident; end
+
   def self.create_new(project, user)
-    if(project!=nil)
-      obj=Project.new(project)
-    else
-      obj=Project.new
-    obj.set_default_values(true)
-    end
-    obj.owner=user
-    obj.group=user.group
-    obj.statusobject = Statusobject.get_first("project")
-    #puts obj.inspect
-    obj
-  end
-
-  def link_attributes=(att)
-    @link_attributes = att
-  end
-
-  def link_attributes
-    @link_attributes
+    raise Exception.new "Don't use this method!"
   end
 
   # renvoie le nom du projet affecte par defaut au user
@@ -81,7 +73,7 @@ class Project < ActiveRecord::Base
 
   def self.get_types_project
     Typesobject.find(:all, :order=>"name",
-    :conditions => ["object = 'project'"])
+    :conditions => ["forobject = 'project'"])
   end
 
   def add_parts_from_favori(favori)

@@ -64,10 +64,9 @@ class ProjectsController < ApplicationController
 	# GET /projects/new
 	# GET /projects/new.xml
 	# nouveau projet
-	# le owner est attribue avant la saisie, voir Project.create_new
 	# on definit les listes de valeur pour le type et le statut
 	def new
-		@project = Project.create_new(nil, @current_user)
+		@project = Project.new(user: @current_user)
 		@types = Project.get_types_project
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		@status= Statusobject.find_for("project", true)
@@ -92,7 +91,7 @@ class ProjectsController < ApplicationController
 	# POST /projects.xml
 	# creation d'un projet (apres validation du new)
 	def create
-		@project = Project.create_new(params[:project], @current_user)
+		@project = Project.new(params[:project].merge(user: @current_user))
 		@types=Project.get_types_project
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		@status= Statusobject.find_for("project")
@@ -167,14 +166,15 @@ class ProjectsController < ApplicationController
 	def new_forum
 		puts 'CustomerController.new_forum:id='+params[:id]
 		@object = Project.find(params[:id])
-		@types=Typesobject.find_for("forum")
-		@status= Statusobject.find_for("forum")
+		@types = Typesobject.find_for("forum")
+		@status = Statusobject.find_for("forum")
 		@relation_id = params[:relation][:forum]
+
 		respond_to do |format|
 			flash[:notice] = ""
-			@forum=Forum.create_new(nil, current_user)
-			@forum.subject=t(:ctrl_subject_forum,:typeobj =>t(:ctrl_project),:ident=>@object.ident)
-			format.html {render :action=>:new_forum, :id=>@object.id }
+			@forum = Forum.new(user: current_user)
+			@forum.subject = t(:ctrl_subject_forum, :typeobj => t(:ctrl_project), :ident => @object.ident)
+			format.html { render :action => :new_forum, :id => @object.id }
 			format.xml  { head :ok }
 		end
 	end

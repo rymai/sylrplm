@@ -1,85 +1,83 @@
+require 'controllers/plm_tree'
+require 'controllers/plm_favorites'
+require 'controllers/plm_lifecycle'
+
 module Controllers
 	module PlmObjectControllerModule
-		def self.included(base)
-			base.extend(ClassMethods)
-		end
-
-		# methodes de classe
-		module ClassMethods
-
-		# ClassMethods
-		end
-
-		require 'controllers/plm_tree'
+	  # extend ActiveSupport::Concern
 
 		def add_favori
-			fname="#{controller_class_name}.#{__method__}"
-			LOG.info(fname) {"params=#{params.inspect}"}
+			LOG.info("#{controller_class_name}.#{__method__}") { "params=#{params.inspect}" }
 			model = get_model(params)
 			obj = model.find(params[:id])
 			@favori.add(obj)
 		end
 
-		require 'controllers/plm_favorites'
-		require 'controllers/plm_lifecycle'
-
 		def ctrl_add_forum(object)
-			fname= "#{self.class.name}.#{__method__}"
-			LOG.info (fname){"params=#{params.inspect}"}
-			type=object.model_name
-			if params["relation_id"] == ""
-				forum_type=Typesobject.find(params[:forum][:typesobject_id])
-				relation = Relation.by_types(type, "forum", object.typesobject.id, forum_type.id)
+			fname = "#{self.class.name}.#{__method__}"
+			LOG.info (fname) { "params=#{params.inspect}" }
+			LOG.info (fname) { "object=#{object.inspect} " }
+			LOG.info (fname) { "typesobject=#{object.typesobject.inspect}" }
+
+			relation = if params["relation_id"].empty?
+				forum_type = Typesobject.find(params[:forum][:typesobject_id])
+				Relation.by_types(object.model_name, "forum", object.typesobject.id, forum_type.id)
 			else
-				relation = Relation.find(params["relation_id"])
+				Relation.find(params["relation_id"])
 			end
-			error=false
+			error = false
+
 			respond_to do |format|
 				flash[:notice] = ""
-				@forum=Forum.create_new(params[:forum], current_user)
-				@forum.owner=@current_user
+				@forum = Forum.new(params[:forum].merge(user: current_user))
+				@forum.owner = current_user
 				if @forum.save
-					item=ForumItem.create_new(@forum, params, current_user)
+					#item = ForumItem.create_new(@forum, params, current_user)
+					args={}
+					args[:forum]=@forum
+					args[:user]=current_user
+					args[:message]=params[:message]
+					item = ForumItem.new(args)
 					if item.save
-						unless relation.nil?
-							link_=Link.create_new(object, @forum, relation, current_user)
-							link=link_[:link]
-							unless link.nil?
-								if link.save
-									flash[:notice] << t(:ctrl_object_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>t(link_[:msg]))
-								else
-									flash[:notice] << t(:ctrl_object_not_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>t(link_[:msg]))
-								@forum.destroy
-								error=true
-								end
-							else
-								msg=$!
-								flash[:notice] << t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>msg)
-							@forum.destroy
-							error=true
-							end
-						else
+						if relation.nil?
 							flash[:notice] << t(:ctrl_object_not_created,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>"no relation",:msg=>nil)
-						@forum.destroy
-						error=true
+							@forum.destroy
+							error = true
+						else
+							link = Link.new(father: object, child: @forum, relation: relation, user: current_user)
+							if link.save
+								flash[:notice] << t(:ctrl_object_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>nil)
+							else
+								msg=link.errors.inspect
+								flash[:notice] << t(:ctrl_object_not_added,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>msg)
+								@forum.destroy
+								error = true
+							end
+							# else
+							# 	msg = $!
+							# 	flash[:notice] << t(:ctrl_object_not_linked,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>msg)
+							# 	@forum.destroy
+							# 	error = true
+							# end
 						end
 					else
-						msg=$!
+						msg=item.errors.inspect
 						flash[:notice] << t(:ctrl_object_not_created, :typeobj =>t(:ctrl_forum_item),:msg=>msg)
-					@forum.destroy
-					error=true
+						@forum.destroy
+						error = true
 					end
 				else
 					flash[:notice] << t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_forum),:ident=>@forum.subject,:relation=>relation.ident,:msg=>nil)
-				error=true
+					error = true
 				end
-				if error==false
-					format.html { redirect_to(object) }
+
+				if error
+					@types = Typesobject.find_for("forum")
+					@status = Statusobject.find_for("forum")
+					@object = object
+					format.html { render :action => :new_forum, :id => object.id }
 				else
-					@types=Typesobject.find_for("forum")
-					@status= Statusobject.find_for("forum")
-					@object=object
-					format.html { render   :action => :new_forum, :id => object.id   }
+					format.html { redirect_to(object) }
 				end
 				format.xml  { head :ok }
 			end

@@ -32,13 +32,11 @@ class User < ActiveRecord::Base
 		[5, :label_user_mail_option_none]
 	]
 
-	def link_attributes=(att)
-		@link_attributes = att
-	end
-
-	def link_attributes
-		@link_attributes
-	end
+	#
+	# User and Group share this method, which returns login and name respectively
+	#
+  def ident; login; end
+  def system_name; login; end
 
 	def designation
 		self.login+" "+self.first_name.to_s+" "+self.last_name.to_s
@@ -52,10 +50,6 @@ class User < ActiveRecord::Base
 		ret
 	end
 
-	def designation=(val)
-		designation        = val
-	end
-
 	def password_confirmation=(val)
 		@password_confirmation        = val
 	end
@@ -65,9 +59,9 @@ class User < ActiveRecord::Base
 			user = User.new(params)
 		else
 			user = User.new
-			user.set_default_values(true)
 			user.nb_items = ::SYLRPLM::NB_ITEMS_PER_PAGE
-			user.volume = Volume.find(1)
+			user.volume = Volume.find_by_name(::SYLRPLM::VOLUME_NAME_DEFAULT)
+			user.set_default_values(true)
 		end
 		user
 	end
@@ -96,13 +90,13 @@ class User < ActiveRecord::Base
 	#
 	def self.create_new_login(aparams, urlbase)
 		name="User.create_new_login:"
-		type=Typesobject.find_by_object_and_name(User.model_name, ::SYLRPLM::TYPE_USER_NEW_ACCOUNT)
+		type=Typesobject.find_by_forobject_and_name(User.model_name, ::SYLRPLM::TYPE_USER_NEW_ACCOUNT)
 		group_consultants=Group.find_by_name(::SYLRPLM::GROUP_CONSULTANTS)
 		role_consultant=Role.find_by_title(::SYLRPLM::ROLE_CONSULTANT)
 		admin = User.find_by_login(::SYLRPLM::USER_ADMIN)
-		proj=Project.create_new(nil, admin)
-		type_proj=Typesobject.find_by_object_and_name(Project.model_name, ::SYLRPLM::TYPE_PROJ_ACCOUNT)
-		typeacc_proj=Typesobject.find_by_object_and_name("project_typeaccess", ::SYLRPLM::TYPEACCESS_PUBLIC)
+		proj = Project.new(user: admin)
+		type_proj=Typesobject.find_by_forobject_and_name(Project.model_name, ::SYLRPLM::TYPE_PROJ_ACCOUNT)
+		typeacc_proj=Typesobject.find_by_forobject_and_name("project_typeaccess", ::SYLRPLM::TYPEACCESS_PUBLIC)
 		unless group_consultants.nil? || role_consultant.nil? || proj.nil? || type.nil? || type_proj.nil? || typeacc_proj.nil?
 			proj.ident=Project::for_user(aparams["login"])
 			proj.typesobject=type_proj
@@ -124,14 +118,13 @@ class User < ActiveRecord::Base
 					new_user.roles<<role_consultant
 					puts name+" new_user="+new_user.inspect
 					puts name+" rel="+proj.model_name+","+ new_user.model_name+","+ proj.typesobject.inspect+","+ new_user.typesobject.inspect
-					relation = Relation.by_types(proj.model_name, new_user.model_name, proj.typesobject.id, new_user.typesobject.id)
-					unless relation.nil?
-						link = Link.create_new(proj, new_user, relation, new_user)
-						unless link[:link].nil?
-							link[:link].save
+
+					if relation = Relation.by_types(proj.model_name, new_user.model_name, proj.typesobject.id, new_user.typesobject.id)
+						link = Link.new(father: proj, child: new_user, relation: relation, useR: new_user)
+						if link.save
 							puts name+"urlbase="+urlbase
-							email=PlmMailer.create_new_login(new_user, new_user, new_user, urlbase)
-							unless email.nil?
+
+							if email = PlmMailer.create_new_login(new_user, new_user, new_user, urlbase)
 								email.set_content_type("text/html")
 								PlmMailer.deliver(email)
 								msg = :ctrl_mail_created_and_delivered
@@ -187,10 +180,6 @@ class User < ActiveRecord::Base
 		self.login+"/"+(self.role.nil? ? " " :self.role.title)+"/"+(self.group.nil? ? " " : self.group.name)+"/"
 	end
 
-	def ident
-		self.login
-	end
-
 	def validate
 		errors.add_to_base("Missing password") if hashed_password.blank?
 	end
@@ -208,11 +197,6 @@ class User < ActiveRecord::Base
 			end
 		end
 		user
-	end
-
-	# 'password' is a virtual attribute
-	def password
-		@password
 	end
 
 	def password=(pwd)
@@ -491,13 +475,6 @@ class User < ActiveRecord::Base
 			ret[:values]={:v_filter => filter}
 		end
 		ret
-	end
-
-	#
-	# User and Group share this method, which returns login and name respectively
-	#
-	def system_name
-		self.login
 	end
 
 end

@@ -1,0 +1,27 @@
+<table>
+	<%= h_attribut_trtd(user, :id)  if current_user.is_admin? %>
+	<%= h_attribut_trtd(user, :login) %>
+	<%= h_attribut_trtd(user, :first_name) %>
+	<%= h_attribut_trtd(user, :last_name) %>
+	<%= h_attribut_trtd(user, "typesobject.name") %>
+	<%= h_attribut_trtd(user, :language) %>
+	<%= h_attribut_trtd(user, "volume.name") %>
+	<%= h_attribut_trtd(user, :theme) %>
+	<%= h_attribut_trtd(user, :notification) %>
+	<%= h_attribut_trtd(user, :time_zone) %>
+	<%= h_attribut_trtd(user, :email) %>
+	<%= h_attribut_trtd(user, :show_mail) %>
+	<tr>
+		<th><%= t(:label_roles) %></th>
+		<td><%= comma_links(user.roles, :title) %></td>
+	</tr>
+	<tr>
+		<th><%= t(:label_groups) %></th>
+		<td><%= comma_links(user.groups, :name) %></td>
+	</tr>
+	<tr>
+		<th><%= t(:label_projects) %></th>
+		<td><%= comma_links(user.projects, :ident) %></td>
+	</tr>
+</table>
+

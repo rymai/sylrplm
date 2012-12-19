@@ -13,7 +13,7 @@
 </p>
 <p>
 	<b><%= t("label_volume") %></b>
-	<%= link_to @datafile.volume.name, volume_path(@datafile.volume) %>
+	<%= link_to "#{@datafile.volume.name}.#{@datafile.volume.protocol}", volume_path(@datafile.volume) %>
 </p>
 <p>
 	<b><%= t("label_filename") %></b>

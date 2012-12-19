@@ -18,8 +18,8 @@
 	</tr>
 	<% @notifications[:recordset].each do |notification| %>
 	<tr>
-		<td> <%= h notification.object_type %></td>
-		<td> <%= h notification.object_id %></td>
+		<td> <%= h notification.forobject_type %></td>
+		<td> <%= h notification.forobject_id %></td>
 		<td> <%= h notification.event_type %></td>
 		<td> <%= h notification.event_date %></td>
 		<td> <%= h notification.responsible.try(:login) %></td>
@@ -38,9 +38,9 @@
 		</td>
 		<td> 
 			<%= link_to(t("explorer"),
-		:controller => Notification.get_object_controller(notification.object_type),
+		:controller => Notification.get_object_controller(notification.forobject_type),
 		:action => 'show',
-		:id => notification.object_id,
+		:id => notification.forobject_id,
 		:only_path => false)%>
 		</td>
 		<% end %>

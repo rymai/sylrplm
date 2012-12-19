@@ -1,0 +1,48 @@
+Documents Fils
+<table class='menu_bas'>
+	<% object.documents.each do |obj| %>
+	<tr>
+		<td><%= obj.ident %></td>
+	</tr>
+	<% end %>
+</table>
+Documents Peres
+<table class='menu_bas'>
+	<% object.documents_up.each do |obj| %>
+	<tr>
+		<td><%= obj.ident %></td>
+	</tr>
+	<% end %>
+</table>
+Parts Peres
+<table class='menu_bas'>
+	<% object.parts_up.each do |obj| %>
+	<tr>
+		<td><%= obj.ident %></td>
+	</tr>
+	<% end %>
+</table>
+Projects Peres
+<table class='menu_bas'>
+	<% object.projects_up.each do |obj| %>
+	<tr>
+		<td><%= obj.ident %></td>
+	</tr>
+	<% end %>
+</table>
+Customers Peres
+<table class='menu_bas'>
+	<% object.customers_up.each do |obj| %>
+	<tr>
+		<td><%= obj.ident %></td>
+	</tr>
+	<% end %>
+</table>
+Histories Peres
+<table class='menu_bas'>
+	<% object.histories_up.each do |obj| %>
+	<tr>
+		<td><%= obj.ident %></td>
+	</tr>
+	<% end %>
+</table>

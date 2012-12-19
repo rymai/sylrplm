@@ -5,6 +5,7 @@ class RolesUser < ActiveRecord::Base
 
   belongs_to :role
   belongs_to :user
+
   def self.get_conditions(filter)
     nil
   end

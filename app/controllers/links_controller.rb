@@ -2,10 +2,11 @@ class LinksController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	access_control(Access.find_for_controller(controller_class_name))
 	before_filter :check_user, :only => [:new, :edit]
+
 	# GET /links
 	# GET /links.xml
 	def index
-		@links = Link.find_paginate({ :user=> current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@links = Link.find_paginate({ :user => current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @links }
@@ -81,113 +82,59 @@ class LinksController < ApplicationController
 	# PUT /links/1
 	# PUT /links/1.xml
 	def update_in_tree
-		fname="#{self.class.name}.#{__method__}"
-		LOG.info(fname){"begin params=#{params}"}
+		fname = "#{self.class.name}.#{__method__}"
+		LOG.info(fname) { "params: #{params}" }
 		@link = Link.find(params[:id])
 		@link.update_accessor(current_user)
+		@object_in_explorer = PlmServices.get_object(params[:object_model], params[:object_id])
+		@root = PlmServices.get_object(params[:root_model], params[:root_id])
 		err = false
+
 		respond_to do |format|
 			values = OpenWFE::Json::from_json(params[:link][:values])
-			LOG.info(fname){"params[:link][:values]=#{values}"}
-			if @link.update_attributes(params[:link])
-				flash[:notice] = "Link parameters are successfully updated."
-				LOG.info(fname){"params[:effectivities]=#{params[:effectivities]}"}
-				unless params[:effectivities].nil?
-					if params[:effectivities].is_a?(Array)
-						par_effs=params[:effectivities]
-					else
-						par_effs=[]
-						par_effs << params[:effectivities]
-					end
-				end
-				relation = Relation.find_by_name("LINK_EFF")
-				unless relation.nil?
-					# menage des effectivites actuelles
-					@link.clean_eff(par_effs)
-					unless par_effs.nil?
-						par_effs.each do |par_eff|
-							eff = PlmServices.get_object_by_mdlid(par_eff)
-							LOG.info(fname){"effectivity to link:#{eff}"}
-							link_eff_ = Link.create_new(@link, eff, relation, current_user) unless eff.nil?
-							LOG.info(fname){"link_eff#{link_eff_}"}
-							link_eff = link_eff_[:link]
-							unless link_eff.nil?
-								unless link_eff.exists?
-									if link_eff.save
-										ctrltype=t("ctrl_#{eff.model_name}")
-										flash[:notice] << t(:ctrl_object_added,
-		                  :typeobj => ctrltype,
-		                  :ident => eff,
-		                  :relation => relation,
-		                  :msg => link_eff_[:msg])
-									else
-									# lien link-effectivite non sauve
-										err = true
-										flash[:notice] << t(:ctrl_object_not_saved, :typeobj =>t(:ctrl_link), :ident=>link_eff )
-									#"<br/>Link from #{@link} to #{eff} by #{relation} <br>not saved"
-									end
-								end
-							else
-							# lien link-effectivite non cree
-								err = true
-								flash[:notice] << t(:ctrl_object_not_created, :typeobj =>t(:ctrl_link), :msg =>link_eff_[:msg] )
-							#"<br/>Link from #{@link} to #{eff} by #{relation} <br>not created"
-							end
-						end
-					end
-				else
-				# relation link_effectivity non trouvee
-					err = true
-					flash[:notice] << t(:ctrl_object_not_created, :typeobj =>t(:ctrl_link), :msg =>"Relation link_effectivity not found" )
-				end
+			LOG.info(fname) { "values: #{values}" }
 
-			else
-			# lien non modifie
-			err = true
-			end
-			LOG.info(fname){"err=#{err}"}
-			@object_in_explorer = PlmServices.get_object(params[:object_model], params[:object_id])
-			@root = PlmServices.get_object(params[:root_model], params[:root_id])
-			if err == false
-				#format.html { redirect_to(@link) }
-				format.html { render :action => "edit_in_tree"}
+			if @link.update_attributes(params[:link]) && update_effectivities(@link, params[:effectivities])
+				LOG.info(fname) { "effectivities: #{params[:effectivities]}" }
+				flash[:notice] = 'Link was successfully updated.'
+				format.html { render action: "edit_in_tree" }
 				format.xml  { head :ok }
 			else
-				format.html { render :action => "edit_in_tree" }
-				format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
+				# lien non modifie
+				format.html { render action: "edit_in_tree" }
+				format.xml  { render xml: @link.errors, status: :unprocessable_entity }
 			end
 		end
 	end
 
 	def update
-		fname="#{self.class.name}.#{__method__}"
-		LOG.info(fname){"params=#{params}"}
+		fname = "#{self.class.name}.#{__method__}"
+		LOG.info(fname) { "params=#{params}" }
 		@link = Link.find(params[:id])
 		@link.update_accessor(current_user)
-		err = false
+
 		respond_to do |format|
-			values = OpenWFE::Json::from_json(params[:link][:values])
-			LOG.info(fname){"values=#{values}"}
+			# values = OpenWFE::Json::from_json(params[:link][:values])
+			# LOG.info(fname) { "values=#{values}" }
 			if @link.update_attributes(params[:link])
 				flash[:notice] = 'Link was successfully updated.'
 				format.html { redirect_to(@link) }
 				format.xml  { head :ok }
 			else
-			# lien non modifie
-				format.html { render :action => "edit" }
-				format.xml  { render :xml => @link.errors, :status => :unprocessable_entity }
+				# lien non modifie
+				format.html { render action: "edit" }
+				format.xml  { render xml: @link.errors, status: :unprocessable_entity }
 			end
-
 		end
 	end
 
 	# DELETE /links/1
 	# DELETE /links/1.xml
 	def destroy
-		fname="#{self.class.name}.#{__method__}"
-		LOG.info(fname){"params=#{params}"}
+		LOG.info("#{self.class.name}.#{__method__}") { "params=#{params}" }
 		@link = Link.find(params[:id])
 		@link.destroy
+
 		respond_to do |format|
 			format.html { redirect_to(links_url) }
 			format.xml  { head :ok }
@@ -197,17 +144,12 @@ class LinksController < ApplicationController
 	# DELETE /links/1
 	# DELETE /links/1.xml
 	def remove_link
-		fname="#{self.class.name}.#{__method__}"
-		LOG.info(fname){"params=#{params}"}
+		LOG.info("#{self.class.name}.#{__method__}") { "params=#{params}" }
 		@link = Link.find(params[:id])
 		@link.destroy
+
 		respond_to do |format|
-			redir = unless session[:tree_object].nil?
-				session[:tree_object]
-			else
-				links_url
-			end
-			format.html { redirect_to(redir) }
+			format.html { redirect_to(session[:tree_object].nil? ? links_url : session[:tree_object]) }
 			format.xml  { head :ok }
 		end
 	end
@@ -215,6 +157,38 @@ class LinksController < ApplicationController
 	def empty_favori
 		puts "#{self.class.name}.#{__method__}:#{params.inspect}"
 		empty_favori_by_type(get_model_type(params))
+	end
+
+	private
+
+	def update_effectivities(link, effectivities)
+		effectivities = Array(effectivities)
+		return if effectivities.empty?
+
+		err = false
+		if relation = Relation.find_by_name("link_effectivity")
+			# menage des autres effectivites
+			link.clean_effectivities(effectivities)
+			effectivities.each do |effectivity|
+				if effectivity = PlmServices.get_object_by_mdlid(effectivity)
+					LOG.info(fname) { "effectivity: #{effectivity}" }
+					link_eff = Link.new(father: link, child: effectivity, relation: relation, user: current_user)
+
+					if link_eff.save
+						ctrltype = t("ctrl_#{effectivity.model_name}")
+						flash[:notice] << t(:ctrl_object_added, typeobj: ctrltype, ident: effectivity.ident, relation: relation.ident, msg: "ctrl_link_#{link_eff.ident}")
+					else
+						# lien link-effectivite non sauve
+						err = true
+					end
+				end
+			end
+		else
+			# relation link_effectivity non trouvee
+			err = true
+		end
+
+		!err
 	end
 
 end

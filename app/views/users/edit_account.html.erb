@@ -1,0 +1,10 @@
+<h1><%= t(:edit_account) %></h1>
+<% form_for(@the_user, :url => {:controller=>:users , :action=>:update_account})  do |form| %>
+<%= form.error_messages %>
+<%= render(:partial => "users/edit",:locals => { :form => form, :fonct => "edit_account" }) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= form.submit t("update") %> </td>
+	</tr>
+</table>
+<%end%>

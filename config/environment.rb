@@ -14,7 +14,7 @@ Rails::Initializer.run do |config|
 	Encoding.default_external = Encoding::UTF_8
 	Encoding.default_internal = Encoding::UTF_8
 
-	config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
+	# config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
 	# Add additional load paths for your own custom dirs
 
 	config.autoload_paths += %W(#{Rails.root}/lib/classes)
@@ -30,7 +30,7 @@ Rails::Initializer.run do |config|
 
 	# Activate observers that should always be running
 	# config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-	config.active_record.observers = :document_observer, :part_observer, :project_observer, :customer_observer
+	# config.active_record.observers = :document_observer, :customer_observer
 
 	# Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
 	# Run "rake -D time" for a list of tasks for finding time zone names.
@@ -66,4 +66,3 @@ Rails::Initializer.run do |config|
 # using the local 'ruote', comment that out if you're using ruote as a gem
 
 end
-

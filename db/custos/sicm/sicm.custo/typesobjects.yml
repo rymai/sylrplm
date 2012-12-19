@@ -1,7 +1,7 @@
 
 Typesobject_41165346: 
   id: "41165346"
-  object: history_entry
+  forobject: history_entry
   name: history_entry
   fields: 
   description: Historique de processus
@@ -9,7 +9,7 @@ Typesobject_41165346:
 
 Typesobject_138668910: 
   id: "138668910"
-  object: project_typeaccess
+  forobject: project_typeaccess
   name: confidential
   fields: 
   description: Projet confidentiel
@@ -17,7 +17,7 @@ Typesobject_138668910:
 
 Typesobject_218759731: 
   id: "218759731"
-  object: user
+  forobject: user
   name: $NEW_ACCOUNT
   fields: 
   description: Type donne au compte a sa creation, en attendant sa validation.
@@ -25,7 +25,7 @@ Typesobject_218759731:
 
 Typesobject_258446918: 
   id: "258446918"
-  object: project_typeaccess
+  forobject: project_typeaccess
   name: secret
   fields: 
   description: Projet secret
@@ -33,7 +33,7 @@ Typesobject_258446918:
 
 Typesobject_262221517: 
   id: "262221517"
-  object: relation
+  forobject: relation
   name: document_document
   fields: 
   description: 
@@ -41,7 +41,7 @@ Typesobject_262221517:
 
 Typesobject_291198241: 
   id: "291198241"
-  object: relation
+  forobject: relation
   name: bom
   fields: 
   description: 
@@ -49,7 +49,7 @@ Typesobject_291198241:
 
 Typesobject_382640329: 
   id: "382640329"
-  object: relation
+  forobject: relation
   name: history_entry
   fields: 
   description: 
@@ -57,7 +57,7 @@ Typesobject_382640329:
 
 Typesobject_413872662: 
   id: "413872662"
-  object: relation
+  forobject: relation
   name: any_relation_type
   fields: 
   description: Relation generique
@@ -65,7 +65,7 @@ Typesobject_413872662:
 
 Typesobject_446111194: 
   id: "446111194"
-  object: user
+  forobject: user
   name: person_
   fields: 
   description: Personne physique.
@@ -73,7 +73,7 @@ Typesobject_446111194:
 
 Typesobject_473241593: 
   id: "473241593"
-  object: any_plmtype
+  forobject: any_plmtype
   name: any_type
   fields: 
   description: Type PLM generique
@@ -81,7 +81,7 @@ Typesobject_473241593:
 
 Typesobject_502955464: 
   id: "502955464"
-  object: relation
+  forobject: relation
   name: document_forum
   fields: 
   description: 
@@ -89,7 +89,7 @@ Typesobject_502955464:
 
 Typesobject_598687896: 
   id: "598687896"
-  object: ar_workitem
+  forobject: ar_workitem
   name: ar_workitem
   fields: 
   description: Tache de processus
@@ -97,7 +97,7 @@ Typesobject_598687896:
 
 Typesobject_672869653: 
   id: "672869653"
-  object: relation
+  forobject: relation
   name: customer_project
   fields: 
   description: 
@@ -105,7 +105,7 @@ Typesobject_672869653:
 
 Typesobject_678514879: 
   id: "678514879"
-  object: project_typeaccess
+  forobject: project_typeaccess
   name: public
   fields: 
   description: Projet public
@@ -113,7 +113,7 @@ Typesobject_678514879:
 
 Typesobject_728513243: 
   id: "728513243"
-  object: relation
+  forobject: relation
   name: part_document
   fields: 
   description: 
@@ -121,7 +121,7 @@ Typesobject_728513243:
 
 Typesobject_749051069: 
   id: "749051069"
-  object: relation
+  forobject: relation
   name: customer_document
   fields: 
   description: 
@@ -129,7 +129,7 @@ Typesobject_749051069:
 
 Typesobject_804690363: 
   id: "804690363"
-  object: user
+  forobject: user
   name: virtual_
   fields: 
   description: Utilisateur virtuel, pour les batchs ...
@@ -137,7 +137,7 @@ Typesobject_804690363:
 
 Typesobject_841581186: 
   id: "841581186"
-  object: relation
+  forobject: relation
   name: project_forum
   fields: 
   description: 
@@ -145,7 +145,7 @@ Typesobject_841581186:
 
 Typesobject_905287875: 
   id: "905287875"
-  object: relation
+  forobject: relation
   name: customer_customer
   fields: 
   description: 
@@ -153,7 +153,7 @@ Typesobject_905287875:
 
 Typesobject_913245371: 
   id: "913245371"
-  object: relation
+  forobject: relation
   name: project_part
   fields: 
   description: 
@@ -161,7 +161,7 @@ Typesobject_913245371:
 
 Typesobject_980319875: 
   id: "980319875"
-  object: relation
+  forobject: relation
   name: customer_forum
   fields: 
   description: 
@@ -169,7 +169,7 @@ Typesobject_980319875:
 
 Typesobject_989626521: 
   id: "989626521"
-  object: relation
+  forobject: relation
   name: part_forum
   fields: 
   description: 
@@ -177,7 +177,7 @@ Typesobject_989626521:
 
 Typesobject_989626522: 
   id: "989626522"
-  object: part
+  forobject: part
   name: PRD
   fields: 
   description: Produit
@@ -185,7 +185,7 @@ Typesobject_989626522:
 
 Typesobject_989626523: 
   id: "989626523"
-  object: part
+  forobject: part
   name: VAR
   fields: 
   description: Variante de produit
@@ -193,7 +193,7 @@ Typesobject_989626523:
 
 Typesobject_989626524: 
   id: "989626524"
-  object: part
+  forobject: part
   name: EFF
   fields: 
   description: Effectivite, liee au produit, a la variante et au link
@@ -201,7 +201,7 @@ Typesobject_989626524:
 
 Typesobject_989626525: 
   id: "989626525"
-  object: part
+  forobject: part
   name: PIE
   fields: 
   description: Piece
@@ -209,7 +209,7 @@ Typesobject_989626525:
 
 Typesobject_989626526: 
   id: "989626526"
-  object: part
+  forobject: part
   name: STR
   fields: 
   description: Structure
@@ -217,7 +217,7 @@ Typesobject_989626526:
 
 Typesobject_989626530: 
   id: "989626530"
-  object: relation
+  forobject: relation
   name: configuration
   fields: 
   description: 
@@ -225,7 +225,7 @@ Typesobject_989626530:
 
 Typesobject_989626531: 
   id: "989626531"
-  object: link
+  forobject: link
   name: bom
   fields: 
   description: pour definir les relations from link de type bom
@@ -233,7 +233,7 @@ Typesobject_989626531:
 
 Typesobject_997141214: 
   id: "997141214"
-  object: project
+  forobject: project
   name: $PROJ_ACCOUNT
   fields: 
   description: Type de projet affecte automatiquement a la creation du compte.
@@ -241,7 +241,7 @@ Typesobject_997141214:
 
 Typesobject_1045584111: 
   id: "1045584111"
-  object: relation
+  forobject: relation
   name: project_document
   fields: 
   description: 
@@ -249,7 +249,7 @@ Typesobject_1045584111:
 
 Typesobject_17665305: 
   id: "17665305"
-  object: forum
+  forobject: forum
   name: tests
   fields: 
   description: Forum sur les tests
@@ -257,7 +257,7 @@ Typesobject_17665305:
 
 Typesobject_59219424: 
   id: "59219424"
-  object: part
+  forobject: part
   name: electric
   fields: 
   description: Composant ou ensemble electrique
@@ -265,7 +265,7 @@ Typesobject_59219424:
 
 Typesobject_64093143: 
   id: "64093143"
-  object: document
+  forobject: document
   name: fmat
   fields: 
   description: Fiche matiere
@@ -273,7 +273,7 @@ Typesobject_64093143:
 
 Typesobject_89393353: 
   id: "89393353"
-  object: project
+  forobject: project
   name: product
   fields: 
   description: Projet pour un produit
@@ -281,7 +281,7 @@ Typesobject_89393353:
 
 Typesobject_109967184: 
   id: "109967184"
-  object: definition
+  forobject: definition
   name: plm
   fields: 
   description: 
@@ -289,7 +289,7 @@ Typesobject_109967184:
   
 Typesobject_117029505: 
   id: "117029505"
-  object: document
+  forobject: document
   name: norme
   fields: 
   description: Norme applicable
@@ -297,7 +297,7 @@ Typesobject_117029505:
 
 Typesobject_251879061: 
   id: "251879061"
-  object: forum
+  forobject: forum
   name: specifs
   fields: 
   description: Forum sur les specifications
@@ -305,7 +305,7 @@ Typesobject_251879061:
 
 Typesobject_304033590: 
   id: "304033590"
-  object: relation
+  forobject: relation
   name: cdc_requirement
   fields: 
   description: Exigences du cahier des charges
@@ -313,7 +313,7 @@ Typesobject_304033590:
 
 Typesobject_312726501: 
   id: "312726501"
-  object: forum
+  forobject: forum
   name: design
   fields: 
   description: Forum sur la conception
@@ -321,7 +321,7 @@ Typesobject_312726501:
 
 Typesobject_314246312: 
   id: "314246312"
-  object: project
+  forobject: project
   name: sub-assembly
   fields: 
   description: Projet pour un sous ensemble
@@ -329,7 +329,7 @@ Typesobject_314246312:
 
 Typesobject_353569266: 
   id: "353569266"
-  object: document
+  forobject: document
   name: m3d
   fields: 
   description: Numerisation 3D
@@ -337,7 +337,7 @@ Typesobject_353569266:
 
 Typesobject_360315624: 
   id: "360315624"
-  object: datafile
+  forobject: datafile
   name: autocad
   fields: 
   description: DAO Autocad
@@ -345,7 +345,7 @@ Typesobject_360315624:
 
 Typesobject_401521250: 
   id: "401521250"
-  object: part
+  forobject: part
   name: mecanic
   fields: 
   description: Composant ou ensemble mecanique
@@ -353,7 +353,7 @@ Typesobject_401521250:
 
 Typesobject_418777236: 
   id: "418777236"
-  object: document
+  forobject: document
   name: p2d
   fields: 
   description: Numerisation 2D
@@ -361,7 +361,7 @@ Typesobject_418777236:
 
 Typesobject_472785393: 
   id: "472785393"
-  object: part
+  forobject: part
   name: electronic
   fields: 
   description: Composant ou ensemble electronique
@@ -369,7 +369,7 @@ Typesobject_472785393:
 
 Typesobject_557092610: 
   id: "557092610"
-  object: relation
+  forobject: relation
   name: exb_requirement
   fields: 
   description: Exigences de l'expression de besoin
@@ -377,7 +377,7 @@ Typesobject_557092610:
 
 Typesobject_569273268: 
   id: "569273268"
-  object: document
+  forobject: document
   name: exb
   fields: 
   description: Expression de besoin
@@ -385,7 +385,7 @@ Typesobject_569273268:
 
 Typesobject_646247456: 
   id: "646247456"
-  object: datafile
+  forobject: datafile
   name: text
   fields: 
   description: Fichier texte
@@ -393,7 +393,7 @@ Typesobject_646247456:
 
 Typesobject_788606013: 
   id: "788606013"
-  object: forum
+  forobject: forum
   name: requirements
   fields: 
   description: Forum sur les exigences
@@ -401,7 +401,7 @@ Typesobject_788606013:
 
 Typesobject_802476987: 
   id: "802476987"
-  object: datafile
+  forobject: datafile
   name: spreadsheet
   fields: 
   description: Fichier tableur
@@ -409,7 +409,7 @@ Typesobject_802476987:
 
 Typesobject_873691851: 
   id: "873691851"
-  object: document
+  forobject: document
   name: cdc
   fields: 
   description: Cahier des charges
@@ -417,7 +417,7 @@ Typesobject_873691851:
 
 Typesobject_889037033: 
   id: "889037033"
-  object: datafile
+  forobject: datafile
   name: writer
   fields: 
   description: Traitement de texte
@@ -425,7 +425,7 @@ Typesobject_889037033:
 
 Typesobject_942363587: 
   id: "942363587"
-  object: datafile
+  forobject: datafile
   name: catia
   fields: 
   description: CAO Catia
@@ -433,7 +433,7 @@ Typesobject_942363587:
 
 Typesobject_959762344: 
   id: "959762344"
-  object: forum
+  forobject: forum
   name: needs
   fields: 
   description: Forum sur les besoins
@@ -441,7 +441,7 @@ Typesobject_959762344:
 
 Typesobject_975625710: 
   id: "975625710"
-  object: project
+  forobject: project
   name: standard
   fields: 
   description: Projet pour articles standards ou catalogues
@@ -449,7 +449,7 @@ Typesobject_975625710:
 
 Typesobject_994999514: 
   id: "994999514"
-  object: datafile
+  forobject: datafile
   name: image
   fields: 
   description: fichier image jpg gif bmp
@@ -457,7 +457,7 @@ Typesobject_994999514:
 
 Typesobject_1016696961: 
   id: "1016696961"
-  object: document
+  forobject: document
   name: calculsheet
   fields: 
   description: Feuille de calcul
@@ -465,7 +465,7 @@ Typesobject_1016696961:
 
 Typesobject_customer_private: 
   id: "423945440"
-  object: customer
+  forobject: customer
   name: private
   fields: 
   description: Client externe a acces restreint
@@ -473,7 +473,7 @@ Typesobject_customer_private:
 
 Typesobject_customer_internal: 
   id: "423945441"
-  object: customer
+  forobject: customer
   name: internal
   fields: 
   description: Service ou direction interne a l'entreprise
@@ -481,7 +481,7 @@ Typesobject_customer_internal:
   
 Typesobject_customer_public: 
   id: "423945442"
-  object: customer
+  forobject: customer
   name: public
   fields: 
   description: Client externe accessible a tous

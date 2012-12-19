@@ -39,7 +39,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level)
 	#------------------------------------------------------
 	# associated users: begin
 	#------------------------------------------------------
-	usersnode = tree_level(t("label_#{father.model_name}_user"), icone_plmtype("user"), icone_plmtype("user"))
+	usersnode = tree_level(t("label_#{father.model_name}_users"), icone_plmtype("user"), icone_plmtype("user"))
 	tree_users(usersnode, father)
 	LOG.debug (fname) {"usersnode.size=#{usersnode.size}"}
 	node << usersnode if usersnode.size > 0
