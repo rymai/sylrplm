@@ -58,16 +58,21 @@ class VolumesController < ApplicationController
   # PUT /volumes/1
   # PUT /volumes/1.xml
   def update
-    puts params[:id].to_s+":"+Volume.count(:conditions => "id=#{params[:id]}").to_s
+    fname=self.class.name+"."+__method__.to_s+":"
+    LOG.info(fname){"id=#{params[:id]}"}
+ 
     @volume = Volume.find(params[:id])
     @volume.update_accessor(current_user)
+    LOG.info(fname){"volume=#{@volume}"}
     respond_to do |format|
       if @volume.update_attributes(params[:volume])
+      	LOG.info(fname){"volume=#{@volume}"}
         flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_volume),:ident=>@volume.name)
         format.html { redirect_to(@volume) }
         format.xml  { head :ok }
       else
-        flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_volume),:ident=>@volume.name)
+        LOG.info(fname){"volume=#{@volume}"}
+        flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_volume),:ident=>@volume.name,:msg=>@volume.errors.inspect)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @volume.errors, :status => :unprocessable_entity }
       end

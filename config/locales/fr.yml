@@ -224,6 +224,7 @@ fr:
   # general
   label_internal: Interne
   label_projowner: Projet
+  label_forum_items: Messages
   modif_status: Modifier le statut
   label_created_at: Création
   label_updated_at: Modification
@@ -694,7 +695,7 @@ fr:
   # users
   legend_user: Renseignez les propriétés de l'utilisateur
   user_edit: Edition l'utilisateur
-  user_edit_password: Changement informations du compte
+  edit_account: Editer mon compte
   user_list: Liste des utilisateurs
   user_show: Détail de l'utilisateur
   user_new: Nouvel utilisateur

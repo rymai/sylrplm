@@ -35,7 +35,7 @@ class Definition < ActiveRecord::Base
   # validations
   validates_presence_of :name, :uri
   #
-  
+
   def validate
     super
     validate_uri
@@ -59,10 +59,9 @@ class Definition < ActiveRecord::Base
   def before_save
     self.description ||= OpenWFE::ExpressionTree.get_description(@_tree)
   end
-  
-  def ident
-    self.name
-  end
+
+  def ident; name; end
+
   #
   # Finds all the definitions the user has the right to see
   #
@@ -75,7 +74,7 @@ class Definition < ActiveRecord::Base
   # to launch an embedded or an untracked definition)
   #
   def is_special?
-    [ '*embedded*', '*untracked*' ].include?(self.name)
+    ['*embedded*', '*untracked*'].include?(self.name)
   end
 
   #

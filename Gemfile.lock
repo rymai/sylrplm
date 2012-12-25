@@ -1,6 +1,5 @@
 GEM
-  remote: http://rubygems.org/
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   remote: http://rubygems.org/
   specs:
     actionmailer (2.3.12)
@@ -52,8 +51,7 @@ GEM
       activeresource (= 2.3.12)
       activesupport (= 2.3.12)
       rake (>= 0.8.3)
-    rake (0.8.7)
-    rdoc (3.8)
+    rake (10.0.3)
     ruby-hmac (0.4.0)
     ruby2ruby (2.0.1)
       ruby_parser (~> 3.0.0)
@@ -98,14 +96,14 @@ PLATFORMS
 
 DEPENDENCIES
   atom-tools (= 2.0.5)
+  bundler
   fog (~> 1.1.2)
   haml (= 3.1.2)
   json (= 1.5.3)
   mail (= 2.3.0)
   mysql (= 2.8.1)
   rails (= 2.3.12)
-  rake (= 0.8.7)
-  rdoc (= 3.8)
+  rake
   rufus-verbs (= 1.0.0)
   ruote (= 2.2.0)
   will_paginate (~> 2.3.16)

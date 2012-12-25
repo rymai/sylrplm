@@ -10,20 +10,25 @@
 		<th <%= sort_td_class_helper :owner %>> <%= sort_link_helper t(:label_responsible), :owner %> </th>
 		<th <%= sort_td_class_helper :group %>> <%= sort_link_helper t(:label_group), :group %> </th>
 		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), :projowner %> </th>
-		<th <%= sort_td_class_helper :created_at %>> <%= sort_link_helper t(:label_date), :created_at %> </th><th></th>
+		<th <%= sort_td_class_helper :created_at %>> <%= sort_link_helper t(:label_date), :created_at %> </th>
 		<th></th>
 		<th></th>
 		<th></th>
 	</tr>
 	<% datafiles[:recordset].each do |datafile| %>
 	<tr>
-		<td> <%= h datafile.ident %> </td>
+		<td> <%= link_to datafile.ident, datafile_path(datafile, :doc => (document.nil? ? nil : document.id)) %> </td>
 		<td> <%= h datafile.revision %> </td>
 		<td> <%= h datafile.typesobject.name %> </td>
 		<td> <% unless datafile.document.nil? %>
+		<% unless datafile.document == document %>
 		<%= link_to datafile.document.ident, document_path(datafile.document) %>
+		<% else %>
+		<%= datafile.document.ident %>
+		<% end %>
+
 		<%end %> </td>
-		<td> <%= link_to datafile.volume.name, volume_path(datafile.volume) %> </td>
+		<td> <%= link_to "#{datafile.volume.name}.#{datafile.volume.protocol}", volume_path(datafile.volume) %> </td>
 		<td><a href="<%= url_for(:controller=> 'datafiles',:action=>'show_file', :id => datafile.id) %>" title="<%= datafile.repository %>"><%= h datafile.filename %></a></td>
 		<td> <% if datafile.content_type != nil %>
 		<%= datafile.content_type[0..20] %>
@@ -32,10 +37,16 @@
 		<td> <%= link_to datafile.group.name, group_path(datafile.group) %> </td>
 		<td> <%= link_to datafile.projowner.ident, project_path(datafile.projowner) %> </td>
 		<td> <%= l datafile.updated_at %> </td>
-		<td> <% if (document.nil? || !document.checked?) && !datafile.filename.nil? %>
-		<%= link_to t(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %>
-		<%end %> </td>
-		<% unless document.nil? %> <td> <%= link_to h_img_show.to_s, datafile_path(datafile, :doc => document.id) %> </td>
+		<td> <% unless document.nil? %>
+		<% unless !document.checked? || datafile.filename.nil? %>
+		<%= link_to h_img(:download).to_s, :id => datafile.id, :controller=> "datafiles", :action => :download_file %>
+		<% else %>
+		<%= h_img(:download_ko).to_s+"#{document.nil?} #{document.checked?} #{datafile.filename.nil?}" %>
+		<%end %> 
+
+		<% end %> </td>
+		<% unless document.nil? %>
+
 		<td> <%= link_to h_img_edit.to_s, edit_datafile_path(datafile, :doc => document.id) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, datafile_path(datafile, :doc => document.id), :method => :delete, :confirm => t("msg_confirm") %> </td>
 		<%else %> <td> <%= link_to h_img_show.to_s, datafile, :controller=> "datafiles",  :action => :show %> </td>

@@ -44,7 +44,7 @@ class CustomersController < ApplicationController
 	# GET /customers/new.xml
 	def new
 		#puts "===CustomersController.new:"+params.inspect+" user="+@current_user.inspect
-		@customer = Customer.create_new(nil, @current_user)
+		@customer = Customer.new(user: current_user)
 		@types    = Typesobject.get_types("customer")
 		@status   = Statusobject.find_for("customer", 2)
 		respond_to do |format|
@@ -63,7 +63,7 @@ class CustomersController < ApplicationController
 	# POST /customers
 	# POST /customers.xml
 	def create
-		@customer = Customer.create_new(params[:customer], @current_user)
+		@customer = Customer.new(params[:customer].merge(user: @current_user))
 		@types    = Typesobject.get_types("customer")
 		@status   = Statusobject.find_for(@customer)
 		respond_to do |format|
@@ -103,7 +103,8 @@ class CustomersController < ApplicationController
 	# DELETE /customers/1.xml
 	def destroy
 		@customer = Customer.find(params[:id])
-		unless @customer.nil?
+		respond_to do |format|
+			unless @customer.nil?
 			if @customer.destroy
 				flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
 				format.html { redirect_to(customers_url) }
@@ -116,6 +117,7 @@ class CustomersController < ApplicationController
 			end
 		else
 			flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+		end
 		end
 	end
 
@@ -133,9 +135,10 @@ class CustomersController < ApplicationController
 		@types  = Typesobject.find_for("forum")
 		@status = Statusobject.find_for("forum")
 		@relation_id = params[:relation][:forum]
+
 		respond_to do |format|
 			flash[:notice] = ""
-			@forum         = Forum.create_new(nil, current_user)
+			@forum         = Forum.new(user: current_user)
 			@forum.subject = t(:ctrl_subject_forum, :typeobj => t(:ctrl_customer), :ident => @object.ident)
 			format.html { render :action => :new_forum, :id => @object.id }
 			format.xml  { head :ok }

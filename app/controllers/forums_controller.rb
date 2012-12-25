@@ -44,13 +44,13 @@ class ForumsController < ApplicationController
   # POST /forums
   # POST /forums.xml
   def create
-    @forum  = Forum.create_new(params[:forum], current_user)
+    @forum  = Forum.new(params[:forum].merge(user: current_user))
     @types  = Typesobject.find_for("forum")
     @status = Statusobject.find_for("forum")
     respond_to do |format|
       if @forum.save
-        @item = ForumItem.create_new(@forum, params, current_user)
-        if(@item.save)
+        @item = @forum.forum_items.build(message: params[:message], user: current_user)
+        if @item.save
           flash[:notice] = 'Forum and item was successfully created.'
           format.html { redirect_to(@forum) }
           format.xml  { render :xml => @forum, :status => :created, :location => @forum }

@@ -1,16 +1,18 @@
 class FavoriProject
+
   attr_reader :items
+
   def initialize
-    @items=[]   
+    @items = []
   end
-  
+
   def add_project(project)
-    current_item=@items.find { |item| item.id==project.id }
-    if(not current_item) 
-      @items << project
-    end
+    current_item = @items.detect { |item| item.id == project.id }
+    @items << project unless current_item
   end
+
   def empty
-    @items.size==0
+    @items.empty?
   end
+
 end

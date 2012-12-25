@@ -18,6 +18,9 @@ span, p, li, ul, dl, dt, dd, legend {
 	padding-left: 0px;
 	color: white;
 }
+ul.forum {
+	margin-left: 30px;
+}
 ul, dl {
 
 	margin-left: 1px;

@@ -27,5 +27,8 @@ work_development
 !Gemfile
 !Gemfile.lock
 !.bundle
-!.bundle/*
+bundle/
 !public/assets/*.gz
+.pydevproject
+vol-local*
+

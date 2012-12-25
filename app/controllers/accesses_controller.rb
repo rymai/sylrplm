@@ -91,8 +91,9 @@ class AccessesController < ApplicationController
     #on refait les autorisations:
     # - apres l'ajout d'un controller (rare et manuel)
     # - apres ajout/suppression de role (peut etre automatise)
-    st=Access.reset
+    Access.reset
     @accesses = Access.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort] || 'controller, action', :nb_items => get_nb_items(params[:nb_items]) })
+
     respond_to do |format|
       format.html { redirect_to(accesses_path)  }
       format.xml  { render :xml => @accesses[:recordset] }

@@ -9,13 +9,15 @@
 <%= will_paginate(@sequences[:recordset]) %>
 <table>
 	<tr>
-		<th> <%= t(:label_utility) %> </th>
-		<th> <%= t(:label_sequence) %> </th>
-		<th> <%= t(:label_modify) %> </th>
-		<th> <%= t(:label_value) %> </th>
-		<th> <%= t(:label_min) %> </th>
-		<th> <%= t(:label_max) %> </th>
-		<th> <%= t(:label_domain) %> </th>
+		
+		<th <%= sort_td_class_helper :utility %>> <%= sort_link_helper t(:label_utility), :utility %> </th>
+		<th <%= sort_td_class_helper :sequence %>> <%= sort_link_helper t(:label_sequence), :sequence %> </th>
+		<th <%= sort_td_class_helper :modify %>> <%= sort_link_helper t(:label_modify), :modify %> </th>
+		<th <%= sort_td_class_helper :value %>> <%= sort_link_helper t(:label_value), :value %> </th>
+		<th <%= sort_td_class_helper :min %>> <%= sort_link_helper t(:label_min), :min %> </th>
+		<th <%= sort_td_class_helper :max %>> <%= sort_link_helper t(:label_max), :max %> </th>
+		<th <%= sort_td_class_helper :domain %>> <%= sort_link_helper t(:label_domain), :domain %> </th>
+		
 		<th></th>
 		<th></th><th></th>
 	</tr>

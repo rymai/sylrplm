@@ -5,7 +5,7 @@ class RelationsController < ApplicationController
 	# GET /relations
 	# GET /relations.xml
 	def index
-		@relations = Relation.all
+	  @relations = Relation.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @relations }
@@ -26,7 +26,7 @@ class RelationsController < ApplicationController
 	# GET /relations/new.xml
 	def new
 		fname= "#{controller_class_name}.#{__method__}"
-		@relation = Relation.create_new(nil)
+		@relation = Relation.new
 		@datas = @relation.datas
 		@views = View.all
 		LOG.debug (fname) {"#{typesobject=@relation.typesobject}"}
@@ -49,7 +49,7 @@ class RelationsController < ApplicationController
 	# POST /relations.xml
 	def create
 		#puts __FILE__+"."+__method__.to_s+":"+params.inspect
-		@relation = Relation.create_new(params[:relation])
+		@relation = Relation.new(params[:relation])
 		@datas = @relation.datas
 		@views = View.all
 		respond_to do |format|

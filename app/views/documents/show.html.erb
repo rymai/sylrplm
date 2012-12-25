@@ -38,8 +38,11 @@
 	<b><%= t("label_date") %></b>
 	<%= l @document.date %>
 </p>
+<% files = @document.get_datafiles%>
+<% if files[:total]>0%>
 <h1><%= t("document_datafiles") %></h1>
-<%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>@document.get_datafiles, :document=>@document}) %>
+<%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files, :document=>@document}) %>
+<% end %>
 <% unless @document.frozen? %>
 <table class='menu_bas'>
 	<tr>
@@ -50,54 +53,10 @@
 
 <%= h_show_tree @document%>
 
-Documents Fils
-<table class='menu_bas'>
-	<% @document.documents.each do |obj| %>
-	<tr>
-		<td><%= obj.ident %></td>
-	</tr>
-	<% end %>
-</table>
-Documents Peres
-<table class='menu_bas'>
-	<% @document.documents_up.each do |obj| %>
-	<tr>
-		<td><%= obj.ident %></td>
-	</tr>
-	<% end %>
-</table>
-Parts Peres
-<table class='menu_bas'>
-	<% @document.parts_up.each do |obj| %>
-	<tr>
-		<td><%= obj.ident %></td>
-	</tr>
-	<% end %>
-</table>
-Projects Peres
-<table class='menu_bas'>
-	<% @document.projects_up.each do |obj| %>
-	<tr>
-		<td><%= obj.ident %></td>
-	</tr>
-	<% end %>
-</table>
-Customers Peres
-<table class='menu_bas'>
-	<% @document.customers_up.each do |obj| %>
-	<tr>
-		<td><%= obj.ident %></td>
-	</tr>
-	<% end %>
-</table>
-Histories Peres
-<table class='menu_bas'>
-	<% @document.histories_up.each do |obj| %>
-	<tr>
-		<td><%= obj.ident %></td>
-	</tr>
-	<% end %>
-</table>
+<!--
+	<%= render(:partial => "shared/show_objects_in_relations", :locals=>{:object=>@document}) %>
+-->
+
 <table class='menu_bas'>
 	<tr>
 		<% unless @favori.get('document').count==0 %>
@@ -120,7 +79,7 @@ Histories Peres
 	<tr>
 		<td> <%= f.submit t("button_check_out") %></td>
 		<td> <%= label_tag t("label_out_reason") %></td>
-		<td> <%= text_field_tag :out_reason %></td>
+		<td> <%= text_field_tag "check[out_reason]" %></td>
 	</tr>
 	<%end %>
 	<% else %>
@@ -134,14 +93,14 @@ Histories Peres
 	<tr>
 		<td> <%= f.submit t("button_check_in") %></td>
 		<td> <%= label_tag t("label_in_reason") %></td>
-		<td> <%= text_field_tag :in_reason %></td>
+		<td> <%= text_field_tag "check[in_reason]" %></td>
 	</tr>
 	<% end %>
 	<% form_for(@document, :url => {:id => @document.id, :action => :check_free }, :method => :get) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_free") %></td>
 		<td> <%= label_tag t("label_in_reason") %></td>
-		<td> <%= text_field_tag :in_reason %></td>
+		<td> <%= text_field_tag "check[in_reason]" %></td>
 	</tr>
 	<% end %>
 	<%end %>

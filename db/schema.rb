@@ -48,8 +48,8 @@ ActiveRecord::Schema.define(:version => 0) do
 	add_index "ar_workitems", ["wfrevision"], :name => "index_ar_workitems_on_wfrevision"
 
 	create_table "checks", :force => true do |t|
-		t.string   "object"
-		t.integer  "object_id"
+		t.string   "checkobject"
+		t.integer  "checkobject_id"
 		t.integer  "status"
 		t.string   "in_reason"
 		t.date     "in_date"
@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(:version => 0) do
 
 	add_index "checks", ["in_group_id"], :name => "index_checks_on_in_group_id"
 	add_index "checks", ["in_user_id"], :name => "index_checks_on_in_user_id"
-	add_index "checks", ["object", "object_id"], :name => "index_checks_on_object_and_object_id"
+	add_index "checks", ["checkobject", "checkobject_id"], :name => "index_checks_on_object_and_object_id"
 	add_index "checks", ["out_group_id"], :name => "index_checks_on_out_group_id"
 	add_index "checks", ["out_user_id"], :name => "index_checks_on_out_user_id"
 	add_index "checks", ["projowner_id"], :name => "index_checks_on_projowner_id"
@@ -271,8 +271,8 @@ ActiveRecord::Schema.define(:version => 0) do
 	add_index "links", ["relation_id"], :name => "index_links_on_relation_id"
 
 	create_table "notifications", :force => true do |t|
-		t.string   "object_type"
-		t.integer  "object_id"
+		t.string   "forobject_type"
+		t.integer  "forobject_id"
 		t.integer  "responsible_id"
 		t.text     "event_type"
 		t.date     "event_date"
@@ -281,7 +281,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.datetime "updated_at"
 	end
 
-	add_index "notifications", ["object_type", "object_id"], :name => "index_notifications_on_object_type_and_object_id"
+	add_index "notifications", ["forobject_type", "forobject_id"], :name => "index_notifications_on_object_type_and_object_id"
 	add_index "notifications", ["responsible_id"], :name => "index_notifications_on_responsible_id"
 
 	create_table "parts", :force => true do |t|
@@ -441,7 +441,7 @@ ActiveRecord::Schema.define(:version => 0) do
 	add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
 	create_table "statusobjects", :force => true do |t|
-		t.string   "object"
+		t.string   "forobject"
 		t.string   "name"
 		t.text     "description"
 		t.integer  "rank"
@@ -452,10 +452,10 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "domain"
 	end
 
-	add_index "statusobjects", ["object", "rank", "name"], :name => "index_statusobjects_on_object_and_rank_and_name", :unique => true
+	add_index "statusobjects", ["forobject", "rank", "name"], :name => "index_statusobjects_on_object_and_rank_and_name", :unique => true
 
 	create_table "typesobjects", :force => true do |t|
-		t.string   "object"
+		t.string   "forobject"
 		t.string   "name"
 		t.string   "fields"
 		t.text     "description"
@@ -464,7 +464,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "domain"
 	end
 
-	add_index "typesobjects", ["object", "name"], :name => "index_typesobjects_on_object_and_name", :unique => true
+	add_index "typesobjects", ["forobject", "name"], :name => "index_typesobjects_on_object_and_name", :unique => true
 
 	create_table "user_groups", :id => false, :force => true do |t|
 		t.integer "user_id",  :null => false

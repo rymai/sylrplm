@@ -3,6 +3,8 @@ class Datafile < ActiveRecord::Base
   include Models::PlmObject
   include Models::SylrplmCommon
 
+  attr_accessor :user
+
   validates_presence_of :ident , :typesobject
   validates_uniqueness_of :ident, :scope => :revision
 
@@ -14,40 +16,28 @@ class Datafile < ActiveRecord::Base
   belongs_to :group
   belongs_to :projowner,
     :class_name => "Project"
-  #
-  FILE_REV_DELIMITER="--"
-  #
-  def self.create_new(params,user)
-    if(params==nil)
-      obj=new
-      obj.set_default_values(true)
-      obj.volume=user.volume
-      obj.owner=user
-      obj.group=user.group
-      obj.projowner=user.project
-      obj.revision="1"
-    ret=true
-    else
-      parameters=params[:datafile]
-      uploadedfile=parameters[:uploaded_file]
-      #contournement pour faire le upload apres la creation pour avoir la revision dans
-      #repository !!!!!!!!!!!!!!
-      parameters.delete(:uploaded_file)
-      parameters[:volume]=user.volume
-      parameters[:owner]=user
-      parameters[:group]=user.group
-      parameters[:projowner]=user.project
-      obj=new(parameters)
-      if obj.save
-        # on sauve le fichier maintenant et le tour est joue
-        obj.create_dir
-        if uploadedfile
-          obj.update_attributes(:uploaded_file => uploadedfile)
-        end
-      end
+
+  FILE_REV_DELIMITER = "--"
+
+  def initialize(*args)
+    super
+    puts "datafile.initialize:args="+args.inspect
+    if args.length==1
+      self.revision = "1"
+      self.set_default_values(true)
     end
-    puts "datafile.create_new:"+obj.inspect
-    obj
+  end
+
+  def user=(user)
+    #puts "datafile.user:user="+user.inspect
+    self.owner     = user
+    self.group     = user.group
+    self.projowner = user.project
+    self.volume    = user.volume
+  end
+
+  def self.create_new(params, user)
+    raise Exception.new "Don't use this method!"
   end
 
   def update_attributes_repos(params, user)
@@ -62,7 +52,6 @@ class Datafile < ActiveRecord::Base
       self.update_attributes(:uploaded_file => uploaded_file)
     else
       unless params[:restore_file].nil?
-        puts "plm_object.update_attributes_repos:restore_file="+params[:restore_file]
         from_rev=Datafile.revision_from_file(params[:restore_file])
         if from_rev!=self.revision.to_s
           if false
@@ -103,22 +92,26 @@ class Datafile < ActiveRecord::Base
   end
 
   def dir_repository
+    ret=""
     if self.volume.protocol == "fog"
       ret=self.volume.dir_name.gsub("/",".").gsub("_","-")+"-"+self.class.name+"-"+self.ident
       if ret.start_with?(".")
       ret=ret[1,ret.length-1]
       end
     else
-      ret=File.join self.volume.dir_name.gsub("_","-"), self.class.name, self.ident
+      unless self.volume.dir_name.nil? || self.ident.nil?
+        ret=File.join self.volume.dir_name.gsub("_","-"), self.class.name, self.ident
+      end
     end
     ret
   end
 
   def repository
     # on prend le volume du fichier lui meme
-    if(self.filename!=nil)
+    puts "datafile.repository:#{self.inspect}"
+    unless self.filename.nil?
       if self.volume.protocol == "fog"
-        ret = dir_repository+"."+filename_repository
+        ret = "#{dir_repository}.#{filename_repository}"
       else
         ret = File.join(dir_repository, filename_repository)
       end
@@ -266,7 +259,7 @@ class Datafile < ActiveRecord::Base
   end
 
   def find_col_for(strcol)
-    Sequence.find_col_for(self.class.name,strcol)
+    Sequence.find_col_for(self.model_name,strcol)
   end
 
   def self.get_conditions(filter)

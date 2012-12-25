@@ -1,3 +1,0 @@
-class PartObserver < PlmObserver
-  
-end

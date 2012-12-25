@@ -2,8 +2,9 @@ require 'classes/plm_services'
 
 module Models
 	module SylrplmCommon
+		# extend ActiveSupport::Concern # only in Rails 3.x ...
 		def self.included(base)
-			# �a appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclue la lib
+			# ça appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclu la lib
 			base.extend(ClassMethods)
 		end
 
@@ -39,7 +40,7 @@ module Models
 			end
 
 			def qrys_object_ident
-				"object_id in(select id from documents where ident LIKE :v_filter)"
+				"forobject_id in(select id from documents where ident LIKE :v_filter)"
 			end
 
 			def qry_author
@@ -70,8 +71,8 @@ module Models
 				mdl=eval self.model_name
 				#puts self.model_name+"."+__method__.to_s+":"+self.column_names.inspect
 				if column_names.include?(:projowner_id)
-					acc_public = ::Typesobject.find_by_object_and_name("project_typeaccess", "public")
-					acc_confidential = ::Typesobject.find_by_object_and_name("project_typeaccess", "confidential")
+					acc_public = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "public")
+					acc_confidential = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "confidential")
 					filter_access[:qry] = ":v_acc_public_id="+qry_projowner_typeaccess+" or :v_acc_confidential_id="+qry_projowner_typeaccess
 					filter_access[:values][:v_acc_public_id] = acc_public.id
 					filter_access[:values][:v_acc_confidential_id] = acc_confidential.id
@@ -145,11 +146,10 @@ module Models
 
 		# attribution de valeurs par defaut suivant la table sequence
 		def set_default_values(next_seq)
-			#find_cols_for(model).each do |strcol|
-			# object.column_for_attribute(strcol)=
-			#get_constants
-			self.attribute_names().each do |strcol|
-				old_value=self[strcol]
+			fname = "#{self.class.name}.#{__method__}"
+		##LOG.debug (fname){"next_seq=#{next_seq}, model_name=#{model_name}"}
+		self.attribute_names().each do |strcol|
+				old_value=  self[strcol]
 				#col=self.find_col_for(strcol)
 				col = ::Sequence.find_col_for(self.class.name,strcol)
 				val=old_value
@@ -168,12 +168,14 @@ module Models
 		end
 
 		def to_s
+		  fname = "#{self.class.name}.#{__method__}"
 			ret = "#{I18n.t("ctrl_"+model_name)}"
 			ret+= "/#{typesobject.name}" if self.respond_to?("typesobject") && !self.typesobject.nil?
 			ret+= ".#{ident}"
 			ret+= "/#{revision}" if self.respond_to?("revision")
 			ret+= " #{designation}" if self.respond_to?("designation")
 			ret+= " (#{statusobject.name})" if self.respond_to?("statusobject") && !self.statusobject.nil?
+			LOG.debug (fname){"ret=#{ret}"}
 			ret
 		end
 
@@ -298,6 +300,8 @@ module Models
 					end
 				end
 			end
+			ret="#{self.ident}:#{ret}"
+			LOG.debug (fname) {"ret={ret}"}
 			ret
 		end
 

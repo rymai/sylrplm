@@ -15,7 +15,7 @@ Sequence_64810938:
   max: 
   utility: Document.revision
   modify: "0"
-  sequence: "1"
+  sequence: "0"
   domain: custo.sicm
 
 Sequence_78719920: 
@@ -157,3 +157,5 @@ Sequence_1031227063:
   modify: "0"
   sequence: "0"
   domain: custo.sicm
+  
+  
