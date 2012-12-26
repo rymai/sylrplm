@@ -1,4 +1,4 @@
-require_dependency 'lib/models/sylrplm_common'
+require_dependency 'models/sylrplm_common'
 
 class Access < ActiveRecord::Base
   include Models::SylrplmCommon
