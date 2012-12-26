@@ -4,7 +4,7 @@
 .tmp
 .rvmrc
 ## PROJECT::GENERAL
-*.*~*
+*~
 *.obsolete
 *.sov
 *.dat
@@ -23,9 +23,6 @@ tmp/restart.txt
 backup.db
 vendor/ruby
 work_development
-!Guardfile
-!Gemfile
-!Gemfile.lock
 !.bundle
 bundle/
 !public/assets/*.gz

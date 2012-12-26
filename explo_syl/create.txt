@@ -532,14 +532,23 @@ ruby setup.rb
 ---
 bundler
 ---
-su
 gem install bundler
+
+---
+Pour ne pas avoir à utiliser "bundle exec" avant les commandes installées par le Gemfile
+(sinon toujours lancer les commandes avec "bundle exec" devant)
+---
+gem install rubygems-bundler
+gem regenerate_binstubs
 
 ---
 prise en compte des gems pre requis dans le Gemfile
 ---
 dans "control center": installer libxml2 et libxslt
 bundle install
+
+---
+Note bizarre: il est impossible d'utiliser rake > 0.8.7 dû à un bug inconnu causé par ruote
 
 ======================================================
 Empêcher akonadi de démarrer avec KDE 4.5
@@ -567,21 +576,23 @@ rake db:fixtures:load FIXTURES_PATH=db/fixtures/domains/01-mecanique-ameublement
 ---
 --- export et import des custos
 ---
+rake sylrplm:export_domain[db/custos_export,sicm.custo]
 rake sylrplm:export_domain[db/custos_export,sample.table]
 
 --- verifier et deplacer dans une custo par besoin
+rake db:reset
 rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
 rake sylrplm:import_domain[db/custos/sicm,sample.table]
 #pour heroku, mettre au debut: heroku run 
+heroku run rake db:reset
+heroku run rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
+heroku run rake sylrplm:import_domain[db/custos/sicm,sample.table]
 
 tests auto: voir capybara
 
 todo: 
-ajouter la sequence Document.revision dans la custo:fait 12/11/2012
 associer des groupes aux utilisateurs dans la custo (pas facile car pas de domain sur assoc)
 modifier/creer le disque local en donnant un chemin windows et unix , dans sicm.custo (serveur unix ou windows)
-
-prendre en compte sylrplm_fog.rb (rescue):fait maison
 
 sur mandriva: kdewallet , compte=dsone\s45, mot de passe=syl91.ani
 

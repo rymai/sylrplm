@@ -1,7 +1,0 @@
-<h1>Listing datafiles</h1>
-
-<%= render(:partial => "datafiles/index_datafiles") %>
-
-<br />
-
-<%= link_to 'New datafile', new_datafile_path %>
