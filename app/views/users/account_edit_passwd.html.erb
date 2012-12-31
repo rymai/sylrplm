@@ -1,0 +1,16 @@
+<h1><%= t(:account_edit, :login => current_user.login) %></h1>
+<% form_for(@the_user, :url => {:controller=>:users , :action=>:account_update})  do |form| %>
+<%= form.error_messages %>
+<label for="user_password"> <%= t(:label_password) %> </label>
+	<%= form.password_field :password, :size => 40 %>
+	<br/>
+	
+	<label for="user_password_confirmation"> <%= t(:label_confirm_password) %> </label>
+	<%= form.password_field :password_confirmation, :size => 40 %>
+	<br/>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= form.submit t("update") %> </td>
+	</tr>
+</table>
+<%end%>

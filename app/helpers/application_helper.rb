@@ -280,6 +280,9 @@ module ApplicationHelper
 	end
 
 	def h_show_tree(obj)
+		"don t use this function, prefer render shared/tree"
+	end
+	def h_show_tree_old(obj)
 		bloc=""
 		if ((@tree && @tree.size>0) || (@tree_up && @tree_up.size>0))
 			#bloc << "<h1></h1>"
@@ -436,8 +439,8 @@ module ApplicationHelper
 
 	def select_inout(form, object, values, field)
 	  fname = "#{self.class.name}.#{__method__}"
-    ##LOG.debug (fname){"object=#{object}"}
-    ##LOG.debug (fname){"values=#{values}"}
+    LOG.debug (fname){"object=#{object}"}
+    LOG.debug (fname){"values=#{values}"}
 		html = ""
 		unless values.nil? || values.count == 0
 			#user

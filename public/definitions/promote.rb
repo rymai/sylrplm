@@ -3,24 +3,24 @@ class PLMPromote < OpenWFE::ProcessDefinition
   description "Promotion objet PLM"
 
   set :v => "demandeur", :value => "${f:launcher}"
-  set :v => "reviewer1", :value => "relecteur1"
-  set :v => "reviewer2", :value => "relecteur2"
-  set :v => "valideur", :value => "chef"
-  set :v => "publish", :value => "assistant"
+  set :v => "reviewer1", :value => "creator"
+  set :v => "reviewer2", :value => "designer"
+  set :v => "valideur", :value => "valider"
+  #set :v => "publish", :value => "assistant"
 
   cursor do
 
     set :f => "comment_createur", :value => "comment demandeur"
-    demandeur :activity =>  "Copier auparavant l objet(s), ajouter un commentaire"
+    demandeur :activity =>  "Copier objet(s), Commenter"
     back :unless => '${f:comment_createur} != ""'
 
     plm Ruote::PlmParticipant, :task => "promote", :step => "init", :relation => "applicable"
 
-    # taches paralleles, quorum=1
+    # taches paralleles, quorum=2
     set :f => "comment_relecteur", :value => "comment relecteur"
-    concurrence :count => 1 do
-      reviewer1 :activity => "-Copier les objet(s) \n-Relire le document applicable\n-Commenter"
-      reviewer2 :activity => "-Copier les objet(s) \n-Relire le document applicable\n-Commenter"
+    concurrence :count => 2 do
+      reviewer1 :activity => "-Copier objet(s) \n-Relire le document applicable\n-Commenter"
+      reviewer2 :activity => "-Copier objet(s) \n-Relire le document applicable\n-Commenter"
     end
     back :unless => '${f:comment_relecteur} != ""'
 

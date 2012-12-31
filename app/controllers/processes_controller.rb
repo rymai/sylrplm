@@ -120,7 +120,7 @@ class ProcessesController < ApplicationController
     options = { :variables => { 'launcher' => @current_user.login } }
     begin
       fei = RuotePlugin.ruote_engine.launch(li, options)
-      puts name+" fei("+fei.wfid+") launched"
+      puts name+" fei("+fei.wfid+") launched options="+options.inspect
       headers['Location'] = process_url(fei.wfid)
       nb=0
       workitem = nil
@@ -130,6 +130,7 @@ class ProcessesController < ApplicationController
         nb+=1
         workitem = OpenWFE::Extras::ArWorkitem.find_by_wfid(fei.wfid)
       end
+      puts name+" workitem="+workitem.inspect
       respond_to do |format|
         unless workitem.nil?
           flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")
@@ -141,7 +142,8 @@ class ProcessesController < ApplicationController
             render :xml => "<wfid>#{fei.wfid}</wfid>", :status => 201 }
         else
           flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")
-          format.html { redirect_to new_process_path(:definition_id => @definition.id)}
+          format.html { redirect_to "/main" }
+          ##format.html { redirect_to new_process_path(:definition_id => @definition.id)}
           format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
         end
       end

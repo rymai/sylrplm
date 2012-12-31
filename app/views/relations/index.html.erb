@@ -18,13 +18,12 @@
 		<th <%= sort_td_class_helper "child_plmtype" %>> <%= sort_link_helper t("label_child_plmtype"), "child_plmtype" %></th>
 		<th <%= sort_td_class_helper "father_typesobject" %>> <%= sort_link_helper t("label_father_type"), "father_typesobject_id" %></th>
 		<th <%= sort_td_class_helper "child_typesobject" %>> <%= sort_link_helper t("label_child_type"), "child_typesobject_id" %></th>
-		<th>Cardin occur min</th>
-		<th>Cardin occur max</th>
-		<th>Cardin use min</th>
-		<th>Cardin use max</th>
+		<th><%= t("label_cardin_occur_min")%></th>
+		<th><%= t("label_cardin_occur_max")%></th>
+		<th><%= t("label_cardin_use_min")%></th>
+		<th><%= t("label_cardin_use_max")%></th>
+		<th><%= t("label_views")%></th>
 		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %></th>
-		
-		
 	</tr>
 	<% @relations[:recordset].each do |relation| %>
 	<tr>
@@ -38,6 +37,7 @@
 		<td><%= h relation.cardin_occur_max %></td>
 		<td><%= h relation.cardin_use_min %></td>
 		<td><%= h relation.cardin_use_max %></td>
+		<td><%= h_value_or_default(comma_links(relation.views, :name),t(:msg_tobedefine)) %></td>
 		<td><%= h relation.domain %></td>
 		<td> <%= link_to h_img_show.to_s, relation %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_relation_path(relation) %> </td>

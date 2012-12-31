@@ -4,6 +4,8 @@ class Role < ActiveRecord::Base
   validates_uniqueness_of :title
 
   has_and_belongs_to_many :users
+  has_and_belongs_to_many :definitions
+  
   belongs_to :father, :class_name => "Role"
   has_many :roles, :class_name => "Role", :foreign_key => "father_id"
 

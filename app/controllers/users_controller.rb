@@ -56,12 +56,22 @@ class UsersController < ApplicationController
 	#puts __FILE__+"."+__method__.to_s+":"+@roles.inspect
 	end
 
-	# GET /users/1/edit_password
-	def edit_account
+	# GET /users/1/reset_passwd
+	def reset_passwd
+		puts "users_controller.reset_passwd:#{params.inspect}"
 		@the_user = User.find(params[:id])
-		@themes  = get_themes(@theme)
-    @notifications = get_notifications(@the_user.notification)
-    @time_zones = get_time_zones(@the_user.time_zone)
+		@the_user.reset_passwd
+		respond_to do |format|
+			if @the_user.save
+				flash.now[:notice] = t(:ctrl_user_updated, :user => @the_user.login)
+				format.html { render :action => "show"  }
+				format.xml  { render :xml => the_user, :status => :updated, :location => @the_user }
+			else
+				flash.now[:notice] = t(:ctrl_user_not_updated, :user => @the_user.login, :msg =>@the_user.errors.inspect)
+				format.html { render :action => "edit" }
+				format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
+			end
+		end
 	end
 
 	def create
@@ -81,7 +91,7 @@ class UsersController < ApplicationController
 				format.html { redirect_to(@the_user) }
 				format.xml  { render :xml => @the_user, :status => :created, :location => @the_user }
 			else
-				flash.now[:notice] = t(:ctrl_user_not_created, :user => @the_user.login)
+				flash.now[:notice] = t(:ctrl_user_not_created, :user => @the_user.login, :msg =>@the_user.errors.inspect)
 				format.html { render :action => "new" }
 				format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
 			end
@@ -101,34 +111,17 @@ class UsersController < ApplicationController
 		@types    = Typesobject.get_types("user")
 		@the_user.update_accessor(current_user)
 		respond_to do |format|
+
 			if @the_user.update_attributes(params[:user])
 				flash[:notice] = t(:ctrl_user_updated, :user => @the_user.login)
 				format.html { redirect_to(@the_user) }
 				format.xml  { head :ok }
 			else
-				flash.now[:notice] = t(:ctrl_user_not_updated, :user => @the_user.login)
+				flash.now[:notice] = t(:ctrl_user_not_updated, :user => @the_user.login, :msg =>@the_user.errors.inspect)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
 			end
-		end
-	end
 
-	def update_account
-		puts "users_controller.update_password:params="+params.inspect
-		@the_user    = User.find(params[:id])
-		@themes  = get_themes(@theme)
-    @notifications = get_notifications(@the_user.notification)
-    @time_zones = get_time_zones(@the_user.time_zone)
-    respond_to do |format|
-			if @the_user.update_attributes(params[:user])
-				flash[:notice] = t(:ctrl_user_updated, :user => @the_user.login)
-				format.html { redirect_to("/main/tools") }
-				format.xml  { head :ok }
-			else
-				flash.now[:notice] = t(:ctrl_user_not_updated, :user => @the_user.login)
-				format.html { render :action => "edit_account" }
-				format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
-			end
 		end
 	end
 
@@ -150,6 +143,69 @@ class UsersController < ApplicationController
 			format.html { redirect_to(users_url) }
 			format.xml  { head :ok }
 		end
+	end
+
+	# GET /users/1/account_edit
+	def account_edit
+		@the_user = User.find(params[:id])
+		@themes  = get_themes(@theme)
+		@notifications = get_notifications(@the_user.notification)
+		@time_zones = get_time_zones(@the_user.time_zone)
+	end
+
+	# GET /users/1/account_edit_passwd
+	def account_edit_passwd
+		@the_user = User.find(params[:id])
+	end
+
+	def account_update
+		puts "users_controller.account_update:params="+params.inspect
+		@the_user    = User.find(params[:id])
+		@themes  = get_themes(@theme)
+		@notifications = get_notifications(@the_user.notification)
+		@time_zones = get_time_zones(@the_user.time_zone)
+		puts "users_controller.update:password=#{params[:user][:password]}"
+		ok=true
+		unless params[:user][:password].nil?
+			if params[:user][:password].empty?
+				ok=false
+				msg=t("password_needed")
+			else
+				if @the_user.update_attributes(params[:user])
+					puts "users_controller.update:update_attributes ok:#{params[:user]}"
+				ok=true
+				else
+				msg = @the_user.errors.inspect
+				ok=false
+				end
+			end
+		else
+			if @the_user.update_attributes(params[:user])
+				puts "users_controller.update:update_attributes ok:#{params[:user]}"
+			ok=true
+			else
+			msg = @the_user.errors.inspect
+			ok=false
+			end
+		end
+
+		respond_to do |format|
+			if ok
+				flash[:notice] = t(:ctrl_user_updated, :user => @the_user.login)
+				format.html { redirect_to("/main/tools") }
+				format.xml  { head :ok }
+			else
+				flash[:notice] = t(:ctrl_user_not_updated, :user => @the_user.login, :msg => msg)
+				format.html { redirect_to("/main/tools") }
+				format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
+			end
+
+		end
+	end
+
+	def empty_favori
+		puts "#{self.class.name}.#{__method__}:#{params.inspect}"
+		empty_favori_by_type(get_model_type(params))
 	end
 
 	private

@@ -93,10 +93,12 @@ class RelationsController < ApplicationController
 	end
 
 	def update_father
+		puts "relations_controller.update_father:params=#{params}"
 		@datas = Relation.datas_by_params(params)
 	end
 
 	def update_child
+		puts "relations_controller.update_child:params=#{params}"
 		@datas = Relation.datas_by_params(params)
 	end
 

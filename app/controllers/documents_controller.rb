@@ -28,14 +28,16 @@ class DocumentsController < ApplicationController
 
 	def select_view
 		show_
+		show_
 		respond_to do |format|
-			format.html { redirect_to(@document) }
+			format.html { render :action => "show" }
+			format.xml  { render :xml => @document }
 		end
 	end
 
 	def show_
 		fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
 		define_view
 		#puts __FILE__+"."+__method__.to_s+":"+params.inspect
 		@document  = Document.find(params[:id])
@@ -44,12 +46,10 @@ class DocumentsController < ApplicationController
 		#@projects  = @document.projects
 		#@customers = @document.customers
 		@checkout  = Check.get_checkout(@document)
-		@tree      = build_tree(@document, @view_id)
-		@tree_up   = build_tree_up(@document, @view_id)
 		@relations = Relation.relations_for(@document)
-		@tree         = build_tree(@document, @view_id, nil)
-    @tree_up      = build_tree_up(@document, @view_id)
-    LOG.debug (fname){"taille tree=#{@tree.size}"}
+    @tree         						= build_tree(@document, @myparams[:view_id])
+		@tree_up      						= build_tree_up(@document, @myparams[:view_id] )
+    #LOG.debug (fname){"taille tree=#{@tree.size}"}
 	end
 
 	# GET /documents/new
@@ -208,7 +208,7 @@ class DocumentsController < ApplicationController
 		if st != "already_checkout"
 			if st != "no_reason"
 				if st == "ok"
-					flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:out_reason])
+					flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:out_reason])
 				else
 					flash[:notice] = t(:ctrl_object_notcheckout, :typeobj => t(:ctrl_document), :ident => @document.ident)
 				end
@@ -235,7 +235,7 @@ class DocumentsController < ApplicationController
 					if st == "ok"
 						update_accessor(@document)
 						@document.update_attributes(params[:document])
-						flash[:notice] = t(:ctrl_object_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:in_reason])
+						flash[:notice] = t(:ctrl_object_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:in_reason])
 					else
 						flash[:notice] = t(:ctrl_object_not_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident)
 					end
@@ -260,7 +260,7 @@ class DocumentsController < ApplicationController
 			if st != "no_reason"
 				if st != "notyet_checkout"
 					if st == "ok"
-						flash[:notice] = t(:ctrl_object_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:in_reason])
+						flash[:notice] = t(:ctrl_object_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:in_reason])
 					else
 						flash[:notice] = t(:ctrl_object_not_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident)
 					end

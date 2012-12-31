@@ -1,8 +1,12 @@
 <h1><%= t(:user_show) %></h1>
+<% form_for @the_user do |form| %>
+<%= form.error_messages %>
+<% end %>
 <%= render(:partial => "users/show",:locals => { :user => @the_user, :fonct => "show" }) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t(:edit), edit_user_path(@the_user) %> </td>
+		<td> <%= link_to t(:reset_passwd), {:controller=>"users", :action=>"reset_passwd", :id=>@the_user.id} %> </td>
 		<td> <%= link_to t(:list), users_path %> </td>
 	</tr>
 </table>

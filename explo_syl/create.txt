@@ -444,11 +444,6 @@ ruby script/plugin install http://barcode-generator.googlecode.com/svn/trunk/bar
 pb install des gems
 (non utilise)
 
------------------
-vider la base
------------------
-heroku rake db:reset
-
 ---
 --- recreer la base avec ou sans les migrations
 ---
@@ -461,13 +456,8 @@ rake db:drop;rake db:create;rake db:migrate
 --- ou (schema+data, il faut db/data.yml)
 rake db:drop;rake db:create;rake db:load 
 
----
---- recreer la base sur heroku
----
-heroku run rake db:reset;
-#heroku run rake db:create;
-#heroku run rake db:schema:load 
-heroku open;heroku logs -n 500
+
+
 
 ======================================================
 charger des fichiers dans amazon 
@@ -576,17 +566,30 @@ rake db:fixtures:load FIXTURES_PATH=db/fixtures/domains/01-mecanique-ameublement
 ---
 --- export et import des custos
 ---
-rake sylrplm:export_domain[db/custos_export,sicm.custo]
-rake sylrplm:export_domain[db/custos_export,sample.table]
+rake sylrplm:export_domain[../sylrplm_custos_export,sicm.custo]
+rake sylrplm:export_domain[../sylrplm_custos_export,sample.table]
 
 --- verifier et deplacer dans une custo par besoin
+-recreer la base
+rake db:drop;rake db:create
+-creer les tables
 rake db:reset
+-remplir la base
 rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
 rake sylrplm:import_domain[db/custos/sicm,sample.table]
-#pour heroku, mettre au debut: heroku run 
+rake sylrplm:update_access
+#pour heroku: 
+-recreer la base                                                                                                              
+heroku pg:reset HEROKU_POSTGRESQL_ONYX --confirm sylrplm
+heroku pg:reset SHARED_DATABASE --confirm sylrplm
+-creer les tables
 heroku run rake db:reset
+-remplir la base
 heroku run rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
 heroku run rake sylrplm:import_domain[db/custos/sicm,sample.table]
+heroku run rake sylrplm:update_access
+
+heroku open;heroku logs -n 500
 
 tests auto: voir capybara
 

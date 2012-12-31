@@ -136,6 +136,13 @@ class Access < ActiveRecord::Base
             #roles = "(admin | designer | valider) & !consultant"
             roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
           end
+        elsif controller.name == "UsersController"
+          #puts "acces.init: seulement admin"
+          roles=nil
+          if controller.method != "show" && controller.method[0,7] != "account"
+            #roles = "(admin | designer | valider) & !consultant"
+            roles = roles_yes(acc_roles[:cat_admins])
+          end
         else
         # les fonctions plm
           if controller.method == "show"

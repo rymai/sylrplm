@@ -164,15 +164,17 @@ module Models
 			#st_cur_name = statusobject.name
 			st = self.statusobject.get_next
 			#st=StatusObject.next(statusobject)
-			update_attributes({:statusobject_id => st.id})
+			res = update_attributes({:statusobject_id => st.id})
 		#puts "Document.promote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
+			self if res
 		end
 
 		def demote
 			#st_cur_name = statusobject.name
 			st = self.statusobject.get_previous
-			update_attributes({:statusobject_id => st.id})
-		#puts "Document.demote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
+			res = update_attributes({:statusobject_id => st.id})
+			#puts "Document.demote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
+			self if res
 		end
 
 		def link_relation

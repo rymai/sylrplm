@@ -148,8 +148,8 @@ class Document < ActiveRecord::Base
       unless params[:out_reason].blank?
         args={}
         args[:out_reason] = params[:out_reason]
-        #args[:object] = self.model_name
-        args[:forobject_id] = self.id
+        args[:checkobject] = self.model_name
+        args[:checkobject_id] = self.id
         args[:user] = user
         
        ## if Check.create(params.merge(object_to_check: self, user: user))
@@ -224,5 +224,13 @@ class Document < ActiveRecord::Base
 
     ret
   end
+  
+  def variants
+  	nil
+  end
+  
+	def users
+		nil
+	end
 
 end

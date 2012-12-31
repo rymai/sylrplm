@@ -37,10 +37,14 @@ namespace :sylrplm do
       ENV["FIXTURES_PATH"] = fixtures_path
       puts "fixtures_path=#{ENV['FIXTURES_PATH']}"
       Rake::Task["db:fixtures:load"].invoke
-      ::Access.reset
     else
       $stdout.puts "Path and Domain are mandatory"
     end
+  end
+  
+  desc 'update access datas'
+  task :update_access => [:connect, :environment] do 
+      ::Access.reset
   end
 
   desc "Truncate all tables"
@@ -125,12 +129,17 @@ namespace :sylrplm do
       domains = []
       domains << "admin"
       domains << adomain 
+     puts "************************************"
+     puts "Loop on domain"
       domains.each do |domain|
         puts "Domain:#{domain} -------------------------------"
         Object.subclasses_of(ActiveRecord::Base).each do |model|
-          begin
-  
-            reflections = model.reflect_on_all_associations(:has_and_belongs_to_many)
+          
+  				begin
+          
+            
+           reflections = model.reflect_on_all_associations(:has_and_belongs_to_many)
+            
            # puts "#{model}.reflections=#{reflections.count}" if reflections.count>0
             # reflections.each do |r|
               # puts "#{r}:#{model} have #{r.macro} to #{r.name} on table=#{r.options[:join_table]}"+
@@ -141,7 +150,9 @@ namespace :sylrplm do
             # model attributs list
             cols=[]
             #model.columns.reject{ |c| c.primary}. each do |col|
+            #puts "cols=#{model.columns}"
             model.columns.each do |col|
+            	#puts "col=#{col}"
               cols<<"#{col.name}" unless %w[created_at updated_at].include?(col.name)
             end
             isdomaindata = cols.include?("domain")
@@ -151,7 +162,7 @@ namespace :sylrplm do
             if isdomaindata && model.count > 0
               # opening output file
               out_yml = File.open("#{fixtures_path}/#{model.name.downcase}s.yml", "a")
-              puts "Opening #{out_yml.inspect} ----------------------"
+              puts "Opening #{out_yml.inspect} "
               model.all.each do |obj|
               # only if data is declared on a domain
                 if obj.send("domain") == domain
@@ -170,7 +181,7 @@ namespace :sylrplm do
                           end
                         end
                         unless trouve
-                        assocs[r.options[:join_table]] << { r.primary_key_name => obj.id, r.association_foreign_key => ext_id}
+                        assocs[r.options[:join_table]] << { r.primary_key_name => obj.id, r.association_foreign_key => ext_id, :domain => domain}
                         end
                         #rel_yml.write "#{r.primary_key_name}_#{obj.id}_#{r.association_foreign_key}_#{ext_id}:\n"
                         #rel_yml.write "  #{r.primary_key_name}: #{obj.id}\n"
@@ -186,24 +197,35 @@ namespace :sylrplm do
               out_yml = nil
             #
             end
+          
+          
           rescue Exception => e
             $stderr.puts "Error during export_domain:#{e}"
+            stack=""
+      			e.backtrace.each do |x|
+        		puts x+"\n"
+      		end
+      
           out_yml.close unless out_yml.nil?
           rel_yml.close unless rel_yml.nil?
+          
+      
           end
         end
       end
+      puts "************************************"
+      puts "Writing associations"
       assocs.keys.each do |key|
         out_yml = File.open("#{fixtures_path}/#{key}.yml", "w")
-        puts "Opening #{out_yml.inspect} *********************"
+        puts "Opening #{out_yml.inspect} "
         assocs[key].each do |assoc|   
           #out_yml.write "#{r.primary_key_name}_#{obj.id}_#{r.association_foreign_key}_#{ext_id}:\n"
           str=""
           head=""
           assoc.keys.each do |akey|
-            str << "  #{akey}: #{assoc[akey]}\n"
-            head<<"_" if head!=""
+             head<<"_" if head!=""
             head<<"#{akey}_#{assoc[akey]}"
+            str << "  #{akey}: #{assoc[akey]}\n"
           end
           out_yml.write "#{head}:\n"
           out_yml.write "#{str}\n"
@@ -212,10 +234,11 @@ namespace :sylrplm do
         end
         out_yml.close unless out_yml.nil?
       end
-      # suppression des fichiers vides
+     puts "************************************"
+      puts "Cleaning empty files"
       Dir.glob("#{fixtures_path}/*.yml").each do |afile|
       	asize=File.size(afile)
-      	$stdout.puts "#{__method__}:output file:#{afile}:#{asize}"
+      	$stdout.puts "verify file:#{afile}:#{asize}"
       	if asize == 0
       		File.unlink(afile)
       	end

@@ -33,18 +33,20 @@ class ProjectsController < ApplicationController
 	end
 
 	def select_view
+		fname= "#{controller_class_name}.#{__method__}"
+		#LOG.debug (fname){"begin:params=#{params}"}
 		show_
 		respond_to do |format|
-			format.html { redirect_to(@project) }
+			format.html { render :action => "show" }
+			format.xml  { render :xml => @project }
 		end
 	end
 
 	def show_
+		fname= "#{controller_class_name}.#{__method__}"
 		define_view
 		@project = Project.find(params[:id])
 		@relations               = Relation.relations_for(@project)
-		@tree=build_tree(@project, @view_id)
-		@tree_up=build_tree_up(@project, @view_id)
 		@documents=@project.documents
 		@parts=@project.parts
 		@customers=@project.customers_up
@@ -58,7 +60,8 @@ class ProjectsController < ApplicationController
 		if @favori.get('user').count>0 && @relations["user"].count==0
 			flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
 		end
-
+		@tree         						= build_tree(@project, @myparams[:view_id])
+		@tree_up      						= build_tree_up(@project, @myparams[:view_id] )
 	end
 
 	# GET /projects/new

@@ -87,4 +87,11 @@ class Customer < ActiveRecord::Base
       filter, filter ] unless filter.nil?
 =end
   end
+  def variants
+  	nil
+  end
+  
+	def users
+	[nil]
+	end
 end

@@ -307,7 +307,17 @@ module Models
 
 		def tooltip
 			fname="#{self.class.name}.#{__method__}:"
-			"#{label}(#{model_name}:#{id}.#{ident})"
+			ret="#{label}(#{model_name}.#{id}"
+			if self.respond_to?(:typesobject)
+				unless self.typesobject.nil?
+				ret += ":#{get_model(model_name).truncate_words(self.typesobject.description, 7)}"
+				else
+					LOG.error (fname) {"DB_CONSISTENCY_ERROR:this object has no type:#{self.inspect}"}
+				end
+			end
+			ret+=")"
+			#ret += ".#{ident}"
+			ret
 		end
 
 	end

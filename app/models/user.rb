@@ -10,10 +10,11 @@ class User < ActiveRecord::Base
 	belongs_to :volume
 	belongs_to :typesobject
 
-	has_many :user_groups, :dependent => :delete_all
-	has_many :groups, :through => :user_groups
+	#has_many :user_groups, :dependent => :delete_all
+	#has_many :groups, :through => :user_groups
 
 	has_and_belongs_to_many :roles
+	has_and_belongs_to_many :groups
 	has_and_belongs_to_many :projects
 	#has_many :projects_users, :dependent => :delete_all
 	#has_many :projects, :through => :projects_users
@@ -35,8 +36,9 @@ class User < ActiveRecord::Base
 	#
 	# User and Group share this method, which returns login and name respectively
 	#
-  def ident; login; end
-  def system_name; login; end
+	def ident; login; end
+
+	def system_name; login; end
 
 	def designation
 		self.login+" "+self.first_name.to_s+" "+self.last_name.to_s
@@ -61,7 +63,7 @@ class User < ActiveRecord::Base
 			user = User.new
 			user.nb_items = ::SYLRPLM::NB_ITEMS_PER_PAGE
 			user.volume = Volume.find_by_name(::SYLRPLM::VOLUME_NAME_DEFAULT)
-			user.set_default_values(true)
+		user.set_default_values(true)
 		end
 		user
 	end
@@ -199,6 +201,10 @@ class User < ActiveRecord::Base
 		user
 	end
 
+	def reset_passwd
+		self.password = "secret"
+	end
+
 	def password=(pwd)
 		#puts __FILE__+".password="+pwd
 		@password = pwd
@@ -217,7 +223,9 @@ class User < ActiveRecord::Base
 	# Returns the list of store names this user has access to
 	#
 	def store_names
-		[ system_name, 'unknown' ] + group_names
+		###TODO origine , voir aussi lib/ruote.rb lookup_participant
+		###[ system_name, 'unknown' ] + group_names
+		[ system_name, 'unknown' ] + role_names
 	end
 
 	#
@@ -225,6 +233,13 @@ class User < ActiveRecord::Base
 	#
 	def group_names
 		groups.collect { |g| g.name }
+	end
+
+	#
+	# Returns the array of roles names the user belongs to.
+	#
+	def role_names
+		roles.collect { |g| g.title }
 	end
 
 	#
@@ -252,7 +267,8 @@ class User < ActiveRecord::Base
 	#
 	def may_launch? (definition)
 		return false if definition.is_special?
-		is_admin? or (self.groups & definition.groups).size > 0
+		#puts "User.may_launch? #{definition} user.groups=#{self.groups}  def.groups=#{definition.groups}:#{(self.groups & definition.groups).size}"
+		is_admin? or (self.roles & definition.roles).size > 0
 	end
 
 	#
@@ -342,13 +358,12 @@ class User < ActiveRecord::Base
 		View.find_by_name("standard")
 	end
 
-	private
-
-	def create_new_salt
-		self.salt = self.object_id.to_s + rand.to_s
+	def tooltip
+		puts "user.tooltip"
+		"#{first_name} #{last_name} (#{typesobject.ident})"
 	end
 
-	def self.encrypted_password(pwd, salt)
+def self.encrypted_password(pwd, salt)
 		#puts __FILE__+".encrypted_password:"+pwd.to_s+":"+salt.to_s
 		string_to_hash = pwd + "wibble" + salt
 		Digest::SHA1.hexdigest(string_to_hash)
@@ -357,7 +372,7 @@ class User < ActiveRecord::Base
 	def self.find_all
 		find(:all, :order=>"login ASC")
 	end
-
+	
 	#user is it a valider ?
 	def is_valider
 		ret=false
@@ -372,6 +387,11 @@ class User < ActiveRecord::Base
 	#          :conditions => "roles.title like 'valid%'",
 	#          :joins => "inner join roles on users.role_id = roles.id")
 	end
+	
+	
+	
+
+	
 
 	# recherche du theme
 	def self.find_theme(session)
@@ -476,5 +496,12 @@ class User < ActiveRecord::Base
 		end
 		ret
 	end
+	
+	private
+
+	def create_new_salt
+		self.salt = self.object_id.to_s + rand.to_s
+	end
+
 
 end

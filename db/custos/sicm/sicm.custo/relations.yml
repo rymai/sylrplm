@@ -2,11 +2,11 @@
 Relation_1: 
   id: "1"
   name: describe_by
-  typesobject_id: "749051069"
+  typesobject_id: "672869653"
   father_plmtype: any_plmtype
   child_plmtype: document
-  father_typesobject_id: "473241593"
-  child_typesobject_id: "473241593"
+  father_typesobject_id: "1045584123"
+  child_typesobject_id: "1045584116"
   cardin_occur_min: "0"
   cardin_occur_max: "-1"
   cardin_use_min: "0"
@@ -15,12 +15,12 @@ Relation_1:
 
 Relation_2: 
   id: "2"
-  name: any_relation
-  typesobject_id: "413872662"
-  father_plmtype: any_plmtype
-  child_plmtype: any_plmtype
-  father_typesobject_id: "473241593"
-  child_typesobject_id: "473241593"
+  name: define_by
+  typesobject_id: "672869653"
+  father_plmtype: project
+  child_plmtype: part
+  father_typesobject_id: "1045584120"
+  child_typesobject_id: "1045584119"
   cardin_occur_min: "0"
   cardin_occur_max: "-1"
   cardin_use_min: "0"
@@ -30,25 +30,11 @@ Relation_2:
 Relation_3: 
   id: "3"
   name: hierarchic_to
-  typesobject_id: "905287875"
+  typesobject_id: "672869653"
   father_plmtype: customer
   child_plmtype: customer
-  father_typesobject_id: "453460665"
-  child_typesobject_id: "453460665"
-  cardin_occur_min: "0"
-  cardin_occur_max: "-1"
-  cardin_use_min: "0"
-  cardin_use_max: "-1"
-  domain: admin
-
-Relation_4: 
-  id: "4"
-  name: modify_by
-  typesobject_id: "989626521"
-  father_plmtype: any_plmtype
-  child_plmtype: document
-  father_typesobject_id: "473241593"
-  child_typesobject_id: "473241593"
+  father_typesobject_id: "1045584114"
+  child_typesobject_id: "1045584114"
   cardin_occur_min: "0"
   cardin_occur_max: "-1"
   cardin_use_min: "0"
@@ -57,26 +43,12 @@ Relation_4:
 
 Relation_5: 
   id: "5"
-  name: link_doc
-  typesobject_id: "262221517"
+  name: doc_ref
+  typesobject_id: "1045584126"
   father_plmtype: document
   child_plmtype: document
-  father_typesobject_id: "473241593"
-  child_typesobject_id: "473241593"
-  cardin_occur_min: "0"
-  cardin_occur_max: "-1"
-  cardin_use_min: "0"
-  cardin_use_max: "-1"
-  domain: admin
-
-Relation_6: 
-  id: "6"
-  name: contains
-  typesobject_id: "913245371"
-  father_plmtype: project
-  child_plmtype: part
-  father_typesobject_id: "473241593"
-  child_typesobject_id: "473241593"
+  father_typesobject_id: "1045584116"
+  child_typesobject_id: "1045584116"
   cardin_occur_min: "0"
   cardin_occur_max: "-1"
   cardin_use_min: "0"
@@ -89,8 +61,8 @@ Relation_7:
   typesobject_id: "672869653"
   father_plmtype: customer
   child_plmtype: project
-  father_typesobject_id: "473241593"
-  child_typesobject_id: "473241593"
+  father_typesobject_id: "1045584114"
+  child_typesobject_id: "1045584120"
   cardin_occur_min: "0"
   cardin_occur_max: "1"
   cardin_use_min: "0"
@@ -100,11 +72,11 @@ Relation_7:
 Relation_8: 
   id: "8"
   name: applicable
-  typesobject_id: "382640329"
+  typesobject_id: "1045584125"
   father_plmtype: history_entry
   child_plmtype: any_plmtype
   father_typesobject_id: "41165346"
-  child_typesobject_id: "473241593"
+  child_typesobject_id: "1045584123"
   cardin_occur_min: "0"
   cardin_occur_max: "-1"
   cardin_use_min: "0"
@@ -114,25 +86,11 @@ Relation_8:
 Relation_9: 
   id: "9"
   name: discuss_by
-  typesobject_id: "841581186"
+  typesobject_id: "502955464"
   father_plmtype: any_plmtype
   child_plmtype: forum
-  father_typesobject_id: "473241593"
-  child_typesobject_id: "473241593"
-  cardin_occur_min: "0"
-  cardin_occur_max: "-1"
-  cardin_use_min: "0"
-  cardin_use_max: "-1"
-  domain: admin
-
-Relation_10: 
-  id: "10"
-  name: bom_part
-  typesobject_id: "291198241"
-  father_plmtype: part
-  child_plmtype: part
-  father_typesobject_id: "473241593"
-  child_typesobject_id: "473241593"
+  father_typesobject_id: "1045584123"
+  child_typesobject_id: "1045584117"
   cardin_occur_min: "0"
   cardin_occur_max: "-1"
   cardin_use_min: "0"
@@ -146,7 +104,7 @@ Relation_11:
   father_plmtype: history_entry
   child_plmtype: any_plmtype
   father_typesobject_id: "41165346"
-  child_typesobject_id: "473241593"
+  child_typesobject_id: "1045584123"
   cardin_occur_min: "0"
   cardin_occur_max: "-1"
   cardin_use_min: "0"
@@ -245,6 +203,34 @@ Relation_26:
   child_plmtype: part
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626525"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+Relation_27: 
+  id: "27"
+  name: directory
+  typesobject_id: "1045584126"
+  father_plmtype: document
+  child_plmtype: document
+  father_typesobject_id: "1045584113"
+  child_typesobject_id: "1045584116"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+Relation_28: 
+  id: "28"
+  name: doc_app
+  typesobject_id: "1045584126"
+  father_plmtype: document
+  child_plmtype: document
+  father_typesobject_id: "1045584116"
+  child_typesobject_id: "1045584116"
   cardin_occur_min: "0"
   cardin_occur_max: "-1"
   cardin_use_min: "0"

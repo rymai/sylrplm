@@ -144,6 +144,10 @@ ActionController::Routing::Routes.draw do |map|
 	'documents/:id/check_free',
 	:controller => 'documents',
 	:action => 'check_free')
+	map.connect(
+	'documents/:id/select_view',
+	:controller => 'documents',
+	:action => 'select_view')
 
 	map.resources :parts, :has_many => :documents, :collection => { :empty_favori => :get}
 	map.connect(
@@ -243,6 +247,10 @@ ActionController::Routing::Routes.draw do |map|
 	:controller => 'projects',
 	:action => 'demote',
 	:conditions => { :method => :get })
+	map.connect(
+	'projects/:id/select_view',
+	:controller => 'projects',
+	:action => 'select_view')
 
 	map.resources :customers, :has_many => :documents, :collection => { :empty_favori => :get }
 	map.connect(
@@ -275,17 +283,10 @@ ActionController::Routing::Routes.draw do |map|
 	'customers/:id/add_forum',
 	:controller => 'customers',
 	:action => 'add_forum')
-
-	
 	map.connect(
-	'users/:id/edit_account',
-	:controller => 'users',
-	:action => 'edit_account')
-
-	map.connect(
-	'users/:id/update_account',
-	:controller => 'users',
-	:action => 'update_account')
+	'customers/:id/select_view',
+	:controller => 'customers',
+	:action => 'select_view')
 
 	map.connect(
 	'users/:id/activate',
@@ -302,6 +303,26 @@ ActionController::Routing::Routes.draw do |map|
 	'users/browse',
 	:controller => 'users',
 	:action => 'browse')
+	
+	map.connect(
+	'users/:id/reset_passwd',
+	:controller => 'users',
+	:action => 'reset_passwd')
+
+	map.connect(
+	'users/:id/account_edit',
+	:controller => 'users',
+	:action => 'account_edit')
+
+	map.connect(
+	'users/:id/account_update',
+	:controller => 'users',
+	:action => 'account_update')
+	
+	map.connect(
+	'users/:id/account_edit_passwd',
+	:controller => 'users',
+	:action => 'account_edit_passwd')
 	
 	map.resources :groups
 

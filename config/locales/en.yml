@@ -162,14 +162,14 @@ en:
   ctrl_user_without_projects: This user have no projects
   ctrl_user_needed: Fill the user
   ctrl_user_created: User %{user} created
-  ctrl_user_not_created: User %{user} not created
+  ctrl_user_not_created: "User %{user} not created: %{msg}"
   ctrl_user_not_valid: User %{user} not yet validated
   ctrl_new_account_not_created: New user %{user} not created
   ctrl_user_updated: User %{user} updated
-  ctrl_user_not_updated: User %{user} not updated
+  ctrl_user_not_updated: "User %{user} not updated: %{msg}"
   ctrl_user_deleted: User %{user} deleted
   ctrl_user_connected: User %{user} connected !
-  ctrl_user_not_connected: Not connected
+  ctrl_user_not_connected: "Not connected: %{msg}"
   ctrl_user_disconnected: User %{user} disconnected !
   ctrl_user_role: Role=
   ctrl_account_needed: Fill the account
@@ -179,6 +179,7 @@ en:
   ctrl_typesobject: Object type
   # users
   ctrl_user: User
+  password_needed: Password is mandatory
   # views
   ctrl_view: View
   # volumes
@@ -207,8 +208,9 @@ en:
   img_checkout: Checkout
   img_checkin: Checkin
   select_context: Context selection
-  help_root_title: SYLRPLM Documentation 
+  select_view: View selection 
   # help
+  help_root_title: SYLRPLM Documentation 
   help_no_help_title: Help missing
   help_no_help: No help for %{key}
   help_lnk_acces: Go
@@ -422,11 +424,11 @@ en:
   # definitions
   legend_definition: Enter definition details
   label_uri: URI
-  label_groups_may_launch: Group that may launch
+  label_roles_may_launch: Roles that may launch
   label_groups: Groups
   label_launch_fields: Launch fields
-  label_definition_group_ids_in: Groups
-  label_definition_group_ids_out: Other groups
+  label_definition_role_ids_in: Roles
+  label_definition_role_ids_out: Other roles
   button_add: Add
   button_remove: Remove
   label_fields: Attributs
@@ -629,6 +631,10 @@ en:
   label_views: Views 
   label_relation_view_ids_in: Attached views 
   label_relation_view_ids_out: Others
+  label_cardin_occur_min: Occur min
+  label_cardin_occur_max: Occur max
+  label_cardin_use_min: Use min
+  label_cardin_use_max: Use max
   # roles
   legend_role: Enter role details
   role_list: Listing of roles
@@ -659,6 +665,8 @@ en:
   submit_new_account: New account
   submit_create_account: Account creation
   label_new_email: Mail for new user
+  #shared-tree
+  object_tree: Structure
   # statusobjects
   legend_statusobjects: Enter statusobjects details
   statusobjects_list: Listing of status 
@@ -694,8 +702,10 @@ en:
   msg_define_types_forum: Please, define forums types
   # users
   legend_user: Enter user details
-  user_edit: Edit user
-  edit_account: Edit my account
+  user_edit: Edit user - %{login}
+  reset_passwd: Reset password
+  account_edit_passwd: Edit password - %{login}
+  account_edit: Edit my account
   user_list: User list 
   user_show: User detail
   user_new: New User

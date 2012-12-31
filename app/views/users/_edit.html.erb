@@ -4,14 +4,6 @@
 	</legend>
 	<label for="user_name"> <%= t(:label_login) %> </label>
 	<%= form.text_field :login, :size => 40 %>
-	
-	<br/>
-	<label for="user_password"> <%= t(:label_password) %> </label>
-	<%= form.password_field :password, :size => 40 %>
-	
-	<br/>
-	<label for="user_password_confirmation"> <%= t(:label_confirm_password) %> </label>
-	<%= form.password_field :password_confirmation, :size => 40 %>
 	<br/>
 	
 	<label for="user_first_name"> <%= t(:label_first_name) %> </label>
@@ -22,7 +14,7 @@
 	<%= form.text_field :last_name, :size => 40 %>
 	<br/>
 	
-	<% if fonct != "edit_account" %>
+	<% if fonct != "account_edit" %>
 	<% if @types != nil %>
 	<%= form.label t(:label_type) %>
 	<%= form.collection_select(:typesobject_id, @types, :id, :name) %>
@@ -38,7 +30,7 @@
 	<%= form.select(:language, options_for_select(@languages)) %>
 	<br/>
 	
-	<% if fonct != "edit_account" %>
+	<% if fonct != "account_edit" %>
 
 	<%= form.label t(:label_volume) %>
 	<%= form.collection_select(:volume_id, @volumes, :id, :name) %>
@@ -67,7 +59,7 @@
 	<%end%>
 	<br/>
 	
-	<% if fonct != "edit_account"%>
+	<% if fonct != "account_edit"%>
 	<label for="user_roles"> <%= t(:label_roles) %> </label>
 	<%= select_inout(form, @the_user, @roles, :title) %>
 	<br/>

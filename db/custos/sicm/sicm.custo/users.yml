@@ -3,16 +3,16 @@ User_1:
   id: "1"
   email: sylvere.coutable@laposte.net
   login: admin
-  first_name: 
-  last_name: 
+  first_name: ""
+  last_name: ""
   language: fr
-  time_zone: 
+  time_zone: ""
   theme: blackwhite
   hashed_password: a1730405a15d17e73c9e962f9f0bf1f456b973b8
   salt: "1234"
   role_id: "1"
   volume_id: "2"
-  nb_items: "20"
+  nb_items: "200"
   notification: "0"
   show_mail: "0"
   typesobject_id: "446111194"
@@ -31,16 +31,16 @@ User_101:
   theme: blackwhite
   hashed_password: 98f7177b50203d053df24f153712229a23030f2e
   salt: "1234"
-  role_id: 
-  volume_id: "499013587"
+  role_id: "1"
+  volume_id: "2"
   nb_items: 
   notification: "0"
   show_mail: "0"
   typesobject_id: "446111194"
-  group_id: 
-  project_id: 
-  domain: custo.sicm
-
+  group_id: "101"
+  project_id: "2"
+  domain: admin
+  
 User_102: 
   id: "102"
   email: alice@example.com
@@ -53,14 +53,14 @@ User_102:
   hashed_password: 8e75d5d0e60f6893ffda3a6fd03716f738c56748
   salt: "1234"
   role_id: 
-  volume_id: "60318548"
+  volume_id: "2"
   nb_items: 
   notification: "0"
   show_mail: "0"
   typesobject_id: "446111194"
   group_id: 
   project_id: 
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 User_103: 
   id: "103"
@@ -74,14 +74,14 @@ User_103:
   hashed_password: 45baf464fcf9f445919555197cbbce1516146106
   salt: "1234"
   role_id: 
-  volume_id: "60318548"
+  volume_id: "2"
   nb_items: "1000"
   notification: "0"
   show_mail: "0"
   typesobject_id: "446111194"
   group_id: 
   project_id: 
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 User_104: 
   id: "104"
@@ -95,14 +95,14 @@ User_104:
   hashed_password: ae41ca2ce64f955ae2000c50c0654a083a64f578
   salt: "1234"
   role_id: 
-  volume_id: "60318548"
+  volume_id: "2"
   nb_items: 
   notification: "0"
   show_mail: "0"
   typesobject_id: "446111194"
   group_id: 
   project_id: 
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 User_105: 
   id: "105"
@@ -116,14 +116,14 @@ User_105:
   hashed_password: acf828308f24af131e59c84d0cf2ee8b65111a73
   salt: "1234"
   role_id: 
-  volume_id: "60318548"
+  volume_id: "2"
   nb_items: 
   notification: "1"
   show_mail: "0"
   typesobject_id: "446111194"
   group_id: 
   project_id: 
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 User_106: 
   id: "106"
@@ -137,14 +137,14 @@ User_106:
   hashed_password: 851099f53bb9ca407186cef1e665b2fd4c9da822
   salt: "1234"
   role_id: 
-  volume_id: "60318548"
+  volume_id: "2"
   nb_items: 
   notification: "1"
   show_mail: "1"
   typesobject_id: "446111194"
   group_id: 
   project_id: 
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 User_107: 
   id: "107"
@@ -158,11 +158,12 @@ User_107:
   hashed_password: d53e167030805511f46ee272cdfbc9b76f379447
   salt: "1234"
   role_id: 
-  volume_id: "60318548"
+  volume_id: "2"
   nb_items: 
   notification: "1"
   show_mail: "1"
   typesobject_id: "446111194"
   group_id: 
   project_id: 
-  domain: custo.sicm
+  domain: "custo_sicm"
+

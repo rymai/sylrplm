@@ -39,7 +39,8 @@ class DefinitionsController < ApplicationController
 	end
 
 	def new_process
-		LOG
+		fname= "#{controller_class_name}.#{__method__}"
+		LOG.debug (fname){"begin:params=#{params}"}
 		@definitions = Definition.find_all_for(@current_user)
 		unless @definitions.length==0
 			respond_to do |format|
@@ -109,10 +110,10 @@ class DefinitionsController < ApplicationController
 	def edit
 
 		@definition = Definition.find(params[:id])
-		@dg_locals = {
-			:in_groups => @definition.group_definitions,
-			:out_groups => Group.find(:all) - @definition.groups
-		}
+		#@dg_locals = {
+		#	:in_roles => @definition.roles_definitions,
+		#	:out_roles => Role.find(:all) - @definition.roles
+		#}
 
 	end
 

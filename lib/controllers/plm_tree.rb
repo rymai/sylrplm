@@ -43,7 +43,6 @@ def follow_tree(root, node, father, relations, var_effectivities, level)
 	tree_users(usersnode, father)
 	LOG.debug (fname) {"usersnode.size=#{usersnode.size}"}
 	node << usersnode if usersnode.size > 0
-	LOG.debug (fname) {"node size 2=#{node.size}"}
 	#------------------------------------------------------
 	# associated users: end
 	#------------------------------------------------------
@@ -233,23 +232,26 @@ end
 #------------------------------------------------------
 def tree_users(node, father)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	begin
-		father.users.each do |child|
-			url={:controller => 'users', :action => 'show', :id => child.id}
-			options={
-				:label => child.ident ,
-				:icon  => icone(child),
-				:icon_open => icone(child),
-				:title => child.designation,
-				:open => false,
-				:url  => url_for(url)
-			}
-			LOG.debug (fname){"user:#{child.ident}"}
-			cnode = Node.new(options, nil)
-			node << cnode
+	LOG.debug (fname){"#{father.ident} father.users=#{father.users}"}
+	unless father.users.nil?
+		begin
+			father.users.each do |child|
+				url={:controller => 'users', :action => 'show', :id => child.id}
+				options={
+					:label => child.ident ,
+					:icon  => icone(child),
+					:icon_open => icone(child),
+					:title => child.tooltip,
+					:open => false,
+					:url  => url_for(url)
+				}
+				LOG.debug (fname){"user:#{child.ident}"}
+				cnode = Node.new(options, nil)
+				node << cnode
+			end
+		rescue Exception => e
+			LOG.warn (__method__.to_s){e}
 		end
-	rescue Exception => e
-		LOG.warn (__method__.to_s){e}
 	end
 	node
 end

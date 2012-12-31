@@ -1,15 +1,16 @@
 def empty_favori_by_type(type=nil)
-  puts "===PlmObjectControllerModule.empty_favori_by_type"+type.to_s
+  puts "plm_favorites.empty_favori_by_type"+type.to_s
   @favori.reset(type)
 end
 
 def empty_favori
-  puts "===PlmObjectControllerModule.empty_favori"+params.inspect
+  puts "plm_favorites.empty_favori"+params.inspect
   empty_favori_by_type(get_model_type(params))
 end
 
 def ctrl_add_objects_from_favorites(object, child_plmtype)
-  LOG.info("#{controller_class_name}.#{__method__}") {"#{object.inspect}.#{child_plmtype}"}
+  fname="#{controller_class_name}.#{__method__}"
+  LOG.info(fname) {"#{object.inspect}.#{child_plmtype}"}
   relation = Relation.find(params[:relation][child_plmtype])
   plmtype = child_plmtype.to_s
   ctrltype = t("ctrl_#{plmtype}")

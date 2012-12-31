@@ -33,7 +33,7 @@ class PartsController < ApplicationController
 
 	def show_
 		fname= "#{controller_class_name}.#{__method__}"
-		LOG.debug (fname){"begin:params=#{params}"}
+		#LOG.debug (fname){"begin:params=#{params}"}
 		define_view
 		@part                    = Part.find(params[:id])
 		@other_parts = Part.paginate(:page => params[:page],
@@ -48,13 +48,13 @@ class PartsController < ApplicationController
 			if params[:variant].nil?
 				@variant = nil
 			else
-				LOG.debug (fname){"all_variant=#{all_variant}, variante=#{params[:variant]} => on filtre"}
+				#LOG.debug (fname){"all_variant=#{all_variant}, variante=#{params[:variant]} => on filtre"}
 				@variant = PlmServices.get_object_by_mdlid(params[:variant])
 			end
 		end
 		@tree         = build_tree(@part, @myparams[:view_id] , @variant)
 		@tree_up      = build_tree_up(@part, @myparams[:view_id] )
-		LOG.debug (fname){"taille tree=#{@tree.size}"}
+		#LOG.debug (fname){"taille tree=#{@tree.size}"}
 	#LOG.debug (fname){"variant=#{@variant}"}
 	#LOG.debug (fname){"variant eff=#{@variant.var_effectivities}"} unless @variant.nil?
 	#LOG.debug (fname){"end:view=#{View.find(@myparams[:view_id]).to_s}"}

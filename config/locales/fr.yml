@@ -162,14 +162,14 @@ fr:
   ctrl_user_without_projects: Cet utilisateur collabore à aucun projet
   ctrl_user_needed: Renseigner l'utilisateur
   ctrl_user_created: Utilisateur %{user} crée
-  ctrl_user_not_created: Utilisateur %{user} non crée
+  ctrl_user_not_created: "Utilisateur %{user} non crée: %{msg}"
   ctrl_user_not_valid: Utilisateur %{user} en cours de validation
   ctrl_new_account_not_created: Nouveau compte %{user} non crée, réessayer ultérieurement puis ecrivez à l'administrateur
   ctrl_user_updated: Utilisateur %{user} modifié
-  ctrl_user_not_updated: Utilisateur %{user} non modifié
+  ctrl_user_not_updated: "Utilisateur %{user} non modifié: %{msg}"
   ctrl_user_deleted: "Utilisateur %{user} supprimé"
   ctrl_user_connected: "Utilisateur %{user} connecté !"
-  ctrl_user_not_connected: Non connecté
+  ctrl_user_not_connected: "Non connecté: %{msg}"
   ctrl_user_disconnected: "Utilisateur %{user} déconnecté !"
   ctrl_user_role: Rôle=%{role}
   ctrl_account_needed: Renseigner le compte 
@@ -179,6 +179,7 @@ fr:
   ctrl_typesobject: Type objet
   # users
   ctrl_user: Utilisateur
+  password_needed: Mot de passe obligatoire
   # views
   ctrl_view: Vue
   # volumes
@@ -207,6 +208,7 @@ fr:
   img_checkout: Réservé
   img_checkin: Non réservé
   select_context: Choix vue et variante
+  select_view: Choix vue 
   # help
   help_root_title: Documentation de l'application SYLPLM
   help_no_help_title: Aide absente
@@ -423,11 +425,11 @@ fr:
   legend_definition: Renseignez les propriétés de la définition de processus
   label_process_definition: Définition du processus
   label_uri: URI
-  label_groups_may_launch: Affectation des groupes
+  label_roles_may_launch: Affectation des rôles
   label_groups: Groupes
   label_launch_fields: Champs
-  label_definition_group_ids_in: Groupes pouvant lancer ce processus
-  label_definition_group_ids_out: Autres groupes pouvant être affectées
+  label_definition_role_ids_in: Rôles pouvant lancer ce processus
+  label_definition_role_ids_out: Autres rôles pouvant être affectées
   button_add: Ajouter
   button_remove: Enlever
   label_fields: Attributs
@@ -629,6 +631,10 @@ fr:
   label_views: Vues 
   label_relation_view_ids_in: Vues attachées
   label_relation_view_ids_out: Autres vues
+  label_cardin_occur_min: Occur min
+  label_cardin_occur_max: Occur max
+  label_cardin_use_min: Util min
+  label_cardin_use_max: Util max
   # roles
   legend_role: "Renseignez les propriétés du role"
   role_list: Liste des rôles
@@ -659,6 +665,8 @@ fr:
   submit_new_account: Demande de compte
   submit_create_account: Création du compte
   label_new_email: Adresse de messagerie 
+  #shared-tree
+  object_tree: Structure
   # statusobjects
   legend_statusobject: "Renseignez les propriétés du statut d' objets"
   statusobjects_list: Liste des statuts d' objets
@@ -695,7 +703,9 @@ fr:
   # users
   legend_user: Renseignez les propriétés de l'utilisateur
   user_edit: Edition l'utilisateur
-  edit_account: Editer mon compte
+  reset_passwd: Annuler le mot de passe
+  account_edit_passwd: Modifier le mot de passe - %{login}
+  account_edit: "Editer mon compte - %{login}"
   user_list: Liste des utilisateurs
   user_show: Détail de l'utilisateur
   user_new: Nouvel utilisateur
@@ -767,6 +777,7 @@ fr:
   label_activity: Activité
   label_dispatch_time: Envoyé le
   button_task_validate: Valider
+  
   ###########################
   # helper
   ###########################

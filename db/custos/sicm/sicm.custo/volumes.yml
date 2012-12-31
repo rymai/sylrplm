@@ -2,7 +2,7 @@
 Volume_1: 
   id: "1"
   name: vol_fog_01
-  directory: 
+  directory: <%= ::SYLRPLM::VOLUME_DIRECTORY_DEFAULT %>
   protocol: fog
   description: volume de depart sur fog
   domain: admin

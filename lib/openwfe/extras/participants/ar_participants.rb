@@ -92,6 +92,8 @@ module OpenWFE::Extras
     def before_save
 
       touch
+      fname="base ArWorkitem.before_save:"
+        LOG.debug (fname) {"save:#{self.inspect}"}
     end
 
     def self.from_owfe_workitem (wi, store_name=nil)

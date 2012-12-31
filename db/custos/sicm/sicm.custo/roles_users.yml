@@ -1,34 +1,70 @@
-role_id_1_user_id_1:
-  role_id: 1
+user_id_1_role_id_1_domain_admin:
   user_id: 1
+  role_id: 1
+  domain: admin
 
-role_id_2_user_id_101:
-  role_id: 2
+user_id_101_role_id_1_domain_admin:
   user_id: 101
+  role_id: 1
+  domain: admin
 
-role_id_2_user_id_102:
+user_id_101_role_id_2_domain_admin:
+  user_id: 101
   role_id: 2
-  user_id: 102
+  domain: admin
 
-role_id_2_user_id_103:
+user_id_101_role_id_3_domain_admin:
+  user_id: 101
+  role_id: 3
+  domain: admin
+
+user_id_101_role_id_4_domain_admin:
+  user_id: 101
+  role_id: 4
+  domain: admin
+
+user_id_101_role_id_5_domain_admin:
+  user_id: 101
+  role_id: 5
+  domain: admin
+
+user_id_101_role_id_6_domain_admin:
+  user_id: 101
+  role_id: 6
+  domain: admin
+
+user_id_101_role_id_7_domain_admin:
+  user_id: 101
+  role_id: 7
+  domain: admin
+
+role_id_2_user_id_103_domain_admin:
   role_id: 2
   user_id: 103
+  domain: admin
 
-role_id_2_user_id_104:
-  role_id: 2
-  user_id: 104
+role_id_3_user_id_102_domain_admin:
+  role_id: 3
+  user_id: 102
+  domain: admin
 
-role_id_2_user_id_105:
-  role_id: 2
+role_id_4_user_id_105_domain_admin:
+  role_id: 4
   user_id: 105
+  domain: admin
 
-role_id_2_user_id_106:
-  role_id: 2
-  user_id: 106
-
-role_id_2_user_id_107:
-  role_id: 2
+role_id_5_user_id_107_domain_admin:
+  role_id: 5
   user_id: 107
+  domain: admin
 
+role_id_6_user_id_106_domain_admin:
+  role_id: 6
+  user_id: 106
+  domain: admin
 
+role_id_7_user_id_104_domain_admin:
+  role_id: 7
+  user_id: 104
+  domain: admin
 

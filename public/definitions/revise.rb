@@ -2,7 +2,7 @@ class PLMRevise < OpenWFE::ProcessDefinition
 	description "Revision objet PLM"
 
 	set :v => "demandeur", :value => "${f:launcher}"
-	set :v => "valideur", :value => "chef de projet"
+	set :v => "valideur", :value => "valider"
 
 	#set :v => "f" , :value => { :in => [{ :fields => '/^private_/', :remove => true }], :out => [{ :fields => '/^private_/', :restore => true },{ :fields => '/^protected_/', :restore => true }]}
 
@@ -13,7 +13,7 @@ class PLMRevise < OpenWFE::ProcessDefinition
 	#jump :to => 'partdocument'
 
 		set :f => "comment_createur", :value => "commentaire demandeur"
-		demandeur :activity =>  "Mettez l objet(s) à réviser dans le presse papier, ajouter un commentaire puis valider cette tâche"
+		demandeur :activity =>  "Copier objet(s), Commenter"
 		back :unless => '${f:comment_createur} != ""'
 		#_redo :ref => 'createur', :unless => '${f:comment} != "" '
 

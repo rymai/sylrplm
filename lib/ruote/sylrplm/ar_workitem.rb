@@ -46,6 +46,11 @@ module Ruote
 				links.each {|lnk| lnk.destroy}
 			end
 
+			def before_save
+				fname="ArWorkitem.before_save:"
+				LOG.debug (fname) {"save:#{self.inspect}"}
+			end
+
 			def get_wi_links
 				fname="ArWorkitem."+__method__.to_s+":"
 				ret=[]

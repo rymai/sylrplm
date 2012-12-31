@@ -20,8 +20,8 @@
 	:textarea_name => 'definition[launch_fields]'}
 	) %>
 	<br/>
-	<%= f.label t("label_groups_may_launch") %>
-	<%= select_inout(f, @definition, Group.all, :name) %>
+	<%= f.label t("label_roles_may_launch") %>
+	<%= select_inout(f, @definition, Role.all, :title) %>
 	<%= h_input_text(f ,:domain) %>
 	<br />
 </fieldset>

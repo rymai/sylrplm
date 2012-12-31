@@ -148,7 +148,7 @@ class SessionsController < ApplicationController
           end
         else
           errs=@current_user.errors
-          flash[:notice] = t(:ctrl_user_not_connected, :user => @current_user.login)
+          flash[:notice] = t(:ctrl_user_not_connected, :user => @current_user.login, :msg =>errs.inspect)
           @current_user=nil
           session[:user_id] = nil
           respond_to do |format|

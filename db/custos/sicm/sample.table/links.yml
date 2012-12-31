@@ -1103,7 +1103,7 @@ Link_132:
   father_typesobject_id: "997141214"
   child_typesobject_id: "989626522"
   relation_id: "2"
-  values: 
+  values: "{}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -1118,7 +1118,7 @@ Link_152:
   father_typesobject_id: "1027958329"
   child_typesobject_id: "997141214"
   relation_id: "7"
-  values: 
+  values: "{}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -1210,6 +1210,51 @@ Link_158:
   relation_id: "23"
   values: 
   owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+
+Link_168: 
+  id: "168"
+  father_plmtype: part
+  child_plmtype: document
+  father_id: "1"
+  child_id: "3"
+  father_typesobject_id: "989626522"
+  child_typesobject_id: "1045584113"
+  relation_id: "1"
+  values: "{}"
+  owner_id: 
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+
+Link_169: 
+  id: "169"
+  father_plmtype: document
+  child_plmtype: document
+  father_id: "4"
+  child_id: "5"
+  father_typesobject_id: "1016696961"
+  child_typesobject_id: "1016696961"
+  relation_id: "28"
+  values: "{}"
+  owner_id: 
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+
+Link_170: 
+  id: "170"
+  father_plmtype: document
+  child_plmtype: document
+  father_id: "3"
+  child_id: "4"
+  father_typesobject_id: "1045584113"
+  child_typesobject_id: "1016696961"
+  relation_id: "27"
+  values: "{}"
+  owner_id: 
   group_id: "1"
   projowner_id: "1"
   domain: sample.table

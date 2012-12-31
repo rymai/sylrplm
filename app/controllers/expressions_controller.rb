@@ -68,7 +68,7 @@ class ExpressionsController < ApplicationController
   #
   def destroy
 
-   puts "expressions_controller.destroy:params="+params.inspect
+   #puts "expressions_controller.destroy:params="+params.inspect
     find_expression
 
     ruote_engine.cancel_expression(@expression)

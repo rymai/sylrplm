@@ -1,10 +1,10 @@
-require 'filters/log_definition_filter'
-require 'controllers/plm_event'
-require 'controllers/plm_favorites'
-require 'controllers/plm_lifecycle'
-require 'controllers/plm_object_controller_module'
-require 'controllers/plm_tree'
-require 'error_reply'
+require_dependency 'filters/log_definition_filter'
+require_dependency 'controllers/plm_event'
+require_dependency 'controllers/plm_favorites'
+require_dependency 'controllers/plm_lifecycle'
+require_dependency 'controllers/plm_object_controller_module'
+require_dependency 'controllers/plm_tree'
+require_dependency 'error_reply'
 
 class ApplicationController < ActionController::Base
   include Controllers::PlmObjectControllerModule
@@ -137,6 +137,7 @@ class ApplicationController < ActionController::Base
     WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
     WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
   	@myparams = params
+  	
   end
 
   # nombre d'objets listes par page si pagination
@@ -247,14 +248,20 @@ class ApplicationController < ActionController::Base
       puts "authorize:user=#{user} admin?=#{user.is_admin?}"
       unless user.is_admin?
         if user.roles.nil? || user.groups.nil? || user.projects.nil?
+          puts "authorize:roles=#{user.roles}  "
+          puts "authorize:groups=#{user.groups}  "
+          puts "authorize:projects=#{user.projects}  "
           session[:original_uri] = request.request_uri
           flash[:notice] = t(:login_login)
           redirect_to new_sessions_url
         end
       end
-      if user.role.nil? || user.volume.nil? || user.group.nil? || user.project.nil?
-          puts "authorize:role=#{user.role} volume=#{user.volume} group=#{user.volume} project=#{user.project}"
-	  session[:original_uri] = request.request_uri
+      if user.roles.nil?  || user.groups.nil? || user.projects.nil? || user.volume.nil?
+          puts "authorize:roles=#{user.roles}  "
+          puts "authorize:groups=#{user.groups}  "
+          puts "authorize:projects=#{user.projects}  "
+          puts "authorize:volume=#{user.volume} "
+	  			session[:original_uri] = request.request_uri
           flash[:notice] = t(:login_login)
           redirect_to new_sessions_url
       end
@@ -314,6 +321,7 @@ class ApplicationController < ActionController::Base
   # controle des vues et de la vue active
   #
   def define_view
+  	#puts "#{controller_name}.define_view:begin view=#{@myparams[:view_id]}"
   	# views: liste des vues possibles est utilisee dans la view ruby show
 		@views = View.all
 		# view_id: id de la vue selectionnee est utilisee dans la view ruby show
@@ -323,7 +331,7 @@ class ApplicationController < ActionController::Base
 			@myparams[:view_id] = current_user.get_default_view.id
 			end
 		end
-		#puts "#{controller_name}.#{__method__}:view=#{@myparams[:view_id]}"
+		#puts "#{controller_name}.define_view:end view=#{@myparams[:view_id]}"
 	end
 
 	#

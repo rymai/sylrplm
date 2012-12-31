@@ -1,0 +1,10 @@
+role_id_2_definition_id_5_domain_admin:
+  role_id: 2
+  definition_id: 5
+  domain: admin
+
+role_id_2_definition_id_6_domain_admin:
+  role_id: 2
+  definition_id: 6
+  domain: admin
+

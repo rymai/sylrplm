@@ -30,10 +30,7 @@
 <p>
 	<b><%= t(:label_date) %></b>
 	<%= l @project.date %>
-</p>
-
-<%= h_show_tree @project %>
-
+</p><h1></h1>
 <%= render(:partial => "shared/object_workitems", :object =>@project) %>
 <table class='menu_bas'>
 	<% unless @favori.get('document').count==0 || @relations["document"].count==0 %>
@@ -43,7 +40,6 @@
 		<% end %>
 	</tr>
 	<% end %>
-
 	<% unless @favori.get('part').count==0 || @relations["part"].count==0 %>
 	<tr>
 		<% form_for(@project, :url => {:id => @project.id, :action => "add_parts" }) do |f| %> <td> <%= select("relation","part", options_from_collection_for_select( @relations["part"], :id, :ident)) %></td>
@@ -58,16 +54,15 @@
 		<% end %>
 	</tr>
 	<% end %>
-</table>
-<table class='menu_bas'>
+	<% unless @relations["forum"].count==0 %>
 	<tr>
-		<% unless @relations["forum"].count==0 %>
 		<% form_for(@project, :url => {:id => @project.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @relations["forum"], :id, :ident)) %></td>
 		<td><%= submit_tag t("add_forum") %></td>
 		<% end %>
-		<% end %>
 	</tr>
-</table>
+	<% end %>
+</table><h1></h1>
+<%= render(:partial => "shared/tree", :object => @project ) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("edit"), edit_project_path(@project) %></td>

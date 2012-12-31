@@ -24,7 +24,7 @@ class WorkitemsController < ApplicationController
     @workitems=[]
     unless @current_user.nil?
       @query = params[:q] || params[:query]
-      #puts "workitems_controller.index:store_names="+@current_user.store_names.inspect
+      puts "workitems_controller.index:current_user.store_names="+@current_user.store_names.inspect
       if @query
         @workitems = Ruote::Sylrplm::ArWorkitem.search(@query, @current_user.is_admin? ? nil : @current_user.store_names)
       else
@@ -67,8 +67,8 @@ class WorkitemsController < ApplicationController
   # GET /workitems/:wfid/:expid/edit
   #
   def edit
-    name= "workitems_controller.edit:"
-    LOG.debug {name+"params="+params.inspect}
+    fname= "workitems_controller.edit:"
+    LOG.debug (fname){"params="+params.inspect}
     @workitem = find_ar_workitem
     @wi_links = @workitem.get_wi_links
     nb=0
@@ -103,7 +103,7 @@ class WorkitemsController < ApplicationController
   #
   def update
     name=self.class.name+"."+__method__.to_s+":"
-    LOG.info{name+"debut:params="+params.inspect}
+    LOG.info (name) {"debut:params="+params.inspect}
     # select du ArWorkitem stocké en base ou sur fichier
     ar_workitem = find_ar_workitem
     return error_reply('no workitem', 404) unless ar_workitem

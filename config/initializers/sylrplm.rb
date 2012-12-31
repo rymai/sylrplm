@@ -9,6 +9,7 @@ require 'classes/app_classes'
 require 'os_functions'
 
 module SYLRPLM
+	
   #include Classes::AppClasses::LogFormatter
   LOCAL_DEFAULT             = "fr"
   NOTIFICATION_DEFAULT      = 1

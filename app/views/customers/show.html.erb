@@ -31,8 +31,7 @@
 	<b><%= t("label_date") %></b>
 	<%= l @customer.date %>
 </p>
-<%= h_show_tree @customer%>
-
+<h1></h1>
 <%= render(:partial => "shared/object_workitems", :object =>@customer) %>
 <table class='menu_bas'>
 	<tr>
@@ -50,6 +49,7 @@
 	</tr>
 </table>
 <h1></h1>
+<%= render(:partial => "shared/tree", :object => @customer ) %>
 <table class='menu_bas'>
 	<tr>
 		<% unless @relations["forum"].count==0 %>

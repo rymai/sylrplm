@@ -24,11 +24,11 @@ class Typesobject < ActiveRecord::Base
 
 	def self.get_types(s_object)
 		fname="Typesobject.#{__method__}(#{s_object})"
-		ret=find_all_by_forobject(s_object.to_s, :order => :name)
+		ret = find_all_by_forobject(s_object.to_s, :order => :name)
 		unless ret.is_a?(Array)
 			ret = [ret]
 		end
-		LOG.debug (fname){"types=#{ret}"}
+		#LOG.debug (fname){"types=#{ret}"}
 		ret
 	end
 
@@ -71,14 +71,24 @@ class Typesobject < ActiveRecord::Base
 
 	def self.find_for(object)
 		#find(:all, :order=>"object,name", :conditions => ["object = '#{object}' "])
-		order_default.find_all_by_forobject(object)
+		fname="Typesobject.find_for:"
+		ret = order_default.find_all_by_forobject(object)
+		type_generic=Typesobject.generic(object)
+		LOG.debug (fname){"type_generic=#{type_generic}"}
+		ret.delete type_generic unless type_generic.nil?
+		LOG.debug (fname){"ret=#{ret}"}
+		ret
+	end
+
+	def self.generic(object)
+		Typesobject.find_by_forobject_and_name(object, ::SYLRPLM::TYPE_GENERIC)
 	end
 
 	def self.get_conditions(filter)
-		filter = filters.gsub("*","%")
+		filter = filter.gsub("*","%")
 		ret={}
 		unless filter.nil?
-			ret[:qry] = "object LIKE :v_filter or name LIKE :v_filter or description LIKE :v_filter "
+			ret[:qry] = "forobject LIKE :v_filter or name LIKE :v_filter or description LIKE :v_filter "
 			ret[:values]={:v_filter => filter}
 		end
 		ret

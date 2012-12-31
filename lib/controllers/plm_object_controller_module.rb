@@ -1,6 +1,6 @@
-require 'controllers/plm_tree'
-require 'controllers/plm_favorites'
-require 'controllers/plm_lifecycle'
+require_dependency 'controllers/plm_tree'
+require_dependency 'controllers/plm_favorites'
+require_dependency 'controllers/plm_lifecycle'
 
 module Controllers
 	module PlmObjectControllerModule

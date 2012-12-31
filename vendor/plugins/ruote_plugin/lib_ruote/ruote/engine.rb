@@ -56,7 +56,7 @@ module Ruote
     # be started and run in the current thread.
     #
     def initialize(worker_or_storage, opts=true)
-      puts "Engine.init:worker_or_storage="+worker_or_storage.inspect
+      puts "Ruote::Engine.init:worker_or_storage="+worker_or_storage.inspect
       @context = worker_or_storage.context
       @context.engine = self
 
@@ -115,7 +115,8 @@ module Ruote
     # Returns the wfid (workflow instance id) of the running single.
     #
     def launch_single(process_definition, fields={}, variables={})
-
+fname="Ruote::Engine:launch_single "
+LOG.debug (fname) {"process_definition=#{process_definition}"}
       tree = @context.reader.read(process_definition)
       name = tree[1]['name'] || (tree[1].find { |k, v| v.nil? } || []).first
 

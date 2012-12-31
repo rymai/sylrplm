@@ -27,7 +27,8 @@ class CustomersController < ApplicationController
 	def select_view
 		show_
 		respond_to do |format|
-			format.html { redirect_to(@customer) }
+			format.html { render :action => "show" }
+			format.xml  { render :xml => @customer }
 		end
 	end
 
@@ -35,9 +36,10 @@ class CustomersController < ApplicationController
 		define_view
 		@customer                = Customer.find(params[:id])
 		@relations               = Relation.relations_for(@customer)
-		@tree                    = build_tree(@customer, @view_id)
 		@documents               = @customer.documents
 		@projects                = @customer.projects
+		@tree         						= build_tree(@customer, @myparams[:view_id])
+		@tree_up      						= build_tree_up(@customer, @myparams[:view_id] )
 	end
 
 	# GET /customers/new

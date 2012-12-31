@@ -7,7 +7,7 @@ Sequence_64810937:
   utility: Document.ident
   modify: "0"
   sequence: "1"
-  domain: custo.sicm
+  domain: "custo_sicm"
 Sequence_64810938: 
   id: "64810938"
   value: 000
@@ -16,7 +16,7 @@ Sequence_64810938:
   utility: Document.revision
   modify: "0"
   sequence: "0"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_78719920: 
   id: "78719920"
@@ -26,7 +26,7 @@ Sequence_78719920:
   utility: Document.designation
   modify: "1"
   sequence: "0"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_175142436: 
   id: "175142436"
@@ -36,7 +36,7 @@ Sequence_175142436:
   utility: Datafile.ident
   modify: "0"
   sequence: "1"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_220049981: 
   id: "220049981"
@@ -46,7 +46,7 @@ Sequence_220049981:
   utility: Relation.cardin_use_max
   modify: "0"
   sequence: "0"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_326707096: 
   id: "326707096"
@@ -56,7 +56,7 @@ Sequence_326707096:
   utility: Relation.cardin_use_min
   modify: "0"
   sequence: "0"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_450215437: 
   id: "450215437"
@@ -66,7 +66,7 @@ Sequence_450215437:
   utility: Part.ident
   modify: "0"
   sequence: "1"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_498629140: 
   id: "498629140"
@@ -76,7 +76,7 @@ Sequence_498629140:
   utility: Part.designation
   modify: "1"
   sequence: "0"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_559752675: 
   id: "559752675"
@@ -86,7 +86,7 @@ Sequence_559752675:
   utility: Part.revision
   modify: "0"
   sequence: "0"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_611088376: 
   id: "611088376"
@@ -96,7 +96,7 @@ Sequence_611088376:
   utility: Volume.protocol
   modify: "0"
   sequence: "0"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_612243215: 
   id: "612243215"
@@ -106,7 +106,7 @@ Sequence_612243215:
   utility: Relation.cardin_occur_max
   modify: "0"
   sequence: "0"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_717179523: 
   id: "717179523"
@@ -116,7 +116,7 @@ Sequence_717179523:
   utility: Project.designation
   modify: "1"
   sequence: "0"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_768773788: 
   id: "768773788"
@@ -126,7 +126,7 @@ Sequence_768773788:
   utility: Project.ident
   modify: "1"
   sequence: "0"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_867572539: 
   id: "867572539"
@@ -136,7 +136,7 @@ Sequence_867572539:
   utility: Customer.ident
   modify: "1"
   sequence: "0"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_973100822: 
   id: "973100822"
@@ -146,7 +146,7 @@ Sequence_973100822:
   utility: Customer.designation
   modify: "1"
   sequence: "0"
-  domain: custo.sicm
+  domain: "custo_sicm"
 
 Sequence_1031227063: 
   id: "1031227063"
@@ -156,6 +156,6 @@ Sequence_1031227063:
   utility: Relation.cardin_occur_min
   modify: "0"
   sequence: "0"
-  domain: custo.sicm
+  domain: "custo_sicm"
   
   

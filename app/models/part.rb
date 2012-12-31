@@ -140,4 +140,7 @@ class Part < ActiveRecord::Base
 		end
 		ret
 	end
+	def users
+		nil
+	end
 end

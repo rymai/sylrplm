@@ -14,23 +14,22 @@ class Relation < ActiveRecord::Base
 
 	has_many :links
 	has_and_belongs_to_many :views
-
 	def validate
 		errors.add_to_base I18n.t("valid_relation_cardin_occur_max") if cardin_occur_max != -1 && cardin_occur_max < cardin_occur_min
 		errors.add_to_base I18n.t("valid_relation_cardin_use_max") if cardin_use_max != -1 && cardin_use_max < cardin_use_min
 	end
 
-  def initialize(*args)
-    super
-    if args.empty?
-    	self.father_plmtype = Typesobject.get_objects_with_type.first
+	def initialize(*args)
+		super
+		if args.empty?
+			self.father_plmtype = Typesobject.get_objects_with_type.first
 			self.child_plmtype  = Typesobject.get_objects_with_type.first
-			self.set_default_values(true)
+		self.set_default_values(true)
 		end
-  end
+	end
 
 	def self.create_new(params)
-    raise Exception.new "Don't use this method!"
+		raise Exception.new "Don't use this method!"
 	end
 
 	def types_father
@@ -53,7 +52,7 @@ class Relation < ActiveRecord::Base
 		#puts aname+ "relation="+self.inspect
 		ret=child_plmtype + sep_type
 		ret+= child_typesobject.name unless child_typesobject.nil?
-		ret+=sep_name + self.name
+		ret+=sep_name + self.name unless self.name.nil?
 		ret+=sep_name + father_plmtype + sep_type
 		#puts aname+ "father_type="+father_type.inspect
 		ret+=father_typesobject.name unless father_typesobject.nil?
@@ -69,8 +68,8 @@ class Relation < ActiveRecord::Base
 		Typesobject.get_objects_with_type.each do |t|
 			ret[t] = []
 		end
-    ##cond="(father_plmtype = '#{father.model_name}' or father_plmtype = '#{::SYLRPLM::PLMTYPE_GENERIC}' )"
-    cond="(father_plmtype = '#{father.model_name}' )"
+		cond="(father_plmtype = '#{father.model_name}' or father_plmtype = '#{::SYLRPLM::PLMTYPE_GENERIC}' )"
+		##cond="(father_plmtype = '#{father.model_name}' )"
 		## ko car show incomplet !!! cond+=" and (father_typesobject_id = '#{father.typesobject_id}')"
 		find(:all, :order => "name",
       :conditions => [cond]).each do |rel|
@@ -95,8 +94,8 @@ class Relation < ActiveRecord::Base
 	end
 
 	def self.by_values_and_name(father_plmtype, child_plmtype, father_type, child_type, name)
-    ###cond="(father_plmtype='#{father_plmtype}' or father_plmtype='#{::SYLRPLM::PLMTYPE_GENERIC}')"
-    cond="(father_plmtype='#{father_plmtype}')"
+		###cond="(father_plmtype='#{father_plmtype}' or father_plmtype='#{::SYLRPLM::PLMTYPE_GENERIC}')"
+		cond="(father_plmtype='#{father_plmtype}')"
 		cond+=" and"
 		cond+=" (child_plmtype='#{child_plmtype}' or child_plmtype='#{::SYLRPLM::PLMTYPE_GENERIC}')"
 		cond+=" and name='#{name}'"
@@ -129,10 +128,10 @@ class Relation < ActiveRecord::Base
 	def self.datas_by_params(params)
 		fname="Relations.#{__method__}:"
 		ret={}
-		ret[:types_father]=Typesobject.get_types(params["father_plmtype"])unless params["father_plmtype"].nil?
-		ret[:types_child]=Typesobject.get_types(params["child_plmtype"])unless params["child_plmtype"].nil?
-    ###ret[:types_father]<<::SYLRPLM::PLMTYPE_GENERIC
-    ret[:types_child]<<::SYLRPLM::PLMTYPE_GENERIC
+		ret[:types_father]=Typesobject.get_types(params["father_plmtype"]) unless params["father_plmtype"].nil?
+		#LOG.info (fname) {"types_father for '#{params["father_plmtype"]}'=#{ret[:types_father]}"}
+		ret[:types_child]=Typesobject.get_types(params["child_plmtype"]) unless params["child_plmtype"].nil?
+		#LOG.info (fname) {"types_child for '#{params["child_plmtype"]}'=#{ret[:types_child]}"}
 		ret
 	end
 

@@ -30,19 +30,3 @@ Definition_4:
   uri: leave_request1.rb
   launch_fields: "{\"employee\":\"\",\"from_date\":\"\",\"to_date\":\"\",\"reason\":\"\"}"
   domain: admin
-
-Definition_5: 
-  id: "5"
-  name: revision
-  description: Revision d un objet PLM
-  uri: /definitions/revise.rb
-  launch_fields: "{}"
-  domain: custo.sicm
-
-Definition_6: 
-  id: "6"
-  name: promotion
-  description: Promotion d un objet PLM
-  uri: /definitions/promote.rb
-  launch_fields: "{}"
-  domain: custo.sicm

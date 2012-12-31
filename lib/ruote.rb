@@ -22,97 +22,95 @@
 # Made in Japan.
 #++
 
-
 #
 # this lib/ruote.rb is 'required' by the ruote_plugin if present.
 # it won't get required when using rake or script/generate
 #
 
 require 'openwfe/participants/participant_map'
+
 #require 'openwfe/extras/participants/active_participants'
 require 'openwfe/extras/participants/ar_participants'
-
 require 'pagination'
 
-
 class ActiveRecord::ConnectionAdapters::AbstractAdapter
-  # original :
-  #
-  #def decrement_open_transactions
-  #  @open_transactions -= 1
-  #end
-  def decrement_open_transactions
-    @open_transactions && @open_transactions -= 1
-  end
+	# original :
+	#
+	#def decrement_open_transactions
+	#  @open_transactions -= 1
+	#end
+	def decrement_open_transactions
+		@open_transactions && @open_transactions -= 1
+	end
 end
 
 module Ruote
-  
+
 end
 
 module OpenWFE
+	#
+	# Reopening the ParticipantMap to change the lookup_participant rules
+	#
+	# If no formally registered participant is found, the system will
+	# put the workitem in a store. If the participant corresponds to a user name
+	# or a user group, the store name will be that user or group name.
+	# Else, the store name will be 'unknown' (workitems that have gone astray).
+	#
+	class ParticipantMap
+		
+		alias :old_lookup_participant :lookup_participant
+		def lookup_participant (participant_name)
+			fname="ParticipantMap.lookup_participant:"
+			LOG.info (fname) {"participant_name=#{participant_name} "}
+			part = old_lookup_participant(participant_name)
 
-  #
-  # Reopening the ParticipantMap to change the lookup_participant rules
-  #
-  # If no formally registered participant is found, the system will
-  # put the workitem in a store. If the participant corresponds to a user name
-  # or a user group, the store name will be that user or group name.
-  # Else, the store name will be 'unknown' (workitems that have gone astray).
-  #
-  class ParticipantMap
+			return part if part
 
-    alias :old_lookup_participant :lookup_participant
+			target =
+			::User.find_by_login(participant_name) ||
+			###TODO ::Group.find_by_name(participant_name)
+			::Role.find_by_name(participant_name)
 
-    def lookup_participant (participant_name)
+			LOG.info (fname) {"participant_name=#{participant_name} target=#{target}"}
+			store_name = target ? participant_name : 'unknown'
 
-      part = old_lookup_participant(participant_name)
+			#store_name = participant_name
 
-      return part if part
+			#OpenWFE::Extras::ActiveStoreParticipant.new(store_name)
+			OpenWFE::Extras::ArParticipant.new(store_name)
+		# returns an 'on the fly' participant
+		end
+	end
 
-      target =
-        ::User.find_by_login(participant_name) ||
-        ::Group.find_by_name(participant_name)
-      store_name = target ? participant_name : 'unknown'
+	class ProcessStatus
+		#
+		# Returning the launcher of this process instance (if set)
+		#
+		def launcher
 
-      #store_name = participant_name
+			self.variables['launcher']
+		end
+	end
 
-      #OpenWFE::Extras::ActiveStoreParticipant.new(store_name)
-      OpenWFE::Extras::ArParticipant.new(store_name)
-        # returns an 'on the fly' participant
-    end
-  end
+	class FlowExpressionId
+		def to_web_s
+			si = sub_instance_id == '' ? '' : "#{sub_instance_id} "
+			"#{si}#{expid} #{expname}"
+		end
+	end
 
-  class ProcessStatus
-
-    #
-    # Returning the launcher of this process instance (if set)
-    #
-    def launcher
-
-      self.variables['launcher']
-    end
-  end
-
-  class FlowExpressionId
-
-    def to_web_s
-      si = sub_instance_id == '' ? '' : "#{sub_instance_id} "
-      "#{si}#{expid} #{expname}"
-    end
-  end
-
-  #module Extras
-  #  class Workitem
-  #    #
-  #    # returns an 'activity' description, if any
-  #    #
-  #    def activity
-  #      h = self.field_hash
-  #      return '-' unless h['params']
-  #      h['params']['activity'] || h['params']['description'] || '-'
-  #    end
-  #  end
-  #end
+#module Extras
+#  class Workitem
+#    #
+#    # returns an 'activity' description, if any
+#    #
+#    def activity
+#      h = self.field_hash
+#      return '-' unless h['params']
+#      h['params']['activity'] || h['params']['description'] || '-'
+#    end
+#  end
+#end
 end
 

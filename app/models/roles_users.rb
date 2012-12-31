@@ -1,4 +1,4 @@
-class RolesUser < ActiveRecord::Base
+class RolesUsers < ActiveRecord::Base
   include Models::SylrplmCommon
 
   validates_uniqueness_of :role_id, :scope => :user_id
@@ -9,4 +9,10 @@ class RolesUser < ActiveRecord::Base
   def self.get_conditions(filter)
     nil
   end
+  
+  def before_save
+  	self.domain = role.domain
+  	self.domain = user.domain if self.domain.nil?
+  end
+  
 end

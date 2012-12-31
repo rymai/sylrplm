@@ -17,29 +17,19 @@
 <% end %>
 <table>
 	<tr>
-		<th <%= sort_td_class_helper "login" %>
-		<%= sort_link_helper t(:label_login), "login" %>
-		</th>
-		<th>
-		<%= t(:label_role) %>
-		</th>
-		<th>
-		<%= t(:label_group) %>
-		</th>
-		<th>
-		<%= t(:label_project) %>
-		</th>
-		<th <%= sort_td_class_helper "mail" %>
-		<%= sort_link_helper t(:label_email), "email" %>
-		</th>
+		<th <%= sort_td_class_helper "login" %>><%= sort_link_helper t(:label_login), "login" %> </th>
+		<th <%= sort_td_class_helper "role_id" %>><%= sort_link_helper t(:label_role), "role_id" %> </th>
+		<th <%= sort_td_class_helper "group_id" %>><%= sort_link_helper t(:label_group), "group_id" %> </th>
+		<th <%= sort_td_class_helper "project_id" %>><%= sort_link_helper t(:label_project), "project_id" %> </th>
+		<th <%= sort_td_class_helper "mail" %>><%= sort_link_helper t(:label_email), "email" %> </th>
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %> </th>
 		<th><%= t(:label_groups) %> </th>
 		<th><%= t(:label_roles) %> </th>
 		<th><%= t(:label_projects) %> </th>
-		</tr>
-		<% for user in @current_users[:recordset] %>
-		<tr>
-		<td> <%= h_explorer user, :login %></td>
+	</tr>
+	<% for user in @current_users[:recordset] %>
+	<tr>
+		<td><%= h_explorer user, :login %></td>
 		<td><%= h_explorer user.role unless user.role.nil? %></td>
 		<td><%= h_explorer user.group unless user.group.nil? %></td>
 		<td><%= h_explorer user.project unless user.project.nil? %></td>
@@ -48,11 +38,12 @@
 		<td><%= h_value_or_default(comma_links(user.groups, :name),t(:msg_tobedefine)) %></td>
 		<td><%= h_value_or_default(comma_links(user.roles, :title),t(:msg_tobedefine)) %></td>
 		<td><%= h_value_or_default(comma_links(user.projects, :ident),t(:msg_tobedefine)) %></td>
-		<% if !param_equals?("todo", "select") %>
-		<td> <%= link_to h_img_edit.to_s, edit_user_path(user) %></td>
-		<td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td><td> <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => user.id}, :method => :get if logged_in? %></td> <% else %> <td>
+		<% if !param_equals?("todo", "select") %> <td> <%= link_to h_img(:edit), edit_user_path(user) %> </td><td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td>
+		<td> <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => user.id}, :method => :get if logged_in? %></td>
+		<% else %> <td>
 		<input type="button" value="select" class="btn-select" onclick="callSelect('<%= @myparams["html_ident"]%>','<%= user.id%>','<%= user.login%>')" />
-		</td> <% end %>
+		</td>
+		<% end %>
 	</tr>
 	<% end %>
 </table>
