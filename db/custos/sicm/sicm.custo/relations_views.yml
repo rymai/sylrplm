@@ -152,4 +152,30 @@ relation_id_28_view_id_3_domain_admin:
   relation_id: 28
   view_id: 3
   domain: admin
+  
+view_id_4_relation_id_9_domain_admin:
+  view_id: 4
+  relation_id: 9
+  domain: admin
+
+view_id_4_relation_id_1_domain_admin:
+  view_id: 4
+  relation_id: 1
+  domain: admin
+
+view_id_4_relation_id_5_domain_admin:
+  view_id: 4
+  relation_id: 5
+  domain: admin
+
+view_id_4_relation_id_27_domain_admin:
+  view_id: 4
+  relation_id: 27
+  domain: admin
+
+view_id_4_relation_id_28_domain_admin:
+  view_id: 4
+  relation_id: 28
+  domain: admin
+
 

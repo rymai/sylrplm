@@ -16,3 +16,9 @@ View_3:
   name: conception
   description: 
   domain: admin
+  
+View_4: 
+  id: "4"
+  name: documentation
+  description: ""
+  domain: admin
