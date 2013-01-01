@@ -61,38 +61,47 @@ class Link < ActiveRecord::Base
     self.errors.add_to_base('Link already exists!') unless ::Link.find(:first, :conditions => cond).nil?
   end
 
-	def initialize(*args)
-		fname = "#{self.class.name}.#{__method__}"
-		super
-		LOG.info (fname) {"#{args}"} 
-	end
-	
-	def before_save
-		fname = "#{self.class.name}.#{__method__}"
-		self.domain = father.domain
-		self.domain = child.domain if self.domain.nil?
-		LOG.info (fname) {"domain=#{self.domain}"} 
-	end
-	
+  def initialize(*args)
+    fname = "#{self.class.name}.#{__method__}"
+    super
+    LOG.info (fname) {"#{args}"}
+  end
+
+  def before_save
+    fname = "#{self.class.name}.#{__method__}"
+    LOG.info (fname) {"self=#{self}"}
+    self.domain = father.domain if father.respond_to?(:domain)
+    self.domain = child.domain if (self.domain.nil? && child.respond_to?(:domain))
+    LOG.info (fname) {"domain=#{self.domain}"}
+  end
+
   def validity
     fname = "#{self.class.name}.#{__method__}"
     begin
     #LOG.info(fname) {"father.typesobject=#{father.typesobject} relation.father_typesobject=#{relation.father_typesobject}"}
     #LOG.info(fname) {"child.typesobject=#{child.typesobject} relation.child_typesobject=#{relation.child_typesobject}"}
-    valid = (father_plmtype == relation.father_plmtype || relation.father_plmtype == ::SYLRPLM::PLMTYPE_GENERIC) \
-      && (child_plmtype == relation.child_plmtype || relation.child_plmtype == ::SYLRPLM::PLMTYPE_GENERIC) \
-      && (father.typesobject.name==relation.father_typesobject.name || relation.father_typesobject.name == ::SYLRPLM::TYPE_GENERIC) \
-      && (child.typesobject.name==relation.child_typesobject.name || relation.child_typesobject.name == ::SYLRPLM::TYPE_GENERIC)
+      msg="relation.father_plmtype:'#{relation.father_plmtype}' <> (father_plmtype:'#{father_plmtype}' and '#{::SYLRPLM::PLMTYPE_GENERIC}')"
+      valid = (father_plmtype == relation.father_plmtype || relation.father_plmtype == ::SYLRPLM::PLMTYPE_GENERIC)
+      if valid
+        msg="relation.child_plmtype:'#{relation.child_plmtype}' <> (child_plmtype:'#{child_plmtype}' and '#{::SYLRPLM::PLMTYPE_GENERIC}')"
+        valid =(child_plmtype == relation.child_plmtype || relation.child_plmtype == ::SYLRPLM::PLMTYPE_GENERIC)
+        if valid
+          msg="relation.father_type:'#{relation.father_typesobject}' <> (father.type:'#{father.typesobject}' and '#{::SYLRPLM::TYPE_GENERIC}')"
+          valid = (father.typesobject.name==relation.father_typesobject.name || relation.father_typesobject.name == ::SYLRPLM::TYPE_GENERIC)
+          if valid
+            msg="relation.child_type:'#{relation.child_typesobject}' <> (child.type:'#{child.typesobject}' and '#{::SYLRPLM::TYPE_GENERIC}')"
+            valid = (child.typesobject.name==relation.child_typesobject.name || relation.child_typesobject.name == ::SYLRPLM::TYPE_GENERIC)
+          end
+        end
+      end
       unless valid
-        self.errors(:base).add('Link is not valid!')
-        LOG.info(fname) {father.model_name+"=="+relation.father_plmtype + \
-          " "+child.model_name+"=="+relation.child_plmtype + \
-          " "+father.typesobject.name+"=="+relation.father_typesobject.name +  \
-          " "+child.typesobject.name+"=="+relation.child_typesobject.name }
+        self.errors.add("Link is not valid:<br/>#{msg}")
       end
     rescue Exception => e
-      valid=false
-      self.errors.add("Link not valid:<br/>father.typesobject=#{father.typesobject} <> relation.father_typesobject=#{relation.father_typesobject} <br/> or <br/>child.typesobject=#{child.typesobject} <> relation.child_typesobject=#{relation.child_typesobject}")
+      valid = false
+      msg="Exception during link validity test:"
+      msg+="<br/>eception=#{e}"
+    self.errors.add(msg)
     end
     valid
   end
@@ -186,9 +195,9 @@ class Link < ActiveRecord::Base
     rel=self.relation
     unless rel.nil?
       if self.values.nil?
-        fields = rel.typesobject.fields
-        self.values = fields unless fields.nil?
-        #OG.info (fname) {"#{fields} : #{self.values}"}
+      fields = rel.typesobject.fields
+      self.values = fields unless fields.nil?
+      #OG.info (fname) {"#{fields} : #{self.values}"}
       end
     end
   end
@@ -228,7 +237,7 @@ class Link < ActiveRecord::Base
   end
 
   def self.valid?(father, child, relation)
-    raise Exception.new "Don't use this method"
+    raise Exception.new "Don't use this method Link.valid?"
   end
 
   #  def before_save
@@ -341,10 +350,16 @@ class Link < ActiveRecord::Base
   end
 
   def self.linked?(obj)
-    cond="(child_typesobject_id=#{obj.typesobject_id} and child_id = #{obj.id}) or (father_typesobject_id=#{obj.typesobject_id} and father_id = #{obj.id})"
-    ret = count(:all,
+    fname="#{self.class.name}.#{__method__}"
+    unless obj.typesobject.nil?
+      cond="(child_typesobject_id=#{obj.typesobject_id} and child_id = #{obj.id}) or (father_typesobject_id=#{obj.typesobject_id} and father_id = #{obj.id})"
+      ret = count(:all,
     :conditions => [cond] )
-    puts "linked cond=#{cond} nb=#{ret}"
+      puts "linked cond=#{cond} nb=#{ret}"
     ret>0
+    else
+      LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no type for #{obj.ident}"}
+    false
+    end
   end
 end

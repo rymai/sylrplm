@@ -66,20 +66,13 @@ class Document < ActiveRecord::Base
     :through => :links_histories_up,
     :source => :history_up
 
-  def initialize(*args)
-    super
-    fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname){"args=#{args.length}:#{args.inspect}"}
-    self.statusobject = Statusobject.get_first("document") 
-		self.set_default_values(true) if args.length==1
-  end
-
   def user=(user)
-  	fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname){"user=#{user.inspect}"}
-    self.owner     = user
-    self.group     = user.group
-    self.projowner = user.project
+      fname= "#{self.class.name}.#{__method__}"
+      LOG.info (fname) {"user=#{user.ident} "}
+      self.owner = user
+      self.group     = user.group
+      self.projowner = user.project
+      LOG.info (fname) {"owner=#{owner.ident} group=#{group.ident} projowner=#{projowner.ident}"}
   end
 
   #essai, appelle 10 fois par document !!!

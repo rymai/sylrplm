@@ -56,8 +56,10 @@ class DocumentsController < ApplicationController
 	# GET /documents/new.xml
 	def new
 		fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
-		@document = Document.new(user: current_user)
+    LOG.debug (fname) {"params=#{params.inspect}"}
+    params={}
+    #params[:action] = :init
+		@document = Document.new(:user => @current_user)
 		@types    = Document.get_types_document
 		@volumes  = Volume.find_all
 		@status   = Statusobject.find_for("document", 2)
@@ -70,7 +72,7 @@ class DocumentsController < ApplicationController
 	# GET /documents/1/edit
 	def edit
 		fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    LOG.debug (fname) {"params=#{params.inspect}"}
 		@document = Document.find_edit(params[:id])
 		@types    = Typesobject.find_for("document")
 		@volumes  = Volume.find_all
@@ -82,10 +84,10 @@ class DocumentsController < ApplicationController
 	# POST /documents.xml
 	def create
 		fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    LOG.debug (fname) {"params=#{params.inspect}"}
 		#contournement pour faire le upload apres la creation pour avoir la revision dans
 		#repository !!!!!!!!!!!!!!
-		@document = Document.new(params[:document].merge(user: @current_user))
+		@document = Document.new(params[:document])
 		@types    = Document.get_types_document
 		@status   = Statusobject.find_for("document")
 		#@volumes  = Volume.find_all

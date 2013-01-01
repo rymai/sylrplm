@@ -141,6 +141,7 @@ fr:
   ctrl_forum: Forum
   # process
   ctrl_process: Processus métier
+  ctrl_history_entry: Tâche
   user_allowed_to_launch_process: "L' utilisateur '%{login}' est autorisé à lancer le processus '%{definition}'"
   user_not_allowed_to_launch_process: "L' utilisateur '%{login}' n'est pas autorisé à lancer le processus '%{definition}'"
   # projects
@@ -188,9 +189,11 @@ fr:
   # workitems
   ctrl_workitem_delegated: "Tâche %{ident} délégué à %{store}"
   ctrl_workitem_proceeded: "Tâche %{ident} exécutée"
+  ctrl_workitem_not_proceeded: "Tâche %{ident} non exécutée, erreurs:%{msg}"
   ctrl_workitem_updated: "Tâche %{ident} modifiée"
   ctrl_workitem_not_updated: "Tâche %{ident} non modifiée"
   ctrl_workitem_canceled: "Tâche %{ident} annullée"
+  ctrl_process_canceled: "Process %{ident} annullé"
   #########################################
   # modules
   #########################################

@@ -72,25 +72,11 @@ Relation_7:
 Relation_8: 
   id: "8"
   name: applicable
-  typesobject_id: "1045584125"
+  typesobject_id: "382640329"
   father_plmtype: history_entry
   child_plmtype: any_plmtype
   father_typesobject_id: "41165346"
   child_typesobject_id: "1045584123"
-  cardin_occur_min: "0"
-  cardin_occur_max: "-1"
-  cardin_use_min: "0"
-  cardin_use_max: "-1"
-  domain: admin
-
-Relation_9: 
-  id: "9"
-  name: discuss_by
-  typesobject_id: "502955464"
-  father_plmtype: any_plmtype
-  child_plmtype: forum
-  father_typesobject_id: "1045584123"
-  child_typesobject_id: "1045584117"
   cardin_occur_min: "0"
   cardin_occur_max: "-1"
   cardin_use_min: "0"
@@ -110,6 +96,22 @@ Relation_11:
   cardin_use_min: "0"
   cardin_use_max: "-1"
   domain: admin
+  
+Relation_9: 
+  id: "9"
+  name: discuss_by
+  typesobject_id: "502955464"
+  father_plmtype: any_plmtype
+  child_plmtype: forum
+  father_typesobject_id: "1045584123"
+  child_typesobject_id: "1045584117"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+
+
 
 Relation_20: 
   id: "20"

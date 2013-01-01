@@ -43,7 +43,7 @@
 		<td> <%= h_explorer document.owner, :login %></td>
 		<td> <%= h_explorer document.group, :name %></td>
 		<td> <%= h_explorer document.projowner %>
-		(<%= document.projowner.typeaccess.name%>) </td>
+		(<%= document.projowner.typeaccess.name unless document.projowner.nil? %>) </td>
 		<td> <%= h document.datafiles.length %></td>
 		<td> <%= document.date %> </td>
 		<td> <%= document.domain %> </td>

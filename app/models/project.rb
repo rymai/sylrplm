@@ -40,11 +40,7 @@ class Project < ActiveRecord::Base
 	has_many :customers_up ,
     :through => :links_customers_up,
     :source => :customer_up
-	def initialize(*args)
-		super
-		self.statusobject = Statusobject.get_first("project")
-		self. set_default_values(true) if args.length==1
-	end
+	
 
 	def user=(user)
 		self.owner = user

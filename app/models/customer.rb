@@ -31,11 +31,7 @@ class Customer < ActiveRecord::Base
     :through => :links_projects,
     :source => :project
 
-  def initialize(*args)
-    super
-    self.statusobject = Statusobject.get_first("customer")
-    self.set_default_values(true) if args.length==1
-  end
+  
 
   def user=(user)
     self.owner     = user

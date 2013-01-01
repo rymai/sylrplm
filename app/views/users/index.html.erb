@@ -29,7 +29,13 @@
 	</tr>
 	<% for user in @current_users[:recordset] %>
 	<tr>
-		<td><%= h_explorer user, :login %></td>
+		<td>
+			<% unless param_equals?("todo", "select") %>
+		<%= h_explorer user, :login %>
+		<% else %>
+		<%= user.login %>
+		<% end %>
+		</td>
 		<td><%= h_explorer user.role unless user.role.nil? %></td>
 		<td><%= h_explorer user.group unless user.group.nil? %></td>
 		<td><%= h_explorer user.project unless user.project.nil? %></td>

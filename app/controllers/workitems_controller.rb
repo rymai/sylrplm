@@ -86,7 +86,7 @@ class WorkitemsController < ApplicationController
   def show
     #    puts "workitems_controller.show:params="+params.inspect
     @workitem = find_ar_workitem
-    #@wi_links = @workitem.get_wi_links
+    @wi_links = @workitem.get_wi_links
 
     return error_reply('no workitem', 404) unless @workitem
 
@@ -138,74 +138,91 @@ class WorkitemsController < ApplicationController
         LOG.info (name){"avant sleep:participant_name=#{in_flow_workitem.participant_name} dispatch=#{ar_workitem.dispatch_time},modified=#{ar_workitem.last_modified}"}
         LOG.info (name){"avant sleep:ar_workitem=#{ar_workitem.inspect}"}
         LOG.info (name){"avant sleep:params="+ar_workitem.field_hash[:params].inspect}
-        nb=0
+        nb = 0
         arw = ar_workitem
         while nb < 7 and !arw.nil? and (arw.last_modified == ar_workitem.last_modified)
           #LOG.debug (name){" boucle #{nb}:#{arw.last_modified}"}
-          sleep 1.0
+          sleep 0.4
           nb+=1
           arw = find_ar_workitem
         end
-        LOG.info (name){"apres sleep"}
         #
         process = ruote_engine.process_status(params[:wfid])
-        LOG.info {name+"process="+process.to_s}
+        LOG.info {name+"apres sleep process="+process.to_s}
         unless process.nil?
-        tree = process.current_tree
+          tree = process.current_tree
         else
           tree = nil
         end
         #
-        respond_to do |format|
         #if ar_workitem.cancel?
         #puts name+"cancel"
         #
-          opts = { :page => nil,
+        opts = { :page => nil,
             :conditions => ["wfid = '"+params[:wfid]+"'"],
             :order => 'created_at DESC' }
-          errors = OpenWFE::Extras::ProcessError.paginate(opts)
-          errs=""
-          errors.each do  |er|
-            e = er.as_owfe_error
-            LOG.info (name) {":"+e.inspect}
-            errs+="</br>"+e.message.to_s
-            er.destroy
-          end
-          unless errs.empty?
+        errors = OpenWFE::Extras::ProcessError.paginate(opts)
+        errs = ""
+        errors.each do  |er|
+          e = er.as_owfe_error
+          LOG.info (name) {":"+e.inspect}
+          errs+="</br>"+e.message.to_s
+          er.destroy
+        end
+        ok = false
+        unless errs.empty?
+          respond_to do |format|
             flash[:notice] = t( :ctrl_workitem_canceled, :ident => workitem_ident)
             flash[:notice]+= errs
             format.html { redirect_to :action => 'index'}
-          else
+          end
+        else
           # recup du workitem sauve en base eventuellement modifie par le participant
-            ar_workitem = find_ar_workitem
-            return error_reply('no workitem', 404) unless ar_workitem
-            LOG.info (name){"apres sleep:participant_name=#{in_flow_workitem.participant_name} dispatch=#{ar_workitem.dispatch_time},modified=#{ar_workitem.last_modified}"}
-            LOG.info (name){"apres sleep:ar_workitem=#{ar_workitem.inspect}"}
-            LOG.info (name){"apres sleep:params="+ar_workitem.field_hash[:params].inspect}
-            #puts name+"wi_fields="+ar_workitem.field_hash.inspect
-            #puts name+"activity="+ar_workitem.activity.inspect
-            #puts name+"keywords="+ar_workitem.keywords.inspect
-            # sauve history
-            history_created = history_log('proceeded', :fei => in_flow_workitem.fei, :participant => in_flow_workitem.participant_name, :tree => tree.to_json, :message => ar_workitem.objects )
-            unless history_created.nil?
-              create_links(ar_workitem, params[:wfid], history_created)
+          ar_workitem = find_ar_workitem
+          return error_reply('no workitem', 404) unless ar_workitem
+          LOG.info (name){"apres sleep:participant_name=#{in_flow_workitem.participant_name} dispatch=#{ar_workitem.dispatch_time},modified=#{ar_workitem.last_modified}"}
+          LOG.info (name){"apres sleep:ar_workitem=#{ar_workitem.inspect}"}
+          LOG.info (name){"apres sleep:params="+ar_workitem.field_hash[:params].inspect}
+          #puts name+"wi_fields="+ar_workitem.field_hash.inspect
+          #puts name+"activity="+ar_workitem.activity.inspect
+          #puts name+"keywords="+ar_workitem.keywords.inspect
+          # sauve history
+          history_created = history_log('proceeded', :fei => in_flow_workitem.fei, :participant => in_flow_workitem.participant_name, :tree => tree.to_json, :message => ar_workitem.objects )
+          unless history_created.nil?
+            create_links(ar_workitem, params[:wfid], history_created)
+            if history_created.errors.count == 0
               flash[:notice] = t(:ctrl_workitem_proceeded, :ident => workitem_ident)
+              ok = true
             else
-              flash[:notice] = t( :ctrl_workitem_not_proceeded, :ident => workitem_ident)
-            end
-            format.html { redirect_to :action => 'index'}
+              flash[:notice] = t( :ctrl_workitem_not_proceeded, :ident => workitem_ident, :msg => history_created.errors.inspect)
+              ###raise PlmProcessException.new("#{name}:error executing workitem #{workitem_ident}:#{history_created.errors.inspect}", 10002)
+            end  
+          else
+            flash[:notice] = t( :ctrl_workitem_not_proceeded, :ident => workitem_ident) 
           end
         end
-        sleep 0.3
-        LOG.info (name){"destroy de ArWorkitem.#{ar_workitem.id}"}
+        ###sleep 0.1
+        LOG.info (name){"ok=#{ok}, destroy de ArWorkitem.#{ar_workitem.id}"}
         Ruote::Sylrplm::ArWorkitem.destroy(ar_workitem.id)
-      rescue Exception => e
-        LOG.error (name){in_flow_workitem.inspect}
-        LOG.error (name){" error="+e.inspect}
-        e.backtrace.each {|x| LOG.error x}
+        unless ok
+          ruote_engine.cancel_process(params[:wfid])
+          flash[:notice] += "<br/>#{t(:ctrl_process_canceled, :ident => params[:wfid])}"
+          ###raise PlmProcessException.new("#{name}:error creating workitem #{workitem_ident}:#{link.errors.inspect}", 10001)
+          LOG.error (name) {flash[:notice]}
+        end
         respond_to do |format|
-          flash[:notice] = t(:ctrl_workitem_not_updated, :ident => workitem_ident+":"+e.inspect)
-          format.html { redirect_to edit_workitem_url(workitem) }
+          format.html { redirect_to :action => 'index'}
+          format.xml  { render :xml => e, :status => :unprocessable_entity }
+        end
+      rescue Exception => e
+        respond_to do |format|
+          flash[:notice] = t(:ctrl_workitem_not_updated, :ident => "#{workitem_ident}:#{e}")
+          LOG.error (name){in_flow_workitem.inspect}
+          LOG.error (name) {flash[:notice]}
+          LOG.error (name){" error="+e.inspect}
+          e.backtrace.each {|x| LOG.error x}
+          #format.html { redirect_to edit_workitem_url(workitem) }
+          format.html { redirect_to workitems_path }
           format.xml  { render :xml => e, :status => :unprocessable_entity }
         end
       end
@@ -303,10 +320,30 @@ class WorkitemsController < ApplicationController
           #puts fname+"sp "+sp.size.to_s+":"+sp[0].to_s
           if sp.size == 3 && sp[0] != url
             #puts fname+sp[1]+"("+sp[1].size.to_s+"):"+sp[2]
-            cls=sp[1].chop
-            id=sp[2]
-            relation_name=sv[0]
-            link_ = link_object(history, cls, id, relation_name)
+            cls = sp[1].chop
+            id = sp[2]
+            relation_name = sv[0]
+            item = PlmServices.get_object(cls, id)
+            unless item.nil?
+            relation = link_relation(history, item, relation_name)
+            unless relation.nil?
+              link = link_object(history, item, relation)
+              if link.save
+                LOG.info(fname){"save ok:link id="+link.id.to_s}
+                #{ link: link, msg: "ctrl_link_#{item.ident}" }
+              else
+                LOG.error(fname){"Error during saving the link :"+link.errors.inspect}
+                ##raise PlmProcessException.new(fname+"error save :"+link.errors.inspect, 10002)
+                link.errors.each do |err|
+                  history.errors.add err
+                end
+              end
+            else
+              history.errors.add "Pas de relation de nom '#{relation_name}'"
+            end
+            else
+              history.errors.add "Objet non trouve: '#{cls}.#{id}'"
+            end
           end
         end
       end
@@ -314,38 +351,30 @@ class WorkitemsController < ApplicationController
 
   end
 
-  def link_object(workitem, type_object, item_id, relation_name)
+  def link_relation (workitem, item, relation_name)
     fname = "WorkitemsController."+__method__.to_s+":"
-
-    if item = PlmServices.get_object(type_object, item_id)
-      relation = Relation.by_values_and_name(workitem.model_name, item.model_name, workitem.model_name, type_object, relation_name)
-      #puts fname+"relation="+relation.inspect
-      unless relation.nil?
-        values = {}
-        values["father_plmtype"]        = workitem.model_name
-        values["child_plmtype"]         = item.model_name
-        values["father_typesobject_id"] = Typesobject.find_by_name(workitem.model_name).id
-        values["child_typesobject_id"]  = item.typesobject_id
-        values["father_id"]             = workitem.id
-        values["child_id"]              = item.id
-        values["relation_id"]           = relation.id
-        # en attendant mieux: user processus ou recup user en cours ...
-        user=User.find_by_name(SYLRPLM::USER_ADMIN)
-        link = Link.new(values.merge(user: nil))
-      else
-        raise PlmProcessException.new(
-        "Pas de relation de nom '"+relation_name+"'", 10001)
+      relation = Relation.by_values_and_name(workitem.model_name, item.model_name, workitem.model_name, item.typesobject.name, relation_name)
+      if relation.nil?
+        msg = "Pas de relation de nom '#{relation_name}' pour workitem:#{workitem} et item:#{item}"
+        LOG.debug (fname) {msg}
+        workitem.errors.add msg
       end
-
-      if link.save
-        LOG.info(fname){"save ok:link id="+link.id.to_s}
-
-        { link: link, msg: "ctrl_link_#{item.ident}" }
-      else
-        LOG.error(fname){"error save :"+link.errors.inspect}
-        raise PlmProcessException.new(fname+"error save :"+link.errors.inspect, 10002)
-      end
-    end
+    relation
+  end
+  
+  def link_object(workitem, item, relation)
+    fname = "WorkitemsController."+__method__.to_s+":"
+    values = {}
+    values["father_plmtype"]        = workitem.model_name
+    values["child_plmtype"]         = item.model_name
+    values["father_typesobject_id"] = Typesobject.find_by_name(workitem.model_name).id
+    values["child_typesobject_id"]  = item.typesobject_id
+    values["father_id"]             = workitem.id
+    values["child_id"]              = item.id
+    values["relation_id"]           = relation.id
+    # en attendant mieux: user processus ou recup user en cours ...
+    user=User.find_by_name(SYLRPLM::USER_ADMIN)
+    link = Link.new(values.merge(user: nil))
   end
 
   #

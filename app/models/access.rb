@@ -10,11 +10,6 @@ class Access < ActiveRecord::Base
   validates_presence_of :controller, :action, :roles
   validates_uniqueness_of :action, :scope => :controller
 
-  def initialize(*args)
-    super
-    self.set_default_values(true) if args.length==1
-  end
-
   def controller_and_action
     "#{controller}.#{action}"
   end

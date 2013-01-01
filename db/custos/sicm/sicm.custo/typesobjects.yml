@@ -473,14 +473,6 @@ Typesobject_1045584123:
   description: ""
   domain: admin
 
-Typesobject_1045584124: 
-  id: "1045584124"
-  forobject: history_entry
-  name: any_type
-  fields: "{}"
-  description: ""
-  domain: admin
-
 Typesobject_1045584125: 
   id: "1045584125"
   forobject: relation

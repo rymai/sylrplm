@@ -1,20 +1,18 @@
 class Question < ActiveRecord::Base
   include Models::SylrplmCommon
   validates_presence_of :question
-
+  attr_accessor  :user
   belongs_to :asker,
   :class_name => "User"
 
   belongs_to :responder,
   :class_name => "User"
-
   def initialize(*args)
     super
     self.set_default_values(true)
   end
 
   def user=(user)
-    super
     if user.nil?
       begin
         self.user_id = User.find_by_login("visiteur").id
@@ -24,8 +22,8 @@ class Question < ActiveRecord::Base
     end
 
     unless user.nil?
-      self.asker = user
-      self.responder = user if self.answer.present?
+    self.asker = user
+    self.responder = user if self.answer.present?
     end
   end
 

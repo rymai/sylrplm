@@ -141,6 +141,7 @@ en:
   ctrl_forum: Forum
   # process
   ctrl_process: Process
+  ctrl_history_entry: Task
   user_allowed_to_launch_process: "User '%{login}' is allowed to launch the process '%{definition}'"
   user_not_allowed_to_launch_process: "User '%{login}' is not allowed to launch the process '%{definition}'"
   # projects
@@ -188,9 +189,11 @@ en:
   # workitems
   ctrl_workitem_delegated: "Workitem %{ident} delegated to store %{store}"
   ctrl_workitem_proceeded: "Workitem %{ident} proceeded"
+  ctrl_workitem_not_proceeded: "Workitem %{ident} not proceeded, errors:%{msg}"
   ctrl_workitem_updated: "Workitem %{ident} modified"
   ctrl_workitem_not_updated: "Workitem %{ident} not modified"
   ctrl_workitem_canceled: "Workitem %{ident} cancelled"
+  ctrl_process_canceled: "Process %{ident} cancelled"
   #########################################
   # modules
   #########################################
