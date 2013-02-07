@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 
 gem 'rake', '0.8.7'
 
-gem 'rails', '2.3.15'
+gem 'rails', '2.3.16'
 gem 'mail', '2.3.0'
 gem 'json', '1.5.3'
 
