@@ -10,8 +10,8 @@ gem 'mail', '2.3.0'
 gem 'json', '1.5.3'
 
 # Databases
-#gem 'pg'
-gem "mysql", "2.8.1"
+gem 'pg'
+#gem "mysql", "2.8.1"
 gem 'ruote', '2.2.0'
 gem 'rufus-verbs', '1.0.0'
 gem 'fog', '~> 1.1.2'
