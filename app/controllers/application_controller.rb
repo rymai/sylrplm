@@ -8,12 +8,11 @@ require_dependency 'error_reply'
 
 class ApplicationController < ActionController::Base
   if %w[staging production].include?(Rails.env)
-    include SslRequirement
     ssl_required
   end
   include Controllers::PlmObjectControllerModule
 
-  helper :all  # include all helpers, all the time
+  helper :all # include all helpers, all the time
   helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
