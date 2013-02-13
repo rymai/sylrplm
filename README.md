@@ -7,8 +7,7 @@
 
 ## Mise en place
 
-- Cloner le repository git hébergé sur GitHub :
-  `$> git clone git://github.com/sylvani/sylrplm.git`
+- Cloner le repository git hébergé sur GitHub : `$> git clone git://github.com/sylvani/sylrplm.git`
 - Installation des gems : `$> cd sylrplm && bundle install`
 
 - (FIXME) Environnement Windows
@@ -19,6 +18,7 @@
 ## Setup de développement
 
 - Créer la DB et générer des données de base
+
   `$> alias be="bundle exec"`
   `$> be rake db:reset` (seulement si changement de modele)
   `$> be rake 'sylrplm:import_domain[db/custos/sicm,sicm.custo]'` (recharge le parametrage de base)
