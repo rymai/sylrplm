@@ -1,0 +1,555 @@
+fr:
+  # general
+  label_internal: Interne
+  label_projowner: Projet
+  label_forum_items: Messages
+  modif_status: Modifier le statut
+  label_created_at: Création
+  label_updated_at: Modification
+  label_date: Date
+  select_add: Ajouter à la sélection
+  select_remove: Enlever de la sélection
+  as: " en tant que "
+  hello: "Bienvenue"
+  disconnect: "Se deconnecter"
+  connect: Se connecter
+  datas_in_database: Données actuellement en base
+  context_info: "Informations sur le contexte:"
+  no_item: Il n'y a rien à afficher.
+  proceed: Valider
+  delegate: Déléguer cette tâche
+  pick: Prendre cette tâche
+  edit_task: Traiter cette tâche
+  launchthis: Lancer ce processus
+  launch: Lancer un nouveau processus
+  explorer: "Explorer"
+  explorer_obj: "Explorer %{obj}"
+  list: "Liste"
+  query: "Filtre"
+  nb_items_per_page: par page
+  filter: "Filtrer"
+  FAQ: "Questions fréquentes"
+  new_customer: "Nouveau client"
+  new_datafile: Nouveau fichier
+  new_document: "Nouveau document"
+  new_part: "Nouvel article"
+  new_project: "Nouveau projet"
+  new_question: "Nouvelle question"
+  new_forum: "Nouveau forum"
+  new_forum_item: "Nouveau message forum"
+  new_access: "Nouvelle autorisation"
+  new_check: "Nouvelle réservation"
+  new_user: "Nouvel utilisateur"
+  new_statusobject: Nouveau statut
+  new_typesobject: Nouveau type
+  new_role: Nouveau rôle
+  new_sequence: Nouvelle valeur par défaut
+  new_volume: Nouveau volume
+  new_notification: Nouvelle notification
+  new_group: Nouveau groupe
+  new_relation: Nouvelle relation
+  new_view: Nouvelle vue
+  new_link: Nouveau lien
+  paste_users: Coller utilisateurs
+  paste_parts: Coller articles
+  paste_documents: Coller documents
+  paste_projects: Coller projets
+  add_forum: Ajout forum
+  freeze: Gelé
+  edit: Editer
+  update: Mettre à jour
+  create: Créer
+  copy: Copier
+  destroy: "Supprimer"
+  remove_all: "Vider"
+  cancel: Annuler
+  menu_action: Action(s)
+  back_to_object: "Retour à :"
+  back_to_root: "Retour au sommet :"
+  # attributs generaux
+  faq_question: Question
+  faq_answer: Réponse
+  updated_at: Mis à jour
+  id: Id
+  # messages
+  msg_no_item_to_display: Il n'y a rien à afficher.
+  msg_confirm: Etes vous sûr ?
+  msg_tobedefine: A définir
+  # langues
+  tit_language: "Langue:"
+  lng_english: "English"
+  lng_french: "French"
+  # main
+  label_preferences: Préférences
+  # menus
+  mnu_main: Accueil
+  mnu_documents: Documents
+  mnu_parts: Articles
+  mnu_projects: Projets
+  mnu_customers: Clients
+  mnu_questions: Questions
+  mnu_news: Nouveautés
+  mnu_contact: Contacts
+  mnu_forums: Forums
+  mnu_forum_items: Messages
+  mnu_users: Utilisateurs
+  mnu_types_objects: Types objets
+  mnu_status_objects: Status objets
+  mnu_roles: Roles
+  mnu_volumes: Volumes
+  mnu_sequences: Valeurs par défaut
+  mnu_acces: Autorisations
+  mnu_links: Liens
+  mnu_checks: Réservations
+  mnu_roles_users: Roles/users
+  mnu_datafiles: Fichiers de données
+  mnu_groups: Groupes
+  mnu_notifications: Notifications
+  mnu_my_notifications: Mes notifications
+  mnu_relations: Relations
+  mnu_tools: Outils
+  mnu_views: Vues
+  cut: "Couper"
+  revise: "Réviser"
+  promote: "Promouvoir"
+  demote: Rétrograder
+  # tree (dans views show)
+  label_document_document: Documents associés
+  label_part_document: Documents associés
+  label_project_document: Documents associés
+  label_customer_document: Documents associés
+  label_document_part: Articles associés
+  label_part_part: Articles associés
+  label_project_part: Articles associés
+  label_customer_part: Articles associés
+  label_document_project: Projets associés
+  label_part_project: Projets associés
+  label_project_project: Projets associés
+  label_customer_project: Projets associés
+  label_document_user: Utilisateurs associés
+  label_part_user: Utilisateurs associés
+  label_project_user: Utilisateurs associés
+  label_customer_user: Utilisateurs associés
+  label_document_forum: Forums associés
+  label_part_forum: Forums associés
+  label_project_forum: Forums associés
+  label_customer_forum: Forums associés
+  label_view: Vue
+  label_variant: Variante
+  label_all_variants: Toutes variantes
+  btn_select: Sélectionner
+  # fin general
+  # access
+  legend_access: Renseignez les propriétés de l'autorisation
+  label_controller: Controleur
+  label_action: Action
+  label_role: Rôle
+  access_edit: Edition autorisation
+  access_list: Liste des autorisations
+  access_show: Détail autorisation
+  access_new: Nouvel autorisation
+  access_reset: Initialisation
+  # check
+  legend_check: Renseignez les propriétés du check
+  check_edit: Edition check
+  check_list: Liste des checks
+  check_show: Détail check
+  check_new: Nouveau check
+  label_object: Objet
+  label_object_id: ID
+  label_status: Statut
+  label_out_reason: Raison réservation
+  label_out_date: Date réservation
+  label_out_user: Utilisateur réservation
+  label_in_reason: Raison libération
+  label_in_date: Date libération
+  label_in_user: Utilisateur libération
+  label_local_dir: Répertoire local
+  label_in_group: Groupe libérant
+  label_out_group: Groupe réservant
+  # customers
+  legend_customer: Renseignez les propriétés du client
+  customer_edit: Edition client
+  customer_list: Liste clients
+  customer_show: Detail client
+  customer_new: Nouveau client
+  label_id: ID
+  label_ident: Identifiant
+  label_type: Type
+  label_designation: Désignation
+  label_responsible: Responsable
+  label_group: Groupe
+  label_statusobject: Statut
+  label_date: Date
+  label_description: Description
+  label_typesobject: Type
+  # datafile
+  legend_datafile: Renseignez les propriétés du fichier de données
+  datafile_edit: Edition fichier
+  datafile_list: Liste fichiers
+  datafile_show: Détail fichier
+  datafile_new: Nouveau fichier
+  label_filename: Fichier
+  label_volume: Volume
+  label_repository: Nom complet
+  label_content_type: Type de contenu
+  label_document: Document
+  label_restore_file: Fichier à restaurer
+  datafile_show_file: Voir le fichier
+  datafile_download_file: Télécharger le fichier
+  # definitions
+  legend_definition: Renseignez les propriétés de la définition de processus
+  label_process_definition: Définition du processus
+  label_uri: URI
+  label_roles_may_launch: Affectation des rôles
+  label_groups: Groupes
+  label_launch_fields: Champs
+  label_definition_role_ids_in: Rôles pouvant lancer ce processus
+  label_definition_role_ids_out: Autres rôles pouvant être affectées
+  button_add: Ajouter
+  button_remove: Enlever
+  label_fields: Attributs
+  label_objects: Objets en relation
+  button_swap: Echanger
+  button_reset: Défaut
+  button_undo: Annuler
+  label_definitions_attributs: Attributs
+  # documents
+  legend_document: Renseignez les propriétés du document
+  document_edit: Edition document
+  document_list: Liste documents
+  document_show: Détail document
+  document_new: Nouveau document
+  label_revision: Révision
+  label_extension: Extension
+  add_datafile: Ajouter fichier
+  document_datafiles: Fichiers associés
+  datafile_add: Ajout d'un fichier au document
+  label_nbfiles: Nb fichiers
+  button_check_out: "Réserver"
+  is_check_out: "Est réservé"
+  button_check_in: "Maj et libérer"
+  button_check_free: "Libérer"
+  download: "Télécharger fichier"
+  document_check: Réservation
+  workitems_assoc: Tâches en cours
+  history_assoc: Traitements effectués sur cet objet
+  # forums
+  legend_forum: Renseignez les propriétés du forum
+  forum_edit: Edition forum
+  forum_list: Liste des forums
+  forum_show: Détail du forum
+  forum_new: Nouveau forum
+  part_new_forum: Nouveau forum sur cet article
+  label_subject: Sujet du forum
+  label_message: Message de démarrage du forum
+  forum_items: Messages
+  forum_follow: suites
+  forum_item_response: Répondre
+  # forum_items
+  legend_forum_item: Renseignez les propriétés du message
+  forum_item_edit: Edition message forum
+  forum_item_list: Liste message forum
+  forum_item_show: Détail message forum
+  forum_item_new: Nouveau message forum
+  label_parent: Prédécesseur
+  label_author: Emetteur
+  label_forum: Forum
+  # groups
+  legend_group: Renseignez les propriétés du groupe
+  group_edit: Edition du groupe
+  group_list: Liste des groupes
+  group_show: Détail du groupe
+  group_new: Nouveau groupe
+  label_group_users: Membres
+  label_group_user_ids_out: Autres utilisateurs
+  label_group_user_ids_in: Utilisateurs
+  label_group_father: Groupe père
+  # help
+  help_title: Aide relative à l application SYLRPLM
+  help_close_window: Fermer la fenêtre d'aide
+  # info
+  # link
+  link_edit: Edition du lien
+  link_list: Liste liens
+  link_show: Détail lien
+  link_new: Nouveau lien
+  link_reset: Suppression des liens !!!
+  link_edit_in_tree: Edition du lien de l'instance
+  legend_link: Relation
+  legend_link_values: Attributs
+  legend_link_father: Père
+  legend_link_child: Fils
+  legend_link_effectivities: Effectivités
+  label_father: Père
+  label_child: Fils
+  label_values: Valeurs
+  label_effectivities: Effectivités
+  # main
+  legend_desktop: Mon bureau
+  label_domain: Domaine
+  submit_create_domain: Créer le domaine
+  label_theme: Thème
+  favori_document_delete: Vider presse-papier documents
+  favori_part_delete: Vider presse-papier articles
+  favori_project_delete: Vider presse-papier projects
+  favoris_document: Documents
+  favoris_part: Articles
+  favoris_project: Projets
+  favoris_customer: Clients
+  favoris_user: Utilisateurs
+  favoris_link: Liens
+  title_contacts: SYLRPLM Contacts
+  title_news: SYLRPLM Nouveautés
+  label_today: Date
+  legend_main: Accueil
+  legend_plm_objects: Objets PLM
+  legend_collab: Collaboratif
+  legend_admin: Administration
+  legend_organization: Organisation
+  legend_param: Paramétrage
+  legend_debug: Debug
+  legend_clipboard: Presse papier
+  submit: GO
+  CV: Curriculum vitae
+  help_first_use: Si vous débutez, vous pouvez profiter de la prise en main (%{help}) avant de lire complètement la documentation ci dessous
+  # notifications
+  legend_notification: Renseignez les propriétés de la notification
+  notification_edit: Edition notification
+  notification_list: Liste des notifications
+  notification_show: Détail notification
+  notification_new: Nouvelle notification
+  label_event_date: Date de l'évenement
+  label_event_type: Type de l'évenement
+  label_notify_date: Date de notification
+  label_path: Chemins
+  button_notify_all: Notifier tout
+  # parts
+  legend_part: "Renseignez les propriétés de l'article"
+  part_edit: Edition article
+  part_list: Liste articles
+  part_show: Détail article
+  part_new: Nouvel article
+  # plm_mailer
+  document_validated: "Le document suivant vient d'être validé par mes soins"
+  part_validated: "La part suivante vient d'être validée par mes soins"
+  document_tovalidate: "Ceci est une demande de validation pour le document"
+  part_tovalidate: "Ceci est une demande de validation pour la part"
+  check_object_and_promote: "Merci de verifier cet objet et d'effectuer une promotion par le menu suivant"
+  direct_access: "Accès direct"
+  notification_notify: Notification des évènements concernant vos données
+  button_notify: Voir la notification
+  label_object_type: Type de donnée
+  # processes
+  legend_processes: Processus
+  mnu_flw_workitems: Mes actions
+  mnu_flw_processes: Processus en cours
+  mnu_flw_new_process: Lancer un Processus
+  mnu_flw_errors: Erreurs processus
+  mnu_flw_history: Historique processus
+  mnu_flw_definitions: Définitions processus
+  definitions_edit: Edition de la définition du processus
+  definitions_list: Liste des définitions de processus
+  definitions_show: Détail de la définition du processus
+  definitions_new: Nouvelle définition de processus
+  errors_list: Liste des erreurs d'exécution de processus
+  expressions_show: Détail de l'expression
+  history_list: Historique des exécutions de processus
+  history_show: Processus exécuté
+  processes_list: Liste des processus
+  processes_show: Détail du processus
+  processes_new: Nouveau processus
+  workitems_edit: Edition tâche
+  workitems_list: Liste des tâches
+  workitems_show: Détail de la tâche
+  new_definition: Nouvelle définition
+  new_process: Nouveau processus
+  workitems_all: Toutes les tâches
+  label_expressions: Expressions
+  label_launch_time: Lancé le
+  label_workitems: Tâches
+  label_paused: En pause
+  label_errors: Erreurs
+  launch_process: Lancer le processus
+  abort process: Abandonner le processus
+  # projects
+  legend_project: "Renseignez les propriétés du projet"
+  project_edit: Edition projet
+  project_list: Liste projets
+  project_show: Détail projet
+  project_new: Nouveau projet
+  label_customer: Client
+  label_users: Collaborateurs
+  label_typeaccess: Confidentialité
+  label_project_user_ids_in: Affecté
+  label_project_user_ids_out: Non affecté
+  # questions
+  legend_question: "Renseignez les propriétés de la question"
+  questions_edit: Edition question
+  questions_list: Liste questions
+  questions_show: Détail question
+  questions_new: Nouvelle question
+  label_question: Question
+  label_answer: Réponse
+  label_position: Position
+  label_asker: Demandeur
+  label_responder: Répondeur
+  # relation
+  legend_relation: Relation
+  label_father_plmtype: PLMType du père
+  label_father_type: Type du père
+  label_child_plmtype: PLMType du fils
+  label_child_type: Type du fils
+  label_cardin_occur_min: Occurence minimale
+  label_cardin_occur_max: Occurence maximale
+  label_cardin_use_min: Usage minimal
+  label_cardin_use_max: Usage maximal
+  label_views: Vues
+  label_relation_view_ids_in: Vues attachées
+  label_relation_view_ids_out: Autres vues
+  label_cardin_occur_min: Occur min
+  label_cardin_occur_max: Occur max
+  label_cardin_use_min: Util min
+  label_cardin_use_max: Util max
+  # roles
+  legend_role: "Renseignez les propriétés du role"
+  role_list: Liste des rôles
+  role_new: Nouveau rôle
+  role_show: Détail du rôle
+  role_edit:  Edition du rôle
+  label_role_users: Utilisateurs
+  label_role_user_ids_in: Ayant ce rôle
+  label_role_user_ids_out: Autres
+  label_role_father: Rôle père
+  # sequences
+  legend_sequence: "Renseignez les propriétés de la valeur/séquence"
+  sequence_list: Liste des valeurs/séquences
+  sequence_new: Nouvelle valeur/séquence
+  sequence_show: Détail de la valeur/séquence
+  sequence_edit:  Edition de la valeur/séquence
+  label_value: Valeur
+  label_min: Valeur minimale
+  label_max: Valeur maximale
+  label_utility: Utilisation
+  label_modify: Modifiable
+  label_sequence: Séquence
+  # session
+  legend_login: Indiquez votre identifiant et mot de passe ou demandez un compte
+  legend_new_account: Renseignez les informations nécessaires à la création de votre compte
+  submit_account: Connexion
+  submit_login: Login
+  submit_new_account: Demande de compte
+  submit_create_account: Création du compte
+  label_new_email: Adresse de messagerie
+  #shared-tree
+  object_tree: Structure
+  # statusobjects
+  legend_statusobject: "Renseignez les propriétés du statut d' objets"
+  statusobjects_list: Liste des statuts d' objets
+  statusobjects_new: Nouveau statut d' objet
+  statusobjects_show: Détail du statut d' objet
+  statusobjects_edit: Edition du statut d' objet
+  label_name: Nom
+  label_rank: Rang de promotion
+  label_promote: Promotion
+  label_demote: Rétrogadation
+  # msg _check_status
+  msg_define_status_document: Définissez les statuts des documents
+  msg_define_status_part: Définissez les statuts des articles
+  msg_define_status_project: Définissez les statuts des projets
+  msg_define_status_customer: Définissez les statuts des clients
+  msg_define_status_forum: Définissez les statuts des forums
+  # tools
+  title_tools: Outils
+  legend_preferences: Préférences
+  legend_account: Mon compte
+  # typesobjects
+  legend_typesobject: "Renseignez les propriétés du type d' objets"
+  typesobjects_list: Liste des types d' objets
+  typesobjects_new: Nouveau type d' objet
+  typesobjects_show: Détail du type d' objet
+  typesobjects_edit:  Edition du type d' objet
+  label_typesobject_name: Type
+  # msg _check_types
+  msg_define_types_document: Définissez les types des documents
+  msg_define_types_part: Définissez les types des articles
+  msg_define_types_project: Définissez les types des projets
+  msg_define_types_customer: Définissez les types des clients
+  msg_define_types_forum: Définissez les types des forums
+  # users
+  legend_user: Renseignez les propriétés de l'utilisateur
+  user_edit: Edition l'utilisateur
+  reset_passwd: Annuler le mot de passe
+  account_edit_passwd: Modifier le mot de passe - %{login}
+  account_edit: "Editer mon compte - %{login}"
+  user_list: Liste des utilisateurs
+  user_show: Détail de l'utilisateur
+  user_new: Nouvel utilisateur
+  label_login: Identifiant
+  label_password: Password
+  label_confirm_password: Confirmation
+  label_role: Rôle
+  label_email: Email
+  label_roles: Rôles
+  label_nb_items: Nombre de données par page
+  label_first_name: Prénom
+  label_last_name: Nom
+  label_language: Langue
+  label_notification: Notifications
+  label_time_zone: Fuseau horaire
+  label_show_mail: Montrer l'adresse mail
+  label_user_mail_option_all: "Pour tous les événements de tous mes projets"
+  label_user_mail_option_selected: "Pour tous les événements des projets sélectionnés..."
+  label_user_mail_option_only_my_events: Seulement pour ce que je surveille
+  label_user_mail_option_only_assigned: Seulement pour ce qui m'est assigné
+  label_user_mail_option_only_owner: Seulement pour ce que j'ai créé
+  label_user_mail_option_none: Aucune notification
+  language_fr: Français
+  language_en: Anglais
+  label_user_role_ids_in: Attribués
+  label_user_role_ids_out: Non atribués
+  label_user_group_ids_in: " d'appartenance"
+  label_user_group_ids_out: Autres groupes
+  label_user_project_ids_in: Affecté à
+  label_user_project_ids_out: Non affecté à
+  label_projects: Projets
+  #views
+  legend_view: "Renseignez les propriétés de la vue"
+  views_list: Liste des vues
+  views_new: Nouvelle vue
+  views_show: Détail de la vue
+  views_edit:  Edition de la vue
+  label_relations: Relations
+  label_view_relation_ids_in: Prises en compte
+  label_view_relation_ids_out: Autres relations
+  # volumes
+  legend_volume: Renseignez les propriétés du volume
+  volume_list: Liste des volumes
+  volume_new: Nouveau volume
+  volume_show: Détail du volume
+  volume_edit:  Edition du volume
+  label_directory: Répertoire
+  label_protocol: Protocole
+  label_volume_name: Nom du volume
+  # relations
+  no_relation: "-----"
+  specification: "Spécification"
+  notice: "Notice"
+  norme: "Norme"
+  reference: "Référence"
+  bom: "BOM"
+  research: "Recherche"
+  production: "Production"
+  forum: Forum
+  # workitems
+  label_relation: Relation
+  label_wfid: Processus
+  label_workflow: Définition
+  label_since: Depuis
+  label_expid: Expression
+  label_wfrevision: Révision
+  label_store: Store
+  label_participant: Participant
+  label_activity: Activité
+  label_dispatch_time: Envoyé le
+  button_task_validate: Valider cette tâche

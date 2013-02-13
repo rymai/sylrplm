@@ -1,0 +1,168 @@
+fr:
+  # general
+  ctrl_no_privilege: "Désolé, Votre rôle '%{role}' ne vous permet d'accéder à la fonction '%{controller}/%{action}'"
+  ctrl_object_created: "%{typeobj} '%{ident}' crée avec succès"
+  ctrl_object_not_created: "%{typeobj} non crée :%{msg}"
+  ctrl_object_not_completed: "%{typeobj} non complété :%{msg}"
+  ctrl_object_updated: "%{typeobj} '%{ident}' modifié avec succès"
+  ctrl_object_not_saved: "%{typeobj} '%{ident}' non sauvegardé"
+  ctrl_object_not_found: "%{typeobj} '%{ident}' non trouvé"
+  ctrl_object_not_updated: "%{typeobj} '%{ident}' non modifié"
+  ctrl_object_deleted: "%{typeobj} '%{ident}' supprimé avec succès"
+  ctrl_object_not_deleted: "%{typeobj} '%{ident}' ne peut être supprimé"
+  ctrl_object_promoted: "%{typeobj} '%{ident}' promu de %{current_rank} à %{new_rank}, valideurs=%{validersMail}"
+  ctrl_object_no_validers: "%{typeobj} '%{ident}' non promu de %{current_rank} à %{new_rank} car pas de valideur(s)"
+  ctrl_object_not_promoted: "%{typeobj} '%{ident}' non promu de %{current_rank} à %{new_rank}"
+  ctrl_user_no_email: "L'utilisateur '%{user}' n'a pas d'adresse mail"
+  ctrl_nothing_to_notify: "Rien à notifier à cet utilisateur"
+  ctrl_mail_created_and_delivered: "Mail de notification crée et envoyé"
+  ctrl_mail_not_created: "Mail de notification non crée"
+  ctrl_object_demoted: "%{typeobj} '%{ident}' rétrogradé de %{current_rank} à %{new_rank}, valideurs=%{validersMail}"
+  ctrl_object_not_demoted: "%{typeobj} '%{ident}' non rétrogradé de %{current_rank} à %{new_rank}"
+  ctrl_object_revised: "%{typeobj} '%{ident}' revisé de %{previous_rev} à %{revision}"
+  ctrl_object_not_revised: "%{typeobj} '%{ident}' non révisé depuis %{previous_rev} (pas dernière revision ou non gelé ?)"
+  ctrl_object_checkout: "%{typeobj} '%{ident}' réservé, raison:%{reason}"
+  ctrl_object_not_checkout: "%{typeobj} '%{ident}' non réservé"
+  ctrl_object_give_reason: "Indiquez une raison"
+  ctrl_object_already_checkout: "%{typeobj} '%{ident}' déja réservé"
+  ctrl_object_checkin: "%{typeobj} '%{ident}' est sauvé et libéré, raison:%{reason}"
+  ctrl_object_not_checkin: "%{typeobj} '%{ident}' n'est pas libéré"
+  ctrl_object_notyet_checkout: "%{typeobj} '%{ident}' n'est pas encore réservé"
+  ctrl_object_give_file: "Indiquez un nouveau fichier"
+  ctrl_object_checkfree: "%{typeobj} '%{ident}' est libéré, raison:%{reason}"
+  ctrl_object_not_checkfree: "%{typeobj} '%{ident}' n'est pas libéré"
+  ctrl_object_added: "%{typeobj} '%{ident}' a été ajouté, relation='%{relation}', message=%{msg}"
+  ctrl_object_not_added: "%{typeobj} '%{ident}' n'a pas été ajouté, relation='%{relation}', messag=%{msg}"
+  ctrl_object_not_linked: "%{typeobj} '%{ident}' n'a pas été relié, relation='%{relation}', messag=%{msg}"
+  ctrl_object_not_existing: "L' objet '%{model}/%{id}' est inconnu: %{error}"
+  ctrl_nothing_to_paste: "Pas de %{typeobj} à coller"
+  # ne pas mettre de guillemet ici car pb creation tree
+  ctrl_subject_forum: "Forum sur %{typeobj} %{ident}"
+  ctrl_object_explorer: "Explorateur de %{typeobj}-%{ident}"
+  ctrl_object_referencer: "Référenceur de %{typeobj}-%{ident}"
+  ctrl_init_to_do: Initialisation à effectuer
+  ctrl_init_done: Initialisation effectuée
+  count_objects: " : %{number_begin}-%{number_end} / %{total}"
+  ctrl_show_no_relation: "%{child_plmtype}(s) à copier mais il n'existe pas de relation entre '%{father_plmtype}' et '%{child_plmtype}'"
+  # access
+  ctrl_object_no_controlers: Controleurs non trouvés
+  # application
+  login_login: "Veuillez vous identifier pour accéder à cette fonctionnalité."
+  label_project: "Projet-"
+  label_customer: "Client-"
+  link_project: "%{link}-Projet-%{ident}"
+  link_customer: "%{link}-Client-%{ident}"
+  user_unknown: Compte inconnu
+  user_unknown_mail: Mail inconnu
+  # customers
+  ctrl_customer: Client
+  # datafiles
+  ctrl_datafile: Fichier
+  # definitions
+  ctrl_definition: Définition
+  # documents
+  ctrl_document: Document
+  ctrl_checkout_auto: Reservation automatique
+  # faq
+  ctrl_faq: Question
+  # forums
+  # forum_items
+  ctrl_forum_item: Message forum
+  # group
+  ctrl_group: Groupe
+  # group_definitions
+  ctrl_group_definitions: Groupe-processus
+  # link
+  ctrl_link: Relation
+  ctrl_link_already_customer_project: Projet déja lié à ce client
+  ctrl_link_already_project_user: Utilisateur déja acteur sur ce projet
+  ctrl_link_already_project: Projet déja utilise ici ou ailleurs
+  ctrl_link_already_customer_document: Document déja lié à ce client
+  ctrl_link_already_project_part: Article déja lié à ce projet
+  ctrl_link_already_part_part: Article déja lié à cet article
+  ctrl_link_already_part_document: Document déja lié à cet article
+  ctrl_link_not_part_document: Document pas dans cette part
+  ctrl_link_recursivity: Risque de récursivité
+  ctrl_link_customer_project: Relation client / projet
+  ctrl_link_customer_document: Relation client / document
+  ctrl_link_project_part: Relation projet / article
+  ctrl_link_project_document: Relation projet / document
+  ctrl_link_project_user: Relation projet / utilisateur
+  ctrl_link_part_part: Relation article / article
+  ctrl_link_part_document: Relation article / document
+  ctrl_link_document_forum: Relation document / forum
+  ctrl_link_part_forum: Relation article / forum
+  ctrl_link_project_forum: Relation projet / forum
+  ctrl_link_customer_forum: Relation client / forum
+  ctrl_link_document_datafile: Relation document / fichier
+  # info
+  info_object_not_found: SYLRPLM_ERROR-%{context}-%{typeobj} non trouvé(e) - %{id}
+  # main
+  ctrl_plm_objects: Objets PLM
+  ctrl_collab_objects: Objets de collaboration
+  ctrl_internal_objects: Objets internes
+  ctrl_admin: Objets d'administration
+  ctrl_workflow_objects: Processus
+  ctrl_relation: Types de relation
+  ctrl_organization: Organisation
+  ctrl_parametrization: Paramétrages
+  # notification
+  ctrl_notify: "%{nb_total} Notifications effectuées à %{nb_users} utilisateurs : %{notifications} "
+  # parts
+  ctrl_part: Article
+  ctrl_forum: Forum
+  # process
+  ctrl_process: Processus métier
+  ctrl_history_entry: Tâche
+  user_allowed_to_launch_process: "L' utilisateur '%{login}' est autorisé à lancer le processus '%{definition}'"
+  user_not_allowed_to_launch_process: "L' utilisateur '%{login}' n'est pas autorisé à lancer le processus '%{definition}'"
+  # projects
+  ctrl_project: Projet
+  label_project_users: Utilisateurs participant au projet
+  label_project_objects: Objets associés au projet
+  label_projowners: Objets crées par le projet
+  # questions
+  ctrl_question: Question
+  # roles
+  ctrl_role: Rôle
+  # sequences
+  ctrl_sequence: Valeur par défaut
+  # session
+  ctrl_role_needed: Renseigner le rôle
+  ctrl_invalid_login: Nom utilisateur ou mot de passe invalide
+  ctrl_user_without_roles: Cet utilisateur n'a pas de rôles
+  ctrl_user_without_groups: Cet utilisateur n'est affecté à aucun groupe
+  ctrl_user_without_projects: Cet utilisateur collabore à aucun projet
+  ctrl_user_needed: Renseigner l'utilisateur
+  ctrl_user_created: "Utilisateur %{user} crée"
+  ctrl_user_not_created: "Utilisateur %{user} non crée: %{msg}"
+  ctrl_user_not_valid: "Utilisateur %{user} en cours de validation"
+  ctrl_new_account_not_created: "Nouveau compte %{user} non crée, réessayer ultérieurement puis ecrivez à l'administrateur"
+  ctrl_user_updated: Utilisateur %{user} modifié
+  ctrl_user_not_updated: "Utilisateur %{user} non modifié: %{msg}"
+  ctrl_user_deleted: "Utilisateur %{user} supprimé"
+  ctrl_user_connected: "Utilisateur %{user} connecté !"
+  ctrl_user_not_connected: "Non connecté: %{msg}"
+  ctrl_user_disconnected: "Utilisateur %{user} déconnecté !"
+  ctrl_user_role: Rôle=%{role}
+  ctrl_account_needed: Renseigner le compte
+  # statusobjects
+  ctrl_statusobject: Statut objet
+  # typesobjects
+  ctrl_typesobject: Type objet
+  # users
+  ctrl_user: Utilisateur
+  password_needed: Mot de passe obligatoire
+  # views
+  ctrl_view: Vue
+  # volumes
+  ctrl_volume: Volume
+  ctrl_no_relation: no relation
+  # workitems
+  ctrl_workitem_delegated: "Tâche %{ident} délégué à %{store}"
+  ctrl_workitem_proceeded: "Tâche %{ident} exécutée"
+  ctrl_workitem_not_proceeded: "Tâche %{ident} non exécutée, erreurs:%{msg}"
+  ctrl_workitem_updated: "Tâche %{ident} modifiée"
+  ctrl_workitem_not_updated: "Tâche %{ident} non modifiée"
+  ctrl_workitem_canceled: "Tâche %{ident} annullée"
+  ctrl_process_canceled: "Process %{ident} annullé"

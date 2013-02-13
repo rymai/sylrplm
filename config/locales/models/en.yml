@@ -1,0 +1,20 @@
+en:
+  # general
+  valid_ident: "L'identifiant d'un %{typeobj} doit commencer par des lettres suivi de chiffres"
+  # relation
+  valid_relation_cardin_occur_max: "Occurence maxi must be greater than mini or -1 (no limit)"
+  valid_relation_cardin_use_max: "Usage maxi must be greater than mini or -1 (no limit)"
+  #volume
+  valid_volume_directory_needed: "Protocol necessary for %{protocol} protocol"
+  check_volume_is_used: "Volume is used by a user or contains some files"
+  check_volume_no_dir: "Directory %{dir} of volume %{name} no more existing"
+  check_volume_no_rmdir: "Directory %{dir} of volume %{name} can't be deleted"
+  # statusobject
+  status_promote_0: forbidden
+  status_promote_1: free
+  status_promote_2: menu
+  status_promote_3: action
+  status_demote_0: forbidden
+  status_demote_1: free
+  status_demote_2: menu
+  status_demote_3: action

@@ -1,0 +1,168 @@
+en:
+  # general
+  ctrl_no_privilege: "Your role '%{role}' don't give access to '%{controller}/%{action}'"
+  ctrl_object_created: "%{typeobj} %{ident} was successfully created"
+  ctrl_object_not_created: "%{typeobj} not created :%{msg}"
+  ctrl_object_not_completed: "%{typeobj} not completed :%{msg}"
+  ctrl_object_updated: "%{typeobj} %{ident} was successfully updated"
+  ctrl_object_not_saved: "%{typeobj} %{ident} not saved"
+  ctrl_object_not_found: "%{typeobj} '%{ident}' not found"
+  ctrl_object_not_updated: "%{typeobj} %{ident} not updated"
+  ctrl_object_deleted: "%{typeobj} %{ident} successfully deleted"
+  ctrl_object_not_deleted: "%{typeobj} %{ident} could not be deleted"
+  ctrl_object_promoted: "%{typeobj} %{ident} was successfully promoted from %{current_rank} to %{new_rank}, validers=%{validersMail}"
+  ctrl_object_no_validers: "%{typeobj} %{ident} not promote from %{current_rank} to %{new_rank} because no validers(s)"
+  ctrl_object_not_promoted: "%{typeobj} %{ident} not promote from %{current_rank} to %{new_rank}}"
+  ctrl_user_no_email: "User %{user} have no mail"
+  ctrl_nothing_to_notify: "Nothing to notify"
+  ctrl_mail_created_and_delivered: "Mail created and send"
+  ctrl_mail_not_created: "Mail not created"
+  ctrl_object_demoted: "%{typeobj} %{ident} was successfully demote from %{current_rank} to %{new_rank}, validers=%{validersMail}"
+  ctrl_object_not_demoted: "%{typeobj} %{ident} not demote from %{current_rank} to %{new_rank}}"
+  ctrl_object_revised: "%{typeobj} %{ident} was successfully revised from %{previous_rev} to %{revision}"
+  ctrl_object_not_revised: "%{typeobj} %{ident} cannot be revised from %{previous_rev} (not last revision or not frozen status ?)"
+  ctrl_object_checkout: "%{typeobj} %{ident} was successfully checkout, reason:%{reason}"
+  ctrl_object_not_checkout: "%{typeobj} %{ident} not checkout"
+  ctrl_object_give_reason: "Please, give a reason"
+  ctrl_object_already_checkout: "%{typeobj} %{ident} is already checkout"
+  ctrl_object_checkin: "%{typeobj} %{ident} was successfully checkin"
+  ctrl_object_not_checkin: "%{typeobj} %{ident} not checkin"
+  ctrl_object_notyet_checkout: "%{typeobj} %{ident} not yet checkout"
+  ctrl_object_give_file: "Please, give a new file"
+  ctrl_object_checkfree: "%{typeobj} %{ident} was successfully free"
+  ctrl_object_not_checkfree: "%{typeobj} %{ident} not free"
+  ctrl_object_added: "<br> %{typeobj} %{ident} was successfully added, relation=%{relation}, messag=%{msg}"
+  ctrl_object_not_added: "<br> %{typeobj} %{ident} was not added, relation=%{relation}, messag=%{msg}"
+  ctrl_object_not_linked: "<br> %{typeobj} %{ident} was not linked, relation=%{relation}, messag=%{msg}"
+  ctrl_object_not_existing: "Object '%{model}/%{id}' is unknown: %{error}"
+  ctrl_nothing_to_paste: "No %{typeobj} to paste"
+  # ne pas mettre de guillemet ici car pb creation tree
+  ctrl_subject_forum: "Forum on %{typeobj} %{ident}"
+  ctrl_object_explorer: "Explorer: %{typeobj}-%{ident}"
+  ctrl_object_referencer: "Referencer: %{typeobj}-%{ident}"
+  ctrl_init_to_do: Initialization to do
+  ctrl_init_done: Initialization done
+  count_objects: " : %{number_begin}-%{number_end} / %{total}"
+  ctrl_show_no_relation: "%{child_plmtype}(s) to copy but relation '%{father_plmtype}' to '%{child_plmtype}' does not exist"
+  # access
+  ctrl_object_no_controlers: "No controlers found"
+  # application
+  login_login: "Please sign in to access this functionnality."
+  label_project: "Project-"
+  label_customer: "Customer-"
+  link_project: "%{link}-Project-%{ident}"
+  link_customer: "%{link}-Customer-%{ident}"
+  user_unknown: User Unknown
+  user_unknown_mail: unknownmail@laposte.net
+  # customers
+  ctrl_customer: "Customer"
+  # datafiles
+  ctrl_datafile: Fichier
+  # definitions
+  ctrl_definition: Definition
+  # documents
+  ctrl_document: Document
+  ctrl_checkout_auto: Automatic checkout
+  # faq
+  ctrl_faq: FAQ
+  # forums
+  # forum_items
+  ctrl_forum_item: Forum messag
+  # group
+  ctrl_group: Group
+  # group_definitions
+  ctrl_group_definitions: Group-processus
+  # link
+  ctrl_link: Relation
+  ctrl_link_already_customer_project: Project already link at customer
+  ctrl_link_already_project_user: User already actor on this project
+  ctrl_link_already_project: Project already link
+  ctrl_link_already_customer_document: Document already link at customer
+  ctrl_link_already_project_part: Part already link at project
+  ctrl_link_already_part_part: Part already link at part
+  ctrl_link_already_part_document: document already link at part
+  ctrl_link_not_part_document: Document not link at part
+  ctrl_link_recursivity: Recursivity risk
+  ctrl_link_customer_project: Relation client / project
+  ctrl_link_customer_document: Relation client / document
+  ctrl_link_project_part: Relation project / part
+  ctrl_link_project_document: Relation project / document
+  ctrl_link_project_user: Relation project / user
+  ctrl_link_part_part: Relation part / part
+  ctrl_link_part_document: Relation part / document
+  ctrl_link_document_forum: Relation document / forum
+  ctrl_link_part_forum: Relation article / forum
+  ctrl_link_project_forum: Relation projet / forum
+  ctrl_link_customer_forum: Relation client / forum
+  ctrl_link_document_datafile: Relation document / file
+  # info
+  info_object_not_found: SYLRPLM_ERROR-%{context}-%{typeobj} not found - %{id}
+  # main
+  ctrl_plm_objects: PLM objects
+  ctrl_collab_objects: Collaboration objects
+  ctrl_internal_objects: Internal objects
+  ctrl_admin: Administration objects
+  ctrl_workflow_objects: Workflows
+  ctrl_relation: Relation types
+  ctrl_organization: Organization
+  ctrl_parametrization: Parametrization
+  # notification
+  ctrl_notify: "%{nb_total} Notifications send to %{nb_users} users : %{notifications} "
+  # parts
+  ctrl_part: Article
+  ctrl_forum: Forum
+  # process
+  ctrl_process: Process
+  ctrl_history_entry: Task
+  user_allowed_to_launch_process: "User '%{login}' is allowed to launch the process '%{definition}'"
+  user_not_allowed_to_launch_process: "User '%{login}' is not allowed to launch the process '%{definition}'"
+  # projects
+  ctrl_project: Project
+  label_project_users: Users
+  label_project_objects: Objects associate at project
+  label_projowners: Objets created by project
+  # questions
+  ctrl_question: Question
+  # roles
+  ctrl_role: Role
+  # sequences
+  ctrl_sequence: Sequence
+  # session
+  ctrl_role_needed: Give the role
+  ctrl_invalid_login: Invalid user/password combination
+  ctrl_user_without_roles: This user have no roles
+  ctrl_user_without_groups: This user have no groups
+  ctrl_user_without_projects: This user have no projects
+  ctrl_user_needed: Fill the user
+  ctrl_user_created: User %{user} created
+  ctrl_user_not_created: "User %{user} not created: %{msg}"
+  ctrl_user_not_valid: User %{user} not yet validated
+  ctrl_new_account_not_created: New user %{user} not created
+  ctrl_user_updated: User %{user} updated
+  ctrl_user_not_updated: "User %{user} not updated: %{msg}"
+  ctrl_user_deleted: User %{user} deleted
+  ctrl_user_connected: User %{user} connected !
+  ctrl_user_not_connected: "Not connected: %{msg}"
+  ctrl_user_disconnected: User %{user} disconnected !
+  ctrl_user_role: Role=
+  ctrl_account_needed: Fill the account
+  # statusobjects
+  ctrl_statusobject: Object status
+  # typesobjects
+  ctrl_typesobject: Object type
+  # users
+  ctrl_user: User
+  password_needed: Password is mandatory
+  # views
+  ctrl_view: View
+  # volumes
+  ctrl_volume: Volume
+  ctrl_no_relation: no relation
+  # workitems
+  ctrl_workitem_delegated: "Workitem %{ident} delegated to store %{store}"
+  ctrl_workitem_proceeded: "Workitem %{ident} proceeded"
+  ctrl_workitem_not_proceeded: "Workitem %{ident} not proceeded, errors:%{msg}"
+  ctrl_workitem_updated: "Workitem %{ident} modified"
+  ctrl_workitem_not_updated: "Workitem %{ident} not modified"
+  ctrl_workitem_canceled: "Workitem %{ident} cancelled"
+  ctrl_process_canceled: "Process %{ident} cancelled"

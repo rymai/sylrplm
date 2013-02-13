@@ -1,0 +1,555 @@
+en:
+  # general
+  label_internal: Internal
+  label_projowner: Project
+  label_forum_items: Messages
+  modif_status: Modify the status
+  label_created_at: Creation
+  label_updated_at: Update
+  label_date: Date
+  select_add: Add to selection
+  select_remove: Remove from selection
+  as: " as "
+  hello: "Hello world"
+  disconnect: "Disconnect"
+  connect: Sign in
+  datas_in_database: We have following data
+  context_info: "Context informations"
+  no_item: There are no items to display.
+  proceed: Proceed
+  delegate: Delegate this task
+  pick: Pick this task
+  edit_task: Edit/proceed this task
+  launchthis: Launch this process
+  launch: Launch a new process
+  explorer: "Explore"
+  explorer_obj: "Explore %{obj}"
+  list: "List"
+  query: "Filter"
+  nb_items_per_page: Items number in page
+  filter: "Filter"
+  FAQ: "Frequently Asked Questions"
+  new_customer: "New customer"
+  new_datafile: New file
+  new_document: "New document"
+  new_part: "New Part"
+  new_project: "New project"
+  new_question: "New FAQ"
+  new_forum: "New forum"
+  new_forum_item: "New forum message"
+  new_access: "New access"
+  new_check: "New check"
+  new_user: "New user"
+  new_statusobject: New status
+  new_typesobject: New type
+  new_role: New role
+  new_sequence: New sequence
+  new_volume: New volume
+  new_notification: New notification
+  new_group: New group
+  new_relation: New relation
+  new_view: New view
+  new_link: New link
+  paste_users: Paste users
+  paste_part: Paste parts
+  paste_documents: Paste documents
+  paste_projects: Paste projects
+  add_forum: Add forum
+  freeze: Freeze
+  edit: Edit
+  update: Update
+  create: Create
+  copy: Copy
+  destroy: Destroy
+  remove_all: Remove all
+  cancel: Cancel
+  menu_action: Action(s)
+  back_to_object: "Back to :"
+  back_to_root: "Back to root :"
+  # attributs generaux
+  faq_question: Question
+  faq_answer: answer
+  updated_at: Updated at
+  id: Id
+  # messages
+  msg.no_item_to_display: "There are no items to display."
+  msg_confirm: Are you sure?
+  msg_tobedefine: To be define
+  # langues
+  tit_language: "Language:"
+  lng_english: "English"
+  lng_french: "French"
+  # main
+  label_preferences: Preferences
+  # menus
+  mnu_main: Welcome
+  mnu_documents: Documents
+  mnu_parts: Parts
+  mnu_projects: Projects
+  mnu_customers: Customers
+  mnu_questions: Questions
+  mnu_news: News
+  mnu_contact: Contact
+  mnu_forums: Forums
+  mnu_forum_items: Message
+  mnu_users: Users
+  mnu_types_objects: Objects types
+  mnu_status_objects: Objects status
+  mnu_roles: Roles
+  mnu_volumes: Volumes
+  mnu_sequences: Sequences
+  mnu_acces: Acces
+  mnu_links: Links
+  mnu_checks: Reservations
+  mnu_roles_users: Roles/users
+  mnu_datafiles: Data files
+  mnu_groups: Groups
+  mnu_notifications: Notifications
+  mnu_my_notifications: My notifications
+  mnu_relations: Relations
+  mnu_tools: Tools
+  mnu_views: Views
+  cut: "Cut"
+  revise: "Revise"
+  promote: "Promote"
+  demote: Demote
+  # tree (dans views show)
+  label_document_document: Documents
+  label_part_document: Documents
+  label_project_document: Documents
+  label_customer_document: Documents
+  label_document_part: Parts
+  label_part_part: Parts
+  label_project_part: Parts
+  label_customer_part: Parts
+  label_document_project: Projects
+  label_part_project: Projects
+  label_project_project: Projects
+  label_customer_project: Projects
+  label_document_user:  Users
+  label_part_user: Users
+  label_project_user: Users
+  label_customer_user: Users
+  label_document_forum: Forums
+  label_part_forum: Forums
+  label_project_forum: Forums
+  label_customer_forum: Forums
+  label_view: View
+  label_variant: Variant
+  label_all_variants: All variants
+  btn_select: Browser
+  # fin general
+  # access
+  legend_access: Enter access details
+  label_controller: Controler
+  label_action: Action
+  label_role: Role
+  access_edit: Editing access
+  access_list: Listing accesses
+  access_show: Detail access
+  access_new: New access
+  access_reset: Initialization
+  # check
+  legend_check: Enter check details
+  check_edit: Editing check
+  check_list: Listing checks
+  check_show: Detail check
+  check_new: New check
+  label_object: Object
+  label_object_id: ID
+  label_status: Status
+  label_out_reason: Out reason
+  label_out_date: Out date
+  label_out_user: Out user
+  label_in_reason: In reason
+  label_in_date: In date
+  label_in_user: In user
+  label_local_dir: Local dir
+  label_in_group: Check in group
+  label_out_group: Check out group
+  # customers
+  legend_customer: Enter customer details
+  customer_edit: Editing customer
+  customer_list: Listing customers
+  customer_show: Detail customer
+  customer_new: New customer
+  label_id: ID
+  label_ident: Identifier
+  label_type: Type
+  label_designation: Designation
+  label_responsible: Responsable
+  label_group: Groupe
+  label_date: Date
+  label_description: Description
+  label_statusobject: Status
+  label_typesobject: Type
+  # datafile
+  legend_datafile: Enter datafile details
+  datafile_edit: Editing file
+  datafile_list: Listing files
+  datafile_show: Detail file
+  datafile_new: New file
+  label_filename: File
+  label_volume: Volume
+  label_repository: Repository
+  label_content_type: Mime type
+  label_document: Document
+  label_restore_file: File to restore
+  datafile_show_file: Show the file
+  datafile_download_file: Download the file
+  # definitions
+  legend_definition: Enter definition details
+  label_uri: URI
+  label_roles_may_launch: Roles that may launch
+  label_groups: Groups
+  label_launch_fields: Launch fields
+  label_definition_role_ids_in: Roles
+  label_definition_role_ids_out: Other roles
+  button_add: Add
+  button_remove: Remove
+  label_fields: Attributs
+  label_objects: Objets en relation
+  button_swap: Echanger
+  button_reset: Défaut
+  button_undo: Annuler
+  label_definitions_attributs: Attributs
+  # documents
+  legend_document: Enter document details
+  document_edit: Editing document
+  document_list: Listing documents
+  document_show: Detail document
+  document_new: New document
+  label_revision: Revision
+  label_extension: Extension
+  add_datafile: Add file
+  document_datafiles: Document files
+  datafile_add: Add a file
+  label_nbfiles: Nb files
+  check_out: Check Out
+  is_check_out: Is Check Out
+  check_in: Check In
+  check_free: Unlock
+  download: download file
+  reason: Reason
+  document_check: Check
+  workitems_assoc: Currents workitems
+  history_assoc: Terminates workitems
+  # forums
+  legend_forum: Enter forum details
+  forum_edit: Forum edit
+  forum_list: Forums list
+  forum_show: Forum detail
+  forum_new: New forum
+  part_new_forum: New forum on this part
+  label_subject: Forum subject
+  label_message: First forum Message
+  forum_items: Messages
+  forum_follow: follow
+  forum_item_response: Response to
+  # forum_items
+  legend_forum_item: Enter forum_item details
+  forum_item_edit: Edition messag forum
+  forum_item_list: List messag forum
+  forum_item_show: Detail messag forum
+  forum_item_new: New messag forum
+  label_parent: Parent
+  label_author: Sender
+  label_forum: Forum
+  # groups
+  legend_group: Enter group details
+  group_edit: Group editing
+  group_list: List groups
+  group_show: Detail group
+  group_new: New groupe
+  label_group_users: Members
+  label_group_user_ids_out: Others users
+  label_group_user_ids_in: Users
+  label_group_father: Father group
+  # help
+  help_title: "Help on SYLRPLM application"
+  help_close_window: Close the help window
+  # info
+  # links
+  link_edit: Link editing
+  link_list: Links list
+  link_show: Link detail
+  link_new: New link
+  link_reset: Links Reset !!!
+  link_edit_in_tree: Edit instance link
+  legend_link: Relation
+  legend_link_values: Attributs
+  legend_link_father: Father
+  legend_link_child: Child
+  legend_link_effectivities: Effectivities
+  label_father: Father
+  label_child: Child
+  label_values: Values
+  label_effectivities: Effectivities
+  # main
+  legend_desktop: My desktop
+  label_domain: Domain
+  submit_create_domain: Create domain
+  label_theme: Theme
+  favori_document_delete: Remove documents from clipboard
+  favori_part_delete: Remove parts from clipboard
+  favori_project_delete: Remove projects from clipboard
+  favoris_document: Documents
+  favoris_part: Parts
+  favoris_project: Projects
+  favoris_customer: Customers
+  favoris_user: Users
+  favoris_link: Links
+  title_contacts: SYLRPLM Contacts
+  title_news: SYLRPLM News
+  label_today: Date
+  legend_main: Welcome
+  legend_plm_objects: PLM Objects
+  legend_collab: Collaboration
+  legend_admin: Administration
+  legend_organization: Organization
+  legend_param: Customization
+  legend_debug: Debug
+  legend_clipboard: Clipboard
+  submit: GO
+  help_first_use: "To begin (%{help})"
+  CV: Curriculum vitae
+  # notifications
+  legend_notification: Enter notification details
+  notification_edit: Notification edit
+  notification_list: Liste des Notifications list
+  notification_show: Notification detail
+  notification_new: New notification
+  label_event_date: Event date
+  label_event_type: Event type
+  label_notify_date: Notify date
+  label_path: Paths
+  button_notify_all: Notify all
+  # parts
+  legend_part: Enter part details
+  part_edit: Edition article
+  part_list: List articles
+  part_show: Detail article
+  part_new: New article
+  # plm_mailer
+  document_validated: I just validate the following document
+  part_validated: I just validate the following part
+  document_tovalidate: Please, validate this document
+  part_tovalidate: Please, validate this part
+  check_object_and_promote: Please, check and promote this object
+  direct_access: Direct access
+  notification_notify: Events notification
+  button_notify: Notification
+  label_object_type: Data type
+  # processes
+  legend_processes: Processes
+  mnu_flw_workitems: My actions
+  mnu_flw_processes: Running processes
+  mnu_flw_errors: Processes errors
+  mnu_flw_new_process: Launch a process
+  mnu_flw_history: Processes history
+  mnu_flw_definitions: Processus definitions
+  definitions_edit: Edit process definition
+  definitions_list: List process definition
+  definitions_show: Detail process definition
+  definitions_new: New process definition
+  errors_list: Processes errors
+  expressions_show: Detail expression
+  history_list: Processes history
+  history_show: Processus executed
+  processes_list: List processes
+  processes_show: Detail process
+  processes_new: New process
+  workitems_edit: Edit task
+  workitems_list: List tasks
+  workitems_show: Detail task
+  new_definition: Nex process définition
+  new_process: New process
+  workitems_all: All tasks
+  label_expressions: Expressions
+  label_launch_time: Launch
+  label_workitems: Workitems
+  label_paused: Paused
+  label_errors: Errors
+  launch_process: Launch new process instance
+  abort process: Abort the process
+  # projects
+  legend_project: Enter project details
+  project_edit: Edit a project
+  project_list: Liste of projects
+  project_show: Detail of project
+  project_new: New project
+  label_customer: Client
+  label_users: Collaborators
+  label_typeaccess: Confidentiality
+  label_project_user_ids_in: Affected
+  label_project_user_ids_out: Unaffected
+  # questions
+  legend_question: Enter question details
+  questions_edit: Edition question
+  questions_list: List questions
+  questions_show: Detail question
+  questions_new: New question
+  label_question: Question
+  label_answer: Answer
+  label_position: Position
+  label_asker: Asker
+  label_responder: Responder
+  # relation
+  legend_relation: Relation
+  label_father_plmtype: Father PLMType
+  label_father_type: Father type
+  label_child_plmtype: Child PLMType
+  label_child_type: Child type
+  label_cardin_occur_min: Minimal occurence
+  label_cardin_occur_max: Maximal occurence
+  label_cardin_use_min: Minimal usage
+  label_cardin_use_max: Maximal usage
+  label_views: Views
+  label_relation_view_ids_in: Attached views
+  label_relation_view_ids_out: Others
+  label_cardin_occur_min: Occur min
+  label_cardin_occur_max: Occur max
+  label_cardin_use_min: Use min
+  label_cardin_use_max: Use max
+  # roles
+  legend_role: Enter role details
+  role_list: Listing of roles
+  role_new: New role
+  role_show: Detail of role
+  role_edit:  Edition of role
+  label_role_users: Users
+  label_role_user_ids_in: Using
+  label_role_user_ids_out: Others
+  label_role_father: Father role
+  # sequences
+  legend_sequence: Enter sequence details
+  sequence_list: Listing of sequences
+  sequence_new: New sequence
+  sequence_show: Detail of sequence
+  sequence_edit:  Edition of sequence
+  label_value: Sequence value
+  label_min: Minimum value
+  label_max: Maximum value
+  label_utility: Utility
+  label_modify: Modifiable
+  label_sequence: Sequence
+  # session
+  legend_login: Please sign in
+  legend_new_account: Fill your account properties
+  submit_account: Sign in
+  submit_login: Login
+  submit_new_account: New account
+  submit_create_account: Account creation
+  label_new_email: Mail for new user
+  #shared-tree
+  object_tree: Structure
+  # statusobjects
+  legend_statusobjects: Enter statusobjects details
+  statusobjects_list: Listing of status
+  statusobjects_new: New status
+  statusobjects_show: Detail of status
+  statusobjects_edit: Edit the status
+  label_name: Name
+  label_rank: Rank
+  label_promote: Promote
+  label_demote: Demote
+  # msg _check_status
+  msg_define_status_document: Please, define documents status
+  msg_define_status_part: Please, define parts status
+  msg_define_status_project: Please, define projects status
+  msg_define_status_customer: Please, define customers status
+  msg_define_status_forum:  Please, define forums status
+  # tools
+  title_tools: Tools
+  legend_preferences: Preferences
+  legend_account: My account
+  # typesobjects
+  legend_typesobjects: Enter typesobjects details
+  typesobjects_list: Listing of types
+  typesobjects_new: New type
+  typesobjects_show: Detail of type
+  typesobjects_edit: Edit the type
+  label_typesobject_name: Type
+  # msg _check_types
+  msg_define_types_document: Please, define documents types
+  msg_define_types_part: Please, define parts types
+  msg_define_types_project: Please, define projects types
+  msg_define_types_customer: Please, define customers types
+  msg_define_types_forum: Please, define forums types
+  # users
+  legend_user: Enter user details
+  user_edit: Edit user - %{login}
+  reset_passwd: Reset password
+  account_edit_passwd: Edit password - %{login}
+  account_edit: Edit my account
+  user_list: User list
+  user_show: User detail
+  user_new: New User
+  label_login: Name
+  label_password: Password
+  label_confirm_password: Confirm
+  label_role: Role
+  label_email: Email
+  label_roles: Roles
+  label_nb_items: Data number in page
+  label_first_name: First name
+  label_last_name: Last name
+  label_language: Language
+  label_notification: Notifications
+  label_time_zone: Time zone
+  label_show_mail: Show mail adress
+  label_user_mail_option_all: "For any event on all my projects"
+  label_user_mail_option_selected: "For any event on the selected projects only..."
+  label_user_mail_option_only_my_events: "Only for things I watch or I'm involved in"
+  label_user_mail_option_only_assigned: "Only for things I am assigned to"
+  label_user_mail_option_only_owner: "Only for things I am the owner of"
+  label_user_mail_option_none: "No events"
+  language_fr: French
+  language_en: English
+  label_user_role_ids_in: User roles
+  label_user_role_ids_out: Other roles
+  label_user_group_ids_in: User groups
+  label_user_group_ids_out: Other groups
+  label_user_project_ids_in: Affected
+  label_user_project_ids_out: Unaffected
+  label_projects: Projects
+  #views
+  legend_view: Enter view details
+  views_list: Listing of views
+  views_new: New view
+  views_show: View detail
+  views_edit:  View editing
+  label_relations: Relations
+  label_view_relation_ids_in: Managed
+  label_view_relation_ids_out: Others
+  # volumes
+  legend_volume: Enter volume details
+  volume_list: Listing of volumes
+  volume_new: New volume
+  volume_show: Detail of volume
+  volume_edit:  Edition of volume
+  label_directory: Directory
+  label_protocol: Protocol
+  label_volume_name: Volume
+  # relations
+  no_relation: "-----"
+  specification: "Specification"
+  notice: "Notice"
+  norme: "Norme"
+  reference: "Reference"
+  bom: "BOM"
+  research: "Research"
+  production: "Production"
+  forum: Forum
+  # workitems
+  label_relation: Relation
+  label_wfid: Processus
+  label_workflow: Definition
+  label_since: Since
+  label_expid: Expression
+  label_wfrevision: Revision
+  label_store: Store
+  label_participant: Participant
+  label_activity: Activity
+  label_dispatch_time: Dispatch
+  button_task_validate: Validate this task
