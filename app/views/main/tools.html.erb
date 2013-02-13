@@ -2,28 +2,33 @@
 <% form_tag :controller=>:main, :action=>:index, :method=>:get do |form| %>
 <% if logged_in? %>
 <fieldset>
-	<legend>
-		<%= t(:legend_account) %>
-	</legend>
-	<%= render(:partial => "users/show",:locals => { :user => current_user, :fonct => "show" }) %>
-	<table class='menu_bas'>
-		<tr>
-			<td> <%= link_to t(:account_edit, :login => current_user.login), :id => current_user.id, :controller=>:users, :action=>:account_edit %> </td>
-			<td> <%= link_to t(:account_edit_passwd, :login => current_user.login), {:controller=>:users, :action=>:account_edit_passwd, :id=>current_user.id} %> </td>
-		</tr>
-	</table>
+  <legend>
+    <%= t(:legend_account) %>
+  </legend>
+  <%= render(:partial => "users/show",:locals => { :user => current_user, :fonct => "show" }) %>
+  <table class='menu_bas'>
+    <tr>
+      <td> <%= link_to t(:account_edit, :login => current_user.login), :id => current_user.id, :controller=>:users, :action=>:account_edit %> </td>
+      <td> <%= link_to t(:account_edit_passwd, :login => current_user.login), {:controller=>:users, :action=>:account_edit_passwd, :id=>current_user.id} %> </td>
+    </tr>
+  </table>
 </fieldset>
 <%end%>
 <fieldset>
-	<legend>
-		<%= t(:legend_preferences) %>
-	</legend>
-	<%= label_tag t(:label_theme) %>
-	<%= select_tag(:theme, @themes) %>
-	<br/>
-	<%= label_tag t(:label_language) %>
-	<%= select_tag(:locale, options_for_select(@languages)) %>
-	<br/>
+  <legend>
+    <%= t(:legend_preferences) %>
+  </legend>
+
+  <p>
+    <%= label_tag t(:label_theme) %>
+    <%= select_tag(:theme, @themes) %>
+  </p>
+
+  <p>
+    <%= label_tag t(:label_language) %>
+    <%= select_tag(:locale, options_for_select(@languages)) %>
+  </p>
+
+  <p><%= submit_tag t(:proceed), class: 'btn' %></p>
 </fieldset>
-<%= h_img_sub(:submit) %>
 <% end %>

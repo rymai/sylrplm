@@ -1,19 +1,22 @@
-<% form_for :session, :url => {:controller=>:sessions , :action=>:create} do |form| %>
+<%= title t(:connect) %>
+
+<% form_for :session, url: { controller: :sessions, action: :create} do |form| %>
 <fieldset>
-	<legend>
-		<%= t(:legend_login) %>
-	</legend>
-	<%= form.label t(:label_login) %>
-	<%= form.text_field :login %> <%= submit_tag t(:submit_new_account) %>
-	<br/>
-	<%= form.label t(:label_password) %>
-	<%= form.password_field :password %>
-	<br/>
-	<table class='menu_bas'>
-		<tr>
-			<td> <%= submit_tag t(:submit_account) %> </td>
-			<td></td>
-		</tr>
-	</table>
+  <legend>
+    <%= t(:legend_login) %>
+  </legend>
+  <p>
+    <%= form.label t(:label_login) %>
+    <%= form.text_field :login %>
+  </p>
+
+  <p>
+    <%= form.label t(:label_password) %>
+    <%= form.password_field :password %>
+  </p>
+
+  <p><%= submit_tag t(:submit_account), class: 'btn' %></p>
+
+  <p><%= link_to t(:submit_new_account), new_account_path %></p>
 </fieldset>
-<% end %> 
+<% end %>

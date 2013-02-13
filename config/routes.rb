@@ -24,10 +24,8 @@ ActionController::Routing::Routes.draw do |map|
 	map.resource :sessions, :only => [:new, :create , :destroy]
 	#map.resource :sessions, :only => [:new, :create, :update, :destroy], :member => { :choose_role => :get }
 	# map.resource :sessions, :only => [:new, :create, :update, :destroy]
-	map.connect(
-	'sessions/create_new_account',
-	:controller => 'sessions',
-	:action => 'create_new_account')
+	map.new_account 'sessions/new_account', controller: 'sessions', action: 'new_account', conditions: { method: :get }
+	map.create_account 'sessions/create_account', controller: 'sessions', action: 'create_account', conditions: { method: :post }
 
 	map.connect(
 	'sessions/login',
@@ -303,7 +301,7 @@ ActionController::Routing::Routes.draw do |map|
 	'users/browse',
 	:controller => 'users',
 	:action => 'browse')
-	
+
 	map.connect(
 	'users/:id/reset_passwd',
 	:controller => 'users',
@@ -318,12 +316,12 @@ ActionController::Routing::Routes.draw do |map|
 	'users/:id/account_update',
 	:controller => 'users',
 	:action => 'account_update')
-	
+
 	map.connect(
 	'users/:id/account_edit_passwd',
 	:controller => 'users',
 	:action => 'account_edit_passwd')
-	
+
 	map.resources :groups
 
 	map.resources :user_groups

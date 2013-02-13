@@ -34,9 +34,9 @@
 
         $> alias be="bundle exec"
         # $> be rake db:drop && be rake db:create && be rake db:migrate && be rake db:populate
-        $> rake db:reset # seulement si changement de modele
-        $> rake sylrplm:import_domain[db/custos/sicm,sicm.custo] # recharge le parametrage de base
-        $> rake sylrplm:import_domain[db/custos/sicm,sample.table] # recharge un exemple de projet
+        $> be rake db:reset # seulement si changement de modele
+        $> be rake 'sylrplm:import_domain[db/custos/sicm,sicm.custo]' # recharge le parametrage de base
+        $> be rake 'sylrplm:import_domain[db/custos/sicm,sample.table]' # recharge un exemple de projet
 
 - Installation de l'application sur Heroku
 
