@@ -1,3 +1,5 @@
+require 'rack/ssl'
+
 # Settings specified here will take precedence over those in config/environment.rb
 config.middleware.insert_before ::Rack::Lock, ::Rack::SSL
 
@@ -24,9 +26,7 @@ config.log_level = :error
 
 # Disable delivery errors, bad email addresses will be ignored
 # config.action_mailer.raise_delivery_errors = false
-config.action_mailer.default_url_options = {
-    :host => "sylrplm.heroku.com"
-  }
+config.action_mailer.default_url_options = { host: 'sylrplm.herokuapp.com' }
+
 # Enable threaded mode
 # config.threadsafe!
-
