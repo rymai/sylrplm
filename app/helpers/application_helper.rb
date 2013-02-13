@@ -1,5 +1,10 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+
+  def title(text)
+    content_for :title, text
+  end
+
 	def h_value_or_default(value, default)
 		ret=default
 		unless value.nil?
@@ -31,11 +36,11 @@ module ApplicationHelper
 		end
 		ret
 	end
-	
+
 	def h_if_differ(current, previous)
 		current
 	end
-	
+
 
 	# renvoie la valeur de l'attribut att sur l'objet
 	# att peut etre un attribut "compose" tel que owner.login, d'ou l'utilisation de eval
@@ -127,11 +132,11 @@ module ApplicationHelper
 	def icone(object)
 		type = "#{object.model_name}_#{object.typesobject.name}" unless object.typesobject.nil?
 		fic="/images/#{type}.png"
-		
+
 		if !File.exists?("#{RAILS_ROOT}/public#{fic}")
 			type="#{object.model_name}"
 			fic="/images/#{type}.png"
-			
+
 		end
 		mdl_name=t("ctrl_#{type.downcase}")
 		"<img class='icone' src='#{fic}' title='#{mdl_name}'></img>"
