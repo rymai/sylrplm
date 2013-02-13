@@ -28,4 +28,4 @@ bundle/
 !public/assets/*.gz
 .pydevproject
 vol-local*
-
+.env
