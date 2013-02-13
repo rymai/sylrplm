@@ -1,5 +1,5 @@
 # Settings specified here will take precedence over those in config/environment.rb
-config.middleware.insert_before Rack::Lock, Rack::SSL
+config.middleware.insert_before ::Rack::Lock, ::Rack::SSL
 
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
