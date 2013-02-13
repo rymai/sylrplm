@@ -7,9 +7,6 @@ require_dependency 'controllers/plm_tree'
 require_dependency 'error_reply'
 
 class ApplicationController < ActionController::Base
-  if %w[staging production].include?(Rails.env)
-    ssl_required
-  end
   include Controllers::PlmObjectControllerModule
 
   helper :all # include all helpers, all the time

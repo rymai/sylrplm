@@ -24,7 +24,7 @@ gem 'will_paginate' , '~> 2.3.16'
 
 group :staging, :production do
   gem 'thin'
-  gem 'ssl_requirement'
+  gem 'rack-ssl'
 end
 
 group :development do
