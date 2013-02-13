@@ -24,8 +24,10 @@ gem 'will_paginate' , '~> 2.3.16'
 
 group :staging, :production do
   gem 'thin'
+  gem 'ssl_requirement'
 end
 
 group :development do
   gem 'foreman'
+  gem 'letter_opener'
 end

@@ -1,45 +1,34 @@
-# Application SylRPLM : Product Life Management
+# SylRPLM : Product Life Management
 
-* Pré-requis
-  - RubyGems : https://rubygems.org/pages/download
-  - Ruby >= 1.9.2
+## Pré-requis
 
-* Mise en place
-  - Cloner le repository git hébergé sur GitHub :
+- RubyGems : https://rubygems.org/pages/download
+- Ruby 1.9.3
 
-        $> git clone git://github.com/sylvani/sylrplm.git
+## Mise en place
 
-  ou
+- Cloner le repository git hébergé sur GitHub :
+  `$> git clone git://github.com/sylvani/sylrplm.git`
+- Installation des gems : `$> cd sylrplm && bundle install`
 
-  - Télécharger le zip (https://github.com/sylvani/sylrplm/zipball/master) puis le décompresser :
-
-        $> unzip sylrplm.zip -d sylrplm
-
-  - Se placer dans la racine de l'application
-
-        $> cd sylrplm
-
-- Installation des gems
-
-        $> bundle install
-
-- Environnement windows
-  - Ajouter le chemin de mysql/bin au PATH
-  - Télécharger http://instantrails.rubyforge.org/svn/trunk/InstantRails-win/InstantRails/mysql/bin/libmySQL.dll
+- (FIXME) Environnement Windows
+    - Ajouter le chemin de mysql/bin au PATH
+    - Télécharger http://instantrails.rubyforge.org/svn/trunk/InstantRails-win/InstantRails/mysql/bin/libmySQL.dll
     et copier la dll dans le répertoire bin de Ruby
 
-- Installation de l'application en developement
+## Setup de développement
 
-  - Créer et charger le schéma de la base de données
+- Créer la DB et générer des données de base
+  `$> alias be="bundle exec"`
+  `$> be rake db:reset` (seulement si changement de modele)
+  `$> be rake 'sylrplm:import_domain[db/custos/sicm,sicm.custo]'` (recharge le parametrage de base)
+  `$> be rake 'sylrplm:import_domain[db/custos/sicm,sample.table]'` (recharge un exemple de projet)
 
-        $> alias be="bundle exec"
-        # $> be rake db:drop && be rake db:create && be rake db:migrate && be rake db:populate
-        $> be rake db:reset # seulement si changement de modele
-        $> be rake 'sylrplm:import_domain[db/custos/sicm,sicm.custo]' # recharge le parametrage de base
-        $> be rake 'sylrplm:import_domain[db/custos/sicm,sample.table]' # recharge un exemple de projet
+- Créer le fichier `.env` qui contient les variables d'environnement utilisées par l'app:
+  `$> echo "RACK_ENV=development" >>.env`
 
-- Installation de l'application sur Heroku
+## Déploiement sur Heroku
 
-  - Charger le schéma de la base de données (chaque app est créée avec une base)
-
-        $> bundle exec heroku rake db:migrate
+- [Installer la Heroku Toolbelt](https://toolbelt.heroku.com).
+- Pusher sur la git remote `production` (Heroku): `$> git push production`
+- Lancer les migrations (si besoin): `$> heroku run rake db:migrate`

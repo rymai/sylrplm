@@ -15,14 +15,14 @@ config.action_controller.perform_caching             = false
 config.action_view.cache_template_loading            = false
 
 # Don't care if the mailer can't send
-config.action_mailer.raise_delivery_errors = true
-config.action_mailer.default_url_options = {
-  :host => "localhost:3000"
-}
+config.action_mailer.raise_delivery_errors = false
+config.action_mailer.delivery_method = :letter_opener
+config.action_mailer.default_url_options = { host: "localhost:5000" }
+
 # See everything in the log (default is :info)
 config.log_level = :info
 #FATAL an unhandleable error that results in a program crash
 #ERROR a handleable error condition
 #WARN  a warning
 #INFO  generic (useful) information about system operation
-#DEBUG 
+#DEBUG

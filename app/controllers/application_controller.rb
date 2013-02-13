@@ -7,6 +7,10 @@ require_dependency 'controllers/plm_tree'
 require_dependency 'error_reply'
 
 class ApplicationController < ActionController::Base
+  if %w[staging production].include?(Rails.env)
+    include SslRequirement
+    ssl_required
+  end
   include Controllers::PlmObjectControllerModule
 
   helper :all  # include all helpers, all the time
@@ -21,7 +25,7 @@ class ApplicationController < ActionController::Base
   before_filter :authorize, :except => [:index, :init_objects]
   before_filter :set_locale
   before_filter :define_variables
-  #
+
   def update_accessor(obj)
     mdl_name = obj.model_name
     params[mdl_name][:owner_id]=current_user.id if obj.instance_variable_defined?(:@owner_id)
@@ -137,7 +141,7 @@ class ApplicationController < ActionController::Base
     WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
     WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
   	@myparams = params
-  	
+
   end
 
   # nombre d'objets listes par page si pagination
