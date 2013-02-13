@@ -25,6 +25,7 @@ gem 'will_paginate' , '~> 2.3.16'
 group :staging, :production do
   gem 'thin'
   gem 'rack-ssl'
+  gem 'newrelic_rpm'
 end
 
 group :development do

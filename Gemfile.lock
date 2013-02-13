@@ -47,6 +47,7 @@ GEM
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.6.5)
+    newrelic_rpm (3.5.5.38)
     nokogiri (1.5.6)
     pg (0.14.1)
     polyglot (0.3.3)
@@ -115,6 +116,7 @@ DEPENDENCIES
   json (= 1.5.5)
   letter_opener
   mail (= 2.3.0)
+  newrelic_rpm
   pg
   rack-ssl
   rails (= 2.3.17)
