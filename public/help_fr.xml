@@ -1,62 +1,161 @@
 <sylrplm_help >
-    Bienvenue dans l'application SYLRPLM développée sur "Ruby On Rails"#img=rails.png=img##lnk=http://www.railsfrance.org/=lnk#"
+    Bienvenue dans l'application SYLRPLM développée sur "Ruby On Rails" : #img=rails.png=img##lnk=http://www.railsfrance.org/=lnk#
     <msg key="help_first_use" title="Prise en main">
-    	Pour une première prise en main, vous pouvez parcourir, en tant que visiteur, les différents menus de gauche pour consulter les données gérées par l'application.
+    	Tout d'abord, nous vous invitons à prendre connaissance des principales fonctionnalités de l'application#jump=help_main_functions=jump#.
+    	Ensuite, pour une première prise en main, vous pouvez parcourir, en tant que visiteur, les différents menus de gauche pour consulter les données gérées par l'application.
     	Certains des menus vous demanderons de vous connecter car ils permettent de voir plus de données et d'en modifier certaines.
     	Vous pourrez alors soit donner un identifiant et un mot de passe que vous possédez ou indiquer celui que vous voulez créer.
-    	Ceci vous permettra, dans un premier temps en tant que consultant, de voir plus de données. 
+    	Ceci vous permettra, dans un premier temps en tant que consultant, de manipuler plus de données. 
+    </msg>
+    <msg key="help_main_functions" title="Principales fonctionnalités">
+    	L'application s'articule autour de la gestion d'articles dans des structures configurables.
+    	Ces articles sont associés à un ou des projets repondant aux besoins exprimés par des clients
+    	Les fonctions permettant ceci sont:
+    	<msg key="help_end_user_functions" title="Fonctionnalités PLM">
+    		<ul>
+	    		<li title="Gestion documentaire">
+	    			La gestion documentaire comprend les 2 composants indissociables suivants:
+	    			<ul>
+	    				<li title="Documents">
+			    			Les fonctions suivantes sont effectives sur les documents: Identification, création, édition, suppression, révision, suivi de la maturité
+					    	Les documents peuvent être associés aux articles, projets ou clients
+					    	Un document peut avoir un ou plusieurs fichiers associés:
+			    		</li>
+			    		<li title="Fichiers">
+			    			Les fonctions d'identification, création, téléchargement et édition sous contrôle, suppression, révision sont effectives sur les fichiers
+			    			#img=help/idea.png=img# De plus il est possible de stocker les fichiers sur un serveur "local" ou sur un "hebergeur" du type "cloud" (amazon)
+			    		</li>
+			    	</ul>
+		    	</li>
+		    	<li title="Gestion d' articles">
+		    		Identification, création, édition, suppression, révision, maturité
+					</li>
+					<li title="Configuration">
+		    			Notion de produit ayant des variantes (ligne produit) avec des critères d'exigences ou effectivités , chaque article répondant ensuite à une ou plusieurs de ces exigences
+		    	</li>
+		    	<li title="Gestion de projets">
+		    		Identification, création, édition, suppression, révision, maturité
+		    	</li><li title="Gestion de clients">
+		    		Identification, création, édition, suppression, révision, maturité
+		    	</li>
+		    	<li title="Mise en oeuvre de processus">
+		    		
+		    		<ul title="Certaines fonctionnalités citées ci dessus sont mises en oeuvre sous contrôle de processus permettant:">
+							<li title="Controles">
+								Controle de validation(s) par des utilisateurs habilités
+		    			</li>
+		    			<li title="Suivi">
+		    				Prise en compte des remarques 
+		    				Historisation du processus associé aux modifications des objets
+		    			</li>
+		    		</ul>   		
+		    		<ul title="Les 2 processus implémentés sont les suivants, d'autres peuvent être facilement ajoutés grâce au framework décrit ci après.">
+		    			<li title="Promotion">
+		    				Changement de statut sous 
+		    				Suivi des remarques associés
+		    			</li>	
+		    			<li title="Revision">
+		    				Création d'une révision sous controle
+		    			</li>
+		    		</ul>
+		    	</li>
+    		</ul>
+    	</msg>
+    	<msg key="help_admin_functions" title="Fonctionnalités d'administration">
+    		<ul>
+	    		<li title="Gestion des utilisateurs">
+	    		</li>
+	    		<li title="Gestion des rôles">
+	    		</li>
+	    		<li title="Gestion des groupes">
+	    		</li>
+	    		<li title="Gestion des droits d'accès (autorisations)">
+	    		</li>
+	    		<li title="Gestion des volumes de stockage des fichiers">
+	    		</li>
+	    	</ul>
+	    </msg>
+    	<msg key="help_framework_functions" title="Framework">
+	    	Les différents composants de l'application sont paramétrables en utilisant le framework inclus dans l'application.
+	    	<ul>
+		    	<li title="Celui ci comprend les possibilites suivantes">
+		    	<ul>
+		    		<li title="Paramétrage des types">
+		    			Chaque objet décrit ci dessus peut être différencié suivant différents types dépendants des besoins de l'entreprise.
+		    		</li>
+		    		<li title="Paramétrage des statuts">
+		    			Chaque type d' objet décrit ci dessus peut avoir différents statuts de maturité dépendants des besoins de l'entreprise.
+		    		</li>
+		    		<li title="Paramétrage des valeurs par défauts et séquence d'identification">
+		    			Une valeur par défaut et/ou une séquence de numérotation peut être définie sur chaque attribut de chaque objet décrit ci dessus 
+		    		</li>
+		    		<li title="Paramétrage des relations">
+		    			Définition des relations possibles entre n'importe quel objet décrit ci dessus
+		    		</li>
+		    		<li title="Paramétrage des vues">
+		    			Définition des relations affichables dans l'exploration des objets
+		    		</li>
+		    		<li title="Définition des processus">
+		    			Les processus sont définis en langage ruby
+		    		</li>
+		    	</ul>
+		    	</li>
+	    		<li title="Intégration continue">
+			    	De plus, il est possible d'exporter et importer l'ensemble d'un paramétrage correspondant aux besoins d'un client
+			    	#img=help/idea.png=img# De la même manière, des exemples de données peuvent être ainsi exportés et importés afin de construire facilement des jeux d'essai ou de démonstration.
+			    	Voir la partie "paramétrage/domain" ci dessous, cette documentation montrant un premier exemple (sample.table)
+			    </li> 
+	    	</ul>
+	    </msg>
     </msg>
     <msg key="help_presentation" title="Présentation générale">
-        <msg key="help_banner" title="Bandeau">
-        		Au démarrage de l'application
-            #img=help/bandeau.png=img#
-            Permet de se connecter explicitement et de se déconnecter.
-            Indique le nom de l'utilisateur et son rôle quand il est connecté
-            #img=help/bandeau2.png=img#
+        <msg key="help_screen_main" title="Ecran principal">
+        		Au lancement de l'application, l'écran suivant s'affiche:
+            #img=help/screen_main.png=img#
+            Il comprend les 3 parties suivantes:
+        <ul>
+            <li title="Bandeau">Au démarrage de l'application
+            	#img=help/screen_banner_top1.png=img#
+            	Permet de se connecter explicitement et de se déconnecter.
+            	Indique le nom de l'utilisateur et son rôle ainsi que le projet auquelle il participe dans sa session
+            	#img=help/screen_banner_top2.png=img#
+            </li>
+            <li title="Menus"> 
+            	Cette zone contient tous les menus de l'application:
+            	#img=help/screen_left_menus.png=img#
+            	Les utilisateurs ayant un rôle d'administration ont plus de menus à leur disposition:
+            	#img=help/screen_left_menus_admin.png=img#
+           	</li>
+           	<li title="Données"> 
+            	Cette zone principale contient les différentes vues des données, par exemple voici la vue listyant les articles :
+            	#img=help/screen_content.png=img#
+            	Les différentes vues, dépendants des modules et menus, sont explicités dans cette documentation. 
+           	</li>
+            </ul>
         </msg>
         <msg key="help_banner" title="Date - Aide">
         		#img=help/module_date.png=img#
         		Affiche la date courante
             Permet d'activer l'aide sur un menu: clic sur l'image help puis clic sur un menu.
         </msg>
-        <msg key="help_theme" title="Thèmes">
-						#img=help/theme.png=img#
-						Permet de changer le thème de présentation de l'application.
-        </msg>
-        <msg key="help_language" title="Langues">
-						#img=help/langue.png=img#
-						Permet de changer la langue de l'application.
-        </msg>
-        <msg key="help_icones" title="Icones">
-            <ul>
-                <li title="Déconnexion">#img=disconnect.png=img#</li>
-                <li title="Explorer un objet">#img=explorer.png=img#</li>
-                <li title="Editer un objet">#img=edit.png=img#</li>
-                <li title="Réviser un objet">#img=revise.png=img#</li>
-                <li title="Couper la relation d'un objet avec son 'père'">#img=cut.png=img#</li>
-                <li title="Détruire un objet">#img=destroy.png=img#</li>
-                <li title="Lancer le filtrage de la liste des objets">#img=filter.png=img#</li>
-                <li title="Copier un objet dans le presse papier">#img=copy.png=img#</li>
-                <li title="Coller les documents du presse papier">#img=paste_documents.png=img#</li>
-                <li title="Coller les articles du presse papier">#img=paste_parts.png=img#</li>
-                <li title="Coller les projets du presse papier">#img=paste_projects.png=img#</li>
-                <li title="Valider la création ou modification">#img=submit.png=img#</li>
-                <li title="Activer l'aide sur un menu">#img=help.png=img#</li>
-                <li title="Aller au chapitre principal">#img=help_main.png=img#</li>
-                <li title="Aller au chapitre suivant">#img=help_next.png=img#</li>
-                <li title="Aller au chapitre précedent">#img=help_previous.png=img#</li>
-                <li title="Aller au chapitre supérieur">#img=help_upper.png=img#</li>
-                <li title="Aller au début de la documentation">#img=welcome.png=img#</li>
-            </ul>
-        </msg>
         <msg key="help_authorization" title="Autorisations/login">
                 Certains menus exigent que l'utilisateur ait certains droits sur les objets, il doit donc se connecter.
                 Cette connexion s'effectue en deux temps soit sur demande (voir bandeau), soit suite à l'activation d'un menu :
                 <ul>
-                    <li title="Connexion">#img=help/login_1.png=img#</li>
-                    <li title="Choix du rôle">#img=help/login_2.png=img#</li>
+                    <li title="Connexion">
+                    	#img=help/login_1.png=img#
+	                    Valider le compte si vous avez déja un compte.
+	                    Sinon, demander un compte et après avoir renseigné le nom et mot de passe que vous desirez, l'administrateur vous affectera le rôle consultant 
+	                    Vous pourrez alors vous connecter sur votre compte
+	                    Attention: Pour le moment, il n'y a pas de notification explicite de la mise à disposition du compte.
+                    </li>
+                    <li title="Choix du contexte">
+                    	#img=help/login_2.png=img#
+                    </li>
                 </ul>
         </msg>
+        
+       
         <msg key="help_filter" title="Filtre">
             Dans toutes les pages listant des objets, il est possible de ne voir qu'une partie de ceux ci.
             Ceci en renseignant le filtre et en validant:
@@ -76,7 +175,7 @@
                 <li title="Documents avant tri">
                     #img=help/documents_tri_1.png=img#
                 </li>
-                <li title="Documents après tri sur l'attribut 'type'">
+                <li title="Documents après tri sur l'attribut 'Identifiant'">
                     #img=help/documents_tri_2.png=img#
                 </li>
             </ul>
@@ -86,10 +185,10 @@
             , la page n'affiche que ce nombre maximum d'objets.
             Il est possible de demander l'affichage des autres pages à l'aide d'un bandeau de pagination:
             <ul>
-                <li title="Liste des documents">
+                <li title="Liste des articles">
                     #img=help/pagination_1.png=img#
                 </li>
-                <li title="Après appui sur Next">
+                <li title="Après appui sur 'Suivante'">
                     #img=help/pagination_2.png=img#
                 </li>
             </ul>
@@ -145,16 +244,78 @@
             	Cas particulier: Le domaine nommé "admin" comporte tous les objets indispensables au fonctionnement de l'application, 
             	En consequence, ces objets ne doivent pas etre supprimes.
             	Voir le chapitre sur le paramétrage pour maitriser son utilisation.
+        </msg>
+        <msg key="help_icones" title="Icones">
+            <ul>
+                <li title="Déconnexion">#img=disconnect.png=img#</li>
+                <li title="Explorer un objet">#img=explorer.png=img#</li>
+                <li title="Editer un objet">#img=edit.png=img#</li>
+                <li title="Réviser un objet">#img=revise.png=img#</li>
+                <li title="Couper la relation d'un objet avec son 'père'">#img=cut.png=img#</li>
+                <li title="Détruire un objet">#img=destroy.png=img#</li>
+                <li title="Lancer le filtrage de la liste des objets">#img=filter.png=img#</li>
+                <li title="Copier un objet dans le presse papier">#img=copy.png=img#</li>
+                <li title="Coller les documents du presse papier">#img=paste_documents.png=img#</li>
+                <li title="Coller les articles du presse papier">#img=paste_parts.png=img#</li>
+                <li title="Coller les projets du presse papier">#img=paste_projects.png=img#</li>
+                <li title="Valider la création ou modification">#img=submit.png=img#</li>
+                <li title="Activer l'aide sur un menu">#img=help.png=img#</li>
+                <li title="Aller au chapitre principal">#img=help_main.png=img#</li>
+                <li title="Aller au chapitre suivant">#img=help_next.png=img#</li>
+                <li title="Aller au chapitre précedent">#img=help_previous.png=img#</li>
+                <li title="Aller au chapitre supérieur">#img=help_upper.png=img#</li>
+                <li title="Aller au début de la documentation">#img=welcome.png=img#</li>
+            </ul>
         </msg>	   		
     </msg>
     
     <msg key="help_modules" title="Modules">
         Les différents modules de l'application sont:
-        <msg key="help_welcome" title="Acceuil">
-            #img=help/module_acceuil.png=img#
-            Acceuil: Permet de visualiser cette page d'aide.
-            Mes actions: Permet de voir les actions à effectuer.
+        <msg key="help_my_desk" title="Mon bureau">
+        	#img=help/module_my_desk.png=img#
+	        <ul>
+	        	<li title="Acceuil">
+	            Permet de visualiser cette page d'aide.
+	          </li>
+	          <li title="Mes actions">
+	          	Permet de voir les actions à effectuer en fonction des processus en cours.
+	          </li>
+	          <li title="Mes notifications">
+	          	Permet de voir les notifications qui me sont adressées.
+	          </li>
+	          <li title="Outils">
+	          	Affiche des informations sur la session et le compte de l'utilidsateur connecté.
+	          	Permet de paramétrer le fonctionnement de l'application suivant des besoins personnels.
+	          	#img=help/module_tools.png=img#
+		          <ul>
+			          <li title="Mon compte">
+			          	Les informations du compte sont affichées.
+			          	Les fonctions suivantes sont disponibles 
+			          	<ul>
+			          		<li title="Editer mon compte">
+			          			Permet de modifier certaines informations de mon compte
+			          		</li>
+			          		<li title="Modifier le mot de passe">
+			          			Permet de modifier mon mot de passe
+			          		</li> 
+			          	</ul>
+			          </li>
+			         	<li title="Préférences">
+			         		<ul>
+			         			<li title="Thèmes">
+											Permet de changer le thème de présentation de l'application.
+			        			</li>
+			        			<li title="Langues">
+											Permet de changer la langue de l'application.
+										</li>
+									</ul>
+			          </li>
+		         </ul>
+	         </li>
+	       </ul>
+           
         </msg>
+        
         <msg key="help_objects" title="Les objets PLM">
             #img=help/module_objets.png=img#
             Le module "Objets PLM" permet de gérer les objets suivants:
@@ -890,6 +1051,8 @@
     <msg key="help_todo" title="Reste à faire">
         <ul>
             <li>IMPROV:Vues:prendre en compte l'attribut fixe o/n sur les valeurs par défaut pour permettre ou non la modif de la valeur par le user</li>
+            <li>DOC:écrire un guide méthodologique avec des cas d'utilisation "métier"</li>
+            <li>TEST:Terminer l'écriture des tests unitaires</li>
         </ul>
     </msg>
     <msg key="help_about" title="A propos de SYLRPLM">
