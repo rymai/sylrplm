@@ -19,12 +19,12 @@
   url   = git@github.com:sylvani/sylrplm.git
   fetch = +refs/heads/*:refs/remotes/origin/*
 
-[remote "production-cedar"]
+[remote "production"]
   url   = git@heroku.com:sylrplm-cedar.git
-  fetch = +refs/heads/*:refs/remotes/production-cedar/*
+  fetch = +refs/heads/master:refs/remotes/production/master
   push  = master:master
 
-[remote "production"]
+[remote "production-old"]
   url   = git@heroku.com:sylrplm.git
   fetch = +refs/heads/master:refs/remotes/production/master
   push  = master:master
