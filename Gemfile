@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-#ko syl et heroku ruby '1.9.3'
+#dispo sur bundle 1.2
+ruby '1.9.3'
 
 gem 'bundler'
 gem 'rake', '0.8.7'
@@ -10,8 +11,8 @@ gem 'mail', '2.3.0'
 gem 'json', '1.5.5'
 
 # Databases
-#ko syl gem 'pg'
-gem "mysql", "~> 2.8.1"
+gem 'pg'
+#gem 'mysql'
 
 # Internals
 gem 'ruote', '2.2.0'
