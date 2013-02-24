@@ -58,7 +58,7 @@ module OpenWFE
 	# Else, the store name will be 'unknown' (workitems that have gone astray).
 	#
 	class ParticipantMap
-		
+
 		alias :old_lookup_participant :lookup_participant
 		def lookup_participant (participant_name)
 			fname="ParticipantMap.lookup_participant:"
