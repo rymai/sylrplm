@@ -1,7 +1,8 @@
 <h1><%= t("document_show") %></h1>
-<% form_for(@document) do |f| %>
+<% fonct="show" %>
+<% form_for(@document, :html => { :id => h_form_html_id(@document, fonct) }) do |f| %>
 <%= f.error_messages %>
-<%end %>
+
 <p>
 	<b><%= t("label_ident") %></b>
 	<%= h @document.ident %>
@@ -37,7 +38,14 @@
 <p>
 	<b><%= t("label_date") %></b>
 	<%= l @document.date %>
-</p><h1></h1>
+</p>
+<%= h_type_values(@document, fonct) %>
+<p>
+	<b><%= t("label_domain") %></b>
+	<%= h @document.domain %>
+</p>
+<%end %>
+<h1></h1>
 <% files = @document.get_datafiles%>
 <% if files[:total]>0%> <h1><%= t("document_datafiles") %></h1>
 <%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files, :document=>@document}) %>
@@ -52,8 +60,7 @@
 <%= render(:partial => "shared/show_objects_in_relations", :locals=>{:object=>@document}) %>
 -->
 <h1></h1>
-<%= render(:partial => "shared/object_workitems", :object => @document)  %>
-<h1><%= t("document_check") %></h1>
+<%= render(:partial => "shared/object_workitems", :object => @document)  %> <h1><%= t("document_check") %></h1>
 <table class='menu_bas'>
 	<% if @document.frozen? %>
 	<tr>
@@ -91,7 +98,6 @@
 	<%end %>
 	<% end %>
 </table>
-
 <% unless @favori.get('document').count==0 %> <h1></h1>
 <table class='menu_bas'>
 	<tr>
@@ -101,12 +107,8 @@
 	</tr>
 	</td>
 </table>
-<%end%>
-
-<h1></h1>
-<%= render(:partial => "shared/tree", :object => @document ) %>
-
-<h1></h1>
+<%end%> <h1></h1>
+<%= render(:partial => "shared/tree", :object => @document ) %> <h1></h1>
 <% form_for(@document) do |f| %>
 <table class='menu_bas'>
 	<tr>

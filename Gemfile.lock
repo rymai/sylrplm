@@ -13,7 +13,7 @@ GEM
     activesupport (2.3.17)
     addressable (2.3.3)
     atom-tools (2.0.5)
-    builder (3.1.4)
+    builder (3.2.0)
     daemons (1.1.9)
     eventmachine (1.0.0)
     excon (0.9.6)
@@ -44,12 +44,12 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.21)
     multi_json (1.0.4)
-    mysql (2.9.1)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
     net-ssh (2.6.5)
-    newrelic_rpm (3.5.6.55)
+    newrelic_rpm (3.5.7.59)
     nokogiri (1.5.6)
+    pg (0.14.1)
     polyglot (0.3.3)
     rack (1.1.6)
     rack-ssl (1.3.3)
@@ -68,8 +68,8 @@ GEM
       sexp_processor (~> 4.0)
     ruby_parser (3.1.1)
       sexp_processor (~> 4.1)
-    rufus-cloche (1.0.2)
-      rufus-json (>= 1.0.1)
+    rufus-cloche (1.0.4)
+      rufus-json (>= 1.0.3)
     rufus-dollar (1.0.4)
     rufus-json (1.0.3)
     rufus-lru (1.0.5)
@@ -98,7 +98,7 @@ GEM
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
     thor (0.17.0)
-    tins (0.7.0)
+    tins (0.7.1)
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
@@ -116,8 +116,8 @@ DEPENDENCIES
   json (= 1.5.5)
   letter_opener
   mail (= 2.3.0)
-  mysql
   newrelic_rpm
+  pg
   rack-ssl
   rails (= 2.3.17)
   rake (= 0.8.7)
