@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
 
-  skip_before_filter :authorize,  :check_user
+  skip_before_filter :authorize, :check_user
   def new
     #puts "sessions_controller.new"+params.inspect
   end
@@ -20,15 +20,15 @@ class SessionsController < ApplicationController
       if user.save
         @current_user = user
         session[:user_id] = user.id
-        flash[:notice]    = t(:ctrl_role_needed)
+        flash[:notice] = t(:ctrl_role_needed)
         respond_to do |format|
           format.html { render :action => :edit }
-          format.xml  { head :ok }
+          format.xml { head :ok }
         end
       else
-        flash[:notice]    = t(:ctrl_new_account_not_created, :user=>user.login)
+        flash[:notice] = t(:ctrl_new_account_not_created, :user=>user.login)
         format.html { render :new }
-        format.xml  {render :xml => errs, :status => :unprocessable_entity }
+        format.xml {render :xml => errs, :status => :unprocessable_entity }
       end
     end
   end
@@ -36,49 +36,57 @@ class SessionsController < ApplicationController
   def create
     par=params[:session]
     puts "sessions_controller.create"+params.inspect
-    puts "sessions_controller.create:compte renseigne"
-    # compte renseigne (new)
-    cur_user = User.authenticate(par["login"], par["password"])
-    unless cur_user.nil?
-      puts "sessions_controller.create:user reconnu, verif si il peut se connecter"
-      # user reconnu, verif si il peut se connecter (role, groupe, projet, ...)
-      flash[:notice] = check_user_connect(cur_user)
-      if flash[:notice].nil?
-        puts "sessions_controller.create:il peut se connecter"
-        @current_user = cur_user
-        session[:user_id] = cur_user.id
-        flash[:notice]    = t(:ctrl_role_needed)
-        respond_to do |format|
-          format.html { render :action => :edit }
-          format.xml  { head :ok }
+    if params["commit"] == t(:submit_account)
+      puts "sessions_controller.create:compte renseigne"
+      # compte renseigne (new)
+      cur_user = User.authenticate(par["login"], par["password"])
+      unless cur_user.nil?
+        puts "sessions_controller.create:user reconnu, verif si il peut se connecter"
+        # user reconnu, verif si il peut se connecter (role, groupe, projet, ...)
+        flash[:notice] = check_user_connect(cur_user)
+        if flash[:notice].nil?
+          puts "sessions_controller.create:il peut se connecter"
+          @current_user = cur_user
+          session[:user_id] = cur_user.id
+          flash[:notice] = t(:ctrl_role_needed)
+          respond_to do |format|
+            format.html { render :action => :edit }
+            format.xml { head :ok }
+          end
+        else
+          puts "sessions_controller.create:il ne peut se connecter"
+          @current_user=nil
+          session[:user_id] = nil
+          respond_to do |format|
+            format.html { render :new }
+            format.xml {render :xml => errs, :status => :unprocessable_entity }
+          end
         end
       else
-        puts "sessions_controller.create:il ne peut se connecter"
+        puts "sessions_controller.create:user non reconnu"
         @current_user=nil
         session[:user_id] = nil
+        flash[:notice] = t(:ctrl_invalid_login)
         respond_to do |format|
           format.html { render :new }
-          format.xml  {render :xml => errs, :status => :unprocessable_entity }
+          format.xml {render :xml => errs, :status => :unprocessable_entity }
         end
       end
-    else
-      puts "sessions_controller.create:user non reconnu"
-      @current_user=nil
-      session[:user_id] = nil
-      flash[:notice] = t(:ctrl_invalid_login)
+
+    elsif params[:commit] == t(:submit_new_account)
+      puts "sessions_controller.create:demande de compte, on demande plus d'infos"
+      # demande de compte, on demande plus d'infos
+      flash[:notice] = t(:ctrl_account_needed)
       respond_to do |format|
-        format.html { render :new }
-        format.xml  {render :xml => errs, :status => :unprocessable_entity }
+        format.html { render :action => :new_account }
+        format.xml { head :ok }
       end
     end
     puts "sessions_controller.create:fin"
   end
 
-  def new_account
-  end
-
-  def create_account
-    puts "sessions_controller.new_account"+params.inspect
+  def create_new_account
+    puts "sessions_controller.create_new_account"+params.inspect
     puts "create:validation du compte"
     par=params[:session]
     # validation du compte
@@ -89,8 +97,8 @@ class SessionsController < ApplicationController
         @current_user=nil
         session[:user_id] = nil
         flash[:notice] =t(:ctrl_invalid_login)
-        format.html { render :new_account }
-        format.xml  { render :xml => errs, :status => :unprocessable_entity }
+        format.html { render :new }
+        format.xml { render :xml => errs, :status => :unprocessable_entity }
       else
         puts "create:validation du compte ok"
         # tout est saisis: creation du nouveau compte
@@ -101,19 +109,19 @@ class SessionsController < ApplicationController
           if flash[:notice].nil?
             @current_user = cur_user
             session[:user_id] = cur_user.id
-            flash[:notice]    = t(:ctrl_role_needed)
+            flash[:notice] = t(:ctrl_role_needed)
             format.html { render :action => "edit" }
-            format.xml  { head :ok }
+            format.xml { head :ok }
           else
             @current_user=nil
             session[:user_id] = nil
-            format.html { render :new_account }
-            format.xml  {render :xml => errs, :status => :unprocessable_entity }
+            format.html { render :new }
+            format.xml {render :xml => errs, :status => :unprocessable_entity }
           end
         else
-          flash[:notice]    = t(:ctrl_new_account_not_created, :user=>par["login"])
-          format.html { render :new_account }
-          format.xml  {render :xml => errs, :status => :unprocessable_entity }
+          flash[:notice] = t(:ctrl_new_account_not_created, :user=>par["login"])
+          format.html { render :new }
+          format.xml {render :xml => errs, :status => :unprocessable_entity }
         end
       end
     end
@@ -136,7 +144,7 @@ class SessionsController < ApplicationController
           flash[:notice] = t(:ctrl_user_connected, :user => current_user.login)
           respond_to do |format|
             format.html { redirect_to_main(uri) }
-            format.xml  { head :ok }
+            format.xml { head :ok }
           end
         else
           errs=@current_user.errors
@@ -145,7 +153,7 @@ class SessionsController < ApplicationController
           session[:user_id] = nil
           respond_to do |format|
             format.html { render :new }
-            format.xml  { render :xml => errs, :status => :unprocessable_entity }
+            format.xml { render :xml => errs, :status => :unprocessable_entity }
           end
         end
       else
@@ -153,7 +161,7 @@ class SessionsController < ApplicationController
         session[:user_id] = nil
         respond_to do |format|
           format.html { render :new }
-          format.xml  {render :xml => errs, :status => :unprocessable_entity }
+          format.xml {render :xml => errs, :status => :unprocessable_entity }
         end
       end
     end
@@ -165,7 +173,7 @@ class SessionsController < ApplicationController
     flash[:notice] = t(:ctrl_user_disconnected, :user => current_user.login) if current_user != nil
     #bouclage
     #format.html { redirect_to_main(uri) }
-    #format.xml  { head :ok }
+    #format.xml { head :ok }
     redirect_to(:controller => "main", :action => "index")
   end
 

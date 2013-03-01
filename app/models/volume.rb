@@ -6,7 +6,7 @@ class Volume < ActiveRecord::Base
 	include Models::SylrplmCommon
 
 	validates_presence_of :name, :protocol
-	validates_format_of :name, :with =>/^([a-z]|[A-Z]|[0-9]||[.-])+$/
+	validates_format_of :name, :with =>/^([a-z]|[A-Z]|[0-9]||[.])+$/
 	validates_uniqueness_of :name
 
 	has_many :users
@@ -24,8 +24,8 @@ class Volume < ActiveRecord::Base
 		super
 		if params_volume.nil?
 			self.directory = SYLRPLM::VOLUME_DIRECTORY_DEFAULT
-		self.set_default_values(true)
 		end
+		self.set_default_values(true)
 		self
 	end
 
@@ -38,7 +38,7 @@ class Volume < ActiveRecord::Base
 		directory_was = self.directory
 		ret = false
 		if self.protocol == "fog"
-			self.directory="sylrplm-"+Rails.env.slice(0,4)+"-"+Time.now.to_i.to_s
+			self.directory="sylrplm."+Rails.env.slice(0,4)+"."+Time.now.to_i.to_s
 		end
 		dir = self.create_dir(directory_was)
 		puts "Volume.dir=#{dir}"

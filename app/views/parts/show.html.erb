@@ -1,5 +1,6 @@
 <h1><%= t(:part_show) %></h1>
-<% form_for(@part) do |f| %>
+<% fonct="show" %>
+<% form_for(@part, :html => { :id => h_form_html_id(@part, fonct) }) do |f| %>
 <%= f.error_messages %>
 <% end %>
 <p>
@@ -38,6 +39,11 @@
 	<b><%= t(:label_date) %></b>
 	<%= l @part.date %>
 </p>
+<%= h_type_values(@part, fonct) %>
+	<p>
+	<b><%= t("label_domain") %></b>
+	<%= h @part.domain %>
+	</p>
 <h1></h1>
 <%= render(:partial => "shared/object_workitems", :object =>@part) %>
 <h1></h1>

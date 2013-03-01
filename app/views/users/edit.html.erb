@@ -1,7 +1,8 @@
 <h1><%= t(:user_edit) %></h1>
-<% form_for @the_user do |form| %>
+<% fonct="edit" %>
+<% form_for @the_user, :html => { :id => h_form_html_id(@the_user, fonct) } do |form| %>
 <%= form.error_messages %>
-<%= render(:partial => "users/edit",:locals => { :form => form, :fonct => "edit" }) %>
+<%= render(:partial => "users/edit",:locals => { :form => form, :fonct => fonct }) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= submit_tag t("update") %> </td>

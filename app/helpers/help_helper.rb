@@ -179,7 +179,7 @@ module HelpHelper
 		if(elem.attributes["title"]!=nil)
 			msg+="<a class='help_tr' href='#"+elem.attributes["key"]+"'>"+elem.attributes["title"]+"</a>\n"
 		end
-		if level<=4
+		if level<=::SYLRPLM::HELP_SUMMARY_LEVEL
 			elem.elements.each("msg") { |element|
 				msg+="<li class='help_key'>\n"
 				msg+=  h_help_summary(element, level)
@@ -245,13 +245,13 @@ module HelpHelper
 			txt.gsub!(10.chr,'<br/>')
 			txt.gsub!('\t','')
 			txt.gsub! /#hlp=(.+?)=hlp#/,
-			"<img class='help' id='\\1' src='images/help.gif' onclick=\"return helpPopup('\\1');\"></img>"
+			"<img class='help' id='\\1' src='images/help.png' onclick=\"return helpPopup('\\1');\"></img>"
 			txt.gsub! /#img=(.+?)=img#/,
 			"<img class='help_tr' src='images/\\1'></img>"
 			txt.gsub! /#jump=(.+?)=jump#/,
 			"<a class='help_tr' href='#\\1' target='_top'>"+t(:help_jump)+"</a>"
 			txt.gsub! /#lnk=(.+?)=lnk#/,
-			"<a class='help_tr' href='\\1' target='_blank'>"+t(:help_lnk_acces)+"</a>"
+			"<a class='help_tr' href='\\1' target='_blank' title='"+t(:help_lnk_acces)+"'><img src='images/submit.png'></img></a>"
 		end
 
 		txt+"\n"

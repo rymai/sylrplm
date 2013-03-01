@@ -2,7 +2,6 @@
 <% fonct="show" %>
 <% form_for(@document, :html => { :id => h_form_html_id(@document, fonct) }) do |f| %>
 <%= f.error_messages %>
-
 <p>
 	<b><%= t("label_ident") %></b>
 	<%= h @document.ident %>
@@ -44,8 +43,7 @@
 	<b><%= t("label_domain") %></b>
 	<%= h @document.domain %>
 </p>
-<%end %>
-<h1></h1>
+<%end %> <h1></h1>
 <% files = @document.get_datafiles%>
 <% if files[:total]>0%> <h1><%= t("document_datafiles") %></h1>
 <%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files, :document=>@document}) %>
@@ -67,7 +65,7 @@
 		<td> <%= t("freeze") %></td>
 	</tr>
 	<% else %>
-	<% if !@document.checked? %>
+	<% unless @document.checked? %>
 	<% form_for(@document, :url => {:id => @document.id, :action => :check_out }, :method => :get) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_out") %></td>
@@ -75,15 +73,21 @@
 		<td> <%= text_field_tag "check[out_reason]" %></td>
 	</tr>
 	<%end %>
-	<% else %>
+	<% else %> <!-- info sur reservation -->
 	<tr>
 		<td> <%= t("is_check_out") %></td>
+		
 		<td> <%= t("label_out_reason") %></td>
-		<td> <%= @checkout.out_reason.force_encoding('utf-8') %> </td>
+		<td> <%= text_field_tag "checkout[out_reason]" , @document.get_check_out.out_reason.force_encoding('utf-8') , :readonly=>:true %> </td>
+		<td> <%= t("label_out_user") %></td>
+		<td> <%= text_field_tag "checkout[out_user]" , @document.get_check_out.out_user, :readonly=>:true %> </td>
 	</tr>
+	<!-- liberation par celui qui a reserve seulement -->
+	<% if @document.can_be_check_in?(current_user) %>
 	<% form_for(@document, :url => {:id => @document.id, :action => :check_in }, :method => :get) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_in") %></td>
+		
 		<td> <%= label_tag t("label_in_reason") %></td>
 		<td> <%= text_field_tag "check[in_reason]" %></td>
 	</tr>
@@ -91,10 +95,12 @@
 	<% form_for(@document, :url => {:id => @document.id, :action => :check_free }, :method => :get) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_free") %></td>
+		
 		<td> <%= label_tag t("label_in_reason") %></td>
 		<td> <%= text_field_tag "check[in_reason]" %></td>
 	</tr>
 	<% end %>
+	<%end %>
 	<%end %>
 	<% end %>
 </table>

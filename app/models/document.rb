@@ -67,13 +67,8 @@ class Document < ActiveRecord::Base
     :source => :history_up
 
   def user=(user)
-      fname= "#{self.class.name}.#{__method__}"
-      LOG.info (fname) {"user=#{user.ident} "}
-      self.owner = user
-      self.group     = user.group
-      self.projowner = user.project
-      LOG.info (fname) {"owner=#{owner.ident} group=#{group.ident} projowner=#{projowner.ident}"}
-  end
+		def_user(user)
+	end
 
   #essai, appelle 10 fois par document !!!
   #def after_find
@@ -132,7 +127,20 @@ class Document < ActiveRecord::Base
     obj.edit
     obj
   end
-
+  
+  def get_check_out
+  	Check.get_checkout(self)
+  end
+  
+	def can_be_check_in?(user)
+		chk = get_check_out
+		ret=false
+		unless chk.nil?
+			ret=user==chk.out_user
+		end
+		ret
+	end
+  
   def check_out(params, user)
     fname= "#{self.class.name}.#{__method__}"
     LOG.info (fname){"params=#{params}, user=#{user.inspect}"} 
@@ -196,7 +204,11 @@ class Document < ActiveRecord::Base
   end
 
   def add_datafile(params,user)
-    datafile = Datafile.new(params.merge(user: user))
+    fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname){"params=#{params}, user=#{user.inspect}"} 
+    #datafile = Datafile.new(params.merge(user: user))
+    datafile = Datafile.new(params)
+    datafile.document = self
     if datafile.save
       self.datafiles << datafile
       self.save
@@ -207,7 +219,7 @@ class Document < ActiveRecord::Base
   end
 
   def remove_datafile(item)
-    self.datafile.delete(item)
+    self.datafiles.delete(item)
   end
 
   def get_datafiles

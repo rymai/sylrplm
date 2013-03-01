@@ -1,221 +1,3 @@
-Typesobject_360315624: 
-  id: "360315624"
-  forobject: datafile
-  name: autocad
-  fields: 
-  description: DAO Autocad
-  domain: "custo_sicm"
-
-
-
-Typesobject_64093143: 
-  id: "64093143"
-  forobject: document
-  name: fmat
-  fields: 
-  description: Fiche matiere
-  domain: "custo_sicm"
-Typesobject_117029505: 
-  id: "117029505"
-  forobject: document
-  name: norme
-  fields: 
-  description: Norme applicable
-  domain: "custo_sicm"
-Typesobject_353569266: 
-  id: "353569266"
-  forobject: document
-  name: m3d
-  fields: 
-  description: Numerisation 3D
-  domain: "custo_sicm"
-Typesobject_418777236: 
-  id: "418777236"
-  forobject: document
-  name: p2d
-  fields: 
-  description: Numerisation 2D
-  domain: "custo_sicm"
-Typesobject_569273268: 
-  id: "569273268"
-  forobject: document
-  name: exb
-  fields: 
-  description: Expression de besoin
-  domain: "custo_sicm"
-
-
-Typesobject_17665305: 
-  id: "17665305"
-  forobject: forum
-  name: tests
-  fields: 
-  description: Forum sur les tests
-  domain: "custo_sicm"
-Typesobject_251879061: 
-  id: "251879061"
-  forobject: forum
-  name: specifs
-  fields: 
-  description: Forum sur les specifications
-  domain: "custo_sicm"
-Typesobject_312726501: 
-  id: "312726501"
-  forobject: forum
-  name: design
-  fields: 
-  description: Forum sur la conception
-  domain: "custo_sicm"
-
-
-
-Typesobject_89393353: 
-  id: "89393353"
-  forobject: project
-  name: product
-  fields: 
-  description: Projet pour un produit
-  domain: admin
-Typesobject_314246312: 
-  id: "314246312"
-  forobject: project
-  name: sub-assembly
-  fields: 
-  description: Projet pour un sous ensemble
-  domain: "custo_sicm"
-
-
-Typesobject_109967184: 
-  id: "109967184"
-  forobject: definition
-  name: plm
-  fields: 
-  description: 
-  domain: admin
-  
-
-
-
-Typesobject_304033590: 
-  id: "304033590"
-  forobject: relation
-  name: cdc_requirement
-  fields: 
-  description: Exigences du cahier des charges
-  domain: "custo_sicm"
-Typesobject_557092610: 
-  id: "557092610"
-  forobject: relation
-  name: exb_requirement
-  fields: 
-  description: Exigences de l'expression de besoin
-  domain: "custo_sicm"
-
-
-Typesobject_646247456: 
-  id: "646247456"
-  forobject: datafile
-  name: text
-  fields: 
-  description: Fichier texte
-  domain: "custo_sicm"
-
-Typesobject_788606013: 
-  id: "788606013"
-  forobject: forum
-  name: requirements
-  fields: 
-  description: Forum sur les exigences
-  domain: "custo_sicm"
-
-Typesobject_802476987: 
-  id: "802476987"
-  forobject: datafile
-  name: spreadsheet
-  fields: 
-  description: Fichier tableur
-  domain: "custo_sicm"
-
-Typesobject_873691851: 
-  id: "873691851"
-  forobject: document
-  name: cdc
-  fields: 
-  description: Cahier des charges
-  domain: "custo_sicm"
-
-Typesobject_889037033: 
-  id: "889037033"
-  forobject: datafile
-  name: writer
-  fields: 
-  description: Traitement de texte
-  domain: "custo_sicm"
-
-Typesobject_942363587: 
-  id: "942363587"
-  forobject: datafile
-  name: catia
-  fields: 
-  description: CAO Catia
-  domain: "custo_sicm"
-
-Typesobject_959762344: 
-  id: "959762344"
-  forobject: forum
-  name: needs
-  fields: 
-  description: Forum sur les besoins
-  domain: "custo_sicm"
-
-Typesobject_975625710: 
-  id: "975625710"
-  forobject: project
-  name: standard
-  fields: 
-  description: Projet pour articles standards ou catalogues
-  domain: "custo_sicm"
-
-Typesobject_994999514: 
-  id: "994999514"
-  forobject: datafile
-  name: image
-  fields: 
-  description: fichier image jpg gif bmp
-  domain: "custo_sicm"
-
-Typesobject_1016696961: 
-  id: "1016696961"
-  forobject: document
-  name: calculsheet
-  fields: 
-  description: Feuille de calcul
-  domain: "custo_sicm"
-
-Typesobject_customer_private: 
-  id: "423945440"
-  forobject: customer
-  name: private
-  fields: 
-  description: Client externe a acces restreint
-  domain: "custo_sicm"
-
-Typesobject_customer_internal: 
-  id: "423945441"
-  forobject: customer
-  name: internal
-  fields: 
-  description: Service ou direction interne a l'entreprise
-  domain: "custo_sicm"
-  
-Typesobject_customer_public: 
-  id: "423945442"
-  forobject: customer
-  name: public
-  fields: 
-  description: Client externe accessible a tous
-  domain: "custo_sicm"
-
 
 Typesobject_41165346: 
   id: "41165346"
@@ -229,7 +11,7 @@ Typesobject_89393353:
   id: "89393353"
   forobject: project
   name: product
-  fields: 
+  fields: "{\"code\": \"\"}"
   description: Projet pour un produit
   domain: admin
 
@@ -253,7 +35,7 @@ Typesobject_218759731:
   id: "218759731"
   forobject: user
   name: $NEW_ACCOUNT
-  fields: 
+  fields: "{\"actif\": true}"
   description: Type donne au compte a sa creation, en attendant sa validation.
   domain: admin
 
@@ -269,8 +51,8 @@ Typesobject_291198241:
   id: "291198241"
   forobject: relation
   name: bom
-  fields: 
-  description: 
+  fields: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}}"
+  description: ""
   domain: admin
 
 Typesobject_382640329: 
@@ -285,7 +67,7 @@ Typesobject_446111194:
   id: "446111194"
   forobject: user
   name: person_
-  fields: 
+  fields: "{\"address\": \"\"}"
   description: Personne physique.
   domain: admin
 
@@ -305,6 +87,14 @@ Typesobject_598687896:
   description: Tache de processus
   domain: admin
 
+Typesobject_646247456: 
+  id: "646247456"
+  forobject: datafile
+  name: text
+  fields: "{\"editor\": \"notepad++\"}"
+  description: Fichier texte
+  domain: admin
+
 Typesobject_672869653: 
   id: "672869653"
   forobject: relation
@@ -315,25 +105,41 @@ Typesobject_672869653:
 
 Typesobject_678514879: 
   id: "678514879"
-  forobject: project_typeaccess
+  forobject: any_plmtype
   name: public
-  fields: 
+  fields: "{}"
   description: Projet public
+  domain: admin
+
+Typesobject_802476987: 
+  id: "802476987"
+  forobject: datafile
+  name: spreadsheet
+  fields: "{\"app_name\": \"\", \"app_version\": \"\"}"
+  description: Fichier tableur
   domain: admin
 
 Typesobject_804690363: 
   id: "804690363"
   forobject: user
   name: virtual_
-  fields: 
+  fields: "{}"
   description: Utilisateur virtuel, pour les batchs ...
+  domain: admin
+
+Typesobject_889037033: 
+  id: "889037033"
+  forobject: datafile
+  name: writer
+  fields: "{\"app_name\": \"\", \"app_version\": \"\"}"
+  description: Traitement de texte
   domain: admin
 
 Typesobject_989626522: 
   id: "989626522"
   forobject: part
   name: PRD
-  fields: 
+  fields: "{\"product_objective\": \"\"}"
   description: Produit
   domain: admin
 
@@ -341,7 +147,7 @@ Typesobject_989626523:
   id: "989626523"
   forobject: part
   name: VAR
-  fields: 
+  fields: "{\"variant_type\": \"\", \"variant_code\": \"\"}"
   description: Variante de produit
   domain: admin
 
@@ -349,7 +155,7 @@ Typesobject_989626524:
   id: "989626524"
   forobject: part
   name: EFF
-  fields: 
+  fields: "{\"eff_type\": \"\"}"
   description: Effectivite, liee au produit, a la variante et au link
   domain: admin
 
@@ -357,7 +163,7 @@ Typesobject_989626525:
   id: "989626525"
   forobject: part
   name: PIE
-  fields: 
+  fields: "{\"item_role\": \"\"}"
   description: Piece
   domain: admin
 
@@ -365,7 +171,7 @@ Typesobject_989626526:
   id: "989626526"
   forobject: part
   name: STR
-  fields: 
+  fields: "{\"str_type\": \"\", \"str_code\": \"\"}"
   description: Structure
   domain: admin
 
@@ -373,15 +179,15 @@ Typesobject_989626530:
   id: "989626530"
   forobject: relation
   name: configuration
-  fields: 
-  description: 
+  fields: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  description: ""
   domain: admin
 
 Typesobject_989626531: 
   id: "989626531"
   forobject: link
   name: bom
-  fields: 
+  fields: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   description: pour definir les relations from link de type bom
   domain: admin
 
@@ -397,7 +203,7 @@ Typesobject_1045584113:
   id: "1045584113"
   forobject: document
   name: directory
-  fields: "{}"
+  fields: "{\"type\": \"\"}"
   description: ""
   domain: admin
 
@@ -488,3 +294,163 @@ Typesobject_1045584126:
   fields: "{}"
   description: ""
   domain: admin
+
+Typesobject_17665305: 
+  id: "17665305"
+  forobject: forum
+  name: tests
+  fields: "{}"
+  description: Forum sur les tests
+  domain: sicm.custo
+
+Typesobject_64093143: 
+  id: "64093143"
+  forobject: document
+  name: fmat
+  fields: "{\"code_material\": \"\"}"
+  description: Fiche matiere
+  domain: sicm.custo
+
+Typesobject_117029505: 
+  id: "117029505"
+  forobject: document
+  name: norme
+  fields: "{\"type_norme\": [\"NF\", \"UK\", \"DE\", \"IT\", \"SP\"], \"ref_norme\": \"\"}"
+  description: Norme applicable
+  domain: sicm.custo
+
+Typesobject_251879061: 
+  id: "251879061"
+  forobject: forum
+  name: specifs
+  fields: "{}"
+  description: Forum sur les specifications
+  domain: sicm.custo
+
+Typesobject_312726501: 
+  id: "312726501"
+  forobject: forum
+  name: design
+  fields: "{}"
+  description: Forum sur la conception
+  domain: sicm.custo
+
+Typesobject_314246312: 
+  id: "314246312"
+  forobject: project
+  name: sub-assembly
+  fields: "{\"code\": \"\"}"
+  description: Projet pour un sous ensemble
+  domain: sicm.custo
+
+Typesobject_353569266: 
+  id: "353569266"
+  forobject: document
+  name: m3d
+  fields: "{\"def_level\": [\"ebauche\", \"semi-fini\", \"fini\"]}"
+  description: Numerisation 3D
+  domain: sicm.custo
+
+Typesobject_360315624: 
+  id: "360315624"
+  forobject: datafile
+  name: autocad
+  fields: "{\"code\": \"\"}"
+  description: DAO Autocad
+  domain: sicm.custo
+
+Typesobject_418777236: 
+  id: "418777236"
+  forobject: document
+  name: p2d
+  fields: "{\"format\": {\"A0\": \"1189*841\", \"A1\": \"841*594\", \"A2\": \"594*420\", \"A3\": \"420*297\", \"A4\": \"297*210\"}}"
+  description: Numerisation 2D
+  domain: sicm.custo
+
+Typesobject_423945440: 
+  id: "423945440"
+  forobject: customer
+  name: private
+  fields: "{\"code\": \"\"}"
+  description: Client externe a acces restreint
+  domain: sicm.custo
+
+Typesobject_423945441: 
+  id: "423945441"
+  forobject: customer
+  name: internal
+  fields: "{\"code\": \"\"}"
+  description: Service ou direction interne a l'entreprise
+  domain: sicm.custo
+
+Typesobject_423945442: 
+  id: "423945442"
+  forobject: customer
+  name: public
+  fields: "{\"code\": \"\"}"
+  description: Client externe accessible a tous
+  domain: sicm.custo
+
+Typesobject_569273268: 
+  id: "569273268"
+  forobject: document
+  name: exb
+  fields: "{\"ref_doc\": \"\"}"
+  description: Expression de besoin
+  domain: sicm.custo
+
+Typesobject_788606013: 
+  id: "788606013"
+  forobject: forum
+  name: requirements
+  fields: "{}"
+  description: Forum sur les exigences
+  domain: sicm.custo
+
+Typesobject_873691851: 
+  id: "873691851"
+  forobject: document
+  name: cdc
+  fields: "{}"
+  description: Cahier des charges
+  domain: sicm.custo
+
+Typesobject_942363587: 
+  id: "942363587"
+  forobject: datafile
+  name: catia
+  fields: "{\"version_catia\": \"\"}"
+  description: CAO Catia
+  domain: sicm.custo
+
+Typesobject_959762344: 
+  id: "959762344"
+  forobject: forum
+  name: needs
+  fields: "{}"
+  description: Forum sur les besoins
+  domain: sicm.custo
+
+Typesobject_975625710: 
+  id: "975625710"
+  forobject: project
+  name: standard
+  fields: "{}"
+  description: Projet pour articles standards ou catalogues
+  domain: sicm.custo
+
+Typesobject_994999514: 
+  id: "994999514"
+  forobject: datafile
+  name: image
+  fields: "{\"app_name\": \"\", \"app_version\": \"\"}"
+  description: fichier image jpg gif bmp
+  domain: sicm.custo
+
+Typesobject_1016696961: 
+  id: "1016696961"
+  forobject: document
+  name: calculsheet
+  fields: "{\"ref_doc\": \"\"}"
+  description: Feuille de calcul
+  domain: sicm.custo

@@ -44,6 +44,7 @@ fr:
   ctrl_init_done: Initialisation effectuée
   count_objects: " : %{number_begin}-%{number_end} / %{total}"
   ctrl_show_no_relation: "%{child_plmtype}(s) à copier mais il n'existe pas de relation entre '%{father_plmtype}' et '%{child_plmtype}'"
+  legend_type_values: Valeurs spécifiques au type
   # access
   ctrl_object_no_controlers: Controleurs non trouvés
   # application

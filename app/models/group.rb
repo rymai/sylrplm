@@ -6,7 +6,8 @@ class Group < ActiveRecord::Base
 
 	#has_many :user_groups, :dependent => :delete_all
 	#has_many :users, :through => :user_groups
-
+	validates_presence_of :name
+	validates_uniqueness_of :name
 	has_and_belongs_to_many :users
 
 	#has_many :group_definitions, :dependent => :delete_all

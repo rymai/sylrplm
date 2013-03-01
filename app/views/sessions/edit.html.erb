@@ -2,7 +2,7 @@
 <%= hidden_field_tag :user_id , @current_user.id %>
 <fieldset>
 	<legend>
-		<%= t(:legend_login) %>
+		<%= t(:legend_context) %>
 	</legend>
 	<%= form.label t(:label_role) %> 
 	<%= form.collection_select(:role_id, @current_user.roles, :id, :title, :options => {}, :selected => @current_user.role_id) %>

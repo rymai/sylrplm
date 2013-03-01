@@ -31,13 +31,9 @@ class Customer < ActiveRecord::Base
     :through => :links_projects,
     :source => :project
 
-  
-
   def user=(user)
-    self.owner     = user
-    self.group     = user.group
-    self.projowner = user.project
-  end
+		def_user(user)
+	end
 
   def self.create_new(customer, user)
     raise Exception.new "Don't use this method!"

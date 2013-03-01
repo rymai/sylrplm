@@ -70,16 +70,18 @@ module SYLRPLM
   # environnement specifique a l'admin de l'application sylrplm
   VOLUME_DIRECTORY_DEFAULT  = case OsFunctions.os
   when "linux"
-    "/home/syl/trav/rubyonrails/sylrplm_data_#{Rails.env}"
+    "/home/syl/trav/rubyonrails/sylrplm-data-#{Rails.env}"
   when "mac"
     "/Users/remy/Development/Ruby/Gems/sylvani/sylrplm/sylrplm_data_#{Rails.env}"
   when "windows"
-    "C:\\sylrplm_data_#{Rails.env}"
+    "C:\\sylrplm-data-#{Rails.env}"
   end
   # ordre des constituants de l'arbre
  TREE_ORDER                = ["forum", "document", "part", "project", "customer" ]
   TREE_UP_ORDER             = ["document", "part", "project", "customer" ]
   # regroupement des composants d'un objet dans l'explorer
   TREE_GROUP                = false
+  # niveau maxi du sommaire de l'aide
+  HELP_SUMMARY_LEVEL        = 3
 end
 

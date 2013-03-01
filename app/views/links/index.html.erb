@@ -16,8 +16,11 @@
 		<th><%= t(:label_father) %> </th>
 		<th><%= t(:label_relation) %> </th>
 		<th><%= t(:label_child) %> </th>
+		<th><%= t(:label_responsible) %> </th>
+		<th><%= t(:label_group) %> </th>
+		<th><%= t(:label_projowner) %> </th>
 		<th><%= t(:label_values) %> </th>
-		<th><%= t("label_domain") %></th>
+		<th><%= t(:label_domain) %></th>
 		
 	</tr>
 	<% @links[:recordset].each do |link| %>
@@ -28,6 +31,9 @@
 		<td><%= h link.father_ident %></td>
 		<td><%= h link.relation_ident %></td>
 		<td><%= h link.child_ident %></td>
+		<td><%= h link.owner unless link.owner.nil? %></td>
+		<td><%= h link.group unless link.group.nil? %></td>
+		<td><%= h link.projowner unless link.projowner.nil?%></td>
 		<td><%= h link.values %></td>
 		<td><%= h link.domain %></td>
 		

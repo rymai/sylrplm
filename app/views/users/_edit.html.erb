@@ -5,15 +5,19 @@
 	<label for="user_name"> <%= t(:label_login) %> </label>
 	<%= form.text_field :login, :size => 40 %>
 	<br/>
-	
 	<label for="user_first_name"> <%= t(:label_first_name) %> </label>
 	<%= form.text_field :first_name, :size => 40 %>
 	<br/>
-	
 	<label for="user_last_name"> <%= t(:label_last_name) %> </label>
 	<%= form.text_field :last_name, :size => 40 %>
 	<br/>
-	
+	<% if fonct == "add" %> <label for="user_password"> <%= t(:label_password) %> </label>
+	<%= form.password_field :password, :size => 40 %>
+	<br/>
+	<label for="user_password_confirmation"> <%= t(:label_confirm_password) %> </label>
+	<%= form.password_field :password_confirmation, :size => 40 %>
+	<br/>
+	<% end %>
 	<% if fonct != "account_edit" %>
 	<% if @types != nil %>
 	<%= form.label t(:label_type) %>
@@ -21,36 +25,31 @@
 	<br/>
 	<% end %>
 	<% end %>
-	
+
 	<%= form.label t(:label_email) %>
 	<%= form.text_field :email, :size => 40 %>
 	<br/>
-	
 	<%= form.label t(:label_language) %>
 	<%= form.select(:language, options_for_select(@languages)) %>
 	<br/>
-	
 	<% if fonct != "account_edit" %>
 
 	<%= form.label t(:label_volume) %>
 	<%= form.collection_select(:volume_id, @volumes, :id, :name) %>
 	<br/>
-	
 	<% if @themes != nil %>
 	<%= form.label t(:label_theme) %>
 	<%= form.select(:theme,options_for_select(@themes)) %>
 	<br/>
 	<% end %>
 	<% end %>
-	
+
 	<%= form.label t(:label_notification) %>
 	<%= form.select(:notification, options_for_select(@notifications)) %>
 	<br/>
-	
 	<%= form.label t(:label_time_zone) %>
 	<%= form.select(:time_zone, options_for_select(User.time_zones, @the_user.time_zone), :include_blank => true) %>
 	<br/>
-	
 	<%= form.label t(:label_show_mail) %>
 	<% if @the_user.show_mail==true %>
 	<%= check_box(:user,:show_mail,{:checked=>"checked"}) %>
@@ -58,22 +57,17 @@
 	<%= check_box(:user,:show_mail) %>
 	<%end%>
 	<br/>
-	
-	<% if fonct != "account_edit"%>
-	<label for="user_roles"> <%= t(:label_roles) %> </label>
+	<% if fonct != "account_edit"%> <label for="user_roles"> <%= t(:label_roles) %> </label>
 	<%= select_inout(form, @the_user, @roles, :title) %>
 	<br/>
-	
 	<label for="user_groups"> <%= t(:label_groups) %> </label>
 	<%= select_inout(form, @the_user, @groups, :name) %>
 	<br/>
-	
 	<label for="user_projects"> <%= t(:label_projects) %> </label>
 	<%= select_inout(form, @the_user, @projects, :ident) %>
 	<br/>
-	
+	<%= h_type_values(@the_user, fonct) %>
 	<%= h_input_text(form ,:domain) %>
 	<br />
-	
 	<% end %>
 </fieldset>

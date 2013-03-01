@@ -197,6 +197,7 @@ en:
   label_restore_file: File to restore
   datafile_show_file: Show the file
   datafile_download_file: Download the file
+  datafile_without_file: No file
   # definitions
   legend_definition: Enter definition details
   label_uri: URI
@@ -232,6 +233,8 @@ en:
   download: download file
   reason: Reason
   document_check: Check
+  download_ko_document_not_checked: Document unchecked
+  download_ko_no_file: No file
   workitems_assoc: Currents workitems
   history_assoc: Terminates workitems
   # forums
@@ -435,7 +438,8 @@ en:
   label_sequence: Sequence
   # session
   legend_login: Please sign in
-  legend_new_account: Fill your account properties
+  legend_context: Indiquez votre rôle, groupe et projet définissant le contexte de la session
+  legend_new_account: Renseignez les informations nécessaires à la création de votre compte 
   submit_account: Sign in
   submit_login: Login
   submit_new_account: New account
@@ -553,3 +557,6 @@ en:
   label_activity: Activity
   label_dispatch_time: Dispatch
   button_task_validate: Validate this task
+  # variables de contexte ou autre
+  variable_key: Variable name
+  variable_value: Value

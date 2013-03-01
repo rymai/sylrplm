@@ -123,6 +123,10 @@ module OpenWFE::Extras
         YAML::dump(flow_expression) :
         Base64.encode64(Marshal.dump(flow_expression))
       #puts  "ExpressionTables.[]=:e=#{e.svalue.size}"
+      
+      #TODO syl pour postgresql qui refuse le null
+      e.text="text" if e.text.nil?
+      
       e.save_without_transactions!
     end
 

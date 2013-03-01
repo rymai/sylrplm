@@ -76,6 +76,8 @@ module OpenWFE
       end
 
       def stop
+      	
+      debug { "sylrplm:stop disconnect" }
         self.connection.disconnect rescue nil
       end
 

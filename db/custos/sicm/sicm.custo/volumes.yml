@@ -1,16 +1,16 @@
 
 Volume_1: 
   id: "1"
-  name: vol_fog_01
-  directory: <%= ::SYLRPLM::VOLUME_DIRECTORY_DEFAULT %>
+  name: volfog01
+  directory: 
   protocol: fog
   description: volume de depart sur fog
   domain: admin
 
 Volume_2: 
   id: "2"
-  name: vol_local_01
-  directory: 
+  name: vollocal01
+  directory: <%= ::SYLRPLM::VOLUME_DIRECTORY_DEFAULT %>
   protocol: file_system
   description: volume en local sur le serveur
   domain: admin

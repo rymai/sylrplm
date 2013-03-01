@@ -175,6 +175,7 @@ class WorkitemsController < ApplicationController
             flash[:notice] = t( :ctrl_workitem_canceled, :ident => workitem_ident)
             flash[:notice]+= errs
             format.html { redirect_to :action => 'index'}
+            #return error_reply(flash[:notice], 1001)
           end
         else
           # recup du workitem sauve en base eventuellement modifie par le participant
@@ -213,6 +214,7 @@ class WorkitemsController < ApplicationController
         respond_to do |format|
           format.html { redirect_to :action => 'index'}
           format.xml  { render :xml => e, :status => :unprocessable_entity }
+          #return error_reply(flash[:notice], 1003)
         end
       rescue Exception => e
         respond_to do |format|
@@ -221,9 +223,9 @@ class WorkitemsController < ApplicationController
           LOG.error (name) {flash[:notice]}
           LOG.error (name){" error="+e.inspect}
           e.backtrace.each {|x| LOG.error x}
-          #format.html { redirect_to edit_workitem_url(workitem) }
           format.html { redirect_to workitems_path }
           format.xml  { render :xml => e, :status => :unprocessable_entity }
+          #return error_reply(flash[:notice], 1004)
         end
       end
     else
@@ -373,8 +375,10 @@ class WorkitemsController < ApplicationController
     values["child_id"]              = item.id
     values["relation_id"]           = relation.id
     # en attendant mieux: user processus ou recup user en cours ...
-    user=User.find_by_name(SYLRPLM::USER_ADMIN)
-    link = Link.new(values.merge(user: nil))
+    #user=User.find_by_name(SYLRPLM::USER_ADMIN)
+    #on prend celui du workitem (HistoryEntry)
+    user=User.find_by_name(workitem.source)
+    link = Link.new(values.merge(user: user))
   end
 
   #

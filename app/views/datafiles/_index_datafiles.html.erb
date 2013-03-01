@@ -38,16 +38,13 @@
 		<td> <%= link_to datafile.projowner.ident, project_path(datafile.projowner) %> </td>
 		<td> <%= l datafile.updated_at %> </td>
 		<td> <% unless document.nil? %>
-		<% unless !document.checked? || datafile.filename.nil? %>
-		<%= link_to h_img(:download).to_s, :id => datafile.id, :controller=> "datafiles", :action => :download_file %>
+		<% unless datafile.filename.nil? %>
+			<%= link_to h_img(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %>
 		<% else %>
-		<%= h_img(:download_ko).to_s+"#{document.nil?} #{document.checked?} #{datafile.filename.nil?}" %>
-		<%end %> 
-
+		  <%= h_img(:download_ko, t(:datafile_without_file)) %>
+		<%end %>
 		<% end %> </td>
-		<% unless document.nil? %>
-
-		<td> <%= link_to h_img_edit.to_s, edit_datafile_path(datafile, :doc => document.id) %> </td>
+		<% unless document.nil? %> <td> <%= link_to h_img_edit.to_s, edit_datafile_path(datafile, :doc => document.id) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, datafile_path(datafile, :doc => document.id), :method => :delete, :confirm => t("msg_confirm") %> </td>
 		<%else %> <td> <%= link_to h_img_show.to_s, datafile, :controller=> "datafiles",  :action => :show %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_datafile_path(datafile), :controller=> "datafiles" %> </td>

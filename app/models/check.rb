@@ -1,6 +1,7 @@
 require_dependency 'models/sylrplm_common'
 
 class Check < ActiveRecord::Base
+  include Models::PlmObject
   include Models::SylrplmCommon
 
   attr_accessor :user
@@ -33,12 +34,12 @@ class Check < ActiveRecord::Base
   end
 
   def user=(user)
-    fname= "#{self.class.name}.#{__method__}"
-    LOG.info (fname) {"user=#{user}"} 
-    self.out_user  = user
+		def_user(user)
+		self.out_user = user
     self.out_group = user.group
     self.projowner = user.project
-  end
+    self.out_date = Time.now.utc
+	end
   
   def object_to_check=(obj)
     fname= "#{self.class.name}.#{__method__}"

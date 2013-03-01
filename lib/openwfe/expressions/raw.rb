@@ -52,6 +52,7 @@ module OpenWFE
       re.apply_time = nil
 
       re.raw_representation = raw_tree
+      
       re
     end
 

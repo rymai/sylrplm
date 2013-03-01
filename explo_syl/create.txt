@@ -456,7 +456,20 @@ rake db:drop;rake db:create;rake db:migrate
 --- ou (schema+data, il faut db/data.yml)
 rake db:drop;rake db:create;rake db:load 
 
-
+---
+--- debug: indiquer la pile des appels
+---
+puts "********************** pg disconnect!"
+	begin 
+		a=1
+		b=0
+		a/b
+	rescue Exception=>e
+puts "***************"
+		e.backtrace.each {|x| puts x}
+puts "***************"
+	end
+	
 
 
 ======================================================
@@ -599,4 +612,51 @@ modifier/creer le disque local en donnant un chemin windows et unix , dans sicm.
 
 sur mandriva: kdewallet , compte=dsone\s45, mot de passe=syl91.ani
 
+---
+--- 20/2/2013: install postgresql pour etre compatible remy et heroku (ruby 1.9.3 dans Gemfile)
+---
+install  dans /opt/PostgreSQL/9.2
+donnees dans /home/PostgreSQL
+user postgres/passwd
+port 5432
+date locale
+---
+--- puis install du gem pg:
+---
+export CONFIGURE_ARGS="with-pg_config=/opt/PostgreSQL/9.2/bin/pg_config with-pg-dir=/opt/PostgreSQL/9.2 with-pg-include=/opt/PostgreSQL/9.2/include with-pg-lib=/opt/PostgreSQL/9.2/lib"
+gem install pg 
+modifier database.yml:
+  adapter: postgresql
+  username: postgres
+  
+---
+--- maj ruby 1.9.3 pour etre compatible remy et heroku (ruby 1.9.3 dans Gemfile)
+---
+telecharger ruby-1.9.3-p374.tar.gz
+extraire
+./configure
+make
+make install
 
+---
+--- modif connecteur postgresql pour eviiter les reconnect
+---
+ajouter la methode suivante au debut de la classe class PostgreSQLAdapter < AbstractAdapter dans le fichier
+bundle/ruby/1.9.1/gems/activerecord-2.3.17/lib/active_record/connection_adapters/postgresql_adapter.rb
+# sylrplm: pour eviter le rechargement des connexions
+def requires_reloading?
+	puts "********************************requires_reloading?" 
+	false
+end
+
+---
+--- debug insert expression ko car text null
+---
+--- modifier la methode suivante dans lib/openwfe/extras/expool/ar_expstorage.rb
+    # Stores an expression.
+    #
+    def []= (fei, flow_expression)
+     ...
+      #TODO syl pour postgresql qui refuse le null
+      e.text="text" if e.text.nil?
+      

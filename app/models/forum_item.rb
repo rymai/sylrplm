@@ -21,12 +21,9 @@ class ForumItem < ActiveRecord::Base
 	has_many :forum_item,
   :class_name => "ForumItem",
   :foreign_key => "parent_id"
+  
 	def user=(user)
-		fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname){"user=#{user}"}
-		self.author    = user
-		self.group     = user.group
-		self.projowner = user.project
+		def_user(user)
 	end
 
 	def forum=(forum)

@@ -96,6 +96,10 @@ ActionController::Routing::Routes.draw do |map|
 	'datafiles/:id/download_file',
 	:controller => 'datafiles',
 	:action => 'download_file')
+	map.connect(
+	'datafiles/:id/del_fogdir',
+	:controller => 'datafiles',
+	:action => 'del_fogdir')
 
 	map.resources :documents, :has_many => :documents, :collection => { :empty_favori => :get }
 	map.connect(

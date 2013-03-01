@@ -45,7 +45,6 @@ class DocumentsController < ApplicationController
 		#@parts     = @document.parts
 		#@projects  = @document.projects
 		#@customers = @document.customers
-		@checkout  = Check.get_checkout(@document)
 		@relations = Relation.relations_for(@document)
     @tree         						= build_tree(@document, @myparams[:view_id])
 		@tree_up      						= build_tree_up(@document, @myparams[:view_id] )
@@ -277,6 +276,7 @@ class DocumentsController < ApplicationController
 		end
 	end
 
+  # preparation du datafile a associer au document
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
     LOG.debug (fname){"params=#{params.inspect}"}
@@ -295,42 +295,53 @@ class DocumentsController < ApplicationController
 					check = nil
 				end
 			end
-
 			unless check.nil?
 				@datafile = Datafile.new(user: current_user)
+				@datafile.document = @object
 				format.html { render :action => :new_datafile, :id => @object.id }
 				format.xml  { head :ok }
 			end
 		end
 	end
 
+	
+	# creation du datafile et association au document
+	def add_datafile
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
+    @object = Document.find(params[:id])
+		begin
+			st = @object.add_datafile(params[:datafile], @current_user)
+			respond_to do |format|
+				flash[:notice] = ""
+				if st != "ok"
+					flash[:notice] += t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
+					puts "document_controller.add_datafile:id=#{@object.id}"
+					@types = Typesobject.find_for("datafile")
+					@datafile = Datafile.new(user: current_user)
+					format.html { render  :action => :new_datafile, :id => @object.id   }
+				else
+					format.html { redirect_to(@object) }
+				end
+				format.xml  { head :ok }
+			end
+		rescue Exception => e
+			flash[:notice] = "Error adding datafile: #{e}"
+			e.backtrace.each {|x| LOG.error (fname){x}}
+			respond_to do |format|
+				format.html { redirect_to(@object) }
+				format.xml  { head :ok }
+			end
+		end
+	end
+	
 	def add_docs
 		fname= "#{self.class.name}.#{__method__}"
     LOG.debug (fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		ctrl_add_objects_from_favorites(@document, :document)
 	end
-
-	def add_datafile
-		fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
-    @object = Document.find(params[:id])
-		st=@object.add_datafile(params[:datafile], @current_user)
-		respond_to do |format|
-			flash[:notice] = ""
-			if st!="ok"
-				flash[:notice] += t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
-				puts "document_controller.add_datafile:id=#{@object.id}"
-				@types = Typesobject.find_for("datafile")
-				@datafile = Datafile.new(user: current_user)
-				format.html { render  :action => :new_datafile, :id => @object.id   }
-			else
-				format.html { redirect_to(@object) }
-			end
-			format.xml  { head :ok }
-		end
-	end
-
+	
 	def empty_favori
 		fname= "#{self.class.name}.#{__method__}"
     LOG.debug (fname){"params=#{params.inspect}"}

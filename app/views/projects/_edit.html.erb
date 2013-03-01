@@ -39,6 +39,8 @@
 	<br/>
 	<label for="project_users"> <%= t(:label_users) %> </label>
 	<%= select_inout(f, @project, @users, :login) %>
+
+	<%= h_type_values(@project, fonct) %>
 	<%= h_input_text(f ,:domain) %>
 	<br />
 </fieldset>

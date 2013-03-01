@@ -2,57 +2,48 @@
 	<legend>
 		<%= t(:legend_datafile) %>
 	</legend>
-
-	<%= hidden_field "datafile[volume_id]" , @datafile.volume.id %>
+	<%= hidden_field_tag "datafile[volume_id]" , @datafile.volume.id %>
 	<%= hidden_field_tag :fonct , fonct %>
 
 	<%= f.label t(:label_ident) %>
 	<%= f.text_field :ident %>
 	<br/>
-
 	<%= f.label t(:label_type) %>
 	<%= f.collection_select(:typesobject_id, @types, :id, :name) %>
 	<br/>
-
 	<%= f.label t(:label_revision) %>
 	<%= text_field_tag :revision, @datafile.revision, :disabled => true %>
 	<br/>
-
 	<%= f.label t(:label_volume) %>
 	<%= text_field_tag :volume, "#{@datafile.volume.name}.#{@datafile.volume.protocol}", :disabled => true %>
 	<br/>
-
 	<%= f.label t(:label_filename) %>
 	<%= text_field_tag :filename, @datafile.filename, :disabled => true %>
 	<br/>
-
-	<% unless @datafile.document.nil? || !@datafile.document.checked? %>
+	<% unless @datafile.document.nil? || !@datafile.document.can_be_check_in?(current_user) %>
 
 	<%= f.label "..." %>
 	<%= f.file_field(:uploaded_file) %>
 	<br/>
-	
 	<%= f.label t(:label_content_type) %>
 	<%= text_field_tag :content_type, @datafile.content_type, :disabled => true %>
 	<br/>
-
 	<% if @datafile.revisions_files.length > 0 %>
 
 	<%= f.label t(:label_restore_file) %>
 	<%= select_tag("restore_file",options_for_select(@datafile.revisions_files,@datafile.current_revision_file)) %>
 	<br/>
+	<% end %>
 
 	<% end %>
 
-	
-	<% end %>
-
-	
 	<%= f.label t(:label_responsible) %>
 	<%= text_field_tag :owner, @datafile.owner.login,  :disabled => true %>
 	<br/>
-
+	
+	<%= hidden_field_tag "datafile[owner_id]", @datafile.owner.id %>
+	
+	<%= h_type_values(@datafile, fonct) %>
 	<%= h_input_text(f ,:domain) %>
 	<br />
-
 </fieldset>

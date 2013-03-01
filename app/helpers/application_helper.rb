@@ -40,8 +40,7 @@ module ApplicationHelper
 	def h_if_differ(current, previous)
 		current
 	end
-
-
+	
 	# renvoie la valeur de l'attribut att sur l'objet
 	# att peut etre un attribut "compose" tel que owner.login, d'ou l'utilisation de eval
 	def get_val(obj, att)
@@ -142,8 +141,11 @@ module ApplicationHelper
 		"<img class='icone' src='#{fic}' title='#{mdl_name}'></img>"
 	end
 
-	def h_img(name)
-		"<img class=\"icone\" src=\"/images/#{name}.png\" title='#{t(File.basename(name.to_s))}'></img>"
+	def h_img(name, title=nil)
+		if title.nil?
+			title=t(File.basename(name.to_s))
+		end
+		"<img class=\"icone\" src=\"/images/#{name}.png\" title='#{title}'></img>"
 	end
 
 	def h_img_btn(name)
@@ -287,6 +289,7 @@ module ApplicationHelper
 	def h_show_tree(obj)
 		"don t use this function, prefer render shared/tree"
 	end
+
 	def h_show_tree_old(obj)
 		bloc=""
 		if ((@tree && @tree.size>0) || (@tree_up && @tree_up.size>0))
@@ -429,6 +432,60 @@ module ApplicationHelper
 		href
 	end
 
+	# affiche ou edite les valeurs specifiques au type
+	# argum obj l'objet
+	# argum fonct la fonction demandee
+	# - show: on les montre seulement
+	# - edit: on peut les editer
+	# - define: on les definit (dans typesobject seulement pour le moment)
+	def h_type_values(obj, fonct)
+		fname=self.class.name+"."+__method__.to_s
+		#LOG.info (fname){"obj=#{obj}"}
+		LOG.info (fname){"fonct=#{fonct}"}
+		ret=""
+		if obj.respond_to?(:typesobject)
+			unless obj.typesobject.nil?
+				unless obj.typesobject.fields.nil?
+					LOG.info (fname){"fields=#{obj.typesobject.fields}"}
+					case fonct
+					when "show"
+						buttons="none"
+					when "edit"
+						buttons="position"
+						if obj.type_values.nil?
+						obj.type_values=obj.typesobject.fields
+						end
+					when "define"
+						buttons="all"
+					else
+					buttons="none"
+					end
+					unless obj.type_values.nil?
+						ret+="<fieldset><legend>"
+						ret+=t(:legend_type_values)
+						ret+="</legend>"
+						ret+= render(
+		:partial => "shared/form_json",
+		:locals => {
+		:fields => obj.type_values,
+		:form_id => h_form_html_id(obj, fonct),
+		:textarea_name => obj.model_name+"[type_values]",
+		:options => {"buttons" => buttons} }
+		)
+						#options: all, position, none
+						ret+="</fieldset>"
+					end
+				end
+			end
+		end
+		ret
+	end
+
+	# renvoi l'identifiant du formulaire en fonction de l'objet et de la fonction demandee
+	def h_form_html_id(obj, fonct)
+		fonct+"_"+obj.model_name
+	end
+
 	#
 	# combo box: select able to return null value
 	#
@@ -443,9 +500,9 @@ module ApplicationHelper
 	end
 
 	def select_inout(form, object, values, field)
-	  fname = "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"object=#{object}"}
-    LOG.debug (fname){"values=#{values}"}
+		fname = "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"object=#{object}"}
+		LOG.debug (fname){"values=#{values}"}
 		html = ""
 		unless values.nil? || values.count == 0
 			#user
@@ -458,7 +515,7 @@ module ApplicationHelper
 			select_name=mdl_object+"["+mdl_assoc+"_ids][]"
 			#role_ids
 			method=(mdl_assoc+"_ids").to_sym
-      LOG.debug (fname){"method=#{method}"}
+			LOG.debug (fname){"method=#{method}"}
 			#the_selected=object.method(method).call: ko dans certains cas (securite!!)
 			the_selected=object.send(method)
 			#puts "select_inout:object="+object.model_name+" method="+method.to_s+" sel="+the_selected.inspect

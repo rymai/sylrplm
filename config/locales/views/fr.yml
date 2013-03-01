@@ -197,6 +197,7 @@ fr:
   label_restore_file: Fichier à restaurer
   datafile_show_file: Voir le fichier
   datafile_download_file: Télécharger le fichier
+  datafile_without_file: Pas de fichier
   # definitions
   legend_definition: Renseignez les propriétés de la définition de processus
   label_process_definition: Définition du processus
@@ -231,6 +232,8 @@ fr:
   button_check_in: "Maj et libérer"
   button_check_free: "Libérer"
   download: "Télécharger fichier"
+  download_ko_document_not_checked: Document non réservé
+  download_ko_no_file: Pas de fichier
   document_check: Réservation
   workitems_assoc: Tâches en cours
   history_assoc: Traitements effectués sur cet objet
@@ -435,12 +438,13 @@ fr:
   label_sequence: Séquence
   # session
   legend_login: Indiquez votre identifiant et mot de passe ou demandez un compte
-  legend_new_account: Renseignez les informations nécessaires à la création de votre compte
-  submit_account: Connexion
+  legend_context: Indiquez votre rôle, groupe et projet définissant le contexte de la session
+  legend_new_account: Renseignez les informations nécessaires à la création de votre compte 
+  submit_account: Entrer
   submit_login: Login
-  submit_new_account: Demande de compte
+  submit_new_account: Pas de compte ?
   submit_create_account: Création du compte
-  label_new_email: Adresse de messagerie
+  label_new_email: Adresse de messagerie 
   #shared-tree
   object_tree: Structure
   # statusobjects
@@ -553,3 +557,6 @@ fr:
   label_activity: Activité
   label_dispatch_time: Envoyé le
   button_task_validate: Valider cette tâche
+  # variables de contexte ou autre
+  variable_key: Nom variable
+  variable_value: Valeur

@@ -132,7 +132,7 @@ class CustomersController < ApplicationController
 	end
 
 	def new_forum
-		puts "CustomerController.new_forum:id=#{params[:id]}"
+		#puts "CustomerController.new_forum:id=#{params[:id]}"
 		@object = Customer.find(params[:id])
 		@types  = Typesobject.find_for("forum")
 		@status = Statusobject.find_for("forum")

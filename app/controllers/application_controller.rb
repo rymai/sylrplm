@@ -230,7 +230,12 @@ class ApplicationController < ActionController::Base
   # Creates an HistoryEntry record
   #
   def history_log (event, options={})
+    
+    fname= "#{self.class.name}.#{__method__}"
     source = options.delete(:source) || @current_user.login
+    
+    LOG.debug (fname){"history_log:source=#{source}"}
+   	LOG.debug (fname){"history_log:options=#{options}"}
     Ruote::Sylrplm::HistoryEntry.log!(source, event, options)
   end
 

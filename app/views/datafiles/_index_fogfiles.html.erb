@@ -1,0 +1,58 @@
+<% all_cols=false%>
+<% unless fogfiles.nil? %>
+<table>
+	<tr>
+		<th>dir</th>
+		<th>dir creation</th>
+		<th>file</th>
+		<th>content_length</th>
+		<th>last_modified</th>
+		<% if all_cols%> <th>cache_control</th>
+		<th>content_disposition</th>
+		<th>content_encoding</th>
+		<th>content_md5</th>
+		<th>content_type</th>
+		<th>etag</th>
+		<th>expires</th>
+		<th>metadata</th>
+		<th>owner</th>
+		<th>storage_class</th>
+		<%end%>
+		<th></th>
+	</tr>
+	<% fogfiles.each do |fogdir| %>
+
+	<% if fogdir.files.length==0 %>
+	<tr>
+		<td> <%= fogdir.key %> </td>
+		<td> <%= fogdir.creation_date.inspect%> </td>
+		<td><%= link_to h_img_destroy.to_s, {:id => fogdir.key.gsub('.','__'), :controller=> "datafiles",  :action => :del_fogdir}%></td>
+	</tr>
+	<% else %>
+	<% fogdir.files.each do |fogfile| %>
+	<tr>
+		<td> <%= fogdir.key %> </td>
+		<td> <%= fogdir.creation_date.inspect%> </td>
+		<td><%= fogfile.key%></td>
+		<td><%= fogfile.content_length%></td>
+		<td><%= fogfile.last_modified%></td>
+		<% if all_cols%> 
+		<td><%= fogfile.cache_control%></td>
+		<td><%= fogfile.content_disposition%></td>
+		<td><%= fogfile.content_encoding%></td>
+		<td><%= fogfile.content_md5%></td>
+		<td><%= fogfile.content_type%></td>
+		<td><%= fogfile.etag%></td>
+		<td><%= fogfile.expires%></td>
+		<td><%= fogfile.metadata%></td>
+		<td><%= fogfile.owner%></td>
+		<td><%= fogfile.storage_class%></td>
+		<%end%>
+		<td><%= link_to h_img_destroy.to_s, {:id => fogdir.key.gsub('.','__'), :controller=> "datafiles",  :action => :del_fogdir}%></td>
+	</tr>
+	<% end %>
+	<% end %>
+	</tr>
+	<% end %>
+</table>
+<% end %>

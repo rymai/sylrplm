@@ -8,7 +8,7 @@ Link_38:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626523"
   relation_id: "21"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -23,7 +23,7 @@ Link_39:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626523"
   relation_id: "21"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -38,7 +38,7 @@ Link_40:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626523"
   relation_id: "21"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -53,7 +53,7 @@ Link_41:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626523"
   relation_id: "21"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -68,7 +68,7 @@ Link_42:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626523"
   relation_id: "21"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -83,7 +83,7 @@ Link_43:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626523"
   relation_id: "21"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -98,7 +98,7 @@ Link_44:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626524"
   relation_id: "20"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -113,7 +113,7 @@ Link_45:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626524"
   relation_id: "20"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -128,7 +128,7 @@ Link_46:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626524"
   relation_id: "20"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -143,7 +143,7 @@ Link_47:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626524"
   relation_id: "20"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -158,7 +158,7 @@ Link_48:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626524"
   relation_id: "20"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -173,7 +173,7 @@ Link_49:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626524"
   relation_id: "20"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -188,7 +188,7 @@ Link_50:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626524"
   relation_id: "20"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -203,7 +203,7 @@ Link_51:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626526"
   relation_id: "24"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -218,7 +218,7 @@ Link_52:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626526"
   relation_id: "24"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -233,7 +233,7 @@ Link_53:
   father_typesobject_id: "989626522"
   child_typesobject_id: "989626526"
   relation_id: "24"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -248,7 +248,7 @@ Link_54:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -263,7 +263,7 @@ Link_55:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -278,7 +278,7 @@ Link_56:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -293,7 +293,7 @@ Link_57:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -308,7 +308,7 @@ Link_58:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -323,7 +323,7 @@ Link_59:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -338,7 +338,7 @@ Link_60:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -353,7 +353,7 @@ Link_61:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -368,7 +368,7 @@ Link_62:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -383,7 +383,7 @@ Link_63:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -398,7 +398,7 @@ Link_64:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -413,7 +413,7 @@ Link_65:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -428,7 +428,7 @@ Link_66:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -443,7 +443,7 @@ Link_67:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -458,7 +458,7 @@ Link_68:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -473,7 +473,7 @@ Link_69:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -488,7 +488,7 @@ Link_70:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -503,7 +503,7 @@ Link_71:
   father_typesobject_id: "989626523"
   child_typesobject_id: "989626524"
   relation_id: "22"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -518,7 +518,7 @@ Link_72:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626525"
   relation_id: "26"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -533,7 +533,7 @@ Link_73:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626525"
   relation_id: "26"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -548,7 +548,7 @@ Link_74:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626525"
   relation_id: "26"
-  values: 
+  values: "{\"matrix\": {\"DX\": 124, \"DY\": 234.5, \"DZ\": 345.6, \"RX\": 456.5, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"fsdsdffs\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -563,7 +563,7 @@ Link_75:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626525"
   relation_id: "26"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -578,7 +578,7 @@ Link_76:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626525"
   relation_id: "26"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -593,7 +593,7 @@ Link_77:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626525"
   relation_id: "26"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -608,7 +608,7 @@ Link_78:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626525"
   relation_id: "26"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -623,7 +623,7 @@ Link_79:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626525"
   relation_id: "26"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -638,7 +638,7 @@ Link_80:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626525"
   relation_id: "26"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -653,7 +653,7 @@ Link_81:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626525"
   relation_id: "26"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -758,7 +758,7 @@ Link_88:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626526"
   relation_id: "25"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -773,7 +773,7 @@ Link_89:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626526"
   relation_id: "25"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -788,7 +788,7 @@ Link_90:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626526"
   relation_id: "25"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -803,7 +803,7 @@ Link_91:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626526"
   relation_id: "25"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -818,7 +818,7 @@ Link_92:
   father_typesobject_id: "989626526"
   child_typesobject_id: "989626526"
   relation_id: "25"
-  values: 
+  values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -923,7 +923,7 @@ Link_117:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -938,7 +938,7 @@ Link_119:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -953,7 +953,7 @@ Link_122:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -968,7 +968,7 @@ Link_123:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -983,7 +983,7 @@ Link_124:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -998,7 +998,7 @@ Link_125:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -1013,7 +1013,7 @@ Link_126:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -1028,7 +1028,7 @@ Link_127:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -1043,7 +1043,7 @@ Link_128:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -1058,7 +1058,7 @@ Link_129:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -1073,7 +1073,7 @@ Link_130:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -1088,7 +1088,7 @@ Link_131:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -1148,7 +1148,7 @@ Link_154:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -1178,7 +1178,7 @@ Link_156:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -1193,7 +1193,7 @@ Link_157:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"
@@ -1208,7 +1208,7 @@ Link_158:
   father_typesobject_id: "989626531"
   child_typesobject_id: "989626524"
   relation_id: "23"
-  values: 
+  values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
   owner_id: "1"
   group_id: "1"
   projowner_id: "1"

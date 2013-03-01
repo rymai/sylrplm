@@ -44,6 +44,7 @@ en:
   ctrl_init_done: Initialization done
   count_objects: " : %{number_begin}-%{number_end} / %{total}"
   ctrl_show_no_relation: "%{child_plmtype}(s) to copy but relation '%{father_plmtype}' to '%{child_plmtype}' does not exist"
+  legend_type_values: Specific values
   # access
   ctrl_object_no_controlers: "No controlers found"
   # application

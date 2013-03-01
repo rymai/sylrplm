@@ -111,7 +111,7 @@ class Statusobject < ActiveRecord::Base
   def get_previous
     if(rank > get_first(forobject).rank)
       new_rank=current_status.rank-1
-      Statusobject.find(:first, :conditions => ["forobject = '#{forobject}' && rank=#{new_rank}"])
+      Statusobject.find(:first, :conditions => ["forobject = '#{forobject}' and rank=#{new_rank}"])
     else
       current_status
     end
@@ -120,7 +120,7 @@ class Statusobject < ActiveRecord::Base
   def get_next
     if(rank < Statusobject.get_last(forobject).rank)
       new_rank = rank + 1
-      Statusobject.find(:first, :conditions => ["forobject = '#{forobject}' && rank=#{new_rank}"])
+      Statusobject.find(:first, :conditions => ["forobject = '#{forobject}' and rank=#{new_rank}"])
     else
     self
     end
@@ -129,7 +129,7 @@ class Statusobject < ActiveRecord::Base
   def self.find_next(object, current_status)
     if(current_status.rank < Statusobject.get_last(object).rank)
       new_rank=current_status.rank+1
-      find(:first, :conditions => ["forobject = '#{object}' && rank=#{new_rank}"])
+      find(:first, :conditions => ["forobject = '#{object}' and rank=#{new_rank}"])
     else
     current_status
     end
@@ -138,7 +138,7 @@ class Statusobject < ActiveRecord::Base
   def self.find_previous(object, current_status)
     if(rank > get_first(object).rank)
       new_rank = rank-1
-      find(:first, :conditions => ["forobject = '#{object}' && rank=#{new_rank}"])
+      find(:first, :conditions => ["forobject = '#{object}' and rank=#{new_rank}"])
     else
     self
     end

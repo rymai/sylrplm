@@ -1,4 +1,7 @@
 <h1><%= t(:datafile_show) %></h1>
+<% fonct="show" %>
+<% form_for(@datafile, :html => { :id => h_form_html_id(@datafile, fonct) }) do |f| %>
+<%= f.error_messages %>
 <p>
 	<b><%= t("label_ident") %></b>
 	<%= h @datafile.ident %>
@@ -35,6 +38,12 @@
 	<b><%= t("label_date") %></b>
 	<%= l @datafile.updated_at %>
 </p>
+<%= h_type_values(@datafile, fonct) %>
+<p>
+	<b><%= t("label_domain") %></b>
+	<%= h @datafile.domain %>
+</p>
+<% end %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("edit"), edit_datafile_path(@datafile) %> </td>

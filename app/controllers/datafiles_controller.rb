@@ -10,7 +10,8 @@ class DatafilesController < ApplicationController
   def index
     @datafiles = Datafile.find_paginate({ :user=> current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
     #pour voir la liste des fichiers stockes sur le fog
-    ####dirs=SylrplmFog.instance.directories(true) if admin_logged_in?
+    @fogfiles = admin_logged_in?SylrplmFog.instance.directories(true) if admin_logged_in?
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @datafiles[:recordset] }
@@ -124,6 +125,15 @@ class DatafilesController < ApplicationController
     send_file_content("attachment")
   end
 
+	def del_fogdir
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
+		st=SylrplmFog.remove_repository(params[:id].gsub('__','.'))
+		respond_to do |format|
+        format.html { redirect_to(datafiles_url) }
+        format.xml  { head :ok }
+    end
+	end
 private
 
   def send_file_content(disposition)

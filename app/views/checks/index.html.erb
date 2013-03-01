@@ -30,8 +30,8 @@
 		<td> <%= h check.status %> </td>
 		<td> <%= h check.out_reason %> </td>
 		<td> <%= l check.out_date %> </td>
-		<td> <%= h check.out_user.login %> </td>
-		<td> <%= h check.out_group.name %> </td>
+		<td> <%= h check.out_user.login unless check.out_user.nil? %> </td>
+		<td> <%= h check.out_group.name unless check.out_group.nil?%> </td>
 		<%unless check.in_date.nil? %> <td> <%= h check.in_reason %> </td>
 		<td> <%= l check.in_date %></td>
 		<td> <%= h check.in_user.login unless check.in_user.nil? %> </td>

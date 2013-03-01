@@ -1,3 +1,6 @@
+<% fonct="show" %>
+<% form_for(@forum, :html => { :id => h_form_html_id(@forum, fonct) }) do |f| %>
+<%= f.error_messages %>
 <p>
 	<b>Type:</b>
 	<%= h @forum.typesobject.name %>
@@ -20,6 +23,12 @@
 	<%= h @forum.owner.login%>
 	<% end %>
 </p>
+<%= h_type_values(@forum, fonct) %>
+<p>
+	<b><%= t("label_domain") %></b>
+	<%= h @forum.domain %>
+</p>
+<% end %>
 <%= @forum.forum_items.count%> <%= t("forum_items")%>
 <% if @forum.forum_items.count >0 %>
 <ul class='forum'>

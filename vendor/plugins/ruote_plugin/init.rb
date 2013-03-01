@@ -38,8 +38,8 @@ Rails.configuration.gem 'rufus-verbs', :lib => 'rufus/verbs'
 
 #
 # starting the ruote engine (if necessary)
-
-unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
+#puts "init.rb:caller=#{caller.inspect}"
+unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) or l.match(/rake\/application\.rb/) }
   #
   # makes sure the engine is not instantied in case of "rake db:migrate"
   # or 'script/generate'
@@ -79,7 +79,9 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) }
   #worker=Ruote::Worker.new(Ruote::FsStorage.new(h[:work_directory]))
   #puts "init:worker="+worker.inspect
   
-  #puts "init:appel RuotePlugin.engine_init:"+h.inspect
+  puts "init:appel RuotePlugin.engine_init:"+h.inspect
+  
+  ##SYL TODO pour creation de la base 
   RuotePlugin.engine_init(h)
 
   begin

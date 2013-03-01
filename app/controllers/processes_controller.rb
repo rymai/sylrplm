@@ -153,8 +153,9 @@ class ProcessesController < ApplicationController
       LOG.error {" options="+options.inspect}
       e.backtrace.each {|x| LOG.error {x}}
       respond_to do |format|
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => nil)
-          format.html { redirect_to new_process_path(:definition_id => @definition.id)}
+        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "fei not launched error=#{e}")
+          #format.html { redirect_to new_process_path(:definition_id => @definition.id)}
+          format.html { redirect_to ({:controller => :definitions , :action => :new_process}) }
           format.xml  { render :xml => e, :status => :unprocessable_entity }
       end
     end

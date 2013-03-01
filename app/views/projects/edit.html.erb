@@ -1,7 +1,8 @@
 <h1><%= t(:project_edit) %></h1>
-<% form_for(@project) do |f| %>
+<% fonct="edit" %>
+<% form_for(@project, :html => { :id => h_form_html_id(@project, fonct) }) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "projects/edit",:locals => { :f => f, :fonct=>"edit" }) %>
+<%= render(:partial => "projects/edit",:locals => { :f => f, :fonct=>fonct }) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= f.submit t("update") %> </td>

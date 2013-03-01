@@ -1,3 +1,6 @@
+<% fonct="show" %>
+<% form_for(@relation, :html => { :id => h_form_html_id(@relation, fonct) }) do |f| %>
+<%= f.error_messages %>
 <p>
 	<b>Ident:</b>
 	<%= h @relation.ident %>
@@ -42,6 +45,12 @@
 	<b>Cardin use max:</b>
 	<%= h @relation.cardin_use_max %>
 </p>
+<%= h_type_values(@relation, fonct) %>
+<p>
+	<b><%= t("label_domain") %></b>
+	<%= h @relation.domain %>
+</p>
+<% end %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("edit"), edit_relation_path(@relation) %></td>

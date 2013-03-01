@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "projowner_id"
 		t.string   "domain"
+		t.string   "type_values"
 	end
 
 	add_index "customers", ["group_id"], :name => "index_customers_on_group_id"
@@ -108,6 +109,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "projowner_id"
 		t.string   "domain"
+		t.string   "type_values"
 	end
 
 	add_index "datafiles", ["document_id"], :name => "index_datafiles_on_document_id"
@@ -153,6 +155,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "projowner_id"
 		t.string   "domain"
+		t.string   "type_values"
 	end
 
 	add_index "documents", ["group_id"], :name => "index_documents_on_group_id"
@@ -205,6 +208,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "projowner_id"
 		t.string   "domain"
+		t.string   "type_values"
 	end
 
 	add_index "forums", ["group_id"], :name => "index_forums_on_group_id"
@@ -306,6 +310,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "projowner_id"
 		t.string   "domain"
+		t.string   "type_values"
 	end
 
 	add_index "parts", ["group_id"], :name => "index_parts_on_group_id"
@@ -339,6 +344,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "typeaccess_id"
 		t.string   "domain"
+		t.string   "type_values"
 	end
 
 	add_index "projects", ["group_id"], :name => "index_projects_on_group_id"
@@ -386,6 +392,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.datetime "created_at"
 		t.datetime "updated_at"
 		t.string   "domain"
+		t.string   "type_values"
 	end
 
 	add_index "relations", ["child_plmtype", "child_typesobject_id"], :name => "index_relations_on_child_plmtype_and_child_typesobject_id"
@@ -496,6 +503,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "project_id"
 		t.string   "domain"
+		t.string   "type_values"
 	end
 
 	add_index "users", ["group_id"], :name => "index_users_on_group_id"

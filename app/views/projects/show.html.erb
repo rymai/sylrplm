@@ -1,4 +1,7 @@
 <H1><%= t(:project_show) %></H1>
+<% fonct="show" %>
+<% form_for(@project, :html => { :id => h_form_html_id(@project, fonct) }) do |f| %>
+<%= f.error_messages %>
 <p>
 	<b><%= t(:label_ident) %></b>
 	<%= h @project.ident %>
@@ -29,8 +32,15 @@
 </p>
 <p>
 	<b><%= t(:label_date) %></b>
-	<%= l @project.date %>
-</p><h1></h1>
+	<%= l @project.date %> 
+</p>
+<%= h_type_values(@project, fonct) %>
+<p>
+	<b><%= t("label_domain") %></b>
+	<%= h @project.domain %>
+</p>
+<% end %>
+<h1></h1>
 <%= render(:partial => "shared/object_workitems", :object =>@project) %>
 <table class='menu_bas'>
 	<% unless @favori.get('document').count==0 || @relations["document"].count==0 %>

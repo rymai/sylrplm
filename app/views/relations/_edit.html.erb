@@ -43,9 +43,9 @@
 	<%= f.label t(:label_cardin_use_max) %>
 	<%= f.text_field :cardin_use_max %>
 	<br/>
-	<%= h_input_text(f ,:domain) %>
-	<br />
 	<%= f.label t(:label_views) %>
 	<%= select_inout(f, @relation, @views, :name) %>
 	<br/>
+	<%= h_type_values(@relation, fonct) %>
+	<%= h_input_text(f ,:domain) %>
 </fieldset>

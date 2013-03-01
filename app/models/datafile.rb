@@ -5,6 +5,8 @@ class Datafile < ActiveRecord::Base
 
   attr_accessor :user
 
+  attr_accessor :file_field
+
   validates_presence_of :ident , :typesobject
   validates_uniqueness_of :ident, :scope => :revision
 
@@ -17,26 +19,17 @@ class Datafile < ActiveRecord::Base
   belongs_to :projowner,
     :class_name => "Project"
 
+	before_save :upload_file
+
   FILE_REV_DELIMITER = "--"
 
-  def initialize(*args)
-    super
-    fname= "#{self.class.name}.#{__method__}"
-    #puts "datafile.initialize:args="+args.inspect
-    if args.length==1
-      self.revision = "1"
-      self.set_default_values(true)
-    end
-  end
-
   def user=(user)
-    fname= "#{self.class.name}.#{__method__}"
-    #puts "datafile.user:user="+user.inspect
-    self.owner     = user
-    self.group     = user.group
-    self.projowner = user.project
-    self.volume    = user.volume
-  end
+		fname= "#{self.class.name}.#{__method__}"
+		def_user(user)
+		self.volume    = user.volume
+		LOG.info (fname) {"volume=#{volume.id}"}
+	end
+
 
   def self.create_new(params, user)
     raise Exception.new "Don't use this method!"
@@ -88,19 +81,25 @@ class Datafile < ActiveRecord::Base
   end
 
   def uploaded_file=(file_field)
+  	self.file_field=file_field
+  end
+  
+  def upload_file
     fname= "#{self.class.name}.#{__method__}"
-    #puts "datafile.uploaded_file=:file_field="+file_field.inspect
-    #puts "datafile.uploaded_file=:self="+self.inspect
-    if (file_field!=nil && file_field!="" && file_field.original_filename!=nil && file_field.original_filename!="")
+    LOG.info (fname){"file_field=#{file_field.inspect}"}
+    LOG.info (fname){"datafile=#{self.inspect}"}
+    if (self.file_field!=nil && self.file_field!="" && self.file_field.original_filename!=nil && self.file_field.original_filename!="")
       self.content_type=file_field.content_type.chomp
       self.filename=base_part_of(file_field.original_filename)
       content=file_field.read
       begin
       write_file(content)
+      self.file_field=nil
       rescue Exception => e
       	raise Exception.new "Error uploaded file #{file_field}:#{e}"
       end
     end
+    
   end
 
   def base_part_of(file_name)
@@ -110,12 +109,14 @@ class Datafile < ActiveRecord::Base
 
   def dir_repository
     fname= "#{self.class.name}.#{__method__}"
+    LOG.info (fname) {"ident=#{self.ident}"}
     ret=""
     if self.volume.protocol == "fog"
-      ret=self.volume.dir_name.gsub("/",".").gsub("_","-")+"-"+self.class.name+"-"+self.ident
+      ret=self.volume.dir_name.gsub("/",".").gsub("_",".")+"."+self.class.name+"."+self.ident
       if ret.start_with?(".")
       ret=ret[1,ret.length-1]
       end
+      ret=ret.downcase
     else
       unless self.volume.dir_name.nil? || self.ident.nil?
         ret=File.join self.volume.dir_name.gsub("_","-"), self.class.name, self.ident
@@ -123,7 +124,7 @@ class Datafile < ActiveRecord::Base
     end
     ret
   end
-
+  
   def repository
     fname= "#{self.class.name}.#{__method__}"
     # on prend le volume du fichier lui meme
@@ -141,10 +142,12 @@ class Datafile < ActiveRecord::Base
   def filename_repository
     fname= "#{self.class.name}.#{__method__}"
     unless self.revision.nil?
-      FILE_REV_DELIMITER+self.revision.to_s+FILE_REV_DELIMITER+self.filename.to_s
+      ret = FILE_REV_DELIMITER+self.revision.to_s+FILE_REV_DELIMITER+self.filename.to_s
     else
-    self.filename.to_s
-    end
+    ret = self.filename.to_s
+    end 
+    LOG.info (fname) {"filename_repository=#{ret}"}
+    ret
   end
 
   # renvoie les differentes revisions du fichier existantes dans le repository
@@ -241,27 +244,32 @@ class Datafile < ActiveRecord::Base
   def create_dir
     fname= "#{self.class.name}.#{__method__}"
     if self.volume.protocol == "fog"
-      dir=SylrplmFog.instance.create_directory(dir_repository)
+      dir = SylrplmFog.instance.create_directory(dir_repository)
     else
-      FileUtils.mkdir_p(dir_repository)
+      FileUtils.mkdir_p(dir_repository) unless File.exists?(dir_repository)
     end
   end
 
   def write_file(content)
     fname= "#{self.class.name}.#{__method__}"
-    repos=self.repository
-    if self.volume.protocol == "fog"
-      fog_file=SylrplmFog.instance.upload_content(dir_repository, self.filename_repository, content)
-      puts "write_file:"+fog_file.inspect
-    else
-      f = File.open(repos, "wb")
-      puts "write_file:"+repos
-      begin
-    f.puts(content)
-    rescue Exception => e
-    	raise Exception.new "Error writing in server file #{repos}:#{e}"
-    end
-    f.close
+    LOG.info (fname) {"protocol=#{self.volume.protocol}"}
+    create_dir
+    repos = self.repository
+    LOG.info (fname) {"repository=#{repos}"}
+    LOG.info (fname){"content size=#{content.length}"}
+    if content.length>0
+	    if self.volume.protocol == "fog"
+	      fog_file = SylrplmFog.instance.upload_content(dir_repository, self.filename_repository, content)
+	      LOG.info (fname) {"write_file:#{fog_file.inspect}"}
+	    else
+	      f = File.open(repos, "wb")
+	      begin
+	    		f.puts(content)
+	    	rescue Exception => e
+	    		raise Exception.new "Error writing in server file #{repos}:#{e}"
+	    	end
+	    	f.close
+	    end
     end
   end
 
@@ -319,7 +327,7 @@ class Datafile < ActiveRecord::Base
       dir=SylrplmFog.instance.directory(dir_repository)
       unless dir.nil?
         dir.files.each do |file|
-          puts "datafile.remove_files:file="+file
+          puts "datafile.remove_files:file="+file.inspect
           file.destroy
         end
       dir.destroy

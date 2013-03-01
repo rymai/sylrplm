@@ -1,4 +1,6 @@
 class Forum < ActiveRecord::Base
+  #pour def_user seulement
+  include Models::PlmObject
   include Models::SylrplmCommon
 
   attr_accessor :user
@@ -20,10 +22,8 @@ class Forum < ActiveRecord::Base
   end
 
   def user=(user)
-    self.owner     = user
-    self.group     = user.group
-    self.projowner = user.project
-  end
+		def_user(user)
+	end
 
   def self.create_new(attributes, user)
     raise Exception.new "Don't call this method! Use Forum.new(params[:forum].merge(user: current_user)) instead!"

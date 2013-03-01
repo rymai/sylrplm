@@ -90,10 +90,8 @@ class Part < ActiveRecord::Base
   end
 
   def user=(user)
-    self.owner     = user
-    self.group     = user.group
-    self.projowner = user.project
-  end
+		def_user(user)
+	end
 
   def self.create_new(part, user)
     raise Exception.new "Don't use this method!"

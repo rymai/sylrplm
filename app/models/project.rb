@@ -43,8 +43,7 @@ class Project < ActiveRecord::Base
 	
 
 	def user=(user)
-		self.owner = user
-		self.group = user.group
+		def_user(user)
 	end
 
 	##def name; ident; end
