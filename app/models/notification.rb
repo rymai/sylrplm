@@ -77,11 +77,7 @@ class Notification < ActiveRecord::Base
     filter = filter.gsub("*","%")
     ret = {}
     if filter.present?
-      ret[:qry] = "forobject_type LIKE :v_filter " +
-      " or #{qry_responsible_id}" +
-      " or #{qrys_object_ident}" +
-      " or event_type LIKE :v_filter " +
-      " or event_date LIKE :v_filter or notify_date LIKE :v_filter "
+     ret[:qry] = "forobject_type LIKE :v_filter or #{qry_responsible_id} or #{qrys_object_ident} or event_type LIKE :v_filter or to_char(event_date, 'YYYY/MM/DD')  LIKE :v_filter or to_char(notify_date, 'YYYY/MM/DD') LIKE :v_filter"
       ret[:values] = { v_filter: filter }
     end
     ret
