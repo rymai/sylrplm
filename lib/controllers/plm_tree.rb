@@ -1,7 +1,7 @@
 ############################################
 # construction des arbres descendants
 ############################################
-def  build_tree(obj, view_id, variant=nil)
+def  build_tree(obj, view_id, variant = nil, level_max = 9999)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	lab=t(:ctrl_object_explorer, :typeobj => t("ctrl_"+obj.model_name), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_down", :label => lab, :open => true })
@@ -9,15 +9,15 @@ def  build_tree(obj, view_id, variant=nil)
 	unless relations.nil?
 		relations.each {|rel| LOG.debug (fname){"relations a afficher:#{rel.id}.#{rel.ident}"}}
 	else
-		LOG.debug (fname){"toutes les relations a afficher"}
+		LOG.debug (fname){"Toutes les relations a afficher"}
 	end
 	unless variant.nil?
 	var_effectivities = variant.var_effectivities
 	else
 	var_effectivities = []
 	end
-	LOG.debug (fname) {"view_id=#{view_id}, variante=#{variant}, var_effectivities=#{var_effectivities.inspect}"}
-	follow_tree(obj, tree, obj, relations, var_effectivities, 0)
+	LOG.debug (fname) {"view_id=#{view_id}, variante=#{variant}, var_effectivities=#{var_effectivities.inspect} level_max=#{level_max}"}
+	follow_tree(obj, tree, obj, relations, var_effectivities, 0, level_max)
 	### a mettre en option group_tree(tree, 0)
 	LOG.debug (fname) {"tree size=#{tree.size}"}
 	tree
@@ -32,10 +32,12 @@ end
 # var_effectivities: tableau des effectivites de la variante:[#<Part id: 22 ... , #<Part id: 25 ...]
 # level
 #
-def follow_tree(root, node, father, relations, var_effectivities, level)
+def follow_tree(root, node, father, relations, var_effectivities, level, level_max)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	LOG.debug (fname) {"node size 1=#{node.size}"}
-	#LOG.info (fname) {"tree or node=#{node} , father=#{father.ident}, relations=#{relations}"}
+	return if level >= level_max
+	#
+	# LOG.info (fname) {"tree or node=#{node} , father=#{father.ident}, relations=#{relations}"}
 	#------------------------------------------------------
 	# associated users: begin
 	#------------------------------------------------------
@@ -143,7 +145,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level)
 					}
 					#LOG.debug (fname){"options=#{options.inspect}"}
 					cnode = Node.new(options)
-					follow_tree(root, cnode, child, relations, var_effectivities, level+=1)
+					follow_tree(root, cnode, child, relations, var_effectivities, level+=1, level_max)
 					unless snode.nil?
 					snode << cnode
 					else
@@ -158,7 +160,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level)
 					else
 					thenode=node
 					end
-					follow_tree(root, thenode, child, relations, var_effectivities, level+=1)
+					follow_tree(root, thenode, child, relations, var_effectivities, level+=1, level_max)
 				end
 			else
 			# on n'affiche pas cette branche

@@ -38,7 +38,7 @@ class CustomersController < ApplicationController
 		@relations               = Relation.relations_for(@customer)
 		@documents               = @customer.documents
 		@projects                = @customer.projects
-		@tree         						= build_tree(@customer, @myparams[:view_id])
+		@tree         						= build_tree(@customer, @myparams[:view_id], nil, 3)
 		@tree_up      						= build_tree_up(@customer, @myparams[:view_id] )
 	end
 
