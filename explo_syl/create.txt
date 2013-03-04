@@ -576,33 +576,7 @@ ruby script/generate scaffold view name:string description:text
 rake db:fixtures:load FIXTURES_PATH=db/fixtures/admin
 rake db:fixtures:load FIXTURES_PATH=db/fixtures/domains/01-mecanique-ameublement/
 
----
---- export et import des custos
----
-rake sylrplm:export_domain[../sylrplm_custos_export,sicm.custo]
-rake sylrplm:export_domain[../sylrplm_custos_export,sample.table]
 
---- verifier et deplacer dans une custo par besoin
--recreer la base
-rake db:drop;rake db:create
--creer les tables
-rake db:reset
--remplir la base
-rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
-rake sylrplm:import_domain[db/custos/sicm,sample.table]
-rake sylrplm:update_access
-#pour heroku: 
--recreer la base                                                                                                              
-heroku pg:reset HEROKU_POSTGRESQL_ONYX --confirm sylrplm
-heroku pg:reset SHARED_DATABASE --confirm sylrplm
--creer les tables
-heroku run rake db:reset
--remplir la base
-heroku run rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
-heroku run rake sylrplm:import_domain[db/custos/sicm,sample.table]
-heroku run rake sylrplm:update_access
-
-heroku open;heroku logs -n 500
 
 tests auto: voir capybara
 
@@ -650,7 +624,7 @@ def requires_reloading?
 end
 
 ---
---- debug insert expression ko car text null
+--- debug pg insert expression ko car text null
 ---
 --- modifier la methode suivante dans lib/openwfe/extras/expool/ar_expstorage.rb
     # Stores an expression.
@@ -660,3 +634,31 @@ end
       #TODO syl pour postgresql qui refuse le null
       e.text="text" if e.text.nil?
       
+
+---
+--- export et import des custos
+---
+rake sylrplm:export_domain[../sylrplm_custos_export,sicm.custo]
+rake sylrplm:export_domain[../sylrplm_custos_export,sample.table]
+
+--- verifier et deplacer dans une custo par besoin
+-recreer la base
+rake db:drop;rake db:create
+-creer les tables
+rake db:reset
+-remplir la base
+rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
+rake sylrplm:import_domain[db/custos/sicm,sample.table]
+rake sylrplm:update_access
+#pour heroku: 
+-recreer la base                                                                                                              
+heroku pg:reset HEROKU_POSTGRESQL_ONYX --confirm sylrplm
+heroku pg:reset SHARED_DATABASE --confirm sylrplm
+-creer les tables
+heroku run rake db:reset
+-remplir la base
+heroku run rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
+heroku run rake sylrplm:import_domain[db/custos/sicm,sample.table]
+heroku run rake sylrplm:update_access
+
+heroku open;heroku logs -n 500
