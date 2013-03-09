@@ -54,9 +54,11 @@
 		<td> <%= link_to t("add_datafile"), :action => :new_datafile, :id => @document.id %> </td>
 	</tr>
 </table>
-<%end %> <!--
+<% end %> <!--
 <%= render(:partial => "shared/show_objects_in_relations", :locals=>{:object=>@document}) %>
 -->
+<% render(:partial => "shared/show_objects_in_relations", :locals=>{:object=>@document}) %> <h1></h1>
+<%= render(:partial => "shared/object_workitems", :object => @document)  %>
 <% unless @document.directory? %> <!-- pas de fichier sous un repertoire -->
 <h1><%= t("document_check") %></h1>
 <table class='menu_bas'>

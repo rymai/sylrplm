@@ -1,8 +1,3 @@
-[user]
-  name  = YOUR NAME
-  email = YOUR EMAIL
-
-
 [core]
   repositoryformatversion = 0
   filemode                = true
@@ -19,13 +14,13 @@
   url   = git@github.com:sylvani/sylrplm.git
   fetch = +refs/heads/*:refs/remotes/origin/*
 
-[remote "production-cedar"]
-  url   = git@heroku.com:sylrplm-cedar.git
-  fetch = +refs/heads/*:refs/remotes/production-cedar/*
-  push  = master:master
-
 [remote "production"]
   url   = git@heroku.com:sylrplm.git
+  fetch = +refs/heads/master:refs/remotes/production/master
+  push  = master:master
+
+[remote "production-old"]
+  url   = git@heroku.com:sylrplm-old.git
   fetch = +refs/heads/master:refs/remotes/production/master
   push  = master:master
 
