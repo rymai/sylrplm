@@ -199,10 +199,10 @@ Typesobject_997141214:
   description: Type de projet affecte automatiquement a la creation du compte.
   domain: admin
 
-Typesobject_1045584113: 
+Typesobject_directory: 
   id: "1045584113"
   forobject: document
-  name: directory
+  name: <%= ::SYLRPLM::TYPE_DOC_DIRECTORY %>
   fields: "{\"type\": \"\"}"
   description: ""
   domain: admin

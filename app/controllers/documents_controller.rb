@@ -35,22 +35,7 @@ class DocumentsController < ApplicationController
 		end
 	end
 
-	def show_
-		fname= "#{self.class.name}.#{__method__}"
-    #LOG.debug (fname){"params=#{params.inspect}"}
-		define_view
-		#puts __FILE__+"."+__method__.to_s+":"+params.inspect
-		@document  = Document.find(params[:id])
-		#@datafiles = @document.get_datafiles
-		#@parts     = @document.parts
-		#@projects  = @document.projects
-		#@customers = @document.customers
-		@relations = Relation.relations_for(@document)
-    @tree         						= build_tree(@document, @myparams[:view_id])
-		@tree_up      						= build_tree_up(@document, @myparams[:view_id] )
-    #LOG.debug (fname){"taille tree=#{@tree.size}"}
-	end
-
+	
 	# GET /documents/new
 	# GET /documents/new.xml
 	def new
@@ -347,7 +332,24 @@ class DocumentsController < ApplicationController
     LOG.debug (fname){"params=#{params.inspect}"}
 		empty_favori_by_type(get_model_type(params))
 	end
+	
 	private
+
+	def show_
+		fname= "#{self.class.name}.#{__method__}"
+    #LOG.debug (fname){"params=#{params.inspect}"}
+		define_view
+		#puts __FILE__+"."+__method__.to_s+":"+params.inspect
+		@document  = Document.find(params[:id])
+		#@datafiles = @document.get_datafiles
+		#@parts     = @document.parts
+		#@projects  = @document.projects
+		#@customers = @document.customers
+		@relations = Relation.relations_for(@document)
+    @tree         						= build_tree(@document, @myparams[:view_id])
+		@tree_up      						= build_tree_up(@document, @myparams[:view_id] )
+    #LOG.debug (fname){"taille tree=#{@tree.size}"}
+	end
 
 	def index_
 		fname= "#{self.class.name}.#{__method__}"

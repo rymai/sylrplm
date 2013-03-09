@@ -63,7 +63,11 @@ cmd="ruby script/generate controller help"
 ---
 --- doc
 ---
+mkdir doc
+touch doc/README_FOR_APP
 rake doc:app
+ou mieux 
+rdoc app --op public/doc/app
 
 mise en production:
 
@@ -123,11 +127,21 @@ generateur de schemas
 
 gem install railroad
 dans config linux: install de graphviz pour dot
-railroad -a -i -M | dot -Tsvg > public/mdd/models.svg
-railroad -a -i -C | dot -Tsvg > public/mdd/controllers.svg
+corriger gems/.../railroad/app_diagram.rb from:
+STDOUT.reopen(PLATFORM =~ /mswin/ ? "NUL" : "/dev/null")
+to
+STDOUT.reopen("/dev/null")
+
+RUBYLIB=. railroad -a -i -M --hide-private | dot -Tsvg > public/mdd/models.svg
+RUBYLIB=. railroad -a -i -C --hide-private | dot -Tsvg > public/mdd/controllers.svg
 ou
-railroad -a -i -M | neato -Tpng > public/mdd/models.png
-railroad -a -i -C | neato -Tpng > public/mdd/controllers.png
+RUBYLIB=. railroad -a -i -M --hide-private | neato -Tpng > public/mdd/models.png
+RUBYLIB=. railroad -a -i -C --hide-private | neato -Tpng > public/mdd/controllers.png
+
+new version: https://github.com/preston/railroady.git
+gem install railroady
+rake diagram:all
+railroady [options] command
 
 ===========================================================
 test

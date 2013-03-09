@@ -42,28 +42,7 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	def show_
-		fname= "#{controller_class_name}.#{__method__}"
-		define_view
-		@project = Project.find(params[:id])
-		@relations               = Relation.relations_for(@project)
-		@documents=@project.documents
-		@parts=@project.parts
-		@customers=@project.customers_up
-		flash[:notice] = "" if flash[:notice].nil?
-		if @favori.get('document').count>0 && @relations["document"].count==0
-			flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_document))
-		end
-		if @favori.get('part').count>0 && @relations["part"].count==0
-			flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_part))
-		end
-		if @favori.get('user').count>0 && @relations["user"].count==0
-			flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
-		end
-		@tree         						= build_tree(@project, @myparams[:view_id], nil, 2)
-		@tree_up      						= build_tree_up(@project, @myparams[:view_id] )
-	end
-
+	
 	# GET /projects/new
 	# GET /projects/new.xml
 	# nouveau projet
@@ -206,7 +185,30 @@ class ProjectsController < ApplicationController
 		puts "#{self.class.name}.#{__method__}:#{params.inspect}"
 		empty_favori_by_type(get_model_type(params))
 	end
+	
 	private
+	
+	def show_
+		fname= "#{controller_class_name}.#{__method__}"
+		define_view
+		@project = Project.find(params[:id])
+		@relations               = Relation.relations_for(@project)
+		@documents=@project.documents
+		@parts=@project.parts
+		@customers=@project.customers_up
+		flash[:notice] = "" if flash[:notice].nil?
+		if @favori.get('document').count>0 && @relations["document"].count==0
+			flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_document))
+		end
+		if @favori.get('part').count>0 && @relations["part"].count==0
+			flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_part))
+		end
+		if @favori.get('user').count>0 && @relations["user"].count==0
+			flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
+		end
+		@tree         						= build_tree(@project, @myparams[:view_id], nil, 2)
+		@tree_up      						= build_tree_up(@project, @myparams[:view_id] )
+	end
 
 	def index_
 		@projects = Project.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})

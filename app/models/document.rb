@@ -128,6 +128,11 @@ class Document < ActiveRecord::Base
     obj
   end
   
+  #pour par exemple interdire les fichiers dans un répertoire
+  def directory? 
+  	typesobject.name==::SYLRPLM::TYPE_DOC_DIRECTORY 
+  end
+  
   def get_check_out
   	Check.get_checkout(self)
   end

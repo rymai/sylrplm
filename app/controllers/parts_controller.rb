@@ -31,34 +31,7 @@ class PartsController < ApplicationController
 		end
 	end
 
-	def show_
-		fname= "#{controller_class_name}.#{__method__}"
-		#LOG.debug (fname){"begin:params=#{params}"}
-		define_view
-		@part                    = Part.find(params[:id])
-		@other_parts = Part.paginate(:page => params[:page],
-		:conditions => ["id != #{@part.id}"],
-		:order => 'ident ASC',
-		:per_page => cfg_items_per_page)
-		@first_status = Statusobject.get_first("part")
-		all_variant=(params[:all_variants].nil? ? "no" : params[:all_variants])
-		if all_variant == "on"
-			@variant = nil
-		else
-			if params[:variant].nil?
-				@variant = nil
-			else
-				#LOG.debug (fname){"all_variant=#{all_variant}, variante=#{params[:variant]} => on filtre"}
-				@variant = PlmServices.get_object_by_mdlid(params[:variant])
-			end
-		end
-		@tree         = build_tree(@part, @myparams[:view_id] , @variant)
-		@tree_up      = build_tree_up(@part, @myparams[:view_id] )
-		#LOG.debug (fname){"taille tree=#{@tree.size}"}
-	#LOG.debug (fname){"variant=#{@variant}"}
-	#LOG.debug (fname){"variant eff=#{@variant.var_effectivities}"} unless @variant.nil?
-	#LOG.debug (fname){"end:view=#{View.find(@myparams[:view_id]).to_s}"}
-	end
+	
 
 	# GET /parts/new
 	# GET /parts/new.xml
@@ -199,6 +172,35 @@ class PartsController < ApplicationController
 	end
 	private
 
+	def show_
+		fname= "#{controller_class_name}.#{__method__}"
+		#LOG.debug (fname){"begin:params=#{params}"}
+		define_view
+		@part                    = Part.find(params[:id])
+		@other_parts = Part.paginate(:page => params[:page],
+		:conditions => ["id != #{@part.id}"],
+		:order => 'ident ASC',
+		:per_page => cfg_items_per_page)
+		@first_status = Statusobject.get_first("part")
+		all_variant=(params[:all_variants].nil? ? "no" : params[:all_variants])
+		if all_variant == "on"
+			@variant = nil
+		else
+			if params[:variant].nil?
+				@variant = nil
+			else
+				#LOG.debug (fname){"all_variant=#{all_variant}, variante=#{params[:variant]} => on filtre"}
+				@variant = PlmServices.get_object_by_mdlid(params[:variant])
+			end
+		end
+		@tree         = build_tree(@part, @myparams[:view_id] , @variant)
+		@tree_up      = build_tree_up(@part, @myparams[:view_id] )
+		#LOG.debug (fname){"taille tree=#{@tree.size}"}
+	#LOG.debug (fname){"variant=#{@variant}"}
+	#LOG.debug (fname){"variant eff=#{@variant.var_effectivities}"} unless @variant.nil?
+	#LOG.debug (fname){"end:view=#{View.find(@myparams[:view_id]).to_s}"}
+	end
+	
 	def index_
 		@parts = Part.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 	end

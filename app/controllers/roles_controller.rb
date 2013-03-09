@@ -30,12 +30,6 @@ class RolesController < ApplicationController
 		end
 	end
 
-	def show_
-		define_view
-		@role = Role.find(params[:id])
-		@tree  = build_tree(@role, @view_id)
-	end
-
 	# GET /roles/new
 	# GET /roles/new.xml
 	def new
@@ -98,4 +92,13 @@ class RolesController < ApplicationController
 			format.xml  { head :ok }
 		end
 	end
+
+	private
+
+	def show_
+		define_view
+		@role = Role.find(params[:id])
+		@tree  = build_tree(@role, @view_id)
+	end
+
 end

@@ -42,7 +42,9 @@ module SYLRPLM
   #
   # valeurs des types
   #
-  # n'importe quel type
+  # document de type directory
+  TYPE_DOC_DIRECTORY        = 'directory'
+ # n'importe quel type
   TYPE_GENERIC              = 'any_type'
   # type de user: personne physique.
   TYPE_USER_PERSON          = 'person_'
