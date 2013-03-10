@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Document - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/document.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActiveRecord::Base
+  
+</nav>
+
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><span class="include">Models::PlmObject</span>
+  
+  
+  
+    <li><span class="include">Models::SylrplmCommon</span>
+  
+  
+  </ul>
+</nav>
+
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-create_new">::create_new</a>
+    
+    <li><a href="#method-c-find_all">::find_all</a>
+    
+    <li><a href="#method-c-find_edit">::find_edit</a>
+    
+    <li><a href="#method-c-find_with_part">::find_with_part</a>
+    
+    <li><a href="#method-c-find_without_part">::find_without_part</a>
+    
+    <li><a href="#method-c-get_conditions">::get_conditions</a>
+    
+    <li><a href="#method-c-get_types_document">::get_types_document</a>
+    
+    <li><a href="#method-i-add_datafile">#add_datafile</a>
+    
+    <li><a href="#method-i-can_be_check_in-3F">#can_be_check_in?</a>
+    
+    <li><a href="#method-i-check_free">#check_free</a>
+    
+    <li><a href="#method-i-check_in">#check_in</a>
+    
+    <li><a href="#method-i-check_out">#check_out</a>
+    
+    <li><a href="#method-i-checked-3F">#checked?</a>
+    
+    <li><a href="#method-i-directory-3F">#directory?</a>
+    
+    <li><a href="#method-i-get_check_out">#get_check_out</a>
+    
+    <li><a href="#method-i-get_datafiles">#get_datafiles</a>
+    
+    <li><a href="#method-i-link_attributes-3D">#link_attributes=</a>
+    
+    <li><a href="#method-i-remove_datafile">#remove_datafile</a>
+    
+    <li><a href="#method-i-to_s">#to_s</a>
+    
+    <li><a href="#method-i-user-3D">#user=</a>
+    
+    <li><a href="#method-i-users">#users</a>
+    
+    <li><a href="#method-i-variants">#variants</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./app/views/roles_users/README.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationController/Class.html">ApplicationController::Class</a>
+  
+    <li><a href="./Access.html">Access</a>
+  
+    <li><a href="./AccessesController.html">AccessesController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Check.html">Check</a>
+  
+    <li><a href="./ChecksController.html">ChecksController</a>
+  
+    <li><a href="./Customer.html">Customer</a>
+  
+    <li><a href="./CustomersController.html">CustomersController</a>
+  
+    <li><a href="./Datafile.html">Datafile</a>
+  
+    <li><a href="./DatafilesController.html">DatafilesController</a>
+  
+    <li><a href="./Definition.html">Definition</a>
+  
+    <li><a href="./DefinitionsController.html">DefinitionsController</a>
+  
+    <li><a href="./DefinitionsRoles.html">DefinitionsRoles</a>
+  
+    <li><a href="./Document.html">Document</a>
+  
+    <li><a href="./DocumentsController.html">DocumentsController</a>
+  
+    <li><a href="./ErrorsController.html">ErrorsController</a>
+  
+    <li><a href="./ExpressionsController.html">ExpressionsController</a>
+  
+    <li><a href="./Favori.html">Favori</a>
+  
+    <li><a href="./FavoriDocument.html">FavoriDocument</a>
+  
+    <li><a href="./FavoriDocumentItem.html">FavoriDocumentItem</a>
+  
+    <li><a href="./FavoriItem.html">FavoriItem</a>
+  
+    <li><a href="./FavoriPart.html">FavoriPart</a>
+  
+    <li><a href="./FavoriPartItem.html">FavoriPartItem</a>
+  
+    <li><a href="./FavoriProject.html">FavoriProject</a>
+  
+    <li><a href="./FavoriProjectItem.html">FavoriProjectItem</a>
+  
+    <li><a href="./Forum.html">Forum</a>
+  
+    <li><a href="./ForumItem.html">ForumItem</a>
+  
+    <li><a href="./ForumItemsController.html">ForumItemsController</a>
+  
+    <li><a href="./ForumsController.html">ForumsController</a>
+  
+    <li><a href="./Group.html">Group</a>
+  
+    <li><a href="./GroupDefinitionsController.html">GroupDefinitionsController</a>
+  
+    <li><a href="./GroupsController.html">GroupsController</a>
+  
+    <li><a href="./GroupsUsers.html">GroupsUsers</a>
+  
+    <li><a href="./HelpController.html">HelpController</a>
+  
+    <li><a href="./HelpHelper.html">HelpHelper</a>
+  
+    <li><a href="./HistoryController.html">HistoryController</a>
+  
+    <li><a href="./HistoryHelper.html">HistoryHelper</a>
+  
+    <li><a href="./InfoController.html">InfoController</a>
+  
+    <li><a href="./Link.html">Link</a>
+  
+    <li><a href="./LinksController.html">LinksController</a>
+  
+    <li><a href="./MainController.html">MainController</a>
+  
+    <li><a href="./MainHelper.html">MainHelper</a>
+  
+    <li><a href="./Notification.html">Notification</a>
+  
+    <li><a href="./NotificationsController.html">NotificationsController</a>
+  
+    <li><a href="./NotificationsHelper.html">NotificationsHelper</a>
+  
+    <li><a href="./Part.html">Part</a>
+  
+    <li><a href="./PartsController.html">PartsController</a>
+  
+    <li><a href="./PlmMailer.html">PlmMailer</a>
+  
+    <li><a href="./PlmMailerHelper.html">PlmMailerHelper</a>
+  
+    <li><a href="./PlmObserver.html">PlmObserver</a>
+  
+    <li><a href="./ProcessesController.html">ProcessesController</a>
+  
+    <li><a href="./Project.html">Project</a>
+  
+    <li><a href="./ProjectsController.html">ProjectsController</a>
+  
+    <li><a href="./Question.html">Question</a>
+  
+    <li><a href="./QuestionsController.html">QuestionsController</a>
+  
+    <li><a href="./Relation.html">Relation</a>
+  
+    <li><a href="./RelationsController.html">RelationsController</a>
+  
+    <li><a href="./Role.html">Role</a>
+  
+    <li><a href="./RolesController.html">RolesController</a>
+  
+    <li><a href="./RolesUsers.html">RolesUsers</a>
+  
+    <li><a href="./RolesUsersController.html">RolesUsersController</a>
+  
+    <li><a href="./Sequence.html">Sequence</a>
+  
+    <li><a href="./SequencesController.html">SequencesController</a>
+  
+    <li><a href="./SessionsController.html">SessionsController</a>
+  
+    <li><a href="./SessionsHelper.html">SessionsHelper</a>
+  
+    <li><a href="./Statusobject.html">Statusobject</a>
+  
+    <li><a href="./StatusobjectsController.html">StatusobjectsController</a>
+  
+    <li><a href="./Typesobject.html">Typesobject</a>
+  
+    <li><a href="./TypesobjectsController.html">TypesobjectsController</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./UserGroupsController.html">UserGroupsController</a>
+  
+    <li><a href="./UsersController.html">UsersController</a>
+  
+    <li><a href="./UsersHelper.html">UsersHelper</a>
+  
+    <li><a href="./View.html">View</a>
+  
+    <li><a href="./ViewsController.html">ViewsController</a>
+  
+    <li><a href="./Volume.html">Volume</a>
+  
+    <li><a href="./VolumesController.html">VolumesController</a>
+  
+    <li><a href="./WorkitemsController.html">WorkitemsController</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Document</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-link_attributes" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">link_attributes</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-user" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">user</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-create_new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">create_new</span><span
+            class="method-args">(document, user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>essai, appelle 10 fois par document !!! def after_find puts
+“Document:after_find: ident=”<code>ident</code>“
+type=”<code>model_name</code>“.”<code>typesobject.name</code>“
+proj=”<code>projowner.ident</code>“ group=”+group.name end</p>
+          
+
+          
+          <div class="method-source-code" id="create_new-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 77</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">create_new</span>(<span class="ruby-identifier">document</span>, <span class="ruby-identifier">user</span>)
+  <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exception</span>.<span class="ruby-identifier">new</span> <span class="ruby-string">&quot;Don't use this method!&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- create_new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- create_new-method -->
+
+    
+      <div id="method-c-find_all" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_all</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_all-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 96</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_all</span>
+  <span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;ident ASC, revision ASC&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_all-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_all-method -->
+
+    
+      <div id="method-c-find_edit" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_edit</span><span
+            class="method-args">(object_id)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>modifie les attributs avant edition</p>
+          
+
+          
+          <div class="method-source-code" id="find_edit-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 125</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_edit</span>(<span class="ruby-identifier">object_id</span>)
+  <span class="ruby-identifier">obj</span> = <span class="ruby-identifier">find</span>(<span class="ruby-identifier">object_id</span>)
+  <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">edit</span>
+  <span class="ruby-identifier">obj</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_edit-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_edit-method -->
+
+    
+      <div id="method-c-find_with_part" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_with_part</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_with_part-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 100</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_with_part</span>
+  <span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>,
+  <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;part_id IS NOT NULL&quot;</span>],
+  <span class="ruby-value">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;ident&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_with_part-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_with_part-method -->
+
+    
+      <div id="method-c-find_without_part" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_without_part</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_without_part-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 106</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_without_part</span>
+  <span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>,
+  <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;part_id IS NULL&quot;</span>],
+  <span class="ruby-value">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;ident&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_without_part-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_without_part-method -->
+
+    
+      <div id="method-c-get_conditions" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_conditions</span><span
+            class="method-args">(filters)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_conditions-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 81</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_conditions</span>(<span class="ruby-identifier">filters</span>)
+  <span class="ruby-identifier">filter</span> = <span class="ruby-identifier">filters</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;*&quot;</span>, <span class="ruby-string">&quot;%&quot;</span>)
+  <span class="ruby-identifier">ret</span> = {}
+  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">filter</span>.<span class="ruby-identifier">nil?</span>
+    <span class="ruby-identifier">ret</span>[<span class="ruby-value">:qry</span>] = <span class="ruby-string">&quot;ident LIKE :v_filter or revision LIKE :v_filter or designation LIKE :v_filter or date LIKE :v_filter &quot;</span>
+    <span class="ruby-identifier">ret</span>[<span class="ruby-value">:values</span>] = { <span class="ruby-value">:v_filter</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">filter</span> }
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_conditions-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_conditions-method -->
+
+    
+      <div id="method-c-get_types_document" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_types_document</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_types_document-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 91</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_types_document</span>
+  <span class="ruby-constant">Typesobject</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;name&quot;</span>,
+  <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;forobject = 'document'&quot;</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_types_document-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_types_document-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-add_datafile" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add_datafile</span><span
+            class="method-args">(params,user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="add_datafile-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 211</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add_datafile</span>(<span class="ruby-identifier">params</span>,<span class="ruby-identifier">user</span>)
+  <span class="ruby-identifier">fname</span>= <span class="ruby-node">&quot;#{self.class.name}.#{__method__}&quot;</span>
+  <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>){<span class="ruby-node">&quot;params=#{params}, user=#{user.inspect}&quot;</span>} 
+  <span class="ruby-comment">#datafile = Datafile.new(params.merge(user: user))</span>
+  <span class="ruby-identifier">datafile</span> = <span class="ruby-constant">Datafile</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>)
+  <span class="ruby-identifier">datafile</span>.<span class="ruby-identifier">document</span> = <span class="ruby-keyword">self</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">datafile</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">datafiles</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">datafile</span>
+    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">save</span>
+    <span class="ruby-string">&quot;ok&quot;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-string">&quot;datafile_not_saved&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- add_datafile-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- add_datafile-method -->
+
+    
+      <div id="method-i-can_be_check_in-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">can_be_check_in?</span><span
+            class="method-args">(user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="can_be_check_in-3F-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 140</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">can_be_check_in?</span>(<span class="ruby-identifier">user</span>)
+        <span class="ruby-identifier">chk</span> = <span class="ruby-identifier">get_check_out</span>
+        <span class="ruby-identifier">ret</span>=<span class="ruby-keyword">false</span>
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">chk</span>.<span class="ruby-identifier">nil?</span>
+                <span class="ruby-identifier">ret</span>=<span class="ruby-identifier">user</span><span class="ruby-operator">==</span><span class="ruby-identifier">chk</span>.<span class="ruby-identifier">out_user</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- can_be_check_in-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- can_be_check_in-3F-method -->
+
+    
+      <div id="method-i-check_free" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">check_free</span><span
+            class="method-args">(params,user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="check_free-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 192</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_free</span>(<span class="ruby-identifier">params</span>,<span class="ruby-identifier">user</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">check</span> = <span class="ruby-constant">Check</span>.<span class="ruby-identifier">get_checkout</span>(<span class="ruby-keyword">self</span>)
+    <span class="ruby-identifier">check</span>.<span class="ruby-identifier">update_accessor</span>(<span class="ruby-identifier">user</span>)
+    <span class="ruby-identifier">check</span>.<span class="ruby-identifier">checkFree</span>(<span class="ruby-identifier">params</span>,<span class="ruby-identifier">user</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">check</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-keyword">self</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:document</span>])
+      <span class="ruby-string">&quot;ok&quot;</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">check</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:in_reason</span>].<span class="ruby-identifier">present?</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;no_reason&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&quot;notcheckfree&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-string">&quot;notyet_checkout&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- check_free-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- check_free-method -->
+
+    
+      <div id="method-i-check_in" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">check_in</span><span
+            class="method-args">(params,user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="check_in-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 177</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_in</span>(<span class="ruby-identifier">params</span>,<span class="ruby-identifier">user</span>)
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">check</span> = <span class="ruby-constant">Check</span>.<span class="ruby-identifier">get_checkout</span>(<span class="ruby-keyword">self</span>)
+    <span class="ruby-identifier">check</span>.<span class="ruby-identifier">update_accessor</span>(<span class="ruby-identifier">user</span>)
+    <span class="ruby-identifier">check</span>.<span class="ruby-identifier">checkIn</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">user</span>)
+    <span class="ruby-keyword">if</span> <span class="ruby-identifier">check</span>.<span class="ruby-identifier">save</span>
+      <span class="ruby-keyword">self</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:document</span>])
+      <span class="ruby-string">&quot;ok&quot;</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">check</span>.<span class="ruby-identifier">errors</span>[<span class="ruby-value">:in_reason</span>].<span class="ruby-identifier">present?</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;no_reason&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-string">&quot;notcheckin&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-string">&quot;notyet_checkout&quot;</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- check_in-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- check_in-method -->
+
+    
+      <div id="method-i-check_out" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">check_out</span><span
+            class="method-args">(params, user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="check_out-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 149</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">check_out</span>(<span class="ruby-identifier">params</span>, <span class="ruby-identifier">user</span>)
+  <span class="ruby-identifier">fname</span>= <span class="ruby-node">&quot;#{self.class.name}.#{__method__}&quot;</span>
+  <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>){<span class="ruby-node">&quot;params=#{params}, user=#{user.inspect}&quot;</span>} 
+  <span class="ruby-identifier">ret</span> = <span class="ruby-string">&quot;&quot;</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">Check</span>.<span class="ruby-identifier">get_checkout</span>(<span class="ruby-keyword">self</span>).<span class="ruby-identifier">nil?</span>
+    <span class="ruby-keyword">unless</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:out_reason</span>].<span class="ruby-identifier">blank?</span>
+      <span class="ruby-identifier">args</span>={}
+      <span class="ruby-identifier">args</span>[<span class="ruby-value">:out_reason</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-value">:out_reason</span>]
+      <span class="ruby-identifier">args</span>[<span class="ruby-value">:checkobject</span>] = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">model_name</span>
+      <span class="ruby-identifier">args</span>[<span class="ruby-value">:checkobject_id</span>] = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>
+      <span class="ruby-identifier">args</span>[<span class="ruby-value">:user</span>] = <span class="ruby-identifier">user</span>
+      
+     <span class="ruby-comment">## if Check.create(params.merge(object_to_check: self, user: user))</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-constant">Check</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">args</span>)
+        <span class="ruby-identifier">ret</span> = <span class="ruby-string">&quot;ok&quot;</span>
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">ret</span> = <span class="ruby-string">&quot;notcheckout&quot;</span>
+      <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">else</span>
+      <span class="ruby-identifier">ret</span> = <span class="ruby-string">&quot;no_reason&quot;</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-identifier">ret</span> = <span class="ruby-string">&quot;already_checkout&quot;</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>){<span class="ruby-node">&quot;ret=#{ret}&quot;</span>} 
+  <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- check_out-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- check_out-method -->
+
+    
+      <div id="method-i-checked-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">checked?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="checked-3F-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 207</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">checked?</span>
+  <span class="ruby-constant">Check</span>.<span class="ruby-identifier">get_checkout</span>(<span class="ruby-keyword">self</span>).<span class="ruby-identifier">present?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- checked-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- checked-3F-method -->
+
+    
+      <div id="method-i-directory-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">directory?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>pour par exemple interdire les fichiers dans un répertoire</p>
+          
+
+          
+          <div class="method-source-code" id="directory-3F-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 132</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">directory?</span> 
+      <span class="ruby-identifier">typesobject</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">==</span><span class="ruby-operator">::</span><span class="ruby-constant">SYLRPLM</span><span class="ruby-operator">::</span><span class="ruby-constant">TYPE_DOC_DIRECTORY</span> 
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- directory-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- directory-3F-method -->
+
+    
+      <div id="method-i-get_check_out" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_check_out</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_check_out-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 136</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_check_out</span>
+      <span class="ruby-constant">Check</span>.<span class="ruby-identifier">get_checkout</span>(<span class="ruby-keyword">self</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_check_out-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_check_out-method -->
+
+    
+      <div id="method-i-get_datafiles" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_datafiles</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_datafiles-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 230</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_datafiles</span>
+  <span class="ruby-identifier">ret</span> = []
+  <span class="ruby-identifier">ret</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">datafiles</span>
+  <span class="ruby-identifier">ret</span> = { <span class="ruby-value">:recordset</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ret</span>, <span class="ruby-value">:total</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ret</span>.<span class="ruby-identifier">length</span> }
+
+  <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_datafiles-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_datafiles-method -->
+
+    
+      <div id="method-i-link_attributes-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">link_attributes=</span><span
+            class="method-args">(att)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="link_attributes-3D-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 116</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">link_attributes=</span>(<span class="ruby-identifier">att</span>)
+  <span class="ruby-ivar">@link_attributes</span> = <span class="ruby-identifier">att</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- link_attributes-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- link_attributes-3D-method -->
+
+    
+      <div id="method-i-remove_datafile" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">remove_datafile</span><span
+            class="method-args">(item)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="remove_datafile-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 226</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">remove_datafile</span>(<span class="ruby-identifier">item</span>)
+  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">datafiles</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">item</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- remove_datafile-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- remove_datafile-method -->
+
+    
+      <div id="method-i-to_s" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">to_s</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="to_s-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 112</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">to_s</span>
+  <span class="ruby-node">&quot;#{self.ident}/#{self.revision}-#{self.designation}-#{self.typesobject.try(:name)}-#{self.statusobject.try(:name)}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- to_s-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- to_s-method -->
+
+    
+      <div id="method-i-user-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">user=</span><span
+            class="method-args">(user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="user-3D-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 69</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">user=</span>(<span class="ruby-identifier">user</span>)
+              <span class="ruby-identifier">def_user</span>(<span class="ruby-identifier">user</span>)
+      <span class="ruby-keyword">end</span></pre>
+          </div><!-- user-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- user-3D-method -->
+
+    
+      <div id="method-i-users" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">users</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="users-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 242</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">users</span>
+        <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- users-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- users-method -->
+
+    
+      <div id="method-i-variants" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">variants</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="variants-source">
+            <pre><span class="ruby-comment"># File app/models/document.rb, line 238</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">variants</span>
+      <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- variants-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- variants-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

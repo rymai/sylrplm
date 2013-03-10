@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Link - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/link.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActiveRecord::Base
+  
+</nav>
+
+    <!-- Included Modules -->
+<nav id="includes-section" class="section">
+  <h3 class="section-header">Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><span class="include">Models::PlmObject</span>
+  
+  
+  
+    <li><span class="include">Models::SylrplmCommon</span>
+  
+  
+  </ul>
+</nav>
+
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-create_new">::create_new</a>
+    
+    <li><a href="#method-c-create_new_by_values">::create_new_by_values</a>
+    
+    <li><a href="#method-c-find_by_father_plmtype_">::find_by_father_plmtype_</a>
+    
+    <li><a href="#method-c-find_child">::find_child</a>
+    
+    <li><a href="#method-c-find_childs">::find_childs</a>
+    
+    <li><a href="#method-c-find_childs_with_father_plmtype">::find_childs_with_father_plmtype</a>
+    
+    <li><a href="#method-c-find_fathers">::find_fathers</a>
+    
+    <li><a href="#method-c-get_all_fathers">::get_all_fathers</a>
+    
+    <li><a href="#method-c-get_conditions">::get_conditions</a>
+    
+    <li><a href="#method-c-is_child_of">::is_child_of</a>
+    
+    <li><a href="#method-c-linked-3F">::linked?</a>
+    
+    <li><a href="#method-c-nb_linked">::nb_linked</a>
+    
+    <li><a href="#method-c-nb_occured">::nb_occured</a>
+    
+    <li><a href="#method-c-nb_used">::nb_used</a>
+    
+    <li><a href="#method-c-new">::new</a>
+    
+    <li><a href="#method-c-valid-3F">::valid?</a>
+    
+    <li><a href="#method-i-after_find">#after_find</a>
+    
+    <li><a href="#method-i-before_save">#before_save</a>
+    
+    <li><a href="#method-i-cardinality_count">#cardinality_count</a>
+    
+    <li><a href="#method-i-child-3D">#child=</a>
+    
+    <li><a href="#method-i-child_ident">#child_ident</a>
+    
+    <li><a href="#method-i-clean_effectivities">#clean_effectivities</a>
+    
+    <li><a href="#method-i-effectivities_mdlid">#effectivities_mdlid</a>
+    
+    <li><a href="#method-i-exists-3F">#exists?</a>
+    
+    <li><a href="#method-i-father-3D">#father=</a>
+    
+    <li><a href="#method-i-father_ident">#father_ident</a>
+    
+    <li><a href="#method-i-ident">#ident</a>
+    
+    <li><a href="#method-i-link_uniqueness">#link_uniqueness</a>
+    
+    <li><a href="#method-i-relation-3D">#relation=</a>
+    
+    <li><a href="#method-i-relation_ident">#relation_ident</a>
+    
+    <li><a href="#method-i-relation_name">#relation_name</a>
+    
+    <li><a href="#method-i-type">#type</a>
+    
+    <li><a href="#method-i-user-3D">#user=</a>
+    
+    <li><a href="#method-i-validity">#validity</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./app/views/roles_users/README.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationController/Class.html">ApplicationController::Class</a>
+  
+    <li><a href="./Access.html">Access</a>
+  
+    <li><a href="./AccessesController.html">AccessesController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Check.html">Check</a>
+  
+    <li><a href="./ChecksController.html">ChecksController</a>
+  
+    <li><a href="./Customer.html">Customer</a>
+  
+    <li><a href="./CustomersController.html">CustomersController</a>
+  
+    <li><a href="./Datafile.html">Datafile</a>
+  
+    <li><a href="./DatafilesController.html">DatafilesController</a>
+  
+    <li><a href="./Definition.html">Definition</a>
+  
+    <li><a href="./DefinitionsController.html">DefinitionsController</a>
+  
+    <li><a href="./DefinitionsRoles.html">DefinitionsRoles</a>
+  
+    <li><a href="./Document.html">Document</a>
+  
+    <li><a href="./DocumentsController.html">DocumentsController</a>
+  
+    <li><a href="./ErrorsController.html">ErrorsController</a>
+  
+    <li><a href="./ExpressionsController.html">ExpressionsController</a>
+  
+    <li><a href="./Favori.html">Favori</a>
+  
+    <li><a href="./FavoriDocument.html">FavoriDocument</a>
+  
+    <li><a href="./FavoriDocumentItem.html">FavoriDocumentItem</a>
+  
+    <li><a href="./FavoriItem.html">FavoriItem</a>
+  
+    <li><a href="./FavoriPart.html">FavoriPart</a>
+  
+    <li><a href="./FavoriPartItem.html">FavoriPartItem</a>
+  
+    <li><a href="./FavoriProject.html">FavoriProject</a>
+  
+    <li><a href="./FavoriProjectItem.html">FavoriProjectItem</a>
+  
+    <li><a href="./Forum.html">Forum</a>
+  
+    <li><a href="./ForumItem.html">ForumItem</a>
+  
+    <li><a href="./ForumItemsController.html">ForumItemsController</a>
+  
+    <li><a href="./ForumsController.html">ForumsController</a>
+  
+    <li><a href="./Group.html">Group</a>
+  
+    <li><a href="./GroupDefinitionsController.html">GroupDefinitionsController</a>
+  
+    <li><a href="./GroupsController.html">GroupsController</a>
+  
+    <li><a href="./GroupsUsers.html">GroupsUsers</a>
+  
+    <li><a href="./HelpController.html">HelpController</a>
+  
+    <li><a href="./HelpHelper.html">HelpHelper</a>
+  
+    <li><a href="./HistoryController.html">HistoryController</a>
+  
+    <li><a href="./HistoryHelper.html">HistoryHelper</a>
+  
+    <li><a href="./InfoController.html">InfoController</a>
+  
+    <li><a href="./Link.html">Link</a>
+  
+    <li><a href="./LinksController.html">LinksController</a>
+  
+    <li><a href="./MainController.html">MainController</a>
+  
+    <li><a href="./MainHelper.html">MainHelper</a>
+  
+    <li><a href="./Notification.html">Notification</a>
+  
+    <li><a href="./NotificationsController.html">NotificationsController</a>
+  
+    <li><a href="./NotificationsHelper.html">NotificationsHelper</a>
+  
+    <li><a href="./Part.html">Part</a>
+  
+    <li><a href="./PartsController.html">PartsController</a>
+  
+    <li><a href="./PlmMailer.html">PlmMailer</a>
+  
+    <li><a href="./PlmMailerHelper.html">PlmMailerHelper</a>
+  
+    <li><a href="./PlmObserver.html">PlmObserver</a>
+  
+    <li><a href="./ProcessesController.html">ProcessesController</a>
+  
+    <li><a href="./Project.html">Project</a>
+  
+    <li><a href="./ProjectsController.html">ProjectsController</a>
+  
+    <li><a href="./Question.html">Question</a>
+  
+    <li><a href="./QuestionsController.html">QuestionsController</a>
+  
+    <li><a href="./Relation.html">Relation</a>
+  
+    <li><a href="./RelationsController.html">RelationsController</a>
+  
+    <li><a href="./Role.html">Role</a>
+  
+    <li><a href="./RolesController.html">RolesController</a>
+  
+    <li><a href="./RolesUsers.html">RolesUsers</a>
+  
+    <li><a href="./RolesUsersController.html">RolesUsersController</a>
+  
+    <li><a href="./Sequence.html">Sequence</a>
+  
+    <li><a href="./SequencesController.html">SequencesController</a>
+  
+    <li><a href="./SessionsController.html">SessionsController</a>
+  
+    <li><a href="./SessionsHelper.html">SessionsHelper</a>
+  
+    <li><a href="./Statusobject.html">Statusobject</a>
+  
+    <li><a href="./StatusobjectsController.html">StatusobjectsController</a>
+  
+    <li><a href="./Typesobject.html">Typesobject</a>
+  
+    <li><a href="./TypesobjectsController.html">TypesobjectsController</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./UserGroupsController.html">UserGroupsController</a>
+  
+    <li><a href="./UsersController.html">UsersController</a>
+  
+    <li><a href="./UsersHelper.html">UsersHelper</a>
+  
+    <li><a href="./View.html">View</a>
+  
+    <li><a href="./ViewsController.html">ViewsController</a>
+  
+    <li><a href="./Volume.html">Volume</a>
+  
+    <li><a href="./VolumesController.html">VolumesController</a>
+  
+    <li><a href="./WorkitemsController.html">WorkitemsController</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Link</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-child" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">child</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <pre class="ruby"><span class="ruby-identifier">une</span> <span class="ruby-identifier">seule</span> <span class="ruby-identifier">occurence</span> <span class="ruby-identifier">d</span><span class="ruby-string">'un fils de type donne dans un pere de type donne
+  verif par soft dans create_new validates_uniqueness_of :child_id, :scope =&gt; [:child_plmtype, :father_id, :father_type ]
+</span></pre>
+
+<p>validates_presence_of :name</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-father" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">father</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <pre class="ruby"><span class="ruby-identifier">une</span> <span class="ruby-identifier">seule</span> <span class="ruby-identifier">occurence</span> <span class="ruby-identifier">d</span><span class="ruby-string">'un fils de type donne dans un pere de type donne
+  verif par soft dans create_new validates_uniqueness_of :child_id, :scope =&gt; [:child_plmtype, :father_id, :father_type ]
+</span></pre>
+
+<p>validates_presence_of :name</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-relation" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">relation</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <pre class="ruby"><span class="ruby-identifier">une</span> <span class="ruby-identifier">seule</span> <span class="ruby-identifier">occurence</span> <span class="ruby-identifier">d</span><span class="ruby-string">'un fils de type donne dans un pere de type donne
+  verif par soft dans create_new validates_uniqueness_of :child_id, :scope =&gt; [:child_plmtype, :father_id, :father_type ]
+</span></pre>
+
+<p>validates_presence_of :name</p>
+        
+        </div>
+      </div>
+      
+      <div id="attribute-i-user" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">user</span><span
+            class="attribute-access-type">[RW]</span>
+        </div>
+
+        <div class="method-description">
+        
+        <pre class="ruby"><span class="ruby-identifier">une</span> <span class="ruby-identifier">seule</span> <span class="ruby-identifier">occurence</span> <span class="ruby-identifier">d</span><span class="ruby-string">'un fils de type donne dans un pere de type donne
+  verif par soft dans create_new validates_uniqueness_of :child_id, :scope =&gt; [:child_plmtype, :father_id, :father_type ]
+</span></pre>
+
+<p>validates_presence_of :name</p>
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-create_new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">create_new</span><span
+            class="method-args">(father, child, relation, user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>creation</p>
+          
+
+          
+          <div class="method-source-code" id="create_new-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 205</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">create_new</span>(<span class="ruby-identifier">father</span>, <span class="ruby-identifier">child</span>, <span class="ruby-identifier">relation</span>, <span class="ruby-identifier">user</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exception</span>.<span class="ruby-identifier">new</span> <span class="ruby-string">&quot;Don't use this method&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- create_new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- create_new-method -->
+
+    
+      <div id="method-c-create_new_by_values" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">create_new_by_values</span><span
+            class="method-args">(values, user = nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>link creation with values calls from PLMParticipant</p>
+          
+
+          
+          <div class="method-source-code" id="create_new_by_values-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 211</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">create_new_by_values</span>(<span class="ruby-identifier">values</span>, <span class="ruby-identifier">user</span> = <span class="ruby-keyword">nil</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exception</span>.<span class="ruby-identifier">new</span> <span class="ruby-string">&quot;Don't use this method&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- create_new_by_values-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- create_new_by_values-method -->
+
+    
+      <div id="method-c-find_by_father_plmtype_" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_by_father_plmtype_</span><span
+            class="method-args">(plmtype)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_by_father_plmtype_-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 300</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_by_father_plmtype_</span>(<span class="ruby-identifier">plmtype</span>)
+            <span class="ruby-identifier">name</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;.&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">__method__</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;:&quot;</span>
+            <span class="ruby-comment">#puts name+plmtype</span>
+            <span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>,
+<span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;father_plmtype='#{plmtype}'&quot;</span>],
+<span class="ruby-value">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;father_id DESC , child_id DESC&quot;</span>)
+    <span class="ruby-keyword">end</span></pre>
+          </div><!-- find_by_father_plmtype_-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_by_father_plmtype_-method -->
+
+    
+      <div id="method-c-find_child" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_child</span><span
+            class="method-args">(father_plmtype, father, child_plmtype, child)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_child-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 277</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_child</span>(<span class="ruby-identifier">father_plmtype</span>, <span class="ruby-identifier">father</span>, <span class="ruby-identifier">child_plmtype</span>, <span class="ruby-identifier">child</span>)
+            <span class="ruby-identifier">find</span>(<span class="ruby-value">:first</span>,
+<span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and father_id =#{father.id} and child_id =#{child.id}&quot;</span>],
+<span class="ruby-value">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;child_id&quot;</span>)
+    <span class="ruby-keyword">end</span></pre>
+          </div><!-- find_child-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_child-method -->
+
+    
+      <div id="method-c-find_childs" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_childs</span><span
+            class="method-args">(father, child_plmtype=nil, relation_name=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>def child</p>
+
+<pre>child_cls=eval(self.child_plmtype.capitalize)
+#puts &quot;link.child:classe=&quot;+child_cls.inspect
+c=child_cls.new(self.child_id)</pre>
+
+<p>end</p>
+          
+
+          
+          <div class="method-source-code" id="find_childs-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 252</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_childs</span>(<span class="ruby-identifier">father</span>, <span class="ruby-identifier">child_plmtype</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">relation_name</span>=<span class="ruby-keyword">nil</span>)
+        <span class="ruby-identifier">find_childs_with_father_plmtype</span>(<span class="ruby-identifier">father</span>.<span class="ruby-identifier">model_name</span>, <span class="ruby-identifier">father</span>, <span class="ruby-identifier">child_plmtype</span>, <span class="ruby-identifier">relation_name</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_childs-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_childs-method -->
+
+    
+      <div id="method-c-find_childs_with_father_plmtype" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_childs_with_father_plmtype</span><span
+            class="method-args">(father_plmtype, father, child_plmtype=nil, relation_name=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_childs_with_father_plmtype-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 256</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_childs_with_father_plmtype</span>(<span class="ruby-identifier">father_plmtype</span>, <span class="ruby-identifier">father</span>, <span class="ruby-identifier">child_plmtype</span>=<span class="ruby-keyword">nil</span>, <span class="ruby-identifier">relation_name</span>=<span class="ruby-keyword">nil</span>)
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">child_plmtype</span>.<span class="ruby-identifier">nil?</span>
+                <span class="ruby-identifier">cond</span>=<span class="ruby-node">&quot;father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and father_id =#{father.id}&quot;</span>
+        <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">cond</span>=<span class="ruby-node">&quot;father_plmtype='#{father_plmtype}' and father_id =#{father.id}&quot;</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">links</span> = <span class="ruby-constant">Link</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>,
+        <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-identifier">cond</span>],
+        <span class="ruby-value">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;child_id DESC&quot;</span>)
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">relation_name</span>.<span class="ruby-identifier">nil?</span>
+                <span class="ruby-identifier">ret</span>=[]
+                <span class="ruby-identifier">links</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">lnk</span><span class="ruby-operator">|</span>
+                        <span class="ruby-identifier">ret</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-identifier">lnk</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">lnk</span>.<span class="ruby-identifier">relation</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">==</span><span class="ruby-identifier">relation_name</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">ret</span>=<span class="ruby-identifier">links</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-comment">#puts &quot;Link.find_childs_with_father_plmtype:&quot;+father.model_name+&quot;.&quot;+father.id.to_s+&quot;.&quot;+child_plmtype+&quot;:'&quot;+cond+&quot;'= &quot;+ret.inspect</span>
+        <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- find_childs_with_father_plmtype-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_childs_with_father_plmtype-method -->
+
+    
+      <div id="method-c-find_fathers" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">find_fathers</span><span
+            class="method-args">(child_plmtype, child, father_plmtype)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="find_fathers-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 283</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">find_fathers</span>(<span class="ruby-identifier">child_plmtype</span>, <span class="ruby-identifier">child</span>, <span class="ruby-identifier">father_plmtype</span>)
+            <span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>,
+<span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and child_id =#{child.id}&quot;</span>],
+<span class="ruby-value">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;child_id&quot;</span>)
+    <span class="ruby-keyword">end</span></pre>
+          </div><!-- find_fathers-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- find_fathers-method -->
+
+    
+      <div id="method-c-get_all_fathers" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_all_fathers</span><span
+            class="method-args">(child)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_all_fathers-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 289</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_all_fathers</span>(<span class="ruby-identifier">child</span>)
+            <span class="ruby-identifier">name</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;.&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">__method__</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;:&quot;</span>
+            <span class="ruby-identifier">child_plmtype</span>=<span class="ruby-identifier">child</span>.<span class="ruby-identifier">model_name</span>
+            <span class="ruby-identifier">cond</span>=<span class="ruby-node">&quot;child_plmtype='#{child_plmtype}' and child_id =#{child.id}&quot;</span>
+            <span class="ruby-identifier">ret</span>=<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>,
+<span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-identifier">cond</span>],
+<span class="ruby-value">:order=</span><span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;child_id&quot;</span>)
+            <span class="ruby-comment">#puts name+child_plmtype+&quot; cond=&quot;+cond+&quot;:&quot;+ret.inspect</span>
+            <span class="ruby-identifier">ret</span>
+    <span class="ruby-keyword">end</span></pre>
+          </div><!-- get_all_fathers-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_all_fathers-method -->
+
+    
+      <div id="method-c-get_conditions" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_conditions</span><span
+            class="method-args">(filter)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="get_conditions-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 343</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_conditions</span>(<span class="ruby-identifier">filter</span>)
+        <span class="ruby-keyword">nil</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_conditions-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_conditions-method -->
+
+    
+      <div id="method-c-is_child_of" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">is_child_of</span><span
+            class="method-args">(father_plmtype, father, child_plmtype, child)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="is_child_of-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 308</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">is_child_of</span>(<span class="ruby-identifier">father_plmtype</span>, <span class="ruby-identifier">father</span>, <span class="ruby-identifier">child_plmtype</span>, <span class="ruby-identifier">child</span>)
+            <span class="ruby-identifier">ret</span>=<span class="ruby-keyword">false</span>
+            <span class="ruby-comment">#childs=find_childs(father_type, father, child_plmtype)</span>
+            <span class="ruby-identifier">nb</span>=<span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>,
+<span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and father_id =#{father} and child_id=#{child}&quot;</span>]
+).<span class="ruby-identifier">count</span>
+            <span class="ruby-identifier">ret</span>=<span class="ruby-identifier">nb</span><span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>
+    <span class="ruby-keyword">end</span></pre>
+          </div><!-- is_child_of-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- is_child_of-method -->
+
+    
+      <div id="method-c-linked-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">linked?</span><span
+            class="method-args">(obj)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="linked-3F-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 347</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">linked?</span>(<span class="ruby-identifier">obj</span>)
+            <span class="ruby-identifier">fname</span>=<span class="ruby-node">&quot;#{self.class.name}.#{__method__}&quot;</span>
+            <span class="ruby-keyword">unless</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">typesobject</span>.<span class="ruby-identifier">nil?</span>
+                    <span class="ruby-identifier">cond</span>=<span class="ruby-node">&quot;(child_typesobject_id=#{obj.typesobject_id} and child_id = #{obj.id}) or (father_typesobject_id=#{obj.typesobject_id} and father_id = #{obj.id})&quot;</span>
+                    <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">count</span>(<span class="ruby-value">:all</span>,
+<span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-identifier">cond</span>] )
+                    <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;linked cond=#{cond} nb=#{ret}&quot;</span>
+            <span class="ruby-identifier">ret</span><span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>
+            <span class="ruby-keyword">else</span>
+                    <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">error</span> (<span class="ruby-identifier">fname</span>) {<span class="ruby-node">&quot;DATABASE_CONSISTENCY_ERROR: no type for #{obj.ident}&quot;</span>}
+            <span class="ruby-keyword">false</span>
+            <span class="ruby-keyword">end</span>
+    <span class="ruby-keyword">end</span></pre>
+          </div><!-- linked-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- linked-3F-method -->
+
+    
+      <div id="method-c-nb_linked" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">nb_linked</span><span
+            class="method-args">(child_plmtype, child)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="nb_linked-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 317</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">nb_linked</span>(<span class="ruby-identifier">child_plmtype</span>, <span class="ruby-identifier">child</span>)
+            <span class="ruby-identifier">ret</span>=<span class="ruby-value">0</span>
+            <span class="ruby-identifier">links</span> = <span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>,
+<span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;child_plmtype='#{child_plmtype}' and child_id =#{child}&quot;</span>] )
+            <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">links</span>.<span class="ruby-identifier">count</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">links</span>.<span class="ruby-identifier">nil?</span>
+            <span class="ruby-identifier">ret</span>
+    <span class="ruby-keyword">end</span></pre>
+          </div><!-- nb_linked-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- nb_linked-method -->
+
+    
+      <div id="method-c-nb_occured" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">nb_occured</span><span
+            class="method-args">(father, relation)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="nb_occured-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 325</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">nb_occured</span>(<span class="ruby-identifier">father</span>, <span class="ruby-identifier">relation</span>)
+            <span class="ruby-identifier">ret</span>=<span class="ruby-value">0</span>
+            <span class="ruby-identifier">links</span> = <span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:include</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:relation</span>,
+<span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;relations.father_plmtype = ? and relations.child_plmtype= ? and relations.child_typesobject_id = ? and father_id = ?&quot;</span>,
+  <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">father_plmtype</span>, <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">child_plmtype</span>, <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">child_typesobject_id</span>, <span class="ruby-identifier">father</span>.<span class="ruby-identifier">id</span> ]
+)
+            <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">links</span>.<span class="ruby-identifier">count</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">links</span>.<span class="ruby-identifier">nil?</span>
+            <span class="ruby-identifier">ret</span>
+    <span class="ruby-keyword">end</span></pre>
+          </div><!-- nb_occured-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- nb_occured-method -->
+
+    
+      <div id="method-c-nb_used" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">nb_used</span><span
+            class="method-args">(relation)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="nb_used-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 335</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">nb_used</span>(<span class="ruby-identifier">relation</span>)
+        <span class="ruby-identifier">ret</span>=<span class="ruby-value">0</span>
+        <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;Link.nb_used:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">relation</span>.<span class="ruby-identifier">child_plmtype</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;:&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">relation</span>.<span class="ruby-identifier">child_typesobject_id</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-identifier">links</span> = <span class="ruby-identifier">find</span>(<span class="ruby-value">:all</span>, <span class="ruby-value">:include</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:relation</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-string">&quot;relations.child_plmtype = ? and relations.child_typesobject_id = ?&quot;</span>, <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">child_plmtype</span>, <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">child_typesobject_id</span>])
+        <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">links</span>.<span class="ruby-identifier">count</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">links</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- nb_used-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- nb_used-method -->
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(*args)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 64</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(*<span class="ruby-identifier">args</span>)
+        <span class="ruby-identifier">fname</span> = <span class="ruby-node">&quot;#{self.class.name}.#{__method__}&quot;</span>
+        <span class="ruby-keyword">super</span>
+        <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>) {<span class="ruby-node">&quot;#{args}&quot;</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+      <div id="method-c-valid-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">valid?</span><span
+            class="method-args">(father, child, relation)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="valid-3F-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 234</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">valid?</span>(<span class="ruby-identifier">father</span>, <span class="ruby-identifier">child</span>, <span class="ruby-identifier">relation</span>)
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exception</span>.<span class="ruby-identifier">new</span> <span class="ruby-string">&quot;Don't use this method Link.valid?&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- valid-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- valid-3F-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-after_find" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">after_find</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="after_find-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 188</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">after_find</span>
+        <span class="ruby-identifier">fname</span>= <span class="ruby-node">&quot;#{self.class.name}.#{__method__}&quot;</span>
+        <span class="ruby-identifier">rel</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">relation</span>
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">rel</span>.<span class="ruby-identifier">nil?</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">values</span>.<span class="ruby-identifier">nil?</span>
+                <span class="ruby-identifier">fields</span> = <span class="ruby-identifier">rel</span>.<span class="ruby-identifier">typesobject</span>.<span class="ruby-identifier">fields</span>
+                <span class="ruby-keyword">self</span>.<span class="ruby-identifier">values</span> = <span class="ruby-identifier">fields</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">fields</span>.<span class="ruby-identifier">nil?</span>
+                <span class="ruby-comment">#OG.info (fname) {&quot;#{fields} : #{self.values}&quot;}</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- after_find-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- after_find-method -->
+
+    
+      <div id="method-i-before_save" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">before_save</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="before_save-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 70</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">before_save</span>
+        <span class="ruby-identifier">fname</span> = <span class="ruby-node">&quot;#{self.class.name}.#{__method__}&quot;</span>
+        <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>) {<span class="ruby-node">&quot;self=#{self}&quot;</span>}
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">domain</span> = <span class="ruby-identifier">father</span>.<span class="ruby-identifier">domain</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">father</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:domain</span>)
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">domain</span> = <span class="ruby-identifier">child</span>.<span class="ruby-identifier">domain</span> <span class="ruby-keyword">if</span> (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">domain</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:domain</span>))
+        <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>) {<span class="ruby-node">&quot;domain=#{self.domain}&quot;</span>}
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- before_save-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- before_save-method -->
+
+    
+      <div id="method-i-cardinality_count" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">cardinality_count</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="cardinality_count-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 109</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">cardinality_count</span>
+        <span class="ruby-identifier">nb_used</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">nb_used</span>(<span class="ruby-identifier">relation</span>)
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">nb_used</span> <span class="ruby-operator">&gt;=</span> <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">cardin_use_min</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">relation</span>.<span class="ruby-identifier">cardin_use_max</span> <span class="ruby-operator">==</span> <span class="ruby-value">-1</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">nb_used</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">cardin_use_max</span>)
+                <span class="ruby-keyword">self</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add_to_base</span>(<span class="ruby-string">'Cardinality is not valid!'</span>)
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- cardinality_count-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- cardinality_count-method -->
+
+    
+      <div id="method-i-child-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">child=</span><span
+            class="method-args">(child)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="child-3D-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 135</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">child=</span>(<span class="ruby-identifier">child</span>)
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">child_plmtype</span>        = <span class="ruby-identifier">child</span>.<span class="ruby-identifier">model_name</span>
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">child_typesobject_id</span> = <span class="ruby-identifier">child</span>.<span class="ruby-identifier">typesobject_id</span>
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">child_id</span>             = <span class="ruby-identifier">child</span>.<span class="ruby-identifier">id</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- child-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- child-3D-method -->
+
+    
+      <div id="method-i-child_ident" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">child_ident</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="child_ident-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 145</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">child_ident</span>
+        <span class="ruby-identifier">ret</span>  = <span class="ruby-node">&quot;#{child_id}:#{child_plmtype}.#{child_typesobject_id}&quot;</span>
+        <span class="ruby-identifier">ret</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;=#{child.ident}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">child</span>.<span class="ruby-identifier">nil?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- child_ident-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- child_ident-method -->
+
+    
+      <div id="method-i-clean_effectivities" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">clean_effectivities</span><span
+            class="method-args">(effectivities_mdlids)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>menage des effectivites non presentes dans effs_mdlid: [part.24, part.22]</p>
+          
+
+          
+          <div class="method-source-code" id="clean_effectivities-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 176</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">clean_effectivities</span>(<span class="ruby-identifier">effectivities_mdlids</span>)
+        <span class="ruby-identifier">fname</span> = <span class="ruby-node">&quot;#{self.class.name}.#{__method__}&quot;</span>
+        <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>) { <span class="ruby-node">&quot;effectivities_mdlids: #{effectivities_mdlids}&quot;</span> }
+        <span class="ruby-identifier">links_effectivities</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">current_link_effectivity</span><span class="ruby-operator">|</span>
+                <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>) { <span class="ruby-node">&quot;current_link_effectivity=#{current_link_effectivity.ident} : #{current_link_effectivity.child.mdlid}&quot;</span> }
+                <span class="ruby-keyword">unless</span> <span class="ruby-identifier">effectivities_mdlids</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">current_link_effectivity</span>.<span class="ruby-identifier">child</span>.<span class="ruby-identifier">mdlid</span>)
+                        <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>) { <span class="ruby-node">&quot;destroy:#{current_link_effectivity.ident}&quot;</span> }
+                <span class="ruby-identifier">current_link_effectivity</span>.<span class="ruby-identifier">destroy</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- clean_effectivities-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- clean_effectivities-method -->
+
+    
+      <div id="method-i-effectivities_mdlid" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">effectivities_mdlid</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="effectivities_mdlid-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 171</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">effectivities_mdlid</span>
+        <span class="ruby-ivar">@effectivities_mdlid</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">effectivities</span>.<span class="ruby-identifier">map</span>(&amp;<span class="ruby-value">:mdlid</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- effectivities_mdlid-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- effectivities_mdlid-method -->
+
+    
+      <div id="method-i-exists-3F" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">exists?</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="exists-3F-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 215</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">exists?</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">Exception</span>.<span class="ruby-identifier">new</span> <span class="ruby-string">&quot;Don't use this method&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- exists-3F-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- exists-3F-method -->
+
+    
+      <div id="method-i-father-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">father=</span><span
+            class="method-args">(father)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="father-3D-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 120</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">father=</span>(<span class="ruby-identifier">father</span>)
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">father_plmtype</span>        = <span class="ruby-identifier">father</span>.<span class="ruby-identifier">model_name</span>
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">father_typesobject_id</span> = <span class="ruby-identifier">father</span>.<span class="ruby-identifier">typesobject_id</span>
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">father_id</span>             = <span class="ruby-identifier">father</span>.<span class="ruby-identifier">id</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- father-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- father-3D-method -->
+
+    
+      <div id="method-i-father_ident" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">father_ident</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="father_ident-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 130</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">father_ident</span>
+        <span class="ruby-identifier">ret</span>  = <span class="ruby-node">&quot;#{father_id}:#{father_plmtype}.#{father_typesobject_id}&quot;</span>
+        <span class="ruby-identifier">ret</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;=#{father.ident}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">father</span>.<span class="ruby-identifier">nil?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- father_ident-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- father_ident-method -->
+
+    
+      <div id="method-i-ident" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">ident</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="ident-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 167</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">ident</span>
+        <span class="ruby-node">&quot;#{(father.nil? ? &quot;father null&quot; : father.ident)}-#{(relation.nil? ? &quot;relation null&quot; : relation.ident)}-#{(child.nil? ? &quot;child null&quot; : child.ident)}-#{values}&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- ident-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- ident-method -->
+
+    
+      <div id="method-i-link_uniqueness" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">link_uniqueness</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>note sure what this does…</p>
+          
+
+          
+          <div class="method-source-code" id="link_uniqueness-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 58</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">link_uniqueness</span>
+        <span class="ruby-identifier">cond</span> = [<span class="ruby-string">&quot;father_plmtype = ? and child_plmtype = ? and father_typesobject_id = ? and child_typesobject_id = ? and relation_id = ? &quot;</span>,
+                <span class="ruby-identifier">father_plmtype</span>, <span class="ruby-identifier">child_plmtype</span>, <span class="ruby-identifier">father_typesobject_id</span>, <span class="ruby-identifier">child_typesobject_id</span>, <span class="ruby-identifier">relation_id</span>]
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add_to_base</span>(<span class="ruby-string">'Link already exists!'</span>) <span class="ruby-keyword">unless</span> <span class="ruby-operator">::</span><span class="ruby-constant">Link</span>.<span class="ruby-identifier">find</span>(<span class="ruby-value">:first</span>, <span class="ruby-value">:conditions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">cond</span>).<span class="ruby-identifier">nil?</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- link_uniqueness-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- link_uniqueness-method -->
+
+    
+      <div id="method-i-relation-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">relation=</span><span
+            class="method-args">(relation)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="relation-3D-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 150</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">relation=</span>(<span class="ruby-identifier">relation</span>)
+        <span class="ruby-identifier">fname</span> = <span class="ruby-node">&quot;#{self.class.name}.#{__method__}&quot;</span>
+        <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">debug</span> (<span class="ruby-identifier">fname</span>) {<span class="ruby-node">&quot;relation.type=#{relation.typesobject}, fields=#{relation.typesobject.fields}&quot;</span>}
+        <span class="ruby-comment">#TODO pour eviter super: no superclass method `relation=' for #&lt;Link:0x9aceec4&gt; super</span>
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">values</span> = <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">typesobject</span>.<span class="ruby-identifier">fields</span>
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">relation_id</span> = <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">id</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- relation-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- relation-3D-method -->
+
+    
+      <div id="method-i-relation_ident" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">relation_ident</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="relation_ident-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 158</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">relation_ident</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">rel</span> = <span class="ruby-constant">Relation</span>.<span class="ruby-identifier">find</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">relation_id</span>) <span class="ruby-keyword">unless</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">relation_id</span>.<span class="ruby-identifier">nil?</span>
+                <span class="ruby-identifier">relation_id</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">rel</span>.<span class="ruby-identifier">ident</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">rel</span>.<span class="ruby-identifier">nil?</span>)
+        <span class="ruby-keyword">rescue</span>
+                <span class="ruby-identifier">relation_id</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- relation_ident-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- relation_ident-method -->
+
+    
+      <div id="method-i-relation_name" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">relation_name</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="relation_name-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 230</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">relation_name</span>
+        (<span class="ruby-keyword">self</span>.<span class="ruby-identifier">relation</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">?</span> <span class="ruby-string">&quot;nil&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">relation</span>.<span class="ruby-identifier">name</span> )
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- relation_name-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- relation_name-method -->
+
+    
+      <div id="method-i-type" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">type</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="type-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 200</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">type</span>
+        <span class="ruby-string">&quot;link&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- type-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- type-method -->
+
+    
+      <div id="method-i-user-3D" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">user=</span><span
+            class="method-args">(user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="user-3D-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 116</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">user=</span>(<span class="ruby-identifier">user</span>)
+        <span class="ruby-identifier">def_user</span>(<span class="ruby-identifier">user</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- user-3D-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- user-3D-method -->
+
+    
+      <div id="method-i-validity" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">validity</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="validity-source">
+            <pre><span class="ruby-comment"># File app/models/link.rb, line 78</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">validity</span>
+        <span class="ruby-identifier">fname</span> = <span class="ruby-node">&quot;#{self.class.name}.#{__method__}&quot;</span>
+        <span class="ruby-keyword">begin</span>
+        <span class="ruby-comment">#LOG.info(fname) {&quot;father.typesobject=#{father.typesobject} relation.father_typesobject=#{relation.father_typesobject}&quot;}</span>
+        <span class="ruby-comment">#LOG.info(fname) {&quot;child.typesobject=#{child.typesobject} relation.child_typesobject=#{relation.child_typesobject}&quot;}</span>
+                <span class="ruby-identifier">msg</span>=<span class="ruby-node">&quot;relation.father_plmtype:'#{relation.father_plmtype}' &lt;&gt; (father_plmtype:'#{father_plmtype}' and '#{::SYLRPLM::PLMTYPE_GENERIC}')&quot;</span>
+                <span class="ruby-identifier">valid</span> = (<span class="ruby-identifier">father_plmtype</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">father_plmtype</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">father_plmtype</span> <span class="ruby-operator">==</span> <span class="ruby-operator">::</span><span class="ruby-constant">SYLRPLM</span><span class="ruby-operator">::</span><span class="ruby-constant">PLMTYPE_GENERIC</span>)
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">valid</span>
+                        <span class="ruby-identifier">msg</span>=<span class="ruby-node">&quot;relation.child_plmtype:'#{relation.child_plmtype}' &lt;&gt; (child_plmtype:'#{child_plmtype}' and '#{::SYLRPLM::PLMTYPE_GENERIC}')&quot;</span>
+                        <span class="ruby-identifier">valid</span> =(<span class="ruby-identifier">child_plmtype</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">child_plmtype</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">child_plmtype</span> <span class="ruby-operator">==</span> <span class="ruby-operator">::</span><span class="ruby-constant">SYLRPLM</span><span class="ruby-operator">::</span><span class="ruby-constant">PLMTYPE_GENERIC</span>)
+                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">valid</span>
+                                <span class="ruby-identifier">msg</span>=<span class="ruby-node">&quot;relation.father_type:'#{relation.father_typesobject}' &lt;&gt; (father.type:'#{father.typesobject}' and '#{::SYLRPLM::TYPE_GENERIC}')&quot;</span>
+                                <span class="ruby-identifier">valid</span> = (<span class="ruby-identifier">father</span>.<span class="ruby-identifier">typesobject</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">==</span><span class="ruby-identifier">relation</span>.<span class="ruby-identifier">father_typesobject</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">father_typesobject</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-operator">::</span><span class="ruby-constant">SYLRPLM</span><span class="ruby-operator">::</span><span class="ruby-constant">TYPE_GENERIC</span>)
+                                <span class="ruby-keyword">if</span> <span class="ruby-identifier">valid</span>
+                                        <span class="ruby-identifier">msg</span>=<span class="ruby-node">&quot;relation.child_type:'#{relation.child_typesobject}' &lt;&gt; (child.type:'#{child.typesobject}' and '#{::SYLRPLM::TYPE_GENERIC}')&quot;</span>
+                                        <span class="ruby-identifier">valid</span> = (<span class="ruby-identifier">child</span>.<span class="ruby-identifier">typesobject</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">==</span><span class="ruby-identifier">relation</span>.<span class="ruby-identifier">child_typesobject</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">relation</span>.<span class="ruby-identifier">child_typesobject</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-operator">::</span><span class="ruby-constant">SYLRPLM</span><span class="ruby-operator">::</span><span class="ruby-constant">TYPE_GENERIC</span>)
+                                <span class="ruby-keyword">end</span>
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">unless</span> <span class="ruby-identifier">valid</span>
+                        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-node">&quot;Link is not valid:&lt;br/&gt;#{msg}&quot;</span>)
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+                <span class="ruby-identifier">valid</span> = <span class="ruby-keyword">false</span>
+                <span class="ruby-identifier">msg</span>=<span class="ruby-string">&quot;Exception during link validity test:&quot;</span>
+                <span class="ruby-identifier">msg</span><span class="ruby-operator">+=</span><span class="ruby-node">&quot;&lt;br/&gt;eception=#{e}&quot;</span>
+        <span class="ruby-keyword">self</span>.<span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">msg</span>)
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">valid</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- validity-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- validity-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
