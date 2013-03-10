@@ -1,0 +1,2536 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>module ApplicationHelper - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="module">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/helpers/application_helper.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-i-as_x_href">#as_x_href</a>
+    
+    <li><a href="#method-i-comma_links">#comma_links</a>
+    
+    <li><a href="#method-i-comma_string">#comma_string</a>
+    
+    <li><a href="#method-i-display_since">#display_since</a>
+    
+    <li><a href="#method-i-display_time">#display_time</a>
+    
+    <li><a href="#method-i-form_simple_query_helper">#form_simple_query_helper</a>
+    
+    <li><a href="#method-i-get_val">#get_val</a>
+    
+    <li><a href="#method-i-h_attribut_trtd">#h_attribut_trtd</a>
+    
+    <li><a href="#method-i-h_count_objects">#h_count_objects</a>
+    
+    <li><a href="#method-i-h_destroy">#h_destroy</a>
+    
+    <li><a href="#method-i-h_explorer">#h_explorer</a>
+    
+    <li><a href="#method-i-h_form_html_id">#h_form_html_id</a>
+    
+    <li><a href="#method-i-h_form_simple_query">#h_form_simple_query</a>
+    
+    <li><a href="#method-i-h_help_menu">#h_help_menu</a>
+    
+    <li><a href="#method-i-h_if_differ">#h_if_differ</a>
+    
+    <li><a href="#method-i-h_if_differ_old">#h_if_differ_old</a>
+    
+    <li><a href="#method-i-h_if_differ_trop_general">#h_if_differ_trop_general</a>
+    
+    <li><a href="#method-i-h_img">#h_img</a>
+    
+    <li><a href="#method-i-h_img_abort">#h_img_abort</a>
+    
+    <li><a href="#method-i-h_img_add_documents">#h_img_add_documents</a>
+    
+    <li><a href="#method-i-h_img_add_forum">#h_img_add_forum</a>
+    
+    <li><a href="#method-i-h_img_add_parts">#h_img_add_parts</a>
+    
+    <li><a href="#method-i-h_img_add_projects">#h_img_add_projects</a>
+    
+    <li><a href="#method-i-h_img_all">#h_img_all</a>
+    
+    <li><a href="#method-i-h_img_btn">#h_img_btn</a>
+    
+    <li><a href="#method-i-h_img_checkin">#h_img_checkin</a>
+    
+    <li><a href="#method-i-h_img_checkout">#h_img_checkout</a>
+    
+    <li><a href="#method-i-h_img_cut">#h_img_cut</a>
+    
+    <li><a href="#method-i-h_img_destroy">#h_img_destroy</a>
+    
+    <li><a href="#method-i-h_img_edit">#h_img_edit</a>
+    
+    <li><a href="#method-i-h_img_edit_task">#h_img_edit_task</a>
+    
+    <li><a href="#method-i-h_img_launch">#h_img_launch</a>
+    
+    <li><a href="#method-i-h_img_launchthis">#h_img_launchthis</a>
+    
+    <li><a href="#method-i-h_img_list">#h_img_list</a>
+    
+    <li><a href="#method-i-h_img_pick">#h_img_pick</a>
+    
+    <li><a href="#method-i-h_img_revise">#h_img_revise</a>
+    
+    <li><a href="#method-i-h_img_show">#h_img_show</a>
+    
+    <li><a href="#method-i-h_img_sub">#h_img_sub</a>
+    
+    <li><a href="#method-i-h_img_tit">#h_img_tit</a>
+    
+    <li><a href="#method-i-h_input_text">#h_input_text</a>
+    
+    <li><a href="#method-i-h_link_to">#h_link_to</a>
+    
+    <li><a href="#method-i-h_menu">#h_menu</a>
+    
+    <li><a href="#method-i-h_show_tree">#h_show_tree</a>
+    
+    <li><a href="#method-i-h_show_tree_old">#h_show_tree_old</a>
+    
+    <li><a href="#method-i-h_simple_query">#h_simple_query</a>
+    
+    <li><a href="#method-i-h_type_values">#h_type_values</a>
+    
+    <li><a href="#method-i-h_value_or_default">#h_value_or_default</a>
+    
+    <li><a href="#method-i-icone">#icone</a>
+    
+    <li><a href="#method-i-link_to_slice">#link_to_slice</a>
+    
+    <li><a href="#method-i-object_path">#object_path</a>
+    
+    <li><a href="#method-i-render_fluo">#render_fluo</a>
+    
+    <li><a href="#method-i-select_inout">#select_inout</a>
+    
+    <li><a href="#method-i-select_with_empty">#select_with_empty</a>
+    
+    <li><a href="#method-i-show_help">#show_help</a>
+    
+    <li><a href="#method-i-sort_link_helper">#sort_link_helper</a>
+    
+    <li><a href="#method-i-sort_td_class_helper">#sort_td_class_helper</a>
+    
+    <li><a href="#method-i-tip_help">#tip_help</a>
+    
+    <li><a href="#method-i-title">#title</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./app/views/roles_users/README.html">README</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationController/Class.html">ApplicationController::Class</a>
+  
+    <li><a href="./Access.html">Access</a>
+  
+    <li><a href="./AccessesController.html">AccessesController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Check.html">Check</a>
+  
+    <li><a href="./ChecksController.html">ChecksController</a>
+  
+    <li><a href="./Customer.html">Customer</a>
+  
+    <li><a href="./CustomersController.html">CustomersController</a>
+  
+    <li><a href="./Datafile.html">Datafile</a>
+  
+    <li><a href="./DatafilesController.html">DatafilesController</a>
+  
+    <li><a href="./Definition.html">Definition</a>
+  
+    <li><a href="./DefinitionsController.html">DefinitionsController</a>
+  
+    <li><a href="./DefinitionsRoles.html">DefinitionsRoles</a>
+  
+    <li><a href="./Document.html">Document</a>
+  
+    <li><a href="./DocumentsController.html">DocumentsController</a>
+  
+    <li><a href="./ErrorsController.html">ErrorsController</a>
+  
+    <li><a href="./ExpressionsController.html">ExpressionsController</a>
+  
+    <li><a href="./Favori.html">Favori</a>
+  
+    <li><a href="./FavoriDocument.html">FavoriDocument</a>
+  
+    <li><a href="./FavoriDocumentItem.html">FavoriDocumentItem</a>
+  
+    <li><a href="./FavoriItem.html">FavoriItem</a>
+  
+    <li><a href="./FavoriPart.html">FavoriPart</a>
+  
+    <li><a href="./FavoriPartItem.html">FavoriPartItem</a>
+  
+    <li><a href="./FavoriProject.html">FavoriProject</a>
+  
+    <li><a href="./FavoriProjectItem.html">FavoriProjectItem</a>
+  
+    <li><a href="./Forum.html">Forum</a>
+  
+    <li><a href="./ForumItem.html">ForumItem</a>
+  
+    <li><a href="./ForumItemsController.html">ForumItemsController</a>
+  
+    <li><a href="./ForumsController.html">ForumsController</a>
+  
+    <li><a href="./Group.html">Group</a>
+  
+    <li><a href="./GroupDefinitionsController.html">GroupDefinitionsController</a>
+  
+    <li><a href="./GroupsController.html">GroupsController</a>
+  
+    <li><a href="./GroupsUsers.html">GroupsUsers</a>
+  
+    <li><a href="./HelpController.html">HelpController</a>
+  
+    <li><a href="./HelpHelper.html">HelpHelper</a>
+  
+    <li><a href="./HistoryController.html">HistoryController</a>
+  
+    <li><a href="./HistoryHelper.html">HistoryHelper</a>
+  
+    <li><a href="./InfoController.html">InfoController</a>
+  
+    <li><a href="./Link.html">Link</a>
+  
+    <li><a href="./LinksController.html">LinksController</a>
+  
+    <li><a href="./MainController.html">MainController</a>
+  
+    <li><a href="./MainHelper.html">MainHelper</a>
+  
+    <li><a href="./Notification.html">Notification</a>
+  
+    <li><a href="./NotificationsController.html">NotificationsController</a>
+  
+    <li><a href="./NotificationsHelper.html">NotificationsHelper</a>
+  
+    <li><a href="./Part.html">Part</a>
+  
+    <li><a href="./PartsController.html">PartsController</a>
+  
+    <li><a href="./PlmMailer.html">PlmMailer</a>
+  
+    <li><a href="./PlmMailerHelper.html">PlmMailerHelper</a>
+  
+    <li><a href="./PlmObserver.html">PlmObserver</a>
+  
+    <li><a href="./ProcessesController.html">ProcessesController</a>
+  
+    <li><a href="./Project.html">Project</a>
+  
+    <li><a href="./ProjectsController.html">ProjectsController</a>
+  
+    <li><a href="./Question.html">Question</a>
+  
+    <li><a href="./QuestionsController.html">QuestionsController</a>
+  
+    <li><a href="./Relation.html">Relation</a>
+  
+    <li><a href="./RelationsController.html">RelationsController</a>
+  
+    <li><a href="./Role.html">Role</a>
+  
+    <li><a href="./RolesController.html">RolesController</a>
+  
+    <li><a href="./RolesUsers.html">RolesUsers</a>
+  
+    <li><a href="./RolesUsersController.html">RolesUsersController</a>
+  
+    <li><a href="./Sequence.html">Sequence</a>
+  
+    <li><a href="./SequencesController.html">SequencesController</a>
+  
+    <li><a href="./SessionsController.html">SessionsController</a>
+  
+    <li><a href="./SessionsHelper.html">SessionsHelper</a>
+  
+    <li><a href="./Statusobject.html">Statusobject</a>
+  
+    <li><a href="./StatusobjectsController.html">StatusobjectsController</a>
+  
+    <li><a href="./Typesobject.html">Typesobject</a>
+  
+    <li><a href="./TypesobjectsController.html">TypesobjectsController</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./UserGroupsController.html">UserGroupsController</a>
+  
+    <li><a href="./UsersController.html">UsersController</a>
+  
+    <li><a href="./UsersHelper.html">UsersHelper</a>
+  
+    <li><a href="./View.html">View</a>
+  
+    <li><a href="./ViewsController.html">ViewsController</a>
+  
+    <li><a href="./Volume.html">Volume</a>
+  
+    <li><a href="./VolumesController.html">VolumesController</a>
+  
+    <li><a href="./WorkitemsController.html">WorkitemsController</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="module">module ApplicationHelper</h1>
+
+  <div id="description" class="description">
+    
+<p>Methods added to this helper will be available to all templates in the
+application.</p>
+
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-as_x_href" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">as_x_href</span><span
+            class="method-args">(format)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>given a view, returns the link to the same view in another content type
+(xml / json)</p>
+          
+
+          
+          <div class="method-source-code" id="as_x_href-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 416</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">as_x_href</span> (<span class="ruby-identifier">format</span>)
+
+        <span class="ruby-identifier">href</span> = [
+                <span class="ruby-value">:protocol</span>, <span class="ruby-value">:host</span>, <span class="ruby-string">':'</span>, <span class="ruby-value">:port</span>,
+                <span class="ruby-value">:request_uri</span>, <span class="ruby-node">&quot;.#{format}?plain=true&quot;</span>
+        ].<span class="ruby-identifier">inject</span>(<span class="ruby-string">''</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">s</span>, <span class="ruby-identifier">elt</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">s</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">elt</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
+                <span class="ruby-identifier">elt</span>
+                <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">elt</span>)
+                        <span class="ruby-identifier">request</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">elt</span>).<span class="ruby-identifier">to_s</span>
+                <span class="ruby-keyword">else</span> <span class="ruby-comment"># shouldn't happen, so let's be verbose</span>
+                <span class="ruby-identifier">elt</span>.<span class="ruby-identifier">inspect</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">s</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">href</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&amp;#{request.query_string}&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">query_string</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+        <span class="ruby-identifier">href</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- as_x_href-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- as_x_href-method -->
+
+    
+      <div id="method-i-comma_links" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">comma_links</span><span
+            class="method-args">(objects, accessor=:name)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="comma_links-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 398</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">comma_links</span> (<span class="ruby-identifier">objects</span>, <span class="ruby-identifier">accessor</span>=<span class="ruby-value">:name</span>)
+        <span class="ruby-identifier">objects</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">name</span> = <span class="ruby-identifier">o</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">accessor</span>)
+                <span class="ruby-identifier">path</span> = <span class="ruby-identifier">send</span> <span class="ruby-node">&quot;#{o.class.to_s.downcase}_path&quot;</span>, <span class="ruby-identifier">o</span>
+                <span class="ruby-identifier">link_to</span>(<span class="ruby-identifier">h</span>(<span class="ruby-identifier">name</span>), <span class="ruby-identifier">path</span>)
+        }.<span class="ruby-identifier">join</span>(<span class="ruby-string">', '</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- comma_links-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- comma_links-method -->
+
+    
+      <div id="method-i-comma_string" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">comma_string</span><span
+            class="method-args">(objects, accessor=:name)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="comma_string-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 406</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">comma_string</span> (<span class="ruby-identifier">objects</span>, <span class="ruby-identifier">accessor</span>=<span class="ruby-value">:name</span>)
+        <span class="ruby-identifier">objects</span>.<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">o</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">accessor</span>)
+        }.<span class="ruby-identifier">join</span>(<span class="ruby-string">', '</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- comma_string-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- comma_string-method -->
+
+    
+      <div id="method-i-display_since" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">display_since</span><span
+            class="method-args">(object, accessor=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p><a
+href="ApplicationHelper.html#method-i-display_since">#display_since</a>(workitem,
+:dispatch_time)</p>
+
+<pre class="ruby"><span class="ruby-comment"># =&gt; 1d16h18m</span>
+</pre>
+          
+
+          
+          <div class="method-source-code" id="display_since-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 342</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">display_since</span> (<span class="ruby-identifier">object</span>, <span class="ruby-identifier">accessor</span>=<span class="ruby-keyword">nil</span>)
+        <span class="ruby-identifier">t</span> = <span class="ruby-identifier">accessor</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">accessor</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">object</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">t</span>
+        <span class="ruby-identifier">d</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">t</span>
+        <span class="ruby-constant">Rufus</span><span class="ruby-operator">::</span><span class="ruby-identifier">to_duration_string</span>(<span class="ruby-identifier">d</span>, <span class="ruby-value">:drop_seconds</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">false</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- display_since-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- display_since-method -->
+
+    
+      <div id="method-i-display_time" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">display_time</span><span
+            class="method-args">(object, accessor=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p><a
+href="ApplicationHelper.html#method-i-display_time">#display_time</a>(workitem.dispatch_time)</p>
+
+<pre class="ruby"><span class="ruby-comment"># =&gt; Sat Mar 1 20:29:44 2008 (1d16h18m)</span>
+</pre>
+
+<p><a
+href="ApplicationHelper.html#method-i-display_time">#display_time</a>(workitem,
+:dispatch_time)</p>
+
+<pre class="ruby"><span class="ruby-comment"># =&gt; Sat Mar 1 20:29:44 2008 (1d16h18m)</span>
+</pre>
+          
+
+          
+          <div class="method-source-code" id="display_time-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 332</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">display_time</span> (<span class="ruby-identifier">object</span>, <span class="ruby-identifier">accessor</span>=<span class="ruby-keyword">nil</span>)
+        <span class="ruby-identifier">t</span> = <span class="ruby-identifier">accessor</span> <span class="ruby-operator">?</span>  <span class="ruby-identifier">object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">accessor</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">object</span>
+        <span class="ruby-keyword">return</span> <span class="ruby-string">&quot;&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">t</span>
+        <span class="ruby-node">&quot;#{t.ctime} (#{display_since(t)})&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- display_time-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- display_time-method -->
+
+    
+      <div id="method-i-form_simple_query_helper" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">form_simple_query_helper</span><span
+            class="method-args">(url, objects)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>pour compatibilite seulement</p>
+          
+
+          
+          <div class="method-source-code" id="form_simple_query_helper-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 98</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">form_simple_query_helper</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">objects</span>)
+        <span class="ruby-identifier">h_form_simple_query</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">objects</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- form_simple_query_helper-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- form_simple_query_helper-method -->
+
+    
+      <div id="method-i-get_val" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">get_val</span><span
+            class="method-args">(obj, att)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>renvoie la valeur de l’attribut att sur l’objet att peut etre un attribut
+“compose” tel que owner.login, d’ou l’utilisation de eval</p>
+          
+
+          
+          <div class="method-source-code" id="get_val-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 46</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">get_val</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">att</span>)
+        <span class="ruby-identifier">blk</span>=<span class="ruby-string">&quot;obj=&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">obj</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;.find(&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">obj</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;)\nobj.&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">att</span>
+        <span class="ruby-comment">#puts &quot;blk=&quot;+blk</span>
+        <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">eval</span> <span class="ruby-identifier">blk</span>
+        <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- get_val-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- get_val-method -->
+
+    
+      <div id="method-i-h_attribut_trtd" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_attribut_trtd</span><span
+            class="method-args">(obj, accessor)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_attribut_trtd-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 361</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_attribut_trtd</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">accessor</span>)
+        <span class="ruby-identifier">fname</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;.&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">__method__</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-identifier">final_obj</span>=<span class="ruby-identifier">obj</span>
+        <span class="ruby-identifier">final_acc</span>=<span class="ruby-identifier">accessor</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-comment"># recherche de l'objet final dans l'accesseur:</span>
+        <span class="ruby-comment"># typesobject.name = typesoject</span>
+        <span class="ruby-comment"># child.statusobject.name = statusobject</span>
+        <span class="ruby-comment">#</span>
+        <span class="ruby-identifier">fields</span> = <span class="ruby-identifier">final_acc</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;.&quot;</span>)
+        <span class="ruby-value">0</span>.<span class="ruby-identifier">upto</span> (<span class="ruby-identifier">fields</span>.<span class="ruby-identifier">count</span><span class="ruby-operator">-</span><span class="ruby-value">2</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+                <span class="ruby-identifier">final_obj</span> = <span class="ruby-identifier">final_obj</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">fields</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">to_s</span>)
+                <span class="ruby-identifier">final_acc</span> = <span class="ruby-identifier">fields</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>].<span class="ruby-identifier">to_s</span>
+        }
+        <span class="ruby-identifier">labacc</span>=<span class="ruby-identifier">final_acc</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">tr</span>(<span class="ruby-string">'.'</span>,<span class="ruby-string">'_'</span>)
+        <span class="ruby-identifier">ret</span>=<span class="ruby-string">&quot;&lt;tr&gt;&quot;</span>
+        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">&quot;&lt;th&gt;&quot;</span>
+        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-identifier">t</span>(<span class="ruby-string">&quot;label_&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">labacc</span>.<span class="ruby-identifier">to_s</span>)
+        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">&quot;&lt;/th&gt;&quot;</span>
+        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">&quot;&lt;td&gt;&quot;</span>
+        <span class="ruby-keyword">begin</span>
+                <span class="ruby-identifier">vacc</span>=<span class="ruby-string">&quot;v_&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">final_acc</span>.<span class="ruby-identifier">to_s</span>
+                <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>){<span class="ruby-string">&quot;final_obj=&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">final_obj</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">&quot; final_acc=&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">final_acc</span>}
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">final_obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">vacc</span>)
+                <span class="ruby-identifier">val</span>=<span class="ruby-identifier">final_obj</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">vacc</span>).<span class="ruby-identifier">to_s</span>
+                <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">val</span>=<span class="ruby-identifier">final_obj</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">final_acc</span>).<span class="ruby-identifier">to_s</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-identifier">val</span>
+        <span class="ruby-keyword">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+                <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">warn</span> (<span class="ruby-identifier">fname</span>){<span class="ruby-identifier">e</span>}
+                <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">&quot;???&quot;</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">&quot;&lt;/td&gt;&quot;</span>
+        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">&quot;&lt;/tr&gt;&quot;</span>
+        <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_attribut_trtd-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_attribut_trtd-method -->
+
+    
+      <div id="method-i-h_count_objects" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_count_objects</span><span
+            class="method-args">(objects)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_count_objects-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 85</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_count_objects</span>(<span class="ruby-identifier">objects</span>)
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">objects</span>[<span class="ruby-value">:page</span>].<span class="ruby-identifier">nil?</span>
+                <span class="ruby-identifier">num_begin</span>=(<span class="ruby-identifier">objects</span>[<span class="ruby-value">:page</span>].<span class="ruby-identifier">to_i</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)
+        <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">num_begin</span>=<span class="ruby-value">0</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">num_begin</span><span class="ruby-operator">*=</span><span class="ruby-identifier">objects</span>[<span class="ruby-value">:nb_items</span>].<span class="ruby-identifier">to_i</span>
+        <span class="ruby-identifier">num_begin</span><span class="ruby-operator">+=</span><span class="ruby-value">1</span>
+        <span class="ruby-identifier">num_end</span>=<span class="ruby-identifier">num_begin</span><span class="ruby-operator">+</span><span class="ruby-identifier">objects</span>[<span class="ruby-value">:recordset</span>].<span class="ruby-identifier">length</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>
+        <span class="ruby-identifier">t</span>(<span class="ruby-string">&quot;count_objects&quot;</span>,<span class="ruby-value">:number_begin=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">num_begin</span>,<span class="ruby-value">:number_end=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">num_end</span>,<span class="ruby-value">:total=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">objects</span>[<span class="ruby-value">:total</span>])
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_count_objects-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_count_objects-method -->
+
+    
+      <div id="method-i-h_destroy" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_destroy</span><span
+            class="method-args">(obj)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_destroy-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 263</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_destroy</span>(<span class="ruby-identifier">obj</span>)
+        <span class="ruby-identifier">link_to</span>( <span class="ruby-identifier">h_img_destroy</span>.<span class="ruby-identifier">to_s</span>, <span class="ruby-identifier">obj</span>, <span class="ruby-value">:confirm</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">t</span>(<span class="ruby-value">:msg_confirm</span>), <span class="ruby-value">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:delete</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_destroy-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_destroy-method -->
+
+    
+      <div id="method-i-h_explorer" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_explorer</span><span
+            class="method-args">(obj, method = nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_explorer-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 235</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_explorer</span> (<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">method</span> = <span class="ruby-keyword">nil</span>)
+        <span class="ruby-identifier">h_link_to</span>(<span class="ruby-string">&quot;explorer&quot;</span>, <span class="ruby-identifier">obj</span>, <span class="ruby-identifier">method</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_explorer-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_explorer-method -->
+
+    
+      <div id="method-i-h_form_html_id" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_form_html_id</span><span
+            class="method-args">(obj, fonct)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>renvoi l’identifiant du formulaire en fonction de l’objet et de la fonction
+demandee</p>
+          
+
+          
+          <div class="method-source-code" id="h_form_html_id-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 485</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_form_html_id</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">fonct</span>)
+        <span class="ruby-identifier">fonct</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;_&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">obj</span>.<span class="ruby-identifier">model_name</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_form_html_id-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_form_html_id-method -->
+
+    
+      <div id="method-i-h_form_simple_query" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_form_simple_query</span><span
+            class="method-args">(url, objects)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_form_simple_query-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 102</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_form_simple_query</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">objects</span>)
+        <span class="ruby-identifier">bloc</span> = <span class="ruby-string">&quot;&quot;</span>
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">form_tag</span>(<span class="ruby-identifier">url</span>, <span class="ruby-value">:method=</span><span class="ruby-operator">&gt;</span><span class="ruby-value">:get</span>)
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">h_simple_query</span>(<span class="ruby-identifier">objects</span>)
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">hidden_field_tag</span>(<span class="ruby-string">&quot;todo&quot;</span> , <span class="ruby-ivar">@myparams</span>[<span class="ruby-string">&quot;todo&quot;</span>]) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@myparams</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">hidden_field_tag</span>(<span class="ruby-string">&quot;html_ident&quot;</span> , <span class="ruby-ivar">@myparams</span>[<span class="ruby-string">&quot;html_ident&quot;</span>]) <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@myparams</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;/form&gt;&quot;</span>
+        <span class="ruby-identifier">bloc</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_form_simple_query-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_form_simple_query-method -->
+
+    
+      <div id="method-i-h_help_menu" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_help_menu</span><span
+            class="method-args">(name,link)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_help_menu-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 59</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_help_menu</span>(<span class="ruby-identifier">name</span>,<span class="ruby-identifier">link</span>)
+        <span class="ruby-identifier">bloc</span>=<span class="ruby-string">&quot;&quot;</span>
+        <span class="ruby-keyword">if</span>(<span class="ruby-identifier">link!</span>=<span class="ruby-keyword">nil</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">link</span>.<span class="ruby-identifier">strip</span>()<span class="ruby-operator">!=</span><span class="ruby-string">&quot;&quot;</span>)
+                <span class="ruby-identifier">bloc</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-string">&quot;&lt;a href='/help?help=&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">link</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;'&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">h_img</span>(<span class="ruby-identifier">name</span>)<span class="ruby-operator">+</span><span class="ruby-string">&quot;&lt;/a&gt;&quot;</span>
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_help_menu-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_help_menu-method -->
+
+    
+      <div id="method-i-h_if_differ" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_if_differ</span><span
+            class="method-args">(current, previous)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_if_differ-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_if_differ</span>(<span class="ruby-identifier">current</span>, <span class="ruby-identifier">previous</span>)
+        <span class="ruby-identifier">current</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_if_differ-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_if_differ-method -->
+
+    
+      <div id="method-i-h_if_differ_old" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_if_differ_old</span><span
+            class="method-args">(current, previous, att)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>renvoie la valeur de l’attribut att sur current si 1- current n’a pas le
+meme identifiant que previous 2- que les valeurs de l’attribut sont
+differentes entre les 2objets att peut etre un attribut “compose” tel que
+owner.login</p>
+          
+
+          
+          <div class="method-source-code" id="h_if_differ_old-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_if_differ_old</span>(<span class="ruby-identifier">current</span>, <span class="ruby-identifier">previous</span>,  <span class="ruby-identifier">att</span>)
+        <span class="ruby-identifier">ret</span>=<span class="ruby-identifier">get_val</span>(<span class="ruby-identifier">current</span>,<span class="ruby-identifier">att</span>)
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">previous</span>.<span class="ruby-identifier">nil?</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">current</span>.<span class="ruby-identifier">ident</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">previous</span>.<span class="ruby-identifier">ident</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">ret</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">get_val</span>(<span class="ruby-identifier">previous</span>, <span class="ruby-identifier">att</span>)
+                        <span class="ruby-identifier">ret</span>= <span class="ruby-string">&quot;&quot;</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_if_differ_old-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_if_differ_old-method -->
+
+    
+      <div id="method-i-h_if_differ_trop_general" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_if_differ_trop_general</span><span
+            class="method-args">(current, previous)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_if_differ_trop_general-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 30</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_if_differ_trop_general</span>(<span class="ruby-identifier">current</span>, <span class="ruby-identifier">previous</span>)
+        <span class="ruby-identifier">ret</span> = <span class="ruby-identifier">current</span>
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">previous</span>.<span class="ruby-identifier">nil?</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">current</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">previous</span>
+                        <span class="ruby-identifier">ret</span>= <span class="ruby-string">&quot;&quot;</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_if_differ_trop_general-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_if_differ_trop_general-method -->
+
+    
+      <div id="method-i-h_img" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img</span><span
+            class="method-args">(name, title=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 144</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">title</span>=<span class="ruby-keyword">nil</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">title</span>.<span class="ruby-identifier">nil?</span>
+                <span class="ruby-identifier">title</span>=<span class="ruby-identifier">t</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span>))
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-node">&quot;&lt;img class=\&quot;icone\&quot; src=\&quot;/images/#{name}.png\&quot; title='#{title}'&gt;&lt;/img&gt;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img-method -->
+
+    
+      <div id="method-i-h_img_abort" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_abort</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_abort-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 219</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_abort</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;abort&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_abort-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_abort-method -->
+
+    
+      <div id="method-i-h_img_add_documents" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_add_documents</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_add_documents-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 203</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_add_documents</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;paste_documents&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_add_documents-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_add_documents-method -->
+
+    
+      <div id="method-i-h_img_add_forum" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_add_forum</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_add_forum-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 211</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_add_forum</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;add_forum&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_add_forum-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_add_forum-method -->
+
+    
+      <div id="method-i-h_img_add_parts" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_add_parts</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_add_parts-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 207</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_add_parts</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;paste_parts&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_add_parts-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_add_parts-method -->
+
+    
+      <div id="method-i-h_img_add_projects" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_add_projects</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_add_projects-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 199</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_add_projects</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;paste_projects&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_add_projects-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_add_projects-method -->
+
+    
+      <div id="method-i-h_img_all" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_all</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_all-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 223</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_all</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;all&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_all-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_all-method -->
+
+    
+      <div id="method-i-h_img_btn" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_btn</span><span
+            class="method-args">(name)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_btn-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 151</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_btn</span>(<span class="ruby-identifier">name</span>)
+        <span class="ruby-node">&quot;&lt;img class=\&quot;btn\&quot; src=\&quot;/images/#{name}.png\&quot; title='#{t(File.basename(name.to_s))}'&gt;&lt;/img&gt;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_btn-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_btn-method -->
+
+    
+      <div id="method-i-h_img_checkin" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_checkin</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_checkin-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 171</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_checkin</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;img_checkin&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_checkin-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_checkin-method -->
+
+    
+      <div id="method-i-h_img_checkout" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_checkout</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_checkout-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 167</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_checkout</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;img_checkout&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_checkout-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_checkout-method -->
+
+    
+      <div id="method-i-h_img_cut" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_cut</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_cut-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 159</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_cut</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;cut&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_cut-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_cut-method -->
+
+    
+      <div id="method-i-h_img_destroy" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_destroy</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_destroy-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 163</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_destroy</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;destroy&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_destroy-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_destroy-method -->
+
+    
+      <div id="method-i-h_img_edit" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_edit</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_edit-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 175</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_edit</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;edit&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_edit-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_edit-method -->
+
+    
+      <div id="method-i-h_img_edit_task" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_edit_task</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_edit_task-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 179</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_edit_task</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;edit_task&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_edit_task-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_edit_task-method -->
+
+    
+      <div id="method-i-h_img_launch" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_launch</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_launch-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 187</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_launch</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;launch&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_launch-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_launch-method -->
+
+    
+      <div id="method-i-h_img_launchthis" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_launchthis</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_launchthis-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 191</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_launchthis</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;launchthis&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_launchthis-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_launchthis-method -->
+
+    
+      <div id="method-i-h_img_list" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_list</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_list-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 215</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_list</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;list&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_list-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_list-method -->
+
+    
+      <div id="method-i-h_img_pick" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_pick</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_pick-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 227</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_pick</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;pick&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_pick-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_pick-method -->
+
+    
+      <div id="method-i-h_img_revise" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_revise</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_revise-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 195</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_revise</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;revise&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_revise-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_revise-method -->
+
+    
+      <div id="method-i-h_img_show" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_show</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_show-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 183</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_show</span>
+        <span class="ruby-identifier">h_img</span>(<span class="ruby-string">&quot;explorer&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_show-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_show-method -->
+
+    
+      <div id="method-i-h_img_sub" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_sub</span><span
+            class="method-args">(name)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_sub-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 231</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_sub</span>(<span class="ruby-identifier">name</span>)
+        <span class="ruby-identifier">image_submit_tag</span>(<span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;.png&quot;</span>,<span class="ruby-value">:title=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">t</span>(<span class="ruby-identifier">name</span>), <span class="ruby-value">:class</span>=<span class="ruby-operator">&gt;</span><span class="ruby-string">&quot;submit&quot;</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_sub-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_sub-method -->
+
+    
+      <div id="method-i-h_img_tit" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_img_tit</span><span
+            class="method-args">(name, title)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_img_tit-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 155</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_img_tit</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">title</span>)
+        <span class="ruby-node">&quot;&lt;img class=\&quot;icone\&quot; src=\&quot;/images/#{name}.png\&quot; title='#{title}'&gt;&lt;/img&gt;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_img_tit-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_img_tit-method -->
+
+    
+      <div id="method-i-h_input_text" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_input_text</span><span
+            class="method-args">(f ,field)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_input_text-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 353</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_input_text</span>(<span class="ruby-identifier">f</span> ,<span class="ruby-identifier">field</span>)
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">admin_logged_in?</span>
+                <span class="ruby-identifier">ret</span>=<span class="ruby-identifier">f</span>.<span class="ruby-identifier">label</span> <span class="ruby-identifier">field</span>, <span class="ruby-identifier">t</span>(<span class="ruby-node">&quot;label_#{field}&quot;</span>)
+        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-identifier">f</span>.<span class="ruby-identifier">text_field</span> <span class="ruby-identifier">field</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_input_text-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_input_text-method -->
+
+    
+      <div id="method-i-h_link_to" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_link_to</span><span
+            class="method-args">(name, obj, method = nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_link_to-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 239</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_link_to</span> (<span class="ruby-identifier">name</span>, <span class="ruby-identifier">obj</span>, <span class="ruby-identifier">method</span> = <span class="ruby-keyword">nil</span>)
+        <span class="ruby-identifier">fname</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;.&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">__method__</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>){<span class="ruby-node">&quot;obj=#{obj}, method=#{method}&quot;</span>}
+        <span class="ruby-identifier">ret</span>=<span class="ruby-string">&quot;&quot;</span>
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">nil?</span>
+
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">method</span>.<span class="ruby-identifier">nil?</span>
+                        <span class="ruby-identifier">method</span> = <span class="ruby-string">&quot;ident&quot;</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">method</span>)
+                <span class="ruby-identifier">txt</span> = <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">method</span>)
+                <span class="ruby-keyword">else</span>
+                <span class="ruby-identifier">txt</span> = <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">ident</span>
+                <span class="ruby-keyword">end</span>
+
+                <span class="ruby-keyword">if</span> <span class="ruby-identifier">txt</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">txt</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;&quot;</span>
+                <span class="ruby-identifier">txt</span> = <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">to_s</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">title</span> = <span class="ruby-identifier">t</span>(<span class="ruby-identifier">name</span>, <span class="ruby-value">:obj</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">obj</span>)
+                <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>){<span class="ruby-node">&quot;title=#{title}&quot;</span>}
+                <span class="ruby-identifier">link_to</span>( <span class="ruby-identifier">txt</span>, <span class="ruby-identifier">obj</span>, {<span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">title</span> } )
+        <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_link_to-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_link_to-method -->
+
+    
+      <div id="method-i-h_menu" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_menu</span><span
+            class="method-args">(href,help,title)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_menu-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_menu</span>(<span class="ruby-identifier">href</span>,<span class="ruby-identifier">help</span>,<span class="ruby-identifier">title</span>)
+        <span class="ruby-identifier">bloc</span>=<span class="ruby-string">&quot;&quot;</span>
+        <span class="ruby-identifier">bloc</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-node">&quot;&lt;a class='menu' onclick=\&quot;return helpPopup('#{help}','#{href}');\&quot; &gt;#{title}&lt;/a&gt;&lt;br /&gt;&quot;</span>;
+        <span class="ruby-identifier">bloc</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_menu-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_menu-method -->
+
+    
+      <div id="method-i-h_show_tree" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_show_tree</span><span
+            class="method-args">(obj)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_show_tree-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 289</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_show_tree</span>(<span class="ruby-identifier">obj</span>)
+        <span class="ruby-string">&quot;don t use this function, prefer render shared/tree&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_show_tree-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_show_tree-method -->
+
+    
+      <div id="method-i-h_show_tree_old" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_show_tree_old</span><span
+            class="method-args">(obj)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_show_tree_old-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 293</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_show_tree_old</span>(<span class="ruby-identifier">obj</span>)
+        <span class="ruby-identifier">bloc</span>=<span class="ruby-string">&quot;&quot;</span>
+        <span class="ruby-keyword">if</span> ((<span class="ruby-ivar">@tree</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@tree</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>) <span class="ruby-operator">||</span> (<span class="ruby-ivar">@tree_up</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@tree_up</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>))
+                <span class="ruby-comment">#bloc &lt;&lt; &quot;&lt;h1&gt;&lt;/h1&gt;&quot;</span>
+                <span class="ruby-comment">#bloc &lt;&lt; &quot;&lt;tr&gt;&quot;</span>
+                <span class="ruby-comment">#form_for(obj, :url =&gt; {:id =&gt; obj.id, :action =&gt; &quot;select_view&quot; }) do |f|</span>
+                <span class="ruby-comment">#    bloc &lt;&lt;    &quot;&lt;td&gt;#{select(&quot;relation&quot;,&quot;view&quot;, options_from_collection_for_select( @views, :id, :name))}&lt;/td&gt;&quot;</span>
+                <span class="ruby-comment">#    bloc &lt;&lt; &quot;&lt;td&gt;#{submit_tag t(&quot;select_view&quot;)}&lt;/td&gt;&quot;</span>
+                <span class="ruby-comment">#end</span>
+                <span class="ruby-comment">#bloc &lt;&lt; &quot;&lt;/tr&gt;&quot;</span>
+                <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;div id='dtree'&gt;&quot;</span>
+                <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@tree</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@tree</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>)
+                        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;table class='menu_bas' &gt;&quot;</span>
+                        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;tr&gt;&quot;</span>
+                        <span class="ruby-identifier">bloc</span><span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;td&gt;&lt;a class='menu_bas' href='#' onclick='openCloseAllTree(tree_down);'&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">t</span>(<span class="ruby-string">&quot;h_open_close_all_tree&quot;</span>)<span class="ruby-operator">+</span><span class="ruby-string">&quot;&lt;/a&gt;&lt;/td&gt;&quot;</span>
+                        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;/tr&gt;&quot;</span>
+                        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;/table&gt;&quot;</span>
+                <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@tree</span>.<span class="ruby-identifier">to_s</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">if</span> (<span class="ruby-ivar">@tree_up</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@tree_up</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">&gt;</span><span class="ruby-value">0</span>)
+                        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;table class='menu_bas' &gt;&quot;</span>
+                        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;tr&gt;&quot;</span>
+                        <span class="ruby-identifier">bloc</span><span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;&lt;td&gt;&lt;a class='menu_bas' href='#' onclick='openCloseAllTree(tree_up);'&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">t</span>(<span class="ruby-string">&quot;h_open_close_all_tree&quot;</span>)<span class="ruby-operator">+</span><span class="ruby-string">&quot;&lt;/a&gt;&lt;/td&gt;&quot;</span>
+                        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;/tr&gt;&quot;</span>
+                        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;/table&gt;&quot;</span>
+                <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@tree_up</span>.<span class="ruby-identifier">to_s</span>
+                <span class="ruby-keyword">end</span>
+                <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;/div&gt;&quot;</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">bloc</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_show_tree_old-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_show_tree_old-method -->
+
+    
+      <div id="method-i-h_simple_query" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_simple_query</span><span
+            class="method-args">(objects)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_simple_query-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 112</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_simple_query</span>(<span class="ruby-identifier">objects</span>)
+        <span class="ruby-identifier">bloc</span> = <span class="ruby-string">&quot;&quot;</span>
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;table&gt;&lt;tr&gt;&quot;</span>
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;td&gt;&quot;</span>
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">t</span>(<span class="ruby-string">&quot;query&quot;</span>)
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-value">:query</span> , <span class="ruby-identifier">value</span>=<span class="ruby-identifier">objects</span>[<span class="ruby-value">:query</span>])
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;/td&gt;&quot;</span>
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;td&gt;&quot;</span>
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">t</span>(<span class="ruby-string">&quot;nb_items_per_page&quot;</span>)
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">text_field_tag</span>(<span class="ruby-value">:nb_items</span> , <span class="ruby-identifier">value</span>=<span class="ruby-identifier">objects</span>[<span class="ruby-value">:nb_items</span>], <span class="ruby-value">:size=</span><span class="ruby-operator">&gt;</span><span class="ruby-value">5</span>)
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;/td&gt;&quot;</span>
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;/td&gt;&quot;</span>
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;td&gt;&quot;</span>
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">h_img_sub</span>(<span class="ruby-value">:filter</span>)
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;/td&gt;&quot;</span>
+        <span class="ruby-identifier">bloc</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&quot;&lt;/tr&gt;&lt;/table&gt;&quot;</span>
+        <span class="ruby-identifier">bloc</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_simple_query-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_simple_query-method -->
+
+    
+      <div id="method-i-h_type_values" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_type_values</span><span
+            class="method-args">(obj, fonct)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>affiche ou edite les valeurs specifiques au type argum obj l’objet argum
+fonct la fonction demandee</p>
+<ul><li>
+<p>show: on les montre seulement</p>
+</li><li>
+<p>edit: on peut les editer</p>
+</li><li>
+<p>define: on les definit (dans typesobject seulement pour le moment)</p>
+</li></ul>
+          
+
+          
+          <div class="method-source-code" id="h_type_values-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 441</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_type_values</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">fonct</span>)
+        <span class="ruby-identifier">fname</span>=<span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;.&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">__method__</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-comment">#LOG.info (fname){&quot;obj=#{obj}&quot;}</span>
+        <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>){<span class="ruby-node">&quot;fonct=#{fonct}&quot;</span>}
+        <span class="ruby-identifier">ret</span>=<span class="ruby-string">&quot;&quot;</span>
+        <span class="ruby-keyword">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:typesobject</span>)
+                <span class="ruby-keyword">unless</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">typesobject</span>.<span class="ruby-identifier">nil?</span>
+                        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">typesobject</span>.<span class="ruby-identifier">fields</span>.<span class="ruby-identifier">nil?</span>
+                                <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">info</span> (<span class="ruby-identifier">fname</span>){<span class="ruby-node">&quot;fields=#{obj.typesobject.fields}&quot;</span>}
+                                <span class="ruby-keyword">case</span> <span class="ruby-identifier">fonct</span>
+                                <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;show&quot;</span>
+                                        <span class="ruby-identifier">buttons</span>=<span class="ruby-string">&quot;none&quot;</span>
+                                <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;edit&quot;</span>
+                                        <span class="ruby-identifier">buttons</span>=<span class="ruby-string">&quot;position&quot;</span>
+                                        <span class="ruby-keyword">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">type_values</span>.<span class="ruby-identifier">nil?</span>
+                                        <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">type_values</span>=<span class="ruby-identifier">obj</span>.<span class="ruby-identifier">typesobject</span>.<span class="ruby-identifier">fields</span>
+                                        <span class="ruby-keyword">end</span>
+                                <span class="ruby-keyword">when</span> <span class="ruby-string">&quot;define&quot;</span>
+                                        <span class="ruby-identifier">buttons</span>=<span class="ruby-string">&quot;all&quot;</span>
+                                <span class="ruby-keyword">else</span>
+                                <span class="ruby-identifier">buttons</span>=<span class="ruby-string">&quot;none&quot;</span>
+                                <span class="ruby-keyword">end</span>
+                                <span class="ruby-keyword">unless</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">type_values</span>.<span class="ruby-identifier">nil?</span>
+                                        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">&quot;&lt;fieldset&gt;&lt;legend&gt;&quot;</span>
+                                        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-identifier">t</span>(<span class="ruby-value">:legend_type_values</span>)
+                                        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">&quot;&lt;/legend&gt;&quot;</span>
+                                        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span> <span class="ruby-identifier">render</span>(
+        <span class="ruby-value">:partial</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;shared/form_json&quot;</span>,
+        <span class="ruby-value">:locals</span> =<span class="ruby-operator">&gt;</span> {
+        <span class="ruby-value">:fields</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">type_values</span>,
+        <span class="ruby-value">:form_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">h_form_html_id</span>(<span class="ruby-identifier">obj</span>, <span class="ruby-identifier">fonct</span>),
+        <span class="ruby-value">:textarea_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">model_name</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;[type_values]&quot;</span>,
+        <span class="ruby-value">:options</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-string">&quot;buttons&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">buttons</span>} }
+        )
+                                        <span class="ruby-comment">#options: all, position, none</span>
+                                        <span class="ruby-identifier">ret</span><span class="ruby-operator">+=</span><span class="ruby-string">&quot;&lt;/fieldset&gt;&quot;</span>
+                                <span class="ruby-keyword">end</span>
+                        <span class="ruby-keyword">end</span>
+                <span class="ruby-keyword">end</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_type_values-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_type_values-method -->
+
+    
+      <div id="method-i-h_value_or_default" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">h_value_or_default</span><span
+            class="method-args">(value, default)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="h_value_or_default-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">h_value_or_default</span>(<span class="ruby-identifier">value</span>, <span class="ruby-identifier">default</span>)
+        <span class="ruby-identifier">ret</span>=<span class="ruby-identifier">default</span>
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-identifier">ret</span>=<span class="ruby-identifier">value</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">value</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">==</span><span class="ruby-value">0</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">ret</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- h_value_or_default-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- h_value_or_default-method -->
+
+    
+      <div id="method-i-icone" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">icone</span><span
+            class="method-args">(object)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="icone-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 131</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">icone</span>(<span class="ruby-identifier">object</span>)
+        <span class="ruby-identifier">type</span> = <span class="ruby-node">&quot;#{object.model_name}_#{object.typesobject.name}&quot;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">typesobject</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-identifier">fic</span>=<span class="ruby-node">&quot;/images/#{type}.png&quot;</span>
+
+        <span class="ruby-keyword">if</span> <span class="ruby-operator">!</span><span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-node">&quot;#{RAILS_ROOT}/public#{fic}&quot;</span>)
+                <span class="ruby-identifier">type</span>=<span class="ruby-node">&quot;#{object.model_name}&quot;</span>
+                <span class="ruby-identifier">fic</span>=<span class="ruby-node">&quot;/images/#{type}.png&quot;</span>
+
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">mdl_name</span>=<span class="ruby-identifier">t</span>(<span class="ruby-node">&quot;ctrl_#{type.downcase}&quot;</span>)
+        <span class="ruby-node">&quot;&lt;img class='icone' src='#{fic}' title='#{mdl_name}'&gt;&lt;/img&gt;&quot;</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- icone-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- icone-method -->
+
+    
+      <div id="method-i-link_to_slice" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">link_to_slice</span><span
+            class="method-args">(item, accessor, param_name=nil)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>used to build links to things like “/workitems?wfid=xyz or”
+/processes?workflow=cheeseburger_order</p>
+          
+
+          
+          <div class="method-source-code" id="link_to_slice-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 628</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">link_to_slice</span> (<span class="ruby-identifier">item</span>, <span class="ruby-identifier">accessor</span>, <span class="ruby-identifier">param_name</span>=<span class="ruby-keyword">nil</span>)
+        <span class="ruby-identifier">v</span> = <span class="ruby-identifier">h</span>(<span class="ruby-identifier">item</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">accessor</span>))
+        <span class="ruby-identifier">link_to</span>(<span class="ruby-identifier">v</span>, (<span class="ruby-identifier">param_name</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">accessor</span>) =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">v</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- link_to_slice-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- link_to_slice-method -->
+
+    
+      <div id="method-i-object_path" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">object_path</span><span
+            class="method-args">(obj)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="object_path-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 349</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">object_path</span>(<span class="ruby-identifier">obj</span>)
+        <span class="ruby-identifier">path</span> = <span class="ruby-identifier">send</span> <span class="ruby-node">&quot;#{obj.class.to_s.downcase}_path&quot;</span>, <span class="ruby-identifier">obj</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- object_path-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- object_path-method -->
+
+    
+      <div id="method-i-render_fluo" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">render_fluo</span><span
+            class="method-args">(opts)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>FLUO</p>
+          
+
+          
+          <div class="method-source-code" id="render_fluo-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 553</span>
+  <span class="ruby-keyword">def</span> <span class="ruby-identifier">render_fluo</span> (<span class="ruby-identifier">opts</span>)
+
+          <span class="ruby-identifier">tree</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">d</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:definition</span>]
+                  <span class="ruby-node">&quot;&lt;script src=\&quot;/definitions/#{d.id}/tree.js?var=proc_tree\&quot;&gt;&lt;/script&gt;&quot;</span>
+          <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">pr</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:process</span>]
+                  <span class="ruby-node">&quot;&lt;script src=\&quot;/processes/#{pr.wfid}/tree.js?var=proc_tree\&quot;&gt;&lt;/script&gt;&quot;</span>
+          <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">i</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:wfid</span>]
+                  <span class="ruby-node">&quot;&lt;script src=\&quot;/processes/#{i}/tree.js?var=proc_tree\&quot;&gt;&lt;/script&gt;&quot;</span>
+          <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">t</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:tree</span>]
+                  <span class="ruby-node">&quot;&lt;script&gt;var proc_tree = #{t.to_json};&lt;/script&gt;&quot;</span>
+          <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">t</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:tree_json</span>]
+                  <span class="ruby-node">&quot;&lt;script&gt;var proc_tree = #{t};&lt;/script&gt;&quot;</span>
+          <span class="ruby-keyword">else</span>
+                  <span class="ruby-string">'&lt;script&gt;var proc_tree = null;&lt;/script&gt;'</span>
+          <span class="ruby-keyword">end</span>
+
+          <span class="ruby-identifier">hl</span> = <span class="ruby-keyword">if</span> <span class="ruby-identifier">e</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-value">:expid</span>]
+                  <span class="ruby-node">&quot;\nFluoCan.highlight('fluo', '#{e}');&quot;</span>
+          <span class="ruby-keyword">else</span>
+                  <span class="ruby-string">''</span>
+          <span class="ruby-keyword">end</span>
+          <span class="ruby-identifier">more</span>=<span class="ruby-node">&quot;&lt;a class=\&quot;menu_bas\&quot;&gt;#{t('label_more')}&lt;/a&gt;&quot;</span>
+          <span class="ruby-identifier">less</span>=<span class="ruby-node">&quot;&lt;a class=\&quot;menu_bas\&quot;&gt;#{t('label_less')}&lt;/a&gt;&quot;</span>
+
+          <span class="ruby-identifier">workitems</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">opts</span>[<span class="ruby-value">:workitems</span>])
+
+          <span class="ruby-node">%Q{
+&lt;!-- fluo --&gt;
+
+&lt;script src=&quot;/javascripts/fluo-json.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/javascripts/fluo-can.js&quot;&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  var proc_tree = null;
+    // initial default value (overriden by following scripts)
+&lt;/script&gt;
+
+&lt;div id='fluo_minor_toggle' style='cursor: pointer;'&gt;
+      &lt;table&gt;&lt;tr&gt;&lt;td class='menu_bas'&gt;&lt;div id='fluo_toggle'&gt;#{more}&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;a id='dataurl_link'&gt;
+  &lt;canvas id=&quot;fluo&quot; width=&quot;50&quot; height=&quot;50&quot;&gt;&lt;/canvas&gt;
+&lt;/a&gt;
+
+#{tree}
+
+&lt;script&gt;
+  if (proc_tree) {
+
+    FluoCan.renderFlow(
+      'fluo', proc_tree, { 'workitems': #{workitems.inspect} });
+
+    FluoCan.toggleMinor('fluo');
+    FluoCan.crop('fluo');#{hl}
+
+    var a = document.getElementById('dataurl_link');
+    a.href = document.getElementById('fluo').toDataURL();
+
+    var toggle = document.getElementById('fluo_toggle');
+    toggle.onclick = function () {
+      FluoCan.toggleMinor('fluo');
+      FluoCan.crop('fluo');
+      if (toggle.innerHTML == '#{more}') toggle.innerHTML = '#{less}'
+      else toggle.innerHTML = '#{more}';
+    };
+  }
+&lt;/script&gt;
+  }</span>
+  <span class="ruby-keyword">end</span></pre>
+          </div><!-- render_fluo-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- render_fluo-method -->
+
+    
+      <div id="method-i-select_inout" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">select_inout</span><span
+            class="method-args">(form, object, values, field)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="select_inout-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 502</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">select_inout</span>(<span class="ruby-identifier">form</span>, <span class="ruby-identifier">object</span>, <span class="ruby-identifier">values</span>, <span class="ruby-identifier">field</span>)
+        <span class="ruby-identifier">fname</span> = <span class="ruby-node">&quot;#{self.class.name}.#{__method__}&quot;</span>
+        <span class="ruby-comment">#LOG.debug (fname){&quot;object=#{object}&quot;}</span>
+        <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">debug</span> (<span class="ruby-identifier">fname</span>){<span class="ruby-node">&quot;values=#{values}&quot;</span>}
+        <span class="ruby-identifier">html</span> = <span class="ruby-string">&quot;&quot;</span>
+        <span class="ruby-keyword">unless</span> <span class="ruby-identifier">values</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">values</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+                <span class="ruby-comment">#user</span>
+                <span class="ruby-identifier">mdl_object</span>=<span class="ruby-identifier">object</span>.<span class="ruby-identifier">model_name</span>
+                <span class="ruby-comment">#group</span>
+                <span class="ruby-identifier">mdl_assoc</span>=<span class="ruby-identifier">values</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">model_name</span>
+                <span class="ruby-comment">#user_groups</span>
+                <span class="ruby-identifier">select_id</span>=<span class="ruby-identifier">mdl_object</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;_&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">mdl_assoc</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;_ids&quot;</span>
+                <span class="ruby-comment">#user[role_ids][]</span>
+                <span class="ruby-identifier">select_name</span>=<span class="ruby-identifier">mdl_object</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;[&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">mdl_assoc</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;_ids][]&quot;</span>
+                <span class="ruby-comment">#role_ids</span>
+                <span class="ruby-identifier">method</span>=(<span class="ruby-identifier">mdl_assoc</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;_ids&quot;</span>).<span class="ruby-identifier">to_sym</span>
+                <span class="ruby-constant">LOG</span>.<span class="ruby-identifier">debug</span> (<span class="ruby-identifier">fname</span>){<span class="ruby-node">&quot;method=#{method}&quot;</span>}
+                <span class="ruby-comment">#the_selected=object.method(method).call: ko dans certains cas (securite!!)</span>
+                <span class="ruby-identifier">the_selected</span>=<span class="ruby-identifier">object</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">method</span>)
+                <span class="ruby-comment">#puts &quot;select_inout:object=&quot;+object.model_name+&quot; method=&quot;+method.to_s+&quot; sel=&quot;+the_selected.inspect</span>
+                <span class="ruby-comment">#label_user_groups_out, label_user_groups_in</span>
+                <span class="ruby-identifier">label_out</span>=<span class="ruby-identifier">t</span>(<span class="ruby-string">&quot;label_&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">select_id</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;_out&quot;</span>)
+                <span class="ruby-identifier">label_in</span>=<span class="ruby-identifier">t</span>(<span class="ruby-string">&quot;label_&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">select_id</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;_in&quot;</span>)
+                <span class="ruby-identifier">nb</span>=[<span class="ruby-identifier">values</span>.<span class="ruby-identifier">count</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>, <span class="ruby-value">10</span>].<span class="ruby-identifier">min</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">javascript_include_tag</span> <span class="ruby-string">&quot;select_extensions&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;&lt;div style='display: none;'&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">form</span>.<span class="ruby-identifier">collection_select</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">values</span>, <span class="ruby-value">:id</span>, <span class="ruby-identifier">field</span>, {}, {<span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">select_id</span>, <span class="ruby-value">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">nb</span>, <span class="ruby-value">:multiple</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">:true</span>, <span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">select_name</span>, <span class="ruby-value">:selected</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">the_selected</span>})
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;&lt;/div&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;&lt;table&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;&lt;tr&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;th&gt;#{label_out}&lt;/th&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;&lt;th&gt;&lt;/th&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;th&gt;#{label_in}&lt;/th&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;&lt;/tr&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;&lt;tr&gt;&quot;</span>
+                <span class="ruby-comment">#html += &quot;&lt;td&gt;mdl_object:#{mdl_object} mdl_assoc:#{mdl_assoc} select_id:#{select_id} select_name:#{select_name} method:#{method} : #{the_selected.inspect}&lt;/td&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;td&gt;&lt;select id='#{select_id}_out' multiple='multiple' name='#{select_id}_out' size=#{nb}&gt;&lt;/select&gt;&lt;/td&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;td&gt;&lt;a onclick=\&quot;selectInOutAdd('#{select_id}'); return true;\&quot; title=\&quot;#{t('button_add')}\&quot;&gt;#{h_img('select_inout/select_add')}&lt;/a&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;&lt;br/&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;a onclick= \&quot;selectInOutRemove('#{select_id}'); return true;\&quot; title=\&quot;#{t('button_remove')}\&quot;&gt;#{h_img('select_inout/select_remove')}&lt;/a&gt;&lt;/td&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;td&gt;&lt;select id='#{select_id}_in' multiple='multiple' name='#{select_id}_in' size=#{nb}&gt;&lt;/select&gt;&lt;/td&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;&lt;/tr&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot;&lt;/table&gt;&quot;</span>
+                <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;script&gt;selectInOutFill('#{select_id}')&lt;/script&gt;&quot;</span>
+        <span class="ruby-keyword">end</span>
+        <span class="ruby-identifier">html</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- select_inout-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- select_inout-method -->
+
+    
+      <div id="method-i-select_with_empty" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">select_with_empty</span><span
+            class="method-args">(form, object, attribute, values, id, method)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>combo box: select able to return null value</p>
+          
+
+          
+          <div class="method-source-code" id="select_with_empty-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 492</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">select_with_empty</span>(<span class="ruby-identifier">form</span>, <span class="ruby-identifier">object</span>, <span class="ruby-identifier">attribute</span>, <span class="ruby-identifier">values</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">method</span>)
+        <span class="ruby-comment"># id du select = role_father_id</span>
+        <span class="ruby-identifier">select_id</span> = <span class="ruby-identifier">object</span>.<span class="ruby-identifier">model_name</span><span class="ruby-operator">+</span><span class="ruby-string">'_'</span><span class="ruby-operator">+</span><span class="ruby-identifier">attribute</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-identifier">html</span> = <span class="ruby-identifier">javascript_include_tag</span> <span class="ruby-string">&quot;select_extensions&quot;</span>
+        <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&lt;p&gt;#{t(:label_select_active)}&lt;/p&gt;&quot;</span>
+        <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">check_box_tag</span>(<span class="ruby-value">:select_active</span>, <span class="ruby-string">&quot;no&quot;</span>, <span class="ruby-string">&quot;false&quot;</span>, <span class="ruby-value">:onclick=</span><span class="ruby-operator">&gt;</span><span class="ruby-node">&quot;selectActive(this, '#{select_id}'); return true;&quot;</span>)
+        <span class="ruby-identifier">html</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">form</span>.<span class="ruby-identifier">collection_select</span>(<span class="ruby-identifier">attribute</span>, <span class="ruby-identifier">values</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">method</span>)
+        <span class="ruby-identifier">html</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- select_with_empty-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- select_with_empty-method -->
+
+    
+      <div id="method-i-show_help" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">show_help</span><span
+            class="method-args">(key, with_img = true)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="show_help-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 73</span>
+    <span class="ruby-keyword">def</span> <span class="ruby-identifier">show_help</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">with_img</span> = <span class="ruby-keyword">true</span>)
+            <span class="ruby-identifier">txt</span>=<span class="ruby-identifier">t</span>(<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span>)
+            <span class="ruby-identifier">bloc</span>=<span class="ruby-string">&quot;&quot;</span>
+            <span class="ruby-keyword">if</span> <span class="ruby-identifier">with_img</span>
+                    <span class="ruby-identifier">bloc</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-node">&quot;&lt;img class=\&quot;help\&quot; id=\&quot;#{key.to_s}\&quot;  src=\&quot;/images/help.png\&quot;
+onclick=\&quot;return helpPopup('#{key.to_s}');\&quot; &gt;&quot;</span>
+            <span class="ruby-keyword">else</span>
+                    <span class="ruby-identifier">bloc</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-string">&quot;&lt;a href='/help?help=&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_s</span><span class="ruby-operator">+</span><span class="ruby-node">&quot;' onclick=\&quot;return helpPopup('#{key.to_s}');\&quot;&gt;&quot;</span><span class="ruby-operator">+</span><span class="ruby-identifier">txt</span><span class="ruby-operator">+</span><span class="ruby-string">&quot;&lt;/a&gt;&quot;</span>
+            <span class="ruby-keyword">end</span>
+            <span class="ruby-identifier">bloc</span>
+    <span class="ruby-keyword">end</span></pre>
+          </div><!-- show_help-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- show_help-method -->
+
+    
+      <div id="method-i-sort_link_helper" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">sort_link_helper</span><span
+            class="method-args">(text, param)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="sort_link_helper-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 273</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">sort_link_helper</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">param</span>)
+        <span class="ruby-identifier">key</span> = <span class="ruby-identifier">param</span>
+        <span class="ruby-identifier">key</span> <span class="ruby-operator">+=</span> <span class="ruby-string">&quot; DESC&quot;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:sort</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">param</span>
+        <span class="ruby-identifier">options</span> = {
+                <span class="ruby-value">:url</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-value">:overwrite_params</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-value">:sort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">key</span>, <span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>}},
+                <span class="ruby-value">:update</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'table'</span>,
+                <span class="ruby-value">:before</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Element.show('spinner')&quot;</span>,
+                <span class="ruby-value">:success</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">&quot;Element.hide('spinner')&quot;</span>
+        }
+        <span class="ruby-identifier">html_options</span> = {
+                <span class="ruby-value">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">t</span>(<span class="ruby-string">&quot;h_sort_by_field&quot;</span>),
+                <span class="ruby-value">:href</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">url_for</span>(<span class="ruby-value">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-string">'index'</span>, <span class="ruby-value">:params</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">merge</span>({<span class="ruby-value">:sort</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">key</span>, <span class="ruby-value">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword">nil</span>}))
+        }
+        <span class="ruby-identifier">link_to_remote</span>(<span class="ruby-identifier">text</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">html_options</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- sort_link_helper-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- sort_link_helper-method -->
+
+    
+      <div id="method-i-sort_td_class_helper" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">sort_td_class_helper</span><span
+            class="method-args">(param)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="sort_td_class_helper-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 267</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">sort_td_class_helper</span>(<span class="ruby-identifier">param</span>)
+        <span class="ruby-identifier">result</span> = <span class="ruby-string">'class=&quot;sortup&quot;'</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:sort</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">param</span>
+        <span class="ruby-identifier">result</span> = <span class="ruby-string">'class=&quot;sortdown&quot;'</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:sort</span>] <span class="ruby-operator">==</span> <span class="ruby-identifier">param</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">+</span> <span class="ruby-string">&quot; DESC&quot;</span>
+        <span class="ruby-identifier">result</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- sort_td_class_helper-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- sort_td_class_helper-method -->
+
+    
+      <div id="method-i-tip_help" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">tip_help</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>memorisation du click sur le help</p>
+          
+
+          
+          <div class="method-source-code" id="tip_help-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 67</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">tip_help</span>()
+        <span class="ruby-identifier">bloc</span>=<span class="ruby-string">&quot;&quot;</span>
+        <span class="ruby-identifier">bloc</span><span class="ruby-operator">&lt;&lt;</span><span class="ruby-string">&quot;&lt;img class='help' id='tip_help' src='/images/help.png' onclick='return helpTip();'&gt;&quot;</span>
+        <span class="ruby-identifier">bloc</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- tip_help-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- tip_help-method -->
+
+    
+      <div id="method-i-title" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">title</span><span
+            class="method-args">(text)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="title-source">
+            <pre><span class="ruby-comment"># File app/helpers/application_helper.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">title</span>(<span class="ruby-identifier">text</span>)
+  <span class="ruby-identifier">content_for</span> <span class="ruby-value">:title</span>, <span class="ruby-identifier">text</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- title-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- title-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

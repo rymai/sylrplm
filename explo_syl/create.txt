@@ -86,7 +86,6 @@ rake db:schema:load RAILS_ENV=production
 revenir en arriere
 rake db:migrate:down VERSION=timestamp
 rake db:migrate:reset
-
 doc sur rake
 rake -T [db test tmp routes stats rails log notes gems doc]
 

@@ -9,7 +9,8 @@
 *.sov
 *.dat
 coverage
-doc
+! le repertoire doc de plus haut niveau, on prend celui de public
+/doc
 log
 logfile
 tmp
