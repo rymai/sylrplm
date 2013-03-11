@@ -28,6 +28,10 @@
     <%= label_tag t(:label_language) %>
     <%= select_tag(:locale, options_for_select(@languages)) %>
   </p>
+  <p>
+    <%= label_tag t(:label_domain) %>
+    <%= text_field_tag(:domain, get_domain) %>
+  </p>
 
   <p><%= submit_tag t(:proceed), class: 'btn' %></p>
 </fieldset>

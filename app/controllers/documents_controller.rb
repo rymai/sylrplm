@@ -41,7 +41,7 @@ class DocumentsController < ApplicationController
     LOG.debug (fname) {"params=#{params.inspect}"}
     params={}
     #params[:action] = :init
-    @document = Document.new(:user => @current_user)
+    @document = Document.new(:user => current_user)
     @types    = Document.get_types_document
     @volumes  = Volume.find_all
     @status   = Statusobject.find_for("document", 2)

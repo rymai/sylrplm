@@ -351,7 +351,7 @@ module ApplicationHelper
 	end
 
 	def h_input_text(f ,field)
-		if admin_logged_in?
+		if admin_logged_in? || ::SYLRPLM::DOMAIN_FOR_ALL==true
 			ret=f.label field, t("label_#{field}")
 		ret+=f.text_field field
 		end

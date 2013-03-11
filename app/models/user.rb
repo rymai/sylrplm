@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
 	attr_accessor :designation, :password, :password_confirmation
 	attr_accessor :link_attributes
+	attr_accessor :session_domain
 	#
 	belongs_to :role
 	belongs_to :group

@@ -33,6 +33,9 @@ class MainController < ApplicationController
     unless params[:locale].nil?
       set_locale
     end
+    unless params[:domain].nil?
+      set_domain
+    end
     respond_to do |format|
       format.html # index.html.erb
     end

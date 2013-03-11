@@ -382,7 +382,7 @@ module Models
 
 		def def_user(user)
 			fname= "#{self.class.name}.#{__method__}"
-			LOG.info (fname) {"user=#{user} "}
+			LOG.info (fname) {"user=#{user.inspect} "}
 			unless user.nil?
 				LOG.info (fname) {"user=#{user.ident} "}
 				if self.respond_to? :owner
@@ -396,6 +396,10 @@ module Models
 				if self.respond_to? :projowner
 					self.projowner = user.project
 					LOG.info (fname) {"projowner=#{self.projowner.ident}"}
+				end
+				if self.respond_to? :domain
+					self.domain = user.session_domain
+					LOG.info (fname) {"domain=#{self.domain}"}
 				end
 			end
 

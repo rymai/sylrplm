@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   include Controllers::PlmObjectControllerModule
 
   helper :all # include all helpers, all the time
-  helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?
+  helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?, :get_domain
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
@@ -115,6 +115,24 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+  
+  # definition du domain en cours
+  def set_domain
+    if params[:domain]
+      session[:domain] = params[:domain]
+    end
+  end
+  
+  def get_domain
+  	if session[:domain].nil? ||  session[:domain]==""
+  		 ret=::SYLRPLM::DOMAIN_DEFAULT
+  		 ret+=current_user.login unless current_user.nil?
+  	else
+  		ret=session[:domain]
+  	end
+  	ret
+  end
+  
 
   # definition des variables globales.
   def define_variables
@@ -274,7 +292,8 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    ret=@current_user ||= User.find_user(session)
+    ret = @current_user ||= User.find_user(session)
+    ret.session_domain=session[:domain] unless ret.nil? || session[:domain].nil?
     ret
   end
 
