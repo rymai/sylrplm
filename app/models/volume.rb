@@ -25,7 +25,7 @@ class Volume < ActiveRecord::Base
 		if params_volume.nil?
 			self.directory = SYLRPLM::VOLUME_DIRECTORY_DEFAULT
 		end
-		self.set_default_values(true)
+		self.set_default_values(1)
 		self
 	end
 
