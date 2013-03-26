@@ -346,14 +346,18 @@ class Link < ActiveRecord::Base
 
 	def self.linked?(obj)
 		fname="#{self.class.name}.#{__method__}"
-		unless obj.typesobject.nil?
-			cond="(child_typesobject_id=#{obj.typesobject_id} and child_id = #{obj.id}) or (father_typesobject_id=#{obj.typesobject_id} and father_id = #{obj.id})"
-			ret = count(:all,
+		if obj.respond_to? :typesobject
+			unless obj.typesobject.nil?
+				cond="(child_typesobject_id=#{obj.typesobject_id} and child_id = #{obj.id}) or (father_typesobject_id=#{obj.typesobject_id} and father_id = #{obj.id})"
+				ret = count(:all,
     :conditions => [cond] )
-			puts "linked cond=#{cond} nb=#{ret}"
-		ret>0
+				puts "linked cond=#{cond} nb=#{ret}"
+			ret>0
+			else
+				LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no type for #{obj.ident}"}
+			false
+			end
 		else
-			LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no type for #{obj.ident}"}
 		false
 		end
 	end
