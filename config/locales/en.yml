@@ -46,3 +46,9 @@ en:
   ###########################
   # formattage
   ###########################
+  
+  activerecord:
+    errors:
+      messages:
+        # sylrplm
+        status_not_valid: "Bad status"

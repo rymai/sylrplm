@@ -1,5 +1,8 @@
 class ForumItem < ActiveRecord::Base
-	include Models::SylrplmCommon
+	
+	#pour def_user seulement
+  include Models::PlmObject
+  include Models::SylrplmCommon
 
 	attr_accessor :user
 
@@ -41,11 +44,11 @@ class ForumItem < ActiveRecord::Base
 			self.message=args[0][:message]
 		end
 	end
-
-	def self.create_new(forum, params, user)
-		raise Exception.new "Don't use this method!"
+	
+	def ident
+		"#{self.id}.#{self.message}"	
 	end
-
+	
 	def self.get_conditions(filter)
 		filter = filters.gsub("*","%")
 		ret = {}

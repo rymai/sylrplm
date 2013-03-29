@@ -15,19 +15,9 @@ class Forum < ActiveRecord::Base
 
   has_many :forum_items, :conditions => { parent_id: nil }
 
-  def initialize(*args)
-    super
-    self.statusobject = Statusobject.get_first("forum")
-    self.set_default_values(true) if args.empty?
-  end
-
   def user=(user)
 		def_user(user)
 	end
-
-  def self.create_new(attributes, user)
-    raise Exception.new "Don't call this method! Use Forum.new(params[:forum].merge(user: current_user)) instead!"
-  end
 
   def ident; subject; end
   def designation; subject; end

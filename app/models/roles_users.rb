@@ -14,5 +14,7 @@ class RolesUsers < ActiveRecord::Base
   	self.domain = role.domain
   	self.domain = user.domain if self.domain.nil?
   end
-  
+  def ident
+  	"#{self.role}.#{self.user}"	
+  end
 end

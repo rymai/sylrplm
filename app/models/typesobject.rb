@@ -14,8 +14,8 @@ class Typesobject < ActiveRecord::Base
 	def initialize(params=nil)
 		super(params)
 		fname="Typesobject.#{__method__}"
-		LOG.debug (fname){"params=#{params}:\n#{params.nil?}:#{self.inspect}"}
-		LOG.debug (fname){"#{self.inspect}"}
+		#LOG.debug (fname){"params=#{params}:\n#{params.nil?}:#{self.inspect}"}
+		#LOG.debug (fname){"#{self.inspect}"}
 	end
 
 	def self.get_all

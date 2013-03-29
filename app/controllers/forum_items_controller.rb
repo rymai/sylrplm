@@ -27,13 +27,13 @@ class ForumItemsController < ApplicationController
   def new
     unless params[:forum_id].nil?
       @forum                = Forum.find(params[:forum_id])
-      @forum_item           = ForumItem.new
+      @forum_item           = ForumItem.new(user: current_user)
       @forum_item.forum     = @forum
-      @forum_item.message   = "essai"
+      @forum_item.message   = "..."
       @forum_item.author    = @current_user
       @forum_item.parent_id = params[:parent_id]
     else
-      @forum_item = ForumItem.new
+      @forum_item = ForumItem.new(user: current_user)
     end
     respond_to do |format|
       format.html # new.html.erb

@@ -222,3 +222,6 @@ fr:
         even: "doit être pair"
         valid_relation_cardin_occur_max: "doit être plus grand que le mini ou -1 (infini)"
         valid_relation_cardin_use_max: "doit être plus grand que le mini ou -1 (infini)"
+        # sylrplm
+        status_not_valid: "Le statut n'est pas valide"
+        

@@ -6,57 +6,52 @@ all_variants=<%=@myparams[:all_variants]%>
 object.variants=<%=object.variants%>
 mdlid=<%=@variant.inspect%>
 -->
-
-<% if (@tree && @tree.size>0) || (@tree_up && @tree_up.size>0) %> <h1><%= t("object_tree")%></h1>
-<% end %>
+<h1><%= t("object_tree")%></h1>
 <% unless @views.nil? %>
 <% form_for(object, :url => {:id => object.id, :action => "select_view" }) do |f| %> <!-- -->
 <input type='hidden' name='root_id' value='<%= object.id%>'>
 <input type='hidden' name='root_model' value='<%= object.model_name%>'>
-<tr>
-	<td> <%= f.label t(:label_view) %>
-	<%= select_tag(:view_id, options_from_collection_for_select( @views, :id, :name, @myparams[:view_id].to_i))%>
-	<br/>
-	<% unless object.variants.nil? %>
-	<%= f.label t(:label_all_variants) %>
-	<%= check_box_tag :all_variants ,  @myparams[:all_variants], @myparams[:all_variants]=="on" -%>
-	<br/>
-	<%= f.label t(:label_variant) %>
-	<%= select_tag( :variant, options_from_collection_for_select(object.variants, :mdlid, :to_s, (@variant.mdlid unless @variant.nil?))) %>
-	<br/>
-	<%= f.label "" %>
-	<%= submit_tag t("select_context") %> </td>
-	<br/>
-	<% else %>
-	<%= f.label "" %>
-	<%= submit_tag t("select_view") %> </td>
-	<br/>
-	<% end %>
-	
-</tr>
+<%= f.label t(:label_view) %>
+<%= select_tag(:view_id, options_from_collection_for_select( @views, :id, :name, @myparams[:view_id].to_i))%>
+</br>
+<% unless object.variants.nil? %>
+<%= f.label t(:label_all_variants) %>
+<%= check_box_tag :all_variants ,  @myparams[:all_variants], @myparams[:all_variants]=="on" -%>
+</br>
+<%= f.label t(:label_variant) %>
+<%= select_tag( :variant, options_from_collection_for_select(object.variants, :mdlid, :to_s, (@variant.mdlid unless @variant.nil?))) %>
+</br>
+<%= f.label "" %><%= submit_tag t("select_context") %>
+</br>
+<% else %>
+<%= f.label "" %> <%= submit_tag t("select_view") %>
+</br>
+<% end %>
 <% end %>
 <% end %>
 <div id='dtree'>
 	<% if @tree && @tree.size>0 %>
-	<tr>
-		<td>
-		<table >
-			<tr>
-				<td><a
-				href='#' onclick='openCloseAllTree(tree_down);'><%= t("h_open_close_all_tree")%></a></td>
-			</tr>
-		</table> <%= @tree.to_s %> </td>
-		<% end %>
-	</tr>
+	<table >
+		<tr>
+			<td><a
+			href='#' onclick='openCloseAllTree(tree_down);'><%= t("h_open_close_all_tree")%></a></td><td><%= h t(:tree_branch_size)%></td>
+			<td><%= @tree.size%></td>
+			<td><%= h t(:tree_size)%></td>
+			<td><%= @tree.size_all%></td>
+		</tr>
+	</table>
+	<%= @tree.to_s %>
+	<% end %>
 	<% if @tree_up && @tree_up.size>0 %>
-	<tr>
-		<td>
-		<table>
-			<tr>
-				<td><a
-				href='#' onclick='openCloseAllTree(tree_up);'><%= t("h_open_close_all_tree")%></a></td>
-			</tr>
-		</table> <%= @tree_up.to_s %> </td>
-		<% end %>
-	</tr>
+	<table>
+		<tr>
+			<td><a
+			href='#' onclick='openCloseAllTree(tree_up);'><%= t("h_open_close_all_tree")%></a></td><td><%= h t(:tree_branch_size)%></td>
+			<td><%= @tree_up.size%></td>
+			<td><%= h t(:tree_size)%></td>
+			<td><%= @tree_up.size_all%></td>
+		</tr>
+	</table>
+	<%= @tree_up.to_s %>
+	<% end %>
 </div>

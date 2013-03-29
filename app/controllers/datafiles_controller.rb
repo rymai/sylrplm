@@ -54,11 +54,11 @@ class DatafilesController < ApplicationController
   # POST /datafiles
   # POST /datafiles.xml
   def create
-    uploadedfile = parameters.delete(:uploaded_file)
-    @datafile = Datafile.new(params.merge(user: current_user))
+    uploadedfile = params.delete(:uploaded_file)
+    @datafile = Datafile.new(params[:datafile])
     @types    = Typesobject.find_for("datafile")
     @document = Document.find(params["doc"]) if params["doc"]
-    puts "datafiles_controller.create:errors=#{@datafile.errors.inspect}"
+    #puts "datafiles_controller.create:errors=#{@datafile.errors.inspect}"
     respond_to do |format|
       if @datafile.save
         @datafile.create_dir

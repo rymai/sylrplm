@@ -1,9 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  title: MyString
-  description: MyText
+  id: 1
+  title: role_1
+  description: "description 1"
 
 two:
-  title: MyString
-  description: MyText
+  id: 2
+  title: role_2
+  description: "description 2"

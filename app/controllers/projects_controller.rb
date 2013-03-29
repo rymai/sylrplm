@@ -48,7 +48,7 @@ class ProjectsController < ApplicationController
 	# nouveau projet
 	# on definit les listes de valeur pour le type et le statut
 	def new
-		@project = Project.new(user: @current_user)
+		@project = Project.new(user: current_user)
 		@types = Project.get_types_project
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		@status= Statusobject.find_for("project", true)
@@ -73,7 +73,7 @@ class ProjectsController < ApplicationController
 	# POST /projects.xml
 	# creation d'un projet (apres validation du new)
 	def create
-		@project = Project.new(params[:project].merge(user: @current_user))
+		@project = Project.new(params[:project])
 		@types=Project.get_types_project
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		@status= Statusobject.find_for("project")

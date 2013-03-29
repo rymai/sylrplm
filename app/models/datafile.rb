@@ -7,7 +7,7 @@ class Datafile < ActiveRecord::Base
 
   attr_accessor :file_field
 
-  validates_presence_of :ident , :typesobject
+  validates_presence_of :ident , :typesobject, :revision, :volume, :owner, :group, :projowner
   validates_uniqueness_of :ident, :scope => :revision
 
   belongs_to :document
@@ -27,13 +27,7 @@ class Datafile < ActiveRecord::Base
 		fname= "#{self.class.name}.#{__method__}"
 		def_user(user)
 		self.volume    = user.volume
-		LOG.info (fname) {"volume=#{volume.id}"}
 	end
-
-
-  def self.create_new(params, user)
-    raise Exception.new "Don't use this method!"
-  end
 
   def update_attributes_repos(params, user)
     fname= "#{self.class.name}.#{__method__}"

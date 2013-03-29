@@ -130,23 +130,19 @@ namespace :sylrplm do
       domains << "admin"
       domains << adomain 
      puts "************************************"
+     stars="*********************************************\n"
      puts "Loop on domain"
       domains.each do |domain|
         puts "Domain:#{domain} -------------------------------"
-        Object.subclasses_of(ActiveRecord::Base).each do |model|
-          
-  				begin
-          
-            
+        Object.subclasses_of(ActiveRecord::Base).each do |model|         
+  				begin                     
            reflections = model.reflect_on_all_associations(:has_and_belongs_to_many)
-            
            # puts "#{model}.reflections=#{reflections.count}" if reflections.count>0
             # reflections.each do |r|
               # puts "#{r}:#{model} have #{r.macro} to #{r.name} on table=#{r.options[:join_table]}"+
               # " active_record=#{r.active_record} class_name=#{r.class_name}"+
               # " foreign_key=#{r.association_foreign_key} key_name=#{r.primary_key_name}"
-            # end
-            
+            # end          
             # model attributs list
             cols=[]
             #model.columns.reject{ |c| c.primary}. each do |col|
@@ -156,7 +152,7 @@ namespace :sylrplm do
               cols<<"#{col.name}" unless %w[created_at updated_at].include?(col.name)
             end
             isdomaindata = cols.include?("domain")
-            $stdout.puts "Model:#{model}, Domain datas?:#{isdomaindata}, #{model.count} objects"
+            $stdout.puts "#{stars}Model:#{model}, Domain datas?:#{isdomaindata}, #{model.count} objects"
             #$stdout.puts "Model:#{model}, Domain datas?:#{isdomaindata}, #{model.count} objects, columns:#{model}:#{cols}"
             # take only model with domain attribut
             if isdomaindata && model.count > 0
@@ -165,7 +161,8 @@ namespace :sylrplm do
               puts "Opening #{out_yml.inspect} "
               model.all.each do |obj|
               # only if data is declared on a domain
-                if obj.send("domain") == domain
+              	objdomain = obj.send("domain")
+                if objdomain == domain
                   out_yml.write( obj.to_yaml)
                   reflections.each do |r|
                     ext_ids = obj.send("#{r.association_foreign_key}s")
@@ -190,26 +187,23 @@ namespace :sylrplm do
                       #rel_yml.close
                     end
                   end unless reflections.nil?
+                else
+                	puts "#{obj} in domain '#{objdomain}'  <> '#{domain}' "
                 end
               end
               #
               out_yml.close
               out_yml = nil
             #
-            end
-          
-          
+            end      
           rescue Exception => e
             $stderr.puts "Error during export_domain:#{e}"
             stack=""
       			e.backtrace.each do |x|
         		puts x+"\n"
-      		end
-      
+      		end 
           out_yml.close unless out_yml.nil?
-          rel_yml.close unless rel_yml.nil?
-          
-      
+          rel_yml.close unless rel_yml.nil?     
           end
         end
       end
@@ -237,11 +231,13 @@ namespace :sylrplm do
      puts "************************************"
       puts "Cleaning empty files"
       Dir.glob("#{fixtures_path}/*.yml").each do |afile|
-      	asize=File.size(afile)
-      	$stdout.puts "verify file:#{afile}:#{asize}"
+      	asize = File.size(afile)
+      	msg = "verify file:#{afile}:#{asize}"
       	if asize == 0
       		File.unlink(afile)
+      		msg+=":deleted"
       	end
+      	$stdout.puts msg
       end
     end
     $stdout.puts "#{__method__}:end"

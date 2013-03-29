@@ -206,16 +206,6 @@ class Link < ActiveRecord::Base
 		raise Exception.new "Don't use this method"
 	end
 
-	# link creation with values
-	# calls from PLMParticipant
-	def self.create_new_by_values(values, user = nil)
-		raise Exception.new "Don't use this method"
-	end
-
-	def exists?
-		raise Exception.new "Don't use this method"
-	end
-
 	# bidouille infame car l'association ne marche pas
 	def relation
 		begin

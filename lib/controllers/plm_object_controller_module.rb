@@ -175,7 +175,8 @@ module Controllers
 				unless %w[. .. _obsolete _old Copy].include?(model)
 					mdl = model.camelize.gsub('.rb', '')
 					begin
-						mdl.constantize.content_columns.each do |col|
+						#mdl.constantize.content_columns.each do |col|
+						mdl.constantize.columns.each do |col|
 							lst<<["#{mdl}.#{col.name}","#{mdl}.#{col.name}"] unless %w[created_at updated_at owner].include?(col.name)
 						end
 					rescue
@@ -183,8 +184,8 @@ module Controllers
 					end
 				end
 			end
-			#puts __FILE__+"."+__method__.to_s+":"+lst.inspect
-			get_html_options(lst, default)
+			##puts __FILE__+"."+__method__.to_s+":"+lst.inspect
+			get_html_options(lst.sort, default)
 		end
 
 		def  get_html_options(lst, default, translate=false)

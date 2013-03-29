@@ -17,7 +17,9 @@ class Notification < ActiveRecord::Base
 
   def initialize(*args)
     super
-    self.set_default_values(true)
+    unless args[0][:user].nil?
+			self.set_default_values_with_next_seq
+		end
   end
 
   def init_mdd
@@ -31,10 +33,6 @@ class Notification < ActiveRecord::Base
       t.datetime "created_at"
       t.datetime "updated_at"
     end
-  end
-
-  def self.create_new(params)
-    raise Exception.new "Don't use this method!"
   end
 
   # utilisation:

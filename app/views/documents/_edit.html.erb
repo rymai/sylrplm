@@ -3,19 +3,19 @@
 		<%= t(:legend_document) %>
 	</legend>
 	<%= f.label t("label_ident") %>
-	<%= f.text_field :ident %>
+	<%= f.text_field :ident , :readonly => @document.column_readonly?(:ident) %>
 	<br/>
 	<%= f.label t("label_type") %>
-	<%= f.collection_select(:typesobject_id, @types, :id, :name) %>
+	<%= f.collection_select(:typesobject_id, @types, :id, :name, :readonly => @document.column_readonly?(:typesobject_id)) %>
 	<br/>
 	<%= f.label t("label_revision") %>
-	<%= text_field_tag :revision, @document.revision, :disabled => true %>
+	<%= text_field_tag :revision, @document.revision, :readonly => true %>
 	<br/>
 	<%= f.label t("label_designation") %>
-	<%= f.text_field :designation %>
+	<%= f.text_field :designation, :readonly => @document.column_readonly?(:designation) %>
 	<br/>
 	<%= f.label t("label_description") %>
-	<%= f.text_area :description , :rows => 10 %>
+	<%= f.text_area :description , :rows => 10, :readonly => @document.column_readonly?(:description) %>
 	<br/>
 	<%if (@document.promote_by_select? || @document.demote_by_select? == 1) && !@document.frozen? %>
 	<%= f.label t("label_status") %>
@@ -25,7 +25,7 @@
 	<%else %>
 	<%= f.label t("label_status") %>
 	<% unless @document.statusobject.nil? %>
-	<%= text_field_tag :status, @document.statusobject.name, :disabled => true %>
+	<%= text_field_tag :status, @document.statusobject.name, :readonly => true %>
 	<%end %>
 	<%end %>
 	<br/>
@@ -38,7 +38,7 @@
 	<%= f.date_select :date %>
 	<br />
 	<%= h_type_values(@document, fonct) %>
-	
+
 	<%= h_input_text(f , :domain) %>
 	<br/>
 </fieldset>

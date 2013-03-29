@@ -84,24 +84,31 @@ module Models
 			fname= "#{self.model_name}.#{__method__}"
 			LOG.debug (fname){"#{self.ident}"}
 			if(self.frozen?)
+				#LOG.debug (fname){"#{self.ident} frozen"}
 				# recherche si c'est la derniere revision
 				rev_cur=self.revision
 				last_rev=last_revision
-				if(revisable?)
-					obj = clone()
-					obj.revision=rev_cur.next
-					obj.statusobject=::Statusobject.get_first(self.model_name)
+				if revisable?
+					#LOG.debug (fname){"#{self.ident} frozen revisable"}
+					admin = User.find_by_name(::SYLRPLM::ROLE_ADMIN)
+					obj = self.clone
+					LOG.debug (fname){"#{self.ident} frozen revisable 2 :#{obj}"}
+					obj.statusobject = ::Statusobject.get_first(self.model_name)
+					obj.revision = rev_cur.next
+					obj.set_default_values_with_next_seq
 					if self.has_attribute?(:filename)
 						if(self.filename!=nil)
-						content=self.read_file
+						content = self.read_file
 						obj.write_file(content)
 						end
 					end
 				return obj
 				else
+					LOG.debug (fname){"#{self.ident} frozen not revisable"}
 					return nil
 				end
 			else
+				LOG.debug (fname){"#{self.ident} not frozen"}
 				return nil
 			end
 		end
@@ -209,18 +216,18 @@ module Models
 		end
 
 		def promote
-			#st_cur_name = statusobject.name
+			st_cur_name = statusobject.name
 			st = self.statusobject.get_next
 			#st=StatusObject.next(statusobject)
-			res = update_attributes({:statusobject_id => st.id})
-			#puts "Document.promote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
+			res = update_attributes({:statusobject => st})
+			#puts "Document.promote:"+res.to_s+":"+st_cur_name+" -> "+statusobject.name
 			self if res
 		end
 
 		def demote
 			#st_cur_name = statusobject.name
 			st = self.statusobject.get_previous
-			res = update_attributes({:statusobject_id => st.id})
+			res = update_attributes({:statusobject => st})
 			#puts "Document.demote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
 			self if res
 		end
@@ -410,36 +417,43 @@ module Models
 			LOG.info (fname) {"args=#{args.length}:#{args.inspect}"}
 			super
 			if self.respond_to? :revision
-				self.revision = "1"
+				if args.size>0 && (!args[0].include?(:revision))
+					self.revision = "1"
+				end
 			end
-
-			if self.respond_to? :statusobject
-			self.statusobject = ::Statusobject.get_first(self.model_name)
+			if (self.respond_to? :statusobject)
+				if args.size>0 && (!args[0].include?(:statusobject))
+				self.statusobject = ::Statusobject.get_first(self.model_name)
+				end
 			end
-			LOG.info (fname) {"arg0=#{args[0]}"}
-			unless args[0][:user].nil?
-			self.set_default_values_with_next_seq
+			if args.size>0
+				unless args[0][:user].nil?
+				self.set_default_values_with_next_seq
+				end
 			end
-
 		end
 
 		def before_save
 			fname= "#{self.class.name}.#{__method__}"
 			if (self.respond_to? :owner) && (self.respond_to? :group)
-				unless owner.group.nil?
-					self.group     = owner.group
-				else
-					self.group     = owner.groups[0]
+				unless owner.nil?
+					unless  owner.group.nil?
+						self.group     = owner.group
+					else
+						self.group     = owner.groups[0]
+					end
+					LOG.info (fname) {"owner=#{owner} group=#{group}"}
 				end
-				LOG.info (fname) {"owner=#{owner} group=#{group}"}
 			end
 			if (self.respond_to? :owner) && (self.respond_to? :projowner)
-				unless owner.project.nil?
-					self.projowner = owner.project
-				else
-					self.projowner = owner.projects[0]
+				unless owner.nil?
+					unless owner.project.nil?
+						self.projowner = owner.project
+					else
+						self.projowner = owner.projects[0]
+					end
+					LOG.info (fname) {"owner=#{owner}  projowner=#{projowner}"}
 				end
-				LOG.info (fname) {"owner=#{owner}  projowner=#{projowner}"}
 			end
 
 		end

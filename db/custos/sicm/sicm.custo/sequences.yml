@@ -1,161 +1,210 @@
 
-Sequence_64810937: 
-  id: "64810937"
-  value: DOC000000
-  min: 
-  max: 
-  utility: Document.ident
-  modify: "0"
-  sequence: "1"
-  domain: "custo_sicm"
-Sequence_64810938: 
-  id: "64810938"
-  value: 000
-  min: 
-  max: 
-  utility: Document.revision
-  modify: "0"
-  sequence: "0"
-  domain: "custo_sicm"
+Sequence_1031227068: 
+  id: "1031227068"
+  value: "89393353"
+  min: ""
+  max: ""
+  utility: Project.typesobject_id
+  modify: f
+  sequence: f
+  domain: admin
 
-Sequence_78719920: 
-  id: "78719920"
-  value: Designation document
-  min: 
-  max: 
-  utility: Document.designation
-  modify: "1"
-  sequence: "0"
-  domain: "custo_sicm"
+Sequence_1031227067: 
+  id: "1031227067"
+  value: "989626525"
+  min: ""
+  max: ""
+  utility: Part.typesobject_id
+  modify: f
+  sequence: f
+  domain: admin
 
 Sequence_175142436: 
   id: "175142436"
-  value: DF0000000000
-  min: 
-  max: 
+  value: DF0000000002
+  min: ""
+  max: ""
   utility: Datafile.ident
-  modify: "0"
-  sequence: "1"
-  domain: "custo_sicm"
+  modify: f
+  sequence: t
+  domain: sicm.custo
 
 Sequence_220049981: 
   id: "220049981"
   value: "-1"
-  min: 
-  max: 
+  min: ""
+  max: ""
   utility: Relation.cardin_use_max
-  modify: "0"
-  sequence: "0"
-  domain: "custo_sicm"
+  modify: f
+  sequence: f
+  domain: sicm.custo
 
 Sequence_326707096: 
   id: "326707096"
   value: "0"
-  min: 
-  max: 
+  min: ""
+  max: ""
   utility: Relation.cardin_use_min
-  modify: "0"
-  sequence: "0"
-  domain: "custo_sicm"
-
-Sequence_450215437: 
-  id: "450215437"
-  value: PRT000000
-  min: 
-  max: 
-  utility: Part.ident
-  modify: "0"
-  sequence: "1"
-  domain: "custo_sicm"
+  modify: f
+  sequence: f
+  domain: sicm.custo
 
 Sequence_498629140: 
   id: "498629140"
   value: Designation article
-  min: 
-  max: 
+  min: ""
+  max: ""
   utility: Part.designation
-  modify: "1"
-  sequence: "0"
-  domain: "custo_sicm"
+  modify: t
+  sequence: f
+  domain: sicm.custo
 
 Sequence_559752675: 
   id: "559752675"
   value: AAA
-  min: 
-  max: 
+  min: ""
+  max: ""
   utility: Part.revision
-  modify: "0"
-  sequence: "0"
-  domain: "custo_sicm"
+  modify: f
+  sequence: f
+  domain: sicm.custo
 
 Sequence_611088376: 
   id: "611088376"
   value: local_vault
-  min: 
-  max: 
+  min: ""
+  max: ""
   utility: Volume.protocol
-  modify: "0"
-  sequence: "0"
-  domain: "custo_sicm"
+  modify: f
+  sequence: f
+  domain: sicm.custo
 
 Sequence_612243215: 
   id: "612243215"
   value: "-1"
-  min: 
-  max: 
+  min: ""
+  max: ""
   utility: Relation.cardin_occur_max
-  modify: "0"
-  sequence: "0"
-  domain: "custo_sicm"
+  modify: f
+  sequence: f
+  domain: sicm.custo
 
 Sequence_717179523: 
   id: "717179523"
   value: Designation projet
-  min: 
-  max: 
+  min: ""
+  max: ""
   utility: Project.designation
-  modify: "1"
-  sequence: "0"
-  domain: "custo_sicm"
+  modify: t
+  sequence: f
+  domain: sicm.custo
 
 Sequence_768773788: 
   id: "768773788"
   value: PROJET
-  min: 
-  max: 
+  min: ""
+  max: ""
   utility: Project.ident
-  modify: "1"
-  sequence: "0"
-  domain: "custo_sicm"
+  modify: t
+  sequence: f
+  domain: sicm.custo
 
 Sequence_867572539: 
   id: "867572539"
   value: CUSTOMER
-  min: 
-  max: 
+  min: ""
+  max: ""
   utility: Customer.ident
-  modify: "1"
-  sequence: "0"
-  domain: "custo_sicm"
+  modify: t
+  sequence: f
+  domain: sicm.custo
 
 Sequence_973100822: 
   id: "973100822"
   value: Designation client
-  min: 
-  max: 
+  min: ""
+  max: ""
   utility: Customer.designation
-  modify: "1"
-  sequence: "0"
-  domain: "custo_sicm"
+  modify: t
+  sequence: f
+  domain: sicm.custo
 
 Sequence_1031227063: 
   id: "1031227063"
   value: "0"
-  min: 
-  max: 
+  min: ""
+  max: ""
   utility: Relation.cardin_occur_min
-  modify: "0"
-  sequence: "0"
-  domain: "custo_sicm"
-  
-  
+  modify: f
+  sequence: f
+  domain: sicm.custo
+
+Sequence_1031227065: 
+  id: "1031227065"
+  value: "423945442"
+  min: ""
+  max: ""
+  utility: Customer.typesobject_id
+  modify: f
+  sequence: f
+  domain: sicm.custo
+
+Sequence_1031227066: 
+  id: "1031227066"
+  value: "360315624"
+  min: ""
+  max: ""
+  utility: Datafile.typesobject_id
+  modify: f
+  sequence: f
+  domain: sicm.custo
+
+Sequence_1031227064: 
+  id: "1031227064"
+  value: "873691851"
+  min: ""
+  max: ""
+  utility: Document.typesobject_id
+  modify: f
+  sequence: f
+  domain: sicm.custo
+
+Sequence_64810938: 
+  id: "64810938"
+  value: "0"
+  min: ""
+  max: ""
+  utility: Document.revision
+  modify: f
+  sequence: f
+  domain: sicm.custo
+
+Sequence_78719920: 
+  id: "78719920"
+  value: Designation document
+  min: ""
+  max: ""
+  utility: Document.designation
+  modify: t
+  sequence: f
+  domain: sicm.custo
+
+Sequence_64810937: 
+  id: "64810937"
+  value: DOC000052
+  min: ""
+  max: ""
+  utility: Document.ident
+  modify: f
+  sequence: t
+  domain: sicm.custo
+
+Sequence_450215437: 
+  id: "450215437"
+  value: PRT000042
+  min: ""
+  max: ""
+  utility: Part.ident
+  modify: f
+  sequence: t
+  domain: sicm.custo

@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "in_reason"
 		t.date     "in_date"
 		t.string   "out_reason"
-		t.date     "out_date"
+		t.date     " out_date"
 		t.string   "local_dir"
 		t.datetime "created_at"
 		t.datetime "updated_at"

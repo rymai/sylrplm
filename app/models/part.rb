@@ -83,18 +83,8 @@ class Part < ActiveRecord::Base
 	#	self.ident+"/"+self.revision+"-"+self.designation+"-"+self.typesobject.name+"-"+self.statusobject.name
 	#end
 
-  def initialize(*args)
-    super
-    self.statusobject = Statusobject.get_first("part")
-    self.set_default_values(true) if args.length==1
-  end
-
   def user=(user)
 		def_user(user)
-	end
-
-  def self.create_new(part, user)
-    raise Exception.new "Don't use this method!"
 	end
 
 	# modifie les attributs avant edition

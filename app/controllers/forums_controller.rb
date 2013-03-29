@@ -25,7 +25,7 @@ class ForumsController < ApplicationController
   # GET /forums/new
   # GET /forums/new.xml
   def new
-    @forum  = Forum.new
+    @forum  = Forum.new(user: current_user)
     @types  = Typesobject.find_for("forum")
     @status = Statusobject.find_for("forum")
     respond_to do |format|
@@ -44,7 +44,7 @@ class ForumsController < ApplicationController
   # POST /forums
   # POST /forums.xml
   def create
-    @forum  = Forum.new(params[:forum].merge(user: current_user))
+    @forum  = Forum.new(params[:forum])
     @types  = Typesobject.find_for("forum")
     @status = Statusobject.find_for("forum")
     respond_to do |format|

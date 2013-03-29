@@ -24,12 +24,10 @@ class Relation < ActiveRecord::Base
 		if args.empty?
 			self.father_plmtype = Typesobject.get_objects_with_type.first
 			self.child_plmtype  = Typesobject.get_objects_with_type.first
-		self.set_default_values(true)
+			unless args[0][:user].nil?
+			self.set_default_values_with_next_seq
+			end
 		end
-	end
-
-	def self.create_new(params)
-		raise Exception.new "Don't use this method!"
 	end
 
 	def types_father

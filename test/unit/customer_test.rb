@@ -1,9 +1,27 @@
-require File.dirname(__FILE__)+'/../test_helper'
-
+require File.expand_path("../../test_helper", __FILE__)
 
 class CustomerTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
-  end
+	# Replace this with your real tests.
+	test "the truth" do
+		assert true
+	end
+
+	def test_invalid
+		customer = Customer.new
+		assert !customer.valid?
+		assert customer.errors.invalid?(:ident)
+		assert customer.errors.invalid?(:designation)
+	end
+
+	def test_unique_ident
+		customer1a = Customer.new(:ident => "Customer01",
+		:designation => "Mon customer")
+		assert customer1a.valid?
+		assert customer1a.save
+		customer1b = Customer.new(:ident => "Customer01",
+		:designation => "Mon customer")
+		assert !customer1b.valid?
+		assert_equal  I18n.translate('activerecord.errors.messages')[:taken] , customer1b.errors.on(:ident)
+	end
+	
 end

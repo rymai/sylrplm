@@ -59,7 +59,7 @@ class PartsController < ApplicationController
 	# POST /parts.xml
 	def create
 		puts "===PartsController.create:"+params.inspect
-		@part   = Part.new(params[:part].merge(user: @current_user))
+		@part   = Part.new(params[:part])
 		@types  = Part.get_types_part
 		@status = Statusobject.find_for("part")
 

@@ -1,13 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
 one:
-  utility: MyString
-  value: MyString
+  utility: Part.ident
+  value: PartIdent01
   min: MyString
   max: MyString
 
 two:
-  utility: MyString
-  value: MyString
+  utility: Document.ident
+  value: DocumentIdent01
   min: MyString
   max: MyString

@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
 			user = User.new
 			user.nb_items = ::SYLRPLM::NB_ITEMS_PER_PAGE
 			user.volume = Volume.find_by_name(::SYLRPLM::VOLUME_NAME_DEFAULT)
-		user.set_default_values(true)
+		user.set_default_values(1)
 		end
 		user
 	end

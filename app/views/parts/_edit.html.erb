@@ -25,13 +25,13 @@
 	<% else %>
 	<%= f.label t("label_status") %>
 	<% unless @part.statusobject.nil? %>
-	<%= text_field_tag :statusobject,  @part.statusobject.name, :disabled => true %>
+	<%= text_field_tag :statusobject,  @part.statusobject.name, :readonly => true %>
 	<% end %>
 	<% end %>
 	<br/>
 	<%= f.label t(:label_responsible) %>
 	<%= hidden_field :part , :owner_id %>
-	<%= text_field_tag "part_owner_display", @part.owner.login, :disabled => true %>
+	<%= text_field_tag "part_owner_display", @part.owner.login, :readonly => true %>
 	<%= link_to h_img_btn("btn_select").to_s, {:controller => "users", :todo => "select", :html_ident => "part_owner"} , {:target => "_blank", :class => 'menu_bas'}%> </td>
 	<br/>
 	<%= f.label t(:label_date) %>

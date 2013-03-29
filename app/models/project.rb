@@ -46,12 +46,6 @@ class Project < ActiveRecord::Base
 		def_user(user)
 	end
 
-	##def name; ident; end
-
-	def self.create_new(project, user)
-		raise Exception.new "Don't use this method!"
-	end
-
 	# renvoie le nom du projet affecte par defaut au user
 	def for_user(username)
 		::SYLRPLM::USER_PROJECT_IDENT+username

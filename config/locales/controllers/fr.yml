@@ -154,6 +154,9 @@ fr:
   # users
   ctrl_user: Utilisateur
   password_needed: Mot de passe obligatoire
+  # tree
+  tree_size: "Nombre de noeuds dans l' arbre"
+  tree_branch_size: "Nombre de noeuds dans la branche"
   # views
   ctrl_view: Vue
   # volumes

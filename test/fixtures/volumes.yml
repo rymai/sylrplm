@@ -1,13 +1,13 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  name: MyString
+volume_one:
+  name: vol1
   description: MyText
   directory: MyString
-  protocole: MyString
+  protocol: file_system
 
-two:
-  name: MyString
+volume_two:
+  name: vol2
   description: MyText
   directory: MyString
-  protocole: MyString
+  protocol: file_system

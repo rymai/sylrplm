@@ -16,6 +16,19 @@
 	<%= f.text_field :answer %>
 	<%end%>
 	<br/>
-	<%= h_input_text(f ,:domain) %>
-	<br />
+	<%= hidden_field_tag "question[asker_id]" , @faq.asker_id %>
+	<%= f.label t(:label_asker) %>
+	<%= text_field_tag :asker, @faq.asker.login, :readonly => true %>
+	<br/>
+	<%= f.label t(:label_responder) %>
+	<% unless @faq.responder.nil? %>
+	<%= hidden_field_tag "question[responder_id]", @faq.responder_id %>
+	<%= text_field_tag :responder, @faq.responder.login, :readonly => true  %>
+	<% else %>....
+	<%end%>
+	<br/>
+	<br/>
+	<%= f.label t(:label_domain) %>
+	<%= f.text_field :domain %>
+	<br/>
 </fieldset>

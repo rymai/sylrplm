@@ -65,7 +65,7 @@ class CustomersController < ApplicationController
 	# POST /customers
 	# POST /customers.xml
 	def create
-		@customer = Customer.new(params[:customer].merge(user: @current_user))
+		@customer = Customer.new(params[:customer])
 		@types    = Typesobject.get_types("customer")
 		@status   = Statusobject.find_for(@customer)
 		respond_to do |format|

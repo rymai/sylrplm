@@ -154,6 +154,9 @@ en:
   # users
   ctrl_user: User
   password_needed: Password is mandatory
+  # tree
+  tree_size: "Tree nodes"
+  tree_branch_size: "Branch nodes"
   # views
   ctrl_view: View
   # volumes

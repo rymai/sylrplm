@@ -74,9 +74,7 @@ class Document < ActiveRecord::Base
   #def after_find
   #puts "Document:after_find: ident="+ident+" type="+model_name+"."+typesobject.name+" proj="+projowner.ident+" group="+group.name
   #end
-  def self.create_new(document, user)
-    raise Exception.new "Don't use this method!"
-  end
+
 
   def self.get_conditions(filters)
     filter = filters.gsub("*", "%")
