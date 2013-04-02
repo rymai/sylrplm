@@ -46,6 +46,14 @@ Typesobject_258446918:
   fields: 
   description: Projet secret
   domain: admin
+  
+Typesobject_258446919: 
+  id: "258446919"
+  forobject: project_typeaccess
+  name: public
+  fields: 
+  description: Projet public
+  domain: admin
 
 Typesobject_291198241: 
   id: "291198241"
