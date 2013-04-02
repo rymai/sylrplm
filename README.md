@@ -1,4 +1,4 @@
-# SylRPLM : Product Life Management
+# SylRPLM : Product Life Management [![Code Climate](https://codeclimate.com/github/sylvani/sylrplm.png)](https://codeclimate.com/github/sylvani/sylrplm)
 
 ## Pré-requis
 
