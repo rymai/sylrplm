@@ -4,6 +4,8 @@
 	</legend>
 	<%= hidden_field_tag "datafile[volume_id]" , @datafile.volume.id %>
 	<%= hidden_field_tag :fonct , fonct %>
+	<%= hidden_field_tag "datafile[group_id]" , current_user.group_id %>
+	<%= hidden_field_tag "datafile[projowner_id]" , current_user.project_id %>
 
 	<%= f.label t(:label_ident) %>
 	<%= f.text_field :ident %>
@@ -40,9 +42,9 @@
 	<%= f.label t(:label_responsible) %>
 	<%= text_field_tag :owner, @datafile.owner.login,  :disabled => true %>
 	<br/>
-	
+
 	<%= hidden_field_tag "datafile[owner_id]", @datafile.owner.id %>
-	
+
 	<%= h_type_values(@datafile, fonct) %>
 	<%= h_input_text(f ,:domain) %>
 	<br />

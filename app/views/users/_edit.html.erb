@@ -25,7 +25,6 @@
 	<br/>
 	<% end %>
 	<% end %>
-
 	<%= form.label t(:label_email) %>
 	<%= form.text_field :email, :size => 40 %>
 	<br/>
@@ -50,12 +49,16 @@
 	<%= form.label t(:label_time_zone) %>
 	<%= form.select(:time_zone, options_for_select(User.time_zones, @the_user.time_zone), :include_blank => true) %>
 	<br/>
+	<%= form.label t(:label_last_revision) %>
+	<%= check_box(:user,:last_revision,{:checked => (@the_user.last_revision==true ? "checked" : "false")} ) %>
+	<br/>
+	<br/>
+	<%= form.label t(:label_check_automatic) %>
+	<%= check_box(:user,:check_automatic,{:checked => (@the_user.check_automatic==true ? "checked" : "false")}) %>
+	<br/>
+	<br/>
 	<%= form.label t(:label_show_mail) %>
-	<% if @the_user.show_mail==true %>
-	<%= check_box(:user,:show_mail,{:checked=>"checked"}) %>
-	<%else%>
-	<%= check_box(:user,:show_mail) %>
-	<%end%>
+	<%= check_box(:user,:show_mail,{:checked => (@the_user.show_mail==true ? "checked" : "false")}) %>
 	<br/>
 	<% if fonct != "account_edit"%> <label for="user_roles"> <%= t(:label_roles) %> </label>
 	<%= select_inout(form, @the_user, @roles, :title) %>
@@ -71,3 +74,4 @@
 	<br />
 	<% end %>
 </fieldset>
+

@@ -188,19 +188,11 @@ class DocumentsController < ApplicationController
     fname= "#{self.class.name}.#{__method__}"
     LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
-    st=@document.check_out(params[:check],@current_user)
-    if st != "already_checkout"
-      if st != "no_reason"
-        if st == "ok"
-          flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:out_reason])
-        else
-          flash[:notice] = t(:ctrl_object_notcheckout, :typeobj => t(:ctrl_document), :ident => @document.ident)
-        end
-      else
-        flash[:notice] = t(:ctrl_object_give_reason)
-      end
+    chk = @document.check_out(params[:check],@current_user)
+   	unless chk.nil?
+      flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:out_reason])
     else
-      flash[:notice] = t(:ctrl_object_already_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
+      flash[:notice] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
     end
     respond_to do |format|
       format.xml  { head :ok }
@@ -212,22 +204,14 @@ class DocumentsController < ApplicationController
     fname= "#{self.class.name}.#{__method__}"
     LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
-    st = @document.check_in(params[:check], current_user)
+    chk = @document.check_in(params[:check], current_user)
     respond_to do |format|
-      if st != "no_reason"
-        if st != "notyet_checkout"
-          if st == "ok"
-            update_accessor(@document)
-            @document.update_attributes(params[:document])
-            flash[:notice] = t(:ctrl_object_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:in_reason])
-          else
-            flash[:notice] = t(:ctrl_object_not_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident)
-          end
-        else
-          flash[:notice] = t(:ctrl_object_notyet_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
-        end
+      unless chk.nil?
+        update_accessor(@document)
+        @document.update_attributes(params[:document])
+        flash[:notice] = t(:ctrl_object_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:in_reason])
       else
-        flash[:notice] = t(:ctrl_object_give_reason)
+        flash[:notice] = t(:ctrl_object_not_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident)
       end
       format.xml  { head :ok }
       format.html { redirect_to(@document) }
@@ -238,21 +222,12 @@ class DocumentsController < ApplicationController
     fname= "#{self.class.name}.#{__method__}"
     LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
-    st = @document.check_free(params[:check], current_user)
-
+    chk = @document.check_free(params[:check], current_user)
     respond_to do |format|
-      if st != "no_reason"
-        if st != "notyet_checkout"
-          if st == "ok"
-            flash[:notice] = t(:ctrl_object_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:in_reason])
-          else
-            flash[:notice] = t(:ctrl_object_not_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident)
-          end
-        else
-          flash[:notice] = t(:ctrl_object_give_reason)
-        end
+    	unless chk.nil?
+      	flash[:notice] = t(:ctrl_object_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:in_reason])
       else
-        flash[:notice] = t(:ctrl_object_notyet_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
+        flash[:notice] = t(:ctrl_object_not_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident)
       end
       format.xml  { head :ok }
       format.html { redirect_to(@document) }
@@ -260,62 +235,83 @@ class DocumentsController < ApplicationController
   end
 
   # preparation du datafile a associer au document
+  #
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
     LOG.debug (fname){"params=#{params.inspect}"}
-    @object = Document.find(params[:id])
-		@types  = Typesobject.find_for("datafile")
-		respond_to do |format|
-			if check = Check.get_checkout(@object)
-				flash[:notice] = t(:ctrl_object_already_checkout, :typeobj => t(:ctrl_document), :ident => @object.ident, :reason => check.out_reason)
-			else
-				check = Check.new(object_to_check: @object, user: current_user, out_reason: t("ctrl_checkout_auto"))
+    @document = Document.find(params[:id])
+		@types  = Typesobject.find_for("datafile")	
+		check = Check.get_checkout(@document)
+		unless check.nil?
+			flash[:notice] = t(:ctrl_object_already_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => check.out_reason)
+		else
+			if current_user.check_automatic			
+				check = Check.new(object_to_check: @document, user: current_user, out_reason: t(:ctrl_checkout_auto))
+				
 				if check.save
-				  LOG.debug (fname){"check saved=#{check.inspect}"}
-					flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @object.ident, :reason => check.out_reason)
+				  #LOG.debug (fname){"check saved=#{check.inspect}"}
+					flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => check.out_reason)
 				else
-					flash[:notice] = t(:ctrl_object_notcheckout, :typeobj => t(:ctrl_document), :ident => @object.ident)
+					LOG.debug (fname){"check errors=#{check.errors.inspect}"}
+					flash[:notice] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
 					check = nil
 				end
+			else
+				check = nil
+				flash[:error] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
 			end
-			unless check.nil?
-				@datafile = Datafile.new(user: current_user)
-				@datafile.document = @object
-				format.html { render :action => :new_datafile, :id => @object.id }
+		end
+		respond_to do |format|
+			@datafile = Datafile.new(user: current_user)
+			unless check.nil?	
+				LOG.debug (fname){"document=#{@document.inspect}"}
+				@datafile.document = @document
+				flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => check.out_reason)
+				format.html { render :action => :new_datafile, :id => @document.id }
+				format.xml  { head :ok }
+			else
+				flash[:notice] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
+				format.html { redirect_to(@document) }
 				format.xml  { head :ok }
 			end
 		end
 	end
 
-
-	# creation du datafile et association au document
+	#
+	# creation du datafile et association au document et liberation si besoin
+	#
 	def add_datafile
 		fname= "#{self.class.name}.#{__method__}"
     LOG.debug (fname){"params=#{params.inspect}"}
-    @object = Document.find(params[:id])
-		begin
-			st = @object.add_datafile(params[:datafile], @current_user)
-			respond_to do |format|
-				flash[:notice] = ""
-				if st != "ok"
-					flash[:notice] += t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
-					puts "document_controller.add_datafile:id=#{@object.id}"
-					@types = Typesobject.find_for("datafile")
-					@datafile = Datafile.new(user: current_user)
-					format.html { render  :action => :new_datafile, :id => @object.id   }
+    @document = Document.find(params[:id])
+    #LOG.debug (fname){"document=#{@document.inspect}"}
+		@datafile = @document.datafiles.build(params[:datafile])
+		#LOG.debug (fname){"datafile=#{@datafile.inspect}"}
+			respond_to do |format|				
+				if @document.save
+					if current_user.check_automatic	
+						check = Check.get_checkout(@document)
+						unless check.nil?
+							check = check.checkIn({:in_reason => t("ctrl_checkin_auto")}, current_user)	
+							#LOG.debug (fname){"check errors==#{check.errors.inspect}"}
+							if check.save
+					  		#LOG.debug (fname){"check saved=#{check.inspect}"}
+								flash[:notice] = t(:ctrl_object_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => check.in_reason)
+							else
+								flash[:notice] = t(:ctrl_object_not_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident)
+								check = nil
+							end
+						else
+							flash[:notice] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
+						end
+					end
+					format.html { redirect_to(@document) }
 				else
-					format.html { redirect_to(@object) }
+					flash[:alert] = t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
+					@types = Typesobject.find_for("datafile")
+					format.html { render :action => :new_datafile, :id => @document.id   }
 				end
-				format.xml  { head :ok }
 			end
-		rescue Exception => e
-			flash[:notice] = "Error adding datafile: #{e}"
-			e.backtrace.each {|x| LOG.error (fname){x}}
-			respond_to do |format|
-				format.html { redirect_to(@object) }
-				format.xml  { head :ok }
-			end
-		end
 	end
 
 	def add_docs
@@ -338,10 +334,6 @@ class DocumentsController < ApplicationController
 		define_view
 		#puts __FILE__+"."+__method__.to_s+":"+params.inspect
 		@document  = Document.find(params[:id])
-		#@datafiles = @document.get_datafiles
-		#@parts     = @document.parts
-		#@projects  = @document.projects
-		#@customers = @document.customers
 		@relations = Relation.relations_for(@document)
     @tree         						= build_tree(@document, @myparams[:view_id])
 		@tree_up      						= build_tree_up(@document, @myparams[:view_id] )

@@ -33,13 +33,14 @@
 	</tr>
 	<% previous=nil
 	@documents[:recordset].each do |document| %>
+	<%= document.ident%>.<%= document.statusobject_id%>
 	<tr>
 		<td> <%= icone(document) %></td>
-		<td> <%= h_if_differ( (h_explorer document, :ident), (h_explorer previous, :ident) ) %> </td>
-		<td> <%= document.revision %> </td>
-		<td> <%= h_if_differ( (h_explorer document.typesobject, :name) , ((h_explorer previous.typesobject, :name) unless previous.nil?) ) unless document.typesobject.nil? %></td>
-		<td> <%= h_if_differ( document.designation , (previous.designation unless previous.nil?)) %> </td>
-		<td> <%= h_if_differ( (h_explorer document.statusobject, :name) , ((h_explorer previous.statusobject, :name) unless previous.nil?)) unless document.statusobject.nil?  %></td>
+		<td> <%= h_explorer document, :ident %> </td>
+		<td> <%= h document.revision %> </td>
+		<td> <%= h_explorer document.typesobject, :name %></td>
+		<td> <%= h document.designation %> </td>
+		<td> <%= h_explorer document.statusobject, :name  %></td>
 		<td> <%= h_explorer document.owner, :login %></td>
 		<td> <%= h_explorer document.group, :name %></td>
 		<td> <%= h_explorer document.projowner %>

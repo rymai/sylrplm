@@ -74,9 +74,9 @@ class Typesobject < ActiveRecord::Base
 		fname="Typesobject.find_for:"
 		ret = order_default.find_all_by_forobject(object)
 		type_generic=Typesobject.generic(object)
-		LOG.debug (fname){"type_generic=#{type_generic}"}
+		#LOG.debug (fname){"type_generic=#{type_generic}"}
 		ret.delete type_generic unless type_generic.nil?
-		LOG.debug (fname){"ret=#{ret}"}
+		#LOG.debug (fname){"ret=#{ret}"}
 		ret
 	end
 

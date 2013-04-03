@@ -11,28 +11,28 @@ user_id_101_group_id_1_domain_admin:
 user_group_101_101: 
   user_id: "101"
   group_id: "101"
-  domain: "custo_sicm" 
+  domain: "custo.sicm" 
 user_group_102_101: 
   user_id: "102"
   group_id: "101"
-  domain: "custo_sicm" 
+  domain: "custo.sicm" 
 user_group_103_101: 
   user_id: "103"
   group_id: "101"
-  domain: "custo_sicm" 
+  domain: "custo.sicm" 
 user_group_104_101: 
   user_id: "104"
   group_id: "101"
-  domain: "custo_sicm" 
+  domain: "custo.sicm" 
 user_group_105_101: 
   user_id: "105"
   group_id: "101"
-  domain: "custo_sicm" 
+  domain: "custo.sicm" 
 user_group_106_101: 
   user_id: "106"
   group_id: "101"
-  domain: "custo_sicm" 
+  domain: "custo.sicm" 
 user_group_107_101: 
   user_id: "107"
   group_id: "101"
-  domain: "custo_sicm"
+  domain: "custo.sicm"

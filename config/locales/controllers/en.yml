@@ -37,7 +37,7 @@ en:
   ctrl_object_not_existing: "Object '%{model}/%{id}' is unknown: %{error}"
   ctrl_nothing_to_paste: "No %{typeobj} to paste"
   # ne pas mettre de guillemet ici car pb creation tree
-  ctrl_subject_forum: "Forum on %{typeobj} %{ident}"
+  ctrl_subject_forum: "Discussion on %{typeobj} %{ident}"
   ctrl_object_explorer: "Explorer: %{typeobj}-%{ident}"
   ctrl_object_referencer: "Referencer: %{typeobj}-%{ident}"
   ctrl_init_to_do: Initialization to do
@@ -64,11 +64,12 @@ en:
   # documents
   ctrl_document: Document
   ctrl_checkout_auto: Automatic checkout
+  ctrl_checkin_auto: Automatic checkin
   # faq
   ctrl_faq: FAQ
   # forums
   # forum_items
-  ctrl_forum_item: Forum messag
+  ctrl_forum_item: Discussion messag
   # group
   ctrl_group: Group
   # group_definitions
@@ -91,10 +92,10 @@ en:
   ctrl_link_project_user: Relation project / user
   ctrl_link_part_part: Relation part / part
   ctrl_link_part_document: Relation part / document
-  ctrl_link_document_forum: Relation document / forum
-  ctrl_link_part_forum: Relation article / forum
-  ctrl_link_project_forum: Relation projet / forum
-  ctrl_link_customer_forum: Relation client / forum
+  ctrl_link_document_forum: Relation document / discussion
+  ctrl_link_part_forum: Relation article / discussion
+  ctrl_link_project_forum: Relation projet / discussion
+  ctrl_link_customer_forum: Relation client / discussion
   ctrl_link_document_datafile: Relation document / file
   # info
   info_object_not_found: SYLRPLM_ERROR-%{context}-%{typeobj} not found - %{id}
@@ -111,7 +112,7 @@ en:
   ctrl_notify: "%{nb_total} Notifications send to %{nb_users} users : %{notifications} "
   # parts
   ctrl_part: Article
-  ctrl_forum: Forum
+  ctrl_forum: Discussion
   # process
   ctrl_process: Process
   ctrl_history_entry: Task

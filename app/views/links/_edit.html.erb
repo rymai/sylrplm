@@ -15,7 +15,7 @@
 </fieldset>
 <fieldset>
 	<legend>
-		<%= t(:legend_link_values) %>
+		<%= t(:legend_link_values, :type => @link.relation.typesobject.name, :name => @link.relation.name) %>
 	</legend>
 	<%= render(
 	:partial => "shared/form_json",
@@ -42,7 +42,7 @@
 	<%= form.label t(:label_child) %>
 	<%= text_field_tag :child, @link.child.to_s , :readonly=>:true , :size => 50  %>
 </fieldset>
-<% unless @root.nil? %>
+<% unless @root.nil? || !@root.respond_to?(:prd_effectivities) || @root.prd_effectivities.nil? %>
 <fieldset>
 	<legend>
 		<%= t(:legend_link_effectivities) %>

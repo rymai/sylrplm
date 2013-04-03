@@ -63,56 +63,6 @@ module Models
 				"parent_id in(select id from forum_items where message LIKE :v_filter)"
 			end
 
-			def find_paginate(params)
-				#puts self.model_name+"."+__method__.to_s+":debut:"+params.inspect
-				user=params[:user]
-				filter_access={}
-				filter_access[:values]={}
-				mdl=eval self.model_name
-				#puts self.model_name+"."+__method__.to_s+":"+self.column_names.inspect
-				if column_names.include?(:projowner_id)
-					acc_public = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "public")
-					acc_confidential = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "confidential")
-					filter_access[:qry] = ":v_acc_public_id="+qry_projowner_typeaccess+" or :v_acc_confidential_id="+qry_projowner_typeaccess
-					filter_access[:values][:v_acc_public_id] = acc_public.id
-					filter_access[:values][:v_acc_confidential_id] = acc_confidential.id
-				else
-					filter_access[:qry] = ""
-					filter_access[:values][:v_acc_public_id] = nil
-					filter_access[:values][:v_acc_confidential_id] =nil
-				end
-				#puts self.model_name+"."+__method__.to_s+":"+filter_access[:qry].length.to_s
-				unless user.nil? || !column_names.include?(:group_id)
-					filter_access[:qry] = " or " if filter_access[:qry].length > 0
-					filter_access[:qry] += " group_id = :v_group_id"
-					filter_access[:values][:v_group_id] = user.group.id
-				end
-				#puts self.model_name+".find_paginate:filter_access="+filter_access.inspect
-				unless params[:query].nil? || params[:query]==""
-					cond = get_conditions(params[:query])
-					puts self.model_name+".find_paginate:cond="+cond.inspect
-					unless cond.nil?
-						values=filter_access[:values].merge(cond[:values])
-					else
-						values=filter_access[:values]
-					end
-					if filter_access[:qry] != ""
-						conditions = [filter_access[:qry]+" and ("+cond[:qry] +")", values]
-					else
-						conditions = [cond[:qry], values]
-					end
-				else
-					conditions = [filter_access[:qry], filter_access[:values]]
-				end
-				#puts self.model_name+".find_paginate:conditions="+conditions.inspect
-				recordset=self.paginate(:page => params[:page],
-				:conditions => conditions,
-				:order => params[:sort],
-				:per_page => params[:nb_items])
-				#puts self.model_name+"."+__method__.to_s+":fin"
-				{:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
-			end
-
 			def truncate_words(text, len = 5, end_string = " ...")
 				return if text == nil
 				words = text.split()
@@ -127,6 +77,88 @@ module Models
 				objs.each { |o| o.destroy }
 			end
 
+			#
+			# construction de la requete de recherche simple pour toutes les vues index
+			#
+			def find_paginate(params)
+				#puts self.model_name+"."+__method__.to_s+":debut:"+params.inspect
+				#puts self.model_name+"."+__method__.to_s+":debut:"+self.class.name
+				user = params[:user]
+				#puts self.model_name+"."+__method__.to_s+":user="+user.inspect
+				filter_access = {}
+				filter_access[:qry] = ""
+				filter_access[:values] = {}
+				mdl = eval self.model_name
+				if column_names.include?("projowner_id")
+					acc_public = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "public")
+					acc_confidential = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "confidential")
+					filter_access[:qry] = ":v_acc_public_id="+qry_projowner_typeaccess+" or :v_acc_confidential_id="+qry_projowner_typeaccess
+					filter_access[:values][:v_acc_public_id] = acc_public.id
+					filter_access[:values][:v_acc_confidential_id] = acc_confidential.id
+				else
+					filter_access[:values][:v_acc_public_id] = nil
+					filter_access[:values][:v_acc_confidential_id] =nil
+				end
+				#puts "#{self.model_name}.#{__method__}:qry=#{filter_access[:qry]}:#{filter_access[:qry].length.to_s}"
+				unless user.nil? || !column_names.include?("group_id")
+					filter_access[:qry] += " or " unless filter_access[:qry] == ""
+					filter_access[:qry] += " group_id = :v_group_id"
+					filter_access[:values][:v_group_id] = user.group.id
+				end
+				#puts self.model_name+".find_paginate:filter_access="+filter_access.inspect
+				unless params[:query].nil? || params[:query]==""
+					cond = get_conditions(params[:query])
+					#puts self.model_name+".find_paginate:cond="+cond.inspect
+					unless cond.nil?
+						values=filter_access[:values].merge(cond[:values])
+					else
+						values=filter_access[:values]
+					end
+					if filter_access[:qry] != ""
+						conditions = [filter_access[:qry]+" and ("+cond[:qry] +")", values]
+					else
+						conditions = [cond[:qry], values]
+					end
+				else
+					conditions = [filter_access[:qry], filter_access[:values]]
+				end
+				#puts self.model_name+".find_paginate:conditions="+conditions.inspect
+				#puts self.model_name+".find_paginate:page="+params[:page].to_s
+				last_rev_only = false
+				if column_names.include?("revision")
+					unless user.nil?
+					last_rev_only = user.last_revision
+					end
+				end
+				if user.is_admin?
+					# le user admin voit tout
+					recordset = self.paginate(:page => params[:page],
+						:conditions => nil,
+						:order => params[:sort],
+						:per_page => params[:nb_items])
+					else
+					if last_rev_only
+						# seulement la derniere revision
+						select = "distinct on (ident) *"
+						order="ident asc, revision desc"
+						order+=","+params[:sort] unless params[:sort].nil?
+						recordset = self.paginate(:page => params[:page],
+						:conditions => conditions,
+						:order => order,
+						:select => select,
+						:per_page => params[:nb_items])
+					else
+					# toutes les revisions
+						recordset = self.paginate(:page => params[:page],
+						:conditions => conditions,
+						:order => params[:sort],
+						:per_page => params[:nb_items])
+					end
+				end
+				puts self.model_name+"."+__method__.to_s+":"+recordset.inspect
+				{:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
+			end
+
 		end
 
 		#
@@ -138,9 +170,9 @@ module Models
 			fname="#{self.class.name}.#{__method__}"
 			ret = false
 			unless (self.statusobject.nil? || ::Statusobject.get_last(self.model_name).nil?)
-			ret = (self.statusobject.rank == ::Statusobject.get_last(self.model_name).rank)
+				ret = (self.statusobject.rank == ::Statusobject.get_last(self.model_name).rank)
+				LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self.model_name).rank}=#{ret}"}
 			end
-			###LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self.model_name).rank}=#{ret}"}
 			ret
 		end
 

@@ -8,3 +8,18 @@
 	</tr>
 </table>
 <%end%>
+
+<% form_for :session, :url => {:controller => :sessions , :action => :login}  do |form| %>
+<%= hidden_field_tag :user_id , @current_user.id %>
+<fieldset>
+	<legend>
+		<%= t(:legend_context) %>
+	</legend>
+	<%= render(:partial => "shared/session_context",:locals => { :form => form}) %>
+	<table class='menu_bas'>
+		<tr>
+			<td> <%= submit_tag t(:submit_login) %> </td>
+		</tr>
+	</table>
+</fieldset>
+<% end %> 

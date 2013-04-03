@@ -48,26 +48,26 @@ ActiveRecord::Schema.define(:version => 0) do
 	add_index "ar_workitems", ["wfrevision"], :name => "index_ar_workitems_on_wfrevision"
 
 	create_table "checks", :force => true do |t|
-		t.string   "checkobject"
+		t.string   "checkobject_plmtype"
 		t.integer  "checkobject_id"
 		t.integer  "status"
-		t.string   "in_reason"
-		t.date     "in_date"
+		t.boolean  "automatic"
 		t.string   "out_reason"
-		t.date     " out_date"
-		t.string   "local_dir"
+		t.integer  "out_user_id"
+		t.integer  "out_group_id"
+		t.date     "out_date"
+		t.string   "in_reason"
+		t.integer  "in_user_id"
+		t.integer  "in_group_id"
+		t.date     "in_date"
+		t.integer  "projowner_id"
 		t.datetime "created_at"
 		t.datetime "updated_at"
-		t.integer  "in_user_id"
-		t.integer  "out_user_id"
-		t.integer  "in_group_id"
-		t.integer  "out_group_id"
-		t.integer  "projowner_id"
 	end
 
 	add_index "checks", ["in_group_id"], :name => "index_checks_on_in_group_id"
 	add_index "checks", ["in_user_id"], :name => "index_checks_on_in_user_id"
-	add_index "checks", ["checkobject", "checkobject_id"], :name => "index_checks_on_object_and_object_id"
+	add_index "checks", ["checkobject_plmtype", "checkobject_id"], :name => "index_checks_on_object_and_object_id"
 	add_index "checks", ["out_group_id"], :name => "index_checks_on_out_group_id"
 	add_index "checks", ["out_user_id"], :name => "index_checks_on_out_user_id"
 	add_index "checks", ["projowner_id"], :name => "index_checks_on_projowner_id"
@@ -139,7 +139,6 @@ ActiveRecord::Schema.define(:version => 0) do
 	end
 
 	add_index "definitions_roles", ["definition_id", "role_id" ], :name => "index_definitions_roles_on_role_id_and_definition_id", :unique => true
-
 
 	create_table "documents", :force => true do |t|
 		t.integer  "owner_id"
@@ -481,7 +480,6 @@ ActiveRecord::Schema.define(:version => 0) do
 
 	add_index "typesobjects", ["forobject", "name"], :name => "index_typesobjects_on_object_and_name", :unique => true
 
-
 	create_table "users", :force => true do |t|
 		t.string   "email"
 		t.string   "login"
@@ -496,6 +494,8 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "volume_id"
 		t.integer  "nb_items"
 		t.integer  "notification"
+		t.boolean  "last_revision"
+		t.boolean  "check_automatic"
 		t.boolean  "show_mail"
 		t.datetime "created_at"
 		t.datetime "updated_at"

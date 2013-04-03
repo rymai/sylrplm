@@ -86,16 +86,15 @@ module Models
 			if(self.frozen?)
 				#LOG.debug (fname){"#{self.ident} frozen"}
 				# recherche si c'est la derniere revision
-				rev_cur=self.revision
-				last_rev=last_revision
+				rev_cur = self.revision
+				last_rev = last_revision
 				if revisable?
-					#LOG.debug (fname){"#{self.ident} frozen revisable"}
 					admin = User.find_by_name(::SYLRPLM::ROLE_ADMIN)
 					obj = self.clone
-					LOG.debug (fname){"#{self.ident} frozen revisable 2 :#{obj}"}
+					obj.set_default_values_without_next_seq
 					obj.statusobject = ::Statusobject.get_first(self.model_name)
 					obj.revision = rev_cur.next
-					obj.set_default_values_with_next_seq
+					LOG.debug (fname){"#{self.ident} frozen revisable:#{obj.inspect}"}
 					if self.has_attribute?(:filename)
 						if(self.filename!=nil)
 						content = self.read_file

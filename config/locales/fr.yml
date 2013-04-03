@@ -224,4 +224,4 @@ fr:
         valid_relation_cardin_use_max: "doit être plus grand que le mini ou -1 (infini)"
         # sylrplm
         status_not_valid: "Le statut n'est pas valide"
-        
+        exception_validity: "Exception durant la validation de %{model}:<br/>%{exception}"

@@ -21,11 +21,10 @@
 		<th> <%= t("label_in_user") %> </th>
 		<th> <%= t("label_in_group") %> </th>
 		<th> <%= t("label_projowner") %> </th>
-		<th> <%= t("label_local_dir") %> </th>
 	</tr>
 	<% @checks[:recordset].each do |check| %>
 	<tr>
-		<td> <%= h check.checkobject %> </td>
+		<td> <%= h check.checkobject_plmtype %> </td>
 		<td> <%= h check.checkobject_id %> </td>
 		<td> <%= h check.status %> </td>
 		<td> <%= h check.out_reason %> </td>
@@ -41,7 +40,6 @@
 		<td></td>
 		<td></td>
 		<%end %> <td> <%= h check.projowner.ident %> </td>
-		<td> <%= h check.local_dir %> </td>
 		<td> <%= link_to h_img_show.to_s, check %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_check_path(check) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, check, :confirm => t("msg_confirm"), :method => :delete %> </td>

@@ -37,7 +37,7 @@ fr:
   ctrl_object_not_existing: "L' objet '%{model}/%{id}' est inconnu: %{error}"
   ctrl_nothing_to_paste: "Pas de %{typeobj} à coller"
   # ne pas mettre de guillemet ici car pb creation tree
-  ctrl_subject_forum: "Forum sur %{typeobj} %{ident}"
+  ctrl_subject_forum: "Discussion sur %{typeobj} %{ident}"
   ctrl_object_explorer: "Explorateur de %{typeobj}-%{ident}"
   ctrl_object_referencer: "Référenceur de %{typeobj}-%{ident}"
   ctrl_init_to_do: Initialisation à effectuer
@@ -64,11 +64,12 @@ fr:
   # documents
   ctrl_document: Document
   ctrl_checkout_auto: Reservation automatique
+  ctrl_checkin_auto: Libération automatique
   # faq
   ctrl_faq: Question
   # forums
   # forum_items
-  ctrl_forum_item: Message forum
+  ctrl_forum_item: Message discussion
   # group
   ctrl_group: Groupe
   # group_definitions
@@ -91,10 +92,10 @@ fr:
   ctrl_link_project_user: Relation projet / utilisateur
   ctrl_link_part_part: Relation article / article
   ctrl_link_part_document: Relation article / document
-  ctrl_link_document_forum: Relation document / forum
-  ctrl_link_part_forum: Relation article / forum
-  ctrl_link_project_forum: Relation projet / forum
-  ctrl_link_customer_forum: Relation client / forum
+  ctrl_link_document_forum: Relation document / discussion
+  ctrl_link_part_forum: Relation article / discussion
+  ctrl_link_project_forum: Relation projet / discussion
+  ctrl_link_customer_forum: Relation client / discussion
   ctrl_link_document_datafile: Relation document / fichier
   # info
   info_object_not_found: SYLRPLM_ERROR-%{context}-%{typeobj} non trouvé(e) - %{id}
@@ -111,7 +112,7 @@ fr:
   ctrl_notify: "%{nb_total} Notifications effectuées à %{nb_users} utilisateurs : %{notifications} "
   # parts
   ctrl_part: Article
-  ctrl_forum: Forum
+  ctrl_forum: Discussion
   # process
   ctrl_process: Processus métier
   ctrl_history_entry: Tâche

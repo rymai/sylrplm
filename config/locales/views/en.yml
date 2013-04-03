@@ -35,8 +35,8 @@ en:
   new_part: "New Part"
   new_project: "New project"
   new_question: "New FAQ"
-  new_forum: "New forum"
-  new_forum_item: "New forum message"
+  new_forum: "New discussion"
+  new_forum_item: "New discussion message"
   new_access: "New access"
   new_check: "New check"
   new_user: "New user"
@@ -54,7 +54,7 @@ en:
   paste_part: Paste parts
   paste_documents: Paste documents
   paste_projects: Paste projects
-  add_forum: Add forum
+  add_forum: Add discussion
   freeze: Freeze
   edit: Edit
   update: Update
@@ -90,8 +90,8 @@ en:
   mnu_questions: Questions
   mnu_news: News
   mnu_contact: Contact
-  mnu_forums: Forums
-  mnu_forum_items: Message
+  mnu_forums: Discussions
+  mnu_forum_items: Messages
   mnu_users: Users
   mnu_types_objects: Objects types
   mnu_status_objects: Objects status
@@ -130,10 +130,10 @@ en:
   label_part_user: Users
   label_project_user: Users
   label_customer_user: Users
-  label_document_forum: Forums
-  label_part_forum: Forums
-  label_project_forum: Forums
-  label_customer_forum: Forums
+  label_document_forum: Discussions
+  label_part_forum: Discussions
+  label_project_forum: Discussions
+  label_customer_forum: Discussions
   label_view: View
   label_variant: Variant
   label_all_variants: All variants
@@ -209,10 +209,10 @@ en:
   button_add: Add
   button_remove: Remove
   label_fields: Attributs
-  label_objects: Objets en relation
-  button_swap: Echanger
-  button_reset: Défaut
-  button_undo: Annuler
+  label_objects: Objets in relation
+  button_swap: Raw data
+  button_reset: Défault
+  button_undo: Cancel
   label_definitions_attributs: Attributs
   # documents
   legend_document: Enter document details
@@ -238,26 +238,26 @@ en:
   workitems_assoc: Currents workitems
   history_assoc: Terminates workitems
   # forums
-  legend_forum: Enter forum details
-  forum_edit: Forum edit
-  forum_list: Forums list
-  forum_show: Forum detail
-  forum_new: New forum
-  part_new_forum: New forum on this part
-  label_subject: Forum subject
-  label_message: First forum Message
+  legend_forum: Enter discussions details
+  forum_edit: Discussions edit
+  forum_list: Discussions list
+  forum_show: Discussions detail
+  forum_new: New Discussion
+  part_new_forum: New discussion on this part
+  label_subject: Discussion subject
+  label_message: First Discussion Message
   forum_items: Messages
   forum_follow: follow
   forum_item_response: Response to
   # forum_items
-  legend_forum_item: Enter forum_item details
-  forum_item_edit: Edition messag forum
-  forum_item_list: List messag forum
-  forum_item_show: Detail messag forum
-  forum_item_new: New messag forum
+  legend_forum_item: Enter messag details
+  forum_item_edit: Edition messag discussion
+  forum_item_list: List messag discussions
+  forum_item_show: Detail messag discussions
+  forum_item_new: New messag discussion
   label_parent: Parent
   label_author: Sender
-  label_forum: Forum
+  label_forum: Discussion
   # groups
   legend_group: Enter group details
   group_edit: Group editing
@@ -280,7 +280,7 @@ en:
   link_reset: Links Reset !!!
   link_edit_in_tree: Edit instance link
   legend_link: Relation
-  legend_link_values: Attributs
+  legend_link_values: Attributs of link with type '%{type}' and name '%{name}'
   legend_link_father: Father
   legend_link_child: Child
   legend_link_effectivities: Effectivities
@@ -462,7 +462,7 @@ en:
   msg_define_status_part: Please, define parts status
   msg_define_status_project: Please, define projects status
   msg_define_status_customer: Please, define customers status
-  msg_define_status_forum:  Please, define forums status
+  msg_define_status_forum:  Please, define discussions status
   # tools
   title_tools: Tools
   legend_preferences: Preferences
@@ -479,7 +479,7 @@ en:
   msg_define_types_part: Please, define parts types
   msg_define_types_project: Please, define projects types
   msg_define_types_customer: Please, define customers types
-  msg_define_types_forum: Please, define forums types
+  msg_define_types_forum: Please, define discussions types
   # users
   legend_user: Enter user details
   user_edit: Edit user - %{login}
@@ -517,6 +517,8 @@ en:
   label_user_project_ids_in: Affected
   label_user_project_ids_out: Unaffected
   label_projects: Projects
+  label last revision: List only last revision
+  label_check_automatic: Operate automatic check
   #views
   legend_view: Enter view details
   views_list: Listing of views
@@ -544,7 +546,7 @@ en:
   bom: "BOM"
   research: "Research"
   production: "Production"
-  forum: Forum
+  forum: Discussion
   # workitems
   label_relation: Relation
   label_wfid: Processus

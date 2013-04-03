@@ -80,7 +80,7 @@ class Document < ActiveRecord::Base
     filter = filters.gsub("*", "%")
     ret = {}
     unless filter.nil?
-      ret[:qry] = "ident LIKE :v_filter or revision LIKE :v_filter or designation LIKE :v_filter or date LIKE :v_filter "
+      ret[:qry] = "ident LIKE :v_filter or revision LIKE :v_filter or designation LIKE :v_filter or to_char(date, 'YYYY/MM/DD') LIKE :v_filter "
       ret[:values] = { :v_filter => filter }
     end
     ret
@@ -139,7 +139,7 @@ class Document < ActiveRecord::Base
 		chk = get_check_out
 		ret=false
 		unless chk.nil?
-			ret=user==chk.out_user
+			ret=(user==chk.out_user)
 		end
 		ret
 	end
@@ -147,59 +147,43 @@ class Document < ActiveRecord::Base
   def check_out(params, user)
     fname= "#{self.class.name}.#{__method__}"
     LOG.info (fname){"params=#{params}, user=#{user.inspect}"} 
-    ret = ""
-    if Check.get_checkout(self).nil?
-      unless params[:out_reason].blank?
-        args={}
-        args[:out_reason] = params[:out_reason]
-        args[:checkobject] = self.model_name
-        args[:checkobject_id] = self.id
-        args[:user] = user
-        
-       ## if Check.create(params.merge(object_to_check: self, user: user))
-        if Check.create(args)
-          ret = "ok"
-        else
-          ret = "notcheckout"
-        end
-      else
-        ret = "no_reason"
-      end
-    else
-      ret = "already_checkout"
+    ret = Check.get_checkout(self)
+    if ret.nil?
+      args = {}
+      args[:out_reason] = params[:out_reason]
+      args[:checkobject_plmtype] = self.model_name
+      args[:checkobject_id] = self.id
+      args[:user] = user
+      ret = Check.create(args)
     end
-    LOG.info (fname){"ret=#{ret}"} 
+    ret = nil if ret.errors.size>0
     ret
   end
 
-  def check_in(params,user)
-    if check = Check.get_checkout(self)
-      check.update_accessor(user)
-      check.checkIn(params, user)
-      if check.save
+  def check_in(params, user)
+    ret = Check.get_checkout(self)
+    unless ret.nil?
+      ret.update_accessor(user)
+      ret.checkIn(params, user)
+      if ret.save
         self.update_attributes(params[:document])
-        "ok"
-      else
-        check.errors[:in_reason].present? ? "no_reason" : "notcheckin"
       end
-    else
-      "notyet_checkout"
     end
+    ret = nil if ret.errors.size>0
+    ret
   end
 
   def check_free(params,user)
-    if check = Check.get_checkout(self)
-      check.update_accessor(user)
-      check.checkFree(params,user)
-      if check.save
+    ret = Check.get_checkout(self)
+    unless ret.nil?
+    	ret.update_accessor(user)
+      ret.checkFree(params,user)
+      if ret.save
         self.update_attributes(params[:document])
-        "ok"
-      else
-        check.errors[:in_reason].present? ? "no_reason" : "notcheckfree"
       end
-    else
-      "notyet_checkout"
     end
+    ret = nil if ret.errors.size>0
+    ret
   end
 
   def checked?
@@ -209,7 +193,10 @@ class Document < ActiveRecord::Base
   def add_datafile(params,user)
     fname= "#{self.class.name}.#{__method__}"
     LOG.info (fname){"params=#{params}, user=#{user.inspect}"} 
-    #datafile = Datafile.new(params.merge(user: user))
+    LOG.info (fname){"Don't use this method but: document.datafiles.build(params[:datafile])"}
+  end
+  
+  def add_datafile_old(params,user)
     datafile = Datafile.new(params)
     datafile.document = self
     if datafile.save
@@ -229,7 +216,6 @@ class Document < ActiveRecord::Base
     ret = []
     ret = self.datafiles
     ret = { :recordset => ret, :total => ret.length }
-
     ret
   end
   

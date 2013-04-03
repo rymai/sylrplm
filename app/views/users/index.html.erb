@@ -21,6 +21,8 @@
 		<th <%= sort_td_class_helper "role_id" %>><%= sort_link_helper t(:label_role), "role_id" %> </th>
 		<th <%= sort_td_class_helper "group_id" %>><%= sort_link_helper t(:label_group), "group_id" %> </th>
 		<th <%= sort_td_class_helper "project_id" %>><%= sort_link_helper t(:label_project), "project_id" %> </th>
+		<th <%= sort_td_class_helper "last_revision" %>><%= sort_link_helper t(:label_last_revision), "last_revision" %> </th>
+		<th <%= sort_td_class_helper "check_automatic" %>><%= sort_link_helper t(:label_check_automatic), "check_automatic" %> </th>
 		<th <%= sort_td_class_helper "mail" %>><%= sort_link_helper t(:label_email), "email" %> </th>
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %> </th>
 		<th><%= t(:label_groups) %> </th>
@@ -39,6 +41,8 @@
 		<td><%= h_explorer user.role unless user.role.nil? %></td>
 		<td><%= h_explorer user.group unless user.group.nil? %></td>
 		<td><%= h_explorer user.project unless user.project.nil? %></td>
+		<td> <%= user.last_revision %></td>
+		<td> <%= user.check_automatic %></td>
 		<td> <%= user.email %></td>
 		<td> <%= h_explorer user.typesobject, :name %></td>
 		<td><%= h_value_or_default(comma_links(user.groups, :name),t(:msg_tobedefine)) %></td>

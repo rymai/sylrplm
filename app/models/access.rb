@@ -67,7 +67,7 @@ class Access < ActiveRecord::Base
     #puts "#{__method__.to_s}:roles=#{ret[:cat_creators]}"
     ret[:cat_creators]-= ret[:cat_admins]
     ret[:cat_creators]-= ret[:cat_consultants]
-    puts "#{__method__.to_s}:#{ret.inspect}"
+    #puts "#{__method__.to_s}:#{ret.inspect}"
     ret
   end
 

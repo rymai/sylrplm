@@ -35,8 +35,8 @@ fr:
   new_part: "Nouvel article"
   new_project: "Nouveau projet"
   new_question: "Nouvelle question"
-  new_forum: "Nouveau forum"
-  new_forum_item: "Nouveau message forum"
+  new_forum: "Nouvelle discussion"
+  new_forum_item: "Nouveau message"
   new_access: "Nouvelle autorisation"
   new_check: "Nouvelle réservation"
   new_user: "Nouvel utilisateur"
@@ -54,7 +54,7 @@ fr:
   paste_parts: Coller articles
   paste_documents: Coller documents
   paste_projects: Coller projets
-  add_forum: Ajout forum
+  add_forum: Ajout discussion
   freeze: Gelé
   edit: Editer
   update: Mettre à jour
@@ -90,7 +90,7 @@ fr:
   mnu_questions: Questions
   mnu_news: Nouveautés
   mnu_contact: Contacts
-  mnu_forums: Forums
+  mnu_forums: Discussions
   mnu_forum_items: Messages
   mnu_users: Utilisateurs
   mnu_types_objects: Types objets
@@ -130,10 +130,10 @@ fr:
   label_part_user: Utilisateurs associés
   label_project_user: Utilisateurs associés
   label_customer_user: Utilisateurs associés
-  label_document_forum: Forums associés
-  label_part_forum: Forums associés
-  label_project_forum: Forums associés
-  label_customer_forum: Forums associés
+  label_document_forum: Discussions associées
+  label_part_forum: Discussions associées
+  label_project_forum: Discussions associées
+  label_customer_forum: Discussions associées
   label_view: Vue
   label_variant: Variante
   label_all_variants: Toutes variantes
@@ -211,7 +211,7 @@ fr:
   button_remove: Enlever
   label_fields: Attributs
   label_objects: Objets en relation
-  button_swap: Echanger
+  button_swap: Code interne
   button_reset: Défaut
   button_undo: Annuler
   label_definitions_attributs: Attributs
@@ -238,26 +238,26 @@ fr:
   workitems_assoc: Tâches en cours
   history_assoc: Traitements effectués sur cet objet
   # forums
-  legend_forum: Renseignez les propriétés du forum
-  forum_edit: Edition forum
-  forum_list: Liste des forums
-  forum_show: Détail du forum
-  forum_new: Nouveau forum
-  part_new_forum: Nouveau forum sur cet article
-  label_subject: Sujet du forum
-  label_message: Message de démarrage du forum
+  legend_forum: Renseignez les propriétés de la discussion
+  forum_edit: Edition de la discussion
+  forum_list: Liste des discussions
+  forum_show: Détail de la discussion
+  forum_new: Nouvelle discussion
+  part_new_forum: Nouvelle discussion sur cet article
+  label_subject: Sujet de la discussion
+  label_message: Message de démarrage de la discussion
   forum_items: Messages
   forum_follow: suites
   forum_item_response: Répondre
   # forum_items
   legend_forum_item: Renseignez les propriétés du message
-  forum_item_edit: Edition message forum
-  forum_item_list: Liste message forum
-  forum_item_show: Détail message forum
-  forum_item_new: Nouveau message forum
+  forum_item_edit: Edition message 
+  forum_item_list: Liste message 
+  forum_item_show: Détail message
+  forum_item_new: Nouveau message
   label_parent: Prédécesseur
   label_author: Emetteur
-  label_forum: Forum
+  label_forum: Discussion
   # groups
   legend_group: Renseignez les propriétés du groupe
   group_edit: Edition du groupe
@@ -280,7 +280,7 @@ fr:
   link_reset: Suppression des liens !!!
   link_edit_in_tree: Edition du lien de l'instance
   legend_link: Relation
-  legend_link_values: Attributs
+  legend_link_values: Attributs du lien de type '%{type}' et de nom '%{name}'
   legend_link_father: Père
   legend_link_child: Fils
   legend_link_effectivities: Effectivités
@@ -462,7 +462,7 @@ fr:
   msg_define_status_part: Définissez les statuts des articles
   msg_define_status_project: Définissez les statuts des projets
   msg_define_status_customer: Définissez les statuts des clients
-  msg_define_status_forum: Définissez les statuts des forums
+  msg_define_status_forum: Définissez les statuts des discussions
   # tools
   title_tools: Outils
   legend_preferences: Préférences
@@ -479,11 +479,11 @@ fr:
   msg_define_types_part: Définissez les types des articles
   msg_define_types_project: Définissez les types des projets
   msg_define_types_customer: Définissez les types des clients
-  msg_define_types_forum: Définissez les types des forums
+  msg_define_types_forum: Définissez les types des discussions
   # users
   legend_user: Renseignez les propriétés de l'utilisateur
   user_edit: Edition l'utilisateur
-  reset_passwd: Annuler le mot de passe
+  reset_passwd: Reinitaliser le mot de passe
   account_edit_passwd: Modifier le mot de passe - %{login}
   account_edit: "Editer mon compte - %{login}"
   user_list: Liste des utilisateurs
@@ -517,6 +517,8 @@ fr:
   label_user_project_ids_in: Affecté à
   label_user_project_ids_out: Non affecté à
   label_projects: Projets
+  label_last_revision: Lister seulement la dernière révision
+  label_check_automatic: Réservation/libération automatique
   #views
   legend_view: "Renseignez les propriétés de la vue"
   views_list: Liste des vues
@@ -544,7 +546,7 @@ fr:
   bom: "BOM"
   research: "Recherche"
   production: "Production"
-  forum: Forum
+  forum: Discussion
   # workitems
   label_relation: Relation
   label_wfid: Processus

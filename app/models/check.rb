@@ -5,7 +5,7 @@ class Check < ActiveRecord::Base
 
 	attr_accessor :user
 
-	validates_presence_of :checkobject, :checkobject_id, :status, :out_user, :out_date, :out_reason, :out_group
+	validates_presence_of :checkobject_plmtype, :checkobject_id, :status, :out_user, :out_date, :out_reason, :out_group
 
 	belongs_to :out_user, :class_name => "User"
 	belongs_to :in_user, :class_name => "User"
@@ -26,26 +26,32 @@ class Check < ActiveRecord::Base
 		valid = true
 		begin
 			case status
-				when CHECK_STATUS_OUT
-					valid = !( out_user.nil? || out_group.nil? || out_reason.nil? || out_date.nil? )
-				when CHECK_STATUS_IN
-				when CHECK_STATUS_FREE
-				else
-					valid=false
-					self.errors.add(:status, I18n.translate('activerecord.errors.messages')[:status_not_valid])
+			when CHECK_STATUS_OUT
+				valid = !( out_user.blank? || out_group.blank? || out_reason.blank? || out_date.blank? )
+			when CHECK_STATUS_IN
+				valid = !( in_user.blank? || in_group.blank? || in_reason.blank? || in_date.blank? )
+			when CHECK_STATUS_FREE
+				valid = !( in_user.blank? || in_group.blank? || in_reason.blank? || in_date.blank? )
+			else
+			valid = false
+			self.errors.add(:status, I18n.translate('activerecord.errors.messages.status_not_valid'))
 			end
+			#LOG.info (fname) {"status=#{status} in_user=#{in_user} in_group=#{in_group} in_reason=#{in_reason} in_date=#{in_date} valid=#{valid}"}
 		rescue Exception => e
 			valid = false
-			msg="Exception during check validity test:"
-			msg+="<br/>exception=#{e}"
-			self.errors.add(msg)
+			self.errors.add_to_base(I18n.translate('activerecord.errors.messages.exception_validity', :model => 'check', :exception => e))
 		end
 		valid
 	end
 
 	#
+	def ident
+		"#{checkobject_plmtype}.#{checkobject_id}(#{status})"
+	end
+
+	#
 	def self.get_checkout(object)
-		find(:last, :conditions => ["checkobject = ? and checkobject_id = ? and status = ?", object.model_name, object.id, CHECK_STATUS_OUT])
+		find(:last, :conditions => ["checkobject_plmtype = ? and checkobject_id = ? and status = ?", object.model_name, object.id, CHECK_STATUS_OUT])
 	end
 
 	def initialize(*args)
@@ -71,8 +77,8 @@ class Check < ActiveRecord::Base
 
 	def object_to_check=(obj)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname) {"obj=#{obj}"}
-		self.checkobject  = obj.model_name
+		#LOG.info (fname) {"obj=#{obj}"}
+		self.checkobject_plmtype  = obj.model_name
 		self.checkobject_id = obj.id
 	end
 
@@ -83,37 +89,16 @@ class Check < ActiveRecord::Base
 		self.in_group = user.group
 		self.projowner = user.project
 		self.in_date = Time.now.utc
-
-		self.errors.add(:in_reason, "must be present!") if in_reason.blank?
-
-	# if(params)
-	#   # commit genere par le view
-	#   params.delete("commit")
-	#   params.delete("authenticity_token")
-	#   params.delete("_method")
-	#   params.delete("action")
-	#   params.delete("controller")
-	#   self.in_reason = params[:in_reason]
-	# end
+		self
 	end
 
 	def checkFree(params, user)
 		self.attributes = params
 		self.status = CHECK_STATUS_FREE
 		self.in_user = user
+		self.in_group = user.group
+		self.projowner = user.project
 		self.in_date = Time.now.utc
-
-		self.errors.add(:in_reason, "must be present!") if in_reason.blank?
-
-	# if(params)
-	#   # commit genere par le view
-	#   params.delete("commit")
-	#   params.delete("authenticity_token")
-	#   params.delete("_method")
-	#   params.delete("action")
-	#   params.delete("controller")
-	#   self.in_reason = params[:in_reason]
-	# end
 	end
 
 	def self.get_conditions(filter)

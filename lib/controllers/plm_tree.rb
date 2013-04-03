@@ -105,7 +105,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
               :object_id => father.id,
               :root_model => root.model_name,
               :root_id => root.id)
-					edit_link_a = "<a href=#{edit_link_url} title=\"#{link_values}\">#{img_rel}</a>"
+					edit_link_a = "<a href=#{edit_link_url} title=\"#{link_values}\">#{img_rel}#{link.relation.name}</a>"
 					#LOG.debug (fname){"edit_link_a=#{edit_link_a}"}
 					# destroy du lien
 					if child.frozen?
@@ -141,6 +141,8 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 					#LOG.debug (fname){"options=#{options.inspect}"}
 					cnode = Node.new(options)
 					follow_tree(root, cnode, child, relations, var_effectivities, level+=1, level_max)
+					#taille du noeud
+					cnode.label+="(#{cnode.size})" if cnode.size>0
 					unless snode.nil?
 					snode << cnode
 					else

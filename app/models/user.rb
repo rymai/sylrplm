@@ -325,6 +325,14 @@ class User < ActiveRecord::Base
     ":"+ret.to_s
 		ret
 	end
+	
+	# verifie si le user a un contexte de connexion : role, group, projet deja defini
+	def have_context?
+		unless self.role.nil? || self.group.nil? || self.project.nil?
+			ret=true
+		end
+		ret
+	end
 
 	def self.notifications
 		MAIL_NOTIFICATION_OPTIONS
