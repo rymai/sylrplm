@@ -1,0 +1,10 @@
+user_id_1_project_id_1_domain_admin:
+  user_id: 1
+  project_id: 1
+  domain: admin
+
+user_id_1_project_id_3_domain_admin:
+  user_id: 1
+  project_id: 3
+  domain: admin
+

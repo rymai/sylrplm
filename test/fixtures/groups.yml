@@ -1,0 +1,7 @@
+
+group_admins: 
+  id: "1"
+  name: admins
+  father_id: 
+  domain: admin
+
