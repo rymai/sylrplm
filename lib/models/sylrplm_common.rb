@@ -125,36 +125,35 @@ module Models
 				#puts self.model_name+".find_paginate:conditions="+conditions.inspect
 				#puts self.model_name+".find_paginate:page="+params[:page].to_s
 				last_rev_only = false
-				if column_names.include?("revision")
-					unless user.nil?
-					last_rev_only = user.last_revision
+				unless user.nil?
+					if user.is_admin?
+						# le user admin voit tout
+						conditions = nil
+					last_rev_only = false
+					else
+						if column_names.include?("revision")
+						last_rev_only = user.last_revision
+						end
 					end
 				end
-				if user.is_admin?
-					# le user admin voit tout
+				if last_rev_only
+					# seulement la derniere revision
+					select = "distinct on (ident) *"
+					order="ident asc, revision desc"
+					order+=","+params[:sort] unless params[:sort].nil?
 					recordset = self.paginate(:page => params[:page],
-						:conditions => nil,
-						:order => params[:sort],
-						:per_page => params[:nb_items])
-					else
-					if last_rev_only
-						# seulement la derniere revision
-						select = "distinct on (ident) *"
-						order="ident asc, revision desc"
-						order+=","+params[:sort] unless params[:sort].nil?
-						recordset = self.paginate(:page => params[:page],
-						:conditions => conditions,
-						:order => order,
-						:select => select,
-						:per_page => params[:nb_items])
-					else
-					# toutes les revisions
-						recordset = self.paginate(:page => params[:page],
-						:conditions => conditions,
-						:order => params[:sort],
-						:per_page => params[:nb_items])
-					end
+					:conditions => conditions,
+					:order => order,
+					:select => select,
+					:per_page => params[:nb_items])
+				else
+				# toutes les revisions
+					recordset = self.paginate(:page => params[:page],
+					:conditions => conditions,
+					:order => params[:sort],
+					:per_page => params[:nb_items])
 				end
+
 				puts self.model_name+"."+__method__.to_s+":"+recordset.inspect
 				{:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
 			end
