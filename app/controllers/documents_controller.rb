@@ -38,9 +38,8 @@ class DocumentsController < ApplicationController
   # GET /documents/new.xml
   def new
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname) {"params=#{params.inspect}"}
+    #LOG.debug (fname) {"params=#{params.inspect}"}
     params={}
-    #params[:action] = :init
     @document = Document.new(:user => current_user)
     @types    = Document.get_types_document
     @volumes  = Volume.find_all
@@ -54,7 +53,7 @@ class DocumentsController < ApplicationController
   # GET /documents/1/edit
   def edit
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname) {"params=#{params.inspect}"}
+    #LOG.debug (fname) {"params=#{params.inspect}"}
     @document = Document.find_edit(params[:id])
     @types    = Typesobject.find_for("document")
     @volumes  = Volume.find_all
@@ -66,7 +65,7 @@ class DocumentsController < ApplicationController
   # POST /documents.xml
   def create
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname) {"params=#{params.inspect}"}
+    #LOG.debug (fname) {"params=#{params.inspect}"}
     #contournement pour faire le upload apres la creation pour avoir la revision dans
     #repository !!!!!!!!!!!!!!
     @document = Document.new(params[:document])
@@ -82,7 +81,7 @@ class DocumentsController < ApplicationController
         format.xml  { render :xml => @document, :status => :created, :location => @document }
       else
       #puts "===DocumentsController.create:ko:"+@document.inspect
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_document), :msg => nil)
+        flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_document), :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @document.errors, :status => :unprocessable_entity }
       end
@@ -93,7 +92,7 @@ class DocumentsController < ApplicationController
   # PUT /documents/1.xml
   def update
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
     @volumes  = Volume.find_all
     @types    = Typesobject.find_for("document")
@@ -105,7 +104,7 @@ class DocumentsController < ApplicationController
         format.html { redirect_to(@document) }
         format.xml  { head :ok }
       else
-        flash[:notice] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_document), :ident => @document.ident)
+        flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_document), :ident => @document.ident)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @document.errors, :status => :unprocessable_entity }
       end
@@ -116,7 +115,7 @@ class DocumentsController < ApplicationController
   # DELETE /documents/1.xml
   def destroy
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
     @document= Document.find(params[:id])
     respond_to do |format|
       unless @document.nil?
@@ -125,20 +124,20 @@ class DocumentsController < ApplicationController
           format.html { redirect_to(documents_url) }
           format.xml  { head :ok }
         else
-          flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_document), :ident => @document.ident)
+          flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_document), :ident => @document.ident)
           index_
           format.html { render :action => "index" }
           format.xml  { render :xml => @document.errors, :status => :unprocessable_entity }
         end
       else
-        flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_document), :ident => @document.ident)
+        flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_document), :ident => @document.ident)
       end
     end
   end
 
   def promote
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
     @volumes  = Volume.find_all
     @types    = Typesobject.find_for("document")
@@ -148,7 +147,7 @@ class DocumentsController < ApplicationController
 
   def demote
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
     @volumes  = Volume.find_all
     @types    = Typesobject.find_for("document")
@@ -158,7 +157,7 @@ class DocumentsController < ApplicationController
 
   def revise
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
     document     = Document.find(params[:id])
     previous_rev = document.revision
     @document    = document.revise
@@ -167,17 +166,18 @@ class DocumentsController < ApplicationController
     respond_to do |format|
       unless @document.nil?
         if @document.save
-          puts "documents_controller.revision apres save=#{@document.id}:#{@document.revision}"
+          #puts "documents_controller.revision apres save=#{@document.id}:#{@document.revision}"
           flash[:notice] = t(:ctrl_object_revised, :typeobj => t(:ctrl_document), :ident => @document.ident, :previous_rev => previous_rev, :revision => @document.revision)
           format.html { redirect_to(@document) }
           format.xml  { head :ok }
         else
+        	flash[:error] = t(:ctrl_object_not_revised, :typeobj => t(:ctrl_document), :ident => @document.ident, :previous_rev => previous_rev)
           format.html { render :action => "edit" }
           format.xml  { render :xml => @document.errors, :status => :unprocessable_entity }
         end
       else
         @document = Document.find(params[:id])
-        flash[:notice] = t(:ctrl_object_not_revised, :typeobj => t(:ctrl_document), :ident => @document.ident, :previous_rev => previous_rev)
+        flash[:error] = t(:ctrl_object_not_revised, :typeobj => t(:ctrl_document), :ident => @document.ident, :previous_rev => previous_rev)
         format.html { redirect_to(@document) }
         format.xml  { head :ok }
       end
@@ -186,13 +186,13 @@ class DocumentsController < ApplicationController
 
   def check_out
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
     chk = @document.check_out(params[:check],@current_user)
    	unless chk.nil?
       flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:out_reason])
     else
-      flash[:notice] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
+      flash[:error] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
     end
     respond_to do |format|
       format.xml  { head :ok }
@@ -202,7 +202,7 @@ class DocumentsController < ApplicationController
 
   def check_in
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
     chk = @document.check_in(params[:check], current_user)
     respond_to do |format|
@@ -211,7 +211,7 @@ class DocumentsController < ApplicationController
         @document.update_attributes(params[:document])
         flash[:notice] = t(:ctrl_object_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:in_reason])
       else
-        flash[:notice] = t(:ctrl_object_not_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident)
+        flash[:error] = t(:ctrl_object_not_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident)
       end
       format.xml  { head :ok }
       format.html { redirect_to(@document) }
@@ -220,14 +220,14 @@ class DocumentsController < ApplicationController
 
   def check_free
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
     chk = @document.check_free(params[:check], current_user)
     respond_to do |format|
     	unless chk.nil?
       	flash[:notice] = t(:ctrl_object_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:in_reason])
       else
-        flash[:notice] = t(:ctrl_object_not_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident)
+        flash[:error] = t(:ctrl_object_not_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident)
       end
       format.xml  { head :ok }
       format.html { redirect_to(@document) }
@@ -238,7 +238,7 @@ class DocumentsController < ApplicationController
   #
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
 		@types  = Typesobject.find_for("datafile")	
 		check = Check.get_checkout(@document)
@@ -247,13 +247,12 @@ class DocumentsController < ApplicationController
 		else
 			if current_user.check_automatic			
 				check = Check.new(object_to_check: @document, user: current_user, out_reason: t(:ctrl_checkout_auto))
-				
 				if check.save
 				  #LOG.debug (fname){"check saved=#{check.inspect}"}
 					flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => check.out_reason)
 				else
-					LOG.debug (fname){"check errors=#{check.errors.inspect}"}
-					flash[:notice] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
+					#LOG.debug (fname){"check errors=#{check.errors.inspect}"}
+					flash[:error] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
 					check = nil
 				end
 			else
@@ -264,13 +263,13 @@ class DocumentsController < ApplicationController
 		respond_to do |format|
 			@datafile = Datafile.new(user: current_user)
 			unless check.nil?	
-				LOG.debug (fname){"document=#{@document.inspect}"}
+				#LOG.debug (fname){"document=#{@document.inspect}"}
 				@datafile.document = @document
 				flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => check.out_reason)
 				format.html { render :action => :new_datafile, :id => @document.id }
 				format.xml  { head :ok }
 			else
-				flash[:notice] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
+				flash[:error] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
 				format.html { redirect_to(@document) }
 				format.xml  { head :ok }
 			end
@@ -282,7 +281,7 @@ class DocumentsController < ApplicationController
 	#
 	def add_datafile
 		fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
     #LOG.debug (fname){"document=#{@document.inspect}"}
 		@datafile = @document.datafiles.build(params[:datafile])
@@ -298,16 +297,16 @@ class DocumentsController < ApplicationController
 					  		#LOG.debug (fname){"check saved=#{check.inspect}"}
 								flash[:notice] = t(:ctrl_object_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => check.in_reason)
 							else
-								flash[:notice] = t(:ctrl_object_not_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident)
+								flash[:error] = t(:ctrl_object_not_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident)
 								check = nil
 							end
 						else
-							flash[:notice] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
+							flash[:error] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident)
 						end
 					end
 					format.html { redirect_to(@document) }
 				else
-					flash[:alert] = t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
+					flash[:error] = t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
 					@types = Typesobject.find_for("datafile")
 					format.html { render :action => :new_datafile, :id => @document.id   }
 				end
@@ -316,14 +315,15 @@ class DocumentsController < ApplicationController
 
 	def add_docs
 		fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		ctrl_add_objects_from_favorites(@document, :document)
 	end
 
 	def empty_favori
 		fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
+    empty_favori_by_type(get_model_type(params))
   end
 
   private
@@ -332,7 +332,6 @@ class DocumentsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
     #LOG.debug (fname){"params=#{params.inspect}"}
 		define_view
-		#puts __FILE__+"."+__method__.to_s+":"+params.inspect
 		@document  = Document.find(params[:id])
 		@relations = Relation.relations_for(@document)
     @tree         						= build_tree(@document, @myparams[:view_id])
@@ -342,7 +341,7 @@ class DocumentsController < ApplicationController
 	
   def index_
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname){"params=#{params.inspect}"}
+    #LOG.debug (fname){"params=#{params.inspect}"}
     @documents = Document.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
   end
 

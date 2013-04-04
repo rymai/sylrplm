@@ -235,10 +235,25 @@ td.favori {
 	margin-bottom: 10px;
 }
 /* END:favori */
-p.notice {
+
+p.error {
 	font: 140% sans-serif;
 	border: 1px solid #666;
 	color: red;
+	background-color: #DDD;
+	margin-bottom: 15px;
+}
+p.warn {
+	font: 140% sans-serif;
+	border: 1px solid #666;
+	color: yellow;
+	background-color: #DDD;
+	margin-bottom: 15px;
+}
+p.notice {
+	font: 140% sans-serif;
+	border: 1px solid #666;
+	color: green;
 	background-color: #DDD;
 	margin-bottom: 15px;
 }

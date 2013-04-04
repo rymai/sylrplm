@@ -26,7 +26,6 @@ class DefinitionsController < ApplicationController
 	# GET /definitions.xml
 	#
 	def index
-
 		@definitions = Definition.find_all_for(@current_user)
 		unless @definitions.length==0
 			respond_to do |format|
@@ -34,7 +33,6 @@ class DefinitionsController < ApplicationController
 				format.xml { render :xml => @definitions.to_xml(:request => request) }
 				format.json { render :json => @definitions.to_json(:request => request) }
 			end
-
 		end
 	end
 
@@ -56,9 +54,7 @@ class DefinitionsController < ApplicationController
 	# GET /definitions/1.xml
 	#
 	def show
-
 		@definition = Definition.find(params[:id])
-
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml { render :xml => @definition.to_xml(:request => request) }
@@ -75,19 +71,15 @@ class DefinitionsController < ApplicationController
 		@definition = Definition.find(params[:id])
 		LOG.debug (fname){"def=#{@definition.inspect}"}
 		uri = @definition.local_uri
-
 		# TODO : reject outside definitions ?
-
 		pdef = (open(uri).read rescue nil)
-		LOG.debug (fname){"pdef=#{pdef}"}
+		#LOG.debug (fname){"pdef=#{pdef}"}
 		var = params[:var] || 'proc_tree'
-
 		# TODO : use Rails callback thing (:callback)
-
 		tree = pdef ?
 			RuotePlugin.ruote_engine.get_def_parser.parse(pdef) :
 			nil
-		LOG.debug (fname){"tree=#{tree.inspect}"}
+		#LOG.debug (fname){"tree=#{tree.inspect}"}
 		render(
     :text => "var #{var} = #{tree.to_json};",
     :content_type => 'text/javascript')
@@ -108,24 +100,19 @@ class DefinitionsController < ApplicationController
 	# GET /definitions/1/edit
 	#
 	def edit
-
 		@definition = Definition.find(params[:id])
-		#@dg_locals = {
-		#	:in_roles => @definition.roles_definitions,
-		#	:out_roles => Role.find(:all) - @definition.roles
-		#}
-
+	#@dg_locals = {
+	#	:in_roles => @definition.roles_definitions,
+	#	:out_roles => Role.find(:all) - @definition.roles
+	#}
 	end
 
 	# POST /definitions
 	# POST /definitions.xml
 	#
 	def create
-
 		@definition = Definition.new(params[:definition])
-
 		respond_to do |format|
-
 			if @definition.save
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_definition), :ident => @definition.name)
 				format.html {
@@ -145,9 +132,9 @@ class DefinitionsController < ApplicationController
 				}
 
 			else
-				LOG.error @definition.errors.inspect
-				LOG.error @definition.inspect
-				flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_definition), :msg => nil)
+			#LOG.error @definition.errors.inspect
+			#LOG.error @definition.inspect
+				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_definition), :msg => nil)
 				format.html {
 					render(:action => 'new')
 				}
@@ -169,19 +156,15 @@ class DefinitionsController < ApplicationController
 		@definition.update_accessor(current_user)
 		respond_to do |format|
 			if @definition.update_attributes(params[:definition])
-
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)
 				format.html { redirect_to :action => 'index' }
 				format.xml { head :ok }
 				format.json { head :ok }
-
 			else # there is an error
 				LOG.error @definition.errors.inspect
 				LOG.error @definition.inspect
-				flash[:notice] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)
-
+				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)
 				p @definition.errors
-
 				format.html {
 					render(:action => 'edit')
 				}

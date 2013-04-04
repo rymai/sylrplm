@@ -47,15 +47,15 @@ class ApplicationController < ActionController::Base
     flash[:notice] = nil
     if false
       if !user.may_connect?
-        flash[:notice] =""
-        flash[:notice] += t(:ctrl_user_not_valid,:user=>user )+" " if user.typesobject.nil?
-        flash[:notice] += t(:ctrl_user_without_roles )+" " if user.roles.empty?
-        flash[:notice] += t(:ctrl_user_without_groups )+" " if user.groups.empty?
-        flash[:notice] += t(:ctrl_user_without_projects )+" " if user.projects.empty?
-        flash[:notice] = nil if flash[:notice].empty?
+        flash[:error] =""
+        flash[:error] += t(:ctrl_user_not_valid,:user=>user )+" " if user.typesobject.nil?
+        flash[:error] += t(:ctrl_user_without_roles )+" " if user.roles.empty?
+        flash[:error] += t(:ctrl_user_without_groups )+" " if user.groups.empty?
+        flash[:error] += t(:ctrl_user_without_projects )+" " if user.projects.empty?
+        flash[:error] = nil if flash[:notice].empty?
       end
     end
-    flash[:notice] = t(:ctrl_user_not_valid,:user=>user ) unless user.may_connect?
+    flash[:error] = t(:ctrl_user_not_valid,:user=>user ) unless user.may_connect?
     puts "check_user_connect:"+user.inspect+":"+flash[:notice].to_s
     if user.login==::SYLRPLM::USER_ADMIN
       flash[:notice] = nil
@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
   def check_init
     if User.count == 0
       puts 'application_controller.check_init:base vide'
-      flash[:notice]=t(:ctrl_init_to_do)
+      flash[:error]=t(:ctrl_init_to_do)
       respond_to do |format|
         format.html{redirect_to_main}
       end
@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
   end
 
   def permission_denied(role, controller, action)
-    flash[:notice] = t(:ctrl_no_privilege, :role=>role, :controller=>controller, :action=>action)
+    flash[:error] = t(:ctrl_no_privilege, :role=>role, :controller=>controller, :action=>action)
     redirect_to(:action => "index")
   end
 
@@ -248,12 +248,10 @@ class ApplicationController < ActionController::Base
   # Creates an HistoryEntry record
   #
   def history_log (event, options={})
-    
     fname= "#{self.class.name}.#{__method__}"
     source = options.delete(:source) || @current_user.login
-    
-    LOG.debug (fname){"history_log:source=#{source}"}
-   	LOG.debug (fname){"history_log:options=#{options}"}
+    #LOG.debug (fname){"history_log:source=#{source}"}
+   	#LOG.debug (fname){"history_log:options=#{options}"}
     Ruote::Sylrplm::HistoryEntry.log!(source, event, options)
   end
 
@@ -363,7 +361,7 @@ class ApplicationController < ActionController::Base
 	#
 	def param_equals?(key, value)
 		ret = @myparams.include?(key) && @myparams[key] == value
-		puts "#{controller_name}.#{__method__}:#{key}.#{value}=#{ret}"
+		#puts "#{controller_name}.#{__method__}:#{key}.#{value}=#{ret}"
 		ret
 	end
 end

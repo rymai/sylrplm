@@ -95,6 +95,16 @@
 		</div>
 	</div>
 	<div id="main">
+		<% if flash[:error].present? %>
+		<p class="error">
+			<%= flash[:error] %>
+		</p>
+		<% end %>
+		<% if flash[:warn].present? %>
+		<p class="warn">
+			<%= flash[:warn] %>
+		</p>
+		<% end %>
 		<% if flash[:notice].present? %>
 		<p class="notice">
 			<%= flash[:notice] %>

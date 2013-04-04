@@ -67,7 +67,7 @@ class UsersController < ApplicationController
 				format.html { render :action => "show"  }
 				format.xml  { render :xml => the_user, :status => :updated, :location => @the_user }
 			else
-				flash.now[:notice] = t(:ctrl_user_not_updated, :user => @the_user.login, :msg =>@the_user.errors.inspect)
+				flash.now[:error] = t(:ctrl_user_not_updated, :user => @the_user.login, :msg =>@the_user.errors.inspect)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
 			end
@@ -91,7 +91,7 @@ class UsersController < ApplicationController
 				format.html { redirect_to(@the_user) }
 				format.xml  { render :xml => @the_user, :status => :created, :location => @the_user }
 			else
-				flash.now[:notice] = t(:ctrl_user_not_created, :user => @the_user.login, :msg =>@the_user.errors.inspect)
+				flash.now[:error] = t(:ctrl_user_not_created, :user => @the_user.login, :msg =>@the_user.errors.inspect)
 				format.html { render :action => "new" }
 				format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
 			end
@@ -111,13 +111,12 @@ class UsersController < ApplicationController
 		@types    = Typesobject.get_types("user")
 		@the_user.update_accessor(current_user)
 		respond_to do |format|
-
 			if @the_user.update_attributes(params[:user])
 				flash[:notice] = t(:ctrl_user_updated, :user => @the_user.login)
 				format.html { redirect_to(@the_user) }
 				format.xml  { head :ok }
 			else
-				flash.now[:notice] = t(:ctrl_user_not_updated, :user => @the_user.login, :msg =>@the_user.errors.inspect)
+				flash.now[:error] = t(:ctrl_user_not_updated, :user => @the_user.login, :msg =>@the_user.errors.inspect)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
 			end
@@ -133,10 +132,11 @@ class UsersController < ApplicationController
 					@the_user.destroy
 					flash[:notice] = t(:ctrl_user_deleted, :user => @the_user.login)
 				rescue Exception => e
+					flash[:notice] = t(:ctrl_user_not_deleted, :user => @the_user.login)
 					flash[:notice] = e.message
 				end
 			else
-				flash[:notice] = t(:ctrl_user_connected, :user => @the_user.login)
+				flash[:warn] = t(:ctrl_user_connected, :user => @the_user.login)
 			end
 		end
 		respond_to do |format|
@@ -159,12 +159,12 @@ class UsersController < ApplicationController
 	end
 
 	def account_update
-		puts "users_controller.account_update:params="+params.inspect
+		#puts "users_controller.account_update:params="+params.inspect
 		@the_user    = User.find(params[:id])
 		@themes  = get_themes(@theme)
 		@notifications = get_notifications(@the_user.notification)
 		@time_zones = get_time_zones(@the_user.time_zone)
-		puts "users_controller.update:password=#{params[:user][:password]}"
+		#puts "users_controller.update:password=#{params[:user][:password]}"
 		ok=true
 		unless params[:user][:password].nil?
 			if params[:user][:password].empty?
@@ -172,7 +172,7 @@ class UsersController < ApplicationController
 				msg=t("password_needed")
 			else
 				if @the_user.update_attributes(params[:user])
-					puts "users_controller.update:update_attributes ok:#{params[:user]}"
+				#puts "users_controller.update:update_attributes ok:#{params[:user]}"
 				ok=true
 				else
 				msg = @the_user.errors.inspect
@@ -181,7 +181,7 @@ class UsersController < ApplicationController
 			end
 		else
 			if @the_user.update_attributes(params[:user])
-				puts "users_controller.update:update_attributes ok:#{params[:user]}"
+			#puts "users_controller.update:update_attributes ok:#{params[:user]}"
 			ok=true
 			else
 			msg = @the_user.errors.inspect
@@ -195,7 +195,7 @@ class UsersController < ApplicationController
 				format.html { redirect_to("/main/tools") }
 				format.xml  { head :ok }
 			else
-				flash[:notice] = t(:ctrl_user_not_updated, :user => @the_user.login, :msg => msg)
+				flash[:error] = t(:ctrl_user_not_updated, :user => @the_user.login, :msg => msg)
 				format.html { redirect_to("/main/tools") }
 				format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
 			end
@@ -204,7 +204,7 @@ class UsersController < ApplicationController
 	end
 
 	def empty_favori
-		puts "#{self.class.name}.#{__method__}:#{params.inspect}"
+		#puts "#{self.class.name}.#{__method__}:#{params.inspect}"
 		empty_favori_by_type(get_model_type(params))
 	end
 

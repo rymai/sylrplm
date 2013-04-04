@@ -172,12 +172,10 @@ class WorkitemsController < ApplicationController
 					end
 					ok = false
 					unless errs.empty?
-
-						flash[:notice] = t( :ctrl_workitem_canceled, :ident => workitem_ident)
-						flash[:notice]+= errs
+						flash[:error] = t( :ctrl_workitem_canceled, :ident => workitem_ident)
+						flash[:error]+= errs
 						format.html { redirect_to :action => 'index'}
 					#return error_reply(flash[:notice], 1001)
-
 					else
 					# recup du workitem sauve en base eventuellement modifie par le participant
 						ar_workitem = find_ar_workitem
@@ -196,11 +194,11 @@ class WorkitemsController < ApplicationController
 								flash[:notice] = t(:ctrl_workitem_proceeded, :ident => workitem_ident)
 							ok = true
 							else
-								flash[:notice] = t( :ctrl_workitem_not_proceeded, :ident => workitem_ident, :msg => history_created.errors.inspect)
+								flash[:error] = t( :ctrl_workitem_not_proceeded, :ident => workitem_ident, :msg => history_created.errors.inspect)
 							###raise PlmProcessException.new("#{name}:error executing workitem #{workitem_ident}:#{history_created.errors.inspect}", 10002)
 							end
 						else
-							flash[:notice] = t( :ctrl_workitem_not_proceeded, :ident => workitem_ident)
+							flash[:error] = t( :ctrl_workitem_not_proceeded, :ident => workitem_ident)
 						end
 					end
 					###sleep 0.1
@@ -208,9 +206,9 @@ class WorkitemsController < ApplicationController
 					Ruote::Sylrplm::ArWorkitem.destroy(ar_workitem.id)
 					unless ok
 						ruote_engine.cancel_process(params[:wfid])
-						flash[:notice] += "<br/>#{t(:ctrl_process_canceled, :ident => params[:wfid])}"
-						###raise PlmProcessException.new("#{name}:error creating workitem #{workitem_ident}:#{link.errors.inspect}", 10001)
-						LOG.error (name) {flash[:notice]}
+						flash[:error] += "<br/>#{t(:ctrl_process_canceled, :ident => params[:wfid])}"
+					###raise PlmProcessException.new("#{name}:error creating workitem #{workitem_ident}:#{link.errors.inspect}", 10001)
+					#LOG.error (name) {flash[:notice]}
 					end
 
 					format.html { redirect_to :action => 'index'}
@@ -219,9 +217,8 @@ class WorkitemsController < ApplicationController
 
 				rescue Exception => e
 
-					flash[:notice] = t(:ctrl_workitem_not_updated, :ident => "#{workitem_ident}:#{e}")
+					flash[:error] = t(:ctrl_workitem_not_updated, :ident => "#{workitem_ident}:#{e}")
 					LOG.error (name){in_flow_workitem.inspect}
-					LOG.error (name) {flash[:notice]}
 					LOG.error (name){" error="+e.inspect}
 					e.backtrace.each {|x| LOG.error x}
 					format.html { redirect_to workitems_path }
@@ -300,7 +297,7 @@ class WorkitemsController < ApplicationController
 				ret+=1
 			end
 			ar_workitem.replace_fields(fields)
-			LOG.info (name){"apres add: fields="+ar_workitem.field_hash.inspect}
+			#LOG.info (name){"apres add: fields="+ar_workitem.field_hash.inspect}
 			empty_favori_by_type(type_object)
 		else
 			msg += "\nNothing to add:"+type_object

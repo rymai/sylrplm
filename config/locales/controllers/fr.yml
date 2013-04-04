@@ -110,6 +110,7 @@ fr:
   ctrl_parametrization: Paramétrages
   # notification
   ctrl_notify: "%{nb_total} Notifications effectuées à %{nb_users} utilisateurs : %{notifications} "
+  ctrl_notification: Notification
   # parts
   ctrl_part: Article
   ctrl_forum: Discussion

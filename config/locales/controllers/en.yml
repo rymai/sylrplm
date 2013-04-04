@@ -110,6 +110,7 @@ en:
   ctrl_parametrization: Parametrization
   # notification
   ctrl_notify: "%{nb_total} Notifications send to %{nb_users} users : %{notifications} "
+  ctrl_notification: Notification
   # parts
   ctrl_part: Article
   ctrl_forum: Discussion

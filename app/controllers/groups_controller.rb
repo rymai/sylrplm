@@ -101,7 +101,7 @@ class GroupsController < ApplicationController
 				format.html { redirect_to(@group) }
 				format.xml  { render :xml => @group, :status => :created, :location => @group }
 			else
-				flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group), :msg => nil)
+				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group), :msg => nil)
 				format.html { render :action => "new" }
 				format.xml  { render :xml => @group.errors, :status => :unprocessable_entity }
 			end
@@ -120,7 +120,7 @@ class GroupsController < ApplicationController
 				format.html { redirect_to(@group) }
 				format.xml  { head :ok }
 			else
-				flash[:notice] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_group), :ident => @group.name)
+				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_group), :ident => @group.name)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @group.errors, :status => :unprocessable_entity }
 			end

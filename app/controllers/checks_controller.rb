@@ -47,6 +47,7 @@ class ChecksController < ApplicationController
         format.html { redirect_to(@check) }
         format.xml  { render :xml => @check, :status => :created, :location => @check }
       else
+        flash[:error] = '<br />'+t(:ctrl_object_not_created, :typeobj => 'Check', :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @check.errors, :status => :unprocessable_entity }
       end
@@ -60,10 +61,11 @@ class ChecksController < ApplicationController
     @check.update_accessor(current_user)
     respond_to do |format|
       if @check.update_attributes(params[:check])
-        flash[:notice] = 'Check was successfully updated.'
+        flash[:notice] = t(:ctrl_object_updated, :typeobj => 'Check', :ident => @check.controller)
         format.html { redirect_to(@check) }
         format.xml  { head :ok }
       else
+        flash[:error] = t(:ctrl_object_not_updated, :typeobj => 'Check', :ident => @check.controller)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @check.errors, :status => :unprocessable_entity }
       end

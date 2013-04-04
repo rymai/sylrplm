@@ -31,8 +31,6 @@ class PartsController < ApplicationController
 		end
 	end
 
-	
-
 	# GET /parts/new
 	# GET /parts/new.xml
 	def new
@@ -40,7 +38,6 @@ class PartsController < ApplicationController
 		@part   = Part.new(user: @current_user)
 		@types  = Part.get_types_part
 		@status = Statusobject.find_for("part", 2)
-
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @part }
@@ -58,21 +55,16 @@ class PartsController < ApplicationController
 	# POST /parts
 	# POST /parts.xml
 	def create
-		puts "===PartsController.create:"+params.inspect
 		@part   = Part.new(params[:part])
 		@types  = Part.get_types_part
 		@status = Statusobject.find_for("part")
-
 		respond_to do |format|
-			puts "===PartsController.create:"+@part.inspect
 			if @part.save
-				puts "===PartsController.create:ok:"+@part.inspect
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
 				format.html { redirect_to(@part) }
 				format.xml  { render :xml => @part, :status => :created, :location => @part }
 			else
-				puts "===PartsController.create:ko:"+@part.inspect
-				flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_part), :msg => nil)
+				flash[:error] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_part), :msg => nil)
 				format.html { render :action => "new" }
 				format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
 			end
@@ -90,7 +82,7 @@ class PartsController < ApplicationController
 				format.html { redirect_to(@part) }
 				format.xml  { head :ok }
 			else
-				flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
 			end
@@ -108,13 +100,13 @@ class PartsController < ApplicationController
 					format.html { redirect_to(parts_url) }
 					format.xml  { head :ok }
 				else
-					flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_part), :ident => @part.ident)
+					flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_part), :ident => @part.ident)
 					index_
 					format.html { render :action => "index" }
 					format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
 				end
 			else
-				flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_part), :ident => @part.ident)
+				flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_part), :ident => @part.ident)
 			end
 		end
 	end
@@ -124,7 +116,7 @@ class PartsController < ApplicationController
 	end
 
 	def add_docs
-		puts "#{self.class.name}.#{__method__}:#{params.inspect}"
+		#puts "#{self.class.name}.#{__method__}:#{params.inspect}"
 		@part = Part.find(params[:id])
 		ctrl_add_objects_from_favorites(@part, :document)
 	end
@@ -135,12 +127,10 @@ class PartsController < ApplicationController
 	end
 
 	def new_forum
-		LOG.info ("#{self.class.name}.#{__method__}") { "params=#{params.inspect}" }
 		@object = Part.find(params[:id])
 		@types = Typesobject.find_for("forum")
 		@status = Statusobject.find_for("forum")
 		@relation_id = params["relation"]["forum"]
-
 		respond_to do |format|
 			flash[:notice] = ""
 			@forum = Forum.new(user: current_user)
@@ -151,7 +141,7 @@ class PartsController < ApplicationController
 	end
 
 	def add_forum
-		LOG.info ("#{self.class.name}.#{__method__}") { "params=#{params.inspect}" }
+		#LOG.info ("#{self.class.name}.#{__method__}") { "params=#{params.inspect}" }
 		@part = Part.find(params[:id])
 		ctrl_add_forum(@part)
 	end
@@ -167,7 +157,7 @@ class PartsController < ApplicationController
 	end
 
 	def empty_favori
-		LOG.info ("#{self.class.name}.#{__method__}") { "params=#{params.inspect}" }
+		#LOG.info ("#{self.class.name}.#{__method__}") { "params=#{params.inspect}" }
 		empty_favori_by_type(get_model_type(params))
 	end
 	private
@@ -189,18 +179,18 @@ class PartsController < ApplicationController
 			if params[:variant].nil?
 				@variant = nil
 			else
-				#LOG.debug (fname){"all_variant=#{all_variant}, variante=#{params[:variant]} => on filtre"}
+			#LOG.debug (fname){"all_variant=#{all_variant}, variante=#{params[:variant]} => on filtre"}
 				@variant = PlmServices.get_object_by_mdlid(params[:variant])
 			end
 		end
 		@tree         = build_tree(@part, @myparams[:view_id] , @variant)
 		@tree_up      = build_tree_up(@part, @myparams[:view_id] )
-		#LOG.debug (fname){"taille tree=#{@tree.size}"}
+	#LOG.debug (fname){"taille tree=#{@tree.size}"}
 	#LOG.debug (fname){"variant=#{@variant}"}
 	#LOG.debug (fname){"variant eff=#{@variant.var_effectivities}"} unless @variant.nil?
 	#LOG.debug (fname){"end:view=#{View.find(@myparams[:view_id]).to_s}"}
 	end
-	
+
 	def index_
 		@parts = Part.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 	end

@@ -74,7 +74,7 @@ class CustomersController < ApplicationController
 				format.html { redirect_to(@customer) }
 				format.xml  { render :xml => @customer, :status => :created, :location => @customer }
 			else
-				flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_customer), :msg => nil)
+				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_customer), :msg => nil)
 				format.html { render :action => :new }
 				format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
 			end
@@ -94,7 +94,7 @@ class CustomersController < ApplicationController
 				format.html { redirect_to(@customer) }
 				format.xml  { head :ok }
 			else
-				flash[:notice] = t(:ctrl_object_notupdated, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+				flash[:error] = t(:ctrl_object_notupdated, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
 				format.html { render :action => :edit }
 				format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
 			end
@@ -107,19 +107,19 @@ class CustomersController < ApplicationController
 		@customer = Customer.find(params[:id])
 		respond_to do |format|
 			unless @customer.nil?
-			if @customer.destroy
-				flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
-				format.html { redirect_to(customers_url) }
-				format.xml  { head :ok }
+				if @customer.destroy
+					flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+					format.html { redirect_to(customers_url) }
+					format.xml  { head :ok }
+				else
+					flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+					index_
+					format.html { render :action => "index" }
+					format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
+				end
 			else
-				flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
-				index_
-				format.html { render :action => "index" }
-				format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
+				flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
 			end
-		else
-			flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
-		end
 		end
 	end
 
@@ -154,7 +154,7 @@ class CustomersController < ApplicationController
 	end
 
 	def add_docs
-		puts "#{self.class.name}.#{__method__}:#{params.inspect}"
+		#puts "#{self.class.name}.#{__method__}:#{params.inspect}"
 		@customer = Customer.find(params[:id])
 		ctrl_add_objects_from_favorites(@customer, :document)
 	end
@@ -165,7 +165,7 @@ class CustomersController < ApplicationController
 	end
 
 	def empty_favori
-		puts "#{self.class.name}.#{__method__}:#{params.inspect}"
+		#puts "#{self.class.name}.#{__method__}:#{params.inspect}"
 		empty_favori_by_type(get_model_type(params))
 	end
 

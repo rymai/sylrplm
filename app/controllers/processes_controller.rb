@@ -97,14 +97,14 @@ class ProcessesController < ApplicationController
   #
   def new
     fname= "#{controller_class_name}.#{__method__}"
-		LOG.debug (fname){"begin:params=#{params}"}
+		#LOG.debug (fname){"begin:params=#{params}"}
     @definition = Definition.find(params[:definition_id])
 		respond_to do |format|
 			if current_user.may_launch?(@definition)
 				flash[:notice] = t(:user_allowed_to_launch_process, :login => current_user.login, :definition => @definition.description)
 				format.html
 			else
-				flash[:notice] = t(:user_not_allowed_to_launch_process, :login => current_user.login, :definition => @definition.description)
+				flash[:warn] = t(:user_not_allowed_to_launch_process, :login => current_user.login, :definition => @definition.description)
 				format.html { redirect_to(:controller=> "definitions", :action=> "new_process")}
 			end
 		end
@@ -113,8 +113,7 @@ class ProcessesController < ApplicationController
   # POST /processes
   #
   def create
-    name="process_controllers."+__method__.to_s+":"
-    LOG.info {params.inspect}
+    fname="process_controllers."+__method__.to_s+":"
     @definition = Definition.find(params[:definition_id])
     li = parse_launchitem
     options = { :variables => { 'launcher' => @current_user.login } }
@@ -130,7 +129,7 @@ class ProcessesController < ApplicationController
         nb+=1
         workitem = OpenWFE::Extras::ArWorkitem.find_by_wfid(fei.wfid)
       end
-      puts name+" workitem="+workitem.inspect
+      #puts name+" workitem="+workitem.inspect
       respond_to do |format|
         unless workitem.nil?
           flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")
@@ -141,7 +140,7 @@ class ProcessesController < ApplicationController
           format.xml {
             render :xml => "<wfid>#{fei.wfid}</wfid>", :status => 201 }
         else
-          flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")
+          flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")
           format.html { redirect_to "/main" }
           ##format.html { redirect_to new_process_path(:definition_id => @definition.id)}
           format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
@@ -153,7 +152,7 @@ class ProcessesController < ApplicationController
       LOG.error {" options="+options.inspect}
       e.backtrace.each {|x| LOG.error {x}}
       respond_to do |format|
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "fei not launched error=#{e}")
+        flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "fei not launched error=#{e}")
           #format.html { redirect_to new_process_path(:definition_id => @definition.id)}
           format.html { redirect_to ({:controller => :definitions , :action => :new_process}) }
           format.xml  { render :xml => e, :status => :unprocessable_entity }
@@ -172,10 +171,10 @@ class ProcessesController < ApplicationController
       sleep 0.200
       redirect_to :controller => :processes, :action => :index
     rescue Exception => e
-      LOG.error " pb destroy "+params[:id]
+      #LOG.error " pb destroy "+params[:id]
       e.backtrace.each {|x| LOG.error x}
       respond_to do |format|
-            flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_process), :ident => params[:id])
+            flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_process), :ident => params[:id])
             format.html { redirect_to processes_path}
       end
     end
@@ -185,7 +184,7 @@ class ProcessesController < ApplicationController
   #
   def tree
    	fname= "#{controller_class_name}.#{__method__}"
-		LOG.debug (fname){"begin:params=#{params}"}
+		#LOG.debug (fname){"begin:params=#{params}"}
     process = ruote_engine.process_status(params[:id])
     var = params[:var] || 'proc_tree'
     unless process.nil?
@@ -199,7 +198,7 @@ class ProcessesController < ApplicationController
       history = Ruote::Sylrplm::HistoryEntry.paginate(opts)
       render_text = "var #{var} = #{history.last.tree};"
     end
-    LOG.info (fname){"render_text=#{render_text}"}
+    #LOG.info (fname){"render_text=#{render_text}"}
     render(
       :text => render_text,
       :content_type => 'text/javascript')
@@ -211,7 +210,7 @@ class ProcessesController < ApplicationController
   private
 
   def parse_launchitem
-    name=__FILE__+"."+__method__.to_s+":"
+    fname=__FILE__+"."+__method__.to_s+":"
     ct = request.content_type.to_s
     # TODO : deal with Atom[Pub]
     # TODO : sec checks !!!

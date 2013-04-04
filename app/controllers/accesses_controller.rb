@@ -50,7 +50,7 @@ class AccessesController < ApplicationController
         format.xml  { render :xml => @access, :status => :created, :location => @access }
       else
         @roles = Role.findall_except_admin
-        flash[:notice] = '<br />'+t(:ctrl_object_not_created, :typeobj => 'Access', :msg => nil)
+        flash[:error] = '<br />'+t(:ctrl_object_not_created, :typeobj => 'Access', :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @access.errors, :status => :unprocessable_entity }
       end
@@ -68,7 +68,7 @@ class AccessesController < ApplicationController
         format.xml  { head :ok }
       else
         @roles = Role.all
-        flash[:notice] = t(:ctrl_object_not_updated, :typeobj => 'Access', :ident => @access.controller)
+        flash[:error] = t(:ctrl_object_not_updated, :typeobj => 'Access', :ident => @access.controller)
         format.html { render :action => "edit" }
         format.xml  { render :xml => @access.errors, :status => :unprocessable_entity }
       end
@@ -93,7 +93,6 @@ class AccessesController < ApplicationController
     # - apres ajout/suppression de role (peut etre automatise)
     Access.reset
     @accesses = Access.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort] || 'controller, action', :nb_items => get_nb_items(params[:nb_items]) })
-
     respond_to do |format|
       format.html { redirect_to(accesses_path)  }
       format.xml  { render :xml => @accesses[:recordset] }

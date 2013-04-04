@@ -5,7 +5,7 @@ class RelationsController < ApplicationController
 	# GET /relations
 	# GET /relations.xml
 	def index
-	  @relations = Relation.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@relations = Relation.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @relations }
@@ -29,7 +29,7 @@ class RelationsController < ApplicationController
 		@relation = Relation.new
 		@datas = @relation.datas
 		@views = View.all
-		LOG.debug (fname) {"#{typesobject=@relation.typesobject}"}
+		#LOG.debug (fname) {"#{typesobject=@relation.typesobject}"}
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @relation }
@@ -42,7 +42,7 @@ class RelationsController < ApplicationController
 		@relation = Relation.find(params[:id])
 		@datas = @relation.datas
 		@views = View.all
-		LOG.debug (fname) {"#{typesobject=@relation.typesobject}"}
+	#LOG.debug (fname) {"#{typesobject=@relation.typesobject}"}
 	end
 
 	# POST /relations
@@ -54,9 +54,11 @@ class RelationsController < ApplicationController
 		@views = View.all
 		respond_to do |format|
 			if @relation.save
+				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_relation),:ident=>@relation.ident)
 				format.html { redirect_to(@relation, :notice => 'Relation was successfully created.') }
 				format.xml  { render :xml => @relation, :status => :created, :location => @relation }
 			else
+				flash[:error] =t(:ctrl_object_not_created, :typeobj =>t(:ctrl_relation), :msg => @relation.ident)
 				format.html { render :action => "new" }
 				format.xml  { render :xml => @relation.errors, :status => :unprocessable_entity }
 			end
@@ -72,9 +74,11 @@ class RelationsController < ApplicationController
 		@relation.update_accessor(current_user)
 		respond_to do |format|
 			if @relation.update_attributes(params[:relation])
+				flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_relation),:ident=>@relation.ident)
 				format.html { redirect_to(@relation, :notice => 'Relation was successfully updated.') }
 				format.xml  { head :ok }
 			else
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_relation),:ident=>@relation.ident)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @relation.errors, :status => :unprocessable_entity }
 			end
@@ -85,7 +89,11 @@ class RelationsController < ApplicationController
 	# DELETE /relations/1.xml
 	def destroy
 		@relation = Relation.find(params[:id])
-		@relation.destroy
+		if @relation.destroy
+			flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_relation), :ident => @relation.ident)
+		else
+			flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_relation), :ident => @project.ident)
+		end
 		respond_to do |format|
 			format.html { redirect_to(relations_url) }
 			format.xml  { head :ok }
@@ -93,12 +101,12 @@ class RelationsController < ApplicationController
 	end
 
 	def update_father
-		puts "relations_controller.update_father:params=#{params}"
+		#puts "relations_controller.update_father:params=#{params}"
 		@datas = Relation.datas_by_params(params)
 	end
 
 	def update_child
-		puts "relations_controller.update_child:params=#{params}"
+		#puts "relations_controller.update_child:params=#{params}"
 		@datas = Relation.datas_by_params(params)
 	end
 

@@ -56,7 +56,7 @@ class RolesController < ApplicationController
 				format.html { redirect_to(@role) }
 				format.xml  { render :xml => @role, :status => :created, :location => @role }
 			else
-				flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_role),:ident=>@role.title, :msg => nil)
+				flash[:error] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_role),:ident=>@role.title, :msg => nil)
 				format.html { render :action => "new" }
 				format.xml  { render :xml => @role.errors, :status => :unprocessable_entity }
 			end
@@ -74,7 +74,7 @@ class RolesController < ApplicationController
 				format.html { redirect_to(@role) }
 				format.xml  { head :ok }
 			else
-				flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_role),:ident=>@role.title)
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_role),:ident=>@role.title)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @role.errors, :status => :unprocessable_entity }
 			end
@@ -85,9 +85,12 @@ class RolesController < ApplicationController
 	# DELETE /roles/1.xml
 	def destroy
 		@role = Role.find(params[:id])
-		@role.destroy
-		respond_to do |format|
+		if @role.destroy
 			flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_role),:ident=>@role.title)
+		else
+			flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_role), :ident => @role.title)
+		end
+		respond_to do |format|
 			format.html { redirect_to(roles_url) }
 			format.xml  { head :ok }
 		end

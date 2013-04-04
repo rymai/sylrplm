@@ -33,7 +33,6 @@
 	</tr>
 	<% previous=nil
 	@documents[:recordset].each do |document| %>
-	<%= document.ident%>.<%= document.statusobject_id%>
 	<tr>
 		<td> <%= icone(document) %></td>
 		<td> <%= h_explorer document, :ident %> </td>

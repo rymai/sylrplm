@@ -84,7 +84,7 @@ class ProjectsController < ApplicationController
 				format.html { redirect_to(@project) }
 				format.xml  { render :xml => @project, :status => :created, :location => @project }
 			else
-				flash[:notice] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_project),:ident=>@project.ident, :msg => nil)
+				flash[:error] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_project),:ident=>@project.ident, :msg => nil)
 				format.html { render :action => "new" }
 				format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
 			end
@@ -107,7 +107,7 @@ class ProjectsController < ApplicationController
 				format.html { redirect_to(@project) }
 				format.xml  { head :ok }
 			else
-				flash[:notice] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
 			end
@@ -125,13 +125,13 @@ class ProjectsController < ApplicationController
 					format.html { redirect_to(projects_url) }
 					format.xml  { head :ok }
 				else
-					flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_project), :ident => @project.ident)
+					flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_project), :ident => @project.ident)
 					index_
 					format.html { render :action => "index" }
 					format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
 				end
 			else
-				flash[:notice] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_project), :ident => @project.ident)
+				flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_project), :ident => @project.ident)
 			end
 		end
 
@@ -182,7 +182,7 @@ class ProjectsController < ApplicationController
 	end
 
 	def empty_favori
-		puts "#{self.class.name}.#{__method__}:#{params.inspect}"
+		#puts "#{self.class.name}.#{__method__}:#{params.inspect}"
 		empty_favori_by_type(get_model_type(params))
 	end
 	
@@ -196,15 +196,15 @@ class ProjectsController < ApplicationController
 		@documents=@project.documents
 		@parts=@project.parts
 		@customers=@project.customers_up
-		flash[:notice] = "" if flash[:notice].nil?
+		flash[:error] = "" if flash[:error].nil?
 		if @favori.get('document').count>0 && @relations["document"].count==0
-			flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_document))
+			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_document))
 		end
 		if @favori.get('part').count>0 && @relations["part"].count==0
-			flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_part))
+			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_part))
 		end
 		if @favori.get('user').count>0 && @relations["user"].count==0
-			flash[:notice] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
+			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
 		end
 		@tree         						= build_tree(@project, @myparams[:view_id], nil, 2)
 		@tree_up      						= build_tree_up(@project, @myparams[:view_id] )
