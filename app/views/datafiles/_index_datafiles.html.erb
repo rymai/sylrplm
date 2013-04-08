@@ -1,5 +1,6 @@
 <table>
 	<tr>
+		<th><%= h_img(:label_icon) %></th>
 		<th <%= sort_td_class_helper :ident %>> <%= sort_link_helper t(:label_ident), :ident %> </th>
 		<th <%= sort_td_class_helper :revision %>> <%= sort_link_helper t(:label_revision), :revision %> </th>
 		<th <%= sort_td_class_helper :typesobject_id %>> <%= sort_link_helper t(:label_typesobject), :typesobject_id %> </th>
@@ -17,6 +18,8 @@
 	</tr>
 	<% datafiles[:recordset].each do |datafile| %>
 	<tr>
+		<td><%= icone(datafile) %>
+		<%= h_thumbnails(datafile) %></td>
 		<td> <%= link_to datafile.ident, datafile_path(datafile, :doc => (document.nil? ? nil : document.id)) %> </td>
 		<td> <%= h datafile.revision %> </td>
 		<td> <%= h datafile.typesobject.name %> </td>
@@ -39,9 +42,9 @@
 		<td> <%= l datafile.updated_at %> </td>
 		<td> <% unless document.nil? %>
 		<% unless datafile.filename.nil? %>
-			<%= link_to h_img(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %>
+		<%= link_to h_img(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %>
 		<% else %>
-		  <%= h_img(:download_ko, t(:datafile_without_file)) %>
+		<%= h_img(:download_ko, t(:datafile_without_file)) %>
 		<%end %>
 		<% end %> </td>
 		<% unless document.nil? %> <td> <%= link_to h_img_edit.to_s, edit_datafile_path(datafile, :doc => document.id) %> </td>

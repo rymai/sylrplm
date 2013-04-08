@@ -11,10 +11,13 @@
 		<td> <%= show_help("help_projects") %> </td>
 	</tr>
 </table>
+<% if @myparams[:list_mode] == t(:list_mode_icon) %>
+<%= h_thumbnails_objs @projects %>
+<% else %>
 <%= will_paginate(@projects[:recordset]) %>
 <table>
 	<tr>
-		<th></th>
+		<th><%= h_img(:label_icon) %></th>
 		<th <%= sort_td_class_helper "ident" %>> <%= sort_link_helper t(:label_ident), "ident" %> </th>
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t(:label_typesobject), "typesobject_id" %> </th>
 		<th <%= sort_td_class_helper "typeaccess_id" %>> <%= sort_link_helper t(:label_typeaccess), "typeaccess_id" %> </th>
@@ -30,7 +33,7 @@
 	</tr>
 	<% @projects[:recordset].each do |project| %>
 	<tr>
-		<td> <%= icone(project) %> </td>
+		<td> <%= icone(project) %> <%= h_thumbnails(project)%> </td>
 		<td> <%= h_explorer project %> </td>
 		<td> <%= h_explorer project.typesobject, :name unless project.typesobject.nil? %></td>
 		<td> <%= h_explorer project.typeaccess, :name unless project.typeaccess.nil? %> </td>
@@ -49,6 +52,7 @@
 	</tr>
 	<% end %>
 </table>
+<% end %>
 <%= will_paginate(@projects[:recordset]) %>
 <table class='menu_bas'>
 	<tr>

@@ -137,14 +137,31 @@ class DatafilesController < ApplicationController
 		@datafile = Datafile.find(params[:id])
 		ret=nil
 		begin
-			content=@datafile.read_file
-			puts "datafiles_controller.send_file_content"+content.length.to_s
-			send_data(content,
+			fields = @datafile.get_type_values
+			#puts "datafiles_controller.send_file_content:"+fields.inspect
+			# on utilise l'outil definis sur ce datafile seulement pour la visu ou edition, pas pour le download
+			unless fields["tool"].nil? || disposition == "attachment"
+				repos=@datafile.write_file_tmp
+				cmd="#{fields["tool"]} #{repos} &"
+				#puts "datafiles_controller.send_file_content:tool=#{fields["tool"]} cmd=#{cmd}"
+				system(cmd)
+				ret = repos
+				respond_to do |format|
+					format.html { render :action => "show" }
+					format.xml  { format.xml  { head :ok } }
+				end
+			else
+				content=@datafile.read_file
+				#puts "datafiles_controller.send_file_content:"+content.length.to_s
+				send_data(content,
               :filename => @datafile.filename,
               :type => @datafile.content_type,
               :disposition => disposition)
-			ret=@datafile.filename
+			ret = @datafile.filename
+			end
 		rescue Exception => e
+			LOG.error " error="+e.inspect
+			e.backtrace.each {|x| LOG.error x}
 			respond_to do |format|
 				flash[:error] = t(:ctrl_object_not_found,:typeobj => t(:ctrl_datafile),  :ident => @datafile.ident)
 				format.html { render :action => "show" }

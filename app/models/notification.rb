@@ -17,6 +17,7 @@ class Notification < ActiveRecord::Base
 	validates_presence_of :forobject_type, :forobject_id,  :event_date, :event_type
 	belongs_to :responsible,
   :class_name => "User"
+	#
 	def initialize(*args)
 		super
 		unless args[0][:user].nil?
@@ -91,13 +92,13 @@ class Notification < ActiveRecord::Base
 	end
 
 	def self.notify_all(id)
-		name=":"+self.class.name+"."+__method__.to_s+":"
-		from=User.find_by_login(::SYLRPLM::USER_ADMIN)
+		fname = "#{self.class.name}.#{__method__}"
+		from = User.find_by_login(::SYLRPLM::USER_ADMIN)
 		ret=[]
 		if id.nil? || id == "all"
-			notifs=self.find(:all, :conditions => ["notify_date is null"])
+			notifs = self.find(:all, :conditions => ["notify_date is null"])
 		else
-			notifs=Notification.find(params[:id])
+			notifs = Notification.find(params[:id])
 		end
 		the_notifs=[]
 		notifs.each do |notif|
@@ -106,12 +107,13 @@ class Notification < ActiveRecord::Base
 		User.all.each do |user|
 			cnt=0
 			msg=nil;
-			unless user.email==""
-				to_notify=[]
+			unless user.email.blank?
+				to_notify = []
 				the_notifs.each do |notif|
 					if notif[:notif].responsible == user
+						LOG.warn (fname){"to user='#{user.login}' resp='#{notif[:notif].responsible.login}'"}
 						notif[:to_notify] = true
-						to_notify<<notif[:notif]
+						to_notify << notif[:notif]
 					end
 				end
 				LOG.info(name){to_notify.count.to_s+" notification for "+user.login}
@@ -119,38 +121,41 @@ class Notification < ActiveRecord::Base
 					#puts to_notify.inspect
 					notifs={}
 					notifs[:recordset]=to_notify
+					LOG.debug (fname){"fromuser='#{from.login}' frommail='#{from.email}' touser='#{user.login}' tomail='#{user.email}'"}
 					email=PlmMailer.create_notify(notifs, from, user)
 					unless email.nil?
+						LOG.debug (fname){"email avant envoi='#{email}'"}
 						email.set_content_type("text/html")
 						PlmMailer.deliver(email)
+						LOG.debug (fname){"email apres envoi='#{email}'"}
 						cnt = to_notify.count
 						msg = :ctrl_mail_created_and_delivered
 					else
-						LOG.warn (name){"message non cree pour #{user.login}"}
+						LOG.warn (fname){"message non cree pour #{user.login}"}
 						msg = :ctrl_mail_not_created
 					end
 				else
 					msg = :ctrl_nothing_to_notify
 				end
 			else
-				LOG.warn (name){"pas de email pour #{user.login}"}
+				LOG.warn (fname){"pas de email pour #{user.login}"}
 				msg=:ctrl_user_no_email
 			end
-			if cnt ==0
+			if cnt == 0
 				the_notifs.each do |notif|
 					if notif[:notif].responsible == user
-						notif[:notify]=false
+						notif[:notify] = false
 					end
 				end
 			end
-			ret<< { :user => user, :count => cnt, :msg => msg }
+			ret << { :user => user, :count => cnt, :msg => msg }
 		end
 		the_notifs.each do |notif|
 			if notif[:notify] == true
 				notif[:notif].update_attributes({:notify_date => Time.now})
 			end
 		end
-		#puts name+"ret="+ret.inspect
+		#LOG.debug (fname){"ret=#{ret.inspect}"}
 		ret
 	end
 

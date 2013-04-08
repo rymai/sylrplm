@@ -7,6 +7,12 @@ class Customer < ActiveRecord::Base
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident
 
+  has_many :datafiles, :dependent => :destroy
+  has_many :thumbnails, 
+  	:class_name => "Datafile", 
+  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='#{::SYLRPLM::TYPE_DATAFILE_THUMBNAIL}')"
+
+
   has_many :projects
 
   belongs_to :typesobject

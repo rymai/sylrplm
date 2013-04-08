@@ -461,5 +461,34 @@ module Models
 		def mdlid
 			model_name+"."+id.to_s
 		end
+
+		def add_datafile(params,user)
+			fname= "#{self.class.name}.#{__method__}"
+			LOG.info (fname){"Don't use this method but: document.datafiles.build(params[:datafile])"}
+		end
+
+		def add_datafile_old(params,user)
+			datafile = Datafile.new(params)
+			datafile.document = self
+			if datafile.save
+				self.datafiles << datafile
+				self.save
+				"ok"
+			else
+				"datafile_not_saved"
+			end
+		end
+
+		def remove_datafile(item)
+			self.datafiles.delete(item)
+		end
+
+		def get_datafiles
+			ret = []
+			ret = self.datafiles
+			ret = { :recordset => ret, :total => ret.length }
+			ret
+		end
+
 	end
 end

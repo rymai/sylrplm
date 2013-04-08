@@ -55,6 +55,9 @@ en:
   link_customer: "%{link}-Customer-%{ident}"
   user_unknown: User Unknown
   user_unknown_mail: unknownmail@laposte.net
+  list_mode_details: Details
+  list_mode_details_icon: Details with icon
+  list_mode_icon: Icon only
   # customers
   ctrl_customer: "Customer"
   # datafiles

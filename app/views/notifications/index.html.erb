@@ -3,7 +3,7 @@
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_notification"), new_notification_path %></td>
-		<td> <%= link_to t("button_notify_all"), :confirm => t("msg_confirm"), :action => :notify, :id => "all"%></td>
+		<td> <%= link_to t("button_notify_all"), :action => :notify, :id => "all"%></td>
 		<td> <%= show_help("help_notifications") %></td>
 	</tr>
 </table>
@@ -13,7 +13,7 @@
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_notification"), new_notification_path %></td>
-		<td> <%= link_to t("button_notify_all"), :confirm => t("msg_confirm"), :action => :notify, :id => "all"%></td>
+		<td> <%= link_to t("button_notify_all"), :action => :notify, :id => "all"%></td>
 		<td> <%= show_help("help_notifications") %></td>
 	</tr>
 </table>

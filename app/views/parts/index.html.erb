@@ -11,10 +11,13 @@
 		<td><%= show_help("help_parts") %></td>
 	</tr>
 </table>
+<% if @myparams[:list_mode] == t(:list_mode_icon) %>
+<%= h_thumbnails_objs @parts %>
+<% else %>
 <%= will_paginate(@parts[:recordset]) %>
 <table>
 	<tr>
-		<th></th>
+		<th><%= h_img(:label_icon) %></th>
 		<th <%= sort_td_class_helper "ident" %>><%= sort_link_helper t("label_ident"), "ident" %></th>
 		<th <%= sort_td_class_helper "revision" %>><%= sort_link_helper t("label_revision"), "revision" %></th>
 		<th <%= sort_td_class_helper "typesobject_id" %>><%= sort_link_helper t("label_typesobject"), "typesobject_id" %></th>
@@ -31,7 +34,7 @@
 	</tr>
 	<% @parts[:recordset].each do |part| %>
 	<tr>
-		<td><%= icone(part) %></td>
+		<td><%= icone(part) %><%= h_thumbnails(part) %></td>
 		<td><%= h_explorer part %></td>
 		<td><%= part.revision %></td>
 		<td><%= h_explorer part.typesobject, :name unless part.typesobject.nil? %> </td>
@@ -56,6 +59,7 @@
 	</tr>
 	<% end %>
 </table>
+<% end %>
 <%= will_paginate(@parts[:recordset]) %>
 <table class='menu_bas'>
 	<tr>

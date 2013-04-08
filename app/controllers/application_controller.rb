@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   include Controllers::PlmObjectControllerModule
 
   helper :all # include all helpers, all the time
-  helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?, :get_domain
+  helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?, :get_domain, :get_list_modes
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
@@ -155,7 +155,10 @@ class ApplicationController < ActionController::Base
     WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
     WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
   	@myparams = params
-
+  end
+  
+  def get_list_modes
+  	[t(:list_mode_details), t(:list_mode_details_icon),t(:list_mode_icon)]
   end
 
   # nombre d'objets listes par page si pagination

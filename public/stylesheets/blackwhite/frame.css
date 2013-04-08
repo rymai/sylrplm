@@ -19,6 +19,13 @@ span, p, li, ul, dl, dt, dd, legend {
 	padding-left: 0px;
 	color: white;
 }
+
+span.thumbnail {
+	border: 1px solid #DDD;
+	margin: 2px;
+	padding: 3px;
+}
+
 ul.forum {
 	margin-left: 30px;
 }
@@ -205,6 +212,12 @@ img.icone {
 	background: transparent;
 	width: 12px;
 	height: 12px;
+}
+img.thumbnail {
+	border: none;
+	background: transparent;
+	width: 65px;
+	height: 64px;
 }
 .help {
 	font-weight: bold;

@@ -11,10 +11,13 @@
 		<td> <%= show_help("help_documents") %></td>
 	</tr>
 </table>
+<% if @myparams[:list_mode] == t(:list_mode_icon) %>
+<%= h_thumbnails_objs @documents %>
+<% else %>
 <%= will_paginate(@documents[:recordset]) %>
 <table>
 	<tr>
-		<th></th>
+		<th><%= h_img(:label_icon) %></th>
 		<th <%= sort_td_class_helper "ident" %>> <%= sort_link_helper t("label_ident"), "ident" %></th>
 		<th <%= sort_td_class_helper "revision" %>> <%= sort_link_helper t("label_revision"), "revision" %></th>
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %></th>
@@ -34,7 +37,7 @@
 	<% previous=nil
 	@documents[:recordset].each do |document| %>
 	<tr>
-		<td> <%= icone(document) %></td>
+		<td> <%= icone(document) %> </td>
 		<td> <%= h_explorer document, :ident %> </td>
 		<td> <%= h document.revision %> </td>
 		<td> <%= h_explorer document.typesobject, :name %></td>
@@ -69,6 +72,7 @@
 	<% previous=document %>
 	<% end %>
 </table>
+<% end %>
 <%= will_paginate(@documents[:recordset]) %>
 <table class='menu_bas'>
 	<tr>

@@ -9,3 +9,12 @@ if Rails.env.production?
   }
   ActionMailer::Base.delivery_method = :smtp
 end
+
+if Rails.env.development?
+  ActionMailer::Base.smtp_settings = {
+    address:        'smtp.free.fr',
+    port:           '25',
+    domain:         'free.fr'
+  }
+  ActionMailer::Base.delivery_method = :smtp
+end

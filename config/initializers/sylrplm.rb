@@ -57,6 +57,10 @@ module SYLRPLM
 	TYPEACCESS_PUBLIC         = 'public'
 	TYPEACCESS_CONFIDENTIAL   = 'confidential'
 	TYPEACCESS_SECRET         = 'secret'
+	
+	# type de l'image representative d'un document
+	TYPE_DATAFILE_THUMBNAIL   = 'thumbnail'
+	
 	# valeurs de certains objets
 	RELATION_GENERIC          = 'any_relation'
 	#

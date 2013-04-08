@@ -11,10 +11,13 @@
 		<td> <%= show_help("help_customers") %> </td>
 	</tr>
 </table>
+<% if @myparams[:list_mode] == t(:list_mode_icon) %>
+<%= h_thumbnails_objs @customers %>
+<% else %>
 <%= will_paginate(@customers[:recordset]) %>
 <table>
 	<tr>
-		<th></th>
+		<th><%= h_img(:label_icon) %></th>
 		<th <%= sort_td_class_helper "ident" %>> <%= sort_link_helper t("label_ident"), "ident" %> </th>
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %> </th>
 		<th <%= sort_td_class_helper "designation" %>> <%= sort_link_helper t("label_designation"), "designation" %> </th>
@@ -29,7 +32,7 @@
 	</tr>
 	<% @customers[:recordset].each do |customer| %>
 	<tr>
-		<td> <%= icone(customer) %> </td>
+		<td> <%= icone(customer) %><%= h_thumbnails(customer)%> </td>
 		<td> <%= h_explorer customer %> </td>
 		<td> <%= h_explorer customer.typesobject, :name unless customer.typesobject.nil? %> </td>
 		<td> <%= h customer.designation %> </td>
@@ -47,6 +50,7 @@
 	</tr>
 	<% end %>
 </table>
+<% end %>
 <%= will_paginate(@customers[:recordset]) %>
 <table class='menu_bas'>
 	<tr>

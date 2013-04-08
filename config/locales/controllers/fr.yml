@@ -55,6 +55,9 @@ fr:
   link_customer: "%{link}-Client-%{ident}"
   user_unknown: Compte inconnu
   user_unknown_mail: Mail inconnu
+  list_mode_details: Details
+  list_mode_details_icon: Details avec apercu
+  list_mode_icon: Apercu seul
   # customers
   ctrl_customer: Client
   # datafiles

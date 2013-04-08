@@ -16,8 +16,12 @@ class Document < ActiveRecord::Base
   belongs_to :projowner, :class_name => "Project"
 
   has_many :datafiles, :dependent => :destroy
+  has_many :thumbnails, 
+  	:class_name => "Datafile", 
+  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='#{::SYLRPLM::TYPE_DATAFILE_THUMBNAIL}')"
+  
   has_many :checks
-
+    
   has_many :links_documents,
     :class_name => "Link",
     :foreign_key => "father_id",
@@ -190,35 +194,7 @@ class Document < ActiveRecord::Base
     Check.get_checkout(self).present?
   end
 
-  def add_datafile(params,user)
-    fname= "#{self.class.name}.#{__method__}"
-    LOG.info (fname){"params=#{params}, user=#{user.inspect}"} 
-    LOG.info (fname){"Don't use this method but: document.datafiles.build(params[:datafile])"}
-  end
-  
-  def add_datafile_old(params,user)
-    datafile = Datafile.new(params)
-    datafile.document = self
-    if datafile.save
-      self.datafiles << datafile
-      self.save
-      "ok"
-    else
-      "datafile_not_saved"
-    end
-  end
 
-  def remove_datafile(item)
-    self.datafiles.delete(item)
-  end
-
-  def get_datafiles
-    ret = []
-    ret = self.datafiles
-    ret = { :recordset => ret, :total => ret.length }
-    ret
-  end
-  
   def variants
   	nil
   end

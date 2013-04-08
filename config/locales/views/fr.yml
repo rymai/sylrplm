@@ -138,6 +138,7 @@ fr:
   label_variant: Variante
   label_all_variants: Toutes variantes
   btn_select: Sélectionner
+  label_icon: Icône
   # fin general
   # access
   legend_access: Renseignez les propriétés de l'autorisation

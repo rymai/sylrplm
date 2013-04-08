@@ -1,4 +1,5 @@
 #require 'lib/models/plm_object'
+require 'tmpdir'
 class Datafile < ActiveRecord::Base
   include Models::PlmObject
   include Models::SylrplmCommon
@@ -218,12 +219,39 @@ class Datafile < ActiveRecord::Base
     else
       if File.exists?(repository)
         data=''
-        f = File.open(repository, "r")
-        LOG.debug (fname) {"debut lecture #{repository}"}
+        f = File.open(repository, "rb")
+        nctot = File.size(repository)
+        LOG.debug (fname) {"debut lecture #{repository}: #{nctot}"}
+        data = f.sysread(nctot)
+        f.close
+        LOG.debug (fname) {"fin lecture #{repository}"}
+      else
+        data=nil
+      end
+    end
+    data
+  end
+  
+	def read_file_old
+  	fname= "#{self.class.name}.#{__method__}"
+    if self.volume.protocol == "fog"
+      fog_file=SylrplmFog.instance.retrieve(self.dir_repository, self.filename_repository)
+      data=nil
+    data=fog_file.body unless fog_file.nil?
+    else
+      if File.exists?(repository)
+        data=''
+        f = File.open(repository, "rb")
+        nctot = File.size(repository)
+        LOG.debug (fname) {"debut lecture #{repository}: #{nctot}"}
         nc=0
         f.each_byte do |ch|
           data += ch.chr
           nc+=1
+          ###puts " "+ch.to_s+":"+nc.to_s+":"+nctot.to_s
+          if nc >= nctot 
+          	break
+          end
         #puts " "+nc.to_s
         end
         f.close
@@ -246,15 +274,13 @@ class Datafile < ActiveRecord::Base
 
   def write_file(content)
     fname= "#{self.class.name}.#{__method__}"
-    LOG.info (fname) {"protocol=#{self.volume.protocol}"}
     create_dir
     repos = self.repository
-    LOG.info (fname) {"repository=#{repos}"}
-    LOG.info (fname){"content size=#{content.length}"}
+    LOG.info (fname) {"repository=#{repos}, content size=#{content.length}"}
     if content.length>0
 	    if self.volume.protocol == "fog"
 	      fog_file = SylrplmFog.instance.upload_content(dir_repository, self.filename_repository, content)
-	      LOG.info (fname) {"write_file:#{fog_file.inspect}"}
+	      LOG.info (fname) {"write_file in fog:#{fog_file.inspect}"}
 	    else
 	      f = File.open(repos, "wb")
 	      begin
@@ -265,6 +291,31 @@ class Datafile < ActiveRecord::Base
 	    	f.close
 	    end
     end
+  end
+  
+  #
+  # ecriture dans un fichier temporaire dans public/tmp pour visu ou edition par un outil externe
+  #
+  def write_file_tmp
+    fname= "#{self.class.name}.#{__method__}"
+    content = read_file
+    repos=nil
+    if content.length>0
+    	dir_repos=File.join("public","tmp")
+    	FileUtils.mkdir_p(dir_repos) unless File.exists?(dir_repos)
+    		repos = File.join(dir_repos, filename_repository)
+    		LOG.info (fname) {"repository=#{repos}"}
+	      unless File.exists?(repos)
+		      f = File.open(repos, "wb")
+		      begin
+		    		f.puts(content)
+		    	rescue Exception => e
+		    		raise Exception.new "Error writing in tmp file #{repos}:#{e}"
+		    	end
+		    	f.close
+	    	end
+	 	end
+	 	repos 
   end
 
   def file_exists?

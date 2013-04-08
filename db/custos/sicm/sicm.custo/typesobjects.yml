@@ -102,6 +102,24 @@ Typesobject_646247456:
   fields: "{\"editor\": \"notepad++\"}"
   description: Fichier texte
   domain: admin
+  
+Typesobject_646247457: 
+  id: "646247457"
+  forobject: datafile
+  name: thumbnail
+  fields: ""
+  description: "Image représentative du document" 
+  domain: admin
+
+Typesobject_1045584128: 
+  id: "1045584128"
+  forobject: datafile
+  name: brl-cad
+  fields: "{\"tool\": \"racine\"}"
+  description: |-
+    Fichier cao 3d par BRL-CAD
+    pour afficher, utilisez mged ou archer
+  domain: admin
 
 Typesobject_672869653: 
   id: "672869653"

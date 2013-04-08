@@ -21,23 +21,23 @@ class VolumesControllerTest < ActionController::TestCase
   end
 
   test "should show volume" do
-    get :show, :id => volumes(:one).to_param
+    get :show, :id => volumes(:volume_one).to_param
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, :id => volumes(:one).to_param
+    get :edit, :id => volumes(:volume_one).to_param
     assert_response :success
   end
 
   test "should update volume" do
-    put :update, :id => volumes(:one).to_param, :volume => { }
+    put :update, :id => volumes(:volume_one).to_param, :volume => { }
     assert_redirected_to volume_path(assigns(:volume))
   end
 
   test "should destroy volume" do
     assert_difference('Volume.count', -1) do
-      delete :destroy, :id => volumes(:one).to_param
+      delete :destroy, :id => volumes(:volume_one).to_param
     end
 
     assert_redirected_to volumes_path

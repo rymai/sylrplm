@@ -22,7 +22,7 @@ LOG.progname="Constantes"
 LOG.info {"Constantes du module SYLRPLM:"}
 SYLRPLM.constants.sort.each do |c|
   v = SYLRPLM.const_get(c)
-  ############LOG.debug("Constantes"){"#{c}\t\t= #{v}"}
+  LOG.debug("Constantes"){"#{c}\t\t= #{v}"}
 end
 LOG.info ("sylrplm"){"env=#{Rails.env.inspect} loglevel=#{LOG.level}"}
 LOG.info ("sylrplm"){"--------------------------------------------"}

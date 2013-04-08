@@ -138,6 +138,7 @@ en:
   label_variant: Variant
   label_all_variants: All variants
   btn_select: Browser
+  label_icon: Icon
   # fin general
   # access
   legend_access: Enter access details

@@ -154,7 +154,7 @@ module Models
 					:per_page => params[:nb_items])
 				end
 
-				puts self.model_name+"."+__method__.to_s+":"+recordset.inspect
+				#puts self.model_name+"."+__method__.to_s+":"+recordset.inspect
 				{:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
 			end
 
@@ -220,7 +220,7 @@ module Models
 			if path.nil?
 				path=get_path
 			end
-			links=Link.get_all_fathers(self)
+			links=::Link.get_all_fathers(self)
 			links.each do |lnk|
 				mdl=get_model(lnk.father_plmtype)
 				unless mdl.nil?
@@ -365,7 +365,7 @@ module Models
 		def set_default_values(next_seq)
 			fname = "#{self.class.name}.#{__method__}"
 			LOG.debug (fname){"next_seq=#{next_seq}, model_name=#{model_name}"}
-			self. attribute_names.each do |strcol|
+			self.attribute_names.each do |strcol|
 				old_value=  self[strcol]
 				col = ::Sequence.find_col_for(self.class.name, strcol)
 				val = old_value
@@ -381,6 +381,16 @@ module Models
 				self[strcol] = val
 				end
 			end
+		end
+
+		# renvoie l'objet contenu dans l'attribut type_values
+		def get_type_values
+			if self.respond_to? :type_values
+				decod = ActiveSupport::JSON.decode(type_values)
+			#puts "get_type_values:values=#{type_values} decod=#{decod}"
+			#Rufus::Json.decode(type_values)
+			end
+			decod
 		end
 
 	end

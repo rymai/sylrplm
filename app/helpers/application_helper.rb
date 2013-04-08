@@ -1,9 +1,8 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-
-  def title(text)
-    content_for :title, text
-  end
+	def title(text)
+		content_for :title, text
+	end
 
 	def h_value_or_default(value, default)
 		ret=default
@@ -40,7 +39,7 @@ module ApplicationHelper
 	def h_if_differ(current, previous)
 		current
 	end
-	
+
 	# renvoie la valeur de l'attribut att sur l'objet
 	# att peut etre un attribut "compose" tel que owner.login, d'ou l'utilisation de eval
 	def get_val(obj, att)
@@ -110,6 +109,7 @@ module ApplicationHelper
 	end
 
 	def h_simple_query(objects)
+		#puts "h_simple_query:myparams=#{@myparams}"
 		bloc = ""
 		bloc << "<table><tr>"
 		bloc << "<td>"
@@ -122,8 +122,12 @@ module ApplicationHelper
 		bloc << "</td>"
 		bloc << "</td>"
 		bloc << "<td>"
+		bloc << select_tag("list_mode", options_for_select(get_list_modes, @myparams["list_mode"]) )
+		bloc << "</td>"
+		bloc << "<td>"
 		bloc << h_img_sub(:filter)
 		bloc << "</td>"
+
 		bloc << "</tr></table>"
 		bloc
 	end
@@ -138,7 +142,41 @@ module ApplicationHelper
 
 		end
 		mdl_name=t("ctrl_#{type.downcase}")
-		"<img class='icone' src='#{fic}' title='#{mdl_name}'></img>"
+		ret = "<img class='icone' src='#{fic}' title='#{mdl_name}'></img>"
+
+		unless @myparams[:list_mode].blank?
+			if @myparams[:list_mode] != t(:list_mode_details)
+				ret << h_thumbnails(object)
+			end
+		end
+		ret
+	end
+
+	def h_thumbnails_objs(objs)
+		ret = ""
+		objs[:recordset].each do |obj|
+			ret << "<span class='thumbnail'>"
+			ret << h_explorer(obj, :ident)
+			ret << icone(obj)
+			ret << "</span>"
+		end
+		ret
+	end
+
+	def h_thumbnails(obj)
+		ret=""
+		if obj.respond_to? :thumbnails
+			unless obj.thumbnails.nil?
+				obj.thumbnails.each do |img|
+					ret << "<img class='thumbnail' src=\"tmp/#{img.write_file_tmp}\"></img>"
+				end
+			end
+		end
+		ret
+	end
+
+	def h_img_path(name)
+		"<img src=\"#{name}\"></img>"
 	end
 
 	def h_img(name, title=nil)
@@ -233,15 +271,14 @@ module ApplicationHelper
 	end
 
 	def h_explorer (obj, method = nil)
-		h_link_to("explorer", obj, method)
+		h_link_to("explorer_obj", obj, method)
 	end
 
 	def h_link_to (name, obj, method = nil)
 		fname=self.class.name+"."+__method__.to_s
-		LOG.info (fname){"obj=#{obj}, method=#{method}"}
+		#LOG.info (fname){"obj=#{obj}, method=#{method}"}
 		ret=""
 		unless obj.nil?
-
 			if method.nil?
 				method = "ident"
 			end
@@ -255,7 +292,7 @@ module ApplicationHelper
 			txt = obj.to_s
 			end
 			title = t(name, :obj => obj)
-			LOG.info (fname){"title=#{title}"}
+			#LOG.info (fname){"title=#{title}"}
 			link_to( txt, obj, {:title => title } )
 		end
 	end
