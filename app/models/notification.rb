@@ -121,13 +121,13 @@ class Notification < ActiveRecord::Base
 					#puts to_notify.inspect
 					notifs={}
 					notifs[:recordset]=to_notify
-					LOG.debug (fname){"fromuser='#{from.login}' frommail='#{from.email}' touser='#{user.login}' tomail='#{user.email}'"}
+					#LOG.debug (fname){"fromuser='#{from.login}' frommail='#{from.email}' touser='#{user.login}' tomail='#{user.email}'"}
 					email=PlmMailer.create_notify(notifs, from, user)
 					unless email.nil?
-						LOG.debug (fname){"email avant envoi='#{email}'"}
+						#LOG.debug (fname){"email avant envoi='#{email}'"}
 						email.set_content_type("text/html")
 						PlmMailer.deliver(email)
-						LOG.debug (fname){"email apres envoi='#{email}'"}
+						#LOG.debug (fname){"email apres envoi='#{email}'"}
 						cnt = to_notify.count
 						msg = :ctrl_mail_created_and_delivered
 					else

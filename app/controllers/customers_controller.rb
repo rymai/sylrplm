@@ -169,6 +169,26 @@ class CustomersController < ApplicationController
 		empty_favori_by_type(get_model_type(params))
 	end
 
+	#
+  # preparation du datafile a associer 
+  #
+	def new_datafile
+		fname= "#{self.class.name}.#{__method__}"
+    #LOG.debug (fname){"params=#{params.inspect}"}
+    @customer = Customer.find(params[:id])
+    ctrl_new_datafile(@customer)
+  end
+   	
+	#
+	# creation du datafile et association et liberation si besoin
+	#
+	def add_datafile
+		fname= "#{self.class.name}.#{__method__}"
+    #LOG.debug (fname){"params=#{params.inspect}"}
+    @customer = Customer.find(params[:id])
+    ctrl_add_datafile(@customer)
+	end
+	
 	private
 
 	def index_

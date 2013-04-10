@@ -8,7 +8,7 @@ class Plmobserver < ActiveRecord::Observer
 	def initialize(*args)
 		super
 		fname="#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"args=#{args.inspect}"}
+		#LOG.debug (fname) {"args=#{args.inspect}"}
 	end
 
 	def before_validation(object)
@@ -84,7 +84,7 @@ class Plmobserver < ActiveRecord::Observer
 
 	def add_notification(event_type, object)
 		fname="****************"+self.class.name+"."+__method__.to_s+":"
-		puts fname+event_type+":"+object.inspect
+		#puts fname+event_type+":"+object.inspect
 		unless object.model_name == self.model_name
 			params={}
 			params[:forobject_type] = object.model_name

@@ -8,6 +8,7 @@ class Project < ActiveRecord::Base
 	attr_accessor :user, :link_attributes
 
   has_many :datafiles, :dependent => :destroy
+  
   has_many :thumbnails, 
   	:class_name => "Datafile", 
   	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='#{::SYLRPLM::TYPE_DATAFILE_THUMBNAIL}')"

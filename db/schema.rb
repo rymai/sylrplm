@@ -98,7 +98,10 @@ ActiveRecord::Schema.define(:version => 0) do
 	create_table "datafiles", :force => true do |t|
 		t.integer  "owner_id"
 		t.integer  "typesobject_id"
+		t.integer  "customer_id"
 		t.integer  "document_id"
+		t.integer  "part_id"
+		t.integer  "project_id"
 		t.integer  "volume_id"
 		t.integer  "revision"
 		t.string   "ident"

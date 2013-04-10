@@ -33,7 +33,7 @@
 	</tr>
 	<% @projects[:recordset].each do |project| %>
 	<tr>
-		<td> <%= icone(project) %> <%= h_thumbnails(project)%> </td>
+		<td> <%= icone(project) %>  </td>
 		<td> <%= h_explorer project %> </td>
 		<td> <%= h_explorer project.typesobject, :name unless project.typesobject.nil? %></td>
 		<td> <%= h_explorer project.typeaccess, :name unless project.typeaccess.nil? %> </td>

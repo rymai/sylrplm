@@ -45,7 +45,7 @@ class DatafilesController < ApplicationController
 	def edit
 		@datafile = Datafile.find(params[:id])
 		@types    = Typesobject.find_for("datafile")
-		@document = Document.find(params["doc"]) if params["doc"]
+		#TODO@document = Document.find(params["doc"]) if params["doc"]
 	end
 
 	# POST /datafiles
@@ -140,7 +140,7 @@ class DatafilesController < ApplicationController
 			fields = @datafile.get_type_values
 			#puts "datafiles_controller.send_file_content:"+fields.inspect
 			# on utilise l'outil definis sur ce datafile seulement pour la visu ou edition, pas pour le download
-			unless fields["tool"].nil? || disposition == "attachment"
+			unless fields.nil? || fields["tool"].nil? || disposition == "attachment"
 				repos=@datafile.write_file_tmp
 				cmd="#{fields["tool"]} #{repos} &"
 				#puts "datafiles_controller.send_file_content:tool=#{fields["tool"]} cmd=#{cmd}"

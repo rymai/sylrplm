@@ -12,9 +12,10 @@ class Part < ActiveRecord::Base
 
 	attr_accessor :user, :link_attributes
 
-  has_many :datafiles, :dependent => :destroy
-  has_many :thumbnails, 
-  	:class_name => "Datafile", 
+	has_many :datafiles, :dependent => :destroy
+
+	has_many :thumbnails,
+  	:class_name => "Datafile",
   	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='#{::SYLRPLM::TYPE_DATAFILE_THUMBNAIL}')"
 
 	belongs_to :typesobject
@@ -87,8 +88,7 @@ class Part < ActiveRecord::Base
 	#def to_s
 	#	self.ident+"/"+self.revision+"-"+self.designation+"-"+self.typesobject.name+"-"+self.statusobject.name
 	#end
-
-  def user=(user)
+	def user=(user)
 		def_user(user)
 	end
 
@@ -133,6 +133,7 @@ class Part < ActiveRecord::Base
 		end
 		ret
 	end
+
 	def users
 		nil
 	end

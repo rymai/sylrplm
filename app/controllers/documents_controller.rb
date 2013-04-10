@@ -234,9 +234,28 @@ class DocumentsController < ApplicationController
     end
   end
 
-  # preparation du datafile a associer au document
+  #
+  # preparation du datafile a associer 
   #
 	def new_datafile
+		fname= "#{self.class.name}.#{__method__}"
+    #LOG.debug (fname){"params=#{params.inspect}"}
+    @document = Document.find(params[:id])
+    ctrl_new_datafile(@document)
+  end
+   	
+	#
+	# creation du datafile et association et liberation si besoin
+	#
+	def add_datafile
+		fname= "#{self.class.name}.#{__method__}"
+    #LOG.debug (fname){"params=#{params.inspect}"}
+    @document = Document.find(params[:id])
+     #LOG.debug (fname){"document=#{@document.inspect}"}
+    ctrl_add_datafile(@document)
+	end
+	
+	def new_datafile_old
 		fname= "#{self.class.name}.#{__method__}"
     #LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
@@ -275,11 +294,8 @@ class DocumentsController < ApplicationController
 			end
 		end
 	end
-
-	#
-	# creation du datafile et association au document et liberation si besoin
-	#
-	def add_datafile
+	
+	def add_datafile_old
 		fname= "#{self.class.name}.#{__method__}"
     #LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
@@ -311,6 +327,7 @@ class DocumentsController < ApplicationController
 					format.html { render :action => :new_datafile, :id => @document.id   }
 				end
 			end
+			
 	end
 
 	def add_docs
@@ -326,8 +343,8 @@ class DocumentsController < ApplicationController
     empty_favori_by_type(get_model_type(params))
   end
 
-  private
-
+private
+	
 	def show_
 		fname= "#{self.class.name}.#{__method__}"
     #LOG.debug (fname){"params=#{params.inspect}"}
@@ -344,5 +361,7 @@ class DocumentsController < ApplicationController
     #LOG.debug (fname){"params=#{params.inspect}"}
     @documents = Document.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
   end
+  
+  end
+  
 
-end

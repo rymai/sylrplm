@@ -139,6 +139,8 @@ en:
   label_all_variants: All variants
   btn_select: Browser
   label_icon: Icon
+  datafiles_list: Associated files
+  datafile_add: Add a file 
   # fin general
   # access
   legend_access: Enter access details
@@ -224,8 +226,6 @@ en:
   label_revision: Revision
   label_extension: Extension
   add_datafile: Add file
-  document_datafiles: Document files
-  datafile_add: Add a file
   label_nbfiles: Nb files
   check_out: Check Out
   is_check_out: Is Check Out

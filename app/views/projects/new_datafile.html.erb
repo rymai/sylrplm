@@ -1,0 +1,13 @@
+<h1><%= t(:datafile_add) %></h1>
+<% form_for @datafile, :html => { :multipart => true}, :url => { :action=>"add_datafile",:id=>@project.id }  do |f| %>
+<%= f.error_messages %>
+<%= hidden_field_tag "project_id", @project.id.to_s %>
+<%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f , :fonct=>"doc_new", :document=>@project}) %>
+<table class='menu_bas'>
+	<tr>
+		<td><%= f.submit t("create") %></td>
+		<td> <%= link_to t("list"), datafiles_path %> </td>
+		<td> <%= link_to t("project_show"), project_path(@project) %> </td>
+	</tr>
+</table>
+<% end %>

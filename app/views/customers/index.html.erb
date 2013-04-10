@@ -32,7 +32,7 @@
 	</tr>
 	<% @customers[:recordset].each do |customer| %>
 	<tr>
-		<td> <%= icone(customer) %><%= h_thumbnails(customer)%> </td>
+		<td> <%= icone(customer) %> </td>
 		<td> <%= h_explorer customer %> </td>
 		<td> <%= h_explorer customer.typesobject, :name unless customer.typesobject.nil? %> </td>
 		<td> <%= h customer.designation %> </td>

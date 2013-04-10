@@ -22,7 +22,8 @@
 	<%= f.label t(:label_filename) %>
 	<%= text_field_tag :filename, @datafile.filename, :disabled => true %>
 	<br/>
-	<% unless @datafile.document.nil? || !@datafile.document.can_be_check_in?(current_user) %>
+
+	<% if !@checkout_needed || ( !@datafile.document.nil? && @datafile.document.can_be_check_in?(current_user)) %>
 
 	<%= f.label "..." %>
 	<%= f.file_field(:uploaded_file) %>
@@ -38,6 +39,8 @@
 	<% end %>
 
 	<% end %>
+	
+	
 
 	<%= f.label t(:label_responsible) %>
 	<%= text_field_tag :owner, @datafile.owner.login,  :disabled => true %>

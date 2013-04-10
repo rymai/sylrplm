@@ -11,7 +11,11 @@ class Datafile < ActiveRecord::Base
   validates_presence_of :ident , :typesobject, :revision, :volume, :owner, :group, :projowner
   validates_uniqueness_of :ident, :scope => :revision
 
+  belongs_to :customer
   belongs_to :document
+  belongs_to :part
+  belongs_to :project
+  
   belongs_to :typesobject
   belongs_to :volume
   belongs_to :owner,
@@ -301,9 +305,10 @@ class Datafile < ActiveRecord::Base
     content = read_file
     repos=nil
     if content.length>0
-    	dir_repos=File.join("public","tmp")
+    	dir_repos=File.join("public")
+    	tmpfile=File.join("tmp", filename_repository)
     	FileUtils.mkdir_p(dir_repos) unless File.exists?(dir_repos)
-    		repos = File.join(dir_repos, filename_repository)
+    		repos = File.join(dir_repos, tmpfile)
     		LOG.info (fname) {"repository=#{repos}"}
 	      unless File.exists?(repos)
 		      f = File.open(repos, "wb")
@@ -315,7 +320,7 @@ class Datafile < ActiveRecord::Base
 		    	f.close
 	    	end
 	 	end
-	 	repos 
+	 	tmpfile 
   end
 
   def file_exists?

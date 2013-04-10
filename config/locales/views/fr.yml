@@ -139,6 +139,8 @@ fr:
   label_all_variants: Toutes variantes
   btn_select: Sélectionner
   label_icon: Icône
+  datafiles_list: Fichiers associés
+  datafile_add: Ajout d'un fichier 
   # fin general
   # access
   legend_access: Renseignez les propriétés de l'autorisation
@@ -225,8 +227,6 @@ fr:
   label_revision: Révision
   label_extension: Extension
   add_datafile: Ajouter fichier
-  document_datafiles: Fichiers associés
-  datafile_add: Ajout d'un fichier au document
   label_nbfiles: Nb fichiers
   button_check_out: "Réserver"
   is_check_out: "Est réservé"

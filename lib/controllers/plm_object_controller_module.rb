@@ -7,7 +7,7 @@ module Controllers
 	  # extend ActiveSupport::Concern
 
 		def add_favori
-			LOG.info("#{controller_class_name}.#{__method__}") { "params=#{params.inspect}" }
+			#LOG.info("#{controller_class_name}.#{__method__}") { "params=#{params.inspect}" }
 			model = get_model(params)
 			obj = model.find(params[:id])
 			@favori.add(obj)
@@ -15,9 +15,9 @@ module Controllers
 
 		def ctrl_add_forum(object)
 			fname = "#{self.class.name}.#{__method__}"
-			LOG.info (fname) { "params=#{params.inspect}" }
-			LOG.info (fname) { "object=#{object.inspect} " }
-			LOG.info (fname) { "typesobject=#{object.typesobject.inspect}" }
+			#LOG.info (fname) { "params=#{params.inspect}" }
+			#LOG.info (fname) { "object=#{object.inspect} " }
+			#LOG.info (fname) { "typesobject=#{object.typesobject.inspect}" }
 
 			relation = if params["relation_id"].empty?
 				forum_type = Typesobject.find(params[:forum][:typesobject_id])
@@ -206,6 +206,86 @@ module Controllers
 			#puts "application_controller.get_html_options:"+ret
 			ret
 		end
-
+		
+		private
+		
+		def ctrl_new_datafile(at_object)
+			@types  = Typesobject.find_for("datafile")
+			@checkout_needed = at_object.checkout_needed?
+			if @checkout_needed
+				check = Check.get_checkout(at_object)
+				tr_model = t("ctrl_#{at_object.model_name}")
+				unless check.nil?
+					flash[:notice] = t(:ctrl_object_already_checkout, :typeobj => tr_model, :ident => at_object.ident, :reason => check.out_reason)
+				else
+					if current_user.check_automatic			
+						check = Check.new(object_to_check: at_object, user: current_user, out_reason: t(:ctrl_checkout_auto))
+						if check.save
+						  #LOG.debug (fname){"check saved=#{check.inspect}"}
+							flash[:notice] = t(:ctrl_object_checkout, :typeobj => tr_model, :ident => at_object.ident, :reason => check.out_reason)
+						else
+							#LOG.debug (fname){"check errors=#{check.errors.inspect}"}
+							flash[:error] = t(:ctrl_object_not_checkout, :typeobj => tr_model, :ident => at_object.ident)
+							check = nil
+						end
+					else
+						check = nil
+						flash[:error] = t(:ctrl_object_not_checkout, :typeobj => tr_model, :ident => at_object.ident)
+					end
+				end
+				respond_to do |format|
+					@datafile = Datafile.new(user: current_user)
+					unless check.nil?	
+						#LOG.debug (fname){"document=#{@document.inspect}"}
+						flash[:notice] = t(:ctrl_object_checkout, :typeobj => tr_model, :ident => at_object.ident, :reason => check.out_reason)
+						format.html { render :action => :new_datafile, :id => at_object.id }
+						format.xml  { head :ok }
+					else
+						flash[:error] = t(:ctrl_object_not_checkout, :typeobj => tr_model, :ident => at_object.ident)
+						format.html { redirect_to(at_object) }
+						format.xml  { head :ok }
+					end
+				end
+			else
+				respond_to do |format|
+					@datafile = Datafile.new(user: current_user)
+					format.html { render :action => :new_datafile, :id => at_object.id }
+					format.xml  { head :ok }
+				end
+			end		
+		end
+	
+	
+		def ctrl_add_datafile(at_object)
+			fname= "#{self.class.name}.#{__method__}"
+	    #LOG.debug (fname){"params=#{params.inspect}"}
+			@datafile = at_object.datafiles.build(params[:datafile])
+			#LOG.debug (fname){"datafile=#{@datafile.inspect}"}
+			respond_to do |format|				
+				if at_object.save
+					if current_user.check_automatic	
+						check = Check.get_checkout(at_object)
+						unless check.nil?
+							check = check.checkIn({:in_reason => t("ctrl_checkin_auto")}, current_user)	
+							#LOG.debug (fname){"check errors==#{check.errors.inspect}"}
+							if check.save
+					  		#LOG.debug (fname){"check saved=#{check.inspect}"}
+								flash[:notice] = t(:ctrl_object_checkin, :typeobj => t("ctrl_#{at_object.model_name}"), :ident => at_object.ident, :reason => check.in_reason)
+							else
+								flash[:error] = t(:ctrl_object_not_checkin, :typeobj => t(:ctrl_document), :ident => at_object.ident)
+								check = nil
+							end
+						else
+							flash[:error] = t(:ctrl_object_not_checkout, :typeobj => t(:ctrl_document), :ident => at_object.ident)
+						end
+					end
+					format.html { redirect_to(at_object) }
+				else
+					flash[:error] = t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
+					@types = Typesobject.find_for("datafile")
+					format.html { render :action => :new_datafile, :id => at_object.id   }
+				end
+			end
+		end
 	end
 end

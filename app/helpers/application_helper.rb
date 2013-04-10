@@ -135,15 +135,12 @@ module ApplicationHelper
 	def icone(object)
 		type = "#{object.model_name}_#{object.typesobject.name}" unless object.typesobject.nil?
 		fic="/images/#{type}.png"
-
 		if !File.exists?("#{RAILS_ROOT}/public#{fic}")
 			type="#{object.model_name}"
 			fic="/images/#{type}.png"
-
 		end
 		mdl_name=t("ctrl_#{type.downcase}")
 		ret = "<img class='icone' src='#{fic}' title='#{mdl_name}'></img>"
-
 		unless @myparams[:list_mode].blank?
 			if @myparams[:list_mode] != t(:list_mode_details)
 				ret << h_thumbnails(object)
@@ -168,7 +165,7 @@ module ApplicationHelper
 		if obj.respond_to? :thumbnails
 			unless obj.thumbnails.nil?
 				obj.thumbnails.each do |img|
-					ret << "<img class='thumbnail' src=\"tmp/#{img.write_file_tmp}\"></img>"
+					ret << "<img class='thumbnail' src=\"#{img.write_file_tmp}\"></img>"
 				end
 			end
 		end

@@ -34,7 +34,7 @@
 	</tr>
 	<% @parts[:recordset].each do |part| %>
 	<tr>
-		<td><%= icone(part) %><%= h_thumbnails(part) %></td>
+		<td><%= icone(part) %></td>
 		<td><%= h_explorer part %></td>
 		<td><%= part.revision %></td>
 		<td><%= h_explorer part.typesobject, :name unless part.typesobject.nil? %> </td>

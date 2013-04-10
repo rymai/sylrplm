@@ -89,24 +89,49 @@ module Models
 				filter_access[:qry] = ""
 				filter_access[:values] = {}
 				mdl = eval self.model_name
-				if column_names.include?("projowner_id")
-					acc_public = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "public")
-					acc_confidential = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "confidential")
-					filter_access[:qry] = ":v_acc_public_id="+qry_projowner_typeaccess+" or :v_acc_confidential_id="+qry_projowner_typeaccess
-					filter_access[:values][:v_acc_public_id] = acc_public.id
-					filter_access[:values][:v_acc_confidential_id] = acc_confidential.id
-				else
-					filter_access[:values][:v_acc_public_id] = nil
-					filter_access[:values][:v_acc_confidential_id] =nil
+				if(false)
+					if column_names.include?("projowner_id")
+						acc_public = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "public")
+						acc_confidential = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "confidential")
+						filter_access[:qry] = ":v_acc_public_id="+qry_projowner_typeaccess+" or :v_acc_confidential_id="+qry_projowner_typeaccess
+						filter_access[:values][:v_acc_public_id] = acc_public.id
+						filter_access[:values][:v_acc_confidential_id] = acc_confidential.id
+					else
+						filter_access[:values][:v_acc_public_id] = nil
+						filter_access[:values][:v_acc_confidential_id] =nil
+					end
+					#puts "#{self.model_name}.#{__method__}:qry=#{filter_access[:qry]}:#{filter_access[:qry].length.to_s}"
+					unless user.nil? || !column_names.include?("group_id")
+						filter_access[:qry] += " or " unless filter_access[:qry] == ""
+						filter_access[:qry] += " group_id = :v_group_id"
+						filter_access[:values][:v_group_id] = user.group.id
+					end
 				end
-				#puts "#{self.model_name}.#{__method__}:qry=#{filter_access[:qry]}:#{filter_access[:qry].length.to_s}"
-				unless user.nil? || !column_names.include?("group_id")
-					filter_access[:qry] += " or " unless filter_access[:qry] == ""
-					filter_access[:qry] += " group_id = :v_group_id"
-					filter_access[:values][:v_group_id] = user.group.id
+
+				#
+				# lecture possible des projets et des groupes du user
+				#
+				unless user.nil?
+					if column_names.include?("group_id")
+						filter_access[:qry] = " group_id in ("
+						user.groups.each_with_index do |group,i|
+						filter_access[:qry] += group.id.to_s
+							filter_access[:qry] += "," if i<user.groups.size-1
+						end
+						filter_access[:qry] += ")"
+					end
+					if column_names.include?("projowner_id")
+						filter_access[:qry] += " or projowner_id in ("
+						user.projects.each_with_index do |project,i|
+						filter_access[:qry] += project.id.to_s
+							filter_access[:qry] += "," if i<user.projects.size-1
+						end
+						filter_access[:qry] += ")"
+					end
 				end
+
 				#puts self.model_name+".find_paginate:filter_access="+filter_access.inspect
-				unless params[:query].nil? || params[:query]==""
+				unless params[:query].nil? || params[:query].blank?
 					cond = get_conditions(params[:query])
 					#puts self.model_name+".find_paginate:cond="+cond.inspect
 					unless cond.nil?
@@ -122,7 +147,7 @@ module Models
 				else
 					conditions = [filter_access[:qry], filter_access[:values]]
 				end
-				#puts self.model_name+".find_paginate:conditions="+conditions.inspect
+				puts self.model_name+".find_paginate:conditions="+conditions.inspect
 				#puts self.model_name+".find_paginate:page="+params[:page].to_s
 				last_rev_only = false
 				unless user.nil?
@@ -153,7 +178,7 @@ module Models
 					:order => params[:sort],
 					:per_page => params[:nb_items])
 				end
-
+				puts self.model_name+".find_paginate:conditions="+conditions.inspect
 				#puts self.model_name+"."+__method__.to_s+":"+recordset.inspect
 				{:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
 			end
@@ -169,8 +194,8 @@ module Models
 			fname="#{self.class.name}.#{__method__}"
 			ret = false
 			unless (self.statusobject.nil? || ::Statusobject.get_last(self.model_name).nil?)
-				ret = (self.statusobject.rank == ::Statusobject.get_last(self.model_name).rank)
-				LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self.model_name).rank}=#{ret}"}
+			ret = (self.statusobject.rank == ::Statusobject.get_last(self.model_name).rank)
+			#LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self.model_name).rank}=#{ret}"}
 			end
 			ret
 		end
@@ -321,7 +346,7 @@ module Models
 				end
 			end
 			ret="#{self.ident}:#{ret}"
-			LOG.debug (fname) {"ret=#{ret}"}
+			#LOG.debug (fname) {"ret=#{ret}"}
 			ret
 		end
 
@@ -364,7 +389,7 @@ module Models
 		#  - 0 sans recherche du prochain numero de sequence
 		def set_default_values(next_seq)
 			fname = "#{self.class.name}.#{__method__}"
-			LOG.debug (fname){"next_seq=#{next_seq}, model_name=#{model_name}"}
+			#LOG.debug (fname){"next_seq=#{next_seq}, model_name=#{model_name}"}
 			self.attribute_names.each do |strcol|
 				old_value=  self[strcol]
 				col = ::Sequence.find_col_for(self.class.name, strcol)
@@ -386,9 +411,12 @@ module Models
 		# renvoie l'objet contenu dans l'attribut type_values
 		def get_type_values
 			if self.respond_to? :type_values
-				decod = ActiveSupport::JSON.decode(type_values)
-			#puts "get_type_values:values=#{type_values} decod=#{decod}"
-			#Rufus::Json.decode(type_values)
+				unless type_values.blank?
+					puts "get_type_values:values=#{type_values}"
+					decod = ActiveSupport::JSON.decode(type_values)
+				#puts "get_type_values:values=#{type_values} decod=#{decod}"
+				#Rufus::Json.decode(type_values)
+				end
 			end
 			decod
 		end

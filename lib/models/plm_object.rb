@@ -34,7 +34,11 @@ module Models
 			false
 			end
 		end
-
+		
+		def checkout_needed?
+			false
+		end
+		
 		def checked?
 			check = ::Check.get_checkout(self)
 			#file=self.filename
@@ -49,7 +53,6 @@ module Models
 
 		def last_revision
 			fname= "#{self.model_name}.#{__method__}"
-			LOG.debug (fname){"begin"}
 			cls=eval self.class.name
 			cls.find(:last, :order=>"revision ASC",  :conditions => ["ident = '#{ident}'"])
 		end
@@ -76,13 +79,13 @@ module Models
 		def revise_by_action?
 			fname= "#{self.model_name}.#{__method__}"
 			ret = has_attribute?("revision")
-			LOG.debug (fname){"#{self.ident}:#{ret}"}
+			#LOG.debug (fname){"#{self.ident}:#{ret}"}
 			ret
 		end
 
 		def revise
 			fname= "#{self.model_name}.#{__method__}"
-			LOG.debug (fname){"#{self.ident}"}
+			#LOG.debug (fname){"#{self.ident}"}
 			if(self.frozen?)
 				#LOG.debug (fname){"#{self.ident} frozen"}
 				# recherche si c'est la derniere revision
@@ -390,22 +393,22 @@ module Models
 			fname= "#{self.class.name}.#{__method__}"
 			LOG.info (fname) {"user=#{user.inspect} "}
 			unless user.nil?
-				LOG.info (fname) {"user=#{user.ident} "}
+				#LOG.info (fname) {"user=#{user.ident} "}
 				if self.respond_to? :owner
 					self.owner = user
-					LOG.info (fname) {"owner=#{self.owner.ident}"}
+					#LOG.info (fname) {"owner=#{self.owner.ident}"}
 				end
 				if self.respond_to? :group
 					self.group     = user.group
-					LOG.info (fname) {"group=#{self.group.ident}"}
+					#LOG.info (fname) {"group=#{self.group.ident}"}
 				end
 				if self.respond_to? :projowner
 					self.projowner = user.project
-					LOG.info (fname) {"projowner=#{self.projowner.ident}"}
+					#LOG.info (fname) {"projowner=#{self.projowner.ident}"}
 				end
 				if self.respond_to? :domain
 					self.domain = user.session_domain
-					LOG.info (fname) {"domain=#{self.domain}"}
+					#LOG.info (fname) {"domain=#{self.domain}"}
 				end
 			end
 

@@ -160,6 +160,27 @@ class PartsController < ApplicationController
 		#LOG.info ("#{self.class.name}.#{__method__}") { "params=#{params.inspect}" }
 		empty_favori_by_type(get_model_type(params))
 	end
+	
+	#
+  # preparation du datafile a associer 
+  #
+	def new_datafile
+		fname= "#{self.class.name}.#{__method__}"
+    #LOG.debug (fname){"params=#{params.inspect}"}
+    @part = Part.find(params[:id])
+    ctrl_new_datafile(@part)
+  end
+   	
+	#
+	# creation du datafile et association et liberation si besoin
+	#
+	def add_datafile
+		fname= "#{self.class.name}.#{__method__}"
+    #LOG.debug (fname){"params=#{params.inspect}"}
+    @part = Part.find(params[:id])
+    ctrl_add_datafile(@part)
+	end
+	
 	private
 
 	def show_

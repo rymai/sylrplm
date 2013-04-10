@@ -207,6 +207,14 @@ ActionController::Routing::Routes.draw do |map|
 	'parts/:id/select_view',
 	:controller => 'parts',
 	:action => 'select_view')
+	map.connect(
+	'parts/:id/new_datafile',
+	:controller => 'parts',
+	:action => 'new_datafile')
+	map.connect(
+	'parts/:id/add_datafile',
+	:controller => 'parts',
+	:action => 'add_datafile')
 
 	map.resources :projects, :has_many => :documents, :collection => { :empty_favori => :get}
 	map.connect(
@@ -253,6 +261,14 @@ ActionController::Routing::Routes.draw do |map|
 	'projects/:id/select_view',
 	:controller => 'projects',
 	:action => 'select_view')
+	map.connect(
+	'projects/:id/new_datafile',
+	:controller => 'projects',
+	:action => 'new_datafile')
+	map.connect(
+	'projects/:id/add_datafile',
+	:controller => 'projects',
+	:action => 'add_datafile')
 
 	map.resources :customers, :has_many => :documents, :collection => { :empty_favori => :get }
 	map.connect(
@@ -289,6 +305,14 @@ ActionController::Routing::Routes.draw do |map|
 	'customers/:id/select_view',
 	:controller => 'customers',
 	:action => 'select_view')
+	map.connect(
+	'customers/:id/new_datafile',
+	:controller => 'customers',
+	:action => 'new_datafile')
+	map.connect(
+	'customers/:id/add_datafile',
+	:controller => 'customers',
+	:action => 'add_datafile')
 
 	map.connect(
 	'users/:id/activate',

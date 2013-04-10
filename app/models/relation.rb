@@ -80,7 +80,7 @@ class Relation < ActiveRecord::Base
 			ret[rel.child_plmtype] << rel
 			end
 		end
-		LOG.info (fname){"cond=#{cond}, #{ret.count} relations trouvees"}
+		#LOG.info (fname){"cond=#{cond}, #{ret.count} relations trouvees"}
 		ret.each {|r| r.each {|rel| LOG.debug rel}}
 		ret
 	end
@@ -116,10 +116,10 @@ class Relation < ActiveRecord::Base
 		ret[:types_child] = types_child
 		ret[:types_plm]   = Typesobject.get_objects_with_type
 		ret[:types]       = Typesobject.get_types(:relation)
-		LOG.debug (fname) {"types_father=#{ret[:types_father]}"}
-		LOG.debug (fname) {"types_child=#{ret[:types_child]}"}
-		LOG.debug (fname) {"types_plm=#{ret[:types_plm]}"}
-		LOG.debug (fname) {"types=#{ret[:types].inspect}"}
+		#LOG.debug (fname) {"types_father=#{ret[:types_father]}"}
+		#LOG.debug (fname) {"types_child=#{ret[:types_child]}"}
+		#LOG.debug (fname) {"types_plm=#{ret[:types_plm]}"}
+		#LOG.debug (fname) {"types=#{ret[:types].inspect}"}
 		ret
 	end
 
