@@ -1,0 +1,59 @@
+<h1><%= t("subscription_show")%></h1>
+<p>
+	<b><%= t(:label_designation)%></b>
+	<%= h @subscription.designation %>
+</p>
+
+<p>
+	<b><%= t(:label_name)%></b>
+	<%= h @subscription.name %>
+</p>
+
+<p>
+	<b><%= t(:label_description)%></b>
+	<%= h @subscription.description %>
+</p>
+
+<p>
+	<b><%= t(:label_responsible)%></b>
+	<%= h @subscription.owner %>
+</p>
+
+<p>
+	<b><%= t(:label_oncreate)%></b>
+	<%= h @subscription.oncreate %>
+</p>
+
+<p>
+	<b><%= t(:label_onupdate)%></b>
+	<%= h @subscription.onupdate %>
+</p>
+
+<p>
+	<b><%= t(:label_ondestroy)%></b>
+	<%= h @subscription.ondestroy %>
+</p>
+<p>
+	<b><%= t(:label_fortypesobject)%></b>
+	<%= h_value_or_default(comma_links(@subscription.fortypesobject, :ident),t(:msg_tobedefine)) %>
+</p>
+<p>
+	<b><%= t(:label_ingroup)%></b>
+	<%= h_value_or_default(comma_links(@subscription.ingroup, :ident),t(:msg_tobedefine)) %>
+</p>
+<p>
+	<b><%= t(:label_inproject)%></b>
+	<%= h_value_or_default(comma_links(@subscription.inproject, :ident),t(:msg_tobedefine)) %>
+</p>
+
+<p>
+	<b><%= t(:label_domain)%></b>
+	<%= h @subscription.domain %>
+</p>
+
+<table class='menu_bas'>
+	<tr>
+		<td><%= link_to t("edit"), edit_subscription_path(@subscription)  %></td>
+		<td><%= link_to t("list"), subscriptions_path %></td>
+	</tr>
+</table

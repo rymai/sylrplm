@@ -1,0 +1,23 @@
+<% require 'yaml' %>
+<%= ::YAML::include("db/custos/sicm/sicm.custo/projects_subscriptions.yml") %>
+
+project_id_3_subscription_id_1_domain_sample.table:
+  project_id: 3
+  subscription_id: 1
+  domain: sample.table
+
+project_id_3_subscription_id_3_domain_sample.table:
+  project_id: 3
+  subscription_id: 3
+  domain: sample.table
+
+project_id_3_subscription_id_4_domain_sample.table:
+  project_id: 3
+  subscription_id: 4
+  domain: sample.table
+
+project_id_3_subscription_id_5_domain_sample.table:
+  project_id: 3
+  subscription_id: 5
+  domain: sample.table
+

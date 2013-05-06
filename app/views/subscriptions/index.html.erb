@@ -1,0 +1,53 @@
+<h1><%= t(:subscription_list) %><%= h_count_objects(@subscriptions) %></h1>
+<% unless @subscription.nil? %>
+<% form_for(@subscription) do |f| %>
+<%= f.error_messages %>
+<% end %>
+<% end %>
+<%= form_simple_query_helper('/subscription', @subscriptions) %>
+<table class='menu_bas'>
+	<tr>
+		<td><%= link_to t("new_subscription"), new_subscription_path %></td>
+		<td><%= show_help("help_subscriptions") %></td>
+	</tr>
+</table>
+<% if @myparams[:list_mode] == t(:list_mode_icon) %>
+<%= h_thumbnails_objs @subscriptions %>
+<% else %>
+<%= will_paginate(@subscriptions[:recordset]) %>
+<table>
+	<tr>
+		<th <%= sort_td_class_helper "name" %>><%= sort_link_helper t("label_name"), "name" %></th>
+		<th <%= sort_td_class_helper "designation" %>><%= sort_link_helper t("label_designation"), "designation" %></th>
+		<th <%= sort_td_class_helper "owner" %>><%= sort_link_helper t("label_responsible"), "owner_id" %></th>
+		<th <%= sort_td_class_helper "oncreate" %>><%= sort_link_helper t("label_oncreate"), "oncreate" %></th>
+		<th <%= sort_td_class_helper "onupdate" %>><%= sort_link_helper t("label_onupdate"), "onupdate" %></th>
+		<th <%= sort_td_class_helper "ondestroy" %>><%= sort_link_helper t("label_ondestroy"), "ondestroy" %></th>
+		<th><%= t(:label_fortypesobject)%></th>
+		<th><%= t(:label_ingroup)%></th>
+		<th><%= t(:label_inproject)%></th>
+	</tr>
+	<% @subscriptions[:recordset].each do |subscription| %>
+	<tr>
+		<td><%= h h_explorer subscription %></td>
+		<td><%= h subscription.designation %></td>
+		<td><%= h_explorer subscription.owner, :login %></td>
+		<td><%= h subscription.oncreate %></td>
+		<td><%= h subscription.onupdate %></td>
+		<td><%= h subscription.ondestroy %></td>
+		<td><%= h_value_or_default(comma_links(subscription.fortypesobject, :ident),t(:msg_tobedefine)) %></td>
+		<td><%= h_value_or_default(comma_links(subscription.ingroup, :ident),t(:msg_tobedefine)) %></td>
+		<td><%= h_value_or_default(comma_links(subscription.inproject, :ident),t(:msg_tobedefine)) %></td>
+		<td><%= link_to h_img_edit.to_s, edit_subscription_path(subscription) %></td>
+		<td><%= h_destroy(subscription) %></td>
+	</tr>
+	<% end %>
+</table>
+<% end %>
+<%= will_paginate(@subscriptions[:recordset]) %>
+<table class='menu_bas'>
+	<tr>
+		<td><%= link_to t("new_subscription"), new_subscription_path %></td>
+		<td><%= show_help("help_subscriptions") %></td>
+	</tr>
+</table>

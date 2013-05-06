@@ -1,0 +1,50 @@
+<fieldset>
+	<legend>
+		<%= t(:legend_subscription) %>
+	</legend>
+	<p>
+		<%= form.label :name %>
+		<br />
+		<%= form.text_field :name %>
+	</p>
+	<p>
+		<%= form.label :designation %>
+		<br />
+		<%= form.text_field :designation %>
+	</p>
+	<p>
+		<%= form.label :description %>
+		<br />
+		<%= form.text_area :description %>
+	</p>
+
+	<p>
+		<%= form.label :oncreate %>
+		<br />
+		<%= form.check_box :oncreate %>
+	</p>
+	<p>
+		<%= form.label :onupdate %>
+		<br />
+		<%= form.check_box :onupdate %>
+	</p>
+	<p>
+		<%= form.label :ondestroy %>
+		<br />
+		<%= form.check_box :ondestroy %>
+	</p>
+	<%= hidden_field :subscription , :owner_id %>
+
+	<label for="subscription_typesobject"> <%= t(:label_typesobject) %> </label>
+	<%= select_inout(form, @subscription, @fortypesobjects, :ident, :fortypesobject) %>
+
+	<label for="subscription_groups"> <%= t(:label_groups) %> </label>
+	<%= select_inout(form, @subscription, @ingroups, :name, :ingroup) %>
+
+	<label for="subscription_projects"> <%= t(:label_projects) %> </label>
+	<%= select_inout(form, @subscription, @inprojects, :ident, :inproject) %>
+	
+	<%= h_input_text(form , :domain) %>
+	<br/>
+	
+</fieldset>
