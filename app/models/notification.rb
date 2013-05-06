@@ -90,73 +90,142 @@ class Notification < ActiveRecord::Base
 		end
 		ret
 	end
+	# loop on user
 
 	def self.notify_all(id)
 		fname = "#{self.class.name}.#{__method__}"
 		from = User.find_by_login(::SYLRPLM::USER_ADMIN)
 		ret=[]
-		if id.nil? || id == "all"
-			notifs = self.find(:all, :conditions => ["notify_date is null"])
-		else
-			notifs = Notification.find(params[:id])
-		end
-		the_notifs=[]
-		notifs.each do |notif|
-			the_notifs << {:notif => notif, :to_notify => false, :notify => true}
-		end
-		User.all.each do |user|
-			cnt=0
-			msg=nil;
-			unless user.email.blank?
-				to_notify = []
-				the_notifs.each do |notif|
-					if notif[:notif].responsible == user
-						LOG.warn (fname){"to user='#{user.login}' resp='#{notif[:notif].responsible.login}'"}
-						notif[:to_notify] = true
-						to_notify << notif[:notif]
-					end
-				end
-				LOG.info(name){to_notify.count.to_s+" notification for "+user.login}
-				if to_notify.count > 0
-					#puts to_notify.inspect
-					notifs={}
-					notifs[:recordset]=to_notify
-					#LOG.debug (fname){"fromuser='#{from.login}' frommail='#{from.email}' touser='#{user.login}' tomail='#{user.email}'"}
-					email=PlmMailer.create_notify(notifs, from, user)
-					unless email.nil?
-						#LOG.debug (fname){"email avant envoi='#{email}'"}
-						email.set_content_type("text/html")
-						PlmMailer.deliver(email)
-						#LOG.debug (fname){"email apres envoi='#{email}'"}
-						cnt = to_notify.count
-						msg = :ctrl_mail_created_and_delivered
+		# all notifications send for all users
+		to_notify_all=[]
+		#
+		# loop on users with a valid email
+		#
+		User.find_with_mail.each do |user|
+			LOG.debug (fname) {"*** user=#{user}:#{user.subscriptions.count} subscriptions"}
+			cnt = 0
+			msg = nil
+			# notifications to send to the user
+			to_notify  = Hash.new
+			# all notifications for the user
+			the_notifs = Hash.new
+
+			#
+			# loop of subscriptions of the user
+			#
+			user.subscriptions.each do |subscription|
+				LOG.debug (fname) {"	*** subscription=#{subscription}"}
+				inproject = subscription.inproject_array
+				ingroup = subscription.ingroup_array
+				LOG.debug (fname) {"subscription.ingroup=#{ingroup}"}
+				LOG.debug (fname) {"subscription.inproject=#{inproject}"}
+				subscription.fortypesobject.each do |fortype|
+				#
+				# search for active notification (not yet notify)
+				#
+					if id.nil? || id == "all"
+						notifs = self.find(:all, :conditions => ["notify_date is null and forobject_type = '#{fortype.forobject}'"])
 					else
-						LOG.warn (fname){"message non cree pour #{user.login}"}
-						msg = :ctrl_mail_not_created
+						notifs = Notification.find(id)
 					end
-				else
-					msg = :ctrl_nothing_to_notify
+					if notifs.is_a?(Array)
+						notifs.each do |notif|
+							the_notifs[notif] = {:to_notify => false, :notify => true} if to_notify[notif].nil?
+						end
+					else
+					# only one notification was found
+						the_notifs[notifs] = {:to_notify => false, :notify => true} if to_notify[notifs].nil?
+					end
+					LOG.debug (fname) {"		*** fortype=#{fortype.forobject} / #{fortype.name} : the_notifs.count=#{the_notifs.count}"}
+					the_notifs.each do |notif, notify|
+						LOG.debug (fname) {"			*** notif=#{notif}, notify=#{notify}"}
+						# if the object is destroy, we can't retrieve group and projowner !!, then, no notif
+						#LOG.debug (fname) {"type=#{notif.forobject_type} id=#{notif.forobject_id}"}
+						begin
+							notif_obj = ::PlmServices.get_object(notif.forobject_type, notif.forobject_id)
+						rescue Exception => e
+							LOG.warn (fname) {"object no more existing=#{notif.forobject_type}.#{notif.forobject_id}:#{e}"}
+						end
+						unless notif_obj.nil?
+							if notif_obj.typesobject.name == fortype.name
+								#LOG.debug (fname) {"notif=#{notif} notif_obj=#{notif_obj}"}
+								LOG.debug (fname) {"subscription.ingroup=#{ingroup} include? notif_obj.group=#{notif_obj.group.name} "}
+								LOG.debug (fname) {"subscription.inproject=#{inproject} include? notif_obj.projowner=#{notif_obj.projowner.ident}"} if notif_obj.respond_to? :projowner
+								if ingroup.include?(notif_obj.group.name) || (notif_obj.respond_to? :projowner ? inproject.include?(notif_obj.projowner.ident) : true)
+									if to_notify[notif].nil?
+										notify[:to_notify] = true
+										to_notify[notif] = notify
+										cnt+=1
+										LOG.debug (fname) {"notif to_notify='#{notif}'"}
+									else
+										LOG.debug (fname) {"notif to_notify='#{notif}'  but already include"}
+									end
+								end
+							end
+						end
+					end
+
 				end
-			else
-				LOG.warn (fname){"pas de email pour #{user.login}"}
-				msg=:ctrl_user_no_email
 			end
-			if cnt == 0
-				the_notifs.each do |notif|
-					if notif[:notif].responsible == user
-						notif[:notify] = false
-					end
-				end
+			#
+			# send notifications for the user
+			msg = send_notifications(to_notify, from, user)
+			to_notify.each do |tonotif, notify|
+				to_notify_all << tonotif unless to_notify_all.include? tonotif
 			end
 			ret << { :user => user, :count => cnt, :msg => msg }
 		end
-		the_notifs.each do |notif|
-			if notif[:notify] == true
-				notif[:notif].update_attributes({:notify_date => Time.now})
-			end
+		to_notify_all.each do |notif|
+			notif.update_attributes({:notify_date => Time.now})
 		end
 		#LOG.debug (fname){"ret=#{ret.inspect}"}
 		ret
+	end
+
+	def could_show_object?
+		fname = "#{self.class.name}.#{__method__}"
+		ret = !(::Plmobserver::EVENTS_DESTROY.include? (self.event_type.to_sym))
+		#LOG.debug (fname){"EVENTS_DESTROY=#{::Plmobserver::EVENTS_DESTROY}:#{self.event_type}:ret=#{ret}"}
+		ret
+	end
+
+	def self.send_notifications(to_notify, from, user)
+		fname = "#{self.class.name}.#{__method__}"
+		LOG.info(name){to_notify.count.to_s+" notification to send for "+user.login}
+		txt=nil
+		if to_notify.count > 0
+			#puts to_notify.inspect
+			notifs = {}
+			recordset=[]
+			to_notify.each do |tonotif, notify|
+			#LOG.debug (fname) {"tonotif=#{tonotif.inspect}"}
+				recordset << tonotif
+			end
+			notifs[:recordset] = recordset
+			#LOG.debug (fname){"fromuser='#{from.login}' frommail='#{from.email}' touser='#{user.login}' tomail='#{user.email}'"}
+			email = PlmMailer.create_notify(notifs, from, user)
+			unless email.nil?
+				#LOG.debug (fname){"email avant envoi='#{email}'"}
+				email.set_content_type("text/html")
+				PlmMailer.deliver(email)
+				#LOG.debug (fname){"email apres envoi='#{email}'"}
+				cnt = to_notify.count
+				msg = :mail_delivered
+			else
+				LOG.warn (fname) {"#{t(:ctrl_mail_not_created)} pour #{user.login}"}
+				msg = :mail_not_created
+			end
+			recordset.each do |notif|
+				LOG.warn (fname) {"notif.notify_users=#{notif.notify_users}"}
+				prefixe = "#{notif.notify_users}," unless notif.notify_users.blank?
+				txt = "#{prefixe}#{user.login}:#{msg}"
+				#notif.update_attributes({:notify_date => Time.now, :notify_users => "#{txt}"})
+				notif.update_attributes({:notify_users => "#{txt}"})
+			end
+		else
+			msg = :nothing_to_notify
+		end
+		txt
 	end
 
 end

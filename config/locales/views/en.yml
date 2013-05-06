@@ -109,6 +109,8 @@ en:
   mnu_relations: Relations
   mnu_tools: Tools
   mnu_views: Views
+  mnu_subscriptions: Subscriptions
+  mnu_my_subscriptions: My subscriptions
   cut: "Cut"
   revise: "Revise"
   promote: "Promote"
@@ -327,7 +329,9 @@ en:
   label_event_type: Event type
   label_notify_date: Notify date
   label_path: Paths
-  button_notify_all: Notify all
+  label_notify_users: Nofified users
+  btn_notify_all: Notify all
+  btn_notify: Notify this event
   # parts
   legend_part: Enter part details
   part_edit: Edition article
@@ -464,6 +468,25 @@ en:
   msg_define_status_project: Please, define projects status
   msg_define_status_customer: Please, define customers status
   msg_define_status_forum:  Please, define discussions status
+  # subscription
+  new_subscription: New subscription
+  subscription_list: Listing of subscriptions
+  subscription_new: New subscription
+  subscription_show: Detail of the subscription
+  subscription_edit: Edit the subscription
+  legend_subscription: Subscription
+  label_subscription_fortypesobject_ids_in: Subscription objects types
+  label_subscription_fortypesobject_ids_out: Other objects types 
+  label_subscription_ingroup_ids_in: Subscription on groups
+  label_subscription_ingroup_ids_out: Other groups
+  label_subscription_inproject_ids_in: Subscription on projects
+  label_subscription_inproject_ids_out: Other projects
+  label_oncreate: On creation
+  label_onupdate: On edit
+  label_ondestroy: On destroy
+  label_fortypesobject: For types
+  label_ingroup: In groups
+  label_inproject: In projects
   # tools
   title_tools: Tools
   legend_preferences: Preferences
@@ -503,12 +526,6 @@ en:
   label_notification: Notifications
   label_time_zone: Time zone
   label_show_mail: Show mail adress
-  label_user_mail_option_all: "For any event on all my projects"
-  label_user_mail_option_selected: "For any event on the selected projects only..."
-  label_user_mail_option_only_my_events: "Only for things I watch or I'm involved in"
-  label_user_mail_option_only_assigned: "Only for things I am assigned to"
-  label_user_mail_option_only_owner: "Only for things I am the owner of"
-  label_user_mail_option_none: "No events"
   language_fr: French
   language_en: English
   label_user_role_ids_in: User roles

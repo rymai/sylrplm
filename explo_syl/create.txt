@@ -24,6 +24,8 @@ rake db:sessions:create
 ruby script/generate mailer PLMMailer toValidate validated
 ruby script/generate scaffold sequence object:string value:string min:string max:string
 
+ruby script/generate scaffold subscription designation:string description:text responsible:string group:string oncreate:boolean onupdate:boolean ondestroy:boolean
+
 # plugin pour la pagination 
 #script/plugin install git://github.com/mislav/will_paginate.git
 #To enable the library your Rails 2.1 (or later) project, use the gem configuration method in ?config/environment.rb?
@@ -602,7 +604,6 @@ end
       #TODO syl pour postgresql qui refuse le null
       e.text="text" if e.text.nil?
       
-
 ---
 --- export et import des custos
 ---

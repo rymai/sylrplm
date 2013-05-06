@@ -14,9 +14,9 @@ fr:
   ctrl_object_no_validers: "%{typeobj} '%{ident}' non promu de %{current_rank} à %{new_rank} car pas de valideur(s)"
   ctrl_object_not_promoted: "%{typeobj} '%{ident}' non promu de %{current_rank} à %{new_rank}"
   ctrl_user_no_email: "L'utilisateur '%{user}' n'a pas d'adresse mail"
-  ctrl_nothing_to_notify: "Rien à notifier à cet utilisateur"
-  ctrl_mail_created_and_delivered: "Mail de notification crée et envoyé"
-  ctrl_mail_not_created: "Mail de notification non crée"
+  nothing_to_notify: "Rien à notifier à %{var}"
+  mail_delivered: "Mail envoyé à %{var}"
+  mail_not_created: "Mail non crée pour %{var}"
   ctrl_object_demoted: "%{typeobj} '%{ident}' rétrogradé de %{current_rank} à %{new_rank}, valideurs=%{validersMail}"
   ctrl_object_not_demoted: "%{typeobj} '%{ident}' non rétrogradé de %{current_rank} à %{new_rank}"
   ctrl_object_revised: "%{typeobj} '%{ident}' revisé de %{previous_rev} à %{revision}"
@@ -112,7 +112,7 @@ fr:
   ctrl_organization: Organisation
   ctrl_parametrization: Paramétrages
   # notification
-  ctrl_notify: "%{nb_total} Notifications effectuées à %{nb_users} utilisateurs : %{notifications} "
+  ctrl_notify: "%{nb_total} Notifications effectuées à %{nb_users} utilisateurs "
   ctrl_notification: Notification
   # parts
   ctrl_part: Article
@@ -154,6 +154,8 @@ fr:
   ctrl_account_needed: Renseigner le compte
   # statusobjects
   ctrl_statusobject: Statut objet
+  # subscription
+  ctrl_subscription: Abonnement
   # typesobjects
   ctrl_typesobject: Type objet
   # users

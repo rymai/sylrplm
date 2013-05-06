@@ -176,6 +176,7 @@ class CustomersController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
     #LOG.debug (fname){"params=#{params.inspect}"}
     @customer = Customer.find(params[:id])
+    @datafile = Datafile.new({:user => current_user, :thecustomer => @customer})
     ctrl_new_datafile(@customer)
   end
    	

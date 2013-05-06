@@ -8,18 +8,32 @@ class Typesobject < ActiveRecord::Base
 	has_many :projects
 	has_many :customers
 
-	named_scope :order_default, :order=>"name ASC"
+	named_scope :order_default, :order=>"forobject ASC, name ASC"
 	named_scope :find_all , order_default.all
 	#
 	def initialize(params=nil)
 		super(params)
 		fname="Typesobject.#{__method__}"
-		#LOG.debug (fname){"params=#{params}:\n#{params.nil?}:#{self.inspect}"}
-		#LOG.debug (fname){"#{self.inspect}"}
+	#LOG.debug (fname){"params=#{params}:\n#{params.nil?}:#{self.inspect}"}
+	#LOG.debug (fname){"#{self.inspect}"}
 	end
 
 	def self.get_all
 		order_default.find_all
+	end
+
+	#
+	# return types for models observed by Plmobserver
+	#
+	def self.get_from_observer
+		fname="Typesobject.#{__method__}"
+		ret=[]
+		#LOG.info (fname) {"MODELS_OBSERVE=#{::Plmobserver::MODELS_OBSERVE}"}
+		order_default.find_all.each do |type|
+			#LOG.info (fname) {"type.name=#{type.forobject}"}
+			ret << type if ::Plmobserver::MODELS_OBSERVE.include? type.forobject
+		end
+		ret
 	end
 
 	def self.get_types(s_object)

@@ -152,7 +152,7 @@ module Models
 				last_rev_only = false
 				unless user.nil?
 					if user.is_admin?
-						# le user admin voit tout
+						puts self.model_name+"le user admin voit tout"
 						conditions = nil
 					last_rev_only = false
 					else

@@ -210,6 +210,8 @@ module Controllers
 		private
 		
 		def ctrl_new_datafile(at_object)
+			fname= "#{self.class.name}.#{__method__}"
+			#LOG.debug (fname){"datafile.doc=#{@datafile.document}"}
 			@types  = Typesobject.find_for("datafile")
 			@checkout_needed = at_object.checkout_needed?
 			if @checkout_needed
@@ -234,7 +236,6 @@ module Controllers
 					end
 				end
 				respond_to do |format|
-					@datafile = Datafile.new(user: current_user)
 					unless check.nil?	
 						#LOG.debug (fname){"document=#{@document.inspect}"}
 						flash[:notice] = t(:ctrl_object_checkout, :typeobj => tr_model, :ident => at_object.ident, :reason => check.out_reason)
@@ -248,7 +249,6 @@ module Controllers
 				end
 			else
 				respond_to do |format|
-					@datafile = Datafile.new(user: current_user)
 					format.html { render :action => :new_datafile, :id => at_object.id }
 					format.xml  { head :ok }
 				end

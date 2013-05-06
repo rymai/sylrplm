@@ -16,6 +16,7 @@
 				<%= h_menu("/main","help_main",t("mnu_main")) %>
 				<%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
 				<%= h_menu("/notifications?current_user", "help_notifications",t("mnu_my_notifications")) %>
+				<%= h_menu("/subscriptions?current_user", "help_subscriptions",t("mnu_my_subscriptions")) %>
 				<%= h_menu("/main/tools", "help_tools",t("mnu_tools")) %>
 			</fieldset>
 			<fieldset>
@@ -78,6 +79,7 @@
 				<%= h_menu("/relations","help_relations",t("mnu_relations")) %>
 				<%= h_menu("/views","help_views",t("mnu_views")) %>
 				<%= h_menu("/definitions", "help_flw_definitions",t("mnu_flw_definitions")) %>
+				<%= h_menu("/subscriptions", "help_subscriptions",t("mnu_subscriptions")) %>
 			</fieldset>
 			<% end %>
 			<% if admin_logged_in? %>

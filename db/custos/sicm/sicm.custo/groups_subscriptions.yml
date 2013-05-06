@@ -1,0 +1,25 @@
+subscription_id_5_group_id_101_domain_sicm.custo:
+  subscription_id: 5
+  group_id: 101
+  domain: sicm.custo
+
+subscription_id_1_group_id_101_domain_sicm.custo:
+  subscription_id: 1
+  group_id: 101
+  domain: sicm.custo
+
+subscription_id_3_group_id_101_domain_sicm.custo:
+  subscription_id: 3
+  group_id: 101
+  domain: sicm.custo
+
+subscription_id_2_group_id_101_domain_sicm.custo:
+  subscription_id: 2
+  group_id: 101
+  domain: sicm.custo
+
+subscription_id_4_group_id_101_domain_sicm.custo:
+  subscription_id: 4
+  group_id: 101
+  domain: sicm.custo
+

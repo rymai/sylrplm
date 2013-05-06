@@ -1,0 +1,55 @@
+
+Subscription_5: 
+  id: "5"
+  name: sylvia_analyst
+  designation: sylvia_analyst
+  description: sylvia_analyst
+  owner_id: "106"
+  oncreate: t
+  onupdate: t
+  ondestroy: t
+  domain: sicm.custo
+
+Subscription_1: 
+  id: "1"
+  name: bob_creator
+  designation: bob_creator
+  description: part and project fir creator
+  owner_id: "103"
+  oncreate: t
+  onupdate: t
+  ondestroy: t
+  domain: sicm.custo
+
+Subscription_3: 
+  id: "3"
+  name: charly_project_manager
+  designation: charly_project_manager
+  description: ""
+  owner_id: "104"
+  oncreate: t
+  onupdate: t
+  ondestroy: t
+  domain: sicm.custo
+
+Subscription_2: 
+  id: "2"
+  name: alice_consultant
+  designation: alice_consultant
+  description: alice_consultant
+  owner_id: "102"
+  oncreate: t
+  onupdate: t
+  ondestroy: t
+  domain: sicm.custo
+
+Subscription_4: 
+  id: "4"
+  name: robert_designer
+  designation: robert_designer
+  description: robert_designer
+  owner_id: "105"
+  oncreate: t
+  onupdate: t
+  ondestroy: t
+  domain: sicm.custo

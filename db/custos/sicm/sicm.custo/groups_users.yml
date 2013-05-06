@@ -3,11 +3,6 @@ user_id_1_group_id_1_domain_admin:
   group_id: 1
   domain: admin
 
-user_id_101_group_id_1_domain_admin:
-  user_id: 101
-  group_id: 1
-  domain: admin
-
 user_group_101_101: 
   user_id: "101"
   group_id: "101"

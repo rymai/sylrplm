@@ -34,11 +34,11 @@ module Models
 			false
 			end
 		end
-		
+
 		def checkout_needed?
 			false
 		end
-		
+
 		def checked?
 			check = ::Check.get_checkout(self)
 			#file=self.filename
@@ -395,23 +395,23 @@ module Models
 			unless user.nil?
 				#LOG.info (fname) {"user=#{user.ident} "}
 				if self.respond_to? :owner
-					self.owner = user
-					#LOG.info (fname) {"owner=#{self.owner.ident}"}
+				self.owner = user
+				#LOG.info (fname) {"owner=#{self.owner.ident}"}
 				end
 				if self.respond_to? :group
-					self.group     = user.group
-					#LOG.info (fname) {"group=#{self.group.ident}"}
+				self.group     = user.group
+				#LOG.info (fname) {"group=#{self.group.ident}"}
 				end
 				if self.respond_to? :projowner
-					self.projowner = user.project
-					#LOG.info (fname) {"projowner=#{self.projowner.ident}"}
+				self.projowner = user.project
+				#LOG.info (fname) {"projowner=#{self.projowner.ident}"}
 				end
 				if self.respond_to? :domain
-					self.domain = user.session_domain
-					#LOG.info (fname) {"domain=#{self.domain}"}
+				self.domain = user.session_domain
+				#LOG.info (fname) {"domain=#{self.domain}"}
 				end
 			end
-
+			#LOG.info (fname) {"self=#{self.inspect}"}
 		end
 
 		def initialize(*args)

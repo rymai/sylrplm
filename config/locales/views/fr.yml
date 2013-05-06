@@ -109,6 +109,8 @@ fr:
   mnu_relations: Relations
   mnu_tools: Outils
   mnu_views: Vues
+  mnu_subscriptions: Abonnements
+  mnu_my_subscriptions: Mes abonnements
   cut: "Couper"
   revise: "Réviser"
   promote: "Promouvoir"
@@ -327,7 +329,9 @@ fr:
   label_event_type: Type de l'évenement
   label_notify_date: Date de notification
   label_path: Chemins
-  button_notify_all: Notifier tout
+  label_notify_users: Utilisateurs notifiés
+  btn_notify_all: Notifier tout
+  btn_notify: Notifier cet évenement
   # parts
   legend_part: "Renseignez les propriétés de l'article"
   part_edit: Edition article
@@ -464,6 +468,25 @@ fr:
   msg_define_status_project: Définissez les statuts des projets
   msg_define_status_customer: Définissez les statuts des clients
   msg_define_status_forum: Définissez les statuts des discussions
+  # subscription
+  new_subscription: Nouvel abonnement
+  subscription_list: Liste des abonnements
+  subscription_new: Nouvel abonnement
+  subscription_show: Détail de l'abonnement
+  subscription_edit: Edition de l'abonnement
+  legend_subscription: Abonnement
+  label_subscription_fortypesobject_ids_in: Attribués
+  label_subscription_fortypesobject_ids_out: Non attribués 
+  label_subscription_ingroup_ids_in: Attribués
+  label_subscription_ingroup_ids_out: Non attribués
+  label_subscription_inproject_ids_in: Attribués
+  label_subscription_inproject_ids_out: Non attribués
+  label_oncreate: Sur création
+  label_onupdate: Sur édition
+  label_ondestroy: Sur destruction
+  label_fortypesobject: Pour les types
+  label_ingroup: Dans les groupes
+  label_inproject: Dans les projets
   # tools
   title_tools: Outils
   legend_preferences: Préférences
@@ -503,12 +526,6 @@ fr:
   label_notification: Notifications
   label_time_zone: Fuseau horaire
   label_show_mail: Montrer l'adresse mail
-  label_user_mail_option_all: "Pour tous les événements de tous mes projets"
-  label_user_mail_option_selected: "Pour tous les événements des projets sélectionnés..."
-  label_user_mail_option_only_my_events: Seulement pour ce que je surveille
-  label_user_mail_option_only_assigned: Seulement pour ce qui m'est assigné
-  label_user_mail_option_only_owner: Seulement pour ce que j'ai créé
-  label_user_mail_option_none: Aucune notification
   language_fr: Français
   language_en: Anglais
   label_user_role_ids_in: Attribués

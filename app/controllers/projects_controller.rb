@@ -42,7 +42,6 @@ class ProjectsController < ApplicationController
 		end
 	end
 
-	
 	# GET /projects/new
 	# GET /projects/new.xml
 	# nouveau projet
@@ -185,29 +184,30 @@ class ProjectsController < ApplicationController
 		#puts "#{self.class.name}.#{__method__}:#{params.inspect}"
 		empty_favori_by_type(get_model_type(params))
 	end
-	
+
 	#
-  # preparation du datafile a associer 
-  #
+	# preparation du datafile a associer
+	#
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
-    #LOG.debug (fname){"params=#{params.inspect}"}
-    @project = Project.find(params[:id])
-    ctrl_new_datafile(@project)
-  end
-   	
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@project = Project.find(params[:id])
+		@datafile = Datafile.new({:user => current_user, :theproject => @project})
+		ctrl_new_datafile(@project)
+	end
+
 	#
 	# creation du datafile et association et liberation si besoin
 	#
 	def add_datafile
 		fname= "#{self.class.name}.#{__method__}"
-    #LOG.debug (fname){"params=#{params.inspect}"}
-    @project = Project.find(params[:id])
-    ctrl_add_datafile(@project)
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@project = Project.find(params[:id])
+		ctrl_add_datafile(@project)
 	end
-	
+
 	private
-	
+
 	def show_
 		fname= "#{controller_class_name}.#{__method__}"
 		define_view

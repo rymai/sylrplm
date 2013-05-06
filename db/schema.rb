@@ -291,6 +291,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.text     "event_type"
 		t.date     "event_date"
 		t.date     "notify_date"
+		t.string   "notify_users"
 		t.datetime "created_at"
 		t.datetime "updated_at"
 	end
@@ -471,6 +472,51 @@ ActiveRecord::Schema.define(:version => 0) do
 
 	add_index "statusobjects", ["forobject", "rank", "name"], :name => "index_statusobjects_on_object_and_rank_and_name", :unique => true
 
+	create_table "subscriptions" , :force => true do |t|
+		t.string   "name"
+		t.string "designation"
+		t.text  "description"
+		t.integer "owner_id"
+		t.boolean "oncreate"
+		t.boolean "onupdate"
+		t.boolean "ondestroy"
+		t.datetime "created_at"
+		t.datetime "updated_at"
+		t.string   "domain"
+	end
+
+	add_index "subscriptions", ["name"], :name => "index_subscriptions_on_name", :unique => true
+
+	create_table "subscriptions_typesobjects", :id => false, :force => true do |t|
+		t.integer  "subscription_id",    :null => false
+		t.integer  "typesobject_id",    :null => false
+		t.datetime "created_at"
+		t.datetime "updated_at"
+		t.string   "domain"
+	end
+
+	add_index "subscriptions_typesobjects", ["subscription_id", "typesobject_id"], :name => "index_subscription_typesobjects_on_subscription_id_and_typesobject_id", :unique => true
+
+	create_table "projects_subscriptions", :id => false, :force => true do |t|
+		t.integer  "subscription_id",    :null => false
+		t.integer  "project_id",    :null => false
+		t.datetime "created_at"
+		t.datetime "updated_at"
+		t.string   "domain"
+	end
+
+	add_index "projects_subscriptions", ["subscription_id", "project_id"], :name => "index_subscription_projects_on_subscription_id_and_project_id", :unique => true
+
+	create_table "groups_subscriptions", :id => false, :force => true do |t|
+		t.integer  "subscription_id",    :null => false
+		t.integer  "group_id",    :null => false
+		t.datetime "created_at"
+		t.datetime "updated_at"
+		t.string   "domain"
+	end
+
+	add_index "groups_subscriptions", ["subscription_id", "group_id"], :name => "index_subscription_groups_on_subscription_id_and_group_id", :unique => true
+
 	create_table "typesobjects", :force => true do |t|
 		t.string   "forobject"
 		t.string   "name"
@@ -496,7 +542,6 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "role_id"
 		t.integer  "volume_id"
 		t.integer  "nb_items"
-		t.integer  "notification"
 		t.boolean  "last_revision"
 		t.boolean  "check_automatic"
 		t.boolean  "show_mail"

@@ -43,9 +43,6 @@
 	<% end %>
 	<% end %>
 
-	<%= form.label t(:label_notification) %>
-	<%= form.select(:notification, options_for_select(@notifications)) %>
-	<br/>
 	<%= form.label t(:label_time_zone) %>
 	<%= form.select(:time_zone, options_for_select(User.time_zones, @the_user.time_zone), :include_blank => true) %>
 	<br/>

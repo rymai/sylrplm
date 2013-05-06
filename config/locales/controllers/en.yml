@@ -14,9 +14,9 @@ en:
   ctrl_object_no_validers: "%{typeobj} %{ident} not promote from %{current_rank} to %{new_rank} because no validers(s)"
   ctrl_object_not_promoted: "%{typeobj} %{ident} not promote from %{current_rank} to %{new_rank}}"
   ctrl_user_no_email: "User %{user} have no mail"
-  ctrl_nothing_to_notify: "Nothing to notify"
-  ctrl_mail_created_and_delivered: "Mail created and send"
-  ctrl_mail_not_created: "Mail not created"
+  nothing_to_notify: "Nothing to notify to %{var}"
+  mail_delivered: "Mail send to %{var}"
+  mail_not_created: "Mail not created for %{var}"
   ctrl_object_demoted: "%{typeobj} %{ident} was successfully demote from %{current_rank} to %{new_rank}, validers=%{validersMail}"
   ctrl_object_not_demoted: "%{typeobj} %{ident} not demote from %{current_rank} to %{new_rank}}"
   ctrl_object_revised: "%{typeobj} %{ident} was successfully revised from %{previous_rev} to %{revision}"
@@ -112,7 +112,7 @@ en:
   ctrl_organization: Organization
   ctrl_parametrization: Parametrization
   # notification
-  ctrl_notify: "%{nb_total} Notifications send to %{nb_users} users : %{notifications} "
+  ctrl_notify: "%{nb_total} Notifications send to %{nb_users} users "
   ctrl_notification: Notification
   # parts
   ctrl_part: Article
@@ -154,6 +154,8 @@ en:
   ctrl_account_needed: Fill the account
   # statusobjects
   ctrl_statusobject: Object status
+  # subscription
+  ctrl_subscription: Subscription
   # typesobjects
   ctrl_typesobject: Object type
   # users

@@ -1,0 +1,15 @@
+<h1><%= t(:subscription_new) %></h1>
+<% fonct="new" %>
+<% form_for @subscription  do |form| %>
+<%= form.error_messages %>
+
+	<%= render(:partial => "subscriptions/edit",:locals => { :form => form, :fonct => fonct }) %>
+	<table class='menu_bas'>
+		<tr>
+			<td> <%= submit_tag t("update") %> </td>
+			<td> <%= link_to t("explorer"), @subscription %> </td>
+			<td> <%= link_to t("list"), subscriptions_path %> </td>
+		</tr>
+	</table>
+
+<%end %>

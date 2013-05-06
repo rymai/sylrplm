@@ -1,0 +1,27 @@
+project_id_2_subscription_id_1_domain_admin:
+  project_id: 2
+  subscription_id: 1
+  domain: admin
+
+project_id_2_subscription_id_2_domain_admin:
+  project_id: 2
+  subscription_id: 2
+  domain: admin
+
+project_id_2_subscription_id_3_domain_admin:
+  project_id: 2
+  subscription_id: 3
+  domain: admin
+
+project_id_2_subscription_id_4_domain_admin:
+  project_id: 2
+  subscription_id: 4
+  domain: admin
+
+project_id_2_subscription_id_5_domain_admin:
+  project_id: 2
+  subscription_id: 5
+  domain: admin
+
+
+

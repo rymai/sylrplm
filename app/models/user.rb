@@ -17,22 +17,12 @@ class User < ActiveRecord::Base
 	has_and_belongs_to_many :roles
 	has_and_belongs_to_many :groups
 	has_and_belongs_to_many :projects
-	#has_many :projects_users, :dependent => :delete_all
-	#has_many :projects, :through => :projects_users
+	has_many :subscriptions, :foreign_key => :owner_id, :dependent => :delete_all
 
 	validates_presence_of     :login, :typesobject
 	validates_uniqueness_of   :login
 
 	validates_confirmation_of :password
-
-	MAIL_NOTIFICATION_OPTIONS = [
-		[0, :label_user_mail_option_all],
-		[1, :label_user_mail_option_selected],
-		[2, :label_user_mail_option_only_my_events],
-		[3, :label_user_mail_option_only_assigned],
-		[4, :label_user_mail_option_only_owner],
-		[5, :label_user_mail_option_none]
-	]
 
 	#
 	# User and Group share this method, which returns login and name respectively
@@ -312,7 +302,9 @@ class User < ActiveRecord::Base
 
 	# peut creer des objets avec accessor
 	def may_access?
-		!self.role.nil? && !self.group.nil? && !self.project.nil?
+		ret=!self.role.nil? && !self.group.nil? && !self.project.nil?
+		puts "User.may_access?:#{ret}"
+		ret
 	end
 
 	# peut se connecter
@@ -325,20 +317,16 @@ class User < ActiveRecord::Base
     ":"+ret.to_s
 		ret
 	end
-	
+
 	# verifie si le user a un contexte de connexion : role, group, projet deja defini
 	def have_context?
 		unless self.role.nil? || self.group.nil? || self.project.nil?
-			ret=true
+		ret=true
 		end
 		ret
 	end
 
-	def self.notifications
-		MAIL_NOTIFICATION_OPTIONS
-	end
-
-	def v_notification
+	def v_notification_obsolete
 		unless self.notification.nil?
 			ret=User.notifications
 		ret=ret[self.notification]
@@ -372,7 +360,7 @@ class User < ActiveRecord::Base
 		"#{first_name} #{last_name} (#{typesobject.ident})"
 	end
 
-def self.encrypted_password(pwd, salt)
+	def self.encrypted_password(pwd, salt)
 		#puts __FILE__+".encrypted_password:"+pwd.to_s+":"+salt.to_s
 		string_to_hash = pwd + "wibble" + salt
 		Digest::SHA1.hexdigest(string_to_hash)
@@ -381,7 +369,11 @@ def self.encrypted_password(pwd, salt)
 	def self.find_all
 		find(:all, :order=>"login ASC")
 	end
-	
+
+	def self.find_with_mail
+		find(:all, :order => "login ASC", :conditions => 'email IS NOT NULL')
+	end
+
 	#user is it a valider ?
 	def is_valider
 		ret=false
@@ -396,11 +388,6 @@ def self.encrypted_password(pwd, salt)
 	#          :conditions => "roles.title like 'valid%'",
 	#          :joins => "inner join roles on users.role_id = roles.id")
 	end
-	
-	
-	
-
-	
 
 	# recherche du theme
 	def self.find_theme(session)
@@ -505,12 +492,11 @@ def self.encrypted_password(pwd, salt)
 		end
 		ret
 	end
-	
+
 	private
 
 	def create_new_salt
 		self.salt = self.object_id.to_s + rand.to_s
 	end
-
 
 end

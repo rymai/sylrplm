@@ -165,7 +165,12 @@ namespace :sylrplm do
                 if objdomain == domain
                   out_yml.write( obj.to_yaml)
                   reflections.each do |r|
-                    ext_ids = obj.send("#{r.association_foreign_key}s")
+                  	rname = r.name.to_s
+                  	#puts "reflexion=#{r.inspect} dernier caractere=#{rname[rname.length-1,1]}"                	
+                    rname = rname.chop if rname[rname.length-1,1]=="s"
+                    #puts "**************** rname=#{rname}"
+                    #ext_ids = obj.send("#{r.association_foreign_key}s")
+                    ext_ids = obj.send("#{rname}_ids")
                     if ext_ids.count>0
                       #rel_yml = File.open("#{fixtures_path}/#{r.options[:join_table]}.yml", "a")
                       ext_ids.each do |ext_id|

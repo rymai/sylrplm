@@ -9,8 +9,8 @@ Document_3:
   designation: Designation document
   description: ""
   date: "2012-12-29"
-  group_id: "1"
-  projowner_id: "1"
+  group_id: "101"
+  projowner_id: "3"
   domain: sample.table
   type_values: 
 
@@ -39,7 +39,7 @@ Document_5:
   designation: Designation document
   description: ""
   date: "2012-12-29"
-  group_id: "1"
-  projowner_id: "1"
+  group_id: "101"
+  projowner_id: "3"
   domain: sample.table
   type_values: 

@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  designation: MyString
+  description: MyText
+  responsible: MyString
+  group: MyString
+  oncreate: false
+  onupdate: false
+  ondestroy: false
+
+two:
+  designation: MyString
+  description: MyText
+  responsible: MyString
+  group: MyString
+  oncreate: false
+  onupdate: false
+  ondestroy: false

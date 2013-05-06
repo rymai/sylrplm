@@ -10,6 +10,7 @@ class Group < ActiveRecord::Base
 	validates_uniqueness_of :name
 	has_and_belongs_to_many :users
 
+	has_and_belongs_to_many :subscriptions
 	#has_many :group_definitions, :dependent => :delete_all
 	#has_many :definitions, :through => :group_definitions
 

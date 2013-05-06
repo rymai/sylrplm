@@ -31,7 +31,6 @@ class UsersController < ApplicationController
 		@groups  = Group.all
 		@projects  = Project.all
 		@themes  = get_themes(@theme)
-		@notifications=get_notifications(@notification)
 		@time_zones=get_time_zones(@time_zone)
 		@volumes = Volume.find_all
 		@types    = Typesobject.get_types("user")
@@ -49,7 +48,6 @@ class UsersController < ApplicationController
 		@groups  = Group.all
 		@projects  = Project.all
 		@themes  = get_themes(@theme)
-		@notifications = get_notifications(@the_user.notification)
 		@time_zones = get_time_zones(@the_user.time_zone)
 		@volumes = Volume.find_all
 		@types    = Typesobject.get_types("user")
@@ -58,7 +56,6 @@ class UsersController < ApplicationController
 
 	# GET /users/1/reset_passwd
 	def reset_passwd
-		puts "users_controller.reset_passwd:#{params.inspect}"
 		@the_user = User.find(params[:id])
 		@the_user.reset_passwd
 		respond_to do |format|
@@ -75,13 +72,11 @@ class UsersController < ApplicationController
 	end
 
 	def create
-		#puts "users_controller.create:#{params["user"].inspect}"
 		@the_user    = User.new(params["user"])
 		@roles   = Role.all
 		@groups   = Group.all
 		@projects  = Project.all
 		@themes  = get_themes(@theme)
-		@notifications = get_notifications(@the_user.notification)
 		@time_zones = get_time_zones(@the_user.time_zone)
 		@volumes = Volume.find_all
 		@types    = Typesobject.get_types("user")
@@ -99,14 +94,12 @@ class UsersController < ApplicationController
 	end
 
 	def update
-		puts "users_controller.update:params="+params.inspect
 		@the_user    = User.find(params[:id])
 		@volumes = Volume.find_all
 		@roles   = Role.all
 		@projects  = Project.all
 		@groups   = Group.all
 		@themes = get_themes(@theme)
-		@notifications = get_notifications(@the_user.notification)
 		@time_zones = get_time_zones(@the_user.time_zone)
 		@types    = Typesobject.get_types("user")
 		@the_user.update_accessor(current_user)
@@ -149,7 +142,6 @@ class UsersController < ApplicationController
 	def account_edit
 		@the_user = User.find(params[:id])
 		@themes  = get_themes(@theme)
-		@notifications = get_notifications(@the_user.notification)
 		@time_zones = get_time_zones(@the_user.time_zone)
 	end
 
@@ -162,7 +154,6 @@ class UsersController < ApplicationController
 		#puts "users_controller.account_update:params="+params.inspect
 		@the_user    = User.find(params[:id])
 		@themes  = get_themes(@theme)
-		@notifications = get_notifications(@the_user.notification)
 		@time_zones = get_time_zones(@the_user.time_zone)
 		#puts "users_controller.update:password=#{params[:user][:password]}"
 		ok=true
@@ -209,12 +200,6 @@ class UsersController < ApplicationController
 	end
 
 	private
-
-	def get_notifications(default)
-		#renvoie la liste des notifications
-		lst=User.notifications
-		get_html_options(lst,default,true)
-	end
 
 	def get_time_zones(default)
 		#renvoie la liste des time zone

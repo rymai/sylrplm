@@ -38,7 +38,7 @@ class DocumentsController < ApplicationController
   # GET /documents/new.xml
   def new
     fname= "#{self.class.name}.#{__method__}"
-    #LOG.debug (fname) {"params=#{params.inspect}"}
+    LOG.debug (fname) {"params=#{params.inspect}"}
     params={}
     @document = Document.new(:user => current_user)
     @types    = Document.get_types_document
@@ -65,7 +65,7 @@ class DocumentsController < ApplicationController
   # POST /documents.xml
   def create
     fname= "#{self.class.name}.#{__method__}"
-    #LOG.debug (fname) {"params=#{params.inspect}"}
+    LOG.debug (fname) {"params=#{params.inspect}"}
     #contournement pour faire le upload apres la creation pour avoir la revision dans
     #repository !!!!!!!!!!!!!!
     @document = Document.new(params[:document])
@@ -241,6 +241,7 @@ class DocumentsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
     #LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
+    @datafile = Datafile.new({:user => current_user, :thedocument => @document})
     ctrl_new_datafile(@document)
   end
    	
@@ -253,6 +254,7 @@ class DocumentsController < ApplicationController
     @document = Document.find(params[:id])
      #LOG.debug (fname){"document=#{@document.inspect}"}
     ctrl_add_datafile(@document)
+    LOG.debug (fname){"datafile=#{@datafile.inspect}"}
 	end
 	
 	def new_datafile_old

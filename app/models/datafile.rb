@@ -34,6 +34,20 @@ class Datafile < ActiveRecord::Base
 		self.volume    = user.volume
 	end
 
+	def thecustomer=(obj)
+		self.customer=obj
+	end
+	def thedocument=(obj)
+		self.document=obj
+	end
+	def thepart=(obj)
+		self.part=obj
+	end
+	def theproject=(obj)
+		self.project=obj
+	end
+	
+
   def update_attributes_repos(params, user)
     fname= "#{self.class.name}.#{__method__}"
     parameters = params[:datafile]

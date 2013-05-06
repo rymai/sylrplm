@@ -104,19 +104,16 @@ class NotificationsController < ApplicationController
 	def notify
 		fname=self.class.name+"."+__method__.to_s+":"
 		#puts fname+params[:id]+":"
-		st=Notification.notify_all(params[:id])
-		notifs=""
-		nb_users=0
-		nb_total=0
+		st = Notification.notify_all(params[:id])
+		nb_users = 0
+		nb_total = 0
 		# message sur le nombre de notifs par user
 		st.each do |cnt|
-			notifs+="<br/>" if nb_users > 0
-			notifs+=cnt[:user].login+":"+cnt[:count].to_s+":"+t(cnt[:msg])
-			nb_total+=cnt[:count]
-			nb_users+=1
+			nb_total += cnt[:count]
+			nb_users += 1
 		end
 		#puts name+nb_users.to_s+"."+nb_total.to_s+":"+notifs
-		flash[:notice] = t(:ctrl_notify, :nb_total => nb_total, :nb_users => nb_users, :notifications => notifs)
+		flash[:notice] = t(:ctrl_notify, :nb_total => nb_total, :nb_users => nb_users)
 		respond_to do |format|
 			format.html { redirect_to(notifications_url) }
 			format.xml  { head :ok }

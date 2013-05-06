@@ -357,6 +357,28 @@ module ApplicationHelper
 	end
 
 	#
+	# translate the second part of the message (after ":")
+	# => send the first part as a translate variable
+	# exemple : notifications.send_notifications send "#{user.login}:#{msg}", msg could be nothing_to_notify,mail_delivered or mail_not_created
+	def h_tr_messag(msg)
+		fname=self.class.name+"."+__method__.to_s
+		ret=""
+		unless msg.blank?
+			msg.split(",").each do |u|
+			#LOG.info (fname){"part of message=#{u}"}
+				fields = u.split(":")
+				ret += "," unless ret.blank?
+				if fields.count>1
+					ret += t(fields[1], :var => fields[0])
+				else
+				ret += fields[0]
+				end
+			end
+		end
+		ret
+	end
+
+	#
 	#     display_time(workitem.dispatch_time)
 	#         # => Sat Mar 1 20:29:44 2008 (1d16h18m)
 	#
@@ -533,24 +555,33 @@ module ApplicationHelper
 		html
 	end
 
-	def select_inout(form, object, values, field)
+	# @argum assoc_name contient le nom de l'association, exemple :ongroup pour subscription vers les groupes
+	#  								exemple: <%= select_inout(form, @subscription, @ongroups, :name, :ongroup) %>
+	#                   si pas de valeur, on prend le nom par defaut dans la le 1er objet de la liste des valeurs :group
+	#
+	def select_inout(form, object, values, field, assoc_name=nil)
 		fname = "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"object=#{object}"}
-		LOG.debug (fname){"values=#{values}"}
+		LOG.debug (fname){"values=#{values}, field=#{field}"}
 		html = ""
 		unless values.nil? || values.count == 0
 			#user
 			mdl_object=object.model_name
 			#group
-			mdl_assoc=values[0].model_name
+			if assoc_name.nil?
+			mdl_assoc = values[0].model_name
+			else
+			mdl_assoc = assoc_name
+			end
 			#user_groups
-			select_id=mdl_object+"_"+mdl_assoc+"_ids"
+			select_id="#{mdl_object}_#{mdl_assoc}_ids"
 			#user[role_ids][]
-			select_name=mdl_object+"["+mdl_assoc+"_ids][]"
+			select_name="#{mdl_object}[#{mdl_assoc}_ids][]"
 			#role_ids
-			method=(mdl_assoc+"_ids").to_sym
+			method=("#{mdl_assoc}_ids").to_sym
 			LOG.debug (fname){"method=#{method}"}
 			#the_selected=object.method(method).call: ko dans certains cas (securite!!)
+
 			the_selected=object.send(method)
 			#puts "select_inout:object="+object.model_name+" method="+method.to_s+" sel="+the_selected.inspect
 			#label_user_groups_out, label_user_groups_in

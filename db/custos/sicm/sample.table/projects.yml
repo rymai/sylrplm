@@ -5,13 +5,13 @@
 
 Project_3: 
   id: "3"
-  owner_id: "1"
+  owner_id: "101"
   typesobject_id: "997141214"
   statusobject_id: "10"
   ident: PROJET TABLE
   designation: Designation projet
   description: example
   date: "2012-11-01"
-  group_id: "1"
+  group_id: "101"
   typeaccess_id: "678514879"
   domain: sample.table

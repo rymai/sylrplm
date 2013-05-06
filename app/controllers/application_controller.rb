@@ -31,15 +31,18 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user(redirect=true)
+    puts "debut de check_user:redirect=#{redirect}"
     flash[:notice] = nil
-    if !current_user.may_access?
+    unless current_user.may_access?
+    	puts "check_user:user not accessible"
       flash[:notice] =""
       flash[:notice] += t(:ctrl_user_without_roles )+" " if current_user.role.nil?
       flash[:notice] += t(:ctrl_user_without_groups )+" " if current_user.group.nil?
       flash[:notice] += t(:ctrl_user_without_projects )+" " if current_user.project.nil?
       #puts "check_user:"+redirect.to_s+":"+flash[:notice]
-      redirect_to(:action => "index") if redirect && !flash[:notice].empty?
+      redirect_to(:action => "index") if redirect && !flash[:notice].blank?
     end
+    puts "fin de check_user"
     flash[:notice]
   end
 
@@ -71,6 +74,7 @@ class ApplicationController < ActionController::Base
         format.html{redirect_to_main}
       end
     end
+    puts "fin de check_init"
   end
 
   def event
@@ -114,6 +118,7 @@ class ApplicationController < ActionController::Base
         end
       end
     end
+    puts "fin de set_locale"
   end
   
   # definition du domain en cours
@@ -155,6 +160,7 @@ class ApplicationController < ActionController::Base
     WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
     WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
   	@myparams = params
+  	puts "fin de define_variables"
   end
   
   def get_list_modes
@@ -271,6 +277,7 @@ class ApplicationController < ActionController::Base
       user=User.find(user_id)
       puts "authorize:user=#{user} admin?=#{user.is_admin?}"
       unless user.is_admin?
+      	puts "user not admin, user.roles=#{user.roles} user.groups=#{user.groups} user.projects=#{user.projects}"
         if user.roles.nil? || user.groups.nil? || user.projects.nil?
           puts "authorize:roles=#{user.roles}  "
           puts "authorize:groups=#{user.groups}  "
@@ -290,6 +297,7 @@ class ApplicationController < ActionController::Base
           redirect_to new_sessions_url
       end
     end
+    puts "fin de authorize"
   end
 
   def current_user

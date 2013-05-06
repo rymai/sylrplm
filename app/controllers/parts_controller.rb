@@ -168,6 +168,7 @@ class PartsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
     #LOG.debug (fname){"params=#{params.inspect}"}
     @part = Part.find(params[:id])
+    @datafile = Datafile.new({:user => current_user, :thepart => @part})
     ctrl_new_datafile(@part)
   end
    	
