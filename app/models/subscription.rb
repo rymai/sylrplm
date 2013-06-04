@@ -1,5 +1,5 @@
-# un abonnement appartient a un seul user  / a subscription have one and only one owner
-# un user peut avoir plusieurs abonnements / a user could have several subscription
+# un abonnement appartient a un ou plusieurs users  / a subscription have one or many users
+# un user peut avoir un seul abonnement / a user could have only one subscription
 # un abonnement a un nom unique / a subscription have a uniq name
 # un abonnement s'applique sur un ou plusieurs types d'objets / a subscription is applicable on one or several objets type
 # les objets soumis a l'abonnement appartiennent a : / Items subject to the subscription belong to
@@ -42,7 +42,7 @@ class Subscription < ActiveRecord::Base
 
 	def ingroup_array
 		ret=[]
-		self.ingroup(:all,:select => "name").each do |o| 
+		self.ingroup(:all,:select => "name").each do |o|
 			ret << o.name
 		end
 		ret
@@ -50,7 +50,7 @@ class Subscription < ActiveRecord::Base
 
 	def inproject_array
 		ret=[]
-		self.inproject(:all,:select => "ident").each do |o| 
+		self.inproject(:all,:select => "ident").each do |o|
 			ret << o.ident
 		end
 		ret

@@ -15,8 +15,8 @@
 </p>
 
 <p>
-	<b><%= t(:label_responsible)%></b>
-	<%= h @subscription.owner %>
+	<b><%= t(:label_responsible) %></b>
+	<%= h_explorer @subscription.owner, :login unless @subscription.owner.nil? %>
 </p>
 
 <p>
@@ -54,6 +54,5 @@
 <table class='menu_bas'>
 	<tr>
 		<td><%= link_to t("edit"), edit_subscription_path(@subscription)  %></td>
-		<td><%= link_to t("list"), subscriptions_path %></td>
 	</tr>
 </table

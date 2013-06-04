@@ -7,7 +7,8 @@ class NotificationsController < ApplicationController
 		#LOG.info (fname) {"params=#{params.inspect}"}
 		if params.include? :current_user
 			authorize
-			params[:query] = current_user.login
+			#only notifications delivered to current user
+			params[:query] = "%#{current_user.login}:mail_%"
 		end
 		@notifications = Notification.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 		#LOG.info (fname) {"notifs=#{@notifications.inspect}"}

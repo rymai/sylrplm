@@ -345,7 +345,7 @@ en:
   part_tovalidate: Please, validate this part
   check_object_and_promote: Please, check and promote this object
   direct_access: Direct access
-  notification_notify: Events notification
+  notification_notify: "Events notification concerning subscription '%{subscription}' of user '%{user}'"
   button_notify: Notification
   label_object_type: Data type
   # processes
@@ -537,6 +537,7 @@ en:
   label_projects: Projects
   label last revision: List only last revision
   label_check_automatic: Operate automatic check
+  label_subscription: Subscription
   #views
   legend_view: Enter view details
   views_list: Listing of views

@@ -15,7 +15,6 @@
 <%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>@datafiles, :document=>nil}) %>
 <%= will_paginate(@datafiles[:recordset]) %>
 
-
 <%= render(:partial => "datafiles/index_fogfiles", :locals=>{:fogfiles=>@fogfiles}) %>
 
 <table class='menu_bas'>

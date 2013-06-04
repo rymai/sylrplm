@@ -15,6 +15,7 @@ class PlmMailer < ActionMailer::Base
     recipients to.email
     from       from.email
     sent_on    sent_at
+    body["user"] = to
     body["notifications"]=object
     body["theme"]=from.theme
     content_type "text/html"

@@ -552,6 +552,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "project_id"
 		t.string   "domain"
 		t.string   "type_values"
+		t.integer  "subscription_id"
 	end
 
 	add_index "users", ["group_id"], :name => "index_users_on_group_id"

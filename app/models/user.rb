@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
 	belongs_to :project
 	belongs_to :volume
 	belongs_to :typesobject
+	belongs_to :subscription
 
 	#has_many :user_groups, :dependent => :delete_all
 	#has_many :groups, :through => :user_groups
@@ -17,13 +18,12 @@ class User < ActiveRecord::Base
 	has_and_belongs_to_many :roles
 	has_and_belongs_to_many :groups
 	has_and_belongs_to_many :projects
-	has_many :subscriptions, :foreign_key => :owner_id, :dependent => :delete_all
+	##TODO has_many :subscriptions, :foreign_key => :owner_id, :dependent => :delete_all
 
 	validates_presence_of     :login, :typesobject
 	validates_uniqueness_of   :login
 
 	validates_confirmation_of :password
-
 	#
 	# User and Group share this method, which returns login and name respectively
 	#

@@ -351,7 +351,7 @@ ActionController::Routing::Routes.draw do |map|
 	'users/:id/account_edit_passwd',
 	:controller => 'users',
 	:action => 'account_edit_passwd')
-
+	
 	map.resources :groups
 
 	map.resources :user_groups

@@ -7,6 +7,10 @@
 	<%= h_attribut_trtd(user, :language) %>
 	<%= h_attribut_trtd(user, "volume.name") %>
 	<%= h_attribut_trtd(user, :theme) %>
+	<tr>
+		<th><%= t(:label_subscription) %></th>
+		<td><%= h_explorer user.subscription, :name unless user.subscription.nil? %></td>
+	</tr>
 	<%= h_attribut_trtd(user, :time_zone) %>
 	<%= h_attribut_trtd(user, :email) %>
 	<%= h_attribut_trtd(user, :last_revision) %>
@@ -25,4 +29,4 @@
 		<td><%= comma_links(user.projects, :ident) %></td>
 	</tr>
 </table>
-<%= h_type_values(user, fonct) %> 
+<%= h_type_values(user, fonct) %>

@@ -1,12 +1,17 @@
 <h1><%= t(:account_edit, :login => current_user.login) %></h1>
 <% form_for(@the_user, :url => {:controller=>:users , :action=>:account_update})  do |form| %>
 <%= form.error_messages %>
-<%= render(:partial => "users/edit",:locals => { :form => form, :fonct => "account_edit" }) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= form.submit t("update") %> </td>
-	</tr>
-</table>
+<fieldset>
+	<legend>
+		<%= t(:legend_user) %>
+	</legend>
+	<%= render(:partial => "users/edit",:locals => { :form => form, :fonct => "account_edit" }) %>
+	<table class='menu_bas'>
+		<tr>
+			<td> <%= form.submit t("update") %> </td>
+		</tr>
+	</table>
+</fieldset>
 <%end%>
 
 <% form_for :session, :url => {:controller => :sessions , :action => :login}  do |form| %>

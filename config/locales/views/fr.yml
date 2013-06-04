@@ -345,7 +345,7 @@ fr:
   part_tovalidate: "Ceci est une demande de validation pour la part"
   check_object_and_promote: "Merci de verifier cet objet et d'effectuer une promotion par le menu suivant"
   direct_access: "Accès direct"
-  notification_notify: Notification des évènements concernant vos données
+  notification_notify: "Notification des évènements concernant l' abonnement '%{subscription}' de l'utilisateur '%{user}'"
   button_notify: Voir la notification
   label_object_type: Type de donnée
   # processes
@@ -537,6 +537,7 @@ fr:
   label_projects: Projets
   label_last_revision: Lister seulement la dernière révision
   label_check_automatic: Réservation/libération automatique
+  label_subscription: Abonnement
   #views
   legend_view: "Renseignez les propriétés de la vue"
   views_list: Liste des vues

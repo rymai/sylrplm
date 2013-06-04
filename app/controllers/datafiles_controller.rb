@@ -45,7 +45,7 @@ class DatafilesController < ApplicationController
 	def edit
 		@datafile = Datafile.find(params[:id])
 		@types    = Typesobject.find_for("datafile")
-		#TODO@document = Document.find(params["doc"]) if params["doc"]
+	#TODO@document = Document.find(params["doc"]) if params["doc"]
 	end
 
 	# POST /datafiles
@@ -76,6 +76,8 @@ class DatafilesController < ApplicationController
 	# PUT /datafiles/1
 	# PUT /datafiles/1.xml
 	def update
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
 		@types    = Typesobject.find_for("datafile")
 		@document = Document.find(params["doc"]) if params["doc"]

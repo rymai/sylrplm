@@ -7,7 +7,7 @@
 
 <%= h_form_simple_query('/users',@current_users) %>
 
-<% if !param_equals?("todo", "select") %>
+<% unless param_equals?("todo", "select") %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_user"), new_user_path %></td>
@@ -25,6 +25,7 @@
 		<th <%= sort_td_class_helper "check_automatic" %>><%= sort_link_helper t(:label_check_automatic), "check_automatic" %> </th>
 		<th <%= sort_td_class_helper "mail" %>><%= sort_link_helper t(:label_email), "email" %> </th>
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %> </th>
+		<th <%= sort_td_class_helper "subscription_id" %>> <%= sort_link_helper t("label_subscription"), "subscription_id" %> </th>
 		<th><%= t(:label_groups) %> </th>
 		<th><%= t(:label_roles) %> </th>
 		<th><%= t(:label_projects) %> </th>
@@ -45,10 +46,11 @@
 		<td> <%= user.check_automatic %></td>
 		<td> <%= user.email %></td>
 		<td> <%= h_explorer user.typesobject, :name %></td>
+		<td><%= h_explorer user.subscription unless user.subscription.nil? %></td>
 		<td><%= h_value_or_default(comma_links(user.groups, :name),t(:msg_tobedefine)) %></td>
 		<td><%= h_value_or_default(comma_links(user.roles, :title),t(:msg_tobedefine)) %></td>
 		<td><%= h_value_or_default(comma_links(user.projects, :ident),t(:msg_tobedefine)) %></td>
-		<% if !param_equals?("todo", "select") %> <td> <%= link_to h_img(:edit), edit_user_path(user) %> </td><td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td>
+		<% unless param_equals?("todo", "select") %> <td> <%= link_to h_img(:edit), edit_user_path(user) %> </td><td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td>
 		<td> <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => user.id}, :method => :get if logged_in? %></td>
 		<% else %> <td>
 		<input type="button" value="select" class="btn-select" onclick="callSelect('<%= @myparams["html_ident"]%>','<%= user.id%>','<%= user.login%>')" />
@@ -57,7 +59,7 @@
 	</tr>
 	<% end %>
 </table>
-<% if !param_equals?("todo", "select") %>
+<% unless param_equals?("todo", "select") %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_user"), new_user_path %></td>

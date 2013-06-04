@@ -252,9 +252,9 @@ class DocumentsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
     #LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
-     #LOG.debug (fname){"document=#{@document.inspect}"}
+    #LOG.debug (fname){"document=#{@document.inspect}"}
     ctrl_add_datafile(@document)
-    LOG.debug (fname){"datafile=#{@datafile.inspect}"}
+    #LOG.debug (fname){"datafile=#{@datafile.inspect}"}
 	end
 	
 	def new_datafile_old

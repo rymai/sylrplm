@@ -258,7 +258,7 @@ module Controllers
 	
 		def ctrl_add_datafile(at_object)
 			fname= "#{self.class.name}.#{__method__}"
-	    #LOG.debug (fname){"params=#{params.inspect}"}
+	    LOG.debug (fname){"params=#{params.inspect}"}
 			@datafile = at_object.datafiles.build(params[:datafile])
 			#LOG.debug (fname){"datafile=#{@datafile.inspect}"}
 			respond_to do |format|				

@@ -1,45 +1,195 @@
 
+Document_11: 
+  id: "11"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000058
+  revision: "0"
+  designation: Plan plaque
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: 
+
+Document_12: 
+  id: "12"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000059
+  revision: "0"
+  designation: Plan pied carre court
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: 
+
+Document_7: 
+  id: "7"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000054
+  revision: "0"
+  designation: Plan vis
+  description: Plan de la vis de fixation des pieds
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: "{}"
+
+Document_8: 
+  id: "8"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000055
+  revision: "0"
+  designation: Plan cote cadre court
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: 
+
+Document_9: 
+  id: "9"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000056
+  revision: "0"
+  designation: Plan cote cadre long
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: 
+
+Document_10: 
+  id: "10"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000057
+  revision: "0"
+  designation: Plan patin
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: 
+
+Document_13: 
+  id: "13"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000060
+  revision: "0"
+  designation: Plan pied carre long
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: 
+
+Document_14: 
+  id: "14"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000061
+  revision: "0"
+  designation: Plan pied rond court
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: 
+
+Document_15: 
+  id: "15"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000062
+  revision: "0"
+  designation: Plan pied rond long
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: 
+
+Document_5: 
+  id: "5"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000008
+  revision: "0"
+  designation: Plan plateau carre
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: "{\"ref_doc\": \"\"}"
+
+Document_4: 
+  id: "4"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000006
+  revision: "0"
+  designation: Plan plateau rectangulaire
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: "{\"ref_doc\": \"\"}"
+
 Document_3: 
   id: "3"
-  owner_id: "101"
+  owner_id: "105"
   typesobject_id: "1045584113"
   statusobject_id: "4"
   ident: DOC000004
   revision: "0"
-  designation: Designation document
+  designation: Documents de la table
   description: ""
-  date: "2012-12-29"
+  date: "2013-06-04"
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values: "{\"type\": \"\"}"
 
-Document_4: 
-  id: "4"
-  owner_id: "101"
-  typesobject_id: "1016696961"
+Document_6: 
+  id: "6"
+  owner_id: "105"
+  typesobject_id: "418777236"
   statusobject_id: "4"
-  ident: DOC000006
+  ident: DOC000053
   revision: "0"
-  designation: Designation document
+  designation: Plan plateau hexagonal
   description: ""
-  date: "2013-02-21"
-  group_id: "101"
-  projowner_id: "2"
-  domain: sample.table
-  type_values: "{\"ref_doc\": \"\"}"
-
-Document_5: 
-  id: "5"
-  owner_id: "101"
-  typesobject_id: "1016696961"
-  statusobject_id: "4"
-  ident: DOC000008
-  revision: "0"
-  designation: Designation document
-  description: ""
-  date: "2012-12-29"
+  date: "2013-06-04"
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values: "{\"format\": {\"A0\": \"1189*841\", \"A1\": \"841*594\", \"A2\": \"594*420\", \"A3\": \"420*297\", \"A4\": \"297*210\"}}"

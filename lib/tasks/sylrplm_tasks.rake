@@ -20,7 +20,7 @@ namespace :sylrplm do
   task :load_config => :rails_env do
     ActiveRecord::Base.configurations = Rails::Configuration.new.database_configuration
     ActiveRecord::Base.logger = Logger.new(STDOUT)
-    ActiveRecord::Base.logger.level = Logger::INFO
+    ActiveRecord::Base.logger.level = Logger::DEBUG
     $stdout.puts "Database configuration=#{ActiveRecord::Base.configurations}"
   end
 
@@ -37,6 +37,17 @@ namespace :sylrplm do
       ENV["FIXTURES_PATH"] = fixtures_path
       puts "fixtures_path=#{ENV['FIXTURES_PATH']}"
       Rake::Task["db:fixtures:load"].invoke
+      puts "metadata loading terminated, now loading of datafiles"
+      # chargement des fichiers
+      Datafile.all.each do |file|
+      	unless file.filename.nil?
+      		file.file_import = {}
+      		file.file_import[:file] = File.new(file.filename)
+      		file.file_import[:original_filename] = file.filename
+					st = file.save
+					puts "save file_field=#{file.file_field}, filename:#{file.filename}=#{st}"
+      	end
+      end
     else
       $stdout.puts "Path and Domain are mandatory"
     end

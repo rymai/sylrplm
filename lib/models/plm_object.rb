@@ -437,6 +437,7 @@ module Models
 
 		def before_save
 			fname= "#{self.class.name}.#{__method__}"
+			LOG.debug (fname) {"***************************************"}
 			if (self.respond_to? :owner) && (self.respond_to? :group)
 				unless owner.nil?
 					unless  owner.group.nil?

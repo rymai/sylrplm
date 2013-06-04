@@ -17,6 +17,7 @@ User_1:
   typesobject_id: "446111194"
   group_id: "1"
   project_id: "1"
+  subscription_id: 6
   domain: admin
 
 User_101: 
@@ -37,6 +38,7 @@ User_101:
   typesobject_id: "446111194"
   group_id: "101"
   project_id: "2"
+  subscription_id: 1
   domain: admin
   
 User_102: 
@@ -56,7 +58,8 @@ User_102:
   show_mail: "0"
   typesobject_id: "446111194"
   group_id: 
-  project_id: 
+  project_id:
+  subscription_id: 2
   domain: "custo_sicm"
 
 User_103: 
@@ -76,7 +79,8 @@ User_103:
   show_mail: "0"
   typesobject_id: "446111194"
   group_id: 
-  project_id: 
+  project_id:
+  subscription_id: 1 
   domain: "custo_sicm"
 
 User_104: 
@@ -97,6 +101,7 @@ User_104:
   typesobject_id: "446111194"
   group_id: 
   project_id: 
+  subscription_id: 3
   domain: "custo_sicm"
 
 User_105: 
@@ -116,7 +121,8 @@ User_105:
   show_mail: "0"
   typesobject_id: "446111194"
   group_id: 
-  project_id: 
+  project_id:
+  subscription_id: 4
   domain: "custo_sicm"
 
 User_106: 
@@ -137,6 +143,7 @@ User_106:
   typesobject_id: "446111194"
   group_id: 
   project_id: 
+  subscription_id: 5
   domain: "custo_sicm"
 
 User_107: 
@@ -157,5 +164,6 @@ User_107:
   typesobject_id: "446111194"
   group_id: 
   project_id: 
+  subscription_id: 
   domain: "custo_sicm"
 

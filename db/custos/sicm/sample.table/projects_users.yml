@@ -2,3 +2,39 @@
 <%= ::YAML::include("db/custos/sicm/sicm.custo/projects_users.yml") %>
 
 
+project_id_3_user_id_101_domain_sample.table:
+  project_id: 3
+  user_id: 101
+  domain: sample.table
+
+project_id_3_user_id_102_domain_sample.table:
+  project_id: 3
+  user_id: 102
+  domain: sample.table
+
+project_id_3_user_id_103_domain_sample.table:
+  project_id: 3
+  user_id: 103
+  domain: sample.table
+
+project_id_3_user_id_104_domain_sample.table:
+  project_id: 3
+  user_id: 104
+  domain: sample.table
+
+project_id_3_user_id_105_domain_sample.table:
+  project_id: 3
+  user_id: 105
+  domain: sample.table
+
+project_id_3_user_id_106_domain_sample.table:
+  project_id: 3
+  user_id: 106
+  domain: sample.table
+
+project_id_3_user_id_107_domain_sample.table:
+  project_id: 3
+  user_id: 107
+  domain: sample.table
+
+

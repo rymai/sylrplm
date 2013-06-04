@@ -1,7 +1,4 @@
-<fieldset>
-	<legend>
-		<%= t(:legend_user) %>
-	</legend>
+
 	<label for="user_name"> <%= t(:label_login) %> </label>
 	<%= form.text_field :login, :size => 40 %>
 	<br/>
@@ -43,6 +40,10 @@
 	<% end %>
 	<% end %>
 
+	<%= form.label t(:label_subscription) %>
+	<%= form.collection_select(:subscription_id, @subscriptions, :id, :name) %>
+	<br/>
+
 	<%= form.label t(:label_time_zone) %>
 	<%= form.select(:time_zone, options_for_select(User.time_zones, @the_user.time_zone), :include_blank => true) %>
 	<br/>
@@ -70,5 +71,4 @@
 	<%= h_input_text(form ,:domain) %>
 	<br />
 	<% end %>
-</fieldset>
 

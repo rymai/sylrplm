@@ -7,6 +7,7 @@ class Datafile < ActiveRecord::Base
   attr_accessor :user
 
   attr_accessor :file_field
+  attr_accessor :file_import
 
   validates_presence_of :ident , :typesobject, :revision, :volume, :owner, :group, :projowner
   validates_uniqueness_of :ident, :scope => :revision
@@ -28,7 +29,7 @@ class Datafile < ActiveRecord::Base
 
   FILE_REV_DELIMITER = "--"
 
-  def user=(user)
+	def user=(user)
 		fname= "#{self.class.name}.#{__method__}"
 		def_user(user)
 		self.volume    = user.volume
@@ -47,16 +48,16 @@ class Datafile < ActiveRecord::Base
 		self.project=obj
 	end
 	
-
   def update_attributes_repos(params, user)
     fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname){"params=#{params.inspect}"}
     parameters = params[:datafile]
     uploaded_file = parameters[:uploaded_file]
     parameters[:volume]=user.volume
     ret = true
     begin
     	if(uploaded_file)
-      parameters.delete(:uploaded_file)
+      ###TODO syl ??? parameters.delete(:uploaded_file)
       parameters[:revision]=self.revision.next
       self.update_attributes(parameters)
       self.create_dir
@@ -84,6 +85,7 @@ class Datafile < ActiveRecord::Base
     rescue Exception => e
       	self.errors.add "Error update datafile attributes : #{e}"
       	ret=false
+      	e.backtrace.each {|x| LOG.error x}
     end
     ret
   end
@@ -94,23 +96,40 @@ class Datafile < ActiveRecord::Base
   end
 
   def uploaded_file=(file_field)
+  	fname= "#{self.class.name}.#{__method__}"
+  	LOG.debug (fname){"file_field=#{file_field.inspect}"}
   	self.file_field=file_field
   end
   
   def upload_file
     fname= "#{self.class.name}.#{__method__}"
-    LOG.info (fname){"file_field=#{file_field.inspect}"}
-    LOG.info (fname){"datafile=#{self.inspect}"}
-    if (self.file_field!=nil && self.file_field!="" && self.file_field.original_filename!=nil && self.file_field.original_filename!="")
-      self.content_type=file_field.content_type.chomp
-      self.filename=base_part_of(file_field.original_filename)
-      content=file_field.read
+    #LOG.debug (fname){"filename=#{filename}"}
+    LOG.debug (fname){"file_field=#{file_field.inspect}"}
+    LOG.debug (fname){"original_filename=#{file_field.original_filename if file_field.respond_to? :original_filename}"}
+   	#LOG.debug (fname){"datafile=#{self.inspect}"}
+    #if (self.file_field!=nil && self.file_field!="" && self.file_field.original_filename!=nil && self.file_field.original_filename!="")
+    unless self.file_field.blank?
+      self.content_type = file_field.content_type.chomp if file_field.respond_to? :content_type
+      self.filename = base_part_of(file_field.original_filename) if file_field.respond_to? :original_filename
+      #LOG.debug (fname){"filename=#{self.filename} content_type=#{self.content_type}"}
+      content = file_field.read
       begin
       write_file(content)
       self.file_field=nil
       rescue Exception => e
       	raise Exception.new "Error uploaded file #{file_field}:#{e}"
       end
+    else unless self.file_import.nil?
+      self.filename = base_part_of(file_import[:original_filename])
+      content =  file_import[:file].read
+      begin
+      write_file(content)
+      self.file_field=nil
+      rescue Exception => e
+      	raise Exception.new "Error uploaded file #{file_field}:#{e}"
+      	e.backtrace.each {|x| LOG.error x}
+      end
+    	end
     end
     
   end
@@ -304,7 +323,9 @@ class Datafile < ActiveRecord::Base
 	      begin
 	    		f.puts(content)
 	    	rescue Exception => e
+	    		e.backtrace.each {|x| LOG.error x}
 	    		raise Exception.new "Error writing in server file #{repos}:#{e}"
+	    		
 	    	end
 	    	f.close
 	    end
@@ -329,7 +350,8 @@ class Datafile < ActiveRecord::Base
 		      begin
 		    		f.puts(content)
 		    	rescue Exception => e
-		    		raise Exception.new "Error writing in tmp file #{repos}:#{e}"
+		    		e.backtrace.each {|x| LOG.error x}
+		    		raise Exception.new "Error writing in tmp file #{repos}:#{e}"	
 		    	end
 		    	f.close
 	    	end

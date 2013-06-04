@@ -226,14 +226,15 @@
             		</li>
             	</ul>
             	<msg key="help_notifications_attributs" title="Attributs">
-            		<ul>Les Attributs de l' objet notification, tous obligatoires sauf notify_date, sont les suivants
+            		<ul>Les Attributs de l' objet notification, tous obligatoires sauf notify_date et notify_users, sont les suivants
             		<li> id</li>
-            		<li> object_type : document/part/project/customer</li>
-            		<li> object_id : id de l'objet modifie</li>
+            		<li> forobject_type : document/part/project/customer</li>
+            		<li> forobject_id : id de l'objet modifie</li>
             		<li> event_date : date de la modif</li>
             		<li> event_type : type de la modif</li>
             		<li> responsible_id : modifieur</li>
            			<li> notify_date : date de la notification (null si pas encore fait)</li>
+          			<li> notify_users : utilisateurs notifiés (null si pas encore fait)</li>
             	</ul>
             	</msg>		
     		</msg>

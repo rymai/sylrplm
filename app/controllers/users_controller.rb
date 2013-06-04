@@ -34,6 +34,7 @@ class UsersController < ApplicationController
 		@time_zones=get_time_zones(@time_zone)
 		@volumes = Volume.find_all
 		@types    = Typesobject.get_types("user")
+		@subscriptions = Subscription.all
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @the_user }
@@ -51,6 +52,7 @@ class UsersController < ApplicationController
 		@time_zones = get_time_zones(@the_user.time_zone)
 		@volumes = Volume.find_all
 		@types    = Typesobject.get_types("user")
+		@subscriptions = Subscription.all
 	#puts __FILE__+"."+__method__.to_s+":"+@roles.inspect
 	end
 
@@ -86,6 +88,7 @@ class UsersController < ApplicationController
 				format.html { redirect_to(@the_user) }
 				format.xml  { render :xml => @the_user, :status => :created, :location => @the_user }
 			else
+				@subscriptions = Subscription.all
 				flash.now[:error] = t(:ctrl_user_not_created, :user => @the_user.login, :msg =>@the_user.errors.inspect)
 				format.html { render :action => "new" }
 				format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
@@ -109,6 +112,7 @@ class UsersController < ApplicationController
 				format.html { redirect_to(@the_user) }
 				format.xml  { head :ok }
 			else
+				@subscriptions = Subscription.all
 				flash.now[:error] = t(:ctrl_user_not_updated, :user => @the_user.login, :msg =>@the_user.errors.inspect)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
@@ -143,6 +147,7 @@ class UsersController < ApplicationController
 		@the_user = User.find(params[:id])
 		@themes  = get_themes(@theme)
 		@time_zones = get_time_zones(@the_user.time_zone)
+		@subscriptions = Subscription.all
 	end
 
 	# GET /users/1/account_edit_passwd

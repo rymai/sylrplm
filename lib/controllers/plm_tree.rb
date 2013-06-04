@@ -63,7 +63,8 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 		# on teste si une des effectivites du lien est comprise dans la variante en cours
 		#
 			link_effectivities = link.effectivities
-			if link_effectivities.count==0
+			LOG.debug (fname) {"link.link_effectivities=#{link_effectivities}"}
+			if link_effectivities.nil? || link_effectivities.count==0
 				LOG.debug (fname){"link=#{link.ident}, pas d'effectivites sur le lien => on affiche"}
 			link_to_show = true
 			else
@@ -74,8 +75,9 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 				else
 					link_to_show = true
 					link_effectivities.each do |link_eff|
-						LOG.debug (fname){"link=#{link.ident}:effectivite #{link_eff} requise pour variante : #{var_effectivities.include?(link_eff)}"}
+
 						unless var_effectivities.include?(link_eff)
+							LOG.debug (fname){"link=#{link.ident}:effectivite #{link_eff} requise pour variante : #{var_effectivities.include?(link_eff)}"}
 						link_to_show = false
 						end
 					end

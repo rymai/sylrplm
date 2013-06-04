@@ -268,12 +268,14 @@ module ApplicationHelper
 	end
 
 	def h_explorer (obj, method = nil)
+		fname=self.class.name+"."+__method__.to_s
+		LOG.info (fname){"obj=#{obj}, method=#{method}"}
 		h_link_to("explorer_obj", obj, method)
 	end
 
 	def h_link_to (name, obj, method = nil)
 		fname=self.class.name+"."+__method__.to_s
-		#LOG.info (fname){"obj=#{obj}, method=#{method}"}
+		LOG.info (fname){"obj=#{obj}, method=#{method}"}
 		ret=""
 		unless obj.nil?
 			if method.nil?
@@ -289,7 +291,7 @@ module ApplicationHelper
 			txt = obj.to_s
 			end
 			title = t(name, :obj => obj)
-			#LOG.info (fname){"title=#{title}"}
+			LOG.info (fname){"title=#{title}"}
 			link_to( txt, obj, {:title => title } )
 		end
 	end
@@ -422,11 +424,11 @@ module ApplicationHelper
 		# typesobject.name = typesoject
 		# child.statusobject.name = statusobject
 		#
-		fields = final_acc.split(".")
-		0.upto (fields.count-2) { |i|
-			final_obj = final_obj.send(fields[i].to_s)
-			final_acc = fields[i+1].to_s
-		}
+		#fields = final_acc.split(".")
+		#0.upto (fields.count-2) { |i|
+		#	final_obj = final_obj.send(fields[i].to_s)
+		#	final_acc = fields[i+1].to_s
+		#}
 		labacc=final_acc.to_s.tr('.','_')
 		ret="<tr>"
 		ret+="<th>"
@@ -435,7 +437,7 @@ module ApplicationHelper
 		ret+="<td>"
 		begin
 			vacc="v_"+final_acc.to_s
-			LOG.info (fname){"final_obj="+final_obj.to_s+" final_acc="+final_acc}
+			LOG.info (fname){"final_obj=#{final_obj} final_acc=#{final_acc} labacc=#{labacc}"}
 			if final_obj.respond_to?(vacc)
 			val=final_obj.send(vacc).to_s
 			else

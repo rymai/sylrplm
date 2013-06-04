@@ -40,12 +40,12 @@
 
 	<% end %>
 	
-	<%= f.label t(:label_responsible) %>
-	<%= text_field_tag :owner, @datafile.owner.login,  :disabled => true %>
+	<%= f.label t("label_responsible") %>
+	<%= hidden_field :datafile , :owner_id %>
+	<%= text_field_tag "datafile_owner_display", @datafile.owner.login, :disabled => true %>
+	<%= link_to h_img_btn("btn_select").to_s, {:controller => "users", :todo => "select", :html_ident => "datafile_owner"} , {:target => "_blank", :class => 'menu_bas'}%> </td>
 	<br/>
-
-	<%= hidden_field_tag "datafile[owner_id]", @datafile.owner.id %>
-
+	
 	<%= h_type_values(@datafile, fonct) %>
 	<%= h_input_text(f ,:domain) %>
 	<br />
