@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user_connect(user)
-    flash[:notice] = nil
+    flash[:error] = nil
     if false
       if !user.may_connect?
         flash[:error] =""
@@ -61,9 +61,9 @@ class ApplicationController < ActionController::Base
     flash[:error] = t(:ctrl_user_not_valid,:user=>user ) unless user.may_connect?
     puts "check_user_connect:"+user.inspect+":"+flash[:notice].to_s
     if user.login==::SYLRPLM::USER_ADMIN
-      flash[:notice] = nil
+      flash[:error] = nil
     end
-    flash[:notice]
+    flash[:error]
   end
 
   def check_init

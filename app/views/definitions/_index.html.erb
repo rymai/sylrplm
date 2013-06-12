@@ -14,7 +14,7 @@
 		</tr>
 	</thead>
 	<% for definition in @definitions %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<% if admin_logged_in? %>
 			<td> <%= definition.id %> </td>
 		<% end %>

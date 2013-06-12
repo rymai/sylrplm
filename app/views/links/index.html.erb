@@ -24,16 +24,16 @@
 		
 	</tr>
 	<% @links[:recordset].each do |link| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= h link.id %></td>
 		<td><%= h link.ident %></td>
 		<td><%= h link.domain %></td>
 		<td><%= h link.father_ident %></td>
 		<td><%= h link.relation_ident %></td>
 		<td><%= h link.child_ident %></td>
-		<td><%= h link.owner unless link.owner.nil? %></td>
-		<td><%= h link.group unless link.group.nil? %></td>
-		<td><%= h link.projowner unless link.projowner.nil?%></td>
+		<td><%= h_explorer link.owner, :login unless link.owner.nil? %></td>
+		<td><%= h_explorer link.group, :name unless link.group.nil? %></td>
+		<td><%= h_explorer link.projowner, :ident unless link.projowner.nil?%></td>
 		<td><%= h link.values %></td>
 		<td><%= h link.domain %></td>
 		

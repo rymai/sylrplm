@@ -9,7 +9,7 @@
   </tr>
 
 <% @roles_users.each do |roles_user| %>
-  <tr>
+ <tr class='<%= cycle("even", "odd") %>'>
     <td><%=h roles_user.role_id %></td>
     <td><%=h roles_user.user_id %></td>
     <td><%= link_to 'Show', roles_user %></td>

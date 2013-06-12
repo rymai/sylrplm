@@ -19,7 +19,7 @@
 			</tr>
 		</thead>
 		<% for group in @groups[:recordset] %>
-		<tr class='group'>
+		<tr class='<%= cycle("even", "odd") %>'>
 			<td><%= group.name %></td>
 			<td><%= group.domain %></td>
 			<td><%= comma_links(group.users, :login) %></td>

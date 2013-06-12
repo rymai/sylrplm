@@ -44,7 +44,6 @@
 	<b><%= t("label_domain") %></b>
 	<%= h @part.domain %>
 </p>
-<h1></h1>
 <% files = @part.get_datafiles%>
 <% if files[:total]>0 %> <h1><%= t("datafiles_list") %></h1>
 <%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files, :document=>@part}) %>
@@ -57,7 +56,7 @@
 </table>
 <h1></h1>
 <%= render(:partial => "shared/object_workitems", :object =>@part) %>
-<h1></h1>
+
 <table class='menu_bas'>
 	<% unless @favori.get('document').count==0 || @part.relations["document"].count==0 %>
 	<tr>
@@ -82,7 +81,6 @@
 	<% end %>
 </table>
 
-<h1></h1>
 <%= render(:partial => "shared/tree", :object => @part ) %>
 <table class='menu_bas'>
 	<tr>

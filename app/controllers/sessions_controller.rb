@@ -13,9 +13,9 @@ class SessionsController < ApplicationController
 	# appelle depuis un mail envoye par PLMMailer.new_login
 	def activate
 		#puts "sessions_controller.activate"+params.inspect
-		user = User.find(params[:id])
+		user = User.find(params[:id]) if User.exists?(params[:id])
 		unless user.nil?
-			type=Typesobject.find_by_object_and_name(User.model_name, User.USER_TYPE_PERSON)
+			type=Typesobject.find_by_forobject_and_name("user", ::SYLRPLM::TYPE_USER_PERSON)
 			user.typesobject=type
 			if user.save
 				@current_user = user
@@ -27,10 +27,19 @@ class SessionsController < ApplicationController
 				end
 			else
 				flash[:notice] = t(:ctrl_new_account_not_created, :user=>user.login)
-				format.html { render :new }
+				respond_to do |format|
+					format.html { render :action => :new }
+					format.xml {render :xml => errs, :status => :unprocessable_entity }
+				end
+			end
+		else
+			flash[:notice] = t(:ctrl_new_account_not_existing, :user=>nil)
+			respond_to do |format|
+				format.html { render :action => :new }
 				format.xml {render :xml => errs, :status => :unprocessable_entity }
 			end
 		end
+
 	end
 
 	def create
@@ -93,10 +102,10 @@ class SessionsController < ApplicationController
 	#puts "sessions_controller.create:fin"
 	end
 
-	def create_new_account
+	def create_account
 		#puts "sessions_controller.create_new_account"+params.inspect
 		#puts "create:validation du compte"
-		par=params[:session]
+		par = params[:session]
 		# validation du compte
 		# nouvel utilisateur potentiel
 		respond_to do |format|
@@ -110,7 +119,7 @@ class SessionsController < ApplicationController
 			else
 			#puts "create:validation du compte ok"
 			# tout est saisis: creation du nouveau compte
-				cur_user=User.create_new_login(par, @urlbase)
+				cur_user = User.create_new_login(par, @urlbase)
 				puts "sessions_controller.create:cur_user="+cur_user.inspect
 				unless cur_user.nil?
 					flash[:notice] = check_user_connect(cur_user)

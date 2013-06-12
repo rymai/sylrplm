@@ -19,7 +19,7 @@
 		</tr>
 	</thead>
 	<% for ps in @processes %>
-	<tr class="process">
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= link_to_slice(ps, :wfid) %></td>
 		<td><%= link_to_slice(ps, :wfname, :workflow) %> <%= h ps.wfrevision %></td>
 		<td><%= h display_time(ps.launch_time) %></td>

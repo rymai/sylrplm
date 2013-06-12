@@ -20,7 +20,7 @@
 		<% end %> <th><%= t(:label_relations) %></th>
 	</tr>
 	<% @views[:recordset].each do |view| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= h view.id %> </td>
 		<td> <%= h view.name %> </td>
 		<td> <%= h view.description %> </td>

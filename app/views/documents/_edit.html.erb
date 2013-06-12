@@ -30,14 +30,13 @@
 	<%end %>
 	<br/>
 	<%= f.label t("label_responsible") %>
-	<%= hidden_field :document , :owner_id %>
-	<%= text_field_tag "document_owner_display", @document.owner.login, :disabled => true %>
-	<%= link_to h_img_btn("btn_select").to_s, {:controller => "users", :todo => "select", :html_ident => "document_owner"} , {:target => "_blank", :class => 'menu_bas'}%> </td>
+	<%= select_in_list(:document, :owner, @document.owner.login, :users) %>
 	<br/>
 	<%= f.label t("label_date") %>
 	<%= f.date_select :date %>
+	<br/>
+	<%= h_input_text(f , :domain) %>
 	<br />
 	<%= h_type_values(@document, fonct) %>
-	<%= h_input_text(f , :domain) %>
 	<br/>
 </fieldset>

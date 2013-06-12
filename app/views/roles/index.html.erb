@@ -17,7 +17,7 @@
 		<th></th>
 	</tr>
 	<% @roles[:recordset].each do |role| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= role.title %> </td>
 		<td> <%= role.description %> </td>
 		<td> <%= h_explorer role.father, :name unless role.father.nil? %> <td><%= comma_links(role.users, :login) %></td>

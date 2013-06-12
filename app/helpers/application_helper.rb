@@ -1,18 +1,32 @@
+# = ApplicationHelper
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-	def title(text)
+	
+	#
+	# == Role: prepare a title  
+	# == Arguments
+	# * +text+ - text for title
+	# == Usage
+	# === Calling view
+	# === Result
+	# == Impact on other components
+	#
+	def h_title(text)
 		content_for :title, text
 	end
 
 	def h_value_or_default(value, default)
-		ret=default
+		ret = default
 		unless value.nil?
-		ret=value unless value.size==0
+		ret = value unless value.size==0
 		end
 		ret
 	end
 
-	# renvoie la valeur de l'attribut att sur current si
+	#
+	#
+	#
+	# Renvoie la valeur de l'attribut att sur current si
 	# 1- current n'a pas le meme identifiant que previous
 	# 2- que les valeurs de l'attribut sont differentes entre les 2objets
 	# att peut etre un attribut "compose" tel que owner.login
@@ -51,7 +65,8 @@ module ApplicationHelper
 
 	def h_menu(href,help,title)
 		bloc=""
-		bloc<<"<a class='menu' onclick=\"return helpPopup('#{help}','#{href}');\" >#{title}</a><br />";
+		#bloc<<"<a class='menu' onclick=\"return helpPopup('#{help}','#{href}');\" >#{title}</a>";
+		bloc<<"<a class='menu' href='#{href}' >#{title}</a>";
 		bloc
 	end
 
@@ -180,15 +195,15 @@ module ApplicationHelper
 		if title.nil?
 			title=t(File.basename(name.to_s))
 		end
-		"<img class=\"icone\" src=\"/images/#{name}.png\" title='#{title}'></img>"
+		"<img class=\"icone\" src=\"/images/#{name}.png\" title='#{title}'/>"
 	end
 
 	def h_img_btn(name)
-		"<img class=\"btn\" src=\"/images/#{name}.png\" title='#{t(File.basename(name.to_s))}'></img>"
+		"<img class=\"btn\" src=\"/images/#{name}.png\" title='#{t(File.basename(name.to_s))}'/>"
 	end
 
 	def h_img_tit(name, title)
-		"<img class=\"icone\" src=\"/images/#{name}.png\" title='#{title}'></img>"
+		"<img class=\"icone\" src=\"/images/#{name}.png\" title='#{title}'/>"
 	end
 
 	def h_img_cut
@@ -269,13 +284,13 @@ module ApplicationHelper
 
 	def h_explorer (obj, method = nil)
 		fname=self.class.name+"."+__method__.to_s
-		LOG.info (fname){"obj=#{obj}, method=#{method}"}
+		#LOG.info (fname){"obj=#{obj}, method=#{method}"}
 		h_link_to("explorer_obj", obj, method)
 	end
 
 	def h_link_to (name, obj, method = nil)
 		fname=self.class.name+"."+__method__.to_s
-		LOG.info (fname){"obj=#{obj}, method=#{method}"}
+		#LOG.info (fname){"obj=#{obj}, method=#{method}"}
 		ret=""
 		unless obj.nil?
 			if method.nil?
@@ -416,6 +431,8 @@ module ApplicationHelper
 		ret
 	end
 
+	
+
 	def h_attribut_trtd(obj, accessor)
 		fname=self.class.name+"."+__method__.to_s
 		final_obj=obj
@@ -542,76 +559,6 @@ module ApplicationHelper
 	# renvoi l'identifiant du formulaire en fonction de l'objet et de la fonction demandee
 	def h_form_html_id(obj, fonct)
 		fonct+"_"+obj.model_name
-	end
-
-	#
-	# combo box: select able to return null value
-	#
-	def select_with_empty(form, object, attribute, values, id, method)
-		# id du select = role_father_id
-		select_id = object.model_name+'_'+attribute.to_s
-		html = javascript_include_tag "select_extensions"
-		html += "<p>#{t(:label_select_active)}</p>"
-		html += check_box_tag(:select_active, "no", "false", :onclick=>"selectActive(this, '#{select_id}'); return true;")
-		html += form.collection_select(attribute, values, id, method)
-		html
-	end
-
-	# @argum assoc_name contient le nom de l'association, exemple :ongroup pour subscription vers les groupes
-	#  								exemple: <%= select_inout(form, @subscription, @ongroups, :name, :ongroup) %>
-	#                   si pas de valeur, on prend le nom par defaut dans la le 1er objet de la liste des valeurs :group
-	#
-	def select_inout(form, object, values, field, assoc_name=nil)
-		fname = "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"object=#{object}"}
-		LOG.debug (fname){"values=#{values}, field=#{field}"}
-		html = ""
-		unless values.nil? || values.count == 0
-			#user
-			mdl_object=object.model_name
-			#group
-			if assoc_name.nil?
-			mdl_assoc = values[0].model_name
-			else
-			mdl_assoc = assoc_name
-			end
-			#user_groups
-			select_id="#{mdl_object}_#{mdl_assoc}_ids"
-			#user[role_ids][]
-			select_name="#{mdl_object}[#{mdl_assoc}_ids][]"
-			#role_ids
-			method=("#{mdl_assoc}_ids").to_sym
-			LOG.debug (fname){"method=#{method}"}
-			#the_selected=object.method(method).call: ko dans certains cas (securite!!)
-
-			the_selected=object.send(method)
-			#puts "select_inout:object="+object.model_name+" method="+method.to_s+" sel="+the_selected.inspect
-			#label_user_groups_out, label_user_groups_in
-			label_out=t("label_"+select_id+"_out")
-			label_in=t("label_"+select_id+"_in")
-			nb=[values.count+1, 10].min
-			html += javascript_include_tag "select_extensions"
-			html += "<div style='display: none;'>"
-			html += form.collection_select(method, values, :id, field, {}, {:id => select_id, :size => nb, :multiple => :true, :name => select_name, :selected => the_selected})
-			html += "</div>"
-			html += "<table>"
-			html += "<tr>"
-			html += "<th>#{label_out}</th>"
-			html += "<th></th>"
-			html += "<th>#{label_in}</th>"
-			html += "</tr>"
-			html += "<tr>"
-			#html += "<td>mdl_object:#{mdl_object} mdl_assoc:#{mdl_assoc} select_id:#{select_id} select_name:#{select_name} method:#{method} : #{the_selected.inspect}</td>"
-			html += "<td><select id='#{select_id}_out' multiple='multiple' name='#{select_id}_out' size=#{nb}></select></td>"
-			html += "<td><a onclick=\"selectInOutAdd('#{select_id}'); return true;\" title=\"#{t('button_add')}\">#{h_img('select_inout/select_add')}</a>"
-			html += "<br/>"
-			html += "<a onclick= \"selectInOutRemove('#{select_id}'); return true;\" title=\"#{t('button_remove')}\">#{h_img('select_inout/select_remove')}</a></td>"
-			html += "<td><select id='#{select_id}_in' multiple='multiple' name='#{select_id}_in' size=#{nb}></select></td>"
-			html += "</tr>"
-			html += "</table>"
-			html += "<script>selectInOutFill('#{select_id}')</script>"
-		end
-		html
 	end
 
 	#

@@ -18,7 +18,7 @@
 		<th></th>
 	</tr>
 	<% @faqs[:recordset].each do |question| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= h question.asker.login unless question.asker.nil? %> </td>
 		<td> <%= h question.question %> </td>
 		<td> <%= h question.responder.login unless  question.responder.nil? %> </td>

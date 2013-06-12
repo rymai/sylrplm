@@ -16,7 +16,7 @@ module SYLRPLM
 	# nom du volume attribue par defaut au user
 	VOLUME_NAME_DEFAULT       = "vol_local_01"
 	TIME_ZONE_DEFAULT         = 1
-	THEME_DEFAULT             = "blackwhite"
+	THEME_DEFAULT             = "white"
 	NB_ITEMS_PER_PAGE         = 30
 	#
 	# nom de certains objets plm
@@ -64,8 +64,10 @@ module SYLRPLM
 	# valeurs de certains objets
 	RELATION_GENERIC          = 'any_relation'
 	#
-	# Prefixe du nom du projet attribué automatiquement a un nouvel utilisateur
-	USER_PROJECT_IDENT        = 'PROJECT-'
+	# Nom des projets attribués automatiquement a un nouvel utilisateur
+	PROJECTS_ACCOUNT          = 'PROJECT-users,PROJET TABLE'
+	# Nom des groupes attribués automatiquement a un nouvel utilisateur
+	GROUPS_ACCOUNT        		= 'admins,consultants,SICM'
 
 	#domaine par defaut utilise lors de la creation d'objets
 	DOMAIN_DEFAULT  					= 'user.'

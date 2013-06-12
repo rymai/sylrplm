@@ -11,7 +11,7 @@
 		<th><%= t(:label_inproject)%></th>
 	</tr>
 	<% @subscriptions[:recordset].each do |subscription| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= h h_explorer subscription %></td>
 		<td><%= h subscription.designation %></td>
 		<td><%= h h_explorer subscription.owner %></td>

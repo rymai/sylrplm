@@ -54,7 +54,7 @@ class Project < ActiveRecord::Base
 	end
 
 	# renvoie le nom du projet affecte par defaut au user
-	def for_user(username)
+	def self.for_user(username)
 		::SYLRPLM::USER_PROJECT_IDENT+username
 	end
 

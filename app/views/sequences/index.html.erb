@@ -22,7 +22,7 @@
 		<th></th><th></th>
 	</tr>
 	<% @sequences[:recordset].each do |sequence| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= h sequence.utility %> </td>
 		<td> <%= h sequence.sequence %> </td>
 		<td> <%= h sequence.modify %> </td>

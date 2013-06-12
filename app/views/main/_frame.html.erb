@@ -1,101 +1,219 @@
-<div id="banner">
-	<span class='title'> <%= @page_title || "SYLRPLM" %></span>
-	<% if logged_in? %> <span class='banner'> <%= "#{@current_user.login} #{t("as")} #{@current_user.role.try(:title)}-#{@current_user.group.try(:name)}-#{@current_user.project.try(:ident)}" %></span>
-	<span class='banner'> <%= link_to h_img("disconnect").to_s, sessions_path, :method => :delete %></span>
-	<% else %> <span class='banner'> <%= link_to t("connect"), new_sessions_url %></span>
-	<% end %>
-</div>
-<div id="columns">
-	<div id="side">
-		<span class='banner'> <%= t(:label_today) %></span>
-		<span class='banner'> <%= Date.today %></span>
-		<span class='banner'><%= tip_help() %></span>
-		<div id="menu">
-			<fieldset>
-				<%= content_tag(:legend, t(:legend_desktop)) %>
-				<%= h_menu("/main","help_main",t("mnu_main")) %>
-				<%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
-				<%= h_menu("/notifications?current_user", "help_notifications",t("mnu_my_notifications")) %>
-				<%= h_menu("/main/tools", "help_tools",t("mnu_tools")) %>
-			</fieldset>
-			<fieldset>
-				<%= content_tag(:legend, t(:legend_plm_objects)) %>
-				<%= h_menu("/documents","help_documents",t("mnu_documents")) %>
-				<%= h_menu("/parts","help_parts",t("mnu_parts")) %>
-				<%= h_menu("/projects","help_projects",t("mnu_projects")) %>
-				<%= h_menu("/customers","help_customers",t("mnu_customers")) %>
-			</fieldset>
-			<fieldset>
-				<%= content_tag(:legend, t(:legend_collab)) %>
-				<%= h_menu("/questions","help_questions",t("mnu_questions")) %>
-				<%= h_menu("/main/news","help_news",t("mnu_news")) %>
-				<%= h_menu("/forums","help_forums",t("mnu_forums")) %>
-				<%= h_menu("/main/contacts","help_contacts",t("mnu_contact")) %>
-			</fieldset>
-			<fieldset>
-				<%= content_tag(:legend, t(:legend_processes)) %>
-				<%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
-				<%= h_menu("/definitions/new_process", "help_flw_processes",t("mnu_flw_new_process")) %>
-				<%= h_menu("/processes", "help_flw_processes",t("mnu_flw_processes")) %>
-			</fieldset>
-			<fieldset>
-				<%= content_tag(:legend, t(:legend_clipboard)) %>
-				<div id="favori_document">
-					<%= render(:partial => "main/favori_document", :object => @favori.get("document")) %>
-				</div>
-				<div id="favori_part">
-					<%= render(:partial => "main/favori_part", :object => @favori.get("part")) %>
-				</div>
-				<div id="favori_project">
-					<%= render(:partial => "main/favori_project", :object => @favori.get("project")) %>
-				</div>
-				<div id="favori_customer">
-					<%= render(:partial => "main/favori_customer", :object => @favori.get("customer")) %>
-				</div>
-				<div id="favori_user">
-					<%= render(:partial => "main/favori_user", :object => @favori.get("user")) %>
-				</div>
+<div class="navbar">
+	<div class="navbar-inner">
+		<div class="container">
+			<ul class="nav nav-tabs">
+
+				<li class="active">
+					<a href="#main" data-toggle="tab"><%= @page_title || "SYLRPLM" %> <%= t(:label_today) %> <%= Date.today %> </a>
+				</li>
+
+				<li >
+					<a href="#favorites" data-toggle="tab"><%= t(:legend_clipboard) %></a>
+				</li>
+
+				<li class="dropdown" id="desktopmenu">
+					<a class="dropdown-toggle btn-primary" data-toggle="dropdown" href="#"><%= t(:legend_desktop)%> <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<%= h_menu("/main","help_main",t("mnu_main")) %>
+						</li>
+						<li>
+							<%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
+						</li>
+						<li>
+							<%= h_menu("/notifications?current_user", "help_notifications",t("mnu_my_notifications")) %>
+						</li>
+						<li>
+							<%= h_menu("/main/tools", "help_tools",t("mnu_tools")) %>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown" id="plmobjectmenu">
+					<a class="dropdown-toggle btn-primary" data-toggle="dropdown" href="#"><%= t(:legend_plm_objects)%><b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<%= h_menu("/documents","help_documents",t("mnu_documents")) %>
+						</li>
+						<li>
+							<%= h_menu("/parts","help_parts",t("mnu_parts")) %>
+						</li>
+						<li>
+							<%= h_menu("/projects","help_projects",t("mnu_projects")) %>
+						</li>
+						<li>
+							<%= h_menu("/customers","help_customers",t("mnu_customers")) %>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown" id="collabmenu">
+					<a class="dropdown-toggle btn-primary" data-toggle="dropdown" href="#"><%= t(:legend_collab)%><b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<%= h_menu("/questions","help_questions",t("mnu_questions")) %>
+						</li>
+						<li>
+							<%= h_menu("/main/news","help_news",t("mnu_news")) %>
+						</li>
+						<li>
+							<%= h_menu("/forums","help_forums",t("mnu_forums")) %>
+						</li>
+						<li>
+							<%= h_menu("/main/contacts","help_contacts",t("mnu_contact")) %>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown" id="processmenu">
+					<a class="dropdown-toggle btn-primary" data-toggle="dropdown" href="#"><%= t(:legend_processes)%><b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
+						</li>
+						<li>
+							<%= h_menu("/definitions/new_process", "help_flw_processes",t("mnu_flw_new_process")) %>
+						</li>
+						<li>
+							<%= h_menu("/processes", "help_flw_processes",t("mnu_flw_processes")) %>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown" id="organizationmenu">
+					<a class="dropdown-toggle btn-primary" data-toggle="dropdown" href="#"><%= t(:legend_organization)%><b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<%= h_menu("/users","help_users",t("mnu_users")) %>
+						</li>
+						<li>
+							<%= h_menu("/roles","help_roles",t("mnu_roles")) %>
+						</li>
+						<li>
+							<%= h_menu("/groups","help_groups",t("mnu_groups")) %>
+						</li>
+						<li>
+							<%= h_menu("/volumes","help_volumes",t("mnu_volumes")) %>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<%= h_menu("/accesses","help_accesses",t("mnu_acces")) %>
+						</li>
+					</ul>
+				</li>
 				<% if admin_logged_in? %>
-				<div id="favori_link">
-					<%= render(:partial => "main/favori_link", :object => @favori.get("link")) %>
-				</div>
+				<li class="dropdown" id="parammenu">
+					<a class="dropdown-toggle btn-warning" data-toggle="dropdown" href="#"><%= t(:legend_param)%><b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<%= h_menu("/typesobjects","help_typesobjects",t("mnu_types_objects")) %>
+						</li>
+						<li>
+							<%= h_menu("/statusobjects","help_statusobjects",t("mnu_status_objects")) %>
+						</li>
+						<li>
+							<%= h_menu("/sequences","help_sequences",t("mnu_sequences")) %>
+						</li>
+						<li>
+							<%= h_menu("/relations","help_relations",t("mnu_relations")) %>
+						</li>
+
+						<li>
+							<%= h_menu("/views","help_views",t("mnu_views")) %>
+						</li>
+						<li>
+							<%= h_menu("/definitions", "help_flw_definitions",t("mnu_flw_definitions")) %>
+						</li>
+						<li>
+							<%= h_menu("/subscriptions", "help_subscriptions",t("mnu_subscriptions")) %>
+						</li>
+					</ul>
+				</li>
+				<li class="dropdown" id="debugmenu">
+					<a class="dropdown-toggle btn-danger" data-toggle="dropdown" href="#"><%= t(:legend_debug)%><b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<%= h_menu("/notifications", "help_notifications",t("mnu_notifications")) %>
+						</li>
+						<li>
+							<%= h_menu("/datafiles", "help_datafiles",t("mnu_datafiles")) %>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<%= h_menu("/history", "help_flw_history",t("mnu_flw_history")) %>
+						</li>
+						<li>
+							<%= h_menu("/errors", "help_flw_errors",t("mnu_flw_errors")) %>
+						</li>
+						<li>
+							<%= h_menu("/forum_items", "help_forum_items",t("mnu_forum_items")) %>
+						</li>
+						<li>
+							<%= h_menu("/links", "help_links",t("mnu_links")) %>
+						</li>
+						<li>
+							<%= h_menu("/checks", "help_checks",t("mnu_checks")) %>
+						</li>
+					</ul>
+				</li>
+				<%end%>
+				<% if logged_in? %>
+				<a class="brand" href="#"> <%= t(:user_connected,
+				:login => @current_user.login,
+				:role => @current_user.role.try(:title),
+				:group => @current_user.group.try(:name),
+				:project => @current_user.project.try(:ident)) %></a>
+				<%= link_to h_img("disconnect").to_s, sessions_path, :method => :delete, :class=>"brand" %>
+				<% else %><%= link_to t("connect"), new_sessions_url , :class=>"brand"%></span>
 				<% end %>
-			</fieldset>
-			<fieldset>
-				<%= content_tag(:legend, t(:legend_organization)) %>
-				<%= h_menu("/users","help_users",t("mnu_users")) %>
-				<%= h_menu("/roles","help_roles",t("mnu_roles")) %>
-				<%= h_menu("/groups","help_groups",t("mnu_groups")) %>
-				<%= h_menu("/accesses","help_accesses",t("mnu_acces")) %>
-				<%= h_menu("/volumes","help_volumes",t("mnu_volumes")) %>
-			</fieldset>
-			<% if admin_logged_in? %>
-			<fieldset>
-				<%= content_tag(:legend, t(:legend_param)) %>
-				<%= h_menu("/typesobjects","help_typesobjects",t("mnu_types_objects")) %>
-				<%= h_menu("/statusobjects","help_statusobjects",t("mnu_status_objects")) %>
-				<%= h_menu("/sequences","help_sequences",t("mnu_sequences")) %>
-				<%= h_menu("/relations","help_relations",t("mnu_relations")) %>
-				<%= h_menu("/views","help_views",t("mnu_views")) %>
-				<%= h_menu("/definitions", "help_flw_definitions",t("mnu_flw_definitions")) %>
-				<%= h_menu("/subscriptions", "help_subscriptions",t("mnu_subscriptions")) %>
-			</fieldset>
-			<% end %>
-			<% if admin_logged_in? %>
-			<fieldset>
-				<%= content_tag(:legend, t(:legend_debug)) %>
-				<%= h_menu("/notifications", "help_notifications",t("mnu_notifications")) %>
-				<%= h_menu("/errors", "help_flw_errors",t("mnu_flw_errors")) %>
-				<%= h_menu("/history", "help_flw_history",t("mnu_flw_history")) %>
-				<%= h_menu("/datafiles", "help_datafiles",t("mnu_datafiles")) %>
-				<%= h_menu("/forum_items", "help_forum_items",t("mnu_forum_items")) %>
-				<%= h_menu("/links", "help_links",t("mnu_links")) %>
-				<%= h_menu("/checks", "help_checks",t("mnu_checks")) %>
-			</fieldset>
-			<% end %>
+				<a class="brand" href="#"><%= tip_help() %></a>
+			</ul>
+
 		</div>
 	</div>
-	<div id="main">
+</div>
+
+<script type="text/javascript" src="/javascripts/jquery.js"></script>
+<script type="text/javascript" src="/javascripts/bootstrap.js"></script>
+<script type="text/javascript">
+	$(function() {
+		try {
+			$('.dropdown-toggle').dropdown();
+		} catch(err) {
+			txt = "There was an error on this page.\n\n";
+			txt += "Error description: " + err.message + "\n\n";
+			txt += "Click OK to continue.\n\n";
+			alert(txt);
+			return true;
+		}
+	});
+
+</script>
+<div class="tab-content">
+
+	<div id="favorites" class="tab-pane inactive">
+		<fieldset>
+			<%= content_tag(:legend, t(:legend_clipboard)) %>
+			<div id="favori_document">
+				<%= render(:partial => "main/favori_document", :object => @favori.get("document")) %>
+			</div>
+			<div id="favori_part">
+				<%= render(:partial => "main/favori_part", :object => @favori.get("part")) %>
+			</div>
+			<div id="favori_project">
+				<%= render(:partial => "main/favori_project", :object => @favori.get("project")) %>
+			</div>
+			<div id="favori_customer">
+				<%= render(:partial => "main/favori_customer", :object => @favori.get("customer")) %>
+			</div>
+			<div id="favori_user">
+				<%= render(:partial => "main/favori_user", :object => @favori.get("user")) %>
+			</div>
+			<% if admin_logged_in? %>
+			<div id="favori_link">
+				<%= render(:partial => "main/favori_link", :object => @favori.get("link")) %>
+			</div>
+			<% end %>
+		</fieldset>
+	</div>
+
+	<div id="main" class="tab-pane active">
 		<% if flash[:error].present? %>
 		<p class="error">
 			<%= flash[:error] %>
@@ -114,3 +232,4 @@
 		<%= yield :layout %>
 	</div>
 </div>
+

@@ -24,7 +24,7 @@
 		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %> </th><th></th><th></th><th></th>
 	</tr>
 	<% @statusobjects[:recordset].each do |statusobject| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= h statusobject.id %> </td>
 		<td> <%= h statusobject.forobject %> </td>
 		<td> <%= h statusobject.name %> </td>

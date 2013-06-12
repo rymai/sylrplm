@@ -44,7 +44,7 @@
 	</thead>
 	<% for workitem in workitems %>
 	<% fei = workitem.full_fei%>
-	<tr class="workitem">
+	<tr class='<%= cycle("even", "odd") %>'>
 		<% if current_user.is_admin?%> <td> <%= workitem.id %> </td>
 		<% end %> 
 		<% if fonct == "show_only" %>

@@ -23,7 +23,7 @@
 		<th> <%= t("label_projowner") %> </th>
 	</tr>
 	<% @checks[:recordset].each do |check| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= h check.checkobject_plmtype %> </td>
 		<td> <%= h check.checkobject_id %> </td>
 		<td> <%= h check.status %> </td>

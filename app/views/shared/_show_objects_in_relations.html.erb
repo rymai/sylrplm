@@ -1,7 +1,7 @@
 Documents Fils
 <table class='menu_bas'>
 	<% object.documents.each do |obj| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= obj.ident %></td>
 	</tr>
 	<% end %>
@@ -9,7 +9,7 @@ Documents Fils
 Documents Peres
 <table class='menu_bas'>
 	<% object.documents_up.each do |obj| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= obj.ident %></td>
 	</tr>
 	<% end %>
@@ -17,7 +17,7 @@ Documents Peres
 Parts Peres
 <table class='menu_bas'>
 	<% object.parts_up.each do |obj| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= obj.ident %></td>
 	</tr>
 	<% end %>
@@ -25,7 +25,7 @@ Parts Peres
 Projects Peres
 <table class='menu_bas'>
 	<% object.projects_up.each do |obj| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= obj.ident %></td>
 	</tr>
 	<% end %>
@@ -33,7 +33,7 @@ Projects Peres
 Customers Peres
 <table class='menu_bas'>
 	<% object.customers_up.each do |obj| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= obj.ident %></td>
 	</tr>
 	<% end %>

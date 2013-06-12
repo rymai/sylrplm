@@ -104,7 +104,7 @@ class Relation < ActiveRecord::Base
 
 	def self.by_types(father_plmtype, child_plmtype, father_typesobject_id, child_typesobject_id)
 		cond="father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and father_typesobject_id='#{father_typesobject_id}' and child_typesobject_id='#{child_typesobject_id}' "
-		#puts "Relations."+__method__.to_s+":"+cond
+		puts "Relations."+__method__.to_s+":"+cond
 		find(:first,
       :conditions => [ cond ])
 	end

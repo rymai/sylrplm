@@ -159,7 +159,7 @@ class Node
 
 	def size_all_(ret, level)
 		fname="Node:#{__method__}"
-		LOG.debug(fname){"==>level=#{level}, nodes:#{nodes.size}, ret=#{ret}"}
+		#LOG.debug(fname){"==>level=#{level}, nodes:#{nodes.size}, ret=#{ret}"}
 		level+=1
 		nodes.each do |nod|
 			ret= 1+ nod.size_all_(ret, level)

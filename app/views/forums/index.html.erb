@@ -27,7 +27,7 @@
 		<th></th>
 	</tr>
 	<% @forums[:recordset].each do |forum| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= h_explorer forum, :subject %> </td>
 		<td> <%= h_explorer forum.typesobject, :name %> </td>
 		<td> <%= h_explorer forum.statusobject, :name %> </td>

@@ -31,7 +31,7 @@
 		<th><%= t(:label_projects) %> </th>
 	</tr>
 	<% for user in @current_users[:recordset] %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td>
 			<% unless param_equals?("todo", "select") %>
 		<%= h_explorer user, :login %>

@@ -13,7 +13,7 @@
 		<% @datas.each do |domain, values| %> <td>
 		<table>
 			<% @datas[domain].each do |key, value| %>
-			<tr>
+			<tr class='<%= cycle("even", "odd") %>'>
 				<td> <%= @datas[domain][key] %></td>
 				<td> <%= t("ctrl_#{key}") %></td>
 			</tr>
@@ -21,7 +21,6 @@
 		</table> <% end %> </td>
 	</tr>
 </table>
-<hr>
 <%= h_help_all %>
 
 <% else %>

@@ -23,7 +23,7 @@
 		<th></th><th></th><th></th>
 	</tr>
 	<% @typesobjects[:recordset].each do |typesobject| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= h typesobject.id %> </td>
 		<td> <%= h typesobject.forobject %> </td>
 		<td> <%= h typesobject.name %> </td>

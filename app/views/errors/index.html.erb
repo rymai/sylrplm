@@ -25,7 +25,7 @@
 	<tbody>
 		<% @errors.each do |error|
 		e = error.as_owfe_error -%>
-		<tr>
+		<tr class='<%= cycle("even", "odd") %>'>
 			<td><%= h display_time(e.date) %> .<%= h e.date.usec.to_s[0, 3] %></td>
 			<td><%= h e.wfid %></td>
 			<td><%= link_to h(e.fei.expid), expression_path(e.fei) %></td>
