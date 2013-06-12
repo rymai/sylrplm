@@ -32,6 +32,10 @@ class MainController < ApplicationController
     end
     unless params[:locale].nil?
       set_locale
+      unless @current_user.nil?
+      @current_user.language = params[:locale]
+      st = @current_user.save
+      end
     end
     unless params[:domain].nil?
       set_domain

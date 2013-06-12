@@ -18,7 +18,7 @@
 		<th></th><th></th>
 	</tr>
 	<% @accesses[:recordset].each do |acc| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= h acc.controller %> </td>
 		<td> <%= h acc.action %> </td>
 		<td> <%= h acc.roles %> </td>

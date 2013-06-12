@@ -17,7 +17,7 @@
 		<th></th>
 	</tr>
 	<% datafiles[:recordset].each do |datafile| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= icone(datafile) %>
 		<%= h_thumbnails(datafile) %></td>
 		<td> <%= link_to datafile.ident, datafile_path(datafile, :doc => (document.nil? ? nil : document.id)) %> </td>

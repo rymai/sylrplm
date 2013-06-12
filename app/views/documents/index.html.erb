@@ -36,7 +36,7 @@
 	</tr>
 	<% previous=nil
 	@documents[:recordset].each do |document| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= icone(document) %> </td>
 		<td> <%= h_explorer document, :ident %> </td>
 		<td> <%= h document.revision %> </td>
@@ -76,7 +76,7 @@
 <%= will_paginate(@documents[:recordset]) %>
 <table class='menu_bas'>
 	<tr>
-		<td> <%= link_to t("new_document"), new_document_path %></td>
+		<td> <%= link_to t("new_document"), new_document_path  %></td>
 		<td> <%= show_help("help_documents") %></td>
 	</tr>
 </table>

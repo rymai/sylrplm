@@ -3,7 +3,7 @@
 		<td colspan="2"><%= t(:label_belongs_to)%></td>
 	</tr>
 	<% for elt in in_groups %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= h elt.group.name %></td>
 		<td> <%= link_to t('button_remove'), elt,  :method => :delete %></td>
 	</tr>
@@ -15,7 +15,7 @@
 		<td colspan="2"><%= t(:label_not_belongs_to)%></td>
 	</tr>
 	<% for elt in out_groups %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= h elt.name %></td>
 		<td><%= link_to t('button_add'), group_definitions_path(:group_definition => { :group_id => elt.id, :definition_id => @definition.id}), :method => :post %></td>
 	</tr>

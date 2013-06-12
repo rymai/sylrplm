@@ -22,7 +22,7 @@
             </th>
         </tr>
         <% for link in @wi_links %>
-        <tr>
+        <tr class='<%= cycle("even", "odd") %>'>
             <td class="nhover">
                 <%= h(link[:link].relation_name) %>
             </td>

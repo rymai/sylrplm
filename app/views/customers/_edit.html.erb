@@ -25,9 +25,7 @@
 	<%end %>
 	<br/>
 	<%= f.label t(:label_responsible) %>
-	<%= hidden_field :customer , :owner_id %>
-	<%= text_field_tag "customer_owner_display", @customer.owner.login, :disabled => true %>
-	<%= link_to h_img_btn("btn_select").to_s, {:controller => "users", :todo => "select", :html_ident => "customer_owner"} , {:target => "_blank", :class => 'menu_bas'}%> </td>
+	<%= select_in_list(:customer, :owner, @customer.owner.login, :users) %>
 	<br/>
 	<%= f.label t("label_date") %>
 	<%= f.date_select :date %>

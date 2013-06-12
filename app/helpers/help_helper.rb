@@ -117,10 +117,10 @@ module HelpHelper
 	def build_help_all
 		root_help = h_help_root
 		#sommaire
-		msg = "<h1>#{t(:help_summary)}</h1><a class='help_tr' name='help_summary'><hr></a>\n"
+		msg = "<h1>#{t(:help_summary)}</h1><a class='help_tr' name='help_summary'></a>\n"
 		msg += "<h2>#{t(:help_root_title)}</h2>\n"
 		msg += h_help_summary(root_help,0)
-		msg += "<hr>\n"
+		#msg += "<hr>\n"
 		#contenu
 		msg += h_help_level(root_help)
 		msg

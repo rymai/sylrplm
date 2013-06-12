@@ -5,6 +5,12 @@ Group_1:
   father_id: 
   domain: admin
 
+Group_2: 
+  id: "2"
+  name: consultants
+  father_id: 
+  domain: admin
+  
 Group_101: 
   id: "101"
   name: SICM
@@ -28,3 +34,4 @@ Group_104:
   name: SICM_BM
   father_id: 101
   domain: custo.sicm
+

@@ -552,7 +552,7 @@ var RuoteForms = function() {
 		if(options && options['buttons']) {
 			CONFIG.with_buttons = options['buttons'];
 		}
-		//alert('renderForm:' + container + ' data=' + data + ' options=' + options + ' with_buttons=' + CONFIG.with_buttons);
+		//alert('renderForm:' + container + ' data=' + data + ' options[read-only]=' + options['read-only'] + ' with_buttons=' + CONFIG.with_buttons);
 		container = byId(container);
 
 		if(!container.className.match(/rform_root/))

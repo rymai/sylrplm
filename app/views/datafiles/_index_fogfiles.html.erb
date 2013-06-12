@@ -30,7 +30,7 @@
 	</tr>
 	<% else %>
 	<% fogdir.files.each do |fogfile| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= fogdir.key %> </td>
 		<td> <%= fogdir.creation_date.inspect%> </td>
 		<td><%= fogfile.key%></td>

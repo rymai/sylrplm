@@ -26,7 +26,7 @@
 		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %></th>
 	</tr>
 	<% @relations[:recordset].each do |relation| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= h relation.name %></td>
 		<td><%= h relation.typesobject.name unless relation.typesobject.nil? %></td>
 		<td><%= h relation.father_plmtype %></td>

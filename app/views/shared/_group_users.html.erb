@@ -4,7 +4,7 @@
     <td colspan="2"><%=t(:label_members)%></td>
   </tr>
 <% for elt in in_elements %>
-  <tr>
+  <tr class='<%= cycle("even", "odd") %>'>
     <td><%= h elt.user.login %></td>
     <td> <%= link_to 'remove', elt, :confirm => 'Are you sure ?', :method => :delete %></td>
   </tr>
@@ -16,7 +16,7 @@
     <td colspan="2"><%=t(:label_not_members)%></td>
   </tr>
 <% for elt in out_elements %>
-  <tr>
+  <tr class='<%= cycle("even", "odd") %>'>
     <td><%= h elt.login %></td>
     <td> <%= link_to 'add', user_groups_path(:user_group => { :group_id => @group.id, :user_id => elt.id}), :method => :post %></td>
   </tr>

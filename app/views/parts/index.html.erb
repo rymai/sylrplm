@@ -33,7 +33,7 @@
 		<th></th>
 	</tr>
 	<% @parts[:recordset].each do |part| %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= icone(part) %></td>
 		<td><%= h_explorer part %></td>
 		<td><%= part.revision %></td>

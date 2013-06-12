@@ -18,7 +18,7 @@
 	fei = entry.full_fei
 	sfei = fei ? "#{fei.sub_instance_id} #{fei.expname} #{fei.expid}" : ''
 	cat = entry.created_at.to_s %>
-	<tr>
+	<tr class='<%= cycle("even", "odd") %>'>
 		<% if admin_logged_in? %> <td> <%= entry.id %> </td>
 		<% end %> <td class="created_at" title="<%= cat %>"><%= cat[0..18] %></td>
 		<td class="since"><%= display_since(entry, :created_at) %></td>

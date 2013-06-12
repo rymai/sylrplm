@@ -82,81 +82,69 @@ class User < ActiveRecord::Base
 	#
 	#
 	def self.create_new_login(aparams, urlbase)
-		name="User.create_new_login:"
-		type=Typesobject.find_by_forobject_and_name(User.model_name, ::SYLRPLM::TYPE_USER_NEW_ACCOUNT)
-		group_consultants=Group.find_by_name(::SYLRPLM::GROUP_CONSULTANTS)
+		fname="User.create_new_login:"
+		type = Typesobject.find_by_forobject_and_name("user", ::SYLRPLM::TYPE_USER_NEW_ACCOUNT)
+		#puts fname+" type="+type.inspect
 		role_consultant=Role.find_by_title(::SYLRPLM::ROLE_CONSULTANT)
 		admin = User.find_by_login(::SYLRPLM::USER_ADMIN)
-		proj = Project.new(user: admin)
-		type_proj=Typesobject.find_by_forobject_and_name(Project.model_name, ::SYLRPLM::TYPE_PROJ_ACCOUNT)
-		typeacc_proj=Typesobject.find_by_forobject_and_name("project_typeaccess", ::SYLRPLM::TYPEACCESS_PUBLIC)
-		unless group_consultants.nil? || role_consultant.nil? || proj.nil? || type.nil? || type_proj.nil? || typeacc_proj.nil?
-			proj.ident=Project::for_user(aparams["login"])
-			proj.typesobject=type_proj
-			proj.typeaccess=typeacc_proj
-			puts name+" proj="+proj.inspect
-			if proj.save
-				params={}
-				params["typesobject_id"]=type.id
-				params["volume_id"]=1
-				#params["group_id"]=group_consultants.id
-				#params["role_id"]=role_consultant.id
-				#params["project_id"]=proj.id
-				params["login"]=aparams["login"]
-				params["password"]=aparams["password"]
-				params["email"]=aparams["new_email"]
-				new_user = User.new(params)
-				if new_user.save
-					new_user.groups<<group_consultants
-					new_user.roles<<role_consultant
-					puts name+" new_user="+new_user.inspect
-					puts name+" rel="+proj.model_name+","+ new_user.model_name+","+ proj.typesobject.inspect+","+ new_user.typesobject.inspect
+		proj=Project.find_by_ident("PROJECT-admin")
+		#puts fname+" proj="+proj.inspect
+		unless role_consultant.nil? || type.nil?
+			new_user=User.find_by_login(aparams["login"])
+			new_user.destroy unless new_user.nil?
+			params={}
+			params["typesobject_id"]=type.id
+			params["volume_id"]=1
 
-					if relation = Relation.by_types(proj.model_name, new_user.model_name, proj.typesobject.id, new_user.typesobject.id)
-						link = Link.new(father: proj, child: new_user, relation: relation, useR: new_user)
-						if link.save
-							puts name+"urlbase="+urlbase
+			params["login"]=aparams["login"]
+			params["password"]=aparams["password"]
+			params["email"]=aparams["new_email"]
+			new_user = User.new(params)
 
-							if email = PlmMailer.create_new_login(new_user, new_user, new_user, urlbase)
-								email.set_content_type("text/html")
-								PlmMailer.deliver(email)
-								msg = :ctrl_mail_created_and_delivered
-								puts name+" message cree et envoye pour #{new_user.login}"
-							else
-								puts name+" message non cree pour #{new_user.login}"
-								msg = :ctrl_mail_not_created
-								new_user.destroy
-								new_user=nil
-							end
-						else
-							puts name+" lien non cree pour #{new_user.login}"
-							new_user=nil
-						end
-					else
-						puts name+" relation non trouvee pour #{new_user.login}"
-						new_user=nil
-					end
+			if new_user.save
+				#
+				::SYLRPLM::GROUPS_ACCOUNT.split(',').each do |grp|
+					new_user.groups << Group.find_by_name(grp)
+				end
+				new_user.roles<<role_consultant
+				#
+				::SYLRPLM::PROJECTS_ACCOUNT.split(',').each do |proj|
+					new_user.projects << Project.find_by_ident(proj)
+				end
+				
+				#puts fname+" new_user="+new_user.inspect
+				#puts fname+"urlbase="+urlbase
+
+				if email = PlmMailer.create_new_login(new_user, admin, new_user, urlbase)
+					email.set_content_type("text/html")
+					PlmMailer.deliver(email)
+					msg = :ctrl_mail_created_and_delivered
+					puts fname+" message cree et envoye pour #{new_user.login}"
 				else
-					puts name+" user non sauve: #{new_user.login}"
+					puts fname+" message non cree pour #{new_user.login}"
+					msg = :ctrl_mail_not_created
+					new_user.destroy
 					new_user=nil
 				end
+
 			else
-				puts name+" projet "+proj.inspect+" non sauve"
+				puts fname+" user non sauve: #{new_user.login}"
+				puts "#{new_user.errors.inspect}"
 				new_user=nil
 			end
 		else
-			puts name+" manque des objets associes"
-			puts name+"admin="+admin.inspect
-			puts name+"group_consultants="+group_consultants.inspect
-			puts name+"role_consultant="+role_consultant.inspect
-			puts name+"proj="+proj.inspect
-			puts name+"type user="+type.inspect
-			puts name+"type_proj="+type_proj.inspect
-			puts name+"typeacc_proj="+typeacc_proj.inspect
+			puts fname+" manque des objets associes"
+			puts fname+" admin="+admin.inspect
+			puts fname+" group_consultants="+group_consultants.inspect
+			puts fname+" role_consultant="+role_consultant.inspect
+			puts fname+" proj="+proj.inspect
+			puts fname+" type user="+type.inspect
 			new_user=nil
 		end
 		new_user
 	end
+
+	
 
 	def self.find_by_name(name)
 		find(:first , :conditions => ["login = '#{name}' "])
@@ -314,7 +302,7 @@ class User < ActiveRecord::Base
     ".role:"+ self.roles.empty?.to_s +
     ".group:" + self.groups.empty?.to_s +
     ".project:" + self.projects.empty?.to_s +
-    ":"+ret.to_s
+    ":ret="+ret.to_s
 		ret
 	end
 

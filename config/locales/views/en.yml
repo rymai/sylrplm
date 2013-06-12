@@ -9,7 +9,7 @@ en:
   label_date: Date
   select_add: Add to selection
   select_remove: Remove from selection
-  as: " as "
+  user_connected: "%{login} connected as %{role}/%{group}/%{project}"
   hello: "Hello world"
   disconnect: "Disconnect"
   connect: Sign in
@@ -308,7 +308,8 @@ en:
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM News
   label_today: Date
-  legend_main: Welcome
+  legend_welcome: Welcome
+  legend_main: PLM Window
   legend_plm_objects: PLM Objects
   legend_collab: Collaboration
   legend_admin: Administration

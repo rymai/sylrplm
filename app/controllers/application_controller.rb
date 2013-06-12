@@ -19,8 +19,8 @@ class ApplicationController < ActionController::Base
   before_filter LogDefinitionFilter
 
   before_filter :authorize, :except => [:index, :init_objects]
-  before_filter :set_locale
   before_filter :define_variables
+  before_filter :set_locale
 
   def update_accessor(obj)
     mdl_name = obj.model_name
@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user_connect(user)
-    flash[:notice] = nil
+    flash[:error] = nil
     if false
       if !user.may_connect?
         flash[:error] =""
@@ -61,9 +61,9 @@ class ApplicationController < ActionController::Base
     flash[:error] = t(:ctrl_user_not_valid,:user=>user ) unless user.may_connect?
     puts "check_user_connect:"+user.inspect+":"+flash[:notice].to_s
     if user.login==::SYLRPLM::USER_ADMIN
-      flash[:notice] = nil
+      flash[:error] = nil
     end
-    flash[:notice]
+    flash[:error]
   end
 
   def check_init
@@ -103,11 +103,13 @@ class ApplicationController < ActionController::Base
   # definition de la langue
   def set_locale
     @current_user             = User.find_user(session)
+    puts "set_locale:params[:locale]=#{params[:locale]}"
     if params[:locale]
       I18n.locale = params[:locale]
       session[:lng] = I18n.locale
     else
       unless @current_user.nil?
+        puts "set_locale:@current_user=#{@current_user} lng=#{@current_user.language}"
         I18n.locale = @current_user.language
       else
         if session[:lng]
