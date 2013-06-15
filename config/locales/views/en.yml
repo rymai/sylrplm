@@ -229,10 +229,10 @@ en:
   label_extension: Extension
   add_datafile: Add file
   label_nbfiles: Nb files
-  check_out: Check Out
+  button_check_out: Check Out
   is_check_out: Is Check Out
-  check_in: Check In
-  check_free: Unlock
+  button_check_in: Check In
+  button_check_free: Unlock
   download: download file
   reason: Reason
   document_check: Check
@@ -274,6 +274,10 @@ en:
   # help
   help_title: "Help on SYLRPLM application"
   help_close_window: Close the help window
+  help_general: General Help
+  help_window: Help on this window
+  help_about: About SYLRPLM
+  mnu_help: Help
   # info
   # links
   link_edit: Link editing

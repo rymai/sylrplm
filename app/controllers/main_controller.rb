@@ -43,7 +43,14 @@ class MainController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
     end
-    LOG.debug("<==")
+   
   end
+  
+ def helpgeneral
+		puts " helpgeneral"
+		respond_to do |format|
+			format.html # helpgeneral.html.erb
+		end
+	end
 
 end

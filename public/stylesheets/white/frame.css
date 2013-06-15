@@ -255,16 +255,18 @@ label {
 .navbar .brand {
 	font-size: 16px;
 	padding: 5px 10px 5px;
+	margin-top: 8px;
 	margin-left: -10px;
 }
-.navbar .nav > li > a {
-  color: #000000;
-  text-shadow: 0 0px 0 #ffffff;
-}
 
-.navbar .nav > li > a:focus,
-.navbar .nav > li > a:hover {
-  color: #AAAAAA;
-}
-
+/*
+ .navbar .nav > li > a {
+ color: #000000;
+ text-shadow: 0 0px 0 #ffffff;
+ }
+ .navbar .nav > li > a:focus,
+ .navbar .nav > li > a:hover {
+ color: #AAAAAA;
+ }
+ */
 

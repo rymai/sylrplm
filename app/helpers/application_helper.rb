@@ -1,9 +1,8 @@
 # = ApplicationHelper
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-	
 	#
-	# == Role: prepare a title  
+	# == Role: prepare a title
 	# == Arguments
 	# * +text+ - text for title
 	# == Usage
@@ -65,7 +64,7 @@ module ApplicationHelper
 
 	def h_menu(href,help,title)
 		bloc=""
-		#bloc<<"<a class='menu' onclick=\"return helpPopup('#{help}','#{href}');\" >#{title}</a>";
+		#ne marche pas avec boostrap bloc<<"<a class='menu' onclick=\"return helpPopup('#{help}','#{href}');\" >#{title}</a>";
 		bloc<<"<a class='menu' href='#{href}' >#{title}</a>";
 		bloc
 	end
@@ -75,6 +74,18 @@ module ApplicationHelper
 		if(link!=nil && link.strip()!="")
 			bloc<<"<a href='/help?help="+link+"'>"+h_img(name)+"</a>"
 		end
+	end
+
+	def help_window
+		ret = ""
+		ret << "<a onclick=\"return helpWindow('help_#{params[:controller]}_#{params[:action]}');\">#{t(:help_window)}</a>"
+		ret
+	end
+
+	def help_about
+		ret = ""
+		ret << "<a onclick=\"return helpWindow('help_about');\">#{t(:help_about)}</a>"
+		ret
 	end
 
 	# memorisation du click sur le help
@@ -430,8 +441,6 @@ module ApplicationHelper
 		end
 		ret
 	end
-
-	
 
 	def h_attribut_trtd(obj, accessor)
 		fname=self.class.name+"."+__method__.to_s

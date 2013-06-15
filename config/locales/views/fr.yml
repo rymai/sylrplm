@@ -274,6 +274,10 @@ fr:
   # help
   help_title: Aide relative à l application SYLRPLM
   help_close_window: Fermer la fenêtre d'aide
+  help_general: Aide générale
+  help_window: Aide sur cette fenêtre
+  help_about: A propos de SYLRPLM
+  mnu_help: Aide
   # info
   # link
   link_edit: Edition du lien

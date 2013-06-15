@@ -58,17 +58,23 @@ function helpPopup(which, href) {
 	return false;
 };
 
-function helpPopup_old(which, href) {
+function helpWindow(which) {
 
-	if (which == null)
+	if (which == null) {
 		which = "help_contents_help";
-	if ((!helpWin) || (helpWin.closed))
-		helpWin = window.open('/help?help=' + which, '', 'left=50,top=50,width=500,height=320,resizable=1,scrollbars=1');
-	else
-		helpWin.location = '/help?help=' + which;
+	}
+	alert ('helpPopup:open which='+which+' helpWin='+helpWin );
+	if (!helpWin || helpWin.closed) {
+		//alert ('helpPopup:open which='+which+' helpWin='+helpWin+' helpClick='+helpClick+' href='+href);
+		//helpWin = window.open("/help?help="+which, which,"location=no, menubar=no, status=no, scrollbars=no, resizable=no, directories=yes, menubar=no, toolbar=no, width=500, height=320, left=50, top=50");
+		// les dimensions ne sont pas prises en compte sur firefox, la fenetre est maximisée
+		helpWin = window.open('/help?help=' + which, which, 'scrollbars=yes,resizable=yes,width=500,height=320,left=50');
 
+	} else {
+		helpWin.location = '/help?help=' + which;
+	}
 	return false;
-}
+};
 
 function getHelp(which) {
 	if ((helpWin) && (!helpWin.closed))
@@ -76,8 +82,10 @@ function getHelp(which) {
 }
 
 function closeHelp() {
-	if (helpWin)
+	if (helpWin) {
+		alert ('closeHelp');
 		helpWin.close();
+	}
 }
 
 // ruote-web2

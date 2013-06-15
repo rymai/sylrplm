@@ -19,7 +19,7 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.resources :notifications, :member => { :notify => :get }
 
-	map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get, :tools => :get }
+	map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get, :tools => :get, :helpgeneral => :get }
 
 	map.resources :help, :only => [:index]
 
@@ -89,6 +89,11 @@ ActionController::Routing::Routes.draw do |map|
 	'main/init_objects',
 	:controller => 'main',
 	:action => 'init_objects')
+	
+	map.connect(
+	'main/helpgeneral',
+	:controller => 'main',
+	:action => 'helpgeneral')
 
 	map.connect(
 	'datafiles/:id/show_file',

@@ -1,5 +1,8 @@
 <sylrplm_help >
     Bienvenue dans l'application SYLRPLM développée sur "Ruby On Rails" : #img=rails.png=img##lnk=http://www.railsfrance.org/=lnk#
+    <msg key="help_about" title="A propos de SYLRPLM">
+    	SYLRPLM est une réalisation de Sylvère Coutable avec l'assistance technique de Remy Coutable
+    </msg>
     <msg key="help_first_use" title="Prise en main">
     	Tout d'abord, nous vous invitons à prendre connaissance des principales fonctionnalités de l'application#jump=help_main_functions=jump#.
     	Ensuite, pour une première prise en main, vous pouvez parcourir, en tant que visiteur, les différents menus de gauche pour consulter les données gérées par l'application.
@@ -347,7 +350,7 @@
                 </msg>                 
                 <msg key="help_documents_functions" title="Fonctionnalités">
                     Les principales fonctionnalités sur les documents sont:
-                    <msg key="help_documents_list" title="Liste" href="/documents">
+                    <msg key="help_documents_index" title="Liste" href="/documents">
                         #img=help/documents_list.png=img#
                     </msg>
                     <msg key="help_documents_new" title="Nouveau document" href="/documents/new">
@@ -360,7 +363,7 @@
                             </li>
                         </ul>
                     </msg>
-                    <msg key="help_documents_show" title="Explorer" href="/documents/1">
+                    <msg key="help_documents_show" title="Explorer un document" href="/documents/1">
                         #img=help/documents_show.png=img#
                     </msg>
                     <msg key="help_documents_reservation" title="Réservation/Libération">
@@ -447,13 +450,11 @@
                     <msg key="help_parts_bom" title="Nomenclature" href="/parts">
                         Une fonction importante est la nomenclature (bom)
                         Elle représente les instances d'articles avec leurs liens.
-                        
                     </msg>
-                    
-                    <msg key="help_parts_list" title="Liste" href="/parts">
+                    <msg key="help_parts_index" title="Liste" href="/parts">
                         #img=help/parts_list.png=img#
                     </msg>
-                    <msg key="help_parts_show" title="Explorer" href="/parts/1">
+                    <msg key="help_parts_show" title="Explorer un article" href="/parts/1">
                         <ul>
                             <li title="Page d'exploration">#img=help/parts_show.png=img#
                             	Le choix de la vue permet d'afficher seulement les relations qui lui sont associées.
@@ -464,7 +465,7 @@
                             </li>
                         </ul>
                     </msg>
-                    <msg key="help_parts_edit" title="Edition" href="/parts/edit/1">
+                    <msg key="help_parts_edit" title="Editer un article" href="/parts/edit/1">
                         #img=help/parts_edit.png=img#
                     </msg>
                     <msg key="help_parts_new" title="Nouvel article" href="/parts/new">
@@ -498,13 +499,13 @@
                 </msg>
                 <msg key="help_projects_functions" title="Fonctionnalités">
                     Les principales fonctionnalités sur les projets sont:
-                    <msg key="help_projects_list" title="Liste" href="/projects">
+                    <msg key="help_projects_index" title="Liste des projets" href="/projects">
                         #img=help/projects_list.png=img#
                     </msg>
-                    <msg key="help_projects_show" title="Explorer" href="/projects/1">
+                    <msg key="help_projects_show" title="Explorer un projet" href="/projects/1">
                         #img=help/projects_show.png=img#
                     </msg>
-                    <msg key="help_projects_edit" title="Edition" href="/projects/edit/1">
+                    <msg key="help_projects_edit" title="Editer un projet" href="/projects/edit/1">
                         #img=help/projects_edit.png=img#
                     </msg>
                     <msg key="help_projects_new" title="Nouveau projet" href="/projects/new">
@@ -532,13 +533,13 @@
                 </msg>
                 <msg key="help_parts_functions" title="Fonctionnalités">
                     Les principales fonctionnalités sur les articles sont:
-                    <msg key="help_customers_list" title="Liste" href="/customers">
+                    <msg key="help_customers_index" title="Liste des clients" href="/customers">
                         #img=help/customers_list.png=img#
                     </msg>
-                    <msg key="help_customers_show" title="Explorer" href="/customers/1">
+                    <msg key="help_customers_show" title="Explorer un client" href="/customers/1">
                         #img=help/customers_show.png=img#
                     </msg>
-                    <msg key="help_customers_edit" title="Edition" href="/customers/edit/1">
+                    <msg key="help_customers_edit" title="Editer un client" href="/customers/edit/1">
                         #img=help/customers_edit.png=img#
                     </msg>
                     <msg key="help_customers_new" title="Nouveau client" href="/customers/new">
@@ -603,7 +604,7 @@
         <msg key="help_collab" title="Travail collaboratif">
             #img=help/module_collaboratif.png=img#
             Les fonctions de travail collaboratif sont:
-            <msg key="help_questions" title="Foire aux questions" href="/questions">
+            <msg key="help_questions_index" title="Foire aux questions" href="/questions">
                 Cette foire aux questions permet à l'administrateur de préciser certains points techniques ou de fonctionnement de l'application.
                 <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
                     certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
@@ -611,10 +612,10 @@
                     <li title="Réponse">La réponse</li>
                 </ul>
             </msg>
-            <msg key="help_news" title="Nouveautés" href="/main/news">
+            <msg key="help_news_index" title="Nouveautés" href="/main/news">
                 Permet à l'administrateur d'informer les utilisateurs (#jump=help_users=jump#) sur les nouveautés de l'application.
             </msg>
-            <msg key="help_forums" title="Forums" href="/forums">
+            <msg key="help_forums_index" title="Forums" href="/forums">
                 Permet aux utilisateurs (#jump=help_users=jump#) d'échanger des informations.
                 Un ou plusieurs forums peuvent être associés aux objets PLM suivants: article, projet, client par le menu "Ajout forum" de la page "Explorer"
                 <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
@@ -627,7 +628,7 @@
                     <li title="Message">Le premier message sur ce forum</li>
                 </ul>
             </msg>
-            <msg key="help_contacts" title="Contacts" href="/main/contacts">
+            <msg key="help_contacts_index" title="Contacts" href="/main/contacts">
                 Liste les contacts utiles pour l'utilisation de l'application.
             </msg>
         </msg>
@@ -641,7 +642,7 @@
             #img=help/module_processus.png=img#
             Ce module comprend les fonctions relatives a l'execution des processus métier: exécution, suivi.
             
-            <msg key="help_myactions" title="Mes actions" href="/workitems">
+            <msg key="help_workitems_index" title="Mes actions" href="/workitems">
             	Suivi des actions qui me sont affectées lors du déroulement des processus.
             	Liste:
             	#img=help/workflows_list.png=img#
@@ -650,7 +651,7 @@
             	Lancement:
             	#img=help/workflows_edit.png=img#
             </msg>
-            <msg key="help_run_processus" title="Lancer un Processus" href="/definitions/new_process">
+            <msg key="help_definitions_new_process" title="Lancer un Processus" href="/definitions/new_process">
             	Lancer un processus.
             	#img=help/new_process.png=img#
             	Activer un des processus
@@ -658,7 +659,7 @@
             	Lancer le processus 
             	#img=help/new_process2.png=img#
             </msg>
-            <msg key="help_cur_processus" title="Processus en cours" href="/processus">
+            <msg key="help_processes_index" title="Processus en cours" href="/processus">
             	Liste des processus en cours d'exécution.
             	#img=help/processus_list.png=img#
             	Détails:
@@ -688,10 +689,10 @@
                 </msg>
                 <msg key="help_users_functions" title="Fonctionnalités">
                     Les principales fonctionnalités sur les utilisateurs sont:
-                    <msg key="help_users_list" title="Liste" href="/list_users">
+                    <msg key="help_users_index" title="Liste des utilisateurs" href="/list_users">
                         #img=help/users_list.png=img#
                     </msg>
-                    <msg key="help_users_edit" title="Edition" href="/edit_user/1">
+                    <msg key="help_users_edit" title="Editer un utilisateur" href="/edit_user/1">
                         #img=help/users_edit.png=img#
                     </msg>
                     <msg key="help_users_new" title="Nouvel utilisateur" href="/add_user">
@@ -712,13 +713,13 @@
                 </msg>
                 <msg key="help_roles_functions" title="Fonctionnalités">
                     Les principales fonctionnalités sur les rôles sont:
-                    <msg key="help_roles_list" title="Liste" href="/roles">
+                    <msg key="help_roles_index" title="Liste des rôles" href="/roles">
                         #img=help/roles_list.png=img#
                     </msg>
-                    <msg key="help_roles_show" title="Explorer" href="/roles/1">
+                    <msg key="help_roles_show" title="Explorer un rôle" href="/roles/1">
                         #img=help/roles_show.png=img#
                     </msg>
-                    <msg key="help_roles_edit" title="Edition" href="/roles/1">
+                    <msg key="help_roles_edit" title="Editer un rôle" href="/roles/1">
                         #img=help/roles_edit.png=img#
                     </msg>
                     <msg key="help_users_new" title="Nouveau rôle" href="/roles/new">
@@ -740,13 +741,13 @@
                 </msg>
                 <msg key="help_groups_functions" title="Fonctionnalités">
                     Les principales fonctionnalités sur les groupes sont:
-                    <msg key="help_groups_list" title="Liste" href="/groups">
+                    <msg key="help_groups_index" title="Liste des groupes" href="/groups">
                         #img=help/groups_list.png=img#
                     </msg>
-                    <msg key="help_groups_show" title="Explorer" href="/groups/1">
+                    <msg key="help_groups_show" title="Explorer un groupe" href="/groups/1">
                         #img=help/groups_show.png=img#
                     </msg>
-                    <msg key="help_groups_edit" title="Edition" href="/groups/1">
+                    <msg key="help_groups_edit" title="Editer un groupe" href="/groups/1">
                         #img=help/groups_edit.png=img#
                     </msg>
                     <msg key="help_users_new" title="Nouveau groupe" href="/groups/new">
@@ -771,16 +772,16 @@
                 </msg>
                 <msg key="help_accesss_functions" title="Fonctionnalités">
                     Les principales fonctionnalités sur les autorisations sont:
-                    <msg key="help_access_list" title="Liste" href="/access">
+                    <msg key="help_access_index" title="Liste des accès" href="/access">
                         #img=help/access_list.png=img#
                     </msg>
-                    <msg key="help_access_show" title="Explorer" href="/access/1">
+                    <msg key="help_access_show" title="Explorer un accès" href="/access/1">
                         #img=help/access_show.png=img#
                     </msg>
-                    <msg key="help_roles_edit" title="Edition" href="/access/1">
+                    <msg key="help_roles_edit" title="Editer un accès" href="/access/1">
                         #img=help/access_edit.png=img#
                     </msg>
-                    <msg key="help_users_new" title="Nouveau rôle" href="/access/new">
+                    <msg key="help_users_new" title="Nouvel accès" href="/access/new">
                         #img=help/access_new.png=img#
                     </msg>
                 </msg>
@@ -802,16 +803,16 @@
                 </msg>
                 <msg key="help_volumes_functions" title="Fonctionnalités">
                     Les principales fonctionnalités sur les volumes sont:
-                    <msg key="help_volumes_list" title="Liste" href="/volumes">
+                    <msg key="help_volumes_index" title="Liste des volumes" href="/volumes">
                         #img=help/volumes_list.png=img#
                     </msg>
-                    <msg key="help_roles_show" title="Explorer" href="/volumes/1">
+                    <msg key="help_roles_show" title="Explorer un volume" href="/volumes/1">
                         #img=help/volumes_show.png=img#
                     </msg>
-                    <msg key="help_roles_edit" title="Edition" href="/volumes/1">
+                    <msg key="help_roles_edit" title="Editer un volume" href="/volumes/1">
                         #img=help/volumes_edit.png=img#
                     </msg>
-                    <msg key="help_users_new" title="Nouveau volumes" href="/volumes/new">
+                    <msg key="help_users_new" title="Nouveau volume" href="/volumes/new">
                         #img=help/volumes_new.png=img#
                     </msg>
                 </msg>
