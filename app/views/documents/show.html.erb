@@ -44,7 +44,7 @@
 </p>
 <%= h_type_values(@document, fonct) %>
 
-<%end %> 
+<%end %>
 <% files = @document.get_datafiles%>
 <% if files[:total]>0%> <h1><%= t("datafiles_list") %></h1>
 <%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files, :document=>@document}) %>
@@ -55,10 +55,10 @@
 		<td> <%= link_to t("add_datafile"), :action => :new_datafile, :id => @document.id %> </td>
 	</tr>
 </table>
-<% end %> <!--
-<%= render(:partial => "shared/show_objects_in_relations", :locals=>{:object=>@document}) %>
--->
-<% render(:partial => "shared/show_objects_in_relations", :locals=>{:object=>@document}) %> 
+<% end %> 
+
+<% render(:partial => "shared/show_objects_in_relations", :locals=> {:object => @document,  :fonct => fonct}) %>
+
 <%= render(:partial => "shared/object_workitems", :object => @document)  %>
 <% unless @document.directory? %> <!-- pas de fichier sous un repertoire -->
 <h1><%= t("document_check") %></h1>
@@ -104,7 +104,7 @@
 	<%end %>
 	<% end %>
 </table>
-<% end %> 
+<% end %>
 
 <% unless @favori.get('document').count==0 %> <h1></h1>
 <table class='menu_bas'>
@@ -115,7 +115,7 @@
 	</tr>
 	</td>
 </table>
-<%end%> 
+<%end%>
 <%= render(:partial => "shared/tree", :object => @document ) %> <h1></h1>
 <% form_for(@document) do |f| %>
 <table class='menu_bas'>

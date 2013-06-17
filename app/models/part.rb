@@ -45,18 +45,19 @@ class Part < ActiveRecord::Base
     :through => :links_var_effectivities,
     :source => :part
 
-	has_many :links_documents,
+
+has_many :links_documents,
     :class_name => "Link",
     :foreign_key => "father_id",
-    :conditions => ["father_plmtype='part' and child_plmtype='document'"]
-	has_many :documents ,
+    :conditions => { father_plmtype: 'document', child_plmtype: 'document' }
+	has_many :documents,
     :through => :links_documents,
     :source => :document
-
+    
 	has_many :links_parts,
     :class_name => "Link",
     :foreign_key => "father_id",
-    :conditions => ["father_plmtype='part' and child_plmtype='part'"]
+    :conditions => { father_plmtype: 'part', child_plmtype: 'part' }
 	has_many :parts ,
     :through => :links_parts,
     :source => :part
@@ -64,7 +65,7 @@ class Part < ActiveRecord::Base
 	has_many :links_parts_up,
     :class_name => "Link",
     :foreign_key => "child_id",
-    :conditions => ["father_plmtype='part' and child_plmtype='part'"]
+    :conditions => { father_plmtype: 'part', child_plmtype: 'part' }
 	has_many :parts_up ,
     :through => :links_parts_up,
     :source => :part_up

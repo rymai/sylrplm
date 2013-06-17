@@ -68,8 +68,10 @@ class CustomersController < ApplicationController
 		@customer = Customer.new(params[:customer])
 		@types    = Typesobject.get_types("customer")
 		@status   = Statusobject.find_for(@customer)
+		
 		respond_to do |format|
 			if @customer.save
+				st = ctrl_duplicate_links(params, @customer, current_user)
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
 				format.html { redirect_to(@customer) }
 				format.xml  { render :xml => @customer, :status => :created, :location => @customer }
@@ -84,10 +86,13 @@ class CustomersController < ApplicationController
 	# PUT /customers/1
 	# PUT /customers/1.xml
 	def update
-		@customer = Customer.find(params[:id])
+		fname= "#{self.class.name}.#{__method__}"
+    LOG.debug (fname) {"params=#{params.inspect}"}
+    @customer = Customer.find(params[:id])
 		@types    = Typesobject.get_types(:customer)
 		@status   = Statusobject.find_for(@customer)
 		@customer.update_accessor(current_user)
+		
 		respond_to do |format|
 			if @customer.update_attributes(params[:customer])
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
@@ -170,26 +175,40 @@ class CustomersController < ApplicationController
 	end
 
 	#
-  # preparation du datafile a associer 
-  #
+	# preparation du datafile a associer
+	#
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
-    #LOG.debug (fname){"params=#{params.inspect}"}
-    @customer = Customer.find(params[:id])
-    @datafile = Datafile.new({:user => current_user, :thecustomer => @customer})
-    ctrl_new_datafile(@customer)
-  end
-   	
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@customer = Customer.find(params[:id])
+		@datafile = Datafile.new({:user => current_user, :thecustomer => @customer})
+		ctrl_new_datafile(@customer)
+	end
+
 	#
 	# creation du datafile et association et liberation si besoin
 	#
 	def add_datafile
 		fname= "#{self.class.name}.#{__method__}"
-    #LOG.debug (fname){"params=#{params.inspect}"}
-    @customer = Customer.find(params[:id])
-    ctrl_add_datafile(@customer)
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@customer = Customer.find(params[:id])
+		ctrl_add_datafile(@customer)
 	end
-	
+
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@customer_orig = Customer.find(params[:id])
+		@customer = @customer_orig.duplicate(current_user)
+		#LOG.debug (fname){"@customer=#{@customer.inspect}"}
+		@types    = Typesobject.get_types("customer")
+		@status   = Statusobject.find_for("customer", 2)
+		respond_to do |format|
+			format.html # customer/1/new_dup
+			format.xml  { render :xml => @customer }
+		end
+	end
+
 	private
 
 	def index_

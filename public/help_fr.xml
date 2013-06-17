@@ -2,6 +2,7 @@
     Bienvenue dans l'application SYLRPLM développée sur "Ruby On Rails" : #img=rails.png=img##lnk=http://www.railsfrance.org/=lnk#
     <msg key="help_about" title="A propos de SYLRPLM">
     	SYLRPLM est une réalisation de Sylvère Coutable avec l'assistance technique de Remy Coutable
+    	Version: 1.0 at 2013/06/15
     </msg>
     <msg key="help_first_use" title="Prise en main">
     	Tout d'abord, nous vous invitons à prendre connaissance des principales fonctionnalités de l'application#jump=help_main_functions=jump#.

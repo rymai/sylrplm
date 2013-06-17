@@ -56,7 +56,7 @@ class DocumentsController < ApplicationController
     #LOG.debug (fname) {"params=#{params.inspect}"}
     @document = Document.find_edit(params[:id])
     @types    = Typesobject.find_for("document")
-    @volumes  = Volume.find_all
+    #############@volumes  = Volume.find_all
     #seulement les statuts qui peuvent etre promus ou retrograde par le menu
     @status   = Statusobject.find_for(@document, 1)
   end
@@ -65,16 +65,16 @@ class DocumentsController < ApplicationController
   # POST /documents.xml
   def create
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname) {"params=#{params.inspect}"}
+    #LOG.debug (fname) {"params=#{params.inspect}"}
     #contournement pour faire le upload apres la creation pour avoir la revision dans
     #repository !!!!!!!!!!!!!!
     @document = Document.new(params[:document])
     @types    = Document.get_types_document
     @status   = Statusobject.find_for("document")
-    #@volumes  = Volume.find_all
     respond_to do |format|
     #puts "===DocumentsController.create:"+@document.inspect
       if @document.save
+      	st = ctrl_duplicate_links(params, @document, current_user)
         #puts "===DocumentsController.create:ok:"+@document.inspect
         flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_document), :ident => @document.ident)
         format.html { redirect_to(@document) }
@@ -344,6 +344,19 @@ class DocumentsController < ApplicationController
     #LOG.debug (fname){"params=#{params.inspect}"}
     empty_favori_by_type(get_model_type(params))
   end
+  
+ def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@document_orig = Document.find(params[:id])
+		@document = @document_orig.duplicate(current_user)
+		@types    = Typesobject.get_types("document")
+		@status   = Statusobject.find_for("document", 2)
+		respond_to do |format|
+			format.html # document/1/new_dup
+			format.xml  { render :xml => @document }
+		end
+	end
 
 private
 	

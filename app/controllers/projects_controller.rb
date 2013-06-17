@@ -79,6 +79,7 @@ class ProjectsController < ApplicationController
 		@users  = User.all
 		respond_to do |format|
 			if @project.save
+				st = ctrl_duplicate_links(params, @project, current_user)
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
 				format.html { redirect_to(@project) }
 				format.xml  { render :xml => @project, :status => :created, :location => @project }
@@ -206,6 +207,20 @@ class ProjectsController < ApplicationController
 		ctrl_add_datafile(@project)
 	end
 
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@project_orig = Project.find(params[:id])
+		@project = @project_orig.duplicate(current_user)
+		@types    = Typesobject.get_types("project")
+		@status   = Statusobject.find_for("project", 2)
+		@types_access    = Typesobject.get_types("project_typeaccess")
+		@users  = User.all
+		respond_to do |format|
+			format.html # project/1/new_dup
+			format.xml  { render :xml => @project }
+		end
+	end
 	private
 
 	def show_

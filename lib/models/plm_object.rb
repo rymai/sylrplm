@@ -411,7 +411,7 @@ module Models
 				#LOG.info (fname) {"domain=#{self.domain}"}
 				end
 			end
-			#LOG.info (fname) {"self=#{self.inspect}"}
+		#LOG.info (fname) {"self=#{self.inspect}"}
 		end
 
 		def initialize(*args)
@@ -491,6 +491,41 @@ module Models
 			ret = []
 			ret = self.datafiles
 			ret = { :recordset => ret, :total => ret.length }
+			ret
+		end
+
+		# == Role: this function duplicate the object
+		# == Arguments
+		# * +user+ - The user which proceed the duplicate action
+		# == Usage from controller or script:
+		#   theObject=Customer.find(theId)
+		#   theObject.duplicate(current_user)
+		# === Result
+		# 	the duplicate object , all characteristics of the object are copied excepted the followings:
+		# * +ident+ : a new one is calculated if this is a sequence, if not, the same is proposed.
+		# * +status+ : the status is reset to the first one.  
+		# * +revision+ : the revision is reset to the first one. 
+		# * +responsible/group/projowner+ : the accessor is the current user 
+		# * +date+ : date is the actual date
+		# * +domain+ : the user domain is used (see def_user method in this Module PlmObject ) 
+		# == Impact on other components
+		#
+		def duplicate(user)
+			fname = "#{self.class.name}.#{__method__}"
+			LOG.info (fname){"self=#{self.inspect}"}
+			ret = self.clone
+			ret.def_user(user)
+			if ret.respond_to? :revision
+				set_default_value(:revision, 0)
+			end
+			if (ret.respond_to? :statusobject)
+				ret.statusobject = ::Statusobject.get_first(ret.model_name)
+			end
+			ret.set_default_value(:ident, 1)
+			if (ret.respond_to? :date)
+				ret.date=DateTime::now()
+			end
+			LOG.info (fname){"ret=#{ret.inspect}"}
 			ret
 		end
 

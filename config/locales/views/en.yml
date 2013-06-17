@@ -62,6 +62,7 @@ en:
   copy: Copy
   destroy: Destroy
   remove_all: Remove all
+  duplicate: Duplicate
   cancel: Cancel
   menu_action: Action(s)
   back_to_object: "Back to :"
@@ -115,6 +116,18 @@ en:
   revise: "Revise"
   promote: "Promote"
   demote: Demote
+  # shared
+  legend_link_duplication: "Links Duplication of '%{object_orig}'"
+  label_assoc_documents: Associated Documents 
+  label_assoc_parts: Associated Articles 
+  label_assoc_projects: Associated Projets 
+  label_assoc_customers: Associated Clients 
+  label_assoc_users: Associated UTilisateurs 
+  label_assoc_forums: Associated Discussions 
+  label_assoc_documents_up: Father Documents 
+  label_assoc_parts_up: Father Articles 
+  label_assoc_projects_up: Father Projets 
+  label_assoc_customer_up: Father Clients 
   # tree (dans views show)
   label_document_document: Documents
   label_part_document: Documents
@@ -178,6 +191,7 @@ en:
   customer_list: Listing customers
   customer_show: Detail customer
   customer_new: New customer
+  customer_new_dup: Duplicate customer
   label_id: ID
   label_ident: Identifier
   label_type: Type
@@ -205,6 +219,7 @@ en:
   datafile_without_file: No file
   # definitions
   legend_definition: Enter definition details
+  label_process_definition: Processus definition
   label_uri: URI
   label_roles_may_launch: Roles that may launch
   label_groups: Groups
@@ -225,6 +240,7 @@ en:
   document_list: Listing documents
   document_show: Detail document
   document_new: New document
+  document_new_dup: Duplicate document
   label_revision: Revision
   label_extension: Extension
   add_datafile: Add file
@@ -234,10 +250,10 @@ en:
   button_check_in: Check In
   button_check_free: Unlock
   download: download file
-  reason: Reason
-  document_check: Check
   download_ko_document_not_checked: Document unchecked
   download_ko_no_file: No file
+  reason: Reason
+  document_check: Check
   workitems_assoc: Currents workitems
   history_assoc: Terminates workitems
   # forums
@@ -343,6 +359,7 @@ en:
   part_list: List articles
   part_show: Detail article
   part_new: New article
+  part_new_dup: Duplicate part
   # plm_mailer
   document_validated: I just validate the following document
   part_validated: I just validate the following part
@@ -391,6 +408,7 @@ en:
   project_list: Liste of projects
   project_show: Detail of project
   project_new: New project
+  project_new_dup: Duplicate project
   label_customer: Client
   label_users: Collaborators
   label_typeaccess: Confidentiality

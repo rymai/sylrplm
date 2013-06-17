@@ -164,7 +164,7 @@ class Node
 		nodes.each do |nod|
 			ret= 1+ nod.size_all_(ret, level)
 		end
-		LOG.debug(fname){"<==level=#{level}, ret=#{ret}"}
+		#LOG.debug(fname){"<==level=#{level}, ret=#{ret}"}
 		ret
 	end
 

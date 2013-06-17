@@ -19,7 +19,7 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.resources :notifications, :member => { :notify => :get }
 
-	map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get, :tools => :get, :helpgeneral => :get }
+	map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get, :tools => :get}
 
 	map.resources :help, :only => [:index]
 
@@ -108,7 +108,7 @@ ActionController::Routing::Routes.draw do |map|
 	:controller => 'datafiles',
 	:action => 'del_fogdir')
 
-	map.resources :documents, :has_many => :documents, :collection => { :empty_favori => :get }
+	map.resources :documents, :has_many => :documents, :collection => { :empty_favori => :get }, :member=> {:new_dup => :get}
 	map.connect(
 	'documents/:id/add_favori',
 	:controller => 'documents',
@@ -158,7 +158,7 @@ ActionController::Routing::Routes.draw do |map|
 	:controller => 'documents',
 	:action => 'select_view')
 
-	map.resources :parts, :has_many => :documents, :collection => { :empty_favori => :get}
+	map.resources :parts, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:new_dup => :get}
 	map.connect(
 	'parts/:id/add_favori',
 	:controller => 'parts',
@@ -223,7 +223,7 @@ ActionController::Routing::Routes.draw do |map|
 	:controller => 'parts',
 	:action => 'add_datafile')
 
-	map.resources :projects, :has_many => :documents, :collection => { :empty_favori => :get}
+	map.resources :projects, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:new_dup => :get}
 	map.connect(
 	'projects/:id/add_favori',
 	:controller => 'projects',
@@ -277,7 +277,7 @@ ActionController::Routing::Routes.draw do |map|
 	:controller => 'projects',
 	:action => 'add_datafile')
 
-	map.resources :customers, :has_many => :documents, :collection => { :empty_favori => :get }
+	map.resources :customers, :has_many => :documents, :collection => { :empty_favori => :get }, :member=> {:new_dup => :get}
 	map.connect(
 	'customers/:id/add_favori',
 	:controller => 'customers',
@@ -320,7 +320,7 @@ ActionController::Routing::Routes.draw do |map|
 	'customers/:id/add_datafile',
 	:controller => 'customers',
 	:action => 'add_datafile')
-
+	
 	map.connect(
 	'users/:id/activate',
 	:controller => 'users',

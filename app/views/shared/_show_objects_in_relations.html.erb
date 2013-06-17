@@ -1,50 +1,82 @@
-Documents Fils
+<h1><%=t(:legend_link_duplication, :object_orig => object)%></h1>
+<% if object.respond_to? :links_documents %>
+<%= object.links_documents.count %> <%= t(:label_assoc_documents) %>
 <table class='menu_bas'>
-	<% object.documents.each do |obj| %>
+	<% object.links_documents.each do |lnk| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= obj.ident %></td>
+		<td><%= check_box_tag("links[document][]","#{lnk.id}", {:checked => 'checked'}) %><%= lnk.child %></td>
 	</tr>
 	<% end %>
 </table>
-Documents Peres
+<% end %>
+
+<% if object.respond_to? :links_parts %>
+<%= object.links_parts.count %> <%= t(:label_assoc_parts) %>
+<table class='menu_bas'>
+	<% object.links_parts.each do |lnk| %>
+	<tr class='<%= cycle("even", "odd") %>'>
+		<td><%= check_box_tag("links[part][]","#{lnk.id}", {:checked => 'checked'}) %><%= lnk.child %></td>
+	</tr>
+	<% end %>
+</table>
+<% end %>
+
+<% if object.respond_to? :links_projects %>
+<%= object.links_projects.count %> <%= t(:label_assoc_projects) %>
+<table class='menu_bas'>
+	<% object.links_projects.each do |lnk| %>
+	<tr class='<%= cycle("even", "odd") %>'>
+		<td><%= check_box_tag("links[project][]","#{lnk.id}", {:checked => 'checked'}) %><%= lnk.child %></td>
+	</tr>
+	<% end %>
+</table>
+<%end%>
+
+<% if fonct != "new_dup" %>
+
+<% if object.respond_to? :documents_up %>
+<%= object.documents_up.count %> <%= t(:label_assoc_documents_up) %>
 <table class='menu_bas'>
 	<% object.documents_up.each do |obj| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= obj.ident %></td>
+		<td><%= obj %></td>
 	</tr>
 	<% end %>
 </table>
-Parts Peres
+<% end %>
+
+<% if object.respond_to? :parts_up %>
+<%= object.parts_up.count %> <%= t(:label_assoc_parts_up) %>
 <table class='menu_bas'>
 	<% object.parts_up.each do |obj| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= obj.ident %></td>
+		<td><%= obj %></td>
 	</tr>
 	<% end %>
 </table>
-Projects Peres
+<% end %>
+
+<% if object.respond_to? :projects_up %>
+<%= object.projects_up.count %> <%= t(:label_assoc_projects_up) %>
 <table class='menu_bas'>
 	<% object.projects_up.each do |obj| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= obj.ident %></td>
+		<td><%= obj %></td>
 	</tr>
 	<% end %>
 </table>
-Customers Peres
+<% end %>
+
+<% if object.respond_to? :customers_up %>
+<%= object.customers_up.count %> <%= t(:label_assoc_customers_up) %>
 <table class='menu_bas'>
 	<% object.customers_up.each do |obj| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= obj.ident %></td>
+		<td><%= obj %></td>
 	</tr>
-	<% end %>
 
-<%
-# Histories Peres
-# <table class='menu_bas'></
-# 	<% object.histories_up.each do |obj| </
-# 	<tr></
-# 		<td><%= obj.ident </td></
-# 	</tr></
-# 	<% end </
-# </table></table></
-%>
+	<% end %>
+</table>
+<% end %>
+
+<%end%>

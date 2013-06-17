@@ -391,20 +391,27 @@ module Models
 			fname = "#{self.class.name}.#{__method__}"
 			#LOG.debug (fname){"next_seq=#{next_seq}, model_name=#{model_name}"}
 			self.attribute_names.each do |strcol|
-				old_value=  self[strcol]
-				col = ::Sequence.find_col_for(self.class.name, strcol)
-				val = old_value
-				unless col.nil?
-					if col.sequence == true
-						if next_seq == 1
-						val = ::Sequence.get_next_seq(col.utility)
-						end
-					else
-					val =  col.value
+				set_default_value(strcol, next_seq)
+			end
+		end
+
+		def set_default_value(strcol, next_seq)
+			fname = "#{self.class.name}.#{__method__}"
+			LOG.debug (fname){"strcol=#{strcol}, next_seq=#{next_seq}, class.name=#{self.class.name}"}
+			old_value=  self[strcol]
+			col = ::Sequence.find_col_for(self.class.name, strcol)
+			LOG.debug (fname){"col=#{col}"}
+			val = old_value
+			unless col.nil?
+				if col.sequence == true
+					if next_seq == 1
+					val = ::Sequence.get_next_seq(col.utility)
 					end
-				#LOG.debug (fname) {"#{strcol}=#{old_value} to #{val}"}
-				self[strcol] = val
+				else
+				val =  col.value
 				end
+				LOG.debug (fname) {"#{strcol}=#{old_value} to #{val}"}
+			self[strcol] = val
 			end
 		end
 

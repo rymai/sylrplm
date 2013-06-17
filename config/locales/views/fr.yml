@@ -61,6 +61,7 @@ fr:
   create: Créer
   copy: Copier
   destroy: "Supprimer"
+  duplicate: Dupliquer
   remove_all: "Vider"
   cancel: Annuler
   menu_action: Action(s)
@@ -115,6 +116,18 @@ fr:
   revise: "Réviser"
   promote: "Promouvoir"
   demote: Rétrograder
+  # shared
+  legend_link_duplication: "Duplication des liens de '%{object_orig}'"
+  label_assoc_documents: Documents associés
+  label_assoc_parts: Articles associés
+  label_assoc_projects: Projets associés
+  label_assoc_customers: Clients associés
+  label_assoc_users: UTilisateurs associés
+  label_assoc_forums: Discussions associées
+  label_assoc_documents_up: Documents pères
+  label_assoc_parts_up: Articles pères
+  label_assoc_projects_up: Projets pères
+  label_assoc_customer_up: Clients pères
   # tree (dans views show)
   label_document_document: Documents associés
   label_part_document: Documents associés
@@ -178,6 +191,7 @@ fr:
   customer_list: Liste clients
   customer_show: Detail client
   customer_new: Nouveau client
+  customer_new_dup: Dupliquer client
   label_id: ID
   label_ident: Identifiant
   label_type: Type
@@ -226,6 +240,7 @@ fr:
   document_list: Liste documents
   document_show: Détail document
   document_new: Nouveau document
+  document_new_dup: Dupliquer document
   label_revision: Révision
   label_extension: Extension
   add_datafile: Ajouter fichier
@@ -237,6 +252,7 @@ fr:
   download: "Télécharger fichier"
   download_ko_document_not_checked: Document non réservé
   download_ko_no_file: Pas de fichier
+  reason: Raison
   document_check: Réservation
   workitems_assoc: Tâches en cours
   history_assoc: Traitements effectués sur cet objet
@@ -343,6 +359,7 @@ fr:
   part_list: Liste articles
   part_show: Détail article
   part_new: Nouvel article
+  part_new_dup: Dupliquer article
   # plm_mailer
   document_validated: "Le document suivant vient d'être validé par mes soins"
   part_validated: "La part suivante vient d'être validée par mes soins"
@@ -391,6 +408,7 @@ fr:
   project_list: Liste projets
   project_show: Détail projet
   project_new: Nouveau projet
+  project_new_dup: Dupliquer projet
   label_customer: Client
   label_users: Collaborateurs
   label_typeaccess: Confidentialité

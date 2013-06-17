@@ -64,6 +64,7 @@
 		<% else %> <td></td>
 		<td></td>
 		<% end %>
+		<td> <%= link_to h_img(:duplicate), new_dup_document_path(document) %> </td>
 		<% end %>
 		</td>
 		<% if logged_in? %> <td><%= link_to_remote  h_img(:copy).to_s, :url => {:controller => "documents", :action => "add_favori", :id => document.id}, :method => :get  %></td>

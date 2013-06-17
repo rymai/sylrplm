@@ -64,15 +64,15 @@ class Link < ActiveRecord::Base
 	def initialize(*args)
 		fname = "#{self.class.name}.#{__method__}"
 		super
-		LOG.info (fname) {"#{args}"}
+		#LOG.info (fname) {"#{args}"}
 	end
 
 	def before_save
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.info (fname) {"self=#{self}"}
+		#LOG.info (fname) {"self=#{self}"}
 		self.domain = father.domain if father.respond_to?(:domain)
 		self.domain = child.domain if (self.domain.nil? && child.respond_to?(:domain))
-		LOG.info (fname) {"domain=#{self.domain}"}
+		#LOG.info (fname) {"domain=#{self.domain}"}
 	end
 
 	def validity
@@ -350,5 +350,32 @@ class Link < ActiveRecord::Base
 		else
 		false
 		end
+	end
+	
+	
+	# == Role: this function duplicate the link
+		# == Arguments
+		# * +new_father+ the new_father become the father of the new link
+		# * +user+ - The user which proceed the duplicate action
+		# == Usage from controller or script:
+		#    if @customer.save
+		#		  lnk_orig = Link.find(lnkid)
+		#			#puts "=========================lnk_orig="+lnk_orig.inspect
+		#			lnk_new = lnk_orig.duplicate(new_obj, user)
+		# === Result
+		# 	the duplicate object , all characteristics of the object are copied excepted the followings:
+		# * +new_father+ become the father of the new link
+		# * +responsible/group/projowner+ : the accessor is the user 
+		# == Impact on other components
+		# 
+	def duplicate(new_father, user)
+		fname="#{self.class.name}.#{__method__}"
+		#LOG.info (fname) {"new_father=#{new_father.inspect}"}
+		ret = self.clone
+		ret.father_plmtype=new_father.model_name
+		ret.father_id = new_father.id
+		ret.def_user(user)
+		#LOG.info (fname) {"new link=#{ret.inspect}"}
+		ret
 	end
 end

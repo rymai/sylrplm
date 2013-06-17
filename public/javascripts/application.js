@@ -34,7 +34,7 @@ function helpTip() {
 function helpPopup(which, href) {
 
 	if (helpClick != 1 && href != null) {
-		alert('helpPopup:which=' + which + ' helpWin=' + helpWin + ' helpClick=' + helpClick + ' href=' + href);
+		//alert('helpPopup:which=' + which + ' helpWin=' + helpWin + ' helpClick=' + helpClick + ' href=' + href);
 		Element.setStyle('menu', {
 			cursor : "pointer"
 		});
@@ -63,7 +63,7 @@ function helpWindow(which) {
 	if (which == null) {
 		which = "help_contents_help";
 	}
-	alert ('helpPopup:open which='+which+' helpWin='+helpWin );
+	//alert ('helpPopup:open which='+which+' helpWin='+helpWin );
 	if (!helpWin || helpWin.closed) {
 		//alert ('helpPopup:open which='+which+' helpWin='+helpWin+' helpClick='+helpClick+' href='+href);
 		//helpWin = window.open("/help?help="+which, which,"location=no, menubar=no, status=no, scrollbars=no, resizable=no, directories=yes, menubar=no, toolbar=no, width=500, height=320, left=50, top=50");

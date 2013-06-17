@@ -317,7 +317,7 @@ module ApplicationHelper
 			txt = obj.to_s
 			end
 			title = t(name, :obj => obj)
-			LOG.info (fname){"title=#{title}"}
+			#LOG.info (fname){"title=#{title}"}
 			link_to( txt, obj, {:title => title } )
 		end
 	end

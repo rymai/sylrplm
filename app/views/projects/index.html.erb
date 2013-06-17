@@ -33,7 +33,7 @@
 	</tr>
 	<% @projects[:recordset].each do |project| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td> <%= icone(project) %>  </td>
+		<td> <%= icone(project) %> </td>
 		<td> <%= h_explorer project %> </td>
 		<td> <%= h_explorer project.typesobject, :name unless project.typesobject.nil? %></td>
 		<td> <%= h_explorer project.typeaccess, :name unless project.typeaccess.nil? %> </td>
@@ -46,6 +46,7 @@
 		<td> <%= project.domain %></td>
 		<td> <%= link_to h_img_edit.to_s, edit_project_path(project) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, project, :confirm => t(:msg_confirm), :method => :delete %> </td>
+		<td> <%= link_to h_img(:duplicate), new_dup_project_path(project) %> </td>
 		<td> <% if logged_in? %>
 		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => project.id}, :method => :get %>
 		<% end %> </td>

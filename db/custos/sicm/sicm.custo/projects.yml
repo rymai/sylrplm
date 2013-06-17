@@ -3,7 +3,7 @@ Project_1:
   id: "1"
   owner_id: "1"
   typesobject_id: "997141214"
-  statusobject_id: "852666442"
+  statusobject_id: "10"
   ident: PROJECT-admin
   designation: Projet par defaut pour l administrateur
   description: 
@@ -16,7 +16,7 @@ Project_2:
   id: "2"
   owner_id: "1"
   typesobject_id: "997141214"
-  statusobject_id: "852666442"
+  statusobject_id: "10"
   ident: PROJECT-users
   designation: Projet par defaut pour les users
   description: 

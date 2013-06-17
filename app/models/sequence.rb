@@ -65,11 +65,15 @@ class Sequence < ActiveRecord::Base
 		ret=nil
 		find_all.each do |line|
 			tokens=line.utility.split(".")
-			##puts "Sequence.find_col_for:"+model+"."+col+":"+line.utility
-			if(tokens[0]==model && tokens[1]==col)
+			puts "Sequence.find_col_for:#{model}.#{col}:#{tokens.inspect}"
+			puts "Sequence.find_col_for:tokens[0] '#{tokens[0]}' == '#{model.to_s}' ? #{tokens[0] == model.to_s}"
+			puts "Sequence.find_col_for:tokens[1] '#{tokens[1]}' == '#{col.to_s}' ? #{tokens[1] == col.to_s}"
+			if(tokens[0] == model.to_s && tokens[1] == col.to_s)
 			ret=line
 			end
 		end
+		
+		puts "Sequence.find_col_for:ret=#{ret}"
 		ret
 	end
 

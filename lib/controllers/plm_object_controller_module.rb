@@ -287,5 +287,24 @@ module Controllers
 				end
 			end
 		end
+	
+	
+		def ctrl_duplicate_links(params, obj, user)
+	    ret=true
+	   	unless params["links"].nil?
+				#puts "========================="+params["links"].inspect
+				params["links"].each {
+					|key, value| puts "#{key} is #{value}" 
+					value.each do |lnkid|
+						lnk_orig = Link.find(lnkid)
+						#puts "=========================lnk_orig="+lnk_orig.inspect
+						lnk_new = lnk_orig.duplicate(obj, user)
+						#puts "=========================lnk_new="+lnk_new.inspect
+						lnk_new.save unless lnk_new.nil?
+					end
+				}
+			end
+			ret
+		end
 	end
 end

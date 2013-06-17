@@ -60,6 +60,7 @@ class PartsController < ApplicationController
 		@status = Statusobject.find_for("part")
 		respond_to do |format|
 			if @part.save
+				st = ctrl_duplicate_links(params, @part, current_user)
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
 				format.html { redirect_to(@part) }
 				format.xml  { render :xml => @part, :status => :created, :location => @part }
@@ -182,11 +183,23 @@ class PartsController < ApplicationController
     ctrl_add_datafile(@part)
 	end
 	
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@part_orig = Part.find(params[:id])
+		@part = @part_orig.duplicate(current_user)
+		@types    = Typesobject.get_types("part")
+		@status   = Statusobject.find_for("part", 2)
+		respond_to do |format|
+			format.html # part/1/new_dup
+			format.xml  { render :xml => @part }
+		end
+	end
 	private
 
 	def show_
 		fname= "#{controller_class_name}.#{__method__}"
-		#LOG.debug (fname){"begin:params=#{params}"}
+		LOG.debug (fname){"begin:params=#{params}"}
 		define_view
 		@part                    = Part.find(params[:id])
 		@other_parts = Part.paginate(:page => params[:page],

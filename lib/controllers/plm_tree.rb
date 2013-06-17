@@ -212,6 +212,7 @@ end
 def tree_object(obj)
 	url={:controller => obj.controller_name, :action => :show, :id => "#{obj.id}"}
 	options={
+		:id => "'#{obj.model_name}_#{obj.ident}'",
 		:label => t("ctrl_"+obj.model_name)+':'+obj.ident ,
 		:icon=>icone(obj),
 		:icon_open=>icone(obj),

@@ -3,6 +3,7 @@
 <%= hidden_field :part , :revision %>
 <%= f.error_messages %>
 <%= render(:partial => "parts/edit",:locals => { :f => f, :fonct=>"new" }) %>
+<h1></h1>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= f.submit t("create") %> </td>
