@@ -22,7 +22,7 @@
 	<br/>
 	<%= f.label t("label_roles_may_launch") %>
 	<%= select_inout(f, @definition, Role.all, :title) %>
-	<%= h_input_text(f ,:domain) %>
+	<%= h_input_domain(f) %>
 	<br />
 </fieldset>
 <table class='menu_bas'>

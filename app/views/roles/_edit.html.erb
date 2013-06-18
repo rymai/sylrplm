@@ -13,6 +13,6 @@
 	<br/>
 	<%= f.label t("label_role_users") %>
 	<%= select_inout(f, @role, User.all, :login) %>
-	<%= h_input_text(f ,:domain) %>
+	<%= h_input_domain(f) %>
 	<br />
 </fieldset>

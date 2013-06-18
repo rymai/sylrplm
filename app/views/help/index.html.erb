@@ -1,4 +1,13 @@
 <% help=h_help(@help)%> <h1><%= help[:title] %></h1>
+
+<table class="footer">
+	<tr  class="footer">
+		<td class="help_footer"> <%= h_help_menu("help_previous",help[:previous_src])%> </td>
+		<td class="help_footer"> <%= h_help_menu("help_main",help[:main_src])%> </td>
+		<td class="help_footer"> <%= h_help_menu("help_upper",help[:upper_src])%> </td>
+		<td class="help_footer"> <%= h_help_menu("help_next",help[:next_src])%> </td>
+	</tr>
+</table>
 <br/>
 <span class="help_text"> <%= help[:text] %> </span>
 <% if(help[:childs_src])!=nil%>

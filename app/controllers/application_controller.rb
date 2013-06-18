@@ -144,14 +144,14 @@ class ApplicationController < ActionController::Base
   # definition des variables globales.
   def define_variables
     @favori      = session[:favori] ||= Favori.new
-    @theme            = User.find_theme(session)
-    @language=SYLRPLM::LOCAL_DEFAULT
-	  @urlbase          = "http://"+request.env["HTTP_HOST"]
-    @themes = get_themes(@theme)
-    @languages = get_languages
-    @notification=SYLRPLM::NOTIFICATION_DEFAULT
-    @time_zone=SYLRPLM::TIME_ZONE_DEFAULT
-    # mise n forme d'une tache (workitem)
+    @theme       = User.find_theme(session)
+    @language    = SYLRPLM::LOCAL_DEFAULT
+	  @urlbase     = "http://"+request.env["HTTP_HOST"]
+    @themes      = get_themes(@theme)
+    @languages   = get_languages
+    ###########TODO inutile @notification=SYLRPLM::NOTIFICATION_DEFAULT
+    ###########TODO inutile @time_zone=SYLRPLM::TIME_ZONE_DEFAULT
+    # mise en forme d'une tache (workitem)
     @payload_partial = 'shared/ruote_forms'
     WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
     WillPaginate::ViewHelpers.pagination_options[:next_label] = t('label_next')
@@ -162,16 +162,11 @@ class ApplicationController < ActionController::Base
     WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
     WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
   	@myparams = params
-  	puts "fin de define_variables"
+  	#puts "fin de define_variables"
   end
   
   def get_list_modes
   	[t(:list_mode_details), t(:list_mode_details_icon),t(:list_mode_icon)]
-  end
-
-  # nombre d'objets listes par page si pagination
-  def cfg_items_per_page
-    SYLRPLM::NB_ITEMS_PER_PAGE
   end
 
   # redirection vers l'action index

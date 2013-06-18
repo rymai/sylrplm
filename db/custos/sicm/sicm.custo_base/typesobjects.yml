@@ -7,6 +7,14 @@ Typesobject_41165346:
   description: Historique de processus
   domain: admin
 
+Typesobject_678514879: 
+  id: "678514879"
+  forobject: any_plmtype
+  name: public
+  fields: "{}"
+  description: Projet public
+  domain: admin
+  
 Typesobject_89393353: 
   id: "89393353"
   forobject: project
@@ -31,14 +39,6 @@ Typesobject_138668910:
   description: Projet confidentiel
   domain: admin
 
-Typesobject_218759731: 
-  id: "218759731"
-  forobject: user
-  name: $NEW_ACCOUNT
-  fields: "{\"actif\": true}"
-  description: Type donne au compte a sa creation, en attendant sa validation.
-  domain: admin
-
 Typesobject_258446918: 
   id: "258446918"
   forobject: project_typeaccess
@@ -53,6 +53,14 @@ Typesobject_258446919:
   name: public
   fields: 
   description: Projet public
+  domain: admin
+  
+Typesobject_218759731: 
+  id: "218759731"
+  forobject: user
+  name: $NEW_ACCOUNT
+  fields: "{\"actif\": true}"
+  description: Type donne au compte a sa creation, en attendant sa validation.
   domain: admin
 
 Typesobject_291198241: 
@@ -127,14 +135,6 @@ Typesobject_672869653:
   name: tree
   fields: "{}"
   description: ""
-  domain: admin
-
-Typesobject_678514879: 
-  id: "678514879"
-  forobject: any_plmtype
-  name: public
-  fields: "{}"
-  description: Projet public
   domain: admin
 
 Typesobject_802476987: 

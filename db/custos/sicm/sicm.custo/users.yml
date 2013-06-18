@@ -1,4 +1,5 @@
 
+
 User_1: 
   id: "1"
   email: sylvere.coutable@laposte.net
@@ -7,14 +8,14 @@ User_1:
   last_name: ""
   language: fr
   time_zone: ""
-  theme: blackwhite
+  theme: white
   hashed_password: a1730405a15d17e73c9e962f9f0bf1f456b973b8
   salt: "1234"
   role_id: "1"
-  volume_id: "2"
+  volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: "200"
   show_mail: "0"
-  typesobject_id: "446111194"
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
   group_id: "1"
   project_id: "1"
   subscription_id: 6
@@ -28,14 +29,14 @@ User_101:
   last_name: 
   language: fr
   time_zone: 
-  theme: blackwhite
+  theme: white
   hashed_password: 98f7177b50203d053df24f153712229a23030f2e
   salt: "1234"
   role_id: "1"
-  volume_id: "2"
+  volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: 
   show_mail: "0"
-  typesobject_id: "446111194"
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
   group_id: "101"
   project_id: "2"
   subscription_id: 1
@@ -49,14 +50,14 @@ User_102:
   last_name: 
   language: fr
   time_zone: 
-  theme: blackwhite
+  theme: white
   hashed_password: 8e75d5d0e60f6893ffda3a6fd03716f738c56748
   salt: "1234"
   role_id: 
-  volume_id: "2"
+  volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: 
   show_mail: "0"
-  typesobject_id: "446111194"
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
   group_id: 
   project_id:
   subscription_id: 2
@@ -70,14 +71,14 @@ User_103:
   last_name: 
   language: fr
   time_zone: 
-  theme: blackwhite
+  theme: white
   hashed_password: 45baf464fcf9f445919555197cbbce1516146106
   salt: "1234"
   role_id: 
-  volume_id: "2"
+  volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: "1000"
   show_mail: "0"
-  typesobject_id: "446111194"
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
   group_id: 
   project_id:
   subscription_id: 1 
@@ -91,14 +92,14 @@ User_104:
   last_name: 
   language: fr
   time_zone: 
-  theme: blackwhite
+  theme: white
   hashed_password: ae41ca2ce64f955ae2000c50c0654a083a64f578
   salt: "1234"
   role_id: 
-  volume_id: "2"
+  volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: 
   show_mail: "0"
-  typesobject_id: "446111194"
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
   group_id: 
   project_id: 
   subscription_id: 3
@@ -112,14 +113,14 @@ User_105:
   last_name: Maxwell
   language: fr
   time_zone: Paris
-  theme: blackwhite
+  theme: white
   hashed_password: acf828308f24af131e59c84d0cf2ee8b65111a73
   salt: "1234"
   role_id: 
-  volume_id: "2"
+  volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: 
   show_mail: "0"
-  typesobject_id: "446111194"
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
   group_id: 
   project_id:
   subscription_id: 4
@@ -133,14 +134,14 @@ User_106:
   last_name: 
   language: fr
   time_zone: 
-  theme: blackwhite
+  theme: white
   hashed_password: 851099f53bb9ca407186cef1e665b2fd4c9da822
   salt: "1234"
   role_id: 
-  volume_id: "2"
+  volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: 
   show_mail: "1"
-  typesobject_id: "446111194"
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
   group_id: 
   project_id: 
   subscription_id: 5
@@ -154,14 +155,14 @@ User_107:
   last_name: 
   language: fr
   time_zone: 
-  theme: blackwhite
+  theme: white
   hashed_password: d53e167030805511f46ee272cdfbc9b76f379447
   salt: "1234"
   role_id: 
-  volume_id: "2"
+  volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: 
   show_mail: "1"
-  typesobject_id: "446111194"
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
   group_id: 
   project_id: 
   subscription_id: 

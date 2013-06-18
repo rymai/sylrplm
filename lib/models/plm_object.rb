@@ -437,7 +437,7 @@ module Models
 
 		def before_save
 			fname= "#{self.class.name}.#{__method__}"
-			LOG.debug (fname) {"***************************************"}
+			#LOG.debug (fname) {"***************************************"}
 			if (self.respond_to? :owner) && (self.respond_to? :group)
 				unless owner.nil?
 					unless  owner.group.nil?
@@ -445,7 +445,7 @@ module Models
 					else
 						self.group     = owner.groups[0]
 					end
-					LOG.info (fname) {"owner=#{owner} group=#{group}"}
+					#LOG.info (fname) {"owner=#{owner} group=#{group}"}
 				end
 			end
 			if (self.respond_to? :owner) && (self.respond_to? :projowner)
@@ -455,7 +455,7 @@ module Models
 					else
 						self.projowner = owner.projects[0]
 					end
-					LOG.info (fname) {"owner=#{owner}  projowner=#{projowner}"}
+					#LOG.info (fname) {"owner=#{owner}  projowner=#{projowner}"}
 				end
 			end
 

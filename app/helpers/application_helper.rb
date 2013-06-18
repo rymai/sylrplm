@@ -434,11 +434,19 @@ module ApplicationHelper
 		path = send "#{obj.class.to_s.downcase}_path", obj
 	end
 
-	def h_input_text(f ,field)
+	def h_input_domain(f)
+		fname=self.class.name+"."+__method__.to_s
+		#LOG.info (fname){"admin_logged_in?=#{admin_logged_in?} DOMAIN_FOR_ALL=#{::SYLRPLM::DOMAIN_FOR_ALL}"}
+		ret=""
 		if admin_logged_in? || ::SYLRPLM::DOMAIN_FOR_ALL==true
-			ret=f.label field, t("label_#{field}")
-		ret+=f.text_field field
+			ret = h_input_text(f ,:domain)
 		end
+		ret
+	end
+
+	def h_input_text(f ,field)
+		ret = f.label field, t("label_#{field}")
+		ret += f.text_field field
 		ret
 	end
 

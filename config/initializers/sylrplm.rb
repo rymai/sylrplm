@@ -9,37 +9,40 @@ require 'classes/app_classes'
 require 'os_functions'
 
 module SYLRPLM
-
-	#include Classes::AppClasses::LogFormatter
+	# default language
 	LOCAL_DEFAULT             = "fr"
-	NOTIFICATION_DEFAULT      = 1
-	# nom du volume attribue par defaut au user
-	VOLUME_NAME_DEFAULT       = "vol_local_01"
-	TIME_ZONE_DEFAULT         = 1
-	THEME_DEFAULT             = "white"
-	NB_ITEMS_PER_PAGE         = 30
+	# 
+	########TODO inutile ??? NOTIFICATION_DEFAULT      = 1
 	#
-	# nom de certains objets plm
+	# the default values ​​assigned to a user
+	#
+	# volume name / nom du volume attribue par defaut au user
+	VOLUME_NAME_DEFAULT       = "vol_local_01"
+	# number of items in index page
+	NB_ITEMS_PER_PAGE         = 30
+	########TODO inutile ??? TIME_ZONE_DEFAULT         = 1
+	# default theme 
+	THEME_DEFAULT             = "white"
+	#
+	#
+	# plm objects names / nom de certains objets plm
 	#
 	# n'importe quel object plm
 	PLMTYPE_GENERIC           = 'any_plmtype'
 	# groupes
 	GROUP_ADMINS              = 'admins'
-	GROUP_CONSULTANTS         = 'consultants'
-	GROUP_CREATORS            = 'creators'
-	GROUP_VALIDERS            = 'validers'
 	# Roles
 	ROLE_ADMIN                = 'admin'
 	ROLE_CONSULTANT           = 'consultant'
-	ROLE_CREATOR              = 'creator'
-	ROLE_VALIDER              = 'valider'
-	ROLE_PROJECT_MANAGER      = 'project_manager'
-	ROLE_ANALYST              = 'analyst'
-	ROLE_DESIGNER             = 'designer'
-	# User administrateur
+	########TODO inutile ??? ROLE_CREATOR              = 'creator'
+	########TODO inutile ??? ROLE_VALIDER              = 'valider'
+	########TODO inutile ??? ROLE_PROJECT_MANAGER      = 'project_manager'
+	########TODO inutile ??? ROLE_ANALYST              = 'analyst'
+	########TODO inutile ??? ROLE_DESIGNER             = 'designer'
+	# User administrator
 	USER_ADMIN                = 'admin'
 	#
-	# valeurs des types
+	# types value / valeurs des types
 	#
 	# document de type directory (pour eviter par exemple d'y mettre des fichiers)
 	TYPE_DOC_DIRECTORY        = 'directory'
@@ -62,7 +65,7 @@ module SYLRPLM
 	TYPE_DATAFILE_THUMBNAIL   = 'thumbnail'
 	
 	# valeurs de certains objets
-	RELATION_GENERIC          = 'any_relation'
+	########TODO inutile ??? RELATION_GENERIC          = 'any_relation'
 	#
 	# Nom des projets attribués automatiquement a un nouvel utilisateur
 	PROJECTS_ACCOUNT          = 'PROJECT-users,PROJET TABLE'
@@ -75,9 +78,9 @@ module SYLRPLM
 	DOMAIN_FOR_ALL 					  = true
 
 	#
-	# repertoires des chargement initial, voir Controller
+	# repertoires des chargements 
 	DIR_FIXTURES               = "#{Rails.root}/db/fixtures"
-	MAIL_ADMIN                = "sylvere.coutable@laposte.net"
+	########TODO inutile ??? MAIL_ADMIN                = "sylvere.coutable@laposte.net"
 	FOG_ACCESS_KEY            = "W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j"
 	FOG_ACCESS_KEY_ID         = "AKIAIUTZHUXCXNUFDRHQ"
 	# environnement specifique a l'admin de l'application sylrplm

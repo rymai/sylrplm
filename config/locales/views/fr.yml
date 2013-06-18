@@ -208,6 +208,7 @@ fr:
   datafile_list: Liste fichiers
   datafile_show: Détail fichier
   datafile_new: Nouveau fichier
+  fogfiles_list: Liste fogfiles
   label_filename: Fichier
   label_volume: Volume
   label_repository: Nom complet

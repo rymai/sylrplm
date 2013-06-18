@@ -25,6 +25,7 @@
 		<th <%= sort_td_class_helper "check_automatic" %>><%= sort_link_helper t(:label_check_automatic), "check_automatic" %> </th>
 		<th <%= sort_td_class_helper "mail" %>><%= sort_link_helper t(:label_email), "email" %> </th>
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %> </th>
+		<th <%= sort_td_class_helper "volume_id" %>> <%= sort_link_helper t("label_volume"), "volume_id" %> </th>
 		<th <%= sort_td_class_helper "subscription_id" %>> <%= sort_link_helper t("label_subscription"), "subscription_id" %> </th>
 		<th><%= t(:label_groups) %> </th>
 		<th><%= t(:label_roles) %> </th>
@@ -46,6 +47,7 @@
 		<td> <%= user.check_automatic %></td>
 		<td> <%= user.email %></td>
 		<td> <%= h_explorer user.typesobject, :name %></td>
+		<td> <%= h_explorer user.volume, :name %></td>
 		<td><%= h_explorer user.subscription unless user.subscription.nil? %></td>
 		<td><%= h_value_or_default(comma_links(user.groups, :name),t(:msg_tobedefine)) %></td>
 		<td><%= h_value_or_default(comma_links(user.roles, :title),t(:msg_tobedefine)) %></td>

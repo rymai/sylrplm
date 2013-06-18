@@ -205,7 +205,7 @@ class PartsController < ApplicationController
 		@other_parts = Part.paginate(:page => params[:page],
 		:conditions => ["id != #{@part.id}"],
 		:order => 'ident ASC',
-		:per_page => cfg_items_per_page)
+		:per_page => ::SYLRPLM::NB_ITEMS_PER_PAGE)
 		@first_status = Statusobject.get_first("part")
 		all_variant=(params[:all_variants].nil? ? "no" : params[:all_variants])
 		if all_variant == "on"
