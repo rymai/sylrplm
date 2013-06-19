@@ -23,8 +23,8 @@ class SylrplmFog
 			@@instance.storage = Fog::Storage.new(
 			{
 				:provider                 => 'AWS',
-				:aws_secret_access_key    => SYLRPLM::FOG_ACCESS_KEY,
-				:aws_access_key_id        => SYLRPLM::FOG_ACCESS_KEY_ID
+				:aws_secret_access_key    => PlmServices.get_property(:FOG_ACCESS_KEY),
+				:aws_access_key_id        => PlmServices.get_property(:FOG_ACCESS_KEY_ID)
 			})
 		end
 		#puts "SylrplmFog.instance:"+@@instance.inspect

@@ -55,5 +55,7 @@ class Group < ActiveRecord::Base
 	def others
 		Group.all
 	end
+	
+	
 
 end

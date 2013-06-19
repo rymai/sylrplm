@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
     end
     flash[:error] = t(:ctrl_user_not_valid,:user=>user ) unless user.may_connect?
     puts "check_user_connect:"+user.inspect+":"+flash[:notice].to_s
-    if user.login==::SYLRPLM::USER_ADMIN
+    if user.login==PlmServices.get_property(:USER_ADMIN)
       flash[:error] = nil
     end
     flash[:error]
@@ -115,7 +115,7 @@ class ApplicationController < ActionController::Base
         if session[:lng]
           I18n.locale = session[:lng]
         else
-          I18n.locale = SYLRPLM::LOCAL_DEFAULT
+          I18n.locale = PlmServices.get_property(:LOCAL_DEFAULT)
           session[:lng] = I18n.locale
         end
       end
@@ -132,7 +132,7 @@ class ApplicationController < ActionController::Base
   
   def get_domain
   	if session[:domain].nil? ||  session[:domain]==""
-  		 ret=::SYLRPLM::DOMAIN_DEFAULT
+  		 ret=PlmServices.get_property(:DOMAIN_DEFAULT)
   		 ret+=current_user.login unless current_user.nil?
   	else
   		ret=session[:domain]
@@ -145,12 +145,12 @@ class ApplicationController < ActionController::Base
   def define_variables
     @favori      = session[:favori] ||= Favori.new
     @theme       = User.find_theme(session)
-    @language    = SYLRPLM::LOCAL_DEFAULT
+    @language    = PlmServices.get_property(:LOCAL_DEFAULT)
 	  @urlbase     = "http://"+request.env["HTTP_HOST"]
     @themes      = get_themes(@theme)
     @languages   = get_languages
-    ###########TODO inutile @notification=SYLRPLM::NOTIFICATION_DEFAULT
-    ###########TODO inutile @time_zone=SYLRPLM::TIME_ZONE_DEFAULT
+    ###########TODO inutile @notification=PlmServices.get_property(:NOTIFICATION_DEFAULT)
+    ###########TODO inutile @time_zone=PlmServices.get_property(:TIME_ZONE_DEFAULT)
     # mise en forme d'une tache (workitem)
     @payload_partial = 'shared/ruote_forms'
     WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')

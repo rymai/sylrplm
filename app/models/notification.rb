@@ -95,7 +95,7 @@ class Notification < ActiveRecord::Base
 	def self.notify_all(id)
 		fname = "#{self.class.name}.#{__method__}"
 		LOG.debug (fname) {"id=#{id}"}
-		from = User.find_by_login(::SYLRPLM::USER_ADMIN)
+		from = User.find_by_login(PlmServices.get_property(:USER_ADMIN))
 		ret=[]
 		# all notifications send for all users
 		to_notify_all=[]

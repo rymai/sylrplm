@@ -49,8 +49,8 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 	# associated users: end
 	#------------------------------------------------------
 	# LOG.info (fname) {"SYLRPLM::TREE_GROUP=#{SYLRPLM::TREE_GROUP}"}
-	SYLRPLM::TREE_ORDER.each do |mdl_child|
-		if SYLRPLM::TREE_GROUP
+	PlmServices.get_property(:TREE_ORDER).each do |mdl_child|
+		if PlmServices.get_property(:TREE_GROUP)
 			snode = tree_level("'grp_#{father.id}'", t("label_#{father.model_name}_#{mdl_child}"), icone_plmtype(mdl_child), icone_plmtype(mdl_child))
 		else
 			snode = nil
@@ -265,7 +265,7 @@ def build_tree_up(obj, view_id)
 	lab=t(:ctrl_object_referencer, :typeobj => t("ctrl_"+obj.model_name), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_up", :label => lab ,:open => true})
 	relations = View.find(view_id).relations unless  view_id.nil?
-	SYLRPLM::TREE_ORDER.each do |mdl_child|
+	PlmServices.get_property(:TREE_ORDER).each do |mdl_child|
 		follow_father(mdl_child, tree, obj, relations)
 		session[:tree_object_up] = obj
 	end

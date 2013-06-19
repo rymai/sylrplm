@@ -47,13 +47,46 @@ class User < ActiveRecord::Base
 		@password_confirmation        = val
 	end
 
+	def initialize(*args)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.info (fname) {"args=#{args.length}:#{args.inspect}"}
+		super
+		self.language    = PlmServices.get_property(:LOCAL_DEFAULT)
+		self.volume      = Volume.find_by_name(PlmServices.get_property(:VOLUME_NAME_DEFAULT))
+		self.nb_items    = PlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i
+		self.theme       = PlmServices.get_property(:THEME_DEFAULT)
+		self.typesobject = Typesobject.find_by_forobject_and_name("user", PlmServices.get_property(:TYPE_USER_DEFAULT))
+
+		if args.size>0
+			unless args[0][:user].nil?
+				role_consultant  = Role.find_by_title(PlmServices.get_property(:ROLE_USER_DEFAULT))
+				self.roles << role_consultant
+				#
+				PlmServices.get_property(:GROUPS_ACCOUNT).split(',').each do |grp|
+					self.groups << Group.find_by_name(grp)
+				end
+				#
+				PlmServices.get_property(:PROJECTS_ACCOUNT).split(',').each do |proj|
+					self.projects << Project.find_by_ident(proj)
+				end
+			self.set_default_values_with_next_seq
+			end
+		end
+	end
+
+	def user=(auser)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.info (fname) {"auser=#{auser}"}
+	end
+
 	def self.create_new(params=nil)
+		raise Exception.new "Don't use this method!"
 		unless params.nil?
 			user = User.new(params)
 		else
 			user = User.new
-			user.nb_items = ::SYLRPLM::NB_ITEMS_PER_PAGE
-			user.volume = Volume.find_by_name(::SYLRPLM::VOLUME_NAME_DEFAULT)
+			user.nb_items = PlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i
+			user.volume = Volume.find_by_name(PlmServices.get_property(:VOLUME_NAME_DEFAULT))
 		user.set_default_values(1)
 		end
 		user
@@ -72,79 +105,74 @@ class User < ActiveRecord::Base
 	#     * le role consultant lui est affecté
 	#     * un projet par defaut est cree pour lui: PROJET-login, ce projet lui est associé
 	#     *
-	#     *
-	#     *
-	#     *
-	#     *
-
 	#   - nil si le user ne peut etre cree
 	# fonctionnement:
 	#
 	#
 	def self.create_new_login(aparams, urlbase)
 		fname="User.create_new_login:"
-		type = Typesobject.find_by_forobject_and_name("user", ::SYLRPLM::TYPE_USER_NEW_ACCOUNT)
+		###type = Typesobject.find_by_forobject_and_name("user", ::SYLRPLM::TYPE_USER_NEW_ACCOUNT)
 		#puts fname+" type="+type.inspect
-		role_consultant=Role.find_by_title(::SYLRPLM::ROLE_CONSULTANT)
-		admin = User.find_by_login(::SYLRPLM::USER_ADMIN)
+		#role_consultant=Role.find_by_title(::SYLRPLM::ROLE_CONSULTANT)
+		admin = User.find_by_login(PlmServices.get_property(:USER_ADMIN))
 		proj=Project.find_by_ident("PROJECT-admin")
 		#puts fname+" proj="+proj.inspect
-		unless role_consultant.nil? || type.nil?
-			new_user=User.find_by_login(aparams["login"])
-			new_user.destroy unless new_user.nil?
-			params={}
-			params["typesobject_id"]=type.id
-			params["volume_id"]=1
+		#unless role_consultant.nil? || type.nil?
+		new_user=User.find_by_login(aparams["login"])
+		new_user.destroy unless new_user.nil?
+		params={}
+		#params["typesobject_id"]=type.id
+		#params["volume_id"]=1
+		params["login"]    = aparams["login"]
+		params["password"] = aparams["password"]
+		params["email"]    = aparams["new_email"]
+		new_user = User.new(params)
 
-			params["login"]=aparams["login"]
-			params["password"]=aparams["password"]
-			params["email"]=aparams["new_email"]
-			new_user = User.new(params)
+		if new_user.save
+			#
+			#::SYLRPLM::GROUPS_ACCOUNT.split(',').each do |grp|
+			#	new_user.groups << Group.find_by_name(grp)
+			#end
+			#new_user.roles<<role_consultant
+			#
+			#::SYLRPLM::PROJECTS_ACCOUNT.split(',').each do |proj|
+			#	new_user.projects << Project.find_by_ident(proj)
+			#end
 
-			if new_user.save
-				#
-				::SYLRPLM::GROUPS_ACCOUNT.split(',').each do |grp|
-					new_user.groups << Group.find_by_name(grp)
-				end
-				new_user.roles<<role_consultant
-				#
-				::SYLRPLM::PROJECTS_ACCOUNT.split(',').each do |proj|
-					new_user.projects << Project.find_by_ident(proj)
-				end
-				
-				#puts fname+" new_user="+new_user.inspect
-				#puts fname+"urlbase="+urlbase
+			#puts fname+" new_user="+new_user.inspect
+			#puts fname+"urlbase="+urlbase
 
-				if email = PlmMailer.create_new_login(new_user, admin, new_user, urlbase)
-					email.set_content_type("text/html")
-					PlmMailer.deliver(email)
-					msg = :ctrl_mail_created_and_delivered
-					puts fname+" message cree et envoye pour #{new_user.login}"
-				else
-					puts fname+" message non cree pour #{new_user.login}"
-					msg = :ctrl_mail_not_created
-					new_user.destroy
-					new_user=nil
-				end
-
+			if email = PlmMailer.create_new_login(new_user, admin, new_user, urlbase)
+				email.set_content_type("text/html")
+				PlmMailer.deliver(email)
+				msg = :ctrl_mail_created_and_delivered
+				puts fname+" message cree et envoye pour #{new_user.login}"
 			else
-				puts fname+" user non sauve: #{new_user.login}"
-				puts "#{new_user.errors.inspect}"
+				puts fname+" message non cree pour #{new_user.login}"
+				msg = :ctrl_mail_not_created
+				new_user.destroy
 				new_user=nil
 			end
+
 		else
-			puts fname+" manque des objets associes"
-			puts fname+" admin="+admin.inspect
-			puts fname+" group_consultants="+group_consultants.inspect
-			puts fname+" role_consultant="+role_consultant.inspect
-			puts fname+" proj="+proj.inspect
-			puts fname+" type user="+type.inspect
+			puts fname+" user non sauve: #{new_user.login}"
+			puts "#{new_user.errors.inspect}"
 			new_user=nil
 		end
+		#else
+=begin
+puts fname+" manque des objets associes"
+puts fname+" admin="+admin.inspect
+puts fname+" group_consultants="+group_consultants.inspect
+puts fname+" role_consultant="+role_consultant.inspect
+puts fname+" proj="+proj.inspect
+puts fname+" type user="+type.inspect
+new_user=nil
+=end
+
+		#end
 		new_user
 	end
-
-	
 
 	def self.find_by_name(name)
 		find(:first , :conditions => ["login = '#{name}' "])
@@ -169,7 +197,7 @@ class User < ActiveRecord::Base
 		#puts __FILE__+".authenticate:"+log+":"+pwd
 		user = self.find_by_login(log)
 		if user
-			if (user.salt.nil? || user.salt == "") && log==::SYLRPLM::USER_ADMIN
+			if (user.salt.nil? || user.salt == "") && log==PlmServices.get_property(:USER_ADMIN)
 				user.update_attributes({"salt" => "1234", "hashed_password" => encrypted_password(pwd, "1234")})
 			end
 			expected_password = encrypted_password(pwd, user.salt)
@@ -226,8 +254,8 @@ class User < ActiveRecord::Base
 	#
 	def is_admin?
 		#puts "is_admin:"+login+" USER_ADMIN"+::SYLRPLM::USER_ADMIN+":"+login+" GROUP_ADMINS="+::SYLRPLM::GROUP_ADMINS+":"+group_names.to_s
-		ret = login==::SYLRPLM::USER_ADMIN
-		ret = group_names.include?(::SYLRPLM::GROUP_ADMINS) unless ret
+		ret = login==PlmServices.get_property(:USER_ADMIN)
+		ret = group_names.include?(PlmServices.get_property(:GROUP_ADMINS)) unless ret
 		ret
 	end
 
@@ -297,7 +325,7 @@ class User < ActiveRecord::Base
 
 	# peut se connecter
 	def may_connect?
-		ret=!self.typesobject.nil? && self.typesobject.name != ::SYLRPLM::TYPE_USER_NEW_ACCOUNT && !self.roles.empty? && !self.groups.empty? && !self.projects.empty?
+		ret=!self.typesobject.nil? && self.typesobject.name != PlmServices.get_property(:TYPE_USER_NEW_ACCOUNT) && !self.roles.empty? && !self.groups.empty? && !self.projects.empty?
 		puts "user.may_connect:type:"+ self.typesobject.name +
     ".role:"+ self.roles.empty?.to_s +
     ".group:" + self.groups.empty?.to_s +
@@ -379,7 +407,7 @@ class User < ActiveRecord::Base
 
 	# recherche du theme
 	def self.find_theme(session)
-		ret = ::SYLRPLM::THEME_DEFAULT
+		ret = PlmServices.get_property(:THEME_DEFAULT)
 		if session[:user_id]
 			if user = User.find(session[:user_id])
 				if(user.theme!=nil)

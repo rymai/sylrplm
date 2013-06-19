@@ -17,7 +17,7 @@ class MainController < ApplicationController
       flash[:notice] = t(:ctrl_init_done)
     else
       @domains = Controller.get_domains
-      @directory = SYLRPLM::VOLUME_DIRECTORY_DEFAULT
+      @directory = PlmServices.get_property(:VOLUME_DIRECTORY_DEFAULT)
     end
     @datas = get_datas_count
     @themes = get_themes(@theme)

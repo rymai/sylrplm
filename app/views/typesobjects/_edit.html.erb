@@ -13,6 +13,8 @@
 	<br/>
 	<%= form.label t(:label_fields) %>
 	<br/>
+	<%= h_input_domain(form) %>
+	<br />
 	<!--:<%= @typesobject.fields%>:<%= @typesobject.fields == "\"\""%>-->
 	<%= render(
 	:partial => "shared/form_json",
@@ -22,6 +24,5 @@
 	:textarea_name => 'typesobject[fields]',
 	:options => {"buttons" => "all"} }
 	) %>
-	<%= h_input_domain(form) %>
-	<br />
+	
 </fieldset>

@@ -80,17 +80,17 @@ class Link < ActiveRecord::Base
 		begin
 		#LOG.info(fname) {"father.typesobject=#{father.typesobject} relation.father_typesobject=#{relation.father_typesobject}"}
 		#LOG.info(fname) {"child.typesobject=#{child.typesobject} relation.child_typesobject=#{relation.child_typesobject}"}
-			msg="relation.father_plmtype:'#{relation.father_plmtype}' <> (father_plmtype:'#{father_plmtype}' and '#{::SYLRPLM::PLMTYPE_GENERIC}')"
-			valid = (father_plmtype == relation.father_plmtype || relation.father_plmtype == ::SYLRPLM::PLMTYPE_GENERIC)
+			msg="relation.father_plmtype:'#{relation.father_plmtype}' <> (father_plmtype:'#{father_plmtype}' and '#{PlmServices.get_property(:PLMTYPE_GENERIC)}')"
+			valid = (father_plmtype == relation.father_plmtype || relation.father_plmtype == PlmServices.get_property(:PLMTYPE_GENERIC))
 			if valid
-				msg="relation.child_plmtype:'#{relation.child_plmtype}' <> (child_plmtype:'#{child_plmtype}' and '#{::SYLRPLM::PLMTYPE_GENERIC}')"
-				valid =(child_plmtype == relation.child_plmtype || relation.child_plmtype == ::SYLRPLM::PLMTYPE_GENERIC)
+				msg="relation.child_plmtype:'#{relation.child_plmtype}' <> (child_plmtype:'#{child_plmtype}' and '#{PlmServices.get_property(:PLMTYPE_GENERIC)}')"
+				valid =(child_plmtype == relation.child_plmtype || relation.child_plmtype == PlmServices.get_property(:PLMTYPE_GENERIC))
 				if valid
-					msg="relation.father_type:'#{relation.father_typesobject}' <> (father.type:'#{father.typesobject}' and '#{::SYLRPLM::TYPE_GENERIC}')"
-					valid = (father.typesobject.name==relation.father_typesobject.name || relation.father_typesobject.name == ::SYLRPLM::TYPE_GENERIC)
+					msg="relation.father_type:'#{relation.father_typesobject}' <> (father.type:'#{father.typesobject}' and '#{PlmServices.get_property(:TYPE_GENERIC)}')"
+					valid = (father.typesobject.name==relation.father_typesobject.name || relation.father_typesobject.name == PlmServices.get_property(:TYPE_GENERIC))
 					if valid
-						msg="relation.child_type:'#{relation.child_typesobject}' <> (child.type:'#{child.typesobject}' and '#{::SYLRPLM::TYPE_GENERIC}')"
-						valid = (child.typesobject.name==relation.child_typesobject.name || relation.child_typesobject.name == ::SYLRPLM::TYPE_GENERIC)
+						msg="relation.child_type:'#{relation.child_typesobject}' <> (child.type:'#{child.typesobject}' and '#{PlmServices.get_property(:TYPE_GENERIC)}')"
+						valid = (child.typesobject.name==relation.child_typesobject.name || relation.child_typesobject.name == PlmServices.get_property(:TYPE_GENERIC))
 					end
 				end
 			end

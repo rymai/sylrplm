@@ -30,7 +30,7 @@ class Typesobject < ActiveRecord::Base
 		ret=[]
 		#LOG.info (fname) {"MODELS_OBSERVE=#{::Plmobserver::MODELS_OBSERVE}"}
 		order_default.find_all.each do |type|
-			#LOG.info (fname) {"type.name=#{type.forobject}"}
+		#LOG.info (fname) {"type.name=#{type.forobject}"}
 			ret << type if ::Plmobserver::MODELS_OBSERVE.include? type.forobject
 		end
 		ret
@@ -75,11 +75,11 @@ class Typesobject < ActiveRecord::Base
 		# liste complete potentielle:
 		#   objets du schema: "document", "part", "project", "customer", "forum", "definition", "datafile", "relation", "user", "link" (pour la conf)
 		#   +objets ayant les methodes adequates: "ar_workitem", "history_entry"
-		#   +objets generiques: ::SYLRPLM::PLMTYPE_GENERIC
+		#   +objets generiques: ::SYLRPLM::PROPERTIES, PLMTYPE_GENERIC
 		# objets non pris en compte:
 		#   ar_workitem: pas de besoin
 		#   definition: pas de besoin
-		ret=[::SYLRPLM::PLMTYPE_GENERIC, "document", "part", "project", "customer", "forum", "datafile", "relation", "link", "history_entry", "relation", "user"].sort
+		ret=[::SYLRPLM::PLM_PROPERTIES, PlmServices.get_property(:PLMTYPE_GENERIC), "document", "part", "project", "customer", "forum", "datafile", "relation", "link", "history_entry", "relation", "user"].sort
 		ret
 	end
 
@@ -95,7 +95,7 @@ class Typesobject < ActiveRecord::Base
 	end
 
 	def self.generic(object)
-		Typesobject.find_by_forobject_and_name(object, ::SYLRPLM::TYPE_GENERIC)
+		Typesobject.find_by_forobject_and_name(object, PlmServices.get_property(:TYPE_GENERIC))
 	end
 
 	def self.get_conditions(filter)
@@ -111,5 +111,16 @@ class Typesobject < ActiveRecord::Base
 
 	def ident
 		"#{forobject}.#{name}"
+	end
+
+	# renvoie l'objet contenu dans l'attribut type_values
+	def get_fields_values
+		if self.respond_to? :fields
+			unless fields.blank?
+				#puts "get_fields_values:values=#{fields}"
+				decod = ActiveSupport::JSON.decode(fields)
+			end
+		end
+		decod
 	end
 end

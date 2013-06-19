@@ -520,7 +520,7 @@ ActiveRecord::Schema.define(:version => 0) do
 	create_table "typesobjects", :force => true do |t|
 		t.string   "forobject"
 		t.string   "name"
-		t.string   "fields"
+		t.string   "fields", :limit => 1024
 		t.text     "description"
 		t.datetime "created_at"
 		t.datetime "updated_at"

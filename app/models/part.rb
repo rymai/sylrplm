@@ -16,7 +16,7 @@ class Part < ActiveRecord::Base
 
 	has_many :thumbnails,
   	:class_name => "Datafile",
-  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='#{::SYLRPLM::TYPE_DATAFILE_THUMBNAIL}')"
+  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='#{PlmServices.get_property(:TYPE_DATAFILE_THUMBNAIL)}')"
 
 	belongs_to :typesobject
 	belongs_to :statusobject

@@ -92,7 +92,7 @@ module Models
 				rev_cur = self.revision
 				last_rev = last_revision
 				if revisable?
-					admin = User.find_by_name(::SYLRPLM::ROLE_ADMIN)
+					admin = User.find_by_name(PlmServices.get_property(:ROLE_ADMIN))
 					obj = self.clone
 					obj.set_default_values_without_next_seq
 					obj.statusobject = ::Statusobject.get_first(self.model_name)
@@ -445,7 +445,7 @@ module Models
 					else
 						self.group     = owner.groups[0]
 					end
-					#LOG.info (fname) {"owner=#{owner} group=#{group}"}
+				#LOG.info (fname) {"owner=#{owner} group=#{group}"}
 				end
 			end
 			if (self.respond_to? :owner) && (self.respond_to? :projowner)
@@ -455,7 +455,7 @@ module Models
 					else
 						self.projowner = owner.projects[0]
 					end
-					#LOG.info (fname) {"owner=#{owner}  projowner=#{projowner}"}
+				#LOG.info (fname) {"owner=#{owner}  projowner=#{projowner}"}
 				end
 			end
 
@@ -503,11 +503,11 @@ module Models
 		# === Result
 		# 	the duplicate object , all characteristics of the object are copied excepted the followings:
 		# * +ident+ : a new one is calculated if this is a sequence, if not, the same is proposed.
-		# * +status+ : the status is reset to the first one.  
-		# * +revision+ : the revision is reset to the first one. 
-		# * +responsible/group/projowner+ : the accessor is the current user 
+		# * +status+ : the status is reset to the first one.
+		# * +revision+ : the revision is reset to the first one.
+		# * +responsible/group/projowner+ : the accessor is the current user
 		# * +date+ : date is the actual date
-		# * +domain+ : the user domain is used (see def_user method in this Module PlmObject ) 
+		# * +domain+ : the user domain is used (see def_user method in this Module PlmObject )
 		# == Impact on other components
 		#
 		def duplicate(user)
@@ -519,7 +519,7 @@ module Models
 				set_default_value(:revision, 0)
 			end
 			if (ret.respond_to? :statusobject)
-				ret.statusobject = ::Statusobject.get_first(ret.model_name)
+			ret.statusobject = ::Statusobject.get_first(ret.model_name)
 			end
 			ret.set_default_value(:ident, 1)
 			if (ret.respond_to? :date)

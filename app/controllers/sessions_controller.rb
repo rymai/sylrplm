@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
 		#puts "sessions_controller.activate"+params.inspect
 		user = User.find(params[:id]) if User.exists?(params[:id])
 		unless user.nil?
-			type=Typesobject.find_by_forobject_and_name("user", ::SYLRPLM::TYPE_USER_PERSON)
+			type=Typesobject.find_by_forobject_and_name("user", PlmServices.get_property(:TYPE_USER_PERSON))
 			user.typesobject=type
 			if user.save
 				@current_user = user
