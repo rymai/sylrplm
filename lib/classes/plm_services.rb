@@ -91,6 +91,7 @@ class PlmServices
 			break
 			end
 		end
+		#
 		if ret.nil?
 			# the property is not in a typsobject, we search in SYLRPLM variables
 			begin
