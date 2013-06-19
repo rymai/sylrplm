@@ -15,7 +15,7 @@ User_1:
   volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: "200"
   show_mail: "0"
-  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",PlmServices.get_property(:TYPE_USER_PERSON)).id %>
   group_id: "1"
   project_id: "1"
   subscription_id: 6
@@ -36,7 +36,7 @@ User_101:
   volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: 
   show_mail: "0"
-  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",PlmServices.get_property(:TYPE_USER_PERSON)).id %>
   group_id: "101"
   project_id: "2"
   subscription_id: 1
@@ -57,7 +57,7 @@ User_102:
   volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: 
   show_mail: "0"
-  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",PlmServices.get_property(:TYPE_USER_PERSON)).id %>
   group_id: 
   project_id:
   subscription_id: 2
@@ -78,7 +78,7 @@ User_103:
   volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: "1000"
   show_mail: "0"
-  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",PlmServices.get_property(:TYPE_USER_PERSON)).id %>
   group_id: 
   project_id:
   subscription_id: 1 
@@ -99,7 +99,7 @@ User_104:
   volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: 
   show_mail: "0"
-  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",PlmServices.get_property(:TYPE_USER_PERSON)).id %>
   group_id: 
   project_id: 
   subscription_id: 3
@@ -120,7 +120,7 @@ User_105:
   volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: 
   show_mail: "0"
-  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",PlmServices.get_property(:TYPE_USER_PERSON)).id %>
   group_id: 
   project_id:
   subscription_id: 4
@@ -141,7 +141,7 @@ User_106:
   volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: 
   show_mail: "1"
-  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",PlmServices.get_property(:TYPE_USER_PERSON)).id %>
   group_id: 
   project_id: 
   subscription_id: 5
@@ -162,7 +162,7 @@ User_107:
   volume_id: <%= Volume.find_by_name("volfog01").id %>
   nb_items: 
   show_mail: "1"
-  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",::SYLRPLM::TYPE_USER_PERSON).id %>
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("user",PlmServices.get_property(:TYPE_USER_PERSON)).id %>
   group_id: 
   project_id: 
   subscription_id: 

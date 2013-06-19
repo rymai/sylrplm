@@ -179,7 +179,7 @@ module HelpHelper
 		if(elem.attributes["title"]!=nil)
 			msg+="<a class='help_tr' href='#"+elem.attributes["key"]+"'>"+elem.attributes["title"]+"</a>\n"
 		end
-		if level<=::SYLRPLM::HELP_SUMMARY_LEVEL
+		if level <= PlmServices.get_property(:HELP_SUMMARY_LEVEL).to_i
 			elem.elements.each("msg") { |element|
 				msg+="<li class='help_key'>\n"
 				msg+=  h_help_summary(element, level)

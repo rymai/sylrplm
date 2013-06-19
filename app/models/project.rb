@@ -11,7 +11,7 @@ class Project < ActiveRecord::Base
   
   has_many :thumbnails, 
   	:class_name => "Datafile", 
-  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='#{::SYLRPLM::TYPE_DATAFILE_THUMBNAIL}')"
+  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='#{PlmServices.get_property(:TYPE_DATAFILE_THUMBNAIL)}')"
 
 	belongs_to :typesobject
 	belongs_to :typeaccess,
@@ -55,7 +55,7 @@ class Project < ActiveRecord::Base
 
 	# renvoie le nom du projet affecte par defaut au user
 	def self.for_user(username)
-		::SYLRPLM::USER_PROJECT_IDENT+username
+		PlmServices.get_property(:USER_PROJECT_IDENT)+username
 	end
 
 	# modifie les attributs avant edition

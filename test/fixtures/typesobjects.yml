@@ -202,7 +202,7 @@ Typesobject_997141214:
 Typesobject_directory: 
   id: "1045584113"
   forobject: document
-  name: <%= ::SYLRPLM::TYPE_DOC_DIRECTORY %>
+  name: <%= PlmServices.get_property(:TYPE_DOC_DIRECTORY) %>
   fields: "{\"type\": \"\"}"
   description: ""
   domain: admin

@@ -50,10 +50,10 @@ class Controller
   #appelle par main_controller.init_objects
   def self.create_admin
     puts "Controller.create_admin:"
-    dirname="#{SYLRPLM::DIR_FIXTURES}/admin/*.yml"
+    dirname="#{PlmServices.get_property(:DIR_FIXTURES)}/admin/*.yml"
     puts "Controller.create_admin:"+dirname
     Dir.glob(dirname).each do |file|
-      dirfile="#{SYLRPLM::DIR_FIXTURES}/admin"
+      dirfile="#{PlmServices.get_property(:DIR_FIXTURES)}/admin"
       puts "Controller.create_admin:dirfile="+dirfile+" file="+File.basename(file, '.*')
       Fixtures.create_fixtures(dirfile, File.basename(file, '.*'))
     end
@@ -61,10 +61,10 @@ class Controller
 
   def self.create_domain(domain)
     puts "Controller.create_domain:"+domain
-    dirname="#{SYLRPLM::DIR_FIXTURES}/domains/#{domain}/*.yml"
+    dirname="#{PlmServices.get_property(:DIR_FIXTURES)}/domains/#{domain}/*.yml"
     puts "Controller.create_domain:"+dirname
     Dir.glob(dirname).each do |file|
-      dirfile = "#{SYLRPLM::DIR_FIXTURES}/domains/#{domain}"
+      dirfile = "#{PlmServices.get_property(:DIR_FIXTURES)}/domains/#{domain}"
       puts "Controller.create_domain:dirfile="+dirfile+" file="+File.basename(file, '.*')
       Fixtures.create_fixtures(dirfile, File.basename(file, '.*'))
     end
@@ -74,7 +74,7 @@ class Controller
   #renvoie la liste des domaines pour le chargement initial
   #appelle par main_controller.init_objects
   def self.get_domains
-    dirname="#{SYLRPLM::DIR_FIXTURES}/domains/*"
+    dirname="#{PlmServices.get_property(:DIR_FIXTURES)}/domains/*"
     ret=""
     Dir.glob(dirname).each do |dir|
       ret<<"<option>"<<File.basename(dir, '.*')<<"</option>"

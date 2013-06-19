@@ -23,7 +23,7 @@ class Volume < ActiveRecord::Base
 	def initialize(params_volume=nil)
 		super
 		if params_volume.nil?
-			self.directory = SYLRPLM::VOLUME_DIRECTORY_DEFAULT
+			self.directory = PlmServices.get_property(:VOLUME_DIRECTORY_DEFAULT)
 		end
 		self.set_default_values(1)
 		self

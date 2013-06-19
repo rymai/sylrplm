@@ -5,7 +5,8 @@ ActionController::Routing::Routes.draw do |map|
 
 
 # syl 17/11/2010 : route par defaut
-	map.root :controller => "main", :action => "index"
+	#map.root :controller => "main", :action => "index"
+	map.root :controller => "workitems", :action => "index"
 
 	map.resources :relations
 	map.connect(

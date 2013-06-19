@@ -66,12 +66,12 @@ class Relation < ActiveRecord::Base
 		Typesobject.get_objects_with_type.each do |t|
 			ret[t] = []
 		end
-		cond="(father_plmtype = '#{father.model_name}' or father_plmtype = '#{::SYLRPLM::PLMTYPE_GENERIC}' )"
+		cond="(father_plmtype = '#{father.model_name}' or father_plmtype = '#{PlmServices.get_property(:PLMTYPE_GENERIC)}' )"
 		##cond="(father_plmtype = '#{father.model_name}' )"
 		## ko car show incomplet !!! cond+=" and (father_typesobject_id = '#{father.typesobject_id}')"
 		find(:all, :order => "name",
       :conditions => [cond]).each do |rel|
-			if rel.child_plmtype==::SYLRPLM::PLMTYPE_GENERIC
+			if rel.child_plmtype==PlmServices.get_property(:PLMTYPE_GENERIC)
 				# ok pour tous les types de fils
 				Typesobject.get_objects_with_type.each do |t|
 					ret[t] <<rel
@@ -95,7 +95,7 @@ class Relation < ActiveRecord::Base
 		###cond="(father_plmtype='#{father_plmtype}' or father_plmtype='#{::SYLRPLM::PLMTYPE_GENERIC}')"
 		cond="(father_plmtype='#{father_plmtype}')"
 		cond+=" and"
-		cond+=" (child_plmtype='#{child_plmtype}' or child_plmtype='#{::SYLRPLM::PLMTYPE_GENERIC}')"
+		cond+=" (child_plmtype='#{child_plmtype}' or child_plmtype='#{PlmServices.get_property(:PLMTYPE_GENERIC)}')"
 		cond+=" and name='#{name}'"
 		#puts "Relations."+__method__.to_s+":"+cond
 		find(:first,

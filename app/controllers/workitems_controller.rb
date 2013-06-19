@@ -30,7 +30,7 @@ class WorkitemsController < ApplicationController
 			else
 				opts = { :order => 'dispatch_time DESC' }
 				opts[:conditions] = { :store_name => @current_user.store_names }
-				opts[:page] = (params[:page].nil? ? SYLRPLM::NB_ITEMS_PER_PAGE :  params[:page])
+				opts[:page] = (params[:page].nil? ? PlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i :  params[:page])
 				@workitems = Ruote::Sylrplm::ArWorkitem.paginate_by_params(
 				[
 					# parameter_name[, column_name]
@@ -374,7 +374,7 @@ class WorkitemsController < ApplicationController
 		values["child_id"]              = item.id
 		values["relation_id"]           = relation.id
 		# en attendant mieux: user processus ou recup user en cours ...
-		#user=User.find_by_name(SYLRPLM::USER_ADMIN)
+		#user=User.find_by_name(PlmServices.get_property(:USER_ADMIN))
 		#on prend celui du workitem (HistoryEntry)
 		user=User.find_by_name(workitem.source)
 		link = Link.new(values.merge(user: user))

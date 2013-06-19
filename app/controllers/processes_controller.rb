@@ -119,17 +119,17 @@ class ProcessesController < ApplicationController
     options = { :variables => { 'launcher' => @current_user.login } }
     begin
       fei = RuotePlugin.ruote_engine.launch(li, options)
-      puts name+" fei("+fei.wfid+") launched options="+options.inspect
+      puts fname+" fei("+fei.wfid+") launched options="+options.inspect
       headers['Location'] = process_url(fei.wfid)
       nb=0
       workitem = nil
       while nb<5 and workitem.nil?
-        puts name+" boucle "+nb.to_s+":"+fei.wfid
+        puts fname+" boucle "+nb.to_s+":"+fei.wfid
         sleep 1.0
         nb+=1
         workitem = OpenWFE::Extras::ArWorkitem.find_by_wfid(fei.wfid)
       end
-      #puts name+" workitem="+workitem.inspect
+      #puts fname+" workitem="+workitem.inspect
       respond_to do |format|
         unless workitem.nil?
           flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")

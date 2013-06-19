@@ -436,9 +436,9 @@ module ApplicationHelper
 
 	def h_input_domain(f)
 		fname=self.class.name+"."+__method__.to_s
-		#LOG.info (fname){"admin_logged_in?=#{admin_logged_in?} DOMAIN_FOR_ALL=#{::SYLRPLM::DOMAIN_FOR_ALL}"}
+		#LOG.info (fname){"admin_logged_in?=#{admin_logged_in?} DOMAIN_FOR_ALL=#{PlmServices.get_property(:DOMAIN_FOR_ALL)}"}
 		ret=""
-		if admin_logged_in? || ::SYLRPLM::DOMAIN_FOR_ALL==true
+		if admin_logged_in? || PlmServices.get_property(:DOMAIN_FOR_ALL)==true
 			ret = h_input_text(f ,:domain)
 		end
 		ret
@@ -458,12 +458,12 @@ module ApplicationHelper
 		# typesobject.name = typesoject
 		# child.statusobject.name = statusobject
 		#
-		#fields = final_acc.split(".")
-		#0.upto (fields.count-2) { |i|
-		#	final_obj = final_obj.send(fields[i].to_s)
-		#	final_acc = fields[i+1].to_s
-		#}
 		labacc=final_acc.to_s.tr('.','_')
+		fields = final_acc.split(".")
+		0.upto (fields.count-2) { |i|
+			final_obj = final_obj.send(fields[i].to_s)
+			final_acc = fields[i+1].to_s
+		}
 		ret="<tr>"
 		ret+="<th>"
 		ret+=t("label_"+labacc.to_s)

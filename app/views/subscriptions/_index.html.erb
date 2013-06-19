@@ -9,6 +9,7 @@
 		<th><%= t(:label_fortypesobject)%></th>
 		<th><%= t(:label_ingroup)%></th>
 		<th><%= t(:label_inproject)%></th>
+		<th><%= t(:label_domain)%></th>
 	</tr>
 	<% @subscriptions[:recordset].each do |subscription| %>
 	<tr class='<%= cycle("even", "odd") %>'>
@@ -21,6 +22,7 @@
 		<td><%= h_value_or_default(comma_links(subscription.fortypesobject, :ident),t(:msg_tobedefine)) %></td>
 		<td><%= h_value_or_default(comma_links(subscription.ingroup, :ident),t(:msg_tobedefine)) %></td>
 		<td><%= h_value_or_default(comma_links(subscription.inproject, :ident),t(:msg_tobedefine)) %></td>
+		<td><%= h subscription.domain %></td>
 		<td><%= link_to h_img_edit.to_s, edit_subscription_path(subscription) %></td>
 		<td><%= h_destroy(subscription) %></td>
 	</tr>

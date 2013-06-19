@@ -10,7 +10,7 @@ Volume_1:
 Volume_2: 
   id: "2"
   name: vollocal01
-  directory: <%= ::SYLRPLM::VOLUME_DIRECTORY_DEFAULT %>
+  directory: <%= PlmServices.get_property(:VOLUME_DIRECTORY_DEFAULT) %>
   protocol: file_system
   description: volume en local sur le serveur
   domain: admin

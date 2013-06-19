@@ -19,7 +19,7 @@ class Document < ActiveRecord::Base
 
 	has_many :thumbnails,
   	:class_name => "Datafile",
-  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='#{::SYLRPLM::TYPE_DATAFILE_THUMBNAIL}')"
+  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='#{PlmServices.get_property(:TYPE_DATAFILE_THUMBNAIL)}')"
 
 	has_many :checks
 
@@ -135,7 +135,7 @@ class Document < ActiveRecord::Base
 
 	#pour par exemple interdire les fichiers dans un répertoire
 	def directory?
-		typesobject.name==::SYLRPLM::TYPE_DOC_DIRECTORY
+		typesobject.name==PlmServices.get_property(:TYPE_DOC_DIRECTORY)
 	end
 
 	def get_check_out

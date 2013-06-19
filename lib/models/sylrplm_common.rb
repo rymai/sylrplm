@@ -428,5 +428,33 @@ module Models
 			decod
 		end
 
+		#
+		#== Role: check if the group or role is a descendant of the ancestor
+		#
+		# == Arguments
+		# * +ancestor+ - The object to check as ancestor
+		# == Usage from model or controller or script:
+		#   theGroup = Group.find_by_name("SICM_BE")
+		#   theAncestor = Group.find_by_name("SICM")
+		#   theAdmin = Group.find_by_name("admins")
+		#   theGroup.is_child_of?(theAncestor) : true
+		#   theGroup.is_child_of?(theAdmin) : false
+		# === Result
+		# 	see above
+		# == Impact on other components
+		#
+		def is_child_of? (ancestor)
+			fname = "#{self.class.name}.#{__method__}"
+			ret = false
+			if self.respond_to? :father
+				afather = self.father
+				while afather != nil and afather != ancestor
+					afather = afather.father
+				end
+				ret = (afather != nil)
+			end
+			#LOG.info (fname){"self=#{self} is_child_of? #{ancestor}:#{ret}"}
+			ret
+		end
 	end
 end

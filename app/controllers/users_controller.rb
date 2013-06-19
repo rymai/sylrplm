@@ -26,12 +26,13 @@ class UsersController < ApplicationController
 	# GET /users/new
 	# GET /users/new.xml
 	def new
-		@the_user = User.create_new
+		###@the_user = User.create_new
+		@the_user = User.new(user: current_user)
 		@roles   = Role.all
 		@groups  = Group.all
 		@projects  = Project.all
 		@themes  = get_themes(@theme)
-		@time_zones=get_time_zones(@time_zone)
+		@time_zones = get_time_zones(@time_zone)
 		@volumes = Volume.find_all
 		@types    = Typesobject.get_types("user")
 		@subscriptions = Subscription.all
@@ -75,19 +76,19 @@ class UsersController < ApplicationController
 
 	def create
 		@the_user    = User.new(params["user"])
-		@roles   = Role.all
-		@groups   = Group.all
-		@projects  = Project.all
-		@themes  = get_themes(@theme)
-		@time_zones = get_time_zones(@the_user.time_zone)
-		@volumes = Volume.find_all
-		@types    = Typesobject.get_types("user")
 		respond_to do |format|
 			if @the_user.save
 				flash.now[:notice] = t(:ctrl_user_created, :user => @the_user.login)
 				format.html { redirect_to(@the_user) }
 				format.xml  { render :xml => @the_user, :status => :created, :location => @the_user }
 			else
+				@roles   = Role.all
+				@groups   = Group.all
+				@projects  = Project.all
+				@themes  = get_themes(@theme)
+				@time_zones = get_time_zones(@the_user.time_zone)
+				@volumes = Volume.find_all
+				@types    = Typesobject.get_types("user")
 				@subscriptions = Subscription.all
 				flash.now[:error] = t(:ctrl_user_not_created, :user => @the_user.login, :msg =>@the_user.errors.inspect)
 				format.html { render :action => "new" }
