@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-
 #dispo sur bundle 1.2
 ruby '1.9.3'
 
@@ -20,6 +19,10 @@ gem 'atom-tools' , '2.0.5'
 
 # Views
 gem 'will_paginate' , '~> 2.3.16'
+
+
+gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
+####gem 'sylrplm_ext', :path => "/home/syl/trav/rubyonrails/sylrplm_ext"
 
 group :staging, :production do
   gem 'thin'

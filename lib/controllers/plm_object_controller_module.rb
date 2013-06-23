@@ -98,7 +98,7 @@ module Controllers
 					unless session[:nb_items].nil?
 						session[:nb_items]
 					else
-						SPlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i
+						PlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i
 					end
 				end
 			end

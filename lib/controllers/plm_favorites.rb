@@ -1,5 +1,5 @@
 def empty_favori_by_type(type=nil)
-  puts "plm_favorites.empty_favori_by_type"+type.to_s
+  puts "plm_favorites.empty_favori_by_type:"+type.to_s
   @favori.reset(type)
 end
 

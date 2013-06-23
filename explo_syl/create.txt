@@ -546,8 +546,6 @@ ruby script/generate scaffold view name:string description:text
 rake db:fixtures:load FIXTURES_PATH=db/fixtures/admin
 rake db:fixtures:load FIXTURES_PATH=db/fixtures/domains/01-mecanique-ameublement/
 
-
-
 tests auto: voir capybara
 
 todo: 
@@ -667,3 +665,21 @@ ActiveRecord::StatementInvalid: Mysql::Error: Unknown column 'object' in 'field 
 modif de test/fixtures/sequences.yml et remplacer object par utility
 modif de test/fixtures/forums.yml et remplacer typeobjects_id par typesobject_id
 modif de test/fixtures/accesses.yml et remplacer role_id par roles
+
+
+=============================================
+creer un gem avec select_inout et select_in_list
+=============================================
+cd rubyonrails
+bundle gem sylrplm_ext
+cd sylrplm_ext
+bundle
+rake -T
+rake build
+$ git remote add origin git@github.com/sylvani/sylrplm_ext
+$ git add .
+$ git commit -m "First release"
+$ git push origin master
+rake install
+rake release
+

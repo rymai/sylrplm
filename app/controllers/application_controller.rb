@@ -1,13 +1,10 @@
 require_dependency 'filters/log_definition_filter'
 require_dependency 'controllers/plm_event'
-require_dependency 'controllers/plm_favorites'
-require_dependency 'controllers/plm_lifecycle'
 require_dependency 'controllers/plm_object_controller_module'
-require_dependency 'controllers/plm_tree'
 require_dependency 'error_reply'
 
 class ApplicationController < ActionController::Base
-  include Controllers::PlmObjectControllerModule
+  include ::Controllers::PlmObjectControllerModule
 
   helper :all # include all helpers, all the time
   helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?, :get_domain, :get_list_modes
