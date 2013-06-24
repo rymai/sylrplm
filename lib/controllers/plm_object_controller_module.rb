@@ -11,7 +11,19 @@ module Controllers
 			model = get_model(params)
 			obj = model.find(params[:id])
 			@favori.add(obj)
+
+			respond_to do |format|
+				format.js { render 'shared/refresh_favorites' }
+			end
 		end
+
+		def empty_favori
+	    empty_favori_by_type(get_model_type(params))
+
+	    respond_to do |format|
+	      format.js { render 'shared/refresh_favorites' }
+	    end
+	  end
 
 		def ctrl_add_forum(object)
 			fname = "#{self.class.name}.#{__method__}"
@@ -206,9 +218,9 @@ module Controllers
 			#puts "application_controller.get_html_options:"+ret
 			ret
 		end
-		
+
 		private
-		
+
 		def ctrl_new_datafile(at_object)
 			fname= "#{self.class.name}.#{__method__}"
 			#LOG.debug (fname){"datafile.doc=#{@datafile.document}"}
@@ -220,7 +232,7 @@ module Controllers
 				unless check.nil?
 					flash[:notice] = t(:ctrl_object_already_checkout, :typeobj => tr_model, :ident => at_object.ident, :reason => check.out_reason)
 				else
-					if current_user.check_automatic			
+					if current_user.check_automatic
 						check = Check.new(object_to_check: at_object, user: current_user, out_reason: t(:ctrl_checkout_auto))
 						if check.save
 						  #LOG.debug (fname){"check saved=#{check.inspect}"}
@@ -236,7 +248,7 @@ module Controllers
 					end
 				end
 				respond_to do |format|
-					unless check.nil?	
+					unless check.nil?
 						#LOG.debug (fname){"document=#{@document.inspect}"}
 						flash[:notice] = t(:ctrl_object_checkout, :typeobj => tr_model, :ident => at_object.ident, :reason => check.out_reason)
 						format.html { render :action => :new_datafile, :id => at_object.id }
@@ -252,21 +264,21 @@ module Controllers
 					format.html { render :action => :new_datafile, :id => at_object.id }
 					format.xml  { head :ok }
 				end
-			end		
+			end
 		end
-	
-	
+
+
 		def ctrl_add_datafile(at_object)
 			fname= "#{self.class.name}.#{__method__}"
 	    LOG.debug (fname){"params=#{params.inspect}"}
 			@datafile = at_object.datafiles.build(params[:datafile])
 			#LOG.debug (fname){"datafile=#{@datafile.inspect}"}
-			respond_to do |format|				
+			respond_to do |format|
 				if at_object.save
-					if current_user.check_automatic	
+					if current_user.check_automatic
 						check = Check.get_checkout(at_object)
 						unless check.nil?
-							check = check.checkIn({:in_reason => t("ctrl_checkin_auto")}, current_user)	
+							check = check.checkIn({:in_reason => t("ctrl_checkin_auto")}, current_user)
 							#LOG.debug (fname){"check errors==#{check.errors.inspect}"}
 							if check.save
 					  		#LOG.debug (fname){"check saved=#{check.inspect}"}
@@ -287,14 +299,14 @@ module Controllers
 				end
 			end
 		end
-	
-	
+
+
 		def ctrl_duplicate_links(params, obj, user)
 	    ret=true
 	   	unless params["links"].nil?
 				#puts "========================="+params["links"].inspect
 				params["links"].each {
-					|key, value| puts "#{key} is #{value}" 
+					|key, value| puts "#{key} is #{value}"
 					value.each do |lnkid|
 						lnk_orig = Link.find(lnkid)
 						#puts "=========================lnk_orig="+lnk_orig.inspect

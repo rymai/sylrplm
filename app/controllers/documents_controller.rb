@@ -33,7 +33,7 @@ class DocumentsController < ApplicationController
       format.xml  { render :xml => @document }
     end
   end
-	
+
   # GET /documents/new
   # GET /documents/new.xml
   def new
@@ -235,7 +235,7 @@ class DocumentsController < ApplicationController
   end
 
   #
-  # preparation du datafile a associer 
+  # preparation du datafile a associer
   #
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
@@ -244,7 +244,7 @@ class DocumentsController < ApplicationController
     @datafile = Datafile.new({:user => current_user, :thedocument => @document})
     ctrl_new_datafile(@document)
   end
-   	
+
 	#
 	# creation du datafile et association et liberation si besoin
 	#
@@ -256,17 +256,17 @@ class DocumentsController < ApplicationController
     ctrl_add_datafile(@document)
     #LOG.debug (fname){"datafile=#{@datafile.inspect}"}
 	end
-	
+
 	def new_datafile_old
 		fname= "#{self.class.name}.#{__method__}"
     #LOG.debug (fname){"params=#{params.inspect}"}
     @document = Document.find(params[:id])
-		@types  = Typesobject.find_for("datafile")	
+		@types  = Typesobject.find_for("datafile")
 		check = Check.get_checkout(@document)
 		unless check.nil?
 			flash[:notice] = t(:ctrl_object_already_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => check.out_reason)
 		else
-			if current_user.check_automatic			
+			if current_user.check_automatic
 				check = Check.new(object_to_check: @document, user: current_user, out_reason: t(:ctrl_checkout_auto))
 				if check.save
 				  #LOG.debug (fname){"check saved=#{check.inspect}"}
@@ -283,7 +283,7 @@ class DocumentsController < ApplicationController
 		end
 		respond_to do |format|
 			@datafile = Datafile.new(user: current_user)
-			unless check.nil?	
+			unless check.nil?
 				#LOG.debug (fname){"document=#{@document.inspect}"}
 				@datafile.document = @document
 				flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => check.out_reason)
@@ -296,7 +296,7 @@ class DocumentsController < ApplicationController
 			end
 		end
 	end
-	
+
 	def add_datafile_old
 		fname= "#{self.class.name}.#{__method__}"
     #LOG.debug (fname){"params=#{params.inspect}"}
@@ -304,12 +304,12 @@ class DocumentsController < ApplicationController
     #LOG.debug (fname){"document=#{@document.inspect}"}
 		@datafile = @document.datafiles.build(params[:datafile])
 		#LOG.debug (fname){"datafile=#{@datafile.inspect}"}
-			respond_to do |format|				
+			respond_to do |format|
 				if @document.save
-					if current_user.check_automatic	
+					if current_user.check_automatic
 						check = Check.get_checkout(@document)
 						unless check.nil?
-							check = check.checkIn({:in_reason => t("ctrl_checkin_auto")}, current_user)	
+							check = check.checkIn({:in_reason => t("ctrl_checkin_auto")}, current_user)
 							#LOG.debug (fname){"check errors==#{check.errors.inspect}"}
 							if check.save
 					  		#LOG.debug (fname){"check saved=#{check.inspect}"}
@@ -329,7 +329,7 @@ class DocumentsController < ApplicationController
 					format.html { render :action => :new_datafile, :id => @document.id   }
 				end
 			end
-			
+
 	end
 
 	def add_docs
@@ -339,13 +339,7 @@ class DocumentsController < ApplicationController
 		ctrl_add_objects_from_favorites(@document, :document)
 	end
 
-	def empty_favori
-		fname= "#{self.class.name}.#{__method__}"
-    #LOG.debug (fname){"params=#{params.inspect}"}
-    empty_favori_by_type(get_model_type(params))
-  end
-  
- def new_dup
+  def new_dup
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@document_orig = Document.find(params[:id])
@@ -359,7 +353,7 @@ class DocumentsController < ApplicationController
 	end
 
 private
-	
+
 	def show_
 		fname= "#{self.class.name}.#{__method__}"
     #LOG.debug (fname){"params=#{params.inspect}"}
@@ -370,13 +364,13 @@ private
 		@tree_up      						= build_tree_up(@document, @myparams[:view_id] )
     #LOG.debug (fname){"taille tree=#{@tree.size}"}
 	end
-	
+
   def index_
     fname= "#{self.class.name}.#{__method__}"
     #LOG.debug (fname){"params=#{params.inspect}"}
     @documents = Document.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
   end
-  
+
   end
-  
+
 

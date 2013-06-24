@@ -181,11 +181,6 @@ class ProjectsController < ApplicationController
 		ctrl_add_objects_from_favorites(@project, :user)
 	end
 
-	def empty_favori
-		#puts "#{self.class.name}.#{__method__}:#{params.inspect}"
-		empty_favori_by_type(get_model_type(params))
-	end
-
 	#
 	# preparation du datafile a associer
 	#

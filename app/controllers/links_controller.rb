@@ -161,11 +161,6 @@ class LinksController < ApplicationController
 		end
 	end
 
-	def empty_favori
-		#puts "#{self.class.name}.#{__method__}:#{params.inspect}"
-		empty_favori_by_type(get_model_type(params))
-	end
-
 	private
 
 	def update_effectivities(link, effectivities)

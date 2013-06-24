@@ -157,13 +157,8 @@ class PartsController < ApplicationController
 		ctrl_demote(@part)
 	end
 
-	def empty_favori
-		#LOG.info ("#{self.class.name}.#{__method__}") { "params=#{params.inspect}" }
-		empty_favori_by_type(get_model_type(params))
-	end
-	
 	#
-  # preparation du datafile a associer 
+  # preparation du datafile a associer
   #
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
@@ -172,7 +167,7 @@ class PartsController < ApplicationController
     @datafile = Datafile.new({:user => current_user, :thepart => @part})
     ctrl_new_datafile(@part)
   end
-   	
+
 	#
 	# creation du datafile et association et liberation si besoin
 	#
@@ -182,7 +177,7 @@ class PartsController < ApplicationController
     @part = Part.find(params[:id])
     ctrl_add_datafile(@part)
 	end
-	
+
 	def new_dup
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}

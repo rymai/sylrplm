@@ -1,0 +1,9 @@
+<div class="favori-title">
+  <%= t(:"favoris_#{type}") %>
+  <%= link_to_remote(h_img(:remove_all).to_s, url: { controller: type.pluralize, action: 'empty_favori' }, method: :get) %>
+</div>
+<% if @favori.get(type).present? %>
+  <table>
+    <%= render 'layouts/favorite_item', collection: @favori.get(type) %>
+  </table>
+<% end %>

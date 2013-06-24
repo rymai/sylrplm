@@ -1,0 +1,14 @@
+<fieldset>
+  <%= content_tag(:legend, t(:legend_clipboard)) %>
+  <% %w[document part project customer user].each do |type| %>
+    <div id="favori_<%= type %>">
+      <%= render 'layouts/favorite', type: type %>
+    </div>
+  <% end %>
+
+  <% if admin_logged_in? %>
+    <div id="favori_link">
+      <%= render 'layouts/favorite', type: 'link' %>
+    </div>
+  <% end %>
+</fieldset>

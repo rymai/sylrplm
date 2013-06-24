@@ -240,29 +240,7 @@
 <div class="tab-content">
 
 	<div id="favorites" class="tab-pane inactive">
-		<fieldset>
-			<%= content_tag(:legend, t(:legend_clipboard)) %>
-			<div id="favori_document">
-				<%= render(:partial => "main/favori_document", :object => @favori.get("document")) %>
-			</div>
-			<div id="favori_part">
-				<%= render(:partial => "main/favori_part", :object => @favori.get("part")) %>
-			</div>
-			<div id="favori_project">
-				<%= render(:partial => "main/favori_project", :object => @favori.get("project")) %>
-			</div>
-			<div id="favori_customer">
-				<%= render(:partial => "main/favori_customer", :object => @favori.get("customer")) %>
-			</div>
-			<div id="favori_user">
-				<%= render(:partial => "main/favori_user", :object => @favori.get("user")) %>
-			</div>
-			<% if admin_logged_in? %>
-			<div id="favori_link">
-				<%= render(:partial => "main/favori_link", :object => @favori.get("link")) %>
-			</div>
-			<% end %>
-		</fieldset>
+		<%= render 'layouts/favorites' %>
 	</div>
 
 	<div id="main" class="tab-pane active">

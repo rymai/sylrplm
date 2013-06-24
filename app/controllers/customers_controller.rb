@@ -68,7 +68,7 @@ class CustomersController < ApplicationController
 		@customer = Customer.new(params[:customer])
 		@types    = Typesobject.get_types("customer")
 		@status   = Statusobject.find_for(@customer)
-		
+
 		respond_to do |format|
 			if @customer.save
 				st = ctrl_duplicate_links(params, @customer, current_user)
@@ -92,7 +92,7 @@ class CustomersController < ApplicationController
 		@types    = Typesobject.get_types(:customer)
 		@status   = Statusobject.find_for(@customer)
 		@customer.update_accessor(current_user)
-		
+
 		respond_to do |format|
 			if @customer.update_attributes(params[:customer])
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
@@ -167,11 +167,6 @@ class CustomersController < ApplicationController
 	def add_projects
 		@customer = Customer.find(params[:id])
 		ctrl_add_objects_from_favorites(@customer, :project)
-	end
-
-	def empty_favori
-		#puts "#{self.class.name}.#{__method__}:#{params.inspect}"
-		empty_favori_by_type(get_model_type(params))
 	end
 
 	#
