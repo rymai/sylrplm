@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
 
 	skip_before_filter :authorize
 
-	access_control (Access.find_for_controller(controller_class_name()))
+	access_control (Access.find_for_controller(controller_name()))
 	def index
 		@faqs = Question.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
 	end

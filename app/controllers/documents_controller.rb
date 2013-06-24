@@ -4,7 +4,7 @@ class DocumentsController < ApplicationController
   #droits d'acces suivant le controller et l'action demandee
   #administration par le menu Access
   #access_control (Document.controller_access())
-  access_control(Access.find_for_controller(controller_class_name))
+  access_control(Access.find_for_controller(controller_name))
   before_filter :check_user, :only => [:new, :edit]
   # GET /documents
   # GET /documents.xml

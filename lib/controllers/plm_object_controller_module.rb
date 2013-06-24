@@ -7,7 +7,7 @@ module Controllers
 	  # extend ActiveSupport::Concern
 
 		def add_favori
-			#LOG.info("#{controller_class_name}.#{__method__}") { "params=#{params.inspect}" }
+			#LOG.info("#{controller_name}.#{__method__}") { "params=#{params.inspect}" }
 			model = get_model(params)
 			obj = model.find(params[:id])
 			@favori.add(obj)

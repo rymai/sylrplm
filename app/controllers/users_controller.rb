@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	##include CheckboxSelectable
 	#
-	access_control(Access.find_for_controller(controller_class_name))
+	access_control(Access.find_for_controller(controller_name))
 	# GET /users
 	# GET /users.xml
 	def index

@@ -8,8 +8,8 @@ class Typesobject < ActiveRecord::Base
 	has_many :projects
 	has_many :customers
 
-	named_scope :order_default, :order=>"forobject ASC, name ASC"
-	named_scope :find_all , order_default.all
+	scope :order_default, :order=>"forobject ASC, name ASC"
+	scope :find_all , order_default.all
 	#
 	def initialize(params=nil)
 		super(params)

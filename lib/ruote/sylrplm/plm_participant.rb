@@ -11,6 +11,7 @@
 ############################################################################
 require 'ruote'
 require 'ruote/sylrplm/plm_process_exception'
+require 'models/sylrplm_common'
 
 class Ruote::PlmParticipant
 	include OpenWFE::LocalParticipant

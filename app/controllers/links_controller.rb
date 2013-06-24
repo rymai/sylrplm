@@ -1,6 +1,6 @@
 class LinksController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control(Access.find_for_controller(controller_class_name))
+	access_control(Access.find_for_controller(controller_name))
 	before_filter :check_user, :only => [:new, :edit]
 
 	# GET /links

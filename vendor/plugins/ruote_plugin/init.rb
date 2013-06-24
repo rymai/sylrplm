@@ -59,13 +59,13 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) or l.mat
   h[:engine_class] ||= OpenWFE::Extras::DbPersistedEngine
 
   unless h[:logger]
-    h[:logger] = ActiveSupport::BufferedLogger.new("#{RAILS_ROOT}/log/ruote_#{RAILS_ENV}.log")
+    h[:logger] = ActiveSupport::BufferedLogger.new(Rails.root.join("log/ruote_#{Rails.env}.log"))
     h[:logger].level = ActiveSupport::BufferedLogger::INFO if Rails.env.production?
   end
 
   #TODO syl
   #interdit sur heroku h[:work_directory] ||= "#{RAILS_ROOT}/work_#{RAILS_ENV}"
-  h[:work_directory] ||= "#{RAILS_ROOT}/tmp"
+  h[:work_directory] ||= Rails.root.join('tmp')
 
   h[:ruby_eval_allowed] ||= true
   # the 'reval' expression and the ${r:some_ruby_code} notation are allowed
@@ -75,20 +75,20 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) or l.mat
 
   h[:definition_in_launchitem_allowed] ||= true
   # launchitems (process_items) may contain process definitions
-  
+
   #worker=Ruote::Worker.new(Ruote::FsStorage.new(h[:work_directory]))
   #puts "init:worker="+worker.inspect
-  
+
   puts "init:appel RuotePlugin.engine_init:"+h.inspect
-  
-  ##SYL TODO pour creation de la base 
+
+  ##SYL TODO pour creation de la base
   RuotePlugin.engine_init(h)
 
   begin
-    require "#{RAILS_ROOT}/lib/ruote.rb"
-    puts ".. found #{RAILS_ROOT}/lib/ruote.rb"
+    require Rails.root.join('lib/ruote.rb')
+    puts ".. found #{Rails.root}/lib/ruote.rb"
   rescue LoadError => le
-    puts ".. couldn't load #{RAILS_ROOT}/lib/ruote.rb :\n#{le}"
+    puts ".. couldn't load #{Rails.root}/lib/ruote.rb :\n#{le}"
   end
 
 end

@@ -12,7 +12,7 @@ require 'classes/plm_services'
 class WorkitemsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	before_filter :authorize, :except => nil
-	access_control(Access.find_for_controller(controller_class_name))
+	access_control(Access.find_for_controller(controller_name))
 	# GET /workitems
 	#  or
 	# GET /workitems?q=:q || GET /workitems?query=:q

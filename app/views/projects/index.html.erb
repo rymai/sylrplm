@@ -48,7 +48,7 @@
 		<td> <%= link_to h_img_destroy.to_s, project, :confirm => t(:msg_confirm), :method => :delete %> </td>
 		<td> <%= link_to h_img(:duplicate), new_dup_project_path(project) %> </td>
 		<td> <% if logged_in? %>
-		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => project.id}, :method => :get %>
+		<%= link_to h_img(:copy).to_s, :url => {:action => :add_favori, :id => project.id}, :method => :get, :remote => true %>
 		<% end %> </td>
 	</tr>
 	<% end %>

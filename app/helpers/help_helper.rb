@@ -12,9 +12,9 @@ module HelpHelper
 			hlp=msg[:el].text
 			title=nil
 			if(hlp==nil)
-				txt=t(:help_no_help,:key=>key)
+				txt = t(:help_no_help,:key=>key)
 			else
-				txt=h_help_transform(hlp)
+				txt = h_help_transform(hlp)
 			end
 			suitable_helps=h_help_suitable(root_help,key)
 			title=msg[:el].attributes["title"]
@@ -22,13 +22,14 @@ module HelpHelper
 			help={:key=>key,
 				:title=>title,
 				:href=>href,
-				:text=>txt,
+				:text=> raw(txt),
 				:previous_src=>suitable_helps[:previous_src],
 				:main_src=>suitable_helps[:main_src],
 				:upper_src=>suitable_helps[:upper_src],
 				:next_src=>suitable_helps[:next_src],
 				:childs_src=>suitable_helps[:childs_src]}
 		end
+
 		help
 	end
 
@@ -93,7 +94,7 @@ module HelpHelper
 			msg[:el].each_element { |child|
 				key=child.attribute(:key)
 				title=child.attribute(:title)
-				childs_src<<"<a href='/help?help=#{key}'>#{title}</a>"
+				childs_src<< link_to(title, "/help?help=#{key}")
 			}
 		end
 		suite={:previous_src=>previous_src, :main_src=>main_src, :upper_src=>upper_src, :next_src=>next_src, :childs_src=>childs_src}
@@ -105,13 +106,14 @@ module HelpHelper
 	end
 
 	def h_help_all
-		ret=""
+		html = ''
 		#TODO syl ret=read_help_file
-		if ret==""
-			ret=build_help_all
+		if html == ''
+			html = build_help_all
 		#TODO syl pour eviter d'ecrire si heroku write_help_file(ret)
 		end
-		ret
+
+		raw html
 	end
 
 	def build_help_all
@@ -255,6 +257,5 @@ module HelpHelper
 		end
 
 		txt+"\n"
-
 	end
 end

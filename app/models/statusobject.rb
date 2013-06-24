@@ -19,10 +19,10 @@ class Statusobject < ActiveRecord::Base
 	has_many :customers
 	has_many :forums
 
-	named_scope :order_default, :order => "forobject,rank,name ASC"
-	named_scope :order_desc, :order => "forobject,rank,name DESC"
-	named_scope :cond_object, lambda{|obj| {:conditions=> ["forobject = ?",obj] }}
-	named_scope :find_all , order_default.all
+	scope :order_default, :order => "forobject,rank,name ASC"
+	scope :order_desc, :order => "forobject,rank,name DESC"
+	scope :cond_object, lambda{|obj| {:conditions=> ["forobject = ?",obj] }}
+	scope :find_all , order_default.all
 
 	PREFIX_PROMOTE="status_promote_"
 	PREFIX_DEMOTE="status_demote_"

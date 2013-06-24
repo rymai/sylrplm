@@ -1,7 +1,7 @@
 class PartsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	before_filter :check_init, :only => :new
-	access_control(Access.find_for_controller(controller_class_name))
+	access_control(Access.find_for_controller(controller_name))
 	before_filter :check_user, :only => [:new, :edit]
 	# GET /parts
 	# GET /parts.xml
@@ -193,7 +193,7 @@ class PartsController < ApplicationController
 	private
 
 	def show_
-		fname= "#{controller_class_name}.#{__method__}"
+		fname= "#{controller_name}.#{__method__}"
 		LOG.debug (fname){"begin:params=#{params}"}
 		define_view
 		@part                    = Part.find(params[:id])

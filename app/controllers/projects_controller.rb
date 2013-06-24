@@ -3,7 +3,7 @@
 class ProjectsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	before_filter :check_init, :only=>[:new]
-	#access_control (Access.find_for_controller(controller_class_name()))
+	#access_control (Access.find_for_controller(controller_name()))
 	#before_filter :authorize, :only => [ :show, :edit , :new, :destroy ]
 	# GET /projects
 	# GET /projects.xml
@@ -33,7 +33,7 @@ class ProjectsController < ApplicationController
 	end
 
 	def select_view
-		fname= "#{controller_class_name}.#{__method__}"
+		fname= "#{controller_name}.#{__method__}"
 		#LOG.debug (fname){"begin:params=#{params}"}
 		show_
 		respond_to do |format|
@@ -219,7 +219,7 @@ class ProjectsController < ApplicationController
 	private
 
 	def show_
-		fname= "#{controller_class_name}.#{__method__}"
+		fname= "#{controller_name}.#{__method__}"
 		define_view
 		@project = Project.find(params[:id])
 		@relations               = Relation.relations_for(@project)

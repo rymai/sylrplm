@@ -11,8 +11,6 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  filter_parameter_logging :password
-
   before_filter LogDefinitionFilter
 
   before_filter :authorize, :except => [:index, :init_objects]
@@ -119,14 +117,14 @@ class ApplicationController < ActionController::Base
     end
     puts "fin de set_locale"
   end
-  
+
   # definition du domain en cours
   def set_domain
     if params[:domain]
       session[:domain] = params[:domain]
     end
   end
-  
+
   def get_domain
   	if session[:domain].nil? ||  session[:domain]==""
   		 ret=PlmServices.get_property(:DOMAIN_DEFAULT)
@@ -136,7 +134,7 @@ class ApplicationController < ActionController::Base
   	end
   	ret
   end
-  
+
 
   # definition des variables globales.
   def define_variables
@@ -161,7 +159,7 @@ class ApplicationController < ActionController::Base
   	@myparams = params
   	#puts "fin de define_variables"
   end
-  
+
   def get_list_modes
   	[t(:list_mode_details), t(:list_mode_details_icon),t(:list_mode_icon)]
   end
@@ -317,7 +315,7 @@ class ApplicationController < ActionController::Base
   end
 
   def icone(obj)
-  	fname="#{controller_class_name}.#{__method__}"
+  	fname="#{controller_name}.#{__method__}"
     unless obj.model_name.nil? || obj.typesobject.nil?
       ret = "/images/#{obj.model_name}_#{obj.typesobject.name}.png"
       unless File.exist?("#{RAILS_ROOT}/public#{ret}")

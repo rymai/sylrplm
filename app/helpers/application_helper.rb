@@ -70,10 +70,7 @@ module ApplicationHelper
 	end
 
 	def h_help_menu(name,link)
-		bloc=""
-		if(link!=nil && link.strip()!="")
-			bloc<<"<a href='/help?help="+link+"'>"+h_img(name)+"</a>"
-		end
+		link_to(h_img(name), "/help?help=#{link}") if link.present?
 	end
 
 	def help_window
@@ -96,15 +93,17 @@ module ApplicationHelper
 	end
 
 	def show_help(key, with_img = true)
-		txt=t(key.to_s)
-		bloc=""
+		key, html = key.to_s, ''
+
 		if with_img
-			bloc<<"<img class=\"help\" id=\"#{key.to_s}\"  src=\"/images/help.png\"
-    onclick=\"return helpPopup('#{key.to_s}');\" >"
+			html += image_tag('help.png', class: 'help', id: key, onclick: "return helpPopup('#{key}');")
+			# "<img class=\"help\" id=\"#{key.to_s}\"  src=\"/images/help.png\" onclick=\"return helpPopup('#{key.to_s}');\" >"
 		else
-			bloc<<"<a href='/help?help="+key.to_s+"' onclick=\"return helpPopup('#{key.to_s}');\">"+txt+"</a>"
+			html += link_to(t(key), "/help?help=#{key}", onclick: "return helpPopup('#{key}');")
+			# <a href='/help?help="+key.to_s+"' onclick=\"return helpPopup('#{key.to_s}');\">"+txt+"</a>"
 		end
-		bloc
+
+		raw html.html_safe
 	end
 
 	def h_count_objects(objects)
@@ -202,11 +201,8 @@ module ApplicationHelper
 		"<img src=\"#{name}\"></img>"
 	end
 
-	def h_img(name, title=nil)
-		if title.nil?
-			title=t(File.basename(name.to_s))
-		end
-		"<img class=\"icone\" src=\"/images/#{name}.png\" title='#{title}'/>"
+	def h_img(name, title = nil)
+		image_tag("#{name}.png", class: 'icone', title: title || t(File.basename(name.to_s)))
 	end
 
 	def h_img_btn(name)
@@ -339,13 +335,14 @@ module ApplicationHelper
 			:url => {:overwrite_params => {:sort => key, :page => nil}},
 			:update => 'table',
 			:before => "Element.show('spinner')",
-			:success => "Element.hide('spinner')"
+			:success => "Element.hide('spinner')",
+			:remote => true
 		}
 		html_options = {
 			:title => t("h_sort_by_field"),
 			:href => url_for(:action => 'index', :params => params.merge({:sort => key, :page => nil}))
 		}
-		link_to_remote(text, options, html_options)
+		link_to(text, options, html_options)
 	end
 
 	def h_show_tree(obj)

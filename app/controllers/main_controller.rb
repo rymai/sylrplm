@@ -4,13 +4,13 @@ require 'classes/controller'
 
 class MainController < ApplicationController
 
-  #access_control(Access.find_for_controller(controller_class_name))
+  #access_control(Access.find_for_controller(controller_name))
   skip_before_filter :authorize
   #def infos
   #  request.env["PATH_INFO"] +":"+__FILE__+":"+__LINE__.to_s
   #end
   def index
-    
+
     unless params[:domain].blank?
       # creation du domaine demande: status et types d'objets
       st=Controller.init_db(params)
@@ -43,9 +43,9 @@ class MainController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
     end
-   
+
   end
-  
+
  def helpgeneral
 		puts " helpgeneral"
 		respond_to do |format|

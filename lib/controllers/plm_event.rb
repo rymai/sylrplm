@@ -9,7 +9,7 @@ module Classes
       #                 :update => '(admin | moderator) & !blacklist',
       #                 :list => '(admin | moderator | user) & !blacklist'
       def event_manager
-        name=controller_class_name+".event_manager:"
+        name=controller_name+".event_manager:"
         before_filter do |c|
         #syl
           role_title=""
@@ -34,7 +34,7 @@ module Classes
       end
 
       def event_manager_before
-        name=controller_class_name+".event_manager_before:"
+        name=controller_name+".event_manager_before:"
         before_filter do |c|
         #syl
           role_title=""
@@ -49,7 +49,7 @@ module Classes
       end
 
       def event_manager_after
-        name=controller_class_name+".event_manager_after:"
+        name=controller_name+".event_manager_after:"
         puts name
         after_filter do |c|
         #syl

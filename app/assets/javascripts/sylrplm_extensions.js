@@ -106,5 +106,5 @@ function callSelect(html_ident, id, display) {
 	//alert (' id='+field_id.value+' display='+field_display.value);
 	window.close();
 	win.focus();
-	
+
 }

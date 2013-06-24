@@ -53,10 +53,10 @@
 		<% else %> <td></td>
 		<td></td>
 		<% end %>
-		
+
 				<td> <%= link_to h_img(:duplicate), new_dup_part_path(part) %> </td>
 		<% end %> <td> <% if logged_in? %>
-		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => part.id}, :method => :get %>
+		<%= link_to h_img(:copy).to_s, :url => {:action => :add_favori, :id => part.id}, :method => :get, :remote => true %>
 		<%end%> </td>
 	</tr>
 	<% end %>

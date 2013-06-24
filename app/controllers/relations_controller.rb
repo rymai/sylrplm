@@ -1,7 +1,7 @@
 class RelationsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	layout "application"
-	#access_control (Access.find_for_controller(controller_class_name()))
+	#access_control (Access.find_for_controller(controller_name()))
 	# GET /relations
 	# GET /relations.xml
 	def index
@@ -25,7 +25,7 @@ class RelationsController < ApplicationController
 	# GET /relations/new
 	# GET /relations/new.xml
 	def new
-		fname= "#{controller_class_name}.#{__method__}"
+		fname= "#{controller_name}.#{__method__}"
 		@relation = Relation.new
 		@datas = @relation.datas
 		@views = View.all
@@ -38,7 +38,7 @@ class RelationsController < ApplicationController
 
 	# GET /relations/1/edit
 	def edit
-		fname= "#{controller_class_name}.#{__method__}"
+		fname= "#{controller_name}.#{__method__}"
 		@relation = Relation.find(params[:id])
 		@datas = @relation.datas
 		@views = View.all

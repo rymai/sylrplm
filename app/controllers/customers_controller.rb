@@ -2,7 +2,7 @@ class CustomersController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	before_filter :check_init, :only => :new
 
-	access_control(Access.find_for_controller(controller_class_name))
+	access_control(Access.find_for_controller(controller_name))
 	before_filter :check_user, :only => [:new, :edit]
 	# GET /customers
 	# GET /customers.xml

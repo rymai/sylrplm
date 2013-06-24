@@ -1,5 +1,7 @@
+# require 'controllers/plm_object_controller_module'
+
 class Favori
-  include Controllers::PlmObjectControllerModule
+  # include ::Controllers::PlmObjectControllerModule
 
   attr_reader :items
 

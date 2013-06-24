@@ -37,7 +37,7 @@ class DefinitionsController < ApplicationController
 	end
 
 	def new_process
-		fname= "#{controller_class_name}.#{__method__}"
+		fname= "#{controller_name}.#{__method__}"
 		LOG.debug (fname){"begin:params=#{params}"}
 		@definitions = Definition.find_all_for(@current_user)
 		unless @definitions.length==0
@@ -66,7 +66,7 @@ class DefinitionsController < ApplicationController
 	# GET /definitions/:id/tree.js
 	#
 	def tree
-		fname= "#{controller_class_name}.#{__method__}"
+		fname= "#{controller_name}.#{__method__}"
 		LOG.debug (fname){"begin:params=#{params}"}
 		@definition = Definition.find(params[:id])
 		LOG.debug (fname){"def=#{@definition.inspect}"}

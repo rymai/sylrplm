@@ -1,6 +1,6 @@
 class TypesobjectsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control (Access.find_for_controller(controller_class_name()))
+	access_control (Access.find_for_controller(controller_name()))
 	# GET /typesobjects
 	# GET /typesobjects.xml
 	def index

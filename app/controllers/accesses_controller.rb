@@ -1,6 +1,6 @@
 class AccessesController < ApplicationController
   include Controllers::PlmObjectControllerModule
-  access_control(Access.find_for_controller(controller_class_name))
+  access_control(Access.find_for_controller(controller_name))
 
   before_filter :find_by_id, :only => [:show, :edit, :update, :destroy]
   before_filter :find_controllers, :only => [:new, :edit, :create, :update]

@@ -2,7 +2,7 @@
 # construction des arbres descendants
 ############################################
 def  build_tree(obj, view_id, variant = nil, level_max = 9999)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	fname="plm_tree:#{controller_name}.#{__method__}"
 	lab=t(:ctrl_object_explorer, :typeobj => t("ctrl_"+obj.model_name), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_down", :label => lab, :open => true })
 	view=View.find(view_id) unless  view_id.nil?
@@ -34,7 +34,7 @@ end
 # level
 #
 def follow_tree(root, node, father, relations, var_effectivities, level, level_max)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	fname="plm_tree:#{controller_name}.#{__method__}"
 	return if level >= level_max
 	#
 	# LOG.info (fname) {"tree or node=#{node} , father=#{father.ident}, relations=#{relations}"}
@@ -229,7 +229,7 @@ end
 # utilisateurs associes a l'objet
 #------------------------------------------------------
 def tree_users(node, father)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	fname="plm_tree:#{controller_name}.#{__method__}"
 	if father.respond_to? :users
 		LOG.debug (fname){"#{father.ident} father.users=#{father.users}"}
 		unless father.users.nil?
@@ -307,7 +307,7 @@ end
 # cree un noeud intermediaire pour definir un niveau de regroupement d'objets de meme nature par exemple
 #
 def   tree_level(id, title, icon = nil, icon_open = nil, designation = nil, open = false)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	fname="plm_tree:#{controller_name}.#{__method__}"
 	options={
 		:id => id,
 		:label => title,
@@ -339,7 +339,7 @@ end
 
 def group_tree(thenode, level)
 	# elimination des doublons avec comptage
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	fname="plm_tree:#{controller_name}.#{__method__}"
 	cur_quantity = thenode.nodes.count
 	tab=" "*(level+1)
 	LOG.info (fname){"#{tab} begin ************ #{cur_quantity} noeuds devient #{thenode.nodes.count} "}

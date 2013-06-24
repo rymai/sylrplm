@@ -96,7 +96,7 @@ class ProcessesController < ApplicationController
   # GET /processes/new
   #
   def new
-    fname= "#{controller_class_name}.#{__method__}"
+    fname= "#{controller_name}.#{__method__}"
 		#LOG.debug (fname){"begin:params=#{params}"}
     @definition = Definition.find(params[:definition_id])
 		respond_to do |format|
@@ -183,7 +183,7 @@ class ProcessesController < ApplicationController
   # GET /processes/:id/tree
   #
   def tree
-   	fname= "#{controller_class_name}.#{__method__}"
+   	fname= "#{controller_name}.#{__method__}"
 		#LOG.debug (fname){"begin:params=#{params}"}
     process = ruote_engine.process_status(params[:id])
     var = params[:var] || 'proc_tree'

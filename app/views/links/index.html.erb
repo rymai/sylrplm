@@ -21,7 +21,7 @@
 		<th><%= t(:label_projowner) %> </th>
 		<th><%= t(:label_values) %> </th>
 		<th><%= t(:label_domain) %></th>
-		
+
 	</tr>
 	<% @links[:recordset].each do |link| %>
 	<tr class='<%= cycle("even", "odd") %>'>
@@ -36,13 +36,13 @@
 		<td><%= h_explorer link.projowner, :ident unless link.projowner.nil?%></td>
 		<td><%= h link.values %></td>
 		<td><%= h link.domain %></td>
-		
+
 		<td><%= link_to h_img_show.to_s, link %> </td>
 		<td><%= link_to h_img_edit.to_s, edit_link_path(link) %> </td>
 		<td><%= link_to h_img_destroy.to_s, link, :confirm => t(:msg_confirm), :method => :delete %> </td>
-		<% if logged_in? %> <td><%= link_to_remote  h_img(:copy).to_s, :url => {:controller => "links", :action => "add_favori", :id => link.id}, :method => :get  %></td>
+		<% if logged_in? %> <td><%= link_to h_img(:copy).to_s, :url => {:controller => "links", :action => "add_favori", :id => link.id}, :method => :get, :remote => true  %></td>
 		<% end %>
-		
+
 	</tr>
 	<% end %>
 </table>

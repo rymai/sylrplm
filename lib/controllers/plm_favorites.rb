@@ -9,7 +9,7 @@ def empty_favori
 end
 
 def ctrl_add_objects_from_favorites(object, child_plmtype)
-  fname="#{controller_class_name}.#{__method__}"
+  fname="#{controller_name}.#{__method__}"
   LOG.info(fname) {"#{object.inspect}.#{child_plmtype}"}
   relation = Relation.find(params[:relation][child_plmtype])
   plmtype = child_plmtype.to_s

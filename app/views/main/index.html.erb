@@ -1,56 +1,54 @@
 <h1><%= t(:hello) %></h1>
 <!-- <h2><%= t(:tit_language) %><%= I18n.locale.to_s %></h2> -->
 <p class='notice'>
-	<%= t(:help_first_use,:help => show_help(:help_first_use,true))%>
+	<%= raw t(:help_first_use, :help => show_help(:help_first_use,true))%>
 </p>
-<% unless User.count == 0 %> <h1><%= t(:datas_in_database) %></h1>
-<table>
-	<tr>
-		<% @datas.each do |domain, values| %> <th> <%= t("ctrl_#{domain}") %></th>
-		<% end %>
-	</tr>
-	<tr>
-		<% @datas.each do |domain, values| %> <td>
-		<table>
-			<% @datas[domain].each do |key, value| %>
-			<tr class='<%= cycle("even", "odd") %>'>
-				<td> <%= @datas[domain][key] %></td>
-				<td> <%= t("ctrl_#{key}") %></td>
-			</tr>
+
+<% unless User.count == 0 %>
+	<h1><%= t(:datas_in_database) %></h1>
+	<table>
+		<tr>
+			<% @datas.each do |domain, values| %> <th> <%= t("ctrl_#{domain}") %></th>
 			<% end %>
-		</table> <% end %> </td>
-	</tr>
-</table>
-<%= h_help_all %>
-
+		</tr>
+		<tr>
+			<% @datas.each do |domain, values| %> <td>
+			<table>
+				<% @datas[domain].each do |key, value| %>
+				<tr class='<%= cycle("even", "odd") %>'>
+					<td> <%= @datas[domain][key] %></td>
+					<td> <%= t("ctrl_#{key}") %></td>
+				</tr>
+				<% end %>
+			</table> <% end %> </td>
+		</tr>
+	</table>
+	<%= h_help_all %>
 <% else %>
-
-<% unless @domains.nil? %>
-<% form_tag do |f| %>
-<fieldset>
-	<legend>
-		<%= t(:ctrl_init_to_do) %>
-	</legend>
-	<label for="domain"> <%= t(:label_domain) %> </label>
-	<%= select_tag("domain", @domains) %>
-	<br/>
-	<br/>
-	<!--
-	<label for="directory"> <%= t(:label_directory) %> </label>
-	<%= text_field_tag :directory, @directory %>
-	<br/>
-	-->
-	</br/>
-</fieldset>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= submit_tag t(:submit_create_domain) %></td>
-	</tr>
-</table>
+	<% unless @domains.nil? %>
+		<% form_tag do |f| %>
+			<fieldset>
+				<legend>
+					<%= t(:ctrl_init_to_do) %>
+				</legend>
+				<label for="domain"> <%= t(:label_domain) %> </label>
+				<%= select_tag("domain", @domains) %>
+				<br/>
+				<br/>
+				<!--
+				<label for="directory"> <%= t(:label_directory) %> </label>
+				<%= text_field_tag :directory, @directory %>
+				<br/>
+				-->
+				</br/>
+			</fieldset>
+			<table class='menu_bas'>
+				<tr>
+					<td> <%= submit_tag t(:submit_create_domain) %></td>
+				</tr>
+			</table>
+		<% end %>
+		<H1><%= h_help("help_init_db")[:title] %></H1>
+		<p><%= h_help("help_init_db")[:text] %></p>
+	<% end %>
 <% end %>
-<H1><%= h_help("help_init_db")[:title] %></H1>
-<p><%= h_help("help_init_db")[:text] %></p>
-
-<%end %>
-
-<% end %> 

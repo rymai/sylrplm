@@ -25,6 +25,9 @@
 #
 # Process definitions are tracked via this record class.
 #
+
+require 'ruote_routing'
+
 class Definition < ActiveRecord::Base
   include Models::SylrplmCommon
   include LinksMixin
