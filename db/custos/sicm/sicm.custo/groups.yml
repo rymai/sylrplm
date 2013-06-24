@@ -1,37 +1,35 @@
-
-Group_1: 
+Group_1:
   id: "1"
   name: admins
-  father_id: 
+  father_id:
   domain: admin
 
-Group_2: 
+Group_2:
   id: "2"
   name: consultants
-  father_id: 
+  father_id:
   domain: admin
-  
-Group_101: 
+
+Group_101:
   id: "101"
   name: SICM
-  father_id: 
+  father_id:
   domain: custo.sicm
 
-Group_102: 
+Group_102:
   id: "102"
   name: SICM_marketing
   father_id: 101
   domain: custo.sicm
 
-Group_103: 
+Group_103:
   id: "103"
   name: SICM_BE
   father_id: 101
   domain: custo.sicm
 
-Group_104: 
+Group_104:
   id: "104"
   name: SICM_BM
   father_id: 101
   domain: custo.sicm
-

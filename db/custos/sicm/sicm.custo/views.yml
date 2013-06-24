@@ -1,23 +1,22 @@
-
-View_1: 
+View_1:
   id: "1"
   name: standard
-  description: 
+  description:
   domain: admin
 
-View_2: 
+View_2:
   id: "2"
   name: configuration
-  description: 
+  description:
   domain: admin
 
-View_3: 
+View_3:
   id: "3"
   name: conception
-  description: 
+  description:
   domain: admin
-  
-View_4: 
+
+View_4:
   id: "4"
   name: documentation
   description: ""

@@ -1,21 +1,28 @@
+Typesobject_1045584132:
+  id: "1045584132"
+  forobject: sylrplm_properties
+  name: types_values
+  fields: "{\"PLMTYPE_GENERIC\": \"any_plmtype\", \"TYPE_DOC_DIRECTORY\": \"directory\", \"TYPE_GENERIC\": \"any_type\", \"TYPE_USER_PERSON\": \"person_\", \"TYPE_USER_VIRTUAL\": \"virtual_\", \"TYPE_USER_NEW_ACCOUNT\": \"$NEW_ACCOUNT\", \"TYPE_PROJ_ACCOUNT\": \"$PROJ_ACCOUNT\", \"TYPEACCESS_PUBLIC\": \"public\", \"TYPEACCESS_CONFIDENTIAL\": \"confidential\", \"TYPEACCESS_SECRET\": \"TYPEACCESS_SECRET\", \"TYPE_DATAFILE_THUMBNAIL\": \"thumbnail\"}"
+  description: ""
+  domain: admin
 
-Typesobject_41165346: 
+Typesobject_41165346:
   id: "41165346"
   forobject: history_entry
   name: history_entry
-  fields: 
+  fields:
   description: Historique de processus
   domain: admin
 
-Typesobject_678514879: 
+Typesobject_678514879:
   id: "678514879"
   forobject: any_plmtype
   name: public
   fields: "{}"
   description: Projet public
   domain: admin
-  
-Typesobject_89393353: 
+
+Typesobject_89393353:
   id: "89393353"
   forobject: project
   name: product
@@ -23,39 +30,39 @@ Typesobject_89393353:
   description: Projet pour un produit
   domain: admin
 
-Typesobject_109967184: 
+Typesobject_109967184:
   id: "109967184"
   forobject: definition
   name: plm
-  fields: 
-  description: 
+  fields:
+  description:
   domain: admin
 
-Typesobject_138668910: 
+Typesobject_138668910:
   id: "138668910"
   forobject: project_typeaccess
   name: confidential
-  fields: 
+  fields:
   description: Projet confidentiel
   domain: admin
 
-Typesobject_258446918: 
+Typesobject_258446918:
   id: "258446918"
   forobject: project_typeaccess
   name: secret
-  fields: 
+  fields:
   description: Projet secret
   domain: admin
-  
-Typesobject_258446919: 
+
+Typesobject_258446919:
   id: "258446919"
   forobject: project_typeaccess
   name: public
-  fields: 
+  fields:
   description: Projet public
   domain: admin
-  
-Typesobject_218759731: 
+
+Typesobject_218759731:
   id: "218759731"
   forobject: user
   name: $NEW_ACCOUNT
@@ -63,7 +70,7 @@ Typesobject_218759731:
   description: Type donne au compte a sa creation, en attendant sa validation.
   domain: admin
 
-Typesobject_291198241: 
+Typesobject_291198241:
   id: "291198241"
   forobject: relation
   name: bom
@@ -71,7 +78,7 @@ Typesobject_291198241:
   description: ""
   domain: admin
 
-Typesobject_382640329: 
+Typesobject_382640329:
   id: "382640329"
   forobject: relation
   name: history
@@ -79,7 +86,7 @@ Typesobject_382640329:
   description: ""
   domain: admin
 
-Typesobject_446111194: 
+Typesobject_446111194:
   id: "446111194"
   forobject: user
   name: person_
@@ -87,7 +94,7 @@ Typesobject_446111194:
   description: Personne physique.
   domain: admin
 
-Typesobject_502955464: 
+Typesobject_502955464:
   id: "502955464"
   forobject: relation
   name: forum
@@ -95,31 +102,31 @@ Typesobject_502955464:
   description: ""
   domain: admin
 
-Typesobject_598687896: 
+Typesobject_598687896:
   id: "598687896"
   forobject: ar_workitem
   name: ar_workitem
-  fields: 
+  fields:
   description: Tache de processus
   domain: admin
 
-Typesobject_646247456: 
+Typesobject_646247456:
   id: "646247456"
   forobject: datafile
   name: text
   fields: "{\"editor\": \"notepad++\"}"
   description: Fichier texte
   domain: admin
-  
-Typesobject_646247457: 
+
+Typesobject_646247457:
   id: "646247457"
   forobject: datafile
   name: thumbnail
   fields: ""
-  description: "Image représentative du document" 
+  description: "Image représentative du document"
   domain: admin
 
-Typesobject_1045584128: 
+Typesobject_1045584128:
   id: "1045584128"
   forobject: datafile
   name: brl-cad
@@ -129,7 +136,7 @@ Typesobject_1045584128:
     pour afficher, utilisez mged ou archer
   domain: admin
 
-Typesobject_672869653: 
+Typesobject_672869653:
   id: "672869653"
   forobject: relation
   name: tree
@@ -137,7 +144,7 @@ Typesobject_672869653:
   description: ""
   domain: admin
 
-Typesobject_802476987: 
+Typesobject_802476987:
   id: "802476987"
   forobject: datafile
   name: spreadsheet
@@ -145,7 +152,7 @@ Typesobject_802476987:
   description: Fichier tableur
   domain: admin
 
-Typesobject_804690363: 
+Typesobject_804690363:
   id: "804690363"
   forobject: user
   name: virtual_
@@ -153,7 +160,7 @@ Typesobject_804690363:
   description: Utilisateur virtuel, pour les batchs ...
   domain: admin
 
-Typesobject_889037033: 
+Typesobject_889037033:
   id: "889037033"
   forobject: datafile
   name: writer
@@ -161,7 +168,7 @@ Typesobject_889037033:
   description: Traitement de texte
   domain: admin
 
-Typesobject_989626522: 
+Typesobject_989626522:
   id: "989626522"
   forobject: part
   name: PRD
@@ -169,7 +176,7 @@ Typesobject_989626522:
   description: Produit
   domain: admin
 
-Typesobject_989626523: 
+Typesobject_989626523:
   id: "989626523"
   forobject: part
   name: VAR
@@ -177,7 +184,7 @@ Typesobject_989626523:
   description: Variante de produit
   domain: admin
 
-Typesobject_989626524: 
+Typesobject_989626524:
   id: "989626524"
   forobject: part
   name: EFF
@@ -185,7 +192,7 @@ Typesobject_989626524:
   description: Effectivite, liee au produit, a la variante et au link
   domain: admin
 
-Typesobject_989626525: 
+Typesobject_989626525:
   id: "989626525"
   forobject: part
   name: PIE
@@ -193,7 +200,7 @@ Typesobject_989626525:
   description: Piece
   domain: admin
 
-Typesobject_989626526: 
+Typesobject_989626526:
   id: "989626526"
   forobject: part
   name: STR
@@ -201,7 +208,7 @@ Typesobject_989626526:
   description: Structure
   domain: admin
 
-Typesobject_989626530: 
+Typesobject_989626530:
   id: "989626530"
   forobject: relation
   name: configuration
@@ -209,7 +216,7 @@ Typesobject_989626530:
   description: ""
   domain: admin
 
-Typesobject_989626531: 
+Typesobject_989626531:
   id: "989626531"
   forobject: link
   name: bom
@@ -217,7 +224,7 @@ Typesobject_989626531:
   description: pour definir les relations from link de type bom
   domain: admin
 
-Typesobject_997141214: 
+Typesobject_997141214:
   id: "997141214"
   forobject: project
   name: $PROJ_ACCOUNT
@@ -225,7 +232,7 @@ Typesobject_997141214:
   description: Type de projet affecte automatiquement a la creation du compte.
   domain: admin
 
-Typesobject_directory: 
+Typesobject_directory:
   id: "1045584113"
   forobject: document
   name: <%= PlmServices.get_property(:TYPE_DOC_DIRECTORY) %>
@@ -233,7 +240,7 @@ Typesobject_directory:
   description: ""
   domain: admin
 
-Typesobject_1045584114: 
+Typesobject_1045584114:
   id: "1045584114"
   forobject: customer
   name: any_type
@@ -241,7 +248,7 @@ Typesobject_1045584114:
   description: ""
   domain: admin
 
-Typesobject_1045584115: 
+Typesobject_1045584115:
   id: "1045584115"
   forobject: datafile
   name: any_type
@@ -249,7 +256,7 @@ Typesobject_1045584115:
   description: ""
   domain: admin
 
-Typesobject_1045584116: 
+Typesobject_1045584116:
   id: "1045584116"
   forobject: document
   name: any_type
@@ -257,7 +264,7 @@ Typesobject_1045584116:
   description: ""
   domain: admin
 
-Typesobject_1045584117: 
+Typesobject_1045584117:
   id: "1045584117"
   forobject: forum
   name: any_type
@@ -265,7 +272,7 @@ Typesobject_1045584117:
   description: ""
   domain: admin
 
-Typesobject_1045584118: 
+Typesobject_1045584118:
   id: "1045584118"
   forobject: link
   name: any_type
@@ -273,7 +280,7 @@ Typesobject_1045584118:
   description: ""
   domain: admin
 
-Typesobject_1045584119: 
+Typesobject_1045584119:
   id: "1045584119"
   forobject: part
   name: any_type
@@ -281,7 +288,7 @@ Typesobject_1045584119:
   description: ""
   domain: admin
 
-Typesobject_1045584120: 
+Typesobject_1045584120:
   id: "1045584120"
   forobject: project
   name: any_type
@@ -289,7 +296,7 @@ Typesobject_1045584120:
   description: ""
   domain: admin
 
-Typesobject_1045584122: 
+Typesobject_1045584122:
   id: "1045584122"
   forobject: user
   name: any_type
@@ -297,7 +304,7 @@ Typesobject_1045584122:
   description: ""
   domain: admin
 
-Typesobject_1045584123: 
+Typesobject_1045584123:
   id: "1045584123"
   forobject: any_plmtype
   name: any_type
@@ -305,7 +312,7 @@ Typesobject_1045584123:
   description: ""
   domain: admin
 
-Typesobject_1045584125: 
+Typesobject_1045584125:
   id: "1045584125"
   forobject: relation
   name: processus
@@ -313,7 +320,7 @@ Typesobject_1045584125:
   description: ""
   domain: admin
 
-Typesobject_1045584126: 
+Typesobject_1045584126:
   id: "1045584126"
   forobject: relation
   name: documentation
@@ -321,7 +328,7 @@ Typesobject_1045584126:
   description: ""
   domain: admin
 
-Typesobject_17665305: 
+Typesobject_17665305:
   id: "17665305"
   forobject: forum
   name: tests
@@ -329,7 +336,7 @@ Typesobject_17665305:
   description: Forum sur les tests
   domain: sicm.custo
 
-Typesobject_64093143: 
+Typesobject_64093143:
   id: "64093143"
   forobject: document
   name: fmat
@@ -337,7 +344,7 @@ Typesobject_64093143:
   description: Fiche matiere
   domain: sicm.custo
 
-Typesobject_117029505: 
+Typesobject_117029505:
   id: "117029505"
   forobject: document
   name: norme
@@ -345,7 +352,7 @@ Typesobject_117029505:
   description: Norme applicable
   domain: sicm.custo
 
-Typesobject_251879061: 
+Typesobject_251879061:
   id: "251879061"
   forobject: forum
   name: specifs
@@ -353,7 +360,7 @@ Typesobject_251879061:
   description: Forum sur les specifications
   domain: sicm.custo
 
-Typesobject_312726501: 
+Typesobject_312726501:
   id: "312726501"
   forobject: forum
   name: design
@@ -361,7 +368,7 @@ Typesobject_312726501:
   description: Forum sur la conception
   domain: sicm.custo
 
-Typesobject_314246312: 
+Typesobject_314246312:
   id: "314246312"
   forobject: project
   name: sub-assembly
@@ -369,7 +376,7 @@ Typesobject_314246312:
   description: Projet pour un sous ensemble
   domain: sicm.custo
 
-Typesobject_353569266: 
+Typesobject_353569266:
   id: "353569266"
   forobject: document
   name: m3d
@@ -377,7 +384,7 @@ Typesobject_353569266:
   description: Numerisation 3D
   domain: sicm.custo
 
-Typesobject_360315624: 
+Typesobject_360315624:
   id: "360315624"
   forobject: datafile
   name: autocad
@@ -385,7 +392,7 @@ Typesobject_360315624:
   description: DAO Autocad
   domain: sicm.custo
 
-Typesobject_418777236: 
+Typesobject_418777236:
   id: "418777236"
   forobject: document
   name: p2d
@@ -393,7 +400,7 @@ Typesobject_418777236:
   description: Numerisation 2D
   domain: sicm.custo
 
-Typesobject_423945440: 
+Typesobject_423945440:
   id: "423945440"
   forobject: customer
   name: private
@@ -401,7 +408,7 @@ Typesobject_423945440:
   description: Client externe a acces restreint
   domain: sicm.custo
 
-Typesobject_423945441: 
+Typesobject_423945441:
   id: "423945441"
   forobject: customer
   name: internal
@@ -409,7 +416,7 @@ Typesobject_423945441:
   description: Service ou direction interne a l'entreprise
   domain: sicm.custo
 
-Typesobject_423945442: 
+Typesobject_423945442:
   id: "423945442"
   forobject: customer
   name: public
@@ -417,7 +424,7 @@ Typesobject_423945442:
   description: Client externe accessible a tous
   domain: sicm.custo
 
-Typesobject_569273268: 
+Typesobject_569273268:
   id: "569273268"
   forobject: document
   name: exb
@@ -425,7 +432,7 @@ Typesobject_569273268:
   description: Expression de besoin
   domain: sicm.custo
 
-Typesobject_788606013: 
+Typesobject_788606013:
   id: "788606013"
   forobject: forum
   name: requirements
@@ -433,7 +440,7 @@ Typesobject_788606013:
   description: Forum sur les exigences
   domain: sicm.custo
 
-Typesobject_873691851: 
+Typesobject_873691851:
   id: "873691851"
   forobject: document
   name: cdc
@@ -441,7 +448,7 @@ Typesobject_873691851:
   description: Cahier des charges
   domain: sicm.custo
 
-Typesobject_942363587: 
+Typesobject_942363587:
   id: "942363587"
   forobject: datafile
   name: catia
@@ -449,7 +456,7 @@ Typesobject_942363587:
   description: CAO Catia
   domain: sicm.custo
 
-Typesobject_959762344: 
+Typesobject_959762344:
   id: "959762344"
   forobject: forum
   name: needs
@@ -457,7 +464,7 @@ Typesobject_959762344:
   description: Forum sur les besoins
   domain: sicm.custo
 
-Typesobject_975625710: 
+Typesobject_975625710:
   id: "975625710"
   forobject: project
   name: standard
@@ -465,7 +472,7 @@ Typesobject_975625710:
   description: Projet pour articles standards ou catalogues
   domain: sicm.custo
 
-Typesobject_994999514: 
+Typesobject_994999514:
   id: "994999514"
   forobject: datafile
   name: image
@@ -473,15 +480,15 @@ Typesobject_994999514:
   description: fichier image jpg gif bmp
   domain: sicm.custo
 
-Typesobject_1016696961: 
+Typesobject_1016696961:
   id: "1016696961"
   forobject: document
   name: calculsheet
   fields: "{\"ref_doc\": \"\"}"
   description: Feuille de calcul
   domain: sicm.custo
-  
-Typesobject_1045584129: 
+
+Typesobject_1045584129:
   id: "1045584129"
   forobject: sylrplm_properties
   name: user_default
@@ -489,7 +496,7 @@ Typesobject_1045584129:
   description: ""
   domain: admin
 
-Typesobject_1045584130: 
+Typesobject_1045584130:
   id: "1045584130"
   forobject: sylrplm_properties
   name: tree
@@ -497,7 +504,7 @@ Typesobject_1045584130:
   description: ""
   domain: admin
 
-Typesobject_1045584131: 
+Typesobject_1045584131:
   id: "1045584131"
   forobject: sylrplm_properties
   name: objects_names
@@ -505,7 +512,7 @@ Typesobject_1045584131:
   description: ""
   domain: admin
 
-Typesobject_1045584134: 
+Typesobject_1045584134:
   id: "1045584134"
   forobject: sylrplm_properties
   name: others
@@ -513,18 +520,10 @@ Typesobject_1045584134:
   description: ""
   domain: admin
 
-Typesobject_1045584133: 
+Typesobject_1045584133:
   id: "1045584133"
   forobject: sylrplm_properties
   name: volumes
   fields: "{\"FOG_ACCESS_KEY\": \"W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j\", \"FOG_ACCESS_KEY_ID\": \"AKIAIUTZHUXCXNUFDRHQ\"}"
-  description: ""
-  domain: admin
-
-Typesobject_1045584132: 
-  id: "1045584132"
-  forobject: sylrplm_properties
-  name: types_values
-  fields: "{\"PLMTYPE_GENERIC\": \"any_plmtype\", \"TYPE_DOC_DIRECTORY\": \"directory\", \"TYPE_GENERIC\": \"any_type\", \"TYPE_USER_PERSON\": \"person_\", \"TYPE_USER_VIRTUAL\": \"virtual_\", \"TYPE_USER_NEW_ACCOUNT\": \"$NEW_ACCOUNT\", \"TYPE_PROJ_ACCOUNT\": \"$PROJ_ACCOUNT\", \"TYPEACCESS_PUBLIC\": \"public\", \"TYPEACCESS_CONFIDENTIAL\": \"confidential\", \"TYPEACCESS_SECRET\": \"TYPEACCESS_SECRET\", \"TYPE_DATAFILE_THUMBNAIL\": \"thumbnail\"}"
   description: ""
   domain: admin

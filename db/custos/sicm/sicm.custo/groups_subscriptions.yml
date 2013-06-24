@@ -1,4 +1,3 @@
-
 subscription_id_1_group_id_101_domain_sicm.custo:
   subscription_id: 1
   group_id: 101
@@ -18,17 +17,17 @@ subscription_id_4_group_id_101_domain_sicm.custo:
   subscription_id: 4
   group_id: 101
   domain: sicm.custo
-  
+
 subscription_id_5_group_id_101_domain_sicm.custo:
   subscription_id: 5
   group_id: 101
   domain: sicm.custo
-  
+
 group_id_1_subscription_id_6_domain_admin:
   group_id: 1
   subscription_id: 6
   domain: admin
-  
+
 subscription_id_6_group_id_101_domain_sicm.custo:
   subscription_id: 6
   group_id: 101
@@ -48,4 +47,3 @@ subscription_id_6_group_id_104_domain_sicm.custo:
   subscription_id: 6
   group_id: 104
   domain: sicm.custo
-

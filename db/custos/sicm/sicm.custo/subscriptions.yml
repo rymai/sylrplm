@@ -1,5 +1,4 @@
-
-Subscription_1: 
+Subscription_1:
   id: "1"
   name: creator
   designation: bob_creator
@@ -10,7 +9,7 @@ Subscription_1:
   ondestroy: t
   domain: sicm.custo
 
-Subscription_2: 
+Subscription_2:
   id: "2"
   name: consultant
   designation: alice_consultant
@@ -20,8 +19,8 @@ Subscription_2:
   onupdate: t
   ondestroy: t
   domain: sicm.custo
-  
-Subscription_3: 
+
+Subscription_3:
   id: "3"
   name: project_manager
   designation: charly_project_manager
@@ -32,7 +31,7 @@ Subscription_3:
   ondestroy: t
   domain: sicm.custo
 
-Subscription_4: 
+Subscription_4:
   id: "4"
   name: designer
   designation: robert_designer
@@ -42,8 +41,8 @@ Subscription_4:
   onupdate: t
   ondestroy: t
   domain: sicm.custo
-  
-Subscription_5: 
+
+Subscription_5:
   id: "5"
   name: analyst
   designation: sylvia_analyst
@@ -53,8 +52,8 @@ Subscription_5:
   onupdate: t
   ondestroy: t
   domain: sicm.custo
-  
-Subscription_6: 
+
+Subscription_6:
   id: "6"
   name: admin
   designation: subscription admin
@@ -64,4 +63,4 @@ Subscription_6:
   onupdate: t
   ondestroy: t
   domain: sicm.custo
-  
+

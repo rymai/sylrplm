@@ -8,10 +8,10 @@ class Customer < ActiveRecord::Base
   validates_uniqueness_of :ident
 
   has_many :datafiles, :dependent => :destroy
-  
-  has_many :thumbnails, 
-  	:class_name => "Datafile", 
-  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='#{PlmServices.get_property(:TYPE_DATAFILE_THUMBNAIL)}')"
+
+  has_many :thumbnails,
+  	:class_name => "Datafile",
+  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='thumbnail')"
 
 
   has_many :projects
@@ -89,7 +89,7 @@ class Customer < ActiveRecord::Base
   def variants
   	nil
   end
-  
+
 	def users
 	[nil]
 	end

@@ -8,10 +8,10 @@ class Project < ActiveRecord::Base
 	attr_accessor :user, :link_attributes
 
   has_many :datafiles, :dependent => :destroy
-  
-  has_many :thumbnails, 
-  	:class_name => "Datafile", 
-  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='#{PlmServices.get_property(:TYPE_DATAFILE_THUMBNAIL)}')"
+
+  has_many :thumbnails,
+  	:class_name => "Datafile",
+  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='thumbnail')"
 
 	belongs_to :typesobject
 	belongs_to :typeaccess,
@@ -47,7 +47,7 @@ class Project < ActiveRecord::Base
 	has_many :customers_up ,
     :through => :links_customers_up,
     :source => :customer_up
-	
+
 
 	def user=(user)
 		def_user(user)

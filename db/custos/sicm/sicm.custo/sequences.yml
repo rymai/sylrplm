@@ -1,5 +1,4 @@
-
-Sequence_1031227068: 
+Sequence_1031227068:
   id: "1031227068"
   value: "89393353"
   min: ""
@@ -9,7 +8,7 @@ Sequence_1031227068:
   sequence: f
   domain: admin
 
-Sequence_1031227067: 
+Sequence_1031227067:
   id: "1031227067"
   value: "989626525"
   min: ""
@@ -19,7 +18,7 @@ Sequence_1031227067:
   sequence: f
   domain: admin
 
-Sequence_175142436: 
+Sequence_175142436:
   id: "175142436"
   value: DF0000000002
   min: ""
@@ -29,7 +28,7 @@ Sequence_175142436:
   sequence: t
   domain: sicm.custo
 
-Sequence_220049981: 
+Sequence_220049981:
   id: "220049981"
   value: "-1"
   min: ""
@@ -39,7 +38,7 @@ Sequence_220049981:
   sequence: f
   domain: sicm.custo
 
-Sequence_326707096: 
+Sequence_326707096:
   id: "326707096"
   value: "0"
   min: ""
@@ -49,7 +48,7 @@ Sequence_326707096:
   sequence: f
   domain: sicm.custo
 
-Sequence_498629140: 
+Sequence_498629140:
   id: "498629140"
   value: Designation article
   min: ""
@@ -59,7 +58,7 @@ Sequence_498629140:
   sequence: f
   domain: sicm.custo
 
-Sequence_559752675: 
+Sequence_559752675:
   id: "559752675"
   value: AAA
   min: ""
@@ -69,7 +68,7 @@ Sequence_559752675:
   sequence: f
   domain: sicm.custo
 
-Sequence_611088376: 
+Sequence_611088376:
   id: "611088376"
   value: local_vault
   min: ""
@@ -79,7 +78,7 @@ Sequence_611088376:
   sequence: f
   domain: sicm.custo
 
-Sequence_612243215: 
+Sequence_612243215:
   id: "612243215"
   value: "-1"
   min: ""
@@ -89,7 +88,7 @@ Sequence_612243215:
   sequence: f
   domain: sicm.custo
 
-Sequence_717179523: 
+Sequence_717179523:
   id: "717179523"
   value: Designation projet
   min: ""
@@ -99,7 +98,7 @@ Sequence_717179523:
   sequence: f
   domain: sicm.custo
 
-Sequence_768773788: 
+Sequence_768773788:
   id: "768773788"
   value: PROJET
   min: ""
@@ -109,7 +108,7 @@ Sequence_768773788:
   sequence: f
   domain: sicm.custo
 
-Sequence_867572539: 
+Sequence_867572539:
   id: "867572539"
   value: CUSTOMER
   min: ""
@@ -119,7 +118,7 @@ Sequence_867572539:
   sequence: f
   domain: sicm.custo
 
-Sequence_973100822: 
+Sequence_973100822:
   id: "973100822"
   value: Designation client
   min: ""
@@ -129,7 +128,7 @@ Sequence_973100822:
   sequence: f
   domain: sicm.custo
 
-Sequence_1031227063: 
+Sequence_1031227063:
   id: "1031227063"
   value: "0"
   min: ""
@@ -139,7 +138,7 @@ Sequence_1031227063:
   sequence: f
   domain: sicm.custo
 
-Sequence_1031227065: 
+Sequence_1031227065:
   id: "1031227065"
   value: "423945442"
   min: ""
@@ -149,7 +148,7 @@ Sequence_1031227065:
   sequence: f
   domain: sicm.custo
 
-Sequence_1031227066: 
+Sequence_1031227066:
   id: "1031227066"
   value: "360315624"
   min: ""
@@ -159,7 +158,7 @@ Sequence_1031227066:
   sequence: f
   domain: sicm.custo
 
-Sequence_1031227064: 
+Sequence_1031227064:
   id: "1031227064"
   value: "873691851"
   min: ""
@@ -169,7 +168,7 @@ Sequence_1031227064:
   sequence: f
   domain: sicm.custo
 
-Sequence_64810938: 
+Sequence_64810938:
   id: "64810938"
   value: "0"
   min: ""
@@ -179,7 +178,7 @@ Sequence_64810938:
   sequence: f
   domain: sicm.custo
 
-Sequence_78719920: 
+Sequence_78719920:
   id: "78719920"
   value: Designation document
   min: ""
@@ -189,7 +188,7 @@ Sequence_78719920:
   sequence: f
   domain: sicm.custo
 
-Sequence_64810937: 
+Sequence_64810937:
   id: "64810937"
   value: DOC000052
   min: ""
@@ -199,7 +198,7 @@ Sequence_64810937:
   sequence: t
   domain: sicm.custo
 
-Sequence_450215437: 
+Sequence_450215437:
   id: "450215437"
   value: PRT000042
   min: ""

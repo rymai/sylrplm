@@ -1,5 +1,4 @@
-
-Document_11: 
+Document_11:
   id: "11"
   owner_id: "105"
   typesobject_id: "418777236"
@@ -12,9 +11,9 @@ Document_11:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Document_12: 
+Document_12:
   id: "12"
   owner_id: "105"
   typesobject_id: "418777236"
@@ -27,9 +26,9 @@ Document_12:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Document_7: 
+Document_7:
   id: "7"
   owner_id: "105"
   typesobject_id: "418777236"
@@ -44,7 +43,7 @@ Document_7:
   domain: sample.table
   type_values: "{}"
 
-Document_8: 
+Document_8:
   id: "8"
   owner_id: "105"
   typesobject_id: "418777236"
@@ -57,9 +56,9 @@ Document_8:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Document_9: 
+Document_9:
   id: "9"
   owner_id: "105"
   typesobject_id: "418777236"
@@ -72,9 +71,9 @@ Document_9:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Document_10: 
+Document_10:
   id: "10"
   owner_id: "105"
   typesobject_id: "418777236"
@@ -87,9 +86,9 @@ Document_10:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Document_13: 
+Document_13:
   id: "13"
   owner_id: "105"
   typesobject_id: "418777236"
@@ -102,9 +101,9 @@ Document_13:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Document_14: 
+Document_14:
   id: "14"
   owner_id: "105"
   typesobject_id: "418777236"
@@ -117,9 +116,9 @@ Document_14:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Document_15: 
+Document_15:
   id: "15"
   owner_id: "105"
   typesobject_id: "418777236"
@@ -132,9 +131,9 @@ Document_15:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Document_5: 
+Document_5:
   id: "5"
   owner_id: "105"
   typesobject_id: "418777236"
@@ -149,7 +148,7 @@ Document_5:
   domain: sample.table
   type_values: "{\"ref_doc\": \"\"}"
 
-Document_4: 
+Document_4:
   id: "4"
   owner_id: "105"
   typesobject_id: "418777236"
@@ -164,7 +163,7 @@ Document_4:
   domain: sample.table
   type_values: "{\"ref_doc\": \"\"}"
 
-Document_3: 
+Document_3:
   id: "3"
   owner_id: "105"
   typesobject_id: "1045584113"
@@ -179,7 +178,7 @@ Document_3:
   domain: sample.table
   type_values: "{\"type\": \"\"}"
 
-Document_6: 
+Document_6:
   id: "6"
   owner_id: "105"
   typesobject_id: "418777236"

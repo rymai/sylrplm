@@ -1,7 +1,6 @@
 <% require 'yaml' %>
 <%= ::YAML::include("db/custos/sicm/sicm.custo/projects_users.yml") %>
 
-
 project_id_3_user_id_101_domain_sample.table:
   project_id: 3
   user_id: 101
@@ -36,5 +35,3 @@ project_id_3_user_id_107_domain_sample.table:
   project_id: 3
   user_id: 107
   domain: sample.table
-
-

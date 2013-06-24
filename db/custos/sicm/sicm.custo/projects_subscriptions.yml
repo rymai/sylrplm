@@ -33,10 +33,8 @@ subscription_id_6_project_id_3_domain_sicm.custo:
   subscription_id: 6
   project_id: 3
   domain: sicm.custo
-  
+
 project_id_2_subscription_id_6_domain_admin:
   project_id: 2
   subscription_id: 6
   domain: admin
-
-

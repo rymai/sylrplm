@@ -16,7 +16,7 @@ class Part < ActiveRecord::Base
 
 	has_many :thumbnails,
   	:class_name => "Datafile",
-  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='#{PlmServices.get_property(:TYPE_DATAFILE_THUMBNAIL)}')"
+  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='thumbnail')"
 
 	belongs_to :typesobject
 	belongs_to :statusobject
@@ -53,7 +53,7 @@ has_many :links_documents,
 	has_many :documents,
     :through => :links_documents,
     :source => :document
-    
+
 	has_many :links_parts,
     :class_name => "Link",
     :foreign_key => "father_id",

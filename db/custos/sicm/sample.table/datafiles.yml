@@ -1,11 +1,11 @@
-Datafile_1: 
+Datafile_1:
   id: "1"
   owner_id: "105"
   typesobject_id: "889037033"
-  customer_id: 
+  customer_id:
   document_id: "4"
-  part_id: 
-  project_id: 
+  part_id:
+  project_id:
   volume_id: "1"
   revision: "2"
   ident: DF0000000004
@@ -16,14 +16,14 @@ Datafile_1:
   domain: sample.table
   type_values: "{\"code\": \"\"}"
 
-Datafile_2: 
+Datafile_2:
   id: "2"
   owner_id: "105"
   typesobject_id: "889037033"
-  customer_id: 
+  customer_id:
   document_id: "5"
-  part_id: 
-  project_id: 
+  part_id:
+  project_id:
   volume_id: "1"
   revision: "2"
   ident: DF0000000005
@@ -34,14 +34,14 @@ Datafile_2:
   domain: sample.table
   type_values: "{\"code\": \"\"}"
 
-Datafile_3: 
+Datafile_3:
   id: "3"
   owner_id: "105"
   typesobject_id: "889037033"
-  customer_id: 
+  customer_id:
   document_id: "6"
-  part_id: 
-  project_id: 
+  part_id:
+  project_id:
   volume_id: "1"
   revision: "1"
   ident: DF0000000003
@@ -50,16 +50,16 @@ Datafile_3:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Datafile_4: 
+Datafile_4:
   id: "4"
   owner_id: "105"
   typesobject_id: "889037033"
-  customer_id: 
+  customer_id:
   document_id: "11"
-  part_id: 
-  project_id: 
+  part_id:
+  project_id:
   volume_id: "1"
   revision: "1"
   ident: DF0000000006
@@ -68,16 +68,16 @@ Datafile_4:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Datafile_6: 
+Datafile_6:
   id: "6"
   owner_id: "105"
   typesobject_id: "889037033"
-  customer_id: 
+  customer_id:
   document_id: "12"
-  part_id: 
-  project_id: 
+  part_id:
+  project_id:
   volume_id: "1"
   revision: "1"
   ident: DF0000000007
@@ -86,16 +86,16 @@ Datafile_6:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Datafile_7: 
+Datafile_7:
   id: "7"
   owner_id: "105"
   typesobject_id: "889037033"
-  customer_id: 
+  customer_id:
   document_id: "7"
-  part_id: 
-  project_id: 
+  part_id:
+  project_id:
   volume_id: "1"
   revision: "1"
   ident: DF0000000008
@@ -104,16 +104,16 @@ Datafile_7:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Datafile_8: 
+Datafile_8:
   id: "8"
   owner_id: "105"
   typesobject_id: "889037033"
-  customer_id: 
+  customer_id:
   document_id: "8"
-  part_id: 
-  project_id: 
+  part_id:
+  project_id:
   volume_id: "1"
   revision: "1"
   ident: DF0000000009
@@ -124,14 +124,14 @@ Datafile_8:
   domain: sample.table
   type_values: "{\"code\": \"\"}"
 
-Datafile_9: 
+Datafile_9:
   id: "9"
   owner_id: "105"
   typesobject_id: "889037033"
-  customer_id: 
+  customer_id:
   document_id: "9"
-  part_id: 
-  project_id: 
+  part_id:
+  project_id:
   volume_id: "1"
   revision: "1"
   ident: DF0000000011
@@ -140,16 +140,16 @@ Datafile_9:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Datafile_10: 
+Datafile_10:
   id: "10"
   owner_id: "105"
   typesobject_id: "889037033"
-  customer_id: 
+  customer_id:
   document_id: "10"
-  part_id: 
-  project_id: 
+  part_id:
+  project_id:
   volume_id: "1"
   revision: "1"
   ident: DF0000000012
@@ -158,16 +158,16 @@ Datafile_10:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Datafile_11: 
+Datafile_11:
   id: "11"
   owner_id: "105"
   typesobject_id: "889037033"
-  customer_id: 
+  customer_id:
   document_id: "13"
-  part_id: 
-  project_id: 
+  part_id:
+  project_id:
   volume_id: "1"
   revision: "1"
   ident: DF0000000013
@@ -176,16 +176,16 @@ Datafile_11:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Datafile_12: 
+Datafile_12:
   id: "12"
   owner_id: "105"
   typesobject_id: "889037033"
-  customer_id: 
+  customer_id:
   document_id: "14"
-  part_id: 
-  project_id: 
+  part_id:
+  project_id:
   volume_id: "1"
   revision: "1"
   ident: DF0000000014
@@ -194,16 +194,16 @@ Datafile_12:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
+  type_values:
 
-Datafile_13: 
+Datafile_13:
   id: "13"
   owner_id: "105"
   typesobject_id: "889037033"
-  customer_id: 
+  customer_id:
   document_id: "15"
-  part_id: 
-  project_id: 
+  part_id:
+  project_id:
   volume_id: "1"
   revision: "1"
   ident: DF0000000015
@@ -212,9 +212,4 @@ Datafile_13:
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values: 
-
-
-
-
-  
+  type_values:

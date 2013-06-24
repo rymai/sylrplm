@@ -1,9 +1,7 @@
-
 <% require 'yaml' %>
 <%= ::YAML::include("db/custos/sicm/sicm.custo/projects.yml") %>
 
-
-Project_3: 
+Project_3:
   id: "3"
   owner_id: "101"
   typesobject_id: "997141214"

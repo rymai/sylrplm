@@ -1,4 +1,5 @@
-# SylRPLM : Product Life Management [![Code Climate](https://codeclimate.com/github/sylvani/sylrplm.png)](https://codeclimate.com/github/sylvani/sylrplm)
+# SylRPLM : Product Life Management
+[![Code Climate](https://codeclimate.com/github/sylvani/sylrplm.png)](https://codeclimate.com/github/sylvani/sylrplm)
 
 ## Pré-requis
 
@@ -19,6 +20,7 @@
 - Créer la DB et générer des données de base
     - `$> alias be="bundle exec"`
     - `$> be rake db:reset` (seulement si changement de modele)
+    - `$> be rake 'sylrplm:import_domain[db/custos/sicm,sicm.custo_table]'` (recharge les données indispensables)
     - `$> be rake 'sylrplm:import_domain[db/custos/sicm,sicm.custo]'` (recharge le parametrage de base)
     - `$> be rake 'sylrplm:import_domain[db/custos/sicm,sample.table]'` (recharge un exemple de projet)
 - Créer le fichier `.env` qui contient les variables d'environnement utilisées par l'app:

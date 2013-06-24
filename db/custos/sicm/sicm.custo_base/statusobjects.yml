@@ -1,15 +1,14 @@
-
-Statusobject_4: 
+Statusobject_4:
   id: "4"
   forobject: document
   name: inwork
-  description: 
+  description:
   rank: "1"
   promote_id: "2"
   demote_id: "0"
   domain: admin
 
-Statusobject_5: 
+Statusobject_5:
   id: "5"
   forobject: document
   name: ready
@@ -19,27 +18,27 @@ Statusobject_5:
   demote_id: "1"
   domain: admin
 
-Statusobject_6: 
+Statusobject_6:
   id: "6"
   forobject: document
   name: approved
-  description: 
+  description:
   rank: "3"
   promote_id: "0"
   demote_id: "0"
   domain: admin
 
-Statusobject_7: 
+Statusobject_7:
   id: "7"
   forobject: part
   name: inprogress
-  description: 
+  description:
   rank: "1"
   promote_id: "2"
   demote_id: "0"
   domain: admin
 
-Statusobject_8: 
+Statusobject_8:
   id: "8"
   forobject: part
   name: ready
@@ -49,81 +48,81 @@ Statusobject_8:
   demote_id: "1"
   domain: admin
 
-Statusobject_9: 
+Statusobject_9:
   id: "9"
   forobject: part
   name: validated
-  description: 
+  description:
   rank: "3"
   promote_id: "0"
   demote_id: "0"
   domain: admin
 
-Statusobject_10: 
+Statusobject_10:
   id: "10"
   forobject: project
   name: started
-  description: 
+  description:
   rank: "1"
   promote_id: "1"
   demote_id: "1"
   domain: admin
 
-Statusobject_11: 
+Statusobject_11:
   id: "11"
   forobject: project
   name: finished
-  description: 
+  description:
   rank: "2"
   promote_id: "1"
   demote_id: "1"
   domain: admin
 
-Statusobject_12: 
+Statusobject_12:
   id: "12"
   forobject: project
   name: hasbeen
-  description: 
+  description:
   rank: "3"
   promote_id: "1"
   demote_id: "1"
   domain: admin
 
-Statusobject_14: 
+Statusobject_14:
   id: "14"
   forobject: forum
   name: open
-  description: 
+  description:
   rank: "1"
   promote_id: "1"
   demote_id: "1"
   domain: admin
 
-Statusobject_15: 
+Statusobject_15:
   id: "15"
   forobject: forum
   name: close
-  description: 
+  description:
   rank: "2"
   promote_id: "1"
   demote_id: "1"
   domain: admin
 
-Statusobject_21: 
+Statusobject_21:
   id: "21"
   forobject: customer
   name: active
-  description: 
+  description:
   rank: "1"
   promote_id: "1"
   demote_id: "1"
   domain: admin
 
-Statusobject_22: 
+Statusobject_22:
   id: "22"
   forobject: customer
   name: inactive
-  description: 
+  description:
   rank: "2"
   promote_id: "1"
   demote_id: "1"

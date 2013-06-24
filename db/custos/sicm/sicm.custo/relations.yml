@@ -1,5 +1,4 @@
-
-Relation_1: 
+Relation_1:
   id: "1"
   name: describe_by
   typesobject_id: "672869653"
@@ -13,7 +12,7 @@ Relation_1:
   cardin_use_max: "-1"
   domain: admin
 
-Relation_2: 
+Relation_2:
   id: "2"
   name: define_by
   typesobject_id: "672869653"
@@ -27,7 +26,7 @@ Relation_2:
   cardin_use_max: "-1"
   domain: admin
 
-Relation_3: 
+Relation_3:
   id: "3"
   name: hierarchic_to
   typesobject_id: "672869653"
@@ -41,7 +40,7 @@ Relation_3:
   cardin_use_max: "-1"
   domain: admin
 
-Relation_5: 
+Relation_5:
   id: "5"
   name: doc_ref
   typesobject_id: "1045584126"
@@ -55,7 +54,7 @@ Relation_5:
   cardin_use_max: "-1"
   domain: admin
 
-Relation_7: 
+Relation_7:
   id: "7"
   name: ask_for
   typesobject_id: "672869653"
@@ -69,7 +68,7 @@ Relation_7:
   cardin_use_max: "2"
   domain: admin
 
-Relation_8: 
+Relation_8:
   id: "8"
   name: applicable
   typesobject_id: "382640329"
@@ -83,7 +82,7 @@ Relation_8:
   cardin_use_max: "-1"
   domain: admin
 
-Relation_11: 
+Relation_11:
   id: "11"
   name: reference
   typesobject_id: "382640329"
@@ -96,8 +95,8 @@ Relation_11:
   cardin_use_min: "0"
   cardin_use_max: "-1"
   domain: admin
-  
-Relation_9: 
+
+Relation_9:
   id: "9"
   name: discuss_by
   typesobject_id: "502955464"
@@ -113,7 +112,7 @@ Relation_9:
 
 
 
-Relation_20: 
+Relation_20:
   id: "20"
   name: PRD_EFF
   typesobject_id: "989626530"
@@ -127,7 +126,7 @@ Relation_20:
   cardin_use_max: "-1"
   domain: admin
 
-Relation_21: 
+Relation_21:
   id: "21"
   name: PRD_VAR
   typesobject_id: "989626530"
@@ -141,7 +140,7 @@ Relation_21:
   cardin_use_max: "-1"
   domain: admin
 
-Relation_22: 
+Relation_22:
   id: "22"
   name: VAR_EFF
   typesobject_id: "989626530"
@@ -155,7 +154,7 @@ Relation_22:
   cardin_use_max: "-1"
   domain: admin
 
-Relation_23: 
+Relation_23:
   id: "23"
   name: LINK_EFF
   typesobject_id: "989626530"
@@ -169,7 +168,7 @@ Relation_23:
   cardin_use_max: "-1"
   domain: admin
 
-Relation_24: 
+Relation_24:
   id: "24"
   name: PRD_STR
   typesobject_id: "989626531"
@@ -183,7 +182,7 @@ Relation_24:
   cardin_use_max: "-1"
   domain: admin
 
-Relation_25: 
+Relation_25:
   id: "25"
   name: STR_STR
   typesobject_id: "989626531"
@@ -197,7 +196,7 @@ Relation_25:
   cardin_use_max: "-1"
   domain: admin
 
-Relation_26: 
+Relation_26:
   id: "26"
   name: STR_PIE
   typesobject_id: "989626531"
@@ -211,7 +210,7 @@ Relation_26:
   cardin_use_max: "-1"
   domain: admin
 
-Relation_27: 
+Relation_27:
   id: "27"
   name: directory
   typesobject_id: "1045584126"
@@ -225,7 +224,7 @@ Relation_27:
   cardin_use_max: "-1"
   domain: admin
 
-Relation_28: 
+Relation_28:
   id: "28"
   name: doc_app
   typesobject_id: "1045584126"
