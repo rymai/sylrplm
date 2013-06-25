@@ -297,11 +297,11 @@ a, th a, a.help_tr, .help a, a.menu, .menu_bas input, input.menu_bas {
 	margin: 0px;
 	border: none;
 	color: #222222;
-	background: transparent url('/images/btn_submit.png') repeat center center;
+	background: transparent url(<%= asset_path 'btn_submit.png' %>) repeat center center;
 	height: 25px;
 }
 .menu_bas a:hover {
-	background: transparent url('/images/btn_submit_hover.png') repeat center center;
+	background: transparent url(<%= asset_path 'btn_submit_hover.png' %>) repeat center center;
 	color: #EEEEEE;
 }
 input, option, select, textarea {
@@ -315,11 +315,11 @@ input[type=submit] {
 	margin: 0px;
 	border: none;
 	color: #222222;
-	background: transparent url('/images/btn_submit.png') no-repeat center center;
+	background: transparent url(<%= asset_path 'btn_submit.png' %>) no-repeat center center;
 	height: 25px;
 }
 input[type=submit]:hover {
-	background: transparent url('/images/btn_submit_hover.png') no-repeat center center;
+	background: transparent url(<%= asset_path 'btn_submit_hover.png' %>) no-repeat center center;
 	color: #EEEEEE;
 }
 input:active, option:active, select:active, textarea:active {

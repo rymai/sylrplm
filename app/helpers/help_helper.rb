@@ -242,20 +242,20 @@ module HelpHelper
 		end
 		if !special
 			#puts "h_help_transform:"+txt.length.to_s+":"+txt
-			txt.gsub!('\n\n','\n')
-			txt.gsub!('\n','<br/>')
-			txt.gsub!(10.chr,'<br/>')
-			txt.gsub!('\t','')
-			txt.gsub! /#hlp=(.+?)=hlp#/,
-			"<img class='help' id='\\1' src='images/help.png' onclick=\"return helpPopup('\\1');\"></img>"
-			txt.gsub! /#img=(.+?)=img#/,
-			"<img class='help_tr' src='images/\\1'></img>"
-			txt.gsub! /#jump=(.+?)=jump#/,
-			"<a class='help_tr' href='#\\1' target='_top'>"+t(:help_jump)+"</a>"
-			txt.gsub! /#lnk=(.+?)=lnk#/,
-			"<a class='help_tr' href='\\1' target='_blank' title='"+t(:help_lnk_acces)+"'><img src='images/submit.png'></img></a>"
+			txt.gsub!('\n\n', '\n')
+			txt.gsub!('\n', '<br/>')
+			txt.gsub!(10.chr, '<br/>')
+			txt.gsub!('\t', '')
+			# txt.gsub! /#hlp=(.+?)=hlp#/, "<img class='help' id='\\1' src='images/help.png' onclick=\"return helpPopup('\\1');\"></img>"
+			txt.gsub!(/#hlp=(.+?)=hlp#/) { image_tag('help.png', id: $1, class: 'help', onclick: "return helpPopup('#{$1}');") }
+			# txt.gsub! /#img=(.+?)=img#/, "<img class='help_tr' src='images/\\1'></img>"
+			txt.gsub!(/#img=(.+?)=img#/) { image_tag($1, class: 'help_tr', onclick: "return helpPopup('#{$1}');") }
+			# txt.gsub! /#jump=(.+?)=jump#/, "<a class='help_tr' href='#\\1' target='_top'>"+t(:help_jump)+"</a>"
+			txt.gsub!(/#jump=(.+?)=jump#/) { link_to(t(:help_jump), "##{$1}", class: 'help_tr', target: '_top') }
+			# txt.gsub! /#lnk=(.+?)=lnk#/, "<a class='help_tr' href='\\1' target='_blank' title='"+t(:help_lnk_acces)+"'><img src='images/submit.png'></img></a>"
+			txt.gsub!(/#lnk=(.+?)=lnk#/) { link_to(image_tag('submit.png'), $1, class: 'help_tr', target: '_blank', title: t(:help_lnk_acces)) }
 		end
 
-		txt+"\n"
+		("#{txt}\n").html_safe
 	end
 end

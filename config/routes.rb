@@ -10,54 +10,66 @@ SylRPLM::Application.routes.draw do
 		end
 	end
 
-	resources :notifications, :member => { :notify => :get }
-
-	resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get, :tools => :get}
-
-	resources :help, :only => [:index]
-
-	resource :sessions, :only => [:new, :create , :destroy] do
-		collection do
-			get :new_account
-			post :create_account
+	resources :notifications do
+		member do
+			get :notify
 		end
 	end
-	#resource :sessions, :only => [:new, :create, :update, :destroy], :member => { :choose_role => :get }
-	# resource :sessions, :only => [:new, :create, :update, :destroy]
-	# get 'sessions/new_account', controller: 'sessions', action: 'new_account', conditions: { method: :get }
-	# create_account 'sessions/create_account', controller: 'sessions', action: 'create_account', conditions: { method: :post }
 
-	get 'sessions/login',	:controller => 'sessions', :action => 'login'
+	resources :main, controller: 'main' do
+		collection do
+			get :news
+			get :contacts
+			get :tools
+		end
+	end
 
-	get 'sessions/:id/activate', :controller => 'sessions', :action => 'activate'
+	resources :help, only: [:index]
 
-	resources :users, :collection => { :empty_favori => :get }
+	resource :sessions, only: [:new, :create, :destroy] do
+		collection do
+			get :login
+			# get :new_account, as: 'new_account'
+			post :create_account
+		end
+		member do
+			get :choose_role
+			get :activate
+		end
+		# get 'sessions/:id/activate', :controller => 'sessions', :action => 'activate'
+	end
+	get 'new_account' => 'sessions#new_account'
+
+	# get 'sessions/login',	:controller => 'sessions', :action => 'login'
+
+	resources :users do
+		collection do
+			get :empty_favori
+		end
+	end
 
 	resources :datafiles
-
 	resources :questions
-
-	resources :accesses, :collection => { :reset => :get}
-
+	resources :accesses do
+		collection do
+			get :reset
+		end
+	end
 	resources :roles_users
-
 	resources :forum_items
-
 	resources :forums
-
 	resources :checks
-
 	resources :sequences
-
 	resources :volumes
-
 	resources :roles
-
 	resources :statusobjects
-
 	resources :typesobjects
-
-	resources :links, :collection => { :reset => :get, :empty_favori => :get}
+	resources :links do
+		collection do
+			get :reset
+			get :empty_favori
+		end
+	end
 # 	connect(
 # 	'links/:id/edit_in_tree',
 # 	:controller => 'links',
@@ -97,7 +109,16 @@ SylRPLM::Application.routes.draw do
 # 	:controller => 'datafiles',
 # 	:action => 'del_fogdir')
 
-# 	resources :documents, :has_many => :documents, :collection => { :empty_favori => :get }, :member=> {:new_dup => :get}
+	resources :documents, has_many: :documents do
+		collection do
+			get :empty_favori
+		end
+
+		member do
+			get :new_dup
+		end
+	end
+
 # 	connect(
 # 	'documents/:id/add_favori',
 # 	:controller => 'documents',
@@ -147,7 +168,15 @@ SylRPLM::Application.routes.draw do
 # 	:controller => 'documents',
 # 	:action => 'select_view')
 
-# 	resources :parts, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:new_dup => :get}
+	resources :parts, has_many: :documents do
+		collection do
+			get :empty_favori
+		end
+
+		member do
+			get :new_dup
+		end
+	end
 # 	connect(
 # 	'parts/:id/add_favori',
 # 	:controller => 'parts',
@@ -212,7 +241,15 @@ SylRPLM::Application.routes.draw do
 # 	:controller => 'parts',
 # 	:action => 'add_datafile')
 
-# 	resources :projects, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:new_dup => :get}
+	resources :projects, has_many: :documents do
+		collection do
+			get :empty_favori
+		end
+
+		member do
+			get :new_dup
+		end
+	end
 # 	connect(
 # 	'projects/:id/add_favori',
 # 	:controller => 'projects',
@@ -266,7 +303,15 @@ SylRPLM::Application.routes.draw do
 # 	:controller => 'projects',
 # 	:action => 'add_datafile')
 
-# 	resources :customers, :has_many => :documents, :collection => { :empty_favori => :get }, :member=> {:new_dup => :get}
+	resources :customers, has_many: :documents do
+		collection do
+			get :empty_favori
+		end
+
+		member do
+			get :new_dup
+		end
+	end
 # 	connect(
 # 	'customers/:id/add_favori',
 # 	:controller => 'customers',
@@ -346,11 +391,9 @@ SylRPLM::Application.routes.draw do
 # 	:controller => 'users',
 # 	:action => 'account_edit_passwd')
 
-# 	resources :groups
-
-# 	resources :user_groups
-
-# 	resources :group_definitions
+	resources :groups
+	resources :user_groups
+	resources :group_definitions
 
 # 	wfid_resources :errors
 
@@ -370,25 +413,27 @@ SylRPLM::Application.routes.draw do
 # 	:action => 'update_tree',
 # 	:conditions => { :method => :put })
 
-# 	resources :definitions, :collection => { :new_process => :get}
-
+	resources :definitions do
+		collection do
+			get :new_process
+		end
+	end
 # 	connect(
 # 	'definitions/:id/tree.js',
 # 	:controller => 'definitions',
 # 	:action => 'tree')
 
-# 	resources :processes
+	resources :processes
 
 # 	connect(
 # 	'processes/:id/tree.js',
 # 	:controller => 'processes',
 # 	:action => 'tree')
 
-# 	resources :views
+	resources :views
+	resources :workitems
+	resources :history
 
-# 	resources :workitems
-
-# 	resources :history
 # # The priority is based upon order of creation: first created -> highest priority.
 
 # # Sample of regular route:

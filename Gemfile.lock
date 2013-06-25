@@ -1,5 +1,6 @@
-PATH
-  remote: ../sylrplm_ext
+GIT
+  remote: git://github.com/sylvani/sylrplm_ext.git
+  revision: 309a70aa965d219c5b5c43aba5f1fe25914373ba
   specs:
     sylrplm_ext (0.0.4)
 
@@ -42,12 +43,19 @@ GEM
     cache_digests (0.3.1)
       actionpack (>= 3.2)
       thread_safe
+    coderay (1.0.9)
     dalli (2.6.4)
+    diff-lcs (1.2.4)
     dotenv (0.8.0)
     dotenv-rails (0.8.0)
       dotenv (= 0.8.0)
+    em-websocket (0.5.0)
+      eventmachine (>= 0.12.9)
+      http_parser.rb (~> 0.5.3)
     erubis (2.7.0)
+    eventmachine (1.0.3)
     excon (0.23.0)
+    ffi (1.9.0)
     file-tail (1.0.12)
       tins (~> 0.5)
     fog (1.12.1)
@@ -64,7 +72,25 @@ GEM
       dotenv (>= 0.7)
       thor (>= 0.13.6)
     formatador (0.2.4)
+    guard (1.8.1)
+      formatador (>= 0.2.4)
+      listen (>= 1.0.0)
+      lumberjack (>= 1.0.2)
+      pry (>= 0.9.10)
+      thor (>= 0.14.6)
+    guard-livereload (1.3.0)
+      em-websocket (>= 0.2.0)
+      guard (>= 1.5.0)
+      multi_json (~> 1.0)
+    guard-pow (1.0.0)
+      guard (>= 1.1)
+    guard-rspec (3.0.2)
+      guard (>= 1.8)
+      rspec (~> 2.13)
+    guard-shell (0.5.1)
+      guard (>= 1.1.0)
     hike (1.2.3)
+    http_parser.rb (0.5.3)
     i18n (0.6.1)
     journey (1.0.4)
     json (1.8.0)
@@ -73,12 +99,18 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.1.1)
       launchy (~> 2.2)
+    listen (1.2.2)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
+      rb-kqueue (>= 0.2)
     lograge (0.2.0)
       actionpack
       activesupport
+    lumberjack (1.0.3)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    method_source (0.8.1)
     mime-types (1.23)
     multi_json (1.0.4)
     net-scp (1.1.1)
@@ -91,6 +123,12 @@ GEM
       blankslate (~> 2.0)
     pg (0.15.1)
     polyglot (0.3.3)
+    pry (0.9.12.2)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    quiet_assets (1.0.2)
+      railties (>= 3.1, < 5.0)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -117,12 +155,26 @@ GEM
       thor (>= 0.14.6, < 2.0)
     raindrops (0.11.0)
     rake (10.0.4)
+    rb-fsevent (0.9.3)
+    rb-inotify (0.9.0)
+      ffi (>= 0.5.0)
+    rb-kqueue (0.2.0)
+      ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    rspec (2.13.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
+    rspec-core (2.13.1)
+    rspec-expectations (2.13.0)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.13.1)
     ruby-hmac (0.4.0)
     ruby2ruby (1.3.1)
       ruby_parser (~> 2.0)
       sexp_processor (~> 3.0)
+    ruby_gntp (0.3.4)
     ruby_parser (2.3.1)
       sexp_processor (~> 3.0)
     rufus-cloche (1.0.4)
@@ -149,6 +201,9 @@ GEM
       rufus-treechecker (>= 1.0.8)
       sourcify (= 0.5.0)
     sexp_processor (3.2.0)
+    sextant (0.2.4)
+      rails (>= 3.2)
+    slop (3.4.5)
     sourcify (0.5.0)
       file-tail (>= 1.0.5)
       ruby2ruby (>= 1.2.5)
@@ -185,16 +240,24 @@ DEPENDENCIES
   dotenv-rails
   fog (~> 1.12)
   foreman
+  guard-livereload
+  guard-pow
+  guard-rspec
+  guard-shell
   letter_opener
   lograge
   newrelic_rpm
   oj
   pg
+  quiet_assets
   rack-ssl
   railroad
   railroady
   rails (= 3.2.13)
+  ruby_gntp
   rufus-verbs (~> 1.0)
   ruote (~> 2.3)
+  sextant
+  sylrplm_ext!
   unicorn
   will_paginate

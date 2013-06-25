@@ -66,6 +66,7 @@ fr:
   ctrl_definition: Définition
   # documents
   ctrl_document: Document
+  ctrl_document_directory: Dossier
   ctrl_checkout_auto: Reservation automatique
   ctrl_checkin_auto: Libération automatique
   # faq

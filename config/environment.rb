@@ -1,5 +1,12 @@
 # encoding: utf-8
 
+# class Object
+#   def self.inherited(child)
+#     target_class = "Mapper"
+#     raise "#{target_class} defined" if child.name =~ /#{target_class}/
+#   end
+# end
+
 # Load the rails application
 require File.expand_path('../application', __FILE__)
 

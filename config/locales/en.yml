@@ -40,13 +40,13 @@ en:
   # plugins
   ###########################
   # will_paginate
-  label_previous: Previous
-  label_next: Next
+  will_paginate.previous_label: Previous
+  will_paginate.next_label: Next
 
   ###########################
   # formattage
   ###########################
-  
+
   activerecord:
     errors:
       messages:

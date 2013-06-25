@@ -18,7 +18,6 @@ class Node
 		:open => true,
 		:parent => '',
 		:id => '',
-		:link_to_remote => nil,
 		:link_to => nil,
 		#syl
 		:js_name => 'r',
@@ -46,9 +45,6 @@ class Node
 		@options = DEFAULT_OPTIONS.merge(options)
 
 		@id=options[:id] || self.object_id.abs
-		if options[:link_to_remote]
-			internal_link_to_remote(@label,options[:link_to_remote] , html_options)
-		end
 
 		if options[:link_to]
 			internal_link_to(@label,options[:link_to] , *html_options.to_a)
@@ -83,15 +79,6 @@ class Node
 		@url="#{url_formater(options,parameters_for_method_reference)}"
 		@label=name
 
-	end
-
-	def internal_link_to_remote(name, options = {}, html_options ={})
-		@controller=options[:base]
-		options.delete :base
-		@request=@controller.request
-		@label=name
-		@event_name='onclick'
-		@url=remote_function(options)
 	end
 
 	def nodes

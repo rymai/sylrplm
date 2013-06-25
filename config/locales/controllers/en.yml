@@ -66,6 +66,7 @@ en:
   ctrl_definition: Definition
   # documents
   ctrl_document: Document
+  ctrl_document_directory: Folder
   ctrl_checkout_auto: Automatic checkout
   ctrl_checkin_auto: Automatic checkin
   # faq

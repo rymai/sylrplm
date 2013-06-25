@@ -62,11 +62,9 @@ module ApplicationHelper
 		ret
 	end
 
-	def h_menu(href,help,title)
-		bloc=""
+	def h_menu(href, help, title)
 		#ne marche pas avec boostrap bloc<<"<a class='menu' onclick=\"return helpPopup('#{help}','#{href}');\" >#{title}</a>";
-		bloc<<"<a class='menu' href='#{href}' >#{title}</a>";
-		bloc
+		link_to(title, href, class: 'menu')
 	end
 
 	def h_help_menu(name,link)
@@ -74,22 +72,16 @@ module ApplicationHelper
 	end
 
 	def help_window
-		ret = ""
-		ret << "<a onclick=\"return helpWindow('help_#{params[:controller]}_#{params[:action]}');\">#{t(:help_window)}</a>"
-		ret
+		link_to(t(:help_window), '', onclick: "return helpWindow('help_#{params[:controller]}_#{params[:action]}');")
 	end
 
 	def help_about
-		ret = ""
-		ret << "<a onclick=\"return helpWindow('help_about');\">#{t(:help_about)}</a>"
-		ret
+		link_to(t(:help_about), '', onclick: "return helpWindow('help_about');")
 	end
 
 	# memorisation du click sur le help
 	def tip_help()
-		bloc=""
-		bloc<<"<img class='help' id='tip_help' src='/images/help.png' onclick='return helpTip();'>"
-		bloc
+		image_tag('help.png', id: 'tip_help', class: 'help', onclick: 'return helpTip();')
 	end
 
 	def show_help(key, with_img = true)
@@ -97,10 +89,8 @@ module ApplicationHelper
 
 		if with_img
 			html += image_tag('help.png', class: 'help', id: key, onclick: "return helpPopup('#{key}');")
-			# "<img class=\"help\" id=\"#{key.to_s}\"  src=\"/images/help.png\" onclick=\"return helpPopup('#{key.to_s}');\" >"
 		else
 			html += link_to(t(key), "/help?help=#{key}", onclick: "return helpPopup('#{key}');")
-			# <a href='/help?help="+key.to_s+"' onclick=\"return helpPopup('#{key.to_s}');\">"+txt+"</a>"
 		end
 
 		raw html.html_safe
@@ -130,7 +120,8 @@ module ApplicationHelper
 		bloc << hidden_field_tag("todo" , @myparams["todo"]) unless @myparams.nil?
 		bloc << hidden_field_tag("html_ident" , @myparams["html_ident"]) unless @myparams.nil?
 		bloc << "</form>"
-		bloc
+
+		bloc.html_safe
 	end
 
 	def h_simple_query(objects)
@@ -159,13 +150,13 @@ module ApplicationHelper
 
 	def icone(object)
 		type = "#{object.model_name}_#{object.typesobject.name}" unless object.typesobject.nil?
-		fic="/images/#{type}.png"
-		if !File.exists?("#{RAILS_ROOT}/public#{fic}")
+		fic="#{type}.png"
+		if !File.exists?(Rails.root.join('app', 'assets', 'images', fic))
 			type="#{object.model_name}"
-			fic="/images/#{type}.png"
+			fic="#{type}.png"
 		end
 		mdl_name=t("ctrl_#{type.downcase}")
-		ret = "<img class='icone' src='#{fic}' title='#{mdl_name}'></img>"
+		ret = image_tag(fic, class: 'icone', title: mdl_name)
 		unless @myparams[:list_mode].blank?
 			if @myparams[:list_mode] != t(:list_mode_details)
 				ret << h_thumbnails(object)
@@ -190,7 +181,7 @@ module ApplicationHelper
 		if obj.respond_to? :thumbnails
 			unless obj.thumbnails.nil?
 				obj.thumbnails.each do |img|
-					ret << "<img class='thumbnail' src=\"#{img.write_file_tmp}\"></img>"
+					ret << image_tag(img.write_file_tmp, class: 'thumbnail')
 				end
 			end
 		end
@@ -198,7 +189,7 @@ module ApplicationHelper
 	end
 
 	def h_img_path(name)
-		"<img src=\"#{name}\"></img>"
+		image_tag(name)
 	end
 
 	def h_img(name, title = nil)
@@ -206,11 +197,11 @@ module ApplicationHelper
 	end
 
 	def h_img_btn(name)
-		"<img class=\"btn\" src=\"/images/#{name}.png\" title='#{t(File.basename(name.to_s))}'/>"
+		image_tag("#{name}.png", class: 'btn', title: t(File.basename(name.to_s)))
 	end
 
 	def h_img_tit(name, title)
-		"<img class=\"icone\" src=\"/images/#{name}.png\" title='#{title}'/>"
+		image_tag("#{name}.png", class: 'icone', title: title)
 	end
 
 	def h_img_cut
@@ -289,14 +280,15 @@ module ApplicationHelper
 		image_submit_tag(name.to_s+".png",:title=>t(name), :class=>"submit")
 	end
 
-	def h_explorer (obj, method = nil)
-		fname=self.class.name+"."+__method__.to_s
+	def h_explorer(obj, method = nil)
+		# Rails.logger.info "\n\n self.class.name : -#{self.class.name}- \n\n"
+		# fname=self.class.name+"."+__method__.to_s
 		#LOG.info (fname){"obj=#{obj}, method=#{method}"}
 		h_link_to("explorer_obj", obj, method)
 	end
 
 	def h_link_to (name, obj, method = nil)
-		fname=self.class.name+"."+__method__.to_s
+		# fname=self.class.name+"."+__method__.to_s
 		#LOG.info (fname){"obj=#{obj}, method=#{method}"}
 		ret=""
 		unless obj.nil?

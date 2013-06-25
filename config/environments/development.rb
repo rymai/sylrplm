@@ -22,13 +22,6 @@ SylRPLM::Application.configure do
   config.action_mailer.delivery_method       = :letter_opener
   config.action_mailer.default_url_options   = { host: 'sylrplm.dev' }
 
-  # config.action_mailer.delivery_method = :smtp
-  # config.action_mailer.smtp_settings = {
-  #   address: 'smtp.free.fr',
-  #   port: '25',
-  #   domain: 'free.fr'
-  # }
-
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 
@@ -41,7 +34,7 @@ SylRPLM::Application.configure do
   # Use a different cache store in production
   config.cache_store = :dalli_store
 
-  # CacheDigests::TemplateDigestor.cache = ActiveSupport::Cache::NullStore.new
+  CacheDigests::TemplateDigestor.cache = ActiveSupport::Cache::NullStore.new
 
   # Expands the lines which load the assets
   config.assets.debug = true
