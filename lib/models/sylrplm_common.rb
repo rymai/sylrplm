@@ -111,9 +111,10 @@ module Models
 				#
 				# lecture possible des projets et des groupes du user
 				#
+				filter_access[:qry] = "("
 				unless user.nil?
 					if column_names.include?("group_id")
-						filter_access[:qry] = " group_id in ("
+						filter_access[:qry] += " group_id in ("
 						user.groups.each_with_index do |group,i|
 						filter_access[:qry] += group.id.to_s
 							filter_access[:qry] += "," if i<user.groups.size-1
@@ -128,9 +129,14 @@ module Models
 						end
 						filter_access[:qry] += ")"
 					end
+					filter_access[:qry] += ")"
 				end
 
 				#puts self.model_name+".find_paginate:filter_access="+filter_access.inspect
+
+				if filter_access[:qry] == "()" || filter_access[:qry] == "(" || filter_access[:qry] == ")"
+					filter_access[:qry] = ""
+				end
 				unless params[:query].nil? || params[:query].blank?
 					cond = get_conditions(params[:query])
 					#puts self.model_name+".find_paginate:cond="+cond.inspect
@@ -145,6 +151,7 @@ module Models
 						conditions = [cond[:qry], values]
 					end
 				else
+
 					conditions = [filter_access[:qry], filter_access[:values]]
 				end
 				puts self.model_name+".find_paginate:conditions="+conditions.inspect

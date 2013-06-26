@@ -125,8 +125,9 @@ module OpenWFE::Extras
       #puts  "ExpressionTables.[]=:e=#{e.svalue.size}"
       
       #TODO syl pour postgresql qui refuse le null
+      if e.respond_to? :text
       e.text="text" if e.text.nil?
-      
+      end
       e.save_without_transactions!
     end
 
@@ -328,7 +329,7 @@ module OpenWFE::Extras
     def as_owfe_expression (record)
 
       return nil unless record
-
+puts "**************** as_owfe_expression:record=#{record.inspect}"
       s = record.svalue
 
      ##fe = s.match(Y_START) ? YAML.load(s) : ::OpenWFE::Xml::from_xml(s)

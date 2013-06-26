@@ -18,4 +18,4 @@
 		<td> <%= link_to t("list"), roles_path %></td>
 	</tr>
 </table>
-<%= h_show_tree @role %> 
+<%= render(:partial => "shared/tree", :object => @role ) %>

@@ -31,6 +31,9 @@ class Role < ActiveRecord::Base
     Role.truncate_words(description, 5)
   end
 
+	def variants
+		nil
+	end
   #return the list of validers
   def self.get_validers
     ret=[]

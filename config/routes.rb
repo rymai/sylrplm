@@ -61,7 +61,11 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :volumes
 
 	map.resources :roles
-
+	map.connect(
+	'roles/:id/select_view',
+	:controller => 'roles',
+	:action => 'select_view')
+	
 	map.resources :statusobjects
 
 	map.resources :typesobjects
@@ -359,7 +363,11 @@ ActionController::Routing::Routes.draw do |map|
 	:action => 'account_edit_passwd')
 	
 	map.resources :groups
-
+	map.connect(
+	'groups/:id/select_view',
+	:controller => 'groups',
+	:action => 'select_view')
+	
 	map.resources :user_groups
 
 	map.resources :group_definitions

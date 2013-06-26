@@ -34,7 +34,7 @@ module Ruote
 			# delete of workitems of a process
 			def self.destroy_process(wfid)
 				LOG.info {wfid}
-				ArWorkitem.find_by_wfid_(wfid).each do |ar|
+				::OpenWFE::Extras::ArWorkitem.find_by_wfid_(wfid).each do |ar|
 					ar.destroy
 				end
 			end

@@ -22,4 +22,5 @@
 		<td><%= link_to t("edit"), edit_group_path(@group)  %></td>
 		<td><%= link_to t("list"),  groups_path %></td>
 	</tr>
-</table><%= h_show_tree @group %>
+</table>
+<%= render(:partial => "shared/tree", :object => @group ) %>

@@ -7,19 +7,23 @@ module Controllers
 	  # extend ActiveSupport::Concern
 
 		def add_favori
-			#LOG.info("#{controller_class_name}.#{__method__}") { "params=#{params.inspect}" }
+			fname="#{controller_class_name}.#{__method__}"
+			#LOG.info() { "params=#{params.inspect}" }
 			model = get_model(params)
+			model_name=get_model_type(params)
 			obj = model.find(params[:id])
 			@favori.add(obj)
-
+			#LOG.info(fname) { "favori#{model_name}=#{@favori.get(model_name).count}" }
 			respond_to do |format|
-				format.js { render 'shared/refresh_favorites' }
+					format.js { render 'shared/refresh_favorites' }
 			end
 		end
 
 		def empty_favori
+	    fname="#{controller_class_name}.#{__method__}"
 	    empty_favori_by_type(get_model_type(params))
-
+			model_name=get_model_type(params)
+			#LOG.info(fname) { "favori#{model_name}=#{@favori.get(model_name).count}" }
 	    respond_to do |format|
 	      format.js { render 'shared/refresh_favorites' }
 	    end

@@ -42,8 +42,7 @@
 		    	</li><li title="Gestion de clients">
 		    		Identification, création, édition, suppression, révision, maturité
 		    	</li>
-		    	<li title="Mise en oeuvre de processus">
-		    		
+		    	<li title="Mise en oeuvre de processus">	
 		    		<ul title="Certaines fonctionnalités citées ci dessus sont mises en oeuvre sous contrôle de processus permettant:">
 							<li title="Controles">
 								Controle de validation(s) par des utilisateurs habilités
@@ -62,6 +61,36 @@
 		    				Création d'une révision sous controle
 		    			</li>
 		    		</ul>
+		    	</li>
+		    	<li title="Traçabilité">	
+		    		<ul title="L'application met en oeuvre les composants suivants pour assurer la traçabilité ">
+							<li title="Abonnement">
+								Un abonnement définit quels évènements seront notifiés aux utilisateurs concernés.
+								Chaque utilisateur peut définir l'abonnement qui le concerne.
+								Seul l"'administrateur crée ou modifie les abonnements.
+								Chaque abonnement peut être associé à plusieurs utilisateurs.
+								Un utilisateur ne peut avoir qu'un seul abonnement.
+		    			</li>
+		    			<li title="Notification">
+		    				Chaque évènement de création/modification/destruction est notifiable à tel ou tel utilisateur suivant l'abonnement auquel il est associé. 
+		    				Les notifications conservent l'information concernant l'évènement et le ou les utilisateurs qui ont été notifié.
+		    				Voir aussi le chapitre sur les notifications: #jump=help_notifications=jump#
+		    			</li>
+		    			<li title="Planificateur de notification">
+		    				L'administrateur lance un planificateur qui va notifier les utilisateurs à intervalle régulier.
+		    				Cet intervalle est modifiable par l'administrateur du site dans le fichier lib/tasks/sylrplm_tasks.rake: scheduler.cron '*/15 7-21 * * 1-5' do
+		    			</li>
+		    			<li title="Logs">
+		    				Des fichiers logs accessible à l'administrateur contiennent des informations sur le fonctionnement de l'application.
+		    				Le niveau de trace est paramétrable par l'administrateur du site dans le fichier de configuration : config/environments/production.rb:
+		    				config.log_level = :info
+								#FATAL an unhandleable error that results in a program crash
+								#ERROR a handleable error condition
+								#WARN  a warning
+								#INFO  generic (useful) information about system operation
+								#DEBUG
+		    			</li>
+		    		</ul> 
 		    	</li>
     		</ul>
     	</msg>
@@ -119,29 +148,40 @@
             Il comprend les 3 parties suivantes:
         <ul>
             <li title="Bandeau">Au démarrage de l'application
+            	Le bandeau comprend plusieurs parties dont des informations sur la connexion en cours
             	#img=help/screen_banner_top1.png=img#
-            	Permet de se connecter explicitement et de se déconnecter.
-            	Indique le nom de l'utilisateur et son rôle ainsi que le projet auquelle il participe dans sa session
+            	Le bouton "Se connecter" permet de se connecter explicitement. 
+            	Indique le nom de l'utilisateur et son rôle ainsi que le rôle qu'il utilise et le projet auquelle il participe dans sa session
             	#img=help/screen_banner_top2.png=img#
+            	L'imgae "se déconnecter" permet ensuite de se déconnecter.
             </li>
             <li title="Menus"> 
             	Cette zone contient tous les menus de l'application:
-            	#img=help/screen_left_menus.png=img#
-            	Les utilisateurs ayant un rôle d'administration ont plus de menus à leur disposition:
-            	#img=help/screen_left_menus_admin.png=img#
+            	#img=help/screen_banner_menus.png=img#
+            	Le détail est donné dans la chapitre sur les modules: #jump=help_modules=jump#
            	</li>
-           	<li title="Données"> 
-            	Cette zone principale contient les différentes vues des données, par exemple voici la vue listyant les articles :
-            	#img=help/screen_content.png=img#
-            	Les différentes vues, dépendants des modules et menus, sont explicités dans cette documentation. 
+           	<li title="Fenêtres">
+           		#img=help/screen_banner_tabs.png=img#
+           		Cette partie du bandeau permet de visualiser les deux parties des données:
+           		<ul>
+		           	<li title="SYLRPLM Date"> 
+		            	Cette zone principale contient les différentes vues des données, par exemple voici la vue listant les articles :
+		            	#img=help/screen_content.png=img#
+		            	Les différentes vues, dépendants des modules et menus, sont explicités dans cette documentation.
+		            	#img=help/module_date.png=img#
+			        		Affiche la date courante
+		           	</li>
+		           	<li title="Presse papiers">
+			            #img=help/module_pressepapier.png=img#
+			            Indique les objets copiés depuis les listes d'objets par le menu "Copier".
+			            Ces objets peuvent être "collés" dans les autres objets par le menu "Explorer"
+			            Ils peuvent également être enlevé du presse papier en activant la croix rouge.
+		        		</li>
+           		</ul>
            	</li>
-            </ul>
+        </ul>
         </msg>
-        <msg key="help_banner" title="Date - Aide">
-        		#img=help/module_date.png=img#
-        		Affiche la date courante
-            Permet d'activer l'aide sur un menu: clic sur l'image help puis clic sur un menu.
-        </msg>
+        
         <msg key="help_authorization" title="Autorisations/login">
                 Certains menus exigent que l'utilisateur ait certains droits sur les objets, il doit donc se connecter.
                 Cette connexion s'effectue en deux temps soit sur demande (voir bandeau), soit suite à l'activation d'un menu :
@@ -159,7 +199,21 @@
                 </ul>
         </msg>
         
-       
+       <msg key="help_display_mode" title="Mode d'affichage">
+            Dans toutes les pages listant des objets, il existe plusieurs modes d'affichage
+            #img=help/documents_display_modes.png=img#
+            <ul>
+                <li title="Détails">
+                    #img=help/documents_display_details.png=img#
+                </li>
+                <li title="Détails avec aperçu">
+                    #img=help/documents_display_details_thumbnail.png=img#
+                </li>
+               <li title="Aperçu seul">
+                    #img=help/documents_display_thumbnail.png=img#
+                </li>
+            </ul>
+        </msg>
         <msg key="help_filter" title="Filtre">
             Dans toutes les pages listant des objets, il est possible de ne voir qu'une partie de ceux ci.
             Ceci en renseignant le filtre et en validant:
@@ -167,7 +221,7 @@
                 <li title="Documents avant filtre">
                     #img=help/documents_filtre_1.png=img#
                 </li>
-                <li title="Documents après filtre sur le type 'm3d'">
+                <li title="Documents après filtre sur la fin de l'identifiant">
                     #img=help/documents_filtre_2.png=img#
                 </li>
             </ul>
@@ -216,17 +270,16 @@
         <msg key="help_notifications" title="Notifications">
             	Chaque modification d'une donnée (create/update/delete/add_*/del_*) est enregistrée.
             	<ul>A intervalle régulier et paramétrable, une notification est créee et envoyée aux destinataires: 			
- 								<li>Notifier les  proprietaires des donnees impactees par la modif de cet objet: 
- 								  - remonter les relations pour trouver les proprio des objets superieurs
- 									  - conserver le chemin
- 									  - chercher le proprio 
- 								    - lui envoyer un mail avec l'info du chemin et de l'action effectuée 
-            		</li>
-            		<li>Notifier les participants aux projets auxquelles appartiennent les objets modifies:
+ 								<li>Notifier les participants aux projets auxquelles appartiennent les objets modifies:
             		  - remonter les relations pour trouver le ou les projets
             		  - conserver le chemin
             		  - lister les users du projet
             		  - leur envoyer un mail avec l'info du chemin et de l'action effectuée 
+            		</li>
+            		<li>Notifier les groupes auxquels appartiennent les objets modifiés:
+            		  - trouver les groupes
+            		  - lister les users du groupe
+            		  - leur envoyer un mail avec l'action effectuée 
             		</li>
             	</ul>
             	<msg key="help_notifications_attributs" title="Attributs">
@@ -238,6 +291,7 @@
             		<li> event_type : type de la modif</li>
             		<li> responsible_id : modifieur</li>
            			<li> notify_date : date de la notification (null si pas encore fait)</li>
+           			Une notification ayant cette date renseignée ne sera plus notifiée.
           			<li> notify_users : utilisateurs notifiés (null si pas encore fait)</li>
             	</ul>
             	</msg>		
@@ -415,7 +469,21 @@
 				                </msg> 
 				                <msg key="help_datafiles_functions" title="Fonctionnalités">
                     				Les principales fonctionnalités sur les fichiers sont:                            
-                    				<msg key="help_datafiles_show" title="Explorer un fichier">
+                    				<msg key="help_documents_add_datafiles" title="Ajouter un fichier au document">
+                    					Dans la vue de détail d'un document, après activation du menu "Ajouter fichier", la fenêtre suivante apparait:
+			                        Note: le document doit être réservé pour ajouter un fichier, celle ci peut s'effectuer de deux manières:
+			                        <ul>
+			                        	<li>Automatiquement si la propriété de l'utilisateur "Réservation automatique" est vrai: #jump=help_documents_reservation=jump#	                        		                       	
+			                        	</li>
+			                        	<li>Manuellement par le menu "Réserver" de la vue de détail du document			                        		
+			                        	</li>
+			                        </ul>
+			                        #img=help/documents_add_datafile.png=img#			                            
+                    				</msg>
+                    				<msg key="help_datafiles_list" title="Lister les fichiers">
+			                        #img=help/documents_datafile_list.png=img#			                            
+                    				</msg>
+                   					<msg key="help_datafiles_show" title="Explorer un fichier">
 			                        #img=help/documents_datafile_show.png=img#			                            
                     				</msg>
                     				<msg key="help_datafiles_edit" title="Editer un fichier">
@@ -533,7 +601,7 @@
                     </ul>
                 </msg>
                 <msg key="help_parts_functions" title="Fonctionnalités">
-                    Les principales fonctionnalités sur les articles sont:
+                    Les principales fonctionnalités sur les clients sont:
                     <msg key="help_customers_index" title="Liste des clients" href="/customers">
                         #img=help/customers_list.png=img#
                     </msg>
@@ -633,12 +701,7 @@
                 Liste les contacts utiles pour l'utilisation de l'application.
             </msg>
         </msg>
-        <msg key="help_clipboard" title="Presse papiers">
-            #img=help/module_pressepapier.png=img#
-            Indique les objets copiés depuis les listes d'objets par le menu "Copier".
-            Ces objets peuvent être "collés" dans les autres objets par le menu "Explorer"
-            Ils peuvent également être enlevé du presse papier en activant la croix rouge.
-        </msg>
+        
         <msg key="help_processus" title="Processus métier">
             #img=help/module_processus.png=img#
             Ce module comprend les fonctions relatives a l'execution des processus métier: exécution, suivi.
@@ -667,309 +730,389 @@
             	#img=help/processus_show.png=img#
             </msg>
         </msg>
-
-        <msg key="help_organization" title="L'organisation">
-            #img=help/module_organisation.png=img#
-            Le module "Organisation" permet de gérer:
-            <msg key="help_users" title="Utilisateurs" href="/login/list_users">
-                Permet de définir les personnes ayant accès à l'application.
-                <msg key="help_users_attributs" title="Attributs">
-                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
-                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
-                        <li title="Nom">Nom de l'utilisateur
-                        </li>
-                        <li title="Rôle">Rôle actuel de l'utilisateur
-                        </li>
-                        <li title="Email">Adresse de messagerie de l'utilisateur
-                        </li>
-                        <li title="Thème">Thème actif pour l'utilisateur
-                        </li>
-                        <li title="Rôles(en création seulement)">Rôles attribués à l'utilisateur
-                        </li>
-                    </ul>
-                </msg>
-                <msg key="help_users_functions" title="Fonctionnalités">
-                    Les principales fonctionnalités sur les utilisateurs sont:
-                    <msg key="help_users_index" title="Liste des utilisateurs" href="/list_users">
-                        #img=help/users_list.png=img#
-                    </msg>
-                    <msg key="help_users_edit" title="Editer un utilisateur" href="/edit_user/1">
-                        #img=help/users_edit.png=img#
-                    </msg>
-                    <msg key="help_users_new" title="Nouvel utilisateur" href="/add_user">
-                        #img=help/users_new.png=img#
-                    </msg>
-                </msg>
-            </msg>
-            <msg key="help_roles" title="Rôles" href="/roles">
-                Un ou plusieurs rôles sont attribués à un utilisateur, il se connecte avec un seul de ses rôles dans une session.
-                <msg key="help_roles_attributs" title="Attributs">
-                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
-                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
-                        <li title="Nom">Nom du rôle.
-                        </li>
-                        <li title="Description">
-                        </li>
-                    </ul>
-                </msg>
-                <msg key="help_roles_functions" title="Fonctionnalités">
-                    Les principales fonctionnalités sur les rôles sont:
-                    <msg key="help_roles_index" title="Liste des rôles" href="/roles">
-                        #img=help/roles_list.png=img#
-                    </msg>
-                    <msg key="help_roles_show" title="Explorer un rôle" href="/roles/1">
-                        #img=help/roles_show.png=img#
-                    </msg>
-                    <msg key="help_roles_edit" title="Editer un rôle" href="/roles/1">
-                        #img=help/roles_edit.png=img#
-                    </msg>
-                    <msg key="help_users_new" title="Nouveau rôle" href="/roles/new">
-                        #img=help/roles_new.png=img#
-                    </msg>
-                </msg>
-            </msg>
-            <msg key="help_groups" title="Groupes" href="/groups">
-                Un groupe comprend un ou plusieurs utilisateurs, ils permettent d'attribuer certains droits au groupe entier.
-                par exemple, exécuter un processus
-                <msg key="help_groups_attributs" title="Attributs">
-                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
-                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
-                        <li title="Nom">Nom du groupe.
-                        </li>
-                        <li title="Description">
-                        </li>
-                    </ul>
-                </msg>
-                <msg key="help_groups_functions" title="Fonctionnalités">
-                    Les principales fonctionnalités sur les groupes sont:
-                    <msg key="help_groups_index" title="Liste des groupes" href="/groups">
-                        #img=help/groups_list.png=img#
-                    </msg>
-                    <msg key="help_groups_show" title="Explorer un groupe" href="/groups/1">
-                        #img=help/groups_show.png=img#
-                    </msg>
-                    <msg key="help_groups_edit" title="Editer un groupe" href="/groups/1">
-                        #img=help/groups_edit.png=img#
-                    </msg>
-                    <msg key="help_users_new" title="Nouveau groupe" href="/groups/new">
-                        #img=help/groups_new.png=img#
-                    </msg>
-                </msg>
-            </msg>
-            <msg key="help_access" title="Autorisations" href="/access">
-                Déterminent les fonctions utilisables par chaque rôle (#jump=help_roles=jump#)
-                <msg key="help_access_attributs" title="Autorisations">
-                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
-                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
-                        <li title="Controleur">Controleur(ruby and rails) sur lequel l'action est permise au rôle.
-                        </li>
-                        <li title="Action">L'action du controleur que peut effectuer le rôle.
-                        </li>
-                        <li title="Rôle">le Rôle pour lequel l'action du controleur est permise.
-                        </li>
-                        <li title="Controleur(en création seulement">Controleur(ruby and rails).action permis au rôle.
-                        </li>
-                    </ul>
-                </msg>
-                <msg key="help_accesss_functions" title="Fonctionnalités">
-                    Les principales fonctionnalités sur les autorisations sont:
-                    <msg key="help_access_index" title="Liste des accès" href="/access">
-                        #img=help/access_list.png=img#
-                    </msg>
-                    <msg key="help_access_show" title="Explorer un accès" href="/access/1">
-                        #img=help/access_show.png=img#
-                    </msg>
-                    <msg key="help_roles_edit" title="Editer un accès" href="/access/1">
-                        #img=help/access_edit.png=img#
-                    </msg>
-                    <msg key="help_users_new" title="Nouvel accès" href="/access/new">
-                        #img=help/access_new.png=img#
-                    </msg>
-                </msg>
-            </msg>
-            <msg key="help_volumes" title="Volumes" href="/volumes">
-                Détermine le lieu de stockage des fichiers des Documents
-                <msg key="help_volumes_volumes" title="Volumes">
-                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
-                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
-                        <li title="Nom">Nom du volume, il appraitra tel quel sans traduction.
-                        </li>
-                        <li title="Description">
-                        </li>
-                        <li title="Répertoire">Répertoire de base du volume.
-                            Les fichiers y seront stockés suivant la structure suivante.
-                            %Répertoire%/@nom_volume/Document/@ident/@revision/@nom_fichier.extension
-                        </li>
-                    </ul>
-                </msg>
-                <msg key="help_volumes_functions" title="Fonctionnalités">
-                    Les principales fonctionnalités sur les volumes sont:
-                    <msg key="help_volumes_index" title="Liste des volumes" href="/volumes">
-                        #img=help/volumes_list.png=img#
-                    </msg>
-                    <msg key="help_roles_show" title="Explorer un volume" href="/volumes/1">
-                        #img=help/volumes_show.png=img#
-                    </msg>
-                    <msg key="help_roles_edit" title="Editer un volume" href="/volumes/1">
-                        #img=help/volumes_edit.png=img#
-                    </msg>
-                    <msg key="help_users_new" title="Nouveau volume" href="/volumes/new">
-                        #img=help/volumes_new.png=img#
-                    </msg>
-                </msg>
-            </msg>
-        </msg>
-        <msg key="help_param" title="Paramétrages">
-            #img=help/module_parametrage.png=img#
-            Les diverses possibilités de paramétrage portent sur:
-            <msg key="help_typesobjects" title="Types d'objet" href="/typesobjects">
-                Les types permettent de classer les différents objets suivant une caractéristique considerée comme importante dans l'entreprise.
-                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
-                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
-                    <li title="Objet">Type d'objet ou de relation sur lequel portera le statut:
-                        <ul>
-                            <li>document</li>
-                            <li>article</li>
-                            <li>projet</li>
-                            <li>client</li>
-                            <li>relation_document (depuis document ou part ou projet ou client)</li>
-                            <li>relation_part (depuis part ou projet ou client)</li>
-                            <li>relation_projet (depuis client)</li>
-                        </ul>
-                    </li>
-                    <li title="Nom">Nom du type, il appraitra tel quel sans traduction.
-                    </li>
-                    <li title="Description">
-                    </li>
-                </ul>
-            </msg>
-            <msg key="help_statusobjects" title="Status des objets" href="/statusobjects">
-                Les statuts permettent de définir les statuts de maturité des objets suivant les processus mis en oeuvre dans l'entreprise.
-                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
-                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
-                    <li title="Objet">Type d'objet sur lequel portera le statut: document/article/projet/client
-                    </li>
-                    <li title="Nom">Nom du statut, il appraitra tel quel sans traduction.
-                    </li>
-                    <li title="Rang de promotion">Rang du statut dans le cycle de vie de l'objet:
-                        le Premier est pris à la creation
-                        Une promotion attribue le suivant
-                        Une rétrogradation attribue le précédent
-                        Le dernier permet à l'utilisateur de demander une révision de l'objet:#jump=help_lifecycle=jump#
-                    </li>
-                    <li title="Description">
-                    </li>
-                    <li title="Promotion(oui/non)">Permet de préciser si le changement de statut vers le haut se fait par le menu promote (oui) ou par choix dans la liste (non)
-                    </li>
-                    <li title="Rétrogadation(oui/non)">Permet de préciser si le changement de statut vers le bas se fait par le menu promote (oui) ou par choix dans la liste (non)
-                    </li>
-                </ul>
-            </msg>
-            <msg key="help_sequences" title="Valeurs par défaut" href="/sequences">
-                Définit les différentes valeurs par défaut utilisées par l'application, en particulier lors de l'attribution de noms aux objets.
-                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
-                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
-                    <li title="Utilisation(identifiant/revision/...)">Permet d'attribuer la valeur à n'importe quel attribut d'un objet
-                    </li>
-                    <li title="Séquence(oui/non)">Permet de préciser que la valeur doit s'incrémenter à chaque création d'un nouel objet de ce type.
-                    </li>
-                    <li title="Modifiable">Permet de rendre possible la modification de la valeur de cet attribut( non pris en compte pour le moment)
-                    </li>
-                    <li title="Valeur">Pour préciser la valeur par défaut ou la première valeur d'une séquence.
-                    </li>
-                    <li title="Valeur minimale">Pour préciser la valeur minimale, non utilisée pour l'instant.
-                    </li>
-                    <li title="Valeur maximale">Pour préciser la valeur maximale, non utilisée pour l'instant.
-                    </li>
-                </ul>
-            </msg>
-
-            <msg key="help_relations" title="Relations" href="/relations">
-                Définit les différentes relations utilisées par l'application lors de la création de lienx entre objets
-                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
-                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
-                    <li title="Nom">Nom de la relation.
-                    </li>
-                    <li title="Type">Type de la relation.
-                    </li>
-                    <li title="Type PLM du père">Type PLM possible de l'objet père de la relation.
-                    </li>
-                    <li title="Type PLM du fils">Type PLM possible de l'objet fils de la relation.
-                    </li>
-                     <li title="Type du père">Type possible de l'objet père de la relation.
-                    </li>
-                    <li title="Type du fils">Type possible de l'objet fils de la relation.
-                    </li>
-                    <li title="Cardin occur mini">Cardinalité d'occurence mini de la relation.
-                    </li>
-                    <li title="Cardin occur maxi">Cardinalité d'occurence maxi de la relation.
-                    </li>
-                    <li title="Cardin use mini">Cardinalité d'utilisation mini de la relation.
-                    </li>
-                    <li title="Cardin use maxi">Cardinalité d'utilisation maxi de la relation.
-                    </li>
-                </ul>
-            </msg>
-
-            <msg key="help_views" title="Vues" href="/views">
-                Définit les différentes vues utilisées par l'application lors de l'affichage des nomenclatures d'articles par l'explorateur, 
-                voir les commandes Explorateur des objets concernes: Article, Projet et Client.
-                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
-                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
-                    <li title="Nom">
-                    </li>
-                    <li title="Description">
-                    </li>
-                    <li title="Relations">Liste des relations que la vue affichera dans l'explorateur
-                    </li>
-                   
-                </ul>
-            </msg>
-            
-            <msg key="help_definitions" title="Définitions de processus" href="/definitions">
-                Définit les différentes processus utilisées par l'application 
-                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
-                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
-                    <li title="Nom">
-                    </li>
-                    <li title="Description">
-                    </li>
-                    <li title="URL">
-                    </li>
-                    <li title="Groupes">
-                    </li>
-                </ul>
-                <msg key="help_definitions" title="Définition" href="/definitions">
-		            	Liste et lancement des processus (bouton vert)
-		            	#img=help/definitions_list.png=img#
-		            	Détail:
-		            	#img=help/definitions_show.png=img#
-		            	Edition:
-		            	#img=help/definitions_edit.png=img#
-		            	Création:
-		            	#img=help/definitions_new.png=img#
-            		</msg>
-            </msg>
-
-            <msg key="help_config" title="Configuration">
-                Il est possible de configurer l'application à l'aide paramètres à définir dans le fichier sylrplm.rb du répertoire config
-                Toute modification de ce fichier requiert un redémarrage du serveur http.
-                <ul title="config/sylrplm.rb">
-                    <li title="VOLUME_DIRECTORY_DEFAULT">=/home/syl/trav/rubyonrails/sylrplm_data/
-                        Répertoire par défaut du premier volume crée lors de l'initialisation: #jump=help_init_db=jump#
-                    </li>
-                    <li title="LOCAL_DEFAULT">="fr"
-                        Langue par défaut (fr ou us)
-                    </li>
-                    <li title="THEME_DEFAULT">="blackwhite"
-                        Thème par défaut (blackwhite ou blue ou green)
-                    </li>
-                    <li title="NB_ITEMS_PER_PAGE">=15
-                        Nombre de lignes d'objets affichées dans les listes.
-                    </li>
-                </ul>
-            </msg>
-            
+				<msg key="help_administration" title="L'administration des objets et du framework">
+					<ul title="Administration">
+						Les modules d'administration sont différents pour l'administrateur et les utilisateurs "normaux
+	          <li title="Administration">Les modules d'administration pour un user non administrateur sont les suivants:
+	          	#img=help/modules_administration.png=img#
+	          </li>
+	         <li title="Administration administrateur">Les modules d'administration pour un user  administrateur sont les suivants:
+	          	#img=help/modules_administration_admin.png=img#
+	          </li>
+	        </ul>
+	        <msg key="help_organization" title="L'organisation">
+	            #img=help/module_organisation.png=img#
+	            Le module "Organisation" permet de gérer:
+	            <msg key="help_users" title="Utilisateurs" href="/login/list_users">
+	                Permet de définir les personnes ayant accès à l'application.
+	                <msg key="help_users_attributs" title="Attributs">
+	                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+	                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+	                        <li title="Nom">Nom de l'utilisateur
+	                        </li>
+	                        <li title="Rôle">Rôle actuel de l'utilisateur
+	                        </li>
+	                        <li title="Email">Adresse de messagerie de l'utilisateur
+	                        </li>
+	                        <li title="Thème">Thème actif pour l'utilisateur
+	                        </li>
+	                        <li title="Rôles(en création seulement)">Rôles attribués à l'utilisateur
+	                        </li>
+	                    </ul>
+	                </msg>
+	                <msg key="help_users_functions" title="Fonctionnalités">
+	                    Les principales fonctionnalités sur les utilisateurs sont:
+	                    <msg key="help_users_index" title="Liste des utilisateurs" href="/list_users">
+	                        #img=help/users_list.png=img#
+	                    </msg>
+	                    <msg key="help_users_edit" title="Editer un utilisateur" href="/edit_user/1">
+	                        #img=help/users_edit.png=img#
+	                    </msg>
+	                    <msg key="help_users_new" title="Nouvel utilisateur" href="/add_user">
+	                        #img=help/users_new.png=img#
+	                    </msg>
+	                </msg>
+	            </msg>
+	            <msg key="help_roles" title="Rôles" href="/roles">
+	                Un ou plusieurs rôles sont attribués à un utilisateur, il se connecte avec un seul de ses rôles dans une session.
+	                <msg key="help_roles_attributs" title="Attributs">
+	                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+	                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+	                        <li title="Nom">Nom du rôle.
+	                        </li>
+	                        <li title="Description">
+	                        </li>
+	                    </ul>
+	                </msg>
+	                <msg key="help_roles_functions" title="Fonctionnalités">
+	                    Les principales fonctionnalités sur les rôles sont:
+	                    <msg key="help_roles_index" title="Liste des rôles" href="/roles">
+	                        #img=help/roles_list.png=img#
+	                    </msg>
+	                    <msg key="help_roles_show" title="Explorer un rôle" href="/roles/1">
+	                        #img=help/roles_show.png=img#
+	                    </msg>
+	                    <msg key="help_roles_edit" title="Editer un rôle" href="/roles/1">
+	                        #img=help/roles_edit.png=img#
+	                    </msg>
+	                    <msg key="help_users_new" title="Nouveau rôle" href="/roles/new">
+	                        #img=help/roles_new.png=img#
+	                    </msg>
+	                </msg>
+	            </msg>
+	            <msg key="help_groups" title="Groupes" href="/groups">
+	                Un groupe comprend un ou plusieurs utilisateurs, ils permettent d'attribuer certains droits au groupe entier.
+	                par exemple, exécuter un processus
+	                <msg key="help_groups_attributs" title="Attributs">
+	                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+	                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+	                        <li title="Nom">Nom du groupe.
+	                        </li>
+	                        <li title="Description">
+	                        </li>
+	                    </ul>
+	                </msg>
+	                <msg key="help_groups_functions" title="Fonctionnalités">
+	                    Les principales fonctionnalités sur les groupes sont:
+	                    <msg key="help_groups_index" title="Liste des groupes" href="/groups">
+	                        #img=help/groups_list.png=img#
+	                    </msg>
+	                    <msg key="help_groups_show" title="Explorer un groupe" href="/groups/1">
+	                        #img=help/groups_show.png=img#
+	                    </msg>
+	                    <msg key="help_groups_edit" title="Editer un groupe" href="/groups/1">
+	                        #img=help/groups_edit.png=img#
+	                    </msg>
+	                    <msg key="help_users_new" title="Nouveau groupe" href="/groups/new">
+	                        #img=help/groups_new.png=img#
+	                    </msg>
+	                </msg>
+	            </msg>
+	            <msg key="help_access" title="Autorisations" href="/access">
+	                Déterminent les fonctions utilisables par chaque rôle (#jump=help_roles=jump#)
+	                <msg key="help_access_attributs" title="Autorisations">
+	                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+	                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+	                        <li title="Controleur">Controleur(ruby and rails) sur lequel l'action est permise au rôle.
+	                        </li>
+	                        <li title="Action">L'action du controleur que peut effectuer le rôle.
+	                        </li>
+	                        <li title="Rôle">le Rôle pour lequel l'action du controleur est permise.
+	                        </li>
+	                        <li title="Controleur(en création seulement">Controleur(ruby and rails).action permis au rôle.
+	                        </li>
+	                    </ul>
+	                </msg>
+	                <msg key="help_accesss_functions" title="Fonctionnalités">
+	                    Les principales fonctionnalités sur les autorisations sont:
+	                    <msg key="help_access_index" title="Liste des accès" href="/access">
+	                        #img=help/access_list.png=img#
+	                    </msg>
+	                    <msg key="help_access_show" title="Explorer un accès" href="/access/1">
+	                        #img=help/access_show.png=img#
+	                    </msg>
+	                    <msg key="help_roles_edit" title="Editer un accès" href="/access/1">
+	                        #img=help/access_edit.png=img#
+	                    </msg>
+	                    <msg key="help_users_new" title="Nouvel accès" href="/access/new">
+	                        #img=help/access_new.png=img#
+	                    </msg>
+	                </msg>
+	            </msg>
+	            <msg key="help_volumes" title="Volumes" href="/volumes">
+	                Détermine le lieu de stockage des fichiers des Documents
+	                <msg key="help_volumes_volumes" title="Volumes">
+	                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+	                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+	                        <li title="Nom">Nom du volume, il appraitra tel quel sans traduction.
+	                        </li>
+	                        <li title="Description">
+	                        </li>
+	                        <li title="Répertoire">Répertoire de base du volume.
+	                            Les fichiers y seront stockés suivant la structure suivante.
+	                            %Répertoire%/@nom_volume/Document/@ident/@revision/@nom_fichier.extension
+	                        </li>
+	                    </ul>
+	                </msg>
+	                <msg key="help_volumes_functions" title="Fonctionnalités">
+	                    Les principales fonctionnalités sur les volumes sont:
+	                    <msg key="help_volumes_index" title="Liste des volumes" href="/volumes">
+	                        #img=help/volumes_list.png=img#
+	                    </msg>
+	                    <msg key="help_volumes_show" title="Explorer un volume" href="/volumes/1">
+	                        #img=help/volumes_show.png=img#
+	                    </msg>
+	                    <msg key="help_volumes_edit" title="Editer un volume" href="/volumes/1">
+	                        #img=help/volumes_edit.png=img#
+	                    </msg>
+	                    <msg key="help_volumes_new" title="Nouveau volume" href="/volumes/new">
+	                        #img=help/volumes_new.png=img#
+	                    </msg>
+	                </msg>
+	            </msg>
+	        </msg>
+	        <msg key="help_param" title="Paramétrages">
+	            #img=help/module_parametrage.png=img#
+	            Les diverses possibilités de paramétrage portent sur:
+	            <msg key="help_typesobjects" title="Types d'objet" href="/typesobjects">
+	                Les types permettent de classer les différents objets suivant une caractéristique considerée comme importante dans l'entreprise.
+	                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+	                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+	                    <li title="Objet">Type d'objet ou de relation sur lequel portera le statut:
+	                        <ul>
+	                            <li>document</li>
+	                            <li>article</li>
+	                            <li>projet</li>
+	                            <li>client</li>
+	                            <li>relation_document (depuis document ou part ou projet ou client)</li>
+	                            <li>relation_part (depuis part ou projet ou client)</li>
+	                            <li>relation_projet (depuis client)</li>
+	                        </ul>
+	                    </li>
+	                    <li title="Nom">Nom du type, il appraitra tel quel sans traduction.
+	                    </li>
+	                    <li title="Description">
+	                    </li>
+	                </ul>
+	            </msg>
+	            <msg key="help_statusobjects" title="Status des objets" href="/statusobjects">
+	                Les statuts permettent de définir les statuts de maturité des objets suivant les processus mis en oeuvre dans l'entreprise.
+	                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+	                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+	                    <li title="Objet">Type d'objet sur lequel portera le statut: document/article/projet/client
+	                    </li>
+	                    <li title="Nom">Nom du statut, il appraitra tel quel sans traduction.
+	                    </li>
+	                    <li title="Rang de promotion">Rang du statut dans le cycle de vie de l'objet:
+	                        le Premier est pris à la creation
+	                        Une promotion attribue le suivant
+	                        Une rétrogradation attribue le précédent
+	                        Le dernier permet à l'utilisateur de demander une révision de l'objet:#jump=help_lifecycle=jump#
+	                    </li>
+	                    <li title="Description">
+	                    </li>
+	                    <li title="Promotion(oui/non)">Permet de préciser si le changement de statut vers le haut se fait par le menu promote (oui) ou par choix dans la liste (non)
+	                    </li>
+	                    <li title="Rétrogadation(oui/non)">Permet de préciser si le changement de statut vers le bas se fait par le menu promote (oui) ou par choix dans la liste (non)
+	                    </li>
+	                </ul>
+	            </msg>
+	            <msg key="help_sequences" title="Valeurs par défaut" href="/sequences">
+	                Définit les différentes valeurs par défaut utilisées par l'application, en particulier lors de l'attribution de noms aux objets.
+	                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+	                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+	                    <li title="Utilisation(identifiant/revision/...)">Permet d'attribuer la valeur à n'importe quel attribut d'un objet
+	                    </li>
+	                    <li title="Séquence(oui/non)">Permet de préciser que la valeur doit s'incrémenter à chaque création d'un nouel objet de ce type.
+	                    </li>
+	                    <li title="Modifiable">Permet de rendre possible la modification de la valeur de cet attribut( non pris en compte pour le moment)
+	                    </li>
+	                    <li title="Valeur">Pour préciser la valeur par défaut ou la première valeur d'une séquence.
+	                    </li>
+	                    <li title="Valeur minimale">Pour préciser la valeur minimale, non utilisée pour l'instant.
+	                    </li>
+	                    <li title="Valeur maximale">Pour préciser la valeur maximale, non utilisée pour l'instant.
+	                    </li>
+	                </ul>
+	            </msg>
+	
+	            <msg key="help_relations" title="Relations" href="/relations">
+	                Définit les différentes relations utilisées par l'application lors de la création de lienx entre objets
+	                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+	                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+	                    <li title="Nom">Nom de la relation.
+	                    </li>
+	                    <li title="Type">Type de la relation.
+	                    </li>
+	                    <li title="Type PLM du père">Type PLM possible de l'objet père de la relation.
+	                    </li>
+	                    <li title="Type PLM du fils">Type PLM possible de l'objet fils de la relation.
+	                    </li>
+	                     <li title="Type du père">Type possible de l'objet père de la relation.
+	                    </li>
+	                    <li title="Type du fils">Type possible de l'objet fils de la relation.
+	                    </li>
+	                    <li title="Cardin occur mini">Cardinalité d'occurence mini de la relation.
+	                    </li>
+	                    <li title="Cardin occur maxi">Cardinalité d'occurence maxi de la relation.
+	                    </li>
+	                    <li title="Cardin use mini">Cardinalité d'utilisation mini de la relation.
+	                    </li>
+	                    <li title="Cardin use maxi">Cardinalité d'utilisation maxi de la relation.
+	                    </li>
+	                </ul>
+	            </msg>
+	
+	            <msg key="help_views" title="Vues" href="/views">
+	                Définit les différentes vues utilisées par l'application lors de l'affichage des nomenclatures d'articles par l'explorateur, 
+	                voir les commandes Explorateur des objets concernes: Article, Projet et Client.
+	                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+	                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+	                    <li title="Nom">
+	                    </li>
+	                    <li title="Description">
+	                    </li>
+	                    <li title="Relations">Liste des relations que la vue affichera dans l'explorateur
+	                    </li>
+	                   
+	                </ul>
+	            </msg>
+	            
+	            <msg key="help_definitions" title="Définitions de processus" href="/definitions">
+	                Définit les différentes processus utilisées par l'application 
+	                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+	                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+	                    <li title="Nom">
+	                    </li>
+	                    <li title="Description">
+	                    </li>
+	                    <li title="URL">
+	                    </li>
+	                    <li title="Groupes">
+	                    </li>
+	                </ul>
+	                <msg key="help_definitions" title="Définition" href="/definitions">
+			            	Liste et lancement des processus (bouton vert)
+			            	#img=help/definitions_list.png=img#
+			            	Détail:
+			            	#img=help/definitions_show.png=img#
+			            	Edition:
+			            	#img=help/definitions_edit.png=img#
+			            	Création:
+			            	#img=help/definitions_new.png=img#
+	            		</msg>
+	            </msg>
+							<msg key="help_subscriptions" title="Abonnements" href="/subscription">
+	                Définit les abonnements pour assurer les notifications d'après les évènements sur les objets PLM.
+	                <msg key="help_subscriptions_subscriptions" title="Abonnements">
+	                    <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
+	                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
+	                        <li title="Nom">Nom de l'abonnement, il apparaitra tel quel sans traduction.
+	                        </li>
+	                        <li title="Désignation">
+	                        </li>
+	                        <li title="Responsable">Créateur ou dernier modificateur.
+	                       	</li>
+	                        <li title="Sur création">L'évènement de création sera notifié.
+	                        </li>
+	                        <li title="Sur édition">L'évènement de modification sera notifié.
+	                        </li>
+	                        <li title="Sur destruction">L'évènement de destruction sera notifié.
+	                        </li>
+	                        <li title="Pour les types">Seuls ces types seront pris en compte.
+	                        </li>
+	                        <li title="Dans les groupes">Les objets appartenant à ces groupes seront pris en compte.
+	                        </li>
+	                        <li title="Dans les projets">Les objets associés à ces projets seront pris en compte.
+	                        </li>
+	                        <li title="Domaine">
+	                        </li>
+	                    </ul>
+	                </msg>
+	                <msg key="help_subscriptions_functions" title="Fonctionnalités">
+	                    Les principales fonctionnalités sur les abonnements sont:
+	                    <msg key="help_subscriptions_index" title="Liste des abonnements" href="/volumes">
+	                        #img=help/subscriptions_list.png=img#
+	                    </msg>
+	                    <msg key="help_subscriptions_show" title="Explorer un abonnement" href="/abonnements/1">
+	                        #img=help/subscriptions_show.png=img#
+	                    </msg>
+	                    <msg key="help_subscriptions_edit" title="Editer un abonnement" href="/abonnements/1">
+	                        #img=help/subscriptions_edit.png=img#
+	                    </msg>
+	                    <msg key="help_subscriptions_new" title="Nouvel abonnement" href="/abonnements/new">
+	                        #img=help/subscriptions_new.png=img#
+	                    </msg>
+	                </msg>
+	            </msg>
+	            <msg key="help_config" title="Configuration">
+	                Il est possible de configurer l'application à l'aide de propriétés à définir dans le fichier sylrplm.rb du répertoire config/initializers/sylrplm.rb
+	                Toute modification de ce fichier requiert un redémarrage du serveur http.
+	                <ul title="config/sylrplm.rb">
+	                    <li title="VOLUME_DIRECTORY_DEFAULT">=/home/syl/trav/rubyonrails/sylrplm_data/
+	                        Répertoire par défaut du premier volume crée lors de l'initialisation: #jump=help_init_db=jump#
+	                    </li>
+	                </ul>
+	                <ul title="Types/properties">
+	                	De plus, d'autres paramètres peuvent être modifiés dans la base dans les objets 'Types d'objet' de type sylrplm_properties:
+	                	#img=help/properties.png=img#
+	                  <li title="Volume">
+	                   #img=help/properties_volume.png=img#
+	                   <ul>
+	                    	<li>
+	                    		
+	                    	</li>
+	                    </ul>
+	                  </li>
+	                  <li title="Autres">
+	                   #img=help/properties_others.png=img#
+	                  </li>
+	                  <li title="Objets">
+	                   #img=help/properties_objects.png=img#
+	                  </li>
+	                  <li title="Structure">
+	                   #img=help/properties_tree.png=img#
+	                  </li>
+	                  <li title="Defauts utilisateur">
+	                   	#img=help/properties_userdefaults.png=img#
+	                   	<ul>
+		                   	<li>title="LOCAL_DEFAULT">="fr"
+		                    	Langue par défaut (fr ou us)
+		                    </li>
+		                    <li title="THEME_DEFAULT">="blackwhite"
+		                    	Thème par défaut (blackwhite ou blue ou green)
+		                   	</li>
+		                   	<li title="NB_ITEMS_PER_PAGE">=15
+		                    	Nombre de lignes d'objets affichées par page dans les listes.
+		                   	</li>
+	                  	</ul>
+	                	</li>
+	                  <li title="Valeurs des types">
+	                  	#img=help/properties_typesvalues.png=img#
+	                  </li>
+	                </ul>
+	            </msg>
+        	</msg>
         </msg>
         
         <msg key="help_debug" title="Debug">
@@ -980,14 +1123,17 @@
         
         <msg key="help_custo_integration" title="Integration du parametrage">
             La commande "rake sylrplm:export_domain" permet d'exporter et importer un parametrage suivant un domaine particulier
- 						<ul title="Export-Import">Les differentes utilisation possibles sont:
-                    <li title="Export custo societe sicm">
+ 						<ul title="Export-Import">Les differentes utilisations possibles sont:
+                   <li title="Export custo societe sicm">
                         rake sylrplm:export_domain[db/custos_export,sicm.custo]
                     </li>
                     <li title="Export exemple table">
                         rake sylrplm:export_domain[db/custos_export,sample.table]
                     </li>
-                    <li title="Import custo societe sicm">
+                    <li title="Import custo de base de la  societe sicm">
+                        rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base]
+                    </li>
+                    <li title="Import custo de la societe sicm">
                         rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
                     </li>
                     <li title="Import exemple table">
@@ -1006,15 +1152,25 @@
     <msg key="help_init_db" title="Initialisation d'une base de données">
         Avant de commencer à créer des objets , l'application vous invite à initialiser la base de donnée suivant le domaine dans lequel vous voulez l'utiliser
         Vous pourrez ensuite compléter ce paramétrage, voir la partie paramétrage.
-        L'application propose donc le choix du domaine de votre PLM: Mécanique ou Culinaire ainsi que celui de l'emplacement du 1er volume de stockage des fichiers associés aux documents.
+        L'application propose donc la société SICM (société internationale de construction de meubles) ainsi que l'exemple d'une table configurée.
+        Ce paramétrage est disponible en effectuant l'import suivant précisé dans le chapitre sur l'intégration:#jump=help_custo_integration=jump#
+        : 
         <ul>
-            <li title="Domaine mécanique">
-                Le domaine mécanique comprend les paramétrages suivants:
+        	<li title="Import custo de base de la societe sicm">
+        		rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base]
+          </li>
+          <li title="Import custo de la societe sicm">
+          	rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
+          </li>
+        </ul>
+        <ul>
+            <li title="SICM">
+                Les paramétrages possibles sont les suivants:
                 <ul>
                     <li title="Types d'objets" href="/typesobjects/new">
                         <ul>
                             <li>Documents:Plan2D, Plan3D, Note de calcul, ...</li>
-                            <li>Pièces:Mécanique, Electronique, ...</li>
+                            <li>Pièces:Ameublement Mécanique, Electronique, ...</li>
                             <li>Projets:PDM, Batiment, ...</li>
                             <li>Clients:Interne, Public, Privé ...</li>
                         </ul>
