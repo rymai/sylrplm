@@ -20,7 +20,7 @@
 		</thead>
 		<% for group in @groups[:recordset] %>
 		<tr class='<%= cycle("even", "odd") %>'>
-			<td><%= group.name %></td>
+			<td><%= h_explorer group %></td>
 			<td><%= group.domain %></td>
 			<td><%= comma_links(group.users, :login) %></td>
 			<td><%= h_explorer group.father, :name unless group.father.nil? %></td>

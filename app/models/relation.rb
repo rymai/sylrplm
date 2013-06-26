@@ -53,7 +53,8 @@ class Relation < ActiveRecord::Base
 		ret+=sep_name + self.name unless self.name.nil?
 		ret+=sep_name + father_plmtype + sep_type
 		#puts aname+ "father_type="+father_type.inspect
-		ret+=father_typesobject.name unless father_typesobject.nil?
+		#ret+=father_typesobject.name unless father_typesobject.nil?
+		
 		# on recommence plus simplement
 		ret="#{typesobject.name}.#{name}" unless typesobject.nil?
 		ret

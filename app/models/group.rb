@@ -26,6 +26,10 @@ class Group < ActiveRecord::Base
 
 	def designation; name; end
 
+	def variants
+		nil
+	end
+
 	def typesobject
 		Typesobject.find_by_forobject(model_name)
 	end
@@ -55,7 +59,5 @@ class Group < ActiveRecord::Base
 	def others
 		Group.all
 	end
-	
-	
 
 end

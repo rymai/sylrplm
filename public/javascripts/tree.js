@@ -1,4 +1,3 @@
-<!--
 
  /*--------------------------------------------------|
 | dTree 2.05 | www.destroydrop.com/javascript/tree/ |
@@ -552,4 +551,3 @@ if (!Array.prototype.pop) {
 function tree_ajax_update(params){
    return "new Ajax.Updater("+params+");";
 }
--->

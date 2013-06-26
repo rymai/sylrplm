@@ -1,5 +1,6 @@
-PATH
-  remote: ../sylrplm_ext
+GIT
+  remote: git://github.com/sylvani/sylrplm_ext.git
+  revision: 51f0654022665e70d72c393cb542ba6e166b464a
   specs:
     sylrplm_ext (0.0.4)
 
