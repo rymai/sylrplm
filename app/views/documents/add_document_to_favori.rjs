@@ -1,3 +1,0 @@
-page.replace_html("favori_document", 
-:partial => "main/favori_document", 
-:object => @favori_document)

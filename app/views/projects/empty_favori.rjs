@@ -1,3 +1,0 @@
-page.replace_html("favori_project", 
-:partial => "main/favori_project", 
-:object => @favori.get("project"))
