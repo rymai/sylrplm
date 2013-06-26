@@ -6,7 +6,7 @@
 		byId('definition_span').style.display = 'inline';
 	}
 </script>
-<% form_for(@definition, :html => { :multipart => true }) do |f| %>
+<%= form_for(@definition, :html => { :multipart => true }) do |f| %>
 <%= f.error_messages %>
 <table>
 	<tr>
@@ -28,4 +28,4 @@
 		<td> <%= link_to t(:list), definitions_path %></td>
 	</tr>
 </table>
-<% end %> 
+<% end %>

@@ -1,5 +1,5 @@
 <h1><%=t(:project_new) %></h1>
-<% form_for(@project) do |f| %>
+<%= form_for(@project) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "projects/edit",:locals => { :f => f, :fonct=>"new" }) %>
 <h1></h1>

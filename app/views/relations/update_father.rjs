@@ -1,2 +1,0 @@
-page.replace_html("father_types", :partial => "relations/father_types" )
-

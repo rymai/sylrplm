@@ -1,6 +1,6 @@
 <h1><%= t(:project_list) %><%= h_count_objects(@projects) %></h1>
 <% unless @project.nil? %>
-<% form_for(@project) do |f| %>
+<%= form_for(@project) do |f| %>
 <%= f.error_messages %>
 <% end %>
 <% end %>

@@ -1,6 +1,6 @@
 <h1><%= t(:subscription_list) %><%= h_count_objects(@subscriptions) %></h1>
 <% unless @subscription.nil? %>
-<% form_for(@subscription) do |f| %>
+<%= form_for(@subscription) do |f| %>
 <%= f.error_messages %>
 <% end %>
 <% end %>

@@ -1,5 +1,5 @@
 <h1><%=t(:volume_new) %></h1>
-<% form_for(@volume) do |f| %>
+<%= form_for(@volume) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "volumes/edit",:locals => { :f => f, :fonct=>"new" }) %>
 <table class='menu_bas'>

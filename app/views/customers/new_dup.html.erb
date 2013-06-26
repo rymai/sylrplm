@@ -1,6 +1,6 @@
 <h1><%= t("customer_new_dup") %></h1>
 <% fonct="new_dup" %>
-<% form_for(@customer, :html => { :id => h_form_html_id(@customer, fonct) }) do |f| %>
+<%= form_for(@customer, :html => { :id => h_form_html_id(@customer, fonct) }) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "customers/edit",:locals => { :f => f, :fonct=>fonct }) %>
 <%= render(:partial => "shared/show_objects_in_relations", :locals => { :object => @customer_orig, :f => f, :fonct=>fonct }) %>

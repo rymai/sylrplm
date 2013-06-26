@@ -1,6 +1,6 @@
 <h1><%= t("document_show") %></h1>
 <% fonct="show" %>
-<% form_for(@document, :html => { :id => h_form_html_id(@document, fonct) }) do |f| %>
+<%= form_for(@document, :html => { :id => h_form_html_id(@document, fonct) }) do |f| %>
 <%= f.error_messages %>
 <p>
 	<b><%= t("label_ident") %></b>
@@ -55,7 +55,7 @@
 		<td> <%= link_to t("add_datafile"), :action => :new_datafile, :id => @document.id %> </td>
 	</tr>
 </table>
-<% end %> 
+<% end %>
 
 <% render(:partial => "shared/show_objects_in_relations", :locals=> {:object => @document,  :fonct => fonct}) %>
 
@@ -69,7 +69,7 @@
 	</tr>
 	<% else %>
 	<% unless @document.checked? %>
-	<% form_for(@document, :url => {:id => @document.id, :action => :check_out }, :method => :get) do |f| %>
+	<%= form_for(@document, :url => {:id => @document.id, :action => :check_out }, :method => :get) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_out") %></td>
 		<td> <%= label_tag t("label_out_reason") %></td>
@@ -86,14 +86,14 @@
 	</tr>
 	<!-- liberation par celui qui a reserve seulement -->
 	<% if @document.can_be_check_in?(current_user) %>
-	<% form_for(@document, :url => {:id => @document.id, :action => :check_in }, :method => :get) do |f| %>
+	<%= form_for(@document, :url => {:id => @document.id, :action => :check_in }, :method => :get) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_in") %></td>
 		<td> <%= label_tag t("label_in_reason") %></td>
 		<td> <%= text_field_tag "check[in_reason]" %></td>
 	</tr>
 	<% end %>
-	<% form_for(@document, :url => {:id => @document.id, :action => :check_free }, :method => :get) do |f| %>
+	<%= form_for(@document, :url => {:id => @document.id, :action => :check_free }, :method => :get) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_free") %></td>
 		<td> <%= label_tag t("label_in_reason") %></td>
@@ -109,7 +109,7 @@
 <% unless @favori.get('document').count==0 %> <h1></h1>
 <table class='menu_bas'>
 	<tr>
-		<% form_for(@document, :url => {:id => @document.id, :action => :add_docs }) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %></td>
+		<%= form_for(@document, :url => {:id => @document.id, :action => :add_docs }) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
 		<% end %>
 	</tr>
@@ -117,7 +117,7 @@
 </table>
 <%end%>
 <%= render(:partial => "shared/tree", :object => @document ) %> <h1></h1>
-<% form_for(@document) do |f| %>
+<%= form_for(@document) do |f| %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("edit"), edit_document_path(@document) %></td>
@@ -125,4 +125,4 @@
 		<td> <%= link_to t("list"), documents_path %></td>
 	</tr>
 </table>
-<% end %> 
+<% end %>

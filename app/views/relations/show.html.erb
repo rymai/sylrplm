@@ -1,5 +1,5 @@
 <% fonct="show" %>
-<% form_for(@relation, :html => { :id => h_form_html_id(@relation, fonct) }) do |f| %>
+<%= form_for(@relation, :html => { :id => h_form_html_id(@relation, fonct) }) do |f| %>
 <%= f.error_messages %>
 <p>
 	<b>Ident:</b>

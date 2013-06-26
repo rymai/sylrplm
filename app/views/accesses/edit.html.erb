@@ -1,5 +1,5 @@
 <h1><%= t("access_edit")%></h1>
-<% form_for(@access) do |f| %>
+<%= form_for(@access) do |f| %>
 <%= f.error_messages %>
 <%= render "accesses/edit", :f => f, :fonct => "edit" %>
 <table class='menu_bas'>

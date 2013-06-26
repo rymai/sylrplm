@@ -25,6 +25,9 @@ gem 'sylrplm_ext', github: 'sylvani/sylrplm_ext'
 # gem 'sylrplm_ext', :path => "/home/syl/trav/rubyonrails/sylrplm_ext"
 # gem 'sylrplm_ext', :path => "~/Code/github/sylrplm_ext"
 
+# Back compatibility
+gem 'dynamic_form'
+
 group :staging, :production do
   gem 'unicorn'
   gem 'rack-ssl'

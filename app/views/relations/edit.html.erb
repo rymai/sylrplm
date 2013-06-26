@@ -1,13 +1,13 @@
 <h1>Editing relation</h1>
 <% fonct="edit" %>
-<% form_for(@relation, :html => { :id => h_form_html_id(@relation, fonct) }) do |f| %>
+<%= form_for(@relation, :html => { :id => h_form_html_id(@relation, fonct) }) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "relations/edit",:locals => { :f => f, :fonct=>fonct }) %>
 <table class='menu_bas'>
     <tr>
         <td>
             <%= f.submit t("update") %>
-        </td>      
+        </td>
         <td>
             <%= link_to t("explorer"), @relation %>
         </td>

@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/sylvani/sylrplm_ext.git
-  revision: 309a70aa965d219c5b5c43aba5f1fe25914373ba
+  revision: f900a9d26633410dc47eec194411f44b8aa271c4
   specs:
     sylrplm_ext (0.0.4)
 
@@ -49,6 +49,7 @@ GEM
     dotenv (0.8.0)
     dotenv-rails (0.8.0)
       dotenv (= 0.8.0)
+    dynamic_form (1.1.4)
     em-websocket (0.5.0)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.5.3)
@@ -238,6 +239,7 @@ DEPENDENCIES
   cache_digests
   dalli
   dotenv-rails
+  dynamic_form
   fog (~> 1.12)
   foreman
   guard-livereload

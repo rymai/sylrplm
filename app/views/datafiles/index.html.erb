@@ -1,6 +1,6 @@
 <h1><%= t(:datafile_list) %><%= h_count_objects(@datafiles)%> </h1>
 <% unless @datafile.nil? %>
-<% form_for(@datafile) do |f| %>
+<%= form_for(@datafile) do |f| %>
 <%= f.error_messages %>
 <% end %>
 <% end %>

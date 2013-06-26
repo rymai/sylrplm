@@ -15,7 +15,7 @@
 	<%= f.select(
 		:father_plmtype, @datas[:types_plm], {},
 		{
-			:onchange => "#{remote_function(:url => {:controller => 'relations', :action => 'update_father'}, :with => "'father_plmtype='+value")}"
+			:onchange => "$.get('/relations/update_father?father_plmtype=' + value, function(data) {}, 'script')"
 		}
 		) %>
 	<br/>
@@ -25,7 +25,7 @@
 	<%= f.select(
 		:child_plmtype, @datas[:types_plm], {},
 		{
-			:onchange => "#{remote_function(:url =>  {:controller => 'relations', :action => 'update_child'}, :with => "'child_plmtype='+value")}"
+			:onchange => "$.get('/relations/update_child?child_plmtype=' + value, function(data) {}, 'script')"
 		}
 		) %>
 	<br/>

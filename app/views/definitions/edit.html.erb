@@ -1,5 +1,5 @@
 <h1><%= t("definitions_edit") %>: "<%= h @definition.name %>"</h1>
-<% form_for(@definition, :html => { :id => 'definition_form' }) do |f| %>
+<%= form_for(@definition, :html => { :id => 'definition_form' }) do |f| %>
 <%= f.error_messages %>
 <fieldset>
 	<legend>

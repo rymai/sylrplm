@@ -1,6 +1,6 @@
 <h1><%= t(:typesobjects_list) %><%= h_count_objects(@typesobjects)%> </h1>
 <% unless @typesobject.nil? %>
-<% form_for(@typesobject) do |f| %>
+<%= form_for(@typesobject) do |f| %>
 <%= f.error_messages %>
 <% end %>
 <% end %>

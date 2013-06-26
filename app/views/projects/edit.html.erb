@@ -1,6 +1,6 @@
 <h1><%= t(:project_edit) %></h1>
 <% fonct="edit" %>
-<% form_for(@project, :html => { :id => h_form_html_id(@project, fonct) }) do |f| %>
+<%= form_for(@project, :html => { :id => h_form_html_id(@project, fonct) }) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "projects/edit",:locals => { :f => f, :fonct=>fonct }) %>
 <h1></h1>

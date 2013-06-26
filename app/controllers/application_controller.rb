@@ -254,7 +254,7 @@ class ApplicationController < ActionController::Base
       puts "authorize:user is nil"
       #puts "application_controller.authorize.request_uri="+request.request_uri
       #puts "application_controller.authorize.new_sessions_url="+new_sessions_url
-      session[:original_uri] = request.request_uri
+      session[:original_uri] = request.path
       flash[:notice] = t(:login_login)
       redirect_to new_sessions_url
     else
@@ -266,7 +266,7 @@ class ApplicationController < ActionController::Base
           puts "authorize:roles=#{user.roles}  "
           puts "authorize:groups=#{user.groups}  "
           puts "authorize:projects=#{user.projects}  "
-          session[:original_uri] = request.request_uri
+          session[:original_uri] = request.path
           flash[:notice] = t(:login_login)
           redirect_to new_sessions_url
         end
@@ -276,7 +276,7 @@ class ApplicationController < ActionController::Base
           puts "authorize:groups=#{user.groups}  "
           puts "authorize:projects=#{user.projects}  "
           puts "authorize:volume=#{user.volume} "
-	  			session[:original_uri] = request.request_uri
+	  			session[:original_uri] = request.path
           flash[:notice] = t(:login_login)
           redirect_to new_sessions_url
       end

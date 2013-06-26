@@ -108,7 +108,7 @@ function byId(i) {
 function linkToCss(href) {
 
 	var e = document.createElement('link');
-	e.setAttribute('href', '/stylesheets/' + href + '.css');
+	e.setAttribute('href', '/assets/' + href + '.css');
 	e.setAttribute('media', 'screen');
 	e.setAttribute('rel', 'stylesheet');
 	e.setAttribute('type', 'text/css');

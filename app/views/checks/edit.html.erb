@@ -1,5 +1,5 @@
 <h1><%= t("check_edit")%></h1>
-<% form_for(@check) do |f| %>
+<%= form_for(@check) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "checks/edit",:locals => { :f => f, :fonct=>"edit" }) %>
 <table class='menu_bas'>

@@ -1,6 +1,6 @@
 <h1><%= t(:views_list) %><%= h_count_objects(@views)%> </h1>
 <% unless @view.nil? %>
-<% form_for(@view) do |f| %>
+<%= form_for(@view) do |f| %>
 <%= f.error_messages %>
 <% end %>
 <% end %>

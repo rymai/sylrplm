@@ -1,7 +1,7 @@
 
 <h1><%= t("object_tree")%></h1>
 <% unless @views.nil? %>
-<% form_for(object, :url => {:id => object.id, :action => "select_view" }) do |f| %> <!-- -->
+<%= form_for(object, :url => {:id => object.id, :action => "select_view" }) do |f| %> <!-- -->
 <input type='hidden' name='root_id' value='<%= object.id%>'>
 <input type='hidden' name='root_model' value='<%= object.model_name%>'>
 <%= f.label t(:label_view) %>

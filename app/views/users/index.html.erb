@@ -1,6 +1,6 @@
 <h1><%= t(:user_list) %><%= h_count_objects(@current_users)%> </h1>
 <% unless @user.nil? %>
-<% form_for(@user) do |f| %>
+<%= form_for(@user) do |f| %>
 <%= f.error_messages %>
 <% end %>
 <% end %>

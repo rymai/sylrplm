@@ -1,5 +1,5 @@
 <h1><%= t("check_new")%></h1>
-<% form_for(@check) do |f| %>
+<%= form_for(@check) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "checks/edit",:locals => { :f => f, :fonct=>"new" }) %>
 <table class='menu_bas'>
@@ -8,4 +8,4 @@
 		<td><%= link_to t("list"), checks_path %></td>
 	</tr>
 </table>
-<% end %> 
+<% end %>

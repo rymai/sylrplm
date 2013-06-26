@@ -1,6 +1,6 @@
 <h1><%= t(:part_show) %></h1>
 <% fonct="show" %>
-<% form_for(@part, :html => { :id => h_form_html_id(@part, fonct) }) do |f| %>
+<%= form_for(@part, :html => { :id => h_form_html_id(@part, fonct) }) do |f| %>
 <%= f.error_messages %>
 <% end %>
 <p>
@@ -60,21 +60,21 @@
 <table class='menu_bas'>
 	<% unless @favori.get('document').count==0 || @part.relations["document"].count==0 %>
 	<tr>
-		<% form_for(@part, :url => {:id => @part.id, :action => "add_docs" }, :method => :get) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @part.relations["document"], :id, :ident)) %></td>
+		<%= form_for(@part, :url => {:id => @part.id, :action => "add_docs" }, :method => :get) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @part.relations["document"], :id, :ident)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
 		<% end %>
 	</tr>
 	<%end%>
 	<% unless @favori.get('part').count==0 || @part.relations["part"].count==0 %>
 	<tr>
-		<% form_for(@part, :url => {:id => @part.id, :action => "add_parts" }, :method => :get) do |f| %> <td> <%= select("relation","part", options_from_collection_for_select( @part.relations["part"], :id, :ident)) %></td>
+		<%= form_for(@part, :url => {:id => @part.id, :action => "add_parts" }, :method => :get) do |f| %> <td> <%= select("relation","part", options_from_collection_for_select( @part.relations["part"], :id, :ident)) %></td>
 		<td> <%= submit_tag t("paste_parts") %></td>
 		<% end %>
 	</tr>
 	<% end %>
 	<% unless @part.relations["forum"].count==0 %>
 	<tr>
-		<% form_for(@part, :url => {:id => @part.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @part.relations["forum"], :id, :ident)) %></td>
+		<%= form_for(@part, :url => {:id => @part.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @part.relations["forum"], :id, :ident)) %></td>
 		<td><%= submit_tag t("add_forum") %></td>
 		<% end %>
 	</tr>

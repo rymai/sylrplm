@@ -1,7 +1,7 @@
 <h1><%= t("link_edit_in_tree") %>
 <% fonct="edit_in_tree"
 	form_id=fonct+"_link" %>
-<% form_for(@link, :url => {:controller => :links , :action => :update_in_tree}, :html => { :id => form_id }) do |f| %>
+<%= form_for(@link, :url => {:controller => :links , :action => :update_in_tree}, :html => { :id => form_id }) do |f| %>
 <%= f.error_messages %>
 <%= hidden_field_tag 'object_model' , @object_in_explorer.model_name %>
 <%= hidden_field_tag 'object_id' , @object_in_explorer.id %>
@@ -20,4 +20,4 @@
 		<td> <%= link_to t("back_to_object")+@object_in_explorer.ident, object_path(@object_in_explorer) %> </td>
 		<td> <%= link_to t("back_to_root")+@root.ident, object_path(@root) %> </td>
 	</tr>
-</table> <% end %> 
+</table> <% end %>

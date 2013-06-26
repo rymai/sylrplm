@@ -1,9 +1,7 @@
 <h1><%= t(:user_show) %></h1>
-<% fonct="show" %>
-<% form_for(@the_user, :html => { :id => h_form_html_id(@the_user, fonct) }) do |form| %>
-<%= form.error_messages %>
+<%= form_for(@the_user, :html => { :id => h_form_html_id(@the_user, 'show') }) do |form| %>
 <% end %>
-<%= render(:partial => "users/"+fonct,:locals => { :user => @the_user, :fonct => fonct }) %>
+<%= render 'show', user: @the_user, fonct: 'show' %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t(:edit), edit_user_path(@the_user) %> </td>

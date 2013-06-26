@@ -8,76 +8,76 @@ Fond:
   - Préférer "&&" à "and" ("&&" évite des bugs subtil, ayant plus de priorité que "and", cf http://www.themomorohoax.com/2008/12/08/and-vs-amperand-in-ruby)
   - Trop de répétition dans les models, dans Link.createNew par exemple
   - Ne crée pas de variables quand c'est inutile, exemple :
-  
+
     def self.getObjectsWithType
     		ret=["document","part","project","customer","forum","relation_document","relation_part","relation_project"]
     		ret
     end
-  
+
   peut être écrit :
-  
+
     def self.getObjectsWithType
       ["document", "part", "project", "customer", "forum", "relation_document", "relation_part", "relation_project"]
     end
-  
+
   - Dans User, il faut utiliser un before_destroy si tu veux pas supprimer le dernier user! Pas un after_destroy
-  
+
   - Dans ApplicationController :
-    
+
     I18n.locale = params[:locale] || 'en ou fr'
-    
+
   c'est pas légal ça ?! :P
-  
+
   - Tous les find_user, find_userid, find_username, find_userrole, find_usermail etc. dans ApplicationController, il faut les mettre ailleurs, j'ai pas encore assez bien saisi ton code pour pouvoir te dire ou, mais il va pas falloir les laisser là !
-  
-  - C'est pas pour faire joli ça : 
-  
+
+  - C'est pas pour faire joli ça :
+
     # Scrub sensitive parameters from your log
     # filter_parameter_logging :password
-  
+
   il faut que tu mettes "filter_parameter_logging :password" en haut de ton ApplicationController au minimum et ajoutes tous les autres parametres qui ne doivent pas apparaitre dans les logs : "filter_parameter_logging :password, :credit_card" (tous les params qui contiennent 'password' ou 'credit_card' seront filtrés)
-  
-  
+
+
   - Évite les "return" quand c'est pas nécessaire et pareil pour les query SQL :
-  
+
     def self.find_validers
       ret=find(:all,
-        :select => "us.login,us.email", 
-        :order => "us.login", 
+        :select => "us.login,us.email",
+        :order => "us.login",
         :conditions => ["ro.title like ?",'valid%' ],
         :joins => "as us inner join roles as ro on us.role_id=ro.id")
         puts "User.find_validers:"+ret.inspect
         return ret
     end
-  
+
   peut s'écrire :
-  
+
     def self.find_validers
       all(:select => [:login, :email],
           :order => :login,
           :conditions => "roles.title like valid%",
           :joins => "inner join roles on users.role_id = roles.id")
     end
-  
+
   => find(:all) = all()
   => pourquoi faire un alias des tables quand la query est si petite et pas écrite entièrement en SQL, je trouve que ça alourdit le tout ? tu peux aussi virer "user." quand la colonne n'est pas ambigue (ça à la limite ça peut etre pas mal de toujours préfixer...)
   => préfère les symboles au strings : :select => "us.login,us.email" == :select => [:login, :email]
   => pas besoin de ["blabla ?", "truc"] quand truc n'est pas entré par un user, mets directement "blabla truc"
   => pas besoin de return car le find est la dernière commande interprétée donc sont resultat est retourné implicitement, utilises return quand tu veux quitter une méthode brutalement (du style au début d'une méthode tu peux avoir "return if object.nil?" si tout ce que tu fois faire se passe sur object et qu'il est nil, tu bypass direct la méthode par exemple)
-  
+
   - Met une route par défaut, car quand je lance l'appli pour la première fois j'ai l'index.html par défaut de Rails (vire le d'ailleurs celui là!)
   - Utilises la puissance de Ruby pour éviter les duplications, exemple :
-  
+
     def self.createNew()
       obj=Volume.new
       Sequence.set_default_values(obj, self.name, true)
       obj
     end
-  
+
   Je pense que tu veux créer une instance de Volume et en meme temps créer une sequence unique pour l'objet, mon conseil puisque j'ai vu que tu appelle ce meme code dans plusieurs modeles :
     - utilises simplement Volume.create dans ton controleur (ou volume = Volume.new puis colume.save si tu veux le faire en 2 temps)
     - créé un module :
-    
+
       module HasSequence
 
         def self.included(base)
@@ -98,13 +98,13 @@ Fond:
         end
 
       end
-    
+
     et ensuite dans tous les models qui ont une sequence, ajoute simplement : include HasSequence
     J'ai vu que dans certains modeles la logique est differente, dans ceux là à la limite pour le moment tu peux redéfinir le set_sequence.
-    
+
   - Utilises des scope à la place des méthode "find_by", "find_all" etc.
     Pour te donner un exemple, voici des scopes que l'on a sur un de nos projet (les scopes sont définis avec la nouvelle syntaxe qui va avec Rails 3 ici):
-    
+
       default_scope where(:trashed_at => nil)
 
       scope :starred,                where(:starred => true)
@@ -129,18 +129,18 @@ Fond:
 
       scope :with_tag, lambda { |tag| tag.present? ? includes({ :sites => :tags }, :tags).where({ :tags => { :name => tag } } | { :sites => { :tags => { :name => tag } } }) : where("") }
       scope :search, lambda { |q| where(["LOWER(enthusiasts.email) LIKE LOWER(?) OR LOWER(enthusiasts.free_text) LIKE LOWER(?) OR LOWER(enthusiast_sites.hostname) LIKE LOWER(?)", "%#{q}%", "%#{q}%", "%#{q}%"])
-    
+
     Ensuite t'as plus qu'a appeler Enthusiast.starred.not_invited.having_tag.by_date par exemple (tu peut enchainer les scopes et ça te fait une requete SQL au final!). Vachement plus clean ! :)
-    
+
   - Dans tes views, utilises des partials pour éviter la duplication de code. Typiquement tu prend /checks/new et /checks/edit, tu as exactement le même form avec juste le titre et les boutons qui changent !
-  
+
   Fais un partial _form.html.erb dans lequel tu met les champs du form et tu appelles ensuite à peu près ça dans les 2 pages (avec le titre et texte des boutons qui change, mais même ça tu pourrais le passer en variables au partial si tu voulais) :
-  
+
   <h1><%=t("check_edit")%></h1>
-  
-  <% form_for(@check) do |f| %>
+
+  <%= form_for(@check) do |f| %>
     <%= render :partial => 'form', :f => f %>
-    
+
     <table class='menu_bas'>
       <tr>
         <td><%= f.submit t("update") %></td>
@@ -149,41 +149,41 @@ Fond:
       </tr>
     </table>
   <% end %>
-  
-  
+
+
 Forme (moins important mais pas mal de trucs font parti des "guidelines de Ruby/Rails" et quand je vois ton code, je sais que tu viens du Java ^^ donc Ruby c'est aussi une mentalité au niveau de la clarté du code, des conventions de codage (comme en Java ça, mais elles sont différentes en Ruby)):
-  
+
   - Les modules doivent etre placés dans /lib (PlmInitControllerModule par exemple) et tu les include dans les controleurs si tu en as besoin par exemple
-  
+
   - Bouge SylFormatter dans un module, typiquement.
-  
+
   - Supprimer les fichiers vides (les helpers par exemple)
-  
+
   - Virer les lignes commentées, nettoyer les espaces superflues (affiches les et tu comprendras pourquoi je dis ça!!) et les lignes vides
-  
+
   - Utilises toujours 2 espaces au lieu de tabulations, pas comme là par exemple :
-  
+
   8 espaces là :
-  
+
     def self.find_all
             find(:all, :order=>"object,name")
-    end 
-  
+    end
+
   4 espaces là :
-  
+
     def self.find_for(object)
         find(:all, :order=>"object,name", :conditions => ["object = '#{object}' "])
     end
-  
+
   - Essaye de toujours (je sais que tu le fais, mais pas partout) de mettre les "if/unless" avec une condition et une action sur une ligne.
   - Mettre un espace de part et d'autre des "=" quand tu assignes des variables
   - Moi j'aime bien mettre des espaces dans les hash, comme ça : { :key1 => "value1", :key2 => "value2" }
   - Mais pas dans les array : [:foo, :bar] mais met un espace entre les éléments de l'array par contre !
-  
+
   - Le CSS, met la taille de police à plus que 11px !! Genre 14px
-  
+
   - C'est normal les intitulés de traductions "mnu_questions" ?
-  
+
   - Indente les blocs "if/do" etc. dans les views, moi j'utilises HAML comme langage de templating et il fonctionne sur l'indentation, donc si tu indentes mal ça crash ! Je peux te dire que mes views sont parfaitement indentées !! C'est une bonne habitude.
-  
+
   - Fais pas un layout pour chaque controleurs, surtout quand ils sont quasi-identiques !! Penses à la maintenance de ton application ! ;)

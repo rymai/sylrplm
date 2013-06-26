@@ -1,5 +1,5 @@
 <h1><%=t(:forum_edit)%></h1>
-<% form_for(@forum) do |f| %>
+<%= form_for(@forum) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "forums/edit",:locals => { :f => f, :fonct=>"edit" }) %>
 <table class='menu_bas'>
@@ -9,4 +9,4 @@
 		<td><%= link_to t("list"), forums_path %></td>
 	</tr>
 </table>
-<% end %> 
+<% end %>

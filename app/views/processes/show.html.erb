@@ -1,6 +1,6 @@
 <h1><%= t("processes_show") %><%= h @process.wfid %></h1>
-<% form_for(:process, @process, :html => { :method => :delete }) do |f| %>
-	
+<%= form_for(:process, @process, :html => { :method => :delete }) do |f| %>
+
 	<table>
 		<tr>
 			<td class="wide-first-col">wfid</td>
@@ -50,4 +50,4 @@
 	</table>
 	<%= render_fluo :process => @process, :workitems => @process.workitem_expids %>
 
-<% end %> 
+<% end %>

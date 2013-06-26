@@ -371,10 +371,7 @@ SylRPLM::Application.routes.draw do
 # 	:controller => 'users',
 # 	:action => 'browse')
 
-# 	connect(
-# 	'users/:id/reset_passwd',
-# 	:controller => 'users',
-# 	:action => 'reset_passwd')
+	get	'users/:id/reset_passwd' => 'users#reset_passwd'
 
 # 	connect(
 # 	'users/:id/account_edit',

@@ -1,9 +1,7 @@
 <!-- attention:
 	ne pas faire de formattage auto sur ce fichier, le javascript est mal decoupe
 	-->
-	<script src="/javascripts/ruote-forms.js"></script>
-<script src="/javascripts/fluo-json.js"></script>
-<script src="/javascripts/forms-ext.js"></script>
+	<%= javascript_include_tag 'ruote-forms', 'fluo-json', 'forms-ext' %>
 <table class='menu_bas'>
 	<tr>
 		<td><span><a href="" onclick="swapForm(); return false;"><%= t(:button_swap)%></a></span></td>
@@ -11,7 +9,7 @@
 			<td><span id="rf_buttons"><a href="" onclick="RuoteForms.resetForm('rform'); return false;"><%= t(:button_reset)%></a><a href="" onclick="RuoteForms.undo('rform'); return false;"><%= t(:button_undo)%></a></span></td>
 		-->
 		<td><span id="rf_buttons"></span></td>
-	
+
 	</tr>
 </table>
 <div id="fields_ta" style="display: none;">
@@ -26,5 +24,5 @@
 <div class="fieldhead">
 	<script>
 byId('<%= form_id ||= "fields" %>').onsubmit = function () { swapForm(); return true;};
-	RuoteForms.renderForm('rform', <%= fields %><%= (","+options.to_json) unless options.nil? %>);</script>
+	RuoteForms.renderForm('rform', <%= fields %>, <%= (options || {}).to_json.html_safe %>);</script>
 </div>

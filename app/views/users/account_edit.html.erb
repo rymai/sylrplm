@@ -1,5 +1,5 @@
 <h1><%= t(:account_edit, :login => current_user.login) %></h1>
-<% form_for(@the_user, :url => {:controller=>:users , :action=>:account_update})  do |form| %>
+<%= form_for(@the_user, :url => {:controller=>:users , :action=>:account_update})  do |form| %>
 <%= form.error_messages %>
 <fieldset>
 	<legend>
@@ -14,7 +14,7 @@
 </fieldset>
 <%end%>
 
-<% form_for :session, :url => {:controller => :sessions , :action => :login}  do |form| %>
+<%= form_for :session, :url => {:controller => :sessions , :action => :login}  do |form| %>
 <%= hidden_field_tag :user_id , @current_user.id %>
 <fieldset>
 	<legend>
@@ -27,4 +27,4 @@
 		</tr>
 	</table>
 </fieldset>
-<% end %> 
+<% end %>

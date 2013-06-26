@@ -1,6 +1,6 @@
 <h1><%= t(:datafile_show) %></h1>
 <% fonct="show" %>
-<% form_for(@datafile, :html => { :id => h_form_html_id(@datafile, fonct) }) do |f| %>
+<%= form_for(@datafile, :html => { :id => h_form_html_id(@datafile, fonct) }) do |f| %>
 <%= f.error_messages %>
 <p>
 	<b><%= t("label_ident") %></b>

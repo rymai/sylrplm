@@ -1,6 +1,6 @@
 <% h_title t(:connect) %>
 
-<% form_for :session, url: { controller: :sessions, action: :create} do |form| %>
+<%= form_for :session, url: { controller: :sessions, action: :create} do |form| %>
 <fieldset>
 	<legend>
 		<%= t(:legend_login) %>

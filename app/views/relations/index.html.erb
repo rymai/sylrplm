@@ -1,6 +1,6 @@
 <h1>Listing relations</h1>
 <% unless @relation.nil? %>
-<% form_for(@relation) do |f| %>
+<%= form_for(@relation) do |f| %>
 <%= f.error_messages %>
 <% end %>
 <% end %>

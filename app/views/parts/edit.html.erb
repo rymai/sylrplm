@@ -1,5 +1,5 @@
 <h1><%= t(:part_edit) %></h1>
-<% form_for(@part) do |f| %>
+<%= form_for(@part) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "parts/edit",:locals => { :f => f, :fonct=>"edit" }) %>
 <h1></h1>
@@ -20,4 +20,4 @@
 		<td> <%= link_to t("list"), parts_path %> </td>
 	</tr>
 </table>
-<% end %> 
+<% end %>

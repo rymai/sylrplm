@@ -1,6 +1,6 @@
 <h1>New roles_user</h1>
 
-<% form_for(@roles_user) do |f| %>
+<%= form_for(@roles_user) do |f| %>
   <%= f.error_messages %>
 
  <%= render(:partial => "roles_users/edit",:locals => { :f => f, :fonct=>"new" }) %>

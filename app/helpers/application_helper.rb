@@ -424,7 +424,7 @@ module ApplicationHelper
 	end
 
 	def h_input_domain(f)
-		fname=self.class.name+"."+__method__.to_s
+		# fname=self.class.name+"."+__method__.to_s
 		#LOG.info (fname){"admin_logged_in?=#{admin_logged_in?} DOMAIN_FOR_ALL=#{PlmServices.get_property(:DOMAIN_FOR_ALL)}"}
 		ret=""
 		if admin_logged_in? || PlmServices.get_property(:DOMAIN_FOR_ALL)==true
@@ -440,7 +440,7 @@ module ApplicationHelper
 	end
 
 	def h_attribut_trtd(obj, accessor)
-		fname=self.class.name+"."+__method__.to_s
+		# fname=self.class.name+"."+__method__.to_s
 		final_obj=obj
 		final_acc=accessor.to_s
 		# recherche de l'objet final dans l'accesseur:
@@ -460,7 +460,7 @@ module ApplicationHelper
 		ret+="<td>"
 		begin
 			vacc="v_"+final_acc.to_s
-			LOG.info (fname){"final_obj=#{final_obj} final_acc=#{final_acc} labacc=#{labacc}"}
+			# LOG.info (fname){"final_obj=#{final_obj} final_acc=#{final_acc} labacc=#{labacc}"}
 			if final_obj.respond_to?(vacc)
 			val=final_obj.send(vacc).to_s
 			else
@@ -468,12 +468,13 @@ module ApplicationHelper
 			end
 			ret+=val
 		rescue Exception => e
-			LOG.warn (fname){e}
+			# LOG.warn (fname){e}
 			ret+="???"
 		end
 		ret+="</td>"
 		ret+="</tr>"
-		ret
+
+		ret.html_safe
 	end
 
 	def comma_links (objects, accessor=:name)
@@ -481,13 +482,13 @@ module ApplicationHelper
 			name = o.send(accessor)
 			path = send "#{o.class.to_s.downcase}_path", o
 			link_to(h(name), path)
-		}.join(', ')
+		}.join(', ').html_safe
 	end
 
 	def comma_string (objects, accessor=:name)
 		objects.collect { |o|
 			o.send(accessor)
-		}.join(', ')
+		}.join(', ').html_safe
 	end
 
 	#
@@ -520,14 +521,14 @@ module ApplicationHelper
 	# - edit: on peut les editer
 	# - define: on les definit (dans typesobject seulement pour le moment)
 	def h_type_values(obj, fonct)
-		fname=self.class.name+"."+__method__.to_s
+		# fname=self.class.name+"."+__method__.to_s
 		#LOG.info (fname){"obj=#{obj}"}
-		LOG.info (fname){"fonct=#{fonct}"}
+		# LOG.info (fname){"fonct=#{fonct}"}
 		ret=""
 		if obj.respond_to?(:typesobject)
 			unless obj.typesobject.nil?
 				unless obj.typesobject.fields.nil?
-					LOG.info (fname){"fields=#{obj.typesobject.fields}"}
+					# LOG.info (fname){"fields=#{obj.typesobject.fields}"}
 					case fonct
 					when "show"
 						buttons="none"
@@ -559,7 +560,8 @@ module ApplicationHelper
 				end
 			end
 		end
-		ret
+
+		ret.html_safe
 	end
 
 	# renvoi l'identifiant du formulaire en fonction de l'objet et de la fonction demandee
