@@ -1,5 +1,7 @@
 class DocumentsController < ApplicationController
+  # include Controllers::PlmTree
   include Controllers::PlmObjectControllerModule
+
   before_filter :check_init, :only => :new
   #droits d'acces suivant le controller et l'action demandee
   #administration par le menu Access
@@ -360,8 +362,8 @@ private
 		define_view
 		@document  = Document.find(params[:id])
 		@relations = Relation.relations_for(@document)
-    @tree         						= build_tree(@document, @myparams[:view_id])
-		@tree_up      						= build_tree_up(@document, @myparams[:view_id] )
+    @tree      = build_tree(@document, @myparams[:view_id])
+		@tree_up   = build_tree_up(@document, @myparams[:view_id] )
     #LOG.debug (fname){"taille tree=#{@tree.size}"}
 	end
 

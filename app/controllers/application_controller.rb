@@ -138,7 +138,8 @@ class ApplicationController < ActionController::Base
 
   # definition des variables globales.
   def define_variables
-    @favori      = session[:favori] ||= Favori.new
+    # @favori      = session[:favori] ||= Favori.new
+    @favori      = Favori.new
     @theme       = User.find_theme(session)
     @language    = PlmServices.get_property(:LOCAL_DEFAULT)
 	  @urlbase     = "http://"+request.env["HTTP_HOST"]
@@ -323,14 +324,6 @@ class ApplicationController < ActionController::Base
       ret = ""
     end
     #LOG.debug  (fname){"icone:#{obj.model_name}:#{obj.typesobject.name}:#{ret}"}
-    ret
-  end
-
-  def icone_plmtype(plmtype)
-    ret = "#{plmtype}.png"
-    unless File.exist?(Rails.root.join('app', 'assets', 'images', ret))
-      ret = ""
-    end
     ret
   end
 

@@ -19,10 +19,10 @@
   fetch = +refs/heads/master:refs/remotes/production/master
   push  = master:master
 
-[remote "production-old"]
-  url   = git@heroku.com:sylrplm-old.git
-  fetch = +refs/heads/master:refs/remotes/production/master
-  push  = master:master
+[remote "production-rails3"]
+  url   = git@heroku.com:sylrplm-rails3.git
+  fetch = +refs/heads/rails3:refs/remotes/production/master
+  push  = rails3:master
 
 
 [branch "master"]

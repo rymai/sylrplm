@@ -213,8 +213,8 @@ class PartsController < ApplicationController
 				@variant = PlmServices.get_object_by_mdlid(params[:variant])
 			end
 		end
-		@tree         = build_tree(@part, @myparams[:view_id] , @variant)
-		@tree_up      = build_tree_up(@part, @myparams[:view_id] )
+		@tree    = PlmTree.build_tree(@part, @myparams[:view_id] , @variant)
+		@tree_up = PlmTree.build_tree_up(@part, @myparams[:view_id] )
 	#LOG.debug (fname){"taille tree=#{@tree.size}"}
 	#LOG.debug (fname){"variant=#{@variant}"}
 	#LOG.debug (fname){"variant eff=#{@variant.var_effectivities}"} unless @variant.nil?

@@ -116,7 +116,7 @@
 	</td>
 </table>
 <%end%>
-<%= render(:partial => "shared/tree", :object => @document ) %> <h1></h1>
+<%= render(:partial => "shared/tree", :locals => { :object => @document }) %> <h1></h1>
 <%= form_for(@document) do |f| %>
 <table class='menu_bas'>
 	<tr>

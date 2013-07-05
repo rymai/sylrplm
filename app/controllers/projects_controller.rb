@@ -236,8 +236,8 @@ class ProjectsController < ApplicationController
 		if @favori.get('user').count>0 && @relations["user"].count==0
 			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
 		end
-		@tree         						= build_tree(@project, @myparams[:view_id], nil, 2)
-		@tree_up      						= build_tree_up(@project, @myparams[:view_id] )
+		@tree    = PlmTree.build_tree(@project, @myparams[:view_id], nil, 2)
+		@tree_up = PlmTree.build_tree_up(@project, @myparams[:view_id] )
 	end
 
 	def index_

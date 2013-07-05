@@ -4,7 +4,7 @@ require_dependency 'controllers/plm_lifecycle'
 
 module Controllers
 	module PlmObjectControllerModule
-	  # extend ActiveSupport::Concern
+	  include PlmTree
 
 		def add_favori
 			#LOG.info("#{controller_name}.#{__method__}") { "params=#{params.inspect}" }

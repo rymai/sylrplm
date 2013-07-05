@@ -24,77 +24,37 @@
 #
 # Opening Rails Mapper to add a wfid_resources method
 #
-module ActionController
+# module ActionController
+#   module Routing
+#     class RouteSet
+#       class Mapper
+module ActionDispatch
   module Routing
-    class RouteSet
-      class Mapper
+    class Mapper
         def wfid_resources (controller_name)
 
           controller_name = controller_name.to_s
 
           # GET
           #
-          connect(
-      controller_name,
-      :controller => controller_name,
-      :action => 'index',
-      :conditions => { :method => :get })
-          connect(
-      "#{controller_name}.:format",
-      :controller => controller_name,
-      :action => 'index',
-      :conditions => { :method => :get })
-
-          connect(
-      "#{controller_name}/:wfid",
-      :controller => controller_name,
-      :action => 'index',
-      :conditions => { :method => :get })
-
-          connect(
-      "#{controller_name}/:wfid/:expid",
-      :controller => controller_name,
-      :action => 'show',
-      :conditions => { :method => :get })
-          connect(
-      "#{controller_name}/:wfid/:expid.:format",
-      :controller => controller_name,
-      :action => 'show',
-      :conditions => { :method => :get })
-
-          connect(
-      "#{controller_name}/:wfid/:expid/edit",
-      :controller => controller_name,
-      :action => 'edit',
-      :conditions => { :method => :get })
+          get controller_name => "#{controller_name}#index"
+          get "#{controller_name}.:format" => "#{controller_name}#index"
+          get "#{controller_name}/:wfid" => "#{controller_name}#index"
+          get "#{controller_name}/:wfid/:expid" => "#{controller_name}#show"
+          get "#{controller_name}/:wfid/:expid.:format" => "#{controller_name}#show"
+          get "#{controller_name}/:wfid/:expid/edit" => "#{controller_name}#edit"
 
           # (no POST)
 
           # PUT
           #
-          connect(
-      "#{controller_name}/:wfid/:expid",
-      :controller => controller_name,
-      :action => 'update',
-      :conditions => { :method => :put })
-          connect(
-      "#{controller_name}/:wfid/:expid.:format",
-      :controller => controller_name,
-      :action => 'update',
-      :conditions => { :method => :put })
+          put "#{controller_name}/:wfid/:expid" => "#{controller_name}#update"
+          put "#{controller_name}/:wfid/:expid.:format" => "#{controller_name}#update"
 
           # DELETE
           #
-          connect(
-      "#{controller_name}/:wfid/:expid",
-      :controller => controller_name,
-      :action => 'destroy',
-      :conditions => { :method => :delete })
-          connect(
-      "#{controller_name}/:wfid/:expid.:format",
-      :controller => controller_name,
-      :action => 'destroy',
-      :conditions => { :method => :delete })
+          delete "#{controller_name}/:wfid/:expid" => "#{controller_name}#destroy"
+          delete "#{controller_name}/:wfid/:expid.:format" => "#{controller_name}#destroy"
 
           #
           # paths and URLs
@@ -136,7 +96,7 @@ module ActionController
       end
     end
   end
-end
+# end
 
 #
 # adding Links to models' to_xml / to_json

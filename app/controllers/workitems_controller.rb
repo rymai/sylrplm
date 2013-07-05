@@ -31,16 +31,18 @@ class WorkitemsController < ApplicationController
 				opts = { :order => 'dispatch_time DESC' }
 				opts[:conditions] = { :store_name => @current_user.store_names }
 				opts[:page] = (params[:page].nil? ? PlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i :  params[:page])
-				@workitems = Ruote::Sylrplm::ArWorkitem.paginate_by_params(
-				[
-					# parameter_name[, column_name]
-					'wfid',
-					[ 'workflow', 'wfname' ],
-					[ 'store', 'store_name' ],
-					[ 'participant', 'participant_name' ]
-				],
-				params,
-			opts)
+				@workitems = Ruote::Sylrplm::ArWorkitem.all
+
+				# FIXME
+				# @workitems = Ruote::Sylrplm::ArWorkitem.paginate_by_params(
+				# [
+				# 	# parameter_name[, column_name]
+				# 	'wfid',
+				# 	[ 'workflow', 'wfname' ],
+				# 	[ 'store', 'store_name' ],
+				# 	[ 'participant', 'participant_name' ]
+				# ],
+				# params, opts)
 			end
 		end
 		@workitems.each do |en|

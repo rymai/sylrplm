@@ -101,7 +101,7 @@ class RolesController < ApplicationController
 	def show_
 		define_view
 		@role = Role.find(params[:id])
-		@tree  = build_tree(@role, @view_id)
+		@tree = PlmTree.build_tree(@role, @view_id)
 	end
 
 end

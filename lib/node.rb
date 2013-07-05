@@ -27,7 +27,7 @@ class Node
 	}
 
 	include ActionView::Helpers::UrlHelper
-	include ActionView::Helpers::PrototypeHelper
+	# include ActionView::Helpers::PrototypeHelper
 	include ActionView::Helpers::JavaScriptHelper
 	include ERB::Util
 

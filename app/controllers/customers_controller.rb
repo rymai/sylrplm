@@ -34,12 +34,12 @@ class CustomersController < ApplicationController
 
 	def show_
 		define_view
-		@customer                = Customer.find(params[:id])
-		@relations               = Relation.relations_for(@customer)
-		@documents               = @customer.documents
-		@projects                = @customer.projects
-		@tree         						= build_tree(@customer, @myparams[:view_id], nil, 3)
-		@tree_up      						= build_tree_up(@customer, @myparams[:view_id] )
+		@customer  = Customer.find(params[:id])
+		@relations = Relation.relations_for(@customer)
+		@documents = @customer.documents
+		@projects  = @customer.projects
+		@tree      = PlmTree.build_tree(@customer, @myparams[:view_id], nil, 3)
+		@tree_up   = PlmTree.build_tree_up(@customer, @myparams[:view_id] )
 	end
 
 	# GET /customers/new

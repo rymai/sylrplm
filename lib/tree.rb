@@ -1,6 +1,5 @@
 require 'node'
 
-
 class Tree < Node
 
   attr_reader :id, :parent,:buffer_nodes

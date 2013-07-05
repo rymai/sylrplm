@@ -60,14 +60,14 @@
 <table class='menu_bas'>
 	<% unless @favori.get('document').count==0 || @part.relations["document"].count==0 %>
 	<tr>
-		<%= form_for(@part, :url => {:id => @part.id, :action => "add_docs" }, :method => :get) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @part.relations["document"], :id, :ident)) %></td>
+		<%= form_for(@part, :url => {:id => @part.id, :action => "add_docs" }) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @part.relations["document"], :id, :ident)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
 		<% end %>
 	</tr>
 	<%end%>
 	<% unless @favori.get('part').count==0 || @part.relations["part"].count==0 %>
 	<tr>
-		<%= form_for(@part, :url => {:id => @part.id, :action => "add_parts" }, :method => :get) do |f| %> <td> <%= select("relation","part", options_from_collection_for_select( @part.relations["part"], :id, :ident)) %></td>
+		<%= form_for(@part, :url => {:id => @part.id, :action => "add_parts" }) do |f| %> <td> <%= select("relation","part", options_from_collection_for_select( @part.relations["part"], :id, :ident)) %></td>
 		<td> <%= submit_tag t("paste_parts") %></td>
 		<% end %>
 	</tr>

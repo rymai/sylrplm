@@ -60,7 +60,7 @@ class GroupsController < ApplicationController
 	def show_
 		define_view
 		@group = Group.find(params[:id])
-		@tree  = build_tree(@group, @view_id)
+		@tree  = PlmTree.build_tree(@group, @view_id)
 	end
 
 	# GET /groups/new
