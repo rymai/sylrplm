@@ -271,21 +271,21 @@ class ApplicationController < ActionController::Base
       user=User.find(user_id)
       puts "authorize:user=#{user} admin?=#{user.is_admin?}"
       unless user.is_admin?
-      	puts "user not admin, user.roles=#{user.roles} user.groups=#{user.groups} user.projects=#{user.projects}"
+      	#puts "user not admin, user.roles=#{user.roles} user.groups=#{user.groups} user.projects=#{user.projects}"
         if user.roles.nil? || user.groups.nil? || user.projects.nil?
-          puts "authorize:roles=#{user.roles}  "
-          puts "authorize:groups=#{user.groups}  "
-          puts "authorize:projects=#{user.projects}  "
+          #puts "authorize:roles=#{user.roles}  "
+          #puts "authorize:groups=#{user.groups}  "
+          #puts "authorize:projects=#{user.projects}  "
           session[:original_uri] = request.request_uri
           flash[:notice] = t(:login_login)
           redirect_to new_sessions_url
         end
       end
       if user.roles.nil?  || user.groups.nil? || user.projects.nil? || user.volume.nil?
-          puts "authorize:roles=#{user.roles}  "
-          puts "authorize:groups=#{user.groups}  "
-          puts "authorize:projects=#{user.projects}  "
-          puts "authorize:volume=#{user.volume} "
+          #puts "authorize:roles=#{user.roles}  "
+          #puts "authorize:groups=#{user.groups}  "
+          #puts "authorize:projects=#{user.projects}  "
+          #puts "authorize:volume=#{user.volume} "
 	  			session[:original_uri] = request.request_uri
           flash[:notice] = t(:login_login)
           redirect_to new_sessions_url

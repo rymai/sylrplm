@@ -70,7 +70,8 @@ module OpenWFE::Extras
   class HistoryEntry < ActiveRecord::Base
     include SingleConnectionMixin
 
-    set_table_name('history')
+   #TODO syl set_table_name('history')
+   set_table_name('history_entry')
 
     #
     # returns a FlowExpressionId instance if the entry has a 'fei' or

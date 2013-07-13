@@ -7,7 +7,7 @@
 #
 
 require 'openwfe/representations'
-#require 'ruote/sylrplm'
+require 'ruote/sylrplm/workitems'
 
 class ProcessesController < ApplicationController
   ###before_filter :login_required
@@ -119,15 +119,15 @@ class ProcessesController < ApplicationController
     options = { :variables => { 'launcher' => @current_user.login } }
     begin
       fei = RuotePlugin.ruote_engine.launch(li, options)
-      puts fname+" fei("+fei.wfid+") launched options="+options.inspect
+      puts fname+" fei("+fei.wfid+") launched options="+options.to_s
       headers['Location'] = process_url(fei.wfid)
       nb=0
       workitem = nil
       while nb<5 and workitem.nil?
         puts fname+" boucle "+nb.to_s+":"+fei.wfid
-        sleep 1.0
+        sleep 0.8
         nb+=1
-        workitem = OpenWFE::Extras::ArWorkitem.find_by_wfid(fei.wfid)
+        workitem = ::Ruote::Sylrplm::ArWorkitem.get_workitem(fei.wfid)
       end
       #puts fname+" workitem="+workitem.inspect
       respond_to do |format|
@@ -163,7 +163,7 @@ class ProcessesController < ApplicationController
   # DELETE /processes/:id
   #
   def destroy
-    #    puts "processes_controller.destroy:params="+params.inspect
+    fname="process_controllers.#{__method__}"
     begin
       @process = ruote_engine.process_status(params[:id])
       ::Ruote::Sylrplm::ArWorkitem.destroy_process(@process.wfid)
@@ -171,7 +171,7 @@ class ProcessesController < ApplicationController
       sleep 0.200
       redirect_to :controller => :processes, :action => :index
     rescue Exception => e
-      #LOG.error " pb destroy "+params[:id]
+      LOG.error (fname) {" pb destroy #{params[:id]}, e=#{e}"}
       e.backtrace.each {|x| LOG.error x}
       respond_to do |format|
             flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_process), :ident => params[:id])

@@ -9,11 +9,14 @@ gem 'rails', '2.3.17'
 gem 'mail', '2.3.0'
 gem 'json', '1.5.5'
 
-# Databases
-gem 'pg'
+# connecteur Database
+# be careful, don't activate 0.15.1 version : process processing is ko
+gem 'pg', '0.14.1'
 
 # Internals
 gem 'ruote', '2.2.0'
+#gem 'ruote-extras'
+#gem 'ruote-postgres'
 gem 'fog', '~> 1.1.2'
 gem 'rufus-verbs', '1.0.0'
 gem 'atom-tools' , '2.0.5'
@@ -23,8 +26,12 @@ gem 'atom-tools' , '2.0.5'
 gem 'will_paginate' , '~> 2.3.16'
 
 
-gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
+###gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
 ####gem 'sylrplm_ext', :path => "/home/syl/trav/rubyonrails/sylrplm_ext"
+
+###gem 'psych'
+
+
 
 group :staging, :production do
   gem 'thin'

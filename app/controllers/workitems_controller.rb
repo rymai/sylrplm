@@ -128,8 +128,8 @@ class WorkitemsController < ApplicationController
 		elsif params[:state] == 'proceeded'
 			LOG.info {name+":debut proceeded:wfid="+params[:wfid]}
 			in_flow_workitem.attributes = workitem.attributes
-			LOG.debug name+"ar_workitem="+ar_workitem.inspect
-			LOG.debug name+"in_flow_workitem="+in_flow_workitem.inspect
+			LOG.debug (name) {"ar_workitem="+ar_workitem.inspect}
+			LOG.debug (name) {"in_flow_workitem="+in_flow_workitem.inspect}
 			respond_to do |format|
 				begin
 					RuotePlugin.ruote_engine.reply(in_flow_workitem)
@@ -141,15 +141,15 @@ class WorkitemsController < ApplicationController
 					LOG.info (name){"avant sleep:params="+ar_workitem.field_hash[:params].inspect}
 					nb = 0
 					arw = ar_workitem
-					while nb < 7 and !arw.nil? and (arw.last_modified == ar_workitem.last_modified)
+					while nb < 5 and !arw.nil? and (arw.last_modified == ar_workitem.last_modified)
 						#LOG.debug (name){" boucle #{nb}:#{arw.last_modified}"}
-						sleep 0.4
 						nb+=1
 						arw = find_ar_workitem
 					end
 					#
+					LOG.info (name) {"apres sleep nb=#{nb}"}
 					process = ruote_engine.process_status(params[:wfid])
-					LOG.info {name+"apres sleep process="+process.to_s}
+					LOG.info (name) {"apres sleep process="+process.to_s}
 					unless process.nil?
 					tree = process.current_tree
 					else
@@ -264,12 +264,13 @@ class WorkitemsController < ApplicationController
 	# see / update an off-limit workitem
 	#
 	def find_ar_workitem
+		fname="WorkitemsController.#{__method__}"
 		sleep 0.3
 		ar_workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid_and_expid(
 		params[:wfid], OpenWFE.to_dots(params[:expid])
 		)
 		ret=current_user.may_see?(ar_workitem) ? ar_workitem : nil unless ar_workitem.nil?
-		LOG.debug {ret.inspect}
+		LOG.debug (fname) {"ar_workitem=#{ret.inspect}"}
 		ret
 	end
 

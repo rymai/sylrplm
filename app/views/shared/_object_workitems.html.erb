@@ -1,10 +1,10 @@
 <% workitems = object_workitems.get_workitems
 if workitems.any? %>
-  <h2><%= t("workitems_assoc") %></h2>
+  <h1><%= t("workitems_assoc") %></h1>
   <%= render(:partial => "workitems/workitems", :object =>  workitems, :locals => {  :fonct => "show_only", :obj => object_workitems } )%>
 <% end %>
 <% histories = object_workitems.get_histories
 if histories.any? %>
-  <h2><%= t("history_assoc") %></h2>
+  <h1><%= t("history_assoc") %></h1>
   <%= render(:partial => "history/histories", :object => histories, :locals => { :fonct => "show_only", :obj => object_workitems } ) %>
 <% end %>

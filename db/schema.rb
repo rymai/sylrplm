@@ -172,7 +172,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string "wfid",      :null => false
 		t.string "expid",     :null => false
 		t.string "exp_class", :null => false
-		t.text   "svalue",    :null => false
+		t.string   "svalue",    :null => false, :limit => 1024 * 1024
 		t.text   "text",      :null => false
 	end
 
@@ -237,7 +237,7 @@ ActiveRecord::Schema.define(:version => 0) do
 
 	add_index "groups_users", ["user_id", "group_id"], :name => "index_groups_users_on_user_id_and_group_id", :unique => true
 
-	create_table "history", :force => true do |t|
+	create_table "history_entry", :force => true do |t|
 		t.string   "source",      :null => false
 		t.string   "event",       :null => false
 		t.string   "wfid"
@@ -250,13 +250,13 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.datetime "created_at"
 	end
 
-	add_index "history", ["created_at"], :name => "index_history_on_created_at"
-	add_index "history", ["event"], :name => "index_history_on_event"
-	add_index "history", ["participant"], :name => "index_history_on_participant"
-	add_index "history", ["source"], :name => "index_history_on_source"
-	add_index "history", ["wfid"], :name => "index_history_on_wfid"
-	add_index "history", ["wfname"], :name => "index_history_on_wfname"
-	add_index "history", ["wfrevision"], :name => "index_history_on_wfrevision"
+	add_index "history_entry", ["created_at"], :name => "index_history_entry_on_created_at"
+	add_index "history_entry", ["event"], :name => "index_history_entry_on_event"
+	add_index "history_entry", ["participant"], :name => "index_history_entry_on_participant"
+	add_index "history_entry", ["source"], :name => "index_history_entry_on_source"
+	add_index "history_entry", ["wfid"], :name => "index_history_entry_on_wfid"
+	add_index "history_entry", ["wfname"], :name => "index_history_entry_on_wfname"
+	add_index "history_entry", ["wfrevision"], :name => "index_history_entry_on_wfrevision"
 
 	create_table "links", :force => true do |t|
 		t.string   "father_plmtype", :null => false

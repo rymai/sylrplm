@@ -82,7 +82,8 @@ module OpenWFE::Extras
     # (within the Workitem it's just stored as a String).
     #
     def full_fei
-
+				fname="base ArWorkitem.full_fei"
+        LOG.debug (fname) {"fei:#{fei}"}
       @full_fei ||= OpenWFE::FlowExpressionId.from_s(fei)
     end
 
@@ -90,12 +91,20 @@ module OpenWFE::Extras
     # Making sure last_modified is set to Time.now before each save.
     #
     def before_save
-
+			fname="base ArWorkitem.before_save:"
+      LOG.debug (fname) {"saving:#{self.inspect}"}
       touch
-      fname="base ArWorkitem.before_save:"
-        LOG.debug (fname) {"save:#{self.inspect}"}
     end
-
+   def after_save
+			fname="base ArWorkitem.after_save:"
+      LOG.debug (fname) {"saved:#{self.inspect}"}
+      true
+    end
+    def before_destroy
+			fname="base ArWorkitem.before_destroy:"
+      LOG.debug (fname) {"destroy:#{self.inspect}"}
+      true
+    end
     def self.from_owfe_workitem (wi, store_name=nil)
 
       arwi = ArWorkitem.new

@@ -5,10 +5,10 @@ module ActiveRecord
 		class PostgreSQLAdapter < AbstractAdapter
 			# sylrplm: pour eviter le rechargement des connexions
 			def requires_reloading?
-				puts "TODO:#{__FILE__}:#{__method__} by syl"
-				false
+				ret=false
+				puts "TODO:#{__FILE__}:#{__method__} by syl:#{ret}"
+				ret
 			end
-
 		end
 	end
 end

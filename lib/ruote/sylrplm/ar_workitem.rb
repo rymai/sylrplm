@@ -22,7 +22,7 @@ module Ruote
 			end
 
 			def ident
-				fei+"_"+wfid+"_"+expid+"_"+wfname
+				#fei+"_"+wfid+"_"+expid+"_"+wfname
 				[wfid,expid,wfname].join("_")
 			end
 
@@ -33,7 +33,8 @@ module Ruote
 
 			# delete of workitems of a process
 			def self.destroy_process(wfid)
-				LOG.info {wfid}
+				fname="ArWorkitem."+__method__.to_s+":"
+				LOG.info (fname) {"wfid=#{wfid}"}
 				::OpenWFE::Extras::ArWorkitem.find_by_wfid_(wfid).each do |ar|
 					ar.destroy
 				end
@@ -42,13 +43,8 @@ module Ruote
 			def before_destroy
 				fname="ArWorkitem."+__method__.to_s+":"
 				links=Link.find_childs(self)
-				LOG.info {fname+(links.nil? ? "0" : links.count.to_s)+" liens a detruire"}
+				LOG.info (fname) {(links.nil? ? "0" : links.count.to_s)+" liens a detruire"}
 				links.each {|lnk| lnk.destroy}
-			end
-
-			def before_save
-				fname="ArWorkitem.before_save:"
-				LOG.debug (fname) {"save:#{self.inspect}"}
 			end
 
 			def get_wi_links
@@ -83,6 +79,31 @@ module Ruote
 					ret = {:act => activity, :obj => params.values}
 				end
 				ret
+			end
+			
+			def self.get_workitem(wfid)
+				fname="ArWorkitem."+__method__.to_s
+				LOG.debug (fname) {"wfid=#{wfid}"}
+				require 'pg'
+
+				#show_activity
+						  
+				ret = find(:first, :conditions => ["wfid = '#{wfid}'"])
+				#ret = find_by_wfid(wfid)
+				LOG.debug (fname) {"ret=#{ret}"}
+				ret
+			end
+			
+			def show_activity
+				# Output a table of current connections to the DB
+			  conn = PG.connect( dbname: 'sylrplm_development' , user: "postgres", password: "pa33zp62" )
+			  conn.exec( "SELECT * FROM pg_stat_activity" ) do |result|
+			    puts "     PID | User             | Query"
+			  result.each do |row|
+			      puts " %7d | %-16s | %s " %
+			        row.values_at('pid', 'usename', 'query')
+			    end
+			  end
 			end
 
 		end

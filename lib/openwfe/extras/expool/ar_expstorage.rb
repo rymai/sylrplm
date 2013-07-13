@@ -329,7 +329,6 @@ module OpenWFE::Extras
     def as_owfe_expression (record)
 
       return nil unless record
-puts "**************** as_owfe_expression:record=#{record.inspect}"
       s = record.svalue
 
      ##fe = s.match(Y_START) ? YAML.load(s) : ::OpenWFE::Xml::from_xml(s)
