@@ -1,0 +1,13 @@
+<h1><%= t(:lifecycle_edit, :model => t(@part.model_name), :obj => @part.to_s) %></h1>
+<% form_for(@part, :url => {:controller=>"parts", :action=>"update_lifecycle", :id => @part.id}, :method=>:get) do |f| %>
+<%= f.error_messages %>
+<%= render(:partial => "parts/edit_lifecycle",:locals => { :f => f, :fonct=>"edit" }) %>
+<h1></h1>
+<table class='menu_bas'>
+	<tr>
+		<%= h_menu_lifecycle f, @part %>
+		<td> <%= link_to t("explorer"), @part %> </td>
+		<td> <%= link_to t("list"), parts_path %> </td>
+	</tr>
+</table>
+<% end %> 

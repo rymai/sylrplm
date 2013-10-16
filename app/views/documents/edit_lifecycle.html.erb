@@ -1,0 +1,14 @@
+<h1><%= t(:lifecycle_edit, :model => t(@document.model_name), :obj => @document.to_s) %></h1>
+<% fonct="edit" %>
+<% form_for(@document, :url => {:controller=>"documents", :action=>"update_lifecycle", :id => @document.id}, :method=>:get, :html => { :id => h_form_html_id(@document, fonct) }) do |f| %>
+<%= f.error_messages %>
+<%= render(:partial => "documents/edit_lifecycle",:locals => { :f => f, :fonct=>fonct }) %>
+<h1></h1>
+<table class='menu_bas'>
+	<tr>
+		<%= h_menu_lifecycle f, @document %>
+		<td> <%= link_to t("explorer"), @document %> </td>
+		<td> <%= link_to t("list"), documents_path %> </td>
+	</tr>
+</table>
+<% end %>

@@ -1,0 +1,12 @@
+<h1><%= t(:lifecycle_edit, :model => t(@forum.model_name), :obj => @forum.to_s) %></h1>
+<% form_for(@forum, :url => {:controller=>"forums", :action=>"update_lifecycle", :id => @forum.id}, :method=>:get) do |f| %>
+<%= f.error_messages %>
+<%= render(:partial => "forums/edit_lifecycle",:locals => { :f => f, :fonct=>"edit" }) %>
+<table class='menu_bas'>
+	<tr>
+		<%= h_menu_lifecycle f, @forum %>
+		<td><%= link_to t("explorer"), @forum %></td>
+		<td><%= link_to t("list"), forums_path %></td>
+	</tr>
+</table>
+<% end %> 
