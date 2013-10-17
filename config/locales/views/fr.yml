@@ -1,5 +1,10 @@
 fr:
   # general
+  customer: client
+  document: document
+  part: article
+  project: projet
+  forum: discussion
   label_internal: Interne
   label_projowner: Projet
   label_forum_items: Messages
@@ -9,7 +14,7 @@ fr:
   label_date: Date
   select_add: Ajouter à la sélection
   select_remove: Enlever de la sélection
-  user_connected: "%{login} connecté en tant que %{role}/%{group}/%{project}"
+  user_connected: "%{login}:%{role}/%{group}/%{project}"
   hello: "Bienvenue"
   disconnect: "Se deconnecter"
   connect: Se connecter
@@ -57,6 +62,7 @@ fr:
   add_forum: Ajout discussion
   freeze: Gelé
   edit: Editer
+  edit_lifecycle: Cycle de vie 
   update: Mettre à jour
   create: Créer
   copy: Copier
@@ -67,6 +73,9 @@ fr:
   menu_action: Action(s)
   back_to_object: "Retour à :"
   back_to_root: "Retour au sommet :"
+  legend_edit_lifecycle: Cycle de vie
+  legend_edit_revision: Révision
+  lifecycle_edit: "Cycle de vie du %{model} '%{obj}'"
   # attributs generaux
   faq_question: Question
   faq_answer: Réponse
@@ -114,8 +123,14 @@ fr:
   mnu_my_subscriptions: Mes abonnements
   cut: "Couper"
   revise: "Réviser"
-  promote: "Promouvoir"
-  demote: Rétrograder
+  promote_by_menu: Promouvoir par menu
+  demote_by_menu: Retrograder par menu
+  promote_by_action: Promouvoir par action
+  demote_by_action: Retrograder par action
+  promote_by_select: Promouvoir par selection
+  demote_by_select: Retrograder par selection
+  revise_by_menu: Reviser par menu
+  revise_by_action: Reviser par action
   # shared
   legend_link_duplication: "Duplication des liens de '%{object_orig}'"
   label_assoc_documents: Documents associés
@@ -293,6 +308,7 @@ fr:
   help_close_window: Fermer la fenêtre d'aide
   help_general: Aide générale
   help_window: Aide sur cette fenêtre
+  help_first_use: Prise en main
   help_about: A propos de SYLRPLM
   mnu_help: Aide
   # info
@@ -340,7 +356,7 @@ fr:
   legend_clipboard: Presse papier
   submit: GO
   CV: Curriculum vitae
-  help_first_use: Si vous débutez, vous pouvez profiter de la prise en main (%{help}) avant de lire complètement la documentation ci dessous
+  first_use: Si vous débutez, vous pouvez profiter de la prise en main (%{help}) avant de lire complètement la documentation ci dessous
   # notifications
   legend_notification: Renseignez les propriétés de la notification
   notification_edit: Edition notification
@@ -486,6 +502,11 @@ fr:
   label_rank: Rang de promotion
   label_promote: Promotion
   label_demote: Rétrogadation
+  label_next_status: Status suivant(s)
+  label_previous_status: Status précédent(s)
+  label_statusobject_next_statusobject_ids_out: Non attribués 	
+  label_statusobject_next_statusobject_ids_in: Attribués
+  label_revise: Révisable
   # msg _check_status
   msg_define_status_document: Définissez les statuts des documents
   msg_define_status_part: Définissez les statuts des articles

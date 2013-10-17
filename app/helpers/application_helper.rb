@@ -1,6 +1,107 @@
 # = ApplicationHelper
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+	# show promote/demote menu
+	def h_edit_lifecycle(a_form, a_object)
+		ret=""
+		ret << "<fieldset>"
+		ret << "<legend>#{t(:legend_edit_lifecycle)}</legend>"
+		ret << "<table>"
+		# labels
+		ret << "<tr>"
+		ret << "<td><b>"
+		ret <<  t("label_previous_status")
+		ret << "</b></td>"
+		ret << "<td><b>"
+		ret <<  t("label_status")
+		ret << "</b></td>"
+		ret << "<td><b>"
+		ret <<  t("label_next_status")
+		ret << "</b></td>"
+		ret << "</tr>"
+		# buttons
+		ret << "<tr>"
+		button_demote=a_object.demote_button?
+		ret << "<td>"
+		unless button_demote.nil?
+			prevs = a_object.statusobject.previous_statusobjects
+			ret << a_form.collection_select(:previous_status_id, prevs, :id, :name)
+		end
+		ret << "</td>"
+		ret << "<td>"
+		unless a_object.statusobject.nil?
+		stval=a_object.statusobject.name
+		end
+		ret << text_field_tag( :status, stval, :readonly => true)
+		ret << "</td>"
+		button_promote=a_object.promote_button?
+		ret << "<td>"
+		unless button_promote.nil?
+			nexts = a_object.statusobject.next_statusobjects
+			ret << a_form.collection_select(:next_status_id,  nexts, :id, :name)
+		end
+		ret << "</td>"
+		ret << "</tr>"
+		ret << "<tr>"
+		button_demote=a_object.demote_button?
+		ret << "<td>"
+		unless button_demote.nil?
+			ret << "#{a_form.submit t(button_demote)}"
+		end
+		ret << "</td>"
+		ret << "<td>"
+		ret << "</td>"
+		ret << "<td>"
+		if a_object.frozen?
+			ret << "#{t(:freeze)}"
+		else
+			button_promote=a_object.promote_button?
+			unless button_promote.nil?
+				ret << "#{a_form.submit t(button_promote)}"
+			end
+		end
+		ret << "</td>"
+		ret << "</table>"
+		ret << "</fieldset>"
+		button_revise = a_object.revise_button?
+		unless button_revise.nil?
+			ret << "<fieldset>"
+			ret << "<legend>#{t(:legend_edit_revision)}</legend>"
+			ret << "<br/>"
+			ret << "<table>"
+			# labels
+			ret << "<tr>"
+			ret << "<td>"
+
+			ret << "#{a_form.submit t(button_revise)}"
+
+			ret << "</td>"
+			ret << "</tr>"
+			ret << "</table>"
+			ret << "</fieldset>"
+		end
+		ret
+	end
+
+	# write the menus in the bottom for lifecycle  panel
+	def h_menu_lifecycle(a_form, a_object)
+		return ""
+		ret=""
+		if a_object.frozen?
+			ret << "<td>#{t(:freeze)}</td>"
+		else
+			button_promote=a_object.promote_button?
+			unless button_promote.nil?
+				ret << "<td>#{a_form.submit t(button_promote)}</td>"
+			end
+			button_demote=a_object.demote_button?
+			unless button_demote.nil?
+				ret << "<td>#{a_form.submit t(button_demote)}</td>"
+			end
+		end
+		ret
+	end
+
 	#
 	# == Role: prepare a title
 	# == Arguments
@@ -82,9 +183,10 @@ module ApplicationHelper
 		ret
 	end
 
-	def help_about
+	#help on a chapter
+	def help_chapter(chapter)
 		ret = ""
-		ret << "<a onclick=\"return helpWindow('help_about');\">#{t(:help_about)}</a>"
+		ret << "<a onclick=\"return helpWindow('#{chapter}');\">#{t(chapter)}</a>"
 		ret
 	end
 
@@ -279,6 +381,10 @@ module ApplicationHelper
 
 	def h_img_abort
 		h_img("abort")
+	end
+
+	def h_img_edit_lifecycle
+		h_img("edit_lifecycle")
 	end
 
 	def h_img_all
@@ -552,6 +658,8 @@ module ApplicationHelper
 					else
 					buttons="none"
 					end
+					#syl pour voir
+					###buttons="all"
 					unless obj.type_values.nil?
 						ret+="<fieldset><legend>"
 						ret+=t(:legend_type_values)

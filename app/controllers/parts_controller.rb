@@ -48,8 +48,11 @@ class PartsController < ApplicationController
 	def edit
 		@part   = Part.find_edit(params[:id])
 		@types  = Part.get_types_part
-		#seulement les statuts qui peuvenet etre promus sans process
-		@status = Statusobject.find_for("part", 2)
+	end
+
+	# GET /parts/1/edit_lifecycle
+	def edit_lifecycle
+		@part   = Part.find_edit(params[:id])
 	end
 
 	# POST /parts
@@ -77,16 +80,36 @@ class PartsController < ApplicationController
 	def update
 		@part = Part.find(params[:id])
 		@part.update_accessor(current_user)
-		respond_to do |format|
-			if @part.update_attributes(params[:part])
-				flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
-				format.html { redirect_to(@part) }
-				format.xml  { head :ok }
-			else
-				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
-				format.html { render :action => "edit" }
-				format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
+		if commit_promote?
+			ctrl_promote(@part)
+		else
+			respond_to do |format|
+				if @part.update_attributes(params[:part])
+					flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
+					format.html { redirect_to(@part) }
+					format.xml  { head :ok }
+				else
+					flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
+					format.html { render :action => "edit" }
+					format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
+				end
 			end
+		end
+	end
+
+	def update_lifecycle
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"params=#{params.inspect}"}
+		@part = Part.find(params[:id])
+		if commit_promote?
+			ctrl_promote(@part)
+		end
+
+		if commit_demote?
+			ctrl_demote(@part)
+		end
+		if commit_revise?
+			ctrl_revise(@part)
 		end
 	end
 
@@ -147,6 +170,14 @@ class PartsController < ApplicationController
 		ctrl_add_forum(@part)
 	end
 
+	def promote_by_menu_obsolete
+		promote_
+	end
+
+	def promote_by_action_obsolete
+		promote_
+	end
+
 	def promote
 		@part = Part.find(params[:id])
 		ctrl_promote(@part)
@@ -158,24 +189,24 @@ class PartsController < ApplicationController
 	end
 
 	#
-  # preparation du datafile a associer
-  #
+	# preparation du datafile a associer
+	#
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
-    #LOG.debug (fname){"params=#{params.inspect}"}
-    @part = Part.find(params[:id])
-    @datafile = Datafile.new({:user => current_user, :thepart => @part})
-    ctrl_new_datafile(@part)
-  end
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@part = Part.find(params[:id])
+		@datafile = Datafile.new({:user => current_user, :thepart => @part})
+		ctrl_new_datafile(@part)
+	end
 
 	#
 	# creation du datafile et association et liberation si besoin
 	#
 	def add_datafile
 		fname= "#{self.class.name}.#{__method__}"
-    #LOG.debug (fname){"params=#{params.inspect}"}
-    @part = Part.find(params[:id])
-    ctrl_add_datafile(@part)
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@part = Part.find(params[:id])
+		ctrl_add_datafile(@part)
 	end
 
 	def new_dup
@@ -201,7 +232,7 @@ class PartsController < ApplicationController
 		:conditions => ["id != #{@part.id}"],
 		:order => 'ident ASC',
 		:per_page => PlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i)
-		@first_status = Statusobject.get_first("part")
+		@first_status = Statusobject.get_first(@part)
 		all_variant=(params[:all_variants].nil? ? "no" : params[:all_variants])
 		if all_variant == "on"
 			@variant = nil

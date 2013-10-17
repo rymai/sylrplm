@@ -64,8 +64,13 @@ class ProjectsController < ApplicationController
 		@project = Project.find_edit(params[:id])
 		@types=Project.get_types_project
 		@types_access    = Typesobject.get_types("project_typeaccess")
-		@status= Statusobject.find_for("project")
 		@users  = User.all
+	end
+
+	# GET /projects/1/edit_lifecycle
+	# modification d'un projet
+	def edit_lifecycle
+		@project = Project.find_edit(params[:id])
 	end
 
 	# POST /projects
@@ -101,16 +106,35 @@ class ProjectsController < ApplicationController
 		@status= Statusobject.find_for("project")
 		@users  = User.all
 		@project.update_accessor(current_user)
-		respond_to do |format|
-			if @project.update_attributes(params[:project])
-				flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
-				format.html { redirect_to(@project) }
-				format.xml  { head :ok }
-			else
-				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
-				format.html { render :action => "edit" }
-				format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
+		if commit_promote?
+			ctrl_promote(@project)
+		else
+			respond_to do |format|
+				if @project.update_attributes(params[:project])
+					flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
+					format.html { redirect_to(@project) }
+					format.xml  { head :ok }
+				else
+					flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
+					format.html { render :action => "edit" }
+					format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
+				end
 			end
+		end
+	end
+
+	def update_lifecycle
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"params=#{params.inspect}"}
+		@project = Project.find(params[:id])
+		if commit_promote?
+			ctrl_promote(@project)
+		end
+		if commit_demote?
+			ctrl_demote(@project)
+		end
+		if commit_revise?
+			ctrl_revise(@project)
 		end
 	end
 
@@ -137,7 +161,15 @@ class ProjectsController < ApplicationController
 
 	end
 
-	def promote
+	def promote_by_menu
+		promote_
+	end
+
+	def promote_by_action
+		promote_
+	end
+
+	def promote_
 		ctrl_promote(Project,false)
 	end
 

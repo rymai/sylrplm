@@ -84,7 +84,7 @@ class PlmServices
 		ret_key=nil
 		prop_name=prop_name.to_s.strip
 		props.each do |key, value|
-		#LOG.debug(fname) {"key=#{key}, value=#{value}"}
+			#LOG.debug(fname) {"key=#{key}, value=#{value}"}
 			unless value[prop_name].nil?
 			ret = value[prop_name]
 			ret_key=key

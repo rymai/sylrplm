@@ -4,6 +4,7 @@ Project_1:
   typesobject_id: <%= Typesobject.find_by_forobject_and_name("project", PlmServices.get_property(:TYPE_PROJ_ACCOUNT)).id %>
   statusobject_id: "10"
   ident: PROJECT-admin
+  revision: 1
   designation: Projet par defaut pour l administrateur
   description:
   date: "2012-04-07"
@@ -17,6 +18,7 @@ Project_2:
   typesobject_id: <%= Typesobject.find_by_forobject_and_name("project", PlmServices.get_property(:TYPE_PROJ_ACCOUNT)).id %>
   statusobject_id: "10"
   ident: PROJECT-users
+  revision: 1
   designation: Projet par defaut pour les users
   description:
   date: "2012-04-07"

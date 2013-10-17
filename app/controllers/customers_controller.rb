@@ -59,7 +59,11 @@ class CustomersController < ApplicationController
 	def edit
 		@customer = Customer.find_edit(params[:id])
 		@types    = Typesobject.get_types("customer")
-		@status   = Statusobject.find_for(@customer)
+	end
+	
+	# GET /customers/1/edit_lifecycle
+	def edit_lifecycle
+		@customer = Customer.find_edit(params[:id])
 	end
 
 	# POST /customers
@@ -87,25 +91,43 @@ class CustomersController < ApplicationController
 	# PUT /customers/1.xml
 	def update
 		fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname) {"params=#{params.inspect}"}
-    @customer = Customer.find(params[:id])
+		LOG.debug (fname) {"params=#{params.inspect}"}
+		@customer = Customer.find(params[:id])
 		@types    = Typesobject.get_types(:customer)
 		@status   = Statusobject.find_for(@customer)
 		@customer.update_accessor(current_user)
-
-		respond_to do |format|
-			if @customer.update_attributes(params[:customer])
-				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
-				format.html { redirect_to(@customer) }
-				format.xml  { head :ok }
-			else
-				flash[:error] = t(:ctrl_object_notupdated, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
-				format.html { render :action => :edit }
-				format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
+		if commit_promote?
+			ctrl_promote(@customer)
+		else
+			respond_to do |format|
+				if @customer.update_attributes(params[:customer])
+					flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+					format.html { redirect_to(@customer) }
+					format.xml  { head :ok }
+				else
+					flash[:error] = t(:ctrl_object_notupdated, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+					format.html { render :action => :edit }
+					format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
+				end
 			end
 		end
 	end
 
+ def update_lifecycle
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"params=#{params.inspect}"}
+		@customer = Customer.find(params[:id])
+		if commit_promote?
+			ctrl_promote(@customer)
+		end
+		if commit_demote?
+			ctrl_demote(@customer)
+		end
+		if commit_revise?
+			ctrl_revise(@customer)
+		end
+	end
+	
 	# DELETE /customers/1
 	# DELETE /customers/1.xml
 	def destroy
@@ -128,7 +150,15 @@ class CustomersController < ApplicationController
 		end
 	end
 
-	def promote
+	def promote_by_menu
+		promote_
+	end
+
+	def promote_by_action
+		promote_
+	end
+
+	def promote_
 		ctrl_promote(Customer,false)
 	end
 

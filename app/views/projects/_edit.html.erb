@@ -17,18 +17,7 @@
 	<%= f.label t(:label_description) %>
 	<%= f.text_area :description , :rows => 10 %>
 	<br/>
-	<%if (@project.statusobject.promote!=true || @project.statusobject.demote!=true) %>
-	<%= f.label t("modif_status") %>
-	<% if(@project.statusobject != nil) %>
-	<%= f.collection_select(:statusobject_id, @status, :id, :name) %>
-	<% end %>
-	<%else %>
-	<%= f.label t("label_status") %>
-	<% if(@project.statusobject != nil) %>
-	<%= f.collection_select(:statusobject_id, @status, :id, :name) %>
-	<%end %>
-	<%end %>
-	<br/>
+	
 	<%= f.label t(:label_responsible) %>
 	<%= select_in_list(:project, :owner, @project.owner.login, :users) %>
 	<br/>
@@ -37,8 +26,8 @@
 	<br/>
 	<label for="project_users"> <%= t(:label_users) %> </label>
 	<%= select_inout(f, @project, @users, :login) %>
-
-	<%= h_type_values(@project, fonct) %>
 	<%= h_input_domain(f) %>
+	<%= h_type_values(@project, fonct) %>
+
 	<br />
 </fieldset>

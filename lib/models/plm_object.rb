@@ -1,3 +1,5 @@
+require 'ruote/sylrplm/workitems'
+
 module Models
 	module PlmObject
 		# modifie les attributs avant edition
@@ -24,8 +26,8 @@ module Models
 		end
 
 		def is_freeze_old
-			if(self.statusobject!=nil && ::Statusobject.get_last(self.class.name)!=nil)
-				if(self.statusobject.rank == ::Statusobject.get_last(self.class.name).rank)
+			if(self.statusobject!=nil && ::Statusobject.get_last(self)!=nil)
+				if(self.statusobject.rank == ::Statusobject.get_last(self).rank)
 				true
 				else
 				false
@@ -68,7 +70,8 @@ module Models
 		end
 
 		def revisable?
-			ret = (has_attribute?("revision") && frozen? && last_revision?)
+			###ret = (has_attribute?("revision") && frozen? && last_revision?)
+			ret = revise_by_menu? || revise_by_action?
 			ret
 		end
 
@@ -76,50 +79,59 @@ module Models
 		# TODO solution d'attente, on teste juste que l'objet est revisionnable
 		# on suppose donc qu'un process existe
 		#
+		def revise_by_menu?
+			fname= "#{self.model_name}.#{__method__}"
+			brev=PlmServices.get_property("#{self.model_name.upcase}_REVISE")
+			ret = brev == true && has_attribute?("revision") && self.statusobject.revise_id==1
+			LOG.debug (fname){"#{self}:#{self.model_name.upcase}_REVISE=#{brev}: status=#{self.statusobject.revise_id}:#{ret}"}
+			ret
+		end
+
 		def revise_by_action?
 			fname= "#{self.model_name}.#{__method__}"
-			ret = has_attribute?("revision")
-			#LOG.debug (fname){"#{self.ident}:#{ret}"}
+			brev=PlmServices.get_property("#{self.model_name.upcase}_REVISE")
+			ret = brev == true && has_attribute?("revision") && self.statusobject.revise_id==2
+			LOG.debug (fname){"#{self}:#{self.model_name.upcase}_REVISE=#{brev}: status=#{self.statusobject.revise_id}:#{ret}"}
 			ret
 		end
 
 		def revise
 			fname= "#{self.model_name}.#{__method__}"
 			#LOG.debug (fname){"#{self.ident}"}
-			if(self.frozen?)
-				#LOG.debug (fname){"#{self.ident} frozen"}
-				# recherche si c'est la derniere revision
-				rev_cur = self.revision
-				last_rev = last_revision
-				if revisable?
-					admin = User.find_by_name(PlmServices.get_property(:ROLE_ADMIN))
-					obj = self.clone
-					obj.set_default_values_without_next_seq
-					obj.statusobject = ::Statusobject.get_first(self.model_name)
-					obj.revision = rev_cur.next
-					LOG.debug (fname){"#{self.ident} frozen revisable:#{obj.inspect}"}
-					if self.has_attribute?(:filename)
-						if(self.filename!=nil)
-						content = self.read_file
-						obj.write_file(content)
-						end
+			#if(self.frozen?)
+			#LOG.debug (fname){"#{self.ident} frozen"}
+			# recherche si c'est la derniere revision
+			rev_cur = self.revision
+			last_rev = last_revision
+			if revisable?
+				admin = User.find_by_name(PlmServices.get_property(:ROLE_ADMIN))
+				obj = self.clone
+				obj.set_default_values_without_next_seq
+				obj.statusobject = ::Statusobject.get_first(self)
+				obj.revision = rev_cur.next
+				LOG.debug (fname){"#{self.ident} frozen revisable:#{obj.inspect}"}
+				if self.has_attribute?(:filename)
+					if(self.filename!=nil)
+					content = self.read_file
+					obj.write_file(content)
 					end
-				return obj
-				else
-					LOG.debug (fname){"#{self.ident} frozen not revisable"}
-					return nil
 				end
+			return obj
 			else
-				LOG.debug (fname){"#{self.ident} not frozen"}
+				LOG.debug (fname){"#{self.ident} frozen not revisable"}
 				return nil
 			end
+		#else
+		#	LOG.debug (fname){"#{self.ident} not frozen"}
+		#	return nil
+		#end
 		end
 
 		# a valider si avant dernier status
 		def could_validate?
 			mdl = model_name
-			!(self.statusobject.nil? || ::Statusobject.get_last(mdl).nil?) &&
-			self.statusobject.rank == ::Statusobject.get_last(mdl).rank-1
+			!(self.statusobject.nil? || ::Statusobject.get_last(self).nil?) &&
+			self.statusobject.rank == ::Statusobject.get_last(self).rank-1
 		end
 
 		def plm_validate
@@ -161,35 +173,46 @@ module Models
 		end
 
 		def promote_by?(choice)
-			#puts "#{__method__} #{self.ident}: promote_id=#{self.statusobject.promote_id} choice#{choice}"
 			fname="#{self.class.name}.#{__method__}"
+			#puts "#{fname}: promote_id=#{self.statusobject.promote_id} choice#{choice} #{self.respond_to? :statusobject}"
 			ret=false
 			if self.respond_to? :statusobject
-				unless  self.statusobject.nil?
-					if self.statusobject.promote_id == choice
+				unless  self.statusobject.nil?				
+					if self.statusobject.promote_id == choice		
 					ret = true
 					end
 				else
 					LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{self.ident}"}
 				end
 			end
+			if ret && choice==3
+				# par action
+				deja = Ruote::Sylrplm::Process.exists_on_object_for_action?(self, "promote")
+			ret = !deja
+			end
+			#puts "#{fname} #{self.ident}:#{ret}"
 			ret
 		end
 
 		def demote_by?(choice)
-			#( (self.respond_to? (:statusobject)) ? self.statusobject.demote_id == choice : false)
-			#puts "#{__method__} #{self.ident}: promote_id=#{self.statusobject.promote_id} choice#{choice}"
 			fname="#{self.class.name}.#{__method__}"
+			#puts "#{fname}==> #{self.ident}: demote_id=#{self.statusobject.demote_id} choice#{choice} #{self.respond_to? :statusobject}"
 			ret=false
 			if self.respond_to? :statusobject
 				unless  self.statusobject.nil?
 					if self.statusobject.demote_id == choice
-					ret = true
+						ret = true
 					end
 				else
 					LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{self.ident}"}
 				end
 			end
+			if ret && choice==3
+				# par action
+				deja = Ruote::Sylrplm::Process.exists_on_object_for_action?(self, "demote")
+			ret = !deja
+			end
+			#puts "#{fname}<== #{ret}"
 			ret
 		end
 
@@ -217,21 +240,52 @@ module Models
 			demote_by?(3)
 		end
 
+		def promote_button?
+			nexts = self.statusobject.next_statusobjects
+			if nexts.size >0
+				ret="promote_by_select" if promote_by_select?
+				ret="promote_by_menu" if promote_by_menu?
+				ret="promote_by_action" if promote_by_action?
+			end
+			puts "promote_button?:nexts.size=#{nexts.size} by_select?=#{promote_by_select?} by_menu?=#{promote_by_menu?} by_action?=#{promote_by_action?} ret=#{ret}"
+			ret
+		end
+
+		def demote_button?
+			prevs = self.statusobject.previous_statusobjects
+			if prevs.size > 0
+				ret="demote_by_select" if demote_by_select?
+				ret="demote_by_menu" if demote_by_menu?
+				ret="demote_by_action" if demote_by_action?
+			end
+			puts "demote_button?:prevs.size=#{prevs.size} by_select?=#{demote_by_select?} by_menu?=#{demote_by_menu?} by_action?=#{demote_by_action?} ret=#{ret}"
+			ret
+		end
+
+		def revise_button?
+			ret="revise_by_menu" if revise_by_menu?
+			ret="revise_by_action" if revise_by_action?
+			ret
+		end
+
 		def promote
 			st_cur_name = statusobject.name
-			st = self.statusobject.get_next
-			#st=StatusObject.next(statusobject)
-			res = update_attributes({:statusobject => st})
-			#puts "Document.promote:"+res.to_s+":"+st_cur_name+" -> "+statusobject.name
-			self if res
+			self.statusobject=::Statusobject.find(self.next_status_id)
+			#puts "Document.promote:res=#{res}:#{st_cur_name}->#{statusobject.name}"
+			self.next_status=nil
+			ret = self
+			#puts "object.promote:#{st_cur_name} -> #{self.statusobject.name} ret=#{ret}"
+			ret
 		end
 
 		def demote
-			#st_cur_name = statusobject.name
-			st = self.statusobject.get_previous
-			res = update_attributes({:statusobject => st})
-			#puts "Document.demote:"+st_cur_name+" -> "+st_new.name+":"+statusobject.name
-			self if res
+			st_cur_name = self.statusobject.name
+			stid = self.previous_status_id
+			self.statusobject=::Statusobject.find(self.previous_status_id)
+			self.previous_status=nil
+			ret = self
+			#puts "object.demote:#{st_cur_name} -> #{self.statusobject.name} ret=#{ret}"
+			ret
 		end
 
 		def link_relation
@@ -423,16 +477,23 @@ module Models
 					self.revision = "1"
 				end
 			end
+
 			if (self.respond_to? :statusobject)
-				if args.size>0 && (!args[0].include?(:statusobject))
-				self.statusobject = ::Statusobject.get_first(self.model_name)
+				if args.size>0 && (!args[0].include?(:statusobject_id))
+				self.statusobject = ::Statusobject.get_first(self)
 				end
 			end
+
 			if args.size>0
 				unless args[0][:user].nil?
-				self.set_default_values_with_next_seq
+					self.set_default_values_with_next_seq
+					if (self.respond_to? :statusobject)
+					# recalculate the status here because depending of the type modified above
+					self.statusobject = ::Statusobject.get_first(self)
+					end
 				end
 			end
+
 		end
 
 		def before_save
@@ -519,7 +580,7 @@ module Models
 				set_default_value(:revision, 0)
 			end
 			if (ret.respond_to? :statusobject)
-			ret.statusobject = ::Statusobject.get_first(ret.model_name)
+			ret.statusobject = ::Statusobject.get_first(ret)
 			end
 			ret.set_default_value(:ident, 1)
 			if (ret.respond_to? :date)

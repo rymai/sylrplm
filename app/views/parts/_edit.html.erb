@@ -17,18 +17,6 @@
 	<%= f.label t(:label_description) %>
 	<%= f.text_area :description , :rows => 10 %>
 	<br/>
-	<% if !(@part.statusobject.promote && @part.statusobject.demote) && !@part.frozen? %>
-	<%= f.label t("modif_status") %>
-	<% unless @part.statusobject.nil? %>
-	<%= f.collection_select(:statusobject_id, @status, :id, :name) %>
-	<% end %>
-	<% else %>
-	<%= f.label t("label_status") %>
-	<% unless @part.statusobject.nil? %>
-	<%= text_field_tag :statusobject,  @part.statusobject.name, :readonly => true %>
-	<% end %>
-	<% end %>
-	<br/>
 	<%= f.label t(:label_responsible) %>
 	<%= select_in_list(:part, :owner, @part.owner.login, :users) %>
 	<br/>
@@ -36,5 +24,6 @@
 	<%= f.date_select :date %>
 	<br/>
 	<%= h_input_domain(f) %>
+	<%= h_type_values(@part, fonct) %>
 	<br />
 </fieldset>

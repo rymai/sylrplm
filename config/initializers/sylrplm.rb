@@ -28,6 +28,20 @@ module SYLRPLM
 		"C:\\sylrplm-data-#{Rails.env}"
 	end
 
+
+		# document de type directory (pour eviter par exemple d'y mettre des fichiers)
+		TYPE_DOC_DIRECTORY        = 'directory'
+# type de user: personne physique.
+		TYPE_USER_PERSON          = 'person_'
+		# type du projet affecte par defaut a un user lors de sa creation
+		TYPE_PROJ_ACCOUNT         = '$PROJ_ACCOUNT'
+		# valeurs des types d'acces a un  projet
+		TYPEACCESS_PUBLIC         = 'public'
+		TYPEACCESS_CONFIDENTIAL   = 'confidential'
+		TYPEACCESS_SECRET         = 'secret'
+		FOG_ACCESS_KEY            = "W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j"
+		FOG_ACCESS_KEY_ID         = "AKIAIUTZHUXCXNUFDRHQ"
+
 	#
 	# no more used, use PlmServices.get_property("HELP_SUMMARY_LEVEL") for example
 	# properties are now stored in Typesobject table and managed by PlmServices
@@ -54,8 +68,6 @@ module SYLRPLM
 		#
 		# n'importe quel object plm
 		PLMTYPE_GENERIC           = 'any_plmtype'
-		# document de type directory (pour eviter par exemple d'y mettre des fichiers)
-		TYPE_DOC_DIRECTORY        = 'directory'
 		# n'importe quel type
 		TYPE_GENERIC              = 'any_type'
 		# type de user: personne physique.

@@ -20,7 +20,7 @@ class WorkitemsController < ApplicationController
 	# GET /workitems?p=:p || GET /workitems?participant=:p
 	#
 	def index
-		#puts "workitems_controller.index:params="+params.inspect
+		puts "workitems_controller.index:params="+params.inspect
 		@workitems=[]
 		unless @current_user.nil?
 			@query = params[:q] || params[:query]

@@ -38,7 +38,11 @@ class ForumsController < ApplicationController
 	def edit
 		@forum  = Forum.find(params[:id])
 		@types  = Typesobject.find_for("forum")
-		@status = Statusobject.find_for("forum")
+	end
+	
+	# GET /forums/1/edit_lifecycle
+	def edit_lifecycle
+		@forum  = Forum.find(params[:id])
 	end
 
 	# POST /forums
@@ -84,7 +88,22 @@ class ForumsController < ApplicationController
 			end
 		end
 	end
-
+	
+ def update_lifecycle
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"params=#{params.inspect}"}
+		@forum = Forum.find(params[:id])
+		if commit_promote?
+			ctrl_promote(@forum)
+		end
+		if commit_demote?
+			ctrl_demote(@forum)
+		end
+		if commit_revise?
+			ctrl_revise(@forum)
+		end
+	end
+	
 	# DELETE /forums/1
 	# DELETE /forums/1.xml
 	def destroy

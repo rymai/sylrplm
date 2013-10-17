@@ -340,3 +340,10 @@ a:hover, .help a:hover, a.help_tr:hover, a.menu:hover, a:hover, input:hover, sel
 .pagination {
 	margin: 5px 0;
 }
+
+/* surcharge bootstrap */
+.container {
+  margin-right: 0px;
+  margin-left: 0px;
+  *zoom: 1;
+}

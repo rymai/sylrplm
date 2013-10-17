@@ -180,10 +180,11 @@ module Models
 					:per_page => params[:nb_items])
 				else
 				# toutes les revisions
-					recordset = self.paginate(:page => params[:page],
+					recordset = self.paginate( :page => params[:page],
 					:conditions => conditions,
 					:order => params[:sort],
-					:per_page => params[:nb_items])
+					:per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
+					)
 				end
 				puts self.model_name+".find_paginate:conditions="+conditions.inspect
 				#puts self.model_name+"."+__method__.to_s+":"+recordset.inspect
@@ -200,9 +201,9 @@ module Models
 		def frozen?
 			fname="#{self.class.name}.#{__method__}"
 			ret = false
-			unless (self.statusobject.nil? || ::Statusobject.get_last(self.model_name).nil?)
-			ret = (self.statusobject.rank == ::Statusobject.get_last(self.model_name).rank)
-			#LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self.model_name).rank}=#{ret}"}
+			unless (self.statusobject.nil? || ::Statusobject.get_last(self).nil?)
+			ret = (self.statusobject.rank == ::Statusobject.get_last(self).rank)
+			LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self).rank}=#{ret}"}
 			end
 			ret
 		end

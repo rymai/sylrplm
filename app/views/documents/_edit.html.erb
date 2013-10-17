@@ -17,18 +17,6 @@
 	<%= f.label t("label_description") %>
 	<%= f.text_area :description , :rows => 10, :readonly => @document.column_readonly?(:description) %>
 	<br/>
-	<%if (@document.promote_by_select? || @document.demote_by_select? == 1) && !@document.frozen? %>
-	<%= f.label t("label_status") %>
-	<% unless @document.statusobject.nil? %>
-	<%= f.collection_select(:statusobject_id, @status, :id, :name) %>
-	<% end %>
-	<%else %>
-	<%= f.label t("label_status") %>
-	<% unless @document.statusobject.nil? %>
-	<%= text_field_tag :status, @document.statusobject.name, :readonly => true %>
-	<%end %>
-	<%end %>
-	<br/>
 	<%= f.label t("label_responsible") %>
 	<%= select_in_list(:document, :owner, @document.owner.login, :users) %>
 	<br/>

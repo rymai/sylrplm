@@ -11,6 +11,8 @@ class Document < ActiveRecord::Base
 
 	belongs_to :typesobject
 	belongs_to :statusobject
+	belongs_to :next_status, :class_name => "Statusobject"
+	belongs_to :previous_status, :class_name => "Statusobject"
 	belongs_to :owner, :class_name => "User"
 	belongs_to :group
 	belongs_to :projowner, :class_name => "Project"

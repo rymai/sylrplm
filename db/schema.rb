@@ -76,7 +76,10 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "owner_id"
 		t.integer  "typesobject_id"
 		t.integer  "statusobject_id"
+		t.integer  "next_status_id"
+		t.integer  "previous_status_id"
 		t.string   "ident"
+		t.string   "revision"
 		t.string   "designation"
 		t.text     "description"
 		t.date     "date"
@@ -147,6 +150,8 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "owner_id"
 		t.integer  "typesobject_id"
 		t.integer  "statusobject_id"
+		t.integer  "next_status_id"
+		t.integer  "previous_status_id"
 		t.string   "ident"
 		t.string   "revision"
 		t.string   "designation"
@@ -203,6 +208,8 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "owner_id"
 		t.integer  "typesobject_id"
 		t.integer  "statusobject_id"
+		t.integer  "next_status_id"
+		t.integer  "previous_status_id"
 		t.string   "subject"
 		t.text     "description"
 		t.datetime "created_at"
@@ -303,6 +310,8 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "owner_id"
 		t.integer  "typesobject_id"
 		t.integer  "statusobject_id"
+		t.integer  "next_status_id"
+		t.integer  "previous_status_id"
 		t.string   "ident"
 		t.string   "revision"
 		t.string   "designation"
@@ -338,7 +347,10 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "owner_id"
 		t.integer  "typesobject_id"
 		t.integer  "statusobject_id"
+		t.integer  "next_status_id"
+		t.integer  "previous_status_id"
 		t.string   "ident"
+		t.string   "revision"
 		t.string   "designation"
 		t.text     "description"
 		t.date     "date"
@@ -460,17 +472,37 @@ ActiveRecord::Schema.define(:version => 0) do
 
 	create_table "statusobjects", :force => true do |t|
 		t.string   "forobject"
+		t.integer  "typesobject_id"
 		t.string   "name"
 		t.text     "description"
 		t.integer  "rank"
 		t.integer  "promote_id"
 		t.integer  "demote_id"
+		t.integer  "revise_id"
 		t.datetime "created_at"
 		t.datetime "updated_at"
 		t.string   "domain"
 	end
 
 	add_index "statusobjects", ["forobject", "rank", "name"], :name => "index_statusobjects_on_object_and_rank_and_name", :unique => true
+
+	create_table "statusobjects_nexts", :id => false, :force => true do |t|
+		t.integer  "statusobject_id",    :null => false
+		t.integer  "other_statusobject_id",    :null => false
+		t.datetime "created_at"
+		t.datetime "updated_at"
+		t.string   "domain"
+	end
+	add_index "statusobjects_nexts", ["statusobject_id", "other_statusobject_id"], :name => "index_statusobjects_nexts_on_statusobjects_id_and_other_statusobject_id", :unique => true
+
+	create_table "statusobjects_previous", :id => false, :force => true do |t|
+		t.integer  "statusobject_id",    :null => false
+		t.integer  "other_statusobject_id",    :null => false
+		t.datetime "created_at"
+		t.datetime "updated_at"
+		t.string   "domain"
+	end
+	add_index "statusobjects_previous", ["statusobject_id", "other_statusobject_id"], :name => "index_statusobjects_previous_on_statusobject_id_and_other_statusobject_id", :unique => true
 
 	create_table "subscriptions" , :force => true do |t|
 		t.string   "name"

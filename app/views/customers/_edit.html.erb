@@ -14,16 +14,7 @@
 	<%= f.label t("label_description") %>
 	<%= f.text_area :description , :rows => 10 %>
 	<br/>
-	<%if (@customer.statusobject.promote!=true || @customer.statusobject.demote!=true) %> <%= f.label t("modif_status") %>
-	<% if(@customer.statusobject != nil) %>
-	<%= f.collection_select(:statusobject_id, @status, :id, :name) %>
-	<% end %>
-	<%else %> <%= f.label t("label_status") %>
-	<% if(@customer.statusobject != nil) %>
-	<%= @customer.statusobject.name %>
-	<%end %>
-	<%end %>
-	<br/>
+	
 	<%= f.label t(:label_responsible) %>
 	<%= select_in_list(:customer, :owner, @customer.owner.login, :users) %>
 	<br/>

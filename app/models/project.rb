@@ -3,7 +3,7 @@ class Project < ActiveRecord::Base
 	include Models::PlmObject
 	include Models::SylrplmCommon
 	validates_presence_of :ident, :designation
-	validates_uniqueness_of :ident
+	validates_uniqueness_of :ident, :scope => :revision
 
 	attr_accessor :user, :link_attributes
 
@@ -17,6 +17,8 @@ class Project < ActiveRecord::Base
 	belongs_to :typeaccess,
   :class_name => "Typesobject"
 	belongs_to :statusobject
+	belongs_to :next_status, :class_name => "Statusobject"
+	belongs_to :previous_status, :class_name => "Statusobject"
 	belongs_to :owner, :class_name => "User"
 	belongs_to :group
 

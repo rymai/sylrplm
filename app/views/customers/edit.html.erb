@@ -7,11 +7,7 @@
 <table class='menu_bas'>
 	<tr>
 		<td> <%= f.submit t("update") %> </td>
-		<%if @customer.statusobject.promote==true %> <td><%= link_to t(:promote), :id => @customer.id, :action => :promote , :confirm => t("msg_confirm") %></td>
-		<%end %>
-		<%if @customer.statusobject.demote==true %> <td><%= link_to t(:demote), :id => @customer.id, :action => :demote , :confirm => t("msg_confirm") %></td>
-		<%end %> <td> <%= link_to t("explorer"), @customer %> </td>
-		<td> <%= link_to t("list"), customers_path %> </td>
+		 <td> <%= link_to t("list"), customers_path %> </td>
 	</tr>
 </table>
 <% end %>

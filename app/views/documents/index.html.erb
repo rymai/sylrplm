@@ -55,17 +55,12 @@
 		<%else%>
 		<%= h_img_checkin.to_s %>
 		<% end%> </td>
-		<% if document.revisable? %> <td><% unless document.revise_by_action? %>
-		<%= h_img_revise.to_s %><% end %></td>
-		<td></td>
-		<% else %>
-		<% if document.frozen? == false %> <td> <%= link_to h_img_edit.to_s, edit_document_path(document) %></td>
+		<td> <%= link_to h_img_edit.to_s, edit_document_path(document) %></td>
+		<td> <%= link_to h_img_edit_lifecycle.to_s, {:controller=>"documents", :action=>"edit_lifecycle", :id => document.id} %> </td>
 		<td> <%= link_to h_img_destroy.to_s, document, :confirm => t("msg_confirm"), :method => :delete %></td>
-		<% else %> <td></td>
 		<td></td>
-		<% end %>
+		<td></td>
 		<td> <%= link_to h_img(:duplicate), new_dup_document_path(document) %> </td>
-		<% end %>
 		<% if logged_in? %> <td><%= link_to_remote  h_img(:copy).to_s, :url => {:controller => "documents", :action => "add_favori", :id => document.id}, :method => :get  %></td>
 		<% end %>
 	</tr>

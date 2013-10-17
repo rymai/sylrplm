@@ -1,7 +1,5 @@
 require 'classes/controller'
 
-
-
 class MainController < ApplicationController
 
   #access_control(Access.find_for_controller(controller_class_name))
@@ -10,7 +8,6 @@ class MainController < ApplicationController
   #  request.env["PATH_INFO"] +":"+__FILE__+":"+__LINE__.to_s
   #end
   def index
-    
     unless params[:domain].blank?
       # creation du domaine demande: status et types d'objets
       st=Controller.init_db(params)
@@ -30,6 +27,9 @@ class MainController < ApplicationController
         session[:theme] = @theme
       end
     end
+    if @theme.nil?
+    	@theme="white"
+    end
     unless params[:locale].nil?
       set_locale
       unless @current_user.nil?
@@ -41,6 +41,7 @@ class MainController < ApplicationController
       set_domain
     end
     respond_to do |format|
+    	@main=true
       format.html # index.html.erb
     end
    

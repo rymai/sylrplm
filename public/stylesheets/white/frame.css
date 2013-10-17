@@ -183,6 +183,9 @@ fieldset, legend {
 	padding: 0px;
 	margin-bottom: 0px;
 }
+fieldset {
+	border: 2px solid black;
+}
 legend {
 	color: black;
 	border: none;
@@ -251,7 +254,11 @@ label {
 	margin-right: 2px;
 	margin-top: 2px;
 }
-
+textarea {
+	width:205px;
+	height:200px;
+}
+/*            boostrap */
 .navbar .brand {
 	font-size: 16px;
 	padding: 5px 10px 5px;
@@ -270,3 +277,15 @@ label {
  }
  */
 
+/* surcharge bootstrap */
+.container {
+  margin-right: 0px;
+  margin-left: 0px;
+  *zoom: 1;
+}
+
+.navbar-static-top .container,
+.navbar-fixed-top .container,
+.navbar-fixed-bottom .container {
+  width: 1260px;
+}

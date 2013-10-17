@@ -40,6 +40,7 @@
 		<td><%= h_explorer forum.projowner %></td>
 		<td><%= forum.forum_items.length %></td>
 		<% unless forum.frozen? %> <td> <%= link_to h_img_edit.to_s, edit_forum_path(forum) %> </td>
+		<td> <%= link_to h_img_edit_lifecycle.to_s, {:controller=>"forums", :action=>"edit_lifecycle", :id => forum.id} %> </td>
 		<td> <%= link_to h_img_destroy, forum, :confirm => t("msg_confirm"), :method => :delete %> </td>
 		<% end %>
 	</tr>

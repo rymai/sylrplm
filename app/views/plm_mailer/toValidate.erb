@@ -27,8 +27,6 @@
   <%=h @object.description %>
 </p>
 
-
-
 <p>
   <b><%=t(:label_status)%></b>
   <% if(@object.statusobject != nil) %>
@@ -45,7 +43,6 @@
   <b><%=t(:label_date)%></b>
   <%=h @object.date %>
 </p>
-
 
 <%=t(:check_object_and_promote)%> <a href="<%= @urlbase %><%= url_for(:controller=>"documents", :action=>'edit', :id => @object.id) %>" title="<%= @object.ident %>" ><%=h @object.ident %></a>
 

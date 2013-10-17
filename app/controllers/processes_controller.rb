@@ -14,19 +14,7 @@ class ProcessesController < ApplicationController
   # GET /processes
   #
   def index
-    #    puts "processes_controller.index:params="+params.inspect
-    v=ruote_engine.process_statuses.values
-
-    vv=[]
-    v.each do  |ps|
-      #      puts "ProcessesController.index:ps("+v.size.to_s+")="+ps.launch_time.inspect
-      unless ps.launch_time.nil?
-        vv<<ps
-      end
-    end
-    all_processes = vv.sort_by { |ps|
-      ps.launch_time
-    }.reverse
+    all_processes=Ruote::Sylrplm::Process.get_all
 
     #all_processes = v
 
@@ -209,7 +197,7 @@ class ProcessesController < ApplicationController
   #
   private
 
-  def parse_launchitem
+  def parse_launchitem_mis_dans_lib
     fname=__FILE__+"."+__method__.to_s+":"
     ct = request.content_type.to_s
     # TODO : deal with Atom[Pub]

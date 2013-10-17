@@ -4,6 +4,10 @@
 	<%= h @statusobject.forobject %>
 </p>
 <p>
+	<b><%= t(:label_typesobject) %></b>
+	<%= h @statusobject.typesobject.name %>
+</p>
+<p>
 	<b><%= t(:label_name) %></b>
 	<%= h @statusobject.name %>
 </p>
@@ -22,6 +26,18 @@
 <p>
 	<b><%= t(:label_demote) %></b>
 	<%= h @statusobject.demote %>
+</p>
+<p>
+	<b><%= t(:label_revise) %></b>
+	<%= h @statusobject.revise %>
+</p>
+<p>
+	<b><%= t(:label_next_status) %></b>
+	<%= h @statusobject.next_statusobjects.collect {|st| "#{st.name}"} %>
+</p>
+<p>
+	<b><%= t(:label_previous_status) %></b>
+	<%= h @statusobject.previous_statusobjects.collect {|st| "#{st.name}"} %>
 </p>
 <table class='menu_bas'>
 	<tr>
@@ -46,6 +62,7 @@
 		<th> <%= t(:label_date) %> </th>
 		<th> <%= t(:label_filename) %> </th>
 		<th> <%= t(:label_content_type) %> </th>
+		<th> <%= t(:label_domain) %> </th>
 	</tr>
 	<% @statusobject.documents.each do |document| %>
 	<tr>

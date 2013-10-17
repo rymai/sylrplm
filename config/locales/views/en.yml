@@ -1,5 +1,10 @@
 en:
   # general
+  customer: client
+  document: document
+  part: part
+  project: project
+  forum: forum
   label_internal: Internal
   label_projowner: Project
   label_forum_items: Messages
@@ -9,7 +14,7 @@ en:
   label_date: Date
   select_add: Add to selection
   select_remove: Remove from selection
-  user_connected: "%{login} connected as %{role}/%{group}/%{project}"
+  user_connected: "%{login}:%{role}/%{group}/%{project}"
   hello: "Hello world"
   disconnect: "Disconnect"
   connect: Sign in
@@ -57,6 +62,7 @@ en:
   add_forum: Add discussion
   freeze: Freeze
   edit: Edit
+  edit_lifecycle: Life cycle 
   update: Update
   create: Create
   copy: Copy
@@ -67,6 +73,9 @@ en:
   menu_action: Action(s)
   back_to_object: "Back to :"
   back_to_root: "Back to root :"
+  legend_edit_lifecycle: Lifecycle
+  legend_edit_revision: Revision
+  lifecycle_edit: "Lifecycle of the %{model} '%{obj}'"
   # attributs generaux
   faq_question: Question
   faq_answer: answer
@@ -114,8 +123,14 @@ en:
   mnu_my_subscriptions: My subscriptions
   cut: "Cut"
   revise: "Revise"
-  promote: "Promote"
-  demote: Demote
+  promote_by_menu: "Promote"
+  demote_by_menu: Demote
+  promote_by_action: "Promote by action"
+  demote_by_action: Demote by action
+  promote_by_select: "Promote by select"
+  demote_by_select: Demote by select
+  revise_by_menu: Revise by menu
+  revise_by_action: Revise by action
   # shared
   legend_link_duplication: "Links Duplication of '%{object_orig}'"
   label_assoc_documents: Associated Documents 
@@ -259,9 +274,9 @@ en:
   history_assoc: Terminates workitems
   # forums
   legend_forum: Enter discussions details
-  forum_edit: Discussions edit
+  forum_edit: Discussion edit
   forum_list: Discussions list
-  forum_show: Discussions detail
+  forum_show: Discussion detail
   forum_new: New Discussion
   part_new_forum: New discussion on this part
   label_subject: Discussion subject
@@ -293,6 +308,7 @@ en:
   help_close_window: Close the help window
   help_general: General Help
   help_window: Help on this window
+  help_first_use: First use
   help_about: About SYLRPLM
   mnu_help: Help
   # info
@@ -339,7 +355,7 @@ en:
   legend_debug: Debug
   legend_clipboard: Clipboard
   submit: GO
-  help_first_use: "To begin (%{help})"
+  first_use: "To begin (%{help})"
   CV: Curriculum vitae
   # notifications
   legend_notification: Enter notification details
@@ -486,6 +502,11 @@ en:
   label_rank: Rank
   label_promote: Promote
   label_demote: Demote
+  label_next_status: Next Status(s)
+  label_previous_status: Previous Status
+  label_statusobject_next_statusobject_ids_out: Other status	
+  label_statusobject_next_statusobject_ids_in: Next status
+  label_revise: Revisable
   # msg _check_status
   msg_define_status_document: Please, define documents status
   msg_define_status_part: Please, define parts status

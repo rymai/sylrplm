@@ -10,11 +10,14 @@ fr:
   check_volume_no_dir: "Le répertoire %{dir} du volume %{name} n'existe pas ou plus"
   check_volume_no_rmdir: "Le répertoire %{dir} du volume %{name} ne peut être supprimé"
   # statusobject
-  status_promote_0: interdit
-  status_promote_1: libre
-  status_promote_2: menu
-  status_promote_3: action
-  status_demote_0: interdit
-  status_demote_1: libre
-  status_demote_2: menu
-  status_demote_3: action
+  status_promote_0: Interdit
+  status_promote_1: Libre
+  status_promote_2: Menu
+  status_promote_3: Action
+  status_demote_0: Interdit
+  status_demote_1: Libre
+  status_demote_2: Menu
+  status_demote_3: Action
+  status_revise_0: Interdit
+  status_revise_1: Menu
+  status_revise_2: Action

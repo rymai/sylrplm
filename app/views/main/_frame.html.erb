@@ -1,14 +1,12 @@
-<div class="navbar">
+<div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
 		<div class="container">
-			<div class="btn-toolbar" style="margin: 0;">
+			<div class="btn-toolbar" >
 				<div class="btn-group">
 					<ul class="nav nav-tabs">
-
 						<li class="active">
-							<a class="brand" href="#main" data-toggle="tab"> <%= @page_title || "SYLRPLM" %> <%= t(:label_today) %> <%= Date.today %></a>
+							<a class="brand" href="#main" data-toggle="tab"> <%= @page_title || "SYLRPLM" %> </a>
 						</li>
-
 						<li >
 							<a class="brand" href="#favorites" data-toggle="tab"><%= t(:legend_clipboard) %></a>
 						</li>
@@ -201,7 +199,7 @@
 					</button>
 					<ul class="dropdown-menu">
 						<li>
-							<%= link_to t(:help_general), {:controller=> :main, :action => :helpgeneral},{:target => "_blank" } %>
+							<%= link_to t(:help_general), {:controller=> :main, :action => :helpgeneral}, {:target => "_blank" } %>
 						</li>
 						<!--
 						<li>
@@ -209,19 +207,20 @@
 						</li>
 						-->
 						<li>
+							<%= help_chapter :help_first_use %>
+						</li>
+						<li>
 							<%= help_window() %>
 						</li>
 						<li>
-							<%= help_about() %>
+							<%= help_chapter :help_about %>
 						</li>
 					</ul>
 				</div>
 			</div><!-- /btn-toolbar -->
-
 		</div><!-- /container -->
-	</div>
-</div>
-
+	</div><!-- /navbar-inner -->
+</div><!-- /navbar -->
 
 <script type="text/javascript">
 	$(function() {
@@ -238,7 +237,10 @@
 
 </script>
 <div class="tab-content">
-
+	<br/>
+	<br/>
+	<br/>
+	<br/>
 	<div id="favorites" class="tab-pane inactive">
 		<%= render('layouts/favorites') %>
 	</div>
@@ -261,5 +263,33 @@
 		<% end %>
 		<%= yield :layout %>
 	</div>
+	<br/>
+	<br/>
 </div>
+<div class="container">
+	<%unless @main.nil? || @current_user.nil?%>
+	<% opts = { :order => 'dispatch_time DESC' }
+		opts[:conditions] = { :store_name => @current_user.store_names }
+		opts[:page] = (params[:page].nil? ? PlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i :  params[:page])
+		@workitems = Ruote::Sylrplm::ArWorkitem.paginate_by_params(
+	[
+	# parameter_name[, column_name]
+	'wfid',
+	[ 'workflow', 'wfname' ],
+	[ 'store', 'store_name' ],
+	[ 'participant', 'participant_name' ]
+	],
+	params,
+	opts) %>
+	<h1><%= t("workitems_list") %></h1>
+	<%= render(:partial => "workitems/workitems", :object =>  @workitems, :locals => {  :fonct=>"list_main" } ) %>
+	<%end%>
+</div><!-- /container -->
+<div class="navbar navbar-fixed-bottom">
+	<div class="navbar-inner">
+		<div class="container">
+			Bas de page
+		</div><!-- /container -->
+	</div><!-- /navbar-inner -->
+</div><!-- /navbar -->
 

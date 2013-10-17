@@ -31,7 +31,8 @@ class StatusobjectsController < ApplicationController
 	# GET /statusobjects/new
 	# GET /statusobjects/new.xml
 	def new
-		@statusobject = Statusobject.new(params[:statusobject])
+		@statusobject = Statusobject.new
+		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
 		@objectswithstatus=Statusobject.get_objects_with_status
 		respond_to do |format|
 			format.html # new.html.erb
@@ -42,6 +43,7 @@ class StatusobjectsController < ApplicationController
 	# GET /statusobjects/1/edit
 	def edit
 		@statusobject = Statusobject.find(params[:id])
+		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
 		@objectswithstatus=Statusobject.get_objects_with_status
 	end
 
@@ -49,6 +51,7 @@ class StatusobjectsController < ApplicationController
 	# POST /statusobjects.xml
 	def create
 		@statusobject = Statusobject.new(params[:statusobject])
+		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
 		@objectswithstatus=Statusobject.get_objects_with_status
 		respond_to do |format|
 			if @statusobject.save

@@ -1,52 +1,46 @@
-<%=t(:hello)%>
+<%= t(:hello)%>
 <br>
-<%=t(:document_validated)%>
+<%= t(:document_validated)%>
 <br>
 
 <p>
-  <b><%=t(:label_ident)%><</b>
-  <%=h @object.ident %>
+	<b><%= t(:label_ident)%><</b>
+	<%= h @object.ident %>
 </p>
 
 <p>
-  <b><%=t(:label_type)%><</b>
-  <% if(@object.typesobject != nil) %>
-  	<%=h @object.typesobject.id %>:<%=h @object.typesobject.name %>
-  <% end %> 
+	<b><%= t(:label_type)%><</b>
+	<% if(@object.typesobject != nil) %>
+	<%= h @object.typesobject.id %>:<%= h @object.typesobject.name %>
+	<% end %>
 </p>
 
 <p>
-  <b><%=t(:label_designation)%><</b>
-  <%=h @object.designation %>
+	<b><%= t(:label_designation)%><</b>
+	<%= h @object.designation %>
 </p>
 
 <p>
-  <b><%=t(:label_description)%><</b>
-  <%=h @object.description %>
-</p>
-
-
-<p>
-  <b><%=t(:label_status)%><</b>
-  <% if(@object.statusobject != nil) %>
-  	<%=h @object.statusobject.id %>:<%=h @object.statusobject.name %>
-  <% end %> 
+	<b><%= t(:label_description)%><</b>
+	<%= h @object.description %>
 </p>
 
 <p>
-  <b><%=t(:label_responsible)%><</b>
-  <%=h @object.owner.login %>
+	<b><%= t(:label_status)%><</b>
+	<% if(@object.statusobject != nil) %>
+	<%= h @object.statusobject.id %>:<%= h @object.statusobject.name %>
+	<% end %>
 </p>
-
 
 <p>
-  <b><%=t(:label_date)%><</b>
-  <%=h @object.date %>
+	<b><%= t(:label_responsible)%><</b>
+	<%= h @object.owner.login %>
 </p>
 
+<p>
+	<b><%= t(:label_date)%><</b>
+	<%= h @object.date %>
+</p>
 
-<%=t(:direct_access)%><a href="<%= @urlbase %><%= url_for(:controller=>"documents", :action=>'show', :id => @object.id) %>" title="<%= @object.ident %>" ><%=h @object.ident %></a>
-
-
-
+<%= t(:direct_access)%><a href="<%= @urlbase %><%= url_for(:controller=>"documents", :action=>'show', :id => @object.id) %>" title="<%= @object.ident %>" ><%= h @object.ident %></a>
 

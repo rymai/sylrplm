@@ -84,10 +84,8 @@ module Ruote
 			def self.get_workitem(wfid)
 				fname="ArWorkitem."+__method__.to_s
 				LOG.debug (fname) {"wfid=#{wfid}"}
-				require 'pg'
-
-				#show_activity
-						  
+				###require 'pg'
+				#show_activity		  
 				ret = find(:first, :conditions => ["wfid = '#{wfid}'"])
 				#ret = find_by_wfid(wfid)
 				LOG.debug (fname) {"ret=#{ret}"}
@@ -105,7 +103,29 @@ module Ruote
 			    end
 			  end
 			end
-
+			
+			# add an object in fields
+			def add_object(object)
+				fname="ArWorkitem."+__method__.to_s
+				ret=0
+				type_object=object.model_name
+				fields = self.field_hash
+				if fields == nil
+					fields = {}
+					fields["params"] = {}
+				end
+				url="/"+type_object+"s"
+				url+="/"+object.id.to_s
+				label=type_object+":"+object.ident
+				unless fields["params"][url]==label
+					fields["params"][url]=label	
+					ret+=1
+					self.replace_fields(fields)
+				else
+					LOG.info (fname) {"objet deja present dans cette tache"}
+				end
+				ret
+			end
 		end
 	end
 end

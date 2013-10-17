@@ -30,12 +30,6 @@
   <%=h @document.description %>
 </p>
 
-
-<p>
-  <b><%=t(:label_repository)%><</b>
-  <%=h @document.repository %>
-</p>
-
 <p>
   <b><%=t(:label_status)%><</b>
   <% if(@document.statusobject != nil) %>
@@ -53,10 +47,7 @@
   <b><%=t(:label_date)%><</b>
   <%=h @document.date %>
 </p>
-<p>
-	<b>File:</b>
-<a href="<%= @urlbase %><%= url_for(:controller=>"documents", :action=>'show_file', :id => @document.id, :only_path => :false, :skip_relative_url_root => :false ) %>" title="<%= @document.getRepository %>" ><%=h @document.filename %></a>
-</p>
+
 
 <%=t(:direct_access)%><a href="<%= @urlbase %><%= url_for(:controller=>"documents", :action=>'show', :id => @document.id) %>" title="<%= @document.ident %>" ><%=h @document.ident %></a>
 

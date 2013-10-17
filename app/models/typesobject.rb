@@ -7,6 +7,7 @@ class Typesobject < ActiveRecord::Base
 	has_many :parts
 	has_many :projects
 	has_many :customers
+	has_many :statusobject
 
 	named_scope :order_default, :order=>"forobject ASC, name ASC"
 	named_scope :find_all , order_default.all

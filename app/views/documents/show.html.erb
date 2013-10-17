@@ -31,6 +31,12 @@
 	<% end %>
 </p>
 <p>
+	<b><%= t("label_next_status") %></b>
+	<% unless @document.next_status.nil?  %>
+	<%= h @document.next_status.name %>
+	<% end %>
+</p>
+<p>
 	<b><%= t("label_responsible") %></b>
 	<%= h @document.owner.login %>
 </p>

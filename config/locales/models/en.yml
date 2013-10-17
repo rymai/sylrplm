@@ -10,11 +10,14 @@ en:
   check_volume_no_dir: "Directory %{dir} of volume %{name} no more existing"
   check_volume_no_rmdir: "Directory %{dir} of volume %{name} can't be deleted"
   # statusobject
-  status_promote_0: forbidden
-  status_promote_1: free
-  status_promote_2: menu
-  status_promote_3: action
-  status_demote_0: forbidden
-  status_demote_1: free
-  status_demote_2: menu
-  status_demote_3: action
+  status_promote_0: Forbidden
+  status_promote_1: Free
+  status_promote_2: Menu
+  status_promote_3: Action
+  status_demote_0: Forbidden
+  status_demote_1: Free
+  status_demote_2: Menu
+  status_demote_3: Action
+  status_revise_0: Forbidden
+  status_revise_1: Menu
+  status_revise_2: Action

@@ -557,11 +557,13 @@ sur mandriva: kdewallet , compte=dsone\s45, mot de passe=syl91.ani
 ---
 --- 20/2/2013: install postgresql pour etre compatible remy et heroku (ruby 1.9.3 dans Gemfile)
 ---
-install  dans /opt/PostgreSQL/9.2
+install par ./postgresql-9.2.3-1-linux.run
+install dans /opt/PostgreSQL/9.2
 donnees dans /home/PostgreSQL
 user postgres/passwd
 port 5432
 date locale
+verifier la protection des datas: chmod 0700 /home/PostgreSQL
 ---
 --- puis install du gem pg:
 ---
@@ -682,4 +684,7 @@ $ git commit -m "First release"
 $ git push origin master
 rake install
 rake release
+
+infos
+<%= t(:label_today) %> <%= Date.today %>
 
