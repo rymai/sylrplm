@@ -10,21 +10,19 @@
 <%= will_paginate(@volumes[:recordset]) %>
 <table>
 	<tr>
-		<th> <%= t(:label_name) %> </th>
-		<th> <%= t(:label_description) %> </th>
-		<th> <%= t(:label_directory) %> </th>
-		<th> <%= t(:label_protocol) %> </th>
-		<th></th>
+		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t(:label_name), "name" %> </th>
+		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
+		<th <%= sort_td_class_helper "directory" %>> <%= sort_link_helper t(:label_directory), "directory" %> </th>
+		<th <%= sort_td_class_helper "protocol" %>> <%= sort_link_helper t(:label_protocol), "protocol" %> </th>
 		<th></th>
 		<th></th>
 	</tr>
 	<% @volumes[:recordset].each do |volume| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td> <%= h volume.name %> </td>
+		<td> <%= h_explorer volume, :name %> </td>
 		<td> <%= h volume.description %> </td>
 		<td> <%= h volume.directory %> </td>
 		<td> <%= h volume.protocol %> </td>
-		<td> <%= link_to h_img_show.to_s, volume %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_volume_path(volume) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, volume, :confirm =>t(:msg_confirm), :method => :delete %> </td>
 	</tr>

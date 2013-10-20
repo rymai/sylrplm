@@ -25,14 +25,14 @@
 		<th <%= sort_td_class_helper "revise" %>> <%= sort_link_helper t(:label_revise), "revise" %> </th>
 		<th> <%= t(:label_next_status) %> </th>
 		<th> <%= t(:label_previous_status) %> </th>
-		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %> </th><th></th><th></th><th></th>
+		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %> </th><th></th><th></th>
 	</tr>
 	<% @statusobjects[:recordset].each do |statusobject| %>
 	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= h statusobject.id %> </td>
 		<td> <%= h statusobject.forobject %> </td>
-		<td> <%= h statusobject.typesobject.name %> </td>
-		<td> <%= h statusobject.name %> </td>
+		<td> <%= h_explorer statusobject.typesobject, :name %> </td>
+		<td> <%= h_explorer statusobject, :name %> </td>
 		<td> <%= h statusobject.rank %> </td>
 		<td> <%= h statusobject.description %> </td>
 		<td> <%= h statusobject.promote %> </td>
@@ -41,7 +41,6 @@
 		<td> <%= h statusobject.next_statusobjects.collect {|st| "#{st.name}"} %> </td>
 		<td> <%= h statusobject.previous_statusobjects.collect {|st| "#{st.name}"} %> </td>
 		<td> <%= h statusobject.domain %> </td>
-		<td> <%= link_to h_img_show.to_s, statusobject %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_statusobject_path(statusobject) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, statusobject, :confirm => t(:msg_confirm), :method => :delete %> </td>
 	</tr>

@@ -61,7 +61,7 @@
 		<td> <%= link_to t("add_datafile"), :action => :new_datafile, :id => @document.id %> </td>
 	</tr>
 </table>
-<% end %> 
+<% end %>
 
 <% render(:partial => "shared/show_objects_in_relations", :locals=> {:object => @document,  :fonct => fonct}) %>
 
@@ -122,7 +122,16 @@
 	</td>
 </table>
 <%end%>
+<% unless @document.relations["forum"].count==0 %>
+<tr>
+	<% form_for(@document, :url => {:id => @document.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @document.relations["forum"], :id, :ident)) %></td>
+	<td><%= submit_tag t("add_forum") %></td>
+	<% end %>
+</tr>
+<% end %>
+
 <%= render(:partial => "shared/tree", :object => @document ) %> <h1></h1>
+
 <% form_for(@document) do |f| %>
 <table class='menu_bas'>
 	<tr>

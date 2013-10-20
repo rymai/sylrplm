@@ -66,6 +66,10 @@ class Link < ActiveRecord::Base
 		super
 		#LOG.info (fname) {"#{args}"}
 	end
+	
+	def designation
+		""
+	end
 
 	def before_save
 		fname = "#{self.class.name}.#{__method__}"
@@ -124,7 +128,9 @@ class Link < ActiveRecord::Base
 	end
 
 	def father
-		get_object(father_plmtype, father_id)
+		fname = "#{self.class.name}.#{__method__}"
+		LOG.debug (fname) {"father_plmtype=#{father_plmtype} father_id=#{father_id}"}
+		get_object(father_plmtype, father_id) unless father_plmtype.blank? || father_id.blank?
 	end
 
 	def father_ident
@@ -139,7 +145,7 @@ class Link < ActiveRecord::Base
 	end
 
 	def child
-		get_object(child_plmtype, child_id)
+		get_object(child_plmtype, child_id) unless child_plmtype.blank? || child_id.blank?
 	end
 
 	def child_ident

@@ -20,17 +20,16 @@
 		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
 		<th <%= sort_td_class_helper "fields" %>> <%= sort_link_helper t(:label_fields), "fields" %> </th>
 		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %> </th>
-		<th></th><th></th><th></th>
+		<th></th><th></th>
 	</tr>
 	<% @typesobjects[:recordset].each do |typesobject| %>
 	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= h typesobject.id %> </td>
 		<td> <%= h typesobject.forobject %> </td>
-		<td> <%= h typesobject.name %> </td>
+		<td> <%= h_explorer typesobject, :name %> </td>
 		<td> <%= h typesobject.description %> </td>
 		<td> <%= h typesobject.fields %> </td>
 		<td> <%= h typesobject.domain %> </td>
-		<td> <%= link_to h_img_show.to_s, typesobject %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_typesobject_path(typesobject) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, typesobject, :confirm => t(:msg_confirm), :method => :delete %> </td>
 	</tr>

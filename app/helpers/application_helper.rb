@@ -407,7 +407,7 @@ module ApplicationHelper
 
 	def h_link_to (name, obj, method = nil)
 		fname=self.class.name+"."+__method__.to_s
-		#LOG.info (fname){"obj=#{obj}, method=#{method}"}
+		#LOG.info (fname){"obj=#{obj.to_s}, method=#{method}"}
 		ret=""
 		unless obj.nil?
 			if method.nil?

@@ -1,9 +1,19 @@
-<h1>New link</h1>
-<% form_for(@link) do |f| %>
+<h1>New link</h1><% fonct="new"
+form_id=fonct+"_link" %>
+<% form_for(@link, :html => { :id => form_id }) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "links/edit",:locals => { :f => f, :fonct=>"new" }) %>
-<p>
-	<%= f.submit 'Create' %>
-</p>
+<%= render(
+:partial => "links/edit",
+:locals => {
+:form => f,
+:fonct => fonct,
+:form_id => form_id }
+) %>
+<table class='menu_bas'>
+	<tr>
+		<td> <%= f.submit t("update") %> </td>
+		<td> <%= link_to t("explorer"), @link %> </td>
+		<td> <%= link_to t("list"), links_path %> </td>
+	</tr>
+</table>
 <% end %>
-<%= link_to 'Back', links_path %>

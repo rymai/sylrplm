@@ -177,8 +177,8 @@ module Models
 			#puts "#{fname}: promote_id=#{self.statusobject.promote_id} choice#{choice} #{self.respond_to? :statusobject}"
 			ret=false
 			if self.respond_to? :statusobject
-				unless  self.statusobject.nil?				
-					if self.statusobject.promote_id == choice		
+				unless  self.statusobject.nil?
+					if self.statusobject.promote_id == choice
 					ret = true
 					end
 				else
@@ -201,7 +201,7 @@ module Models
 			if self.respond_to? :statusobject
 				unless  self.statusobject.nil?
 					if self.statusobject.demote_id == choice
-						ret = true
+					ret = true
 					end
 				else
 					LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{self.ident}"}
@@ -286,6 +286,10 @@ module Models
 			ret = self
 			#puts "object.demote:#{st_cur_name} -> #{self.statusobject.name} ret=#{ret}"
 			ret
+		end
+
+		def relations
+			Relation.relations_for(self)
 		end
 
 		def link_relation

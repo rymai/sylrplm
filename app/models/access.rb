@@ -111,9 +111,15 @@ class Access < ActiveRecord::Base
     puts "acces.init:remplissage initial des autorisations"
     acc_roles = Access.access_roles
     Controller.get_controllers_and_methods.each do |controller|
-      if %w[AccessesController LoginController RolesController RolesUsersController SequencesController].include?(controller.name)
+    	if controller.method[0,6] == "update"
+						roles=nil
+      elsif %w[AccessesController LoginController RolesController RolesUsersController SequencesController].include?(controller.name)
         #puts "acces.init: fonctions admin"
-        roles = roles_yes(acc_roles[:cat_admins]) +"& ("+ roles_no(acc_roles[:cat_consultants]) +"!"+ roles_no(acc_roles[:cat_creators])+ ")"
+        if controller.method[0,5] == "reset"
+        	roles=roles_yes(acc_roles[:cat_admins]) 
+        else
+        	roles = roles_yes(acc_roles[:cat_admins]) +"& ("+ roles_no(acc_roles[:cat_consultants]) +" | "+ roles_no(acc_roles[:cat_creators])+ ")"
+      	end
       #roles = "admin & (!designer | !consultant | !valider)"
       else
         if controller.name == "SessionsController"

@@ -18,13 +18,12 @@
 		<% if admin_logged_in? %>
 			<td> <%= definition.id %> </td>
 		<% end %>
-		<td> <%= link_to h(definition.name), definition %> </td>
+		<td> <%= h_explorer definition, :name %> </td>
 		<td title="<%= h definition.description %>"> <%= h truncate(definition.description, :length => 40) %> </td>
 		<td> <%= link_to h(definition.uri), definition.full_uri %> </td>
 		<td> <%= comma_links(definition.roles,:title) %> </td>
 		<td> <%= definition.domain %> </td>
 		<% if fonct != "new_process" %> 
-		<td> <%= link_to(h_img_show.to_s, definition) %></td>
 		<td><%= link_to(
 		h_img_edit.to_s,
 		edit_definition_path(definition)) %></td>

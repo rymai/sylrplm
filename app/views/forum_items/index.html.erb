@@ -15,12 +15,13 @@
 		<th> <%= t(:label_parent) %> </th>
 		<th> <%= t(:label_author) %> </th>
 		<th> <%= t(:label_group) %> </th>
-		<th <%= t(:label_projowner) %></th>
-	</tr>
-	<% @forum_items[:recordset].each do |forum_item| %>
-	<tr class='<%= cycle("even", "odd") %>'>
+		<th> <%= t(:label_projowner) %></th>
+		<th></th><th></th>
+		</tr>
+		<% @forum_items[:recordset].each do |forum_item| %>
+		<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= h forum_item.id %> </td>
-		<td> <%= h forum_item.message %> </td>
+		<td> <%= h_explorer forum_item, :message %> </td>
 		<td> <% if forum_item.forum!=nil %>
 		<%= h forum_item.forum.id %>:<%= h forum_item.forum.subject %>
 		<% end %> </td>
@@ -28,13 +29,15 @@
 		<%= h forum_item.parent.id %>
 		<% else %>
 		no parent<% end %> </td>
-		<td> <% if forum_item.author !=nil %>
-		<%= h forum_item.author.login %>
-		<%= h forum_item.group.name %>
-		<%= h forum_item.projowner.ident %>
-		<% else %>
-		no author<%end %> </td>
-		<td> <%= link_to h_img_show.to_s, forum_item %> </td>
+		<td>
+		<%= h forum_item.author.login unless forum_item.author.nil? %>
+		</td>
+		<td>
+		<%= h forum_item.group.name unless forum_item.group.nil? %>
+		</td>
+		<td>
+		<%= h forum_item.projowner.ident unless forum_item.projowner.nil? %>
+		</td>
 		<td> <%= link_to h_img_edit.to_s, edit_forum_item_path(forum_item) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, forum_item, :confirm => t(:msg_confirm), :method => :delete %> </td>
 	</tr>

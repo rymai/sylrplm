@@ -17,16 +17,15 @@
 		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t(:label_name), "name" %> </th>
 		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
 		<% if current_user.is_admin?%> <th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %> </th>
-		<% end %> <th><%= t(:label_relations) %></th>
+		<% end %> <th><%= t(:label_relations) %></th><th></th><th></th>
 	</tr>
 	<% @views[:recordset].each do |view| %>
 	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= h view.id %> </td>
-		<td> <%= h view.name %> </td>
+		<td> <%= h_explorer view, :name %> </td>
 		<td> <%= h view.description %> </td>
 		<% if current_user.is_admin?%> <td> <%= h view.domain %> </td>
 		<% end %> <td> <%= comma_links(view.relations, :name) %></td>
-		<td> <%= link_to h_img_show.to_s, view %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_view_path(view)  %> </td>
 		<td> <%= link_to h_img_destroy.to_s, view, :confirm => t(:msg_confirm), :method => :delete %> </td>
 	</tr>

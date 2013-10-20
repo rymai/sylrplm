@@ -1,7 +1,7 @@
 <table>
 	<tr>
 		<% if fonct == "index" %>
-		<th <%= t "label_ident" %></th>
+		<th> <%= t "label_ident" %></th>
 		<th <%= sort_td_class_helper "event_type" %>	> <%= sort_link_helper t("label_event_type"), "event_type" %></th>
 		<th <%= sort_td_class_helper "event_date" %>	> <%= sort_link_helper t("label_event_date"), "event_date" %></th>
 		<th <%= sort_td_class_helper "responsible" %>	> <%= sort_link_helper t("label_responsible"), "responsible" %></th>
@@ -13,15 +13,13 @@
 		<th><%= t "label_event_date" %></th>
 		<th><%= t "label_responsible" %></th>
 		<% end %>
-		</tr>
-		<% @notifications[:recordset].each do |notification| %>
-		<tr class='<%= cycle("even", "odd") %>'>
-		<td>
-		<% if notification.could_show_object? %>
+	</tr>
+	<% @notifications[:recordset].each do |notification| %>
+	<tr class='<%= cycle("even", "odd") %>'>
+		<td> <% if notification.could_show_object? %>
 		<%= link_to("#{notification.forobject_type}.#{notification.forobject_id}", {:controller => "#{Notification.get_object_controller(notification.forobject_type)}", :action => :show, :id => "#{notification.forobject_id}"}) %>
 		<%else%>
-		<%= h ("#{notification.forobject_type}.#{notification.forobject_id}") %>
-		</td>
+		<%= h ("#{notification.forobject_type}.#{notification.forobject_id}") %> </td>
 		<%end%> <td> <%= h (notification.event_type) %></td><td> <%= h (notification.event_date) %></td><td> <%= h (notification.responsible.try(:login)) %></td> <% if fonct == "index" %> <td> <%= h (notification.notify_date) %></td><td> <%= h (h_tr_messag(notification.notify_users)) %></td><td> <%= link_to h_img_show.to_s, notification %></td><td> <%= link_to h_img_edit.to_s, edit_notification_path(notification) %></td><td> <%= link_to h_img_destroy.to_s, notification, :confirm => t("msg_confirm"), :method => :delete %></td><td> <%= link_to h_img("btn_notify"), :action => :notify, :id => notification.id%></td> <% else %> <td> <%= link_to( t("button_notify"),
 		:controller => 'notifications',
 		:action => 'show',

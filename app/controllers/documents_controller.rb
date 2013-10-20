@@ -121,7 +121,7 @@ class DocumentsController < ApplicationController
 
 	# PUT /documents/1
 	# PUT /documents/1.xml
-	 def update_lifecycle
+	def update_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug (fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
@@ -134,6 +134,26 @@ class DocumentsController < ApplicationController
 		if commit_revise?
 			ctrl_revise(@document)
 		end
+	end
+
+	def new_forum
+		@object = Document.find(params[:id])
+		@types = Typesobject.find_for("forum")
+		@status = Statusobject.find_for("forum")
+		@relation_id = params["relation"]["forum"]
+		respond_to do |format|
+			flash[:notice] = ""
+			@forum = Forum.new(user: current_user)
+			@forum.subject = t(:ctrl_subject_forum, :typeobj => t(:ctrl_document), :ident => @object.ident)
+			format.html { render :action => :new_forum, :id => @object.id }
+			format.xml  { head :ok }
+		end
+	end
+
+	def add_forum
+		#LOG.info ("#{self.class.name}.#{__method__}") { "params=#{params.inspect}" }
+		@document = Document.find(params[:id])
+		ctrl_add_forum(@document)
 	end
 
 	# DELETE /documents/1

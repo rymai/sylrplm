@@ -160,6 +160,14 @@ ActionController::Routing::Routes.draw do |map|
 	'documents/:id/update_lifecycle',
 	:controller => 'documents',
 	:action => 'update_lifecycle')
+	map.connect(
+	'documents/:id/new_forum',
+	:controller => 'documents',
+	:action => 'new_forum')
+	map.connect(
+	'documents/:id/add_forum',
+	:controller => 'documents',
+	:action => 'add_forum')
 
 	map.resources :parts, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	map.connect(

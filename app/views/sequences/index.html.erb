@@ -19,18 +19,17 @@
 		<th <%= sort_td_class_helper :domain %>> <%= sort_link_helper t(:label_domain), :domain %> </th>
 		
 		<th></th>
-		<th></th><th></th>
+		<th></th>
 	</tr>
 	<% @sequences[:recordset].each do |sequence| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td> <%= h sequence.utility %> </td>
+		<td> <%= h_explorer sequence, :utility %> </td>
 		<td> <%= h sequence.sequence %> </td>
 		<td> <%= h sequence.modify %> </td>
 		<td> <%= h sequence.value %> </td>
 		<td> <%= h sequence.min %> </td>
 		<td> <%= h sequence.max %> </td>
 		<td> <%= h sequence.domain %> </td>
-		<td> <%= link_to h_img_show.to_s, sequence %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_sequence_path(sequence) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, sequence, :confirm => t(:msg_confirm), :method => :delete %> </td>
 	</tr>

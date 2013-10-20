@@ -23,23 +23,22 @@
 		<th><%= t("label_cardin_use_min")%></th>
 		<th><%= t("label_cardin_use_max")%></th>
 		<th><%= t("label_views")%></th>
-		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %></th>
+		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %></th><th></th><th></th>
 	</tr>
 	<% @relations[:recordset].each do |relation| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= h relation.name %></td>
-		<td><%= h relation.typesobject.name unless relation.typesobject.nil? %></td>
+		<td><%= h_explorer relation, :name %></td>
+		<td><%= h_explorer relation.typesobject, :name unless relation.typesobject.nil? %></td>
 		<td><%= h relation.father_plmtype %></td>
 		<td><%= h relation.child_plmtype  %></td>
-		<td><%= h relation.father_typesobject.name unless relation.father_typesobject.nil? %></td>
-		<td><%= h relation.child_typesobject.name unless relation.child_typesobject.nil? %></td>
+		<td><%= h_explorer relation.father_typesobject, :name unless relation.father_typesobject.nil? %></td>
+		<td><%= h_explorer relation.child_typesobject, :name unless relation.child_typesobject.nil? %></td>
 		<td><%= h relation.cardin_occur_min %></td>
 		<td><%= h relation.cardin_occur_max %></td>
 		<td><%= h relation.cardin_use_min %></td>
 		<td><%= h relation.cardin_use_max %></td>
 		<td><%= h_value_or_default(comma_links(relation.views, :name),t(:msg_tobedefine)) %></td>
 		<td><%= h relation.domain %></td>
-		<td> <%= link_to h_img_show.to_s, relation %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_relation_path(relation) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, relation, :confirm => t(:msg_confirm), :method => :delete %> </td>
 	</tr>
