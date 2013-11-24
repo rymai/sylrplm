@@ -1,15 +1,7 @@
-<h1><%=t(:volume_new) %></h1>
+<h1><%= t(:volume_new) %></h1>
 <% form_for(@volume) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "volumes/edit",:locals => { :f => f, :fonct=>"new" }) %>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= f.submit t("create") %>
-        </td>
-        <td>
-            <%= link_to t("list"), volumes_path %>
-        </td>
-    </tr>
-</table>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @volume, :f => f}) %>
+
 <% end %>

@@ -8,9 +8,4 @@
 		<td><%= comma_links(@view.relations, :name) %></td>
 	</tr>
 </table>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:edit), edit_view_path(@view)  %> </td>
-		<td> <%= link_to t(:list), views_path %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_show", :object => @view) %>

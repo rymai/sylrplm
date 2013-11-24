@@ -2,14 +2,6 @@
 <% form_for(@role) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "roles/edit",:locals => { :f => f, :fonct=>"new" }) %>
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= f.submit t("create") %>
-        </td>
-        <td>
-            <%= link_to t("list"), roles_path %>
-        </td>
-    </tr>
-</table>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @role, :f => f}) %>
+
 <% end %>

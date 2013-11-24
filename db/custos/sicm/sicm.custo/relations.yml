@@ -237,3 +237,32 @@ Relation_28:
   cardin_use_min: "0"
   cardin_use_max: "-1"
   domain: admin
+  
+Relation_29:
+  id: "29"
+  name: FROM_REVISION
+  typesobject_id: "672869653"
+  father_plmtype: any_plmtype
+  child_plmtype: any_plmtype
+  father_typesobject_id: "1045584123"
+  child_typesobject_id: "1045584123"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+  
+Relation_30:
+  id: "30"
+  name: FROM_DUPLICATE
+  typesobject_id: "672869653"
+  father_plmtype: any_plmtype
+  child_plmtype: any_plmtype
+  father_typesobject_id: "1045584123"
+  child_typesobject_id: "1045584123"
+  cardin_occur_min: "0"
+  cardin_occur_max: "-1"
+  cardin_use_min: "0"
+  cardin_use_max: "-1"
+  domain: admin
+  

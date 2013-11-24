@@ -212,6 +212,10 @@ class DocumentsController < ApplicationController
 	end
 
 	def revise
+		ctrl_revise(Document)
+	end
+
+	def revise_obsolete
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		document     = Document.find(params[:id])
@@ -333,6 +337,13 @@ class DocumentsController < ApplicationController
 		end
 	end
 
+	def show_design
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"myparams=#{@myparams.inspect}"}
+		document = Document.find(params[:id])
+		ctrl_show_design(document)
+	end
 	private
 
 	def show_
@@ -343,6 +354,7 @@ class DocumentsController < ApplicationController
 		@relations = Relation.relations_for(@document)
 		@tree         						= build_tree(@document, @myparams[:view_id])
 		@tree_up      						= build_tree_up(@document, @myparams[:view_id] )
+		@object_plm = @document
 	#LOG.debug (fname){"taille tree=#{@tree.size}"}
 	end
 

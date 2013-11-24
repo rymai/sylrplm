@@ -129,15 +129,6 @@
 	<% end %>
 </tr>
 <% end %>
+<h1></h1>
 
-<%= render(:partial => "shared/tree", :object => @document ) %> <h1></h1>
-
-<% form_for(@document) do |f| %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("edit"), edit_document_path(@document) %></td>
-		<td> <%= link_to t("new_document"), new_document_path %></td>
-		<td> <%= link_to t("list"), documents_path %></td>
-	</tr>
-</table>
-<% end %> 
+<%= render(:partial => "shared/menu_show", :object =>@document) %>

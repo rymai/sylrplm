@@ -1,0 +1,27 @@
+
+		<% if object.respond_to? :statusobject %>
+		<td> <%= link_to t("edit_lifecycle"), {:controller=>object.controller_name, :action=>"edit_lifecycle", :id => object.id} %> </td>
+		<% end %>
+
+		<td> <%= link_to t("new_#{object.model_name}"), {:controller=>object.controller_name, :action=>"new"} %></td>
+
+		<% if Controller.route_exists?(object.controller_name, "new_dup")%>
+		<td> <%= link_to t("duplicate"), {:controller=>object.controller_name, :action=>"new_dup", :id => object.id} %> </td>
+		<% end %>
+
+		<% begin %>
+		<% if Controller.route_exists?(object.controller_name, "add_favori")%>
+		<% if logged_in? %> <td><%= link_to_remote  t("copy"), :url => {:controller => object.controller_name, :action => "add_favori", :id => object.id}, :method => :get  %></td>
+		<% end %>
+		<% end %>
+		<% rescue Exception => e %>
+		<% end %>
+
+		<% if Controller.route_exists?(object.controller_name, "new_process")
+		begin %>
+		<td><%= link_to t("launchthis"), new_process_path(:definition_id => @definition.id) %></td>
+		<% rescue Exception=>e
+		end
+		end %>
+
+		

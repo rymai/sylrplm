@@ -22,10 +22,6 @@
 		<td><span id="uri_span"> <%= f.text_field :uri %> or <%= link_to_function 'paste a definition', 'showDefinitionBox()' %></span><span id="definition_span" style="display: none;"> <%= f.text_area 'definition' %></span></td>
 	</tr>
 </table>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= f.submit t(:create) %></td>
-		<td> <%= link_to t(:list), definitions_path %></td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @definition, :f => f}) %>
+
 <% end %> 

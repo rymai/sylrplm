@@ -3,10 +3,6 @@
 <%= f.error_messages %>
 <%= render(:partial => "customers/edit",:locals => { :f => f, :fonct=>"new" }) %>
 <h1></h1>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= f.submit t(:create) %> </td>
-		<td> <%= link_to t(:list), customers_path %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @customer, :f => f}) %>
+
 <% end %>

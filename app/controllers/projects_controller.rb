@@ -248,6 +248,15 @@ class ProjectsController < ApplicationController
 			format.xml  { render :xml => @project }
 		end
 	end
+	
+	def show_design
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"myparams=#{@myparams.inspect}"}
+		project = Project.find(params[:id])
+		ctrl_show_design(project)
+	end
+	
 	private
 
 	def show_
@@ -269,7 +278,8 @@ class ProjectsController < ApplicationController
 			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
 		end
 		@tree         						= build_tree(@project, @myparams[:view_id], nil, 2)
-		@tree_up      						= build_tree_up(@project, @myparams[:view_id] )
+		@tree_up      						= build_tree_up(@project, @myparams[:view_id] )				
+		@object_plm = @project
 	end
 
 	def index_

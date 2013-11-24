@@ -20,6 +20,8 @@ class Role < ActiveRecord::Base
   def father_name
     (father ? father.title : "")
   end
+  
+  
 
   def ident; title; end
 

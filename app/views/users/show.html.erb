@@ -4,10 +4,5 @@
 <%= form.error_messages %>
 <% end %>
 <%= render(:partial => "users/"+fonct,:locals => { :user => @the_user, :fonct => fonct }) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:edit), edit_user_path(@the_user) %> </td>
-		<td> <%= link_to t(:reset_passwd), {:controller=>"users", :action=>"reset_passwd", :id=>@the_user.id} %> </td>
-		<td> <%= link_to t(:list), users_path %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_show", :object => @the_user) %>
+

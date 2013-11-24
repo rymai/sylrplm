@@ -2,45 +2,51 @@
     Bienvenue dans l'application SYLRPLM développée sur "Ruby On Rails" : #img=rails.png=img##lnk=http://www.railsfrance.org/=lnk#
     <msg key="help_about" title="A propos de SYLRPLM">
     	SYLRPLM est une réalisation de Sylvère Coutable avec l'assistance technique de Remy Coutable
-    	Version: 1.0 at 2013/06/15
+    	Version: 1.0 du 15/06/2013
     </msg>
     <msg key="help_first_use" title="Prise en main">
     	Tout d'abord, nous vous invitons à prendre connaissance des principales fonctionnalités de l'application#jump=help_main_functions=jump#.
-    	Ensuite, pour une première prise en main, vous pouvez parcourir, en tant que visiteur, les différents menus de gauche pour consulter les données gérées par l'application.
+    	Ensuite, pour une première prise en main, vous pouvez parcourir, en tant que visiteur, les différents menus pour consulter les données gérées par l'application.
     	Certains des menus vous demanderons de vous connecter car ils permettent de voir plus de données et d'en modifier certaines.
     	Vous pourrez alors soit donner un identifiant et un mot de passe que vous possédez ou indiquer celui que vous voulez créer.
     	Ceci vous permettra, dans un premier temps en tant que consultant, de manipuler plus de données. 
     </msg>
     <msg key="help_main_functions" title="Principales fonctionnalités">
     	L'application s'articule autour de la gestion d'articles dans des structures configurables.
-    	Ces articles sont associés à un ou des projets repondant aux besoins exprimés par des clients
+    	Ces articles sont documentés et associés à un ou des projets repondant aux besoins exprimés par des clients
+    	Tous ces objets ont un cycle de vie paramétrable.
+    	Certaines fonctions (promotion, revision) sur les objets sont activables en utilisant un processus (signature, commentaires)
     	Les fonctions permettant ceci sont:
     	<msg key="help_end_user_functions" title="Fonctionnalités PLM">
     		<ul>
 	    		<li title="Gestion documentaire">
-	    			La gestion documentaire comprend les 2 composants indissociables suivants:
+	    			La gestion documentaire comprend les 2 composants suivants:
 	    			<ul>
 	    				<li title="Documents">
-			    			Les fonctions suivantes sont effectives sur les documents: Identification, création, édition, suppression, révision, suivi de la maturité
+			    			Les fonctions suivantes sont effectives sur les documents: Identification, création, édition, suppression, révision, duplication, cycle de vie
 					    	Les documents peuvent être associés aux articles, projets ou clients
 					    	Un document peut avoir un ou plusieurs fichiers associés:
 			    		</li>
 			    		<li title="Fichiers">
 			    			Les fonctions d'identification, création, téléchargement et édition sous contrôle, suppression, révision sont effectives sur les fichiers
 			    			#img=help/idea.png=img# De plus il est possible de stocker les fichiers sur un serveur "local" ou sur un "hebergeur" du type "cloud" (amazon)
+			    			Un fichier peut être associé à un document ou un article ou un projet ou un client pour l' "illustrer" (icone, miniature...) 
 			    		</li>
 			    	</ul>
 		    	</li>
 		    	<li title="Gestion d' articles">
-		    		Identification, création, édition, suppression, révision, maturité
+		    		Identification, création, édition, suppression, révision, duplication, cycle de vie
 					</li>
 					<li title="Configuration">
 		    			Notion de produit ayant des variantes (ligne produit) avec des critères d'exigences ou effectivités , chaque article répondant ensuite à une ou plusieurs de ces exigences
 		    	</li>
 		    	<li title="Gestion de projets">
-		    		Identification, création, édition, suppression, révision, maturité
+		    		Identification, création, édition, suppression, révision, duplication, cycle de vie
 		    	</li><li title="Gestion de clients">
-		    		Identification, création, édition, suppression, révision, maturité
+		    		Identification, création, édition, suppression, révision, duplication, cycle de vie
+		    	</li>
+					<li title="Duplication">
+						Tous les objets peuvent être facilement dupliqués
 		    	</li>
 		    	<li title="Mise en oeuvre de processus">	
 		    		<ul title="Certaines fonctionnalités citées ci dessus sont mises en oeuvre sous contrôle de processus permettant:">
@@ -54,11 +60,11 @@
 		    		</ul>   		
 		    		<ul title="Les 2 processus implémentés sont les suivants, d'autres peuvent être facilement ajoutés grâce au framework décrit ci après.">
 		    			<li title="Promotion">
-		    				Changement de statut sous 
+		    				Changement de statut sous contrôle du processus
 		    				Suivi des remarques associés
 		    			</li>	
 		    			<li title="Revision">
-		    				Création d'une révision sous controle
+		    				Création d'une révision sous contrôle du processus
 		    			</li>
 		    		</ul>
 		    	</li>
@@ -67,7 +73,7 @@
 							<li title="Abonnement">
 								Un abonnement définit quels évènements seront notifiés aux utilisateurs concernés.
 								Chaque utilisateur peut définir l'abonnement qui le concerne.
-								Seul l"'administrateur crée ou modifie les abonnements.
+								Seul l'administrateur crée ou modifie les abonnements.
 								Chaque abonnement peut être associé à plusieurs utilisateurs.
 								Un utilisateur ne peut avoir qu'un seul abonnement.
 		    			</li>
@@ -77,8 +83,8 @@
 		    				Voir aussi le chapitre sur les notifications: #jump=help_notifications=jump#
 		    			</li>
 		    			<li title="Planificateur de notification">
-		    				L'administrateur lance un planificateur qui va notifier les utilisateurs à intervalle régulier.
-		    				Cet intervalle est modifiable par l'administrateur du site dans le fichier lib/tasks/sylrplm_tasks.rake: scheduler.cron '*/15 7-21 * * 1-5' do
+		    				L'administrateur lance un planificateur qui va notifier les utilisateurs à interval régulier.
+		    				Cet interval est modifiable par l'administrateur du site dans le fichier lib/tasks/sylrplm_tasks.rake: scheduler.cron '*/15 7-21 * * 1-5' do
 		    			</li>
 		    			<li title="Logs">
 		    				Des fichiers logs accessible à l'administrateur contiennent des informations sur le fonctionnement de l'application.
@@ -164,13 +170,20 @@
            		#img=help/screen_banner_tabs.png=img#
            		Cette partie du bandeau permet de visualiser les deux parties des données:
            		<ul>
-		           	<li title="SYLRPLM Date"> 
+		           	<li title="SYLRPLM"> 
 		            	Cette zone principale contient les différentes vues des données, par exemple voici la vue listant les articles :
 		            	#img=help/screen_content.png=img#
 		            	Les différentes vues, dépendants des modules et menus, sont explicités dans cette documentation.
 		            	#img=help/module_date.png=img#
 			        		Affiche la date courante
 		           	</li>
+		           	<li title="Structure">
+			            #img=help/module_structure.png=img#
+			            Affiche l'arbre représentant la structure de l'objet avec ses relations suivant une vue et avec un filtrage possible suivant une variante.
+			            Le choix de la vue permet d'afficher seulement les relations qui lui sont associées.
+                  Voir le paramétrage des vues pour exploiter cette notion.	
+                  Le choix de la variante permet d'exploiter la notion de configuration de nomenclature (nomenclature configurée) 
+		        		</li>
 		           	<li title="Presse papiers">
 			            #img=help/module_pressepapier.png=img#
 			            Indique les objets copiés depuis les listes d'objets par le menu "Copier".
@@ -251,6 +264,12 @@
                 </li>
             </ul>
         </msg>
+        <msg key="help_duplication" title="Duplication">
+						Tous les objets peuvent être facilement dupliqués
+						#img=help/module_duplication1.png=img#
+						#img=help/module_duplication2.png=img#
+						Le menu Duplication présent dans la page listant les objets ou dans les pages d'édition/exploration permet de dupliquer l'objet.
+		    </msg>
         <msg key="help_notice_error" title="Informations et erreurs">
             Après chaque opération de modification d'un objet, une ou plusieurs lignes d' information apparaissent sur l'écran suivant.
             Elles indiquent le résultat de l'action précédente: succès, échec, information importante...
@@ -269,7 +288,7 @@
         </msg>
         <msg key="help_notifications" title="Notifications">
             	Chaque modification d'une donnée (create/update/delete/add_*/del_*) est enregistrée.
-            	<ul>A intervalle régulier et paramétrable, une notification est créee et envoyée aux destinataires: 			
+            	<ul>A interval régulier et paramétrable, une notification est créee et envoyée aux destinataires: 			
  								<li>Notifier les participants aux projets auxquelles appartiennent les objets modifies:
             		  - remonter les relations pour trouver le ou les projets
             		  - conserver le chemin
@@ -526,6 +545,8 @@
                     <msg key="help_parts_show" title="Explorer un article" href="/parts/1">
                         <ul>
                             <li title="Page d'exploration">#img=help/parts_show.png=img#
+                            </li>
+                           	<li title="Structure">#img=help/parts_structure.png=img#
                             	Le choix de la vue permet d'afficher seulement les relations qui lui sont associées.
                             	Voir le paramétrage des vues pour exploiter cette notion.	
                             	Le choix de la variante permet d'exploiter la notion de configuration de nomenclature (nomenclature configurée)
@@ -572,7 +593,16 @@
                         #img=help/projects_list.png=img#
                     </msg>
                     <msg key="help_projects_show" title="Explorer un projet" href="/projects/1">
-                        #img=help/projects_show.png=img#
+                        <ul>
+                            <li title="Page d'exploration">#img=help/projects_show.png=img#
+                            </li>
+                           	<li title="Structure">#img=help/projects_structure.png=img#
+                            	Le choix de la vue permet d'afficher seulement les relations qui lui sont associées.
+                            	Voir le paramétrage des vues pour exploiter cette notion.	
+                            </li>
+                            <li title="Ajout forum">#img=help/projects_add_forum.png=img#
+                            </li>
+                        </ul>
                     </msg>
                     <msg key="help_projects_edit" title="Editer un projet" href="/projects/edit/1">
                         #img=help/projects_edit.png=img#
@@ -606,7 +636,16 @@
                         #img=help/customers_list.png=img#
                     </msg>
                     <msg key="help_customers_show" title="Explorer un client" href="/customers/1">
-                        #img=help/customers_show.png=img#
+                        <ul>
+                            <li title="Page d'exploration">#img=help/customers_show.png=img#
+                            </li>
+                            <li title="Ajout forum">#img=help/customers_add_forum.png=img#
+                            </li>
+                           	<li title="Structure">#img=help/customers_structure.png=img#
+                            	Le choix de la vue permet d'afficher seulement les relations qui lui sont associées.
+                            	Voir le paramétrage des vues pour exploiter cette notion.	
+                            </li>
+                        </ul>
                     </msg>
                     <msg key="help_customers_edit" title="Editer un client" href="/customers/edit/1">
                         #img=help/customers_edit.png=img#
@@ -650,22 +689,18 @@
                 </ul>
             </msg>
             <msg key="help_lifecycle" title="Cycle de vie des objets PLM">
+            	  #img=help/module_lifecycle.png=img#
                 L'application gère le cycle de vie de ces objets PLM:document,article,projet,client grâce à 2 notions:
                 <ul>
                     <li title="Maturité">A un moment donné, un objet a un statut parmi plusieurs possibles, par exemple "inwork", "ready", "approved".
-                        Le passage d'un statut à un autre s'effectue, par le menu d' "Edition" sur la liste des objets,
-                        soit par choix dans la liste des statuts possibles, soit par les menus "Promouvoir"/"Rétrograder" : #jump=help_statusobjects=jump#.
+                        Le passage d'un statut à un autre s'effectue de diverses manières possibles dans la page "Cycle de vie":
+                        Soit par choix dans la liste des statuts possibles, soit par les menus "Promouvoir"/"Rétrograder" : #jump=help_statusobjects=jump#.
                         Ceci dépend du paramétrage des statuts, voir le chapitre correspondant:#jump=help_statusobjects=jump#
-                        Lorsque le statut, suite à cette action, est l'avant dernier possible, ex:"ready",
-                        l'application envoie un mail à l'utilisateur ayant le rôle "valider" lui demandant de valider cet objet en modifiant son statut,
-                        ex: "approved".
-                        Lorsque le "valider" a modifier le statut, l'application envoie un mail au demandeur l'informant de la validation de l'objet
-                        Remarque: si le "valider" ou le "demandeur" n'ont pas mail, le mail correspondant n'est pas envoyé.
                     </li>
                     <li title="Révision">Pour les documents et articles seulement.
-                        Un objet peut être révisé lorsque le dernier statut possible est atteint, ex:"approved".
-                        L'utilisateur peut alors demander sa révision par le menu "Révision" sur la liste des objets.
-                        Une nouvelle version de lobjet est alors crée, la valeur de la révision ayant été incrémentée.
+                        Un objet peut être révisé lorsque le statut le permet (voir le paramétrage par le framework), ex:"approved".
+                        L'utilisateur peut alors demander sa révision par le menu "Révision par menu" "Révision par action" dans la page "Cycle de vie".
+                        Une nouvelle version de l' objet est alors crée, la valeur de la révision ayant été incrémentée.
                     </li>
                 </ul>
             </msg>
@@ -736,7 +771,7 @@
 	          <li title="Administration">Les modules d'administration pour un user non administrateur sont les suivants:
 	          	#img=help/modules_administration.png=img#
 	          </li>
-	         <li title="Administration administrateur">Les modules d'administration pour un user  administrateur sont les suivants:
+	         <li title="Administration administrateur">Les modules d'administration pour un user administrateur sont les suivants:
 	          	#img=help/modules_administration_admin.png=img#
 	          </li>
 	        </ul>
@@ -913,28 +948,43 @@
 	                    </li>
 	                    <li title="Description">
 	                    </li>
+	                    <li title="Attributs">
+	                    	Permet de définir des attributs spécifiques au type ou à une fonctionnalité donnée.
+	                    </li>
 	                </ul>
 	            </msg>
 	            <msg key="help_statusobjects" title="Status des objets" href="/statusobjects">
 	                Les statuts permettent de définir les statuts de maturité des objets suivant les processus mis en oeuvre dans l'entreprise.
 	                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
 	                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
-	                    <li title="Objet">Type d'objet sur lequel portera le statut: document/article/projet/client
+	                    <li title="Objet">Type d'objet PLM sur lequel portera le statut: document/article/projet/client/forum
 	                    </li>
-	                    <li title="Nom">Nom du statut, il appraitra tel quel sans traduction.
+	                    <li title="Type">Sous type du type PLM sur lequel portera le statut: document:cdc/m3d,m2d,exb,fmat...  , part:EFF, PIE, PRD, ...
+	                    </li>
+	                    <li title="Nom">Nom du statut, il apparaitra tel quel sans traduction.
 	                    </li>
 	                    <li title="Rang de promotion">Rang du statut dans le cycle de vie de l'objet:
 	                        le Premier est pris à la creation
-	                        Une promotion attribue le suivant
-	                        Une rétrogradation attribue le précédent
-	                        Le dernier permet à l'utilisateur de demander une révision de l'objet:#jump=help_lifecycle=jump#
+	                        #jump=help_lifecycle=jump#
 	                    </li>
 	                    <li title="Description">
 	                    </li>
-	                    <li title="Promotion(oui/non)">Permet de préciser si le changement de statut vers le haut se fait par le menu promote (oui) ou par choix dans la liste (non)
+	                    <li title="Promotion(interdit, libre, menu, action)">Permet de préciser si le changement de statut vers le haut se fait par choix dans la liste ou par le menu ou par une action (processus) 
 	                    </li>
-	                    <li title="Rétrogadation(oui/non)">Permet de préciser si le changement de statut vers le bas se fait par le menu promote (oui) ou par choix dans la liste (non)
+	                    <li title="Rétrogadation(oui/non)">Permet de préciser si le changement de statut vers le bas se fait par choix dans la liste ou par le menu ou par une action (processus) 
 	                    </li>
+	                    <li title="Statuts suivants"> 
+	                    	Définit le ou les status possibles suivant ce statut 
+	                    	L'utilisateur aura le choix dans la page "Cycle de vie"
+	                    </li>
+	                    <li title="Statuts précédents"> 
+	                    	Définit le ou les status possibles précédents ce statut 
+	                    	L'utilisateur aura le choix dans la page "Cycle de vie"
+	                    </li>
+	                    <li title="Révisable"> 
+	                    	Précise si une révision de l'objet est possible depuis ce statut (Interdit/Menu/Action)
+	                    </li>
+
 	                </ul>
 	            </msg>
 	            <msg key="help_sequences" title="Valeurs par défaut" href="/sequences">
@@ -1078,11 +1128,6 @@
 	                	#img=help/properties.png=img#
 	                  <li title="Volume">
 	                   #img=help/properties_volume.png=img#
-	                   <ul>
-	                    	<li>
-	                    		
-	                    	</li>
-	                    </ul>
 	                  </li>
 	                  <li title="Autres">
 	                   #img=help/properties_others.png=img#

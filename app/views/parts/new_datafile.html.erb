@@ -3,11 +3,6 @@
 <%= f.error_messages %>
 <%= hidden_field_tag "part_id", @part.id.to_s %>
 <%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f , :fonct=>"doc_new", :document=>@part}) %>
-<table class='menu_bas'>
-	<tr>
-		<td><%= f.submit t("create") %></td>
-		<td> <%= link_to t("list"), datafiles_path %> </td>
-		<td> <%= link_to t("part_show"), part_path(@part) %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @datafile, :f => f}) %>
+
 <% end %>

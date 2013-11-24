@@ -4,13 +4,5 @@
 :html => { :multipart => true,:id => h_form_html_id(@datafile, fonct) } ) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f, :fonct=>fonct, :document=>@document }) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= f.submit t("update") %> </td>
-		<td> <%= link_to t("explorer"), @datafile %> </td>
-		<td> <%= link_to t("list"), datafiles_path %> </td>
-		<%if @document!=nil%> <td> <%= link_to t("document_show"), document_path(@document) %> </td>
-		<%end%>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_edit", :locals => {:object => @datafile, :f => f}) %>
 <% end %>

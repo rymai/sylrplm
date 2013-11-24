@@ -1,5 +1,6 @@
 fr:
   # general
+  root_model_design: Modèle de conception de la tête de l'arbre
   customer: client
   document: document
   part: article
@@ -76,6 +77,7 @@ fr:
   legend_edit_lifecycle: Cycle de vie
   legend_edit_revision: Révision
   lifecycle_edit: "Cycle de vie du %{model} '%{obj}'"
+  label_liste_mode: Type de liste
   # attributs generaux
   faq_question: Question
   faq_answer: Réponse
@@ -171,6 +173,7 @@ fr:
   label_icon: Icône
   datafiles_list: Fichiers associés
   datafile_add: Ajout d'un fichier 
+  legend_tree: Structure
   # fin general
   # access
   legend_access: Renseignez les propriétés de l'autorisation

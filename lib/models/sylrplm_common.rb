@@ -184,7 +184,7 @@ module Models
 					:conditions => conditions,
 					:order => params[:sort],
 					:per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
-					)
+				)
 				end
 				puts self.model_name+".find_paginate:conditions="+conditions.inspect
 				#puts self.model_name+"."+__method__.to_s+":"+recordset.inspect
@@ -202,8 +202,8 @@ module Models
 			fname="#{self.class.name}.#{__method__}"
 			ret = false
 			unless (self.statusobject.nil? || ::Statusobject.get_last(self).nil?)
-			ret = (self.statusobject.rank == ::Statusobject.get_last(self).rank)
-			LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self).rank}=#{ret}"}
+				ret = (self.statusobject.rank == ::Statusobject.get_last(self).rank)
+				LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self).rank}=#{ret}"}
 			end
 			ret
 		end
@@ -239,7 +239,14 @@ module Models
 
 		def controller_name
 			# Part devient parts
-			self.class.name.downcase+"s"
+			ret=self.class.name.downcase
+			puts "controller_name:#{self.class.name} = #{ret}"
+			if self.class.name == "Access"
+				ret+="es"
+			else
+				ret+="s"
+			end
+			ret
 		end
 
 		def get_object(type, id)
@@ -353,7 +360,7 @@ module Models
 					end
 				end
 			end
-			ret="#{self.ident}:#{ret}"
+			ret="#{self.ident_plm}:#{ret}"
 			#LOG.debug (fname) {"ret=#{ret}"}
 			ret
 		end
@@ -365,7 +372,7 @@ module Models
 				unless self.typesobject.nil?
 					ret += ":#{get_model(model_name).truncate_words(self.typesobject.description, 7)}"
 				else
-					LOG.error (fname) {"DB_CONSISTENCY_ERROR:this object has no type:#{self.inspect}"}
+					LOG.warn (fname) {"DB_CONSISTENCY_ERROR:this object has no type:#{self.inspect}"}
 				end
 			end
 			ret+=")"
@@ -464,5 +471,13 @@ module Models
 			#LOG.info (fname){"self=#{self} is_child_of? #{ancestor}:#{ret}"}
 			ret
 		end
+
+		#
+		# this object could not have a 3d or 2d model show in tree
+		#
+		def have_model_design?
+			false
+		end
+
 	end
 end

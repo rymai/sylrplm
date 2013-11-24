@@ -5,7 +5,21 @@ th, td {
 	line-height: 18px;
 	vertical-align: top;
 	text-align: left;
+
 }
+th, td {
+	max-width: 180px;
+	word-wrap:break-word;
+}
+select, input[type=text] {
+	max-width: 170px;
+	word-wrap:break-word;
+}
+
+select {
+	max-width: 500px;
+}
+
 th {
 	background-color: #acacac;
 	/*border: 1px solid #dfdfdf;*/
@@ -77,6 +91,7 @@ a {
 	/*height: 25px;*/
 	/*font-size: 18px;*/
 	/*color: white;*/
+	max-width: none;
 }
 .menu_bas a, a.menu_bas {
 	/*background: transparent url('/images/btn_submit.png') no-repeat center center;*/
@@ -255,7 +270,7 @@ label {
 	margin-top: 2px;
 }
 textarea {
-	width:205px;
+	width:300px;
 	height:200px;
 }
 /*            boostrap */

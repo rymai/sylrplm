@@ -75,6 +75,7 @@ en:
   ctrl_forum_item: Discussion messag
   # group
   ctrl_group: Group
+  label_group_groups: Childs groups
   # group_definitions
   ctrl_group_definitions: Group-processus
   # link
@@ -131,6 +132,7 @@ en:
   ctrl_question: Question
   # roles
   ctrl_role: Role
+  label_role_roles: Childs Roles
   # sequences
   ctrl_sequence: Sequence
   # session

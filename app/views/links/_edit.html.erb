@@ -1,5 +1,5 @@
-<% 
-readonly=fonct=="edit_in_tree"
+<%
+ readonly=fonct=="edit_in_tree"
 %>
 <fieldset>
 	<legend>
@@ -67,7 +67,7 @@ readonly=fonct=="edit_in_tree"
 		<%= t(:legend_link_effectivities) %>
 	</legend>
 	<label for="part_effectivities"> <%= t(:label_effectivities) %> </label>
-	<%= select_tag(:effectivities, options_from_collection_for_select( @root.prd_effectivities, :mdlid, :to_s, @link.effectivities_mdlid), {:multiple => true, :size => 15 }) %>
+	<%= select_tag(:effectivities, options_from_collection_for_select( @root.prd_effectivities, :mdlid, :to_s, @link.effectivities_mdlid), {:style=>"width:450px;", :size=>10, :multiple => true }) %>
 	<br/>
 </fieldset>
 <% end %>

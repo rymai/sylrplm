@@ -4,16 +4,5 @@
 <%= f.error_messages %>
 <%= render(:partial => "documents/edit",:locals => { :f => f, :fonct=>fonct }) %>
 <h1></h1>
-<table class='menu_bas'>
-	<tr>
-		<td>  </td>
-		<td> <% if @document.frozen? %>
-		<%= t("freeze") %>
-		<% else %>
-		<%= f.submit t("update") %>
-		<% end %> </td>
-		<td> <%= link_to t("explorer"), @document %> </td>
-		<td> <%= link_to t("list"), documents_path %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_edit",:locals => { :object => @document, :f => f}) %>
 <% end %>

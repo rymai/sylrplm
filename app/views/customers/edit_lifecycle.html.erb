@@ -4,11 +4,5 @@
 <%= f.error_messages %>
 <%= render(:partial => "customers/edit_lifecycle",:locals => { :f => f, :fonct=>fonct }) %>
 <h1></h1>
-<table class='menu_bas'>
-	<tr>
-		<%= h_menu_lifecycle f, @customer %>
-		<td> <%= link_to t("explorer"), @customer %> </td>
-		<td> <%= link_to t("list"), customers_path %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_edit", :locals => {:object => @customer, :f => f}) %>
 <% end %>

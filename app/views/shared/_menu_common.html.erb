@@ -1,0 +1,28 @@
+<% if object.respond_to? :document %>
+<% unless object.document.nil? %> <td> <%= link_to t("document_show"), document_path(object.document) %> </td>
+<% end %>
+<% end %>
+
+<% if object.respond_to? :part %>
+<% unless object.part.nil? %> <td> <%= link_to t("part_show"), part_path(object.part) %> </td>
+<% end %>
+<% end %>
+
+<% if object.respond_to? :project %>
+<% unless object.project.nil? %> <td> <%= link_to t("project_show"), project_path(object.project) %> </td>
+<% end %>
+<% end %>
+
+<% if object.respond_to? :customer %>
+<% unless object.customer.nil? %> <td> <%= link_to t("customer_show"), project_path(object.customer) %> </td>
+<% end %>
+<% end %>
+
+<% if Controller.route_exists?(object.controller_name, "reset_passwd")
+begin %>
+<td> <%= link_to t(:reset_passwd), {:controller=>"users", :action=>"reset_passwd", :id=>object.id} %> </td>
+<% rescue Exception=>e
+end
+end %>
+
+<td> <%= link_to t("list"), {:controller=>object.controller_name, :action=>"index"} %></td>

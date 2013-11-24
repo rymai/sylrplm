@@ -5,14 +5,6 @@
 <%= render(:partial => "projects/edit",:locals => { :f => f, :fonct=>fonct }) %>
 <%= render(:partial => "shared/show_objects_in_relations",:locals => { :object => @project_orig, :f => f, :fonct=>fonct }) %>
 <h1></h1>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= f.submit t("update") %> </td>
-		<%if @project.statusobject.promote==true %> <td><%= link_to t(:promote), :id => @project.id, :action => :promote , :confirm => t("msg_confirm") %></td>
-		<%end %>
-		<%if @project.statusobject.demote==true %> <td><%= link_to t(:demote), :id => @project.id, :action => :demote , :confirm => t("msg_confirm") %></td>
-		<%end %> <td> <%= link_to t("explorer"), @project %> </td>
-		<td> <%= link_to t("list"), projects_path %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @project, :f => f}) %>
+
 <% end %>

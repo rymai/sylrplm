@@ -44,11 +44,5 @@
 	<%= h @datafile.domain %>
 </p>
 <% end %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("edit"), edit_datafile_path(@datafile) %> </td>
-		<td> <%= link_to t("list"), datafiles_path %> </td>
-		<%if @document!=nil%> <td> <%= link_to t("document_show"), document_path(@document) %> </td>
-		<%end%>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_show", :object =>@datafile) %>
+

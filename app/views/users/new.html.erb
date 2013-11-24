@@ -6,11 +6,7 @@
 		<%= t(:legend_user) %>
 	</legend>
 	<%= render(:partial => "users/edit",:locals => { :form => form, :fonct=>"add" }) %>
-	<table class='menu_bas'>
-		<tr>
-			<td> <%= form.submit t("create") %> </td>
-			<td> <%= link_to t("list"), users_path %> </td>
-		</tr>
-	</table>
+	<%= render(:partial => "shared/menu_new", :locals => {:object => @the_user, :f => f}) %>
+
 </fieldset>
 <%end%>

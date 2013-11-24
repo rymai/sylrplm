@@ -11,10 +11,4 @@
 	<b><%= t("label_role") %>:</b>
 	<%= h @access.roles %>
 </p>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("edit"),edit_access_path(@access) %> </td>
-		<td> <%= link_to t("new_access"), new_access_path %> </td>
-		<td> <%= link_to t("list"), accesses_path %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_show", :object =>@access) %>

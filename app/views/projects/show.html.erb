@@ -32,7 +32,7 @@
 </p>
 <p>
 	<b><%= t(:label_date) %></b>
-	<%= l @project.date %> 
+	<%= l @project.date %>
 </p>
 <%= h_type_values(@project, fonct) %>
 <p>
@@ -44,7 +44,7 @@
 <% files = @project.get_datafiles%>
 <% if files[:total]>0%> <h1><%= t("datafiles_list") %></h1>
 <%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files, :document=>@project}) %>
-<% end %> 
+<% end %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("add_datafile"), :action => :new_datafile, :id => @project.id %> </td>
@@ -82,11 +82,5 @@
 	</tr>
 	<% end %>
 </table><h1></h1>
-<%= render(:partial => "shared/tree", :object => @project ) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("edit"), edit_project_path(@project) %></td>
-		<td> <%= link_to t("new_project"), new_project_path %></td>
-		<td> <%= link_to t("list"), projects_path %></td>
-	</tr>
-</table>
+
+<%= render(:partial => "shared/menu_show", :object =>@project) %>

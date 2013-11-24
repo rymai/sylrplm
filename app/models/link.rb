@@ -64,9 +64,9 @@ class Link < ActiveRecord::Base
 	def initialize(*args)
 		fname = "#{self.class.name}.#{__method__}"
 		super
-		#LOG.info (fname) {"#{args}"}
+	#LOG.info (fname) {"#{args}"}
 	end
-	
+
 	def designation
 		""
 	end
@@ -76,7 +76,7 @@ class Link < ActiveRecord::Base
 		#LOG.info (fname) {"self=#{self}"}
 		self.domain = father.domain if father.respond_to?(:domain)
 		self.domain = child.domain if (self.domain.nil? && child.respond_to?(:domain))
-		#LOG.info (fname) {"domain=#{self.domain}"}
+	#LOG.info (fname) {"domain=#{self.domain}"}
 	end
 
 	def validity
@@ -129,13 +129,15 @@ class Link < ActiveRecord::Base
 
 	def father
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"father_plmtype=#{father_plmtype} father_id=#{father_id}"}
+		#LOG.debug (fname) {"father_plmtype=#{father_plmtype} father_id=#{father_id}"}
 		get_object(father_plmtype, father_id) unless father_plmtype.blank? || father_id.blank?
 	end
 
 	def father_ident
+		fname = "#{self.class.name}.#{__method__}"
+		LOG.debug (fname) {"father=#{father}"}
 		ret  = "#{father_id}:#{father_plmtype}.#{father_typesobject_id}"
-		ret += "=#{father.ident}" unless father.nil?
+		ret += "=#{father.ident_plm}" 
 	end
 
 	def child=(child)
@@ -150,7 +152,7 @@ class Link < ActiveRecord::Base
 
 	def child_ident
 		ret  = "#{child_id}:#{child_plmtype}.#{child_typesobject_id}"
-		ret += "=#{child.ident}" unless child.nil?
+		ret += "=#{child.ident_plm}" 
 	end
 
 	def relation=(relation)
@@ -171,7 +173,7 @@ class Link < ActiveRecord::Base
 	end
 
 	def ident
-		"#{(father.nil? ? "father null" : father.ident)}-#{(relation.nil? ? "relation null" : relation.ident)}-#{(child.nil? ? "child null" : child.ident)}-#{values}"
+		"#{(father.nil? ? "father null" : father.ident_plm)}-#{(relation.nil? ? "relation null" : relation.ident)}-#{(child.nil? ? "child null" : child.ident_plm)}-#{values}"
 	end
 
 	def effectivities_mdlid
@@ -350,30 +352,29 @@ class Link < ActiveRecord::Base
 				puts "linked cond=#{cond} nb=#{ret}"
 			ret>0
 			else
-				LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no type for #{obj.ident}"}
+				LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no type for #{obj.ident_plm}"}
 			false
 			end
 		else
 		false
 		end
 	end
-	
-	
+
 	# == Role: this function duplicate the link
-		# == Arguments
-		# * +new_father+ the new_father become the father of the new link
-		# * +user+ - The user which proceed the duplicate action
-		# == Usage from controller or script:
-		#    if @customer.save
-		#		  lnk_orig = Link.find(lnkid)
-		#			#puts "=========================lnk_orig="+lnk_orig.inspect
-		#			lnk_new = lnk_orig.duplicate(new_obj, user)
-		# === Result
-		# 	the duplicate object , all characteristics of the object are copied excepted the followings:
-		# * +new_father+ become the father of the new link
-		# * +responsible/group/projowner+ : the accessor is the user 
-		# == Impact on other components
-		# 
+	# == Arguments
+	# * +new_father+ the new_father become the father of the new link
+	# * +user+ - The user which proceed the duplicate action
+	# == Usage from controller or script:
+	#    if @customer.save
+	#		  lnk_orig = Link.find(lnkid)
+	#			#puts "=========================lnk_orig="+lnk_orig.inspect
+	#			lnk_new = lnk_orig.duplicate(new_obj, user)
+	# === Result
+	# 	the duplicate object , all characteristics of the object are copied excepted the followings:
+	# * +new_father+ become the father of the new link
+	# * +responsible/group/projowner+ : the accessor is the user
+	# == Impact on other components
+	#
 	def duplicate(new_father, user)
 		fname="#{self.class.name}.#{__method__}"
 		#LOG.info (fname) {"new_father=#{new_father.inspect}"}

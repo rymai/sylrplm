@@ -49,6 +49,9 @@
 		<td> <% if logged_in? %>
 		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => customer.id}, :method => :get %>
 		<% end %> </td>
+		<% if customer.revisable?  %> 
+		<td> <%= h_img_revise.to_s %></td>
+		<%end%>
 	</tr>
 	<% end %>
 </table>

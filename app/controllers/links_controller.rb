@@ -55,11 +55,11 @@ class LinksController < ApplicationController
 		@root = PlmServices.get_object(params[:root_model], params[:root_id])
 		#LOG.info (fname){"link=#{@link}"}
 		#LOG.info (fname){"owner=#{(@link.owner.nil? ? "no owner" : @link.owner)}"}
-		#LOG.info (fname){"link effectivities=#{@link.links_effectivities}"}
-		#LOG.info (fname){"effectivities=#{@link.effectivities}"}
-		#LOG.info (fname){"effectivities_mdlid=#{@link.effectivities_mdlid}"}
+		LOG.info (fname){"link effectivities=#{@link.links_effectivities}"}
+		LOG.info (fname){"effectivities=#{@link.effectivities}"}
+		LOG.info (fname){"effectivities_mdlid=#{@link.effectivities_mdlid}"}
 		#LOG.info (fname){"object_in_explorer=#{@object_in_explorer}"}
-		#LOG.info (fname){"root=#{@root}"}
+		LOG.info (fname){"root=#{@root}"}
 	end
 
 	# POST /links
@@ -99,11 +99,12 @@ class LinksController < ApplicationController
 			update_eff = update_effectivities(@link, params[:effectivities])
 			#LOG.info(fname) { "update_eff: #{update_eff} @link.errors=#{@link.errors.inspect}" }
 			if update_att && update_eff
-				#LOG.info(fname) { "ok:effectivities: #{params[:effectivities]}" }
+				LOG.info(fname) { "ok:effectivities: #{params[:effectivities]}" }
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_link), :ident => @link.ident)
 				format.html { render action: "edit_in_tree" }
 				format.xml  { head :ok }
 			else
+				LOG.info(fname) { "ko:update_att=#{update_att} update_eff=#{update_eff} effectivities: #{params[:effectivities]}" }
 				# lien non modifie
 				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_link),:ident=>@link.ident)
 				format.html { render action: "edit_in_tree" }
@@ -164,13 +165,17 @@ class LinksController < ApplicationController
 	private
 
 	def update_effectivities(link, effectivities)
+		fname="#{self.class.name}.#{__method__}"
+		LOG.info(fname) { "link=#{link} effectivities=#{effectivities}" }
 		effectivities = Array(effectivities)
 		return true if effectivities.empty?
 
 		ret = false
-		if relation = Relation.find_by_name("link_effectivity")
+		if relation = Relation.find_by_name("LINK_EFF")
+			LOG.info(fname) { "relation link_effectivity ok=#{relation}" }
 			# menage des autres effectivites
 			link.clean_effectivities(effectivities)
+			flash[:notice]=""
 			effectivities.each do |effectivity|
 				if effectivity = PlmServices.get_object_by_mdlid(effectivity)
 					#LOG.info(fname) { "effectivity: #{effectivity}" }
@@ -186,6 +191,7 @@ class LinksController < ApplicationController
 				end
 			end
 		else
+			LOG.info(fname) { "relation link_effectivity ko" }
 			# relation link_effectivity non trouvee
 			ret = true
 		end

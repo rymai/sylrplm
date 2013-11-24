@@ -102,6 +102,7 @@ class RolesController < ApplicationController
 		define_view
 		@role = Role.find(params[:id])
 		@tree  = build_tree(@role, @view_id)
+		@object_plm = @role
 	end
 
 end

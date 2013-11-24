@@ -7,10 +7,14 @@
 						<li class="active">
 							<a class="brand" href="#main" data-toggle="tab"> <%= @page_title || "SYLRPLM" %> </a>
 						</li>
+						<% if @tree || @tree_up %>
+						<li >
+							<a class="brand" href="#tree" data-toggle="tab"><%= t(:legend_tree) %></a>
+						</li>
+						<% end %>
 						<li >
 							<a class="brand" href="#favorites" data-toggle="tab"><%= t(:legend_clipboard) %></a>
 						</li>
-
 					</ul><!-- nav nav-tabs -->
 				</div>
 				<div class="btn-group">
@@ -114,7 +118,7 @@
 								</li>
 							</ul>
 						</li>
-						<% if admin_logged_in? %>
+
 						<li class="dropdown-submenu" id="parammenu">
 							<a tabindex="-1" href="#"><%= t(:legend_param)%></a>
 							<ul class="dropdown-menu">
@@ -142,6 +146,7 @@
 								</li>
 							</ul>
 						</li>
+						<% if admin_logged_in? %>
 						<li class="dropdown-submenu" id="debugmenu">
 							<a tabindex="-1" href="#"><%= t(:legend_debug)%></a>
 							<ul class="dropdown-menu">
@@ -176,11 +181,11 @@
 					<ul class="nav nav-tabs">
 						<% if logged_in? %>
 						<li>
-							<a class="brand" href="#"> <%= t(:user_connected,
+							<a class="brand" href="#" title="<%= t(:user_connected,
 							:login => @current_user.login,
 							:role => @current_user.role.try(:title),
 							:group => @current_user.group.try(:name),
-							:project => @current_user.project.try(:ident)) %></a>
+							:project => @current_user.project.try(:ident))%>"> <%= @current_user.login %></a>
 						</li>
 						<li>
 							<%= link_to h_img("disconnect"), sessions_path, :method => :delete, :class=>"brand" %>
@@ -243,6 +248,11 @@
 	<br/>
 	<div id="favorites" class="tab-pane inactive">
 		<%= render('layouts/favorites') %>
+	</div>
+	<div id="tree" class="tab-pane inactive">
+		<% if @tree || @tree_up %>
+		<%= render(:partial => "shared/tree", :object => @object_plm ) %>
+		<% end %>
 	</div>
 
 	<div id="main" class="tab-pane active">

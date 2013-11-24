@@ -15,7 +15,7 @@ class Favori
       current_item = @items[obj.model_name].find { |item| item.id == obj.id }
     end
 
-    @items[obj.model_name] << obj unless current_item
+    @items[obj.model_name] << obj ###unless current_item
   end
 
   def remove(obj)

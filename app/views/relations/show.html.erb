@@ -51,10 +51,4 @@
 	<%= h @relation.domain %>
 </p>
 <% end %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("edit"), edit_relation_path(@relation) %></td>
-		<td> <%= link_to t("new_relation"), new_relation_path %></td>
-		<td> <%= link_to t("list"), relations_path %></td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_show", :object => @relation) %>

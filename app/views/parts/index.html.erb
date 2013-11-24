@@ -45,16 +45,17 @@
 		<td><%= h_explorer part.projowner %></td>
 		<td><%= l part.date %></td>
 		<td><%= part.domain %></td>
-		<% if part.revisable?  %> <td> <% unless part.revise_by_action? %><%= h_img_revise.to_s %><% end %></td>
-		<td></td>
-		<% else %>
+		
 		<td><%= link_to h_img_edit.to_s, edit_part_path(part) %></td>
 		<td> <%= link_to h_img_edit_lifecycle.to_s, {:controller=>"parts", :action=>"edit_lifecycle", :id => part.id} %> </td>
 		<td><%= h_destroy(part) %></td>
 		<td> <%= link_to h_img(:duplicate), new_dup_part_path(part) %> </td>
-		<% end %> <td> <% if logged_in? %>
+		<td> <% if logged_in? %>
 		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => part.id}, :method => :get %>
 		<%end%> </td>
+		<% if part.revisable?  %> 
+		<td> <%= h_img_revise.to_s %></td>
+		<%end%>
 	</tr>
 	<% end %>
 </table>

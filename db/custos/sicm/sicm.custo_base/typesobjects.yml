@@ -48,6 +48,14 @@ Typesobject_1045584128:
     Fichier cao 3d par BRL-CAD
     pour afficher, utilisez mged ou archer
   domain: admin
+  
+Typesobject_1045584150: 
+  id: "1045584150"
+  forobject: datafile
+  name: scad
+  fields: "{\"tool\": \"openscad\"}"
+  description: Fichier cao 3d par openscad
+  domain: admin
 
 Typesobject_672869653: 
   id: "672869653"

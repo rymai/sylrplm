@@ -14,6 +14,10 @@ class Relation < ActiveRecord::Base
 
 	has_many :links
 	has_and_belongs_to_many :views
+	#
+	RELATION_FROM_REVISION = "FROM_REVISION"
+	RELATION_FROM_DUPLICATE = "FROM_DUPLICATE"
+	
 	def validate
 		errors.add_to_base I18n.t("valid_relation_cardin_occur_max") if cardin_occur_max != -1 && cardin_occur_max < cardin_occur_min
 		errors.add_to_base I18n.t("valid_relation_cardin_use_max") if cardin_use_max != -1 && cardin_use_max < cardin_use_min
@@ -24,9 +28,9 @@ class Relation < ActiveRecord::Base
 		if args.empty?
 			self.father_plmtype = Typesobject.get_objects_with_type.first
 			self.child_plmtype  = Typesobject.get_objects_with_type.first
-			unless args[0][:user].nil?
+			#unless args[0][:user].nil?
 			self.set_default_values_with_next_seq
-			end
+			#end
 		end
 	end
 

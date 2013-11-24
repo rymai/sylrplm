@@ -1,8 +1,112 @@
+def build_scad_datafile(obj)
+	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	LOG.debug (fname) {"obj=#{obj}"}
+	ret="#{obj.read_file} \n"
+	ret << "#{obj.filename.split(".")[0]}();\n"
+end
+
+              
+def build_scad(obj, tree)
+	ret="module #{obj.ident}() {\n"
+	nodes = tree.nodes
+	mx=nil
+	files=[]
+	nodes.each do |nod|
+		read_node(nod, ret, mx, files)
+	end
+	files.each do |datafile|
+		ret<<"#{datafile.read_file} \n"
+	end
+	ret << "}\n"
+	ret << "#{obj.ident}();\n"
+end
+
+def build_scad_file(obj, tree)
+	file = File.open("#{Rails.root}/public/tmp/#{obj.ident}.scad", "w+")
+	file.write("module #{obj.ident}() {\n")
+	nodes = tree.nodes
+	mx=nil
+	files=[]
+	nodes.each do |nod|
+		read_node(nod, file, mx, files)
+	end
+	files.each do |datafile|
+		file.write("#{datafile.read_file} \n")
+	end
+	file.write("}\n")
+	file.write("#{obj.ident}();\n")
+	file.close
+	file
+end
+
+def read_node(node, content, mx, files)
+	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	lnk = Link.find(node.id)
+	child = PlmServices.get_object(lnk.child_plmtype, lnk.child_id)
+	LOG.debug (fname) {"lnk.child_plmtype=#{lnk.child_plmtype}"}
+	rb_values = nil
+	if lnk.child_plmtype == "document"
+		child.datafiles.each do |datafile|
+			LOG.debug (fname) {"datafile.typesobject.name=#{datafile.typesobject.name}"}
+			if datafile.typesobject.name == "scad"
+				files << datafile unless files.include?(datafile)
+				mx=rb_values["matrix"] unless rb_values.nil?
+				LOG.debug (fname) {"write(#{datafile.ident} filename=#{datafile.filename} mx=#{mx}"}
+				if mx.nil?
+				content<<"\t#{datafile.filename.split(".")[0]}();\n"
+				else
+				
+				content<<"\ttranslate([#{mx["DX"]}, #{mx["DY"]}, #{mx["DZ"]}]) #{datafile.filename.split(".")[0]}();\n" 
+				end
+			end
+		end
+	elsif lnk.child_plmtype == "part"
+		rb_values = OpenWFE::Json::from_json(lnk.values)
+		mx = rb_values["matrix"] unless rb_values.nil?
+		nodes = node.nodes
+		nodes.each do |nod|
+			read_node(nod, content, mx, files)
+		end
+	end
+end
+
+def read_node_file(node, file, mx, files)
+	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	lnk = Link.find(node.id)
+	child = PlmServices.get_object(lnk.child_plmtype, lnk.child_id)
+	LOG.debug (fname) {"lnk.child_plmtype=#{lnk.child_plmtype}"}
+	rb_values = nil
+	if lnk.child_plmtype == "document"
+		child.datafiles.each do |datafile|
+			LOG.debug (fname) {"datafile.typesobject.name=#{datafile.typesobject.name}"}
+			if datafile.typesobject.name == "scad"
+				files << datafile unless files.include?(datafile)
+				mx=rb_values["matrix"] unless rb_values.nil?
+				LOG.debug (fname) {"write(#{datafile.ident} filename=#{datafile.filename} mx=#{mx}"}
+				if mx.nil?
+				file.write("\t#{datafile.filename.split(".")[0]}();\n") 
+				else
+				
+				file.write("\ttranslate([#{mx["DX"]}, #{mx["DY"]}, #{mx["DZ"]}]) #{datafile.filename.split(".")[0]}();\n") 
+				end
+			end
+		end
+	elsif lnk.child_plmtype == "part"
+		rb_values = OpenWFE::Json::from_json(lnk.values)
+		mx = rb_values["matrix"] unless rb_values.nil?
+		nodes = node.nodes
+		nodes.each do |nod|
+			read_node(nod, file, mx, files)
+		end
+	end
+end
+
 ############################################
 # construction des arbres descendants
 ############################################
-def  build_tree(obj, view_id, variant = nil, level_max = 9999)
+def  build_tree(obj, view_id, variant_id = nil, level_max = 9999)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	LOG.debug (fname) {"variant_id=#{variant_id}, level_max=#{level_max}"}
 	lab=t(:ctrl_object_explorer, :typeobj => t("ctrl_"+obj.model_name), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_down", :label => lab, :open => true })
 	view=View.find(view_id) unless  view_id.nil?
@@ -12,12 +116,13 @@ def  build_tree(obj, view_id, variant = nil, level_max = 9999)
 	else
 		LOG.debug (fname){"Toutes les relations sont a afficher"}
 	end
-	unless variant.nil?
+	unless variant_id.nil?
+		variant=PlmServices.get_object("part",variant_id)
 	var_effectivities = variant.var_effectivities
 	else
 	var_effectivities = []
 	end
-	LOG.debug (fname) {"variante=#{variant}, var_effectivities=#{var_effectivities.inspect} level_max=#{level_max}"}
+	LOG.debug (fname) {"variant=#{variant}, var_effectivities=#{var_effectivities.inspect} level_max=#{level_max}"}
 	follow_tree(obj, tree, obj, relations, var_effectivities, 0, level_max)
 	###TODO a mettre en option group_tree(tree, 0)
 	LOG.debug (fname) {"tree size=#{tree.size}"}
@@ -43,8 +148,19 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 	#------------------------------------------------------
 	usersnode = tree_level("'users_#{father.id}'", t("label_#{father.model_name}_users"), icone_plmtype("user"), icone_plmtype("user"))
 	tree_users(usersnode, father)
-	#LOG.debug (fname) {"usersnode.size=#{usersnode.size}"}
 	node << usersnode if usersnode.size > 0
+	if(father.is_a?(Role))
+		rolesnode = tree_level("'roles_#{father.id}'", t("label_#{father.model_name}_roles"), icone_plmtype("role"), icone_plmtype("role"))
+		tree_roles(rolesnode, father)
+		node << rolesnode if rolesnode.size > 0
+	end
+	if(father.is_a?(Group))
+		groupsnode = tree_level("'groups_#{father.id}'", t("label_#{father.model_name}_groups"), icone_plmtype("group"), icone_plmtype("group"))
+		tree_groups(groupsnode, father)
+		node << groupsnode if groupsnode.size > 0
+	end
+	
+	#LOG.debug (fname) {"usersnode.size=#{usersnode.size}"}
 	#------------------------------------------------------
 	# associated users: end
 	#------------------------------------------------------
@@ -142,7 +258,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 						:link => link
 					}
 					html_options = {
-						:alt => "alt:"+child.ident
+						:alt => "alt:"+child.ident_plm
 					}
 					#LOG.debug (fname){"options=#{options.inspect}"}
 					cnode = Node.new(options)
@@ -216,8 +332,8 @@ end
 def tree_object(obj)
 	url={:controller => obj.controller_name, :action => :show, :id => "#{obj.id}"}
 	options={
-		:id => "'#{obj.model_name}_#{obj.ident}'",
-		:label => t("ctrl_"+obj.model_name)+':'+obj.ident ,
+		:id => "'#{obj.model_name}_#{obj.ident_plm}'",
+		:label => t("ctrl_"+obj.model_name)+':'+obj.ident_plm ,
 		:icon=>icone(obj),
 		:icon_open=>icone(obj),
 		:title => obj.designation,
@@ -242,7 +358,7 @@ def tree_users(node, father)
 					url = {:controller => 'users', :action => 'show', :id => child.id}
 					options = {
 						:id => "#{child.id}" ,
-						:label => child.ident ,
+						:label => child.ident_plm ,
 						:icon  => icone(child),
 						:icon_open => icone(child),
 						:title => child.tooltip,
@@ -258,6 +374,71 @@ def tree_users(node, father)
 			end
 		end
 	end
+	node
+end
+
+#------------------------------------------------------
+# roles associes a l'objet
+#------------------------------------------------------
+def tree_roles(node, father)
+	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	if father.respond_to? :roles
+		LOG.debug (fname){"#{father.ident} father.roles=#{father.roles}"}
+		unless father.roles.nil?
+			begin
+				father.roles.each do |child|
+					url = {:controller => 'roles', :action => 'show', :id => child.id}
+					options = {
+						:id => "#{child.id}" ,
+						:label => child.ident_plm ,
+						:icon  => icone(child),
+						:icon_open => icone(child),
+						:title => child.tooltip,
+						:open => false,
+						:url  => url_for(url)
+					}
+					LOG.debug (fname){"role:#{child.ident}"}
+					cnode = Node.new(options, nil)
+					node << cnode
+				end
+			rescue Exception => e
+				LOG.warn (fname){e}
+			end
+		end
+	end
+	LOG.debug (fname){"node=#{node.inspect}"}
+	node
+end
+#------------------------------------------------------
+# groupes associes a l'objet
+#------------------------------------------------------
+def tree_groups(node, father)
+	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	if father.respond_to? :groups
+		LOG.debug (fname){"#{father.ident} father.groups=#{father.groups}"}
+		unless father.groups.nil?
+			begin
+				father.groups.each do |child|
+					url = {:controller => 'groups', :action => 'show', :id => child.id}
+					options = {
+						:id => "#{child.id}" ,
+						:label => child.ident_plm ,
+						:icon  => icone(child),
+						:icon_open => icone(child),
+						:title => child.tooltip,
+						:open => false,
+						:url  => url_for(url)
+					}
+					LOG.debug (fname){"group:#{child.ident}"}
+					cnode = Node.new(options, nil)
+					node << cnode
+				end
+			rescue Exception => e
+				LOG.warn (fname){e}
+			end
+		end
+	end
+	LOG.debug (fname){"node=#{node.inspect}"}
 	node
 end
 
@@ -287,7 +468,7 @@ def follow_father(model_name, node, obj, relations)
 		img_rel="<img class=\"icone\" src=\"#{icone(link)}\" title=\"#{link.tooltip}\" />"
 		options={
 			:id => link.id ,
-			:label => "#{img_rel}-#{father.label}",
+			:label => "#{img_rel}#{link.relation.name} | #{father.label}",
 			:icon => icone(father),
 			:icon_open => icone(father),
 			:title => clean_text_for_tree(father.tooltip),

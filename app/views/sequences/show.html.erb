@@ -23,9 +23,4 @@
 	<b><%= t(:label_max) %></b>
 	<%= h @sequence.max %>
 </p>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:edit), edit_sequence_path(@sequence)%> </td>
-		<td> <%= link_to t(:list), sequences_path %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_show", :object => @sequence) %>

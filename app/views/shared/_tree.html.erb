@@ -1,4 +1,3 @@
-
 <h1><%= t("object_tree")%></h1>
 <% unless @views.nil? %>
 <% form_for(object, :url => {:id => object.id, :action => "select_view" }) do |f| %> <!-- -->
@@ -10,6 +9,7 @@
 <% unless object.variants.nil? %>
 <%= f.label t(:label_all_variants) %>
 <%= check_box_tag :all_variants ,  @myparams[:all_variants], @myparams[:all_variants]=="on" -%>
+<br/>
 <br/>
 <%= f.label t(:label_variant) %>
 <%= select_tag( :variant, options_from_collection_for_select(object.variants, :mdlid, :to_s, (@variant.mdlid unless @variant.nil?))) %>
@@ -33,6 +33,9 @@
 			<td><%= @tree.size_all%></td>
 		</tr>
 	</table>
+	<% if object.have_model_design?%>
+	<%= link_to t("root_model_design"), {:controller=> object.controller_name, :action=>"show_design", :id => object.id, :variant=>@variant }%>
+	<% end %>
 	<%= @tree.to_s %>
 	<% end %>
 	<% if @tree_up && @tree_up.size>0 %>
@@ -47,4 +50,5 @@
 	</table>
 	<%= @tree_up.to_s %>
 	<% end %>
+	<%= render(:partial => "shared/menu_show", :object =>object) %>
 </div>

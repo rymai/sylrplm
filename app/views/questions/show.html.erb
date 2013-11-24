@@ -9,13 +9,4 @@
   <%=h @faq.answer %>
 </p>
 
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= link_to t(:edit), edit_question_path(@faq) %>
-        </td>
-        <td>
-            <%= link_to t(:list), questions_path %>
-        </td>
-    </tr>
-</table>
+<%= render(:partial => "shared/menu_show", :object => @faq) %>

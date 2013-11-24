@@ -39,7 +39,17 @@ class Controller
     end
     ret
   end
-
+  
+	def self.route_exists?(controller, action)
+		cont = "#{controller}_controller".camelize
+		#puts "Controller.route_exists?(#{cont}, #{action})"
+		methods=eval("::#{cont}.new.methods")
+		#puts "Controller.route_exists?:methods=#{methods}"
+		ret = methods.include? action.to_sym
+		#puts "Controller.route_exists?(#{cont}, #{action.to_sym})=#{ret}"
+		ret
+	end
+	
   def self.init_db(params)
     create_admin
     create_domain(params[:domain])

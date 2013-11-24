@@ -221,6 +221,15 @@ class PartsController < ApplicationController
 			format.xml  { render :xml => @part }
 		end
 	end
+
+	def show_design
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"myparams=#{@myparams.inspect}"}
+		part = Part.find(params[:id])
+		ctrl_show_design(part)
+	end
+	
 	private
 
 	def show_
@@ -245,7 +254,8 @@ class PartsController < ApplicationController
 			end
 		end
 		@tree         = build_tree(@part, @myparams[:view_id] , @variant)
-		@tree_up      = build_tree_up(@part, @myparams[:view_id] )
+		@tree_up      = build_tree_up(@part, @myparams[:view_id] )				
+		@object_plm = @part
 	#LOG.debug (fname){"taille tree=#{@tree.size}"}
 	#LOG.debug (fname){"variant=#{@variant}"}
 	#LOG.debug (fname){"variant eff=#{@variant.var_effectivities}"} unless @variant.nil?

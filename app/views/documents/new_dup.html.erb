@@ -5,14 +5,6 @@
 <%= render(:partial => "documents/edit",:locals => { :f => f, :fonct=>fonct }) %>
 <%= render(:partial => "shared/show_objects_in_relations",:locals => { :object => @document_orig, :f => f, :fonct=>fonct }) %>
 <h1></h1>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= f.submit t("update") %> </td>
-		<%if @document.statusobject.promote==true %> <td><%= link_to t(:promote), :id => @document.id, :action => :promote , :confirm => t("msg_confirm") %></td>
-		<%end %>
-		<%if @document.statusobject.demote==true %> <td><%= link_to t(:demote), :id => @document.id, :action => :demote , :confirm => t("msg_confirm") %></td>
-		<%end %> <td> <%= link_to t("explorer"), @document %> </td>
-		<td> <%= link_to t("list"), documents_path %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @document, :f => f}) %>
+
 <% end %>

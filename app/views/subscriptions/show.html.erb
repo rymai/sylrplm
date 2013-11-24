@@ -51,8 +51,4 @@
 	<%= h @subscription.domain %>
 </p>
 
-<table class='menu_bas'>
-	<tr>
-		<td><%= link_to t("edit"), edit_subscription_path(@subscription)  %></td>
-	</tr>
-</table
+<%= render(:partial => "shared/menu_show", :object => @subscription) %>

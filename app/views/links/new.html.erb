@@ -9,11 +9,6 @@ form_id=fonct+"_link" %>
 :fonct => fonct,
 :form_id => form_id }
 ) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= f.submit t("update") %> </td>
-		<td> <%= link_to t("explorer"), @link %> </td>
-		<td> <%= link_to t("list"), links_path %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @link, :f => f}) %>
+
 <% end %>

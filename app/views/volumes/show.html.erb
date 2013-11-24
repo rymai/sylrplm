@@ -15,9 +15,5 @@
 	<b><%= t(:label_protocol) %></b>
 	<%= h @volume.protocol %>
 </p>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:edit), edit_volume_path(@volume)%> </td>
-		<td> <%= link_to t(:list), volumes_path %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_show", :object => @volume) %>
+

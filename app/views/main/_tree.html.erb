@@ -1,0 +1,9 @@
+<fieldset>
+  <%= content_tag(:legend, t(:legend_tree)) %>
+   
+    <div id="tree">
+    	main/tree 
+      <%= render(:partial => "shared/tree", :object => @object ) %>
+    </div>
+  
+</fieldset>

@@ -245,13 +245,13 @@ module HelpHelper
 			txt.gsub!(10.chr,'<br/>')
 			txt.gsub!('\t','')
 			txt.gsub! /#hlp=(.+?)=hlp#/,
-			"<img class='help' id='\\1' src='images/help.png' onclick=\"return helpPopup('\\1');\"></img>"
+			"<img class='help' id='\\1' src='/images/help.png' onclick=\"return helpPopup('\\1');\"></img>"
 			txt.gsub! /#img=(.+?)=img#/,
-			"<img class='help_tr' src='images/\\1'></img>"
+			"<img class='help_tr' src='/images/\\1'></img>"
 			txt.gsub! /#jump=(.+?)=jump#/,
 			"<a class='help_tr' href='#\\1' target='_top'>"+t(:help_jump)+"</a>"
 			txt.gsub! /#lnk=(.+?)=lnk#/,
-			"<a class='help_tr' href='\\1' target='_blank' title='"+t(:help_lnk_acces)+"'><img src='images/submit.png'></img></a>"
+			"<a class='help_tr' href='\\1' target='_blank' title='"+t(:help_lnk_acces)+"'><img src='/images/submit.png'></img></a>"
 		end
 
 		txt+"\n"

@@ -75,6 +75,7 @@ fr:
   ctrl_forum_item: Message discussion
   # group
   ctrl_group: Groupe
+  label_group_groups: Groupes fils
   # group_definitions
   ctrl_group_definitions: Groupe-processus
   # link
@@ -131,6 +132,7 @@ fr:
   ctrl_question: Question
   # roles
   ctrl_role: Rôle
+  label_role_roles: Rôles fils
   # sequences
   ctrl_sequence: Valeur par défaut
   # session

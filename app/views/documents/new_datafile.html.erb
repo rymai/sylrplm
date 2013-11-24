@@ -4,11 +4,5 @@
 <%= f.error_messages %>
 <%= hidden_field_tag "document_id", @document.id.to_s %>
 <%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f , :fonct=>"doc_new", :document=>@document}) %>
-<table class='menu_bas'>
-	<tr>
-		<td><%= f.submit t("create") %></td>
-		<td> <%= link_to t("list"), datafiles_path %> </td>
-		<td> <%= link_to t("document_show"), document_path(@document) %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @document, :f => f}) %>
 <% end %>

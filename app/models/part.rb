@@ -140,4 +140,10 @@ has_many :links_documents,
 	def users
 		nil
 	end
+	#
+	# this object could have a 3d or 2d model show in tree
+	#
+	def have_model_design?
+			true
+	end
 end

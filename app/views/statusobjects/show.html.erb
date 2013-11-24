@@ -39,12 +39,7 @@
 	<b><%= t(:label_previous_status) %></b>
 	<%= h @statusobject.previous_statusobjects.collect {|st| "#{st.name}"} %>
 </p>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:edit), edit_statusobject_path(@statusobject) %> </td>
-		<td> <%= link_to t(:list), statusobjects_path %> </td>
-	</tr>
-</table>
+<%= render(:partial => "shared/menu_show", :object => @statusobject) %>
 <% if false %>
 <hr>
 <h1><%= t(:document_list) %><%= @statusobject.documents.count %></h1>

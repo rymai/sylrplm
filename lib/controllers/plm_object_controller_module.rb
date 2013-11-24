@@ -222,7 +222,15 @@ module Controllers
 			#puts "application_controller.get_html_options:"+ret
 			ret
 		end
-
+		def  ctrl_show_design(object)
+			variant = params[ :variant]
+				tree         = build_tree(object, @myparams[:view_id] , variant)
+				content = build_scad(object, tree)
+				send_data(content,
+		              :filename => object.ident+".scad",
+		              :type => "application/scad",
+		              :disposition => "attachment") unless content.nil?
+		end
 		private
 
 		def ctrl_new_datafile(at_object)

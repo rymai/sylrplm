@@ -98,8 +98,6 @@ module Models
 		def revise
 			fname= "#{self.model_name}.#{__method__}"
 			#LOG.debug (fname){"#{self.ident}"}
-			#if(self.frozen?)
-			#LOG.debug (fname){"#{self.ident} frozen"}
 			# recherche si c'est la derniere revision
 			rev_cur = self.revision
 			last_rev = last_revision
@@ -108,23 +106,65 @@ module Models
 				obj = self.clone
 				obj.set_default_values_without_next_seq
 				obj.statusobject = ::Statusobject.get_first(self)
-				obj.revision = rev_cur.next
-				LOG.debug (fname){"#{self.ident} frozen revisable:#{obj.inspect}"}
+				obj.revision = next_revision
+				LOG.debug (fname){"#{self.ident} rev=#{obj.inspect}"}
 				if self.has_attribute?(:filename)
 					if(self.filename!=nil)
 					content = self.read_file
 					obj.write_file(content)
 					end
 				end
+				st = obj.save
+				if !st
+					obj = nil
+				else
+				st = obj.from_revise(self)
+				end
 			return obj
 			else
-				LOG.debug (fname){"#{self.ident} frozen not revisable"}
+				LOG.debug (fname){"#{self.ident} not revisable"}
 				return nil
 			end
-		#else
-		#	LOG.debug (fname){"#{self.ident} not frozen"}
-		#	return nil
-		#end
+		end
+
+		def next_revision
+			next_revision = self.revision
+			found = false
+			modl = eval self.class.name
+			while found == false
+				next_revision = next_revision.next
+				obj=nil
+				begin
+					obj = modl.find_by_ident_and_revision(self.ident, next_revision)
+					if obj.nil?
+					found = true
+					end
+				rescue Exception=>e
+				found = true
+				end
+			end
+			next_revision
+		end
+
+		def from_revise(from)
+			from_function(from, ::Relation::RELATION_FROM_REVISION)
+		end
+
+		def from_duplicate(from)
+			from_function(from, ::Relation::RELATION_FROM_DUPLICATE)
+		end
+
+		def from_function(from, function)
+			fname= "#{self.model_name}.#{__method__}:#{function}:"
+			rel=::Relation.find_by_name(function)
+			link_from = ::Link.new(father: self, child: from, relation: rel, user: self.owner)
+			st=link_from.save
+			LOG.debug (fname){"link_from=#{link_from}:st save=#{st}"}
+			if !st
+				link_from=nil
+			end
+			LOG.debug (fname){"link_from=#{link_from}"}
+			link_from
 		end
 
 		# a valider si avant dernier status
@@ -581,7 +621,7 @@ module Models
 			ret = self.clone
 			ret.def_user(user)
 			if ret.respond_to? :revision
-				set_default_value(:revision, 0)
+				ret.set_default_value(:revision, 0)
 			end
 			if (ret.respond_to? :statusobject)
 			ret.statusobject = ::Statusobject.get_first(ret)
@@ -590,7 +630,24 @@ module Models
 			if (ret.respond_to? :date)
 				ret.date=DateTime::now()
 			end
+			st = ret.save
+			if !st
+				ret = nil
+			else
+			st = ret.from_duplicate(self)
+			end
 			LOG.info (fname){"ret=#{ret.inspect}"}
+			ret
+		end
+
+		def ident_plm
+			fname = "#{self.class.name}.#{__method__}"
+			if self.respond_to?(:revision)
+				ret="#{ident}/#{revision}"
+			else
+				ret=ident
+			end
+			#LOG.info (fname){"ident_plm=#{ret}"}
 			ret
 		end
 

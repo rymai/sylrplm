@@ -39,6 +39,7 @@
 	<tr>
 		<% if @forum.frozen? %> <td><%= t("freeze")%></td>
 		<% else %> <td><%= link_to t("edit"), edit_forum_path(@forum) %></td>
+		<td> <%= link_to t("edit_lifecycle"), {:controller=>"forums", :action=>"edit_lifecycle", :id => @forum.id} %> </td>
 		<% end %> <td><%= link_to t("list"), forums_path %></td>
 	</tr>
 </table>

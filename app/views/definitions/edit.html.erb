@@ -25,13 +25,8 @@
 	<%= h_input_domain(f) %>
 	<br />
 </fieldset>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= f.submit t("update") %></td>
-		<td> <%= link_to t("explorer"),  @definition %></td>
-		<td> <%= link_to t("list"), definitions_path %></td>
-	</tr>
-</table>
+
+<%= render(:partial => "shared/menu_edit", :locals => {:object => @definition, :f => f}) %>
 <% end %>
 
 <%= render_fluo :definition => @definition %>

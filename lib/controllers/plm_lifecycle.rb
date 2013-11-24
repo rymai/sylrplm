@@ -3,16 +3,10 @@ def ctrl_revise(object)
 	@object = object.revise
 	@types = Typesobject.get_types(object.class.name.downcase!)
 	respond_to do |format|
-		if(@object != nil)
-			if @object.save
-				puts object.class.name+'.revision apres save='+@object.id.to_s+":"+@object.revision;
-				flash[:notice] = t(:ctrl_object_revised,:typeobj =>t(:ctrl_.to_s+@object.class.name.downcase!),:ident=>@object.ident,:previous_rev=>previous_rev,:revision=>@object.revision)
-				format.html { redirect_to(@object) }
-				format.xml  { head :ok }
-			else
-				format.html { render :action => "edit" }
-				format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
-			end
+		unless @object.nil?
+			flash[:notice] = t(:ctrl_object_revised,:typeobj =>t(:ctrl_.to_s+@object.class.name.downcase!),:ident=>@object.ident,:previous_rev=>previous_rev,:revision=>@object.revision)
+			format.html { redirect_to(@object) }
+			format.xml  { head :ok }
 		else
 			@object = object
 			flash[:notice] = t(:ctrl_object_not_revised,:typeobj =>t(:ctrl_.to_s+@object.class.name.downcase!),:ident=>@object.ident,:previous_rev=>previous_rev)
@@ -93,6 +87,7 @@ def ctrl_promote(a_object, withMail=true)
 		end
 	end
 end
+
 def ctrl_demote(a_object, withMail=true)
 	fname= "#{self.class.name}.#{__method__}"
 	#LOG.debug (fname){"params=#{params.inspect}"}
@@ -144,8 +139,6 @@ def ctrl_demote(a_object, withMail=true)
 		end
 	end
 end
-
-
 
 def ctrl_create_process(process_name)
 	fname= "#{self.class.name}.#{__method__}"

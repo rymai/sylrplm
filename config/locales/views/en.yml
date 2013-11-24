@@ -1,5 +1,6 @@
 en:
   # general
+  root_model_design: Root design model
   customer: client
   document: document
   part: part
@@ -76,6 +77,7 @@ en:
   legend_edit_lifecycle: Lifecycle
   legend_edit_revision: Revision
   lifecycle_edit: "Lifecycle of the %{model} '%{obj}'"
+  label_liste_mode: List type
   # attributs generaux
   faq_question: Question
   faq_answer: answer
@@ -171,6 +173,7 @@ en:
   label_icon: Icon
   datafiles_list: Associated files
   datafile_add: Add a file 
+  legend_tree: Structure 
   # fin general
   # access
   legend_access: Enter access details

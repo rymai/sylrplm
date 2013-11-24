@@ -2,15 +2,6 @@
 <% form_for(@statusobject) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "statusobjects/edit",:locals => { :f => f, :fonct=>"new" }) %>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @statusobject, :f => f}) %>
 
-<table class='menu_bas'>
-    <tr>
-        <td>
-            <%= f.submit t("create") %>
-        </td>
-        <td>
-            <%= link_to t("list"), statusobjects_path %>
-        </td>
-    </tr>
-</table>
 <% end %>

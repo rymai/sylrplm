@@ -84,7 +84,7 @@ module ApplicationHelper
 	end
 
 	# write the menus in the bottom for lifecycle  panel
-	def h_menu_lifecycle(a_form, a_object)
+	def h_menu_lifecycle_obsolete(a_form, a_object)
 		return ""
 		ret=""
 		if a_object.frozen?
@@ -226,7 +226,7 @@ module ApplicationHelper
 		h_form_simple_query(url, objects)
 	end
 
-	def h_form_simple_query(url, objects)
+	def  h_form_simple_query(url, objects)
 		bloc = ""
 		bloc << form_tag(url, :method=>:get)
 		bloc << h_simple_query(objects)
@@ -239,24 +239,33 @@ module ApplicationHelper
 	def h_simple_query(objects)
 		#puts "h_simple_query:myparams=#{@myparams}"
 		bloc = ""
-		bloc << "<table><tr>"
-		bloc << "<td>"
+		bloc << "<table>"
+		bloc << "<tr>"
+		bloc << "<th>"
 		bloc << t("query")
+		bloc << "</th>"
+		bloc << "<th>"
+		bloc << t("nb_items_per_page")
+		bloc << "</th>"
+		bloc << "<th>"
+		bloc << t("label_liste_mode")
+		bloc << "</th><th>........</th><th></th>"
+		bloc << "</tr>"
+		bloc << "<tr>"
+		bloc << "<td>"
 		bloc << text_field_tag(:query , value=objects[:query])
 		bloc << "</td>"
 		bloc << "<td>"
-		bloc << t("nb_items_per_page")
 		bloc << text_field_tag(:nb_items , value=objects[:nb_items], :size=>5)
-		bloc << "</td>"
 		bloc << "</td>"
 		bloc << "<td>"
 		bloc << select_tag("list_mode", options_for_select(get_list_modes, @myparams["list_mode"]) )
-		bloc << "</td>"
+		bloc << "</td><td></td>"
 		bloc << "<td>"
 		bloc << h_img_sub(:filter)
 		bloc << "</td>"
-
-		bloc << "</tr></table>"
+		bloc << "</tr>"
+		bloc << "</table>"
 		bloc
 	end
 
@@ -409,23 +418,28 @@ module ApplicationHelper
 		fname=self.class.name+"."+__method__.to_s
 		#LOG.info (fname){"obj=#{obj.to_s}, method=#{method}"}
 		ret=""
-		unless obj.nil?
-			if method.nil?
-				method = "ident"
-			end
-			if obj.respond_to?(method)
-			txt = obj.send(method)
-			else
-			txt = obj.ident
-			end
+		begin
+			unless obj.nil?
+				if method.nil?
+					method = "ident"
+				end
+				if obj.respond_to?(method)
+				txt = obj.send(method)
+				else
+				txt = obj.ident
+				end
 
-			if txt.nil? || txt == ""
-			txt = obj.to_s
+				if txt.blank?
+				txt = obj.to_s
+				end
+				title = t(name, :obj => obj)
+				#LOG.info (fname){"title=#{title}"}
+				ret=link_to( txt, obj, {:title => title } )
 			end
-			title = t(name, :obj => obj)
-			#LOG.info (fname){"title=#{title}"}
-			link_to( txt, obj, {:title => title } )
+		rescue Exception => e
+			LOG.info (fname){"exception name=#{name}  method=#{method}:#{e}"}
 		end
+		return ret
 	end
 
 	def h_destroy(obj)

@@ -22,8 +22,10 @@ class DatafilesController < ApplicationController
 		@types    = Typesobject.find_for("datafile")
 		if params["doc"]
 			@document = Document.find(params["doc"])
-		#puts "datafiles_controller.show:doc=#{@document.inspect}"
+		puts "datafiles_controller.show:doc(#{params["doc"]})=#{@document} filedoc=#{@datafile.document}"
 		end
+		puts "datafiles_controller.show:doc=#{@datafile.document} part=#{@datafile.part} project=#{@datafile.project} cust=#{@datafile.customer}"
+
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @datafile }
@@ -116,6 +118,8 @@ class DatafilesController < ApplicationController
 	end
 
 	def show_file
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"params=#{params.inspect}"}
 		send_file_content("inline")
 	end
 
@@ -153,7 +157,8 @@ class DatafilesController < ApplicationController
 					format.xml  { format.xml  { head :ok } }
 				end
 			else
-				content=@datafile.read_file
+			#content=@datafile.read_file
+				content=build_scad_datafile(@datafile)
 				#puts "datafiles_controller.send_file_content:"+content.length.to_s
 				send_data(content,
               :filename => @datafile.filename,

@@ -168,6 +168,10 @@ ActionController::Routing::Routes.draw do |map|
 	'documents/:id/add_forum',
 	:controller => 'documents',
 	:action => 'add_forum')
+	map.connect(
+	'documents/:id/show_design',
+	:controller => 'documents',
+	:action => 'show_design')
 
 	map.resources :parts, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	map.connect(
@@ -237,6 +241,10 @@ ActionController::Routing::Routes.draw do |map|
 	'parts/:id/update_lifecycle',
 	:controller => 'parts',
 	:action => 'update_lifecycle')
+	map.connect(
+	'parts/:id/show_design',
+	:controller => 'parts',
+	:action => 'show_design')
 
 	map.resources :projects, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	map.connect(
@@ -295,6 +303,10 @@ ActionController::Routing::Routes.draw do |map|
 	'projects/:id/update_lifecycle',
 	:controller => 'projects',
 	:action => 'update_lifecycle')
+	map.connect(
+	'projects/:id/show_design',
+	:controller => 'projects',
+	:action => 'show_design')
 	
 	map.resources :customers, :has_many => :documents, :collection => { :empty_favori => :get }, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	map.connect(
@@ -343,6 +355,10 @@ ActionController::Routing::Routes.draw do |map|
 	'customers/:id/update_lifecycle',
 	:controller => 'customers',
 	:action => 'update_lifecycle')
+	map.connect(
+	'customers/:id/show_design',
+	:controller => 'customers',
+	:action => 'show_design')
 	
 	map.connect(
 	'users/:id/activate',

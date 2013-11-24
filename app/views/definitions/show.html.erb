@@ -24,13 +24,5 @@
 			<td><%= h @definition.launch_fields %></td>
 		</tr>
 	</table>
-	<table class='menu_bas'>
-		<tr class="button-row">
-			<td> <%= link_to t("edit"), edit_definition_path(@definition) %></td>
-			<td> <%= link_to t("new_definition"), new_definition_path %> </td>
-			<td> <%= link_to t("launchthis"), new_process_path(:definition_id => @definition.id) %></td>
-			<td> <%= link_to t("list"), definitions_path %></td>
-		</tr>
-	</table>
-
+	<%= render(:partial => "shared/menu_show", :object => @definition) %>
 	<%= render_fluo :definition => @definition %>

@@ -40,6 +40,7 @@ class CustomersController < ApplicationController
 		@projects                = @customer.projects
 		@tree         						= build_tree(@customer, @myparams[:view_id], nil, 3)
 		@tree_up      						= build_tree_up(@customer, @myparams[:view_id] )
+		@object_plm = @customer
 	end
 
 	# GET /customers/new
@@ -60,7 +61,7 @@ class CustomersController < ApplicationController
 		@customer = Customer.find_edit(params[:id])
 		@types    = Typesobject.get_types("customer")
 	end
-	
+
 	# GET /customers/1/edit_lifecycle
 	def edit_lifecycle
 		@customer = Customer.find_edit(params[:id])
@@ -113,7 +114,7 @@ class CustomersController < ApplicationController
 		end
 	end
 
- def update_lifecycle
+	def update_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug (fname){"params=#{params.inspect}"}
 		@customer = Customer.find(params[:id])
@@ -127,7 +128,7 @@ class CustomersController < ApplicationController
 			ctrl_revise(@customer)
 		end
 	end
-	
+
 	# DELETE /customers/1
 	# DELETE /customers/1.xml
 	def destroy
@@ -234,6 +235,13 @@ class CustomersController < ApplicationController
 		end
 	end
 
+	def show_design
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"myparams=#{@myparams.inspect}"}
+		customer = Customer.find(params[:id])
+		ctrl_show_design(customer)
+	end
 	private
 
 	def index_
