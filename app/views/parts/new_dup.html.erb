@@ -1,10 +1,1 @@
-<h1><%= t("part_new_dup") %></h1>
-<% fonct="new_dup" %>
-<% form_for(@part, :html => { :id => h_form_html_id(@part, fonct) }) do |f| %>
-<%= f.error_messages %>
-<%= render(:partial => "parts/edit",:locals => { :f => f, :fonct=>fonct }) %>
-<%= render(:partial => "shared/show_objects_in_relations",:locals => { :object => @part_orig, :f => f, :fonct=>fonct }) %>
-<h1></h1>
-<%= render(:partial => "shared/menu_new", :locals => {:object => @part, :f => f}) %>
-
-<% end %>
+<%= render(:partial => "shared/new_dup") %>

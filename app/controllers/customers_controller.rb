@@ -55,7 +55,21 @@ class CustomersController < ApplicationController
 			format.xml  { render :xml => @customer }
 		end
 	end
-
+	
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@object_orig = Customer.find(params[:id])
+		@object = @object_orig.duplicate(current_user)
+		@customer=@object
+		#LOG.debug (fname){"@customer=#{@customer.inspect}"}
+		@types    = Typesobject.get_types("customer")
+		@status   = Statusobject.find_for("customer", 2)
+		respond_to do |format|
+			format.html # customer/1/new_dup
+			format.xml  { render :xml => @customer }
+		end
+	end
 	# GET /customers/1/edit
 	def edit
 		@customer = Customer.find_edit(params[:id])
@@ -70,18 +84,25 @@ class CustomersController < ApplicationController
 	# POST /customers
 	# POST /customers.xml
 	def create
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname) {"params=#{params.inspect}"}
 		@customer = Customer.new(params[:customer])
 		@types    = Typesobject.get_types("customer")
 		@status   = Statusobject.find_for(@customer)
-
 		respond_to do |format|
-			if @customer.save
+			if params[:fonct] == "new_dup"
+				object_orig=Customer.find(params[:object_orig_id])
+				st = @customer.create_duplicate(object_orig)
+			else
+				st = @customer.save
+			end
+			if st
 				st = ctrl_duplicate_links(params, @customer, current_user)
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
 				format.html { redirect_to(@customer) }
 				format.xml  { render :xml => @customer, :status => :created, :location => @customer }
 			else
-				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_customer), :msg => nil)
+				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_customer), :msg => @customer.errors)
 				format.html { render :action => :new }
 				format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
 			end
@@ -219,20 +240,6 @@ class CustomersController < ApplicationController
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@customer = Customer.find(params[:id])
 		ctrl_add_datafile(@customer)
-	end
-
-	def new_dup
-		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
-		@customer_orig = Customer.find(params[:id])
-		@customer = @customer_orig.duplicate(current_user)
-		#LOG.debug (fname){"@customer=#{@customer.inspect}"}
-		@types    = Typesobject.get_types("customer")
-		@status   = Statusobject.find_for("customer", 2)
-		respond_to do |format|
-			format.html # customer/1/new_dup
-			format.xml  { render :xml => @customer }
-		end
 	end
 
 	def show_design

@@ -39,7 +39,20 @@ class StatusobjectsController < ApplicationController
 			format.xml  { render :xml => @statusobject }
 		end
 	end
-
+	
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		@object_orig = Statusobject.find(params[:id])
+		@object = @object_orig.duplicate(current_user)
+		@statusobject=@object
+		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
+		@objectswithstatus=Statusobject.get_objects_with_status
+		respond_to do |format|
+			format.html
+			format.xml  { render :xml => @object }
+		end
+	end
+	
 	# GET /statusobjects/1/edit
 	def edit
 		@statusobject = Statusobject.find(params[:id])
@@ -54,7 +67,13 @@ class StatusobjectsController < ApplicationController
 		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
 		@objectswithstatus=Statusobject.get_objects_with_status
 		respond_to do |format|
-			if @statusobject.save
+			if params[:fonct] == "new_dup"
+				object_orig=Statusobject.find(params[:object_orig_id])
+			st = @statusobject.create_duplicate(object_orig)
+			else
+			st = @statusobject.save
+			end
+			if st
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
 				format.html { redirect_to(@statusobject) }
 				format.xml  { render :xml => @statusobject, :status => :created, :location => @statusobject }

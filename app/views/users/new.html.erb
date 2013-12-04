@@ -1,11 +1,11 @@
 <h1><%= t(:user_new) %></h1>
-<% form_for(@the_user) do |form| %>
-<%= form.error_messages %>
+<% form_for(@the_user) do |f| %>
+<%= f.error_messages %>
 <fieldset>
 	<legend>
 		<%= t(:legend_user) %>
 	</legend>
-	<%= render(:partial => "users/edit",:locals => { :form => form, :fonct=>"add" }) %>
+	<%= render(:partial => "users/edit",:locals => { :f => f, :fonct=>"add" }) %>
 	<%= render(:partial => "shared/menu_new", :locals => {:object => @the_user, :f => f}) %>
 
 </fieldset>

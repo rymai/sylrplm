@@ -1,8 +1,8 @@
 <h1><%= t(:subscription_edit) %></h1>
 <% fonct="edit" %>
-<% form_for @subscription  do |form| %>
-<%= form.error_messages %>
+<% form_for @subscription  do |f| %>
+<%= f.error_messages %>
 
-<%= render(:partial => "subscriptions/edit",:locals => { :form => form, :fonct => fonct }) %>
+<%= render(:partial => "subscriptions/edit",:locals => { :f => f, :fonct => fonct }) %>
 <%= render(:partial => "shared/menu_edit",:locals => { :object => @subscription, :f => f}) %>
 <%end %>

@@ -71,12 +71,12 @@ class Customer < ActiveRecord::Base
     documents += favori.items # this should work the same
   end
 
-  def self.get_conditions(filter)
+  def self.get_conditions(filters)
     filter = filters.gsub("*", "%")
     ret = {}
     unless filter.nil?
-      ret[:qry] = "ident LIKE :v_filter or designation LIKE :v_filter or :qry_type or :qry_status or :qry_owner"
-      ret[:values] = { v_filter: filter, qry_type: qry_type, qry_status: qry_status, qry_owner: qry_owner }
+      ret[:qry] = "ident LIKE :v_filter or designation LIKE :v_filter or #{qry_type} or #{qry_status} or #{qry_owner_id} or to_char(updated_at, 'YYYY/MM/DD') LIKE :v_filter"
+      ret[:values] = { v_filter: filter }
     end
     ret
 =begin  TODO

@@ -31,6 +31,18 @@ class VolumesController < ApplicationController
 		end
 	end
 
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		@object_orig = Volume.find(params[:id])
+		@object = @object_orig.duplicate(current_user)
+		@volume=@object
+		LOG.debug (fname) {"object=#{@object}"}
+		respond_to do |format|
+			format.html
+			format.xml  { render :xml => @object }
+		end
+	end
+
 	# GET /volumes/1/edit
 	def edit
 		@volume = Volume.find(params[:id])
@@ -43,7 +55,13 @@ class VolumesController < ApplicationController
 		@volume = Volume.new(params[:volume])
 		#puts "volumes_controller.create:errors="+@volume.errors.count.to_s+":"+@volume.errors.inspect
 		respond_to do |format|
-			if @volume.save
+			if params[:fonct] == "new_dup"
+				object_orig=Volume.find(params[:object_orig_id])
+			st = @volume.create_duplicate(object_orig)
+			else
+			st = @volume.save
+			end
+			if st
 				flash[:notice] = t(:ctrl_object_created,:typeobj => t(:ctrl_volume), :ident=>@volume.name)
 				format.html { redirect_to(@volume) }
 				format.xml  { render :xml => @volume, :status => :created, :location => @volume }

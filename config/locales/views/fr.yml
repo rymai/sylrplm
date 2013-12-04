@@ -185,6 +185,7 @@ fr:
   access_show: Détail autorisation
   access_new: Nouvel autorisation
   access_reset: Initialisation
+  access_new_dup: Duplication d' autorisation' 
   # check
   legend_check: Renseignez les propriétés du check
   check_edit: Edition check
@@ -253,6 +254,7 @@ fr:
   button_reset: Défaut
   button_undo: Annuler
   label_definitions_attributs: Attributs
+  definition_new_dup: Duplication de définition
   # documents
   legend_document: Renseignez les propriétés du document
   document_edit: Edition document
@@ -302,6 +304,7 @@ fr:
   group_list: Liste des groupes
   group_show: Détail du groupe
   group_new: Nouveau groupe
+  group_new_dup: Duplication de groupe
   label_group_users: Membres
   label_group_user_ids_out: Autres utilisateurs
   label_group_user_ids_in: Utilisateurs
@@ -462,12 +465,14 @@ fr:
   label_cardin_occur_max: Occur max
   label_cardin_use_min: Util min
   label_cardin_use_max: Util max
+  relation_new_dup: Duplication de relation
   # roles
   legend_role: "Renseignez les propriétés du role"
   role_list: Liste des rôles
   role_new: Nouveau rôle
   role_show: Détail du rôle
   role_edit:  Edition du rôle
+  role_new_dup: Duplication de rôle
   label_role_users: Utilisateurs
   label_role_user_ids_in: Ayant ce rôle
   label_role_user_ids_out: Autres
@@ -478,6 +483,7 @@ fr:
   sequence_new: Nouvelle valeur/séquence
   sequence_show: Détail de la valeur/séquence
   sequence_edit:  Edition de la valeur/séquence
+  sequence_new_dup: Duplication de la valeur/séquence
   label_value: Valeur
   label_min: Valeur minimale
   label_max: Valeur maximale
@@ -501,6 +507,7 @@ fr:
   statusobjects_new: Nouveau statut d' objet
   statusobjects_show: Détail du statut d' objet
   statusobjects_edit: Edition du statut d' objet
+  statusobjects_new_dup: Duplication de statut  
   label_name: Nom
   label_rank: Rang de promotion
   label_promote: Promotion
@@ -520,8 +527,9 @@ fr:
   new_subscription: Nouvel abonnement
   subscription_list: Liste des abonnements
   subscription_new: Nouvel abonnement
-  subscription_show: Détail de l'abonnement
-  subscription_edit: Edition de l'abonnement
+  subscription_show: Détail de l' abonnement
+  subscription_edit: Edition de l' abonnement
+  subscription_new_dup: Duplication d' abonnement
   legend_subscription: Abonnement
   label_subscription_fortypesobject_ids_in: Attribués
   label_subscription_fortypesobject_ids_out: Non attribués 
@@ -545,6 +553,7 @@ fr:
   typesobjects_new: Nouveau type d' objet
   typesobjects_show: Détail du type d' objet
   typesobjects_edit:  Edition du type d' objet
+  typesobject_new_dup: Duplication de type d' objet 
   label_typesobject_name: Type
   # msg _check_types
   msg_define_types_document: Définissez les types des documents
@@ -561,6 +570,7 @@ fr:
   user_list: Liste des utilisateurs
   user_show: Détail de l'utilisateur
   user_new: Nouvel utilisateur
+  user_new_dup: Duplication d'utilisateur
   label_login: Identifiant
   label_password: Password
   label_confirm_password: Confirmation
@@ -592,6 +602,7 @@ fr:
   views_new: Nouvelle vue
   views_show: Détail de la vue
   views_edit:  Edition de la vue
+  view_new_dup: Duplication de vue
   label_relations: Relations
   label_view_relation_ids_in: Prises en compte
   label_view_relation_ids_out: Autres relations
@@ -601,6 +612,7 @@ fr:
   volume_new: Nouveau volume
   volume_show: Détail du volume
   volume_edit:  Edition du volume
+  volume_new_dup: Duplication de volume 
   label_directory: Répertoire
   label_protocol: Protocole
   label_volume_name: Nom du volume

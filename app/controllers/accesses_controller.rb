@@ -3,7 +3,7 @@ class AccessesController < ApplicationController
   access_control(Access.find_for_controller(controller_class_name))
 
   before_filter :find_by_id, :only => [:show, :edit, :update, :destroy]
-  before_filter :find_controllers, :only => [:new, :edit, :create, :update]
+  before_filter :find_controllers, :only => [:new, :new_dup, :edit, :create, :update]
   # GET /accesses
   # GET /accesses.xml
   def index
@@ -34,6 +34,18 @@ class AccessesController < ApplicationController
     end
   end
 
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+    @roles  = Role.findall_except_admin
+		@object_orig = Access.find(params[:id])
+		@object = @object_orig.duplicate(current_user)
+		@access=@object
+		respond_to do |format|
+			format.html
+			format.xml  { render :xml => @object }
+		end
+	end
+	
   # GET /accesses/1/edit
   def edit
     @roles = Role.all
@@ -43,8 +55,14 @@ class AccessesController < ApplicationController
   # POST /accesses.xml
   def create
     respond_to do |format|
-      @access = Access.new(params[:access])
-      if @access.save
+			@access = Access.new(params[:access])
+			if params[:fonct] == "new_dup"
+				object_orig=Access.find(params[:object_orig_id])
+				st = @access.create_duplicate(object_orig)
+			else
+				st = @access.save
+			end
+			if st
         flash[:notice] = '<br />'+ t(:ctrl_object_created, :typeobj => 'Access', :ident => @access.controller, :msg => nil)
         format.html { redirect_to(@access) }
         format.xml  { render :xml => @access, :status => :created, :location => @access }

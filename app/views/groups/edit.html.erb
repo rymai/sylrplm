@@ -1,20 +1,7 @@
 <h1><%= t("group_edit") %><%= h @group.name %></h1>
 <% form_for(@group) do |f| %>
 <%= f.error_messages %>
-<fieldset>
-	<legend>
-		<%= t(:legend_group) %>
-	</legend>
-	<%= f.label t("label_name") %>
-	<%= f.text_field :name %>
-	<br/>
-	<%= f.label t("label_group_father") %>
-	<%= f.collection_select(:father_id, @group.others, :id, :name,  {:include_blank => true}) %>
-	<br/>
-	<%= f.label t("label_group_users") %>
-	<%= select_inout(f, @group, User.all, :login) %>
-	<%= h_input_domain(f) %>
-	<br />
-</fieldset>
+<%= render(:partial => "groups/edit",:locals => { :f => f, :fonct=>"edit" }) %>
+
 <%= render(:partial => "shared/menu_edit",:locals => { :object => @group, :f => f}) %>
 <% end %> 

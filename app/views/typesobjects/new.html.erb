@@ -4,7 +4,7 @@
 <% form_for(@typesobject, :html => { :id => form_id }) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "typesobjects/edit",:locals => {
-:form => f,
+:f => f,
 :fonct => fonct,
 :form_id => form_id })
 %>

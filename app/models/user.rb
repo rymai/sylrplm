@@ -503,7 +503,7 @@ new_user=nil
 		filter=filter.gsub("*","%")
 		ret={}
 		unless filter.nil?
-			ret[:qry] = "login LIKE :v_filter or "+qry_role+" or email LIKE :v_filter "
+			ret[:qry] = "login LIKE :v_filter or "+qry_role+" or email LIKE :v_filter or to_char(updated_at, 'YYYY/MM/DD') LIKE :v_filter"
 			ret[:values]={:v_filter => filter}
 		end
 		ret

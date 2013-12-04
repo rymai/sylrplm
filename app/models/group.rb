@@ -14,8 +14,7 @@ class Group < ActiveRecord::Base
 	#has_many :group_definitions, :dependent => :delete_all
 	#has_many :definitions, :through => :group_definitions
 
-	has_many :groups, :class_name => "Group", :foreign_key => "father_id"
-
+	has_many :childs, :class_name => "Group", :primary_key => "id", :foreign_key => "father_id"
 	belongs_to :father, :class_name => "Group"
 	#
 	# User and Group share this method, which returns login and name respectively
@@ -50,7 +49,7 @@ class Group < ActiveRecord::Base
 		filter = filters.gsub("*","%")
 		ret = {}
 		unless filter.nil?
-			ret[:qry]    = "name LIKE :v_filter "
+			ret[:qry]    = "name LIKE :v_filter or to_char(updated_at, 'YYYY/MM/DD') LIKE :v_filter"
 			ret[:values] = { v_filter: filter }
 		end
 		ret

@@ -108,11 +108,10 @@ has_many :links_documents,
 	end
 
 	def self.get_conditions(filter)
-
 		filter = filter.gsub("*","%")
 		ret={}
 		unless filter.nil?
-			ret[:qry] = "ident LIKE :v_filter or revision LIKE :v_filter or designation LIKE :v_filter or date LIKE :v_filter or "+qry_type+" or "+qry_status+
+			ret[:qry] = "ident LIKE :v_filter or revision LIKE :v_filter or designation LIKE :v_filter or to_char(updated_at, 'YYYY/MM/DD') LIKE :v_filter or "+qry_type+" or "+qry_status+
 			" or "+qry_owner_id
 			ret[:values]={:v_filter => filter}
 		end

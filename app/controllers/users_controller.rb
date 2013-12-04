@@ -42,6 +42,25 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		@object_orig = User.find(params[:id])
+		@object = @object_orig.duplicate(current_user)
+		@the_user = @object
+		@roles   = Role.all
+		@groups  = Group.all
+		@projects  = Project.all
+		@themes  = get_themes(@theme)
+		@time_zones = get_time_zones(@time_zone)
+		@volumes = Volume.find_all
+		@types    = Typesobject.get_types("user")
+		@subscriptions = Subscription.all
+		respond_to do |format|
+			format.html
+			format.xml  { render :xml => @object }
+		end
+	end
+	
 	# GET /users/1/edit
 	def edit
 		#puts "users_controller.edit:#{params["user"].inspect}"
@@ -77,7 +96,13 @@ class UsersController < ApplicationController
 	def create
 		@the_user    = User.new(params["user"])
 		respond_to do |format|
-			if @the_user.save
+			if params[:fonct] == "new_dup"
+				object_orig=User.find(params[:object_orig_id])
+			st = @the_user.create_duplicate(object_orig)
+			else
+			st = @the_user.save
+			end
+			if st
 				flash.now[:notice] = t(:ctrl_user_created, :user => @the_user.login)
 				format.html { redirect_to(@the_user) }
 				format.xml  { render :xml => @the_user, :status => :created, :location => @the_user }

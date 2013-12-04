@@ -32,7 +32,7 @@ class Question < ActiveRecord::Base
 		filter = filters.gsub("*","%")
 		ret={}
 		unless filter.nil?
-			ret[:qry] = "question LIKE :v_filter or answer LIKE :v_filter or updated_at LIKE :v_filter"
+			ret[:qry] = "question LIKE :v_filter or answer LIKE :v_filter or to_char(updated_at, 'YYYY/MM/DD') LIKE :v_filter"
 			ret[:values]={:v_filter => filter}
 		end
 		ret

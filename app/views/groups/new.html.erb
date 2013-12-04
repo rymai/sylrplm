@@ -1,14 +1,8 @@
 <h1><%= t("group_new") %></h1>
 <% form_for(@group) do |f| %>
 <%= f.error_messages %>
-<fieldset>
-	<legend>
-		<%= t(:legend_group) %>
-	</legend>
-	<%= f.label t("label_name") %>
-	<%= f.text_field :name %>
-	<br/>
-</fieldset>
+<%= render(:partial => "groups/edit",:locals => { :f => f, :fonct=>"new" }) %>
+
 <%= render(:partial => "shared/menu_new", :locals => {:object => @group, :f => f}) %>
 
 <% end %> 

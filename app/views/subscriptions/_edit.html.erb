@@ -1,46 +1,46 @@
 
 	<p>
-		<%= form.label :name %>
+		<%= f.label :name %>
 		<br />
-		<%= form.text_field :name %>
+		<%= f.text_field :name %>
 	</p>
 	<p>
-		<%= form.label :designation %>
+		<%= f.label :designation %>
 		<br />
-		<%= form.text_field :designation %>
+		<%= f.text_field :designation %>
 	</p>
 	<p>
-		<%= form.label :description %>
+		<%= f.label :description %>
 		<br />
-		<%= form.text_area :description %>
+		<%= f.text_area :description %>
 	</p>
 
 	<p>
-		<%= form.label :oncreate %>
+		<%= f.label :oncreate %>
 		<br />
-		<%= form.check_box :oncreate %>
+		<%= f.check_box :oncreate %>
 	</p>
 	<p>
-		<%= form.label :onupdate %>
+		<%= f.label :onupdate %>
 		<br />
-		<%= form.check_box :onupdate %>
+		<%= f.check_box :onupdate %>
 	</p>
 	<p>
-		<%= form.label :ondestroy %>
+		<%= f.label :ondestroy %>
 		<br />
-		<%= form.check_box :ondestroy %>
+		<%= f.check_box :ondestroy %>
 	</p>
 	<%= hidden_field :subscription , :owner_id %>
 
 	<label for="subscription_typesobject"> <%= t(:label_typesobject) %> </label>
-	<%= select_inout(form, @subscription, @fortypesobjects, :ident, :fortypesobject) %>
+	<%= select_inout(f, @subscription, @fortypesobjects, :ident, :fortypesobject) %>
 
 	<label for="subscription_groups"> <%= t(:label_groups) %> </label>
-	<%= select_inout(form, @subscription, @ingroups, :name, :ingroup) %>
+	<%= select_inout(f, @subscription, @ingroups, :name, :ingroup) %>
 
 	<label for="subscription_projects"> <%= t(:label_projects) %> </label>
-	<%= select_inout(form, @subscription, @inprojects, :ident, :inproject) %>
+	<%= select_inout(f, @subscription, @inprojects, :ident, :inproject) %>
 	
-	<%= h_input_domain(form) %>
+	<%= h_input_domain(f) %>
 	<br/>
 	

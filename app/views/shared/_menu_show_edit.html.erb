@@ -1,5 +1,5 @@
 
-		<% if object.respond_to? :statusobject %>
+		<% if object.have_lifecycle? == true %>
 		<td> <%= link_to t("edit_lifecycle"), {:controller=>object.controller_name, :action=>"edit_lifecycle", :id => object.id} %> </td>
 		<% end %>
 

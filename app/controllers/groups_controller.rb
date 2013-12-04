@@ -68,13 +68,22 @@ class GroupsController < ApplicationController
 	# GET /groups/new.xml
 	#
 	def new
-
 		@group = Group.new
-
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @group }
 			format.json  { render :json => @group }
+		end
+	end
+
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		@object_orig = Group.find(params[:id])
+		@object = @object_orig.duplicate(current_user)
+		@group=@object
+		respond_to do |format|
+			format.html
+			format.xml  { render :xml => @object }
 		end
 	end
 
@@ -93,11 +102,15 @@ class GroupsController < ApplicationController
 	# POST /groups.xml
 	#
 	def create
-
 		@group = Group.new(params[:group])
-
 		respond_to do |format|
-			if @group.save
+			if params[:fonct] == "new_dup"
+				object_orig=Group.find(params[:object_orig_id])
+			st = @group.create_duplicate(object_orig)
+			else
+			st = @group.save
+			end
+			if st
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_group), :ident => @group.name)
 				format.html { redirect_to(@group) }
 				format.xml  { render :xml => @group, :status => :created, :location => @group }

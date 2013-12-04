@@ -91,7 +91,7 @@ class Project < ActiveRecord::Base
 		ret={}
 		unless filter.nil?
 			ret[:qry] = "ident LIKE :v_filter or "+qry_type+" or designation LIKE :v_filter or "+qry_status+
-			" or "+qry_owner+" or date LIKE :v_filter "
+			" or "+qry_owner+" or to_char(date, 'YYYY/MM/DD') LIKE :v_filter or to_char(updated_at, 'YYYY/MM/DD') LIKE :v_filter "
 			ret[:values]={:v_filter => filter}
 		end
 		ret

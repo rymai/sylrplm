@@ -1,6 +1,13 @@
 # = ApplicationHelper
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+	
+	def h_menu_duplicate(object_plm)
+		# new_dup_customer_path
+		url="{new_dup_object_plm.model_name}_path"
+		link_to h_img(:duplicate),  {:controller => object_plm.controller_name, :action => :new_dup, :id => object_plm.id}
+	end
+	
 	# show promote/demote menu
 	def h_edit_lifecycle(a_form, a_object)
 		ret=""

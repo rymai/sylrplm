@@ -149,16 +149,16 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 	usersnode = tree_level("'users_#{father.id}'", t("label_#{father.model_name}_users"), icone_plmtype("user"), icone_plmtype("user"))
 	tree_users(usersnode, father)
 	node << usersnode if usersnode.size > 0
-	if(father.is_a?(Role))
-		rolesnode = tree_level("'roles_#{father.id}'", t("label_#{father.model_name}_roles"), icone_plmtype("role"), icone_plmtype("role"))
-		tree_roles(rolesnode, father)
-		node << rolesnode if rolesnode.size > 0
+	if(father.respond_to?(:childs))
+		organode = tree_level("'#{father.model_name}_#{father.id}'", t("label_#{father.model_name}_#{father.controller_name}"), icone_plmtype(father.model_name), icone_plmtype(father.model_name))
+		tree_organization(organode, father)
+		node << organode if organode.size > 0
 	end
-	if(father.is_a?(Group))
-		groupsnode = tree_level("'groups_#{father.id}'", t("label_#{father.model_name}_groups"), icone_plmtype("group"), icone_plmtype("group"))
-		tree_groups(groupsnode, father)
-		node << groupsnode if groupsnode.size > 0
-	end
+	#if(father.is_a?(Group))
+	#	groupsnode = tree_level("'groups_#{father.id}'", t("label_#{father.model_name}_groups"), icone_plmtype("group"), icone_plmtype("group"))
+	#	tree_groups(groupsnode, father)
+	#	node << groupsnode if groupsnode.size > 0
+	#end
 	
 	#LOG.debug (fname) {"usersnode.size=#{usersnode.size}"}
 	#------------------------------------------------------
@@ -179,12 +179,14 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 		# on teste si une des effectivites du lien est comprise dans la variante en cours
 		#
 			link_effectivities = link.effectivities
+			LOG.debug (fname) {"link=#{link.inspect}"}
+			LOG.debug (fname) {"link_effectivities=#{link.effectivities.inspect}"} unless link.effectivities.nil?
 			unless link_effectivities.nil?
 				if link_effectivities.count==0
 					link_effectivities=nil
 				end
 			end
-			#LOG.debug (fname) {"link.link_effectivities=#{link_effectivities}"}
+			#
 			if link_effectivities.nil? #|| link_effectivities.count==0
 				LOG.debug (fname){"link=#{link.ident}, pas d'effectivites sur le lien => on affiche"}
 			link_to_show = true
@@ -355,6 +357,7 @@ def tree_users(node, father)
 		unless father.users.nil?
 			begin
 				father.users.each do |child|
+					LOG.debug (fname){"child=#{child.inspect}"}
 					url = {:controller => 'users', :action => 'show', :id => child.id}
 					options = {
 						:id => "#{child.id}" ,
@@ -370,7 +373,7 @@ def tree_users(node, father)
 					node << cnode
 				end
 			rescue Exception => e
-				LOG.warn (__method__.to_s){e}
+				LOG.warn (__method__.to_s){"Exception=#{e}"}
 			end
 		end
 	end
@@ -378,16 +381,15 @@ def tree_users(node, father)
 end
 
 #------------------------------------------------------
-# roles associes a l'objet
+# roles ou groupes associes a l'objet
 #------------------------------------------------------
-def tree_roles(node, father)
+def tree_organization(node, father)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	if father.respond_to? :roles
-		LOG.debug (fname){"#{father.ident} father.roles=#{father.roles}"}
-		unless father.roles.nil?
+		LOG.debug (fname){"#{father.ident} father.childs=#{father.childs}"}
+		unless father.childs.nil?
 			begin
-				father.roles.each do |child|
-					url = {:controller => 'roles', :action => 'show', :id => child.id}
+				father.childs.each do |child|
+					url = {:controller => child.controller_name, :action => 'show', :id => child.id}
 					options = {
 						:id => "#{child.id}" ,
 						:label => child.ident_plm ,
@@ -397,15 +399,15 @@ def tree_roles(node, father)
 						:open => false,
 						:url  => url_for(url)
 					}
-					LOG.debug (fname){"role:#{child.ident}"}
+					LOG.debug (fname){"child#{child.ident}"}
 					cnode = Node.new(options, nil)
 					node << cnode
+					tree_organization(cnode, child)
 				end
 			rescue Exception => e
 				LOG.warn (fname){e}
 			end
 		end
-	end
 	LOG.debug (fname){"node=#{node.inspect}"}
 	node
 end

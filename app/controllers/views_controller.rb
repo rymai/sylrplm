@@ -31,6 +31,18 @@ class ViewsController < ApplicationController
 			format.xml  { render :xml => @view }
 		end
 	end
+	
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		@object_orig = View.find(params[:id])
+		@object = @object_orig.duplicate(current_user)
+		@view=@object
+		@relations=Relation.all
+		respond_to do |format|
+			format.html
+			format.xml  { render :xml => @object }
+		end
+	end
 
 	# GET /views/1/edit
 	def edit
@@ -46,7 +58,13 @@ class ViewsController < ApplicationController
 		@view = View.new(params[:view])
 		@relations=Relation.all
 		respond_to do |format|
-			if @view.save
+			if params[:fonct] == "new_dup"
+				object_orig=View.find(params[:object_orig_id])
+			st = @view.create_duplicate(object_orig)
+			else
+			st = @view.save
+			end
+			if st
 				flash[:notice] = t(:ctrl_object_created,:typeobj => t(:ctrl_view), :ident=>@view.name)
 				format.html { redirect_to(@view) }
 				format.xml  { render :xml => @view, :status => :created, :location => @view }

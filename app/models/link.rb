@@ -123,7 +123,12 @@ class Link < ActiveRecord::Base
 
 	def father=(father)
 		self.father_plmtype        = father.model_name
+		if father.respond_to? :typesobject_id
 		self.father_typesobject_id = father.typesobject_id
+		else
+			anytype=Typesobject.find_by_name(PlmServices.get_property(:TYPE_GENERIC))
+		self.father_typesobject_id = anytype.id
+		end
 		self.father_id             = father.id
 	end
 
@@ -135,14 +140,19 @@ class Link < ActiveRecord::Base
 
 	def father_ident
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"father=#{father}"}
+		LOG.debug (fname) {"father=:#{father.inspect}:"}
 		ret  = "#{father_id}:#{father_plmtype}.#{father_typesobject_id}"
-		ret += "=#{father.ident_plm}" 
+		ret += "=#{(father.nil? ? 'father null' : father.ident_plm)}"
 	end
 
 	def child=(child)
 		self.child_plmtype        = child.model_name
+		if child.respond_to? :typesobject_id
 		self.child_typesobject_id = child.typesobject_id
+		else
+			anytype=Typesobject.find_by_name(PlmServices.get_property(:TYPE_GENERIC))
+		self.child_typesobject_id = anytype.id
+		end
 		self.child_id             = child.id
 	end
 
@@ -152,7 +162,7 @@ class Link < ActiveRecord::Base
 
 	def child_ident
 		ret  = "#{child_id}:#{child_plmtype}.#{child_typesobject_id}"
-		ret += "=#{child.ident_plm}" 
+		ret += "=#{child.ident_plm}"
 	end
 
 	def relation=(relation)
@@ -346,7 +356,7 @@ class Link < ActiveRecord::Base
 		fname="#{self.class.name}.#{__method__}"
 		if obj.respond_to? :typesobject
 			unless obj.typesobject.nil?
-				cond="(child_typesobject_id=#{obj.typesobject_id} and child_id = #{obj.id}) or (father_typesobject_id=#{obj.typesobject_id} and father_id = #{obj.id})"
+				cond="(child_typesobject_id=#{obj.typesobject_id} and child_id = #{obj.id}) or (father_typesobject_id=#{obj.typesobject_id} and father_id = #{obj.id}) "
 				ret = count(:all,
     :conditions => [cond] )
 				puts "linked cond=#{cond} nb=#{ret}"

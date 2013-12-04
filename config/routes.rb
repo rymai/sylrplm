@@ -6,94 +6,66 @@ ActionController::Routing::Routes.draw do |map|
 
 # syl 17/11/2010 : route par defaut
 	map.root :controller => "main", :action => "index"
+	map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get, :tools => :get, :helpgeneral => :get}
 	#desactivate because connection is mandatory for this action: map.root :controller => "workitems", :action => "index"
 
-	map.resources :relations
-	map.connect(
-	'relations/update_father',
-	:controller => 'relations',
-	:action => 'update_father')
-	map.connect(
-	'relations/update_child',
-	:controller => 'relations',
-	:action => 'update_child')
+	map.resources :accesses, :collection => { :reset => :get}, :member=> {:new_dup => :get}
 
-	map.resources :notifications, :member => { :notify => :get }
-
-	map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get, :tools => :get, :helpgeneral => :get}
-
-	map.resources :help, :only => [:index]
-
-	map.resource :sessions, :only => [:new, :create , :destroy]
-	#map.resource :sessions, :only => [:new, :create, :update, :destroy], :member => { :choose_role => :get }
-	# map.resource :sessions, :only => [:new, :create, :update, :destroy]
-	map.new_account 'sessions/new_account', controller: 'sessions', action: 'new_account', conditions: { method: :get }
-	map.create_account 'sessions/create_account', controller: 'sessions', action: 'create_account', conditions: { method: :post }
-
-	map.connect(
-	'sessions/login',
-	:controller => 'sessions',
-	:action => 'login')
-
-	map.connect(
-	'sessions/:id/activate',
-	:controller => 'sessions',
-	:action => 'activate')
-
-	map.resources :users, :collection => { :empty_favori => :get }
-
-	map.resources :datafiles
-
-	map.resources :questions
-
-	map.resources :accesses, :collection => { :reset => :get}
-
-	map.resources :roles_users
-
-	map.resources :forum_items
-
-	map.resources :forums, :member=> {:edit_lifecycle => :get}
-	map.connect(
-	'forums/:id/update_lifecycle',
-	:controller => 'forums',
-	:action => 'update_lifecycle')
-	
 	map.resources :checks
 
-	map.resources :sequences
-
-	map.resources :volumes
-
-	map.resources :roles
+	map.resources :customers, :has_many => :documents, :collection => { :empty_favori => :get }, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	map.connect(
-	'roles/:id/select_view',
-	:controller => 'roles',
-	:action => 'select_view')
-	
-	map.resources :statusobjects
-
-	map.resources :typesobjects
-
-	map.resources :links, :collection => { :reset => :get, :empty_favori => :get}
-	map.connect(
-	'links/:id/edit_in_tree',
-	:controller => 'links',
-	:action => 'edit_in_tree',
-	:conditions => { :method => :get })
-	map.connect(
-	'links/:id/update_in_tree',
-	:controller => 'links',
-	:action => 'update_in_tree')
-	map.connect(
-	'links/:id/remove_link',
-	:controller => 'links',
-	:action => 'remove_link')
-	map.connect(
-	'links/:id/add_favori',
-	:controller => 'links',
+	'customers/:id/add_favori',
+	:controller => 'customers',
 	:action => 'add_favori',
 	:conditions => { :method => :get })
+	map.connect(
+	'customers/:id/add_docs',
+	:controller => 'customers',
+	:action => 'add_docs')
+	map.connect(
+	'customers/:id/remove_link',
+	:controller => 'customers',
+	:action => 'remove_link',
+	:conditions => { :method => :get })
+	map.connect(
+	'customers/:id/add_parts',
+	:controller => 'customers',
+	:action => 'add_parts')
+	map.connect(
+	'customers/:id/add_projects',
+	:controller => 'customers',
+	:action => 'add_projects')
+	map.connect(
+	'customers/:id/new_forum',
+	:controller => 'customers',
+	:action => 'new_forum')
+	map.connect(
+	'customers/:id/add_forum',
+	:controller => 'customers',
+	:action => 'add_forum')
+	map.connect(
+	'customers/:id/select_view',
+	:controller => 'customers',
+	:action => 'select_view')
+	map.connect(
+	'customers/:id/new_datafile',
+	:controller => 'customers',
+	:action => 'new_datafile')
+	map.connect(
+	'customers/:id/add_datafile',
+	:controller => 'customers',
+	:action => 'add_datafile')
+	map.connect(
+	'customers/:id/update_lifecycle',
+	:controller => 'customers',
+	:action => 'update_lifecycle')
+	map.connect(
+	'customers/:id/show_design',
+	:controller => 'customers',
+	:action => 'show_design')
 	
+	map.resources :datafiles
 	map.connect(
 	'datafiles/:id/show_file',
 	:controller => 'datafiles',
@@ -106,7 +78,13 @@ ActionController::Routing::Routes.draw do |map|
 	'datafiles/:id/del_fogdir',
 	:controller => 'datafiles',
 	:action => 'del_fogdir')
-
+	
+	map.resources :definitions, :collection => { :new_process => :get}, :member=> {:new_dup => :get}
+	map.connect(
+	'definitions/:id/tree.js',
+	:controller => 'definitions',
+	:action => 'tree')
+	
 	map.resources :documents, :has_many => :documents, :collection => { :empty_favori => :get }, :member=> {:edit_lifecycle => :get, :new_dup => :get}
 	map.connect(
 	'documents/:id/add_favori',
@@ -172,6 +150,58 @@ ActionController::Routing::Routes.draw do |map|
 	'documents/:id/show_design',
 	:controller => 'documents',
 	:action => 'show_design')
+	
+	map.connect(
+	'expressions/:wfid/:expid/tree',
+	:controller => 'expressions',
+	:action => 'show_tree',
+	:conditions => { :method => :get })
+	map.connect(
+	'expressions/:wfid/:expid/tree',
+	:controller => 'expressions',
+	:action => 'update_tree',
+	:conditions => { :method => :put })
+	
+	map.resources :forums, :member=> {:edit_lifecycle => :get}
+	map.connect(
+	'forums/:id/update_lifecycle',
+	:controller => 'forums',
+	:action => 'update_lifecycle')
+	map.resources :forum_items
+
+	map.resources :groups, :member=> {:new_dup => :get}
+	map.connect(
+	'groups/:id/select_view',
+	:controller => 'groups',
+	:action => 'select_view')
+	
+	map.resources :group_definitions
+		
+	map.resources :help, :only => [:index]
+	
+	map.resources :history
+
+	map.resources :links, :collection => { :reset => :get, :empty_favori => :get}
+	map.connect(
+	'links/:id/edit_in_tree',
+	:controller => 'links',
+	:action => 'edit_in_tree',
+	:conditions => { :method => :get })
+	map.connect(
+	'links/:id/update_in_tree',
+	:controller => 'links',
+	:action => 'update_in_tree')
+	map.connect(
+	'links/:id/remove_link',
+	:controller => 'links',
+	:action => 'remove_link')
+	map.connect(
+	'links/:id/add_favori',
+	:controller => 'links',
+	:action => 'add_favori',
+	:conditions => { :method => :get })
+	
+	map.resources :notifications, :member => { :notify => :get }
 
 	map.resources :parts, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	map.connect(
@@ -245,7 +275,13 @@ ActionController::Routing::Routes.draw do |map|
 	'parts/:id/show_design',
 	:controller => 'parts',
 	:action => 'show_design')
-
+	
+	map.resources :processes
+	map.connect(
+	'processes/:id/tree.js',
+	:controller => 'processes',
+	:action => 'tree')
+	
 	map.resources :projects, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	map.connect(
 	'projects/:id/add_favori',
@@ -308,141 +344,94 @@ ActionController::Routing::Routes.draw do |map|
 	:controller => 'projects',
 	:action => 'show_design')
 	
-	map.resources :customers, :has_many => :documents, :collection => { :empty_favori => :get }, :member=> {:edit_lifecycle => :get,:new_dup => :get}
+	map.resources :relations, :member=> {:new_dup => :get}
 	map.connect(
-	'customers/:id/add_favori',
-	:controller => 'customers',
-	:action => 'add_favori',
-	:conditions => { :method => :get })
+	'relations/update_father',
+	:controller => 'relations',
+	:action => 'update_father')
 	map.connect(
-	'customers/:id/add_docs',
-	:controller => 'customers',
-	:action => 'add_docs')
-	map.connect(
-	'customers/:id/remove_link',
-	:controller => 'customers',
-	:action => 'remove_link',
-	:conditions => { :method => :get })
-	map.connect(
-	'customers/:id/add_parts',
-	:controller => 'customers',
-	:action => 'add_parts')
-	map.connect(
-	'customers/:id/add_projects',
-	:controller => 'customers',
-	:action => 'add_projects')
-	map.connect(
-	'customers/:id/new_forum',
-	:controller => 'customers',
-	:action => 'new_forum')
-	map.connect(
-	'customers/:id/add_forum',
-	:controller => 'customers',
-	:action => 'add_forum')
-	map.connect(
-	'customers/:id/select_view',
-	:controller => 'customers',
-	:action => 'select_view')
-	map.connect(
-	'customers/:id/new_datafile',
-	:controller => 'customers',
-	:action => 'new_datafile')
-	map.connect(
-	'customers/:id/add_datafile',
-	:controller => 'customers',
-	:action => 'add_datafile')
-	map.connect(
-	'customers/:id/update_lifecycle',
-	:controller => 'customers',
-	:action => 'update_lifecycle')
-	map.connect(
-	'customers/:id/show_design',
-	:controller => 'customers',
-	:action => 'show_design')
+	'relations/update_child',
+	:controller => 'relations',
+	:action => 'update_child')
 	
+	map.resources :questions
+	
+	map.resources :roles, :member=> {:new_dup => :get}
+	map.connect(
+	'roles/:id/select_view',
+	:controller => 'roles',
+	:action => 'select_view')
+	
+	map.resources :roles_users
+	
+	map.resources :sequences, :member=> {:new_dup => :get}
+	
+	map.resource :sessions, :only => [:new, :create , :destroy]
+	#map.resource :sessions, :only => [:new, :create, :update, :destroy], :member => { :choose_role => :get }
+	# map.resource :sessions, :only => [:new, :create, :update, :destroy]
+	map.new_account 'sessions/new_account', controller: 'sessions', action: 'new_account', conditions: { method: :get }
+	map.create_account 'sessions/create_account', controller: 'sessions', action: 'create_account', conditions: { method: :post }
+	map.connect(
+	'sessions/login',
+	:controller => 'sessions',
+	:action => 'login')
+	map.connect(
+	'sessions/:id/activate',
+	:controller => 'sessions',
+	:action => 'activate')
+
+	map.resources :statusobjects, :member=> {:new_dup => :get}
+	
+	map.resources :subscriptions, :member=> {:new_dup => :get}
+	
+	map.resources :typesobjects, :member=> {:new_dup => :get}
+		
+	map.resources :users, :collection => { :empty_favori => :get }, :member=> {:new_dup => :get}
 	map.connect(
 	'users/:id/activate',
 	:controller => 'users',
 	:action => 'activate')
-
 	map.connect(
 	'users/:id/add_favori',
 	:controller => 'users',
 	:action => 'add_favori',
 	:conditions => { :method => :get })
-
 	map.connect(
 	'users/browse',
 	:controller => 'users',
 	:action => 'browse')
-
 	map.connect(
 	'users/:id/reset_passwd',
 	:controller => 'users',
 	:action => 'reset_passwd')
-
 	map.connect(
 	'users/:id/account_edit',
 	:controller => 'users',
 	:action => 'account_edit')
-
 	map.connect(
 	'users/:id/account_update',
 	:controller => 'users',
 	:action => 'account_update')
-
 	map.connect(
 	'users/:id/account_edit_passwd',
 	:controller => 'users',
 	:action => 'account_edit_passwd')
 	
-	map.resources :groups
-	map.connect(
-	'groups/:id/select_view',
-	:controller => 'groups',
-	:action => 'select_view')
-	
 	map.resources :user_groups
+	
+	map.resources :views, :member=> {:new_dup => :get}
+		
+	map.resources :volumes, :member=> {:new_dup => :get}
 
-	map.resources :group_definitions
+	map.resources :workitems
+
 
 	map.wfid_resources :errors
 
 	map.wfid_resources :workitems
-
+	
 	map.wfid_resources :expressions
 
-	map.connect(
-	'expressions/:wfid/:expid/tree',
-	:controller => 'expressions',
-	:action => 'show_tree',
-	:conditions => { :method => :get })
-
-	map.connect(
-	'expressions/:wfid/:expid/tree',
-	:controller => 'expressions',
-	:action => 'update_tree',
-	:conditions => { :method => :put })
-
-	map.resources :definitions, :collection => { :new_process => :get}
-
-	map.connect(
-	'definitions/:id/tree.js',
-	:controller => 'definitions',
-	:action => 'tree')
-
-	map.resources :processes
-
-	map.connect(
-	'processes/:id/tree.js',
-	:controller => 'processes',
-	:action => 'tree')
-
-	map.resources :views
-
-	map.resources :workitems
-
-	map.resources :history
 # The priority is based upon order of creation: first created -> highest priority.
 
 # Sample of regular route:

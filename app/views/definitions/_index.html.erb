@@ -27,6 +27,9 @@
 		<td><%= link_to(
 		h_img_edit.to_s,
 		edit_definition_path(definition)) %></td>
+		
+		<td> <%= h_menu_duplicate(definition) %> </td>
+		
 		<td><%= link_to(
 		h_img_destroy.to_s,
 		definition,

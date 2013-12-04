@@ -50,6 +50,19 @@ class DocumentsController < ApplicationController
 		end
 	end
 
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@object_orig = Document.find(params[:id])
+		@document = @object = @object_orig.duplicate(current_user)
+		@types    = Typesobject.get_types("document")
+		@status   = Statusobject.find_for("document", 2)
+		respond_to do |format|
+			format.html # document/1/new_dup
+			format.xml  { render :xml => @document }
+		end
+	end
+	
 	# GET /documents/1/edit
 	def edit
 		fname= "#{self.class.name}.#{__method__}"
@@ -76,8 +89,13 @@ class DocumentsController < ApplicationController
 		@types    = Document.get_types_document
 		@status   = Statusobject.find_for("document")
 		respond_to do |format|
-		#puts "===DocumentsController.create:"+@document.inspect
-			if @document.save
+			if params[:fonct] == "new_dup"
+				object_orig=Document.find(params[:object_orig_id])
+			st = @document.create_duplicate(object_orig)
+			else
+			st = @document.save
+			end
+			if st
 				st = ctrl_duplicate_links(params, @document, current_user)
 				#puts "===DocumentsController.create:ok:"+@document.inspect
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_document), :ident => @document.ident)
@@ -322,19 +340,6 @@ class DocumentsController < ApplicationController
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		ctrl_add_objects_from_favorites(@document, :document)
-	end
-
-	def new_dup
-		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
-		@document_orig = Document.find(params[:id])
-		@document = @document_orig.duplicate(current_user)
-		@types    = Typesobject.get_types("document")
-		@status   = Statusobject.find_for("document", 2)
-		respond_to do |format|
-			format.html # document/1/new_dup
-			format.xml  { render :xml => @document }
-		end
 	end
 
 	def show_design

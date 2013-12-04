@@ -43,6 +43,19 @@ class PartsController < ApplicationController
 			format.xml  { render :xml => @part }
 		end
 	end
+	
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@object_orig = Part.find(params[:id])
+		@part = @object = @object_orig.duplicate(current_user)
+		@types    = Typesobject.get_types("part")
+		@status   = Statusobject.find_for("part", 2)
+		respond_to do |format|
+			format.html # part/1/new_dup
+			format.xml  { render :xml => @part }
+		end
+	end
 
 	# GET /parts/1/edit
 	def edit
@@ -62,7 +75,13 @@ class PartsController < ApplicationController
 		@types  = Part.get_types_part
 		@status = Statusobject.find_for("part")
 		respond_to do |format|
-			if @part.save
+			if params[:fonct] == "new_dup"
+				object_orig=Part.find(params[:object_orig_id])
+			st = @part.create_duplicate(object_orig)
+			else
+			st = @part.save
+			end
+			if st
 				st = ctrl_duplicate_links(params, @part, current_user)
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
 				format.html { redirect_to(@part) }
@@ -209,18 +228,6 @@ class PartsController < ApplicationController
 		ctrl_add_datafile(@part)
 	end
 
-	def new_dup
-		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
-		@part_orig = Part.find(params[:id])
-		@part = @part_orig.duplicate(current_user)
-		@types    = Typesobject.get_types("part")
-		@status   = Statusobject.find_for("part", 2)
-		respond_to do |format|
-			format.html # part/1/new_dup
-			format.xml  { render :xml => @part }
-		end
-	end
 
 	def show_design
 		fname= "#{self.class.name}.#{__method__}"
@@ -229,7 +236,7 @@ class PartsController < ApplicationController
 		part = Part.find(params[:id])
 		ctrl_show_design(part)
 	end
-	
+
 	private
 
 	def show_
@@ -254,7 +261,7 @@ class PartsController < ApplicationController
 			end
 		end
 		@tree         = build_tree(@part, @myparams[:view_id] , @variant)
-		@tree_up      = build_tree_up(@part, @myparams[:view_id] )				
+		@tree_up      = build_tree_up(@part, @myparams[:view_id] )
 		@object_plm = @part
 	#LOG.debug (fname){"taille tree=#{@tree.size}"}
 	#LOG.debug (fname){"variant=#{@variant}"}

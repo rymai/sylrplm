@@ -31,6 +31,7 @@
 		<td> <%= h typesobject.fields %> </td>
 		<td> <%= h typesobject.domain %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_typesobject_path(typesobject) %> </td>
+		<td> <%= h_menu_duplicate(typesobject) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, typesobject, :confirm => t(:msg_confirm), :method => :delete %> </td>
 	</tr>
 	<% end %>

@@ -12,6 +12,7 @@ class Statusobject < ActiveRecord::Base
 	include Models::SylrplmCommon
 
 	validates_presence_of :forobject, :name, :rank
+	validates_uniqueness_of :name, :scope => :forobject, :scope => :rank
 
 	has_many :documents
 	has_many :parts
@@ -187,24 +188,31 @@ class Statusobject < ActiveRecord::Base
 		if ret.nil?
 		#ret=[]
 		end
-		LOG.info(fname){"stat_cur=#{stat_cur} choice(#{choice})=>cond_promote(#{cond_promote}),cond_demote(#{cond_demote}),cond(#{cond}) ret=#{ret}"}
+		LOG.debug(fname){"stat_cur=#{stat_cur} choice(#{choice})=>cond_promote(#{cond_promote}),cond_demote(#{cond_demote}),cond(#{cond}) ret=#{ret}"}
 		ret
 
 	end
 
 	#
 	def self.get_first(obj)
+		fname="#{self.class.name}.#{__method__}"
 		any_type=::Typesobject.find_by_forobject_and_name(obj.model_name, PlmServices.get_property(:TYPE_GENERIC))
-		objtype = obj.typesobject
-		objtype = any_type if obj.typesobject.nil?
+		any_type=::Typesobject.find_by_name(PlmServices.get_property(:TYPE_GENERIC)) if any_type.nil?
+		if obj.respond_to? :typesobject 
+			objtype = obj.typesobject
+		else
+			objtype = any_type 
+		end
+		LOG.debug(fname){"obj=#{obj} objtype=#{objtype} any_type=#{any_type}"}
 		cond="forobject='#{obj.model_name}' and (typesobject_id=#{objtype.id} or typesobject_id=#{any_type.id} or typesobject_id is null)"
 		ret=Statusobject.order_default.find(:first, :conditions => [cond])
-		puts "status.get_first:cond=#{cond} : #{ret}"
+		LOG.info(fname){"status.get_first:cond=#{cond} : #{ret}"}
 		ret
 	end
 
 	def self.get_last(obj)
 		any_type=::Typesobject.find_by_forobject_and_name(obj.model_name, PlmServices.get_property(:TYPE_GENERIC))
+		any_type=::Typesobject.find_by_name(PlmServices.get_property(:TYPE_GENERIC)) if any_type.nil?
 		obj.typesobject=any_type if obj.typesobject.nil?
 		cond="forobject='#{obj.model_name}' and (typesobject_id=#{obj.typesobject_id} or typesobject_id= #{any_type.id} or typesobject_id is null)"
 		ret=Statusobject.order_default.find(:last, :conditions => [cond])
@@ -255,7 +263,7 @@ class Statusobject < ActiveRecord::Base
 		filter = filters.gsub("*","%")
 		ret={}
 		unless filter.nil?
-			ret[:qry] = "object LIKE :v_filter or name LIKE :v_filter or description LIKE :v_filter or rank LIKE :v_filter or promote LIKE :v_filter or demote LIKE :v_filter "
+			ret[:qry] = "object LIKE :v_filter or name LIKE :v_filter or description LIKE :v_filter or rank LIKE :v_filter or promote LIKE :v_filter or demote LIKE :v_filter or to_char(updated_at, 'YYYY/MM/DD') LIKE :v_filter"
 			ret[:values]={:v_filter => filter}
 		end
 		ret

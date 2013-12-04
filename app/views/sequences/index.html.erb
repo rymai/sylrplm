@@ -9,7 +9,7 @@
 <%= will_paginate(@sequences[:recordset]) %>
 <table>
 	<tr>
-		
+
 		<th <%= sort_td_class_helper :utility %>> <%= sort_link_helper t(:label_utility), :utility %> </th>
 		<th <%= sort_td_class_helper :sequence %>> <%= sort_link_helper t(:label_sequence), :sequence %> </th>
 		<th <%= sort_td_class_helper :modify %>> <%= sort_link_helper t(:label_modify), :modify %> </th>
@@ -17,7 +17,7 @@
 		<th <%= sort_td_class_helper :min %>> <%= sort_link_helper t(:label_min), :min %> </th>
 		<th <%= sort_td_class_helper :max %>> <%= sort_link_helper t(:label_max), :max %> </th>
 		<th <%= sort_td_class_helper :domain %>> <%= sort_link_helper t(:label_domain), :domain %> </th>
-		
+
 		<th></th>
 		<th></th>
 	</tr>
@@ -31,6 +31,7 @@
 		<td> <%= h sequence.max %> </td>
 		<td> <%= h sequence.domain %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_sequence_path(sequence) %> </td>
+		<td> <%= h_menu_duplicate(sequence) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, sequence, :confirm => t(:msg_confirm), :method => :delete %> </td>
 	</tr>
 	<% end %>

@@ -6,7 +6,7 @@
 	<%= f.collection_select(:controller_and_action, @controllers, :name_method, :name_method) %>
 	<br />
 	<%= f.label :roles, t("label_role") %>
-	<%= f.text_field :roles %>
+	<%= f.text_area :roles, :rows => 3 %>
 	<br />
 	<%= h_input_domain(f) %>
 	<br />

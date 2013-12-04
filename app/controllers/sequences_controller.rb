@@ -33,6 +33,18 @@ class SequencesController < ApplicationController
 		end
 	end
 
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		@object_orig = Sequence.find(params[:id])
+		@object = @object_orig.duplicate(current_user)
+		@sequence=@object
+		@utilities=html_models_and_columns(@sequence.utility)
+		respond_to do |format|
+			format.html
+			format.xml  { render :xml => @object }
+		end
+	end
+
 	# GET /sequences/1/edit
 	def edit
 		@sequence = Sequence.find(params[:id])
@@ -48,7 +60,13 @@ class SequencesController < ApplicationController
 		#@objects=Sequence.getObjectsWithSequence
 		@utilities=html_models_and_columns(@sequence.utility)
 		respond_to do |format|
-			if @sequence.save
+			if params[:fonct] == "new_dup"
+				object_orig=Sequence.find(params[:object_orig_id])
+			st = @sequence.create_duplicate(object_orig)
+			else
+			st = @sequence.save
+			end
+			if st
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility)
 				format.html { redirect_to(@sequence) }
 				format.xml  { render :xml => @sequence, :status => :created, :location => @sequence }

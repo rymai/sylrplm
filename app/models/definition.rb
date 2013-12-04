@@ -38,6 +38,7 @@ class Definition < ActiveRecord::Base
   # validations
   validates_presence_of :name, :uri
   #
+  validates_uniqueness_of :name
 
   def validate
     super

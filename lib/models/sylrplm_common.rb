@@ -24,11 +24,11 @@ module Models
 			end
 
 			def qry_type
-				"typesobject_id in (select id from typesobjects as t where t.name LIKE :v_filter)"
+				'typesobject_id in (select id from typesobjects as t where t.name LIKE :v_filter)'
 			end
 
 			def qry_status
-				"statusobject_id in (select id from statusobjects as s where s.name LIKE :v_filter)"
+				'statusobject_id in (select id from statusobjects as s where s.name LIKE :v_filter)'
 			end
 
 			def qry_responsible_id
@@ -36,7 +36,7 @@ module Models
 			end
 
 			def qry_owner_id
-				"owner_id in(select id from users where login LIKE :v_filter)"
+				'owner_id in(select id from users where login LIKE :v_filter)'
 			end
 
 			def qrys_object_ident
@@ -240,12 +240,12 @@ module Models
 		def controller_name
 			# Part devient parts
 			ret=self.class.name.downcase
-			puts "controller_name:#{self.class.name} = #{ret}"
 			if self.class.name == "Access"
 				ret+="es"
 			else
 				ret+="s"
 			end
+			puts "controller_name:#{self.class.name} = #{ret}"
 			ret
 		end
 
@@ -360,7 +360,11 @@ module Models
 					end
 				end
 			end
-			ret="#{self.ident_plm}:#{ret}"
+			if self.respond_to?(:ident_plm)
+				ret="#{self.ident_plm}:#{ret}"
+			else
+				ret="#{self.ident}:#{ret}"
+			end
 			#LOG.debug (fname) {"ret=#{ret}"}
 			ret
 		end
@@ -413,21 +417,25 @@ module Models
 		def set_default_value(strcol, next_seq)
 			fname = "#{self.class.name}.#{__method__}"
 			LOG.debug (fname){"strcol=#{strcol}, next_seq=#{next_seq}, class.name=#{self.class.name}"}
-			old_value=  self[strcol]
-			col = ::Sequence.find_col_for(self.class.name, strcol)
-			LOG.debug (fname){"col=#{col}"}
-			val = old_value
-			unless col.nil?
-				if col.sequence == true
-					if next_seq == 1
-					val = ::Sequence.get_next_seq(col.utility)
+			if self.respond_to?(strcol)
+				old_value = self.send(strcol)
+				col = ::Sequence.find_col_for(self.class.name, strcol)
+				LOG.debug (fname){"col=#{col}"}
+				val = old_value
+				unless col.nil?
+					if col.sequence == true
+						if next_seq == 1
+						val = ::Sequence.get_next_seq(col.utility)
+						end
+					else
+					val =  col.value
 					end
-				else
-				val =  col.value
+					LOG.debug (fname) {"#{strcol}=#{old_value} to #{val}"}
+					self[strcol] = val
+					LOG.debug (fname) {"self=#{self.inspect}"}
 				end
-				LOG.debug (fname) {"#{strcol}=#{old_value} to #{val}"}
-			self[strcol] = val
 			end
+			self
 		end
 
 		# renvoie l'objet contenu dans l'attribut type_values
@@ -477,6 +485,140 @@ module Models
 		#
 		def have_model_design?
 			false
+		end
+
+		def ident_plm
+			fname = "#{self.class.name}.#{__method__}"
+			if self.respond_to?(:revision)
+				ret="#{ident}/#{revision}"
+			else
+				ret=ident
+			end
+			#LOG.info (fname){"ident_plm=#{ret}"}
+			ret
+		end
+
+		# == Role: this function duplicate the object
+		# == Arguments
+		# * +user+ - The user which proceed the duplicate action
+		# == Usage from controller or script:
+		#   theObject=Customer.find(theId)
+		#   theObject.duplicate(current_user)
+		# === Result
+		# 	the duplicate object , all characteristics of the object are copied excepted the followings:
+		# * +ident+ : a new one is calculated if this is a sequence, if not, the same is proposed.
+		# * +status+ : the status is reset to the first one.
+		# * +revision+ : the revision is reset to the first one.
+		# * +responsible/group/projowner+ : the accessor is the current user
+		# * +date+ : date is the actual date
+		# * +domain+ : the user domain is used (see def_user method in this Module PlmObject )
+		# == Impact on other components
+		#
+		def duplicate(user)
+			fname = "#{self.class.name}.#{__method__}"
+			LOG.info (fname){"self avant clone=#{self.inspect}"}
+			ret = self.clone
+			LOG.info (fname){"ret apres clone=#{ret.inspect}"}
+			ret.def_user(user)
+			LOG.info (fname){"ret apres clone et def_user=#{ret.inspect}"}
+			if ret.respond_to? :revision
+				ret.set_default_value(:revision, 0)
+			end
+			begin
+				if ret.respond_to? :statusobject
+				ret.statusobject = ::Statusobject.get_first(ret)
+				end
+			rescue Exception=>e
+			# pour le cas typesobject has_many statusobject (les autres ont belong_to)
+			end
+			ret.set_default_value(:name, 1)
+			ret.set_default_value(:title, 1)
+			ret.set_default_value(:login, 1)
+			ret.set_default_value(:ident, 1)
+			if (ret.respond_to? :date)
+				ret.date=DateTime::now()
+			end
+			LOG.info (fname){"ret=#{ret.inspect}"}
+			ret
+		end
+
+		def create_duplicate(object_orig)
+			fname= "#{self.class.name}.#{__method__}"
+			LOG.info (fname){"object_orig:#{object_orig}"}
+			st = self.save
+			if !st
+				LOG.info (fname){"echec save:#{self.errors.inspect}"}
+				ret = false
+			else
+			st = self.from_duplicate(object_orig)
+			ret = true
+			end
+			ret
+		end
+
+		def def_user(user)
+			fname= "#{self.class.name}.#{__method__}"
+			LOG.info (fname) {"user=#{user.inspect} "}
+			unless user.nil?
+				#LOG.info (fname) {"user=#{user.ident} "}
+				if self.respond_to? :owner
+				self.owner = user
+				#LOG.info (fname) {"owner=#{self.owner.ident}"}
+				end
+				if self.respond_to? :group
+				self.group     = user.group
+				#LOG.info (fname) {"group=#{self.group.ident}"}
+				end
+				if self.respond_to? :projowner
+				self.projowner = user.project
+				#LOG.info (fname) {"projowner=#{self.projowner.ident}"}
+				end
+				if self.respond_to? :domain
+				self.domain = user.session_domain
+				#LOG.info (fname) {"domain=#{self.domain}"}
+				end
+			end
+		#LOG.info (fname) {"self=#{self.inspect}"}
+		end
+
+		def from_revise(from)
+			from_function(from, ::Relation::RELATION_FROM_REVISION)
+		end
+
+		def from_duplicate(from)
+			from_function(from, ::Relation::RELATION_FROM_DUPLICATE)
+		end
+
+		def from_function(from, function)
+			fname= "#{self.model_name}.#{__method__}:#{function}:"
+			LOG.debug (fname){"from=#{from} function=#{function}"}
+			rel=::Relation.find_by_name(function)
+			LOG.debug (fname){"rel=#{rel}"}
+			if self.respond_to?(:owner)
+			own = self.owner
+			else
+				own=nil
+			end
+			link_from = ::Link.new(father: self, child: from, relation: rel, user: own)
+			st=link_from.save
+			LOG.debug (fname){"link_from=#{link_from}:st save=#{st}"}
+			if !st
+				link_from=nil
+			end
+			LOG.debug (fname){"link_from=#{link_from}"}
+			link_from
+		end
+
+		def have_lifecycle?
+			fname= "#{self.model_name}.#{__method__}"
+			ret = false
+			if self.respond_to? :statusobject
+				if self.model_name != "typesobject"
+				ret = true
+				end
+			end
+			LOG.debug (fname){"self.model_name=#{self.model_name}  status?:#{self.respond_to? :statusobject} ret=#{ret}"}
+			ret
 		end
 
 	end

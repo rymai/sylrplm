@@ -8,11 +8,11 @@ th, td {
 
 }
 th, td {
-	max-width: 180px;
+	max-width: 320px;
 	word-wrap:break-word;
 }
 select, input[type=text] {
-	max-width: 170px;
+	max-width: 310px;
 	word-wrap:break-word;
 }
 

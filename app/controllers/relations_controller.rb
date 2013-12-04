@@ -36,6 +36,19 @@ class RelationsController < ApplicationController
 		end
 	end
 
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		@object_orig = Relation.find(params[:id])
+		@object = @object_orig.duplicate(current_user)
+		@relation=@object
+		@datas = @relation.datas
+		@views = View.all
+		respond_to do |format|
+			format.html
+			format.xml  { render :xml => @object }
+		end
+	end
+
 	# GET /relations/1/edit
 	def edit
 		fname= "#{controller_class_name}.#{__method__}"
@@ -53,7 +66,13 @@ class RelationsController < ApplicationController
 		@datas = @relation.datas
 		@views = View.all
 		respond_to do |format|
-			if @relation.save
+			if params[:fonct] == "new_dup"
+				object_orig=Relation.find(params[:object_orig_id])
+			st = @relation.create_duplicate(object_orig)
+			else
+			st = @relation.save
+			end
+			if st
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_relation),:ident=>@relation.ident)
 				format.html { redirect_to(@relation, :notice => 'Relation was successfully created.') }
 				format.xml  { render :xml => @relation, :status => :created, :location => @relation }

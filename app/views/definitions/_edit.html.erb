@@ -1,0 +1,36 @@
+<script>
+	function showDefinitionBox() {
+	byId('uri_label').innerHTML='definition';
+	byId('uri_span').style.display='none';
+	byId('definition_span').style.display='inline';
+	}
+</script>
+
+<fieldset>
+	<legend>
+		<%= t("label_process_definition")%>
+	</legend>
+	<table>
+		<tr>
+			<th><%= f.label t("label_name")%></th>
+			<td><%= f.text_field :name %></td>
+		</tr>
+		<tr>
+			<th><%= f.label t("label_description")%></th>
+			<td><%= f.text_field :description %></td>
+		</tr>
+		<tr>
+			<th><span id="uri_label"><%= f.label t("label_uri")%></span></th>
+			<td><span id="uri_span"> <%= f.text_field :uri %> or <%= link_to_function 'paste a definition', 'showDefinitionBox()' %></span><span id="definition_span" style="display: none;"> <%= f.text_area 'definition' %></span></td>
+		</tr>
+		<tr>
+			<th><%= f.label t("label_roles_may_launch") %></th>
+			<td><%= select_inout(f, @definition, Role.all, :title) %></td>
+		</tr>
+		<tr>
+			<th><%= f.label t("label_domain") %></th>
+			<td><%= f.text_field :domain %></td>
+		</tr>
+	</table>
+
+</fieldset>

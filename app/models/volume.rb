@@ -167,7 +167,7 @@ class Volume < ActiveRecord::Base
 		filter = filters.gsub("*","%")
 		ret={}
 		unless filter.nil?
-			ret[:qry] = "name LIKE :v_filter or description LIKE :v_filter or directory LIKE :v_filter or protocol LIKE :v_filter"
+			ret[:qry] = "name LIKE :v_filter or description LIKE :v_filter or directory LIKE :v_filter or protocol LIKE :v_filter or to_char(updated_at, 'YYYY/MM/DD') LIKE :v_filter"
 			ret[:values]={:v_filter => filter}
 		end
 		ret

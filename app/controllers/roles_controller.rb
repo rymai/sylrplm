@@ -41,6 +41,17 @@ class RolesController < ApplicationController
 		end
 	end
 
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		@object_orig = Role.find(params[:id])
+		@object = @object_orig.duplicate(current_user)
+		@role = @object
+		respond_to do |format|
+			format.html
+			format.xml  { render :xml => @object }
+		end
+	end
+
 	# GET /roles/1/edit
 	def edit
 		@role = Role.find(params[:id])
@@ -51,7 +62,13 @@ class RolesController < ApplicationController
 	def create
 		@role = Role.new(params[:role])
 		respond_to do |format|
-			if @role.save
+			if params[:fonct] == "new_dup"
+				object_orig=Role.find(params[:object_orig_id])
+			st = @role.create_duplicate(object_orig)
+			else
+			st = @role.save
+			end
+			if st
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_role),:ident=>@role.title)
 				format.html { redirect_to(@role) }
 				format.xml  { render :xml => @role, :status => :created, :location => @role }

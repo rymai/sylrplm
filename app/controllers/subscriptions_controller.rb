@@ -38,6 +38,17 @@ class SubscriptionsController < ApplicationController
 		end
 	end
 
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		@object_orig = Subscription.find(params[:id])
+		@object = @object_orig.duplicate(current_user)
+		@subscription=@object
+		respond_to do |format|
+			format.html
+			format.xml  { render :xml => @object }
+		end
+	end
+
 	# GET /subscriptions/1/edit
 	def edit
 		@subscription = Subscription.find(params[:id])
@@ -50,9 +61,14 @@ class SubscriptionsController < ApplicationController
 	# POST /subscriptions.xml
 	def create
 		@subscription = Subscription.new(params[:subscription])
-
 		respond_to do |format|
-			if @subscription.save
+			if params[:fonct] == "new_dup"
+				object_orig=Subscription.find(params[:object_orig_id])
+			st = @subscription.create_duplicate(object_orig)
+			else
+			st = @subscription.save
+			end
+			if st
 				format.html { redirect_to(@subscription, :notice => 'Subscription was successfully created.') }
 				format.xml  { render :xml => @subscription, :status => :created, :location => @subscription }
 			else

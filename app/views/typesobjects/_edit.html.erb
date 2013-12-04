@@ -2,18 +2,18 @@
 	<legend>
 		<%= t(:legend_typesobject) %>
 	</legend>
-	<%= form.label t(:label_object) %>
-	<%= form.select(:forobject, @objectswithtype) %>
+	<%= f.label t(:label_object) %>
+	<%= f.select(:forobject, @objectswithtype) %>
 	<br/>
-	<%= form.label t(:label_name) %>
-	<%= form.text_field :name %>
+	<%= f.label t(:label_name) %>
+	<%= f.text_field :name %>
 	<br/>
-	<%= form.label t(:label_description) %>
-	<%= form.text_area :description %>
+	<%= f.label t(:label_description) %>
+	<%= f.text_area :description %>
 	<br/>
-	<%= form.label t(:label_fields) %>
+	<%= f.label t(:label_fields) %>
 	<br/>
-	<%= h_input_domain(form) %>
+	<%= h_input_domain(f) %>
 	<br />
 	<!--:<%= @typesobject.fields%>:<%= @typesobject.fields == "\"\""%>-->
 	<%= render(

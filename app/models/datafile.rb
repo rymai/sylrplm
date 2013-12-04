@@ -104,7 +104,7 @@ class Datafile < ActiveRecord::Base
   def upload_file
     fname= "#{self.class.name}.#{__method__}"
     #LOG.debug (fname){"filename=#{filename}"}
-    LOG.debug (fname){"file_field=#{file_field.inspect}"}
+    LOG.debug (fname){"debut de upload: file_field=#{file_field.inspect}"}
     LOG.debug (fname){"original_filename=#{file_field.original_filename if file_field.respond_to? :original_filename}"}
    	#LOG.debug (fname){"datafile=#{self.inspect}"}
     #if (self.file_field!=nil && self.file_field!="" && self.file_field.original_filename!=nil && self.file_field.original_filename!="")
@@ -117,7 +117,8 @@ class Datafile < ActiveRecord::Base
       write_file(content)
       self.file_field=nil
       rescue Exception => e
-      	raise Exception.new "Error uploaded file #{file_field}:#{e}"
+      	raise Exception.new "Error uploaded file 1 #{file_field}:#{e}"
+      	e.backtrace.each {|x| LOG.error x}
       end
     else unless self.file_import.nil?
       self.filename = base_part_of(file_import[:original_filename])
@@ -126,10 +127,11 @@ class Datafile < ActiveRecord::Base
       write_file(content)
       self.file_field=nil
       rescue Exception => e
-      	raise Exception.new "Error uploaded file #{file_field}:#{e}"
+      	raise Exception.new "Error uploaded file 2 #{file_field}:#{e}"
       	e.backtrace.each {|x| LOG.error x}
       end
     	end
+    	LOG.debug (fname){"fin de upload"}
     end
     
   end
@@ -250,9 +252,10 @@ class Datafile < ActiveRecord::Base
   def read_file
   	fname= "#{self.class.name}.#{__method__}"
     if self.volume.protocol == "fog"
-      fog_file=SylrplmFog.instance.retrieve(self.dir_repository, self.filename_repository)
+      fog_file = SylrplmFog.instance.retrieve(self.dir_repository, self.filename_repository)
       data=nil
-    data=fog_file.body unless fog_file.nil?
+    	data=fog_file.body unless fog_file.nil?
+    	LOG.debug (fname) {"fog_file=#{fog_file.inspect} taille=#{data.size}"}
     else
       if File.exists?(repository)
         data=''
@@ -311,13 +314,13 @@ class Datafile < ActiveRecord::Base
 
   def write_file(content)
     fname= "#{self.class.name}.#{__method__}"
-    create_dir
-    repos = self.repository
-    LOG.info (fname) {"repository=#{repos}, content size=#{content.length}"}
+    LOG.info (fname) {"content size=#{content.length}"}
     if content.length>0
+    	create_dir
+    	repos = self.repository
 	    if self.volume.protocol == "fog"
 	      fog_file = SylrplmFog.instance.upload_content(dir_repository, self.filename_repository, content)
-	      LOG.info (fname) {"write_file in fog:#{fog_file.inspect}"}
+	      LOG.info (fname) {"apres write in fog:#{fog_file.inspect}"}
 	    else
 	      f = File.open(repos, "wb")
 	      begin
@@ -356,7 +359,7 @@ class Datafile < ActiveRecord::Base
 		    	f.close
 	    	end
 	 	end
-	 	tmpfile 
+	 	repos 
   end
 
   def file_exists?
@@ -397,7 +400,7 @@ class Datafile < ActiveRecord::Base
     filter = filters.gsub("*","%")
     ret={}
     unless filter.nil?
-      ret[:qry] = "ident LIKE :v_filter or revision LIKE :v_filter or updated_at LIKE :v_filter or "+qry_owner_id+" or "+qry_type+" or "+qry_volume
+      ret[:qry] = "ident LIKE :v_filter or revision LIKE :v_filter or to_char(updated_at, 'YYYY/MM/DD')  LIKE :v_filter or "+qry_owner_id+" or "+qry_type+" or "+qry_volume
       ret[:values]={:v_filter => filter}
     end
     ret

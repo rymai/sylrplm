@@ -58,6 +58,21 @@ class ProjectsController < ApplicationController
 		end
 	end
 
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@object_orig = Project.find(params[:id])
+		@project = @object = @object_orig.duplicate(current_user)
+		@types    = Typesobject.get_types("project")
+		@status   = Statusobject.find_for("project", 2)
+		@types_access    = Typesobject.get_types("project_typeaccess")
+		@users  = User.all
+		respond_to do |format|
+			format.html # project/1/new_dup
+			format.xml  { render :xml => @project }
+		end
+	end
+
 	# GET /projects/1/edit
 	# modification d'un projet
 	def edit
@@ -83,7 +98,13 @@ class ProjectsController < ApplicationController
 		@status= Statusobject.find_for("project")
 		@users  = User.all
 		respond_to do |format|
-			if @project.save
+			if params[:fonct] == "new_dup"
+				object_orig=Project.find(params[:object_orig_id])
+			st = @project.create_duplicate(object_orig)
+			else
+			st = @project.save
+			end
+			if st
 				st = ctrl_duplicate_links(params, @project, current_user)
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
 				format.html { redirect_to(@project) }
@@ -234,21 +255,6 @@ class ProjectsController < ApplicationController
 		ctrl_add_datafile(@project)
 	end
 
-	def new_dup
-		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
-		@project_orig = Project.find(params[:id])
-		@project = @project_orig.duplicate(current_user)
-		@types    = Typesobject.get_types("project")
-		@status   = Statusobject.find_for("project", 2)
-		@types_access    = Typesobject.get_types("project_typeaccess")
-		@users  = User.all
-		respond_to do |format|
-			format.html # project/1/new_dup
-			format.xml  { render :xml => @project }
-		end
-	end
-	
 	def show_design
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
@@ -256,7 +262,7 @@ class ProjectsController < ApplicationController
 		project = Project.find(params[:id])
 		ctrl_show_design(project)
 	end
-	
+
 	private
 
 	def show_
@@ -278,7 +284,7 @@ class ProjectsController < ApplicationController
 			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
 		end
 		@tree         						= build_tree(@project, @myparams[:view_id], nil, 2)
-		@tree_up      						= build_tree_up(@project, @myparams[:view_id] )				
+		@tree_up      						= build_tree_up(@project, @myparams[:view_id] )
 		@object_plm = @project
 	end
 

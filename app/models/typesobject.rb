@@ -1,6 +1,7 @@
 class Typesobject < ActiveRecord::Base
 	include Models::SylrplmCommon
 	validates_presence_of :forobject, :name
+	validates_uniqueness_of :name, :scope => :forobject
 
 	has_many :datafiles
 	has_many :documents
@@ -56,6 +57,13 @@ class Typesobject < ActiveRecord::Base
 		ret
 	end
 
+	def self.get_default(obj)
+		fname="Typesobject.#{__method__}:"
+		ret=find_by_forobject(obj.model_name)
+		LOG.debug (fname){"ret=#{ret}"}
+		ret
+	end
+
 	# liste des objets pouvant entrer dans une relation
 	# ils doivent avoir les caracteristiques suivantes:
 	# => association avec l'objet Typesobject. belongs_to :typesobject
@@ -103,7 +111,7 @@ class Typesobject < ActiveRecord::Base
 		filter = filter.gsub("*","%")
 		ret={}
 		unless filter.nil?
-			ret[:qry] = "forobject LIKE :v_filter or name LIKE :v_filter or description LIKE :v_filter "
+			ret[:qry] = "forobject LIKE :v_filter or name LIKE :v_filter or description LIKE :v_filter or to_char(updated_at, 'YYYY/MM/DD') LIKE :v_filter"
 			ret[:values]={:v_filter => filter}
 		end
 		ret

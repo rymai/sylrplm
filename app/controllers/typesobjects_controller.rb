@@ -33,6 +33,18 @@ class TypesobjectsController < ApplicationController
 		end
 	end
 
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		@object_orig = Typesobject.find(params[:id])
+		@object = @object_orig.duplicate(current_user)
+		@typesobject=@object
+		@objectswithtype=Typesobject.get_objects_with_type
+		respond_to do |format|
+			format.html
+			format.xml  { render :xml => @object }
+		end
+	end
+
 	# GET /typesobjects/1/edit
 	def edit
 		@typesobject = Typesobject.find(params[:id])
@@ -47,8 +59,14 @@ class TypesobjectsController < ApplicationController
 		@typesobject = Typesobject.new(params[:typesobject])
 		@objectswithtype=Typesobject.get_objects_with_type
 		respond_to do |format|
-			if @typesobject.save
-				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_typesobject),:ident=>@typesobject.name)
+			if params[:fonct] == "new_dup"
+				object_orig=Typesobject.find(params[:object_orig_id])
+			st = @typesobject.create_duplicate(object_orig)
+			else
+			st = @typesobject.save
+			end
+			if st
+				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_typesobject),:ident=>@typesobject.ident)
 				format.html { redirect_to(@typesobject) }
 				format.xml  { render :xml => @typesobject, :status => :created, :location => @typesobject }
 			else

@@ -146,27 +146,7 @@ module Models
 			next_revision
 		end
 
-		def from_revise(from)
-			from_function(from, ::Relation::RELATION_FROM_REVISION)
-		end
-
-		def from_duplicate(from)
-			from_function(from, ::Relation::RELATION_FROM_DUPLICATE)
-		end
-
-		def from_function(from, function)
-			fname= "#{self.model_name}.#{__method__}:#{function}:"
-			rel=::Relation.find_by_name(function)
-			link_from = ::Link.new(father: self, child: from, relation: rel, user: self.owner)
-			st=link_from.save
-			LOG.debug (fname){"link_from=#{link_from}:st save=#{st}"}
-			if !st
-				link_from=nil
-			end
-			LOG.debug (fname){"link_from=#{link_from}"}
-			link_from
-		end
-
+		
 		# a valider si avant dernier status
 		def could_validate?
 			mdl = model_name
@@ -487,31 +467,6 @@ module Models
 			end
 		end
 
-		def def_user(user)
-			fname= "#{self.class.name}.#{__method__}"
-			LOG.info (fname) {"user=#{user.inspect} "}
-			unless user.nil?
-				#LOG.info (fname) {"user=#{user.ident} "}
-				if self.respond_to? :owner
-				self.owner = user
-				#LOG.info (fname) {"owner=#{self.owner.ident}"}
-				end
-				if self.respond_to? :group
-				self.group     = user.group
-				#LOG.info (fname) {"group=#{self.group.ident}"}
-				end
-				if self.respond_to? :projowner
-				self.projowner = user.project
-				#LOG.info (fname) {"projowner=#{self.projowner.ident}"}
-				end
-				if self.respond_to? :domain
-				self.domain = user.session_domain
-				#LOG.info (fname) {"domain=#{self.domain}"}
-				end
-			end
-		#LOG.info (fname) {"self=#{self.inspect}"}
-		end
-
 		def initialize(*args)
 			fname= "#{self.class.name}.#{__method__}"
 			LOG.info (fname) {"args=#{args.length}:#{args.inspect}"}
@@ -522,6 +477,12 @@ module Models
 				end
 			end
 
+			if (self.respond_to? :typesobject)
+				if args.size>0 && (!args[0].include?(:typesobject_id))
+				self.typesobject = ::Typesobject.get_default(self)
+				end
+			end
+			
 			if (self.respond_to? :statusobject)
 				if args.size>0 && (!args[0].include?(:statusobject_id))
 				self.statusobject = ::Statusobject.get_first(self)
@@ -599,57 +560,7 @@ module Models
 			ret
 		end
 
-		# == Role: this function duplicate the object
-		# == Arguments
-		# * +user+ - The user which proceed the duplicate action
-		# == Usage from controller or script:
-		#   theObject=Customer.find(theId)
-		#   theObject.duplicate(current_user)
-		# === Result
-		# 	the duplicate object , all characteristics of the object are copied excepted the followings:
-		# * +ident+ : a new one is calculated if this is a sequence, if not, the same is proposed.
-		# * +status+ : the status is reset to the first one.
-		# * +revision+ : the revision is reset to the first one.
-		# * +responsible/group/projowner+ : the accessor is the current user
-		# * +date+ : date is the actual date
-		# * +domain+ : the user domain is used (see def_user method in this Module PlmObject )
-		# == Impact on other components
-		#
-		def duplicate(user)
-			fname = "#{self.class.name}.#{__method__}"
-			LOG.info (fname){"self=#{self.inspect}"}
-			ret = self.clone
-			ret.def_user(user)
-			if ret.respond_to? :revision
-				ret.set_default_value(:revision, 0)
-			end
-			if (ret.respond_to? :statusobject)
-			ret.statusobject = ::Statusobject.get_first(ret)
-			end
-			ret.set_default_value(:ident, 1)
-			if (ret.respond_to? :date)
-				ret.date=DateTime::now()
-			end
-			st = ret.save
-			if !st
-				ret = nil
-			else
-			st = ret.from_duplicate(self)
-			end
-			LOG.info (fname){"ret=#{ret.inspect}"}
-			ret
-		end
-
-		def ident_plm
-			fname = "#{self.class.name}.#{__method__}"
-			if self.respond_to?(:revision)
-				ret="#{ident}/#{revision}"
-			else
-				ret=ident
-			end
-			#LOG.info (fname){"ident_plm=#{ret}"}
-			ret
-		end
+		
 
 	end
 end

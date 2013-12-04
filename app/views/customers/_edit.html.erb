@@ -14,7 +14,6 @@
 	<%= f.label t("label_description") %>
 	<%= f.text_area :description , :rows => 10 %>
 	<br/>
-	
 	<%= f.label t(:label_responsible) %>
 	<%= select_in_list(:customer, :owner, @customer.owner.login, :users) %>
 	<br/>

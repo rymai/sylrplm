@@ -140,16 +140,19 @@ class DatafilesController < ApplicationController
 	private
 
 	def send_file_content(disposition)
+		fname= "#{self.class.name}.#{__method__}"
 		@datafile = Datafile.find(params[:id])
 		ret=nil
 		begin
 			fields = @datafile.get_type_values
+			LOG.debug (fname){"disposition=#{disposition} fields[tool]=#{fields["tool"]}"}
 			#puts "datafiles_controller.send_file_content:"+fields.inspect
 			# on utilise l'outil definis sur ce datafile seulement pour la visu ou edition, pas pour le download
-			unless fields.nil? || fields["tool"].nil? || disposition == "attachment"
+			unless false || fields.nil? || fields["tool"].nil? || disposition == "attachment"
 				repos=@datafile.write_file_tmp
-				cmd="#{fields["tool"]} #{repos} &"
-				#puts "datafiles_controller.send_file_content:tool=#{fields["tool"]} cmd=#{cmd}"
+				dirtmpfile=File.join(RAILS_ROOT,repos)
+				cmd="#{fields["tool"]} #{dirtmpfile} &"
+				LOG.debug (fname){"tool=#{fields["tool"]} cmd=#{cmd}"}
 				system(cmd)
 				ret = repos
 				respond_to do |format|
@@ -159,7 +162,7 @@ class DatafilesController < ApplicationController
 			else
 			#content=@datafile.read_file
 				content=build_scad_datafile(@datafile)
-				#puts "datafiles_controller.send_file_content:"+content.length.to_s
+				LOG.debug (fname){"content.length=#{content.length}"}
 				send_data(content,
               :filename => @datafile.filename,
               :type => @datafile.content_type,

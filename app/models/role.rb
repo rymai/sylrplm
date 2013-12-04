@@ -7,7 +7,7 @@ class Role < ActiveRecord::Base
   has_and_belongs_to_many :definitions
   
   belongs_to :father, :class_name => "Role"
-  has_many :roles, :class_name => "Role", :foreign_key => "father_id"
+  has_many :childs, :class_name => "Role", :primary_key => "id", :foreign_key => "father_id"
 
   def self.find_by_name(name)
     find(:first , :conditions => ["title = '#{name}' "])
@@ -21,8 +21,6 @@ class Role < ActiveRecord::Base
     (father ? father.title : "")
   end
   
-  
-
   def ident; title; end
 
   def typesobject

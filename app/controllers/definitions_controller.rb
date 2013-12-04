@@ -96,7 +96,17 @@ class DefinitionsController < ApplicationController
 			format.json { render :json => @definition.to_json(:request => request) }
 		end
 	end
-
+	
+	def new_dup
+		fname= "#{self.class.name}.#{__method__}"
+		@object_orig = Definition.find(params[:id])
+		@object = @object_orig.duplicate(current_user)
+		@definition=@object
+		respond_to do |format|
+			format.html
+			format.xml  { render :xml => @object }
+		end
+	end
 	# GET /definitions/1/edit
 	#
 	def edit
@@ -113,7 +123,13 @@ class DefinitionsController < ApplicationController
 	def create
 		@definition = Definition.new(params[:definition])
 		respond_to do |format|
-			if @definition.save
+			if params[:fonct] == "new_dup"
+				object_orig=Definition.find(params[:object_orig_id])
+				st = @definition.create_duplicate(object_orig)
+			else
+				st = @definition.save
+			end
+			if st
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_definition), :ident => @definition.name)
 				format.html {
 					redirect_to(@definition)

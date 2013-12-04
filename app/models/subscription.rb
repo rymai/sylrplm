@@ -34,7 +34,7 @@ class Subscription < ActiveRecord::Base
 		filter = filter.gsub("*","%")
 		ret = {}
 		if filter.present?
-			ret[:qry] = "name LIKE :v_filter or designation LIKE :v_filter or description LIKE :v_filter or #{qry_owner_id} "
+			ret[:qry] = "name LIKE :v_filter or designation LIKE :v_filter or description LIKE :v_filter or #{qry_owner_id} or to_char(updated_at, 'YYYY/MM/DD') LIKE :v_filter"
 			ret[:values] = { v_filter: filter }
 		end
 		ret

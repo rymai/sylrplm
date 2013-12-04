@@ -32,7 +32,7 @@ class Forum < ActiveRecord::Base
     filter = filters.gsub("*","%")
     ret = {}
     unless filter.nil?
-      ret[:qry] = "subject LIKE :v_filter or #{qry_type} or #{qry_owner_id} or #{qry_status}"
+      ret[:qry] = "subject LIKE :v_filter or #{qry_type} or #{qry_owner_id} or #{qry_status} or to_char(updated_at, 'YYYY/MM/DD') LIKE :v_filter"
       ret[:values] = { v_filter: filter }
     end
     ret

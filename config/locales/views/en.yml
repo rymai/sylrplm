@@ -185,6 +185,7 @@ en:
   access_show: Detail access
   access_new: New access
   access_reset: Initialization
+  access_new_dup: Access duplication 
   # check
   legend_check: Enter check details
   check_edit: Editing check
@@ -253,6 +254,7 @@ en:
   button_reset: Défault
   button_undo: Cancel
   label_definitions_attributs: Attributs
+  definition_new_dup: Definition duplication
   # documents
   legend_document: Enter document details
   document_edit: Editing document
@@ -301,7 +303,8 @@ en:
   group_edit: Group editing
   group_list: List groups
   group_show: Detail group
-  group_new: New groupe
+  group_new: New group
+  group_new_dup: Group duplication
   label_group_users: Members
   label_group_user_ids_out: Others users
   label_group_user_ids_in: Users
@@ -462,12 +465,14 @@ en:
   label_cardin_occur_max: Occur max
   label_cardin_use_min: Use min
   label_cardin_use_max: Use max
+  relation_new_dup: Duplication of relation
   # roles
   legend_role: Enter role details
   role_list: Listing of roles
   role_new: New role
   role_show: Detail of role
   role_edit:  Edition of role
+  role_new_dup: Role duplication
   label_role_users: Users
   label_role_user_ids_in: Using
   label_role_user_ids_out: Others
@@ -478,6 +483,7 @@ en:
   sequence_new: New sequence
   sequence_show: Detail of sequence
   sequence_edit:  Edition of sequence
+  sequence_new_dup: Duplication of sequence
   label_value: Sequence value
   label_min: Minimum value
   label_max: Maximum value
@@ -501,6 +507,7 @@ en:
   statusobjects_new: New status
   statusobjects_show: Detail of status
   statusobjects_edit: Edit the status
+  statusobjects_new_dup: Status duplication 
   label_name: Name
   label_rank: Rank
   label_promote: Promote
@@ -522,6 +529,7 @@ en:
   subscription_new: New subscription
   subscription_show: Detail of the subscription
   subscription_edit: Edit the subscription
+  subscription_new_dup: Duplication of subscription
   legend_subscription: Subscription
   label_subscription_fortypesobject_ids_in: Subscription objects types
   label_subscription_fortypesobject_ids_out: Other objects types 
@@ -545,6 +553,7 @@ en:
   typesobjects_new: New type
   typesobjects_show: Detail of type
   typesobjects_edit: Edit the type
+  typesobject_new_dup: Duplication of type
   label_typesobject_name: Type
   # msg _check_types
   msg_define_types_document: Please, define documents types
@@ -561,6 +570,7 @@ en:
   user_list: User list
   user_show: User detail
   user_new: New User
+  user_new_dup: User duplication
   label_login: Name
   label_password: Password
   label_confirm_password: Confirm
@@ -592,6 +602,7 @@ en:
   views_new: New view
   views_show: View detail
   views_edit:  View editing
+  view_new_dup: View duplication
   label_relations: Relations
   label_view_relation_ids_in: Managed
   label_view_relation_ids_out: Others
@@ -601,6 +612,7 @@ en:
   volume_new: New volume
   volume_show: Detail of volume
   volume_edit:  Edition of volume
+  volume_new_dup: Volume duplication
   label_directory: Directory
   label_protocol: Protocol
   label_volume_name: Volume
