@@ -1,7 +1,9 @@
 <h1><%=t(:sequence_edit) %></h1>
+<% fonct="edit" %>
 <% form_for(@sequence) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "sequences/edit",:locals => { :f => f, :fonct=>"edit" }) %>
-<%= render(:partial => "shared/menu_edit",:locals => { :object => @sequence, :f => f}) %>
+<%= render(:partial => "shared/menu_edit",:locals => { :object => @sequence, :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "sequences/edit",:locals => { :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "shared/submit_edit",:locals => { :object => @sequence, :f => f, :fonct=>fonct}) %>
 
 <% end %>

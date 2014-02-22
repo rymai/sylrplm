@@ -1,8 +1,7 @@
 <table class='menu_bas'>
 	<tr>
-		<td> <%= f.submit t("update") %> </td>
 		<td> <%= link_to t("explorer"), object %> </td>
-		<%= render(:partial => "shared/menu_show_edit", :locals => {:object => object, :f => nil}) %>
-		<%= render(:partial => "shared/menu_common", :locals => {:object => object, :f => f}) %>
+		<%= render(:partial => "shared/menu_show_edit", :locals => {:object => object, :fonct=>fonct}) %>
+		<%= render(:partial => "shared/menu_common", :locals => {:object => object, :fonct=>fonct}) %>
 	</tr>
 </table>

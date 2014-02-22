@@ -146,7 +146,7 @@
 								</li>
 							</ul>
 						</li>
-						<% if admin_logged_in? %>
+						
 						<li class="dropdown-submenu" id="debugmenu">
 							<a tabindex="-1" href="#"><%= t(:legend_debug)%></a>
 							<ul class="dropdown-menu">
@@ -174,7 +174,7 @@
 								</li>
 							</ul>
 						</li>
-						<%end%>
+						
 					</ul>
 				</div><!-- /btn-group -->
 				<div class="btn-group">
@@ -277,20 +277,8 @@
 	<br/>
 </div>
 <div class="container">
-	<%unless @main.nil? || @current_user.nil?%>
-	<% opts = { :order => 'dispatch_time DESC' }
-		opts[:conditions] = { :store_name => @current_user.store_names }
-		opts[:page] = (params[:page].nil? ? PlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i :  params[:page])
-		@workitems = Ruote::Sylrplm::ArWorkitem.paginate_by_params(
-	[
-	# parameter_name[, column_name]
-	'wfid',
-	[ 'workflow', 'wfname' ],
-	[ 'store', 'store_name' ],
-	[ 'participant', 'participant_name' ]
-	],
-	params,
-	opts) %>
+	
+	<% unless @workitems.nil? %>
 	<h1><%= t("workitems_list") %></h1>
 	<%= render(:partial => "workitems/workitems", :object =>  @workitems, :locals => {  :fonct=>"list_main" } ) %>
 	<%end%>

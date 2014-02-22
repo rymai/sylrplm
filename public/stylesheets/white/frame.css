@@ -11,13 +11,9 @@ th, td {
 	max-width: 320px;
 	word-wrap:break-word;
 }
-select, input[type=text] {
+input[type=text] {
 	max-width: 310px;
 	word-wrap:break-word;
-}
-
-select {
-	max-width: 500px;
 }
 
 th {
@@ -184,13 +180,13 @@ input[type=submit]:hover {
 }
 
 h1 {
-	font: bold 180% sans-serif;
+	font: bold 130% sans-serif;
 	color: black;
 	border-top: 2px solid #666;
 	margin-bottom: 1px;
 }
 h2 {
-	font: bold 140% sans-serif;
+	font: bold 100% sans-serif;
 	color: black;
 }
 fieldset, legend {
@@ -200,6 +196,7 @@ fieldset, legend {
 }
 fieldset {
 	border: 2px solid black;
+	margin: 3px;
 }
 legend {
 	color: black;

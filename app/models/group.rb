@@ -13,7 +13,7 @@ class Group < ActiveRecord::Base
 	has_and_belongs_to_many :subscriptions
 	#has_many :group_definitions, :dependent => :delete_all
 	#has_many :definitions, :through => :group_definitions
-
+	has_and_belongs_to_many :volumes
 	has_many :childs, :class_name => "Group", :primary_key => "id", :foreign_key => "father_id"
 	belongs_to :father, :class_name => "Group"
 	#

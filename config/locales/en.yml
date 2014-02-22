@@ -53,3 +53,4 @@ en:
         # sylrplm
         status_not_valid: "Bad status"
         exception_validity: "Exception during %{model} validating:<br/>%{exception}"
+        datafile_write_bad_format: The file %{filename} could not be saved, choose another volume.

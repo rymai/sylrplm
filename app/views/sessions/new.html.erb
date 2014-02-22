@@ -17,9 +17,8 @@
 	<table class='menu_bas'>
 		<tr>
 			<td> <%= submit_tag t(:submit_account) %> </td>
-			
 		</tr>
 	</table>		
-
+<%= render(:partial => "users/index",:locals => { :fonct => "new_session"}) %>
 </fieldset>
 <% end %>

@@ -75,9 +75,9 @@ ActionController::Routing::Routes.draw do |map|
 	:controller => 'datafiles',
 	:action => 'download_file')
 	map.connect(
-	'datafiles/:id/del_fogdir',
+	'datafiles/:file_id/del_sylrplm_file',
 	:controller => 'datafiles',
-	:action => 'del_fogdir')
+	:action => 'del_sylrplm_file')
 	
 	map.resources :definitions, :collection => { :new_process => :get}, :member=> {:new_dup => :get}
 	map.connect(

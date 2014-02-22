@@ -2,6 +2,7 @@
 <% fonct="edit" %>
 <% form_for(@relation, :html => { :id => h_form_html_id(@relation, fonct) }) do |f| %>
 <%= f.error_messages %>
+<%= render(:partial => "shared/menu_edit",:locals => { :object => @relation, :f => f, :fonct=>fonct}) %>
 <%= render(:partial => "relations/edit",:locals => { :f => f, :fonct=>fonct }) %>
-<%= render(:partial => "shared/menu_edit",:locals => { :object => @relation, :f => f}) %>
+<%= render(:partial => "shared/submit_edit",:locals => { :object => @relation, :f => f, :fonct=>fonct}) %>
 <% end %>

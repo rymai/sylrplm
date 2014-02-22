@@ -1,5 +1,6 @@
 <H1><%= t("customer_show") %></H1>
 <% fonct="show" %>
+<%= render(:partial => "shared/menu_show", :locals => {:object => @customer, :fonct => fonct}) %>
 <% form_for(@customer, :html => { :id => h_form_html_id(@customer, fonct) }) do |f| %>
 <%= f.error_messages %>
 <p>
@@ -39,7 +40,7 @@
 <h1></h1>
 <% files = @customer.get_datafiles%>
 <% if files[:total]>0%> <h1><%= t("datafiles_list") %></h1>
-<%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files, :document=>@customer}) %>
+<%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files,:document=>nil, :part=>nil, :project=>nil, :customer=>@customer }) %>
 <% end %>
 <table class='menu_bas'>
 	<tr>
@@ -51,13 +52,13 @@
 <table class='menu_bas'>
 	<tr>
 		<% unless @favori.get("document").count==0 %>
-		<% form_for(@customer, :url => {:id => @customer.id, :action => "add_docs" }) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %> </td>
+		<% form_for(@customer, :url => {:id => @customer.id, :action => "add_docs" }) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @customer.relations(:document), :id, :ident)) %> </td>
 		<td> <%= submit_tag t("paste_documents") %> <td> <% end %>
 	</tr>
 	<tr>
 		<% end %>
 		<% unless @favori.get("project").count==0 %>
-		<% form_for(@customer, :url => {:id => @customer.id, :action => "add_projects" }) do |f| %> <td> <%= select("relation","project", options_from_collection_for_select( @relations["project"], :id, :ident)) %> </td>
+		<% form_for(@customer, :url => {:id => @customer.id, :action => "add_projects" }) do |f| %> <td> <%= select("relation","project", options_from_collection_for_select( @customer.relations(:project), :id, :ident)) %> </td>
 		<td> <%= submit_tag t("paste_projects") %> </td>
 		<% end %>
 		<% end %>
@@ -66,10 +67,9 @@
 <h1></h1>
 <table class='menu_bas'>
 	<tr>
-		<% unless @relations["forum"].count==0 %>
-		<% form_for(@customer, :url => {:id => @customer.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @relations["forum"], :id, :name)) %></td>
+		<% unless @customer.relations(:forum).count==0 %>
+		<% form_for(@customer, :url => {:id => @customer.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @customer.relations(:forum), :id, :name)) %></td>
 		<td><%= submit_tag t("add_forum") %></td>
 		<% end %><% end %>
 	</tr>
 </table>
-<%= render(:partial => "shared/menu_show", :object =>@customer) %>

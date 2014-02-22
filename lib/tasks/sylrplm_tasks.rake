@@ -22,7 +22,7 @@ namespace :sylrplm do
   task :load_config => :rails_env do
     ActiveRecord::Base.configurations = Rails::Configuration.new.database_configuration
     ActiveRecord::Base.logger = Logger.new(STDOUT)
-    ActiveRecord::Base.logger.level = Logger::DEBUG
+    ActiveRecord::Base.logger.level = Logger::ERROR
     $stdout.puts "Database configuration=#{ActiveRecord::Base.configurations}"
   end
   desc 'run the scheduler'
@@ -73,12 +73,13 @@ namespace :sylrplm do
   	Notification.notify_all(nil)
 	end
 
-  desc 'import domain objects : [db/fixtures,admin"] or [db/fixtures,mecanic] or [db/fixtures,cooking] '
-  task :import_domain, [:path, :domain] => [:connect, :environment] do |t, args|
-    #args.with_defaults(:domain => :admin)
+  desc 'import domain objects : [db/fixtures,admin,site"] or [db/fixtures,mecanic] or [db/fixtures,cooking] '
+  task :import_domain, [:path, :domain, :site] => [:connect, :environment] do |t, args|
+    args.with_defaults(:site => nil)
     domain = args.domain.to_s
     path = args.path.to_s
-    puts "path is #{path}, domain is #{domain}"
+    site=args.site.to_s
+    puts "path is #{path}, domain is #{domain}, site is #{site}"
     fixtures_path = "#{path}/#{domain}"
     unless domain.empty?
       ###truncate
@@ -99,6 +100,12 @@ namespace :sylrplm do
       end
     else
       $stdout.puts "Path and Domain are mandatory"
+    end
+    unless site.blank?
+    PlmServices.set_property("sites","central",site) 
+    Volume.find_all.each do |vol| 
+    	 vol.save
+    	end
     end
   end
   

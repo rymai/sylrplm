@@ -1,5 +1,4 @@
 <h1><%= t(:volume_list) %><%= h_count_objects(@volumes) %></h1>
-
 <%= form_simple_query_helper('/volumes', @volumes) %>
 <table class='menu_bas'>
 	<tr>
@@ -14,6 +13,10 @@
 		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
 		<th <%= sort_td_class_helper "directory" %>> <%= sort_link_helper t(:label_directory), "directory" %> </th>
 		<th <%= sort_td_class_helper "protocol" %>> <%= sort_link_helper t(:label_protocol), "protocol" %> </th>
+		<th <%= sort_td_class_helper "encode" %>> <%= sort_link_helper t(:label_encode), "encode" %> </th>
+		<th <%= sort_td_class_helper "decode" %>> <%= sort_link_helper t(:label_decode), "decode" %> </th>
+		<th <%= sort_td_class_helper "compress" %>> <%= sort_link_helper t(:label_compress), "compress" %> </th>
+		<th <%= sort_td_class_helper "decompress" %>> <%= sort_link_helper t(:label_decompress), "decompress" %> </th>
 		<th></th>
 		<th></th>
 	</tr>
@@ -23,6 +26,10 @@
 		<td> <%= h volume.description %> </td>
 		<td> <%= h volume.directory %> </td>
 		<td> <%= h volume.protocol %> </td>
+		<td> <%= h volume.encode %> </td>
+		<td> <%= h volume.decode %> </td>
+		<td> <%= h volume.compress %> </td>
+		<td> <%= h volume.decompress %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_volume_path(volume) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, volume, :confirm =>t(:msg_confirm), :method => :delete %> </td>
 		<td> <%= link_to h_img(:duplicate), new_dup_volume_path(volume) %> </td>

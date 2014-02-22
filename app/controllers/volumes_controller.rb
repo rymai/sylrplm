@@ -100,16 +100,20 @@ class VolumesController < ApplicationController
 	# DELETE /volumes/1.xml
 	def destroy
 		@volume = Volume.find(params[:id])
+		name=@volume.name
+		dir=@volume.directory
 		st=@volume.destroy_volume
-		#puts "volumes_controller.destroy:errors="+@volume.errors.inspect
-		if st
-			flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_volume), :ident=>@volume.name+":"+@volume.directory)
-		else
-			flash[:error] = t(:ctrl_object_not_deleted,:typeobj =>t(:ctrl_volume), :ident=>@volume.name+":"+@volume.directory)
-		end
 		respond_to do |format|
-			format.html { redirect_to(volumes_url) }
-			format.xml  { head :ok }
+			if st
+				flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_volume), :ident=>"#{name}:#{dir}")
+				format.html { redirect_to(volumes_url) }
+				format.xml  { head :ok }
+			else
+				flash[:error] = t(:ctrl_object_not_deleted,:typeobj =>t(:ctrl_volume), :ident=>"#{name}:#{dir}")
+				puts "volumes_controller.destroy:errors="+@volume.errors.inspect
+				format.html { render :action => "show" }
+				format.xml  { head :ok }
+			end
 		end
 	end
 end

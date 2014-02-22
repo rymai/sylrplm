@@ -1,4 +1,9 @@
 <h1><%= t(:volume_show) %></h1>
+<% fonct="show" %>
+<% form_for(@volume) do |f| %>
+<%= f.error_messages %>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @volume, :fonct=>fonct}) %>
+
 <p>
 	<b><%= t(:label_name) %></b>
 	<%= h @volume.name %>
@@ -15,5 +20,4 @@
 	<b><%= t(:label_protocol) %></b>
 	<%= h @volume.protocol %>
 </p>
-<%= render(:partial => "shared/menu_show", :object => @volume) %>
-
+<%end%>

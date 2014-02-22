@@ -1,5 +1,5 @@
 
-		<% if object.have_lifecycle? == true %>
+		<% if object.have_lifecycle? == true && fonct!="edit_lifecycle" %>
 		<td> <%= link_to t("edit_lifecycle"), {:controller=>object.controller_name, :action=>"edit_lifecycle", :id => object.id} %> </td>
 		<% end %>
 

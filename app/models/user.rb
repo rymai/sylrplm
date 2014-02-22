@@ -66,8 +66,11 @@ class User < ActiveRecord::Base
 					self.groups << Group.find_by_name(grp)
 				end
 				#
-				PlmServices.get_property(:PROJECTS_ACCOUNT).split(',').each do |proj|
-					self.projects << Project.find_by_ident(proj)
+				projs=PlmServices.get_property(:PROJECTS_ACCOUNT)
+				projs.split(',').each do |sproj|
+					LOG.debug (fname) {"sproj=#{sproj}"}
+					proj=Project.find_by_ident(sproj)
+					self.projects << proj unless proj.nil?
 				end
 			self.set_default_values_with_next_seq
 			end

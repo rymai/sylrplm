@@ -10,24 +10,7 @@
 	</tr>
 </table>
 <%= will_paginate(@accesses[:recordset]) %>
-<table>
-	<tr>
-		<th <%= sort_td_class_helper "controller" %>> <%= sort_link_helper t("label_controller"), "controller" %> </th>
-		<th <%= sort_td_class_helper "action" %>> <%= sort_link_helper t("label_action"), "action" %> </th>
-		<th <%= sort_td_class_helper "roles" %>> <%= sort_link_helper t("label_role"), "roles" %> </th>
-		<th></th><th></th>
-	</tr>
-	<% @accesses[:recordset].each do |acc| %>
-	<tr class='<%= cycle("even", "odd") %>'>
-		<td> <%= h acc.controller %> </td>
-		<td> <%= h acc.action %> </td>
-		<td> <%= h acc.roles %> </td>
-		<td> <%= link_to h_img_edit.to_s, edit_access_path(acc) %> </td>
-		<td> <%= h_menu_duplicate(acc) %> </td>
-		<td> <%= link_to h_img_destroy.to_s, acc, :confirm => t("msg_confirm"), :method => :delete %> </td>
-	</tr>
-	<% end %>
-</table>
+<%= render(:partial => "accesses/index", :locals => {:fonct=>"index"}) %>
 <%= will_paginate(@accesses[:recordset]) %>
 <table class='menu_bas'>
 	<tr>

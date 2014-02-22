@@ -35,7 +35,7 @@ class CustomersController < ApplicationController
 	def show_
 		define_view
 		@customer                = Customer.find(params[:id])
-		@relations               = Relation.relations_for(@customer)
+		#@relations               = Relation.relations_for(@customer)
 		@documents               = @customer.documents
 		@projects                = @customer.projects
 		@tree         						= build_tree(@customer, @myparams[:view_id], nil, 3)

@@ -19,7 +19,7 @@ class Link < ActiveRecord::Base
 	belongs_to :projowner,
     :class_name => "Project"
 
-	delegate :typesobject_id, :typesobject, to: :relation
+	#delegate :typesobject_id, :typesobject, to: :relation
 
 	#objets pouvant etre fils:"document", "part", "project", "customer", "forum", "datafile"
 	with_options :foreign_key => 'child_id' do |child|
@@ -61,11 +61,11 @@ class Link < ActiveRecord::Base
 		self.errors.add_to_base('Link already exists!') unless ::Link.find(:first, :conditions => cond).nil?
 	end
 
-	def initialize(*args)
-		fname = "#{self.class.name}.#{__method__}"
-		super
+#	def initialize(*args)
+	 #	fname = "#{self.class.name}.#{__method__}"
+		#super
 	#LOG.info (fname) {"#{args}"}
-	end
+	#end
 
 	def designation
 		""

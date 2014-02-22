@@ -17,33 +17,34 @@
 	<%= text_field_tag :revision, @datafile.revision, :disabled => true %>
 	<br/>
 	<%= f.label t(:label_volume) %>
-	<%= text_field_tag :volume, "#{@datafile.volume.name}.#{@datafile.volume.protocol}", :disabled => true %>
+	<% if fonct!="edit"%>
+	<%= f.collection_select(:volume_id, @datafile.volumes, :id, :name) %>
+	<%else%>
+	<%= text_field_tag :volume, @datafile.volume.name, :disabled => true %>
+	<%end%>
 	<br/>
 	<%= f.label t(:label_filename) %>
 	<%= text_field_tag :filename, @datafile.filename, :disabled => true %>
 	<br/>
-
 	<% if !@checkout_needed || ( !@datafile.document.nil? && @datafile.document.can_be_check_in?(current_user)) %>
-
 	<%= f.label "..." %>
 	<%= f.file_field(:uploaded_file) %>
 	<br/>
 	<%= f.label t(:label_content_type) %>
 	<%= text_field_tag :content_type, @datafile.content_type, :disabled => true %>
 	<br/>
+	<% if fonct=="edit"%>
 	<% if @datafile.revisions_files.length > 0 %>
-
 	<%= f.label t(:label_restore_file) %>
 	<%= select_tag("restore_file",options_for_select(@datafile.revisions_files,@datafile.current_revision_file)) %>
 	<br/>
+	<%end%>
 	<% end %>
-
 	<% end %>
-	
 	<%= f.label t("label_responsible") %>
 	<%= select_in_list(:datafile, :owner, @datafile.owner.login, :users) %>
 	<br/>
-	
+
 	<%= h_type_values(@datafile, fonct) %>
 	<%= h_input_domain(f) %>
 	<br />

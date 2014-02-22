@@ -27,11 +27,10 @@
 <%= f.label t(:label_language) %>
 <%= f.select(:language, options_for_select(@languages)) %>
 <br/>
-<% if fonct != "account_edit" %>
-
 <%= f.label t(:label_volume) %>
 <%= f.collection_select(:volume_id, @volumes, :id, :name) %>
 <br/>
+<% if fonct != "account_edit" %>
 <% if @themes != nil %>
 <%= f.label t(:label_theme) %>
 <%= f.select(:theme,options_for_select(@themes)) %>

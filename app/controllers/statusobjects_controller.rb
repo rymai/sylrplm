@@ -57,6 +57,7 @@ class StatusobjectsController < ApplicationController
 	def edit
 		@statusobject = Statusobject.find(params[:id])
 		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
+		
 		@objectswithstatus=Statusobject.get_objects_with_status
 	end
 
@@ -91,6 +92,8 @@ class StatusobjectsController < ApplicationController
 		@statusobject = Statusobject.find(params[:id])
 		@objectswithstatus=Statusobject.get_objects_with_status
 		@statusobject.update_accessor(current_user)
+		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
+		
 		respond_to do |format|
 			if @statusobject.update_attributes(params[:statusobject])
 				flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)

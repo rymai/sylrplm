@@ -2,7 +2,7 @@
 <% fonct="edit" %>
 <% form_for(@project, :html => { :id => h_form_html_id(@project, fonct) }) do |f| %>
 <%= f.error_messages %>
+<%= render(:partial => "shared/menu_edit",:locals => { :object => @project, :f => f, :fonct=>fonct}) %>
 <%= render(:partial => "projects/edit",:locals => { :f => f, :fonct=>fonct }) %>
-<h1></h1>
-<%= render(:partial => "shared/menu_edit",:locals => { :object => @project, :f => f}) %>
+<%= render(:partial => "shared/submit_edit",:locals => { :object => @project, :f => f, :fonct=>fonct}) %>
 <% end %>

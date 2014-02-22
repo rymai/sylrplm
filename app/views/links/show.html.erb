@@ -1,4 +1,5 @@
 <h1><%= t("link_show") %></h1>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @link, :fonct=>"show"}) %>
 <% form_for(@link) do |f| %>
 <%= f.error_messages %>
 <p>
@@ -21,16 +22,8 @@
 	<b><%= t(:label_values) %></b>
 	<%= h @link.values%>
 </p>
-
 <p>
 	<b><%= t(:label_responsible) %></b>
 	<%= h @link.owner.login unless @link.owner.nil? %>
 </p>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("edit"), edit_link_path(@link) %></td>
-		<td> <%= link_to t("link_new"), new_link_path %></td>
-		<td> <%= link_to t("list"), links_path %></td>
-	</tr>
-</table>
 <% end %>

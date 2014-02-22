@@ -21,26 +21,25 @@ module SYLRPLM
 	#TODO not yet in property
 	VOLUME_DIRECTORY_DEFAULT  = case OsFunctions.os
 	when "linux"
-		"/home/syl/trav/rubyonrails/sylrplm-data-#{Rails.env}"
+		"/home/syl/trav/rubyonrails/sylrplm-data"
 	when "mac"
-		"/Users/remy/Development/Ruby/Gems/sylvani/sylrplm/sylrplm_data_#{Rails.env}"
+		"/Users/remy/Development/Ruby/Gems/sylvani/sylrplm/sylrplm_data"
 	when "windows"
-		"C:\\sylrplm-data-#{Rails.env}"
+		"C:\\sylrplm-data"
 	end
 
-
-		# document de type directory (pour eviter par exemple d'y mettre des fichiers)
-		TYPE_DOC_DIRECTORY        = 'directory'
-# type de user: personne physique.
-		TYPE_USER_PERSON          = 'person_'
-		# type du projet affecte par defaut a un user lors de sa creation
-		TYPE_PROJ_ACCOUNT         = '$PROJ_ACCOUNT'
-		# valeurs des types d'acces a un  projet
-		TYPEACCESS_PUBLIC         = 'public'
-		TYPEACCESS_CONFIDENTIAL   = 'confidential'
-		TYPEACCESS_SECRET         = 'secret'
-		FOG_ACCESS_KEY            = "W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j"
-		FOG_ACCESS_KEY_ID         = "AKIAIUTZHUXCXNUFDRHQ"
+	# document de type directory (pour eviter par exemple d'y mettre des fichiers)
+	TYPE_DOC_DIRECTORY        = 'directory'
+	# type de user: personne physique.
+	TYPE_USER_PERSON          = 'person_'
+	# type du projet affecte par defaut a un user lors de sa creation
+	TYPE_PROJ_ACCOUNT         = '$PROJ_ACCOUNT'
+	# valeurs des types d'acces a un  projet
+	TYPEACCESS_PUBLIC         = 'public'
+	TYPEACCESS_CONFIDENTIAL   = 'confidential'
+	TYPEACCESS_SECRET         = 'secret'
+	FOG_ACCESS_KEY            = "W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j"
+	FOG_ACCESS_KEY_ID         = "AKIAIUTZHUXCXNUFDRHQ"
 
 	#
 	# no more used, use PlmServices.get_property("HELP_SUMMARY_LEVEL") for example

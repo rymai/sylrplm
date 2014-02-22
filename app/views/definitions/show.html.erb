@@ -1,28 +1,28 @@
 <h1><%= t("definitions_show") %><%= h @definition.id %></h1>
-	<table>
-		<tr>
-			<td class="wide-first-col"><%= t("label_name")%></td>
-			<td><%= h @definition.name %></td>
-		</tr>
-		<tr>
-			<td><%= t("label_description")%></td>
-			<td><%= h @definition.description %></td>
-		</tr>
-		<tr>
-			<td><%= t("label_uri")%></td>
-			<td><%= link_to h(@definition.uri), @definition.full_uri %></td>
-		</tr>
-		<tr>
-			<td><%= t("label_created_at")%></td>
-			<td><%= h @definition.created_at %></td>
-		</tr>
-		<tr>
-			<td><%= t("label_updated_at")%></td> <td><%= h @definition.updated_at %></td>
-		</tr>
-		<tr>
-			<td><%= t("label_launch_fields")%></td>
-			<td><%= h @definition.launch_fields %></td>
-		</tr>
-	</table>
-	<%= render(:partial => "shared/menu_show", :object => @definition) %>
-	<%= render_fluo :definition => @definition %>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @definition, :fonct=>"show"}) %>
+<table>
+	<tr>
+		<td class="wide-first-col"><%= t("label_name")%></td>
+		<td><%= h @definition.name %></td>
+	</tr>
+	<tr>
+		<td><%= t("label_description")%></td>
+		<td><%= h @definition.description %></td>
+	</tr>
+	<tr>
+		<td><%= t("label_uri")%></td>
+		<td><%= link_to h(@definition.uri), @definition.full_uri %></td>
+	</tr>
+	<tr>
+		<td><%= t("label_created_at")%></td>
+		<td><%= h @definition.created_at %></td>
+	</tr>
+	<tr>
+		<td><%= t("label_updated_at")%></td><td><%= h @definition.updated_at %></td>
+	</tr>
+	<tr>
+		<td><%= t("label_launch_fields")%></td>
+		<td><%= h @definition.launch_fields %></td>
+	</tr>
+</table>
+<%= render_fluo :definition => @definition %>

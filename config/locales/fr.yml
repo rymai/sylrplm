@@ -225,3 +225,4 @@ fr:
         # sylrplm
         status_not_valid: "Le statut n'est pas valide"
         exception_validity: "Exception durant la validation de %{model}:<br/>%{exception}"
+        datafile_write_bad_format: Le fichier %{filename} ne peut être écrit en base, choisissez un autre volume.

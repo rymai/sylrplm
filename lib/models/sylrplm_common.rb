@@ -73,7 +73,7 @@ module Models
 				#cond=[]
 				#objs = Link.find(:all, :conditions => [cond])
 				objs=Link.all
-				LOG.debug "reset:"+objs.inspect
+				#LOG.debug "reset:"+objs.inspect
 				objs.each { |o| o.destroy }
 			end
 
@@ -193,6 +193,51 @@ module Models
 
 		end
 
+		def before_save
+			fname= "#{self.class.name}.#{__method__}"
+			#LOG.debug (fname) {"debut **********************"}
+			if (self.respond_to? :owner) && (self.respond_to? :group)
+				unless owner.nil?
+					unless  owner.group.nil?
+						self.group     = owner.group
+					else
+						self.group     = owner.groups[0]
+					end
+				#LOG.info (fname) {"owner=#{owner} group=#{group}"}
+				end
+			end
+			if (self.respond_to? :owner) && (self.respond_to? :projowner)
+				unless owner.nil?
+					unless owner.project.nil?
+						self.projowner = owner.project
+					else
+						self.projowner = owner.projects[0]
+					end
+				#LOG.info (fname) {"owner=#{owner}  projowner=#{projowner}"}
+				end
+			end
+			if ((self.respond_to? :domain) && (self.respond_to? :owner))
+				LOG.debug (fname) {"domain=#{domain} admin?=#{self.owner.role.is_admin? unless self.owner.role.nil?}"}
+				if(self.domain=="admin" && !self.owner.role.is_admin?)
+					self.errors.add_to_base('Role is not admin!')
+				return false
+				end
+			end
+			#LOG.debug (fname) {"fin **********************"}
+			true
+		end
+
+		def before_destroy
+			#unless Favori.get(self.model_name).count.zero?
+			#  raise "Can't delete because of links:"+self.ident
+			#end
+			if ::Link.linked?(self)
+				#raise "Can't delete "+self.ident+" because of links:"
+				self.errors.add_to_base "Can't delete "+self.ident+" because of links"
+			return false
+			end
+		end
+
 		#
 		# return frozen stat of an object
 		#   return:
@@ -206,18 +251,6 @@ module Models
 				LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self).rank}=#{ret}"}
 			end
 			ret
-		end
-
-		# attribution de valeurs par defaut suivant la table sequence
-		# avec calcul du prochain numero de sequence si c'est une sequence
-		def set_default_values_with_next_seq
-			set_default_values(1)
-		end
-
-		# attribution de valeurs par defaut suivant la table sequence
-		# pas de calcul du prochain numero de sequence si c'est une sequence
-		def set_default_values_without_next_seq
-			set_default_values(0)
 		end
 
 		def to_s
@@ -245,7 +278,7 @@ module Models
 			else
 				ret+="s"
 			end
-			puts "controller_name:#{self.class.name} = #{ret}"
+			#puts "controller_name:#{self.class.name} = #{ret}"
 			ret
 		end
 
@@ -303,9 +336,12 @@ module Models
 		# update the object accessor before update_attributes call
 		#
 		def update_accessor(user)
+			fname= "#{self.class.name}.#{__method__}"
+			LOG.debug (fname) {"debut"}
 			self.owner_id = user.id if self.attribute_present?("owner_id")
 			self.group_id = user.group_id if self.attribute_present?("group_id")
 			self.projowner_id = user.project_id if self.attribute_present?("projowner_id")
+			LOG.debug (fname) {"fin"}
 		end
 
 		def to_yaml_properties
@@ -414,9 +450,21 @@ module Models
 			end
 		end
 
+		# attribution de valeurs par defaut suivant la table sequence
+		# avec calcul du prochain numero de sequence si c'est une sequence
+		def set_default_values_with_next_seq
+			set_default_values(1)
+		end
+
+		# attribution de valeurs par defaut suivant la table sequence
+		# pas de calcul du prochain numero de sequence si c'est une sequence
+		def set_default_values_without_next_seq
+			set_default_values(0)
+		end
+
 		def set_default_value(strcol, next_seq)
 			fname = "#{self.class.name}.#{__method__}"
-			LOG.debug (fname){"strcol=#{strcol}, next_seq=#{next_seq}, class.name=#{self.class.name}"}
+			#LOG.debug (fname){"strcol=#{strcol}, next_seq=#{next_seq}, class.name=#{self.class.name}"}
 			if self.respond_to?(strcol)
 				old_value = self.send(strcol)
 				col = ::Sequence.find_col_for(self.class.name, strcol)
@@ -431,8 +479,8 @@ module Models
 					val =  col.value
 					end
 					LOG.debug (fname) {"#{strcol}=#{old_value} to #{val}"}
-					self[strcol] = val
-					LOG.debug (fname) {"self=#{self.inspect}"}
+				self[strcol] = val
+				#LOG.debug (fname) {"self=#{self.inspect}"}
 				end
 			end
 			self
@@ -548,7 +596,7 @@ module Models
 			st = self.save
 			if !st
 				LOG.info (fname){"echec save:#{self.errors.inspect}"}
-				ret = false
+			ret = false
 			else
 			st = self.from_duplicate(object_orig)
 			ret = true
@@ -593,7 +641,7 @@ module Models
 			fname= "#{self.model_name}.#{__method__}:#{function}:"
 			LOG.debug (fname){"from=#{from} function=#{function}"}
 			rel=::Relation.find_by_name(function)
-			LOG.debug (fname){"rel=#{rel}"}
+			#LOG.debug (fname){"rel=#{rel}"}
 			if self.respond_to?(:owner)
 			own = self.owner
 			else
@@ -605,7 +653,7 @@ module Models
 			if !st
 				link_from=nil
 			end
-			LOG.debug (fname){"link_from=#{link_from}"}
+			#LOG.debug (fname){"link_from=#{link_from}"}
 			link_from
 		end
 
@@ -618,6 +666,18 @@ module Models
 				end
 			end
 			LOG.debug (fname){"self.model_name=#{self.model_name}  status?:#{self.respond_to? :statusobject} ret=#{ret}"}
+			ret
+		end
+
+		def have_errors?
+			fname= "#{self.model_name}.#{__method__}"
+			ret=false
+			unless self.errors.nil?
+				if self.errors.size>0
+				ret=true
+				end
+			end
+			LOG.debug (fname){"errors=#{self.errors.size} ret=#{ret}"}
 			ret
 		end
 

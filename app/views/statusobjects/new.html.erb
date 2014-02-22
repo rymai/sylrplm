@@ -1,7 +1,9 @@
 <h1>New statusobject</h1>
+<%fonct="new"%>
 <% form_for(@statusobject) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "statusobjects/edit",:locals => { :f => f, :fonct=>"new" }) %>
-<%= render(:partial => "shared/menu_new", :locals => {:object => @statusobject, :f => f}) %>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @statusobject, :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "statusobjects/edit",:locals => { :f => f, :fonct=>fonct }) %>
+<%= render(:partial => "shared/submit_new", :locals => {:object => @statusobject, :f => f, :fonct=>fonct}) %>
 
 <% end %>

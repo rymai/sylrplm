@@ -2,14 +2,17 @@
 	<legend>
 		<%= t(:legend_group) %>
 	</legend>
-	<%= f.label t("label_name") %>
+	<%= f.label t(:label_name) %>
 	<%= f.text_field :name %>
 	<br/>
-	<%= f.label t("label_group_father") %>
+	<%= f.label t(:label_group_father) %>
 	<%= f.collection_select(:father_id, @group.others, :id, :name,  {:include_blank => true}) %>
 	<br/>
-	<%= f.label t("label_group_users") %>
+	<%= f.label t(:label_group_users) %>
 	<%= select_inout(f, @group, User.all, :login) %>
+	<br/>
+	<%= f.label t(:label_group_volumes) %>
+	<%= select_inout(f, @group, Volume.all, :name) %>
 	<%= h_input_domain(f) %>
 	<br />
 </fieldset>

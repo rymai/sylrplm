@@ -244,6 +244,13 @@ ActiveRecord::Schema.define(:version => 0) do
 
 	add_index "groups_users", ["user_id", "group_id"], :name => "index_groups_users_on_user_id_and_group_id", :unique => true
 
+	create_table "groups_volumes", :id => false, :force => true do |t|
+		t.integer "group_id", :null => false
+		t.integer "volume_id",  :null => false
+		t.string  "domain"
+	end
+	add_index "groups_volumes", ["volume_id", "group_id"], :name => "index_groups_volumes_on_volume_id_and_group_id", :unique => true
+
 	create_table "history_entry", :force => true do |t|
 		t.string   "source",      :null => false
 		t.string   "event",       :null => false
@@ -286,7 +293,8 @@ ActiveRecord::Schema.define(:version => 0) do
 	add_index "links", ["child_typesobject_id"], :name => "index_links_on_child_typesobject_id"
 	add_index "links", ["father_plmtype"], :name => "index_links_on_father_plmtype"
 	add_index "links", ["father_typesobject_id"], :name => "index_links_on_father_typesobject_id"
-	add_index "links", ["group_id"], :name => "index_links_on_group_id"
+	add_index "links", ["father_id"], :name => "index_links_on_father_id"
+	add_index "links", ["child_id"], :name => "index_links_on_child_id"
 	add_index "links", ["owner_id"], :name => "index_links_on_owner_id"
 	add_index "links", ["projowner_id"], :name => "index_links_on_projowner_id"
 	add_index "links", ["relation_id"], :name => "index_links_on_relation_id"
@@ -423,7 +431,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "domain"
 	end
 
-	add_index "relations_views", ["relation_id", "view_id"], :name => "index_relations_views_on_relation_id_and_view_id", :unique => true
+	add_index "relations_views", ["view_id", "relation_id" ], :name => "index_relations_views_on_relation_id_and_view_id", :unique => true
 
 	create_table "roles", :force => true do |t|
 		t.string   "title"
@@ -484,7 +492,8 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "domain"
 	end
 
-	add_index "statusobjects", ["forobject", "rank", "name"], :name => "index_statusobjects_on_object_and_rank_and_name", :unique => true
+	add_index "statusobjects", ["forobject", "rank","name"], :name => "index_statusobjects_on_object_and_rank_and_name", :unique => true
+	add_index "statusobjects", ["name"], :name => "index_statusobjects_on_name"
 
 	create_table "statusobjects_nexts", :id => false, :force => true do |t|
 		t.integer  "statusobject_id",    :null => false
@@ -560,6 +569,7 @@ ActiveRecord::Schema.define(:version => 0) do
 	end
 
 	add_index "typesobjects", ["forobject", "name"], :name => "index_typesobjects_on_object_and_name", :unique => true
+	add_index "typesobjects", ["name"], :name => "index_typesobjects_on_name"
 
 	create_table "users", :force => true do |t|
 		t.string   "email"
@@ -608,6 +618,10 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "name"
 		t.string   "directory"
 		t.string   "protocol"
+		t.string   "encode"
+		t.string   "decode"
+		t.string   "compress"
+		t.string   "decompress"
 		t.text     "description"
 		t.datetime "created_at"
 		t.datetime "updated_at"

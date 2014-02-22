@@ -62,7 +62,7 @@ class DocumentsController < ApplicationController
 			format.xml  { render :xml => @document }
 		end
 	end
-	
+
 	# GET /documents/1/edit
 	def edit
 		fname= "#{self.class.name}.#{__method__}"
@@ -332,7 +332,7 @@ class DocumentsController < ApplicationController
 		@document = Document.find(params[:id])
 		#LOG.debug (fname){"document=#{@document.inspect}"}
 		ctrl_add_datafile(@document)
-	#LOG.debug (fname){"datafile=#{@datafile.inspect}"}
+		LOG.debug (fname){"datafile=#{@datafile.inspect}"}
 	end
 
 	def add_docs
@@ -353,14 +353,14 @@ class DocumentsController < ApplicationController
 
 	def show_
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug (fname){"params=#{params.inspect}"}
 		define_view
 		@document  = Document.find(params[:id])
-		@relations = Relation.relations_for(@document)
+		#@relations = Relation.relations_for(@document)
 		@tree         						= build_tree(@document, @myparams[:view_id])
 		@tree_up      						= build_tree_up(@document, @myparams[:view_id] )
 		@object_plm = @document
-	#LOG.debug (fname){"taille tree=#{@tree.size}"}
+		LOG.debug (fname){"taille tree=#{@tree.size}"}
 	end
 
 	def index_

@@ -127,7 +127,11 @@ class Typesobject < ActiveRecord::Base
 		if self.respond_to? :fields
 			unless fields.blank?
 				#puts "get_fields_values:values=#{fields}"
+				begin
 				decod = ActiveSupport::JSON.decode(fields)
+				rescue Exception => e
+					puts "Error during field decoding:#{e}"
+				end
 			end
 		end
 		decod

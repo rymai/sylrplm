@@ -1,4 +1,5 @@
 <h1><%=t(:questions_show)%></h1>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @faq, :fonct=>"show"}) %>
 <p>
   <b><%=t(:label_question) %></b>
   <%=h @faq.question %>
@@ -9,4 +10,4 @@
   <%=h @faq.answer %>
 </p>
 
-<%= render(:partial => "shared/menu_show", :object => @faq) %>
+

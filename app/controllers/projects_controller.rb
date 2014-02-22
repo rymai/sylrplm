@@ -269,18 +269,19 @@ class ProjectsController < ApplicationController
 		fname= "#{controller_class_name}.#{__method__}"
 		define_view
 		@project = Project.find(params[:id])
-		@relations               = Relation.relations_for(@project)
+		#@relations               = Relation.relations_for(@project)
 		@documents=@project.documents
 		@parts=@project.parts
 		@customers=@project.customers_up
 		flash[:error] = "" if flash[:error].nil?
-		if @favori.get('document').count>0 && @relations["document"].count==0
+
+		if @favori.get('document').count>0 && @project.relations(:document).count==0
 			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_document))
 		end
-		if @favori.get('part').count>0 && @relations["part"].count==0
+		if @favori.get('part').count>0 && @project.relations(:part).count==0
 			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_part))
 		end
-		if @favori.get('user').count>0 && @relations["user"].count==0
+		if @favori.get('user').count>0 && @project.relations(:user).count==0
 			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
 		end
 		@tree         						= build_tree(@project, @myparams[:view_id], nil, 2)

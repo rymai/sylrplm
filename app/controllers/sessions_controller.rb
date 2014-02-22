@@ -3,6 +3,8 @@ class SessionsController < ApplicationController
 	skip_before_filter :authorize, :check_user
 	def new
 		#puts "sessions_controller.new"+params.inspect
+				@current_users = User.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+
 	end
 
 	def edit

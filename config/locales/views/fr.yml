@@ -1,6 +1,6 @@
 fr:
   # general
-  root_model_design: Modèle de conception de la tête de l'arbre
+  root_model_design: Modèle 2D/3D
   customer: client
   document: document
   part: article
@@ -185,7 +185,7 @@ fr:
   access_show: Détail autorisation
   access_new: Nouvel autorisation
   access_reset: Initialisation
-  access_new_dup: Duplication d' autorisation' 
+  access_new_dup: Duplication d' autorisation'
   # check
   legend_check: Renseignez les propriétés du check
   check_edit: Edition check
@@ -232,7 +232,10 @@ fr:
   label_volume: Volume
   label_repository: Nom complet
   label_content_type: Type de contenu
-  label_document: Document
+  label_datafile_document: Document
+  label_datafile_part: Article
+  label_datafile_project: Projet
+  label_datafile_customer: Client
   label_restore_file: Fichier à restaurer
   datafile_show_file: Voir le fichier
   datafile_download_file: Télécharger le fichier
@@ -308,6 +311,9 @@ fr:
   label_group_users: Membres
   label_group_user_ids_out: Autres utilisateurs
   label_group_user_ids_in: Utilisateurs
+  label_group_volumes: Volumes
+  label_group_volume_ids_out: Autres volumes
+  label_group_volume_ids_in: Volumes
   label_group_father: Groupe père
   # help
   help_title: Aide relative à l application SYLRPLM
@@ -362,7 +368,7 @@ fr:
   legend_clipboard: Presse papier
   submit: GO
   CV: Curriculum vitae
-  first_use: Si vous débutez, vous pouvez profiter de la prise en main (%{help}) avant de lire complètement la documentation ci dessous
+  first_use: Si vous débutez, vous pouvez profiter de la prise en main (%{help}) avant de lire complètement la <a href='/main/helpgeneral'>documentation dans l' aide</a>
   # notifications
   legend_notification: Renseignez les propriétés de la notification
   notification_edit: Edition notification
@@ -449,6 +455,10 @@ fr:
   label_asker: Demandeur
   label_responder: Répondeur
   # relation
+  relation_show: Détail d' une relation
+  relation_edit: Edition d' une relation
+  relation_new: Nouvelle relation
+  relation_list: Liste des relations
   legend_relation: Relation
   label_father_plmtype: PLMType du père
   label_father_type: Type du père
@@ -616,6 +626,13 @@ fr:
   label_directory: Répertoire
   label_protocol: Protocole
   label_volume_name: Nom du volume
+  label_volume_groups: Groupes
+  label_volume_group_ids_out: Autres groupes
+  label_volume_group_ids_in: Groupes
+  label_encode: Encodage
+  label_decode: Décodage
+  label_compress: Compression
+  label_decompress: Décompression
   # relations
   no_relation: "-----"
   specification: "Spécification"
@@ -626,6 +643,8 @@ fr:
   research: "Recherche"
   production: "Production"
   forum: Discussion
+  # session
+  session_user_password: Pour simplifier la prise en main, voici les utilisateurs disponibles, le mot de passe = le nom du user
   # workitems
   label_relation: Relation
   label_wfid: Processus

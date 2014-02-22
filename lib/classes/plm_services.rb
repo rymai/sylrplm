@@ -84,8 +84,8 @@ class PlmServices
 		ret_key=nil
 		prop_name=prop_name.to_s.strip
 		props.each do |key, value|
-			#LOG.debug(fname) {"key=#{key}, value=#{value}"}
-			unless value[prop_name].nil?
+		#LOG.debug(fname) {"key=#{key}, value=#{value}"}
+			unless value.nil? || value[prop_name].nil?
 			ret = value[prop_name]
 			ret_key=key
 			break
@@ -105,6 +105,15 @@ class PlmServices
 		#LOG.debug(fname) {"prop_name=#{prop_name}, atype_ident=#{atype_ident}, ret=#{ret} found in #{ret_key} properties"  }
 		end
 		ret
+	end
+
+	def self.set_property( atype_ident, prop_name, value)
+		params={}
+		params[:forobject] = ::SYLRPLM::PLM_PROPERTIES
+		params[:name] = atype_ident
+		params[:fields]={prop_name=>value}.to_json
+		type=::Typesobject.new(params)
+		type.save
 	end
 
 end

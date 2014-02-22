@@ -1,4 +1,5 @@
 <h1><%= t(:statusobjects_show)%></h1>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @statusobject, :fonct=>"show"}) %>
 <p>
 	<b><%= t(:label_object) %></b>
 	<%= h @statusobject.forobject %>
@@ -39,7 +40,7 @@
 	<b><%= t(:label_previous_status) %></b>
 	<%= h @statusobject.previous_statusobjects.collect {|st| "#{st.name}"} %>
 </p>
-<%= render(:partial => "shared/menu_show", :object => @statusobject) %>
+
 <% if false %>
 <hr>
 <h1><%= t(:document_list) %><%= @statusobject.documents.count %></h1>

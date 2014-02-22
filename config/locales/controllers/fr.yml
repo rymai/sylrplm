@@ -46,7 +46,8 @@ fr:
   ctrl_show_no_relation: "%{child_plmtype}(s) à copier mais il n'existe pas de relation entre '%{father_plmtype}' et '%{child_plmtype}'"
   legend_type_values: Valeurs spécifiques au type
   # access
-  ctrl_object_no_controlers: Controleurs non trouvés
+  ctrl_object_no_controlers: Controleurs non trouvés 
+  ctrl_actions_by_roles: Actions par rôle
   # application
   login_login: "Veuillez vous identifier pour accéder à cette fonctionnalité."
   label_project: "Projet-"

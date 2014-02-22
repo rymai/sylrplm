@@ -1,7 +1,9 @@
 <h1><%=t(:questions_new) %></h1>
+<%fonct="new"%>
 <% form_for(@faq) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "questions/edit",:locals => { :f => f, :fonct=>"new" }) %>
-<%= render(:partial => "shared/menu_new", :locals => {:object => @faq, :f => f}) %>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @faq, :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "questions/edit",:locals => { :f => f, :fonct=>fonct }) %>
+<%= render(:partial => "shared/submit_new", :locals => {:object => @faq, :f => f, :fonct=>fonct}) %>
 
 <% end %>

@@ -1,34 +1,39 @@
-def build_scad_datafile(obj)
+def build_model_datafile(obj, datatype)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	LOG.debug (fname) {"obj=#{obj}"}
+	if(datatype=="scad")
 	ret="#{obj.read_file} \n"
 	ret << "#{obj.filename.split(".")[0]}();\n"
+	end
+	ret
 end
-
-              
-def build_scad(obj, tree)
+           
+def build_model(obj, tree, datatype)
+	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	LOG.debug (fname) {"obj=#{obj.inspect}"}
 	ret="module #{obj.ident}() {\n"
 	nodes = tree.nodes
 	mx=nil
 	files=[]
 	nodes.each do |nod|
-		read_node(nod, ret, mx, files)
+		read_node(nod, datatype, ret, mx, files)
 	end
 	files.each do |datafile|
+		LOG.debug (fname) {"datafile=#{datafile.inspect}"}
 		ret<<"#{datafile.read_file} \n"
 	end
 	ret << "}\n"
 	ret << "#{obj.ident}();\n"
 end
 
-def build_scad_file(obj, tree)
+def build_model_file_obsolete(obj, tree, datatype)
 	file = File.open("#{Rails.root}/public/tmp/#{obj.ident}.scad", "w+")
 	file.write("module #{obj.ident}() {\n")
 	nodes = tree.nodes
 	mx=nil
 	files=[]
 	nodes.each do |nod|
-		read_node(nod, file, mx, files)
+		read_node(nod, datatype, file, mx, files)
 	end
 	files.each do |datafile|
 		file.write("#{datafile.read_file} \n")
@@ -39,7 +44,7 @@ def build_scad_file(obj, tree)
 	file
 end
 
-def read_node(node, content, mx, files)
+def read_node(node, datatype, content, mx, files)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	lnk = Link.find(node.id)
 	child = PlmServices.get_object(lnk.child_plmtype, lnk.child_id)
@@ -47,30 +52,48 @@ def read_node(node, content, mx, files)
 	rb_values = nil
 	if lnk.child_plmtype == "document"
 		child.datafiles.each do |datafile|
-			LOG.debug (fname) {"datafile.typesobject.name=#{datafile.typesobject.name}"}
-			if datafile.typesobject.name == "scad"
+			LOG.debug (fname) {"datafile=#{datafile.inspect} datafile.typesobject.name=#{datafile.typesobject.name}"}
+			if datafile.typesobject.name == datatype
 				files << datafile unless files.include?(datafile)
+				rb_values = OpenWFE::Json::from_json(lnk.values)
 				mx=rb_values["matrix"] unless rb_values.nil?
 				LOG.debug (fname) {"write(#{datafile.ident} filename=#{datafile.filename} mx=#{mx}"}
 				if mx.nil?
 				content<<"\t#{datafile.filename.split(".")[0]}();\n"
 				else
-				
-				content<<"\ttranslate([#{mx["DX"]}, #{mx["DY"]}, #{mx["DZ"]}]) #{datafile.filename.split(".")[0]}();\n" 
+					content<<"\trotate([#{mx["RX"]}, #{mx["RY"]}, #{mx["RZ"]}])" unless mx["RX"].zero? && mx["RY"].zero? && mx["RZ"].zero? 	
+				  content<<"\ttranslate([#{mx["DX"]}, #{mx["DY"]}, #{mx["DZ"]}])" unless mx["DX"].zero? && mx["DY"].zero? && mx["DZ"].zero? 
+				  content<<"#{datafile.filename.split(".")[0]}();\n" 
 				end
 			end
 		end
 	elsif lnk.child_plmtype == "part"
 		rb_values = OpenWFE::Json::from_json(lnk.values)
 		mx = rb_values["matrix"] unless rb_values.nil?
+		yamx=false
+		unless mx.nil?
+			
+			unless mx["RX"].zero? && mx["RY"].zero? && mx["RZ"].zero? 
+				content<<"\trotate([#{mx["RX"]}, #{mx["RY"]}, #{mx["RZ"]}])" 
+				yamx=true	
+			end
+			unless mx["DX"].zero? && mx["DY"].zero? && mx["DZ"].zero? 
+				content<<"\ttranslate([#{mx["DX"]}, #{mx["DY"]}, #{mx["DZ"]}])" 
+				yamx=true
+			end
+			content <<"{" if yamx==true
+		end
 		nodes = node.nodes
 		nodes.each do |nod|
-			read_node(nod, content, mx, files)
+			read_node(nod, datatype, content, mx, files)
 		end
+		content <<"}" if yamx==true
 	end
 end
 
-def read_node_file(node, file, mx, files)
+
+
+def read_node_file(node, datatype, file, mx, files)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	lnk = Link.find(node.id)
 	child = PlmServices.get_object(lnk.child_plmtype, lnk.child_id)
@@ -79,7 +102,7 @@ def read_node_file(node, file, mx, files)
 	if lnk.child_plmtype == "document"
 		child.datafiles.each do |datafile|
 			LOG.debug (fname) {"datafile.typesobject.name=#{datafile.typesobject.name}"}
-			if datafile.typesobject.name == "scad"
+			if datafile.typesobject.name == datatype
 				files << datafile unless files.include?(datafile)
 				mx=rb_values["matrix"] unless rb_values.nil?
 				LOG.debug (fname) {"write(#{datafile.ident} filename=#{datafile.filename} mx=#{mx}"}
@@ -96,7 +119,7 @@ def read_node_file(node, file, mx, files)
 		mx = rb_values["matrix"] unless rb_values.nil?
 		nodes = node.nodes
 		nodes.each do |nod|
-			read_node(nod, file, mx, files)
+			read_node(nod, datatype, file, mx, files)
 		end
 	end
 end
@@ -179,7 +202,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 		# on teste si une des effectivites du lien est comprise dans la variante en cours
 		#
 			link_effectivities = link.effectivities
-			LOG.debug (fname) {"link=#{link.inspect}"}
+			#LOG.debug (fname) {"link=#{link.inspect}"}
 			LOG.debug (fname) {"link_effectivities=#{link.effectivities.inspect}"} unless link.effectivities.nil?
 			unless link_effectivities.nil?
 				if link_effectivities.count==0
@@ -262,15 +285,18 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 					html_options = {
 						:alt => "alt:"+child.ident_plm
 					}
-					#LOG.debug (fname){"options=#{options.inspect}"}
-					cnode = Node.new(options)
-					follow_tree(root, cnode, child, relations, var_effectivities, level+=1, level_max)
-					#taille du noeud
-					cnode.label+="(#{cnode.size})" if cnode.size>0
-					unless snode.nil?
-					snode << cnode
-					else
-					node << cnode
+					unless relation.stop_tree?
+						LOG.debug (fname){"options=#{options.inspect}"}
+						cnode = Node.new(options)
+						LOG.debug (fname){"level=#{level} root=#{root} father=#{father} child=#{child} "}
+						follow_tree(root, cnode, child, relations, var_effectivities, level+=1, level_max)
+						#taille du noeud
+						cnode.label+="(#{cnode.size})" if cnode.size>0
+						unless snode.nil?
+						snode << cnode
+						else
+						node << cnode
+					end
 					end
 				else
 				# on parcours la branche sans afficher ce noeud
@@ -408,7 +434,7 @@ def tree_organization(node, father)
 				LOG.warn (fname){e}
 			end
 		end
-	LOG.debug (fname){"node=#{node.inspect}"}
+	#LOG.debug (fname){"node=#{node.inspect}"}
 	node
 end
 #------------------------------------------------------

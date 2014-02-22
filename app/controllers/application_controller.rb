@@ -4,7 +4,7 @@ require_dependency 'controllers/plm_object_controller_module'
 require_dependency 'error_reply'
 
 class ApplicationController < ActionController::Base
-  include ::Controllers::PlmObjectControllerModule
+  include Controllers::PlmObjectControllerModule
 
   helper :all # include all helpers, all the time
   helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?, :get_domain, :get_list_modes
@@ -12,12 +12,67 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
   filter_parameter_logging :password
+  
+  # bug: page non affichee before_render :check_access_data
 
   before_filter LogDefinitionFilter
 
   before_filter :authorize, :except => [:index, :init_objects]
   before_filter :define_variables
   before_filter :set_locale
+  before_filter :active_check
+
+	def active_check
+    @my_filter = true
+  end
+  def render(*args)
+    st = check_access_data(args) if @my_filter
+    if st
+    	super
+    else
+    	redirect_to_main(nil ,"Data access forbidden")
+    end
+  end
+  
+	def check_access_data(*args)
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname) {"************** args=#{args}"}
+		##############instance_variable_names.each  {|vi| LOG.debug (fname) {"#{vi} = #{eval vi}"}}
+		#@current_user = syl/creator/SICM/
+		#index:
+		#@_params = {"controller"=>"documents", "action"=>"index"}
+		#@documents = {:recordset=>[#<Document id: 2, owner_id: 101, typesobject_id: 873691851, statusobject_id: 4, next_status_id: nil, previous_status_id: nil, ident: "DOC000064", revision: "0", designation: "Designation document", description: "", date: "2013-12-07", created_at: "2013-12-07 09:45:44", updated_at: "2013-12-07 09:45:44", group_id: 101, projowner_id: 2, domain: "", type_values: nil>], :query=>nil, :page=>nil, :total=>1, :nb_items=>nil, :conditions=>["( group_id in (101) or projowner_id in (2))", {}]}
+		#show
+		#@_params = {"controller"=>"documents", "action"=>"show", "id"=>"2", "view_id"=>1}
+		#@document = DOC000064/0-Designation document-cdc-inwork
+		#edit
+		#@_params = {"controller"=>"documents", "action"=>"edit", "id"=>"2"}
+		#@document = DOC000064/0-Designation document-cdc-inwork
+		#@types = [#<Typesobject id: 1016696961, forobject: "document", n...
+		#new
+		#@_params = {"controller"=>"documents", "action"=>"new"}
+		#@document = DOC000067/0-Designation document-directory-inwork
+		#@types = [#<Typesobject id: 1045584116, forobject: "document", name: "any_type", fields: "{}", description: "", created_at: "2013-12-06 17:53:07", updated_at: "2013-12-06 17:53:07", domain: "admin">, #<Typesobject id: 1016696961, forobject: "document", name: "calculsheet", fields: "{\"ref_doc\": \"\"}", description: "Feuille de calcul", created_at: "2013-12-06 17:53:07", updated_at: "2013-12-06 17
+		#edit_lifecycle
+		#@_params = {"controller"=>"documents", "action"=>"edit_lifecycle", "id"=>"2"}
+		#@document = DOC000064/0-Designation document-cdc-inwork
+		#add_favori
+		#@_params = {"authenticity_token"=>"1UofyUu3oSh/gswSNcrVVuiSklPBsIroOCERrKBZEEc=", "controller"=>"documents", "action"=>"add_favori", "id"=>"2"}
+		#dupliquer
+		#@_params = {"controller"=>"documents", "action"=>"new_dup", "id"=>"2"}
+		#@object_orig = DOC000064/0-Designation document-cdc-inwork
+		#@object = DOC000069/0-Designation document-cdc-inwork
+		#@document = DOC000069/0-Designation document-cdc-inwork
+		#@types = [#<Typesobject id: 1045584116, forobject: "document", name: "any_type", fiel
+		#
+		#
+		if @_params[:controller]=="main" && @_params[:action]=="index"
+			ret=true
+		else
+			ret=true #false
+		end
+		ret
+	end
 
   def update_accessor(obj)
     mdl_name = obj.model_name
@@ -117,7 +172,7 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    puts "fin de set_locale"
+    #puts "fin de set_locale"
   end
   
   # definition du domain en cours
@@ -159,6 +214,7 @@ class ApplicationController < ActionController::Base
     WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
     WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
   	@myparams = params
+		Datafile.host=request.host
   	#puts "fin de define_variables"
   end
   
@@ -173,7 +229,7 @@ class ApplicationController < ActionController::Base
   end
 
   # redirection vers l'action index du main si besoin
-  def redirect_to_main(uri, msg=nil)
+  def redirect_to_main(uri=nil, msg=nil)
     flash[:notice] = msg if msg
     redirect_to(uri || { :controller => "main", :action => "index" })
   end
@@ -291,7 +347,7 @@ class ApplicationController < ActionController::Base
           redirect_to new_sessions_url
       end
     end
-    puts "fin de authorize"
+    #puts "fin de authorize"
   end
 
   def current_user
@@ -318,7 +374,7 @@ class ApplicationController < ActionController::Base
 
   def icone(obj)
   	fname="#{controller_class_name}.#{__method__}"
-    unless obj.model_name.nil? || obj.typesobject.nil?
+    unless obj.model_name.nil? || !obj.respond_to?(:typesobject) || obj.typesobject.nil?
       ret = "/images/#{obj.model_name}_#{obj.typesobject.name}.png"
       unless File.exist?("#{RAILS_ROOT}/public#{ret}")
         ret = "/images/#{obj.model_name}.png"

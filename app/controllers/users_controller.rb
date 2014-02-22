@@ -174,6 +174,7 @@ class UsersController < ApplicationController
 		@themes  = get_themes(@theme)
 		@time_zones = get_time_zones(@the_user.time_zone)
 		@subscriptions = Subscription.all
+		@volumes = Volume.find_all
 	end
 
 	# GET /users/1/account_edit_passwd
@@ -186,6 +187,7 @@ class UsersController < ApplicationController
 		@the_user    = User.find(params[:id])
 		@themes  = get_themes(@theme)
 		@time_zones = get_time_zones(@the_user.time_zone)
+		@volumes = Volume.find_all
 		#puts "users_controller.update:password=#{params[:user][:password]}"
 		ok=true
 		unless params[:user][:password].nil?

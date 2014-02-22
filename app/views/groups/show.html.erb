@@ -1,4 +1,5 @@
 <h1><%= t("group_show") %><%= h @group.name %></h1>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @group, :fonct=>"show"}) %>
 <table>
 	<tr>
 		<td class="wide-first-col">id</td>
@@ -17,9 +18,4 @@
 		<td><%= @group.father_name %></td>
 	</tr>
 </table>
-<table class='menu_bas'>
-	<tr>
-		<td><%= link_to t("edit"), edit_group_path(@group)  %></td>
-		<td><%= link_to t("list"),  groups_path %></td>
-	</tr>
-</table>
+

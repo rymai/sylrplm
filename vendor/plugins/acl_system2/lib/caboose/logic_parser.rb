@@ -12,7 +12,7 @@ module Caboose
           else
             role_title=""
           end
-      #puts "process:string=#{logicstring} role=#{role_title}"
+      ###puts "process:string=#{logicstring} role=#{role_title}"
       # if logicstring contains any parenthasized patterns, call process recursively on them
       while logicstring =~ /\(/
         logicstring.sub!(/\(([^\)]+)\)/) {

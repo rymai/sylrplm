@@ -1,8 +1,9 @@
 <h1><%= t("customer_new") %></h1>
+<% fonct="new"%>
 <% form_for(@customer) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "customers/edit",:locals => { :f => f, :fonct=>"new" }) %>
-<h1></h1>
-<%= render(:partial => "shared/menu_new", :locals => {:object => @customer, :f => f}) %>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @customer, :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "customers/edit",:locals => { :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "shared/submit_new", :locals => {:object => @customer, :f => f, :fonct=>fonct}) %>
 
 <% end %>

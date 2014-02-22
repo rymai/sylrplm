@@ -32,6 +32,21 @@ module HelpHelper
 		help
 	end
 
+	def h_help_key(key)
+
+		#ret = h_help_elem(h_help_root, key)[:el]
+		#puts "h_help_key(#{key})=(#{ret.count})#{ret.inspect}"
+		#ret.each do |tt|
+		#puts "h_help_key(#{key})=#{tt.inspect}"
+		#end
+		#ret=h_help_replace(ret)
+		elem = h_elem_key(key)
+		puts "h_help_key(#{key})elem=#{elem}"
+		ret = h_help_level(elem, false)
+		puts "h_help_key(#{key})=#{ret}"
+		ret
+	end
+
 	def h_help_elem(elem,key)
 		helem=nil
 		el = elem.elements["msg[@key='#{key}']"]
@@ -149,23 +164,45 @@ module HelpHelper
 		filename = dirname+"/help_"+I18n.locale.to_s+".html"
 	end
 
-	def h_help_level(elem)
+	def h_elem_key(key, parent=nil)
+		ret=nil
+		if parent.nil?
+			parent = h_help_root
+		end
+		parent.elements.each("msg") { |element|
+			if(element.attributes["key"]) == key.to_s
+				puts "h_elem_key:key=#{key} element=#{element.inspect}"
+			ret = element
+			break
+			else
+				ret= h_elem_key(key, element)
+			end
+		}
+		ret
+	end
+
+	def h_help_level(elem, with_anchor=true)
+		puts "h_help_level:with_anchor=#{with_anchor} #{elem} "
 		msg=""
 		msg+="<ul class='help_key'>\n"
-		if elem.attributes["title"]!=nil
-			msg+="<a class='help_tr' name='"+elem.attributes["key"]+"'></a>\n"
-			if(elem.attributes["href"]!=nil)
-				msg+="<a class='help_tr' href='"+elem.attributes["href"]+"'>"+elem.attributes["title"]+"</a>\n"
+		unless elem.attributes["title"].nil?
+			if with_anchor==true
+				msg+="<a class='help_tr' name='"+elem.attributes["key"]+"'></a>\n"
+				if(elem.attributes["href"]!=nil)
+					msg+="<a class='help_tr' href='"+elem.attributes["href"]+"'>"+elem.attributes["title"]+"</a>\n"
+				else
+					msg+="<a class='help_tr' >"+elem.attributes["title"]+"</a>\n"
+				end
+				msg+="<a class='help_tr' href='#help_summary'>"+h_img_tit("help_upper",t(:help_summary))+"</a>\n"
 			else
-				msg+="<a class='help_tr' >"+elem.attributes["title"]+"</a>\n"
+				msg+="<b>#{elem.attributes["title"]}</br></b>"
 			end
-			msg+="<a class='help_tr' href='#help_summary'>"+h_img_tit("help_upper",t(:help_summary))+"</a>\n"
 		end
 		msg+=h_help_transform(elem.text)
 		msg+=h_help_ul(elem)
 		elem.elements.each("msg") { |element|
 			msg+="<li class='help_key'>\n"
-			msg+=  h_help_level(element)
+			msg+=  h_help_level(element, with_anchor)
 			msg+="</li>\n"
 		}
 		msg+="</ul>\n"
@@ -231,30 +268,37 @@ module HelpHelper
 	def h_help_transform(hlp)
 		txt=hlp
 		special=true
-		decode=""
+		#decode=""
 		txt.each_byte do |c|
-			decode+=c.to_s+" "
+		#decode+=c.to_s+" "
 			if c!=10 && c!=13 && c!=32 && c!='\t'
 			special=false
 			end
 		end
 		if !special
-			#puts "h_help_transform:"+txt.length.to_s+":"+txt
-			txt.gsub!('\n\n','\n')
-			txt.gsub!('\n','<br/>')
-			txt.gsub!(10.chr,'<br/>')
-			txt.gsub!('\t','')
-			txt.gsub! /#hlp=(.+?)=hlp#/,
-			"<img class='help' id='\\1' src='/images/help.png' onclick=\"return helpPopup('\\1');\"></img>"
-			txt.gsub! /#img=(.+?)=img#/,
-			"<img class='help_tr' src='/images/\\1'></img>"
-			txt.gsub! /#jump=(.+?)=jump#/,
-			"<a class='help_tr' href='#\\1' target='_top'>"+t(:help_jump)+"</a>"
-			txt.gsub! /#lnk=(.+?)=lnk#/,
-			"<a class='help_tr' href='\\1' target='_blank' title='"+t(:help_lnk_acces)+"'><img src='/images/submit.png'></img></a>"
+			txt = h_help_replace(txt)
 		end
-
 		txt+"\n"
+	end
 
+	def h_help_replace(txt)
+		#puts "h_help_transform:"+txt.length.to_s+":"+txt
+		txt.gsub!('#br#','<br/>')
+		txt.gsub!('\n\n','\n')
+		###txt.gsub!('\n','<br/>')
+		txt.gsub!(':'+10.chr,':<br/>')
+		txt.gsub!('.'+10.chr,'.<br/>')
+		txt.gsub!('\t','')
+		
+		txt.gsub! /#hlp=(.+?)=hlp#/,
+		"<img class='help' id='\\1' src='/images/help.png' onclick=\"return helpPopup('\\1');\"></img>"
+		txt.gsub! /#img=(.+?)=img#/,
+		"<img class='help_tr' src='/images/\\1'></img>"
+		txt.gsub! /#jump=(.+?)=jump#/,
+		"<a class='help_tr' href='#\\1' target='_top'>"+t(:help_jump)+"</a>"
+		txt.gsub! /#lnk=(.+?)=lnk#/,
+		"<a class='help_tr' href='\\1' target='_blank' title='"+t(:help_lnk_acces)+"'><img src='/images/submit.png'></img></a>"
+		
+		txt
 	end
 end

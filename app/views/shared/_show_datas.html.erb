@@ -1,0 +1,20 @@
+
+<% unless User.count == 0 %> <h1><%= t(:datas_in_database) %></h1>
+<table>
+	<tr>
+		<% @datas.each do |domain, values| %> <th> <%= t("ctrl_#{domain}") %></th>
+		<% end %>
+	</tr>
+	<tr>
+		<% @datas.each do |domain, values| %> <td>
+		<table>
+			<% @datas[domain].each do |key, value| %>
+			<tr class='<%= cycle("even", "odd") %>'>
+				<td> <%= @datas[domain][key] %></td>
+				<td> <%= t("ctrl_#{key}") %></td>
+			</tr>
+			<% end %>
+		</table> <% end %> </td>
+	</tr>
+</table>
+<% end %> 

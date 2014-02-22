@@ -128,6 +128,7 @@ module Models
 		end
 
 		def next_revision
+			fname= "#{self.model_name}.#{__method__}"
 			next_revision = self.revision
 			found = false
 			modl = eval self.class.name
@@ -135,6 +136,7 @@ module Models
 				next_revision = next_revision.next
 				obj=nil
 				begin
+					LOG.debug (fname){"find_by_ident_and_revision"}
 					obj = modl.find_by_ident_and_revision(self.ident, next_revision)
 					if obj.nil?
 					found = true
@@ -146,7 +148,6 @@ module Models
 			next_revision
 		end
 
-		
 		# a valider si avant dernier status
 		def could_validate?
 			mdl = model_name
@@ -308,8 +309,8 @@ module Models
 			ret
 		end
 
-		def relations
-			Relation.relations_for(self)
+		def relations(child_plmtype = nil)
+			::Relation.relations_for(self, child_plmtype)
 		end
 
 		def link_relation
@@ -456,16 +457,7 @@ module Models
 			end
 		end
 
-		def before_destroy
-			#unless Favori.get(self.model_name).count.zero?
-			#  raise "Can't delete because of links:"+self.ident
-			#end
-			if ::Link.linked?(self)
-				#raise "Can't delete "+self.ident+" because of links:"
-				self.errors.add_to_base "Can't delete "+self.ident+" because of links"
-			return false
-			end
-		end
+
 
 		def initialize(*args)
 			fname= "#{self.class.name}.#{__method__}"
@@ -482,7 +474,7 @@ module Models
 				self.typesobject = ::Typesobject.get_default(self)
 				end
 			end
-			
+
 			if (self.respond_to? :statusobject)
 				if args.size>0 && (!args[0].include?(:statusobject_id))
 				self.statusobject = ::Statusobject.get_first(self)
@@ -501,31 +493,7 @@ module Models
 
 		end
 
-		def before_save
-			fname= "#{self.class.name}.#{__method__}"
-			#LOG.debug (fname) {"***************************************"}
-			if (self.respond_to? :owner) && (self.respond_to? :group)
-				unless owner.nil?
-					unless  owner.group.nil?
-						self.group     = owner.group
-					else
-						self.group     = owner.groups[0]
-					end
-				#LOG.info (fname) {"owner=#{owner} group=#{group}"}
-				end
-			end
-			if (self.respond_to? :owner) && (self.respond_to? :projowner)
-				unless owner.nil?
-					unless owner.project.nil?
-						self.projowner = owner.project
-					else
-						self.projowner = owner.projects[0]
-					end
-				#LOG.info (fname) {"owner=#{owner}  projowner=#{projowner}"}
-				end
-			end
-
-		end
+		
 
 		# identifiant informatique : model + id
 		def mdlid
@@ -559,8 +527,6 @@ module Models
 			ret = { :recordset => ret, :total => ret.length }
 			ret
 		end
-
-		
 
 	end
 end

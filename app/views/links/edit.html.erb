@@ -3,6 +3,7 @@
   form_id=fonct+"_link" %>
 <% form_for(@link, :html => { :id => form_id }) do |f| %>
 <%= f.error_messages %>
+<%= render(:partial => "shared/menu_edit",:locals => { :object => @link, :f => f, :fonct=>fonct}) %>
 <%= render(
 :partial => "links/edit",
 :locals => {
@@ -10,6 +11,6 @@
 :fonct => fonct,
 :form_id => form_id }
 ) %>
-<%= render(:partial => "shared/menu_edit",:locals => { :object => @link, :f => f}) %>
+<%= render(:partial => "shared/submit_edit",:locals => { :object => @link, :f => f, :fonct=>fonct}) %>
 
 <% end %>

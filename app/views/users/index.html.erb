@@ -15,53 +15,8 @@
 	</tr>
 </table>
 <% end %>
-<table>
-	<tr>
-		<th <%= sort_td_class_helper "login" %>><%= sort_link_helper t(:label_login), "login" %> </th>
-		<th <%= sort_td_class_helper "role_id" %>><%= sort_link_helper t(:label_role), "role_id" %> </th>
-		<th <%= sort_td_class_helper "group_id" %>><%= sort_link_helper t(:label_group), "group_id" %> </th>
-		<th <%= sort_td_class_helper "project_id" %>><%= sort_link_helper t(:label_project), "project_id" %> </th>
-		<th <%= sort_td_class_helper "last_revision" %>><%= sort_link_helper t(:label_last_revision), "last_revision" %> </th>
-		<th <%= sort_td_class_helper "check_automatic" %>><%= sort_link_helper t(:label_check_automatic), "check_automatic" %> </th>
-		<th <%= sort_td_class_helper "mail" %>><%= sort_link_helper t(:label_email), "email" %> </th>
-		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %> </th>
-		<th <%= sort_td_class_helper "volume_id" %>> <%= sort_link_helper t("label_volume"), "volume_id" %> </th>
-		<th <%= sort_td_class_helper "subscription_id" %>> <%= sort_link_helper t("label_subscription"), "subscription_id" %> </th>
-		<th><%= t(:label_groups) %> </th>
-		<th><%= t(:label_roles) %> </th>
-		<th><%= t(:label_projects) %> </th>
-	</tr>
-	<% for user in @current_users[:recordset] %>
-	<tr class='<%= cycle("even", "odd") %>'>
-		<td>
-			<% unless param_equals?("todo", "select") %>
-		<%= h_explorer user, :login %>
-		<% else %>
-		<%= user.login %>
-		<% end %>
-		</td>
-		<td><%= h_explorer user.role unless user.role.nil? %></td>
-		<td><%= h_explorer user.group unless user.group.nil? %></td>
-		<td><%= h_explorer user.project unless user.project.nil? %></td>
-		<td> <%= user.last_revision %></td>
-		<td> <%= user.check_automatic %></td>
-		<td> <%= user.email %></td>
-		<td> <%= h_explorer user.typesobject, :name %></td>
-		<td> <%= h_explorer user.volume, :name %></td>
-		<td><%= h_explorer user.subscription unless user.subscription.nil? %></td>
-		<td><%= h_value_or_default(comma_links(user.groups, :name),t(:msg_tobedefine)) %></td>
-		<td><%= h_value_or_default(comma_links(user.roles, :title),t(:msg_tobedefine)) %></td>
-		<td><%= h_value_or_default(comma_links(user.projects, :ident),t(:msg_tobedefine)) %></td>
-		<% unless param_equals?("todo", "select") %> <td> <%= link_to h_img(:edit), edit_user_path(user) %> </td><td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td>
-		<td> <%= link_to h_img(:duplicate), new_dup_user_path(user) %> </td>
-		<td> <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => user.id}, :method => :get if logged_in? %></td>
-		<% else %> <td>
-		<input type="button" value="select" class="btn-select" onclick="callSelect('<%= @myparams["html_ident"]%>','<%= user.id%>','<%= user.login%>')" />
-		</td>
-		<% end %>
-	</tr>
-	<% end %>
-</table>
+<%= render(:partial => "users/index",:locals => { :fonct => "index_users"}) %>
+
 <% unless param_equals?("todo", "select") %>
 <table class='menu_bas'>
 	<tr>

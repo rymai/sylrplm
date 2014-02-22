@@ -16,9 +16,23 @@
 	<%= f.select( :protocol, Volume.protocol_values) %>
 	<% end %>
 	<br/>
+	<%= f.label t(:label_encode) %>
+	<%= f.text_area :encode %>
+	<br/>
+	<%= f.label t(:label_decode) %>
+	<%= f.text_area :decode %>
+	<br/>
+	<%= f.label t(:label_compress) %>
+	<%= f.text_area :compress %>
+	<br/>
+	<%= f.label t(:label_decompress) %>
+	<%= f.text_area :decompress %>
+	<br/>
 	<%= f.label t(:label_description) %>
 	<%= f.text_area :description %>
 	<br/>
+	<%= f.label t(:label_volume_groups) %>
+	<%= select_inout(f, @volume, Group.all, :name) %>
 	<%= h_input_text(f ,:domain) %>
 	<br />
 </fieldset>

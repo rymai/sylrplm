@@ -1,8 +1,7 @@
 <h1><%= t("group_new") %></h1>
 <% form_for(@group) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "groups/edit",:locals => { :f => f, :fonct=>"new" }) %>
-
 <%= render(:partial => "shared/menu_new", :locals => {:object => @group, :f => f}) %>
-
+<%= render(:partial => "groups/edit",:locals => { :f => f, :fonct=>"new" }) %>
+<%= render(:partial => "shared/submit_new", :locals => {:object => @group, :f => f}) %>
 <% end %> 

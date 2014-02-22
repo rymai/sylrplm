@@ -2,7 +2,6 @@
 <% fonct="show" %>
 <% form_for(@the_user, :html => { :id => h_form_html_id(@the_user, fonct) }) do |f| %>
 <%= f.error_messages %>
+<%= render(:partial => "shared/menu_show",:locals => { :object => @the_user, :fonct => fonct, :f => f }) %>
+<%= render(:partial => "users/"+fonct,:locals => { :user => @the_user, :fonct => fonct, :f => f }) %>
 <% end %>
-<%= render(:partial => "users/"+fonct,:locals => { :user => @the_user, :fonct => fonct }) %>
-<%= render(:partial => "shared/menu_show", :object => @the_user) %>
-

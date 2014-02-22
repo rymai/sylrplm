@@ -1,7 +1,8 @@
 <h1><%= t("group_edit") %><%= h @group.name %></h1>
+<% fonct="edit" %>
 <% form_for(@group) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "groups/edit",:locals => { :f => f, :fonct=>"edit" }) %>
-
-<%= render(:partial => "shared/menu_edit",:locals => { :object => @group, :f => f}) %>
+<%= render(:partial => "shared/menu_edit",:locals => { :object => @group, :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "groups/edit",:locals => { :f => f, :fonct=>fonct }) %>
+<%= render(:partial => "shared/submit_edit",:locals => { :object => @group, :f => f, :fonct=>fonct}) %>
 <% end %> 

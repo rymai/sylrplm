@@ -1,7 +1,9 @@
 <h1><%= t(:notification_new) %></h1>
+<%fonct="new"%>
 <% form_for(@notification) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "notifications/edit",:locals => { :f => f, :fonct=>"new" }) %>
-<%= render(:partial => "shared/menu_new", :locals => {:object => @notification, :f => f}) %>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @notification, :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "notifications/edit",:locals => { :f => f, :fonct=>fonct }) %>
+<%= render(:partial => "shared/submit_new", :locals => {:object => @notification, :f => f, :fonct=>fonct}) %>
 
 <% end %> 

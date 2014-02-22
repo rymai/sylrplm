@@ -1,6 +1,8 @@
 <h1><%= t(:datafile_new) %></h1>
+<%fonct="new"%>
 <% form_for(@datafile , :html => { :multipart => true}) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f , :fonct=>"new", :document=>@document}) %>
-<%= render(:partial => "shared/menu_new", :locals => {:object => @datafile, :f => f}) %>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @datafile, :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f , :fonct=>fonct, :document=>@document}) %>
+<%= render(:partial => "shared/submit_new", :locals => {:object => @datafile, :f => f, :fonct=>fonct}) %>
 <% end %>

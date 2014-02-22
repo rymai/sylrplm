@@ -1,4 +1,5 @@
 <h1><%= t("document_show") %></h1>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @document, :fonct=>"show"}) %>
 <% fonct="show" %>
 <% form_for(@document, :html => { :id => h_form_html_id(@document, fonct) }) do |f| %>
 <%= f.error_messages %>
@@ -53,7 +54,7 @@
 <%end %>
 <% files = @document.get_datafiles%>
 <% if files[:total]>0%> <h1><%= t("datafiles_list") %></h1>
-<%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files, :document=>@document}) %>
+<%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files, :document=>@document, :part=>nil, :project=>nil, :customer=>nil }) %>
 <% end %> <!-- pas de fichier sous un repertoire -->
 <% unless @document.frozen? || @document.directory? %>
 <table class='menu_bas'>
@@ -115,20 +116,19 @@
 <% unless @favori.get('document').count==0 %> <h1></h1>
 <table class='menu_bas'>
 	<tr>
-		<% form_for(@document, :url => {:id => @document.id, :action => :add_docs }) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @relations["document"], :id, :ident)) %></td>
+		<% form_for(@document, :url => {:id => @document.id, :action => :add_docs }) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @document.relations(:document), :id, :ident)) %></td>
 		<td><%= submit_tag t("paste_documents") %></td>
 		<% end %>
 	</tr>
 	</td>
 </table>
 <%end%>
-<% unless @document.relations["forum"].count==0 %>
+<% unless @document.relations(:forum).count==0 %>
 <tr>
-	<% form_for(@document, :url => {:id => @document.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @document.relations["forum"], :id, :ident)) %></td>
+	<% form_for(@document, :url => {:id => @document.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @document.relations(:forum), :id, :ident)) %></td>
 	<td><%= submit_tag t("add_forum") %></td>
 	<% end %>
 </tr>
 <% end %>
 <h1></h1>
 
-<%= render(:partial => "shared/menu_show", :object =>@document) %>

@@ -1,7 +1,9 @@
 <h1><%= t(:datafile_show) %></h1>
 <% fonct="show" %>
+<%= render(:partial => "shared/menu_show", :locals=>{:object =>@datafile, :fonct=>fonct}) %>
 <% form_for(@datafile, :html => { :id => h_form_html_id(@datafile, fonct) }) do |f| %>
 <%= f.error_messages %>
+
 <p>
 	<b><%= t("label_ident") %></b>
 	<%= h @datafile.ident %>
@@ -13,6 +15,22 @@
 <p>
 	<b><%= t("label_revision") %></b>
 	<%= h @datafile.revision %>
+</p>
+<p>
+	<b><%= t("label_document") %></b>
+	<%= h @datafile.document %>
+</p>
+<p>
+	<b><%= t("label_part") %></b>
+	<%= h @datafile.revision %>
+</p>
+<p>
+	<b><%= t("label_project") %></b>
+	<%= h @datafile.project %>
+</p>
+<p>
+	<b><%= t("label_customer") %></b>
+	<%= h @datafile.customer %>
 </p>
 <p>
 	<b><%= t("label_volume") %></b>
@@ -44,5 +62,4 @@
 	<%= h @datafile.domain %>
 </p>
 <% end %>
-<%= render(:partial => "shared/menu_show", :object =>@datafile) %>
 

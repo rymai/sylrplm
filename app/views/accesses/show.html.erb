@@ -1,4 +1,5 @@
 <h1><%= t("access_show") %></h1>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @access, :fonct=>"show"}) %>
 <p>
 	<b><%= t("label_controller") %>:</b>
 	<%= h @access.controller %>
@@ -11,4 +12,3 @@
 	<b><%= t("label_role") %>:</b>
 	<%= h @access.roles %>
 </p>
-<%= render(:partial => "shared/menu_show", :object =>@access) %>

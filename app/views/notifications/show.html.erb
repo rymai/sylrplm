@@ -1,9 +1,4 @@
 <h1><%= t(:notification_show) %></h1>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @notification, :fonct=>"show"}) %>
 <%= render(:partial => "notifications/show") %> <h1></h1>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("edit"), edit_notification_path(@notification) %></td>
-		<td> <%= link_to t("new_notification"), new_notification_path %></td>
-		<td> <%= link_to t("list"), notifications_path %></td>
-	</tr>
 </table>

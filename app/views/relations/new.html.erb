@@ -1,7 +1,8 @@
 <h1>New relation</h1>
+<%fonct="new"%>
 <% form_for(@relation) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "relations/edit",:locals => { :f => f, :fonct=>"edit" }) %>
-<%= render(:partial => "shared/menu_new", :locals => {:object => @relation, :f => f}) %>
-
+<%= render(:partial => "shared/menu_new", :locals => {:object => @relation, :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "relations/edit",:locals => { :f => f, :fonct=>fonct }) %>
+<%= render(:partial => "shared/submit_new", :locals => {:object => @relation, :f => f, :fonct=>fonct}) %>
 <% end %> 

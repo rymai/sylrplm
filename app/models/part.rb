@@ -120,10 +120,6 @@ has_many :links_documents,
 	#  " or "+qry_owner+" or date LIKE ? "
 	end
 
-	def relations
-		Relation.relations_for(self)
-	end
-
 	def variants
 		fname= "#{self.class.name}.#{__method__}"
 		ret=[]

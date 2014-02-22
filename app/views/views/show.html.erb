@@ -1,4 +1,5 @@
 <h1><%= t(:views_show) %></h1>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @view, :fonct=>"show"}) %>
 <table>
 	<%= h_attribut_trtd(@view, :id) %>
 	<%= h_attribut_trtd(@view, :name) %>
@@ -8,4 +9,3 @@
 		<td><%= comma_links(@view.relations, :name) %></td>
 	</tr>
 </table>
-<%= render(:partial => "shared/menu_show", :object => @view) %>

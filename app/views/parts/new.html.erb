@@ -1,9 +1,10 @@
 <h1><%= t(:part_new) %></h1>
+<%fonct="new"%>
 <% form_for(@part) do |f| %>
 <%= hidden_field :part , :revision %>
 <%= f.error_messages %>
-<%= render(:partial => "parts/edit",:locals => { :f => f, :fonct=>"new" }) %>
-<h1></h1>
-<%= render(:partial => "shared/menu_new", :locals => {:object => @part, :f => f}) %>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @part, :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "parts/edit",:locals => { :f => f, :fonct=>fonct }) %>
+<%= render(:partial => "shared/submit_new", :locals => {:object => @part, :f => f, :fonct=>fonct}) %>
 
 <% end %>

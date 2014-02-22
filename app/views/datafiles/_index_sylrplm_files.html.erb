@@ -1,0 +1,48 @@
+<% all_cols=false%>
+<% unless files.nil? %>
+<table>
+	<tr>
+		<th>id</th>
+		<th>group_files</th>
+		<th>volume</th>
+		<th>protocol</th>
+		<th>volume_dir</th>
+		<th>datafile model</th>
+		<th>datafile</th>
+		<th>revision</th>
+		<th>filename</th>
+		<th>size</th>
+		<th>created</th>
+		<th>last_modified</th>
+		<th>last_acceded</th>
+		<th>owner</th>
+		<th>domain</th>
+	</tr>
+	<% files.each do |protocol, volumes| %>
+	<% volumes.each do |vol_name, files| %>
+	<% files.each do |file| %>
+	<tr class='<%= cycle("even", "odd") %>'>
+		<td> <%= file.id unless file.id.nil? %> </td>
+		<td> <%= protocol %> </td>
+		<td> <%= vol_name %> </td>
+		<td> <%= file.protocol %> </td>
+		<td> <%= file.volume_dir %> </td>
+		<td> <%= file.datafile_model %> </td>
+		<td> <%= file.datafile %> </td>
+		<td><%= file.revision%></td>
+		<td> <%= file.filename%> </td>
+		<td><%= file.size %></td>
+		<td><%= file.created_at %></td>
+		<td><%= file.updated_at %></td>
+		<td><%= file.acceded_at %></td>
+		<td><%= %></td>
+		<td><%= file.domain%></td>
+
+		<td><%= link_to h_img_destroy.to_s, {:file_id => file.id, :controller=> "datafiles",  :action => :del_sylrplm_file} unless file.id.nil?%></td>
+
+	</tr>
+	<% end %>
+	<% end %>
+	<% end %>
+</table>
+<% end %>

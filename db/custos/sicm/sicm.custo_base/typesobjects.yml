@@ -269,7 +269,7 @@ Typesobject_1045584130:
   id: "1045584130"
   forobject: sylrplm_properties
   name: tree
-  fields: "{\"TREE_ORDER\": [\"forum\", \"document\", \"part\", \"project\", \"customer\"], \"TREE_UP_ORDER\": [\"document\", \"part\", \"project\", \"customer\"], \"TREE_GROUP\": false}"
+  fields: "{\"TREE_ORDER\": [\"forum\", \"document\", \"part\", \"project\", \"customer\"], \"TREE_UP_ORDER\": [\"document\", \"part\", \"project\", \"customer\"], \"TREE_GROUP\": false, \"TREE_RELATION_STOP\": [\"FROM_REVISION\", \"FROM_DUPLICATE\"]}"
   description: ""
   domain: admin
 

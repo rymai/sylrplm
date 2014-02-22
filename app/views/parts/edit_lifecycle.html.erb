@@ -1,7 +1,7 @@
 <h1><%= t(:lifecycle_edit, :model => t(@part.model_name), :obj => @part.to_s) %></h1>
+<% fonct="edit_lifecycle" %>
+<%= render(:partial => "shared/menu_edit",:locals => { :object => @part, :fonct=>fonct}) %>
 <% form_for(@part, :url => {:controller=>"parts", :action=>"update_lifecycle", :id => @part.id}, :method=>:get) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "parts/edit_lifecycle",:locals => { :f => f, :fonct=>"edit" }) %>
-<h1></h1>
-<%= render(:partial => "shared/menu_edit",:locals => { :object => @part, :f => f}) %>
+<%= render(:partial => "parts/edit_lifecycle",:locals => { :fonct=>fonct, :f=>f , :fonct=>fonct}) %>
 <% end %> 

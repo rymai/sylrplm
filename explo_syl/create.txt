@@ -583,7 +583,7 @@ make
 make install
 
 ---
---- modif connecteur postgresql pour eviiter les reconnect
+--- modif connecteur postgresql pour eviter les reconnect
 ---
 ajouter la methode suivante au debut de la classe class PostgreSQLAdapter < AbstractAdapter dans le fichier
 bundle/ruby/1.9.1/gems/activerecord-2.3.17/lib/active_record/connection_adapters/postgresql_adapter.rb
@@ -616,7 +616,7 @@ rake db:drop;rake db:create
 -creer les tables
 rake db:reset
 -remplir la base
-rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base]
+rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base,limours]
 rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
 rake sylrplm:import_domain[db/custos/sicm,sample.table]
 rake sylrplm:update_access

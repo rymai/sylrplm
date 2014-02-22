@@ -1,8 +1,7 @@
 
 module plateau_carre()
 {
-	cube(size = [60,60,4], center = true);
+	cube(size = [80,80,4], center = true);
 }
 
-plateau_carre();
 

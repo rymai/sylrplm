@@ -1,9 +1,8 @@
 
-module pied_rond_long()
+module pied_rond_court()
 {
 	translate([0,0,-15])
-cylinder(h = 30, r1 = 7, r2 = 7, center = true);
+	cylinder(h = 30, r1 = 3, r2 = 3, center = true);
 
 }
-pied_rond_long();
 

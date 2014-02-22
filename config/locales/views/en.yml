@@ -1,6 +1,6 @@
 en:
   # general
-  root_model_design: Root design model
+  root_model_design: Design model
   customer: client
   document: document
   part: part
@@ -232,7 +232,10 @@ en:
   label_volume: Volume
   label_repository: Repository
   label_content_type: Mime type
-  label_document: Document
+  label_datafile_document: Document
+  label_datafile_part: Part
+  label_datafile_project: Project
+  label_datafile_customer: Customer
   label_restore_file: File to restore
   datafile_show_file: Show the file
   datafile_download_file: Download the file
@@ -308,6 +311,9 @@ en:
   label_group_users: Members
   label_group_user_ids_out: Others users
   label_group_user_ids_in: Users
+  label_group_volumes: Volumes
+  label_group_volume_ids_out: Others volumes
+  label_group_volume_ids_in: Volumes
   label_group_father: Father group
   # help
   help_title: "Help on SYLRPLM application"
@@ -449,6 +455,10 @@ en:
   label_asker: Asker
   label_responder: Responder
   # relation
+  relation_show: Détail of relation
+  relation_edit: Edit relation
+  relation_new: New relation
+  relation_list: List of relations
   legend_relation: Relation
   label_father_plmtype: Father PLMType
   label_father_type: Father type
@@ -616,6 +626,13 @@ en:
   label_directory: Directory
   label_protocol: Protocol
   label_volume_name: Volume
+  label_volume_groups: Groups
+  label_volume_group_ids_out: Others groups
+  label_volume_group_ids_in: Groups
+  label_encode: Encoding
+  label_decode: Décoding
+  label_compress: Compressing
+  label_decompress: Decompressing
   # relations
   no_relation: "-----"
   specification: "Specification"
@@ -626,6 +643,8 @@ en:
   research: "Research"
   production: "Production"
   forum: Discussion
+  # session
+  session_user_password: In first approach, password = user name
   # workitems
   label_relation: Relation
   label_wfid: Processus

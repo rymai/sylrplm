@@ -1,3 +1,4 @@
+#encoding: utf-8
 class Relation < ActiveRecord::Base
 	include Models::SylrplmCommon
 	#validates_presence_of :type, :name, cardin_occur_min, cardin_occur_max, cardin_use_min, cardin_use_max
@@ -17,7 +18,6 @@ class Relation < ActiveRecord::Base
 	#
 	RELATION_FROM_REVISION = "FROM_REVISION"
 	RELATION_FROM_DUPLICATE = "FROM_DUPLICATE"
-	
 	def validate
 		errors.add_to_base I18n.t("valid_relation_cardin_occur_max") if cardin_occur_max != -1 && cardin_occur_max < cardin_occur_min
 		errors.add_to_base I18n.t("valid_relation_cardin_use_max") if cardin_use_max != -1 && cardin_use_max < cardin_use_min
@@ -28,9 +28,9 @@ class Relation < ActiveRecord::Base
 		if args.empty?
 			self.father_plmtype = Typesobject.get_objects_with_type.first
 			self.child_plmtype  = Typesobject.get_objects_with_type.first
-			#unless args[0][:user].nil?
-			self.set_default_values_with_next_seq
-			#end
+		#unless args[0][:user].nil?
+		self.set_default_values_with_next_seq
+		#end
 		end
 	end
 
@@ -58,14 +58,56 @@ class Relation < ActiveRecord::Base
 		ret+=sep_name + father_plmtype + sep_type
 		#puts aname+ "father_type="+father_type.inspect
 		#ret+=father_typesobject.name unless father_typesobject.nil?
-		
+
 		# on recommence plus simplement
 		ret="#{typesobject.name}.#{name}" unless typesobject.nil?
 		ret
 	end
 
-	def self.relations_for(father)
-		fname="Relations.#{__method__}:#{father.model_name}:"
+	def self.relations_for(father, child_plmtype=nil, child_type=nil)
+		fname="Relations.#{__method__}:father=#{father.model_name}:child_plmtype=#{child_plmtype}"
+		LOG.debug(fname){"debut"}
+		if father.nil? && child_plmtype.blank? && child_type.blank?
+			# all is null, we return all relations
+			father_plmtype = nil
+			father_type = nil
+			cond = nil
+		elsif father.nil? && !child_plmtype.blank?
+			# all with child=child
+			father_plmtype = nil
+			father_type = nil
+			cond = "child_plmtype = '#{child_plmtype}'"
+			cond += " and child_typesobject_id = '#{child_type.id}'" unless child_type.nil?
+		elsif !father.nil? && !child_plmtype.blank?
+			father_plmtype = father.model_name
+			father_type=father.typesobject
+			type_any_any=Typesobject.find_by_forobject_and_name(PlmServices.get_property(:PLMTYPE_GENERIC), PlmServices.get_property(:TYPE_GENERIC))
+			type_father_any=Typesobject.find_by_forobject_and_name(father_plmtype, PlmServices.get_property(:TYPE_GENERIC))
+			type_father_father=father.typesobject
+			type_any_father=Typesobject.find_by_forobject_and_name(PlmServices.get_property(:PLMTYPE_GENERIC), father_type.name)
+			cond =  "("
+			cond += "(father_plmtype = '#{type_any_any.forobject}' and (father_typesobject_id = #{type_any_any.id}))" unless type_any_any.nil?
+			cond += " or (father_plmtype = '#{type_father_any.forobject}' and (father_typesobject_id = #{type_father_any.id}))" unless type_father_any.nil?
+			cond += " or (father_plmtype = '#{type_father_father.forobject}' and (father_typesobject_id = #{type_father_father.id}))" unless type_father_father.nil?
+			cond += " or (father_plmtype = '#{type_any_father.forobject}' and (father_typesobject_id = #{type_any_father.id}))" unless type_any_father.nil?
+			cond += ")"
+			cond += " and child_typesobject_id = '#{child_type.id}'" unless child_type.nil?
+			#cond += " and (child_plmtype = '#{child_plmtype}' or child_plmtype = '#{PlmServices.get_property(:PLMTYPE_GENERIC)}')"
+			cond += " and (child_plmtype = '#{child_plmtype}')"
+		end
+		ret = find(:all, :order => "name",
+      :conditions => [cond],
+      :group => "father_plmtype,id")
+		LOG.debug(fname){"fin:cond=#{cond}, #{ret.size} relations trouvées pour #{father_plmtype}.#{father_type}=>#{child_plmtype}.#{child_type}"}
+		#LOG.debug(fname){"fin:ret(#{ret.count})=#{ret}"}
+		ret
+	end
+
+	
+
+	def self.relations_for_old(father, child_plmtype=nil)
+		fname="Relations.#{__method__}:father=#{father.model_name}:child_plmtype=#{child_plmtype}"
+		LOG.debug(fname){"debut"}
 		ret={}
 		## pas de ret[::SYLRPLM::PLMTYPE_GENERIC] = []
 		Typesobject.get_objects_with_type.each do |t|
@@ -76,17 +118,38 @@ class Relation < ActiveRecord::Base
 		## ko car show incomplet !!! cond+=" and (father_typesobject_id = '#{father.typesobject_id}')"
 		find(:all, :order => "name",
       :conditions => [cond]).each do |rel|
-			if rel.child_plmtype==PlmServices.get_property(:PLMTYPE_GENERIC)
-				# ok pour tous les types de fils
+		#LOG.debug(fname){"rel=#{rel} child_plmtype=#{child_plmtype}"}
+			if rel.child_plmtype == PlmServices.get_property(:PLMTYPE_GENERIC)
+				# generic => ok pour tous les types plm de fils
 				Typesobject.get_objects_with_type.each do |t|
-					ret[t] <<rel
+				#LOG.debug(fname){"#{t} : #{child_plmtype}"}
+					if child_plmtype.nil? || child_plmtype.to_s==t.to_s
+						# seulement pour ce type
+						unless ret[t].include? rel
+							LOG.debug(fname){"cas generique:#{rel}"}
+						ret[t] << rel
+						end
+					end
 				end
 			else
-			ret[rel.child_plmtype] << rel
+				if child_plmtype.nil?
+					LOG.debug(fname){"cas child_plmtype nil:#{rel}"}
+					unless ret[rel.child_plmtype].include? rel
+					ret[rel.child_plmtype] << rel
+					end
+				else
+					if rel.child_plmtype.to_s == child_plmtype.to_s
+						unless ret[rel.child_plmtype].include? rel
+							LOG.debug(fname){"cas child_plmtype non nil:#{rel}"}
+						ret[rel.child_plmtype] << rel
+						end
+					end
+				end
 			end
 		end
 		#LOG.info (fname){"cond=#{cond}, #{ret.count} relations trouvees"}
-		ret.each {|r| r.each {|rel| LOG.debug rel}}
+		#ret.each {|r| r.each {|rel| LOG.debug rel}}
+		LOG.debug(fname){"fin"}
 		ret
 	end
 
@@ -138,4 +201,7 @@ class Relation < ActiveRecord::Base
 		ret
 	end
 
+	def stop_tree?
+		PlmServices.get_property(:TREE_RELATION_STOP).include?(self.name)
+	end
 end
