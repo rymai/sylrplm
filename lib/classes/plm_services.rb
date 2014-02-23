@@ -44,7 +44,7 @@ class PlmServices
 		types = ::Typesobject.get_types(::SYLRPLM::PLM_PROPERTIES)
 		ret = {}
 		types.each do |typ|
-		#LOG.debug(fname) {"type=#{typ}"}
+		#LOG.debug(fname) {"atype_ident=#{atype_ident} type=#{typ}"}
 			ident = "#{typ.name}"
 			if atype_ident.nil?
 			# all properties
@@ -56,7 +56,7 @@ class PlmServices
 				end
 			end
 		end
-		#LOG.debug(fname) {"ret=#{ret}"}
+		LOG.debug(fname) {"atype_ident=#{atype_ident} ret=#{ret}"}
 		ret
 	end
 
@@ -84,16 +84,17 @@ class PlmServices
 		ret_key=nil
 		prop_name=prop_name.to_s.strip
 		props.each do |key, value|
-		#LOG.debug(fname) {"key=#{key}, value=#{value}"}
+		LOG.debug(fname) {"key=#{key}, value=#{value}"}
 			unless value.nil? || value[prop_name].nil?
 			ret = value[prop_name]
-			ret_key=key
+			ret_key = key
 			break
 			end
 		end
 		#
 		if ret.nil?
-			# the property is not in a typsobject, we search in SYLRPLM variables
+			LOG.error(fname) {"variable #{prop_name} does not exists in TypesObjects : #{atype_ident}"}
+			# the property is not in a typesobject, we search in SYLRPLM variables
 			begin
 				var = "::SYLRPLM::#{prop_name}"
 				ret = eval var
@@ -108,12 +109,14 @@ class PlmServices
 	end
 
 	def self.set_property( atype_ident, prop_name, value)
+		fname = "PlmServices.#{__method__}"
 		params={}
 		params[:forobject] = ::SYLRPLM::PLM_PROPERTIES
 		params[:name] = atype_ident
 		params[:fields]={prop_name=>value}.to_json
 		type=::Typesobject.new(params)
 		type.save
+		LOG.debug(fname) {"prop name=#{prop_name}, type=#{type.inspect}"}
 	end
 
 end

@@ -82,15 +82,25 @@ namespace :sylrplm do
     puts "path is #{path}, domain is #{domain}, site is #{site}"
     fixtures_path = "#{path}/#{domain}"
     unless domain.empty?
-      ###truncate
+      unless site.blank?
+	    PlmServices.set_property("sites","central",site) 
+	    Volume.find_all.each do |vol| 
+	    	 vol.save
+	    	end
+	    end
+	    props= PlmServices.get_properties("sites")
+    	###truncate
       #Rake::Task["db:fixtures:load FIXTURES_PATH=#{fixtures_path}"].invoke
       ENV["FIXTURES_PATH"] = fixtures_path
       puts "fixtures_path=#{ENV['FIXTURES_PATH']}"
       Rake::Task["db:fixtures:load"].invoke
-      puts "metadata loading terminated, now loading of datafiles"
+      puts "metadata loading terminated, now loading of datafiles if needed"
       # chargement des fichiers
+      PlmServices.set_property("sites","central",site) 
+     	props= PlmServices.get_properties("sites")
       Datafile.all.each do |file|
       	unless file.filename.nil?
+      		puts "import of #{file.filename}"
       		file.file_import = {}
       		file.file_import[:file] = File.new(file.filename)
       		file.file_import[:original_filename] = file.filename
@@ -100,12 +110,6 @@ namespace :sylrplm do
       end
     else
       $stdout.puts "Path and Domain are mandatory"
-    end
-    unless site.blank?
-    PlmServices.set_property("sites","central",site) 
-    Volume.find_all.each do |vol| 
-    	 vol.save
-    	end
     end
   end
   
