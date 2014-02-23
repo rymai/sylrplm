@@ -43,9 +43,7 @@
 			    		</li>
 			    		<li title="Fichiers">
 			    			Les fonctions d'identification, création, téléchargement et édition sous contrôle, suppression, révision sont effectives sur les fichiers.
-			    			#img=help/idea.png=img# De plus il est possible de stocker les fichiers sur un serveur de fichier "local" ou sur un "hebergeur" 
-			    			du type "cloud" (amazon) ou directement dans une table de la base de données.
-			    			Un fichier peut être associé à un document ou un article ou un projet ou un client pour l' "illustrer" (icone, miniature...).
+			    			Un ou plusieurs fichiers peuvent être associés à un document ou un article ou un projet ou un client pour l' "illustrer" (icone, miniature...).
 			    		</li>
 			    	</ul>
 		    	</li>
@@ -64,12 +62,21 @@
 					<li title="Duplication">
 						Tous les objets peuvent être facilement dupliqués.
 		    	</li>
+		    	<li title="Cycle de vie">	
+		    		L'application gère le cycle de vie des objets PLM:document,article,projet,client grâce aux notions de maturité et de révision:#lnk=/help?help=help_lifecycle=lnk#
+		    	</li>
+			    	<li title="Structure">	
+		    		Les relations entre les objets PLM sont affichées sous forme de structure ou d'arbre dans l'onglet principal 'Structure'.
+		    		Il est alors possible d'étendre ou réduire celui ci et de modifier la relation ou d'afficher le fils ou de choisir une variante ou une vue ...
+		    		#img=help/module_structure.png=img#.
+		    	</li>
 		    	<li title="Mise en oeuvre de processus">	
 		    		<ul title="Certaines fonctionnalités citées ci dessus sont mises en oeuvre sous contrôle de processus permettant:">
 							<li title="Controles">
 								Contrôle de validation(s) par des utilisateurs habilités.
 		    			</li>
 		    			<li title="Suivi">
+		    				Suivi des actions en cours.
 		    				Prise en compte des remarques.
 		    				Historisation du processus associé aux modifications des objets.
 		    			</li>
@@ -88,12 +95,12 @@
 		    		<ul title="L'application met en oeuvre les composants suivants pour assurer la traçabilité ">
 							<li title="Abonnement">
 								Un abonnement définit quels évènements seront notifiés aux utilisateurs concernés.
-								Voir les fonctions d'administration du framework #jump=help_framework_functions=jump#
+								Voir les fonctions d'administration du framework:#lnk=/help?help=help_framework_functions=lnk#.
 		    			</li>
 		    			<li title="Notification">
 		    				Chaque évènement de création/modification/destruction est notifiable à tel ou tel utilisateur suivant l'abonnement auquel il est associé.
 		    				Les notifications conservent l'information concernant l'évènement et le ou les utilisateurs qui ont été notifié.
-		    				Voir aussi le chapitre sur les notifications: #jump=help_notifications=jump#.
+		    				Voir aussi le chapitre sur les notifications:#lnk=/help?help=help_notifications=lnk#.
 		    			</li>
 		    			<li title="Planificateur de notification">
 		    				L'administrateur lance un planificateur qui va notifier les utilisateurs à interval régulier.
@@ -101,18 +108,27 @@
 		    			</li>
 		    			<li title="Logs">
 		    				Des fichiers logs accessible à l'administrateur contiennent des informations sur le fonctionnement de l'application.
-		    				Le niveau de trace est paramétrable par l'administrateur du site dans le fichier de configuration : config/environments/production.rb:
-		    				config.log_level = :info.
-								#FATAL an unhandleable error that results in a program crash.
-								#ERROR a handleable error condition.
-								#WARN  a warning.
-								#INFO  generic (useful) information about system operation.
-								#DEBUG.
 		    			</li>
 		    		</ul> 
 		    	</li>
     		</ul>
     	</msg>
+    	<msg key="help_share_functions" title="Fonctionnalités de partage">
+    		<ul>
+	    		<li title="Questions">
+	    			Identification, création, réponse, suppression.
+	    		</li>
+	    		<li title="Nouveautés">
+	    			Nouvelles de la part de l'équipe de développement.
+	    		</li>
+	    		<li title="Discussions">
+	    			Une discussion peut être associé à un objet PLM.
+	    			Identification, création, réponse, suppression.
+	    		</li>
+	    		<li title="Contacts">
+	    		</li>
+	    	</ul>
+	    </msg>
     	<msg key="help_admin_functions" title="Fonctionnalités d'administration">
     		<ul>
 	    		<li title="Gestion des utilisateurs">
@@ -131,7 +147,7 @@
 	    		</li>
 	    		<li title="Gestion des volumes de stockage des fichiers">
 	    			Identification, création, édition, suppression.
-	    			Permet de stocker les fichiers suivant un protocol donné: file_system pour le système de fichier, fog pour le cloud, database pour une table de la base de donnée. 
+	    			#img=help/idea.png=img# Le volume permet de stocker les fichiers suivant un protocol donné: file_system pour le système de fichier, fog pour le cloud, database pour une table de la base de donnée. 
 	    		</li>
 	    	</ul>
 	    </msg>
@@ -142,6 +158,7 @@
 		    	<ul>
 		    		<li title="Paramétrage des types">
 		    			Chaque objet décrit ci dessus peut être différencié suivant différents types dépendants des besoins de l'entreprise.
+		    			Note: Certains paramètres de l'application peuvent être modifiés dans la base dans les objets 'Types d'objet' de type sylrplm_properties:
 		    		</li>
 		    		<li title="Paramétrage des statuts">
 		    			Chaque type d' objet décrit ci dessus peut avoir différents statuts de maturité dépendants des besoins de l'entreprise.
@@ -1204,6 +1221,18 @@
 	                  	#img=help/properties_typesvalues.png=img#.
 	                  </li>
 	                </ul>
+	                <ul>
+	                	<li title="Logs">
+					    				Des fichiers logs accessible à l'administrateur contiennent des informations sur le fonctionnement de l'application.
+					    				Le niveau de trace est paramétrable par l'administrateur du site dans le fichier de configuration : config/environments/production.rb:
+					    				config.log_level = :info.
+											#FATAL an unhandleable error that results in a program crash.
+											#ERROR a handleable error condition.
+											#WARN  a warning.
+											#INFO  generic (useful) information about system operation.
+											#DEBUG.
+				    				</li>
+									</ul>
 	            </msg>
         	</msg>
         </msg>

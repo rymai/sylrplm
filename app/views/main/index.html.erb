@@ -1,17 +1,13 @@
 <h1><%= t(:hello) %></h1>
 <!-- <h2><%= t(:tit_language) %><%= I18n.locale.to_s %></h2> -->
-
+<%= render(:partial => "shared/show_datas") %>
 <p class='notice'>
 	<%= t(:first_use,:help => show_help(:help_first_use,true))%>
 </p>
 <p>
 	<%= h_help_key(:help_main_functions)%>
 </p>
-
-<%= render(:partial => "shared/show_datas") %>
-
 <!-- <%= h_help_all %> -->
-
 <% if User.count == 0 %>
 <h2><%= t(:ctrl_init_to_do) %></h2>
 <%end %>

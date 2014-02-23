@@ -41,9 +41,9 @@ module HelpHelper
 		#end
 		#ret=h_help_replace(ret)
 		elem = h_elem_key(key)
-		puts "h_help_key(#{key})elem=#{elem}"
+		#puts "h_help_key(#{key})elem=#{elem}"
 		ret = h_help_level(elem, false)
-		puts "h_help_key(#{key})=#{ret}"
+		#puts "h_help_key(#{key})=#{ret}"
 		ret
 	end
 
@@ -171,7 +171,7 @@ module HelpHelper
 		end
 		parent.elements.each("msg") { |element|
 			if(element.attributes["key"]) == key.to_s
-				puts "h_elem_key:key=#{key} element=#{element.inspect}"
+				#puts "h_elem_key:key=#{key} element=#{element.inspect}"
 			ret = element
 			break
 			else
@@ -182,7 +182,7 @@ module HelpHelper
 	end
 
 	def h_help_level(elem, with_anchor=true)
-		puts "h_help_level:with_anchor=#{with_anchor} #{elem} "
+		#puts "h_help_level:with_anchor=#{with_anchor} #{elem} "
 		msg=""
 		msg+="<ul class='help_key'>\n"
 		unless elem.attributes["title"].nil?
@@ -295,7 +295,7 @@ module HelpHelper
 		txt.gsub! /#img=(.+?)=img#/,
 		"<img class='help_tr' src='/images/\\1'></img>"
 		txt.gsub! /#jump=(.+?)=jump#/,
-		"<a class='help_tr' href='#\\1' target='_top'>"+t(:help_jump)+"</a>"
+		"<a class='help_tr' href='/main/helpgeneral#\\1' target='_top'>"+t(:help_jump)+"</a>"
 		txt.gsub! /#lnk=(.+?)=lnk#/,
 		"<a class='help_tr' href='\\1' target='_blank' title='"+t(:help_lnk_acces)+"'><img src='/images/submit.png'></img></a>"
 		
