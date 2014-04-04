@@ -33,6 +33,7 @@ gem 'will_paginate' , '~> 2.3.16'
 ####gem 'sylrplm_ext', :path => "/home/syl/trav/rubyonrails/sylrplm_ext"
 
 ###gem 'psych'
+gem 'psych', '~> 2.0.5'
 
 gem 'zip-zip'
 
