@@ -10,6 +10,7 @@
 	<br/>
 	<%= f.label t(:label_revision) %>
 	<%= text_field_tag :revision, @part.revision, :disabled => true %>
+	<%= f.hidden_field :revision, :value => @part.revision %>
 	<br/>
 	<%= f.label t(:label_designation) %>
 	<%= f.text_field :designation %>

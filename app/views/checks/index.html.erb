@@ -1,5 +1,5 @@
 <h1><%= t("check_list") %><%= h_count_objects(@checks) %></h1>
-<%= form_simple_query_helper('/checks', @checks) %>
+<%= h_form_simple_query('/checks', @checks) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_check"), new_check_path %> </td>

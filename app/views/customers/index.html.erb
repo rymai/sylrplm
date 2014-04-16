@@ -4,7 +4,7 @@
 <%= f.error_messages %>
 <% end %>
 <% end %>
-<%= form_simple_query_helper('/customers', @customers) %>
+<%= h_form_simple_query('/customers', @customers) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_customer"), new_customer_path %> </td>

@@ -3,12 +3,11 @@ require 'classes/filedrivers'
 
 class DatafilesController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	before_filter :check_user, :only => [:new, :edit]
 	# GET /datafiles
 	# GET /datafiles.xml
 	def index
 		@datafiles = Datafile.find_paginate({ :user=> current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
-		#pour voir la liste des fichiers 
+		#pour voir la liste des fichiers
 		@all_files=Volume.get_all_files(true) if admin_logged_in?
 		respond_to do |format|
 			format.html # index.html.erb
@@ -20,14 +19,14 @@ class DatafilesController < ApplicationController
 	# GET /datafiles/1.xml
 	def show
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
 		@types    = Typesobject.find_for("datafile")
 		if params["doc"]
 			@document = Document.find(params["doc"])
-			puts "datafiles_controller.show:doc(#{params["doc"]})=#{@document} filedoc=#{@datafile.document}"
+		#puts "datafiles_controller.show:doc(#{params["doc"]})=#{@document} filedoc=#{@datafile.document}"
 		end
-		puts "datafiles_controller.show:doc=#{@datafile.document} part=#{@datafile.part} project=#{@datafile.project} cust=#{@datafile.customer}"
+		#puts "datafiles_controller.show:doc=#{@datafile.document} part=#{@datafile.part} project=#{@datafile.project} cust=#{@datafile.customer}"
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @datafile }
@@ -37,9 +36,8 @@ class DatafilesController < ApplicationController
 	# GET /datafiles/new
 	# GET /datafiles/new.xml
 	def new
-
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		@datafile = Datafile.new(user: current_user)
 		@types    = Typesobject.find_for("datafile")
 		respond_to do |format|
@@ -51,7 +49,7 @@ class DatafilesController < ApplicationController
 	# GET /datafiles/1/edit
 	def edit
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
 		@types    = Typesobject.find_for("datafile")
 	#TODO@document = Document.find(params["doc"]) if params["doc"]
@@ -61,18 +59,13 @@ class DatafilesController < ApplicationController
 	# POST /datafiles.xml
 	def create
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
-		uploadedfile = params.delete(:uploaded_file)
-		@datafile = Datafile.new(params[:datafile])
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		@types    = Typesobject.find_for("datafile")
 		@document = Document.find(params["doc"]) if params["doc"]
 		#puts "datafiles_controller.create:errors=#{@datafile.errors.inspect}"
 		respond_to do |format|
-			if @datafile.save
-				@datafile.create_directory
-				if uploadedfile
-					@datafile.update_attributes(:uploaded_file => uploadedfile)
-				end
+			@datafile=Datafile.m_create(params[:datafile])
+			if @datafile.errors.nil?
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_datafile), :ident => @datafile.ident)
 				format.html { redirect_to(@datafile) }
 				format.xml  { render :xml => @datafile, :status => :created, :location => @datafile }
@@ -88,19 +81,18 @@ class DatafilesController < ApplicationController
 	# PUT /datafiles/1.xml
 	def update
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
 		@types    = Typesobject.find_for("datafile")
 		@document = Document.find(params["doc"]) if params["doc"]
-		update_accessor(@datafile)
+		stupd = @datafile.m_update(params, @current_user)
 		respond_to do |format|
-			stupd=@datafile.update_attributes_repos(params, @current_user)
 			if stupd && !@datafile.have_errors?
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_datafile), :ident => @datafile.ident)
 				format.html { redirect_to(@datafile) }
 				format.xml  { head :ok }
 			else
-				LOG.debug (fname){"stupd=#{stupd} errors=#{@datafile.errors.inspect}"}
+			#LOG.debug (fname){"stupd=#{stupd} errors=#{@datafile.errors.inspect}"}
 				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_datafile), :ident => @datafile.ident)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @datafile.errors, :status => :unprocessable_entity }
@@ -112,13 +104,13 @@ class DatafilesController < ApplicationController
 	# DELETE /datafiles/1.xml
 	def destroy
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
-		if params["doc"]
-			@document = Document.find(params["doc"])
-		@document.remove_datafile(@datafile)
-		end
-		@datafile.delete
+		#if params["doc"]
+		#	@document = Document.find(params["doc"])
+		#@document.remove_datafile(@datafile)
+		#end
+		@datafile.m_destroy
 		@types = Typesobject.find_for("datafile")
 		respond_to do |format|
 			if params["doc"]
@@ -132,32 +124,12 @@ class DatafilesController < ApplicationController
 
 	def show_file
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		send_file_content("inline")
 	end
 
 	def download_file
 		send_file_content("attachment")
-	end
-
-	def del_fogdir_obsolete
-		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
-		st=SylrplmFog.remove_repository(params[:id].gsub('__','.'))
-		respond_to do |format|
-			format.html { redirect_to(datafiles_url) }
-			format.xml  { head :ok }
-		end
-	end
-
-	def del_sylrplm_file_obsolete
-		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
-		Filedriver.driver_from_file_id(params[:file_id]).delete_file(params[:file_id])
-		respond_to do |format|
-			format.html { redirect_to(datafiles_url) }
-			format.xml  { head :ok }
-		end
 	end
 
 	private
@@ -168,14 +140,14 @@ class DatafilesController < ApplicationController
 		ret=nil
 		begin
 			fields = @datafile.get_type_values
-			LOG.debug (fname){"disposition=#{disposition}"}
+			#LOG.debug (fname){"disposition=#{disposition}"}
 			#puts "datafiles_controller.send_file_content:"+fields.inspect
 			# on utilise l'outil definis sur ce datafile seulement pour la visu ou edition, pas pour le download
 			unless true || fields.nil? || fields["tool"].nil? || disposition == "attachment"
 				repos=@datafile.write_file_tmp
 				dirtmpfile=File.join(RAILS_ROOT,repos)
 				cmd="#{fields["tool"]} #{dirtmpfile} &"
-				LOG.debug (fname){"tool=#{fields["tool"]} cmd=#{cmd}"}
+				#LOG.debug (fname){"tool=#{fields["tool"]} cmd=#{cmd}"}
 				system(cmd)
 				ret = repos
 				respond_to do |format|
@@ -185,7 +157,7 @@ class DatafilesController < ApplicationController
 			else
 			#content=@datafile.read_file
 				content=build_model_datafile(@datafile, "scad")
-				LOG.debug (fname){"content.length=#{content.length}"}
+				#LOG.debug (fname){"content.length=#{content.length}"}
 				send_data(content,
               :filename => @datafile.filename,
               :type => @datafile.content_type,

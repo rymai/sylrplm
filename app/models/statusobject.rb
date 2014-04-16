@@ -69,6 +69,14 @@ class Statusobject < ActiveRecord::Base
 		end
 	end
 
+	def name
+		PlmServices.translate("typesobject_name_#{super}")
+	end
+
+	def forobject
+		PlmServices.translate("forobject_#{super}")
+	end
+
 	def promote
 		promote_id.to_s+":"+I18n.t(PREFIX_PROMOTE+promote_id.to_s)
 	end
@@ -102,33 +110,6 @@ class Statusobject < ActiveRecord::Base
 
 	def self.get_objects_with_status
 		ret=["document", "part", "project", "customer", "forum"]
-	end
-
-	# liste les autres status
-	def get_next_status_obsolete
-		fname="#{self.class.name}.#{__method__}"
-		alls = Statusobject.find(:all, :order => "rank ASC", :conditions => ["forobject = '#{self.forobject}'"])
-		unless alls.is_a?(Array)
-			alls=[alls]
-		end
-		ret=[]
-		alls.each do |st|
-			ok=false
-			if st.id != self.id
-				if st.typesobject_id.nil? || self.typesobject_id.nil?
-				ok=true
-				else
-					if st.typesobject_id == self.typesobject_id
-					ok=true
-					end
-				end
-			end
-			if(ok)
-			ret << st
-			end
-		end
-		LOG.info(fname){"next_status=#{ret}"}
-		ret
 	end
 
 	def get_others_status
@@ -198,10 +179,10 @@ class Statusobject < ActiveRecord::Base
 		fname="#{self.class.name}.#{__method__}"
 		any_type=::Typesobject.find_by_forobject_and_name(obj.model_name, PlmServices.get_property(:TYPE_GENERIC))
 		any_type=::Typesobject.find_by_name(PlmServices.get_property(:TYPE_GENERIC)) if any_type.nil?
-		if obj.respond_to? :typesobject 
-			objtype = obj.typesobject
+		if obj.respond_to? :typesobject
+		objtype = obj.typesobject
 		else
-			objtype = any_type 
+		objtype = any_type
 		end
 		LOG.debug(fname){"obj=#{obj} objtype=#{objtype} any_type=#{any_type}"}
 		cond="forobject='#{obj.model_name}' and (typesobject_id=#{objtype.id} or typesobject_id=#{any_type.id} or typesobject_id is null)"
@@ -218,45 +199,6 @@ class Statusobject < ActiveRecord::Base
 		ret=Statusobject.order_default.find(:last, :conditions => [cond])
 		#puts "cond=#{cond} get_last:#{ret}"
 		ret
-	end
-
-	#TODO a refaire en partant du next_status
-	def get_previous_obsolete
-		if(rank > get_first(forobject).rank)
-			new_rank=current_status.rank-1
-			Statusobject.find(:first, :conditions => ["forobject = '#{forobject}' and rank=#{new_rank}"])
-		else
-			current_status
-		end
-	end
-
-	def get_next_obsolete(obj)
-		puts "statusobject:obj=#{obj} rank=#{rank} last=#{Statusobject.get_last(obj).rank}"
-		ret=self
-		if(rank < Statusobject.get_last(obj).rank)
-			new_rank = rank + 1
-			cond="forobject = '#{forobject}' and rank=#{new_rank}"
-			ret=Statusobject.find(:first, :conditions => [cond])
-		end
-		ret
-	end
-
-	def self.find_next_nonutilise(object, current_status)
-		if(current_status.rank < Statusobject.get_last(object).rank)
-			new_rank = current_status.rank + 1
-			find(:first, :conditions => ["forobject = '#{object}' and rank=#{new_rank}"])
-		else
-		current_status
-		end
-	end
-
-	def self.find_previous_nonutilise(object, current_status)
-		if(rank > get_first(object).rank)
-			new_rank = rank-1
-			find(:first, :conditions => ["forobject = '#{object}' and rank=#{new_rank}"])
-		else
-		self
-		end
 	end
 
 	def self.get_conditions(filter)

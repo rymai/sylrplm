@@ -1,5 +1,6 @@
 en:
   # general
+  model3d_view: View the model corresponding to the structure 
   root_model_design: Design model
   customer: client
   document: document
@@ -78,6 +79,7 @@ en:
   legend_edit_revision: Revision
   lifecycle_edit: "Lifecycle of the %{model} '%{obj}'"
   label_liste_mode: List type
+  switch_all_links: "All-None"
   # attributs generaux
   faq_question: Question
   faq_answer: answer
@@ -367,8 +369,8 @@ en:
   legend_debug: Debug
   legend_clipboard: Clipboard
   submit: GO
-  first_use: "To begin (%{help})"
   CV: Curriculum vitae
+  first_use: "To begin (%{help})"
   # notifications
   legend_notification: Enter notification details
   notification_edit: Notification edit

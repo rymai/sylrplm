@@ -1,7 +1,6 @@
 class LinksController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	access_control(Access.find_for_controller(controller_class_name))
-	before_filter :check_user, :only => [:new, :edit]
 
 	# GET /links
 	# GET /links.xml
@@ -55,11 +54,11 @@ class LinksController < ApplicationController
 		@root = PlmServices.get_object(params[:root_model], params[:root_id])
 		#LOG.info (fname){"link=#{@link}"}
 		#LOG.info (fname){"owner=#{(@link.owner.nil? ? "no owner" : @link.owner)}"}
-		LOG.info (fname){"link effectivities=#{@link.links_effectivities}"}
-		LOG.info (fname){"effectivities=#{@link.effectivities}"}
-		LOG.info (fname){"effectivities_mdlid=#{@link.effectivities_mdlid}"}
+		#LOG.info (fname){"link effectivities=#{@link.links_effectivities}"}
+		#LOG.info (fname){"effectivities=#{@link.effectivities}"}
+		#LOG.info (fname){"effectivities_mdlid=#{@link.effectivities_mdlid}"}
 		#LOG.info (fname){"object_in_explorer=#{@object_in_explorer}"}
-		LOG.info (fname){"root=#{@root}"}
+		#LOG.info (fname){"root=#{@root}"}
 	end
 
 	# POST /links
@@ -86,14 +85,15 @@ class LinksController < ApplicationController
 		fname = "#{self.class.name}.#{__method__}"
 		#LOG.info(fname) { "params: #{params}" }
 		@link = Link.find(params[:id])
-		@link.update_accessor(current_user)
+		##########@link.update_accessor(current_user)
 		@object_in_explorer = PlmServices.get_object(params[:object_model], params[:object_id])
 		@root = PlmServices.get_object(params[:root_model], params[:root_id])
 		err = false
 		respond_to do |format|
-			values = OpenWFE::Json::from_json(params[:link][:values])
+			#values = OpenWFE::Json::from_json(params[:link][:values])
 			#LOG.info(fname) { "values: #{values}" }
-			update_att=@link.update_attributes(params[:link])
+			#########update_att=@link.update_attributes(params[:link])
+			update_att = @link.update(current_user,params[:link])
 			#LOG.info(fname) { "update_att: #{update_att} @link.errors=#{@link.errors.inspect}" }
 			@link.errors.clear if update_att
 			update_eff = update_effectivities(@link, params[:effectivities])
@@ -169,7 +169,6 @@ class LinksController < ApplicationController
 		LOG.info(fname) { "link=#{link} effectivities=#{effectivities}" }
 		effectivities = Array(effectivities)
 		return true if effectivities.empty?
-
 		ret = false
 		if relation = Relation.find_by_name("LINK_EFF")
 			LOG.info(fname) { "relation link_effectivity ok=#{relation}" }
@@ -180,7 +179,6 @@ class LinksController < ApplicationController
 				if effectivity = PlmServices.get_object_by_mdlid(effectivity)
 					#LOG.info(fname) { "effectivity: #{effectivity}" }
 					link_eff = Link.new(father: link, child: effectivity, relation: relation, user: current_user)
-
 					if link_eff.save
 						ctrltype = t("ctrl_#{effectivity.model_name}")
 						flash[:notice] << t(:ctrl_object_added, typeobj: ctrltype, ident: effectivity.ident, relation: relation.ident, msg: "ctrl_link_#{link_eff.ident}")

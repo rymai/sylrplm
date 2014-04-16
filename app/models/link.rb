@@ -23,12 +23,12 @@ class Link < ActiveRecord::Base
 
 	#objets pouvant etre fils:"document", "part", "project", "customer", "forum", "datafile"
 	with_options :foreign_key => 'child_id' do |child|
-		child.belongs_to :document , :conditions => ["child_plmtype='document'"], :class_name => "Document"
-		child.belongs_to :part , :conditions => ["child_plmtype='part'"], :class_name => "Part"
-		child.belongs_to :project , :conditions => ["child_plmtype='project'"], :class_name => "Project"
-		child.belongs_to :customer , :conditions => ["child_plmtype='customer'"], :class_name => "Customer"
-		child.belongs_to :forum , :conditions => ["child_plmtype='forum'"], :class_name => "Forum"
-		child.belongs_to :datafile , :conditions => ["child_plmtype='datafile'"], :class_name => "Datafile"
+		child.belongs_to :document_down , :conditions => ["child_plmtype='document'"], :class_name => "Document"
+		child.belongs_to :part_down , :conditions => ["child_plmtype='part'"], :class_name => "Part"
+		child.belongs_to :project_down , :conditions => ["child_plmtype='project'"], :class_name => "Project"
+		child.belongs_to :customer_down , :conditions => ["child_plmtype='customer'"], :class_name => "Customer"
+		child.belongs_to :forum_down , :conditions => ["child_plmtype='forum'"], :class_name => "Forum"
+		child.belongs_to :datafile_down , :conditions => ["child_plmtype='datafile'"], :class_name => "Datafile"
 	end
 
 	#objets pouvant etre pere:"document", "part", "project", "customer", "definition", "history", "link"(pour les effectivites)
@@ -48,7 +48,7 @@ class Link < ActiveRecord::Base
     :conditions => ["father_plmtype='link' and child_plmtype='part' and child_typesobject_id in (select id from typesobjects as t where t.name='EFF')"]
 	has_many :effectivities ,
     :through => :links_effectivities,
-    :source => :part
+    :source => :part_down
 
 	###non validates_uniqueness_of :child_id, scope: [:child_plmtype, :father_id, :father_type]
 	###validates :link_uniqueness, :validity
@@ -60,12 +60,6 @@ class Link < ActiveRecord::Base
 			father_plmtype, child_plmtype, father_typesobject_id, child_typesobject_id, relation_id]
 		self.errors.add_to_base('Link already exists!') unless ::Link.find(:first, :conditions => cond).nil?
 	end
-
-#	def initialize(*args)
-	 #	fname = "#{self.class.name}.#{__method__}"
-		#super
-	#LOG.info (fname) {"#{args}"}
-	#end
 
 	def designation
 		""
@@ -217,6 +211,11 @@ class Link < ActiveRecord::Base
 
 	def type
 		"link"
+	end
+
+	def update(user, params_link)
+		update_accessor(user)
+		update_attributes(params_link)
 	end
 
 	# creation

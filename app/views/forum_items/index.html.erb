@@ -1,5 +1,5 @@
 <h1><%= t(:forum_item_list) %><%= h_count_objects(@forum_items) %></h1>
-<%= form_simple_query_helper('/forum_items', @forum_items) %>
+<%= h_form_simple_query('/forum_items', @forum_items) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t(:new_forum_item), new_forum_item_path %> </td>

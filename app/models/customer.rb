@@ -30,7 +30,7 @@ class Customer < ActiveRecord::Base
     :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
   has_many :documents,
     :through => :links_documents,
-    :source => :document
+    :source => :document_down
 
   has_many :links_projects,
     :class_name => "Link",
@@ -38,7 +38,7 @@ class Customer < ActiveRecord::Base
     :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
   has_many :projects ,
     :through => :links_projects,
-    :source => :project
+    :source => :project_down
 
   def user=(user)
 		def_user(user)

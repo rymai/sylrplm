@@ -66,12 +66,12 @@ class AccessesController < ApplicationController
 			st = @access.save
 			end
 			if st
-				flash[:notice] = '<br />'+ t(:ctrl_object_created, :typeobj => 'Access', :ident => @access.controller, :msg => nil)
+				flash[:notice] =  t(:ctrl_object_created, :typeobj => 'Access', :ident => @access.controller, :msg => nil)
 				format.html { redirect_to(@access) }
 				format.xml  { render :xml => @access, :status => :created, :location => @access }
 			else
 				@roles = Role.findall_except_admin
-				flash[:error] = '<br />'+t(:ctrl_object_not_created, :typeobj => 'Access', :msg => nil)
+				flash[:error] = t(:ctrl_object_not_created, :typeobj => 'Access', :msg => nil)
 				format.html { render :action => "new" }
 				format.xml  { render :xml => @access.errors, :status => :unprocessable_entity }
 			end

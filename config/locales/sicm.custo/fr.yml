@@ -1,0 +1,131 @@
+
+fr:
+  relation_describe_by: Décrit par
+  relation_define_by: Défini par
+  relation_hierarchic_to: Descend de
+  relation_doc_ref: Document de référence	
+  relation_ask_for: Ask For
+  relation_applicable: Document Applicable	
+  relation_reference: Document de référence	
+  relation_discuss_by: Discussion par
+  relation_PRD_EFF: Effectivité du produit
+  relation_PRD_VAR: Lien de variante
+  relation_VAR_EFF: Effectivité de la variante
+  relation_LINK_EFF: Effectivité affectée au lien	
+  relation_PRD_STR: Structure produit
+  relation_STR_STR: Noeud de structure
+  relation_STR_PIE: Structure d'articles	
+  relation_directory: Répertoire 	
+  relation_doc_app: Document dépendant	
+  relation_FROM_REVISION: Révision à partir de l'objet
+  relation_FROM_DUPLICATE: Dupliquer à partir de l'objet
+  relation_ctrl_part_var: Variante
+  relation_label_part_users: Article utilisateurs
+  relation_label_document_users: Document utilisateurs
+  relation_label_customer_users: Client utilisateurs
+  relation_label_project_users: Projet utilisateurs
+  #
+  typesobject_name_lifecycle: Cycle de vie
+  typesobject_name_objects_names: Noms
+  typesobject_name_others: Autres
+  typesobject_name_sites: Sites
+  typesobject_name_tree: Arbre
+  typesobject_name_types_values: Type de valeurs
+  typesobject_name_user_default: Utilisateur défaut
+  typesobject_name_volumes: Volumes
+  typesobject_name_PIE: Article
+  typesobject_name_PRD: Produit
+  typesobject_name_STR: Structure
+  typesobject_name_EFF: Effectivité
+  typesobject_name_VAR: Variante
+  typesobject_name_p2d: Plan
+  typesobject_name_cdc: Cahier des charges
+  typesobject_name_directory: Répertoire
+  typesobject_name_inprogress: En cours
+  typesobject_name_inwork: En cours
+  typesobject_name_any_type: Générique
+  typesobject_name_$PROJ_ACCOUNT: Projet de compte
+  typesobject_name_started: Démarré
+  typesobject_name_public: Publique
+  typesobject_name_internal: Interne
+  typesobject_name_private: Privé
+  typesobject_name_confidential: Confidential
+  typesobject_name_secret: Secret
+  typesobject_name_person_: Personne
+  typesobject_name_virtual_: Virtuel
+  typesobject_name_forum: Discussion
+  typesobject_name_ar_workitem: Tâche
+  typesobject_name_writer: Traitement de texte
+  typesobject_name_text: Fichier texte 
+  typesobject_name_thumbnail: Miniature
+  typesobject_name_brl-cad: BRL-CAD
+  typesobject_name_scad: SCAD
+  typesobject_name_fmat: Fiche matériau
+  typesobject_name_norme: Norme
+  typesobject_name_specifs: Spécifications
+  typesobject_name_sub-assembly: Sous ensemble
+  typesobject_name_m3d: Modèle 3D
+  typesobject_name_autocad: Fichier Autocad
+  typesobject_name_design: Conception
+  typesobject_name_specifs: Spécifications
+  typesobject_name_configuration: Configuration
+  typesobject_name_bom: BOM
+  typesobject_name_spreadsheet: Tableur
+  typesobject_name_processus: Process
+  typesobject_name_documentation: Documentation
+  typesobject_name_history_entry: Ligne historique
+  typesobject_name_product: Type produit
+  typesobject_name_plm: Type PLM
+  typesobject_name_$NEW_ACCOUNT: 	Nouveau compte
+  typesobject_name_history: Historique
+  typesobject_name_tests: Tests
+  typesobject_name_exb: Expression de besoin
+  typesobject_name_requirements: Exigences
+  typesobject_name_catia: CATIA
+  typesobject_name_needs: Besoins
+  typesobject_name_standard: Standards
+  typesobject_name_image: Image
+  typesobject_name_calculsheet: Tableur
+  # statusobject
+  typesobject_name_ready: Prêt
+  typesobject_name_approved: Approuvé 
+  typesobject_name_finished: Terminé
+  typesobject_name_hasbeen: Obsolète
+  typesobject_name_open: Ouvert
+  typesobject_name_close: Fermé
+  typesobject_name_active: Actif
+  typesobject_name_inactive: Inactif
+  typesobject_name_validated: Validé
+  #
+  forobject_customer: Client
+  forobject_document: Document
+  forobject_part: Article
+  forobject_project: Projet
+  forobject_sylrplm_properties:
+  forobject_relation: Relation
+  forobject_ar_workitem: Tâche
+  forobject_datafile: Fichier de données
+  forobject_user: Utilisateur
+  forobject_link: Lien
+  forobject_forum: Discussion
+  forobject_any_plmtype: Type générique
+  forobject_sylrplm_properties: Propriétés
+  forobject_history_entry: Historique de processus
+  forobject_definition: Définition de processus
+  forobject_project_typeaccess: Type d'accès
+  # groups
+  group_name_admins: Administrateurs
+  group_name_consultants: Consultants
+  group_name_SICM: Société SICM
+  group_name_SICM_marketing: Service marketing
+  group_name_SICM_BE: Bureau d' étude
+  group_name_SICM_BM: Bureau des méthodes
+  # roles
+  role_title_admin: Administrateur
+  role_title_creator: Créateur
+  role_title_consultant: Consultant
+  role_title_designer: Concepteur
+  role_title_valider: Valideur
+  role_title_analyst: Analyste fonctionnel
+  role_title_project_manager: Chef de projet
+  role_title_plm_actor: Acteur PLM

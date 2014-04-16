@@ -39,7 +39,7 @@ module Models
 				'owner_id in(select id from users where login LIKE :v_filter)'
 			end
 
-			def qrys_object_ident
+			def qry_object_ident
 				"forobject_id in(select id from documents where ident LIKE :v_filter)"
 			end
 

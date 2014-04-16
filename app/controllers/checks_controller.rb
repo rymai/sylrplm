@@ -1,7 +1,6 @@
 class ChecksController < ApplicationController
   include Controllers::PlmObjectControllerModule
   access_control(Access.find_for_controller(controller_class_name))
-  before_filter :check_user, :only => [:new, :edit]
   # GET /checks
   # GET /checks.xml
   def index
@@ -43,11 +42,11 @@ class ChecksController < ApplicationController
     @check = Check.new(params[:check])
     respond_to do |format|
       if @check.save
-        flash[:notice] = '<br />' + t(:ctrl_object_created, :typeobj => 'Check', :ident => @check.id)
+        flash[:notice] = t(:ctrl_object_created, :typeobj => 'Check', :ident => @check.id)
         format.html { redirect_to(@check) }
         format.xml  { render :xml => @check, :status => :created, :location => @check }
       else
-        flash[:error] = '<br />'+t(:ctrl_object_not_created, :typeobj => 'Check', :msg => nil)
+        flash[:error] = t(:ctrl_object_not_created, :typeobj => 'Check', :msg => nil)
         format.html { render :action => "new" }
         format.xml  { render :xml => @check.errors, :status => :unprocessable_entity }
       end

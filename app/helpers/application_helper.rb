@@ -1,112 +1,17 @@
 # = ApplicationHelper
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-	
 	def h_menu_duplicate(object_plm)
 		# new_dup_customer_path
 		url="{new_dup_object_plm.model_name}_path"
 		link_to h_img(:duplicate),  {:controller => object_plm.controller_name, :action => :new_dup, :id => object_plm.id}
 	end
-	
-	# show promote/demote menu
+
 	def h_edit_lifecycle(a_form, a_object)
-		ret=""
-		ret << "<fieldset>"
-		ret << "<legend>#{t(:legend_edit_lifecycle)}</legend>"
-		ret << "<table>"
-		# labels
-		ret << "<tr>"
-		ret << "<td><b>"
-		ret <<  t("label_previous_status")
-		ret << "</b></td>"
-		ret << "<td><b>"
-		ret <<  t("label_status")
-		ret << "</b></td>"
-		ret << "<td><b>"
-		ret <<  t("label_next_status")
-		ret << "</b></td>"
-		ret << "</tr>"
-		# buttons
-		ret << "<tr>"
-		button_demote=a_object.demote_button?
-		ret << "<td>"
-		unless button_demote.nil?
-			prevs = a_object.statusobject.previous_statusobjects
-			ret << a_form.collection_select(:previous_status_id, prevs, :id, :name)
-		end
-		ret << "</td>"
-		ret << "<td>"
-		unless a_object.statusobject.nil?
-		stval=a_object.statusobject.name
-		end
-		ret << text_field_tag( :status, stval, :readonly => true)
-		ret << "</td>"
-		button_promote=a_object.promote_button?
-		ret << "<td>"
-		unless button_promote.nil?
-			nexts = a_object.statusobject.next_statusobjects
-			ret << a_form.collection_select(:next_status_id,  nexts, :id, :name)
-		end
-		ret << "</td>"
-		ret << "</tr>"
-		ret << "<tr>"
-		button_demote=a_object.demote_button?
-		ret << "<td>"
-		unless button_demote.nil?
-			ret << "#{a_form.submit t(button_demote)}"
-		end
-		ret << "</td>"
-		ret << "<td>"
-		ret << "</td>"
-		ret << "<td>"
-		if a_object.frozen?
-			ret << "#{t(:freeze)}"
-		else
-			button_promote=a_object.promote_button?
-			unless button_promote.nil?
-				ret << "#{a_form.submit t(button_promote)}"
-			end
-		end
-		ret << "</td>"
-		ret << "</table>"
-		ret << "</fieldset>"
-		button_revise = a_object.revise_button?
-		unless button_revise.nil?
-			ret << "<fieldset>"
-			ret << "<legend>#{t(:legend_edit_revision)}</legend>"
-			ret << "<br/>"
-			ret << "<table>"
-			# labels
-			ret << "<tr>"
-			ret << "<td>"
-
-			ret << "#{a_form.submit t(button_revise)}"
-
-			ret << "</td>"
-			ret << "</tr>"
-			ret << "</table>"
-			ret << "</fieldset>"
-		end
-		ret
-	end
-
-	# write the menus in the bottom for lifecycle  panel
-	def h_menu_lifecycle_obsolete(a_form, a_object)
-		return ""
-		ret=""
-		if a_object.frozen?
-			ret << "<td>#{t(:freeze)}</td>"
-		else
-			button_promote=a_object.promote_button?
-			unless button_promote.nil?
-				ret << "<td>#{a_form.submit t(button_promote)}</td>"
-			end
-			button_demote=a_object.demote_button?
-			unless button_demote.nil?
-				ret << "<td>#{a_form.submit t(button_demote)}</td>"
-			end
-		end
-		ret
+		render(
+		:partial => "shared/lifecycle_edit",
+		:locals => {:a_form => a_form, :a_object => a_object}
+		)
 	end
 
 	#
@@ -131,22 +36,10 @@ module ApplicationHelper
 	end
 
 	#
-	#
-	#
 	# Renvoie la valeur de l'attribut att sur current si
 	# 1- current n'a pas le meme identifiant que previous
 	# 2- que les valeurs de l'attribut sont differentes entre les 2objets
 	# att peut etre un attribut "compose" tel que owner.login
-	def h_if_differ_old(current, previous,  att)
-		ret=get_val(current,att)
-		unless previous.nil?
-			if current.ident == previous.ident && ret == get_val(previous, att)
-				ret= ""
-			end
-		end
-		ret
-	end
-
 	def h_if_differ_trop_general(current, previous)
 		ret = current
 		unless previous.nil?
@@ -164,7 +57,7 @@ module ApplicationHelper
 	# renvoie la valeur de l'attribut att sur l'objet
 	# att peut etre un attribut "compose" tel que owner.login, d'ou l'utilisation de eval
 	def get_val(obj, att)
-		blk="obj="+obj.class.name+".find("+obj.id.to_s+")\nobj."+att
+		blk = "obj = #{obj.class.name}.find(#{obj.id})\nobj.#{att}"
 		#puts "blk="+blk
 		ret = eval blk
 		ret
@@ -228,22 +121,15 @@ module ApplicationHelper
 		t("count_objects",:number_begin=>num_begin,:number_end=>num_end,:total=>objects[:total])
 	end
 
-	# pour compatibilite seulement
-	def form_simple_query_helper(url, objects)
-		h_form_simple_query(url, objects)
-	end
-
 	def  h_form_simple_query(url, objects)
-		bloc = ""
-		bloc << form_tag(url, :method=>:get)
-		bloc << h_simple_query(objects)
-		bloc << hidden_field_tag("todo" , @myparams["todo"]) unless @myparams.nil?
-		bloc << hidden_field_tag("html_ident" , @myparams["html_ident"]) unless @myparams.nil?
-		bloc << "</form>"
-		bloc
+		render(
+		:partial => "shared/form_simple_query",
+		:locals => {:url => url, :objects => objects}
+		)
 	end
 
 	def h_simple_query(objects)
+		
 		#puts "h_simple_query:myparams=#{@myparams}"
 		bloc = ""
 		bloc << "<table>"
@@ -276,23 +162,6 @@ module ApplicationHelper
 		bloc
 	end
 
-	def icone(object)
-		type = "#{object.model_name}_#{object.typesobject.name}" unless object.typesobject.nil?
-		fic="/images/#{type}.png"
-		if !File.exists?("#{RAILS_ROOT}/public#{fic}")
-			type="#{object.model_name}"
-			fic="/images/#{type}.png"
-		end
-		mdl_name=t("ctrl_#{type.downcase}")
-		ret = "<img class='icone' src='#{fic}' title='#{mdl_name}'></img>"
-		unless @myparams[:list_mode].blank?
-			if @myparams[:list_mode] != t(:list_mode_details)
-				ret << h_thumbnails(object)
-			end
-		end
-		ret
-	end
-
 	def h_thumbnails_objs(objs)
 		ret = ""
 		objs[:recordset].each do |obj|
@@ -304,35 +173,37 @@ module ApplicationHelper
 		ret
 	end
 
-	def h_thumbnails(obj)
-		ret=""
-		if obj.respond_to? :thumbnails
-			unless obj.thumbnails.nil?
-				obj.thumbnails.each do |img|
-					ret << "<img class='thumbnail' src=\"#{img.write_file_tmp}\"></img>"
-				end
-			end
-		end
-		ret
-	end
+	
 
 	def h_img_path(name)
 		"<img src=\"#{name}\"></img>"
+	end
+
+	def h_image(name, title=nil)
+		if title.nil?
+			title=t(File.basename(name.to_s))
+		end
+		h_img_base(name, title, "image")
 	end
 
 	def h_img(name, title=nil)
 		if title.nil?
 			title=t(File.basename(name.to_s))
 		end
-		"<img class=\"icone\" src=\"/images/#{name}.png\" title='#{title}'/>"
+		h_img_base(name, title, "icone")
 	end
 
 	def h_img_btn(name)
-		"<img class=\"btn\" src=\"/images/#{name}.png\" title='#{t(File.basename(name.to_s))}'/>"
+		title=t(File.basename(name.to_s))
+		h_img_base(name, title, "btn")
 	end
 
 	def h_img_tit(name, title)
-		"<img class=\"icone\" src=\"/images/#{name}.png\" title='#{title}'/>"
+		h_img_base(name, title, "icone")
+	end
+
+	def h_img_base(name, title, cls)
+		"<img class='#{cls}' src='/images/#{name}.png' title='#{title}'/>"
 	end
 
 	def h_img_cut
@@ -477,38 +348,6 @@ module ApplicationHelper
 
 	def h_show_tree(obj)
 		"don t use this function, prefer render shared/tree"
-	end
-
-	def h_show_tree_old(obj)
-		bloc=""
-		if ((@tree && @tree.size>0) || (@tree_up && @tree_up.size>0))
-			#bloc << "<h1></h1>"
-			#bloc << "<tr>"
-			#form_for(obj, :url => {:id => obj.id, :action => "select_view" }) do |f|
-			#	bloc <<	"<td>#{select("relation","view", options_from_collection_for_select( @views, :id, :name))}</td>"
-			#	bloc << "<td>#{submit_tag t("select_view")}</td>"
-			#end
-			#bloc << "</tr>"
-			bloc << "<div id='dtree'>"
-			if (@tree && @tree.size>0)
-				bloc << "<table class='menu_bas' >"
-				bloc << "<tr>"
-				bloc<< "<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_down);'>"+t("h_open_close_all_tree")+"</a></td>"
-				bloc << "</tr>"
-				bloc << "</table>"
-			bloc << @tree.to_s
-			end
-			if (@tree_up && @tree_up.size>0)
-				bloc << "<table class='menu_bas' >"
-				bloc << "<tr>"
-				bloc<< "<td><a class='menu_bas' href='#' onclick='openCloseAllTree(tree_up);'>"+t("h_open_close_all_tree")+"</a></td>"
-				bloc << "</tr>"
-				bloc << "</table>"
-			bloc << @tree_up.to_s
-			end
-			bloc << "</div>"
-		end
-		bloc
 	end
 
 	#

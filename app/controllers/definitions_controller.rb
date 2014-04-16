@@ -25,6 +25,9 @@ class DefinitionsController < ApplicationController
 	# GET /definitions
 	# GET /definitions.xml
 	#
+	before_filter :authorize, :except => nil
+	access_control(Access.find_for_controller(controller_class_name))
+	#
 	def index
 		@definitions = Definition.find_all_for(@current_user)
 		unless @definitions.length==0

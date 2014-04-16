@@ -87,13 +87,6 @@ class FiledriverDatabaseText < FiledriverDatabase
 		ret
 	end
 
-	def database_list_obsolete(volume)
-		fname= "#{self.class.name}.#{__method__}"
-		table_name=vol_table_name(volume)
-		records = database_list_table(table_name)
-		records
-	end
-
 	########################################################################
 	# protocol calls end
 	########################################################################

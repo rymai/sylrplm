@@ -1,0 +1,29 @@
+
+en:
+  relation_describe_by: Describe by
+  relation_define_by: Defined by
+  relation_hierarchic_to: Extends to
+  relation_doc_ref: Reference Document 	
+  relation_ask_for: 	
+  relation_applicable: Applicable Document	
+  relation_reference: Reference Document	
+  relation_discuss_by: Discuss by
+  relation_PRD_EFF: Product effectivity
+  relation_PRD_VAR: Product Variant 
+  relation_VAR_EFF: Variant Effectivity
+  relation_LINK_EFF: Link Effectivity	
+  relation_PRD_STR: Product Structure
+  relation_STR_STR: Structure node
+  relation_STR_PIE: Part Structure 	
+  relation_directory: Directory 	
+  relation_doc_app: Dependant Document	
+  relation_FROM_REVISION: Revision from
+  relation_FROM_DUPLICATE: Duplication from
+  typesobject_name_lifecycle: Cycle de vie
+  typesobject_name_objects_names: Noms
+  typesobject_name_others: Autres
+  typesobject_name_sites: Sites
+  typesobject_name_tree: Arbre
+  typesobject_name_types_values: Type de valeurs
+  typesobject_name_user_default: Utilisateur défaut
+  typesobject_name_volumes: Volumes

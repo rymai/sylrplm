@@ -31,7 +31,7 @@ class Document < ActiveRecord::Base
     :conditions => { father_plmtype: 'document', child_plmtype: 'document' }
 	has_many :documents,
     :through => :links_documents,
-    :source => :document
+    :source => :document_down
 
 	has_many :links_documents_up,
     :class_name => "Link",
@@ -95,9 +95,8 @@ class Document < ActiveRecord::Base
 		ret
 	end
 
-	def self.get_types_document
-		Typesobject.find(:all, :order => "name",
-		:conditions => ["forobject = 'document'"])
+	def self.get_types
+		Typesobject.get_types("document")
 	end
 
 	def self.find_all

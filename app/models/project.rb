@@ -33,14 +33,16 @@ class Project < ActiveRecord::Base
     :foreign_key => "father_id",
     :conditions => ["father_plmtype='project' and child_plmtype='document'"]
 	has_many :documents ,
-    :through => :links_documents
+    :through => :links_documents,
+    :source => :document_down
 
 	has_many :links_parts,
     :class_name => "Link",
     :foreign_key => "father_id",
     :conditions => ["father_plmtype='project' and child_plmtype='part'"]
 	has_many :parts ,
-    :through => :links_parts
+    :through => :links_parts,
+    :source => :part_down
 
 	has_many :links_customers_up,
     :class_name => "Link",

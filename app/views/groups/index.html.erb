@@ -1,5 +1,5 @@
 <h1><%= t("group_list") %></h1>
-<%= form_simple_query_helper('/groups', @groups) %>
+<%= h_form_simple_query('/groups', @groups) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_group"), new_group_path %></td>

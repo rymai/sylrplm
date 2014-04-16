@@ -207,3 +207,14 @@ function doUnload() {
 	// Do something when document is about to be unloaded.
 }
 
+function switchCheckBox(obj) {
+	
+	listname='links['+obj.value+'][]'
+	list=document.getElementsByName(listname);
+	//alert('switchCheckBox:name='+obj.name+' id='+obj.id+' value='+obj.value+' listname='+listname)
+	//alert(' list='+list+' ('+list.length+')')
+	for(i=0;i<list.length;i++) {
+		list[i].checked=obj.checked
+	}
+}
+

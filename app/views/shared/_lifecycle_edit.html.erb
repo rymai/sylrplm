@@ -1,0 +1,58 @@
+<fieldset>
+	<legend>
+		<%= t(:legend_edit_lifecycle)%>
+	</legend>
+	<table>
+		<tr>
+			<td><b> <%= t("label_previous_status")%> </b></td>
+			<td><b> <%= t("label_status")%> </b></td>
+			<td><b> <%= t("label_next_status")%> </b></td>
+		</tr>
+		<!--buttons-->
+		<tr>
+			<% button_demote=a_object.demote_button? %>
+			<td> <% unless button_demote.nil?%>
+			<% prevs = a_object.statusobject.previous_statusobjects %>
+			<%= a_form.collection_select(:previous_status_id, prevs, :id, :name) %>
+			<%end%> </td>
+			<td> <% unless a_object.statusobject.nil? %>
+			<% stval = a_object.statusobject.name %>
+			<% end %>
+			<%= text_field_tag( :status, stval, :readonly => true) %> </td>
+			<% button_promote=a_object.promote_button?%>
+			<td> <% unless button_promote.nil? %>
+			<% nexts = a_object.statusobject.next_statusobjects %>
+			<%= a_form.collection_select(:next_status_id,  nexts, :id, :name) %>
+			<% end %> </td>
+		</tr>
+		<tr>
+			<% button_demote=a_object.demote_button? %>
+			<td> <% unless button_demote.nil? %>
+			<%= a_form.submit t(button_demote) %>
+			<% end %> </td>
+			<td></td>
+			<td> <% if a_object.frozen? %>
+			<%= t(:freeze) %>
+			<% else %>
+			<% button_promote=a_object.promote_button? %>
+			<% unless button_promote.nil? %>
+			<%= a_form.submit t(button_promote) %>
+			<% end %>
+			<% end %> </td>
+	</table>
+</fieldset>
+<% button_revise = a_object.revise_button? %>
+<% unless button_revise.nil? %>
+<fieldset>
+	<legend>
+		<%= t(:legend_edit_revision)%>
+	</legend>
+	<br/>
+	<table>
+		<!--labels-->
+		<tr>
+			<td> <%= a_form.submit t(button_revise) %> </td>
+		</tr>
+	</table>
+</fieldset>
+<% end %>

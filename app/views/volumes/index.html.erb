@@ -1,5 +1,5 @@
 <h1><%= t(:volume_list) %><%= h_count_objects(@volumes) %></h1>
-<%= form_simple_query_helper('/volumes', @volumes) %>
+<%= h_form_simple_query('/volumes', @volumes) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t(:new_volume), new_volume_path %> </td>

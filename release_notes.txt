@@ -1,0 +1,20 @@
+#
+# Release notes of sylrplm application
+#
+#------------------------------------------------------------------------------
+# Date: 2014 04 16
+#------------------------------------------------------------------------------
+- improve showing objects in relation with tue current
+- show the scad design model in the tree
+- improvment on access list
+- uniq icone function
+- translation of name of custo objects: types, status, group, role ...
+- less html code in application_helper, using partial render
+- defining m_xxx functions instead of xxx to avoid confusioon with the standard, 
+  ex: datafiles_controller: @datafile=Datafile.m_create(params[:datafile])
+- improve access to definition functions
+- using of xxxx_down instead of xxx in links to avoid confusion 
+  ex: child.belongs_to :document_down in links.rb
+- add update in link controller
+- improve notification search
+- 

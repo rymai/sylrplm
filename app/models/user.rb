@@ -35,14 +35,6 @@ class User < ActiveRecord::Base
 		self.login+" "+self.first_name.to_s+" "+self.last_name.to_s
 	end
 
-	def projects_obsolete
-		ret = links_projects.collect {
-		|p| p.father
-		}
-		puts "User.projects:user="+self.id.to_s+":"+self.designation+":"+ret.inspect
-		ret
-	end
-
 	def password_confirmation=(val)
 		@password_confirmation        = val
 	end
@@ -322,7 +314,7 @@ new_user=nil
 	# peut creer des objets avec accessor
 	def may_access?
 		ret=!self.role.nil? && !self.group.nil? && !self.project.nil?
-		puts "User.may_access?:#{ret}"
+		#puts "User.may_access?:#{ret}"
 		ret
 	end
 
@@ -343,18 +335,6 @@ new_user=nil
 		ret=true
 		end
 		ret
-	end
-
-	def v_notification_obsolete
-		unless self.notification.nil?
-			ret=User.notifications
-		ret=ret[self.notification]
-		end
-		#puts "v_notification:"+self.notification.to_s+":"+User.notifications.inspect+":"+ret.to_s
-		unless ret.nil?
-		ret=ret[1]
-		end
-		I18n.t(ret) unless ret.nil?
 	end
 
 	#renvoie la liste des time zone tries sur le nom ([[texte,nom]])

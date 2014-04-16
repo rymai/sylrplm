@@ -1,5 +1,6 @@
 fr:
   # general
+  model3d_view: Voir le modèlel correspondant à la structure décrite ci dessous
   root_model_design: Modèle 2D/3D
   customer: client
   document: document
@@ -78,6 +79,7 @@ fr:
   legend_edit_revision: Révision
   lifecycle_edit: "Cycle de vie du %{model} '%{obj}'"
   label_liste_mode: Type de liste
+  switch_all_links: "Tous-Aucun"
   # attributs generaux
   faq_question: Question
   faq_answer: Réponse
@@ -368,7 +370,7 @@ fr:
   legend_clipboard: Presse papier
   submit: GO
   CV: Curriculum vitae
-  first_use: Si vous débutez, vous pouvez profiter de la prise en main (%{help}) avant de lire complètement la <a href='/main/helpgeneral'>documentation dans l' aide</a>
+  first_use: Si vous débutez, nous vous invitons à lire la description des principales fonctionnalités de l'application. <br/>Vous pourrez ensuite profiter de la prise en main (%{help}) avant de lire complètement la <a href='/main/helpgeneral'>documentation</a>
   # notifications
   legend_notification: Renseignez les propriétés de la notification
   notification_edit: Edition notification

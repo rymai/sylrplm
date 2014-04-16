@@ -235,6 +235,12 @@ img.icone {
 	width: 16px;
 	height: 16px;
 }
+img.image {
+	border: 1px solid #666;
+	background: transparent;
+	width: 65px;
+	height: 65px;
+}
 img.thumbnail {
 	border: none;
 	background: transparent;

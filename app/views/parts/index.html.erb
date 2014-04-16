@@ -4,7 +4,7 @@
 <%= f.error_messages %>
 <% end %>
 <% end %>
-<%= form_simple_query_helper('/parts', @parts) %>
+<%= h_form_simple_query('/parts', @parts) %>
 <table class='menu_bas'>
 	<tr>
 		<td><%= link_to t("new_part"), new_part_path %></td>

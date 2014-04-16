@@ -71,7 +71,11 @@ class Definition < ActiveRecord::Base
   #
   def self.find_all_for (user)
     all = find(:all)
-    user.is_admin? ? all : all.select { |d| ! d.is_special? }
+    unless user.nil?
+    	user.is_admin? ? all : all.select { |d| ! d.is_special? }
+    else
+    	[]
+    end
   end
   #
   # Returns true if the definition is special (ie it represents the right

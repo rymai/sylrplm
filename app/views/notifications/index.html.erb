@@ -1,5 +1,5 @@
 <h1><%= t(:notification_list) %><%= h_count_objects(@notifications) %></h1>
-<%= form_simple_query_helper('/notifications', @notifications) %>
+<%= h_form_simple_query('/notifications', @notifications) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_notification"), new_notification_path %></td>

@@ -94,9 +94,21 @@ class Datafile < ActiveRecord::Base
 		ret
 	end
 
-	def delete
+	def m_destroy
 		fname= "#{self.class.name}.#{__method__}"
 		ret = volume.protocol_driver.remove_files(self)
+		unless self.customer.nil?
+			customer.remove_datafile(self)
+		end
+		unless self.document.nil?
+			document.remove_datafile(self)
+		end
+		unless self.part.nil?
+			part.remove_datafile(self)
+		end
+		unless self.project.nil?
+			project.remove_datafile(self)
+		end
 		self.destroy
 	end
 
@@ -133,7 +145,24 @@ class Datafile < ActiveRecord::Base
 	########################################################################
 	# protocol calls end
 	########################################################################
-
+	
+	def self.m_create(params)
+		uploadedfile = params.delete(:uploaded_file)
+		datafile = Datafile.new(params[:datafile])
+		if datafile.save
+			datafile.create_directory
+			if uploadedfile
+				datafile.update_attributes(:uploaded_file => uploadedfile)
+			end
+		end
+		datafile
+	end
+	
+	def m_update(params, user)
+		update_accessor(user)
+		stupd = update_attributes_repos(params, user)
+	end
+		
 	def self.host=(args)
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug (fname) {"host=#{args.inspect}"}
@@ -359,36 +388,5 @@ class Datafile < ActiveRecord::Base
 
 	#["ident LIKE ? or "+qry_type+" or revision LIKE ? "+
 	#  " or "+qry_owner_id+" or updated_at LIKE ? or "+qry_volume,
-
-	end
-
-	def remove_files_obsolete
-		fname= "#{self.class.name}.#{__method__}"
-		if self.volume.protocol == ::Volume::PROTOCOL_FOG
-			dir=SylrplmFog.instance.directory(dir_repository)
-			unless dir.nil?
-				dir.files.each do |file|
-					puts "datafile.remove_files:file="+file.inspect
-					file.destroy
-				end
-			dir.destroy
-			end
-		elsif  self.volume.protocol == ::Volume::PROTOCOL_DATABASE_TEXT || self.volume.protocol == ::Volume::PROTOCOL_DATABASE_BINARY
-			ActiveRecord::Base.connection.execute("DELETE FROM #{dir_repository} WHERE datafile = '#{ident}'")
-		else
-			dir = dir_repository
-			#puts "datafile.remove_files:"+dir
-			if File.exists?(dir)
-				Dir.foreach(dir) { |file|
-					repos=File.join(dir,file)
-					puts "datafile.remove_files:file="+repos
-					if File.file?(repos)
-						File.unlink(repos)
-					end
-				}
-				Dir.rmdir(dir)
-			end
-
-		end
 	end
 end

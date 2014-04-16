@@ -1,6 +1,7 @@
 class SubscriptionsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	before_filter :authorize, :except => nil
+	access_control(Access.find_for_controller(controller_class_name))
 	# GET /subscriptions
 	# GET /subscriptions.xml
 	def index

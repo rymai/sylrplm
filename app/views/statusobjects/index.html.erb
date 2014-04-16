@@ -4,7 +4,7 @@
 <%= f.error_messages %>
 <% end %>
 <% end %>
-<%= form_simple_query_helper('/statusobjects', @statusobjects) %>
+<%= h_form_simple_query('/statusobjects', @statusobjects) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t(:new_statusobject), new_statusobject_path %> </td>
@@ -14,7 +14,6 @@
 <%= will_paginate(@statusobjects[:recordset]) %>
 <table>
 	<tr>
-		<th <%= sort_td_class_helper "id" %>> <%= sort_link_helper t(:label_id), "id" %> </th>
 		<th <%= sort_td_class_helper "forobject" %>> <%= sort_link_helper t(:label_object), "forobject" %> </th>
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t(:label_typesobject), "typesobject_id" %> </th>
 		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t(:label_name), "name" %> </th>
@@ -29,7 +28,6 @@
 	</tr>
 	<% @statusobjects[:recordset].each do |statusobject| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td> <%= h statusobject.id %> </td>
 		<td> <%= h statusobject.forobject %> </td>
 		<td> <%= h_explorer statusobject.typesobject, :name %> </td>
 		<td> <%= h_explorer statusobject, :name %> </td>

@@ -26,6 +26,10 @@ class Role < ActiveRecord::Base
 		Typesobject.find_by_forobject(model_name)
 	end
 
+	def title
+		PlmServices.translate("role_title_#{super}")
+	end
+
 	def designation
 		Role.truncate_words(description, 5)
 	end

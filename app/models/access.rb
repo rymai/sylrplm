@@ -186,44 +186,45 @@ class Access < ActiveRecord::Base
        # puts "acces.init:#{controller.name} #{controller.method}: fonctions admin"
         if controller.method[0,5] == "reset"
         	#roles = "admin"
-        	roles = roles_yes(acc_roles[:cat_admins]) 
+        	roles = roles_admin acc_roles
         else
         	#roles = "admin & (!consultant | !creator)"
-        	roles = roles_yes(acc_roles[:cat_admins]) +"& ("+ roles_no(acc_roles[:cat_consultants]) +" | "+ roles_no(acc_roles[:cat_creators])+ ")"
+        	roles = roles_admins_not_creators_not_consultant acc_roles
       	end
       else
         if controller.name == "SessionsController"
         #  puts "acces.init:#{controller.name} #{controller.method}: tout le monde peut se connecter/deconnecter"
           #roles = "admin | creator | consultant"
-          roles = roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +" | "+ roles_yes(acc_roles[:cat_consultants])
+          roles=roles_admin_or_creator_or_consultant acc_roles
         elsif %w["WorkitemsController ErrorsController ExpressionsController HistoryController"].include?(controller.name)
          # puts "acces.init:#{controller.name} #{controller.method}: tout le monde peut executer une tache sauf le consultant"
           #roles = "(admin | creator) & !consultant"
-          roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
+          roles=roles_admin_or_creator_not_consultant acc_roles
         elsif controller.name == "QuestionsController"
           #puts "acces.init:#{controller.name} #{controller.method}: tout le monde peut poser une question, le consultant ne peut repondre"
           roles = nil
           if controller.method == "edit"
             #roles = "(admin | creator) & !consultant"
-            roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
-          end
+ 							roles=roles_admin_or_creator_not_consultant acc_roles
+           end
         elsif controller.name == "UsersController"
           #puts "acces.init:#{controller.name} #{controller.method}: seulement admin"
           roles=nil
           if controller.method != "show" && controller.method[0,7] != "account"
             #roles = "admin" 
-            roles = roles_yes(acc_roles[:cat_admins])
+            roles = roles_admin acc_roles
           end
         else
         # les fonctions plm
           if %w["show"].include?(controller.method) 
            # puts "acces.init:#{controller.name} #{controller.method}:fonctions plm:show index: "
             #roles = "admin | designer | valider | consultant"
-            roles = roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +" | "+ roles_yes(acc_roles[:cat_consultants])
+           roles=roles_admin_or_creator_or_consultant acc_roles
           else
           #puts "acces.init:#{controller.name} #{controller.method}: fonctions plm:autres:#{controller.method}"
-          #roles = "(admin | designer | valider | consultant)"
-            roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +" | "+ roles_yes(acc_roles[:cat_consultants])+ ")"
+          #roles = "(admin | creator) & !consultant"
+          roles=roles_admin_or_creator_not_consultant acc_roles
+            ##roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +" | "+ roles_yes(acc_roles[:cat_consultants])+ ")"
           end
         end
       end
@@ -234,5 +235,16 @@ class Access < ActiveRecord::Base
       end
     end
   end
-
+  def self.roles_admin(acc_roles)
+  	roles_yes(acc_roles[:cat_admins])
+  end
+  def self.roles_admins_not_creators_not_consultant(acc_roles)
+  	 roles_yes(acc_roles[:cat_admins]) +"& ("+ roles_no(acc_roles[:cat_consultants]) +" | "+ roles_no(acc_roles[:cat_creators])+ ")"
+  end
+	def self.roles_admin_or_creator_not_consultant(acc_roles)
+		"("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +") & ("+ roles_no(acc_roles[:cat_consultants])+ ")"
+	end
+	def self.roles_admin_or_creator_or_consultant(acc_roles)
+		roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +" | "+ roles_yes(acc_roles[:cat_consultants])
+	end
 end

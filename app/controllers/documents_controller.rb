@@ -1,11 +1,10 @@
 class DocumentsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	before_filter :check_init, :only => :new
 	#droits d'acces suivant le controller et l'action demandee
 	#administration par le menu Access
 	#access_control (Document.controller_access())
 	access_control(Access.find_for_controller(controller_class_name))
-	before_filter :check_user, :only => [:new, :edit]
+	
 	# GET /documents
 	# GET /documents.xml
 	def index
@@ -41,7 +40,7 @@ class DocumentsController < ApplicationController
 		LOG.debug (fname) {"params=#{params.inspect}"}
 		params={}
 		@document = Document.new(:user => current_user)
-		@types    = Document.get_types_document
+		@types    = Document.get_types
 		@volumes  = Volume.find_all
 		@status   = Statusobject.find_for("document", 2)
 		respond_to do |format|
@@ -198,27 +197,6 @@ class DocumentsController < ApplicationController
 		end
 	end
 
-	def promote_by_menu_obsolete
-		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
-		promote_
-	end
-
-	def promote_by_action_obsolete
-		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
-		promote_
-	end
-
-	def promote__obsolete
-
-		@document = Document.find(params[:id])
-		@volumes  = Volume.find_all
-		@types    = Typesobject.find_for("document")
-		@status   = Statusobject.find_for("document")
-		ctrl_promote(@document)
-	end
-
 	def demote
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
@@ -231,35 +209,6 @@ class DocumentsController < ApplicationController
 
 	def revise
 		ctrl_revise(Document)
-	end
-
-	def revise_obsolete
-		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
-		document     = Document.find(params[:id])
-		previous_rev = document.revision
-		@document    = document.revise
-		@types       = Document.get_types_document
-		@status      = Statusobject.find_for("document")
-		respond_to do |format|
-			unless @document.nil?
-				if @document.save
-					#puts "documents_controller.revision apres save=#{@document.id}:#{@document.revision}"
-					flash[:notice] = t(:ctrl_object_revised, :typeobj => t(:ctrl_document), :ident => @document.ident, :previous_rev => previous_rev, :revision => @document.revision)
-					format.html { redirect_to(@document) }
-					format.xml  { head :ok }
-				else
-					flash[:error] = t(:ctrl_object_not_revised, :typeobj => t(:ctrl_document), :ident => @document.ident, :previous_rev => previous_rev)
-					format.html { render :action => "edit" }
-					format.xml  { render :xml => @document.errors, :status => :unprocessable_entity }
-				end
-			else
-				@document = Document.find(params[:id])
-				flash[:error] = t(:ctrl_object_not_revised, :typeobj => t(:ctrl_document), :ident => @document.ident, :previous_rev => previous_rev)
-				format.html { redirect_to(@document) }
-				format.xml  { head :ok }
-			end
-		end
 	end
 
 	def check_out
@@ -285,7 +234,7 @@ class DocumentsController < ApplicationController
 		chk = @document.check_in(params[:check], current_user)
 		respond_to do |format|
 			unless chk.nil?
-				update_accessor(@document)
+				@document.update_accessor(current_user)
 				@document.update_attributes(params[:document])
 				flash[:notice] = t(:ctrl_object_checkin, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:in_reason])
 			else

@@ -5,26 +5,23 @@ require_dependency 'error_reply'
 
 class ApplicationController < ActionController::Base
   include Controllers::PlmObjectControllerModule
-
   helper :all # include all helpers, all the time
-  helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?, :get_domain, :get_list_modes
-
+  helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?, :get_domain, :get_list_modes, :icone, :h_thumbnails, :tr_def
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-
   filter_parameter_logging :password
-  
   # bug: page non affichee before_render :check_access_data
-
   before_filter LogDefinitionFilter
-
+  before_filter :check_init
   before_filter :authorize, :except => [:index, :init_objects]
+  before_filter :check_user
   before_filter :define_variables
   before_filter :set_locale
   before_filter :active_check
-
+  
 	def active_check
     @my_filter = true
   end
+  
   def render(*args)
     st = check_access_data(args) if @my_filter
     if st
@@ -74,27 +71,24 @@ class ApplicationController < ActionController::Base
 		ret
 	end
 
-  def update_accessor(obj)
-    mdl_name = obj.model_name
-    params[mdl_name][:owner_id]=current_user.id if obj.instance_variable_defined?(:@owner_id)
-    params[mdl_name][:group_id]=current_user.group_id if obj.instance_variable_defined?(:@group_id)
-    params[mdl_name][:projowner_id]=current_user.project_id if obj.instance_variable_defined?(:@projowner_id)
-    puts "update_accessor:"+params.inspect
-  end
-
+	#
+	# if action <> show, check if the user can create or update plm object (by accessor function)
+	#   he must have a role, group and project
+	# if not, redirect to index page
+	#
   def check_user(redirect=true)
-    puts "debut de check_user:redirect=#{redirect}"
+  	fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname) {"redirect=#{redirect}, params=#{params} action=#{params[:action][0,4]}"}
     flash[:notice] = nil
-    unless current_user.may_access?
-    	puts "check_user:user not accessible"
-      flash[:notice] =""
-      flash[:notice] += t(:ctrl_user_without_roles )+" " if current_user.role.nil?
-      flash[:notice] += t(:ctrl_user_without_groups )+" " if current_user.group.nil?
-      flash[:notice] += t(:ctrl_user_without_projects )+" " if current_user.project.nil?
-      #puts "check_user:"+redirect.to_s+":"+flash[:notice]
-      redirect_to(:action => "index") if redirect && !flash[:notice].blank?
+    if(params[:action][0,3]!="show")
+	    unless current_user.nil? || current_user.may_access?
+	      flash[:notice] =""
+	      flash[:notice] += t(:ctrl_user_without_roles )+" " if current_user.role.nil?
+	      flash[:notice] += t(:ctrl_user_without_groups )+" " if current_user.group.nil?
+	      flash[:notice] += t(:ctrl_user_without_projects )+" " if current_user.project.nil?
+	      redirect_to(:action => "index") if redirect && !flash[:notice].blank?
+	    end
     end
-    puts "fin de check_user"
     flash[:notice]
   end
 
@@ -120,26 +114,16 @@ class ApplicationController < ActionController::Base
 
   def check_init
     if User.count == 0
-      puts 'application_controller.check_init:base vide'
+    	LOG.error (fname) {"Database is empty (no user)"}
       flash[:error]=t(:ctrl_init_to_do)
       respond_to do |format|
         format.html{redirect_to_main}
       end
     end
-    puts "fin de check_init"
   end
 
   def event
     event_manager
-  end
-
-  def permission_denied(role, controller, action)
-    flash[:error] = t(:ctrl_no_privilege, :role=>role, :controller=>controller, :action=>action)
-    redirect_to(:action => "index")
-  end
-
-  def permission_granted
-    #flash[:notice] = "Welcome to the secure area !"
   end
 
   def render_text(msg)
@@ -192,7 +176,6 @@ class ApplicationController < ActionController::Base
   	ret
   end
   
-
   # definition des variables globales.
   def define_variables
     @favori      = session[:favori] ||= Favori.new
@@ -234,44 +217,6 @@ class ApplicationController < ActionController::Base
     redirect_to(uri || { :controller => "main", :action => "index" })
   end
 
-  def get_datas_count
-  	ret = {}
-    ret[:plm_objects] = {
-	      :datafile => Datafile.count,
-	      :document => Document.count,
-	      :part => Part.count,
-	      :project => Project.count,
-	      :customer => Customer.count
-	    }
-
-   	ret[:collab_objects] = {
-      	:forum => Forum.count,
-      	:question => Question.count
-     	}
-
-    ret[:organization] = {
-	      :user => User.count,
-	      :role => Role.count,
-	      :group => Group.count,
-	      :volume => Volume.count
-      }
-
-    ret[:parametrization] = {
-	      :typesobject => Typesobject.count,
-	      :statusobject => Statusobject.count,
-	      :relation => Relation.count,
-        :definition => Definition.count
-      }
-
-    if admin_logged_in?
-      ret[:internal_objects] = {
-        	:link => Link.count
-      		}
-
-    end
-    ret
-  end
-
   def error_reply (error_message, status=400)
     if error_message.is_a?(ErrorReply)
     status = error_message.status
@@ -295,24 +240,6 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from(ErrorReply) { |e| error_reply(e) }
-
-  #
-  # Returns a new LinkGenerator wrapping the current request.
-  #
-  def linkgen
-    LinkGenerator.new(request)
-  end
-
-  #
-  # Creates an HistoryEntry record
-  #
-  def history_log (event, options={})
-    fname= "#{self.class.name}.#{__method__}"
-    source = options.delete(:source) || @current_user.login
-    #LOG.debug (fname){"history_log:source=#{source}"}
-   	#LOG.debug (fname){"history_log:options=#{options}"}
-    Ruote::Sylrplm::HistoryEntry.log!(source, event, options)
-  end
 
   def authorize
     user_id = session[:user_id] || User.find_by_id(session[:user_id])
@@ -349,6 +276,15 @@ class ApplicationController < ActionController::Base
     end
     #puts "fin de authorize"
   end
+  
+  def permission_denied(role, controller, action)
+    flash[:error] = t(:ctrl_no_privilege, :role=>role, :controller=>controller, :action=>action)
+    redirect_to(:action => "index")
+  end
+
+  def permission_granted
+    #flash[:notice] = "Welcome to the secure area !"
+  end
 
   def current_user
     ret = @current_user ||= User.find_user(session)
@@ -360,7 +296,7 @@ class ApplicationController < ActionController::Base
     current_user != nil
   end
 
-  # Returns true if the user is connected and having the admin role
+  # Returns true if the user is connected and having an admin role
   def admin_logged_in?
     ret=false
     if logged_in?
@@ -372,7 +308,24 @@ class ApplicationController < ActionController::Base
     ret
   end
 
-  def icone(obj)
+  def icone(object)
+		html_title=""
+		unless object.typesobject.nil?
+			type = "#{object.model_name}_#{object.typesobject.name}"
+			mdl_name = t("ctrl_#{type.downcase}")
+			html_title="title='#{mdl_name}'"
+		end
+		fic = icone_fic(object)
+		ret = "<img class='icone' src='#{fic}' #{html_title}></img>"
+		unless @myparams[:list_mode].blank?
+			if @myparams[:list_mode] != t(:list_mode_details)
+				ret << h_thumbnails(object)
+			end
+		end
+		ret
+	end
+
+	def icone_fic(obj)
   	fname="#{controller_class_name}.#{__method__}"
     unless obj.model_name.nil? || !obj.respond_to?(:typesobject) || obj.typesobject.nil?
       ret = "/images/#{obj.model_name}_#{obj.typesobject.name}.png"
@@ -391,7 +344,10 @@ class ApplicationController < ActionController::Base
     #LOG.debug  (fname){"icone:#{obj.model_name}:#{obj.typesobject.name}:#{ret}"}
     ret
   end
-
+  
+	#
+	# return the image corresponding of an object of plmtype(user, group, customer, part, document, project, ...)
+	#
   def icone_plmtype(plmtype)
     ret = "/images/#{plmtype}.png"
     unless File.exist?("#{RAILS_ROOT}/public#{ret}")
@@ -399,24 +355,7 @@ class ApplicationController < ActionController::Base
     end
     ret
   end
-
-  #
-  # controle des vues et de la vue active
-  #
-  def define_view
-  	#puts "#{controller_name}.define_view:begin view=#{@myparams[:view_id]}"
-  	# views: liste des vues possibles est utilisee dans la view ruby show
-		@views = View.all
-		# view_id: id de la vue selectionnee est utilisee dans la view ruby show
-		#@myparams[:view_id] = @views.first.id if @myparams[:view_id].nil?
-		if @myparams[:view_id].nil?
-			if logged_in?
-			@myparams[:view_id] = current_user.get_default_view.id
-			end
-		end
-		#puts "#{controller_name}.define_view:end view=#{@myparams[:view_id]}"
-	end
-
+  
 	#
 	# verifie qu'un parametre http existe avec la bonne valeur
 	#
@@ -424,6 +363,27 @@ class ApplicationController < ActionController::Base
 		ret = @myparams.include?(key) && @myparams[key] == value
 		#puts "#{controller_name}.#{__method__}:#{key}.#{value}=#{ret}"
 		ret
+	end
+	
+	def h_thumbnails(obj)
+		ret=""
+		if obj.respond_to? :thumbnails
+			unless obj.thumbnails.nil?
+				obj.thumbnails.each do |img|
+					ret << "<img class='thumbnail' src=\"#{img.write_file_tmp}\"></img>"
+				end
+			end
+		end
+		ret
+	end
+	
+	def tr_def(key)
+		t(key,:default=> "%#{key}%")
+	end
+	
+	def t(*args)
+		#puts "t:#{args.inspect} env:#{Rails.env}"
+		PlmServices.translate(args)[0]
 	end
 end
 

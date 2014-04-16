@@ -47,7 +47,7 @@ def ctrl_promote(a_object, withMail=true)
 		if email_ok==true
 			#LOG.debug (fname){"promote_by_action?=#{object.promote_by_action?}"}
 			if a_object.promote_by_action?
-				ctrl_create_process("promotion")
+				ctrl_create_process("promotion", a_object)
 			else
 				current_rank = a_object.statusobject.name
 				a_object.next_status_id = params[a_object.model_name][:next_status_id]
@@ -140,7 +140,7 @@ def ctrl_demote(a_object, withMail=true)
 	end
 end
 
-def ctrl_create_process(process_name)
+def ctrl_create_process(process_name, a_object)
 	fname= "#{self.class.name}.#{__method__}"
 	# run the promote process
 	@definition = Definition.find_by_name(process_name)
@@ -162,22 +162,24 @@ def ctrl_create_process(process_name)
 		LOG.info (fname) {"workitem="+workitem.inspect}
 		unless workitem.nil?
 			flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")
-			add_object_to_workitem(object, workitem)
-			format.html { redirect_to(object) }
+			add_object_to_workitem(a_object, workitem)
+			format.html { redirect_to(a_object) }
 			format.xml  { head :ok }
 		else
 			flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")
-			format.html { redirect_to(object) }
+			format.html { redirect_to(a_object) }
 			format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
 		end
 	rescue Exception => e
 		LOG.error { "fei not launched error="+e.inspect}
 		LOG.error {" fei not launched li="+li.inspect}
 		LOG.error {" options="+options.inspect}
-		e.backtrace.each {|x| LOG.error {x}}
+		e.backtrace.each {|x| LOG.error (fname){x}}
 		flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "fei not launched error=#{e}")
 		#format.html { redirect_to new_process_path(:definition_id => @definition.id)}
-		format.html { redirect_to ({:controller => :definitions , :action => :new_process}) }
+		#format.html { redirect_to ({:controller => :definitions , :action => :new_process, :definition_id => @definition.id}) }
+		LOG.error (fname){"a_object=#{a_object}"}
+		format.html { redirect_to(a_object) }
 		format.xml  { render :xml => e, :status => :unprocessable_entity }
 
 	end

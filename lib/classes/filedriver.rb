@@ -114,26 +114,4 @@ class Filedriver
 		decompress
 	end
 
-	def zip_content_obsolete(content,filename)
-		fname= "#{self.class.name}.#{__method__}"
-		stringio = Zip::ZipOutputStream::write_buffer do |zio|
-			zio.put_next_entry(filename)
-			zio.write content
-		end
-		stringio.rewind
-		binary_data = stringio.sysread
-	end
-
-	def unzip_content_obsolete(content,filename)
-		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"content:size=#{content.length}"}
-		ret=""
-		stringio = Zip::ZipInputStream.open(StringIO.new(content)) do |zio|
-			while (entry = zio.get_next_entry)
-				ret = zio.read
-			end
-		end
-		ret
-	end
-
 end

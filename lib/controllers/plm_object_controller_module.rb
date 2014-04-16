@@ -333,7 +333,8 @@ module Controllers
 	   	unless params["links"].nil?
 				#puts "========================="+params["links"].inspect
 				params["links"].each {
-					|key, value| puts "#{key} is #{value}"
+					|key, value| 
+					#puts "ctrl_duplicate_links:#{key} is #{value}"
 					value.each do |lnkid|
 						lnk_orig = Link.find(lnkid)
 						#puts "=========================lnk_orig="+lnk_orig.inspect
@@ -345,5 +346,78 @@ module Controllers
 			end
 			ret
 		end
+		  #
+  # controle des vues et de la vue active
+  #
+  def define_view
+  	#puts "#{controller_name}.define_view:begin view=#{@myparams[:view_id]}"
+  	# views: liste des vues possibles est utilisee dans la view ruby show
+		@views = View.all
+		# view_id: id de la vue selectionnee est utilisee dans la view ruby show
+		#@myparams[:view_id] = @views.first.id if @myparams[:view_id].nil?
+		if @myparams[:view_id].nil?
+			if logged_in?
+			@myparams[:view_id] = current_user.get_default_view.id
+			end
+		end
+		#puts "#{controller_name}.define_view:end view=#{@myparams[:view_id]}"
+	end
+  #
+  # Creates an HistoryEntry record
+  #
+  def history_log (event, options={})
+    fname= "#{self.class.name}.#{__method__}"
+    source = options.delete(:source) || @current_user.login
+    #LOG.debug (fname){"history_log:source=#{source}"}
+   	#LOG.debug (fname){"history_log:options=#{options}"}
+    Ruote::Sylrplm::HistoryEntry.log!(source, event, options)
+  end
+  
+  def get_datas_count
+  	ret = {}
+    ret[:plm_objects] = {
+	      :datafile => Datafile.count,
+	      :document => Document.count,
+	      :part => Part.count,
+	      :project => Project.count,
+	      :customer => Customer.count
+	    }
+   	ret[:collab_objects] = {
+      	:forum => Forum.count,
+      	:question => Question.count
+     	}
+    ret[:organization] = {
+	      :user => User.count,
+	      :role => Role.count,
+	      :group => Group.count,
+	      :volume => Volume.count
+      }
+    ret[:parametrization] = {
+	      :typesobject => Typesobject.count,
+	      :statusobject => Statusobject.count,
+	      :relation => Relation.count,
+        :definition => Definition.count
+      }
+    if admin_logged_in?
+      ret[:internal_objects] = {
+        	:link => Link.count
+      		}
+    end
+    ret
+  end
+  
+  #
+  # Returns a new LinkGenerator wrapping the current request.
+  #
+  def linkgen
+    LinkGenerator.new(request)
+  end
+	def update_accessor(current_user)
+    mdl_name = self.model_name
+    params[mdl_name][:owner_id]=current_user.id if self.instance_variable_defined?(:@owner_id)
+    params[mdl_name][:group_id]=current_user.group_id if self.instance_variable_defined?(:@group_id)
+    params[mdl_name][:projowner_id]=current_user.project_id if self.instance_variable_defined?(:@projowner_id)
+    #puts "update_accessor:"+params.inspect
+  end
 	end
 end

@@ -25,18 +25,6 @@ module Models
 			self.date=DateTime::now()
 		end
 
-		def is_freeze_old
-			if(self.statusobject!=nil && ::Statusobject.get_last(self)!=nil)
-				if(self.statusobject.rank == ::Statusobject.get_last(self).rank)
-				true
-				else
-				false
-				end
-			else
-			false
-			end
-		end
-
 		def checkout_needed?
 			false
 		end
@@ -493,8 +481,6 @@ module Models
 
 		end
 
-		
-
 		# identifiant informatique : model + id
 		def mdlid
 			model_name+"."+id.to_s
@@ -503,18 +489,6 @@ module Models
 		def add_datafile(params,user)
 			fname= "#{self.class.name}.#{__method__}"
 			LOG.info (fname){"Don't use this method but: document.datafiles.build(params[:datafile])"}
-		end
-
-		def add_datafile_old(params,user)
-			datafile = Datafile.new(params)
-			datafile.document = self
-			if datafile.save
-				self.datafiles << datafile
-				self.save
-				"ok"
-			else
-				"datafile_not_saved"
-			end
 		end
 
 		def remove_datafile(item)

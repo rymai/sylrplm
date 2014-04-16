@@ -37,7 +37,7 @@ class Part < ActiveRecord::Base
     :conditions => ["father_plmtype='part' and child_plmtype='part' and father_typesobject_id in (select id from typesobjects where name='PRD') and child_typesobject_id in (select id from typesobjects where name='EFF')"]
 	has_many :prd_effectivities ,
     :through => :links_prd_effectivities,
-    :source => :part
+    :source => :part_down
 
 	has_many :links_var_effectivities,
     :class_name => "Link",
@@ -45,7 +45,7 @@ class Part < ActiveRecord::Base
     :conditions => ["father_plmtype='part' and child_plmtype='part' and father_typesobject_id in (select id from typesobjects where name='VAR') and child_typesobject_id in (select id from typesobjects where name='EFF')"]
 	has_many :var_effectivities ,
     :through => :links_var_effectivities,
-    :source => :part
+    :source => :part_down
 
 
 has_many :links_documents,
@@ -54,7 +54,7 @@ has_many :links_documents,
     :conditions => { father_plmtype: 'document', child_plmtype: 'document' }
 	has_many :documents,
     :through => :links_documents,
-    :source => :document
+    :source => :document_down
 
 	has_many :links_parts,
     :class_name => "Link",
@@ -62,7 +62,7 @@ has_many :links_documents,
     :conditions => { father_plmtype: 'part', child_plmtype: 'part' }
 	has_many :parts ,
     :through => :links_parts,
-    :source => :part
+    :source => :part_down
 
 	has_many :links_parts_up,
     :class_name => "Link",

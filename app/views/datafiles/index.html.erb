@@ -4,7 +4,7 @@
 <%= f.error_messages %>
 <% end %>
 <% end %>
-<%= form_simple_query_helper('/datafiles', @datafiles) %>
+<%= h_form_simple_query('/datafiles', @datafiles) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_datafile"), new_datafile_path %> </td>

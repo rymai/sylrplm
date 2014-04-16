@@ -24,6 +24,13 @@ class Typesobject < ActiveRecord::Base
 		order_default.find_all
 	end
 
+	def name
+		PlmServices.translate("typesobject_name_#{super}")
+	end
+	def forobject
+		PlmServices.translate("forobject_#{super}")
+	end
+
 	#
 	# return types for models observed by Plmobserver
 	#
@@ -40,11 +47,21 @@ class Typesobject < ActiveRecord::Base
 
 	def self.get_types(s_object)
 		fname="Typesobject.#{__method__}(#{s_object})"
-		ret = find_all_by_forobject(s_object.to_s, :order => :name)
+		sgeneric = PlmServices.get_property(:PLMTYPE_GENERIC)
+		fname="Typesobject.#{__method__}(#{s_object})"
+		stypes = order_default.find_all_by_forobject(s_object.to_s)
+		ret= []
+		stypes.each do |type|
+			#LOG.debug (fname) {"type:#{type}"}
+			if type.name != sgeneric
+				type.name = PlmServices.translate(type.name)
+			ret << type
+			end
+		end
 		unless ret.is_a?(Array)
 			ret = [ret]
 		end
-		#LOG.debug (fname){"types=#{ret}"}
+		#LOG.debug (fname) {"types=#{ret}"}
 		ret
 	end
 
@@ -60,7 +77,7 @@ class Typesobject < ActiveRecord::Base
 	def self.get_default(obj)
 		fname="Typesobject.#{__method__}:"
 		ret=find_by_forobject(obj.model_name)
-		LOG.debug (fname){"ret=#{ret}"}
+		#LOG.debug (fname){"ret=#{ret}"}
 		ret
 	end
 
@@ -92,19 +109,14 @@ class Typesobject < ActiveRecord::Base
 		ret
 	end
 
-	def self.find_for(object)
-		#find(:all, :order=>"object,name", :conditions => ["object = '#{object}' "])
-		fname="Typesobject.find_for:"
-		ret = order_default.find_all_by_forobject(object)
-		type_generic=Typesobject.generic(object)
-		#LOG.debug (fname){"type_generic=#{type_generic}"}
-		ret.delete type_generic unless type_generic.nil?
-		#LOG.debug (fname){"ret=#{ret}"}
-		ret
+	def self.find_for(s_object)
+		fname="Typesobject.#{__method__}(#{s_object})"
+		LOG.info (fname) { "%TODO_OBSOLETE%"}
+		get_types(s_object)
 	end
 
-	def self.generic(object)
-		Typesobject.find_by_forobject_and_name(object, PlmServices.get_property(:TYPE_GENERIC))
+	def self.generic(s_object)
+		Typesobject.find_by_forobject_and_name(s_object, PlmServices.get_property(:TYPE_GENERIC))
 	end
 
 	def self.get_conditions(filter)
@@ -128,7 +140,7 @@ class Typesobject < ActiveRecord::Base
 			unless fields.blank?
 				#puts "get_fields_values:values=#{fields}"
 				begin
-				decod = ActiveSupport::JSON.decode(fields)
+					decod = ActiveSupport::JSON.decode(fields)
 				rescue Exception => e
 					puts "Error during field decoding:#{e}"
 				end

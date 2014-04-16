@@ -1,5 +1,5 @@
 <h1><%= t(:sequence_list) %><%= h_count_objects(@sequences) %></h1>
-<%= form_simple_query_helper('/sequences', @sequences) %>
+<%= h_form_simple_query('/sequences', @sequences) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t(:new_sequence), new_sequence_path %> </td>

@@ -41,7 +41,7 @@ class PlmServices
 	# props_user = PlmServices.get_properties("user_default")
 	def self.get_properties(atype_ident = nil)
 		fname="PlmServices.#{__method__}"
-		types = ::Typesobject.get_types(::SYLRPLM::PLM_PROPERTIES)
+		types = ::Typesobject.find_all_by_forobject(::SYLRPLM::PLM_PROPERTIES, :order => :name)
 		ret = {}
 		types.each do |typ|
 		#LOG.debug(fname) {"atype_ident=#{atype_ident} type=#{typ}"}
@@ -93,13 +93,13 @@ class PlmServices
 		end
 		#
 		if ret.nil?
-			LOG.error(fname) {"variable #{prop_name} does not exists in TypesObjects : #{atype_ident}"}
 			# the property is not in a typesobject, we search in SYLRPLM variables
 			begin
 				var = "::SYLRPLM::#{prop_name}"
 				ret = eval var
+				LOG.warn(fname) {"variable #{prop_name} does not exists in TypesObjects/#{atype_ident} but found in config file sylrplm.rb"}
 			rescue Exception=>e
-				LOG.error(fname) {"variable #{var} does not exists in config file sylrplm.rb"}
+				LOG.error(fname) {"variable #{var} does not exists in TypesObjects/#{atype_ident} and not found in config file sylrplm.rb"}
 			end
 		#LOG.debug(fname) {"prop_name=#{prop_name}, atype_ident=#{atype_ident}, ret=#{ret} found in SYLRPLM variables"}
 		else
@@ -118,6 +118,29 @@ class PlmServices
 		type.save
 		#LOG.debug(fname) {"prop name=#{prop_name}, type=#{type.inspect}"}
 		type
+	end
+	
+	def self.translate(*args)
+		#puts "t:#{args.inspect} env:#{Rails.env}"
+		key=args[0]
+		unless args[1].nil?
+		argums=args[1] 
+		else
+			argums={}
+		end
+		if(Rails.env.production?)
+			ret=I18n.translate(key, argums, :default=> "#{key.capitalize}")
+		else
+			defo="%#{I18n.locale}% #{key}:"
+			argums[:default]=defo 
+			#ret=I18n.translate(key, argums, :default=> defo)
+			ret=I18n.translate(key, argums)
+			if ret==defo
+				# to keep logs about tranlation to do
+				puts "%TODO_TRANSLATE%:#{defo}"
+			end
+		end
+		ret
 	end
 
 end

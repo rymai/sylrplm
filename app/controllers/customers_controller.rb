@@ -1,9 +1,6 @@
 class CustomersController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	before_filter :check_init, :only => :new
-
 	access_control(Access.find_for_controller(controller_class_name))
-	before_filter :check_user, :only => [:new, :edit]
 	# GET /customers
 	# GET /customers.xml
 	def index
@@ -35,7 +32,6 @@ class CustomersController < ApplicationController
 	def show_
 		define_view
 		@customer                = Customer.find(params[:id])
-		#@relations               = Relation.relations_for(@customer)
 		@documents               = @customer.documents
 		@projects                = @customer.projects
 		@tree         						= build_tree(@customer, @myparams[:view_id], nil, 3)
@@ -113,7 +109,7 @@ class CustomersController < ApplicationController
 	# PUT /customers/1.xml
 	def update
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"params=#{params.inspect}"}
+		#LOG.debug (fname) {"params=#{params.inspect}"}
 		@customer = Customer.find(params[:id])
 		@types    = Typesobject.get_types(:customer)
 		@status   = Statusobject.find_for(@customer)
@@ -137,7 +133,7 @@ class CustomersController < ApplicationController
 
 	def update_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		@customer = Customer.find(params[:id])
 		if commit_promote?
 			ctrl_promote(@customer)
@@ -194,7 +190,6 @@ class CustomersController < ApplicationController
 		@types  = Typesobject.find_for("forum")
 		@status = Statusobject.find_for("forum")
 		@relation_id = params[:relation][:forum]
-
 		respond_to do |format|
 			flash[:notice] = ""
 			@forum         = Forum.new(user: current_user)
@@ -206,7 +201,6 @@ class CustomersController < ApplicationController
 
 	def add_forum
 		@object = Customer.find(params[:id])
-
 		ctrl_add_forum(@object)
 	end
 

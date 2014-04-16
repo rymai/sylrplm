@@ -4,7 +4,7 @@
 <%= f.error_messages %>
 <% end %>
 <% end %>
-<%= form_simple_query_helper('/projects', @projects) %>
+<%= h_form_simple_query('/projects', @projects) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_project"), new_project_path %> </td>

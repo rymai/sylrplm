@@ -118,7 +118,10 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "type_values"
 	end
 
+	add_index "datafiles", ["customer_id"], :name => "index_datafiles_on_customer_id"
 	add_index "datafiles", ["document_id"], :name => "index_datafiles_on_document_id"
+	add_index "datafiles", ["part_id"], :name => "index_datafiles_on_part_id"
+	add_index "datafiles", ["project_id"], :name => "index_datafiles_on_project_id"
 	add_index "datafiles", ["group_id"], :name => "index_datafiles_on_group_id"
 	add_index "datafiles", ["projowner_id"], :name => "index_datafiles_on_projowner_id"
 	add_index "datafiles", ["typesobject_id"], :name => "index_datafiles_on_typesobject_id"
@@ -243,6 +246,7 @@ ActiveRecord::Schema.define(:version => 0) do
 	end
 
 	add_index "groups_users", ["user_id", "group_id"], :name => "index_groups_users_on_user_id_and_group_id", :unique => true
+	add_index "groups_users", ["group_id","user_id" ], :name => "index_groups_users_on_group_id_user_id", :unique => true
 
 	create_table "groups_volumes", :id => false, :force => true do |t|
 		t.integer "group_id", :null => false
@@ -289,10 +293,13 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "domain"
 	end
 
-	add_index "links", ["child_plmtype"], :name => "index_links_on_child_plmtype"
-	add_index "links", ["child_typesobject_id"], :name => "index_links_on_child_typesobject_id"
+	add_index "links", ["father_plmtype","child_plmtype"], :name => "index_links_on_father_plmtype_child_plmtype"
+	add_index "links", ["father_plmtype","child_plmtype","child_id"], :name => "index_links_on_father_plmtype_child_plmtype_child_id"
+	add_index "links", ["father_plmtype","child_plmtype","father_id"], :name => "index_links_on_father_plmtype_child_plmtype_father_id"
 	add_index "links", ["father_plmtype"], :name => "index_links_on_father_plmtype"
 	add_index "links", ["father_typesobject_id"], :name => "index_links_on_father_typesobject_id"
+	add_index "links", ["child_plmtype"], :name => "index_links_on_child_plmtype"
+	add_index "links", ["child_typesobject_id"], :name => "index_links_on_child_typesobject_id"
 	add_index "links", ["father_id"], :name => "index_links_on_father_id"
 	add_index "links", ["child_id"], :name => "index_links_on_child_id"
 	add_index "links", ["owner_id"], :name => "index_links_on_owner_id"
@@ -386,6 +393,7 @@ ActiveRecord::Schema.define(:version => 0) do
 	end
 
 	add_index "projects_users", ["project_id", "user_id"], :name => "index_projects_users_on_project_id_and_user_id", :unique => true
+	add_index "projects_users", ["user_id", "project_id" ], :name => "index_projects_users_on_user_id_project_id", :unique => true
 
 	create_table "questions", :force => true do |t|
 		t.string   "question"
@@ -431,7 +439,8 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "domain"
 	end
 
-	add_index "relations_views", ["view_id", "relation_id" ], :name => "index_relations_views_on_relation_id_and_view_id", :unique => true
+	add_index "relations_views", ["view_id", "relation_id" ], :name => "index_relations_views_on_view_id_relation_id", :unique => true
+	add_index "relations_views", ["relation_id", "view_id"  ], :name => "index_relations_views_on_relation_id_view_id", :unique => true
 
 	create_table "roles", :force => true do |t|
 		t.string   "title"
@@ -493,6 +502,7 @@ ActiveRecord::Schema.define(:version => 0) do
 	end
 
 	add_index "statusobjects", ["forobject", "rank","name"], :name => "index_statusobjects_on_object_and_rank_and_name", :unique => true
+	add_index "statusobjects", ["forobject", "typesobject_id"], :name => "index_statusobjects_on_object_typesobject_id"
 	add_index "statusobjects", ["name"], :name => "index_statusobjects_on_name"
 
 	create_table "statusobjects_nexts", :id => false, :force => true do |t|

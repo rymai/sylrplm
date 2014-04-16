@@ -205,14 +205,6 @@ class FiledriverDatabase < Filedriver
 		# directory=table.datafile
 	end
 
-	def directories_obsolete(purge = false)
-		fname= "#{self.class.name}.#{__method__}"
-		# list directories
-		ret=[]
-		LOG.debug (fname){"ret=#{ret}}"}
-		ret
-	end
-
 	def is_used?(tuple)
 		fname= "#{self.class.name}.#{__method__}"
 		#key_dir=volfog01.datafile.df00000000031

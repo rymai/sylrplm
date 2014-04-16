@@ -34,6 +34,10 @@ class Relation < ActiveRecord::Base
 		end
 	end
 
+	def name
+		PlmServices.translate("relation_#{super}")
+	end
+
 	def types_father
 		ret = Typesobject.get_types(father_plmtype)
 		#puts "Relations."+__method__.to_s+":"+father_plmtype.to_s+":"+ret.inspect
@@ -100,56 +104,6 @@ class Relation < ActiveRecord::Base
       :group => "father_plmtype,id")
 		LOG.debug(fname){"fin:cond=#{cond}, #{ret.size} relations trouvées pour #{father_plmtype}.#{father_type}=>#{child_plmtype}.#{child_type}"}
 		#LOG.debug(fname){"fin:ret(#{ret.count})=#{ret}"}
-		ret
-	end
-
-	
-
-	def self.relations_for_old(father, child_plmtype=nil)
-		fname="Relations.#{__method__}:father=#{father.model_name}:child_plmtype=#{child_plmtype}"
-		LOG.debug(fname){"debut"}
-		ret={}
-		## pas de ret[::SYLRPLM::PLMTYPE_GENERIC] = []
-		Typesobject.get_objects_with_type.each do |t|
-			ret[t] = []
-		end
-		cond="(father_plmtype = '#{father.model_name}' or father_plmtype = '#{PlmServices.get_property(:PLMTYPE_GENERIC)}' )"
-		##cond="(father_plmtype = '#{father.model_name}' )"
-		## ko car show incomplet !!! cond+=" and (father_typesobject_id = '#{father.typesobject_id}')"
-		find(:all, :order => "name",
-      :conditions => [cond]).each do |rel|
-		#LOG.debug(fname){"rel=#{rel} child_plmtype=#{child_plmtype}"}
-			if rel.child_plmtype == PlmServices.get_property(:PLMTYPE_GENERIC)
-				# generic => ok pour tous les types plm de fils
-				Typesobject.get_objects_with_type.each do |t|
-				#LOG.debug(fname){"#{t} : #{child_plmtype}"}
-					if child_plmtype.nil? || child_plmtype.to_s==t.to_s
-						# seulement pour ce type
-						unless ret[t].include? rel
-							LOG.debug(fname){"cas generique:#{rel}"}
-						ret[t] << rel
-						end
-					end
-				end
-			else
-				if child_plmtype.nil?
-					LOG.debug(fname){"cas child_plmtype nil:#{rel}"}
-					unless ret[rel.child_plmtype].include? rel
-					ret[rel.child_plmtype] << rel
-					end
-				else
-					if rel.child_plmtype.to_s == child_plmtype.to_s
-						unless ret[rel.child_plmtype].include? rel
-							LOG.debug(fname){"cas child_plmtype non nil:#{rel}"}
-						ret[rel.child_plmtype] << rel
-						end
-					end
-				end
-			end
-		end
-		#LOG.info (fname){"cond=#{cond}, #{ret.count} relations trouvees"}
-		#ret.each {|r| r.each {|rel| LOG.debug rel}}
-		LOG.debug(fname){"fin"}
 		ret
 	end
 

@@ -1,0 +1,19 @@
+
+<% form_tag(url, :method=>:get) do |f| %>
+<table>
+	<tr>
+		<th> <%= t("query")%> </th>
+		<th> <%= t("nb_items_per_page")%> </th>
+		<th> <%= t("label_liste_mode")%> </th><th>........</th><th></th>
+	</tr>
+	<tr>
+		<td> <%= text_field_tag(:query , value=objects[:query])%> </td>
+		<td> <%= text_field_tag(:nb_items , value=objects[:nb_items], :size=>5)%> </td>
+		<td> <%= select_tag("list_mode", options_for_select(get_list_modes, @myparams["list_mode"]) )%> </td>
+		<td></td>
+		<td> <%= h_img_sub(:filter)%> </td>
+	</tr>
+</table>
+<%= hidden_field_tag("todo" , @myparams["todo"]) unless @myparams.nil?%>
+<%= hidden_field_tag("html_ident" , @myparams["html_ident"]) unless @myparams.nil?%>
+<% end %>

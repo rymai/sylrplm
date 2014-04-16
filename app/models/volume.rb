@@ -156,10 +156,6 @@ class Volume < ActiveRecord::Base
 		LOG.debug (fname) {"volume=#{self.inspect}"}
 	end
 
-	def list_files_obsolete
-		_list_files_
-	end
-
 	#
 	# /home/syl/trav/rubyonrails/sylrplm-data-development/vollocal01/Datafile/
 	# self.directory=/home/syl/trav/rubyonrails/sylrplm-data-development

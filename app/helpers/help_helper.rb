@@ -297,7 +297,8 @@ module HelpHelper
 		txt.gsub! /#jump=(.+?)=jump#/,
 		"<a class='help_tr' href='/main/helpgeneral#\\1' target='_top'>"+t(:help_jump)+"</a>"
 		txt.gsub! /#lnk=(.+?)=lnk#/,
-		"<a class='help_tr' href='\\1' target='_blank' title='"+t(:help_lnk_acces)+"'><img src='/images/submit.png'></img></a>"
+		#"<a class='help_tr' href='\\1' target='_blank' title='"+t(:help_lnk_acces)+"'><img src='/images/submit.png'></img></a>"
+		"<a class='help_tr' href='\\1' target='_blank' title='"+t(:help_lnk_acces)+"'>\\1</a>"
 		
 		txt
 	end

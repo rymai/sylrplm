@@ -6,7 +6,7 @@
 <%= f.label t(:label_view) %>
 <%= select_tag(:view_id, options_from_collection_for_select( @views, :id, :name, @myparams[:view_id].to_i))%>
 <br/>
-<% unless object.variants.nil? %>
+<% unless object.variants.nil? || object.variants.count==0 %>
 <%= f.label t(:label_all_variants) %>
 <%= check_box_tag :all_variants ,  @myparams[:all_variants], @myparams[:all_variants]=="on" -%>
 <br/>
@@ -24,6 +24,12 @@
 <% end %>
 <div id='dtree'>
 	<% if @tree && @tree.size>0 %>
+	<% if object.respond_to? :have_model_design?%>
+	<% if object.have_model_design?%>
+	<%=h_image(:model3d_view)%>
+	<%= link_to t("root_model_design"), {:controller=> object.controller_name, :action=>"show_design", :id => object.id, :variant=>@variant }%>
+	<% end %>
+	<% end %>
 	<table >
 		<tr>
 			<td><a
@@ -33,11 +39,6 @@
 			<td><%= @tree.size_all%></td>
 		</tr>
 	</table>
-	<% if object.respond_to? :have_model_design?%>
-	<% if object.have_model_design?%>
-	<%= link_to t("root_model_design"), {:controller=> object.controller_name, :action=>"show_design", :id => object.id, :variant=>@variant }%>
-	<% end %>
-	<% end %>
 	<%= @tree.to_s %>
 	<% end %>
 	<% if @tree_up && @tree_up.size>0 %>
