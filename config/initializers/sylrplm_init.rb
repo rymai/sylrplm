@@ -32,9 +32,10 @@ scheduler = Rufus::Scheduler.start_new
 puts '*** Starting Scheduler ***'
 #scheduler.cron '0 21 * * 1-5' do
 # every day of the week at 21:00
-scheduler.cron '*/15 7-21 * * 1-5' do
+scheduler.cron '*/1 7-21 * * 1-5' do
 # every 15 mn of each hour during the week
-	puts "run task notify"
-	Rake::Task[:notify].invoke
+	Notification.notify_all(nil)
+#Rake.application[:notify].invoke
+#Rake::Task["notify"].invoke
 end
 
