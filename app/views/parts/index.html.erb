@@ -37,15 +37,14 @@
 		<td><%= icone(part) %></td>
 		<td><%= h_explorer part %></td>
 		<td><%= part.revision %></td>
-		<td><%= h_explorer part.typesobject, :name unless part.typesobject.nil? %> </td>
+		<td><%= h_explorer part.typesobject, :name_translate unless part.typesobject.nil? %> </td>
 		<td><%= part.designation %></td>
-		<td><%= h_explorer part.statusobject, :name unless part.statusobject.nil? %> </td>
+		<td><%= h_explorer part.statusobject, :name_translate unless part.statusobject.nil? %> </td>
 		<td><%= h_explorer part.owner, :login %></td>
-		<td><%= h_explorer part.group, :name %></td>
+		<td><%= h_explorer part.group, :name_translate %></td>
 		<td><%= h_explorer part.projowner %></td>
 		<td><%= l part.date %></td>
 		<td><%= part.domain %></td>
-		
 		<td><%= link_to h_img_edit.to_s, edit_part_path(part) %></td>
 		<td> <%= link_to h_img_edit_lifecycle.to_s, {:controller=>"parts", :action=>"edit_lifecycle", :id => part.id} %> </td>
 		<td><%= h_destroy(part) %></td>

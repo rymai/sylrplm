@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 	skip_before_filter :authorize, :check_user
 	def new
 		#puts "sessions_controller.new"+params.inspect
-				@current_users = User.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@current_users = User.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
 
 	end
 
@@ -47,7 +47,10 @@ class SessionsController < ApplicationController
 	def create
 		par=params[:session]
 		#puts "sessions_controller.create"+params.inspect
-		if params["commit"] == t(:submit_account)
+		commit=params["commit"]
+		submit_account=t(:submit_account)
+		#puts "sessions_controller.create:commit=#{commit} submit_account=#{submit_account}"
+		if commit == submit_account
 			#puts "sessions_controller.create:compte renseigne"
 			# compte renseigne (new)
 			cur_user = User.authenticate(par["login"], par["password"])
@@ -73,7 +76,7 @@ class SessionsController < ApplicationController
 						format.xml { head :ok }
 					end
 				else
-				#puts "sessions_controller.create:il ne peut se connecter"
+					#puts "sessions_controller.create:il ne peut se connecter"
 					@current_user=nil
 					session[:user_id] = nil
 					respond_to do |format|
@@ -82,7 +85,7 @@ class SessionsController < ApplicationController
 					end
 				end
 			else
-			#puts "sessions_controller.create:user non reconnu"
+				#puts "sessions_controller.create:user non reconnu"
 				@current_user=nil
 				session[:user_id] = nil
 				flash[:error] = t(:ctrl_invalid_login)

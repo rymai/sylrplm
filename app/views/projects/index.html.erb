@@ -35,12 +35,12 @@
 	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= icone(project) %> </td>
 		<td> <%= h_explorer project %> </td>
-		<td> <%= h_explorer project.typesobject, :name unless project.typesobject.nil? %></td>
-		<td> <%= h_explorer project.typeaccess, :name unless project.typeaccess.nil? %> </td>
+		<td> <%= h_explorer project.typesobject, :name_translate unless project.typesobject.nil? %></td>
+		<td> <%= h_explorer project.typeaccess, :name_translate unless project.typeaccess.nil? %> </td>
 		<td> <%= h project.designation %> </td>
-		<td> <%= h_explorer project.statusobject, :name unless project.statusobject.nil? %> </td>
+		<td> <%= h_explorer project.statusobject, :name_translate unless project.statusobject.nil? %> </td>
 		<td> <%= h_explorer project.owner :login %> </td>
-		<td> <%= h_explorer project.group  %> </td>
+		<td> <%= h_explorer project.group, :name_translate  %> </td>
 		<td> <%= l project.date unless project.date.nil? %> </td>
 		<td> <%= comma_links(project.users, :login) %></td>
 		<td> <%= project.domain %></td>

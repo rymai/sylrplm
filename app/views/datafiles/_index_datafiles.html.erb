@@ -25,7 +25,7 @@
 		<%= h_thumbnails(datafile) %></td>
 		<td> <%= link_to datafile.ident, datafile_path(datafile, :doc => (document.nil? ? nil : document.id)) %> </td>
 		<td> <%= h datafile.revision %> </td>
-		<td> <%= h datafile.typesobject.name %> </td>
+		<td> <%= h datafile.typesobject.name_translate %> </td>
 		<td> <% unless datafile.document.nil? %>
 		<% unless datafile.document == document %>
 		<%= link_to datafile.document.ident, document_path(datafile.document) %>

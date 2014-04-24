@@ -1,3 +1,4 @@
+<% unless workitem.nil? %>
 <tr>
 	<td class="wide-first-col">id</td>
 	<td><%= h workitem.id %></td>
@@ -22,6 +23,7 @@
 	<td><%= t(:label_updated_at)%></td>
 	<td><%= display_time(workitem, :last_modified) %></td>
 </tr>
+<% end %>
 <% unless @favori.get('document').count==0  %>
 <tr>
 	<td> <%= t("paste_documents") %> </td>

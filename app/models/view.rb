@@ -14,4 +14,7 @@ class View < ActiveRecord::Base
 		ret << "]"
 		ret
 	end
+	def name_translate
+		PlmServices.translate("view_#{name}")
+	end
 end

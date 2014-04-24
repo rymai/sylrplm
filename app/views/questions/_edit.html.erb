@@ -18,7 +18,7 @@
 	<br/>
 	<%= hidden_field_tag "question[asker_id]" , @faq.asker_id %>
 	<%= f.label t(:label_asker) %>
-	<%= text_field_tag :asker, @faq.asker.login, :readonly => true %>
+	<%= text_field_tag :asker, @faq.asker.login, :readonly => true unless @faq.asker.nil? %>
 	<br/>
 	<%= f.label t(:label_responder) %>
 	<% unless @faq.responder.nil? %>

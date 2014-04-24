@@ -21,14 +21,14 @@ class PlmServices
 				typec ="Ruote::Sylrplm::"+typec
 				mdl = eval typec
 			rescue Exception => e
-				LOG.error{fname+e.message}
+			#LOG.error{fname+e.message}
 			end
 		end
 		unless mdl.nil?
 			begin
 				ret = mdl.find(id)
 			rescue Exception => e
-				LOG.error{fname+e.message}
+			#LOG.error{fname+e.message}
 			end
 		end
 		#LOG.debug (fname){"ret=#{(ret.nil? ? "" : ret.ident)}"}
@@ -119,27 +119,49 @@ class PlmServices
 		#LOG.debug(fname) {"prop name=#{prop_name}, type=#{type.inspect}"}
 		type
 	end
-	
+
+	# 1- [["language_fr"]]
+	#
+	#
 	def self.translate(*args)
-		#puts "t:#{args.inspect} env:#{Rails.env}"
-		key=args[0]
+		fname = "PlmServices.#{__method__}"
+		#LOG.debug(fname) {"args='#{args}'"}
+		akey=args[0]
 		unless args[1].nil?
-		argums=args[1] 
+		argums=args[1]
 		else
 			argums={}
 		end
+		if akey.is_a?(Array)
+		key=akey[0]
+		argums=akey[1]
+		else
+		key=akey
+		end
+		#LOG.debug(fname) {"key='#{key}', argums='#{argums}'"}
 		if(Rails.env.production?)
 			ret=I18n.translate(key, argums, :default=> "#{key.capitalize}")
 		else
 			defo="%#{I18n.locale}% #{key}:"
-			argums[:default]=defo 
+			argums={} if argums.nil?
+			argums[:default]=defo
 			#ret=I18n.translate(key, argums, :default=> defo)
 			ret=I18n.translate(key, argums)
 			if ret==defo
 				# to keep logs about tranlation to do
 				puts "%TODO_TRANSLATE%:#{defo}"
+				begin
+					a=1/0
+				rescue Exception => e
+					stack=""
+					e.backtrace.each do |x|
+						stack+= x+"\n"
+					end
+					LOG.warn (fname) {"stack=\n#{stack}"}
+				end
 			end
 		end
+		#LOG.debug(fname) {"key='#{key}', argums='#{argums}' ret=#{ret}"}
 		ret
 	end
 

@@ -25,8 +25,8 @@ class Group < ActiveRecord::Base
 
 	def designation; name; end
 
-	def name
-		PlmServices.translate("group_name_#{super}")
+	def name_translate
+		PlmServices.translate("group_name_#{name}")
 	end
 
 	def variants

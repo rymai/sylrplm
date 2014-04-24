@@ -65,7 +65,7 @@ module Ruote
 				Link.find_childs(self,"user").each do |link|
 					ret<<{:typeobj =>User.find(link.child_id), :link=>link}
 				end
-				LOG.debug {fname+id.to_s+":"+ret.size.to_s+":"+ret.inspect}
+				##LOG.debug {fname+id.to_s+":"+ret.size.to_s+":"+ret.inspect}
 				ret
 			end
 
@@ -83,12 +83,12 @@ module Ruote
 			
 			def self.get_workitem(wfid)
 				fname="ArWorkitem."+__method__.to_s
-				LOG.debug (fname) {"wfid=#{wfid}"}
+				#LOG.debug (fname) {"wfid=#{wfid}"}
 				###require 'pg'
 				#show_activity		  
 				ret = find(:first, :conditions => ["wfid = '#{wfid}'"])
 				#ret = find_by_wfid(wfid)
-				LOG.debug (fname) {"ret=#{ret}"}
+				#LOG.debug (fname) {"ret=#{ret}"}
 				ret
 			end
 			

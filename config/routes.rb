@@ -425,7 +425,6 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.resources :workitems
 
-
 	map.wfid_resources :errors
 
 	map.wfid_resources :workitems

@@ -51,7 +51,7 @@ class Notification < ActiveRecord::Base
 	# Notification.notify
 
 	def notify_me
-		Notification.notify_all(self)
+		Notification.notify_all(self.id)
 	end
 
 	def path
@@ -141,7 +141,7 @@ class Notification < ActiveRecord::Base
 
 	def self.notify_for_subscription(id, subscription)
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"	*** subscription=#{subscription}"}
+		#LOG.debug (fname) {"	*** subscription=#{subscription}"}
 		# notifications to send to the user
 		to_notify  = Hash.new
 		unless subscription.nil?
@@ -168,9 +168,9 @@ class Notification < ActiveRecord::Base
 				# only one notification was found
 					the_notifs[notifs] = {:to_notify => false, :notify => true} if to_notify[notifs].nil?
 				end
-				LOG.debug (fname) {"		*** fortype=#{fortype.forobject} / #{fortype.name} : the_notifs.count=#{the_notifs.count}"}
+				#LOG.debug (fname) {"		*** fortype=#{fortype.forobject} / #{fortype.name} : the_notifs.count=#{the_notifs.count}"}
 				the_notifs.each do |notif, notify|
-					LOG.debug (fname) {"			*** notif=#{notif}, notify=#{notify}"}
+					#LOG.debug (fname) {"			*** notif=#{notif}, notify=#{notify}"}
 					# if the object is destroy, we can't retrieve group and projowner !!, then, no notif
 					#LOG.debug (fname) {"type=#{notif.forobject_type} id=#{notif.forobject_id}"}
 					begin
@@ -181,16 +181,16 @@ class Notification < ActiveRecord::Base
 					unless notif_obj.nil?
 						if notif_obj.typesobject.name == fortype.name
 							#LOG.debug (fname) {"notif=#{notif} notif_obj=#{notif_obj}"}
-							LOG.debug (fname) {"subscription.ingroup=#{ingroup} include? notif_obj.group=#{notif_obj.group.name} "}
-							LOG.debug (fname) {"subscription.inproject=#{inproject} include? notif_obj.projowner=#{notif_obj.projowner.ident}"} if notif_obj.respond_to? :projowner
+							#LOG.debug (fname) {"subscription.ingroup=#{ingroup} include? notif_obj.group=#{notif_obj.group.name} "}
+							#LOG.debug (fname) {"subscription.inproject=#{inproject} include? notif_obj.projowner=#{notif_obj.projowner.ident}"} if notif_obj.respond_to? :projowner
 							group_ok = ingroup.include?(notif_obj.group.name)
-							LOG.debug (fname) {"group_ok=#{group_ok}"}
+							#LOG.debug (fname) {"group_ok=#{group_ok}"}
 							if notif_obj.respond_to? :projowner
 							project_ok = inproject.include?(notif_obj.projowner.ident)
 							else
 							project_ok = true
 							end
-							LOG.debug (fname) {"project_ok=#{project_ok}"}
+							#LOG.debug (fname) {"project_ok=#{project_ok}"}
 							if group_ok || project_ok
 								if to_notify[notif].nil?
 									notify[:to_notify] = true

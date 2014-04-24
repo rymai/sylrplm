@@ -34,11 +34,11 @@
 	<tr class='<%= cycle("even", "odd") %>'>
 		<td> <%= icone(customer) %> </td>
 		<td> <%= h_explorer customer %> </td>
-		<td> <%= h_explorer customer.typesobject, :name unless customer.typesobject.nil? %> </td>
+		<td> <%= h_explorer customer.typesobject, :name_translate unless customer.typesobject.nil? %> </td>
 		<td> <%= h customer.designation %> </td>
-		<td> <%= h_explorer customer.statusobject, :name unless customer.statusobject.nil? %> </td>
+		<td> <%= h_explorer customer.statusobject, :name_translate unless customer.statusobject.nil? %> </td>
 		<td> <%= h_explorer customer.owner, :login %> </td>
-		<td> <%= h_explorer customer.group, :name %> </td>
+		<td> <%= h_explorer customer.group, :name_translate %> </td>
 		<td> <%= h_explorer customer.projowner %> </td>
 		<td> <%= l customer.date %> </td>
 		<td> <%= h customer.domain %> </td>

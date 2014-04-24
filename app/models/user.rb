@@ -169,6 +169,15 @@ new_user=nil
 		new_user
 	end
 
+	def role_translate
+		PlmServices.translate("user_role_#{role}")
+	end
+	def group_translate
+		PlmServices.translate("user_group_#{group}")
+	end
+	def project_translate
+		PlmServices.translate("user_project_#{project}")
+	end
 	def self.find_by_name(name)
 		find(:first , :conditions => ["login = '#{name}' "])
 	end

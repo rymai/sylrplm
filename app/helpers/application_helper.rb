@@ -129,7 +129,7 @@ module ApplicationHelper
 	end
 
 	def h_simple_query(objects)
-		
+
 		#puts "h_simple_query:myparams=#{@myparams}"
 		bloc = ""
 		bloc << "<table>"
@@ -172,8 +172,6 @@ module ApplicationHelper
 		end
 		ret
 	end
-
-	
 
 	def h_img_path(name)
 		"<img src=\"#{name}\"></img>"
@@ -294,7 +292,7 @@ module ApplicationHelper
 
 	def h_link_to (name, obj, method = nil)
 		fname=self.class.name+"."+__method__.to_s
-		#LOG.info (fname){"obj=#{obj.to_s}, method=#{method}"}
+		#LOG.info (fname){"name=#{name} obj=#{obj}, method=#{method}"}
 		ret=""
 		begin
 			unless obj.nil?
@@ -302,20 +300,20 @@ module ApplicationHelper
 					method = "ident"
 				end
 				if obj.respond_to?(method)
-				txt = obj.send(method)
+					mdl=get_model obj.model_name
+				txt = obj.send(method.to_sym)
 				else
 				txt = obj.ident
 				end
-
 				if txt.blank?
 				txt = obj.to_s
 				end
 				title = t(name, :obj => obj)
-				#LOG.info (fname){"title=#{title}"}
 				ret=link_to( txt, obj, {:title => title } )
+				#LOG.info (fname){"name=#{name} obj=#{obj}, method=#{method} ret=#{ret}"}
 			end
 		rescue Exception => e
-			LOG.info (fname){"exception name=#{name}  method=#{method}:#{e}"}
+			LOG.info (fname){"exception name=#{name}  method=#{method} error=#{e}"}
 		end
 		return ret
 	end
@@ -627,6 +625,16 @@ module ApplicationHelper
 	def link_to_slice (item, accessor, param_name=nil)
 		v = h(item.send(accessor))
 		link_to(v, (param_name || accessor) => v)
+	end
+
+	def get_model(model_name)
+		begin
+			ret=eval model_name.camelize
+		rescue Exception => e
+			LOG.warn("failed to find "+model_name+" : #{e}")
+			ret=nil
+		end
+		ret
 	end
 
 end

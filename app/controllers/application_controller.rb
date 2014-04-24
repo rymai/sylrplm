@@ -278,7 +278,9 @@ class ApplicationController < ActionController::Base
   end
   
   def permission_denied(role, controller, action)
-    flash[:error] = t(:ctrl_no_privilege, :role=>role, :controller=>controller, :action=>action)
+  	fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname) {"role=#{role} controller=#{controller} action=#{action}"}
+    flash[:error] = t(:ctrl_no_privilege, :role => role, :controller => controller, :action => action)
     redirect_to(:action => "index")
   end
 
@@ -311,8 +313,8 @@ class ApplicationController < ActionController::Base
   def icone(object)
 		html_title=""
 		unless object.typesobject.nil?
-			type = "#{object.model_name}_#{object.typesobject.name}"
-			mdl_name = t("ctrl_#{type.downcase}")
+			#type = "#{object.model_name}_#{object.typesobject.name}"
+			mdl_name = t("typesobject_name_#{object.typesobject.name}")
 			html_title="title='#{mdl_name}'"
 		end
 		fic = icone_fic(object)
@@ -382,8 +384,10 @@ class ApplicationController < ActionController::Base
 	end
 	
 	def t(*args)
-		#puts "t:#{args.inspect} env:#{Rails.env}"
-		PlmServices.translate(args)[0]
+		tr=PlmServices.translate(args)
+		#puts "t:#{args.inspect} env:#{Rails.env}:#{tr}"
+		tr=tr[0] if tr.is_a?(Array)
+		tr
 	end
 end
 

@@ -28,9 +28,9 @@
 	</tr>
 	<% @statusobjects[:recordset].each do |statusobject| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td> <%= h statusobject.forobject %> </td>
-		<td> <%= h_explorer statusobject.typesobject, :name %> </td>
-		<td> <%= h_explorer statusobject, :name %> </td>
+		<td> <%= h statusobject.forobject_translate %> </td>
+		<td> <%= h_explorer statusobject.typesobject, :name_translate %> </td>
+		<td> <%= h_explorer statusobject, :name_translate %> </td>
 		<td> <%= h statusobject.rank %> </td>
 		<td> <%= h statusobject.description %> </td>
 		<td> <%= h statusobject.promote %> </td>

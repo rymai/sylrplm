@@ -88,7 +88,6 @@ module Models
 				filter_access = {}
 				filter_access[:qry] = ""
 				filter_access[:values] = {}
-				mdl = eval self.model_name
 				if(false)
 					if column_names.include?("projowner_id")
 						acc_public = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "public")
@@ -154,7 +153,7 @@ module Models
 
 					conditions = [filter_access[:qry], filter_access[:values]]
 				end
-				puts self.model_name+".find_paginate:conditions="+conditions.inspect
+				#puts self.model_name+".find_paginate:conditions="+conditions.inspect
 				#puts self.model_name+".find_paginate:page="+params[:page].to_s
 				last_rev_only = false
 				unless user.nil?
@@ -186,7 +185,7 @@ module Models
 					:per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
 				)
 				end
-				puts self.model_name+".find_paginate:conditions="+conditions.inspect
+				#puts self.model_name+".find_paginate:conditions="+conditions.inspect
 				#puts self.model_name+"."+__method__.to_s+":"+recordset.inspect
 				{:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
 			end

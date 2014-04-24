@@ -1,10 +1,9 @@
-
 en:
   relation_describe_by: Describe by
   relation_define_by: Defined by
   relation_hierarchic_to: Extends to
   relation_doc_ref: Reference Document 	
-  relation_ask_for: 	
+  relation_ask_for: ASK FOR ??	
   relation_applicable: Applicable Document	
   relation_reference: Reference Document	
   relation_discuss_by: Discuss by
@@ -27,3 +26,24 @@ en:
   typesobject_name_types_values: Type de valeurs
   typesobject_name_user_default: Utilisateur défaut
   typesobject_name_volumes: Volumes
+  # view
+  view_standard: Standard
+  view_configuration: Configuration
+  view_conception: Conception
+  view_documentation: Documentation
+  #definition
+  definition_simple_sequence: Simple
+  definition_leave_request: Request
+  definition_revision: Revision
+  definition_promotion: Promotion
+  definition_*embedded*: embedded
+  definition_*untracked*: untracked
+  #subscription
+  subscription_creator: Conceptor
+  subscription_consultant: Consultant
+  subscription_project_manager: Project Manager
+  subscription_designer: Designer
+  subscription_analyst: Analyst
+  subscription_admin: Administrator
+  
+  

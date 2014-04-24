@@ -24,11 +24,12 @@ class Typesobject < ActiveRecord::Base
 		order_default.find_all
 	end
 
-	def name
-		PlmServices.translate("typesobject_name_#{super}")
+	def name_translate
+		PlmServices.translate("typesobject_name_#{name}")
 	end
-	def forobject
-		PlmServices.translate("forobject_#{super}")
+	
+	def forobject_translate
+		PlmServices.translate("forobject_#{forobject}")
 	end
 
 	#
@@ -54,7 +55,7 @@ class Typesobject < ActiveRecord::Base
 		stypes.each do |type|
 			#LOG.debug (fname) {"type:#{type}"}
 			if type.name != sgeneric
-				type.name = PlmServices.translate(type.name)
+				##type.name = PlmServices.translate(type.name)
 			ret << type
 			end
 		end

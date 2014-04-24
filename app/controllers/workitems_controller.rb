@@ -86,9 +86,9 @@ class WorkitemsController < ApplicationController
 	def show
 		#    puts "workitems_controller.show:params="+params.inspect
 		@workitem = find_ar_workitem
-		@wi_links = @workitem.get_wi_links
+		@wi_links = @workitem.get_wi_links unless @workitem.nil?
 
-		return error_reply('no workitem', 404) unless @workitem
+		return error_reply('no workitem', 404) unless @workitem.nil?
 
 		respond_to do |format|
 			format.html # => app/views/show.html.erb
@@ -266,9 +266,7 @@ class WorkitemsController < ApplicationController
 	def find_ar_workitem
 		fname="WorkitemsController.#{__method__}"
 		sleep 0.3
-		ar_workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid_and_expid(
-		params[:wfid], OpenWFE.to_dots(params[:expid])
-		)
+		ar_workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid_and_expid(params[:wfid], OpenWFE.to_dots(params[:expid])) unless params[:expid].nil?
 		ret=current_user.may_see?(ar_workitem) ? ar_workitem : nil unless ar_workitem.nil?
 		LOG.debug (fname) {"ar_workitem=#{ret.inspect}"}
 		ret

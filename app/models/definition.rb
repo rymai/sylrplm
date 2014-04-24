@@ -56,7 +56,11 @@ class Definition < ActiveRecord::Base
     "#{full_uri} seems not to contain a process definition"
     ) unless @_tree
   end
-
+  
+	def name_translate
+		PlmServices.translate("definition_#{name}")
+	end
+  
   #
   # Fetching the process description
   #

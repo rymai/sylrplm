@@ -83,7 +83,7 @@ module OpenWFE::Extras
     #
     def full_fei
 				fname="base ArWorkitem.full_fei"
-        LOG.debug (fname) {"fei:#{fei}"}
+        #LOG.debug (fname) {"fei:#{fei}"}
       @full_fei ||= OpenWFE::FlowExpressionId.from_s(fei)
     end
 

@@ -1,10 +1,9 @@
-
 fr:
   relation_describe_by: Décrit par
   relation_define_by: Défini par
   relation_hierarchic_to: Descend de
   relation_doc_ref: Document de référence	
-  relation_ask_for: Ask For
+  relation_ask_for: ASK FOR ??
   relation_applicable: Document Applicable	
   relation_reference: Document de référence	
   relation_discuss_by: Discussion par
@@ -129,3 +128,23 @@ fr:
   role_title_analyst: Analyste fonctionnel
   role_title_project_manager: Chef de projet
   role_title_plm_actor: Acteur PLM
+  # view
+  view_standard: Standard
+  view_configuration: Configuration
+  view_conception: Conception
+  view_documentation: Documentation
+  #definition
+  definition_simple_sequence: Simple
+  definition_leave_request: Requete
+  definition_revision: Revision
+  definition_promotion: Promotion
+  definition_*embedded*: embedded
+  definition_*untracked*: untracked
+  #subscription
+  subscription_creator: Concepteur
+  subscription_consultant: Consultant
+  subscription_project_manager: Chef de projet
+  subscription_designer: Dessinateur
+  subscription_analyst: Analyste
+  subscription_admin: Administrateur
+  

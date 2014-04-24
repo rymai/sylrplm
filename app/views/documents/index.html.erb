@@ -40,13 +40,13 @@
 		<td> <%= icone(document) %> </td>
 		<td> <%= h_explorer document, :ident %> </td>
 		<td> <%= h document.revision %> </td>
-		<td> <%= h_explorer document.typesobject, :name %></td>
+		<td> <%= h_explorer document.typesobject, :name_translate %></td>
 		<td> <%= h document.designation %> </td>
-		<td> <%= h_explorer document.statusobject, :name  %></td>
+		<td> <%= h_explorer document.statusobject, :name_translate  %></td>
 		<td> <%= h_explorer document.owner, :login %></td>
-		<td> <%= h_explorer document.group, :name %></td>
+		<td> <%= h_explorer document.group, :name_translate %></td>
 		<td> <%= h_explorer document.projowner %>
-		(<%= document.projowner.typeaccess.name unless document.projowner.nil? %>) </td>
+		(<%= document.projowner.typeaccess.name_translate unless document.projowner.nil? %>) </td>
 		<td> <%= h document.datafiles.length %></td>
 		<td> <%= document.date %> </td>
 		<td> <%= document.domain %> </td>

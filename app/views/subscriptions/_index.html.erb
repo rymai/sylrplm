@@ -13,7 +13,7 @@
 	</tr>
 	<% @subscriptions[:recordset].each do |subscription| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= h h_explorer subscription %></td>
+		<td><%= h h_explorer subscription, :name_translate %></td>
 		<td><%= h subscription.designation %></td>
 		<td><%= h h_explorer subscription.owner %></td>
 		<td><%= h subscription.oncreate %></td>

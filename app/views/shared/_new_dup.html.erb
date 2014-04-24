@@ -3,15 +3,11 @@
  form_id = "#{fonct}_#{@object.model_name}"%>
 <% form_for(@object, :html => { :id => h_form_html_id(@object, fonct) }) do |f| %>
 <%= f.error_messages %>
-
 <%= render(:partial => "#{@object.controller_name}/edit",:locals => { :f => f, :fonct=>fonct, :form_id => form_id }) %>
 <%= render(:partial => "shared/show_objects_in_relations",:locals => { :object => @object_orig, :f => f, :fonct=>fonct }) %>
-
 <h1></h1>
 <%= render(:partial => "shared/submit_new", :locals => {:object => @object, :f => f, :fonct=>fonct}) %>
-
 <%= render(:partial => "shared/menu_new", :locals => {:object => @object, :f => f, :fonct=>fonct}) %>
-
 <%= hidden_field_tag "fonct", fonct %>
 <%= hidden_field_tag "object_orig_id", @object_orig.id unless @object_orig.nil?%>
 <% end %>

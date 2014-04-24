@@ -34,8 +34,14 @@ class Relation < ActiveRecord::Base
 		end
 	end
 
-	def name
-		PlmServices.translate("relation_#{super}")
+	def name_translate
+		PlmServices.translate("relation_#{name}")
+	end
+	def father_plmtype_translate
+		PlmServices.translate("forobject_#{father_plmtype}")
+	end
+	def child_plmtype_translate
+		PlmServices.translate("forobject_#{child_plmtype}")
 	end
 
 	def types_father

@@ -13,7 +13,6 @@
 <%= will_paginate(@views[:recordset]) %>
 <table>
 	<tr>
-		<th <%= sort_td_class_helper "id" %>> <%= sort_link_helper t(:label_id), "id" %> </th>
 		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t(:label_name), "name" %> </th>
 		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
 		<% if admin_logged_in?%> <th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %> </th>
@@ -21,8 +20,7 @@
 	</tr>
 	<% @views[:recordset].each do |view| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td> <%= h view.id %> </td>
-		<td> <%= h_explorer view, :name %> </td>
+		<td> <%= h_explorer view, :name_translate %> </td>
 		<td> <%= h view.description %> </td>
 		<% if admin_logged_in?%> <td> <%= h view.domain %> </td>
 		<% end %> <td> <%= comma_links(view.relations, :name) %></td>

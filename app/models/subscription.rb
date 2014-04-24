@@ -29,7 +29,11 @@ class Subscription < ActiveRecord::Base
 	def ident
 		name
 	end
-
+	
+	def name_translate
+		PlmServices.translate("subscription_#{name}")
+	end
+	
 	def self.get_conditions(filter)
 		filter = filter.gsub("*","%")
 		ret = {}

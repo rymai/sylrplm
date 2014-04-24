@@ -71,7 +71,7 @@ module Models
 			fname= "#{self.model_name}.#{__method__}"
 			brev=PlmServices.get_property("#{self.model_name.upcase}_REVISE")
 			ret = brev == true && has_attribute?("revision") && self.statusobject.revise_id==1
-			LOG.debug (fname){"#{self}:#{self.model_name.upcase}_REVISE=#{brev}: status=#{self.statusobject.revise_id}:#{ret}"}
+			#LOG.debug (fname){"#{self}:#{self.model_name.upcase}_REVISE=#{brev}: status=#{self.statusobject.revise_id}:#{ret}"}
 			ret
 		end
 
@@ -79,7 +79,7 @@ module Models
 			fname= "#{self.model_name}.#{__method__}"
 			brev=PlmServices.get_property("#{self.model_name.upcase}_REVISE")
 			ret = brev == true && has_attribute?("revision") && self.statusobject.revise_id==2
-			LOG.debug (fname){"#{self}:#{self.model_name.upcase}_REVISE=#{brev}: status=#{self.statusobject.revise_id}:#{ret}"}
+			#LOG.debug (fname){"#{self}:#{self.model_name.upcase}_REVISE=#{brev}: status=#{self.statusobject.revise_id}:#{ret}"}
 			ret
 		end
 
