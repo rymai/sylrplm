@@ -528,6 +528,8 @@ fr:
   label_previous_status: Status précédent(s)
   label_statusobject_next_statusobject_ids_out: Non attribués 	
   label_statusobject_next_statusobject_ids_in: Attribués
+  label_statusobject_previous_statusobject_ids_out: Non attribués
+  label_statusobject_previous_statusobject_ids_in: Attribués
   label_revise: Révisable
   # msg _check_status
   msg_define_status_document: Définissez les statuts des documents
@@ -566,7 +568,7 @@ fr:
   typesobjects_show: Détail du type d' objet
   typesobjects_edit:  Edition du type d' objet
   typesobject_new_dup: Duplication de type d' objet 
-  label_typesobject_name: Type
+  label_typesobject_name_translate: Type
   # msg _check_types
   msg_define_types_document: Définissez les types des documents
   msg_define_types_part: Définissez les types des articles

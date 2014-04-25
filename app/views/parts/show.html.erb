@@ -11,7 +11,7 @@
 <p>
 	<b><%= t(:label_type) %></b>
 	<% if(@part.typesobject != nil) %>
-	<%= h @part.typesobject.name %>
+	<%= h @part.typesobject.name_translate %>
 	<% end %>
 </p>
 <p>
@@ -29,7 +29,7 @@
 <p>
 	<b><%= t(:label_status) %></b>
 	<% if(@part.statusobject != nil) %>
-	<%= h @part.statusobject.name %>
+	<%= h @part.statusobject.name_translate %>
 	<% end %>
 </p>
 <p>

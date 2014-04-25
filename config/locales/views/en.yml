@@ -528,6 +528,8 @@ en:
   label_previous_status: Previous Status
   label_statusobject_next_statusobject_ids_out: Other status	
   label_statusobject_next_statusobject_ids_in: Next status
+  label_statusobject_previous_statusobject_ids_out: Other status
+  label_statusobject_previous_statusobject_ids_in: Previous status
   label_revise: Revisable
   # msg _check_status
   msg_define_status_document: Please, define documents status
@@ -566,7 +568,7 @@ en:
   typesobjects_show: Detail of type
   typesobjects_edit: Edit the type
   typesobject_new_dup: Duplication of type
-  label_typesobject_name: Type
+  label_typesobject_name_translate: Type
   # msg _check_types
   msg_define_types_document: Please, define documents types
   msg_define_types_part: Please, define parts types

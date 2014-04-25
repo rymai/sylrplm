@@ -9,27 +9,27 @@
 </p>
 <p>
 	<b>Name:</b>
-	<%= h @relation.name %>
+	<%= h @relation.name %><%=h h_show_translate @relation.name_translate %>
 </p>
 <p>
 	<b>Type:</b>
-	<%= h @relation.typesobject.name %>
+	<%= h @relation.typesobject.name %><%=h h_show_translate @relation.typesobject.name_translate %>
 </p>
 <p>
 	<b>Father plmtype:</b>
-	<%= h @relation.father_plmtype %>
+	<%= h @relation.father_plmtype %><%=h h_show_translate @relation.father_plmtype_translate %>
 </p>
 <p>
 	<b>Child plmtype:</b>
-	<%= h @relation.child_plmtype %>
+	<%= h @relation.child_plmtype %><%=h h_show_translate @relation.child_plmtype_translate %>
 </p>
 <p>
 	<b>Father type:</b>
-	<%= h @relation.father_typesobject.name %>
+	<%= h @relation.father_typesobject.name %><%=h h_show_translate @relation.father_typesobject.name_translate %>
 </p>
 <p>
 	<b>Child type:</b>
-	<%= h @relation.child_typesobject.name %>
+	<%= h @relation.child_typesobject.name %><%=h h_show_translate @relation.child_typesobject.name_translate %>
 </p>
 <p>
 	<b>Cardin occur min:</b>

@@ -30,7 +30,7 @@
 		<td> <%= user.email %></td>
 		<td> <%= h_explorer user.typesobject, :name_translate %></td>
 		<td> <%= h_explorer user.volume, :name %></td>
-		<td><%= h_explorer user.subscription unless user.subscription.nil? %></td>
+		<td><%= h_explorer user.subscription, :name_translate unless user.subscription.nil? %></td>
 		<td><%= h_value_or_default(comma_links(user.groups, :name),t(:msg_tobedefine)) %></td>
 		<td><%= h_value_or_default(comma_links(user.roles, :title),t(:msg_tobedefine)) %></td>
 		<td><%= h_value_or_default(comma_links(user.projects, :ident),t(:msg_tobedefine)) %></td>

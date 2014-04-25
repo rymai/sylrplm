@@ -2,15 +2,15 @@
 <%= render(:partial => "shared/menu_show", :locals=>{:object => @statusobject, :fonct=>"show"}) %>
 <p>
 	<b><%= t(:label_object) %></b>
-	<%= h @statusobject.forobject %>
+	<%= h @statusobject.forobject %><%=h h_show_translate @statusobject.forobject_translate %>
 </p>
 <p>
 	<b><%= t(:label_typesobject) %></b>
-	<%= h @statusobject.typesobject.name %>
+	<%= h @statusobject.typesobject.name %><%=h h_show_translate @statusobject.typesobject.name_translate %>
 </p>
 <p>
 	<b><%= t(:label_name) %></b>
-	<%= h @statusobject.name %>
+	<%= h @statusobject.name %><%=h h_show_translate @statusobject.name_translate %>
 </p>
 <p>
 	<b><%= t(:label_rank) %></b>
@@ -65,13 +65,13 @@
 		<td> <%= h document.id %> </td>
 		<td> <%= h document.ident %> </td>
 		<td> <% if(document.typesobject != nil) %>
-		<%= h document.typesobject.id %>:<%= h document.typesobject.name %>
+		<%= h document.typesobject.name_translate %>
 		<% end %> </td>
 		<td> <%= h document.revision %> </td>
 		<td> <%= h document.designation %> </td>
 		<td> <%= h document.description %> </td>
 		<td> <% if(document.statusobject != nil) %>
-		<%= h document.statusobject.id %>:<%= h document.statusobject.name %>
+		<%= h document.statusobject.name_translate %>
 		<% end %> </td>
 		<td> <%= h document.owner.login %> </td>
 		<td> <%= h document.date %> </td>
@@ -98,11 +98,11 @@
 	<% @statusobject.customers.each do |customer| %>
 	<tr>
 		<td> <%= h customer.ident %> </td>
-		<% if(customer.typesobject != nil) %> <td> <%= h customer.typesobject.id %>:<%= h customer.typesobject.name %> </td>
+		<% if(customer.typesobject != nil) %> <td> <%= h customer.typesobject.name_translate %> </td>
 		<% else %> <td></td>
 		<% end %> <td> <%= h customer.designation %> </td>
 		<td> <%= h customer.description %> </td>
-		<% if(customer.statusobject != nil) %> <td> <%= h customer.statusobject.id %>:<%= h customer.statusobject.name %> </td>
+		<% if(customer.statusobject != nil) %> <td> <%= h customer.statusobject.name_translate %> </td>
 		<% else %> <td></td>
 		<% end %> <td> <%= h customer.owner.login %> </td>
 		<td> <%= h customer.date %> </td>

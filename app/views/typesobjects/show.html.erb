@@ -2,11 +2,11 @@
 <%= render(:partial => "shared/menu_show", :locals=>{:object => @typesobject, :fonct=>"show"}) %>
 <p>
     <b><%=t(:label_object) %></b>
-    <%=h @typesobject.forobject %>
+    <%= @typesobject.forobject %><%=h h_show_translate @typesobject.forobject_translate %>
 </p>
 <p>
     <b><%=t(:label_name) %></b>
-    <%=h @typesobject.name %>
+    <%= @typesobject.name %><%=h h_show_translate @typesobject.name_translate %>
 </p>
 <p>
     <b><%=t(:label_description) %></b>

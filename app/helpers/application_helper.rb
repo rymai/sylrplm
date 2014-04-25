@@ -1,6 +1,10 @@
 # = ApplicationHelper
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+	def h_show_translate item
+		" (#{item})"
+	end
+
 	def h_menu_duplicate(object_plm)
 		# new_dup_customer_path
 		url="{new_dup_object_plm.model_name}_path"
@@ -310,7 +314,7 @@ module ApplicationHelper
 				end
 				title = t(name, :obj => obj)
 				ret=link_to( txt, obj, {:title => title } )
-				#LOG.info (fname){"name=#{name} obj=#{obj}, method=#{method} ret=#{ret}"}
+			#LOG.info (fname){"name=#{name} obj=#{obj}, method=#{method} ret=#{ret}"}
 			end
 		rescue Exception => e
 			LOG.info (fname){"exception name=#{name}  method=#{method} error=#{e}"}
@@ -454,6 +458,11 @@ module ApplicationHelper
 	def comma_links (objects, accessor=:name)
 		objects.collect { |o|
 			name = o.send(accessor)
+			met="#{accessor}_translate"
+			if o.respond_to? met
+				name_tr = o.send(met)
+				name = "#{name}(#{name_tr})"
+			end
 			path = send "#{o.class.to_s.downcase}_path", o
 			link_to(h(name), path)
 		}.join(', ')

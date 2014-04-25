@@ -85,7 +85,7 @@ class DocumentsController < ApplicationController
 		#contournement pour faire le upload apres la creation pour avoir la revision dans
 		#repository !!!!!!!!!!!!!!
 		@document = Document.new(params[:document])
-		@types    = Document.get_types_document
+		@types    = Typesobject.find_for("document")
 		@status   = Statusobject.find_for("document")
 		respond_to do |format|
 			if params[:fonct] == "new_dup"

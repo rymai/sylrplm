@@ -10,7 +10,7 @@
 <p>
 	<b><%= t(:label_type) %></b>
 	<% if(@project.typesobject != nil) %>
-	<%= h @project.typesobject.name %>
+	<%= h @project.typesobject.name_translate %>
 	<% end %>
 </p>
 <p>
@@ -24,7 +24,7 @@
 <p>
 	<b><%= t(:label_statusobject) %></b>
 	<% if(@project.statusobject != nil) %>
-	<%= h @project.statusobject.name %>
+	<%= h @project.statusobject.name_translate %>
 	<% end %>
 </p>
 <p>

@@ -10,7 +10,7 @@
 <p>
 	<b><%= t("label_typesobject") %></b>
 	<% if(@document.typesobject != nil) %>
-	<%= h @document.typesobject.name %>
+	<%= h @document.typesobject.name_translate %>
 	<% end %>
 </p>
 <p>
@@ -28,13 +28,13 @@
 <p>
 	<b><%= t("label_statusobject") %></b>
 	<% if(@document.statusobject != nil) %>
-	<%= h @document.statusobject.name %>
+	<%= h @document.statusobject.name_translate %>
 	<% end %>
 </p>
 <p>
 	<b><%= t("label_next_status") %></b>
 	<% unless @document.next_status.nil?  %>
-	<%= h @document.next_status.name %>
+	<%= h @document.next_status.name_translate %>
 	<% end %>
 </p>
 <p>

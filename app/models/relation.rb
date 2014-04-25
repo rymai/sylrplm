@@ -43,6 +43,7 @@ class Relation < ActiveRecord::Base
 	def child_plmtype_translate
 		PlmServices.translate("forobject_#{child_plmtype}")
 	end
+	
 
 	def types_father
 		ret = Typesobject.get_types(father_plmtype)

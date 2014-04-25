@@ -55,7 +55,7 @@ class Typesobject < ActiveRecord::Base
 		stypes.each do |type|
 			#LOG.debug (fname) {"type:#{type}"}
 			if type.name != sgeneric
-				##type.name = PlmServices.translate(type.name)
+				type.name = type.name_translate 
 			ret << type
 			end
 		end
@@ -66,7 +66,7 @@ class Typesobject < ActiveRecord::Base
 		ret
 	end
 
-	def self.get_types_names(s_object)
+	def self.get_types_names_obsolete(s_object)
 		ret=[]
 		types=get_types(s_object)
 		types.each do |t|

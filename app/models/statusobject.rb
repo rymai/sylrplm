@@ -120,8 +120,11 @@ class Statusobject < ActiveRecord::Base
 		cond << "id <> #{self.id} and " unless self.id.nil?
 		##cond << " forobject = '#{self.forobject}' and (typesobject_id=#{objtype.id} or typesobject_id=#{any_type.id} or typesobject_id is null)"
 		cond << " forobject = '#{self.forobject}' and (typesobject_id=#{objtype.id} or typesobject_id is null)"
-		puts "get_others_status:objtype=#{objtype} any_type=#{any_type} cond=#{cond}"
-		Statusobject.order_default.find(:all, :conditions => [cond])
+		#puts "get_others_status:objtype=#{objtype} any_type=#{any_type} cond=#{cond}"
+		ret=Statusobject.order_default.find(:all, :conditions => [cond]).each  do |status|
+			status.name = status.name_translate
+		end
+		ret
 	end
 	#
 	# recherche des status possibles pour un type d'objet et un contexte donné
@@ -145,7 +148,7 @@ class Statusobject < ActiveRecord::Base
 				cond_promote="rank >= #{stat_cur.rank}" if stat_cur.promote_id == choice
 				cond_demote="rank <= #{stat_cur.rank}" if stat_cur.demote_id == choice
 				if !cond_promote.nil? &&  !cond_demote.nil?
-					LOG.info(fname){"!cond_promote.nil? &&  !cond_demote.nil?"}
+					#LOG.info(fname){"!cond_promote.nil? &&  !cond_demote.nil?"}
 					cond_="(#{cond_promote} or #{cond_demote})"
 				else
 					unless cond_promote.nil?
@@ -164,14 +167,13 @@ class Statusobject < ActiveRecord::Base
 		# object est une string
 			cond="forobject = '#{object}'"
 		end
-		LOG.debug (fname) {"cond= #{cond}"}
+		#LOG.debug (fname) {"cond= #{cond}"}
 		ret = Statusobject.order_default.find(:all, :conditions => [cond]) unless cond.nil?
-		if ret.nil?
-		#ret=[]
+		#LOG.debug(fname){"stat_cur=#{stat_cur} choice(#{choice})=>cond_promote(#{cond_promote}),cond_demote(#{cond_demote}),cond(#{cond}) ret=#{ret}"}
+		ret.each  do |status|
+			status.name = status.name_translate
 		end
-		LOG.debug(fname){"stat_cur=#{stat_cur} choice(#{choice})=>cond_promote(#{cond_promote}),cond_demote(#{cond_demote}),cond(#{cond}) ret=#{ret}"}
 		ret
-
 	end
 
 	#
