@@ -27,7 +27,7 @@
 	</tr>
 	<% @relations[:recordset].each do |relation| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= h_explorer relation, :name_translate %></td>
+		<td><%= h_explorer relation, :name %><%=h h_show_translate relation.name_translate %></td>
 		<td><%= h_explorer relation.typesobject, :name_translate unless relation.typesobject.nil? %></td>
 		<td><%= h relation.father_plmtype_translate %></td>
 		<td><%= h relation.child_plmtype_translate  %></td>

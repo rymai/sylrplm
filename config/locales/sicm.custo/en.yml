@@ -38,6 +38,7 @@ en:
   definition_promotion: Promotion
   definition_*embedded*: embedded
   definition_*untracked*: untracked
+  definition_validate_user: Validate a new user
   #subscription
   subscription_creator: Conceptor
   subscription_consultant: Consultant

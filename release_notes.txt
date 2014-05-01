@@ -17,4 +17,8 @@
   ex: child.belongs_to :document_down in links.rb
 - add update in link controller
 - improve notification search
-- 
+#------------------------------------------------------------------------------
+# Date: 2014 05 01
+#------------------------------------------------------------------------------
+- account creation improvment: validate a new user by process/action, assign default roles, groups and projects
+- best view of process and actions

@@ -51,20 +51,8 @@ class User < ActiveRecord::Base
 
 		if args.size>0
 			unless args[0][:user].nil?
-				role_consultant  = Role.find_by_title(PlmServices.get_property(:ROLE_USER_DEFAULT))
-				self.roles << role_consultant
-				#
-				PlmServices.get_property(:GROUPS_ACCOUNT).split(',').each do |grp|
-					self.groups << Group.find_by_name(grp)
-				end
-				#
-				projs=PlmServices.get_property(:PROJECTS_ACCOUNT)
-				projs.split(',').each do |sproj|
-					LOG.debug (fname) {"sproj=#{sproj}"}
-					proj=Project.find_by_ident(sproj)
-					self.projects << proj unless proj.nil?
-				end
-			self.set_default_values_with_next_seq
+				validate_user
+				self.set_default_values_with_next_seq
 			end
 		end
 	end
@@ -125,15 +113,6 @@ class User < ActiveRecord::Base
 
 		if new_user.save
 			#
-			#::SYLRPLM::GROUPS_ACCOUNT.split(',').each do |grp|
-			#	new_user.groups << Group.find_by_name(grp)
-			#end
-			#new_user.roles<<role_consultant
-			#
-			#::SYLRPLM::PROJECTS_ACCOUNT.split(',').each do |proj|
-			#	new_user.projects << Project.find_by_ident(proj)
-			#end
-
 			#puts fname+" new_user="+new_user.inspect
 			#puts fname+"urlbase="+urlbase
 
@@ -169,15 +148,43 @@ new_user=nil
 		new_user
 	end
 
+	def validate_user_by_action?
+		true
+	end
+
+	def validate_user
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.info (fname) {"attribute roles, groups and project to the user #{login}"}
+		PlmServices.get_property(:ROLES_USER_DEFAULT).split(",").each do |elname|
+			LOG.info (fname) {"attribute role #{elname}"}
+			el=::Role.find_by_title(elname)
+			self.roles << el unless self.roles.include? el
+		end
+		PlmServices.get_property(:GROUPS_USER_DEFAULT).split(",").each do |elname|
+			LOG.info (fname) {"attribute group #{elname}"}
+			el = ::Group.find_by_name(elname)
+			self.groups << el unless self.groups.include? el
+		end
+		PlmServices.get_property(:PROJECTS_USER_DEFAULT).split(",").each do |elname|
+			LOG.info (fname) {"attribute project #{elname}"}
+			el = ::Project.find_by_ident(elname)
+			self.projects << el unless self.projects.include? el
+		end
+		self
+	end
+
 	def role_translate
 		PlmServices.translate("user_role_#{role}")
 	end
+
 	def group_translate
 		PlmServices.translate("user_group_#{group}")
 	end
+
 	def project_translate
 		PlmServices.translate("user_project_#{project}")
 	end
+
 	def self.find_by_name(name)
 		find(:first , :conditions => ["login = '#{name}' "])
 	end
@@ -330,11 +337,7 @@ new_user=nil
 	# peut se connecter
 	def may_connect?
 		ret=!self.typesobject.nil? && self.typesobject.name != PlmServices.get_property(:TYPE_USER_NEW_ACCOUNT) && !self.roles.empty? && !self.groups.empty? && !self.projects.empty?
-		puts "user.may_connect:type:"+ self.typesobject.name +
-    ".role:"+ self.roles.empty?.to_s +
-    ".group:" + self.groups.empty?.to_s +
-    ".project:" + self.projects.empty?.to_s +
-    ":ret="+ret.to_s
+		puts "#{login} may_connect:type:#{typesobject.name} roles?:#{roles} group:#{groups} project:#{projects}:ret=#{ret}"
 		ret
 	end
 

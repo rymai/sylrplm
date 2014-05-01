@@ -6,7 +6,9 @@ class UsersController < ApplicationController
 	# GET /users
 	# GET /users.xml
 	def index
+		fname= "#{self.class.name}.#{__method__}"
 		@current_users = User.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		#LOG.info (fname) {"@current_users=#{@current_users}"}
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @current_users }
@@ -60,7 +62,7 @@ class UsersController < ApplicationController
 			format.xml  { render :xml => @object }
 		end
 	end
-	
+
 	# GET /users/1/edit
 	def edit
 		#puts "users_controller.edit:#{params["user"].inspect}"
@@ -132,8 +134,14 @@ class UsersController < ApplicationController
 		@time_zones = get_time_zones(@the_user.time_zone)
 		@types    = Typesobject.get_types("user")
 		@the_user.update_accessor(current_user)
+		#TODO work around: the view users/_edit:<%= select_inout(f, @the_user, @roles, :title) %>
+		# does not return any value if no value in the choosen list, then we force empty array here
+		params_user=params[:user]
+		params_user[:role_ids]=[] if params_user[:role_ids].nil?
+		params_user[:group_ids]=[] if params_user[:group_ids].nil?
+		params_user[:project_ids]=[] if params_user[:project_ids].nil?
 		respond_to do |format|
-			if @the_user.update_attributes(params[:user])
+			if @the_user.update_attributes(params_user)
 				flash[:notice] = t(:ctrl_user_updated, :user => @the_user.login)
 				format.html { redirect_to(@the_user) }
 				format.xml  { head :ok }

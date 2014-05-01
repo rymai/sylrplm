@@ -3,11 +3,11 @@
 <%= hidden_field_tag 'definition_id', @definition.id %>
 <table>
 	<tr>
-		<td> <%= t(:label_uri)%> </td>
+		<td> <%= t(:label_uri) %></td>
 		<td> <%= h @definition.uri %> </td>
 	</tr>
 	<tr>
-		<td colspan="2" class="nhover"> <%= render(:partial => @payload_partial, :locals => { :fields => @definition.launch_fields_hash }) %> </td>
+		<td colspan="2" class="nhover"> <%= render(:partial => 'shared/ruote_forms', :locals => { :fields => @definition.launch_fields_hash }) %> </td>
 	</tr>
 </table>
 <table class='menu_bas'>

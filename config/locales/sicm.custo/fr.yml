@@ -140,6 +140,7 @@ fr:
   definition_promotion: Promotion
   definition_*embedded*: embedded
   definition_*untracked*: untracked
+  definition_validate_user: Valider un nouvel utilisateur	
   #subscription
   subscription_creator: Concepteur
   subscription_consultant: Consultant

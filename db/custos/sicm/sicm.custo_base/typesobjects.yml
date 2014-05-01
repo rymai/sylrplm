@@ -261,7 +261,7 @@ Typesobject_1045584129:
   id: "1045584129"
   forobject: sylrplm_properties
   name: user_default
-  fields: "{\"THEME_DEFAULT\": \"white\", \"LOCAL_DEFAULT\": \"fr\", \"VOLUME_NAME_DEFAULT\": \"vol_local_01\", \"NB_ITEMS_PER_PAGE\": 30, \"TYPE_USER_DEFAULT\": \"$NEW_ACCOUNT\", \"ROLE_USER_DEFAULT\": \"consultant\", \"PROJECTS_ACCOUNT\": \"PROJECT-users,PROJET TABLE\", \"GROUPS_ACCOUNT\": \"admins,consultants,SICM\"}"
+  fields: "{\"THEME_DEFAULT\": \"white\", \"LOCAL_DEFAULT\": \"fr\", \"VOLUME_NAME_DEFAULT\": \"vol_local_01\", \"NB_ITEMS_PER_PAGE\": 30, \"TYPE_USER_DEFAULT\": \"$NEW_ACCOUNT\", \"ROLES_USER_DEFAULT\": \"consultant\", \"GROUPS_USER_DEFAULT\": \"consultants,SICM\", \"PROJECTS_USER_DEFAULT\": \"PROJECT-users,PROJET TABLE\"}"
   description: ""
   domain: admin
 
@@ -277,7 +277,7 @@ Typesobject_1045584131:
   id: "1045584131"
   forobject: sylrplm_properties
   name: objects_names
-  fields: "{\"GROUP_ADMINS\": \"admins\", \"ROLE_ADMIN\": \"admin\", \"ROLE_CONSULTANT\": \"consultant\", \"ROLE_CREATOR\": \"creator\", \"ROLE_VALIDER\": \"valider\", \"ROLE_PROJECT_MANAGER\": \"project_manager\", \"ROLE_ANALYST\": \"analyst\", \"ROLE_DESIGNER\": \"designer\", \"USER_ADMIN\": \"admin\"}"
+  fields: "{\"GROUP_ADMINS\": \"admins\", \"ROLE_ADMIN\": \"admin\", \"ROLE_CONSULTANT\": \"consultant\", \"ROLE_CREATOR\": \"creator\", \"ROLE_VALIDER\": \"valider\", \"ROLE_PROJECT_MANAGER\": \"project_manager\", \"ROLE_ANALYST\": \"analyst\", \"ROLE_DESIGNER\": \"designer\", \"USER_ADMIN\": \"admin\",\"GROUP_CONSULTANTS\": \"consultants\"}"
   description: ""
   domain: admin
 

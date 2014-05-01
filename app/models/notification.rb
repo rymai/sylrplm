@@ -124,6 +124,7 @@ class Notification < ActiveRecord::Base
 		ret.each do |nnn|
 			LOG.debug (fname){"user=#{nnn[:user]} cnt=#{nnn[:count]} msg=#{nnn[:msg]}"}
 		end
+		LOG.debug (fname) {"id=#{id} ret=#{ret}"}
 		ret
 	end
 

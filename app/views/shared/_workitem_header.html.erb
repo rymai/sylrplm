@@ -44,3 +44,8 @@
 	<td> <%= t("paste_projects") %> </td>
 </tr>
 <% end %> 
+<% unless @favori.get('user').count==0 %>
+<tr>
+	<td> <%= t("paste_users") %> </td>
+</tr>
+<% end %> 

@@ -100,6 +100,9 @@ module OpenWFE::Extras
       opts[:event] = event.to_s
 
       #self.new(opts).save!
+      # syl: unknown attribute
+      puts "db_history.log:opts=#{opts}"
+      opts.delete(:inflow)
       ret=self.new(opts)
       st=ret.save_without_transactions!
       #begin

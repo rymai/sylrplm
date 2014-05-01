@@ -20,10 +20,17 @@ workitem_path(@workitem),
 :multipart => true) do -%>
 <input type="hidden" name="state" id="state" value="" />
 <!-- :( -->
+<table class='menu_bas'>
+	<tr >
+		<td><%= link_to_function(t("update"), 'saveWi()') %> </td>
+		<td><%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> </td>
+		<td><%= link_to(t("list"), workitems_path) %> </td>
+	</tr>
+</table>
 <table>
 	<%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem, :fonct=>"edit" } %>
 	<tr class="nhover">
-		<td colspan="2"> <%= render :partial => @payload_partial, :locals => { :fields => @workitem.field_hash , :fonct=>"edit"} %> </td>
+		<td colspan="2"> <%= render :partial => 'shared/ruote_forms', :locals => { :fields => @workitem.field_hash , :fonct=>"edit"} %> </td>
 	</tr>
 	<%= render(:partial => "workitems/wi_links", :locals => { :fonct=>"edit" } ) %>
 </table>

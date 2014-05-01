@@ -183,7 +183,7 @@ class Ruote::PlmParticipant
 		end
 		puts fname+arworkitem.wfid+":"+relation_name+":"+links.count.to_s+" links"
 		links.each do |link|
-			#puts fname+"link="+link.ident
+		#puts fname+"link="+link.ident
 			father = get_object(link.father_plmtype, link.father_id)
 			#puts fname+"father="+father.inspect
 			#puts fname+"father.wfid="+father.wfid + "==?" + arworkitem.wfid
@@ -216,7 +216,11 @@ class Ruote::PlmParticipant
 				#puts fname+"link.relation.name(#{link.relation.name}) != relation_name(#{relation_name})"
 				end
 			else
-				puts fname+"father(#{father.to_s})=nil or father.wfid(#{father.wfid}) != arworkitem.wfid(#{arworkitem.wfid})"
+				if father.nil?
+					puts fname+"father(#{father})=nil"
+				else
+					puts fname+"father.wfid(#{father.wfid}) != arworkitem.wfid(#{arworkitem.wfid})"
+				end
 			end
 		end
 	end

@@ -122,10 +122,6 @@ module SYLRPLM
 		TYPE_USER_DEFAULT         = TYPE_USER_NEW_ACCOUNT
 		# role
 		ROLE_USER_DEFAULT         = ROLE_CONSULTANT
-		# Nom des projets attribués automatiquement a un nouvel utilisateur
-		PROJECTS_ACCOUNT          = 'PROJECT-users,PROJET TABLE'
-		# Nom des groupes attribués automatiquement a un nouvel utilisateur
-		GROUPS_ACCOUNT        		= 'admins,consultants,SICM'
 
 	end
 

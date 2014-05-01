@@ -3,7 +3,7 @@ require 'classes/controller'
 class MainController < ApplicationController
 
 	#access_control(Access.find_for_controller(controller_class_name))
-	skip_before_filter :authorize
+	skip_before_filter :authorize, :check_user
 	#def infos
 	#  request.env["PATH_INFO"] +":"+__FILE__+":"+__LINE__.to_s
 	#end

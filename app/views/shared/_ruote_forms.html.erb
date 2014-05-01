@@ -6,7 +6,7 @@
 		var ffl = byId('fields');
 		var frf = byId('fields_rf');
 		var brf = byId('rf_buttons');
-		if(fta.style.display == 'block') {
+		if (fta.style.display == 'block') {
 			RuoteForms.renderForm('rform', fluoFromJson(ffl.value));
 			fta.style.display = 'none';
 			frf.style.display = 'block';
@@ -19,11 +19,10 @@
 		}
 	}
 </script>
-<fieldset>
-	<legend>
-		<%= t("label_definitions_attributs")%> <a href="" onclick="swapForm(); return false;"><%= t(:button_swap)%></a>
-		<span id="rf_buttons"> <a href="" onclick="RuoteForms.resetForm('rform'); return false;"><%= t(:button_reset)%><a href="" onclick="RuoteForms.undo('rform'); return false;"><%= t(:button_undo)%></a></span>
-	</legend>
+
+		<%=  t(:label_definitions_attributs) %> <a href="" onclick="swapForm(); return false;"> <%=  t(:button_swap)%></a>
+		<span id="rf_buttons"> <a href="" onclick="RuoteForms.resetForm('rform'); return false;"> <%=  t(:button_reset)%><a href="" onclick="RuoteForms.undo('rform'); return false;"> <%=  t(:button_undo)%></a></span>
+	
 	<div id="fields_ta" style="display: none;">
 		<textarea id="fields" name="<%= textarea_name ||= 'fields' %>"><%= fields.to_json -%></textarea>
 	</div>
@@ -33,10 +32,9 @@
 	<div class="fieldhead">
 		<script>
 			byId('<%= form_id ||= 'workitem_form' %>').onsubmit = function () {
-			swapForm();
-			return true;
+				swapForm();
+				return true;
 			};
-			RuoteForms.renderForm('rform', <%= fields.to_json %>);</script>
+			RuoteForms.renderForm('rform',<%= fields.to_json %>);
+		</script>
 	</div>
-	<br/>
-</fieldset>

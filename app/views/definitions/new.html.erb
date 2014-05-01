@@ -1,8 +1,8 @@
 <h1><%= t("definitions_new") %></h1>
 <% form_for(@definition, :html => { :multipart => true }) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "shared/menu_new", :locals => {:object => @definition, :f => f}) %>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @definition, :f => f, :fonct=>"new"}) %>
 <%= render(:partial => "definitions/edit", :locals => {:object => @definition, :f => f, :fonct=>"new"}) %>
-<%= render(:partial => "shared/submit_new", :locals => {:object => @definition, :f => f}) %>
+<%= render(:partial => "shared/submit_new", :locals => {:object => @definition, :f => f}, :fonct=>"new") %>
 
 <% end %> 
