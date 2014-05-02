@@ -32,14 +32,16 @@ Volume_7:
     Base64.encode64(@content)
   decode: Base64.decode64(@content)
   compress: |-
-    stringio = Zip::ZipOutputStream::write_buffer do |zio|
+    require 'zip/zip'
+    stringio = Zip::ZipOutputStream::write_buffer(::StringIO.new("@filename")) do |zio|
       zio.put_next_entry(@filename)
       zio.write @content
     end
     stringio.rewind
     binary_data = stringio.sysread
   decompress: |-
-    Zip::ZipInputStream.open(StringIO.new(@content)) do |zio|
+    require 'zip/zip'
+    Zip::ZipInputStream.open(::StringIO.new(@content)) do |zio|
       while (entry = zio.get_next_entry)
         ret = zio.read
       end
@@ -53,9 +55,7 @@ Volume_9:
   name: table03
   directory: ""
   protocol: database_text
-  encode: |
-    Base64.encode64(@content)
-
+  encode: Base64.encode64(@content)
   decode: Base64.decode64(@content)
   compress: ""
   decompress: ""
@@ -70,16 +70,16 @@ Volume_8:
   encode: ""
   decode: ""
   compress: |-
-    stringio = Zip::ZipOutputStream::write_buffer do |zio|
+    require 'zip/zip'
+    stringio = Zip::ZipOutputStream::write_buffer(::StringIO.new("@filename")) do |zio|
       zio.put_next_entry(@filename)
       zio.write(@content)
     end
     stringio.rewind
     binary_data = stringio.sysread
-    puts "compress=#{binary_data}"
-    binary_data
   decompress: |-
-    Zip::ZipInputStream.open(StringIO.new(@content)) do |zio|
+    require 'zip/zip'
+    Zip::ZipInputStream.open(::StringIO.new(@content)) do |zio|
       while (entry = zio.get_next_entry)
         ret = zio.read
       end

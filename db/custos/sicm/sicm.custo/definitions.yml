@@ -45,3 +45,11 @@ Definition_6:
   uri: /definitions/promote.rb
   launch_fields: "{}"
   domain: custo.sicm
+  
+Definition_7: 
+  id: "7"
+  name: validate_user
+  description: Validate a new user
+  uri: public/definitions/validate_user.rb
+  launch_fields: 
+  domain: admin
