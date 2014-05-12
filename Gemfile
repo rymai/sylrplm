@@ -40,9 +40,10 @@ gem 'zip-zip'
 gem 'string_to_sha1', :git => "git://github.com/sylvani/string_to_sha1.git"
 
 ##gem 'string_to_sha1', :path => "/home/syl/trav/rubyonrails/string_to_sha1" 
+gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
+###gem 'sylrplm_ext', :path => "/home/syl/trav/rubyonrails/sylrplm_ext"
 
 group :staging, :production do
-  gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
   gem 'thin'
   gem 'rack-ssl'
   gem 'newrelic_rpm'
@@ -52,7 +53,7 @@ group :development do
 	#gem 'ruby-debug-base19'
 	#gem 'ruby-debug-ide19'
 	#gem 'ruby-debug193'
-	gem 'sylrplm_ext', :path => "/home/syl/trav/rubyonrails/sylrplm_ext"
+	
 	gem 'ruby_debugger'
   gem 'foreman'
   gem 'letter_opener'
