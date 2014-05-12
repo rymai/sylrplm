@@ -4,8 +4,9 @@ GIT
   specs:
     string_to_sha1 (1.0.0)
 
-PATH
-  remote: ../sylrplm_ext
+GIT
+  remote: git://github.com/sylvani/sylrplm_ext.git
+  revision: 502328b7a1c9929d94887664db4bab9fb45b4d7c
   specs:
     sylrplm_ext (0.0.4)
 
