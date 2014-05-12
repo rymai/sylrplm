@@ -100,6 +100,15 @@ class PlmServices
 				LOG.warn(fname) {"variable #{prop_name} does not exists in TypesObjects/#{atype_ident} but found in config file sylrplm.rb"}
 			rescue Exception=>e
 				LOG.error(fname) {"variable #{var} does not exists in TypesObjects/#{atype_ident} and not found in config file sylrplm.rb"}
+				begin
+					s=100/0
+				rescue Exception => e
+					stack=""
+					e.backtrace.each do |x|
+						stack+= x+"\n"
+					end
+					LOG.warn (fname) {"stack=\n#{stack}"}
+				end
 			end
 		#LOG.debug(fname) {"prop_name=#{prop_name}, atype_ident=#{atype_ident}, ret=#{ret} found in SYLRPLM variables"}
 		else
@@ -149,7 +158,7 @@ class PlmServices
 			ret=I18n.translate(key, argums)
 			if ret==defo
 				# to keep logs about tranlation to do
-				puts "%TODO_TRANSLATE%:#{defo}"
+				puts "%TODO_TRANSLATE%:#{defo} stack below to see where it is called"
 				begin
 					a=1/0
 				rescue Exception => e

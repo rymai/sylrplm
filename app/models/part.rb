@@ -102,7 +102,7 @@ has_many :links_documents,
 		obj
 	end
 
-	def self.get_types_part
+	def self.get_types_part_obsolete
 		Typesobject.find(:all, :order=>"name",
 		:conditions => ["forobject = 'part'"])
 	end

@@ -94,7 +94,7 @@ class Notification < ActiveRecord::Base
 
 	def self.notify_all(id)
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"id=#{id}"}
+		#LOG.debug (fname) {"id=#{id}"}
 		from = User.find_by_login(PlmServices.get_property(:USER_ADMIN))
 		ret=[]
 		# all notifications send for all users
@@ -103,7 +103,7 @@ class Notification < ActiveRecord::Base
 		# loop on users with a valid email
 		#
 		User.find_with_mail.each do |user|
-			LOG.debug (fname) {"*** user=#{user} subscription=#{user.subscription}"}
+			#LOG.debug (fname) {"user=#{user} subscription=#{user.subscription}"}
 			to_notify = notify_user(user, id)
 			#
 			# send notifications for the user
@@ -122,9 +122,8 @@ class Notification < ActiveRecord::Base
 		#	notif.update_attributes({:notify_date => Time.now})
 		#end
 		ret.each do |nnn|
-			LOG.debug (fname){"user=#{nnn[:user]} cnt=#{nnn[:count]} msg=#{nnn[:msg]}"}
+			LOG.debug (fname){"id=#{id} ret:user=#{nnn[:user]} subscription=#{user.subscription} cnt=#{nnn[:count]} msg=#{nnn[:msg]}"}
 		end
-		LOG.debug (fname) {"id=#{id} ret=#{ret}"}
 		ret
 	end
 
@@ -171,9 +170,9 @@ class Notification < ActiveRecord::Base
 				end
 				#LOG.debug (fname) {"		*** fortype=#{fortype.forobject} / #{fortype.name} : the_notifs.count=#{the_notifs.count}"}
 				the_notifs.each do |notif, notify|
-					#LOG.debug (fname) {"			*** notif=#{notif}, notify=#{notify}"}
-					# if the object is destroy, we can't retrieve group and projowner !!, then, no notif
-					#LOG.debug (fname) {"type=#{notif.forobject_type} id=#{notif.forobject_id}"}
+				#LOG.debug (fname) {"			*** notif=#{notif}, notify=#{notify}"}
+				# if the object is destroy, we can't retrieve group and projowner !!, then, no notif
+				#LOG.debug (fname) {"type=#{notif.forobject_type} id=#{notif.forobject_id}"}
 					begin
 						notif_obj = ::PlmServices.get_object(notif.forobject_type, notif.forobject_id)
 					rescue Exception => e

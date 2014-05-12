@@ -253,7 +253,7 @@ Typesobject_1045584132:
   id: "1045584132"
   forobject: sylrplm_properties
   name: types_values
-  fields: "{\"PLMTYPE_GENERIC\": \"any_plmtype\", \"TYPE_DOC_DIRECTORY\": \"directory\", \"TYPE_GENERIC\": \"any_type\", \"TYPE_USER_PERSON\": \"person_\", \"TYPE_USER_VIRTUAL\": \"virtual_\", \"TYPE_USER_NEW_ACCOUNT\": \"$NEW_ACCOUNT\", \"TYPE_PROJ_ACCOUNT\": \"$PROJ_ACCOUNT\", \"TYPEACCESS_PUBLIC\": \"public\", \"TYPEACCESS_CONFIDENTIAL\": \"confidential\", \"TYPEACCESS_SECRET\": \"TYPEACCESS_SECRET\", \"TYPE_DATAFILE_THUMBNAIL\": \"thumbnail\"}"
+  fields: "{\"PLMTYPE_GENERIC\": \"any_plmtype\", \"TYPE_DOC_DIRECTORY\": \"directory\", \"TYPE_GENERIC\": \"any_type\", \"TYPE_USER_PERSON\": \"person_\", \"TYPE_USER_VIRTUAL\": \"virtual_\", \"TYPE_USER_NEW_ACCOUNT\": \"$NEW_ACCOUNT\", \"TYPE_PROJ_ACCOUNT\": \"$PROJ_ACCOUNT\", \"TYPEACCESS_PUBLIC\": \"public\", \"TYPEACCESS_CONFIDENTIAL\": \"confidential\", \"TYPEACCESS_SECRET\": \"secret\", \"TYPE_DATAFILE_THUMBNAIL\": \"thumbnail\"}"
   description: ""
   domain: admin
 
@@ -293,7 +293,19 @@ Typesobject_1045584133:
   id: "1045584133"
   forobject: sylrplm_properties
   name: volumes
-  fields: "{\"FOG_ACCESS_KEY\": \"W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j\", \"FOG_ACCESS_KEY_ID\": \"AKIAIUTZHUXCXNUFDRHQ\"}"
+  fields: "{\"FOG_ACCESS_KEY\": \"W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j\", \"FOG_ACCESS_KEY_ID\": \"AKIAIUTZHUXCXNUFDRHQ\" }"
+  description: ""
+  domain: admin
+
+Typesobject_1045584136: 
+  id: "1045584136"
+  forobject: sylrplm_properties
+  name: volumes_dir
+  fields: "{\"VOLUME_DIRECTORY_DEFAULT\":
+  \"{'linux'=>'/home/syl/trav/rubyonrails/sylrplm-data',
+  'windows'=>'C:/sylrplm-data',
+  'mac'=>'/Users/remy/Development/Ruby/Gems/sylvani/sylrplm/sylrplm_data'}
+  [OsFunctions.os]\"}"
   description: ""
   domain: admin
 

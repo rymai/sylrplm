@@ -49,7 +49,6 @@ class Typesobject < ActiveRecord::Base
 	def self.get_types(s_object)
 		fname="Typesobject.#{__method__}(#{s_object})"
 		sgeneric = PlmServices.get_property(:PLMTYPE_GENERIC)
-		fname="Typesobject.#{__method__}(#{s_object})"
 		stypes = order_default.find_all_by_forobject(s_object.to_s)
 		ret= []
 		stypes.each do |type|
@@ -137,16 +136,28 @@ class Typesobject < ActiveRecord::Base
 
 	# renvoie l'objet contenu dans l'attribut type_values
 	def get_fields_values
+		fname="Typesobject.#{__method__}"
 		if self.respond_to? :fields
 			unless fields.blank?
-				#puts "get_fields_values:values=#{fields}"
+				#LOG.debug (fname) {"fields=#{fields}"}
 				begin
 					decod = ActiveSupport::JSON.decode(fields)
+					#LOG.debug (fname) {"decod=#{decod}"}
+					ret={}
+					begin
+					decod.each do |decod_part|
+						ret[decod_part[0]] = eval(decod_part[1])
+					end
+					rescue Exception=>e
+						#LOG.warn (fname) {"Decod is not a ruby bloc : #{decod} : #{e}"}
+					ret=decod
+					end
 				rescue Exception => e
-					puts "Error during field decoding:#{e}"
+					LOG.error (fname) {"Error during field decoding : #{fields} : #{e}"}
 				end
 			end
 		end
-		decod
+		#LOG.debug (fname) {"ret=#{ret}"}
+		ret
 	end
 end

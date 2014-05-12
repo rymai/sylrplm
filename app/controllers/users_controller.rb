@@ -125,6 +125,7 @@ class UsersController < ApplicationController
 	end
 
 	def update
+		fname= "#{self.class.name}.#{__method__}"
 		@the_user    = User.find(params[:id])
 		@volumes = Volume.find_all
 		@roles   = Role.all
@@ -137,9 +138,7 @@ class UsersController < ApplicationController
 		#TODO work around: the view users/_edit:<%= select_inout(f, @the_user, @roles, :title) %>
 		# does not return any value if no value in the choosen list, then we force empty array here
 		params_user=params[:user]
-		params_user[:role_ids]=[] if params_user[:role_ids].nil?
-		params_user[:group_ids]=[] if params_user[:group_ids].nil?
-		params_user[:project_ids]=[] if params_user[:project_ids].nil?
+		#LOG.debug(fname){"params_user:roles=#{params_user[:role_ids]} groups=#{params_user[:group_ids]} projects=#{params_user[:project_ids]}"}
 		respond_to do |format|
 			if @the_user.update_attributes(params_user)
 				flash[:notice] = t(:ctrl_user_updated, :user => @the_user.login)

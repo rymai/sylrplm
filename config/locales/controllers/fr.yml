@@ -167,6 +167,10 @@ fr:
   # tree
   tree_size: "Nombre de noeuds dans l' arbre"
   tree_branch_size: "Nombre de noeuds dans la branche"
+  label_customer_users: Client utilisateur
+  label_document_users: Document utilisateur
+  label_part_users: Article utilisateur
+  label_project_users: Projet utilisateur
   # views
   ctrl_view: Vue
   # volumes

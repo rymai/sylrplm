@@ -167,6 +167,10 @@ en:
   # tree
   tree_size: "Tree nodes"
   tree_branch_size: "Branch nodes"
+  label_customer_users: User customer
+  label_document_users: User document
+  label_part_users: User part
+  label_project_users: User Project
   # views
   ctrl_view: View
   # volumes

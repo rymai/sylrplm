@@ -3,6 +3,11 @@ require_dependency 'controllers/plm_event'
 require_dependency 'controllers/plm_object_controller_module'
 require_dependency 'error_reply'
 
+#require "string_to_sha1/version"
+require "string_to_sha1"
+require "sylrplm_ext"
+#require "digest/sha1"
+
 class ApplicationController < ActionController::Base
   include Controllers::PlmObjectControllerModule
   helper :all # include all helpers, all the time
@@ -178,6 +183,8 @@ class ApplicationController < ActionController::Base
   
   # definition des variables globales.
   def define_variables
+  	fname= "#{self.class.name}.#{__method__}"
+  	puts "************************************************** #{fname.to_sha1} **********************************************"
     @favori      = session[:favori] ||= Favori.new
     @theme       = User.find_theme(session)
     @language    = PlmServices.get_property(:LOCAL_DEFAULT)

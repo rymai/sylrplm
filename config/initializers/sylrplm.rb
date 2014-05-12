@@ -11,15 +11,14 @@ require 'os_functions'
 module SYLRPLM
 
 	#########################################
-	# Properties
-	#
+	# Type name for Properties
 	PLM_PROPERTIES						= "sylrplm_properties"
 	#
 	# repertoires des chargements
 	#TODO not yet in property
 	DIR_FIXTURES               = "#{Rails.root}/db/fixtures"
 	#TODO not yet in property
-	VOLUME_DIRECTORY_DEFAULT  = case OsFunctions.os
+	VOLUME_DIRECTORY_DEFAULT___  = case OsFunctions.os
 	when "linux"
 		"/home/syl/trav/rubyonrails/sylrplm-data"
 	when "mac"
@@ -29,17 +28,17 @@ module SYLRPLM
 	end
 
 	# document de type directory (pour eviter par exemple d'y mettre des fichiers)
-	TYPE_DOC_DIRECTORY        = 'directory'
+	#TYPE_DOC_DIRECTORY        = 'directory'
 	# type de user: personne physique.
-	TYPE_USER_PERSON          = 'person_'
+	#TYPE_USER_PERSON          = 'person_'
 	# type du projet affecte par defaut a un user lors de sa creation
-	TYPE_PROJ_ACCOUNT         = '$PROJ_ACCOUNT'
+	#TYPE_PROJ_ACCOUNT         = '$PROJ_ACCOUNT'
 	# valeurs des types d'acces a un  projet
-	TYPEACCESS_PUBLIC         = 'public'
-	TYPEACCESS_CONFIDENTIAL   = 'confidential'
-	TYPEACCESS_SECRET         = 'secret'
-	FOG_ACCESS_KEY            = "W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j"
-	FOG_ACCESS_KEY_ID         = "AKIAIUTZHUXCXNUFDRHQ"
+	#TYPEACCESS_PUBLIC         = 'public'
+	#TYPEACCESS_CONFIDENTIAL   = 'confidential'
+	#TYPEACCESS_SECRET         = 'secret'
+	#FOG_ACCESS_KEY            = "W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j"
+	#FOG_ACCESS_KEY_ID         = "AKIAIUTZHUXCXNUFDRHQ"
 
 	#
 	# no more used, use PlmServices.get_property("HELP_SUMMARY_LEVEL") for example

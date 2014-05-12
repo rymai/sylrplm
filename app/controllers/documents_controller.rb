@@ -40,7 +40,7 @@ class DocumentsController < ApplicationController
 		LOG.debug (fname) {"params=#{params.inspect}"}
 		params={}
 		@document = Document.new(:user => current_user)
-		@types    = Document.get_types
+		@types    = Typesobject.get_types("document")
 		@volumes  = Volume.find_all
 		@status   = Statusobject.find_for("document", 2)
 		respond_to do |format|

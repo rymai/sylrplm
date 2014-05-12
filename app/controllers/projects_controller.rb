@@ -47,7 +47,7 @@ class ProjectsController < ApplicationController
 	# on definit les listes de valeur pour le type et le statut
 	def new
 		@project = Project.new(user: current_user)
-		@types = Project.get_types_project
+		@types = Typesobject.get_types("project")
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		@status= Statusobject.find_for("project", true)
 		@users  = User.all
@@ -76,7 +76,7 @@ class ProjectsController < ApplicationController
 	# modification d'un projet
 	def edit
 		@project = Project.find_edit(params[:id])
-		@types=Project.get_types_project
+		@types=Typesobject.get_types("project")
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		@users  = User.all
 	end
@@ -92,9 +92,9 @@ class ProjectsController < ApplicationController
 	# creation d'un projet (apres validation du new)
 	def create
 		@project = Project.new(params[:project])
-		@types=Project.get_types_project
-		@types_access    = Typesobject.get_types("project_typeaccess")
-		@status= Statusobject.find_for("project")
+		@types = Typesobject.get_types("project")
+		@types_access = Typesobject.get_types("project_typeaccess")
+		@status = Statusobject.find_for("project")
 		@users  = User.all
 		respond_to do |format|
 			if params[:fonct] == "new_dup"
@@ -121,7 +121,7 @@ class ProjectsController < ApplicationController
 	# maj d'un projet (apres validation du edit)
 	def update
 		@project = Project.find(params[:id])
-		@types=Project.get_types_project
+		@types=Typesobject.get_types("project")
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		@status= Statusobject.find_for("project")
 		@users  = User.all

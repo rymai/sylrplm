@@ -69,7 +69,7 @@ class Project < ActiveRecord::Base
 		obj
 	end
 
-	def self.get_types_project
+	def self.get_types_project_obsolete
 		Typesobject.find(:all, :order=>"name",
 		:conditions => ["forobject = 'project'"])
 	end

@@ -37,7 +37,7 @@ class PartsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@part   = Part.new(user: @current_user)
-		@types  = Part.get_types_part
+		@types  = Typesobject.get_types("part")
 		@status = Statusobject.find_for("part", 2)
 		respond_to do |format|
 			format.html # new.html.erb
@@ -63,7 +63,7 @@ class PartsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@part   = Part.find_edit(params[:id])
-		@types  = Part.get_types_part
+		@types  = Typesobject.find_for("part")
 	end
 
 	# GET /parts/1/edit_lifecycle
@@ -79,7 +79,7 @@ class PartsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@part   = Part.new(params[:part])
-		@types  = Part.get_types_part
+		@types  = Typesobject.get_types("part")
 		@status = Statusobject.find_for("part")
 		respond_to do |format|
 			if params[:fonct] == "new_dup"

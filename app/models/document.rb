@@ -95,7 +95,7 @@ class Document < ActiveRecord::Base
 		ret
 	end
 
-	def self.get_types
+	def self.get_types_obsolete
 		Typesobject.get_types("document")
 	end
 

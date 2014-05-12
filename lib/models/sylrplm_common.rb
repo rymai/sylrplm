@@ -247,7 +247,7 @@ module Models
 			ret = false
 			unless (self.statusobject.nil? || ::Statusobject.get_last(self).nil?)
 				ret = (self.statusobject.rank == ::Statusobject.get_last(self).rank)
-				LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self).rank}=#{ret}"}
+				#LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self).rank}=#{ret}"}
 			end
 			ret
 		end
