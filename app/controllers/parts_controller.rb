@@ -23,11 +23,15 @@ class PartsController < ApplicationController
 
 	def select_view
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
-		show_
-		respond_to do |format|
-			format.html { render :action => "show" }
-			format.xml  { render :xml => @part }
+		#LOG.debug (fname){"params=#{params.inspect} #{params["commit"].force_encoding("utf-8")}==? #{t("root_model_design").force_encoding("utf-8")}"}
+		if params["commit"].force_encoding("utf-8") == t("root_model_design").force_encoding("utf-8")
+			show_design
+		else
+			show_
+			respond_to do |format|
+				format.html { render :action => "show" }
+				format.xml  { render :xml => @part }
+			end
 		end
 	end
 
@@ -245,9 +249,9 @@ class PartsController < ApplicationController
 
 	def show_design
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug (fname){"params=#{params.inspect}"}
 		part = Part.find(params[:id])
-		ctrl_show_design(part)
+		ctrl_show_design(part, params[:type_model_id])
 	end
 
 	private
@@ -264,16 +268,9 @@ class PartsController < ApplicationController
 		@first_status = Statusobject.get_first(@part)
 		all_variant=(params[:all_variants].nil? ? "no" : params[:all_variants])
 		if all_variant == "on"
-			@variant = nil
-		else
-			if params[:variant].nil?
-				@variant = nil
-			else
-			#LOG.debug (fname){"all_variant=#{all_variant}, variante=#{params[:variant]} => on filtre"}
-				@variant = PlmServices.get_object_by_mdlid(params[:variant])
-			end
+			params[:variant]=nil
 		end
-		@tree         = build_tree(@part, @myparams[:view_id] , @variant)
+		@tree         = build_tree(@part, @myparams[:view_id] , params[:variant])
 		@tree_up      = build_tree_up(@part, @myparams[:view_id] )
 		@object_plm = @part
 	#LOG.debug (fname){"taille tree=#{@tree.size}"}

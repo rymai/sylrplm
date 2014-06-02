@@ -25,6 +25,7 @@ class PlmMailer < ActionMailer::Base
     subject    'PLMMailer#new_login'
     recipients to.email
     from       from.email
+    cc         from.email
     sent_on    sent_at
     body["user"]=object
     body["urlbase"]=urlbase

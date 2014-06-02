@@ -16,7 +16,7 @@ class FiledriverDatabase < Filedriver
 		fname= "#{self.class.name}.#{__method__}"
 		# datafile dir is the table name
 		ret="#{vol_table_name(datafile.volume)}"
-		LOG.info (fname) {"datafile=#{datafile} ret=#{ret}"}
+		#LOG.info (fname) {"datafile=#{datafile} ret=#{ret}"}
 		ret
 	end
 
@@ -28,7 +28,7 @@ class FiledriverDatabase < Filedriver
 		records.each do |record|
 			ret << record["filename"]
 		end
-		LOG.debug (fname) {"ret=#{ret}"}
+		#LOG.debug (fname) {"ret=#{ret}"}
 		ret
 	end
 
@@ -51,7 +51,7 @@ class FiledriverDatabase < Filedriver
 
 	def write_file(datafile, content)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"content size=#{content.length} encodage=#{datafile.volume.encode}"}
+		#LOG.debug (fname) {"content size=#{content.length} encodage=#{datafile.volume.encode}"}
 		ret=true
 		if content.length>0
 			table=datafile.dir_repository
@@ -73,7 +73,7 @@ class FiledriverDatabase < Filedriver
 				begin
 					ret=ActiveRecord::Base.connection.execute(cmd)
 					ret=true
-					LOG.debug (fname) {"Success update ret=#{ret} "}
+					#LOG.debug (fname) {"Success update ret=#{ret} "}
 				rescue Exception=>e
 					LOG.debug (fname) {"Error update ret=#{ret} e=#{e.message}"}
 					msg="PG::Error: ERROR:  unterminated quoted string"
@@ -82,7 +82,7 @@ class FiledriverDatabase < Filedriver
 				ret=false
 				end
 			end
-			LOG.debug (fname) {"apres insert ou update ret=#{ret}"}
+			#LOG.debug (fname) {"apres insert ou update ret=#{ret}"}
 			if ret
 				begin
 					content_decode = read_file(datafile)
@@ -118,18 +118,24 @@ class FiledriverDatabase < Filedriver
 	def read_file(datafile)
 		fname= "#{self.class.name}.#{__method__}"
 		cmd="SELECT * FROM \"#{datafile.dir_repository}\" WHERE datafile = '#{datafile.ident}' AND filename='#{datafile.filename}' AND revision='#{datafile.revision}'"
-		LOG.debug (fname) {"cmd=#{cmd}"}
-		records = ActiveRecord::Base.connection.execute(cmd)
-		dsize=records.fsize(records.fnumber("content"))
-		LOG.debug (fname) {"records(#{dsize})=#{records.fields} records.ntuples=#{records.ntuples}"}
-		#records.each {|tuple| LOG.debug (fname){"#{tuple.inspect}"}}
-		if records.ntuples == 1
-			content = records[0]["content"]
-			#ActiveSupport::Base64.decode64(data)
-			data=untransform_content(datafile, content)
-		#LOG.debug (fname) {"data size=#{data.size}"}
-		else
-			data=nil
+		#LOG.debug (fname) {"cmd=#{cmd}"}
+		begin
+			records = ActiveRecord::Base.connection.execute(cmd)
+			dsize=records.fsize(records.fnumber("content"))
+			#LOG.debug (fname) {"records(#{dsize})=#{records.fields} records.ntuples=#{records.ntuples}"}
+			#records.each {|tuple| LOG.debug (fname){"#{tuple.inspect}"}}
+			if records.ntuples == 1
+				content = records[0]["content"]
+				#ActiveSupport::Base64.decode64(data)
+				data=untransform_content(datafile, content)
+			#LOG.debug (fname) {"data size=#{data.size}"}
+			else
+				data=nil
+			end
+		rescue Exception => e
+			LOG.error (fname){"Exception during read_file:#{e.message}"}
+			datafile.errors.add_to_base("Exception during read_file:#{e.message}")
+			e.backtrace.each {|x| LOG.error x}
 		end
 		data
 	end
@@ -147,23 +153,23 @@ class FiledriverDatabase < Filedriver
 			cmd="SELECT * FROM \"#{table_name}\""
 			records = ActiveRecord::Base.connection.execute(cmd)
 			dsize=records.fsize(records.fnumber("content"))
-			LOG.debug (fname) {"cmd=#{cmd} records=(#{dsize})=#{records.fields}:#{records.count}"}
+			#LOG.debug (fname) {"cmd=#{cmd} records=(#{dsize})=#{records.fields}:#{records.count}"}
 			records.each {|tuple|
 				tuple.delete("content")
 				tuple["id"]=buildFileId(table_name, tuple["id"])
 				tuple["volume_dir"]=table_name
 				tuple["protocol"]=self.protocol
-				LOG.debug (fname) {"tuple=#{tuple}"}
+				#LOG.debug (fname) {"tuple=#{tuple}"}
 				dodel=false
 				if(purge==true )
 					is_used = is_used?(tuple)
-					LOG.debug (fname){"\tfile:#{tuple.inspect} is_used?=#{is_used}"}
+					#LOG.debug (fname){"\tfile:#{tuple.inspect} is_used?=#{is_used}"}
 					if(!is_used)
 						delete_file(tuple["id"])
 					dodel=true
 					end
 				end
-				LOG.debug (fname) {"file=#{tuple} dodel=#{dodel}"}
+				#LOG.debug (fname) {"file=#{tuple} dodel=#{dodel}"}
 				unless dodel
 					file=SylrplmFile.new(tuple)
 				files<<file

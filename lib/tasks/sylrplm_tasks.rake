@@ -79,24 +79,27 @@ namespace :sylrplm do
     domain = args.domain.to_s
     path = args.path.to_s
     site=args.site.to_s
-    puts "path is #{path}, domain is #{domain}, site is #{site}"
+    puts "import_domain:path is #{path}, domain is #{domain}, site is #{site}"
     fixtures_path = "#{path}/#{domain}"
     unless domain.empty?
+      
+	    #props= PlmServices.get_properties("sites")
+    	###truncate
+      #Rake::Task["db:fixtures:load FIXTURES_PATH=#{fixtures_path}"].invoke
+      ENV["FIXTURES_PATH"] = fixtures_path
+      puts "import_domain:fixtures_path=#{ENV['FIXTURES_PATH']}, metadata loading"
+      Rake::Task["db:fixtures:load"].invoke
+      puts "import_domain:metadata loading terminated"
       unless site.blank?
+     	puts "import_domain:volumes creation"
 	    PlmServices.set_property("sites","central",site) 
 	    Volume.find_all.each do |vol| 
 	    	 vol.save
 	    	end
 	    end
-	    props= PlmServices.get_properties("sites")
-    	###truncate
-      #Rake::Task["db:fixtures:load FIXTURES_PATH=#{fixtures_path}"].invoke
-      ENV["FIXTURES_PATH"] = fixtures_path
-      puts "fixtures_path=#{ENV['FIXTURES_PATH']}"
-      Rake::Task["db:fixtures:load"].invoke
-      puts "metadata loading terminated, now loading of datafiles if needed"
+      puts "import_domain:loading of datafiles if needed"
       # chargement des fichiers
-      PlmServices.set_property("sites","central",site) 
+      #PlmServices.set_property("sites","central",site) 
      	props= PlmServices.get_properties("sites")
       Datafile.all.each do |file|
       	unless file.filename.nil?
@@ -105,7 +108,7 @@ namespace :sylrplm do
       		file.file_import[:file] = File.new(file.filename)
       		file.file_import[:original_filename] = file.filename
 					st = file.save
-					puts "save file_field=#{file.file_field}, filename:#{file.filename}=#{st}"
+					puts "import_domain:save file_field=#{file.file_field}, filename:#{file.filename}=#{st}"
       	end
       end
     else

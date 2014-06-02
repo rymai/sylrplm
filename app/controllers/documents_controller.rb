@@ -26,10 +26,14 @@ class DocumentsController < ApplicationController
 	end
 
 	def select_view
-		show_
-		respond_to do |format|
-			format.html { render :action => "show" }
-			format.xml  { render :xml => @document }
+		if params["commit"].force_encoding("utf-8") == t("root_model_design").force_encoding("utf-8")
+			show_design
+		else
+			show_
+			respond_to do |format|
+				format.html { render :action => "show" }
+				format.xml  { render :xml => @document }
+			end
 		end
 	end
 
@@ -296,7 +300,7 @@ class DocumentsController < ApplicationController
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		#LOG.debug (fname){"myparams=#{@myparams.inspect}"}
 		document = Document.find(params[:id])
-		ctrl_show_design(document)
+		ctrl_show_design(document, params[:type_model_id])
 	end
 	private
 

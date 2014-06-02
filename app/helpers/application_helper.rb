@@ -128,45 +128,11 @@ module ApplicationHelper
 		t("count_objects",:number_begin=>num_begin,:number_end=>num_end,:total=>objects[:total])
 	end
 
-	def  h_form_simple_query(url, objects)
+	def h_form_simple_query(url, objects)
 		render(
 		:partial => "shared/form_simple_query",
 		:locals => {:url => url, :objects => objects}
 		)
-	end
-
-	def h_simple_query(objects)
-
-		#puts "h_simple_query:myparams=#{@myparams}"
-		bloc = ""
-		bloc << "<table>"
-		bloc << "<tr>"
-		bloc << "<th>"
-		bloc << t("query")
-		bloc << "</th>"
-		bloc << "<th>"
-		bloc << t("nb_items_per_page")
-		bloc << "</th>"
-		bloc << "<th>"
-		bloc << t("label_liste_mode")
-		bloc << "</th><th>........</th><th></th>"
-		bloc << "</tr>"
-		bloc << "<tr>"
-		bloc << "<td>"
-		bloc << text_field_tag(:query , value=objects[:query])
-		bloc << "</td>"
-		bloc << "<td>"
-		bloc << text_field_tag(:nb_items , value=objects[:nb_items], :size=>5)
-		bloc << "</td>"
-		bloc << "<td>"
-		bloc << select_tag("list_mode", options_for_select(get_list_modes, @myparams["list_mode"]) )
-		bloc << "</td><td></td>"
-		bloc << "<td>"
-		bloc << h_img_sub(:filter)
-		bloc << "</td>"
-		bloc << "</tr>"
-		bloc << "</table>"
-		bloc
 	end
 
 	def h_thumbnails_objs(objs)
@@ -351,7 +317,7 @@ module ApplicationHelper
 		link_to_remote(text, options, html_options)
 	end
 
-	def h_show_tree(obj)
+	def h_show_tree_obsolete(obj)
 		"don t use this function, prefer render shared/tree"
 	end
 

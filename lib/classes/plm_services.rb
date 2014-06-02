@@ -4,13 +4,25 @@ class PlmServices
 		if fields.size == 2
 			get_object(fields[0], fields[1])
 		else
+			LOG.error (fname){"Type #{type} bad formatted}"}
 			nil
 		end
 	end
 
-	def self.get_object(type, id)
-		# parts devient Part
+	def self.get_object(type, id )
 		fname = "PlmServices.#{__method__}(#{type},#{id})"
+		#if id.nil?
+			# type= 'part.6' 
+			#fields=type.split('.')
+			#if fields.count==2
+			#	type = fields[0]
+			#	id = fields[1]
+			#else
+			#	LOG.error (fname){"Type #{type} bad formatted}"}
+			#	return nil
+			#end
+		#end	
+		# parts devient Part
 		typec = type.camelize
 		ret = nil
 		begin
@@ -21,14 +33,14 @@ class PlmServices
 				typec ="Ruote::Sylrplm::"+typec
 				mdl = eval typec
 			rescue Exception => e
-			#LOG.error{fname+e.message}
+			LOG.error{fname+e.message}
 			end
 		end
 		unless mdl.nil?
 			begin
 				ret = mdl.find(id)
 			rescue Exception => e
-			#LOG.error{fname+e.message}
+			LOG.error{fname+e.message}
 			end
 		end
 		#LOG.debug (fname){"ret=#{(ret.nil? ? "" : ret.ident)}"}

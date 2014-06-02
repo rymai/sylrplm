@@ -28,7 +28,7 @@ class FiledriverFog < Filedriver
 				:aws_access_key_id        => PlmServices.get_property(:FOG_ACCESS_KEY_ID)
 			})
 		end
-		puts "SylrplmFog.instance:"+@@instance.inspect
+		#puts "SylrplmFog.instance:"+@@instance.inspect
 		return @@instance
 	end
 
@@ -75,7 +75,7 @@ class FiledriverFog < Filedriver
 		fname= "#{self.class.name}.#{__method__}"
 		fog_file = retrieve(datafile.dir_repository, datafile.filename_repository)
 		data=fog_file.body unless fog_file.nil?
-		LOG.debug (fname) {"fog_file=#{fog_file.inspect} taille=#{data.size}"}
+		#LOG.debug (fname) {"fog_file=#{fog_file} taille=#{data}"}
 		data
 	end
 
@@ -83,7 +83,7 @@ class FiledriverFog < Filedriver
 	# renvoie un repertoire dans lequel seront uploade les fichiers
 	def create_directory(datafile)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"datafile.dir_repository=#{datafile.dir_repository}"}
+		#LOG.debug (fname) {"datafile.dir_repository=#{datafile.dir_repository}"}
 		directory_key=datafile.dir_repository
 		#dir = create_directory(datafile.dir_repository)
 		unless directory_exists?(directory_key)
@@ -104,7 +104,7 @@ class FiledriverFog < Filedriver
 		LOG.debug (fname) {"content size=#{content.length}"}
 		if content.length>0
 			fog_file = upload_content(datafile.dir_repository, datafile.filename_repository, content)
-			LOG.debug (fname) {"apres write in fog:#{fog_file.inspect}"}
+			#LOG.debug (fname) {"apres write in fog:#{fog_file.inspect}"}
 		end
 	end
 
@@ -289,14 +289,21 @@ class FiledriverFog < Filedriver
 	end
 
 	def directory(directory_key)
+		fname= "#{self.class.name}.#{__method__}"
+		begin
 		ret=storage.directories.get(directory_key)
 		#puts "sylrplm_fog.directory("+directory_key+")="+ret.inspect
+		rescue Exception => exc
+			LOG.debug (fname){"Exception during fog access, verify the network:#{exc}"}
+			ret=nil
+		end
 		ret
 	end
 
 	def file(directory_key, file_key)
 		#puts "sylrplm_fog.file("+directory_key+","+ file_key+")"
-		ret=directory(directory_key).files.get(file_key)
+		dir=directory(directory_key)
+		ret=dir.files.get(file_key) unless dir.nil?
 		#puts "sylrplm_fog.file("+directory_key+","+ file_key+")="+ret.inspect
 		ret
 	end
@@ -333,7 +340,6 @@ class FiledriverFog < Filedriver
 		#puts "sylrplm_fog.retrieve("+directory_key+","+ file_key+")"
 		# get the resume file
 		fog_file = file(directory_key, file_key)
-		fog_file
 	end
 
 	def backup(directory)

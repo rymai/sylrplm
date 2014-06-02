@@ -1,4 +1,5 @@
 require 'tmpdir'
+require "zip/zip"
 
 class Datafile < ActiveRecord::Base
 	include Models::PlmObject
@@ -145,7 +146,7 @@ class Datafile < ActiveRecord::Base
 	########################################################################
 	# protocol calls end
 	########################################################################
-	
+
 	def self.m_create(params)
 		uploadedfile = params.delete(:uploaded_file)
 		datafile = Datafile.new(params[:datafile])
@@ -157,12 +158,12 @@ class Datafile < ActiveRecord::Base
 		end
 		datafile
 	end
-	
+
 	def m_update(params, user)
 		update_accessor(user)
 		stupd = update_attributes_repos(params, user)
 	end
-		
+
 	def self.host=(args)
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug (fname) {"host=#{args.inspect}"}
@@ -293,6 +294,28 @@ class Datafile < ActiveRecord::Base
 		File.basename(file_name).gsub(/[^\w._-]/, '')
 	end
 
+	def file_path
+		File.basename(self.filename)
+	end
+
+	# return the filename without the dir path and the extension
+	def file_name
+		File.basename(self.filename).split(".")[0]
+	end
+	
+	def file_fullname
+		ret=file_name
+		ext=file_extension
+		ret+=".#{ext}" unless ext.blank?
+		ret
+	end
+
+	# return the extension of the file, nil if no . in the name
+	def file_extension
+		sp=File.basename(filename).split(".")
+		sp[sp.size-1] if sp.size>1
+	end
+
 	def filename_repository
 		fname= "#{self.class.name}.#{__method__}"
 		unless self.revision.nil?
@@ -388,5 +411,18 @@ class Datafile < ActiveRecord::Base
 
 	#["ident LIKE ? or "+qry_type+" or revision LIKE ? "+
 	#  " or "+qry_owner_id+" or updated_at LIKE ? or "+qry_volume,
+	end
+	
+	def zipFile
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname) {"datafile=#{self}"}
+		tmpfile = Tempfile.new("#{self.filename}-#{Time.now}")
+		Zip::ZipOutputStream.open(tmpfile.path) do |zio|
+			zio.put_next_entry(self.filename)
+			zio.write self.read_file
+		end
+		ret={:file=>tmpfile, :filename=>"#{@filename}.zip", :content_type=>"application/zip"}
+		LOG.debug (fname) {"ret=#{ret.inspect}"}
+		ret
 	end
 end

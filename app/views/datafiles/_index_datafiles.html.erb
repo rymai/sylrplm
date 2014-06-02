@@ -15,6 +15,7 @@
 		<th <%= sort_td_class_helper :group %>> <%= sort_link_helper t(:label_group), :group %> </th>
 		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), :projowner %> </th>
 		<th <%= sort_td_class_helper :created_at %>> <%= sort_link_helper t(:label_date), :created_at %> </th>
+		<th <%= sort_td_class_helper :domain %>> <%= sort_link_helper t(:label_domain), :domain %> </th>
 		<th></th>
 		<th></th>
 		<th></th>
@@ -64,6 +65,7 @@
 		<td> <%= link_to datafile.group.name, group_path(datafile.group) %> </td>
 		<td> <%= link_to datafile.projowner.ident, project_path(datafile.projowner) %> </td>
 		<td> <%= l datafile.updated_at %> </td>
+		<td> <%= h datafile.domain %> </td>
 		<td> <% unless document.nil? %>
 		<% unless datafile.filename.nil? %>
 		<%= link_to h_img(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %>

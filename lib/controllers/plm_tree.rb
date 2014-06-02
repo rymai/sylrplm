@@ -1,79 +1,305 @@
-def build_model_datafile(obj, datatype)
+require "zip/zip"
+
+#
+# main method to get the whole content of a model of a plm object
+# called by the controller method for the structure tab: ctrl_show_design
+# call the recursive method read_node
+# result depends of the datatype (scad,...)
+# @param customer or document or part or project
+#
+def build_model_tree(plmobject, tree, type_model)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	LOG.debug (fname) {"obj=#{obj}"}
-	if(datatype=="scad")
-	ret="#{obj.read_file} \n"
-	ret << "#{obj.filename.split(".")[0]}();\n"
-	end
+	bloc=""
+	bloc << "nodes = tree.nodes\n"
+	bloc << "matrix = nil\n"
+	bloc << "files = []\n"
+	bloc << "ret_filename = \"\#{plmobject.ident}.\#{type_model.name}\"\n"
+	bloc << "ret_type = \"application/\#{type_model.name}\"\n"
+	bloc << bloc_read_node(type_model)+"\n"
+	bloc <<"LOG.debug (fname) {\" type_model=#{type_model}\"}\n"
+	bloc << "#{type_model.get_fields_values("build_model_tree_begin")}\n"
+	bloc << "if nodes.count > 0\n"
+	bloc << "		nodes.each do |nod|\n"
+	bloc << "			read_node(plmobject, nod, type_model, ret, matrix, files)\n"
+	bloc << "		end\n"
+	bloc << "else\n"
+	bloc << "		plmobject.datafiles.each do |datafile|\n"
+	bloc << "			if datafile.typesobject==type_model\n"
+	bloc << "        files << datafile unless files.include?(datafile)\n"
+	bloc << "			end\n"
+	bloc << "		end\n"
+	bloc << "end\n"
+	bloc << "		puts \"\#{files.count} files\"\n"
+	bloc << "files.each do |datafile|\n"
+	bloc << "		content = datafile.read_file\n"
+	bloc << "		unless content.nil?\n"
+	bloc << "		puts \">>build_model_tree_file:\#{datafile.file_fullname} : \#{content.size}\"\n"
+	bloc << "			#{type_model.get_fields_values("build_model_tree_file")}\n"
+	bloc << "		puts '<<build_model_tree_file'\n"
+	bloc << "		else\n"
+	bloc << "			datafile.errors.each do |type,err|\n"
+	bloc << "					plmobject.errors.add_to_base err\n"
+	bloc << "			end\n"
+	bloc << "			return nil\n"
+	bloc << "		end\n"
+	bloc << "end\n"
+	bloc << "#{type_model.get_fields_values("build_model_tree_end")}\n"
+	bloc << "{\"content\"=>ret, \"filename\"=>ret_filename, \"content_type\"=>ret_type}\n"
+	LOG.debug (fname) {"****************** bloc=\n#{bloc}\n**********"}
+	ret=eval bloc
+	#LOG.debug (fname) {"****************** ret=\n#{ret}"}
 	ret
 end
-           
-def build_model(obj, tree, datatype)
+
+#
+# return content of a node of a tree
+# recursive method
+#
+
+def bloc_read_node(type_model)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	LOG.debug (fname) {"obj=#{obj.inspect}"}
-	ret="module #{obj.ident}() {\n"
-	nodes = tree.nodes
-	mx=nil
-	files=[]
-	nodes.each do |nod|
-		read_node(nod, datatype, ret, mx, files)
+	bloc=""
+	bloc << "def read_node(plmobject, node, type_model, ret, mx, files)\n"
+	bloc << "  lnk = get_node_link(node)\n"
+	bloc << "  child = lnk.child\n"
+	bloc << "  rb_values = nil\n"
+	bloc << "  yamx=false\n"
+	bloc << "  if lnk.father_plmtype == plmobject.model_name && lnk.child_plmtype == 'document'\n"
+		#
+		# get the model content
+		#
+	bloc << "    child.datafiles.each do |datafile|\n"
+	bloc << "      if datafile.typesobject.name == type_model.name\n"
+  bloc << "puts \"read_node:father=\#{lnk.father} child=\#{child} datafile=\#{datafile}\"\n"
+	bloc << "        files << datafile unless files.include?(datafile)\n"
+	bloc << "        rb_values = OpenWFE::Json::from_json(lnk.values)\n"
+	bloc << "        mx=rb_values[\"matrix\"] unless rb_values.nil?\n"
+	bloc << "        #{type_model.get_fields_values("build_model_tree_matrix")}\n"
+	#scad: ret<<"#{datafile.file_name}();"
+	bloc << "      end\n"
+	bloc << "    end\n"
+	bloc << "  elsif lnk.child_plmtype == 'part'\n"
+		#
+		# get the structure information
+		#
+	bloc << "    rb_values = OpenWFE::Json::from_json(lnk.values)\n"
+	bloc << "    mx = rb_values[\"matrix\"] unless rb_values.nil?\n"
+	bloc << "    unless mx.nil?\n"
+	bloc << "      unless mx[\"RX\"].zero? && mx[\"RY\"].zero? && mx[\"RZ\"].zero?\n"
+	bloc << "        #{type_model.get_fields_values("build_model_tree_rotate")}\n"
+	#scad: ret << "rotate([#{mx_rx(mx)}, #{mx_ry(mx)}, #{mx_rz(mx)}])\n" 
+	bloc << "        yamx=true\n"
+	bloc << "      end\n"
+	bloc << "      unless mx[\"DX\"].zero? && mx[\"DY\"].zero? && mx[\"DZ\"].zero? \n"
+	bloc << "        #{type_model.get_fields_values("build_model_tree_translate")}\n"
+	#scad: ret << "translate([\#{mx_tx(mx)}, \#{mx_ty(mx)}, \#{mx_tz(mx)}])\n"
+	bloc << "        yamx=true\n"
+	bloc << "      end\n"
+	bloc << "    end\n"
+	bloc << "  end\n"
+	build_model_tree_nodes_before=type_model.get_fields_values("build_model_tree_nodes_before")
+	unless build_model_tree_nodes_before.nil?
+		bloc << "        #{build_model_tree_nodes_before} if yamx==true\n"
+  	#scad: ret << "{" 
+ 	end
+
+	bloc << "  node.nodes.each do |nod|\n"
+	bloc << "    read_node(plmobject, nod, type_model, ret, mx, files)\n"
+	bloc << "  end\n"
+	build_model_tree_nodes_after=type_model.get_fields_values("build_model_tree_nodes_after")
+	unless build_model_tree_nodes_after.nil?
+		bloc << "        #{build_model_tree_nodes_after} if yamx==true\n"
+		#scad: ret <<"}"
 	end
-	files.each do |datafile|
-		LOG.debug (fname) {"datafile=#{datafile.inspect}"}
-		ret<<"#{datafile.read_file} \n"
-	end
-	ret << "}\n"
-	ret << "#{obj.ident}();\n"
+	bloc << "  ret\n"
+	bloc << "end\n"
 end
 
-def read_node(node, datatype, content, mx, files)
+def get_node_link(node)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	lnk = Link.find(node.id)
-	child = PlmServices.get_object(lnk.child_plmtype, lnk.child_id)
-	LOG.debug (fname) {"lnk.child_plmtype=#{lnk.child_plmtype}"}
+end
+
+def mx_rx(matrix)
+	matrix["RX"]
+end
+def mx_ry(matrix)
+	matrix["RY"]
+end
+def mx_rz(matrix)
+	matrix["RZ"]
+end
+def mx_tx(matrix)
+	matrix["DX"]
+end
+def mx_ty(matrix)
+	matrix["DY"]
+end
+def mx_tz(matrix)
+	matrix["DZ"]
+end
+#
+# return the content of one datafile 
+# called by the datafiles controller for viewing the model of the datafile
+# result depends of the datatype (scad,...)
+#
+def build_model_datafile_obsolete(datafile, datatype)
+	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	#LOG.debug (fname) {"datafile=#{datafile}"}
+	@datafile = datafile
+	#LOG.debug (fname) {"fields=#{datafile.typesobject.get_fields_values}"}
+	code_build = @datafile.typesobject.get_fields_values("build_model_datafile")
+	@content = @datafile.read_file
+	@filename = @datafile.filename
+	LOG.debug (fname) {"code_build build_model_datafile = #{code_build} \n@filename=#{@filename}\n content=#{@content.length}"}
+	######ret = eval code_build
+	#
+	# example of code to put in Typesobject.fields[:build_model_datafile]
+	#for scad
+	#  ret = "#{@datafile.read_file} \n"
+	#  ret << "#{@datafile.filename.split(".")[0]}();\n"
+	#for other: zip
+	# 	require 'zip/zip'
+	# 	stringio = Zip::ZipOutputStream::write_buffer(::StringIO.new("@filename")) do |zio|
+	# 		zio.put_next_entry(@filename)
+  # 		zio.write @content
+  # 	end
+  # 	stringio.rewind
+  # 	binary_data = stringio.sysread
+	LOG.debug (fname) {"ret=#{ret.inspect}"}
+	@content 
+end
+
+def build_model_tree_old(obj, tree, type_model)
+	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	LOG.debug (fname) {"obj=#{obj} type=#{type_model}"}
+	result=""
+	begin
+		@plmobject = obj
+		@datatype=type_model.name
+		code_build = type_model.get_fields_values("build_model_tree_begin") 
+		LOG.debug (fname) {"code_build build_model_tree_begin=#{code_build}"}
+		cont = eval code_build
+		result << cont
+		LOG.debug (fname) {"result begin:#{result}"}
+		# example of code	
+		#ret="module #{@plmobject.ident}() {\n"
+		nodes = tree.nodes
+		matrix = nil
+		files = []
+		LOG.debug (fname) {"#{nodes.count} nodes to read"}
+		if nodes.count > 0
+			nodes.each do |nod|
+				result = read_node(nod, @datatype, result, matrix, files)
+			end
+		else
+			obj.datafiles.each do |df|
+				if df.typesobject==type_model
+					@content = df.read_file
+					@datafile = df
+					code_build=type_model.get_fields_values("build_model_datafile")
+					LOG.debug (fname) {"code_build datafile=#{code_build}"}
+					cont = eval code_build
+					result << cont
+					LOG.debug (fname) {"result datafile:#{result}"}
+				end
+			end
+		end
+		LOG.debug (fname) {"#{files.count} files to read"}
+		files.each do |datafile|
+			LOG.debug (fname) {"datafile=#{datafile.inspect}"}
+			@datafile = datafile
+			@content = datafile.read_file
+			unless @content.nil?
+				code_build = type_model.get_fields_values("build_model_tree_file")
+				LOG.debug (fname) {"code_build build_model_tree_file=#{code_build}"}
+				cont = eval code_build
+				result << cont
+				# example of code	
+				#ret<<"#{@content} \n"
+			else
+				LOG.error (fname) {"error during build model:#{obj.errors.inspect}"}
+				datafile.errors.each do |type,err|
+						obj.errors.add_to_base err
+				end
+				return nil
+			end
+		end
+		code_build = type_model.get_fields_values("build_model_tree_end")
+		LOG.debug (fname) {"code_build build_model_tree_end=#{code_build}"}
+		cont = eval code_build
+		result << cont
+		LOG.debug (fname) {"result end:#{result}"}
+		# example of code		
+		# ret << "}\n"
+		# ret << "#{obj.ident}();\n"
+	rescue Exception => e
+		LOG.error (fname) {"Error in build_model_tree:#{e}"}
+		obj.errors.add_to_base("Error in build_model_tree:#{e}")
+		e.backtrace.each {|x| LOG.error x}
+		result=nil
+	end
+	result
+end
+
+def read_node_old(node, datatype, content, matrix, files)
+	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	child = get_node_child(node)
 	rb_values = nil
 	if lnk.child_plmtype == "document"
+		#
+		# get the model content
+		#
 		child.datafiles.each do |datafile|
 			LOG.debug (fname) {"datafile=#{datafile.inspect} datafile.typesobject.name=#{datafile.typesobject.name}"}
 			if datafile.typesobject.name == datatype
 				files << datafile unless files.include?(datafile)
 				rb_values = OpenWFE::Json::from_json(lnk.values)
-				mx=rb_values["matrix"] unless rb_values.nil?
-				LOG.debug (fname) {"write(#{datafile.ident} filename=#{datafile.filename} mx=#{mx}"}
-				if mx.nil?
-				content<<"\t#{datafile.filename.split(".")[0]}();\n"
-				else
-					content<<"\trotate([#{mx["RX"]}, #{mx["RY"]}, #{mx["RZ"]}])" unless mx["RX"].zero? && mx["RY"].zero? && mx["RZ"].zero? 	
-				  content<<"\ttranslate([#{mx["DX"]}, #{mx["DY"]}, #{mx["DZ"]}])" unless mx["DX"].zero? && mx["DY"].zero? && mx["DZ"].zero? 
-				  content<<"#{datafile.filename.split(".")[0]}();\n" 
-				end
+				@matrix=rb_values["matrix"] unless rb_values.nil?
+				LOG.debug (fname) {"write(#{datafile.ident} filename=#{datafile.filename} matrix=#{matrix}"}
+				@datafile = datafile
+				code_build = @datafile.typesobject.get_fields_values("build_model_tree_matrix")
+				cont = eval code_build
+				content << cont
+				# example for scad
+				# if @matrix.nil?\n"
+				#  content<<"\t#{@datafile.file_name}();\n"
+				# else\n"
+				#	 content<<"\trotate([#{@matrix["RX"]}, #{@matrix["RY"]}, #{@matrix["RZ"]}])" unless @matrix["RX"].zero? && @matrix["RY"].zero? && @matrix["RZ"].zero? \n"	
+				#  content<<"\ttranslate([#{@matrix["DX"]}, #{@matrix["DY"]}, #{@matrix["DZ"]}])" unless @matrix["DX"].zero? && @matrix["DY"].zero? && @matrix["DZ"].zero?\n" 
+				#  content<<"#{datafile.file_name}();\n" 
+				# end
 			end
 		end
 	elsif lnk.child_plmtype == "part"
+		#
+		# get the structure information
+		#
 		rb_values = OpenWFE::Json::from_json(lnk.values)
-		mx = rb_values["matrix"] unless rb_values.nil?
+		matrix = rb_values["matrix"] unless rb_values.nil?
 		yamx=false
-		unless mx.nil?
-			
-			unless mx["RX"].zero? && mx["RY"].zero? && mx["RZ"].zero? 
-				content<<"\trotate([#{mx["RX"]}, #{mx["RY"]}, #{mx["RZ"]}])" 
+		unless matrix.nil?
+			unless matrix["RX"].zero? && matrix["RY"].zero? && matrix["RZ"].zero? 
+				content<<"\trotate([#{matrix["RX"]}, #{matrix["RY"]}, #{matrix["RZ"]}])" 
 				yamx=true	
 			end
-			unless mx["DX"].zero? && mx["DY"].zero? && mx["DZ"].zero? 
-				content<<"\ttranslate([#{mx["DX"]}, #{mx["DY"]}, #{mx["DZ"]}])" 
+			unless matrix["DX"].zero? && matrix["DY"].zero? && matrix["DZ"].zero? 
+				content<<"\ttranslate([#{matrix["DX"]}, #{matrix["DY"]}, #{matrix["DZ"]}])" 
 				yamx=true
 			end
 			content <<"{" if yamx==true
 		end
 		nodes = node.nodes
 		nodes.each do |nod|
-			read_node(nod, datatype, content, mx, files)
+			read_node(nod, datatype, content, matrix, files)
 		end
 		content <<"}" if yamx==true
 	end
+	content
 end
 
-def read_node_file(node, datatype, file, mx, files)
+# TODO not use ???
+def read_node_file_obsolete(node, datatype, file, mx, files)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	lnk = Link.find(node.id)
 	child = PlmServices.get_object(lnk.child_plmtype, lnk.child_id)
@@ -107,9 +333,9 @@ end
 ############################################
 # construction des arbres descendants
 ############################################
-def  build_tree(obj, view_id, variant_id = nil, level_max = 9999)
+def  build_tree(obj, view_id, variant_mdlid = nil, level_max = 9999)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	LOG.debug (fname) {"variant_id=#{variant_id}, level_max=#{level_max}"}
+	LOG.debug (fname) {"variant_mdlid=#{variant_mdlid}, level_max=#{level_max}"}
 	lab=t(:ctrl_object_explorer, :typeobj => t("ctrl_"+obj.model_name), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_down", :label => lab, :open => true })
 	view=View.find(view_id) unless  view_id.nil?
@@ -119,11 +345,15 @@ def  build_tree(obj, view_id, variant_id = nil, level_max = 9999)
 	else
 		LOG.debug (fname){"Toutes les relations sont a afficher"}
 	end
-	unless variant_id.nil?
-		variant=PlmServices.get_object("part",variant_id)
-	var_effectivities = variant.var_effectivities
+	if variant_mdlid.nil?
+		variant = nil
 	else
-	var_effectivities = []
+		variant = PlmServices.get_object_by_mdlid(variant_mdlid)
+	end
+	unless variant.nil? 
+		var_effectivities = variant.var_effectivities
+	else
+		var_effectivities = []
 	end
 	LOG.debug (fname) {"variant=#{variant}, var_effectivities=#{var_effectivities.inspect} level_max=#{level_max}"}
 	follow_tree(obj, tree, obj, relations, var_effectivities, 0, level_max)
@@ -178,7 +408,6 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 		links = Link.find_childs(father,  mdl_child)
 		#LOG.debug (fname) {"links(#{mdl_child})=#{links.inspect}"}
 		links.each do |link|
-
 		#
 		# on teste si une des effectivites du lien est comprise dans la variante en cours
 		#
@@ -186,19 +415,19 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 			#LOG.debug (fname) {"link=#{link.inspect}"}
 			#LOG.debug (fname) {"link_effectivities=#{link.effectivities.inspect}"} unless link.effectivities.nil?
 			unless link_effectivities.nil?
-				if link_effectivities.count==0
+				if link_effectivities.size == 0
 					link_effectivities=nil
 				end
 			end
 			#
 			if link_effectivities.nil? #|| link_effectivities.count==0
-				LOG.debug (fname){"link=#{link.ident}, pas d'effectivites sur le lien => on affiche"}
+				#LOG.debug (fname){"link=#{link.ident}, pas d'effectivites sur le lien => on affiche"}
 			link_to_show = true
 			else
 				#LOG.debug (fname){"link=#{link.ident}, link_effectivities=#{link_effectivities}"}
 				if var_effectivities.count==0
 					link_to_show = true
-					LOG.debug (fname){"pas d'effectivites de variante => on affiche"}
+					#LOG.debug (fname){"pas d'effectivites de variante => on affiche"}
 				else
 					link_to_show = true
 					link_effectivities.each do |link_eff|
@@ -294,11 +523,11 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 				end
 			else
 			# on n'affiche pas cette branche
-				LOG.info (fname){"branche non affichee: link=#{link.ident}"}
+				#LOG.info (fname){"branche non affichee: link=#{link.ident}"}
 			end
 		end
 		unless snode.nil?
-			LOG.debug (fname) {"snode.size=#{snode.size}"}
+			#LOG.debug (fname) {"snode.size=#{snode.size}"}
 		node << snode if snode.size > 0
 		end
 	end
@@ -363,11 +592,11 @@ end
 def tree_users(node, father)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	if father.respond_to? :users
-		LOG.debug (fname){"#{father.ident} father.users=#{father.users}"}
+		#LOG.debug (fname){"#{father.ident} father.users=#{father.users}"}
 		unless father.users.nil?
 			begin
 				father.users.each do |child|
-					LOG.debug (fname){"child=#{child.inspect}"}
+					#LOG.debug (fname){"child=#{child.inspect}"}
 					url = {:controller => 'users', :action => 'show', :id => child.id}
 					options = {
 						:id => "#{child.id}" ,
@@ -378,7 +607,7 @@ def tree_users(node, father)
 						:open => false,
 						:url  => url_for(url)
 					}
-					LOG.debug (fname){"user:#{child.ident}"}
+					#LOG.debug (fname){"user:#{child.ident}"}
 					cnode = Node.new(options, nil)
 					node << cnode
 				end

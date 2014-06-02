@@ -176,6 +176,7 @@ en:
   datafiles_list: Associated files
   datafile_add: Add a file 
   legend_tree: Structure 
+  label_type_model: Model type
   # fin general
   # access
   legend_access: Enter access details

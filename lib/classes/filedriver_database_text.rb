@@ -5,7 +5,7 @@ class FiledriverDatabaseText < FiledriverDatabase
 
 	private
 	def initialize
-		puts "FiledriverDatabaseText.initialize"
+		#puts "FiledriverDatabaseText.initialize"
 	end
 
 	public
@@ -27,7 +27,7 @@ class FiledriverDatabaseText < FiledriverDatabase
 		def self.init_table(table_name)
 			#puts "establish_connection="+ActiveRecord::Base.establish_connection
 			database_conf=Rails::Configuration.new.database_configuration
-			puts "database_configuration=#{database_conf.inspect}"
+			#puts "database_configuration=#{database_conf.inspect}"
 			unless ActiveRecord::Base.connection.table_exists? table_name
 				create_table table_name do |t|
 					t.column :datafile_model, :string

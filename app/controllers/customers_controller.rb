@@ -22,10 +22,14 @@ class CustomersController < ApplicationController
 	end
 
 	def select_view
-		show_
-		respond_to do |format|
-			format.html { render :action => "show" }
-			format.xml  { render :xml => @customer }
+		if params["commit"].force_encoding("utf-8") == t("root_model_design").force_encoding("utf-8")
+			show_design
+		else
+			show_
+			respond_to do |format|
+				format.html { render :action => "show" }
+				format.xml  { render :xml => @customer }
+			end
 		end
 	end
 
@@ -241,7 +245,7 @@ class CustomersController < ApplicationController
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		#LOG.debug (fname){"myparams=#{@myparams.inspect}"}
 		customer = Customer.find(params[:id])
-		ctrl_show_design(customer)
+		ctrl_show_design(customer, params[:type_model_id])
 	end
 	private
 

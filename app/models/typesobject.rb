@@ -27,7 +27,7 @@ class Typesobject < ActiveRecord::Base
 	def name_translate
 		PlmServices.translate("typesobject_name_#{name}")
 	end
-	
+
 	def forobject_translate
 		PlmServices.translate("forobject_#{forobject}")
 	end
@@ -52,9 +52,9 @@ class Typesobject < ActiveRecord::Base
 		stypes = order_default.find_all_by_forobject(s_object.to_s)
 		ret= []
 		stypes.each do |type|
-			#LOG.debug (fname) {"type:#{type}"}
+		#LOG.debug (fname) {"type:#{type}"}
 			if type.name != sgeneric
-				type.name = type.name_translate 
+			type.name = type.name_translate
 			ret << type
 			end
 		end
@@ -135,29 +135,43 @@ class Typesobject < ActiveRecord::Base
 	end
 
 	# renvoie l'objet contenu dans l'attribut type_values
-	def get_fields_values
-		fname="Typesobject.#{__method__}"
+	def get_fields_values(key=nil)
+		fname="Typesobject.#{__method__}:#{name}"
+		ret=nil
 		if self.respond_to? :fields
 			unless fields.blank?
-				#LOG.debug (fname) {"fields=#{fields}"}
+				#LOG.debug (fname) {"key=#{key} fields=#{fields}"}
 				begin
 					decod = ActiveSupport::JSON.decode(fields)
-					#LOG.debug (fname) {"decod=#{decod}"}
+					#LOG.debug (fname) {"key=#{key} decod=#{decod}"}
+=begin
 					ret={}
 					begin
-					decod.each do |decod_part|
-						ret[decod_part[0]] = eval(decod_part[1])
-					end
+						decod.each do |decod_part|
+							ret[decod_part[0]] = eval(decod_part[1])
+							LOG.debug (fname) {"eval(#{decod_part[1]}=#{ret[decod_part[0]]}"}
+						end
 					rescue Exception=>e
-						#LOG.warn (fname) {"Decod is not a ruby bloc : #{decod} : #{e}"}
+					LOG.error (fname) {"key=#{key} Decod is not a ruby bloc : #{decod} : #{e}"}
 					ret=decod
 					end
+=end
+ret=decod
 				rescue Exception => e
-					LOG.error (fname) {"Error during field decoding : #{fields} : #{e}"}
+					LOG.error (fname) {"key=#{key} Error during field decoding from JSON : fields=#{fields}"}
+					LOG.error (fname) {"key=#{key} Error during field decoding from JSON : Exception=#{e}"}
+					ret=nil
 				end
 			end
 		end
-		#LOG.debug (fname) {"ret=#{ret}"}
+		#LOG.debug (fname) {"key=#{key} ret=#{ret}"}
+		unless ret.nil?
+			unless key.nil?
+			ret=ret[key]
+			end
+		end
+		#LOG.debug (fname) {"key=#{key} ret=#{ret}"}
 		ret
 	end
+	
 end

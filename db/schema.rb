@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "projowner_id"
 		t.string   "domain"
-		t.string   "type_values"
+		t.string   "type_values", :limit => 4096
 	end
 
 	add_index "customers", ["group_id"], :name => "index_customers_on_group_id"
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "projowner_id"
 		t.string   "domain"
-		t.string   "type_values"
+		t.string   "type_values", :limit => 4096
 	end
 
 	add_index "datafiles", ["customer_id"], :name => "index_datafiles_on_customer_id"
@@ -165,7 +165,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "projowner_id"
 		t.string   "domain"
-		t.string   "type_values"
+		t.string   "type_values", :limit => 4096
 	end
 
 	add_index "documents", ["group_id"], :name => "index_documents_on_group_id"
@@ -220,7 +220,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "projowner_id"
 		t.string   "domain"
-		t.string   "type_values"
+		t.string   "type_values", :limit => 4096
 	end
 
 	add_index "forums", ["group_id"], :name => "index_forums_on_group_id"
@@ -337,7 +337,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "projowner_id"
 		t.string   "domain"
-		t.string   "type_values"
+		t.string   "type_values", :limit => 4096
 	end
 
 	add_index "parts", ["group_id"], :name => "index_parts_on_group_id"
@@ -374,7 +374,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "typeaccess_id"
 		t.string   "domain"
-		t.string   "type_values"
+		t.string   "type_values", :limit => 4096
 	end
 
 	add_index "projects", ["group_id"], :name => "index_projects_on_group_id"
@@ -423,7 +423,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.datetime "created_at"
 		t.datetime "updated_at"
 		t.string   "domain"
-		t.string   "type_values"
+		t.string   "type_values", :limit => 4096
 	end
 
 	add_index "relations", ["child_plmtype", "child_typesobject_id"], :name => "index_relations_on_child_plmtype_and_child_typesobject_id"
@@ -571,7 +571,7 @@ ActiveRecord::Schema.define(:version => 0) do
 	create_table "typesobjects", :force => true do |t|
 		t.string   "forobject"
 		t.string   "name"
-		t.string   "fields", :limit => 1024
+		t.string   "fields", :limit => 4096
 		t.text     "description"
 		t.datetime "created_at"
 		t.datetime "updated_at"
@@ -603,7 +603,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "group_id"
 		t.integer  "project_id"
 		t.string   "domain"
-		t.string   "type_values"
+		t.string   "type_values", :limit => 4096
 		t.integer  "subscription_id"
 	end
 

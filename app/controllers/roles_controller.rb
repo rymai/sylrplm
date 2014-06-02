@@ -24,9 +24,13 @@ class RolesController < ApplicationController
 	end
 
 	def select_view
-		show_
-		respond_to do |format|
-			format.html { redirect_to(@role) }
+		if params["commit"].force_encoding("utf-8") == t("root_model_design").force_encoding("utf-8")
+			show_design
+		else
+			show_
+			respond_to do |format|
+				format.html { redirect_to(@role) }
+			end
 		end
 	end
 

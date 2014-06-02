@@ -34,10 +34,14 @@ class ProjectsController < ApplicationController
 	def select_view
 		fname= "#{controller_class_name}.#{__method__}"
 		#LOG.debug (fname){"begin:params=#{params}"}
-		show_
-		respond_to do |format|
-			format.html { render :action => "show" }
-			format.xml  { render :xml => @project }
+		if params["commit"].force_encoding("utf-8") == t("root_model_design").force_encoding("utf-8")
+			show_design
+		else
+			show_
+			respond_to do |format|
+				format.html { render :action => "show" }
+				format.xml  { render :xml => @project }
+			end
 		end
 	end
 
@@ -259,7 +263,7 @@ class ProjectsController < ApplicationController
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		#LOG.debug (fname){"myparams=#{@myparams.inspect}"}
 		project = Project.find(params[:id])
-		ctrl_show_design(project)
+		ctrl_show_design(project, params[:type_model_id])
 	end
 
 	private

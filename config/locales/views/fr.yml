@@ -175,7 +175,8 @@ fr:
   label_icon: Icône
   datafiles_list: Fichiers associés
   datafile_add: Ajout d'un fichier 
-  legend_tree: Structure
+  legend_tree: Structure 
+  label_type_model: Type de modèle
   # fin general
   # access
   legend_access: Renseignez les propriétés de l'autorisation

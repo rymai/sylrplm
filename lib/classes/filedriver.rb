@@ -39,22 +39,22 @@ class Filedriver
 
 	def transform_content(datafile, content)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"debut:size=#{content.length}"}
+		#LOG.debug (fname) {"debut:size=#{content.length}"}
 		#LOG.debug (fname) {"debut:#{content}"}
 		begin
 			unless datafile.volume.compress.blank?
-				LOG.debug (fname) {"code datafile.volume.compress='#{datafile.volume.compress}'"}
+				#LOG.debug (fname) {"code datafile.volume.compress='#{datafile.volume.compress}'"}
 				#compress = zip_content(content, datafile.filename)
 				@content=content
 				@filename=datafile.filename
 				#LOG.debug (fname) {"@filename=#{@filename} @content=#{@content}"}
-				require 'zip/zip'
-				stringio = Zip::ZipOutputStream::write_buffer(::StringIO.new("@filename"))  do |zio|
-					zio.put_next_entry(@filename)
-					zio.write @content
-				end
-				stringio.rewind
-				compress = stringio.sysread
+				#require 'zip/zip'
+				#stringio = Zip::ZipOutputStream::write_buffer(::StringIO.new("@filename"))  do |zio|
+				#	zio.put_next_entry(@filename)
+				#	zio.write @content
+				#end
+				#stringio.rewind
+				#compress = stringio.sysread
 				compress = eval datafile.volume.compress
 				LOG.debug (fname) {"compress:size=#{compress.length}"}
 			#LOG.debug (fname) {"compress=#{compress}"}
@@ -67,7 +67,7 @@ class Filedriver
 				#content_encode=(eval encode_fields[0]).send(encode_fields[1], compress)
 				@content=compress
 				@filename=datafile.filename
-				LOG.debug (fname) {"code datafile.volume.encode='#{datafile.volume.encode}'"}
+				#LOG.debug (fname) {"code datafile.volume.encode='#{datafile.volume.encode}'"}
 				content_encode = eval datafile.volume.encode
 				LOG.debug (fname) {"encode:size=#{content_encode.length}"}
 			#LOG.debug (fname) {"encode=#{content_encode}"}
@@ -103,7 +103,7 @@ class Filedriver
 				#decompress = unzip_content(data, datafile.filename)
 				@content=data
 				@filename=datafile.filename
-				LOG.debug (fname) {"datafile.volume.decompress=#{datafile.volume.decompress} , data.length:#{data.length}"}
+				#LOG.debug (fname) {"datafile.volume.decompress=#{datafile.volume.decompress} , data.length:#{data.length}"}
 				#LOG.debug (fname) {"@content=#{@content}"}
 				decompress = eval datafile.volume.decompress
 				LOG.debug (fname) {"decompress:size=#{decompress.length}"}

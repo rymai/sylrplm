@@ -124,11 +124,13 @@ class DatafilesController < ApplicationController
 
 	def show_file
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug (fname){"params=#{params.inspect}"}
 		send_file_content("inline")
 	end
 
 	def download_file
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"params=#{params.inspect}"}
 		send_file_content("attachment")
 	end
 
@@ -137,43 +139,84 @@ class DatafilesController < ApplicationController
 	def send_file_content(disposition)
 		fname= "#{self.class.name}.#{__method__}"
 		@datafile = Datafile.find(params[:id])
-		ret=nil
-		begin
-			fields = @datafile.get_type_values
-			#LOG.debug (fname){"disposition=#{disposition}"}
-			#puts "datafiles_controller.send_file_content:"+fields.inspect
-			# on utilise l'outil definis sur ce datafile seulement pour la visu ou edition, pas pour le download
-			unless true || fields.nil? || fields["tool"].nil? || disposition == "attachment"
-				repos=@datafile.write_file_tmp
-				dirtmpfile=File.join(RAILS_ROOT,repos)
-				cmd="#{fields["tool"]} #{dirtmpfile} &"
-				#LOG.debug (fname){"tool=#{fields["tool"]} cmd=#{cmd}"}
-				system(cmd)
-				ret = repos
-				respond_to do |format|
-					format.html { render :action => "show" }
-					format.xml  { format.xml  { head :ok } }
+		tool = @datafile.typesobject.get_fields_values("tool")
+		LOG.debug (fname){"tool=#{tool} disposition=#{disposition}"}
+		#puts "datafiles_controller.send_file_content:"+fields.inspect
+		#
+		# show_file: inline 
+		#
+		if disposition == "inline"
+			unless tool.nil?
+				# show_file: inline with a tool
+				begin
+					repos = @datafile.write_file_tmp
+					dirtmpfile = File.join(RAILS_ROOT,repos)
+					cmd = "#{tool} #{dirtmpfile} &"
+					LOG.debug (fname){"tool=#{tool} cmd=#{cmd}"}
+					system(cmd)
+					flash[:info] = "File showed with tool #{tool}"
+					respond_to do |format|
+						format.html { render :action => "show" }
+						format.xml  { format.xml  { head :ok } }
+					end
+				rescue Exception => e
+					flash[:info] = "Tool #{tool} does not work"
+					content = @datafile.read_file 
+					#LOG.debug (fname){"content.length=#{content.length}"}
+					flash = ctrl_send_data(content, @datafile.filename, @datafile.content_type, disposition)
 				end
 			else
-			#content=@datafile.read_file
-				content=build_model_datafile(@datafile, "scad")
-				#LOG.debug (fname){"content.length=#{content.length}"}
-				send_data(content,
-              :filename => @datafile.filename,
-              :type => @datafile.content_type,
-              :disposition => disposition)
-			ret = @datafile.filename
+				content = @datafile.read_file 
+				# show_file: inline without tool: send_data inline
+				flash = ctrl_send_data(content, @datafile.filename, @datafile.content_type, disposition)
 			end
+		else
+			# download:attachement: send_file attachement
+			zipFileInfo=@datafile.zipFile
+			flash = ctrl_send_file(zipFileInfo, disposition)
+		end
+		#
+		flash
+	end
+	
+	def ctrl_send_data(content, filename, content_type, disposition)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"content.length=#{content.length} filename=#{filename} content_type=#{content_type} disposition=#{disposition} "}
+		begin
+			send_data(content,
+	              :filename => filename,
+	              :type => content_type,
+	              :disposition => disposition)
 		rescue Exception => e
 			LOG.error " error="+e.inspect
 			e.backtrace.each {|x| LOG.error x}
 			respond_to do |format|
-				flash[:error] = t(:ctrl_object_not_found,:typeobj => t(:ctrl_datafile),  :ident => @datafile.ident)
+				flash[:info] = t(:ctrl_object_not_found,:typeobj => t(:ctrl_datafile),  :ident => @datafile.ident)
 				format.html { render :action => "show" }
 				format.xml  { render :xml => @datafile.errors, :status => :unprocessable_entity }
 			end
+		flash
 		end
-		ret
 	end
-
+	
+	def ctrl_send_file(tmpfile, disposition)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"tmpfile=#{tmpfile[:file].path} filename=#{tmpfile[:filename]} content_type=#{tmpfile[:content_type]} disposition=#{disposition} "}
+		begin
+			send_file(tmpfile[:file].path,
+	              :filename => tmpfile[:filename],
+	              :type => tmpfile[:content_type],
+	              :disposition => disposition)
+		rescue Exception => e
+			LOG.error " error="+e.inspect
+			e.backtrace.each {|x| LOG.error x}
+			respond_to do |format|
+				flash[:info] = t(:ctrl_object_not_found,:typeobj => t(:ctrl_datafile),  :ident => @datafile.ident)
+				format.html { render :action => "show" }
+				format.xml  { render :xml => @datafile.errors, :status => :unprocessable_entity }
+			end
+		flash
+		end
+	end
+	
 end

@@ -223,14 +223,45 @@ module Controllers
 			#puts "application_controller.get_html_options:"+ret
 			ret
 		end
-		def  ctrl_show_design(object)
-			variant = params[ :variant]
-				tree         = build_tree(object, @myparams[:view_id] , variant)
-				content = build_model(object, tree,"scad")
-				send_data(content,
-		              :filename => object.ident+".scad",
-		              :type => "application/scad",
-		              :disposition => "attachment") unless content.nil?
+		
+		def ctrl_show_design(object, type_model_id)
+				fname= "#{self.class.name}.#{__method__}"
+				#LOG.debug (fname){"object=#{object.ident} type_model=#{type_model_id}"}
+				type_model = Typesobject.find(type_model_id)
+				unless type_model.nil?
+					variant = params[:variant]
+					tree    = build_tree(object, @myparams[:view_id] , variant)
+					content = build_model_tree(object, tree, type_model)
+					#LOG.debug (fname){"content=#{content}"}
+					unless content["content"].nil?
+						if content["content"].respond_to?(:path)
+			     		send_file(content["content"].path,
+		             :filename => content["filename"],
+		             :type => content["content_type"],
+		             :disposition => "attachment")
+	        	else
+							send_data(content["content"],
+#			              :filename => "#{object.ident}.#{type_model.name}",
+#			              :type => "application/#{type_model.name}",
+			            :filename => "#{content["filename"]}",
+			            :type => "#{content["content_type"]}",
+			            :disposition => "attachment")  
+	        	end
+	        else
+			   		respond_to do |format|
+			   			flash[:error] = "Error during model generation:#{object.errors.inspect}"
+			   			LOG.debug (fname){"flash=#{flash[:error]} err=#{object.errors.inspect}"}
+			   			format.html { redirect_to(object) } 
+							format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
+						end
+			   	end
+			  else
+			  	respond_to do |format|
+			   			flash[:error] = "Can t generate the model because type is not defined}"
+			   			format.html { redirect_to(object) } 
+							format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
+					end
+			  end
 		end
 		private
 
