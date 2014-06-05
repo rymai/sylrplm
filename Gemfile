@@ -37,7 +37,7 @@ gem 'psych', '~> 2.0.5'
 
 gem 'zip-zip'
 
-gem 'string_to_sha1', :git => "git://github.com/sylvani/string_to_sha1.git"
+###gem 'string_to_sha1', :git => "git://github.com/sylvani/string_to_sha1.git"
 
 ##gem 'string_to_sha1', :path => "/home/syl/trav/rubyonrails/string_to_sha1" 
 gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
