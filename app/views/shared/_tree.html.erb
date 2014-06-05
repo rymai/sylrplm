@@ -28,11 +28,14 @@
 		<% if object.have_model_design?%>
 			<!--
 				<% form_for(object, :url => {:id => object.id, :action => "show_design" }) do |f| %> 
+				
+				Typesobject.find_for("datafile")
+				
 			-->
 			<tr>
 			<td><%= h_image(:model3d_view)%></td>
 			<td><%= label_tag t(:label_type_model) %></td>
-			<td><%= select_tag( :type_model_id, options_from_collection_for_select(Typesobject.find_for("datafile"),:id, :name, @myparams[:typesobject_id].to_i))%></td>
+			<td><%= select_tag( :type_model_id, options_from_collection_for_select(get_types_datafiles_on_tree(@tree),:id, :name, @myparams[:typesobject_id].to_i))%></td>
 			</tr>
 			<% model=true %>
 				<!--

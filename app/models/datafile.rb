@@ -49,7 +49,7 @@ class Datafile < ActiveRecord::Base
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.info (fname) {"ident=#{self.ident}"}
 		ret= volume.protocol_driver.dir_datafile(self)
-		LOG.info (fname) {"ret=#{ret}"}
+		#LOG.info (fname) {"ret=#{ret}"}
 		ret
 	end
 
@@ -84,7 +84,7 @@ class Datafile < ActiveRecord::Base
 
 	def write_file(content)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"content size=#{content.length} volume=#{volume} protocol=#{volume.protocol}"}
+		#LOG.debug (fname) {"content size=#{content.length} volume=#{volume} protocol=#{volume.protocol}"}
 		ret=true
 		if content.length>0
 			create_directory
@@ -166,7 +166,7 @@ class Datafile < ActiveRecord::Base
 
 	def self.host=(args)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"host=#{args.inspect}"}
+		#LOG.debug (fname) {"host=#{args.inspect}"}
 	##@@host=args.gsub(".","-")
 	end
 
@@ -174,7 +174,7 @@ class Datafile < ActiveRecord::Base
 		fname= "#{self.class.name}.#{__method__}"
 		#ret=@@host
 		ret=PlmServices.get_property("central","sites")
-		LOG.debug (fname) {"host_name:#{ret}"}
+		#LOG.debug (fname) {"host_name:#{ret}"}
 		ret
 	end
 
@@ -211,7 +211,7 @@ class Datafile < ActiveRecord::Base
 			LOG.debug (fname){"params[volume_id]=#{params["volume_id"]} uploaded_file=#{uploaded_file}"}
 			if(uploaded_file)
 				###TODO syl ??? parameters.delete(:uploaded_file)
-				LOG.debug (fname){"rev=#{revision} next=#{revision.next}"}
+				#LOG.debug (fname){"rev=#{revision} next=#{revision.next}"}
 				parameters[:revision]=self.revision.next
 				self.update_attributes(parameters)
 				self.create_directory
@@ -257,8 +257,8 @@ class Datafile < ActiveRecord::Base
 	def upload_file
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"filename=#{filename}"}
-		LOG.debug (fname){"debut de upload: file_field=#{file_field.inspect}"}
-		LOG.debug (fname){"original_filename=#{file_field.original_filename if file_field.respond_to? :original_filename}"}
+		#LOG.debug (fname){"debut de upload: file_field=#{file_field.inspect}"}
+		#LOG.debug (fname){"original_filename=#{file_field.original_filename if file_field.respond_to? :original_filename}"}
 		#LOG.debug (fname){"datafile=#{self.inspect}"}
 		unless self.file_field.blank?
 			self.content_type = file_field.content_type.chomp if file_field.respond_to? :content_type
@@ -285,7 +285,7 @@ class Datafile < ActiveRecord::Base
 				end
 			end
 		end
-		LOG.debug (fname){"fin de upload:ret=#{ret}"}
+		#LOG.debug (fname){"fin de upload:ret=#{ret}"}
 		ret
 	end
 
@@ -323,7 +323,7 @@ class Datafile < ActiveRecord::Base
 		else
 		ret = self.filename.to_s
 		end
-		LOG.info (fname) {"filename_repository=#{ret}"}
+		#LOG.info (fname) {"filename_repository=#{ret}"}
 		ret
 	end
 
@@ -379,7 +379,7 @@ class Datafile < ActiveRecord::Base
 			tmpfile=File.join("tmp", filename_repository)
 			FileUtils.mkdir_p(dir_repos) unless File.exists?(dir_repos)
 			repos = File.join(dir_repos, tmpfile)
-			LOG.info (fname) {"repository=#{repos}"}
+			#LOG.info (fname) {"repository=#{repos}"}
 			unless File.exists?(repos)
 				f = File.open(repos, "wb")
 				begin
@@ -422,7 +422,7 @@ class Datafile < ActiveRecord::Base
 			zio.write self.read_file
 		end
 		ret={:file=>tmpfile, :filename=>"#{@filename}.zip", :content_type=>"application/zip"}
-		LOG.debug (fname) {"ret=#{ret.inspect}"}
+		#LOG.debug (fname) {"ret=#{ret.inspect}"}
 		ret
 	end
 end

@@ -15,7 +15,7 @@
 <%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>@datafiles, :document=>nil, :part=>nil, :project=>nil, :customer=>nil}) %>
 <%= will_paginate(@datafiles[:recordset]) %>
 
-<h1><%=t("sylrplm_files_list")%></h1>
+<h1><%=t(:sylrplm_files_list)%></h1>
 <%= render(:partial => "datafiles/index_sylrplm_files", :locals=>{:files=>@all_files}) %>
 
 <table class='menu_bas'>

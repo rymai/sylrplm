@@ -85,6 +85,7 @@ fr:
   typesobject_name_standard: Standards
   typesobject_name_image: Image
   typesobject_name_calculsheet: Tableur
+  typesobject_name_volumes_dir: Répertoire des volumes	
   # statusobject
   typesobject_name_ready: Prêt
   typesobject_name_approved: Approuvé 

@@ -37,8 +37,6 @@ module SYLRPLM
 	#TYPEACCESS_PUBLIC         = 'public'
 	#TYPEACCESS_CONFIDENTIAL   = 'confidential'
 	#TYPEACCESS_SECRET         = 'secret'
-	#FOG_ACCESS_KEY            = "W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j"
-	#FOG_ACCESS_KEY_ID         = "AKIAIUTZHUXCXNUFDRHQ"
 
 	#
 	# no more used, use PlmServices.get_property("HELP_SUMMARY_LEVEL") for example
@@ -94,8 +92,7 @@ module SYLRPLM
 		#
 		#
 		########TODO inutile ??? MAIL_ADMIN                = "sylvere.coutable@laposte.net"
-		FOG_ACCESS_KEY            = "W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j"
-		FOG_ACCESS_KEY_ID         = "AKIAIUTZHUXCXNUFDRHQ"
+		
 		# environnement specifique a l'admin de l'application sylrplm
 		# ordre des constituants de l'arbre
 		TREE_ORDER                = ["forum", "document", "part", "project", "customer" ]

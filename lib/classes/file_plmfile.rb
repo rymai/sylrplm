@@ -24,7 +24,7 @@ class SylrplmFile
 		self.size = params["size"]
 		self.domain = params["domain"]
 		self.id = params["id"]
-		LOG.info (fname) {"params[id]=#{params["id"]} key=#{self.id}"}
+		#LOG.info (fname) {"params[id]=#{params["id"]} key=#{self.id}"}
 		LOG.info (fname) {"file=#{self.inspect}"}
 	end
 
@@ -32,7 +32,7 @@ class SylrplmFile
 
 	def key=(val)
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.info (fname) {"val=#{val}"}
+		#LOG.info (fname) {"val=#{val}"}
 	end
 
 end

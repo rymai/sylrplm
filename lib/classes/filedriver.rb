@@ -56,8 +56,7 @@ class Filedriver
 				#stringio.rewind
 				#compress = stringio.sysread
 				compress = eval datafile.volume.compress
-				LOG.debug (fname) {"compress:size=#{compress.length}"}
-			#LOG.debug (fname) {"compress=#{compress}"}
+				#LOG.debug (fname) {"compress:size=#{compress.length}"}
 			else
 			compress = content
 			end
@@ -69,14 +68,13 @@ class Filedriver
 				@filename=datafile.filename
 				#LOG.debug (fname) {"code datafile.volume.encode='#{datafile.volume.encode}'"}
 				content_encode = eval datafile.volume.encode
-				LOG.debug (fname) {"encode:size=#{content_encode.length}"}
-			#LOG.debug (fname) {"encode=#{content_encode}"}
+				#LOG.debug (fname) {"encode:size=#{content_encode.length}"}
 			else
 			content_encode = compress
 			end
 		rescue Exception=>e
 			msg="Exception during transformation(encode+compress):#{e.message}"
-			LOG.error (fname){msg}
+			LOG.error (fname) {msg}
 			datafile.errors.add_to_base(msg)
 			e.backtrace.each {|x| LOG.error x}
 			content_encode=nil
@@ -86,7 +84,7 @@ class Filedriver
 
 	def untransform_content(datafile, data)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"data:size=#{data.length}"}
+		#LOG.debug (fname) {"data:size=#{data.length}"}
 		#LOG.debug (fname) {"data=#{data}"}
 		begin
 			unless datafile.volume.decode.blank?
@@ -97,7 +95,7 @@ class Filedriver
 				@filename=datafile.filename
 				#LOG.debug (fname) {"datafile.volume.decode=#{datafile.volume.decode}"}
 				data = eval datafile.volume.decode
-				LOG.debug (fname) {"decode:size=#{data.length}"}
+				#LOG.debug (fname) {"decode:size=#{data.length}"}
 			end
 			unless datafile.volume.decompress.blank?
 				#decompress = unzip_content(data, datafile.filename)
@@ -106,13 +104,13 @@ class Filedriver
 				#LOG.debug (fname) {"datafile.volume.decompress=#{datafile.volume.decompress} , data.length:#{data.length}"}
 				#LOG.debug (fname) {"@content=#{@content}"}
 				decompress = eval datafile.volume.decompress
-				LOG.debug (fname) {"decompress:size=#{decompress.length}"}
+				#LOG.debug (fname) {"decompress:size=#{decompress.length}"}
 			else
 			decompress = data
 			end
 		rescue Exception=>e
 			msg="Exception during untransformation(decode+decompress):#{e.message}"
-			LOG.error (fname){msg}
+			LOG.error (fname) {msg}
 			datafile.errors.add_to_base(msg)
 			e.backtrace.each {|x| LOG.error x}
 			decompress=nil

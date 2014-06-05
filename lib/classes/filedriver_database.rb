@@ -45,7 +45,7 @@ class FiledriverDatabase < Filedriver
 	# renvoie un repertoire dans lequel seront uploader les fichiers
 	def create_directory(datafile)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"datafile=#{datafile}"}
+		#LOG.debug (fname) {"datafile=#{datafile}"}
 		true
 	end
 
@@ -64,12 +64,12 @@ class FiledriverDatabase < Filedriver
 			begin
 				cmd="INSERT INTO \"#{table}\"  (datafile,filename,revision,content,domain,size)"
 				cmd+=" VALUES ('#{datafile.ident}','#{datafile.filename}','#{datafile.revision}','#{content_encode}','#{datafile.domain}',#{content.length})"
-				LOG.debug (fname) {"cmd=#{cmd}"}
+				#tres long LOG.debug (fname) {"cmd=#{cmd}"}
 				ret=ActiveRecord::Base.connection.execute(cmd)
 			rescue Exception=>e
-				LOG.warn (fname) {"Warning insert ret=#{ret} e=#{e.message}"}
+				LOG.warn (fname) {"Warning INSERT ret=#{ret} e=#{e.message[0,100]}, because this file exists, then, we UPDATE"}
 				cmd="UPDATE #{table} set content='#{content_encode}' where datafile='#{datafile.ident}' and filename='#{datafile.filename}' and revision='#{datafile.revision}'"
-				LOG.debug (fname) {"cmd=#{cmd}"}
+				#tres long LOG.debug (fname) {"cmd=#{cmd}"}
 				begin
 					ret=ActiveRecord::Base.connection.execute(cmd)
 					ret=true
@@ -89,7 +89,7 @@ class FiledriverDatabase < Filedriver
 					unless content_decode.nil?
 						st =  content_decode.length==content.length
 						st =  content_decode==content if st
-						LOG.debug (fname) {"encode/decode #{content.size} / #{content_encode.size} / #{content_decode.size}=#{st}"}
+						#LOG.debug (fname) {"encode/decode #{content.size} / #{content_encode.size} / #{content_decode.size}=#{st}"}
 						unless st
 							ret = false
 							datafile.errors.add_to_base(I18n.translate('activerecord.errors.messages.datafile_write_bad_format', :filename=>datafile.filename))

@@ -103,12 +103,12 @@ namespace :sylrplm do
      	props= PlmServices.get_properties("sites")
       Datafile.all.each do |file|
       	unless file.filename.nil?
-      		puts "import of #{file.filename}"
+      		puts "import of #{file.filename} protocol=#{file.volume.protocol} file_field=#{file.file_field}"
       		file.file_import = {}
       		file.file_import[:file] = File.new(file.filename)
       		file.file_import[:original_filename] = file.filename
 					st = file.save
-					puts "import_domain:save file_field=#{file.file_field}, filename:#{file.filename}=#{st}"
+					#puts "import_domain:save file_field=#{file.file_field}, filename:#{file.filename}=#{st}"
       	end
       end
     else

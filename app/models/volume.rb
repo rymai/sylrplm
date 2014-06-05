@@ -28,7 +28,7 @@ class Volume < ActiveRecord::Base
 	def protocol_driver
 		fname= "#{self.class.name}.#{__method__}"
 		ret=(eval ("filedriver_#{protocol}".camelize)).instance
-		LOG.debug (fname)  {"volume=#{name} protocol=#{protocol} driver=#{ret}"}
+		#LOG.debug (fname)  {"volume=#{name} protocol=#{protocol} driver=#{ret}"}
 		ret
 	end
 
@@ -40,7 +40,7 @@ class Volume < ActiveRecord::Base
 	#
 	def set_directory
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"debut old_dir_name=#{@old_dir_name}"}
+		#LOG.debug (fname) {"debut old_dir_name=#{@old_dir_name}"}
 		dir = protocol_driver.create_volume_dir(self,@old_dir_name)
 		if dir.nil?
 			ret = false
@@ -48,14 +48,14 @@ class Volume < ActiveRecord::Base
 		else
 		ret = true
 		end
-		LOG.debug (fname) {"fin dir=#{dir} ret=#{ret}"}
+		#LOG.debug (fname) {"fin dir=#{dir} ret=#{ret}"}
 		ret
 	end
 
 	def destroy_volume
 		fname= "#{self.class.name}.#{__method__}"
 		if !is_used?
-			LOG.debug (fname) {"not used, protocol=#{protocol}"}
+			#LOG.debug (fname) {"not used, protocol=#{protocol}"}
 			ret = protocol_driver.delete_volume_dir(self)
 			if ret
 			ret = self.destroy
@@ -66,7 +66,7 @@ class Volume < ActiveRecord::Base
 			self.errors.add_to_base I18n.t(:check_volume_is_used, :ident=>self.name)
 		ret=false
 		end
-		LOG.debug (fname) {"ret=#{ret} errors=#{self.errors.inspect}"}
+		LOG.info (fname) {"ret=#{ret} errors=#{self.errors.inspect}"}
 		ret
 	end
 
@@ -89,21 +89,21 @@ class Volume < ActiveRecord::Base
 		all_files[:fog_files]=fogfiles
 		all_files[:file_system_files]=files_system
 		all_files[:database_files]=files_database
-		LOG.debug (fname) {"files_database=#{files_database}"}
-		LOG.debug (fname) {"files_system=#{files_system}"}
-		LOG.debug (fname) {"fogfiles=#{fogfiles}"}
+		#LOG.debug (fname) {"files_database=#{files_database}"}
+		#LOG.debug (fname) {"files_system=#{files_system}"}
+		#LOG.debug (fname) {"fogfiles=#{fogfiles}"}
 		all_files
 	end
 
 	def validate
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"protocol=#{protocol} directory=#{directory} old_dir_name=#{@old_dir_name}"}
+		#LOG.debug (fname) {"protocol=#{protocol} directory=#{directory} old_dir_name=#{@old_dir_name}"}
 		errors.add_to_base I18n.t("valid_volume_directory_needed", :protocol=>protocol) if [PROTOCOL_FILE_SYSTEM].include? protocol && directory.blank?
 	end
 
 	def initialize(params_volume=nil)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"params=#{params_volume}"}
+		#LOG.debug (fname) {"params=#{params_volume}"}
 		super
 		if params_volume.nil?
 			self.directory = PlmServices.get_property(:VOLUME_DIRECTORY_DEFAULT)
@@ -130,15 +130,15 @@ class Volume < ActiveRecord::Base
 
 	def is_used?
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"users.count=#{users.count} datafiles.count=#{datafiles.count}"}
+		#LOG.debug (fname) {"users.count=#{users.count} datafiles.count=#{datafiles.count}"}
 		self.users.count >0 || self.datafiles.count >0
 	end
 
 	def before_save
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"debut"}
+		#LOG.debug (fname) {"debut"}
 		ret=set_directory
-		LOG.debug (fname) {"fin: ret=#{ret}"}
+		#LOG.debug (fname) {"fin: ret=#{ret}"}
 		ret
 	end
 
@@ -168,7 +168,7 @@ class Volume < ActiveRecord::Base
 			ret=Volume.rails_env
 		end
 		ret=File.join(ret, self.name)
-		LOG.info (fname) {"dir_name=#{ret}"}
+		#LOG.info (fname) {"dir_name=#{ret}"}
 		ret
 	end
 

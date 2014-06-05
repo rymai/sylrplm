@@ -1,5 +1,36 @@
 require "zip/zip"
 
+def get_types_datafiles_on_tree(tree)
+	fname="plm_tree:#{__method__}"
+	ret=[]
+	LOG.debug (fname) {"#{tree.nodes.count} nodes"}
+	ret = get_types_datafiles_on_node(tree)
+	ret
+end
+
+def get_types_datafiles_on_node(node)
+	fname="plm_tree:#{__method__}"
+	ret=[]
+	lnk = get_node_link(node)
+	unless lnk.nil?
+		LOG.debug (fname) {"lnk=#{lnk} child_plmtype=#{lnk.child_plmtype}"}
+		if lnk.child_plmtype == 'document'
+			child = lnk.child
+			LOG.debug (fname) {"child=#{child} #{child.datafiles.count} datafiles"}
+			child.datafiles.each do |datafile|
+				LOG.debug (fname) {"datafile.typesobject=#{datafile.typesobject} "}
+		  	ret << datafile.typesobject unless ret.include?(datafile.typesobject)
+			end
+		end
+	end
+	node.nodes.each do |anode|
+		get_types_datafiles_on_node(anode).each do |type|
+			ret << type unless ret.include?(type)
+		end
+	end
+	ret
+end
+
 #
 # main method to get the whole content of a model of a plm object
 # called by the controller method for the structure tab: ctrl_show_design
@@ -116,8 +147,7 @@ def bloc_read_node(type_model)
 end
 
 def get_node_link(node)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	lnk = Link.find(node.id)
+	lnk = Link.find(node.id) unless node.id==0
 end
 
 def mx_rx(matrix)

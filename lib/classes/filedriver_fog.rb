@@ -37,7 +37,7 @@ class FiledriverFog < Filedriver
 	########################################################################
 	def dir_datafile(datafile)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname) {"ident=#{datafile.ident}"}
+		#LOG.info (fname) {"ident=#{datafile.ident}"}
 		vol_dir=datafile.volume.dir_name.gsub("_","-")
 		vol_dir=vol_dir.gsub("/",::Volume::DIR_DELIMITER)
 		ret="#{vol_dir}#{::Volume::DIR_DELIMITER}#{datafile.class.name}#{::Volume::DIR_DELIMITER}#{datafile.ident}"
@@ -101,7 +101,7 @@ class FiledriverFog < Filedriver
 
 	def write_file(datafile, content)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"content size=#{content.length}"}
+		#LOG.debug (fname) {"content size=#{content.length}"}
 		if content.length>0
 			fog_file = upload_content(datafile.dir_repository, datafile.filename_repository, content)
 			#LOG.debug (fname) {"apres write in fog:#{fog_file.inspect}"}
@@ -143,25 +143,25 @@ class FiledriverFog < Filedriver
 	def files_list(purge = false)
 		fname= "#{self.class.name}.#{__method__}"
 		# list directories
-		LOG.debug (fname){"purge=#{purge} storage=#{self.storage.inspect}"}
+		#LOG.debug (fname){"purge=#{purge} storage=#{self.storage.inspect}"}
 		ret=[]
 		begin
 			ret = self.storage.directories
 			ret.each do |ddd|
-				LOG.debug (fname){"directorie=#{ddd.inspect}"}
+				#LOG.debug (fname){"directorie=#{ddd.inspect}"}
 				ddd.files.each do |s3_file|
 					if(purge==true )
 						is_used = is_used?(ddd, s3_file)
-						LOG.debug (fname){"\tfile:#{s3_file.inspect} is_used?=#{is_used}"}
+						#LOG.debug (fname){"\tfile:#{s3_file.inspect} is_used?=#{is_used}"}
 						if(!is_used)
 						s3_file.destroy
 						end
 					end
 				end
 				if(purge==true)
-					LOG.debug (fname){"ddd.files.count=#{ddd.files.count}"}
+					#LOG.debug (fname){"ddd.files.count=#{ddd.files.count}"}
 					if(ddd.files.count==0)
-						LOG.debug (fname){"destroy de #{ddd.inspect}"}
+						LOG.info (fname){"destroy de #{ddd.inspect}"}
 					ddd.destroy
 					end
 				end
@@ -245,7 +245,7 @@ class FiledriverFog < Filedriver
 
 	def directory_exists?(adir)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"adir=#{adir}"}
+		#LOG.debug (fname){"adir=#{adir}"}
 		dirs = FiledriverFog.instance.storage.directories
 		ret=false
 		#dirs.include? adir
@@ -268,12 +268,12 @@ class FiledriverFog < Filedriver
 			volume_name=fields_dir[2]
 			datafile_model=fields_dir[3].capitalize
 			datafile_ident=fields_dir[4].upcase!
-			LOG.debug (fname){"#{(fields_dir.count==5 ? "OK(5)" : "KO(#{fields_dir.count})")} direct.key=#{direct.key} volume_name=#{volume_name} datafile_model=#{datafile_model} datafile_ident=#{datafile_ident}"}
+			#LOG.debug (fname){"#{(fields_dir.count==5 ? "OK(5)" : "KO(#{fields_dir.count})")} direct.key=#{direct.key} volume_name=#{volume_name} datafile_model=#{datafile_model} datafile_ident=#{datafile_ident}"}
 			#key_file:--1--pied_rond_long.odt
 			fields_file=s3_file.key.split(::Volume::FILE_REV_DELIMITER)
 			file_rev=fields_file[1]
 			file_name=fields_file[2]
-			LOG.debug (fname){"#{(fields_file.count==3 ? "OK(3)" : "KO(#{fields_file.count})")} s3_file.key=#{s3_file.key} file_rev=#{file_rev} file_name=#{file_name}"}
+			#LOG.debug (fname){"#{(fields_file.count==3 ? "OK(3)" : "KO(#{fields_file.count})")} s3_file.key=#{s3_file.key} file_rev=#{file_rev} file_name=#{file_name}"}
 			#
 			if(fields_dir.count==5 && fields_file.count==3)
 				datafiles = (eval datafile_model).find_by_ident_and_revision_and_filename(datafile_ident, file_rev, file_name)
@@ -284,7 +284,7 @@ class FiledriverFog < Filedriver
 		else
 		ret=false
 		end
-		LOG.debug (fname){"ret=#{ret}"}
+		#LOG.debug (fname){"ret=#{ret}"}
 		ret
 	end
 

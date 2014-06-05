@@ -48,7 +48,7 @@ class FiledriverDatabaseText < FiledriverDatabase
 		def self.delete_table(table_name)
 			fname= "#{self.class.name}.#{__method__}"
 			if ActiveRecord::Base.connection.table_exists? table_name
-				LOG.debug (fname) {"table_name to drop =#{table_name}"}
+				#LOG.debug (fname) {"table_name to drop =#{table_name}"}
 				ret = drop_table table_name
 			else
 			ret=true
@@ -76,14 +76,14 @@ class FiledriverDatabaseText < FiledriverDatabase
 			ret = vol_table_name(volume)
 			VolumeTablesText.init_table(ret)
 		end
-		LOG.debug (fname) {"ret=#{ret}"}
+		#LOG.debug (fname) {"ret=#{ret}"}
 		ret
 	end
 
 	def delete_volume_dir(volume)
 		fname= "#{self.class.name}.#{__method__}"
 		ret = VolumeTablesText.delete_table(vol_table_name(volume))
-		LOG.debug (fname) {"ret=#{ret}"}
+		#LOG.debug (fname) {"ret=#{ret}"}
 		ret
 	end
 

@@ -7,6 +7,8 @@ en:
   part: part
   project: project
   forum: forum
+  label_document: Document
+  label_part: Part
   label_internal: Internal
   label_projowner: Project
   label_forum_items: Messages
@@ -243,6 +245,7 @@ en:
   datafile_show_file: Show the file
   datafile_download_file: Download the file
   datafile_without_file: No file
+  sylrplm_files_list: Files list 
   # definitions
   legend_definition: Enter definition details
   label_process_definition: Processus definition

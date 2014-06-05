@@ -7,6 +7,8 @@ fr:
   part: article
   project: projet
   forum: discussion
+  label_document: Document
+  label_part: Article
   label_internal: Interne
   label_projowner: Projet
   label_forum_items: Messages
@@ -243,6 +245,7 @@ fr:
   datafile_show_file: Voir le fichier
   datafile_download_file: Télécharger le fichier
   datafile_without_file: Pas de fichier
+  sylrplm_files_list: Liste des fichiers
   # definitions
   legend_definition: Renseignez les propriétés de la définition de processus
   label_process_definition: Définition du processus

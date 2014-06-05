@@ -462,9 +462,11 @@ ajouter dans Gemfile:
 	gem "fog", "~> 1.1.2"
 bundle update
 livrer
-Identifiant de clé d’accès: AKIAIUTZHUXCXNUFDRHQ
-Clé d’accès secrète: W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j
-
+FOG_ACCESS_KEY_ID: Identifiant de clé d’accès: AKIAIUTZHUXCXNUFDRHQ
+FOG_ACCESS_KEY: Clé d’accès secrète: W2ft89uVn3DqX1qw1WQRKWmpzPZZKZDAV/j2j/0j
+new:
+FOG_ACCESS_KEY_ID: Identifiant de clé d’accès: AWSAccessKeyId = AKIAIUD54MZOYMFWXYEQ
+FOG_ACCESS_KEY: Clé d’accès secrète: AWSSecretKey = /3TLl+gwrWQj/2HGfKWj5ntc3UIQNwjPCGkqDWHG
 ======================================================
 re-installer tout le framework apres un crash disque
 ======================================================

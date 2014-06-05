@@ -216,7 +216,7 @@ module Models
 				end
 			end
 			if ((self.respond_to? :domain) && (self.respond_to? :owner))
-				LOG.debug (fname) {"domain=#{domain} admin?=#{self.owner.role.is_admin? unless self.owner.role.nil?}"}
+				#LOG.debug (fname) {"domain=#{domain} admin?=#{self.owner.role.is_admin? unless self.owner.role.nil?}"}
 				if(self.domain=="admin" && !self.owner.role.is_admin?)
 					self.errors.add_to_base('Role is not admin!')
 				return false

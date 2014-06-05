@@ -72,10 +72,9 @@ class FiledriverFileSystem < Filedriver
 			data=''
 			f = File.open(datafile.repository, "rb")
 			nctot = File.size(datafile.repository)
-			LOG.debug (fname) {"debut lecture #{datafile.repository}: #{nctot}"}
 			data = f.sysread(nctot)
 			f.close
-			LOG.debug (fname) {"fin lecture #{datafile.repository}"}
+			LOG.debug (fname) {"fin lecture #{datafile.repository}: #{nctot}"}
 		else
 			data=nil
 		end
@@ -85,7 +84,7 @@ class FiledriverFileSystem < Filedriver
 	# renvoie un repertoire dans lequel seront uploade les fichiers
 	def create_directory(datafile)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"dir_repository=#{datafile.dir_repository}"}
+		#LOG.debug (fname) {"dir_repository=#{datafile.dir_repository}"}
 		FileUtils.mkdir_p(datafile.dir_repository) unless directory_exists?(datafile.dir_repository)
 	end
 
@@ -103,7 +102,7 @@ class FiledriverFileSystem < Filedriver
 			end
 		f.close
 		end
-		LOG.debug (fname) {"ecriture terminee"}
+		#LOG.debug (fname) {"ecriture terminee"}
 	end
 
 	#
@@ -147,7 +146,7 @@ class FiledriverFileSystem < Filedriver
 				ret=nil
 			end
 		else
-			LOG.info (fname) {"creation du volume"}
+			#LOG.info (fname) {"creation du volume"}
 			dir = vol_dir_name
 			if !File.exists?(dir)
 				begin
@@ -161,7 +160,7 @@ class FiledriverFileSystem < Filedriver
 			ret = dir
 			end
 		end
-		LOG.debug (fname) {"ret=#{ret}"}
+		#LOG.debug (fname) {"ret=#{ret}"}
 		return ret
 	end
 
@@ -172,7 +171,7 @@ class FiledriverFileSystem < Filedriver
 				strm = FileUtils.remove_dir volume.dir_name
 			rescue Exception => e
 			#e.backtrace.each {|x| puts x}
-				puts "volume.destroy_volume:error="+e.inspect
+				LOG.debug (fname) {"volume.destroy_volume:error="+e.inspect}
 				volume.errors.add_to_base I18n.t(:check_volume_no_rmdir, :name => volume.name, :dir => volume.directory)
 			strm=false
 			end
@@ -182,7 +181,7 @@ class FiledriverFileSystem < Filedriver
 		strm=true
 		end
 		ret=strm
-		LOG.debug (fname) {"ret=#{ret}"}
+		#LOG.debug (fname) {"ret=#{ret}"}
 		ret
 	end
 
@@ -193,7 +192,7 @@ class FiledriverFileSystem < Filedriver
 		if File.exists?(dir)
 			Dir.foreach(dir) { |file|
 				repos=File.join(dir,file)
-				puts "datafile.remove_files:file="+repos
+				#LOG.debug (fname) {"datafile.remove_files:file="+repos}
 				if File.file?(repos)
 					File.unlink(repos)
 				end
@@ -207,10 +206,10 @@ class FiledriverFileSystem < Filedriver
 		path=volume.dir_name
 		files_system=[]
 		Pathname.glob(path + "/**/*") do |dir|
-			LOG.debug (fname) {"dir/file=#{dir}"}
+			#LOG.debug (fname) {"dir/file=#{dir}"}
 			if dir.file?() then
 				stat=File.stat(dir)
-				LOG.debug (fname){"\tstat:#{stat.inspect}"}
+				#LOG.debug (fname){"\tstat:#{stat.inspect}"}
 				params = fields_from_path(dir)
 				params["protocol"]=self.protocol
 				params["size"]=stat.size
@@ -222,7 +221,7 @@ class FiledriverFileSystem < Filedriver
 				dodel=false
 				if(purge==true )
 					is_used = is_used?(volume, params)
-					LOG.debug (fname){"\tfile:#{params.inspect} is_used?=#{is_used}"}
+					#LOG.debug (fname){"\tfile:#{params.inspect} is_used?=#{is_used}"}
 					if(!is_used)
 						delete_file(params["id"])
 					dodel=true
@@ -245,7 +244,7 @@ class FiledriverFileSystem < Filedriver
 		dir=File.dirname(path)
 		# _._1_._add_forum.png
 		file=File.basename(path)
-		LOG.debug (fname) {"dir=#{dir} file=#{file}"}
+		#LOG.debug (fname) {"dir=#{dir} file=#{file}"}
 		# add_forum.png
 		ret["filename"]=::Datafile.filename_from_file(file)
 		# 1
@@ -264,7 +263,7 @@ class FiledriverFileSystem < Filedriver
 
 	def delete_file(file_id)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"file_id=#{file_id}"}
+		#LOG.debug (fname) {"file_id=#{file_id}"}
 		fid = splitId(file_id)
 		fullpath=fid[:fullpath]
 		LOG.debug (fname) {"fullpath=#{fullpath} file?:#{File.file?(fullpath)}"}
@@ -303,7 +302,7 @@ class FiledriverFileSystem < Filedriver
 		#/home/syl/trav/rubyonrails/sylrplm-data/0-0-0-0/deve/vollocal01/Datafile/DF0000000017
 		datafiles = Datafile.find_by_ident_and_revision_and_filename(params["datafile"], params["revision"], params["filename"])
 		ret = !datafiles.nil?
-		LOG.debug (fname){"ret=#{ret}"}
+		#LOG.debug (fname){"ret=#{ret}"}
 		ret
 	end
 
