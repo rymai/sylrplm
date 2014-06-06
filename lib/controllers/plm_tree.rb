@@ -366,7 +366,7 @@ end
 def  build_tree(obj, view_id, variant_mdlid = nil, level_max = 9999)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	LOG.debug (fname) {"variant_mdlid=#{variant_mdlid}, level_max=#{level_max}"}
-	lab=t(:ctrl_object_explorer, :typeobj => t("ctrl_"+obj.model_name), :ident => obj.label)
+	lab=t(:ctrl_object_explorer, :typeobj => t("ctrl_#{obj.model_name}"), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_down", :label => lab, :open => true })
 	view=View.find(view_id) unless  view_id.nil?
 	relations = View.find(view_id).relations unless view.nil?
@@ -718,7 +718,7 @@ end
 ############################################
 
 def build_tree_up(obj, view_id)
-	lab=t(:ctrl_object_referencer, :typeobj => t("ctrl_"+obj.model_name), :ident => obj.label)
+	lab=t(:ctrl_object_referencer, :typeobj => t("ctrl_#{obj.model_name}"), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_up", :label => lab ,:open => true})
 	relations = View.find(view_id).relations unless  view_id.nil?
 	PlmServices.get_property(:TREE_ORDER).each do |mdl_child|
