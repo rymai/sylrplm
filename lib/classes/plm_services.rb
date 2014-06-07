@@ -146,7 +146,7 @@ class PlmServices
 	#
 	def self.translate(*args)
 		fname = "PlmServices.#{__method__}"
-		LOG.debug(fname) {"translate:args = '#{args}'"}
+		#LOG.debug(fname) {"translate:args = '#{args}'"}
 		akey=args[0]
 		unless args[1].nil?
 		argums=args[1]
@@ -183,7 +183,7 @@ class PlmServices
 			end
 
 		end
-		LOG.debug(fname) {"key='#{key}', argums='#{argums}' ret=#{ret}"}
+		#LOG.debug(fname) {"key='#{key}', argums='#{argums}' ret=#{ret}"}
 		ret
 	end
 

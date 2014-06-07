@@ -16,7 +16,7 @@ when "development"
 when "test"
 	Logger::DEBUG
 when "production"
-	Logger::DEBUG
+	Logger::ERROR
 end
 LOG.info("sylrplm"){"Lancement SYLRPLM"}
 LOG.progname="Constantes"
