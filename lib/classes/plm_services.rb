@@ -12,16 +12,16 @@ class PlmServices
 	def self.get_object(type, id )
 		fname = "PlmServices.#{__method__}(#{type},#{id})"
 		#if id.nil?
-			# type= 'part.6' 
-			#fields=type.split('.')
-			#if fields.count==2
-			#	type = fields[0]
-			#	id = fields[1]
-			#else
-			#	LOG.error (fname){"Type #{type} bad formatted}"}
-			#	return nil
-			#end
-		#end	
+		# type= 'part.6'
+		#fields=type.split('.')
+		#if fields.count==2
+		#	type = fields[0]
+		#	id = fields[1]
+		#else
+		#	LOG.error (fname){"Type #{type} bad formatted}"}
+		#	return nil
+		#end
+		#end
 		# parts devient Part
 		typec = type.camelize
 		ret = nil
@@ -33,14 +33,14 @@ class PlmServices
 				typec ="Ruote::Sylrplm::"+typec
 				mdl = eval typec
 			rescue Exception => e
-			LOG.error{fname+e.message}
+				LOG.error{fname+e.message}
 			end
 		end
 		unless mdl.nil?
 			begin
 				ret = mdl.find(id)
 			rescue Exception => e
-			LOG.error{fname+e.message}
+				LOG.error{fname+e.message}
 			end
 		end
 		#LOG.debug (fname){"ret=#{(ret.nil? ? "" : ret.ident)}"}
@@ -161,27 +161,27 @@ class PlmServices
 		end
 		#LOG.debug(fname) {"key='#{key}', argums='#{argums}'"}
 		if(Rails.env.production?)
-			argums[:default]="#{key.capitalize}"
-			ret=I18n.translate(key, argums)
+			defo="#{key.capitalize}"
 		else
 			defo="%#{I18n.locale}% #{key}:"
-			argums={} if argums.nil?
-			argums[:default]=defo
-			#ret=I18n.translate(key, argums, :default=> defo)
-			ret=I18n.translate(key, argums)
-			if ret==defo
-				# to keep logs about tranlation to do
-				puts "%TODO_TRANSLATE%:#{defo} stack below to see where it is called"
-				begin
-					a=1/0
-				rescue Exception => e
-					stack=""
-					e.backtrace.each do |x|
-						stack+= x+"\n"
-					end
-					LOG.warn (fname) {"stack=\n#{stack}"}
+		end
+		argums={} if argums.nil?
+		argums[:default]=defo
+		#ret=I18n.translate(key, argums, :default=> defo)
+		ret=I18n.translate(key, argums)
+		if ret==defo
+			# to keep logs about tranlation to do
+			puts "%TODO_TRANSLATE%:#{defo} stack below to see where it is called"
+			begin
+				a=1/0
+			rescue Exception => e
+				stack=""
+				e.backtrace.each do |x|
+					stack+= x+"\n"
 				end
+				LOG.warn (fname) {"stack=\n#{stack}"}
 			end
+
 		end
 		LOG.debug(fname) {"key='#{key}', argums='#{argums}' ret=#{ret}"}
 		ret
