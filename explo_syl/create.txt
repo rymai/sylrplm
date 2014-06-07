@@ -195,12 +195,10 @@ gem install rufus-scheduler
 ------------------------------
 --- hebergement sur heroku
 ------------------------------
-
 ---
 --- install heroku
 ---
 [root@localhost sylrplm (master)]# gem install heroku 
-
 ---
 --- install de la cle 
 ---
@@ -210,12 +208,10 @@ Uploading ssh public key /home/syl/.ssh/id_rsa.pub
 Enter your Heroku credentials.
 Email: sylvere.coutable@laposte.net
 Password: 
-
 ---
 --- Create your Heroku application
 ---
 heroku create
-
 Creating freezing-stone-916... done, stack is bamboo-mri-1.9.2
 http://freezing-stone-916.heroku.com/ | git@heroku.com:freezing-stone-916.git
 Git remote heroku added
