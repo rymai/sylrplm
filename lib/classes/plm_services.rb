@@ -161,7 +161,8 @@ class PlmServices
 		end
 		#LOG.debug(fname) {"key='#{key}', argums='#{argums}'"}
 		if(Rails.env.production?)
-			ret=I18n.translate(key, argums, :default=> "#{key.capitalize}")
+			argums[:default]="#{key.capitalize}"
+			ret=I18n.translate(key, argums)
 		else
 			defo="%#{I18n.locale}% #{key}:"
 			argums={} if argums.nil?
