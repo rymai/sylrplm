@@ -162,18 +162,24 @@ class Volume < ActiveRecord::Base
 	# env=
 	def dir_name
 		fname= "#{self.class.name}.#{__method__}"
-		unless self.directory.blank?
-			ret=File.join(self.directory, Volume.rails_env)
-		else
-			ret=Volume.rails_env
+		env = Volume.rails_env
+		unless env.nil? 
+			unless self.directory.blank?
+				ret = File.join(self.directory, env)
+			else
+				ret = env
+			end
+			ret = File.join(ret, self.name)
 		end
-		ret=File.join(ret, self.name)
 		#LOG.info (fname) {"dir_name=#{ret}"}
 		ret
 	end
 
 	def self.rails_env
-		File.join(Datafile::host,Rails.env[0,4])
+		fname= "#{self.class.name}.#{__method__}"
+		host = Datafile::host
+		#LOG.info (fname) {"Datafile::host=#{host} Rails.env=#{Rails.env}"}
+		File.join(Datafile::host,Rails.env[0,4]) unless host.nil?
 	end
 
 	def self.get_conditions(filter)

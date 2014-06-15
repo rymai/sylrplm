@@ -186,10 +186,10 @@ class Statusobject < ActiveRecord::Base
 		else
 		objtype = any_type
 		end
-		LOG.debug(fname){"obj=#{obj} objtype=#{objtype} any_type=#{any_type}"}
+		#LOG.debug(fname){"obj=#{obj} objtype=#{objtype} any_type=#{any_type}"}
 		cond="forobject='#{obj.model_name}' and (typesobject_id=#{objtype.id} or typesobject_id=#{any_type.id} or typesobject_id is null)"
 		ret=Statusobject.order_default.find(:first, :conditions => [cond])
-		LOG.info(fname){"status.get_first:cond=#{cond} : #{ret}"}
+		#LOG.info(fname){"status.get_first:cond=#{cond} : #{ret}"}
 		ret
 	end
 

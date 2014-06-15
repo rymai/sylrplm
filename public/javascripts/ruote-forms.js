@@ -393,7 +393,7 @@ var RuoteForms = function() {
 	}
 
 	function render_entry(elt, data, options) {
-		//alert ('render_entry:'+elt+":"+data);
+		//alert ('render_entry:'+elt+":"+data+' buttons='+options['buttons']);
 		var e = rcreate(elt, 'div', {
 			'class' : 'rform_entry'
 		});
@@ -404,11 +404,15 @@ var RuoteForms = function() {
 			'class' : 'rform_value'
 		});
 		addEntryButtons(e);
-		//syl ajout
-		///options['read-only'] = true;
+		//syl add: key is editable only on defining the fields (Typesobject)
+		if(options['buttons']!='all'){
+			options['read-only'] = true;
+		}
 		render(ek, data[0], options);
-		//syl ajout
-		///options['read-only'] = false;
+		//syl add: key is editable only on defining the fields (Typesobject)
+		if(options['buttons']!='all'){
+			options['read-only'] = false;
+		}
 		var evv = render(ev, data[1], options);
 		return e;
 	}

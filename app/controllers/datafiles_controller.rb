@@ -124,13 +124,13 @@ class DatafilesController < ApplicationController
 
 	def show_file
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		send_file_content("inline")
 	end
 
 	def download_file
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		send_file_content("attachment")
 	end
 
@@ -139,8 +139,8 @@ class DatafilesController < ApplicationController
 	def send_file_content(disposition)
 		fname= "#{self.class.name}.#{__method__}"
 		@datafile = Datafile.find(params[:id])
-		tool = @datafile.typesobject.get_fields_values("tool")
-		LOG.debug (fname){"tool=#{tool} disposition=#{disposition}"}
+		tool = @datafile.typesobject.get_fields_values_by_key("tool")
+		#LOG.debug (fname){"tool=#{tool} disposition=#{disposition}"}
 		#puts "datafiles_controller.send_file_content:"+fields.inspect
 		#
 		# show_file: inline 
@@ -152,7 +152,7 @@ class DatafilesController < ApplicationController
 					repos = @datafile.write_file_tmp
 					dirtmpfile = File.join(RAILS_ROOT,repos)
 					cmd = "#{tool} #{dirtmpfile} &"
-					LOG.debug (fname){"tool=#{tool} cmd=#{cmd}"}
+					#LOG.debug (fname){"tool=#{tool} cmd=#{cmd}"}
 					system(cmd)
 					flash[:info] = "File showed with tool #{tool}"
 					respond_to do |format|
@@ -161,12 +161,12 @@ class DatafilesController < ApplicationController
 					end
 				rescue Exception => e
 					flash[:info] = "Tool #{tool} does not work"
-					content = @datafile.read_file 
+					content = @datafile.read_file_for_download
 					#LOG.debug (fname){"content.length=#{content.length}"}
 					flash = ctrl_send_data(content, @datafile.filename, @datafile.content_type, disposition)
 				end
 			else
-				content = @datafile.read_file 
+				content = @datafile.read_file_for_download 
 				# show_file: inline without tool: send_data inline
 				flash = ctrl_send_data(content, @datafile.filename, @datafile.content_type, disposition)
 			end
@@ -181,7 +181,7 @@ class DatafilesController < ApplicationController
 	
 	def ctrl_send_data(content, filename, content_type, disposition)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"content.length=#{content.length} filename=#{filename} content_type=#{content_type} disposition=#{disposition} "}
+		#LOG.debug (fname){"content.length=#{content.length} filename=#{filename} content_type=#{content_type} disposition=#{disposition} "}
 		begin
 			send_data(content,
 	              :filename => filename,

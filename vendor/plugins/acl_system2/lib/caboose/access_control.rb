@@ -13,7 +13,8 @@ module Caboose
       #                 :update => '(admin | moderator) & !blacklist',
       #                 :list => '(admin | moderator | user) & !blacklist'
       def access_control(actions={})
-
+				fname= "#{self.class.name}.#{__method__}"
+  			#LOG.debug (fname) {"args=#{args}"}
         # Add class-wide permission callback to before_filter
         defaults = {}
         if block_given?
@@ -21,7 +22,6 @@ module Caboose
           default_block_given = true
         end
         before_filter do |c|
-
           c.default_access_context = defaults if default_block_given
           @access = AccessSentry.new(c, actions)
           #syl
@@ -32,12 +32,12 @@ module Caboose
             end
           end
           action=actions[c.action_name.to_sym]
-          puts "access_control:actions=#{actions.inspect} "
-          puts "access_control:action=#{action.inspect}"
-          ##puts "access_control:c=#{c.inspect} "
-          puts "access_control:c.action=#{c.action_name} "
-          puts "access_control:c.access_context=#{c.access_context.inspect}"
-          puts "access_control:role_title=#{role_title}"
+          #puts "access_control:actions=#{actions.inspect} "
+          LOG.debug (fname) {"action=#{action.inspect}"}
+          #####puts "access_control:c=#{c.inspect} "
+          #puts "access_control:c.action=#{c.action_name} "
+          #puts "access_control:c.access_context=#{c.access_context.inspect}"
+          #puts "access_control:role_title=#{role_title}"
 
           if @access.allowed?(c.action_name)
             c.send(:permission_granted)  if c.respond_to?:permission_granted

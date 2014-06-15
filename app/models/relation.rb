@@ -77,7 +77,7 @@ class Relation < ActiveRecord::Base
 
 	def self.relations_for(father, child_plmtype=nil, child_type=nil)
 		fname="Relations.#{__method__}:father=#{father.model_name}:child_plmtype=#{child_plmtype}"
-		LOG.debug(fname){"debut"}
+		#LOG.debug(fname){"debut"}
 		if father.nil? && child_plmtype.blank? && child_type.blank?
 			# all is null, we return all relations
 			father_plmtype = nil
@@ -109,7 +109,7 @@ class Relation < ActiveRecord::Base
 		ret = find(:all, :order => "name",
       :conditions => [cond],
       :group => "father_plmtype,id")
-		LOG.debug(fname){"fin:cond=#{cond}, #{ret.size} relations trouvées pour #{father_plmtype}.#{father_type}=>#{child_plmtype}.#{child_type}"}
+		#LOG.debug(fname){"fin:cond=#{cond}, #{ret.size} relations trouvées pour #{father_plmtype}.#{father_type}=>#{child_plmtype}.#{child_type}"}
 		#LOG.debug(fname){"fin:ret(#{ret.count})=#{ret}"}
 		ret
 	end

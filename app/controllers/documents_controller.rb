@@ -306,14 +306,14 @@ class DocumentsController < ApplicationController
 
 	def show_
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		define_view
 		@document  = Document.find(params[:id])
 		#@relations = Relation.relations_for(@document)
 		@tree         						= build_tree(@document, @myparams[:view_id])
 		@tree_up      						= build_tree_up(@document, @myparams[:view_id] )
 		@object_plm = @document
-		LOG.debug (fname){"taille tree=#{@tree.size}"}
+		#LOG.debug (fname){"taille tree=#{@tree.size}"}
 	end
 
 	def index_

@@ -3,7 +3,7 @@ require "zip/zip"
 def get_types_datafiles_on_tree(tree)
 	fname="plm_tree:#{__method__}"
 	ret=[]
-	LOG.debug (fname) {"#{tree.nodes.count} nodes"}
+	#LOG.debug (fname) {"#{tree.nodes.count} nodes"}
 	ret = get_types_datafiles_on_node(tree)
 	ret
 end
@@ -13,12 +13,12 @@ def get_types_datafiles_on_node(node)
 	ret=[]
 	lnk = get_node_link(node)
 	unless lnk.nil?
-		LOG.debug (fname) {"lnk=#{lnk} child_plmtype=#{lnk.child_plmtype}"}
+		#LOG.debug (fname) {"lnk=#{lnk} child_plmtype=#{lnk.child_plmtype}"}
 		if lnk.child_plmtype == 'document'
 			child = lnk.child
-			LOG.debug (fname) {"child=#{child} #{child.datafiles.count} datafiles"}
+			#LOG.debug (fname) {"child=#{child} #{child.datafiles.count} datafiles"}
 			child.datafiles.each do |datafile|
-				LOG.debug (fname) {"datafile.typesobject=#{datafile.typesobject} "}
+				#LOG.debug (fname) {"datafile.typesobject=#{datafile.typesobject} "}
 		  	ret << datafile.typesobject unless ret.include?(datafile.typesobject)
 			end
 		end
@@ -48,7 +48,7 @@ def build_model_tree(plmobject, tree, type_model)
 	bloc << "ret_type = \"application/\#{type_model.name}\"\n"
 	bloc << bloc_read_node(type_model)+"\n"
 	bloc <<"LOG.debug (fname) {\" type_model=#{type_model}\"}\n"
-	bloc << "#{type_model.get_fields_values("build_model_tree_begin")}\n"
+	bloc << "#{type_model.get_fields_values_type_only_by_key("build_model_tree_begin")}\n"
 	bloc << "if nodes.count > 0\n"
 	bloc << "		nodes.each do |nod|\n"
 	bloc << "			read_node(plmobject, nod, type_model, ret, matrix, files)\n"
@@ -65,7 +65,7 @@ def build_model_tree(plmobject, tree, type_model)
 	bloc << "		content = datafile.read_file\n"
 	bloc << "		unless content.nil?\n"
 	bloc << "		puts \">>build_model_tree_file:\#{datafile.file_fullname} : \#{content.size}\"\n"
-	bloc << "			#{type_model.get_fields_values("build_model_tree_file")}\n"
+	bloc << "			#{type_model.get_fields_values_type_only_by_key("build_model_tree_file")}\n"
 	bloc << "		puts '<<build_model_tree_file'\n"
 	bloc << "		else\n"
 	bloc << "			datafile.errors.each do |type,err|\n"
@@ -74,9 +74,9 @@ def build_model_tree(plmobject, tree, type_model)
 	bloc << "			return nil\n"
 	bloc << "		end\n"
 	bloc << "end\n"
-	bloc << "#{type_model.get_fields_values("build_model_tree_end")}\n"
+	bloc << "#{type_model.get_fields_values_type_only_by_key("build_model_tree_end")}\n"
 	bloc << "{\"content\"=>ret, \"filename\"=>ret_filename, \"content_type\"=>ret_type}\n"
-	LOG.debug (fname) {"****************** bloc=\n#{bloc}\n**********"}
+	#LOG.debug (fname) {"****************** bloc=\n#{bloc}\n**********"}
 	ret=eval bloc
 	#LOG.debug (fname) {"****************** ret=\n#{ret}"}
 	ret
@@ -105,7 +105,7 @@ def bloc_read_node(type_model)
 	bloc << "        files << datafile unless files.include?(datafile)\n"
 	bloc << "        rb_values = OpenWFE::Json::from_json(lnk.values)\n"
 	bloc << "        mx=rb_values[\"matrix\"] unless rb_values.nil?\n"
-	bloc << "        #{type_model.get_fields_values("build_model_tree_matrix")}\n"
+	bloc << "        #{type_model.get_fields_values_type_only_by_key("build_model_tree_matrix")}\n"
 	#scad: ret<<"#{datafile.file_name}();"
 	bloc << "      end\n"
 	bloc << "    end\n"
@@ -117,18 +117,18 @@ def bloc_read_node(type_model)
 	bloc << "    mx = rb_values[\"matrix\"] unless rb_values.nil?\n"
 	bloc << "    unless mx.nil?\n"
 	bloc << "      unless mx[\"RX\"].zero? && mx[\"RY\"].zero? && mx[\"RZ\"].zero?\n"
-	bloc << "        #{type_model.get_fields_values("build_model_tree_rotate")}\n"
+	bloc << "        #{type_model.get_fields_values_type_only_by_key("build_model_tree_rotate")}\n"
 	#scad: ret << "rotate([#{mx_rx(mx)}, #{mx_ry(mx)}, #{mx_rz(mx)}])\n" 
 	bloc << "        yamx=true\n"
 	bloc << "      end\n"
 	bloc << "      unless mx[\"DX\"].zero? && mx[\"DY\"].zero? && mx[\"DZ\"].zero? \n"
-	bloc << "        #{type_model.get_fields_values("build_model_tree_translate")}\n"
+	bloc << "        #{type_model.get_fields_values_type_only_by_key("build_model_tree_translate")}\n"
 	#scad: ret << "translate([\#{mx_tx(mx)}, \#{mx_ty(mx)}, \#{mx_tz(mx)}])\n"
 	bloc << "        yamx=true\n"
 	bloc << "      end\n"
 	bloc << "    end\n"
 	bloc << "  end\n"
-	build_model_tree_nodes_before=type_model.get_fields_values("build_model_tree_nodes_before")
+	build_model_tree_nodes_before=type_model.get_fields_values_type_only_by_key("build_model_tree_nodes_before")
 	unless build_model_tree_nodes_before.nil?
 		bloc << "        #{build_model_tree_nodes_before} if yamx==true\n"
   	#scad: ret << "{" 
@@ -137,7 +137,7 @@ def bloc_read_node(type_model)
 	bloc << "  node.nodes.each do |nod|\n"
 	bloc << "    read_node(plmobject, nod, type_model, ret, mx, files)\n"
 	bloc << "  end\n"
-	build_model_tree_nodes_after=type_model.get_fields_values("build_model_tree_nodes_after")
+	build_model_tree_nodes_after=type_model.get_fields_values_type_only_by_key("build_model_tree_nodes_after")
 	unless build_model_tree_nodes_after.nil?
 		bloc << "        #{build_model_tree_nodes_after} if yamx==true\n"
 		#scad: ret <<"}"
@@ -178,7 +178,7 @@ def build_model_datafile_obsolete(datafile, datatype)
 	#LOG.debug (fname) {"datafile=#{datafile}"}
 	@datafile = datafile
 	#LOG.debug (fname) {"fields=#{datafile.typesobject.get_fields_values}"}
-	code_build = @datafile.typesobject.get_fields_values("build_model_datafile")
+	code_build = @datafile.typesobject.get_fields_values_type_only_by_key("build_model_datafile")
 	@content = @datafile.read_file
 	@filename = @datafile.filename
 	LOG.debug (fname) {"code_build build_model_datafile = #{code_build} \n@filename=#{@filename}\n content=#{@content.length}"}
@@ -207,7 +207,7 @@ def build_model_tree_old(obj, tree, type_model)
 	begin
 		@plmobject = obj
 		@datatype=type_model.name
-		code_build = type_model.get_fields_values("build_model_tree_begin") 
+		code_build = type_model.get_fields_values_type_only_by_key("build_model_tree_begin") 
 		LOG.debug (fname) {"code_build build_model_tree_begin=#{code_build}"}
 		cont = eval code_build
 		result << cont
@@ -227,7 +227,7 @@ def build_model_tree_old(obj, tree, type_model)
 				if df.typesobject==type_model
 					@content = df.read_file
 					@datafile = df
-					code_build=type_model.get_fields_values("build_model_datafile")
+					code_build=type_model.get_fields_values_type_only_by_key("build_model_datafile")
 					LOG.debug (fname) {"code_build datafile=#{code_build}"}
 					cont = eval code_build
 					result << cont
@@ -241,7 +241,7 @@ def build_model_tree_old(obj, tree, type_model)
 			@datafile = datafile
 			@content = datafile.read_file
 			unless @content.nil?
-				code_build = type_model.get_fields_values("build_model_tree_file")
+				code_build = type_model.get_fields_values_type_only_by_key("build_model_tree_file")
 				LOG.debug (fname) {"code_build build_model_tree_file=#{code_build}"}
 				cont = eval code_build
 				result << cont
@@ -255,7 +255,7 @@ def build_model_tree_old(obj, tree, type_model)
 				return nil
 			end
 		end
-		code_build = type_model.get_fields_values("build_model_tree_end")
+		code_build = type_model.get_fields_values_type_only_by_key("build_model_tree_end")
 		LOG.debug (fname) {"code_build build_model_tree_end=#{code_build}"}
 		cont = eval code_build
 		result << cont
@@ -288,7 +288,7 @@ def read_node_old(node, datatype, content, matrix, files)
 				@matrix=rb_values["matrix"] unless rb_values.nil?
 				LOG.debug (fname) {"write(#{datafile.ident} filename=#{datafile.filename} matrix=#{matrix}"}
 				@datafile = datafile
-				code_build = @datafile.typesobject.get_fields_values("build_model_tree_matrix")
+				code_build = @datafile.typesobject.get_fields_values_type_only_by_key("build_model_tree_matrix")
 				cont = eval code_build
 				content << cont
 				# example for scad
@@ -365,15 +365,15 @@ end
 ############################################
 def  build_tree(obj, view_id, variant_mdlid = nil, level_max = 9999)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	LOG.debug (fname) {"variant_mdlid=#{variant_mdlid}, level_max=#{level_max}"}
+	#LOG.debug (fname) {"variant_mdlid=#{variant_mdlid}, level_max=#{level_max}"}
 	lab=t(:ctrl_object_explorer, :typeobj => t("ctrl_#{obj.model_name}"), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_down", :label => lab, :open => true })
 	view=View.find(view_id) unless  view_id.nil?
 	relations = View.find(view_id).relations unless view.nil?
 	unless relations.nil?
-		LOG.debug (fname) {"view=#{view}"}
+		#LOG.debug (fname) {"view=#{view}"}
 	else
-		LOG.debug (fname){"Toutes les relations sont a afficher"}
+		#LOG.debug (fname){"Toutes les relations sont a afficher"}
 	end
 	if variant_mdlid.nil?
 		variant = nil
@@ -385,10 +385,10 @@ def  build_tree(obj, view_id, variant_mdlid = nil, level_max = 9999)
 	else
 		var_effectivities = []
 	end
-	LOG.debug (fname) {"variant=#{variant}, var_effectivities=#{var_effectivities.inspect} level_max=#{level_max}"}
+	#LOG.debug (fname) {"variant=#{variant}, var_effectivities=#{var_effectivities.inspect} level_max=#{level_max}"}
 	follow_tree(obj, tree, obj, relations, var_effectivities, 0, level_max)
 	###TODO a mettre en option group_tree(tree, 0)
-	LOG.debug (fname) {"tree size=#{tree.size}"}
+	#LOG.debug (fname) {"tree size=#{tree.size}"}
 	##LOG.debug (fname) {"tree =#{tree.inspect}"}
 	tree
 end

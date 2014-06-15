@@ -75,7 +75,35 @@ class Datafile < ActiveRecord::Base
 		ret= volume.protocol_driver.read_file(self)
 		ret
 	end
-
+	
+	# read the file and adapt it for using the file outside the application
+	def read_file_for_download
+	  fname= "#{self.class.name}.#{__method__}"
+	  code_begin=self.typesobject.get_fields_values_type_only_by_key("build_model_file_begin")
+	  code_content=self.typesobject.get_fields_values_type_only_by_key("build_model_file_content")
+	  code_end=self.typesobject.get_fields_values_type_only_by_key("build_model_file_end")
+	  unless code_begin.nil? || code_content.nil? || code_end.nil?
+	  	bloc=""
+			bloc << "		content = self.read_file\n"
+			bloc << "		unless content.nil?\n"
+			bloc << "		  puts \">>read_file_for_download:\#{self.file_fullname} : \#{content.size}\"\n"
+			bloc << "		  #{code_begin}\n" 
+			bloc << "		  #{code_content}\n" 
+			bloc << "		  #{code_end}\n" 
+			bloc << "		  else\n"
+			bloc << "			return nil\n"
+			bloc << "		end\n"
+			bloc << "		ret\n"
+		  #LOG.debug (fname) {"****************** bloc=\n#{bloc}\n**********"}
+			ret = eval bloc
+		else
+			# no code to modify the file, we read the file as is
+			ret = self.read_file
+		end
+		#LOG.debug (fname) {"****************** ret=\n#{ret}"}
+		ret
+	end
+	
 	def create_directory
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname) {"appel #{volume.protocol_driver}.create_directory volume=#{volume} protocol=#{volume.protocol}"}
@@ -372,7 +400,7 @@ class Datafile < ActiveRecord::Base
 	#
 	def write_file_tmp
 		fname= "#{self.class.name}.#{__method__}"
-		content = read_file
+		content = read_file_for_download
 		repos=nil
 		if content.length>0
 			dir_repos=File.join("public")
@@ -419,7 +447,7 @@ class Datafile < ActiveRecord::Base
 		tmpfile = Tempfile.new("#{self.filename}-#{Time.now}")
 		Zip::ZipOutputStream.open(tmpfile.path) do |zio|
 			zio.put_next_entry(self.filename)
-			zio.write self.read_file
+			zio.write self.read_file_for_download
 		end
 		ret={:file=>tmpfile, :filename=>"#{@filename}.zip", :content_type=>"application/zip"}
 		#LOG.debug (fname) {"ret=#{ret.inspect}"}

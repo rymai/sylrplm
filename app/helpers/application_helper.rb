@@ -475,19 +475,20 @@ module ApplicationHelper
 	def h_type_values(obj, fonct)
 		fname=self.class.name+"."+__method__.to_s
 		#LOG.info (fname){"obj=#{obj}"}
-		LOG.info (fname){"fonct=#{fonct}"}
+		#LOG.info (fname){"fonct=#{fonct}"}
 		ret=""
 		if obj.respond_to?(:typesobject)
 			unless obj.typesobject.nil?
-				unless obj.typesobject.fields.nil?
-					LOG.info (fname){"fields=#{obj.typesobject.fields}"}
+				objfields = obj.typesobject.get_fields
+				unless objfields.nil?
+					#LOG.info (fname){"fields=#{objfields}"}
 					case fonct
 					when "show"
 						buttons="none"
 					when "edit"
 						buttons="position"
 						if obj.type_values.nil?
-						obj.type_values=obj.typesobject.fields
+						obj.type_values=objfields
 						end
 					when "define"
 						buttons="all"

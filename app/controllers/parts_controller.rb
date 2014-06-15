@@ -249,7 +249,7 @@ class PartsController < ApplicationController
 
 	def show_design
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		part = Part.find(params[:id])
 		ctrl_show_design(part, params[:type_model_id])
 	end

@@ -27,15 +27,57 @@ class ApplicationController < ActionController::Base
     @my_filter = true
   end
   
-  def render(*args)
-    st = check_access_data(args) if @my_filter
-    if st
-    	super
+  def render(*args) 
+  	fname= "#{self.class.name}.#{__method__}"
+  	#LOG.debug (fname) {"args=#{args}"}
+  	if args.nil? || args.count==0
+  		super
+  	else
+  	# args=[{:action=>"index"}]
+		err = nil
+		unless(args[0][:action] == "index" || (@_params[:controller]=="typesobject" && @_params[:action]=="edit"))
+			err = check_database_consistency(args)
+		end 
+		#LOG.debug (fname) {"args.action=#{args[0][:action]} err=#{err} err.nil?=#{err.nil?}"}
+  	if(err.nil? || err=="")
+	    if @my_filter
+	    	st = check_access_data(args) 
+	    else
+	    	st = true
+	    end
+	    if st == true
+	    	#true
+	    	super
+	    else
+	    	#false 
+	    	msg = t(:data_access_forbidden)
+	    	#LOG.debug (fname) {msg}
+	    	redirect_to_main(nil, msg)
+	    end
     else
-    	redirect_to_main(nil ,"Data access forbidden")
+    	msg=t(:database_not_consistency, :msg=>err)
+    	LOG.error (fname) {msg}
+    	redirect_to_main(nil ,msg)
+    end
     end
   end
   
+  #
+  # check some point to be sure of the consistency of the database
+  # host name, used for fog files ..., define by rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base,limours]
+  #
+  def check_database_consistency(*args)
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname) {"args=#{args}"}
+		ret = nil
+		if Datafile.host.nil?
+			# "Host not defined, define it in Type object property/sites/central=xxx"
+			ret = t(:host_not_defined) 
+		end
+		ret
+  end
+  
+  # return true if user have access on the data
 	def check_access_data(*args)
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname) {"************** args=#{args}"}
@@ -83,7 +125,7 @@ class ApplicationController < ActionController::Base
 	#
   def check_user(redirect=true)
   	fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"redirect=#{redirect}, params=#{params} action=#{params[:action][0,4]}"}
+		#LOG.debug (fname) {"redirect=#{redirect}, params=#{params} action=#{params[:action][0,4]}"}
     flash[:notice] = nil
     if(params[:action][0,3]!="show")
 	    unless current_user.nil? || current_user.may_access?
@@ -144,13 +186,13 @@ class ApplicationController < ActionController::Base
   # definition de la langue
   def set_locale
     @current_user             = User.find_user(session)
-    puts "set_locale:params[:locale]=#{params[:locale]}"
+    #puts "set_locale:params[:locale]=#{params[:locale]}"
     if params[:locale]
       I18n.locale = params[:locale]
       session[:lng] = I18n.locale
     else
       unless @current_user.nil?
-        puts "set_locale:@current_user=#{@current_user} lng=#{@current_user.language}"
+        #puts "set_locale:@current_user=#{@current_user} lng=#{@current_user.language}"
         I18n.locale = @current_user.language
       else
         if session[:lng]
@@ -219,7 +261,7 @@ class ApplicationController < ActionController::Base
   # redirection vers l'action index du main si besoin
   def redirect_to_main(uri=nil, msg=nil)
   	puts "redirect_to_main"
-    flash[:notice] = msg if msg
+    flash[:error] = msg if msg
     redirect_to(uri || { :controller => "main", :action => "index" })
   end
 
@@ -258,7 +300,7 @@ class ApplicationController < ActionController::Base
       redirect_to new_sessions_url
     else
       user=User.find(user_id)
-      puts "authorize:user=#{user} admin?=#{user.is_admin?}"
+      #puts "authorize:user=#{user} admin?=#{user.is_admin?}"
       unless user.is_admin?
       	#puts "user not admin, user.roles=#{user.roles} user.groups=#{user.groups} user.projects=#{user.projects}"
         if user.roles.nil? || user.groups.nil? || user.projects.nil?

@@ -648,7 +648,7 @@ module Models
 			end
 			link_from = ::Link.new(father: self, child: from, relation: rel, user: own)
 			st=link_from.save
-			LOG.debug (fname){"link_from=#{link_from}:st save=#{st}"}
+			#LOG.debug (fname){"link_from=#{link_from}:st save=#{st}"}
 			if !st
 				link_from=nil
 			end
@@ -664,7 +664,7 @@ module Models
 				ret = true
 				end
 			end
-			LOG.debug (fname){"self.model_name=#{self.model_name}  status?:#{self.respond_to? :statusobject} ret=#{ret}"}
+			#LOG.debug (fname){"self.model_name=#{self.model_name}  status?:#{self.respond_to? :statusobject} ret=#{ret}"}
 			ret
 		end
 

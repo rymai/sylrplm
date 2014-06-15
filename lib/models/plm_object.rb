@@ -452,25 +452,25 @@ module Models
 			LOG.info (fname) {"args=#{args.length}:#{args.inspect}"}
 			super
 			if self.respond_to? :revision
-				if args.size>0 && (!args[0].include?(:revision))
+				if args.size>0 && !args[0].nil? && (!args[0].include?(:revision))
 					self.revision = "1"
 				end
 			end
 
 			if (self.respond_to? :typesobject)
-				if args.size>0 && (!args[0].include?(:typesobject_id))
+				if args.size>0 && !args[0].nil? && (!args[0].include?(:typesobject_id))
 				self.typesobject = ::Typesobject.get_default(self)
 				end
 			end
 
 			if (self.respond_to? :statusobject)
-				if args.size>0 && (!args[0].include?(:statusobject_id))
+				if args.size>0 && !args[0].nil? && (!args[0].include?(:statusobject_id))
 				self.statusobject = ::Statusobject.get_first(self)
 				end
 			end
 
 			if args.size>0
-				unless args[0][:user].nil?
+				unless args[0].nil? || args[0][:user].nil?
 					self.set_default_values_with_next_seq
 					if (self.respond_to? :statusobject)
 					# recalculate the status here because depending of the type modified above

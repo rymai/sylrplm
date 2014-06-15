@@ -134,8 +134,42 @@ class Typesobject < ActiveRecord::Base
 		"#{forobject}.#{name}"
 	end
 
-	# renvoie l'objet contenu dans l'attribut type_values
-	def get_fields_values(key=nil)
+	#return filds for copying in an object
+	#we take all fields except _type_only_
+	def get_fields
+		fname="Typesobject.#{__method__}:#{name}"
+		ret=nil
+		values = get_fields_values()
+		#LOG.debug (fname) {"values=#{values}"}
+		unless values.nil?
+			values.delete("_type_only_") 
+			#LOG.debug (fname) {"values after remove=#{values}"}
+			ret = ActiveSupport::JSON.encode(values)
+		end
+		#LOG.debug (fname) {"fields=#{ret}"}
+		ret
+	end
+	
+	# renvoie l'objet contenu dans l'attribut fields
+	# it is a hash
+		
+	def get_fields_values
+		get_fields_values_(nil)
+	end
+	
+	def get_fields_values_by_key(key)
+		get_fields_values_(key)
+	end
+	
+	def get_fields_values_type_only_by_key(key)
+		 get_fields_values_type_only[key]
+	end
+	
+	def get_fields_values_type_only
+		get_fields_values_("_type_only_")
+	end
+	
+	def get_fields_values_(key=nil)
 		fname="Typesobject.#{__method__}:#{name}"
 		ret=nil
 		if self.respond_to? :fields
