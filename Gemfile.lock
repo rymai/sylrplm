@@ -86,7 +86,7 @@ GEM
     rb-readline (0.5.1)
     route_manager (0.9.1)
     ruby-hmac (0.4.0)
-    ruby2ruby (2.1.0)
+    ruby2ruby (2.1.1)
       ruby_parser (~> 3.1)
       sexp_processor (~> 4.0)
     ruby_debugger (1.0.1)

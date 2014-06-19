@@ -75,35 +75,57 @@ class Datafile < ActiveRecord::Base
 		ret= volume.protocol_driver.read_file(self)
 		ret
 	end
-	
-	# read the file and adapt it for using the file outside the application
-	def read_file_for_download
-	  fname= "#{self.class.name}.#{__method__}"
-	  code_begin=self.typesobject.get_fields_values_type_only_by_key("build_model_file_begin")
-	  code_content=self.typesobject.get_fields_values_type_only_by_key("build_model_file_content")
-	  code_end=self.typesobject.get_fields_values_type_only_by_key("build_model_file_end")
-	  unless code_begin.nil? || code_content.nil? || code_end.nil?
-	  	bloc=""
+
+	# read the file and adapt it for include the content in a tree model file
+	def read_file_for_tree
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname) {"content=#{read_file}"}
+		code_content=self.typesobject.get_fields_values_type_only_by_key("build_tree_file_content")
+		unless code_content.nil?
+			bloc=""
 			bloc << "		content = self.read_file\n"
 			bloc << "		unless content.nil?\n"
-			bloc << "		  puts \">>read_file_for_download:\#{self.file_fullname} : \#{content.size}\"\n"
-			bloc << "		  #{code_begin}\n" 
-			bloc << "		  #{code_content}\n" 
-			bloc << "		  #{code_end}\n" 
-			bloc << "		  else\n"
-			bloc << "			return nil\n"
+			bloc << "		  puts \">>read_file_for_tree:\#{self.file_fullname} : \#{content.size}\n\#{content}\"\n"
+			bloc << "		  #{code_content}\n"
+			bloc << "		  puts \">>read_file_for_tree:ret=\n\#{ret}\"\n"
+			bloc << "		else\n"
+			bloc << "			ret=\"\"\n"
 			bloc << "		end\n"
-			bloc << "		ret\n"
-		  #LOG.debug (fname) {"****************** bloc=\n#{bloc}\n**********"}
+			bloc << "		ret"
+			#LOG.debug (fname) {"****************** bloc=\n#{bloc}\n**********"}
 			ret = eval bloc
 		else
-			# no code to modify the file, we read the file as is
-			ret = self.read_file
+		# no code to modify the file, we read the file as is
+		ret = self.read_file
 		end
 		#LOG.debug (fname) {"****************** ret=\n#{ret}"}
 		ret
 	end
-	
+
+	# read the file and adapt it for using the file outside the application
+	def read_file_for_download
+		fname= "#{self.class.name}.#{__method__}"
+		code_content=self.typesobject.get_fields_values_type_only_by_key("build_file_content")
+		unless code_content.nil?
+			bloc=""
+			bloc << "		content = self.read_file\n"
+			bloc << "		unless content.nil?\n"
+			bloc << "		  puts \">>read_file_for_download:\#{self.file_fullname} : \#{content.size}\"\n"
+			bloc << "		  #{code_content}\n"
+			bloc << "		  else\n"
+			bloc << "			return nil\n"
+			bloc << "		end\n"
+			bloc << "		ret\n"
+			#LOG.debug (fname) {"****************** bloc=\n#{bloc}\n**********"}
+			ret = eval bloc
+		else
+		# no code to modify the file, we read the file as is
+		ret = self.read_file
+		end
+		#LOG.debug (fname) {"****************** ret=\n#{ret}"}
+		ret
+	end
+
 	def create_directory
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname) {"appel #{volume.protocol_driver}.create_directory volume=#{volume} protocol=#{volume.protocol}"}
@@ -194,7 +216,7 @@ class Datafile < ActiveRecord::Base
 
 	def self.host=(args)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"host=#{args.inspect}"}
+	#LOG.debug (fname) {"host=#{args.inspect}"}
 	##@@host=args.gsub(".","-")
 	end
 
@@ -330,7 +352,7 @@ class Datafile < ActiveRecord::Base
 	def file_name
 		File.basename(self.filename).split(".")[0]
 	end
-	
+
 	def file_fullname
 		ret=file_name
 		ext=file_extension
@@ -440,7 +462,7 @@ class Datafile < ActiveRecord::Base
 	#["ident LIKE ? or "+qry_type+" or revision LIKE ? "+
 	#  " or "+qry_owner_id+" or updated_at LIKE ? or "+qry_volume,
 	end
-	
+
 	def zipFile
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname) {"datafile=#{self}"}

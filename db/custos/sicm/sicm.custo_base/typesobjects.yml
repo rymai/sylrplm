@@ -389,7 +389,22 @@ Typesobject_1045584150:
   id: "1045584150"
   forobject: datafile
   name: scad
-  fields: "{\"_type_only_\": {\"tool\": \"openscad\", \"build_model_datafile\": \"ret << \\\"//data#{10.chr}\\\"\\nret << \\\"#{content}#{10.chr}\\\"\\nret << \\\"#{datafile.file_name}();#{10.chr}\\\"\\n\", \"build_model_tree_file\": \"ret << \\\"//file#{10.chr}\\\"\\nret << \\\"#{content}#{10.chr}\\\"\\n\", \"build_model_tree_end\": \"ret << \\\"//tend#{10.chr}\\\"\\nret << \\\"}#{10.chr}\\\"\\nret << \\\"#{plmobject.ident}();#{10.chr}\\\"\\n\", \"build_model_tree_begin\": \"ret = \\\"//tbegin#{10.chr}\\\"\\nret << \\\"module #{plmobject.ident}() {#{10.chr}\\\"\\n\", \"build_model_tree_matrix\": \"ret << \\\"//tmx#{10.chr}\\\"\\nif mx.nil?\\nret<<\\\"#{datafile.file_name}();\\\"\\nelse \\nret<<\\\"toto\\\"\\nend\\nret << \\\"#{10.chr}\\\"\\n\", \"build_model_tree_rotate\": \"ret << \\\"rotate([#{mx_rx(mx)}, #{mx_ry(mx)},#{mx_rz(mx)}])#{10.chr}\\\"\\n\", \"build_model_tree_translate\": \"ret << \\\"translate([#{mx_tx(mx)}, #{mx_ty(mx)}, #{mx_tz(mx)}])#{10.chr}\\\"\\n\", \"build_model_tree_nodes_before\": \"ret << \\\"//before#{10.chr}\\\"\\nret <<\\\"{#{10.chr}\\\"\", \"build_model_tree_nodes_after\": \"ret << \\\"//after#{10.chr}\\\"\\nret <<\\\"}#{10.chr}\\\"\", \"build_model_file_begin\": \"ret=\\\"#{10.chr}\\\"\", \"build_model_file_content\": \"ret<<content#{10.chr}\", \"build_model_file_end\": \"ret << \\\"#{self.file_name}();#{10.chr}\\\"\"}, \"comment\": \"\"}"
+  fields: "{\"_type_only_\": 
+  	{
+  	\"tool\": \"openscad\"
+  	, \"build_model_datafile\": \"ret << \\\"//data#{10.chr}\\\"\\nret << \\\"#{content}#{10.chr}\\\"\\nret << \\\"#{datafile.file_name}();#{10.chr}\\\"\\n\"
+  	, \"build_model_tree_file\": \"ret << \\\"//file#{10.chr}\\\"\\nret << \\\"#{content}#{10.chr}\\\"\\n\"
+  	, \"build_model_tree_end\": \"ret << \\\"\\\"\\nret << \\\"}#{10.chr}\\\"\\nret << \\\"#{plmobject.ident}();#{10.chr}\\\"\\n\"
+  	, \"build_model_tree_begin\": \"ret = \\\"\\\"\\nret << \\\"module #{plmobject.ident}() {#{10.chr}\\\"\\n\"
+  	, \"build_model_tree_matrix\": \"ret << \\\"//tmx#{10.chr}\\\"\\nif mx.nil?\\nret<<\\\"#{datafile.file_name}();\\\"\\nelse \\nret<<\\\"toto\\\"\\nend\\nret << \\\"#{10.chr}\\\"\\n\"
+  	, \"build_model_tree_rotate\": \"ret << \\\"rotate([#{mx_rx(mx)}, #{mx_ry(mx)},#{mx_rz(mx)}])#{10.chr}\\\"\\n\"
+  	, \"build_model_tree_translate\": \"ret << \\\"translate([#{mx_tx(mx)}, #{mx_ty(mx)}, #{mx_tz(mx)}])#{10.chr}\\\"\\n\"
+  	, \"build_model_tree_nodes_before\": \"ret << \\\"\\\"\\nret <<\\\"{#{10.chr}\\\"\"
+  	, \"build_model_tree_nodes_after\": \"ret << \\\"\\\"\\nret <<\\\"}#{10.chr}\\\"\"
+    , \"build_file_content\": \"ret=\\\"#{content}#{10.chr}#{self.file_name}();#{10.chr}\\\"\"
+    , \"build_tree_file_content\": \"ret=content.gsub(\\\"#{self.file_name}();\\\",\\\"\\\")\"
+    }
+  , \"comment\": \"\"}"
   description: Fichier cao 3d par openscad
   domain: admin
 

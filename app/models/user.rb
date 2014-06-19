@@ -367,7 +367,7 @@ new_user=nil
 	end
 
 	def tooltip
-		puts "user.tooltip"
+		#puts "user.tooltip"
 		"#{first_name} #{last_name} (#{typesobject.ident})"
 	end
 

@@ -62,7 +62,7 @@ def build_model_tree(plmobject, tree, type_model)
 	bloc << "end\n"
 	bloc << "		puts \"\#{files.count} files\"\n"
 	bloc << "files.each do |datafile|\n"
-	bloc << "		content = datafile.read_file\n"
+	bloc << "		content = datafile.read_file_for_tree\n"
 	bloc << "		unless content.nil?\n"
 	bloc << "		puts \">>build_model_tree_file:\#{datafile.file_fullname} : \#{content.size}\"\n"
 	bloc << "			#{type_model.get_fields_values_type_only_by_key("build_model_tree_file")}\n"
@@ -654,7 +654,7 @@ end
 #------------------------------------------------------
 def tree_organization(node, father)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
-		LOG.debug (fname){"#{father.ident} father.childs=#{father.childs}"}
+		#LOG.debug (fname){"#{father.ident} father.childs=#{father.childs}"}
 		unless father.childs.nil?
 			begin
 				father.childs.each do |child|
@@ -668,7 +668,7 @@ def tree_organization(node, father)
 						:open => false,
 						:url  => url_for(url)
 					}
-					LOG.debug (fname){"child#{child.ident}"}
+					#LOG.debug (fname){"child#{child.ident}"}
 					cnode = Node.new(options, nil)
 					node << cnode
 					tree_organization(cnode, child)
