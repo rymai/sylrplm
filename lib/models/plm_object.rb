@@ -70,7 +70,7 @@ module Models
 		def revise_by_menu?
 			fname= "#{self.model_name}.#{__method__}"
 			brev=PlmServices.get_property("#{self.model_name.upcase}_REVISE")
-			ret = brev == true && has_attribute?("revision") && self.statusobject.revise_id==1
+			ret = (brev == true && has_attribute?("revision") && self.statusobject.revise_id==1) unless self.statusobject.nil?
 			#LOG.debug (fname){"#{self}:#{self.model_name.upcase}_REVISE=#{brev}: status=#{self.statusobject.revise_id}:#{ret}"}
 			ret
 		end
@@ -78,7 +78,7 @@ module Models
 		def revise_by_action?
 			fname= "#{self.model_name}.#{__method__}"
 			brev=PlmServices.get_property("#{self.model_name.upcase}_REVISE")
-			ret = brev == true && has_attribute?("revision") && self.statusobject.revise_id==2
+			ret = brev == true && has_attribute?("revision") && self.statusobject.revise_id==2 unless self.statusobject.nil?
 			#LOG.debug (fname){"#{self}:#{self.model_name.upcase}_REVISE=#{brev}: status=#{self.statusobject.revise_id}:#{ret}"}
 			ret
 		end
@@ -194,12 +194,13 @@ module Models
 					LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{self.ident}"}
 				end
 			end
+			deja=false
 			if ret && choice==3
-				# par action
-				deja = Ruote::Sylrplm::Process.exists_on_object_for_action?(self, "promote")
-			ret = !deja
+			# by action, test if a process already started for the same action on the object
+			###deja = Ruote::Sylrplm::Process.exists_on_object_for_action?(self, "promote")
+			###ret = !deja
 			end
-			#puts "#{fname} #{self.ident}:#{ret}"
+			LOG.debug (fname) { "#{self.ident} choice=#{choice} deja=#{deja} ret=#{ret}"}
 			ret
 		end
 
@@ -250,24 +251,30 @@ module Models
 		end
 
 		def promote_button?
-			nexts = self.statusobject.next_statusobjects
-			if nexts.size >0
-				ret="promote_by_select" if promote_by_select?
-				ret="promote_by_menu" if promote_by_menu?
-				ret="promote_by_action" if promote_by_action?
+			ret=[]
+			unless self.statusobject.nil?
+				nexts = self.statusobject.next_statusobjects
+				if nexts.size >0
+					ret="promote_by_select" if promote_by_select?
+					ret="promote_by_menu" if promote_by_menu?
+					ret="promote_by_action" if promote_by_action?
+				end
+				puts "promote_button?:nexts.size=#{nexts.size} by_select?=#{promote_by_select?} by_menu?=#{promote_by_menu?} by_action?=#{promote_by_action?} ret=#{ret}"
 			end
-			puts "promote_button?:nexts.size=#{nexts.size} by_select?=#{promote_by_select?} by_menu?=#{promote_by_menu?} by_action?=#{promote_by_action?} ret=#{ret}"
 			ret
 		end
 
 		def demote_button?
-			prevs = self.statusobject.previous_statusobjects
-			if prevs.size > 0
-				ret="demote_by_select" if demote_by_select?
-				ret="demote_by_menu" if demote_by_menu?
-				ret="demote_by_action" if demote_by_action?
+			ret=[]
+			unless self.statusobject.nil?
+				prevs = self.statusobject.previous_statusobjects
+				if prevs.size > 0
+					ret="demote_by_select" if demote_by_select?
+					ret="demote_by_menu" if demote_by_menu?
+					ret="demote_by_action" if demote_by_action?
+				end
+				puts "demote_button?:prevs.size=#{prevs.size} by_select?=#{demote_by_select?} by_menu?=#{demote_by_menu?} by_action?=#{demote_by_action?} ret=#{ret}"
 			end
-			puts "demote_button?:prevs.size=#{prevs.size} by_select?=#{demote_by_select?} by_menu?=#{demote_by_menu?} by_action?=#{demote_by_action?} ret=#{ret}"
 			ret
 		end
 
@@ -278,9 +285,16 @@ module Models
 		end
 
 		def promote
+			fname= "#{self.class.name}.#{__method__}"
 			st_cur_name = statusobject.name
-			self.statusobject=::Statusobject.find(self.next_status_id)
+			LOG.info (fname) {"st_cur_name=#{st_cur_name} next_status=#{self.next_status}"}
+			#self.statusobject=::Statusobject.find(self.next_status_id)
+			unless self.next_status.nil?
+			self.statusobject=self.next_status
 			#puts "Document.promote:res=#{res}:#{st_cur_name}->#{statusobject.name}"
+			else
+				raise Exception.new("Error during promotion: Next status not found")
+			end
 			self.next_status=nil
 			ret = self
 			#puts "object.promote:#{st_cur_name} -> #{self.statusobject.name} ret=#{ret}"
@@ -290,7 +304,12 @@ module Models
 		def demote
 			st_cur_name = self.statusobject.name
 			stid = self.previous_status_id
-			self.statusobject=::Statusobject.find(self.previous_status_id)
+			#self.statusobject=::Statusobject.find(self.previous_status_id)
+			unless self.previous_status.nil?
+			self.statusobject=self.previous_status
+			else
+				raise Exception.new("Error during demote: Previous status not found")
+			end
 			self.previous_status=nil
 			ret = self
 			#puts "object.demote:#{st_cur_name} -> #{self.statusobject.name} ret=#{ret}"
@@ -445,11 +464,9 @@ module Models
 			end
 		end
 
-
-
 		def initialize(*args)
 			fname= "#{self.class.name}.#{__method__}"
-			LOG.info (fname) {"args=#{args.length}:#{args.inspect}"}
+			#LOG.info (fname) {"args=#{args.length}:#{args.inspect}"}
 			super
 			if self.respond_to? :revision
 				if args.size>0 && !args[0].nil? && (!args[0].include?(:revision))

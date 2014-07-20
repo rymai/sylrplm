@@ -92,17 +92,17 @@ module OpenWFE::Extras
     #
     def before_save
 			fname="base ArWorkitem.before_save:"
-      LOG.debug (fname) {"saving:#{self.inspect}"}
+      #LOG.debug (fname) {"saving:#{self.inspect}"}
       touch
     end
    def after_save
 			fname="base ArWorkitem.after_save:"
-      LOG.debug (fname) {"saved:#{self.inspect}"}
+      #LOG.debug (fname) {"saved:#{self.inspect}"}
       true
     end
     def before_destroy
 			fname="base ArWorkitem.before_destroy:"
-      LOG.debug (fname) {"destroy:#{self.inspect}"}
+      #LOG.debug (fname) {"destroy:#{self.inspect}"}
       true
     end
     def self.from_owfe_workitem (wi, store_name=nil)

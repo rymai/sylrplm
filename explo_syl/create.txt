@@ -63,14 +63,13 @@ ruby script/plugin install http://opensvn.csie.org/ezra/rails/plugins/dev/acl_sy
 cmd="ruby script/generate controller help"
 
 ---
---- doc
+--- documentation
 ---
 mkdir doc
 touch doc/README_FOR_APP
 rake doc:app
 ou mieux 
-rdoc app config db lib public --visibility=private -A -t 'SylRPLM application' -U --op /home/syl/trav/rubyonrails/sylrplm_doc/  
-
+rdoc app config db lib public -x lib/openwfe --visibility=protected -t 'SylRPLM application' -U --op /home/syl/trav/rubyonrails/sylrplm_doc/
 mise en production:
 
 rake db:migrate RAILS_ENV=production

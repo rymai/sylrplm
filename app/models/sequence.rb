@@ -34,7 +34,7 @@ class Sequence < ActiveRecord::Base
 		Module.constants.select do |constant_name|
 			constant = eval constant_name
 			isClass=constant.is_a? Class
-			puts 'Sequence.get_constants='+constant.to_s+' class='+isClass.to_s
+			#puts 'Sequence.get_constants='+constant.to_s+' class='+isClass.to_s
 		#if not constant.nil? && isClass && constant.extend? ActiveRecord::Base
 
 		end
@@ -72,7 +72,7 @@ class Sequence < ActiveRecord::Base
 			ret=line
 			end
 		end
-		puts "Sequence.find_col_for(#{model}.#{col}):ret=#{ret}"
+		#puts "Sequence.find_col_for(#{model}.#{col}):ret=#{ret}"
 		ret
 	end
 

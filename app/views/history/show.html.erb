@@ -1,4 +1,6 @@
 <h1><%= t("history_show") %></h1>
+<% fonct="show" %>
+<form action='<%="/history/#{@entry.id}"%>' id = '<%=h_form_html_id(@entry, fonct)%>'>
 <p>
 	<b>Date:</b>
 	<%= h @entry.created_at %>
@@ -36,6 +38,11 @@
 	<br/>
 	<%= render_fluo :tree_json => @entry.tree %>
 </p>
+<p>
+	<b>Fields:</b>
+	<br/>
+	<%=	h_history_fields(@entry, fonct) %>
+</p>
 <table class='menu_bas'>
 	<tr>
 		<% unless @object.nil? %> 
@@ -44,3 +51,4 @@
 		<td> <%= link_to t("list"), "/history" %> </td>
 	</tr>
 </table>
+</form>

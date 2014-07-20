@@ -201,7 +201,8 @@ class DocumentsController < ApplicationController
 		end
 	end
 
-	def demote
+	#replaced by update_lifecycle
+	def demote_obsolete
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])

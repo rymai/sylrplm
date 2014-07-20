@@ -399,9 +399,14 @@ module Controllers
   def history_log (event, options={})
     fname= "#{self.class.name}.#{__method__}"
     source = options.delete(:source) || @current_user.login
-    #LOG.debug (fname){"history_log:source=#{source}"}
-   	#LOG.debug (fname){"history_log:options=#{options}"}
-    Ruote::Sylrplm::HistoryEntry.log!(source, event, options)
+    #LOG.debug (fname){"source=#{source}"}
+    #LOG.debug (fname){"options=#{options.inspect}"}
+    ret=Ruote::Sylrplm::HistoryEntry.log!(source, event, options)
+    #LOG.debug (fname){"ret=#{ret}"}
+    LOG.debug (fname){"wi_fields=#{ret.wi_fields}"}
+    LOG.debug (fname){"wi_fields.to_s=#{ret.wi_fields.to_s}"}
+    LOG.debug (fname){"wi_fields.inspect=#{ret.wi_fields.inspect}"}
+    ret
   end
   
   def get_datas_count

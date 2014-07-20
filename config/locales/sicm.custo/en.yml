@@ -32,13 +32,11 @@ en:
   view_conception: Conception
   view_documentation: Documentation
   #definition
-  definition_simple_sequence: Simple
-  definition_leave_request: Request
+  definition_validate_user: Validate a new user
   definition_revision: Revision
   definition_promotion: Promotion
-  definition_*embedded*: embedded
-  definition_*untracked*: untracked
-  definition_validate_user: Validate a new user
+  definition_promotion.part: Promote any type of part
+  definition_promotion.document.ready.approved: Promote a document from ready to approved
   #subscription
   subscription_creator: Conceptor
   subscription_consultant: Consultant

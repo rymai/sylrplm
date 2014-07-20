@@ -273,7 +273,7 @@ var RuoteForms = function() {
 	}
 
 	function addItemButtons(elt) {
-		//alert ('addItemButtons:'+elt);
+		alert ('addItemButtons:'+elt+':'+CONFIG.with_buttons);
 		var e = create(elt, 'div', {
 			'class' : 'rform_buttons',
 		});
@@ -314,7 +314,7 @@ var RuoteForms = function() {
 
 	function addArrayButtons(elt) {
 
-		//alert ('addArrayButtons:'+elt);
+		alert ('addArrayButtons:'+elt);
 		var e = create(elt, 'div', {
 			'class' : 'rform_buttons',
 		});
@@ -371,7 +371,7 @@ var RuoteForms = function() {
 	}
 
 	function render_item(elt, data, options) {
-		//alert ('render_item:'+elt+":"+data);
+		alert ('render_item:'+elt+":"+data);
 		var ei = rcreate(elt, 'div', {
 			'class' : 'rform_item'
 		});
@@ -381,7 +381,7 @@ var RuoteForms = function() {
 	}
 
 	function render_array(elt, data, options) {
-		//alert ('render_array:'+elt+":"+data);
+		alert ('render_array:'+elt+":"+data);
 		var e = rcreate(elt, 'div', {
 			'class' : 'rform_array'
 		});
@@ -404,15 +404,11 @@ var RuoteForms = function() {
 			'class' : 'rform_value'
 		});
 		addEntryButtons(e);
-		//syl add: key is editable only on defining the fields (Typesobject)
-		if(options['buttons']!='all'){
-			options['read-only'] = true;
-		}
+		//syl: key
+		options["read-only"] = !options["edit_key"]
 		render(ek, data[0], options);
-		//syl add: key is editable only on defining the fields (Typesobject)
-		if(options['buttons']!='all'){
-			options['read-only'] = false;
-		}
+		//syl:value
+		options["read-only"] = !options["edit_value"]
 		var evv = render(ev, data[1], options);
 		return e;
 	}
@@ -493,14 +489,16 @@ var RuoteForms = function() {
 
 	function render_string(elt, data, options) {
 		//alert('render_string:data='+data+':'+data.length+",opt="+options)
+		//alert('render_string:read-only='+options['read-only']+' data='+data);
 		var klass = options['class'] || 'rform_string';
 		var e = rcreate(elt, 'span', {
 			'class' : klass
 		});
 		opt = {}
 		//e.innerHTML = escapeHtml(data);
-		if(options['read-only'])
+		if(options['read-only']) {
 			opt['readonly'] = 'true';
+		}
 		if(data.match(/\n/)) {
 			opt['type'] = 'text';
 			create(e, 'textarea', opt, data);
@@ -537,7 +535,7 @@ var RuoteForms = function() {
 	}
 
 	function render(elt, data, options) {
-		//alert('render:data='+data+':'+data.length+",opt="+options)
+		//alert('render:data='+data+':'+data.length+",read-only="+options['read-only'])
 		if(data == EmptyItem || data == null)
 			return render_new(elt, options);
 		var t = data['__class'] || ( typeof data);

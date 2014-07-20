@@ -7,9 +7,13 @@ th, td {
 	text-align: left;
 
 }
+
 th, td {
 	max-width: 320px;
 	word-wrap:break-word;
+}
+.nomax {
+	max-width: none;
 }
 input[type=text] {
 	max-width: 310px;

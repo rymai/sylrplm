@@ -101,7 +101,7 @@ module OpenWFE::Extras
 
       #self.new(opts).save!
       # syl: unknown attribute
-      puts "db_history.log:opts=#{opts}"
+      #puts "db_history.log:opts=#{opts.inspect}"
       opts.delete(:inflow)
       ret=self.new(opts)
       st=ret.save_without_transactions!
@@ -112,6 +112,7 @@ module OpenWFE::Extras
       #  self.new(opts).save! rescue nil
       #end
       #_syl_ pour recuperer l'entry
+      #puts "********** db_history.log:wi_fields=#{ret.wi_fields}"
       (st ? ret : nil)
     end
   end

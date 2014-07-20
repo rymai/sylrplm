@@ -1,5 +1,11 @@
 require "zip/zip"
 
+######################################################
+# build a model file
+######################################################
+#
+# get the types of datafiles existing on a tree
+#
 def get_types_datafiles_on_tree(tree)
 	fname="plm_tree:#{__method__}"
 	ret=[]
@@ -8,6 +14,10 @@ def get_types_datafiles_on_tree(tree)
 	ret
 end
 
+#
+# get the types of datafiles existing on a node
+# recursive method
+#
 def get_types_datafiles_on_node(node)
 	fname="plm_tree:#{__method__}"
 	ret=[]
@@ -86,7 +96,6 @@ end
 # return content of a node of a tree
 # recursive method
 #
-
 def bloc_read_node(type_model)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	bloc=""
@@ -146,10 +155,16 @@ def bloc_read_node(type_model)
 	bloc << "end\n"
 end
 
+#
+# return the link associated to a node
+#
 def get_node_link(node)
 	lnk = Link.find(node.id) unless node.id==0
 end
 
+#
+#  useful methods called by custo blocs in typesobjects
+#
 def mx_rx(matrix)
 	matrix["RX"]
 end
@@ -168,201 +183,14 @@ end
 def mx_tz(matrix)
 	matrix["DZ"]
 end
-#
-# return the content of one datafile 
-# called by the datafiles controller for viewing the model of the datafile
-# result depends of the datatype (scad,...)
-#
-def build_model_datafile_obsolete(datafile, datatype)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	#LOG.debug (fname) {"datafile=#{datafile}"}
-	@datafile = datafile
-	#LOG.debug (fname) {"fields=#{datafile.typesobject.get_fields_values}"}
-	code_build = @datafile.typesobject.get_fields_values_type_only_by_key("build_model_datafile")
-	@content = @datafile.read_file
-	@filename = @datafile.filename
-	LOG.debug (fname) {"code_build build_model_datafile = #{code_build} \n@filename=#{@filename}\n content=#{@content.length}"}
-	######ret = eval code_build
-	#
-	# example of code to put in Typesobject.fields[:build_model_datafile]
-	#for scad
-	#  ret = "#{@datafile.read_file} \n"
-	#  ret << "#{@datafile.filename.split(".")[0]}();\n"
-	#for other: zip
-	# 	require 'zip/zip'
-	# 	stringio = Zip::ZipOutputStream::write_buffer(::StringIO.new("@filename")) do |zio|
-	# 		zio.put_next_entry(@filename)
-  # 		zio.write @content
-  # 	end
-  # 	stringio.rewind
-  # 	binary_data = stringio.sysread
-	LOG.debug (fname) {"ret=#{ret.inspect}"}
-	@content 
-end
-
-def build_model_tree_old(obj, tree, type_model)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	LOG.debug (fname) {"obj=#{obj} type=#{type_model}"}
-	result=""
-	begin
-		@plmobject = obj
-		@datatype=type_model.name
-		code_build = type_model.get_fields_values_type_only_by_key("build_model_tree_begin") 
-		LOG.debug (fname) {"code_build build_model_tree_begin=#{code_build}"}
-		cont = eval code_build
-		result << cont
-		LOG.debug (fname) {"result begin:#{result}"}
-		# example of code	
-		#ret="module #{@plmobject.ident}() {\n"
-		nodes = tree.nodes
-		matrix = nil
-		files = []
-		LOG.debug (fname) {"#{nodes.count} nodes to read"}
-		if nodes.count > 0
-			nodes.each do |nod|
-				result = read_node(nod, @datatype, result, matrix, files)
-			end
-		else
-			obj.datafiles.each do |df|
-				if df.typesobject==type_model
-					@content = df.read_file
-					@datafile = df
-					code_build=type_model.get_fields_values_type_only_by_key("build_model_datafile")
-					LOG.debug (fname) {"code_build datafile=#{code_build}"}
-					cont = eval code_build
-					result << cont
-					LOG.debug (fname) {"result datafile:#{result}"}
-				end
-			end
-		end
-		LOG.debug (fname) {"#{files.count} files to read"}
-		files.each do |datafile|
-			LOG.debug (fname) {"datafile=#{datafile.inspect}"}
-			@datafile = datafile
-			@content = datafile.read_file
-			unless @content.nil?
-				code_build = type_model.get_fields_values_type_only_by_key("build_model_tree_file")
-				LOG.debug (fname) {"code_build build_model_tree_file=#{code_build}"}
-				cont = eval code_build
-				result << cont
-				# example of code	
-				#ret<<"#{@content} \n"
-			else
-				LOG.error (fname) {"error during build model:#{obj.errors.inspect}"}
-				datafile.errors.each do |type,err|
-						obj.errors.add_to_base err
-				end
-				return nil
-			end
-		end
-		code_build = type_model.get_fields_values_type_only_by_key("build_model_tree_end")
-		LOG.debug (fname) {"code_build build_model_tree_end=#{code_build}"}
-		cont = eval code_build
-		result << cont
-		LOG.debug (fname) {"result end:#{result}"}
-		# example of code		
-		# ret << "}\n"
-		# ret << "#{obj.ident}();\n"
-	rescue Exception => e
-		LOG.error (fname) {"Error in build_model_tree:#{e}"}
-		obj.errors.add_to_base("Error in build_model_tree:#{e}")
-		e.backtrace.each {|x| LOG.error x}
-		result=nil
-	end
-	result
-end
-
-def read_node_old(node, datatype, content, matrix, files)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	child = get_node_child(node)
-	rb_values = nil
-	if lnk.child_plmtype == "document"
-		#
-		# get the model content
-		#
-		child.datafiles.each do |datafile|
-			LOG.debug (fname) {"datafile=#{datafile.inspect} datafile.typesobject.name=#{datafile.typesobject.name}"}
-			if datafile.typesobject.name == datatype
-				files << datafile unless files.include?(datafile)
-				rb_values = OpenWFE::Json::from_json(lnk.values)
-				@matrix=rb_values["matrix"] unless rb_values.nil?
-				LOG.debug (fname) {"write(#{datafile.ident} filename=#{datafile.filename} matrix=#{matrix}"}
-				@datafile = datafile
-				code_build = @datafile.typesobject.get_fields_values_type_only_by_key("build_model_tree_matrix")
-				cont = eval code_build
-				content << cont
-				# example for scad
-				# if @matrix.nil?\n"
-				#  content<<"\t#{@datafile.file_name}();\n"
-				# else\n"
-				#	 content<<"\trotate([#{@matrix["RX"]}, #{@matrix["RY"]}, #{@matrix["RZ"]}])" unless @matrix["RX"].zero? && @matrix["RY"].zero? && @matrix["RZ"].zero? \n"	
-				#  content<<"\ttranslate([#{@matrix["DX"]}, #{@matrix["DY"]}, #{@matrix["DZ"]}])" unless @matrix["DX"].zero? && @matrix["DY"].zero? && @matrix["DZ"].zero?\n" 
-				#  content<<"#{datafile.file_name}();\n" 
-				# end
-			end
-		end
-	elsif lnk.child_plmtype == "part"
-		#
-		# get the structure information
-		#
-		rb_values = OpenWFE::Json::from_json(lnk.values)
-		matrix = rb_values["matrix"] unless rb_values.nil?
-		yamx=false
-		unless matrix.nil?
-			unless matrix["RX"].zero? && matrix["RY"].zero? && matrix["RZ"].zero? 
-				content<<"\trotate([#{matrix["RX"]}, #{matrix["RY"]}, #{matrix["RZ"]}])" 
-				yamx=true	
-			end
-			unless matrix["DX"].zero? && matrix["DY"].zero? && matrix["DZ"].zero? 
-				content<<"\ttranslate([#{matrix["DX"]}, #{matrix["DY"]}, #{matrix["DZ"]}])" 
-				yamx=true
-			end
-			content <<"{" if yamx==true
-		end
-		nodes = node.nodes
-		nodes.each do |nod|
-			read_node(nod, datatype, content, matrix, files)
-		end
-		content <<"}" if yamx==true
-	end
-	content
-end
-
-# TODO not use ???
-def read_node_file_obsolete(node, datatype, file, mx, files)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	lnk = Link.find(node.id)
-	child = PlmServices.get_object(lnk.child_plmtype, lnk.child_id)
-	LOG.debug (fname) {"lnk.child_plmtype=#{lnk.child_plmtype}"}
-	rb_values = nil
-	if lnk.child_plmtype == "document"
-		child.datafiles.each do |datafile|
-			LOG.debug (fname) {"datafile.typesobject.name=#{datafile.typesobject.name}"}
-			if datafile.typesobject.name == datatype
-				files << datafile unless files.include?(datafile)
-				mx=rb_values["matrix"] unless rb_values.nil?
-				LOG.debug (fname) {"write(#{datafile.ident} filename=#{datafile.filename} mx=#{mx}"}
-				if mx.nil?
-				file.write("\t#{datafile.filename.split(".")[0]}();\n") 
-				else
-				
-				file.write("\ttranslate([#{mx["DX"]}, #{mx["DY"]}, #{mx["DZ"]}]) #{datafile.filename.split(".")[0]}();\n") 
-				end
-			end
-		end
-	elsif lnk.child_plmtype == "part"
-		rb_values = OpenWFE::Json::from_json(lnk.values)
-		mx = rb_values["matrix"] unless rb_values.nil?
-		nodes = node.nodes
-		nodes.each do |nod|
-			read_node(nod, datatype, file, mx, files)
-		end
-	end
-end
 
 ############################################
 # construction des arbres descendants
+# building the descending tree
 ############################################
+#
+# build the tree, main method called by controller
+#
 def  build_tree(obj, view_id, variant_mdlid = nil, level_max = 9999)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	#LOG.debug (fname) {"variant_mdlid=#{variant_mdlid}, level_max=#{level_max}"}
@@ -393,14 +221,17 @@ def  build_tree(obj, view_id, variant_mdlid = nil, level_max = 9999)
 	tree
 end
 
-# descente de l'arbre (recursif)
-
-# root,
-# node,
-# father,
-# relations,
-# var_effectivities: tableau des effectivites de la variante:[#<Part id: 22 ... , #<Part id: 25 ...]
-# level
+#
+# descending path of the tree , recursive method
+# descente de l'arbre 
+# @param root: root object (part ...)
+# @param node: current node
+# @param father: object father of the node
+# @param relations: relations array to take into account
+# @param var_effectivities: effectivities of the variant : [#<Part id: 22 ... , #<Part id: 25 ...]
+#                           tableau des effectivites de la variante:[#<Part id: 22 ... , #<Part id: 25 ...]
+# @param level: current level of the tree
+# @return the node after adding other node(s)
 #
 def follow_tree(root, node, father, relations, var_effectivities, level, level_max)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
@@ -442,8 +273,8 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 		# on teste si une des effectivites du lien est comprise dans la variante en cours
 		#
 			link_effectivities = link.effectivities
-			#LOG.debug (fname) {"link=#{link.inspect}"}
-			#LOG.debug (fname) {"link_effectivities=#{link.effectivities.inspect}"} unless link.effectivities.nil?
+			LOG.debug (fname) {"link=#{link.inspect}"}
+			LOG.debug (fname) {"link_effectivities=#{link_effectivities}"} unless link_effectivities.nil?
 			unless link_effectivities.nil?
 				if link_effectivities.size == 0
 					link_effectivities=nil
@@ -471,7 +302,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 				end
 			end
 			if(link_to_show == true)
-				LOG.info (fname){"branche affichee: link=#{link.ident}"}
+				#LOG.info (fname){"branche affichee: link=#{link.ident}"}
 				child = PlmServices.get_object(link.child_plmtype, link.child_id)
 				# edit du lien
 				relation = Relation.find(link.relation_id)
@@ -528,18 +359,20 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 					html_options = {
 						:alt => "alt:"+child.ident_plm
 					}
-					unless relation.stop_tree?
+					
 						#LOG.debug (fname){"options=#{options.inspect}"}
 						cnode = Node.new(options)
 						#LOG.debug (fname){"level=#{level} root=#{root} father=#{father} child=#{child} "}
-						follow_tree(root, cnode, child, relations, var_effectivities, level+=1, level_max)
+						unless relation.stop_tree?
+							follow_tree(root, cnode, child, relations, var_effectivities, level+=1, level_max)
+						end
 						#taille du noeud
 						cnode.label+="(#{cnode.size})" if cnode.size>0
 						unless snode.nil?
 						snode << cnode
 						else
 						node << cnode
-					end
+					
 					end
 				else
 				# on parcours la branche sans afficher ce noeud
@@ -573,7 +406,6 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 end
 
 #------------------------------------------------------
-
 # objects created on a project context
 #------------------------------------------------------
 def tree_projowners(node,  father)
@@ -585,6 +417,10 @@ def tree_projowners(node,  father)
 	node
 end
 
+#
+# add objects nodes on a node
+# @param node: the node to update
+# @param objs: objects array to
 def tree_objects(node, objs)
 	if objs.is_a?(Array)
 		objs.each do |obj|
@@ -600,6 +436,11 @@ def tree_objects(node, objs)
 	node
 end
 
+#
+# create a node corresponding to an object
+# @param obj: the object to associate to the node
+# @return the node corresponding to the object
+#
 def tree_object(obj)
 	url={:controller => obj.controller_name, :action => :show, :id => "#{obj.id}"}
 	options={
@@ -616,9 +457,13 @@ end
 
 #
 
-#------------------------------------------------------
+#
 # utilisateurs associes a l'objet
-#------------------------------------------------------
+# complete a node with users nodes associated to an object 
+# @param node: current node
+# @father: the object associated to user(s)
+# @return the completed node
+#
 def tree_users(node, father)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	if father.respond_to? :users
@@ -649,9 +494,13 @@ def tree_users(node, father)
 	node
 end
 
-#------------------------------------------------------
+#
 # roles ou groupes associes a l'objet
-#------------------------------------------------------
+# complete a node with roles or groups nodes associated to an object 
+# @param node: current node
+# @father: the object associated to roles or groups
+# @return the completed node
+# 
 def tree_organization(node, father)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 		#LOG.debug (fname){"#{father.ident} father.childs=#{father.childs}"}
@@ -680,9 +529,14 @@ def tree_organization(node, father)
 	#LOG.debug (fname){"node=#{node.inspect}"}
 	node
 end
-#------------------------------------------------------
+
+#
 # groupes associes a l'objet
-#------------------------------------------------------
+# complete a node with groups nodes associated to an object 
+# @param node: current node
+# @father: the object associated to groups
+# @return the completed node
+#
 def tree_groups(node, father)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	if father.respond_to? :groups
@@ -715,8 +569,11 @@ end
 
 ############################################
 # construction des arbres montants
+# building ascending tree
 ############################################
-
+#
+# build the ascending tree, main method called by controller
+#
 def build_tree_up(obj, view_id)
 	lab=t(:ctrl_object_referencer, :typeobj => t("ctrl_#{obj.model_name}"), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_up", :label => lab ,:open => true})
@@ -728,6 +585,15 @@ def build_tree_up(obj, view_id)
 	tree
 end
 
+#
+# ascending path of the tree , recursive method
+# only one level
+# @param model_name: model name of the father of the node (part/project/customer ...)
+# @param node: current node
+# @param obj: object child of the node
+# @param relations: relations array to take into account
+# @return the node after adding other node(s)
+#
 def follow_father(model_name, node, obj, relations)
 	model=eval model_name.capitalize
 	links=Link.find_fathers(get_model_name(obj), obj,  model_name)
@@ -757,12 +623,21 @@ end
 
 ############################################
 # utilitaires des arbres
+# useful methodes for tree building
 ############################################
 
 #
 # cree un noeud intermediaire pour definir un niveau de regroupement d'objets de meme nature par exemple
+# create an intermediate node in order to group some similar objects 
+# @param id : node id
+# @param title : the label of the node
+# @param icon : the icon
+# @param icon_open : the open icon
+# @param designation 
+# @param open : open (true) or closed (false) at start
+# @return the intermediate node   
 #
-def   tree_level(id, title, icon = nil, icon_open = nil, designation = nil, open = false)
+def tree_level(id, title, icon = nil, icon_open = nil, designation = nil, open = false)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
 	options={
 		:id => id,
@@ -775,6 +650,10 @@ def   tree_level(id, title, icon = nil, icon_open = nil, designation = nil, open
 	cnode = Node.new(options,nil)
 end
 
+#
+# suppress some caracteres not compatible with html
+# transform some caracteres to html tag
+#
 def clean_text_for_tree(txt)
 	txt.gsub!('\n\n','\n')
 	txt.gsub!('\n','<br/>')
@@ -785,14 +664,27 @@ def clean_text_for_tree(txt)
 	txt
 end
 
+#
+# create a html tag for image
+# @param name: image name
+#
 def img(name)
 	"<img class=\"icone\" src=\"/images/#{name}.png\"/>"
 end
 
+#
+# specific cut image
+#
 def img_cut
 	img("cut")
 end
 
+#
+# suppress identical nodes (same id)
+# for example, each instance of an object at diffrent position in the tree become only one node with the count
+# recursive method
+# @param thenode: the node to compute
+# @param level: the current level
 def group_tree(thenode, level)
 	# elimination des doublons avec comptage
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
@@ -834,7 +726,4 @@ def group_tree(thenode, level)
 	thenode
 end
 
-############################################
-# fin des arbres
-############################################
 

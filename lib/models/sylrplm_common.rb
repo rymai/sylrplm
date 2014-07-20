@@ -240,14 +240,29 @@ module Models
 		#
 		# return frozen stat of an object
 		#   return:
+		#     - true if ther is no next or previous status
+		#     - false in other case
+		#
+		def frozen?
+			fname="#{self.class.name}.#{__method__}"
+			st_next = statusobject.next_statusobjects
+			st_previous = statusobject.previous_statusobjects
+			ret = st_next.blank? && st_previous.blank?
+			LOG.info (fname) {"st=#{statusobject.name} st_next=#{statusobject.next_statusobjects} st_previous=#{statusobject.previous_statusobjects} ret=#{ret}"}
+			ret
+		end
+
+		# return frozen stat of an object
+		#   return:
 		#     - true if status is the last of the possibles statues for this object plmtype
 		#     - false in other case
-		def frozen?
+		#
+		def frozen_old?
 			fname="#{self.class.name}.#{__method__}"
 			ret = false
 			unless (self.statusobject.nil? || ::Statusobject.get_last(self).nil?)
-				ret = (self.statusobject.rank == ::Statusobject.get_last(self).rank)
-				#LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self).rank}=#{ret}"}
+			ret = (self.statusobject.rank == ::Statusobject.get_last(self).rank)
+			#LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self).rank}=#{ret}"}
 			end
 			ret
 		end
@@ -467,7 +482,7 @@ module Models
 			if self.respond_to?(strcol)
 				old_value = self.send(strcol)
 				col = ::Sequence.find_col_for(self.class.name, strcol)
-				LOG.debug (fname){"col=#{col}"}
+				#LOG.debug (fname){"col=#{col}"}
 				val = old_value
 				unless col.nil?
 					if col.sequence == true
@@ -477,7 +492,7 @@ module Models
 					else
 					val =  col.value
 					end
-					LOG.debug (fname) {"#{strcol}=#{old_value} to #{val}"}
+				#LOG.debug (fname) {"#{strcol}=#{old_value} to #{val}"}
 				self[strcol] = val
 				#LOG.debug (fname) {"self=#{self.inspect}"}
 				end
@@ -605,7 +620,7 @@ module Models
 
 		def def_user(user)
 			fname= "#{self.class.name}.#{__method__}"
-			LOG.info (fname) {"user=#{user.inspect} "}
+			#LOG.info (fname) {"user=#{user.inspect} "}
 			unless user.nil?
 				#LOG.info (fname) {"user=#{user.ident} "}
 				if self.respond_to? :owner

@@ -28,14 +28,9 @@
 	<legend>
 		<%= t(:legend_link_values, :type => @link.relation.typesobject.name, :name => @link.relation.name) unless @link.relation.nil? %>
 	</legend>
-	<%= render(
-	:partial => "shared/form_json",
-	:locals => {
-	:fields => @link.values,
-	:form_id => form_id,
-	:textarea_name => 'link[values]',
-	:options => {"buttons" => "position"} }
-	) %>
+	
+	<%=	h_render_fields(@link, fonct, "values") %>
+	
 	<%= form.label :owner %>
 	<%= text_field_tag(:owner, @link.owner.login , :readonly => readonly) unless @link.owner.nil? %>
 </fieldset>

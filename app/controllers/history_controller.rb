@@ -22,48 +22,61 @@
 # Made in Japan.
 #++
 require 'ruote/sylrplm/workitems'
+
 class HistoryController < ApplicationController
-  ###before_filter :login_required
-  # GET /history
-  #
-  def index
+	###before_filter :login_required
+	# GET /history
+	#
+	def index
 
-    #puts "history_controller.index:params="+params.inspect
-    opts = { :page => params[:page], :order => 'created_at DESC' }
+		#puts "history_controller.index:params="+params.inspect
+		opts = { :page => params[:page], :order => 'created_at DESC' }
 
-    cs = [
-      :source, :wfid, :event, :participant, :wfname
-    ].inject([[]]) do |a, p|
-      if v = params[p]
-        a.first << "#{p} = ?"
-        a << v
-      end
-      a
-    end
+		cs = [
+			:source, :wfid, :event, :participant, :wfname
+		].inject([[]]) do |a, p|
+			if v = params[p]
+				a.first << "#{p} = ?"
+			a << v
+			end
+			a
+		end
 
-    opts[:conditions] = [ cs.first.join(' AND ') ] + cs[1..-1] \
-    unless cs.first.empty?
-    #puts "HistoryController.index:opts="+opts.inspect
-    @all = (opts[:conditions] == nil)
-    @entries = Ruote::Sylrplm::HistoryEntry.paginate(opts) 
-    @entries.each do |en|
-      en.link_attributes={"relation"=>""}   
-    end
-    # TODO : XML and JSON
-  end
+		opts[:conditions] = [ cs.first.join(' AND ') ] + cs[1..-1] \
 
-  # GET /history
-  # GET /history.xml
-  def show
-    @entry = Ruote::Sylrplm::HistoryEntry.find(params[:id])
-    unless params[:obj_id].nil? || params[:obj_type].nil?
-      @object = PlmServices.get_object(params[:obj_type], params[:obj_id])
-    end
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @entry }
-    end
-  end
+		@entries = nil
+	
+		unless cs.first.empty?
+			#puts "HistoryController.index:opts="+opts.inspect
+			@all = (opts[:conditions] == nil)
+		end
+		puts "HistoryController.index:params="+params.inspect
+		unless params[:fonct].nil?
+			if params[:fonct] = 'on_plm_objects'
+				@entries = Ruote::Sylrplm::HistoryEntry.all
+				puts "HistoryController.index:on_plm_objects:#{@entries.count}"
+			end
+		end
+		@entries = Ruote::Sylrplm::HistoryEntry.paginate(opts) if @entries.nil?
+
+		@entries.each do |en|
+			en.link_attributes={"relation"=>""}
+		end
+	# TODO : XML and JSON
+	end
+
+	# GET /history
+	# GET /history.xml
+	def show
+		@entry = Ruote::Sylrplm::HistoryEntry.find(params[:id])
+		unless params[:obj_id].nil? || params[:obj_type].nil?
+			@object = PlmServices.get_object(params[:obj_type], params[:obj_id])
+		end
+		respond_to do |format|
+			format.html # show.html.erb
+			format.xml  { render :xml => @entry }
+		end
+	end
 
 end
 

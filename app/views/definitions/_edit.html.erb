@@ -21,7 +21,7 @@
 		</tr>
 		<tr>
 			<th><span id="uri_label"><%= f.label t("label_uri")%></span></th>
-			<td><span id="uri_span"> <%= f.text_field :uri %> or <%= link_to_function 'paste a definition', 'showDefinitionBox()' %></span><span id="definition_span" style="display: none;"> <%= f.text_area 'definition' %></span></td>
+		<td><span id="uri_span"> <%= f.text_area :uri %></span></td>
 		</tr>
 		<tr>
 			<th><%= f.label t("label_roles_may_launch") %></th>

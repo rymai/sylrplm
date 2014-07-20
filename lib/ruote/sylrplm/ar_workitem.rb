@@ -71,6 +71,7 @@ module Ruote
 
 			#return associated objects during process
 			def objects
+				fname="ArWorkitem."+__method__.to_s
 				params=self.field_hash[:params]
 				ret=[]
 				unless params.nil?
@@ -78,6 +79,7 @@ module Ruote
 					params.delete(:activity)
 					ret = {:act => activity, :obj => params.values}
 				end
+				LOG.debug (fname) {"objects:params=#{params.inspect} ret=#{ret}"}
 				ret
 			end
 			

@@ -1,12 +1,11 @@
 <h1><%= t("history_list") %></h1>
-<%= will_paginate(@entries) %>
-<%= render(:partial => "history/histories", :object => @entries, :locals => { :fonct => "all", :obj => nil }  ) %>
+<% fonct=params[:fonct]
+fonct="all" if fonct.nil?
+puts "************************* fonct="+fonct%>
+<%= will_paginate(@entries) if fonct=='all' %>
+<%= render(:partial => "history/histories", :object => @entries, :locals => { :fonct => fonct, :obj => nil }  ) %>
 <div class="align-right">
-	<%= @all ? '' : link_to('all', :controller => 'history') %>
+	<%= (@all ? '' : link_to('all', :controller => 'history')) if fonct=='all' %>
 </div>
-<%= will_paginate(@entries) %>
-<div id="help">
-	<p>
-		Listing what happened in the engine.
-	</p>
-</div>
+<%= will_paginate(@entries) if fonct=='all' %>
+

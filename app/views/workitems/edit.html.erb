@@ -30,7 +30,7 @@ workitem_path(@workitem),
 <table>
 	<%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem, :fonct=>"edit" } %>
 	<tr class="nhover">
-		<td colspan="2"> <%= render :partial => 'shared/ruote_forms', :locals => { :fields => @workitem.field_hash , :fonct=>"edit"} %> </td>
+		<td class='nomax' colspan="2"> <%= render :partial => 'shared/ruote_forms', :locals => { :fields => @workitem.field_hash , :fonct=>"edit"} %> </td>
 	</tr>
 	<%= render(:partial => "workitems/wi_links", :locals => { :fonct=>"edit" } ) %>
 </table>

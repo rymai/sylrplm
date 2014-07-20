@@ -1,5 +1,9 @@
 <h1><%=t(:typesobjects_show) %></h1>
-<%= render(:partial => "shared/menu_show", :locals=>{:object => @typesobject, :fonct=>"show"}) %>
+<% fonct="show"
+	form_id = h_form_html_id(@typesobject, fonct) %>
+<% form_for(@typesobject, :html => { :id => form_id }) do |f| %>
+<%= f.error_messages %>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @typesobject, :fonct=>fonct}) %>
 <p>
     <b><%=t(:label_object) %></b>
     <%= @typesobject.forobject %><%=h h_show_translate @typesobject.forobject_translate %>
@@ -14,5 +18,6 @@
 </p>
 <p>
     <b><%=t(:label_fields) %></b>
-    <%=h @typesobject.fields %>
+    <%= h_render_fields(@typesobject, fonct, "fields") %> 
 </p>
+<% end %>

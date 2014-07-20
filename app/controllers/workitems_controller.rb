@@ -24,7 +24,7 @@ class WorkitemsController < ApplicationController
 		@workitems=[]
 		unless @current_user.nil?
 			@query = params[:q] || params[:query]
-			puts "workitems_controller.index:current_user.store_names="+@current_user.store_names.inspect
+			#puts "workitems_controller.index:current_user.store_names="+@current_user.store_names.inspect
 			if @query
 				@workitems = Ruote::Sylrplm::ArWorkitem.search(@query, @current_user.is_admin? ? nil : @current_user.store_names)
 			else
@@ -88,7 +88,7 @@ class WorkitemsController < ApplicationController
 		@workitem = find_ar_workitem
 		@wi_links = @workitem.get_wi_links unless @workitem.nil?
 
-		return error_reply('no workitem', 404) unless @workitem.nil?
+		return error_reply('no workitem', 404) if @workitem.nil?
 
 		respond_to do |format|
 			format.html # => app/views/show.html.erb
@@ -103,7 +103,7 @@ class WorkitemsController < ApplicationController
 	#
 	def update
 		name=self.class.name+"."+__method__.to_s+":"
-		LOG.info (name) {"debut:params="+params.inspect}
+		#LOG.info (name) {"debut:params="+params.inspect}
 		# select du ArWorkitem stocké en base ou sur fichier
 		ar_workitem = find_ar_workitem
 		return error_reply('no workitem', 404) unless ar_workitem
@@ -128,8 +128,8 @@ class WorkitemsController < ApplicationController
 		elsif params[:state] == 'proceeded'
 			LOG.info {name+":debut proceeded:wfid="+params[:wfid]}
 			in_flow_workitem.attributes = workitem.attributes
-			LOG.debug (name) {"ar_workitem="+ar_workitem.inspect}
-			LOG.debug (name) {"in_flow_workitem="+in_flow_workitem.inspect}
+			#LOG.debug (name) {"ar_workitem="+ar_workitem.inspect}
+			#LOG.debug (name) {"in_flow_workitem="+in_flow_workitem.inspect}
 			respond_to do |format|
 				begin
 					RuotePlugin.ruote_engine.reply(in_flow_workitem)
@@ -183,11 +183,19 @@ class WorkitemsController < ApplicationController
 						LOG.info (name){"apres sleep:participant_name=#{in_flow_workitem.participant_name} dispatch=#{ar_workitem.dispatch_time},modified=#{ar_workitem.last_modified}"}
 						LOG.info (name){"apres sleep:ar_workitem=#{ar_workitem.inspect}"}
 						LOG.info (name){"apres sleep:params="+ar_workitem.field_hash[:params].inspect}
-						#puts name+"wi_fields="+ar_workitem.field_hash.inspect
+						puts name+"field_hash="+ar_workitem.field_hash.inspect
+						puts name+"wi_fields="+ar_workitem.wi_fields.inspect
 						#puts name+"activity="+ar_workitem.activity.inspect
 						#puts name+"keywords="+ar_workitem.keywords.inspect
 						# sauve history
-						history_created = history_log('proceeded', :fei => in_flow_workitem.fei, :participant => in_flow_workitem.participant_name, :tree => tree.to_json, :message => ar_workitem.objects )
+						history_created = history_log('proceeded', 
+							:fei => in_flow_workitem.fei, 
+							:participant => in_flow_workitem.participant_name, 
+							:tree => tree.to_json, 
+							:message => ar_workitem.objects,
+							:wi_fields => ar_workitem.field_hash.to_json)
+						#LOG.info (name){"history_created=#{history_created}"}
+						LOG.info (name){"history_created:#{history_created.id} wi_fields=#{history_created.wi_fields}"}
 						unless history_created.nil?
 							create_links(ar_workitem, params[:wfid], history_created)
 							if history_created.errors.count == 0
@@ -237,7 +245,7 @@ class WorkitemsController < ApplicationController
 				format.html { redirect_to :action => 'index'}
 			end
 		end
-		LOG.info {name+"fin"}
+		#LOG.info {name+"fin"}
 	end
 
 	def destroy
@@ -267,8 +275,11 @@ class WorkitemsController < ApplicationController
 		fname="WorkitemsController.#{__method__}"
 		sleep 0.3
 		ar_workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid_and_expid(params[:wfid], OpenWFE.to_dots(params[:expid])) unless params[:expid].nil?
+		if ar_workitem.nil?
+			ar_workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid(params[:id]) unless params[:id].nil? 
+		end
 		ret=current_user.may_see?(ar_workitem) ? ar_workitem : nil unless ar_workitem.nil?
-		LOG.debug (fname) {"ar_workitem=#{ret.inspect}"}
+		#LOG.debug (fname) {"params=#{params} ar_workitem=#{ret.inspect}"}
 		ret
 	end
 
@@ -309,8 +320,11 @@ class WorkitemsController < ApplicationController
 	def create_links(cur_wi, wfid, history)
 		fname="WorkitemsController."+__method__.to_s+":"
 		#puts fname+"cur_wi="+cur_wi.id.to_s+":"+cur_wi.wfid.to_s+":"+cur_wi.expid.to_s
-		params = cur_wi.field_hash[:params]
-		LOG.debug (fname){"params="+params.inspect}
+		LOG.debug (fname){"wfid=#{wfid} "}
+		#LOG.debug (fname){"history=#{history}"}
+		#LOG.debug (fname){"field_hash=#{cur_wi.field_hash}"}
+		params = cur_wi.field_hash["params"]
+		LOG.debug (fname){"params=#{params}"}
 		unless params.nil?
 			params.keys.each do |url|
 				v = params[url]
@@ -339,10 +353,10 @@ class WorkitemsController < ApplicationController
 									end
 								end
 							else
-								history.errors.add "Pas de relation de nom '#{relation_name}'"
+								history.errors.add "No relation with name='#{relation_name}'"
 							end
 						else
-							history.errors.add "Objet non trouve: '#{cls}.#{id}'"
+							history.errors.add "Object not found: '#{cls}.#{id}'"
 						end
 					end
 				end
@@ -355,7 +369,7 @@ class WorkitemsController < ApplicationController
 		fname = "WorkitemsController."+__method__.to_s+":"
 		relation = Relation.by_values_and_name(workitem.model_name, item.model_name, workitem.model_name, item.typesobject.name, relation_name)
 		if relation.nil?
-			msg = "Pas de relation de nom '#{relation_name}' pour workitem:#{workitem} et item:#{item}"
+			msg = "No relation '#{relation_name}' for workitem:#{workitem} and item:#{item}"
 			LOG.debug (fname) {msg}
 		workitem.errors.add msg
 		end

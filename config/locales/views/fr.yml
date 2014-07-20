@@ -87,6 +87,19 @@ fr:
   faq_answer: Réponse
   updated_at: Mis à jour
   id: Id
+  # histories
+  label_history_since: Depuis
+  label_history_source: Source
+  label_history_event: Evénement
+  label_history_wfid: Identifiant
+  label_history_wfname: Nom
+  label_history_wfrev: Revision
+  label_history_fei: Etape
+  label_history_participant: Participant
+  label_history_message: Message
+  label_history_tree: Parcours
+  label_history_plm_objects: Objet concerné
+  label_history_explore: Voir
   # messages
   msg_no_item_to_display: Il n'y a rien à afficher.
   msg_confirm: Etes vous sûr ?
@@ -247,6 +260,10 @@ fr:
   datafile_without_file: Pas de fichier
   sylrplm_files_list: Liste des fichiers
   # definitions
+  definition_simple_sequence: Séquence simple
+  definition_leave_request: Sortie
+  definition_*embedded*: embedded
+  definition_*untracked*: untracked
   legend_definition: Renseignez les propriétés de la définition de processus
   label_process_definition: Définition du processus
   label_uri: URI

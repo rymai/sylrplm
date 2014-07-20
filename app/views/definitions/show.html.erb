@@ -11,14 +11,15 @@
 	</tr>
 	<tr>
 		<td><%= t("label_uri")%></td>
-		<td><%= link_to h(@definition.uri), @definition.full_uri %></td>
+		<td><%= h truncate(@definition.uri, :length => 40)  %></td>
 	</tr>
 	<tr>
 		<td><%= t("label_created_at")%></td>
 		<td><%= h @definition.created_at %></td>
 	</tr>
 	<tr>
-		<td><%= t("label_updated_at")%></td><td><%= h @definition.updated_at %></td>
+		<td><%= t("label_updated_at")%></td>
+		<td><%= h @definition.updated_at %></td>
 	</tr>
 	<tr>
 		<td><%= t("label_launch_fields")%></td>

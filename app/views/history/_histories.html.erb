@@ -1,23 +1,31 @@
 <table class="coll">
 	<tr>
 		<% if admin_logged_in? %> <th> <%= t("label_id")%> </th>
-		<% end %> <th>date</th>
-		<th>since</th>
-		<th>source</th>
-		<th>event</th>
-		<th>wfid</th>
-		<th>wfname</th>
-		<th>wfrev</th>
-		<th>fei</th>
-		<th>participant</th>
-		<th>message</th>
-		<th>tree</th>
-		<th>explore</th>
+		<% end %> <th><%= h t(:label_date)%></th>
+		<th><%= h t(:label_history_since)%></th>
+		<th><%= h t(:label_history_source)%></th>
+		<th><%= h t(:label_history_event)%></th>
+		<th><%= h t(:label_history_wfid)%></th>
+		<th><%= h t(:label_history_wfname)%></th>
+		<th><%= h t(:label_history_wfrev)%></th>
+		<th><%= h t(:label_history_fei)%></th>
+		<th><%= h t(:label_history_participant)%></th>
+		<th><%= h t(:label_history_message)%></th>
+		<th><%= h t(:label_history_tree)%></th>
+		<% if fonct != 'show_only' %>
+		<th><%= h t(:label_history_plm_objects)%></th>
+		<% end %>
+		<th><%= h t(:label_history_explore)%></th>
 	</tr>
 	<% histories.each do |entry|
 	fei = entry.full_fei
 	sfei = fei ? "#{fei.sub_instance_id} #{fei.expname} #{fei.expid}" : ''
-	cat = entry.created_at.to_s %>
+	cat = entry.created_at.to_s 
+	plm_objects=entry.plm_objects 
+	ok = true
+	ok = false if (fonct=='on_plm_objects' && plm_objects.count ==0)
+	puts "******************** fonct="+fonct+" plmobjects=#{plm_objects.count}"
+	if ok %>
 	<tr class='<%= cycle("even", "odd") %>'>
 		<% if admin_logged_in? %> <td> <%= entry.id %> </td>
 		<% end %> <td class="created_at" title="<%= cat %>"><%= cat[0..18] %></td>
@@ -29,13 +37,17 @@
 		<td class="wrevision"><%= h entry.wfrevision %></td>
 		<td class="fei"><%= sfei %></td>
 		<td class="participant"><%= view_link(entry, :participant) %></td>
-		<td class="message" title="<%= h entry.message %>"><%= h truncate(entry.message, :length => 25) %></td>
+		<td class="message" title="<%= h entry.message %>"><%= h truncate(entry.message, :length => 40) %></td>
 		<td class="tree"><%= entry.tree.size.to_s+" car" unless entry.tree.nil? %></td>
+		<% if fonct != 'show_only' %>
+		<td><%= comma_links(plm_objects, :ident) %></td>
+		<% end %>
 		<td> <% if obj.nil? %>
 		<%= link_to h_img_show.to_s, history_path(entry) %>
 		<%else%>
 		<%= link_to h_img_show.to_s, history_path(entry, :obj_id=>obj, :obj_type=>obj.model_name) %>
 		<% end %> </td>
 	</tr>
+	<% end %>
 	<% end %>
 </table>

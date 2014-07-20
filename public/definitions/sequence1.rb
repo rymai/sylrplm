@@ -1,4 +1,3 @@
-
 class Sequence1 < OpenWFE::ProcessDefinition
   description "a tiny sequence"
   sequence do
@@ -6,4 +5,5 @@ class Sequence1 < OpenWFE::ProcessDefinition
     participant 'bob'
   end
 end
+
 

@@ -15,14 +15,7 @@
 	<br/>
 	<%= h_input_domain(f) %>
 	<br />
-	<!--:<%= @typesobject.fields%>:<%= @typesobject.fields == "\"\""%>-->
-	<%= render(
-	:partial => "shared/form_json",
-	:locals => {
-	:fields => @typesobject.fields ,
-	:form_id => form_id,
-	:textarea_name => 'typesobject[fields]',
-	:options => {"buttons" => "all"} }
-	) %>
+	
+	<%= h_render_fields(@typesobject, fonct, "fields") %>
 	
 </fieldset>

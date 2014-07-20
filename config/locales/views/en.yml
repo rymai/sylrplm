@@ -87,6 +87,19 @@ en:
   faq_answer: answer
   updated_at: Updated at
   id: Id
+  # histories
+  label_history_since: Sin d
+  label_history_source: Source
+  label_history_event: Event
+  label_history_wfid: Identifiant
+  label_history_wfname: Name
+  label_history_wfrev: Revision
+  label_history_fei: Step
+  label_history_participant: Participant
+  label_history_message: Messag
+  label_history_tree: Tree
+  label_history_plm_objects: Concerned Object
+  label_history_explore: Explore
   # messages
   msg.no_item_to_display: "There are no items to display."
   msg_confirm: Are you sure?
@@ -247,6 +260,10 @@ en:
   datafile_without_file: No file
   sylrplm_files_list: Files list 
   # definitions
+  definition_simple_sequence: Simple sequence
+  definition_leave_request: Leave request
+  definition_*embedded*: embedded
+  definition_*untracked*: untracked
   legend_definition: Enter definition details
   label_process_definition: Processus definition
   label_uri: URI

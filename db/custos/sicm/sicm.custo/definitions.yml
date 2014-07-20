@@ -1,55 +1,243 @@
-Definition_1:
+
+Definition_1: 
   id: "1"
   name: "*embedded*"
   description: the right to start processes embedded in launch items
-  uri:
-  launch_fields:
+  uri: 
+  launch_fields: 
   domain: admin
 
-Definition_2:
+Definition_2: 
   id: "2"
   name: "*untracked*"
   description: the right to launch processes from any URI
-  uri:
-  launch_fields:
+  uri: 
+  launch_fields: 
   domain: admin
 
-Definition_3:
+Definition_3: 
   id: "3"
-  name: simple sequence
+  name: simple_sequence
   description: a simple sequence
-  uri: sequence1.rb
-  launch_fields:
+  uri: |-
+    class SimpleSequence < OpenWFE::ProcessDefinition
+      description "a tiny sequence"
+      sequence do
+        participant 'admin'
+        participant 'bob'
+      end
+    end
+  launch_fields: 
   domain: admin
 
-Definition_4:
+Definition_4: 
   id: "4"
-  name: leave request
+  name: leave_request
   description: may I leave the office ?
-  uri: leave_request1.rb
+  uri: |
+    #
+    # an example of a Ruby process definition, for a small
+    # leave request application.
+    #
+    class LeaveRequest1 < OpenWFE::ProcessDefinition
+      description "requesting some time off"
+      #
+      # setting some fields and variables right at the beginning of the
+      # process
+      #
+      # setting some "aliases" : the process definition won't mention
+      # users by their login names directly, but by their function
+      set :v => "employee", :value => "${launcher}"
+      set :v => "assistant", :value => "bob"
+      set :v => "boss", :value => "alice"
+      #
+      # the 'body' of the process definition
+      #
+      sequence do
+        #
+        # the first participant is the employee (the user who
+        # launched the process)
+        #
+        set :f => "comment", :value => "cccc"
+        employee
+        #
+        # now setting some fields that the assistant and perhaps
+        # the boss will fill.
+        #
+        set :f => "granted", :value => "false"
+        set :f => "not_enough_info", :value => "true"
+        set :f => "boss_should_have_a_look", :value => "true"
+        assistant
+        #
+        # if the assistant set the field 'boss_should_have_a_look',
+        # then the process will head to the boss desk
+        #
+        boss :if => "${f:boss_should_have_a_look}"
+        #
+        # employee gets the answer to his request
+        #
+        employee
+      end
+    end
+
   launch_fields: "{\"employee\":\"\",\"from_date\":\"\",\"to_date\":\"\",\"reason\":\"\"}"
   domain: admin
 
-Definition_5:
-  id: "5"
-  name: revision
-  description: Revision d un objet PLM
-  uri: /definitions/revise.rb
-  launch_fields: "{}"
-  domain: custo.sicm
-
-Definition_6:
-  id: "6"
-  name: promotion
-  description: Promotion d un objet PLM
-  uri: /definitions/promote.rb
-  launch_fields: "{}"
-  domain: custo.sicm
-  
 Definition_7: 
   id: "7"
+  name: promotion-part
+  description: promote a part of any type and any status
+  uri: |-
+    class PLMPromotePart < OpenWFE::ProcessDefinition
+    	description "Promotion of a part"
+    	set :v => "demandeur", :value => "${f:launcher}"
+    	set :v => "reviewer1", :value => "creator"
+    	set :v => "reviewer2", :value => "designer"
+    	set :v => "valideur", :value => "valider"
+    	#set :v => "publish", :value => "assistant"
+    	cursor do
+    		set :f => "comment_createur", :value => "comment demandeur"
+    		demandeur :activity =>  "Copier objet(s), Commenter"
+    		back :unless => '${f:comment_createur} != ""'
+    		plm Ruote::PlmParticipant, :task => "promote", :step => "init", :relation => "applicable"
+    		plm Ruote::PlmParticipant, :task => "promote", :step => "review", :relation => "reference"
+    		set :f => "ok", :value => "true"
+    		set :f => "comment_valideur", :value => "comment valideur"
+    		valideur :activity =>"commenter puis valider (ok=true) ou (ok=false) non ce document"
+    		back :if =>  '${f:ok} == false' && '${f:comment_valideur} == ""'
+    		# back to the reviewers if editor not happy
+    		rewind :unless =>  '${f:ok}'
+    		plm Ruote::PlmParticipant, :task => "promote", :step => "exec", :relation => "applicable"
+    	end
+    end
+  launch_fields: "{\"employee\":\"\",\"reason\":\"\"}"
+  domain: admin
+
+Definition_6: 
+  id: "6"
+  name: promotion-document-ready-approved
+  description: promote a document of any type from ready to approved
+  uri: |-
+    class PLMPromoteDocumentReadyApproved < OpenWFE::ProcessDefinition
+    	description "Promotion document PLM"
+    	set :v => "demandeur", :value => "${f:launcher}"
+    	set :v => "reviewer1", :value => "creator"
+    	set :v => "reviewer2", :value => "designer"
+    	set :v => "valideur", :value => "valider"
+    	cursor do
+    		set :f => "comment_createur", :value => "comment demandeur"
+    		demandeur :activity =>  "Copier objet(s), Commenter"
+    		back :unless => '${f:comment_createur} != ""'
+    		plm Ruote::PlmParticipant, :task => "promote", :step => "init", :relation => "applicable"
+    		# taches paralleles, quorum=1
+    		set :f => "comment_relecteur", :value => "comment relecteur"
+    		concurrence :count => 1 do
+    			reviewer1 :activity => "-Copier objet(s) \n-Relire le document applicable\n-Commenter"
+    			reviewer2 :activity => "-Copier objet(s) \n-Relire le document applicable\n-Commenter"
+    		end
+    		back :unless => '${f:comment_relecteur} != ""'
+    		plm Ruote::PlmParticipant, :task => "promote", :step => "review", :relation => "reference"
+    		set :f => "ok", :value => "true"
+    		set :f => "comment_valideur", :value => "comment valideur"
+    		valideur :activity =>"commenter puis valider (ok=true) ou (ok=false) non ce document"
+    		back :if =>  '${f:ok} == false' && '${f:comment_valideur} == ""'
+    		# back to the reviewers if editor not happy
+    		rewind :unless =>  '${f:ok}'
+    		plm Ruote::PlmParticipant, :task => "promote", :step => "exec", :relation => "applicable"
+    	end
+    end
+  launch_fields: "{\"employee\":\"\",\"reason\":\"\"}"
+  domain: sicm.custo
+
+Definition_8: 
+  id: "8"
   name: validate_user
   description: Validate a new user
-  uri: public/definitions/validate_user.rb
+  uri: |-
+    class ValidateUser < OpenWFE::ProcessDefinition
+      description "Validation of a PLM user"
+      set :v => "admin", :value => "admin"
+      set :v => "valider", :value => "admin"
+      cursor do
+        set :f => "comment", :value => "comment"
+        admin :activity =>  "Edit user to add projects, roles and groups"
+        back :if => '${f:comment} == ""'
+        plm Ruote::PlmParticipant, :task => "validate_user", :step => "init", :relation => "applicable"
+        set :f => "ok", :value => "true"
+        set :f => "comment_valider", :value => "comment valider"
+        valider :activity =>"Comment and validate (ok=true) ou (ok=false) non ce user"
+        plm Ruote::PlmParticipant, :task => "validate_user", :step => "exec", :relation => "applicable"
+        back :if =>  '${f:ok} == false' && '${f:comment_valideur} == ""'
+        rewind :unless =>  '${f:ok}'
+      end
+    end
   launch_fields: 
-  domain: admin
+  domain: sicm.custo
+
+Definition_10: 
+  id: "10"
+  name: revision
+  description: revise any objects
+  uri: |-
+    class PLMRevise < OpenWFE::ProcessDefinition
+    	description "Revision objet PLM"
+    	set :v => "demandeur", :value => "${f:launcher}"
+    	set :v => "valideur", :value => "valider"
+    	cursor do
+    	#filter "protected_priorite", :type => "number", :in => [1,2,3]
+    	#set :f => "protected_priorite", :value => 1
+    	#set :f => "protected_comment", :value => ""
+    	#jump :to => 'partdocument'
+    		set :f => "comment_createur", :value => "commentaire demandeur"
+    		demandeur :activity =>  "Copier objet(s), Commenter"
+    		back :unless => '${f:comment_createur} != ""'
+    		#_redo :ref => 'createur', :unless => '${f:comment} != "" '
+    		plm Ruote::PlmParticipant, :task=>"revise",:step=>"init", :relation => "applicable"
+    		set :f => "ok", :value => "true"
+    		set :f => "comment_valideur", :value => "commentaire valideur"
+    		valideur :activity => "Commentez puis validez (true) ou non (false)"
+    		back :if =>  '${f:ok} == false' && '${f:comment_valideur} == ""'
+    		# back to the reviewers if editor not happy
+    		rewind :unless =>  '${f:ok}'
+    		plm Ruote::PlmParticipant, :task=>"revise", :step=>"exec", :relation => "applicable"
+    	end
+    end
+  launch_fields: 
+  domain: sicm.custo
+
+Definition_5: 
+  id: "5"
+  name: promotion
+  description: promote any objects
+  uri: |-
+    class PLMPromote < OpenWFE::ProcessDefinition
+    	description "Promotion objet PLM"
+    	set :v => "demandeur", :value => "${f:launcher}"
+    	set :v => "reviewer1", :value => "creator"
+    	set :v => "reviewer2", :value => "designer"
+    	set :v => "valideur", :value => "valider"
+    	#set :v => "publish", :value => "assistant"
+    	cursor do
+    		set :f => "comment_createur", :value => "comment demandeur"
+    		demandeur :activity =>  "Copier objet(s), Commenter"
+    		back :unless => '${f:comment_createur} != ""'
+    		plm Ruote::PlmParticipant, :task => "promote", :step => "init", :relation => "applicable"
+    		# taches paralleles, quorum=1
+    		set :f => "comment_relecteur", :value => "comment relecteur"
+    		concurrence :count => 2 do
+    			reviewer1 :activity => "-Copier objet(s) \n-Relire le document applicable\n-Commenter"
+    			reviewer2 :activity => "-Copier objet(s) \n-Relire le document applicable\n-Commenter"
+    		end
+    		back :unless => '${f:comment_relecteur} != ""'
+    		plm Ruote::PlmParticipant, :task => "promote", :step => "review", :relation => "reference"
+    		set :f => "ok", :value => "true"
+    		set :f => "comment_valideur", :value => "comment valideur"
+    		valideur :activity =>"commenter puis valider (ok=true) ou (ok=false) non ce document"
+    		back :if =>  '${f:ok} == false' && '${f:comment_valideur} == ""'
+    		# back to the reviewers if editor not happy
+    		rewind :unless =>  '${f:ok}'
+    		plm Ruote::PlmParticipant, :task => "promote", :step => "exec", :relation => "applicable"
+    	end
+    end
+  launch_fields: "{\"employee\":\"\",\"reason\":\"\"}"
+  domain: sicm.custo

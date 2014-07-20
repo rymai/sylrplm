@@ -44,7 +44,6 @@
 	<%= f.label t("label_responsible") %>
 	<%= select_in_list(:datafile, :owner, @datafile.owner.login, :users) %>
 	<br/>
-
 	<%= h_type_values(@datafile, fonct) %>
 	<%= h_input_domain(f) %>
 	<br />

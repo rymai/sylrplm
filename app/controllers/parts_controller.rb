@@ -136,7 +136,6 @@ class PartsController < ApplicationController
 		if commit_promote?
 			ctrl_promote(@part)
 		end
-
 		if commit_demote?
 			ctrl_demote(@part)
 		end

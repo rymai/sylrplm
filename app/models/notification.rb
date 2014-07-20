@@ -94,7 +94,7 @@ class Notification < ActiveRecord::Base
 
 	def self.notify_all(id)
 		fname = "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"id=#{id}"}
+		LOG.debug (fname) {"begin id=#{id}"}
 		from = User.find_by_login(PlmServices.get_property(:USER_ADMIN))
 		ret=[]
 		# all notifications send for all users
@@ -122,8 +122,9 @@ class Notification < ActiveRecord::Base
 		#	notif.update_attributes({:notify_date => Time.now})
 		#end
 		ret.each do |nnn|
-			LOG.debug (fname){"id=#{id} ret:user=#{nnn[:user]} subscription=#{user.subscription} cnt=#{nnn[:count]} msg=#{nnn[:msg]}"}
+			LOG.debug (fname){"id=#{id} ret:user=#{nnn[:user]} subscription=#{nnn[:user].subscription} cnt=#{nnn[:count]} msg=#{nnn[:msg]}"}
 		end
+		LOG.debug (fname) {"end id=#{id} "}
 		ret
 	end
 
@@ -217,7 +218,7 @@ class Notification < ActiveRecord::Base
 
 	def self.send_notifications(to_notify, from, user)
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.info(name){to_notify.count.to_s+" notification to send for "+user.login}
+		LOG.info(name){"#{to_notify.count} notification to send for #{user.login}"}
 		txt = nil
 		if to_notify.count > 0
 			#puts to_notify.inspect

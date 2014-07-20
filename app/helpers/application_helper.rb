@@ -483,32 +483,16 @@ module ApplicationHelper
 				unless objfields.nil?
 					#LOG.info (fname){"fields=#{objfields}"}
 					case fonct
-					when "show"
-						buttons="none"
 					when "edit"
-						buttons="position"
 						if obj.type_values.nil?
 						obj.type_values=objfields
 						end
-					when "define"
-						buttons="all"
-					else
-					buttons="none"
 					end
-					#syl pour voir
-					###buttons="all"
 					unless obj.type_values.nil?
 						ret+="<fieldset><legend>"
 						ret+=t(:legend_type_values)
 						ret+="</legend>"
-						ret+= render(
-		:partial => "shared/form_json",
-		:locals => {
-		:fields => obj.type_values,
-		:form_id => h_form_html_id(obj, fonct),
-		:textarea_name => obj.model_name+"[type_values]",
-		:options => {"buttons" => buttons} }
-		)
+						ret+= h_render_fields(obj, fonct, "type_values")
 						#options: all, position, none
 						ret+="</fieldset>"
 					end
@@ -517,10 +501,61 @@ module ApplicationHelper
 		end
 		ret
 	end
-
+	
+	def h_history_fields(obj, fonct)
+		history_fields=obj.wi_fields
+		puts "application_helper.h_history_fields:history_fields="+history_fields
+		ret=""
+		unless history_fields.nil?
+			ret+="<fieldset><legend>"
+			ret+=t(:legend_wi_fields)
+			ret+="</legend>"
+			ret+= h_render_fields(obj, fonct, "wi_fields")
+			ret+="</fieldset>"
+		else
+			ret=t("history_no_fields")
+		end
+		puts "********************ret="+ret
+		ret
+	end
+			
+	def h_render_fields(obj, fonct, method)
+		fname=self.class.name+"."+__method__.to_s
+		LOG.info (fname){"obj=#{obj} fonct=#{fonct} method=#{method}"}
+		fields = obj.send(method)
+		case fonct
+			when "show"
+				buttons="none"
+				edit_key=false
+				edit_value=false
+			when "edit"
+				buttons="position"
+				edit_key=false
+				edit_value=true
+			when "define"
+				buttons="all"
+				edit_key=true
+				edit_value=true
+			else
+			buttons="none"
+			edit_key=false
+			edit_value=false
+		end
+		ret=render(
+			:partial => "shared/form_json",
+			:locals => {
+				:fields => fields,
+				:form_id => h_form_html_id(obj, fonct),
+				:textarea_name => "#{obj.model_name}[#{method}]",
+				:options => {"buttons" => buttons, "edit_key" => edit_key, "edit_value" => edit_value } 
+			}
+		)
+		ret
+	end
+	
 	# renvoi l'identifiant du formulaire en fonction de l'objet et de la fonction demandee
 	def h_form_html_id(obj, fonct)
-		fonct+"_"+obj.model_name
+		"#{fonct}_#{obj.model_name}"
 	end
 
 	#

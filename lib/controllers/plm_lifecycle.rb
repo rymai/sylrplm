@@ -44,51 +44,71 @@ def ctrl_promote(a_object, withMail=true)
 		email_ok=current_user.may_send_email?
 	end
 	respond_to do |format|
-		if email_ok==true
-			#LOG.debug (fname){"promote_by_action?=#{object.promote_by_action?}"}
-			if a_object.promote_by_action?
-				ctrl_create_process("promotion", a_object)
-			else
-				current_rank = a_object.statusobject.name
-				a_object.next_status_id = params[a_object.model_name][:next_status_id]
-				#LOG.debug (fname){"current_rank=#{current_rank} current_id=#{a_object.statusobject} next_status_id=#{a_object.next_status_id}"}
-				a_object.promote
-				new_rank = a_object.statusobject.name
-				if a_object.save
-					if withMail==true
-						askUserMail=a_object.owner.email
-						email=nil
-						#validers=User.find_validers
-						#if a_object.could_validate?
-						#	validersMail=PlmMailer.listUserMail(validers)
-						#	email=PlmMailer.create_docToValidate(a_object, current_user, @urlbase, validersMail)
-						#end
-						validers=[]#TODO pour test
-						validersMail = PlmMailer.listUserMail(validers, current_user)
-						email=PlmMailer.create_docValidated(a_object, current_user, @urlbase, askUserMail, validersMail)
-						if(email != nil)
-							email.set_content_type("text/html")
-							PlmMailer.deliver(email)
-						end
+		if ctrl_update_lifecycle(a_object)
+			flash[:notice] = t(:ctrl_object_updated, :typeobj => t("ctrl_#{a_object.model_name}"), :ident => a_object.ident)
+			if email_ok==true
+				#LOG.debug (fname){"promote_by_action?=#{object.promote_by_action?}"}
+				if a_object.promote_by_action?
+					st_from = a_object.statusobject.name
+					unless a_object.next_status.nil?
+					st_next = a_object.next_status.name
 					end
-					flash[:notice] = t(:ctrl_object_promoted,:typeobj =>t(:ctrl_.to_s+a_object.class.name.downcase!),:ident=>a_object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>nil)
-					format.html { render :action => "edit_lifecycle" }
-					format.xml  { head :ok }
+					ctrl_create_process(format, "promotion", a_object, st_from, st_next)
 				else
-					flash[:notice] = t(:ctrl_object_not_promoted,:typeobj =>t(:ctrl_.to_s+a_object.class.name.downcase!),:ident=>a_object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>validersMail)
-					format.html { render :action => "edit_lifecycle" }
-					format.xml  { render :xml => a_object.errors, :status => :unprocessable_entity }
+					current_rank = a_object.statusobject.name
+					a_object.next_status_id = params[a_object.model_name][:next_status_id]
+					#LOG.debug (fname){"current_rank=#{current_rank} current_id=#{a_object.statusobject} next_status_id=#{a_object.next_status_id}"}
+					a_object.promote
+					new_rank = a_object.statusobject.name
+					if a_object.save
+						if withMail==true
+							askUserMail=a_object.owner.email
+							email=nil
+							#validers=User.find_validers
+							#if a_object.could_validate?
+							#	validersMail=PlmMailer.listUserMail(validers)
+							#	email=PlmMailer.create_docToValidate(a_object, current_user, @urlbase, validersMail)
+							#end
+							validers=[]#TODO pour test
+							validersMail = PlmMailer.listUserMail(validers, current_user)
+							email=PlmMailer.create_docValidated(a_object, current_user, @urlbase, askUserMail, validersMail)
+							if(email != nil)
+								email.set_content_type("text/html")
+								PlmMailer.deliver(email)
+							end
+						end
+						flash[:notice] += "<br/>"+t(:ctrl_object_promoted,:typeobj =>t(:ctrl_.to_s+a_object.class.name.downcase!),:ident=>a_object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>nil)
+						format.html { render :action => "edit_lifecycle" }
+						format.xml  { head :ok }
+					else
+						flash[:error] = t(:ctrl_object_not_promoted,:typeobj =>t(:ctrl_.to_s+a_object.class.name.downcase!),:ident=>a_object.ident,:current_rank=>current_rank,:new_rank=>new_rank,:validersMail=>validersMail)
+						format.html { render :action => "edit_lifecycle" }
+						format.xml  { render :xml => a_object.errors, :status => :unprocessable_entity }
+					end
 				end
+			else
+				flash[:notice] = t(:ctrl_user_no_email,:user=>current_user.login)
+				format.html { render :action => "edit_lifecycle" }
+				format.xml  { render :xml => a_object.errors, :status => :unprocessable_entity }
 			end
 		else
-			flash[:notice] = t(:ctrl_user_no_email,:user=>current_user.login)
+			flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_document), :ident => @document.ident)
 			format.html { render :action => "edit_lifecycle" }
 			format.xml  { render :xml => a_object.errors, :status => :unprocessable_entity }
 		end
 	end
 end
 
-def ctrl_demote(a_object, withMail=true)
+def ctrl_update_lifecycle(a_object)
+	if a_object.update_attributes(params[a_object.model_name])
+	ret=true
+	else
+	ret=false
+	end
+	ret
+end
+
+def ctrl_demote(a_object, withMail=true, st_from=nil, st_next=nil)
 	fname= "#{self.class.name}.#{__method__}"
 	#LOG.debug (fname){"params=#{params.inspect}"}
 	email_ok=true
@@ -96,10 +116,15 @@ def ctrl_demote(a_object, withMail=true)
 		email_ok=current_user.may_send_email?
 	end
 	respond_to do |format|
+		ctrl_update_lifecycle(a_object)
 		if email_ok==true
 			#LOG.debug (fname){"promote_by_action?=#{object.promote_by_action?}"}
 			if a_object.demote_by_action?
-				ctrl_create_process("demotion")
+				st_from = a_object.statusobject.name
+				unless a_object.next_status.nil?
+				st_previous = a_object.previous_status.name
+				end
+				ctrl_create_process(format, "promotion", a_object, st_from, st_previous)
 			else
 				current_rank = a_object.statusobject.name
 				a_object.previous_status_id = params[a_object.model_name][:previous_status_id]
@@ -140,14 +165,15 @@ def ctrl_demote(a_object, withMail=true)
 	end
 end
 
-def ctrl_create_process(process_name, a_object)
+def ctrl_create_process(format, process_name, a_object, value1, value2)
 	fname= "#{self.class.name}.#{__method__}"
 	# run the promote process
-	@definition = Definition.find_by_name(process_name)
-	params[:definition_id]=@definition.id
-	li = parse_launchitem
-	options = { :variables => { 'launcher' => @current_user.login } }
 	begin
+		@definition = Definition.get_by_process_name(process_name, a_object, value1, value2)
+		params[:definition_id] = @definition.id
+		li = parse_launchitem
+		options = { :variables => { 'launcher' => @current_user.login } }
+
 		fei = RuotePlugin.ruote_engine.launch(li, options)
 		LOG.info (fname) {" fei("+fei.wfid+") launched options="+options.to_s}
 		headers['Location'] = process_url(fei.wfid)

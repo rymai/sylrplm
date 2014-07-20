@@ -1,5 +1,7 @@
 <h1><%= t(:part_show) %></h1>
-<%= render(:partial => "shared/menu_show", :locals=>{:object => @part, :fonct=>"show"}) %>
+<% fonct="show"%>
+<% form_for(@part, :html => { :id => h_form_html_id(@part, fonct) }) do |f| %>
+<%= f.error_messages %><%= render(:partial => "shared/menu_show", :locals=>{:object => @part, :fonct=>"show"}) %>
 <% fonct="show" %>
 <% form_for(@part, :html => { :id => h_form_html_id(@part, fonct) }) do |f| %>
 <%= f.error_messages %>
@@ -57,7 +59,7 @@
 </table>
 <h1></h1>
 <%= render(:partial => "shared/object_workitems", :object =>@part) %>
-
+<%= h_type_values(@part, fonct) %>
 <table class='menu_bas'>
 	<% unless @favori.get('document').count==0 || @part.relations(:document).count==0 %>
 	<tr>
@@ -81,3 +83,4 @@
 	</tr>
 	<% end %>
 </table>
+<% end %>

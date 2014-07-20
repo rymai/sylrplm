@@ -1,42 +1,24 @@
 <% if !@wi_links.nil? && @wi_links.count>0 %>
 <tr>
-    <td>
-    <table>
-        <tr>
-            <td>
-                <%=t(:label_objects)%>
-            </td>
-        </tr>
-        <tr>
-            <th class="nhover">
-                <%=t(:label_relation)%>
-            </th>
-            <th class="nhover">
-                <%=t(:label_type)%> 
-            </th>
-            <th class="nhover">
-                <%=t(:label_designation)%>
-            </th>
-            <th>
-                <%=t(:label_ident)%>
-            </th>
-        </tr>
-        <% for link in @wi_links %>
-        <tr class='<%= cycle("even", "odd") %>'>
-            <td class="nhover">
-                <%= h(link[:link].relation_name) %>
-            </td>
-            <td class="nhover">
-                <%= h(link[:link].child_plmtype) %>
-            </td>
-            <td class="nhover">
-                <%= h(link[:typeobj].designation) %>
-            </td>
-            <td class="nhover">
-                <%= link_to h(link[:typeobj].ident), link[:typeobj] %>
-            </td>
-        </tr>
-        <%end %>
-    </table>
+	<td>
+	<table>
+		<tr>
+			<td> <%= t(:label_objects)%> </td>
+		</tr>
+		<tr>
+			<th class="nhover"> <%= t(:label_relation)%> </th>
+			<th class="nhover"> <%= t(:label_type)%> </th>
+			<th class="nhover"> <%= t(:label_designation)%> </th>
+			<th> <%= t(:label_ident)%> </th>
+		</tr>
+		<% for link in @wi_links %>
+		<tr class='<%= cycle("even", "odd") %>'>
+			<td class="nhover"> <%= h(link[:link].relation_name) %> </td>
+			<td class="nhover"> <%= h(link[:link].child_plmtype) %> </td>
+			<td class="nhover"> <%= h(link[:typeobj].designation) %> </td>
+			<td class="nhover"> <%= link_to h(link[:typeobj].ident), link[:typeobj] %> </td>
+		</tr>
+		<%end %>
+	</table>
 </tr>
 <%end%>

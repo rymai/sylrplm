@@ -6,7 +6,7 @@ ruby '1.9.3'
 gem 'bundler'
 
 gem 'rails', '2.3.17'
-
+gem 'rake' , '10.3.2'
 gem 'mail', '2.3.0'
 gem 'json', '1.5.5'
 

@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(:version => 0) do
 	create_table "definitions", :force => true do |t|
 		t.string   "name"
 		t.string   "description"
-		t.string   "uri"
+		t.text     "uri"
 		t.text     "launch_fields"
 		t.datetime "created_at"
 		t.datetime "updated_at"
@@ -265,6 +265,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "participant"
 		t.string   "message"
 		t.text     "tree"
+		t.text     "wi_fields"
 		t.datetime "created_at"
 	end
 

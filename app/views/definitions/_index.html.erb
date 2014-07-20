@@ -20,7 +20,7 @@
 		<% end %>
 		<td> <%= h_explorer definition, :name_translate %> </td>
 		<td title="<%= h definition.description %>"> <%= h truncate(definition.description, :length => 40) %> </td>
-		<td> <%= link_to h(definition.uri), definition.full_uri %> </td>
+		<td> <%= h truncate(definition.uri, :length => 40)  %> </td>
 		<td> <%= comma_links(definition.roles,:title) %> </td>
 		<td> <%= definition.domain %> </td>
 		<% if fonct != "new_process" %> 
