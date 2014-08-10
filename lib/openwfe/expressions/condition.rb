@@ -90,7 +90,7 @@ module OpenWFE
     protected
 
       def do_eval_condition (attname, workitem)
-
+fname="#{__FILE__}. {__method__}:"
         conditional = lookup_attribute(attname, workitem)
         rconditional = lookup_attribute("r#{attname.to_s}", workitem)
 
@@ -109,7 +109,7 @@ module OpenWFE
         r = eval_set(conditional)
         return r if r != nil
        
-      #puts __FILE__+"."+__method__.to_s+" do_val="+do_eval(conditional, workitem)
+      #puts fname+" do_val="+do_eval(conditional, workitem)
 
         begin
           return to_boolean(do_eval(conditional, workitem))

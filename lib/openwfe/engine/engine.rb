@@ -191,7 +191,8 @@ module OpenWFE
     def reply (workitem)
 
       if workitem.is_a?(InFlowWorkItem)
-
+        fname= "Engine.#{__method__}"
+        #LOG.debug (fname) { "workitem=#{workitem.inspect}"}
         if workitem.flow_expression_id
           #
           # vanilla case, workitem coming back
@@ -257,7 +258,7 @@ module OpenWFE
       storage = get_expression_storage
 
       while storage.size > 1
-        sleep 1
+        sleep 1.0
       end
     end
 

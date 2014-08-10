@@ -1,4 +1,4 @@
-﻿--- install ruby 1.9
+--- install ruby 1.9
 telecharger ruby-1.9.2-p290.tar.gz
 dezipper
 cd dans le repertoire
@@ -6,6 +6,8 @@ modifier le fichier ext/Setup en activant des modules
 ./configure
 make
 make install
+
+installer ruby-mysql  
 
 mysqladmin -u root password xxxx
 modifier /etc/my.cnf
@@ -611,12 +613,12 @@ rake sylrplm:export_domain[../sylrplm_custos_export,sample.table]
 -recreer la base
 rake db:drop;rake db:create
 -creer les tables
-rake db:reset
+bundle exec rake db:reset
 -remplir la base
-rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base,limours]
-rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
-rake sylrplm:import_domain[db/custos/sicm,sample.table]
-rake sylrplm:update_access
+bundle exec rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base,limours]
+bundle exec rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
+bundle exec rake sylrplm:import_domain[db/custos/sicm,sample.table]
+bundle exec rake sylrplm:update_access
 #pour heroku: 
 -recreer la base                                                                                                              
 heroku pg:reset HEROKU_POSTGRESQL_ONYX --confirm sylrplm
@@ -685,3 +687,268 @@ rake release
 infos
 <%= t(:label_today) %> <%= Date.today %>
 
+
+reinstall de ruby 2.0.0 depuis le gestionnaire de sources
+ruby
+ruby-gem
+ruby-rake
+bigdecimal
+
+gem update --system 1.8.25
+gem install bundler
+bundle install
+gem install activerecord-postgresql-adapter
+gem install test-unit
+
+pb postgresql sur utf8:
+PG::InvalidParameterValue: ERROR:  new encoding (UTF8) is incompatible with the encoding of the template database (SQL_ASCII)
+
+UPDATE pg_database SET datistemplate = FALSE WHERE datname = 'template1';
+dropdb template1 ou drop database
+createdb --encoding=unicode --template=template0 template1
+CREATE DATABASE template1 WITH TEMPLATE = template0 ENCODING = 'UTF8';
+UPDATE pg_database SET datistemplate = TRUE WHERE datname = 'template1';
+\c template1
+VACUUM FREEZE;
+
+
+When integrating with NewRelic, do not enable the SQL query plan instrumentation. 
+It can grab a connection that your application is also trying to use... libpq is thread safe, 
+so long as two threads do not try to manipulate the same PGonn object 
+(http://www.postgresql.org/docs/9.3/static/libpq-threading.html). 
+If you see errors such as PG::UnableToSend: insufficient data in "T" message or PG::UnableToSend: extraneous data in "T" message, 
+this can indicate that multiple threads are accessing the same connection, and data (or random bytes) may have been transposed between queries.
+rechercher database pg with one thread dans google
+
+modif /var/lib/pgsql/data/postgresql.conf
+#syl checkpoint_segments = 3		# in logfile segments, min 1, 16MB each
+checkpoint_segments = 6
+
+edition par sublime text 3
+download et extraction dans /home/softs/sublime_text_3
+#pour avoir des icones dans la sidebar
+  download de sidebar-folder-icons-for-sublime-text-master
+  suivre les instructions en mettant le rep Theme... dans /home/syl/.config/sublime-text-3/Packages
+# touche F12 pour reindenter
+  preferences->key-bindings->User
+  { "keys": ["f12"], "command": "reindent" }
+
+
+pour maitriser le repertoire th-pg-config=
+bundle config build.pg --with-pg-config=<path to pg_config>
+
+workitems edit
+<tr class="nhover">
+    <td class='nomax' colspan="2"> <%= render :partial => 'shared/ruote_forms', :locals => { :fields => @workitem.field_hash , :fonct=>fonct} %> </td>
+  </tr>
+  
+  apres lancement du process, avant lancement 1ere action
+  (fei 0.9.21 engine /tmp/promotion-part20140727-12172-e7kmv9 PLMPromotePart 0 20140727-durosuporu demandeur 0.5.1)
+  (fei 0.9.21 engine /tmp/promotion-part20140727-12172-e7kmv9 PLMPromotePart 0 20140727-durosuporu demandeur 0.5.1)
+  
+  ok
+  class SimpleSequence < OpenWFE::ProcessDefinition
+  description "a tiny sequence"
+  sequence do
+    participant 'admin'
+    participant 'bob'
+  end
+end
+
+class PLMPromotePart < OpenWFE::ProcessDefinition
+  description "Promotion of a part"
+  set :v => "demandeur", :value => "${f:launcher}"
+  set :v => "reviewer1", :value => "creator"
+  set :v => "reviewer2", :value => "designer"
+  set :v => "valideur", :value => "valider"
+  #set :v => "publish", :value => "assistant"
+  cursor do
+    set :f => "comment_createur", :value => "comment demandeur"
+    demandeur :activity =>  "Copier objet(s), Commenter"
+    back :unless => '${f:comment_createur} != ""'
+    plm Ruote::PlmParticipant, :task => "promote", :step => "init", :relation => "applicable"
+    plm Ruote::PlmParticipant, :task => "promote", :step => "review", :relation => "reference"
+    set :f => "ok", :value => "true"
+    set :f => "comment_valideur", :value => "comment valideur"
+    valideur :activity =>"commenter puis valider (ok=true) ou (ok=false) non ce document"
+    back :if =>  '${f:ok} == false' && '${f:comment_valideur} == ""'
+    # back to the reviewers if editor not happy
+    rewind :unless =>  '${f:ok}'
+    plm Ruote::PlmParticipant, :task => "promote", :step => "exec", :relation => "applicable"
+  end
+end
+
+pb avec bigdecimal et ruby 2
+modifs de certains fichiers
+
+/usr/share/ruby/gems/gems/activesupport-2.3.17/lib/active_support/core_ext/bigdecimal.rb
+#syl require 'bigdecimal.so'
+require 'bigdecimal/bigdecimal.so'
+
+/usr/share/ruby/gems/gems/activerecord-2.3.17/lib/active_record/connection_adapters/abstract/schema_definitions.rb
+et /usr/share/ruby/gems/gems/activerecord-2.3.17/lib/active_record/connection_adapters/abstract_adapter.rb
+#syl require 'bigdecimal.so'
+require 'bigdecimal/bigdecimal.so'
+### n'existe pas !!! require 'bigdecimal/util'
+
+IMPORTANT!  Nokogiri builds and uses a packaged version of libxslt.
+If this is a concern for you and you want to use the system library
+instead, abort this installation process and reinstall nokogiri as
+follows:
+    gem install nokogiri -- --use-system-libraries
+If you are using Bundler, tell it to use the option:
+    bundle config build.nokogiri --use-system-libraries
+    bundle install
+
+utiliser /usr/bin/bundle car il lance celui de la 1.9 dans /usr/local/bin/bundle
+
+Post-install message from newrelic_rpm:
+# New Relic Ruby Agent Release Notes #
+
+## v3.9.0 ##
+
+* Rack middleware instrumentation
+
+  The Ruby agent now automatically instruments Rack middlewares!
+
+  This means that the agent can now give you a more complete picture of your
+  application's response time, including time spent in middleware. It also means
+  that requests which previously weren't captured by the agent because they
+  never made it to the bottom of your middleware stack (usually a Rails or
+  Sinatra application) will now be captured.
+
+  After installing this version of the Ruby agent, you'll see a new 'Middleware'
+  band on your application's overview graph, and individual middlewares will
+  appear in transaction breakdown charts and transaction traces.
+
+  The agent can instrument middlewares that are added from a config.ru file via
+  Rack::Builder, or via Rails' middleware stack in Rails 3.0+.
+
+  This instrumentation may be disabled with the
+  disable_middlware_instrumentation configuration setting.
+
+  For more details, see the documentation for this feature:
+
+    - http://docs.newrelic.com/docs/ruby/rack-middlewares
+    - http://docs.newrelic.com/docs/ruby/middleware-upgrade-changes
+
+* Capistrano 3.x support
+
+  Recording application deployments using Capistrano 3.x is now supported.
+
+  Many thanks to Jennifer Page for the contribution!
+
+* Better support for Sidekiq's Delayed extensions
+
+  Sidekiq jobs executed via the Delayed extensions (e.g. the #delay method) will
+  now be named after the actual class that #delay was invoked against, and will
+  have their job arguments correctly captured if the sidekiq.capture_params
+  configuration setting is enabled.
+
+  Many thanks to printercu for the contribution!
+
+* Improved Apdex calculation with ignored error classes
+
+  Previously, a transaction resulting in an exception that bubbled up to the top
+  level would always be counted as failing for the purposes of Apdex
+  calculations (unless the transaction name was ignored entirely). Now,
+  exceptions whose classes have been ignored by the
+  error_collector.ignore_errors configuration setting will not cause a
+  transaction to be automatically counted as failing.
+
+* Allow URIs that are not parseable by stdlib's URI if addressable is present
+
+  There are some URIs that are valid by RFC 3986, but not parseable by Ruby's
+  stdlib URI class. The Ruby agent will now attempt to use the addressable gem
+  to parse URIs if it is present, allowing requests against these problematic
+  URIs to be instrumented.
+
+  Many thanks to Craig R Webster and Amir Yalon for their help with this issue!
+
+* More robust error collection from Resque processes
+
+  Previously, traced errors where the exception class was defined in the Resque
+  worker but not in the Resque master process would not be correctly handled by
+  the agent. This has been fixed.
+
+* Allow Sinatra apps to set the New Relic environment without setting RACK_ENV
+
+  The NEW_RELIC_ENV environment variable may now be used to specify the
+  environment the agent should use from its configuration file, independently of
+  RACK_ENV.
+
+  Many thanks to Mario Izquierdo for the contribution!
+
+* Better error handling in Browser Application Monitoring injection
+
+  The agent middleware that injects the JavaScript code necessary for Browser
+  Application Monitoring now does a better job of catching errors that might
+  occur during the injection process.
+
+* Allow disabling of Net::HTTP instrumentation
+
+  Most instrumentation in the Ruby agent can be disabled easily via a
+  configuration setting. Our Net::HTTP instrumentation was previously an
+  exception, but now it can also be disabled with the disable_net_http
+  configuration setting.
+
+* Make Rails constant presence check more defensive
+
+  The Ruby agent now guards against the (rare) case where an application has a
+  Rails constant defined, but no Rails::VERSION constant (because Rails is not
+  actually present).
+
+  Many thanks to Vladimir Kiselev for the contribution!
+
+    See https://github.com/newrelic/rpm/blob/master/CHANGELOG for a full list of
+    changes.
+[syl@localhost sylrplm (master)]$ 
+
+If you see errors such as PG::UnableToSend: insufficient data in "T" message or PG::UnableToSend: extraneous data in "T" message, 
+this can indicate that multiple threads are accessing the same connection, and data (or random bytes) may have been transposed between queries.
+
+install de postgres par le download postgresql-9.1.14.tar.bz2
+./configure --without-readline  --disable-thread-safety
+make
+su
+make install
+
+su - postgres
+mkdir /home/PostgreSQL
+chown postgres:postgres /home/PostgreSQL
+/usr/local/pgsql/bin/initdb -D /home/PostgreSQL
+
+---------------------------------------------------------------------------------------
+a faire au demarrage de la machine
+su - postgres
+cd
+/usr/local/pgsql/bin/pg_ctl -D /home/PostgreSQL -l logfile start
+---------------------------------------------------------------------------------------
+
+bd de test
+/usr/local/pgsql/bin/createdb test
+/usr/local/pgsql/bin/psql test
+
+export CONFIGURE_ARGS="with-pg_config=/usr/local/pgsql/bin/pg_config"
+[syl@localhost sylrplm (master)]$ gem install pg -v '0.14.1' 
+
+
+traces ruote a la creation d'un process# Logfile created on 2014-08-02 10:02:07 +0200OpenWFE::Extras::DbPersistedEngine 's_engine' - build_scheduler() version is 2.0.24
+OpenWFE::CacheExpressionStorage 's_expression_storage' - new() size is 5000
+OpenWFE::Extras::DbPersistedEngine 's_engine' - new() --- engine started --- 30976220
+OpenWFE::ExpressionPool 's_expression_pool' - reschedule() initiating...
+OpenWFE::ExpressionPool 's_expression_pool' - reschedule() for  (fei 0.9.21 engine ee ee 0 0 environment 0)...
+OpenWFE::ExpressionPool 's_expression_pool' - reschedule() done. (took 21.245241165161133 ms)
+OpenWFE::ParticipantMap 's_participant_map' - register_participant() participant.class Class
+OpenWFE::ParticipantMap 's_participant_map' - register_participant() '^plm$'
+OpenWFE::ExpressionPool 's_expression_pool' - reschedule() initiating...
+OpenWFE::ExpressionPool 's_expression_pool' - reschedule() for  (fei 0.9.21 engine ee ee 0 0 environment 0)...
+OpenWFE::ExpressionPool 's_expression_pool' - reschedule() done. (took 6.798982620239258 ms)
+OpenWFE::ExpressionPool 's_expression_pool' - s_expression_pool operation :apply on (fei 0.9.21 engine /tmp/promotion-part20140802-30250-1t4cpoo PLMPromotePart 0 20140802-gibochinuro demandeur 0.5.1) failed with
+exception : undefined local variable or method `rwi' for #<Class:0x00000003e6f020>
+/home/syl/.gem/ruby/gems/activerecord-2.3.17/lib/active_record/base.rb:2002:in `method_missing'
+/home/syl/.gem/ruby/gems/will_paginate-2.3.16/lib/will_paginate/finder.rb:170:in `method_missing_with_paginate'
+/home/syl/trav/rubyonrails/sylrplm/lib/openwfe/extras/participants/ar_participants.rb:142:in `from_owfe_workitem'
+/home/syl/trav/rubyonrails/sylrplm/lib/openwfe/extras/participants/ar_participants.rb:308:in `consume'
+/home/syl/trav/rubyonrails/sylrplm/lib/openwfe/participants/participant_map.rb:219:in `do_dispatch'
+/home/syl/trav/rubyonrails/sylrplm/lib/openwfe/participants/participant_map.rb:179:in `block in dispatch'

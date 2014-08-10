@@ -102,7 +102,8 @@ module OpenWFE
     # the method called by the mixer to actually queue the work.
     #
     def push (target, method_name, *args)
-
+      fname= "#{self.class.name}.#{__method__}"
+      ##LOG.debug (fname) {" target=#{target} method_name=#{method_name} inflow=#{args[2]} @stopped=#{@stopped}"}
       #fei = args.find { |e| e.respond_to?(:fei) }
       #fei = fei.fei.to_s if fei
       #p [ :push, method_name, args.find { |e| e.is_a?(Symbol) }, fei ]

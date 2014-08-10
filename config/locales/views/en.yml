@@ -152,6 +152,7 @@ en:
   revise_by_action: Revise by action
   # shared
   legend_link_duplication: "Links Duplication of '%{object_orig}'"
+  legend_wi_fields: Processus values
   label_assoc_documents: Associated Documents 
   label_assoc_parts: Associated Articles 
   label_assoc_projects: Associated Projets 

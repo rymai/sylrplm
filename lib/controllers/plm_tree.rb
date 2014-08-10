@@ -273,8 +273,8 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 		# on teste si une des effectivites du lien est comprise dans la variante en cours
 		#
 			link_effectivities = link.effectivities
-			LOG.debug (fname) {"link=#{link.inspect}"}
-			LOG.debug (fname) {"link_effectivities=#{link_effectivities}"} unless link_effectivities.nil?
+			#LOG.debug (fname) {"link=#{link.inspect}"}
+			#LOG.debug (fname) {"link_effectivities=#{link_effectivities}"} unless link_effectivities.nil?
 			unless link_effectivities.nil?
 				if link_effectivities.size == 0
 					link_effectivities=nil

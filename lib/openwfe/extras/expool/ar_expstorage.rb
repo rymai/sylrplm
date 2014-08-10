@@ -125,9 +125,9 @@ module OpenWFE::Extras
       #puts  "ExpressionTables.[]=:e=#{e.svalue.size}"
       
       #TODO syl pour postgresql qui refuse le null
-      if e.respond_to? :text
+      ###if e.respond_to? :text
       e.text="text" if e.text.nil?
-      end
+      ##end
       e.save_without_transactions!
     end
 
@@ -183,7 +183,7 @@ module OpenWFE::Extras
 
       #
       # maximize usage of SQL querying
-
+##puts "*************** ar_expstorage.find_expressions:conditions=#{conditions} ****************"
       exps = Expression.find(:all, :conditions => conditions)
 
       #
@@ -327,14 +327,19 @@ module OpenWFE::Extras
     # active record and makes sure its application_context is set.
     #
     def as_owfe_expression (record)
-
+#puts "================== ar_expstorage.as_owfe_expression:record=#{record}"
       return nil unless record
+      #begin
       s = record.svalue
 
      ##fe = s.match(Y_START) ? YAML.load(s) : ::OpenWFE::Xml::from_xml(s)
      fe = s.match(Y_START) ? YAML.load(s) : Marshal.load(Base64.decode64(s))
       fe.application_context = @application_context
       fe
+      #rescue Exception=>exc
+      #  puts "================== ar_expstorage.as_owfe_expression:no svalue"
+      #nil
+      #end
     end
   end
 end

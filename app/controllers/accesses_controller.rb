@@ -1,5 +1,7 @@
-class AccessesController < ApplicationController
-	include Controllers::PlmObjectControllerModule
+	
+
+	class AccessesController < ApplicationController
+		include Controllers::PlmObjectControllerModule
 	#
 	access_control(Access.find_for_controller(controller_class_name))
 	before_filter :find_by_id, :only => [:show, :edit, :update, :destroy]
@@ -61,9 +63,9 @@ class AccessesController < ApplicationController
 			@access = Access.new(params[:access])
 			if params[:fonct] == "new_dup"
 				object_orig=Access.find(params[:object_orig_id])
-			st = @access.create_duplicate(object_orig)
+				st = @access.create_duplicate(object_orig)
 			else
-			st = @access.save
+				st = @access.save
 			end
 			if st
 				flash[:notice] =  t(:ctrl_object_created, :typeobj => 'Access', :ident => @access.controller, :msg => nil)

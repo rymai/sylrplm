@@ -84,11 +84,25 @@ module OpenWFE
     # rest of the process is continuing).
     #
     def launch (launchobject, options={})
+      fname= "#{self.class.name}.#{__method__}"
+      ###LOG.debug (fname) {"launchobject=#{launchobject} options=#{launchobject}"}
 
-      launchitem = to_launchitem(launchobject)
+#syl
+if(false)
+  begin
+    a=1/0
+  rescue Exception => e
+    stack=""
+    e.backtrace.each do |x|
+      stack+= x+"\n"
+    end
+    LOG.warn (fname) {"stack=\n#{stack}"}
+  end
+end
+launchitem = to_launchitem(launchobject)
 
-      wait = (options.delete(:wait_for) == true)
-      initial_variables = options.delete(:vars) || options.delete(:variables)
+wait = (options.delete(:wait_for) == true)
+initial_variables = options.delete(:vars) || options.delete(:variables)
 
       #
       # prepare raw expression
@@ -98,7 +112,7 @@ module OpenWFE
         # will raise an exception if there are requirements
         # and one of them is not met
 
-      raw_expression.new_environment(initial_variables)
+        raw_expression.new_environment(initial_variables)
         #
         # as this expression is the root of a new process instance,
         # it has to have an environment for all the variables of
@@ -106,17 +120,17 @@ module OpenWFE
         #
         # (new_environment() calls store_itself on the new env)
 
-      raw_expression = wrap_in_schedule(raw_expression, options) \
+        raw_expression = wrap_in_schedule(raw_expression, options) \
         if (options.keys & [ :in, :at, :cron, :every ]).size > 0
 
-      fei = raw_expression.fei
+          fei = raw_expression.fei
 
       #
       # apply prepared raw expression
 
       wi = InFlowWorkItem.new
       wi.attributes = launchitem.attributes.dup
-
+      ###LOG.debug (fname) {" fei=#{fei} wait=#{wait} raw_expression=#{raw_expression} wi=#{wi}"}
       if wait
         get_expression_pool.wait_for(fei) {
           get_expression_pool.launch(raw_expression, wi)
@@ -194,11 +208,11 @@ module OpenWFE
 
       raise(
         "didn't find process definition at '#{wfdurl}'"
-      ) unless definition
+        ) unless definition
 
       raise(
         ':definition_in_launchitem_allowed not set to true, cannot launch.'
-      ) if in_launchitem and ac[:definition_in_launchitem_allowed] != true
+        ) if in_launchitem and ac[:definition_in_launchitem_allowed] != true
 
       raw_expression = get_expression_pool.build_raw_expression(
         definition, launchitem)
@@ -210,10 +224,10 @@ module OpenWFE
         # will raise an exception if there are requirements
         # and one of them is not met
 
-      raw_expression.store_itself
+        raw_expression.store_itself
 
-      raw_expression
-    end
+        raw_expression
+      end
 
     #
     # Turns the raw launch request info into a LaunchItem instance.

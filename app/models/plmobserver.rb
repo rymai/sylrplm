@@ -35,7 +35,7 @@ class Plmobserver < ActiveRecord::Observer
 
 	def after_save(object)
 		fname="#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"object=#{object} "}
+		#LOG.debug (fname) {"object=#{object} "}
 	#add_notification(__method__.to_s, object)
 	end
 

@@ -59,22 +59,22 @@ module OpenWFE::Extras
       add_index :ar_workitems, :fei, :unique => true
         # with sqlite3, comment out this :unique => true on :fei :(
 
-      add_index :ar_workitems, :wfid
-      add_index :ar_workitems, :expid
-      add_index :ar_workitems, :wfname
-      add_index :ar_workitems, :wfrevision
-      add_index :ar_workitems, :participant_name
-      add_index :ar_workitems, :store_name
-    end
+          add_index :ar_workitems, :wfid
+          add_index :ar_workitems, :expid
+          add_index :ar_workitems, :wfname
+          add_index :ar_workitems, :wfrevision
+          add_index :ar_workitems, :participant_name
+          add_index :ar_workitems, :store_name
+        end
 
-    def self.down
+        def self.down
 
-      drop_table :ar_workitems
-    end
-  end
+          drop_table :ar_workitems
+        end
+      end
 
-  class ArWorkitem < ActiveRecord::Base
-    include SingleConnectionMixin
+      class ArWorkitem < ActiveRecord::Base
+        include SingleConnectionMixin
 
     #
     # Returns the flow expression id of this work (its unique OpenWFEru (Ruote)
@@ -82,31 +82,31 @@ module OpenWFE::Extras
     # (within the Workitem it's just stored as a String).
     #
     def full_fei
-				fname="base ArWorkitem.full_fei"
+      fname="base ArWorkitem.full_fei"
         #LOG.debug (fname) {"fei:#{fei}"}
-      @full_fei ||= OpenWFE::FlowExpressionId.from_s(fei)
-    end
+        @full_fei ||= OpenWFE::FlowExpressionId.from_s(fei)
+      end
 
     #
     # Making sure last_modified is set to Time.now before each save.
     #
     def before_save
-			fname="base ArWorkitem.before_save:"
+     fname="base ArWorkitem.before_save:"
       #LOG.debug (fname) {"saving:#{self.inspect}"}
       touch
     end
-   def after_save
-			fname="base ArWorkitem.after_save:"
+    def after_save
+     fname="base ArWorkitem.after_save:"
       #LOG.debug (fname) {"saved:#{self.inspect}"}
       true
     end
     def before_destroy
-			fname="base ArWorkitem.before_destroy:"
+     fname="base ArWorkitem.before_destroy:"
       #LOG.debug (fname) {"destroy:#{self.inspect}"}
       true
     end
     def self.from_owfe_workitem (wi, store_name=nil)
-
+      fname="base ArWorkitem.after_save:"
       arwi = ArWorkitem.new
       arwi.fei = wi.fei.to_s
       arwi.wfid = wi.fei.wfid
@@ -123,11 +123,24 @@ module OpenWFE::Extras
       arwi.wi_fields = YAML.dump(wi.fields)
         # using YAML as it's more future proof
 
-      arwi.keywords = flatten_keywords(wi.fields, wi.participant_name)
+        arwi.keywords = flatten_keywords(wi.fields, wi.participant_name)
 
       #arwi.save! # making sure to throw an exception in case of trouble
+      #TODO syl
+      if(true)
+        begin
+          arwi.save_without_transactions!
+        rescue Exception => e
+          LOG.error (fname) {"error=#{e}"}
+          stack=""
+          e.backtrace.each do |x|
+            stack+= x+"\n"
+          end
+          LOG.debug (fname) {"stack=\n#{stack}"}
+          raise e
+        end 
+      end
       arwi.save_without_transactions!
-
       arwi
     end
 
@@ -170,7 +183,7 @@ module OpenWFE::Extras
     end
 
     def field_hash
-
+      ###puts "**************** ar_participants.field_hash:self=#{self.inspect} ******************"
       YAML.load(self.wi_fields)
     end
 
@@ -216,7 +229,7 @@ module OpenWFE::Extras
           participant_name ])
     end
     
-   def self.find_by_wfid_ (wfid)
+    def self.find_by_wfid_ (wfid)
 
       find(
         :all,

@@ -64,9 +64,13 @@ module OpenWFE
     def get_wfid_generator
       @application_context[:s_wfid_generator]
     end
+
     def get_workqueue
+     fname= "rudefinitions.#{__method__}"
+        ##LOG.debug (fname) { "workqueue=#{@application_context[:s_workqueue].inspect[0,200]}"}
       @application_context[:s_workqueue]
     end
+    
     def get_expool
       @application_context[:s_expression_pool]
     end

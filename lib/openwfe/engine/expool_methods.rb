@@ -42,7 +42,6 @@ module OpenWFE
     # instance.
     #
     def cancel_process (exp_or_wfid)
-
       get_expression_pool.cancel_process(exp_or_wfid)
     end
     alias :cancel_flow :cancel_process

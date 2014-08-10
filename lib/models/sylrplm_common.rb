@@ -248,7 +248,7 @@ module Models
 			st_next = statusobject.next_statusobjects
 			st_previous = statusobject.previous_statusobjects
 			ret = st_next.blank? && st_previous.blank?
-			LOG.info (fname) {"st=#{statusobject.name} st_next=#{statusobject.next_statusobjects} st_previous=#{statusobject.previous_statusobjects} ret=#{ret}"}
+			#LOG.info (fname) {"st=#{statusobject.name} st_next=#{statusobject.next_statusobjects} st_previous=#{statusobject.previous_statusobjects} ret=#{ret}"}
 			ret
 		end
 

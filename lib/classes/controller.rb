@@ -1,5 +1,5 @@
-require 'active_record/fixtures'
-require 'populate'
+#require 'active_record/fixtures'
+#require 'populate'
 
 class Controller
 	attr_accessor :id, :name, :method

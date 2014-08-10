@@ -24,7 +24,6 @@
 	plm_objects=entry.plm_objects 
 	ok = true
 	ok = false if (fonct=='on_plm_objects' && plm_objects.count ==0)
-	puts "******************** fonct="+fonct+" plmobjects=#{plm_objects.count}"
 	if ok %>
 	<tr class='<%= cycle("even", "odd") %>'>
 		<% if admin_logged_in? %> <td> <%= entry.id %> </td>

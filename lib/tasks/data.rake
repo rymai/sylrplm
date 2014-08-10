@@ -2,7 +2,7 @@
 namespace :data do
 
   require 'active_record'
-  require 'active_record/fixtures'
+  #TODO syl require 'active_record/fixtures'
 
   #
   # Populates the development database with the data found under db/dev_fixtures
@@ -11,9 +11,9 @@ namespace :data do
   #
   task :populate => :environment do
 
-    Fixtures.create_fixtures(
-      'db/dev_fixtures',
-      %w{ users groups user_groups definitions group_definitions })
+    #TODO syl Fixtures.create_fixtures(
+    #TODO syl   'db/dev_fixtures',
+    #TODO syl   %w{ users groups user_groups definitions group_definitions })
 
     puts
     puts "loaded #{User.find(:all).size} users"

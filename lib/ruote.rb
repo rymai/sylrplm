@@ -62,7 +62,7 @@ module OpenWFE
 		alias :old_lookup_participant :lookup_participant
 		def lookup_participant (participant_name)
 			fname="ParticipantMap.lookup_participant:"
-			LOG.info (fname) {"participant_name=#{participant_name} "}
+			##LOG.info (fname) {"participant_name=#{participant_name} "}
 			part = old_lookup_participant(participant_name)
 
 			return part if part
@@ -72,7 +72,7 @@ module OpenWFE
 			###TODO ::Group.find_by_name(participant_name)
 			::Role.find_by_name(participant_name)
 
-			LOG.info (fname) {"participant_name=#{participant_name} target=#{target}"}
+			###LOG.info (fname) {"participant_name=#{participant_name} target=#{target}"}
 			store_name = target ? participant_name : 'unknown'
 
 			#store_name = participant_name

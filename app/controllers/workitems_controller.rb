@@ -117,7 +117,9 @@ class WorkitemsController < ApplicationController
 		workitem_ident = "#{in_flow_workitem.fei.wfid}/#{OpenWFE.to_uscores(in_flow_workitem.fei.expid)}"
 		#puts name+"workitem_ident="+workitem_ident
 		if store_name = params[:store_name]
+			#
 			# delegation de la tache
+			#
 			LOG.info{ name+"delegation:store="+store_name}
 			ar_workitem.store_name = store_name
 			ar_workitem.save!
@@ -126,32 +128,39 @@ class WorkitemsController < ApplicationController
         'delegated',
         :inflow => in_flow_workitem, :message => "wi delegated to '#{store_name}'")
 		elsif params[:state] == 'proceeded'
+			#
+			# task execution
+			#
 			LOG.info {name+":debut proceeded:wfid="+params[:wfid]}
 			in_flow_workitem.attributes = workitem.attributes
 			#LOG.debug (name) {"ar_workitem="+ar_workitem.inspect}
 			#LOG.debug (name) {"in_flow_workitem="+in_flow_workitem.inspect}
 			respond_to do |format|
 				begin
+					LOG.info (name){"avant reply:in_flow_workitem=#{in_flow_workitem.inspect}"}
+					#sleep 0.3
 					RuotePlugin.ruote_engine.reply(in_flow_workitem)
+					sleep 0.3
 					#
 					# attente traitement par plm_participant
 					#
-					LOG.info (name){"avant sleep:participant_name=#{in_flow_workitem.participant_name} dispatch=#{ar_workitem.dispatch_time},modified=#{ar_workitem.last_modified}"}
-					LOG.info (name){"avant sleep:ar_workitem=#{ar_workitem.inspect}"}
-					LOG.info (name){"avant sleep:params="+ar_workitem.field_hash[:params].inspect}
+					#LOG.info (name){"avant sleep:participant_name=#{in_flow_workitem.participant_name} dispatch=#{ar_workitem.dispatch_time},modified=#{ar_workitem.last_modified}"}
+					LOG.info (name){"apres reply, avant sleep:ar_workitem=#{ar_workitem.inspect}"}
+					#LOG.info (name){"avant sleep:params="+ar_workitem.field_hash[:params].inspect}
 					nb = 0
 					arw = ar_workitem
 					while nb < 5 and !arw.nil? and (arw.last_modified == ar_workitem.last_modified)
 						#LOG.debug (name){" boucle #{nb}:#{arw.last_modified}"}
 						nb+=1
 						arw = find_ar_workitem
+						LOG.info (name) {"during loop #{nb}: arw=#{arw.inspect} \n arw.last_modified =#{arw.last_modified} ar_workitem.last_modified=#{ar_workitem.last_modified}:#{arw.last_modified == ar_workitem.last_modified}"}
 					end
 					#
 					LOG.info (name) {"apres sleep nb=#{nb}"}
 					process = ruote_engine.process_status(params[:wfid])
-					LOG.info (name) {"apres sleep process="+process.to_s}
+					LOG.info (name) {"apres process_status, process="+process.to_s}					
 					unless process.nil?
-					tree = process.current_tree
+						tree = process.current_tree
 					else
 						tree = nil
 					end
@@ -172,11 +181,17 @@ class WorkitemsController < ApplicationController
 					end
 					ok = false
 					unless errs.empty?
+						#
+						# errors
+						#
 						flash[:error] = t( :ctrl_workitem_canceled, :ident => workitem_ident)
 						flash[:error]+= errs
 						format.html { redirect_to :action => 'index'}
 					#return error_reply(flash[:notice], 1001)
 					else
+						#
+						# successful
+						#
 					# recup du workitem sauve en base eventuellement modifie par le participant
 						ar_workitem = find_ar_workitem
 						return error_reply('no workitem', 404) unless ar_workitem
@@ -209,10 +224,13 @@ class WorkitemsController < ApplicationController
 							flash[:error] = t( :ctrl_workitem_not_proceeded, :ident => workitem_ident)
 						end
 					end
-					###sleep 0.1
-					LOG.info (name){"ok=#{ok}, destroy de ArWorkitem.#{ar_workitem.id}"}
+					sleep 0.1
+					LOG.info (name){"workitem processing ok=#{ok}, destroy de ArWorkitem.#{ar_workitem.id}"}
 					Ruote::Sylrplm::ArWorkitem.destroy(ar_workitem.id)
 					unless ok
+						#
+						# error during  workitem processing, cancel the process
+						#
 						ruote_engine.cancel_process(params[:wfid])
 						flash[:error] += "<br/>#{t(:ctrl_process_canceled, :ident => params[:wfid])}"
 					###raise PlmProcessException.new("#{name}:error creating workitem #{workitem_ident}:#{link.errors.inspect}", 10001)
@@ -226,8 +244,8 @@ class WorkitemsController < ApplicationController
 				rescue Exception => e
 
 					flash[:error] = t(:ctrl_workitem_not_updated, :ident => "#{workitem_ident}:#{e}")
-					LOG.error (name){in_flow_workitem.inspect}
-					LOG.error (name){" error="+e.inspect}
+					LOG.error (name){"in_flow_workitem=+#{in_flow_workitem.inspect}"}
+					LOG.error (name){" error=#{e.inspect}"}
 					e.backtrace.each {|x| LOG.error x}
 					format.html { redirect_to workitems_path }
 					format.xml  { render :xml => e, :status => :unprocessable_entity }

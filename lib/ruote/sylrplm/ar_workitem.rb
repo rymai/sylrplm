@@ -35,7 +35,8 @@ module Ruote
 			def self.destroy_process(wfid)
 				fname="ArWorkitem."+__method__.to_s+":"
 				LOG.info (fname) {"wfid=#{wfid}"}
-				::OpenWFE::Extras::ArWorkitem.find_by_wfid_(wfid).each do |ar|
+				find_by_wfid_(wfid).each do |ar|
+				  LOG.info (fname) {"workitem to destroy=#{ar}"}
 					ar.destroy
 				end
 			end
@@ -86,7 +87,7 @@ module Ruote
 			def self.get_workitem(wfid)
 				fname="ArWorkitem."+__method__.to_s
 				#LOG.debug (fname) {"wfid=#{wfid}"}
-				###require 'pg'
+				require 'pg'
 				#show_activity		  
 				ret = find(:first, :conditions => ["wfid = '#{wfid}'"])
 				#ret = find_by_wfid(wfid)

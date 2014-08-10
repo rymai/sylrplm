@@ -113,7 +113,7 @@ class ProcessesController < ApplicationController
       workitem = nil
       while nb<5 and workitem.nil?
         puts fname+" boucle "+nb.to_s+":"+fei.wfid
-        sleep 0.8
+        sleep 0.3
         nb+=1
         workitem = ::Ruote::Sylrplm::ArWorkitem.get_workitem(fei.wfid)
       end
@@ -154,8 +154,8 @@ class ProcessesController < ApplicationController
     fname="process_controllers.#{__method__}"
     begin
       @process = ruote_engine.process_status(params[:id])
+      ruote_engine.cancel_process(params[:id])
       ::Ruote::Sylrplm::ArWorkitem.destroy_process(@process.wfid)
-      RuotePlugin.ruote_engine.cancel_process(params[:id])
       sleep 0.200
       redirect_to :controller => :processes, :action => :index
     rescue Exception => e

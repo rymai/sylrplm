@@ -18,14 +18,21 @@ class FiledriverFog < Filedriver
 	@@instance = nil
 
 	def self.instance
+	  fname= "#{self.class.name}.#{__method__}"
+    access_key=PlmServices.get_property(:FOG_ACCESS_KEY)
+		access_key_id=PlmServices.get_property(:FOG_ACCESS_KEY_ID)
 		if @@instance.nil?
+		  LOG.info (fname) {"access_key=#{access_key} access_key_id=#{access_key_id}"}
+		  
 			@@instance = FiledriverFog.new
 			# create a connection
 			@@instance.storage = Fog::Storage.new(
 			{
 				:provider                 => 'AWS',
-				:aws_secret_access_key    => PlmServices.get_property(:FOG_ACCESS_KEY),
-				:aws_access_key_id        => PlmServices.get_property(:FOG_ACCESS_KEY_ID)
+				:aws_secret_access_key    => access_key,
+				:aws_access_key_id        => access_key_id,
+				# authorize the period (.) in the hostname
+				:path_style => true 
 			})
 		end
 		#puts "SylrplmFog.instance:"+@@instance.inspect
@@ -294,7 +301,7 @@ class FiledriverFog < Filedriver
 		ret=storage.directories.get(directory_key)
 		#puts "sylrplm_fog.directory("+directory_key+")="+ret.inspect
 		rescue Exception => exc
-			LOG.debug (fname){"Exception during fog access, verify the network:#{exc}"}
+			LOG.debug (fname){"Exception during fog access, verify the network, dir_key=#{directory_key} exception=#{exc}"}
 			ret=nil
 		end
 		ret

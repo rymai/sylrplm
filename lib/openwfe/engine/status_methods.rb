@@ -212,19 +212,19 @@ module OpenWFE
           fei.expid == '0')
 
         @launch_time ||= item.apply_time \
-          if item.fei.expid == '0' and item.fei.is_in_parent_process?
+        if item.fei.expid == '0' and item.fei.is_in_parent_process?
 
-        @all_expressions << item
+          @all_expressions << item
 
-        wi = nil
-        wi = item.applied_workitem if item.respond_to?(:applied_workitem)
-        @applied_workitems << wi if wi
+          wi = nil
+          wi = item.applied_workitem if item.respond_to?(:applied_workitem)
+          @applied_workitems << wi if wi
 
-      else
-
-        @errors[item.fei] = item
+        else
+          ###puts "*************** status_methods.<< item non flowexpression=#{item} ****************"
+          @errors[item.fei] = item
+        end
       end
-    end
 
     #--
     # A lighter version
@@ -247,17 +247,17 @@ module OpenWFE
 
       @all_expressions.sort_by { |fe|
         "#{fe.fei.wfid} #{fe.fei.expid}"
-      }.each do |fe|
+        }.each do |fe|
 
-        next unless fe.apply_time
+          next unless fe.apply_time
           # no Environment instances allowed
 
-        @expressions.delete_if { |e| e.fei == fe.parent_id }
+          @expressions.delete_if { |e| e.fei == fe.parent_id }
 
-        @expressions << fe
+          @expressions << fe
+        end
       end
     end
-  end
 
   #
   # Simply adding a timestamp
@@ -302,7 +302,7 @@ module OpenWFE
     # a day (:wfid_prefix => '20070529').
     #
     def process_statuses (options={})
-
+ fname= "#{self.class.name}.#{__method__}"
       all = (options == {})
 
       return @all_status_cache if all and @all_status_cache
@@ -311,6 +311,7 @@ module OpenWFE
 
       options = { :wfid_prefix => options } if options.is_a?(String)
 
+      #puts "*************** status_methods.process_statuses:options=#{options} ****************"
       expressions = get_expression_storage.find_expressions(options)
 
       result = expressions.inject({}) do |r, fe|
@@ -320,9 +321,12 @@ module OpenWFE
       result.values.each do |ps|
 
         ps.paused = (get_expool.paused_instances[ps.wfid] != nil)
-
-        get_error_journal.get_error_log(ps.wfid).each { |er| ps << er }
-
+        #syl
+        begin
+          get_error_journal.get_error_log(ps.wfid).each { |er| ps << er }
+        rescue Exception => exc
+          LOG.error (fname) {"error:#{exc}"}
+        end
         ps.send(:pack_expressions) # letting it protected
 
         ps.scheduled_jobs = get_scheduler.find_jobs(ps.wfid)

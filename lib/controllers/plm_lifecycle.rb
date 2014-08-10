@@ -19,14 +19,14 @@ end
 def commit_promote?
 	fname= "#{self.class.name}.#{__method__}"
 	ret = [t("promote_by_select"),t("promote_by_menu"),t("promote_by_action")].include? params[:commit]
-	LOG.debug (fname){"commit=#{params[:commit]} ret=#{ret}"}
+	#LOG.debug (fname){"commit=#{params[:commit]} ret=#{ret}"}
 	ret
 end
 
 def commit_demote?
 	fname= "#{self.class.name}.#{__method__}"
 	ret = [t("demote_by_select"),t("demote_by_menu"),t("demote_by_action")].include? params[:commit]
-	LOG.debug (fname){"commit=#{params[:commit]} menu:#{t("demote_by_menu").force_encoding("UTF-8")} ret=#{ret}"}
+	#LOG.debug (fname){"commit=#{params[:commit]} menu:#{t("demote_by_menu").force_encoding("UTF-8")} ret=#{ret}"}
 	ret
 end
 
@@ -165,94 +165,5 @@ def ctrl_demote(a_object, withMail=true, st_from=nil, st_next=nil)
 	end
 end
 
-def ctrl_create_process(format, process_name, a_object, value1, value2)
-	fname= "#{self.class.name}.#{__method__}"
-	# run the promote process
-	begin
-		@definition = Definition.get_by_process_name(process_name, a_object, value1, value2)
-		params[:definition_id] = @definition.id
-		li = parse_launchitem
-		options = { :variables => { 'launcher' => @current_user.login } }
 
-		fei = RuotePlugin.ruote_engine.launch(li, options)
-		LOG.info (fname) {" fei("+fei.wfid+") launched options="+options.to_s}
-		headers['Location'] = process_url(fei.wfid)
-		nb=0
-		workitem = nil
-		while nb<5 and workitem.nil?
-			puts fname+" boucle "+nb.to_s+":"+fei.wfid
-			sleep 0.8
-			nb+=1
-			workitem = ::Ruote::Sylrplm::ArWorkitem.get_workitem(fei.wfid)
-		end
-		LOG.info (fname) {"workitem="+workitem.inspect}
-		unless workitem.nil?
-			flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")
-			add_object_to_workitem(a_object, workitem)
-			format.html { redirect_to(a_object) }
-			format.xml  { head :ok }
-		else
-			flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")
-			format.html { redirect_to(a_object) }
-			format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
-		end
-	rescue Exception => e
-		LOG.error { "fei not launched error="+e.inspect}
-		LOG.error {" fei not launched li="+li.inspect}
-		LOG.error {" options="+options.inspect}
-		e.backtrace.each {|x| LOG.error (fname){x}}
-		flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "fei not launched error=#{e}")
-		#format.html { redirect_to new_process_path(:definition_id => @definition.id)}
-		#format.html { redirect_to ({:controller => :definitions , :action => :new_process, :definition_id => @definition.id}) }
-		LOG.error (fname){"a_object=#{a_object}"}
-		format.html { redirect_to(a_object) }
-		format.xml  { render :xml => e, :status => :unprocessable_entity }
-
-	end
-end
-
-def parse_launchitem
-	fname= "#{self.class.name}.#{__method__}"
-	ct                        = request.content_type.to_s
-	# TODO : deal with Atom[Pub]
-	# TODO : sec checks !!!
-	begin
-		return OpenWFE::Xml::launchitem_from_xml(request.body.read) \
-		if ct.match(/xml$/)
-		return OpenWFE::Json.launchitem_from_h(request.body.read) \
-		if ct.match(/json$/)
-	rescue Exception          => e
-		raise ErrorReply.new(
-      "#{e}:failed to parse launchitem from request body", 400)
-	end
-	# then we have a form...
-	if definition_id = params[:definition_id]
-		# is the user allowed to launch that process [definition] ?
-		definition = Definition.find(definition_id)
-		raise ErrorReply.new("you are not allowed to launch this process", 403
-      ) unless @current_user.may_launch?(definition)
-		params[:definition_url] = definition.local_uri if definition
-	elsif definition_url = params[:definition_url]
-		raise ErrorReply.new("not allowed to launch process definitions from adhoc URIs", 400
-      ) unless @current_user.may_launch_from_adhoc_uri?
-	elsif definition = params[:definition]
-		# is the user allowed to launch embedded process definitions ?
-		raise ErrorReply.new("not allowed to launch embedded process definitions", 400
-      ) unless @current_user.may_launch_embedded_process?
-	else
-		raise ErrorReply.new("failed to parse launchitem from request parameters", 400)
-	end
-	if fields = params[:fields]
-		params[:fields] = ActiveSupport::JSON::decode(fields)
-	end
-	ret = OpenWFE::LaunchItem.from_h(params)
-	ret
-
-end
-
-def add_object_to_workitem(object, ar_workitem)
-	fname = "plm_lifecycle."+__method__.to_s
-	LOG.info (fname) {"#{object} #{ar_workitem}"}
-	return ar_workitem.add_object(object)
-end
 

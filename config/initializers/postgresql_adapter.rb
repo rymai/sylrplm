@@ -6,7 +6,7 @@ module ActiveRecord
 			# sylrplm: pour eviter le rechargement des connexions
 			def requires_reloading?
 				ret=false
-				puts "TODO:#{__FILE__}:#{__method__} by syl:#{ret}"
+				###puts "TODO:#{__FILE__}:#{__method__} by syl:#{ret}"
 				ret
 			end
 		end

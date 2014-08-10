@@ -73,7 +73,7 @@ class ExpressionsController < ApplicationController
 
     ruote_engine.cancel_expression(@expression)
 
-    sleep 0.350
+    sleep 0.3
 
     @process = ruote_engine.process_status(params[:wfid])
 

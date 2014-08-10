@@ -46,7 +46,11 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) or l.mat
   # lets the engine start for "rake test" anyway
 
   require 'ruote_plugin'
-  #require 'ruote/worker'
+  require 'ruote/worker'
+  require 'rubygems'
+require 'json' # gem install json
+require 'ruote'
+###require 'ruote-postgres' # gem install ruote-postgres
   #require 'ruote/storage/fs_storage'
 
   #
@@ -54,9 +58,19 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) or l.mat
 
   h = defined?(RUOTE_ENV) ? RUOTE_ENV : {}
 
+#engine = Ruote::Engine.new(Ruote::Worker.new(Ruote::Postgres::Storage.new(pg, opts)))
+  # from ruote-postgres gem
+ # pg_opts={'pg_table_name' => 'ruote_pg_docs'}
+  #pg_conn = PG.connect(dbname: "sylrplm_#{RAILS_ENV}", user: "postgres", password: "pa33zp62")
+
+  #worker=Ruote::Worker.new(Ruote::Postgres::Storage.new(pg_conn, pg_opts))
+    #worker=Ruote::Worker.new(Ruote::FsStorage.new(h[:work_directory]))
+  #puts "init:worker="+worker.inspect
+
   # the type of engine to use
   #h[:engine_class] ||= OpenWFE::FsPersistedEngine
-  h[:engine_class] ||= OpenWFE::Extras::DbPersistedEngine
+h[:engine_class] ||= OpenWFE::Extras::DbPersistedEngine
+####h[:engine_class] ||=worker
 
   unless h[:logger]
     h[:logger] = ActiveSupport::BufferedLogger.new("#{RAILS_ROOT}/log/ruote_#{RAILS_ENV}.log")
@@ -76,10 +90,7 @@ unless caller.find { |l| l.match(/rake\.rb/) or l.match(/generate\.rb/) or l.mat
   h[:definition_in_launchitem_allowed] ||= true
   # launchitems (process_items) may contain process definitions
   
-  #worker=Ruote::Worker.new(Ruote::FsStorage.new(h[:work_directory]))
-  #puts "init:worker="+worker.inspect
-  
-  puts "init:appel RuotePlugin.engine_init:"+h.inspect
+  ### trop verbeux puts "init:appel RuotePlugin.engine_init:"+h.inspect
   
   ##SYL TODO pour creation de la base 
   RuotePlugin.engine_init(h)

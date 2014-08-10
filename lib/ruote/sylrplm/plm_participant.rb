@@ -21,18 +21,19 @@ class Ruote::PlmParticipant
 	#
 	def do_not_thread
 		fname="PlmParticipant.do_not_thread:"
+		puts fname
 		true
 	end
 
 	def initialize(work=nil, opts=nil)
 		fname="PlmParticipant.initialize"
-		puts fname+"opts="+opts.nil?.to_s+" work="+work.inspect
+		puts fname+":opts="+opts.nil?.to_s+" work="+work.inspect
 		@opts = opts
 	end
 
 	def consume(workitem)
 		fname="PlmParticipant.consume:"
-		puts fname+"debut *******************************************"
+		puts fname+":debut *******************************************"
 		#puts "PlmParticipant.consume:workitem="+workitem.inspect+" opts="+@opts.nil?.to_s
 		#puts "PlmParticipant.consume:attributes="+workitem.attributes.inspect
 		begin
@@ -166,8 +167,9 @@ class Ruote::PlmParticipant
 		# on doit avoir au moins un objet sur lequel s'applique le processus
 		#
 		if step!= "exec" && relation_name == "applicable" && nb_applicable==0
-			msg = fname+":No applicable object for task(#{task}) and step(#{step}) and relation(#{relation_name})"
-			raise PlmProcessException.new(msg, 10006)
+			puts fname+":step=#{step} relation_name=#{relation_name} nb_applicable=#{nb_applicable}"
+			msg = fname+":No applicable object for task(#{task}) and step(#{step}) and relation(#{relation_name}) and nb_applicable(#{nb_applicable})"
+			####raise PlmProcessException.new(msg, 10006)
 		end
 		arworkitem.replace_fields(fields) unless fields.nil?
 	end

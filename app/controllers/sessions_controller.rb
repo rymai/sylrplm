@@ -119,6 +119,7 @@ class SessionsController < ApplicationController
 	end
 
 	def create_account
+		fname= "#{self.class.name}.#{__method__}"
 		#puts "sessions_controller.create_new_account"+params.inspect
 		#puts "create:validation du compte"
 		par = params[:session]
@@ -138,7 +139,8 @@ class SessionsController < ApplicationController
 			#puts "create:validation du compte ok"
 			# tout est saisis: creation du nouveau compte
 				cur_user = User.create_new_login(par, @urlbase)
-				puts "sessions_controller.create:cur_user="+cur_user.inspect
+				LOG.debug (fname){"cur_user=#{cur_user.inspect}"}
+				ctrl_create_process(format, "validate", cur_user, nil,  nil)
 				unless cur_user.nil?
 					flash[:notice] = check_user_connect(cur_user)
 					if flash[:notice].nil?

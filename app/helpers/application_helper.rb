@@ -515,15 +515,37 @@ module ApplicationHelper
 		else
 			ret=t("history_no_fields")
 		end
-		puts "********************ret="+ret
+		#puts "******************** h_history_fields:ret="+ret
 		ret
 	end
 			
-	def h_render_fields(obj, fonct, method)
+	def h_workitem_fields(obj, fonct)
+		fields=obj.field_hash
+		puts "application_helper.h_workitem_fields:fields=#{fields}"
+		ret=""
+		unless fields.nil?
+			ret+="<fieldset><legend>"
+			ret+=t(:legend_wi_fields)
+			ret+="</legend>"
+			ret+= h_render_fields(obj, fonct, "field_hash", true)
+			ret+="</fieldset>"
+		else
+			ret=t("history_no_fields")
+		end
+		#puts "******************** h_history_fields:ret="+ret
+		ret
+	end
+			
+
+	def h_render_fields(obj, fonct, method, to_json=false)
 		fname=self.class.name+"."+__method__.to_s
 		LOG.info (fname){"obj=#{obj} fonct=#{fonct} method=#{method}"}
 		fields = obj.send(method)
-		case fonct
+		unless fields.nil?
+			if to_json
+				fields=fields.to_json
+			end
+			case fonct
 			when "show"
 				buttons="none"
 				edit_key=false
@@ -537,19 +559,22 @@ module ApplicationHelper
 				edit_key=true
 				edit_value=true
 			else
-			buttons="none"
-			edit_key=false
-			edit_value=false
+				buttons="none"
+				edit_key=false
+				edit_value=false
+			end
+			ret=render(
+				:partial => "shared/form_json",
+				:locals => {
+					:fields => fields,
+					:form_id => h_form_html_id(obj, fonct),
+					:textarea_name => "#{obj.model_name}[#{method}]",
+					:options => {"buttons" => buttons, "edit_key" => edit_key, "edit_value" => edit_value } 
+				}
+				)
+		else
+			ret=""
 		end
-		ret=render(
-			:partial => "shared/form_json",
-			:locals => {
-				:fields => fields,
-				:form_id => h_form_html_id(obj, fonct),
-				:textarea_name => "#{obj.model_name}[#{method}]",
-				:options => {"buttons" => buttons, "edit_key" => edit_key, "edit_value" => edit_value } 
-			}
-		)
 		ret
 	end
 	

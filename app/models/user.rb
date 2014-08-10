@@ -170,6 +170,7 @@ new_user=nil
 			el = ::Project.find_by_ident(elname)
 			self.projects << el unless self.projects.include? el
 		end
+		self.typesobject=Typesobject.find_by_forobject_and_name("user", PlmServices.get_property(:TYPE_USER_VALIDATE))
 		self
 	end
 
@@ -311,7 +312,9 @@ new_user=nil
 	# (always returns true for an admin).
 	#
 	def may_see? (workitem)
-		is_admin? || store_names.include?(workitem.store_name)
+		ret=is_admin? || store_names.include?(workitem.store_name)
+		#puts "User.may_see?: workitem=#{workitem.inspect}:#{ret}"
+		ret
 	end
 
 	#
@@ -337,7 +340,7 @@ new_user=nil
 	# peut se connecter
 	def may_connect?
 		ret=!self.typesobject.nil? && self.typesobject.name != PlmServices.get_property(:TYPE_USER_NEW_ACCOUNT) && !self.roles.empty? && !self.groups.empty? && !self.projects.empty?
-		puts "#{login} may_connect:type:#{typesobject.name} roles?:#{roles} group:#{groups} project:#{projects}:ret=#{ret}"
+		#puts "#{login} may_connect:type:#{typesobject.name} roles?:#{roles} group:#{groups} project:#{projects}:ret=#{ret}"
 		ret
 	end
 

@@ -221,6 +221,7 @@ class Definition < ActiveRecord::Base
 	def local_uri
 		fname= "#{self.class.name}.#{__method__}"
 		return nil unless self.uri
+		#
 		tmp_file = Tempfile.new("#{self.name}")
 		begin
    		tmp_file.write(self.uri)
@@ -235,7 +236,7 @@ class Definition < ActiveRecord::Base
 		#	f.close
 		#end
 		#tmp_file.write(self.uri)
-		LOG.debug (fname) {"local_uri=#{ret}"}
+		#LOG.debug (fname) {"local_uri=#{ret}"}
 		ret
 	end
 

@@ -1,4 +1,5 @@
 <h1><%= t("workitems_edit") %><%= h @workitem.wfid %></h1>
+
 <script>
 	function saveWi() {
 		var f = byId('workitem_form');
@@ -12,35 +13,38 @@
 		saveWi();
 	}
 </script>
-
+<% fonct="edit"%>
 <% form_tag(
-workitem_path(@workitem),
-:id => 'workitem_form',
-:method => :put,
-:multipart => true) do -%>
-<input type="hidden" name="state" id="state" value="" />
-<!-- :( -->
-<table class='menu_bas'>
-	<tr >
-		<td><%= link_to_function(t("update"), 'saveWi()') %> </td>
-		<td><%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> </td>
-		<td><%= link_to(t("list"), workitems_path) %> </td>
-	</tr>
-</table>
-<table>
-	<%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem, :fonct=>"edit" } %>
-	<tr class="nhover">
-		<td class='nomax' colspan="2"> <%= render :partial => 'shared/ruote_forms', :locals => { :fields => @workitem.field_hash , :fonct=>"edit"} %> </td>
-	</tr>
-	<%= render(:partial => "workitems/wi_links", :locals => { :fonct=>"edit" } ) %>
-</table>
-<% end -%>
-<table class='menu_bas'>
-	<tr >
-		<td><%= link_to_function(t("update"), 'saveWi()') %> </td>
-		<td><%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> </td>
-		<td><%= link_to(t("list"), workitems_path) %> </td>
-	</tr>
-</table>
-<%= render_fluo :wfid => @workitem.wfid, :workitems => [ @workitem.expid ] %> 
+	workitem_path(@workitem),
+	:id => h_form_html_id(@workitem, fonct),
+	:method => :put,
+	:multipart => true) do -%>
+	<input type="hidden" name="state" id="state" value="" />
+	<!-- :( -->
+	<table class='menu_bas'>
+		<tr >
+			<td><%= link_to_function(t("update"), 'saveWi()') %> </td>
+			<td><%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> </td>
+			<td><%= link_to(t("list"), workitems_path) %> </td>
+		</tr>
+	</table>
+	<table>
+		<%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem, :fonct=>fonct } %>
+		<tr>
+			<td class='nomax'>
+				<%= h_workitem_fields(@workitem, fonct)%>
+			</td>
+		</tr>
+		<%= render(:partial => "workitems/wi_links", :locals => { :fonct=>fonct } ) %>
+	</table>
+	<% end -%>
+	<%= render_fluo :wfid => @workitem.wfid, :workitems => [ @workitem.expid ] %> 
+	<table class='menu_bas'>
+		<tr >
+			<td><%= link_to_function(t("update"), 'saveWi()') %> </td>
+			<td><%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> </td>
+			<td><%= link_to(t("list"), workitems_path) %> </td>
+		</tr>
+	</table>
+
 

@@ -32,6 +32,10 @@ module Ruote
   #
   module StorageBase
 
+
+
+
+
     def context
 
       @context ||= Ruote::Context.new(self)

@@ -200,7 +200,7 @@ module Models
 			###deja = Ruote::Sylrplm::Process.exists_on_object_for_action?(self, "promote")
 			###ret = !deja
 			end
-			LOG.debug (fname) { "#{self.ident} choice=#{choice} deja=#{deja} ret=#{ret}"}
+			###LOG.debug (fname) { "#{self.ident} choice=#{choice} deja=#{deja} ret=#{ret}"}
 			ret
 		end
 
@@ -259,7 +259,7 @@ module Models
 					ret="promote_by_menu" if promote_by_menu?
 					ret="promote_by_action" if promote_by_action?
 				end
-				puts "promote_button?:nexts.size=#{nexts.size} by_select?=#{promote_by_select?} by_menu?=#{promote_by_menu?} by_action?=#{promote_by_action?} ret=#{ret}"
+				#puts "promote_button?:nexts.size=#{nexts.size} by_select?=#{promote_by_select?} by_menu?=#{promote_by_menu?} by_action?=#{promote_by_action?} ret=#{ret}"
 			end
 			ret
 		end
@@ -273,7 +273,7 @@ module Models
 					ret="demote_by_menu" if demote_by_menu?
 					ret="demote_by_action" if demote_by_action?
 				end
-				puts "demote_button?:prevs.size=#{prevs.size} by_select?=#{demote_by_select?} by_menu?=#{demote_by_menu?} by_action?=#{demote_by_action?} ret=#{ret}"
+				#puts "demote_button?:prevs.size=#{prevs.size} by_select?=#{demote_by_select?} by_menu?=#{demote_by_menu?} by_action?=#{demote_by_action?} ret=#{ret}"
 			end
 			ret
 		end

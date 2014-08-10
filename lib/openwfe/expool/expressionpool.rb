@@ -77,7 +77,7 @@ module OpenWFE
 
       engine_environment_id
         # makes sure it's called now
-    end
+      end
 
     #
     # Stops this expression pool (especially its workqueue).
@@ -100,37 +100,37 @@ module OpenWFE
       return fetch_expression(template) if template.is_a?(FlowExpressionId)
         # used for "scheduled launches"
 
-      fei = parent_exp.fei.dup
-      fei.expression_id = "#{fei.expid}.#{sub_id}"
-      fei.expression_name = template.first
+        fei = parent_exp.fei.dup
+        fei.expression_id = "#{fei.expid}.#{sub_id}"
+        fei.expression_name = template.first
 
-      parent_id = options[:orphan] ? nil : parent_exp.fei
+        parent_id = options[:orphan] ? nil : parent_exp.fei
 
-      raw_exp = RawExpression.new_raw(
-        fei, parent_id, nil, @application_context, template)
+        raw_exp = RawExpression.new_raw(
+          fei, parent_id, nil, @application_context, template)
 
-      if vars = options[:variables]
-        raw_exp.new_environment(vars)
-      else
-        raw_exp.environment_id = parent_exp.environment_id
-      end
+        if vars = options[:variables]
+          raw_exp.new_environment(vars)
+        else
+          raw_exp.environment_id = parent_exp.environment_id
+        end
 
-      raw_exp.dup_environment if options[:dup_environment]
+        raw_exp.dup_environment if options[:dup_environment]
 
       #workitem.fei = raw_exp.fei
         # done in do_apply...
 
-      if options[:register_child] == true
+        if options[:register_child] == true
 
-        (parent_exp.children ||= []) << raw_exp.fei
+          (parent_exp.children ||= []) << raw_exp.fei
 
-        update(raw_exp)
+          update(raw_exp)
 
-        parent_exp.store_itself unless options[:dont_store_parent]
+          parent_exp.store_itself unless options[:dont_store_parent]
+        end
+
+        raw_exp
       end
-
-      raw_exp
-    end
 
     #
     # Launches the given template (sexp) as the child of its
@@ -162,23 +162,23 @@ module OpenWFE
     def launch_subprocess (
       firing_exp, template, forget, workitem, initial_variables)
 
-      raw_exp = build_raw_expression(template)
+    raw_exp = build_raw_expression(template)
 
-      raw_exp.parent_id = forget ? nil : firing_exp.fei
+    raw_exp.parent_id = forget ? nil : firing_exp.fei
 
-      raw_exp.fei.workflow_definition_url = firing_exp.fei.wfurl
+    raw_exp.fei.workflow_definition_url = firing_exp.fei.wfurl
 
-      raw_exp.fei.wfid =
-        "#{firing_exp.fei.parent_wfid}.#{firing_exp.get_next_sub_id}"
+    raw_exp.fei.wfid =
+    "#{firing_exp.fei.parent_wfid}.#{firing_exp.get_next_sub_id}"
 
-      raw_exp.new_environment(initial_variables)
+    raw_exp.new_environment(initial_variables)
 
-      raw_exp.store_itself
+    raw_exp.store_itself
 
-      apply(raw_exp, workitem)
+    apply(raw_exp, workitem)
 
-      raw_exp.fei
-    end
+    raw_exp.fei
+  end
 
     #
     # Replaces the flow expression with a raw expression that has
@@ -225,10 +225,11 @@ module OpenWFE
     # Replies to a given expression
     #
     def reply (exp_or_fei, workitem)
-
-      get_workqueue.push(
-        self, :do_apply_reply, :reply, exp_or_fei, workitem)
-    end
+     fname= "expression_pool.#{__method__}"
+        ##LOG.debug (fname) { "exp_or_fei=#{exp_or_fei} workitem=#{workitem.inspect}"}
+        get_workqueue.push(
+          self, :do_apply_reply, :reply, exp_or_fei, workitem)
+      end
 
     #
     # Cancels the given expression.
@@ -253,8 +254,8 @@ module OpenWFE
       remove(exp)
         # will remove owned environment if any
 
-      wi
-    end
+        wi
+      end
 
     #
     # Cancels the given expression and makes sure to resume the flow
@@ -265,7 +266,7 @@ module OpenWFE
     # expression.
     #
     def cancel_expression (exp)
-
+      puts "=================== expressionpool.cancel_expression:exp=#{exp}"
       exp, fei = fetch(exp)
 
       raise "cannot cancel 'missing' expression #{fei.to_short_s}" unless exp
@@ -294,15 +295,15 @@ module OpenWFE
       wfid = extract_wfid(exp_or_wfid, false)
         # 'true' would have made sure that the parent wfid is used...
 
-      ldebug { "cancel_process() '#{wfid}'" }
+        ldebug { "cancel_process() '#{wfid}'" }
 
-      root = fetch_root(wfid)
+        root = fetch_root(wfid)
 
-      raise "no process to cancel '#{wfid}'" unless root
+        raise "no process to cancel '#{wfid}'" unless root
 
-      cancel(root)
-    end
-    alias :cancel_flow :cancel_process
+        cancel(root)
+      end
+      alias :cancel_flow :cancel_process
 
     #
     # Forgets the given expression (make it an orphan).
@@ -341,10 +342,10 @@ module OpenWFE
           #
           # remove the expression itself
 
-        exp.clean_children
+          exp.clean_children
           #
           # remove all the children of the expression
-      end
+        end
 
       #
       # manage tag, have to remove it so it can get 'redone' or 'undone'
@@ -606,18 +607,18 @@ module OpenWFE
 
       h = {
         :workflow_instance_id =>
-          get_wfid_generator.generate(launchitem),
+        get_wfid_generator.generate(launchitem),
         :workflow_definition_name =>
-          atts['name'] || procdef[2].first || 'no-name',
+        atts['name'] || procdef[2].first || 'no-name',
         :workflow_definition_revision =>
-          atts['revision'] || '0',
+        atts['revision'] || '0',
         :expression_name =>
-          procdef[0]
+        procdef[0]
       }
 
       h[:workflow_definition_url] = (
         launchitem.workflow_definition_url || LaunchItem::FIELD_DEF
-      ) if launchitem
+        ) if launchitem
 
       RawExpression.new_raw(
         new_fei(h), nil, nil, @application_context, procdef)
@@ -694,7 +695,7 @@ module OpenWFE
             # were no error handler at all (error is then passed to error
             # journal usually (if there is one listening))
 
-          tryexp = fetch_expression(fei)
+tryexp = fetch_expression(fei)
 
           # remove error handler before consuming it
 
@@ -704,13 +705,13 @@ module OpenWFE
           # fetch on_error template
 
           template = (on_error == 'redo') ?
-            tryexp.raw_representation :
-            tryexp.lookup_variable(on_error) || [ on_error, {}, [] ]
+          tryexp.raw_representation :
+          tryexp.lookup_variable(on_error) || [ on_error, {}, [] ]
 
           # cancel block that is adorned with 'on_error'
 
           environment = tryexp.owns_its_environment? ?
-            tryexp.get_environment : nil
+          tryexp.get_environment : nil
 
           cancel(tryexp)
 
@@ -732,11 +733,11 @@ module OpenWFE
             # the point of error had variables, make sure they are available
             # to the error handling block.
 
-          substitute_and_apply(tryexp, template, workitem)
+            substitute_and_apply(tryexp, template, workitem)
 
-          return true
+            return true
+          end
         end
-      end
 
       false # no error handler found
     end
@@ -762,29 +763,29 @@ module OpenWFE
           # I uncomment that sometimes to see how the stack
           # grows (wfids and expids)
 
-        if not exp
+          if not exp
 
           #raise "apply() cannot apply missing #{_fei.to_debug_s}"
             # not very helpful anyway
 
-          lwarn { "do_apply_reply() :#{direction} but cannot find #{fei}" }
+            lwarn { "do_apply_reply() :#{direction} but cannot find #{fei}" }
 
-          return
+            return
+          end
+
+          check_if_paused(exp)
+
+          workitem.fei = exp.fei if direction == :apply
+
+          onotify(direction, exp, workitem)
+
+          exp.send(direction, workitem)
+
+        rescue Exception => e
+
+          handle_error(e, fei, direction, workitem)
         end
-
-        check_if_paused(exp)
-
-        workitem.fei = exp.fei if direction == :apply
-
-        onotify(direction, exp, workitem)
-
-        exp.send(direction, workitem)
-
-      rescue Exception => e
-
-        handle_error(e, fei, direction, workitem)
       end
-    end
 
     #
     # Will raise an exception if the expression belongs to a paused
@@ -888,10 +889,10 @@ module OpenWFE
         #
         # env already unbound and removed
 
-      env.unbind
+        env.unbind
 
-      onotify(:remove, environment_id)
-    end
+        onotify(:remove, environment_id)
+      end
 
     #
     # Builds a FlowExpressionId instance for a process being

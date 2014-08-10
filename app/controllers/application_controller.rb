@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   	else
   	# args=[{:action=>"index"}]
 		err = nil
-		unless(args[0][:action] == "index" || (@_params[:controller]=="typesobject" && @_params[:action]=="edit"))
+		unless(args[0]["action"] == "index" || (@_params["controller"]=="typesobject" && @_params["action"]=="edit"))
 			err = check_database_consistency(args)
 		end 
 		#LOG.debug (fname) {"args.action=#{args[0][:action]} err=#{err} err.nil?=#{err.nil?}"}
@@ -152,7 +152,7 @@ class ApplicationController < ActionController::Base
       end
     end
     flash[:error] = t(:ctrl_user_not_valid,:user=>user ) unless user.may_connect?
-    puts "check_user_connect:"+user.inspect+":"+flash[:notice].to_s
+    #puts "check_user_connect:"+user.inspect+":"+flash[:notice].to_s
     if user.login==PlmServices.get_property(:USER_ADMIN)
       flash[:error] = nil
     end

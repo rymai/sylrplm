@@ -40,9 +40,11 @@ module RuotePlugin
     #
     # start engine
     engine_class = application_context.delete(:engine_class)
-
-    @engine = engine_class.new(application_context)
-
+    if engine_class.is_a? Ruote::Worker
+      @engine =Ruote::Engine.new(engine_class)
+    else
+      @engine = engine_class.new(application_context)
+    
     #
     # init history
     @engine.init_service(:s_history, OpenWFE::Extras::QueuedDbHistory)
@@ -58,7 +60,7 @@ module RuotePlugin
     # (this should normally be done by the app itself, once all the participants
     # have been registered)
     @engine.reload
-
+end
     puts '.. Ruote workflow/BPM engine started (ruote_plugin)'
   end
 

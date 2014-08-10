@@ -253,6 +253,7 @@ module OpenWFE
     def find_expressions (options={})
 
       options[:cache] = self
+#puts "*************** expstorage.find_expressions:options=#{options.count} ****************"
 
       get_real_storage.find_expressions(options)
     end
