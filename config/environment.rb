@@ -6,13 +6,44 @@
 # Bootstrap the Rails environment, frameworks, and default configuration
 require File.join(File.dirname(__FILE__), 'boot')
 
+# monkey patch for 2.0. Will ignore vendor gems.
+if RUBY_VERSION >= "2.0.0"
+	module Gem
+		def self.source_index
+			sources
+		end
+
+		def self.cache
+			sources
+		end
+
+		SourceIndex = Specification
+
+		class SourceList
+		      # If you want vendor gems, this is where to start writing code.
+		      def search( *args ); []; end
+		      def each( &block ); end
+		      include Enumerable
+		end
+	end
+end
+
 Rails::Initializer.run do |config|
+
+	config.gem 'haml'
+  # etc
+  # maybe some more
+  # and so on...
+
+  # Note that iconv is a gem in ruby-2.0
+  config.gem 'iconv' if RUBY_VERSION >= "2.0.0"
+
 # Settings in config/environments/* take precedence over those specified here.
 # Application configuration should go into files in config/initializers
 # -- all .rb files in that directory are automatically loaded.
 
-	Encoding.default_external = Encoding::UTF_8
-	Encoding.default_internal = Encoding::UTF_8
+Encoding.default_external = Encoding::UTF_8
+Encoding.default_internal = Encoding::UTF_8
 
 	# config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
 	# Add additional load paths for your own custom dirs
@@ -22,7 +53,7 @@ Rails::Initializer.run do |config|
 	config.autoload_paths += %W[#{Rails.root}/lib/helper]
 	config.autoload_paths += %W[#{Rails.root}/lib/models]
 	config.autoload_paths += %W[#{Rails.root}/lib/ruote/sylrplm]
-  
+
 	# Only load the plugins named here, in the order given (default is alphabetical).
 	# :all can be used as a placeholder for all plugins not explicitly named
 	# config.plugins = [ :exception_notification, :ssl_requirement, :all ]

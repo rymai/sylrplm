@@ -208,7 +208,9 @@ gem install rufus-scheduler
 Uploading ssh public key /home/syl/.ssh/id_rsa.pub
 Enter your Heroku credentials.
 Email: sylvere.coutable@laposte.net
-Password: 
+Password: pa33zp62
+info: passphrase=syl@localhost
+
 ---
 --- Create your Heroku application
 ---
@@ -919,7 +921,7 @@ chown postgres:postgres /home/PostgreSQL
 /usr/local/pgsql/bin/initdb -D /home/PostgreSQL
 
 ---------------------------------------------------------------------------------------
-a faire au demarrage de la machine
+a faire au demarrage de la machine, service cree
 su - postgres
 cd
 /usr/local/pgsql/bin/pg_ctl -D /home/PostgreSQL -l logfile start
@@ -952,3 +954,23 @@ exception : undefined local variable or method `rwi' for #<Class:0x00000003e6f02
 /home/syl/trav/rubyonrails/sylrplm/lib/openwfe/extras/participants/ar_participants.rb:308:in `consume'
 /home/syl/trav/rubyonrails/sylrplm/lib/openwfe/participants/participant_map.rb:219:in `do_dispatch'
 /home/syl/trav/rubyonrails/sylrplm/lib/openwfe/participants/participant_map.rb:179:in `block in dispatch'
+
+pb ruby-gem:
+ruby script/server
+...
+/home/syl/.gem/ruby/gems/rails-2.3.17/lib/rails/gem_dependency.rb:21:in `add_frozen_gem_path': undefined method `source_index' for Gem:Module (NoMethodError)
+        from /home/syl/.gem/ruby/gems/rails-2.3.17/lib/initializer.rb:298:in `add_gem_load_paths'
+        from /home/syl/.gem/ruby/gems/rails-2.3.17/lib/initializer.rb:132:in `process'
+        from /home/syl/.gem/ruby/gems/rails-2.3.17/lib/initializer.rb:113:in `run'
+        from /home/syl/trav/rubyonrails/sylrplm/config/environment.rb:9:in `<top (required)>'
+        from /home/syl/.gem/ruby/gems/activesupport-2.3.17/lib/active_support/dependencies.rb:182:in `require'
+        from /home/syl/.gem/ruby/gems/activesupport-2.3.17/lib/active_support/dependencies.rb:182:in `block in require'
+        from /home/syl/.gem/ruby/gems/activesupport-2.3.17/lib/active_support/dependencies.rb:547:in `new_constants_in'
+        from /home/syl/.gem/ruby/gems/activesupport-2.3.17/lib/active_support/dependencies.rb:182:in `require'
+        from /home/syl/.gem/ruby/gems/rails-2.3.17/lib/commands/server.rb:84:in `<top (required)>'
+        from script/server:3:in `require'
+        from script/server:3:in `<main>'
+[syl@localhost sylrplm (master)]$ bundle show rails
+/home/syl/.gem/ruby/gems/bundler-1.6.5/lib/bundler.rb:301: warning: Insecure world writable dir /home/syl in PATH, mode 040777
+/home/syl/.gem/ruby/gems/rails-2.3.17
+[syl@localhost sylrplm (master)]$ gem update --system 1.8.25

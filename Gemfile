@@ -11,6 +11,7 @@ gem 'activesupport'
 gem 'bundler'
 
 gem 'bigdecimal'
+gem 'haml'
 gem 'iconv'
 #gem 'test-unit'
 gem 'nokogiri'  #, '~>1.5.4' 1.6.3.1
