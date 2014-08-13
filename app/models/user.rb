@@ -21,9 +21,35 @@ class User < ActiveRecord::Base
 	##TODO has_many :subscriptions, :foreign_key => :owner_id, :dependent => :delete_all
 
 	validates_presence_of     :login, :typesobject
+	#validates :email, :presence => true, :format => {:with => /^[^@\s]+)@((?:[-a-z0-9A-Z]+\.[a-zA-Z]{2,})$/}
+
 	validates_uniqueness_of   :login
 
 	validates_confirmation_of :password
+
+	before_save :validity
+	
+	def validity
+		fname = "#{self.class.name}.#{__method__}:"
+		valid = false
+		begin
+			#LOG.info(fname) {"email=#{self.email} : #{PlmServices.isEmail(self.email)}"}
+			unless self.email.blank?
+				if PlmServices.isEmail(self.email)
+					valid=true
+				else
+					self.errors.add("User mail is not valid, example: me.name@free.fr")
+				end
+			else
+				self.errors.add("User mail is mandatory, example: me.name@free.fr")
+			end
+		rescue Exception => e
+			msg="Exception during user validity test:<br/>Exception=#{e}"
+			self.errors.add(msg)
+		end
+		valid
+	end
+
 	#
 	# User and Group share this method, which returns login and name respectively
 	#
@@ -41,25 +67,27 @@ class User < ActiveRecord::Base
 
 	def initialize(*args)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname) {"args=#{args.length}:#{args.inspect}"}
+		#LOG.info (fname) {"args=#{args.length}:#{args.inspect}"}
+		#LOG.info (fname) {"errors on user begin=#{self.errors.count}"}
 		super
 		self.language    = PlmServices.get_property(:LOCAL_DEFAULT)
 		self.volume      = Volume.find_by_name(PlmServices.get_property(:VOLUME_NAME_DEFAULT))
 		self.nb_items    = PlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i
 		self.theme       = PlmServices.get_property(:THEME_DEFAULT)
 		self.typesobject = Typesobject.find_by_forobject_and_name("user", PlmServices.get_property(:TYPE_USER_DEFAULT))
-
 		if args.size>0
 			unless args[0][:user].nil?
 				validate_user
 				self.set_default_values_with_next_seq
 			end
 		end
+		#LOG.info (fname) {"errors on user end=#{self.errors.count}"}
+		self
 	end
 
 	def user=(auser)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname) {"auser=#{auser}"}
+		#LOG.info (fname) {"auser=#{auser}"}
 	end
 
 	def self.create_new(params=nil)
@@ -94,6 +122,7 @@ class User < ActiveRecord::Base
 	#
 	def self.create_new_login(aparams, urlbase)
 		fname="User.create_new_login:"
+		#LOG.debug (fname) {"params login=#{aparams}"}
 		###type = Typesobject.find_by_forobject_and_name("user", ::SYLRPLM::TYPE_USER_NEW_ACCOUNT)
 		#puts fname+" type="+type.inspect
 		#role_consultant=Role.find_by_title(::SYLRPLM::ROLE_CONSULTANT)
@@ -108,30 +137,32 @@ class User < ActiveRecord::Base
 		#params["volume_id"]=1
 		params["login"]    = aparams["login"]
 		params["password"] = aparams["password"]
-		params["email"]    = aparams["new_email"]
+		params["email"]    = aparams["email"]
 		new_user = User.new(params)
+		if new_user.errors.nil? || new_user.errors.count==0
+			if new_user.save
+				#
+				#puts fname+" new_user="+new_user.inspect
+				#puts fname+"urlbase="+urlbase
 
-		if new_user.save
-			#
-			#puts fname+" new_user="+new_user.inspect
-			#puts fname+"urlbase="+urlbase
+				if email = PlmMailer.create_new_login(new_user, admin, new_user, urlbase)
+					email.set_content_type("text/html")
+					PlmMailer.deliver(email)
+					msg = :ctrl_mail_created_and_delivered
+					puts fname+" message cree et envoye pour #{new_user.login}"
+				else
+					puts fname+" message non cree pour #{new_user.login}"
+					msg = :ctrl_mail_not_created
+					#new_user.destroy
+					#new_user=nil
+				end
 
-			if email = PlmMailer.create_new_login(new_user, admin, new_user, urlbase)
-				email.set_content_type("text/html")
-				PlmMailer.deliver(email)
-				msg = :ctrl_mail_created_and_delivered
-				puts fname+" message cree et envoye pour #{new_user.login}"
 			else
-				puts fname+" message non cree pour #{new_user.login}"
-				msg = :ctrl_mail_not_created
-				new_user.destroy
-				new_user=nil
+				LOG.error (fname) {" user non sauve: errors= #{new_user.errors.inspect}"}
+				#new_user=nil
 			end
-
 		else
-			puts fname+" user non sauve: #{new_user.login}"
-			puts "#{new_user.errors.inspect}"
-			new_user=nil
+			LOG.error (fname) {" user non cree: errors= #{new_user.errors.inspect}"}
 		end
 		#else
 =begin
@@ -156,17 +187,17 @@ new_user=nil
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.info (fname) {"attribute roles, groups and project to the user #{login}"}
 		PlmServices.get_property(:ROLES_USER_DEFAULT).split(",").each do |elname|
-			LOG.info (fname) {"attribute role #{elname}"}
+			#LOG.info (fname) {"attribute role #{elname}"}
 			el=::Role.find_by_title(elname)
 			self.roles << el unless self.roles.include? el
 		end
 		PlmServices.get_property(:GROUPS_USER_DEFAULT).split(",").each do |elname|
-			LOG.info (fname) {"attribute group #{elname}"}
+			#LOG.info (fname) {"attribute group #{elname}"}
 			el = ::Group.find_by_name(elname)
 			self.groups << el unless self.groups.include? el
 		end
 		PlmServices.get_property(:PROJECTS_USER_DEFAULT).split(",").each do |elname|
-			LOG.info (fname) {"attribute project #{elname}"}
+			#LOG.info (fname) {"attribute project #{elname}"}
 			el = ::Project.find_by_ident(elname)
 			self.projects << el unless self.projects.include? el
 		end

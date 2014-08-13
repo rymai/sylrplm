@@ -1,6 +1,7 @@
 <% h_title t(:connect) %>
 
 <% form_for :session, url: { controller: :sessions, action: :create} do |form| %>
+<%= form.error_messages %>
 <fieldset>
 	<legend>
 		<%= t(:legend_login) %>

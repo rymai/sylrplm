@@ -1,11 +1,12 @@
 <%= h_title t(:submit_create_account) %>
 
 <% form_for :session, url: create_account_path, method: 'post' do |form| %>
+<%= form.error_messages %>
 <fieldset>
   <legend>
     <%= t(:legend_new_account) %>
   </legend>
-  <p>
+   <p>
     <%= form.label t(:label_login) %>
     <%= form.text_field :login %>
   </p>
@@ -17,7 +18,7 @@
 
   <p>
     <%= form.label t(:label_new_email) %>
-    <%= form.text_field :new_email %>
+    <%= form.text_field :email %>
   </p>
 
   <p>

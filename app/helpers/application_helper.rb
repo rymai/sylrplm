@@ -408,7 +408,7 @@ module ApplicationHelper
 		ret+="<td>"
 		begin
 			vacc="v_"+final_acc.to_s
-			LOG.info (fname){"final_obj=#{final_obj} final_acc=#{final_acc} labacc=#{labacc}"}
+			#LOG.info (fname){"final_obj=#{final_obj} final_acc=#{final_acc} labacc=#{labacc}"}
 			if final_obj.respond_to?(vacc)
 			val=final_obj.send(vacc).to_s
 			else

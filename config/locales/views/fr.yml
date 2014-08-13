@@ -423,6 +423,7 @@ fr:
   notification_notify: "Notification des évènements concernant l' abonnement '%{subscription}' de l'utilisateur '%{user}'"
   button_notify: Voir la notification
   label_object_type: Type de donnée
+  new_login_activate: Cliquez sur le lien pour activer votre compte
   # processes
   legend_processes: Processus
   mnu_flw_workitems: Mes actions

@@ -1,4 +1,9 @@
 class PlmServices
+	
+	def self.isEmail(str)
+  		str.match(/\A(\S+)@(.+)\.(\S+)\z/)
+	end
+
 	def self.get_object_by_mdlid(mdlid)
 		fields = mdlid.split(".")
 		if fields.size == 2

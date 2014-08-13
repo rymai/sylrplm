@@ -9,7 +9,7 @@ class MainController < ApplicationController
 	#end
 	def index
 		fname= "#{self.class.name}.#{__method__}"
-		
+		#LOG.info (fname){"params=#{params.inspect}"}
 		unless params[:domain].blank?
 			# creation du domaine demande: status et types d'objets
 			st=Controller.init_db(params)

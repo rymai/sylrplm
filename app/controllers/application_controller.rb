@@ -260,7 +260,7 @@ class ApplicationController < ActionController::Base
 
   # redirection vers l'action index du main si besoin
   def redirect_to_main(uri=nil, msg=nil)
-  	puts "redirect_to_main"
+  #puts "application_controller: redirect_to_main"
     flash[:error] = msg if msg
     redirect_to(uri || { :controller => "main", :action => "index" })
   end
@@ -291,8 +291,9 @@ class ApplicationController < ActionController::Base
 
   def authorize
     user_id = session[:user_id] || User.find_by_id(session[:user_id])
+    #puts "application_controller.authorize.request_uri="+request.request_uri+" user_id="+user_id.to_s
     if user_id.nil?
-      puts "authorize:user is nil"
+      #puts "authorize:user is nil"
       #puts "application_controller.authorize.request_uri="+request.request_uri
       #puts "application_controller.authorize.new_sessions_url="+new_sessions_url
       session[:original_uri] = request.request_uri

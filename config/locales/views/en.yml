@@ -423,6 +423,7 @@ en:
   notification_notify: "Events notification concerning subscription '%{subscription}' of user '%{user}'"
   button_notify: Notification
   label_object_type: Data type
+  new_login_activate: Clic on link to activate your acount
   # processes
   legend_processes: Processes
   mnu_flw_workitems: My actions

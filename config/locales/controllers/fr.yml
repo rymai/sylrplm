@@ -149,14 +149,15 @@ fr:
   ctrl_user_created: "Utilisateur %{user} crée"
   ctrl_user_not_created: "Utilisateur %{user} non crée: %{msg}"
   ctrl_user_not_valid: "Utilisateur %{user} en cours de validation"
-  ctrl_new_account_not_created: "Nouveau compte %{user} non crée, réessayer ultérieurement puis ecrivez à l'administrateur"
-  ctrl_user_updated: Utilisateur %{user} modifié
+  ctrl_new_account_not_created: "Nouveau compte %{user} non crée"
+  ctrl_new_account_not_validated: "Nouveau compte %{user} non  validé, réessayer ultérieurement puis ecrivez à l'administrateur"
+  ctrl_user_updated: "Utilisateur %{user} modifié"
   ctrl_user_not_updated: "Utilisateur %{user} non modifié: %{msg}"
   ctrl_user_deleted: "Utilisateur %{user} supprimé"
   ctrl_user_connected: "Utilisateur %{user} connecté !"
   ctrl_user_not_connected: "Non connecté: %{msg}"
   ctrl_user_disconnected: "Utilisateur %{user} déconnecté !"
-  ctrl_user_role: Rôle=%{role}
+  ctrl_user_role: "Rôle=%{role}"
   ctrl_account_needed: Renseigner le compte
   # statusobjects
   ctrl_statusobject: Statut objet

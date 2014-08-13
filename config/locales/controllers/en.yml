@@ -150,6 +150,7 @@ en:
   ctrl_user_not_created: "User %{user} not created: %{msg}"
   ctrl_user_not_valid: User %{user} not yet validated
   ctrl_new_account_not_created: New user %{user} not created
+  ctrl_new_account_not_validated: New user %{user} not validated
   ctrl_user_updated: User %{user} updated
   ctrl_user_not_updated: "User %{user} not updated: %{msg}"
   ctrl_user_deleted: User %{user} deleted
