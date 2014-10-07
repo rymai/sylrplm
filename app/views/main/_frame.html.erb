@@ -2,21 +2,37 @@
 	<div class="navbar-inner">
 		<div class="container">
 			<div class="btn-toolbar" >
-				<div class="btn-group">
-					<ul class="nav nav-tabs">
-						<li class="active">
-							<a class="brand" href="#main" data-toggle="tab"> <%= @page_title || "SYLRPLM" %> </a>
-						</li>
-						<% if @tree || @tree_up %>
-						<li >
-							<a class="brand" href="#tree" data-toggle="tab"><%= t(:legend_tree) %></a>
-						</li>
-						<% end %>
-						<li >
-							<a class="brand" href="#favorites" data-toggle="tab"><%= t(:legend_clipboard) %></a>
-						</li>
-					</ul><!-- nav nav-tabs -->
-				</div>
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a class="brand" href="#main" data-toggle="tab"> <%= @page_title || "SYLRPLM" %> </a>
+					</li>
+					<% if @tree || @tree_up %>
+					<li >
+						<a class="brand" href="#tree" data-toggle="tab"><%= t(:legend_tree) %></a>
+					</li>
+					<% end %>
+					<li >
+						<a class="brand" href="#favorites" data-toggle="tab"><%= t(:legend_clipboard) %></a>
+					</li>
+					<% if logged_in? %>
+					<li>
+						<a class="brand" href="#" title="<%= t(:user_connected,
+						:login => @current_user.login,
+						:role => @current_user.role.try(:title),
+						:group => @current_user.group.try(:name),
+						:project => @current_user.project.try(:ident))%>"> <%= @current_user.login %></a>
+					</li>
+					<li>
+						<%= link_to h_img("disconnect"), sessions_path, :method => :delete, :class=>"brand" %>
+					</li>
+					<% else %>
+					<li>
+						<%= link_to t("connect"), new_sessions_url , :class=>"brand"%>
+					</li>
+					<% end %>
+
+				</ul><!-- nav nav-tabs -->
+
 				<div class="btn-group">
 					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 						<%= t(:legend_desktop)%> <span class="caret"></span>
@@ -41,18 +57,7 @@
 						<%= t(:legend_plm_objects)%> <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu">
-						<li>
-							<%= h_menu("/documents","help_documents",t("mnu_documents")) %>
-						</li>
-						<li>
-							<%= h_menu("/parts","help_parts",t("mnu_parts")) %>
-						</li>
-						<li>
-							<%= h_menu("/projects","help_projects",t("mnu_projects")) %>
-						</li>
-						<li>
-							<%= h_menu("/customers","help_customers",t("mnu_customers")) %>
-						</li>
+						<%= render(:partial => "main/menus_feature") %>
 						<li>
 							<%= h_menu("/history?fonct=on_plm_objects", "help_flw_history",t("mnu_flw_history")) %>
 						</li>
@@ -101,7 +106,7 @@
 					</button>
 					<ul class="dropdown-menu">
 						<li class="dropdown-submenu" id="organizationmenu">
-							<a tabindex="-1" href="#"><%= t(:legend_organization)%></b></a>
+							<a class='menu' tabindex="-1" href="#"><%= t(:legend_organization)%></b></a>
 							<ul class="dropdown-menu">
 								<li>
 									<%= h_menu("/users","help_users",t("mnu_users")) %>
@@ -123,7 +128,7 @@
 						</li>
 
 						<li class="dropdown-submenu" id="parammenu">
-							<a tabindex="-1" href="#"><%= t(:legend_param)%></a>
+							<a class='menu' tabindex="-1" href="#"><%= t(:legend_param)%></a>
 							<ul class="dropdown-menu">
 								<li>
 									<%= h_menu("/typesobjects","help_typesobjects",t("mnu_types_objects")) %>
@@ -149,9 +154,9 @@
 								</li>
 							</ul>
 						</li>
-						
+
 						<li class="dropdown-submenu" id="debugmenu">
-							<a tabindex="-1" href="#"><%= t(:legend_debug)%></a>
+							<a class='menu' tabindex="-1" href="#"><%= t(:legend_debug)%></a>
 							<ul class="dropdown-menu">
 								<li>
 									<%= h_menu("/notifications", "help_notifications",t("mnu_notifications")) %>
@@ -177,37 +182,17 @@
 								</li>
 							</ul>
 						</li>
-						
-					</ul>
-				</div><!-- /btn-group -->
-				<div class="btn-group">
-					<ul class="nav nav-tabs">
-						<% if logged_in? %>
-						<li>
-							<a class="brand" href="#" title="<%= t(:user_connected,
-							:login => @current_user.login,
-							:role => @current_user.role.try(:title),
-							:group => @current_user.group.try(:name),
-							:project => @current_user.project.try(:ident))%>"> <%= @current_user.login %></a>
-						</li>
-						<li>
-							<%= link_to h_img("disconnect"), sessions_path, :method => :delete, :class=>"brand" %>
-						</li>
-						<% else %>
-						<li>
-							<%= link_to t("connect"), new_sessions_url , :class=>"brand"%>
-						</li>
-						<% end %>
 
 					</ul>
-				</div>
+				</div><!-- /btn-group -->
+
 				<div class="btn-group">
 					<button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
 						<%= t(:mnu_help) %> <span class="caret"></span>
 					</button>
 					<ul class="dropdown-menu">
 						<li>
-							<%= link_to t(:help_general), {:controller=> :main, :action => :helpgeneral}, {:target => "_blank" } %>
+							<%= link_to t(:help_general), {:controller=> :main, :action => :helpgeneral}, {:target => "_blank", :class=>"menu" } %>
 						</li>
 						<!--
 						<li>
@@ -215,13 +200,13 @@
 						</li>
 						-->
 						<li>
-							<%= help_chapter :help_first_use %>
+							<%= help_chapter :help_first_use , "menu" %>
 						</li>
 						<li>
-							<%= help_window() %>
+							<%= help_window("menu") %>
 						</li>
 						<li>
-							<%= help_chapter :help_about %>
+							<%= help_chapter :help_about, "menu" %>
 						</li>
 					</ul>
 				</div>
@@ -248,9 +233,9 @@
 	<br/>
 	<br/>
 	<br/>
-	<br/>
 	<div id="favorites" class="tab-pane inactive">
 		<%= render('layouts/favorites') %>
+		<%= render('layouts/recent_links') %>
 	</div>
 	<div id="tree" class="tab-pane inactive">
 		<% if @tree || @tree_up %>
@@ -290,7 +275,7 @@
 <div class="navbar navbar-fixed-bottom">
 	<div class="navbar-inner">
 		<div class="container">
-			Bas de page
+			<%= flash[:notice] %>
 		</div><!-- /container -->
 	</div><!-- /navbar-inner -->
 </div><!-- /navbar -->

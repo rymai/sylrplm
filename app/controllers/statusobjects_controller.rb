@@ -11,7 +11,7 @@ class StatusobjectsController < ApplicationController
 	# GET /statusobjects
 	# GET /statusobjects.xml
 	def index
-		@statusobjects = Statusobject.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@statusobjects = Statusobject.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @statusobjects }
@@ -39,7 +39,7 @@ class StatusobjectsController < ApplicationController
 			format.xml  { render :xml => @statusobject }
 		end
 	end
-	
+
 	def new_dup
 		fname= "#{self.class.name}.#{__method__}"
 		@object_orig = Statusobject.find(params[:id])
@@ -52,12 +52,14 @@ class StatusobjectsController < ApplicationController
 			format.xml  { render :xml => @object }
 		end
 	end
-	
+
 	# GET /statusobjects/1/edit
 	def edit
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		@statusobject = Statusobject.find(params[:id])
+		#LOG.debug (fname){"@statusobject=#{@statusobject}"}
 		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
-		
 		@objectswithstatus=Statusobject.get_objects_with_status
 	end
 
@@ -68,7 +70,7 @@ class StatusobjectsController < ApplicationController
 		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
 		@objectswithstatus=Statusobject.get_objects_with_status
 		respond_to do |format|
-			if params[:fonct] == "new_dup"
+			if params[:fonct][:current] == "new_dup"
 				object_orig=Statusobject.find(params[:object_orig_id])
 			st = @statusobject.create_duplicate(object_orig)
 			else
@@ -93,7 +95,7 @@ class StatusobjectsController < ApplicationController
 		@objectswithstatus=Statusobject.get_objects_with_status
 		@statusobject.update_accessor(current_user)
 		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
-		
+
 		respond_to do |format|
 			if @statusobject.update_attributes(params[:statusobject])
 				flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
@@ -105,6 +107,16 @@ class StatusobjectsController < ApplicationController
 				format.xml  { render :xml => @statusobject.errors, :status => :unprocessable_entity }
 			end
 		end
+	end
+
+	#
+	# update of edit panel after changing the type
+	#
+	def update_type
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@statusobject = Statusobject.find(params[:id])
+		ctrl_update_type @statusobject, params[:object_type]
 	end
 
 	# DELETE /statusobjects/1

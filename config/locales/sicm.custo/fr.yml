@@ -2,20 +2,20 @@ fr:
   relation_describe_by: Décrit par
   relation_define_by: Défini par
   relation_hierarchic_to: Descend de
-  relation_doc_ref: Document de référence	
+  relation_doc_ref: Document de référence
   relation_ask_for: ASK FOR ??
-  relation_applicable: Document Applicable	
-  relation_reference: Document de référence	
+  relation_applicable: Document Applicable
+  relation_reference: Document de référence
   relation_discuss_by: Discussion par
   relation_PRD_EFF: Effectivité du produit
   relation_PRD_VAR: Lien de variante
   relation_VAR_EFF: Effectivité de la variante
-  relation_LINK_EFF: Effectivité affectée au lien	
+  relation_LINK_EFF: Effectivité affectée au lien
   relation_PRD_STR: Structure produit
   relation_STR_STR: Noeud de structure
-  relation_STR_PIE: Structure d'articles	
-  relation_directory: Répertoire 	
-  relation_doc_app: Document dépendant	
+  relation_STR_PIE: Structure d'articles
+  relation_directory: Répertoire
+  relation_doc_app: Document dépendant
   relation_FROM_REVISION: Révision à partir de l'objet
   relation_FROM_DUPLICATE: Dupliquer à partir de l'objet
   relation_ctrl_part_var: Variante
@@ -23,6 +23,8 @@ fr:
   relation_label_document_users: Document utilisateurs
   relation_label_customer_users: Client utilisateurs
   relation_label_project_users: Projet utilisateurs
+  relation_ISSUE_ORIGIN: Origine du problème
+  relation_RECENT_ACTION: Action récente
   #
   typesobject_name_lifecycle: Cycle de vie
   typesobject_name_objects_names: Noms
@@ -48,14 +50,14 @@ fr:
   typesobject_name_public: Publique
   typesobject_name_internal: Interne
   typesobject_name_private: Privé
-  typesobject_name_confidential: Confidential
+  typesobject_name_confidential: Confidentiel
   typesobject_name_secret: Secret
   typesobject_name_person_: Personne
   typesobject_name_virtual_: Virtuel
   typesobject_name_forum: Discussion
   typesobject_name_ar_workitem: Tâche
   typesobject_name_writer: Traitement de texte
-  typesobject_name_text: Fichier texte 
+  typesobject_name_text: Fichier texte
   typesobject_name_thumbnail: Miniature
   typesobject_name_brl-cad: BRL-CAD
   typesobject_name_scad: SCAD
@@ -85,10 +87,11 @@ fr:
   typesobject_name_standard: Standards
   typesobject_name_image: Image
   typesobject_name_calculsheet: Tableur
-  typesobject_name_volumes_dir: Répertoire des volumes	
+  typesobject_name_volumes_dir: Répertoire des volumes
+  typesobject_name_ISSUE: Problème
   # statusobject
   typesobject_name_ready: Prêt
-  typesobject_name_approved: Approuvé 
+  typesobject_name_approved: Approuvé
   typesobject_name_finished: Terminé
   typesobject_name_hasbeen: Obsolète
   typesobject_name_open: Ouvert
@@ -96,12 +99,11 @@ fr:
   typesobject_name_active: Actif
   typesobject_name_inactive: Inactif
   typesobject_name_validated: Validé
-  #
+  # forobject
   forobject_customer: Client
   forobject_document: Document
   forobject_part: Article
   forobject_project: Projet
-  forobject_sylrplm_properties:
   forobject_relation: Relation
   forobject_ar_workitem: Tâche
   forobject_datafile: Fichier de données
@@ -139,7 +141,7 @@ fr:
   definition_revision: Revision
   definition_promotion: Promotion
   definition_promotion-part: Promouvoir un article de n'importe quel type
-  definition_promotion-document-ready-approved: Promouvoir un document de n'importe quel type de ready à approved	
+  definition_promotion-document-ready-approved: Promouvoir un document de n'importe quel type de ready à approved
   #subscription
   subscription_creator: Concepteur
   subscription_consultant: Consultant
@@ -147,4 +149,3 @@ fr:
   subscription_designer: Dessinateur
   subscription_analyst: Analyste
   subscription_admin: Administrateur
-  

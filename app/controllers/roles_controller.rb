@@ -5,7 +5,7 @@ class RolesController < ApplicationController
 	# GET /roles.xml
 	def index
 
-		@roles = Role.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@roles = Role.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
 
 		respond_to do |format|
 			format.html # index.html.erb
@@ -66,7 +66,7 @@ class RolesController < ApplicationController
 	def create
 		@role = Role.new(params[:role])
 		respond_to do |format|
-			if params[:fonct] == "new_dup"
+			if params[:fonct][:current] == "new_dup"
 				object_orig=Role.find(params[:object_orig_id])
 			st = @role.create_duplicate(object_orig)
 			else

@@ -27,9 +27,9 @@
 	<thead>
 		<tr>
 			<% if current_user.is_admin?%> <th> <%= t(:label_id)%> </th>
-			<% end %> 
+			<% end %>
 			<% if fonct == "show_only" %>
-			
+
 			<th> <%= t(:label_relation)%> </th>
 			<% end %>
 			<th> <%= t(:label_wfid)%> </th>
@@ -40,13 +40,15 @@
 			<th> <%= t(:label_store)%> </th>
 			<th> <%= t(:label_participant)%> </th>
 			<th> <%= t(:label_activity)%> </th>
+			<th> <%= t(:label_workitem_objects)%> </th>
+			<th> <%= t(:label_objects)%></th>
 		</tr>
 	</thead>
 	<% for workitem in workitems %>
 	<% fei = workitem.full_fei%>
 	<tr class='<%= cycle("even", "odd") %>'>
 		<% if current_user.is_admin?%> <td> <%= workitem.id %> </td>
-		<% end %> 
+		<% end %>
 		<% if fonct == "show_only" %>
 		<td> <%= workitem.link_attributes["relation"].name %> </td>
 		<% end %>
@@ -58,6 +60,9 @@
 		<td> <%= link_to_slice(workitem, :store_name, :store) %> </td>
 		<td> <%= link_to_slice(workitem, :participant_name, :participant) %> </td>
 		<td> <%= h workitem.activity %> </td>
+		<td> <%= comma_links(workitem.get_plm_objects, :ident)  %> </td>
+		<td> <%= h_workitems_links(workitem)  %> </td>
+
 		<td > <%= link_to h_img_show.to_s, workitem_url(workitem) %></td>
 		<td class='menu_bas'> <% if fonct != "show_only" %>
 		<%= link_to_if current_user.may_see?(workitem) , t("edit_task"), edit_workitem_url(workitem) %>
@@ -77,4 +82,4 @@
 :method => :put,
 :multipart => true) do -%>
 <input type="hidden" name="store_name" id="store_name" value="<%= current_user.login %>" />
-<% end %> 
+<% end %>

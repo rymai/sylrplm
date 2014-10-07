@@ -19,9 +19,32 @@ module Models
 				end
 				ret
 			end
+		end #ClassMethods
+
+ #
+		# adapt some atttributes of the object depending of the new type
+		#
+		def modify_type(type)
+			typesobject_old=self.typesobject
+			type_values_old=self.type_values
+			statusobject_old=self.statusobject
+			self.typesobject=type
+			self.type_values=type.fields
+			self.statusobject = ::Statusobject.get_first(self)
+			ret=[]
+			if(self.typesobject != typesobject_old)
+				ret<< "Type changed from #{typesobject_old} to #{self.typesobject}"
+			end
+			if(self.type_values != type_values_old)
+				ret<< "Type_values changed from #{type_values_old} to #{self.type_values}"
+			end
+			if(self.statusobject != statusobject_old)
+				ret<< "Status changed from #{statusobject_old} to #{self.statusobject}"
+			end
+			ret
 		end
 
-		def edit()
+		def edit
 			self.date=DateTime::now()
 		end
 
@@ -48,16 +71,19 @@ module Models
 		end
 
 		def first_revision
+			fname= "#{self.model_name}.#{__method__}"
 			cls=eval self.class.name
 			cls.find(:first, :order=>"revision ASC",  :conditions => ["ident = '#{ident}'"])
 		end
 
 		def last_revision?
+			fname= "#{self.model_name}.#{__method__}"
 			ret = (self.revision == self.last_revision.revision)
 			ret
 		end
 
 		def revisable?
+			fname= "#{self.model_name}.#{__method__}"
 			###ret = (has_attribute?("revision") && frozen? && last_revision?)
 			ret = revise_by_menu? || revise_by_action?
 			ret
@@ -317,7 +343,10 @@ module Models
 		end
 
 		def relations(child_plmtype = nil)
-			::Relation.relations_for(self, child_plmtype)
+			fname= "#{self.class.name}.#{__method__}"
+			ret=::Relation.relations_for(self, child_plmtype.to_s)
+			#OG.info (fname) {"relations from #{self.model_name} to #{child_plmtype.to_s}:ret=#{ret}"}
+			ret
 		end
 
 		def link_relation

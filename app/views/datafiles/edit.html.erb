@@ -1,10 +1,4 @@
-<h1><%= t(:datafile_edit) %></h1>
 <% fonct="edit" %>
-<% form_for(@datafile,
-:html => { :multipart => true,  :id => h_form_html_id(@datafile, fonct) } ) do |f| %>
-<%= f.error_messages %>
-<%= hidden_field_tag "MAX_FILE_SIZE", PlmServices.get_property(:MAX_FILE_SIZE) %>
-<%= render(:partial => "shared/menu_edit", :locals => {:object => @datafile, :f => f, :fonct=>fonct}) %>
-<%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f, :fonct=>fonct, :document=>@document }) %>
-<%= render(:partial => "shared/submit_edit", :locals => {:object => @datafile, :f => f, :fonct=>fonct}) %>
-<% end %>
+<div id="edit_object">
+	<%= render(:partial => "shared/edit_object", :locals=>{:fonct=>"edit", :plm_object=>@datafile, :document=>@document}) %>
+</div>

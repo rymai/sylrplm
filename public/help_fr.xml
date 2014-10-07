@@ -1,8 +1,8 @@
 <sylrplm_help >
     Bienvenue dans l'application SYLRPLM développée sur "Ruby On Rails" : #img=rails.png=img##lnk=http://www.railsfrance.org/=lnk#
     <msg key="help_about" title="A propos de SYLRPLM">
-    	SYLRPLM est une réalisation de Sylvère Coutable avec l'assistance technique de Remy Coutable
-    	Version: 1.0 du 15/06/2013
+    	SYLRPLM est une réalisation de Sylvère Coutable avec l'assistance technique de Rémy Coutable.
+    	#bloc=translate(:sylrplm_version, :version => ::SYLRPLM::SYLRPLM_VERSION, :version_date => I18n.localize(::SYLRPLM::SYLRPLM_DATE))=bloc#
     </msg>
     <msg key="help_first_use" title="Prise en main">
     	<ul><li title="Préambule">Tout d'abord, nous vous invitons à prendre connaissance des principales fonctionnalités de l'application: #lnk=/main/helpgeneral=lnk#.</li>
@@ -10,7 +10,7 @@
     	<li title="Connexion">Certains des menus vous demanderons de vous connecter car ils permettent de voir plus de données et d'en modifier certaines.
     	Vous pourrez alors soit donner un identifiant et un mot de passe que vous possédez ou indiquer celui que vous voulez créer.
     	Ceci vous permettra, dans un premier temps en tant que consultant, de manipuler plus de données.</li>
-    	<li title="Modèle 3d">ATTENTION: Si vous voulez visualiser les exemples de modèles 3D existants sur le site, il faut auparavant télécharger et installer le logiciel "OpenSCAD" 
+    	<li title="Modèle 3d">ATTENTION: Si vous voulez visualiser les exemples de modèles 3D existants sur le site, il faut auparavant télécharger et installer le logiciel "OpenSCAD"
     	à cette adresse:#lnk=http://www.openscad.org/downloads.html=lnk#
     	La documentation est accessible ici: #lnk=http://en.wikibooks.org/wiki/OpenSCAD_User_Manual=lnk#
     	Le scénario est le suivant: dans la vue "Structure", vous activez le menu "Modèle 3D".
@@ -26,13 +26,19 @@
     	</ul>
     </msg>
     <msg key="help_main_functions" title="Principales fonctionnalités">
-    	L'application s'articule autour de la gestion d'articles dans des structures configurables.
+    	<msg key="help_functions_introduction" title="Que propose sylrplm ?">
+    	sylrplm est une application spécialisée dans la gestion du cycle de vie de produits (PLM: Product Lifecycle Management).
+    	Elle unifie les activités de la société dans le but de structurer les données autour du produit.
+    	sylrplm dispose d'une interface full-web, le serveur d'application pouvant lui même être hebergé (cloud) ainsi que les "cofres forts" des données.
+    	sylrplm est écrit dans le langage ruby et est intégrée par le framework rails.
+    	Divers systèmes de gestion de base de donnée peuvent être utilisés (Postgresql, mysql, ...).
+    	Les quatres domaines regroupant l'ensemble des fonctionnalités de l'application sont:
+    	</msg>
+    	<msg key="help_end_user_functions" title="Fonctionnalités PLM">
+    		<ul>L'application s'articule autour de la gestion d'articles dans des structures configurables.
     	Ces articles sont documentés et associés à un ou des projets repondant aux besoins exprimés par des clients.
     	Tous ces objets ont un cycle de vie paramétrable.
     	Certaines fonctions (promotion, revision) sur les objets sont activables en utilisant un processus (signature, commentaires).
-    	Les trois domaines regroupant l'ensemble des fonctionnalités de l'application sont:
-    	<msg key="help_end_user_functions" title="Fonctionnalités PLM">
-    		<ul>
 	    		<li title="Gestion documentaire">
 	    			La gestion documentaire comprend les 2 composants suivants:
 	    			<ul>
@@ -51,7 +57,7 @@
 		    		Identification, création, édition, suppression, révision, duplication, cycle de vie.
 					</li>
 					<li title="Configuration">
-		    			Notion de produit ayant des variantes (ligne produit) avec des critères d'exigences ou effectivités , chaque article répondant 
+		    			Notion de produit ayant des variantes (ligne produit) avec des critères d'exigences ou effectivités , chaque article répondant
 		    			ensuite à une ou plusieurs de ces exigences.
 		    	</li>
 		    	<li title="Gestion de projets">
@@ -62,15 +68,15 @@
 					<li title="Duplication">
 						Tous les objets peuvent être facilement dupliqués.
 		    	</li>
-		    	<li title="Cycle de vie">	
+		    	<li title="Cycle de vie">
 		    		L'application gère le cycle de vie des objets PLM:document,article,projet,client grâce aux notions de maturité et de révision:#lnk=/help?help=help_lifecycle=lnk#
 		    	</li>
-			    	<li title="Structure">	
+			    	<li title="Structure">
 		    		Les relations entre les objets PLM sont affichées sous forme de structure ou d'arbre dans l'onglet principal 'Structure'.
 		    		Il est alors possible d'étendre ou réduire celui ci et de modifier la relation ou d'afficher le fils ou de choisir une variante ou une vue ...
 		    		#img=help/module_structure.png=img#.
 		    	</li>
-		    	<li title="Mise en oeuvre de processus">	
+		    	<li title="Mise en oeuvre de processus">
 		    		<ul title="Certaines fonctionnalités citées ci dessus sont mises en oeuvre sous contrôle de processus permettant:">
 							<li title="Controles">
 								Contrôle de validation(s) par des utilisateurs habilités.
@@ -80,18 +86,18 @@
 		    				Prise en compte des remarques.
 		    				Historisation du processus associé aux modifications des objets.
 		    			</li>
-		    		</ul>   		
+		    		</ul>
 		    		<ul title="Les 2 processus implémentés sont les suivants, d'autres peuvent être facilement ajoutés grâce au framework décrit ci après.">
 		    			<li title="Promotion">
 		    				Changement de statut sous contrôle du processus.
 		    				Suivi des remarques associés.
-		    			</li>	
+		    			</li>
 		    			<li title="Revision">
 		    				Création d'une révision sous contrôle du processus.
 		    			</li>
 		    		</ul>
 		    	</li>
-		    	<li title="Traçabilité">	
+		    	<li title="Traçabilité">
 		    		<ul title="L'application met en oeuvre les composants suivants pour assurer la traçabilité ">
 							<li title="Abonnement">
 								Un abonnement définit quels évènements seront notifiés aux utilisateurs concernés.
@@ -109,7 +115,7 @@
 		    			<li title="Logs">
 		    				Des fichiers logs accessible à l'administrateur contiennent des informations sur le fonctionnement de l'application.
 		    			</li>
-		    		</ul> 
+		    		</ul>
 		    	</li>
     		</ul>
     	</msg>
@@ -147,7 +153,7 @@
 	    		</li>
 	    		<li title="Gestion des volumes de stockage des fichiers">
 	    			Identification, création, édition, suppression.
-	    			#img=help/idea.png=img# Le volume permet de stocker les fichiers suivant un protocol donné: file_system pour le système de fichier, fog pour le cloud, database pour une table de la base de donnée. 
+	    			#img=help/idea.png=img# Le volume permet de stocker les fichiers suivant un protocol donné: file_system pour le système de fichier, fog pour le cloud, database pour une table de la base de donnée.
 	    		</li>
 	    	</ul>
 	    </msg>
@@ -164,7 +170,7 @@
 		    			Chaque type d' objet décrit ci dessus peut avoir différents statuts de maturité dépendants des besoins de l'entreprise.
 		    		</li>
 		    		<li title="Paramétrage des valeurs par défauts et séquence d'identification">
-		    			Une valeur par défaut et/ou une séquence de numérotation peut être définie sur chaque attribut de chaque objet décrit ci dessus. 
+		    			Une valeur par défaut et/ou une séquence de numérotation peut être définie sur chaque attribut de chaque objet décrit ci dessus.
 		    		</li>
 		    		<li title="Paramétrage des relations">
 		    			Définition des relations possibles entre n'importe quel objet décrit ci dessus.
@@ -189,10 +195,10 @@
 			    	De plus, il est possible d'exporter et importer l'ensemble d'un paramétrage ainsi qu'un ensemble de données correspondant aux besoins d'un client.
 			    	#img=help/idea.png=img# De la même manière, des exemples de données peuvent être ainsi exportés et importés afin de construire facilement des jeux d'essai ou de démonstration.
 			    	Voir la partie "paramétrage/domain" ci dessous, cette documentation montrant un premier exemple (sample.table).
-			    </li> 
+			    </li>
 	    	</ul>
 	    </msg>
-		</msg> 
+		</msg>
     <msg key="help_presentation" title="Présentation générale">
         <msg key="help_screen_main" title="Ecran principal">
         		Au lancement de l'application, l'écran suivant s'affiche:
@@ -202,12 +208,12 @@
             <li title="Bandeau">Au démarrage de l'application
             	Le bandeau comprend plusieurs parties dont des informations sur la connexion en cours.
             	#img=help/screen_banner_top1.png=img#.
-            	Le bouton "Se connecter" permet de se connecter explicitement. 
+            	Le bouton "Se connecter" permet de se connecter explicitement.
             	Indique le nom de l'utilisateur et son rôle ainsi que le rôle qu'il utilise et le projet auquelle il participe dans sa session.
             	#img=help/screen_banner_top2.png=img#.
             	L'imgae "se déconnecter" permet ensuite de se déconnecter.
             </li>
-            <li title="Menus"> 
+            <li title="Menus">
             	Cette zone contient tous les menus de l'application:
             	#img=help/screen_banner_menus.png=img#.
             	Le détail est donné dans la chapitre sur les modules: #jump=help_modules=jump#.
@@ -216,7 +222,7 @@
            		#img=help/screen_banner_tabs.png=img#.
            		Cette partie du bandeau permet de visualiser les deux parties des données:
            		<ul>
-		           	<li title="SYLRPLM"> 
+		           	<li title="SYLRPLM">
 		            	Cette zone principale contient les différentes vues des données, par exemple voici la vue listant les articles :
 		            	#img=help/screen_content.png=img#.
 		            	Les différentes vues, dépendants des modules et menus, sont explicités dans cette documentation.
@@ -227,7 +233,7 @@
 			            #img=help/module_structure.png=img#.
 			            Affiche l'arbre représentant la structure de l'objet avec ses relations suivant une vue et avec un filtrage possible suivant une variante.
 			            Le choix de la vue permet d'afficher seulement les relations qui lui sont associées.
-                  Voir le paramétrage des vues pour exploiter cette notion.	
+                  Voir le paramétrage des vues pour exploiter cette notion.
                   Le choix de la variante permet d'exploiter la notion de configuration de nomenclature (nomenclature configurée).
 		        		</li>
 		           	<li title="Presse papiers">
@@ -240,7 +246,7 @@
            	</li>
         </ul>
         </msg>
-        
+
         <msg key="help_authorization" title="Autorisations/login">
                 Certains menus exigent que l'utilisateur ait certains droits sur les objets, il doit donc se connecter.
                 Cette connexion s'effectue en deux temps soit sur demande (voir bandeau), soit suite à l'activation d'un menu :
@@ -257,7 +263,7 @@
                     </li>
                 </ul>
         </msg>
-        
+
        <msg key="help_display_mode" title="Mode d'affichage">
             Dans toutes les pages listant des objets, il existe plusieurs modes d'affichage.
             #img=help/documents_display_modes.png=img#.
@@ -334,17 +340,17 @@
         </msg>
         <msg key="help_notifications" title="Notifications">
             	Chaque modification d'une donnée (create/update/delete/add_*/del_*) est enregistrée.
-            	<ul>A interval régulier et paramétrable, une notification est créee et envoyée aux destinataires: 			
+            	<ul>A interval régulier et paramétrable, une notification est créee et envoyée aux destinataires:
  								<li>Notifier les participants aux projets auxquelles appartiennent les objets modifies:
             		  - remonter les relations pour trouver le ou les projets.
             		  - conserver le chemin.
             		  - lister les users du projet.
-            		  - leur envoyer un mail avec l'info du chemin et de l'action effectuée. 
+            		  - leur envoyer un mail avec l'info du chemin et de l'action effectuée.
             		</li>
             		<li>Notifier les groupes auxquels appartiennent les objets modifiés:
             		  - trouver les groupes.
             		  - lister les users du groupe.
-            		  - leur envoyer un mail avec l'action effectuée. 
+            		  - leur envoyer un mail avec l'action effectuée.
             		</li>
             	</ul>
             	<msg key="help_notifications_attributs" title="Attributs">
@@ -359,13 +365,13 @@
            			Une notification ayant cette date renseignée ne sera plus notifiée.
           			<li> notify_users : utilisateurs notifiés (null si pas encore fait)</li>
             	</ul>
-            	</msg>		
+            	</msg>
     		</msg>
     		<msg key="help_domain" title="Domaine">
-            	La notion de domaine d'utilisation permet de definir l'ensemble des composants permettant de parametrer l'application 
-            	suivant les exigences d'une organisation. 
+            	La notion de domaine d'utilisation permet de definir l'ensemble des composants permettant de parametrer l'application
+            	suivant les exigences d'une organisation.
             	Pour ceci, la plupart des objets comportent l'attribut Domaine qui permet de specifier le domaine pour lequel il a été crée.
-            	Cas particulier: Le domaine nommé "admin" comporte tous les objets indispensables au fonctionnement de l'application, 
+            	Cas particulier: Le domaine nommé "admin" comporte tous les objets indispensables au fonctionnement de l'application,
             	En consequence, ces objets ne doivent pas etre supprimes.
             	Voir le chapitre sur le paramétrage pour maitriser son utilisation.
         </msg>
@@ -390,9 +396,9 @@
                 <li title="Aller au chapitre supérieur">#img=help_upper.png=img#</li>
                 <li title="Aller au début de la documentation">#img=welcome.png=img#</li>
             </ul>
-        </msg>	   		
+        </msg>
     </msg>
-    
+
     <msg key="help_modules" title="Modules">
         Les différents modules de l'application sont:
         <msg key="help_my_desk" title="Mon bureau">.
@@ -421,7 +427,7 @@
 			          		</li>
 			          		<li title="Modifier le mot de passe">
 			          			Permet de modifier mon mot de passe.
-			          		</li> 
+			          		</li>
 			          	</ul>
 			          </li>
 			         	<li title="Préférences">
@@ -437,13 +443,13 @@
 		         </ul>
 	         </li>
 	       </ul>
-           
+
         </msg>
-        
+
         <msg key="help_objects" title="Les objets PLM">.
             #img=help/module_objets.png=img#.
             Le module "Objets PLM" permet de gérer les objets suivants:
-            <msg key="help_documents" title="Documents" href="/documents">        
+            <msg key="help_documents" title="Documents" href="/documents">
                 <msg key="help_documents_description" title="Description">
                     <ul>
                         <li>Les documents permettent de décrire les articles ou projets ou clients.
@@ -457,7 +463,7 @@
                 </msg>
                 <msg key="help_documents_attributs" title="Attributs">
                     <ul>Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
-                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:                        	 			                       	
+                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
                         <li title="Identifiant">Identifiant du document</li>
                         <li title="Type">Type du document</li>
                         <li title="Révision">Révision, ident+revision=identifiant unique d'un document</li>
@@ -465,9 +471,9 @@
                         <li title="Statut">Statut (voir le cycle de vie)</li>
                         <li title="Responsable">Nom de l'utilisateur créateur ou dernier modifieur</li>
                         <li title="Nb fichiers">Nombre de fichiers associés à ce document</li>
-                        <li title="Date">Date de création ou de dernière modification</li>                 
+                        <li title="Date">Date de création ou de dernière modification</li>
                     </ul>
-                </msg>                 
+                </msg>
                 <msg key="help_documents_functions" title="Fonctionnalités">
                     Les principales fonctionnalités sur les documents sont:
                     <msg key="help_documents_index" title="Liste" href="/documents">.
@@ -507,7 +513,7 @@
                     <msg key="help_documents_edit" title="Edition" href="/documents/edit/1">.
                         #img=help/documents_edit.png=img#.
                     </msg>
-                    
+
                     <msg key="help_datafiles" title="Document/fichiers" >
 				            	Les fichiers sont toujours associés aux documents et ne sont donc pas accessibles directement aux utilisateurs.
 				            	<msg key="help_datafiles_description" title="Description">
@@ -518,47 +524,47 @@
 				                        <li>L'application gère le cycle de vie des fichiers.</li>
 				                    </ul>
 				                </msg>
-				                <msg key="help_datafiles_attributs" title="Attributs"> 	
+				                <msg key="help_datafiles_attributs" title="Attributs">
 				                    <ul>Les attributs des fichiers ont les suivants, certains sont obligatoires lors de la création ou édition,
-				                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:                        	 			                       	
+				                        certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
 				                        <li title="Identifiant">Identifiant du fichier</li>
 				                        <li title="Révision">Révision, ident+revision=identifiant unique d'un fichier</li>
 				                        <li title="Type">Type du fichier</li>
 				                        <li title="Volume">Nom du volume ou est stocké le fichier</li>
 				                				<li title="Fichier">Nom du fichier associé à ce document</li>
-				                				<li title="Type de contenu">Type de contenu du fichier</li>                
-				                        <li title="Responsable">Nom de l'utilisateur créateur ou dernier modifieur</li>                     
-				                       	<li title="Document">Le document que le fichier définit en tout ou partie</li>                     
-				                        <li title="Date">Date de création ou de dernière modification</li>                 
+				                				<li title="Type de contenu">Type de contenu du fichier</li>
+				                        <li title="Responsable">Nom de l'utilisateur créateur ou dernier modifieur</li>
+				                       	<li title="Document">Le document que le fichier définit en tout ou partie</li>
+				                        <li title="Date">Date de création ou de dernière modification</li>
 				                    </ul>
-				                </msg> 
+				                </msg>
 				                <msg key="help_datafiles_functions" title="Fonctionnalités">
-                    				Les principales fonctionnalités sur les fichiers sont:                            
+                    				Les principales fonctionnalités sur les fichiers sont:
                     				<msg key="help_documents_add_datafiles" title="Ajouter un fichier au document">
                     					Dans la vue de détail d'un document, après activation du menu "Ajouter fichier", la fenêtre suivante apparait:
 			                        Note: le document doit être réservé pour ajouter un fichier, celle ci peut s'effectuer de deux manières:
 			                        <ul>
-			                        	<li>Automatiquement si la propriété de l'utilisateur "Réservation automatique" est vrai: #jump=help_documents_reservation=jump#	.                        		                       	
+			                        	<li>Automatiquement si la propriété de l'utilisateur "Réservation automatique" est vrai: #jump=help_documents_reservation=jump#	.
 			                        	</li>
-			                        	<li>Manuellement par le menu "Réserver" de la vue de détail du document.			                        		
+			                        	<li>Manuellement par le menu "Réserver" de la vue de détail du document.
 			                        	</li>
 			                        </ul>
-			                        #img=help/documents_add_datafile.png=img#.			                            
+			                        #img=help/documents_add_datafile.png=img#.
                     				</msg>
                     				<msg key="help_datafiles_list" title="Lister les fichiers">
-			                        #img=help/documents_datafile_list.png=img#.			                            
+			                        #img=help/documents_datafile_list.png=img#.
                     				</msg>
                    					<msg key="help_datafiles_show" title="Explorer un fichier">
-			                        #img=help/documents_datafile_show.png=img#.			                            
+			                        #img=help/documents_datafile_show.png=img#.
                     				</msg>
                     				<msg key="help_datafiles_edit" title="Editer un fichier">
                            	#img=help/documents_datafile_edit.png=img#.
                     				</msg>
-            						</msg> 
-            						</msg>      
+            						</msg>
+            						</msg>
                 </msg>
             </msg>
-                    
+
             <msg key="help_parts" title="Articles" href="/parts">
                 <ul>
                     <li>Les Articles sont les composants d'un produit (qui est également un article)</li>
@@ -594,7 +600,7 @@
                             </li>
                            	<li title="Structure">#img=help/parts_structure.png=img#.
                             	Le choix de la vue permet d'afficher seulement les relations qui lui sont associées.
-                            	Voir le paramétrage des vues pour exploiter cette notion.	
+                            	Voir le paramétrage des vues pour exploiter cette notion.
                             	Le choix de la variante permet d'exploiter la notion de configuration de nomenclature (nomenclature configurée).
                             </li>
                             <li title="Ajout forum">#img=help/parts_add_forum.png=img#.
@@ -644,7 +650,7 @@
                             </li>
                            	<li title="Structure">#img=help/projects_structure.png=img#.
                             	Le choix de la vue permet d'afficher seulement les relations qui lui sont associées.
-                            	Voir le paramétrage des vues pour exploiter cette notion.	
+                            	Voir le paramétrage des vues pour exploiter cette notion.
                             </li>
                             <li title="Ajout forum">#img=help/projects_add_forum.png=img#.
                             </li>
@@ -689,7 +695,7 @@
                             </li>
                            	<li title="Structure">#img=help/customers_structure.png=img#.
                             	Le choix de la vue permet d'afficher seulement les relations qui lui sont associées.
-                            	Voir le paramétrage des vues pour exploiter cette notion.	
+                            	Voir le paramétrage des vues pour exploiter cette notion.
                             </li>
                         </ul>
                     </msg>
@@ -781,12 +787,12 @@
            		<msg key="help_forumitems" title="Messages Forums" href="/forumsitems">
  								Messages contenus dans les forums.
  							</msg>
-            
+
             <msg key="help_contacts_index" title="Contacts" href="/main/contacts">
                 Liste les contacts utiles pour l'utilisation de l'application.
             </msg>
         </msg>
-        
+
         <msg key="help_processes" title="Processus métier">.
             #img=help/module_processus.png=img#.
             Ce module comprend les fonctions relatives a l'execution des processus métier: exécution, suivi.
@@ -804,7 +810,7 @@
             	#img=help/new_process.png=img#.
             	Activer un des processus
             	#img=help/new_process1.png=img#.
-            	Lancer le processus 
+            	Lancer le processus
             	#img=help/new_process2.png=img#.
             </msg>
             <msg key="help_processes_index" title="Processus en cours" href="/processus">
@@ -1036,17 +1042,17 @@
 	                    </li>
 	                    <li title="Promotion(interdit, libre, menu, action)">Permet de préciser si le changement de statut vers le haut se fait par choix dans la liste ou par le menu ou par une action (processus) .
 	                    </li>
-	                    <li title="Rétrogadation(oui/non)">Permet de préciser si le changement de statut vers le bas se fait par choix dans la liste ou par le menu ou par une action (processus). 
+	                    <li title="Rétrogadation(oui/non)">Permet de préciser si le changement de statut vers le bas se fait par choix dans la liste ou par le menu ou par une action (processus).
 	                    </li>
-	                    <li title="Statuts suivants"> 
+	                    <li title="Statuts suivants">
 	                    	Définit le ou les status possibles suivant ce statut .
 	                    	L'utilisateur aura le choix dans la page "Cycle de vie".
 	                    </li>
-	                    <li title="Statuts précédents"> 
+	                    <li title="Statuts précédents">
 	                    	Définit le ou les status possibles précédents ce statut .
 	                    	L'utilisateur aura le choix dans la page "Cycle de vie".
 	                    </li>
-	                    <li title="Révisable"> 
+	                    <li title="Révisable">
 	                    	Précise si une révision de l'objet est possible depuis ce statut (Interdit/Menu/Action).
 	                    </li>
 
@@ -1070,7 +1076,7 @@
 	                    </li>
 	                </ul>
 	            </msg>
-	
+
 	            <msg key="help_relations" title="Relations" href="/relations">
 	                Définit les différentes relations utilisées par l'application lors de la création de lienx entre objets.
 	                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
@@ -1097,9 +1103,9 @@
 	                    </li>
 	                </ul>
 	            </msg>
-	
+
 	            <msg key="help_views" title="Vues" href="/views">
-	                Définit les différentes vues utilisées par l'application lors de l'affichage des nomenclatures d'articles par l'explorateur, 
+	                Définit les différentes vues utilisées par l'application lors de l'affichage des nomenclatures d'articles par l'explorateur,
 	                voir les commandes Explorateur des objets concernes: Article, Projet et Client.
 	                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
 	                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
@@ -1109,12 +1115,12 @@
 	                    </li>
 	                    <li title="Relations">Liste des relations que la vue affichera dans l'explorateur.
 	                    </li>
-	                   
+
 	                </ul>
 	            </msg>
-	            
+
 	            <msg key="help_definitions" title="Définitions de processus" href="/definitions">
-	                Définit les différentes processus utilisées par l'application. 
+	                Définit les différentes processus utilisées par l'application.
 	                <ul title="Attributs">Les attributs sont les suivants, certains sont obligatoires lors de la création ou édition,
 	                    certains sont remplis automatiquement et modifiable ou non par l'utilisateur.:
 	                    <li title="Nom">
@@ -1236,13 +1242,13 @@
 	            </msg>
         	</msg>
         </msg>
-        
+
         <msg key="help_debug" title="Debug">.
             #img=help/module_debug.png=img#
             Permet de gérer les tables internes de l'application.
             Pour administrateur très éclairé seulement.
         </msg>
-        
+
         <msg key="help_custo_integration" title="Integration du parametrage">
             La commande "rake sylrplm:export_domain" permet d'exporter et importer un parametrage suivant un domaine particulier
  						<ul title="Export-Import">Les differentes utilisations possibles sont:
@@ -1263,21 +1269,21 @@
                     </li>
             </ul>
         </msg>
-        
+
     </msg>
     <msg key="help_technical_doc" title="Documentation technique">.
         La documentation technique de l'application décrit les classes,fichiers source et méthodes:#lnk=doc/app/index.html=lnk#.
         Diagramme des classes du modèle de données:#lnk=mdd/models.png=lnk#.
         Diagramme des classes du modèle des controlleurs:#lnk=mdd/controllers.png=lnk#.
     </msg>
-    
+
     <msg key="help_init_db" title="Initialisation d'une base de données">.
         Avant de commencer à créer des objets , l'application vous invite à initialiser la base de donnée suivant le domaine dans lequel vous voulez l'utiliser.
         Vous pourrez ensuite compléter ce paramétrage, voir la partie paramétrage.
         L'application propose donc la société SICM (société internationale de construction de meubles) ainsi que l'exemple d'une table configurée.
         Ce paramétrage est disponible en effectuant l'import suivant précisé dans le chapitre sur l'intégration:
         #jump=help_custo_integration=jump#.
-        : 
+        :
         <ul>
         	<li title="Import custo de base de la societe sicm">
         		rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base].
@@ -1326,10 +1332,10 @@
             <li title="Utilisateurs">Utilisateurs crées: admin avec le rôle admin, designer avec le rôle designer, consutant avec le rôle consultant:#lnk=/login/add_user=lnk#.
                 Mot de passe=nom utilisateur.
             </li>
-            
+
         </ul>
     </msg>
-    
+
     <msg key="help_todo" title="Reste à faire">
         <ul>
             <li>IMPROV:Vues:prendre en compte l'attribut fixe o/n sur les valeurs par défaut pour permettre ou non la modif de la valeur par le user</li>
@@ -1356,6 +1362,6 @@
             </ul>
         </msg>
     </msg>
-    
-    
+
+
 </sylrplm_help>

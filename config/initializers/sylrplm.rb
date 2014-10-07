@@ -11,8 +11,19 @@ require 'os_functions'
 module SYLRPLM
 
 	#########################################
+	# version
+	SYLRPLM_VERSION					= "1.0.1"
+	SYLRPLM_DATE						= "2014/09/20".to_date
+	#
 	# Type name for Properties
 	PLM_PROPERTIES						= "sylrplm_properties"
+
+	# max number of recent objects seen by user, each user can modify it
+	MAX_RECENT_ACTION					= 30
+	# name of the relation to store link about user recent action
+	RELATION_RECENT_ACTION		= "RECENT_ACTION"
+	# admin domain name to keep OOTB functionnalities
+	DOMAIN_ADMIN							= "admin"
 	#
 	# repertoires des chargements
 	#TODO not yet in property
@@ -92,7 +103,7 @@ module SYLRPLM
 		#
 		#
 		########TODO inutile ??? MAIL_ADMIN                = "sylvere.coutable@laposte.net"
-		
+
 		# environnement specifique a l'admin de l'application sylrplm
 		# ordre des constituants de l'arbre
 		TREE_ORDER                = ["forum", "document", "part", "project", "customer" ]

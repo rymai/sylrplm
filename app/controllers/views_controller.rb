@@ -4,7 +4,7 @@ class ViewsController < ApplicationController
 	# GET /views
 	# GET /views.xml
 	def index
-		@views = View.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@views = View.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @views }
@@ -31,7 +31,7 @@ class ViewsController < ApplicationController
 			format.xml  { render :xml => @view }
 		end
 	end
-	
+
 	def new_dup
 		fname= "#{self.class.name}.#{__method__}"
 		@object_orig = View.find(params[:id])
@@ -58,7 +58,7 @@ class ViewsController < ApplicationController
 		@view = View.new(params[:view])
 		@relations=Relation.all
 		respond_to do |format|
-			if params[:fonct] == "new_dup"
+			if params[:fonct][:current] == "new_dup"
 				object_orig=View.find(params[:object_orig_id])
 			st = @view.create_duplicate(object_orig)
 			else

@@ -555,9 +555,9 @@ modifier/creer le disque local en donnant un chemin windows et unix , dans sicm.
 
 sur mandriva: kdewallet , compte=dsone\s45, mot de passe=syl91.ani
 
----
+------------------------------------------------------------------------------------------------
 --- 20/2/2013: install postgresql pour etre compatible remy et heroku (ruby 1.9.3 dans Gemfile)
----
+------------------------------------------------------------------------------------------------
 install par ./postgresql-9.2.3-1-linux.run
 install dans /opt/PostgreSQL/9.2
 donnees dans /home/PostgreSQL
@@ -689,15 +689,19 @@ rake release
 infos
 <%= t(:label_today) %> <%= Date.today %>
 
-
+-----------------------------------------------------------------
 reinstall de ruby 2.0.0 depuis le gestionnaire de sources
+-----------------------------------------------------------------
 ruby
 ruby-gem
 ruby-rake
+ruby-devel
 bigdecimal
+git
+gcc ++
 
-gem update --system 1.8.25
-gem install bundler
+su gem update --system 1.8.25
+su gem install bundler
 bundle install
 gem install activerecord-postgresql-adapter
 gem install test-unit
@@ -780,8 +784,10 @@ class PLMPromotePart < OpenWFE::ProcessDefinition
   end
 end
 
+-------------------------------
 pb avec bigdecimal et ruby 2
 modifs de certains fichiers
+-------------------------------
 
 /usr/share/ruby/gems/gems/activesupport-2.3.17/lib/active_support/core_ext/bigdecimal.rb
 #syl require 'bigdecimal.so'
@@ -974,3 +980,31 @@ ruby script/server
 /home/syl/.gem/ruby/gems/bundler-1.6.5/lib/bundler.rb:301: warning: Insecure world writable dir /home/syl in PATH, mode 040777
 /home/syl/.gem/ruby/gems/rails-2.3.17
 [syl@localhost sylrplm (master)]$ gem update --system 1.8.25
+
+
+-------------------
+reinstall postgres apres pb disque ssd
+postgres 9.1.13 par centre de controle
+-------------------------------------
+lancement du serveur
+/usr/bin/pg_ctl -D /home/PostgreSQL -l logfile start
+ou modif /var/lib/pgsql/data/postgresql.conf : data_directory = '/home/PostgreSQL'
+
+-----------------------------------------------------------------
+reinstall de ruby 2.0.0 depuis le gestionnaire de sources
+-----------------------------------------------------------------
+ruby
+ruby-gem
+ruby-rake
+ruby-devel
+git
+gcc ++
+
+su gem update --system 1.8.25
+su gem install bundler
+bundle install
+gem install activerecord-postgresql-adapter
+#gem install test-unit
+ajouter a environnment
+config.autoload_paths += %W[/usr/share/ruby/gems/gems/bigdecimal-1.2.5/lib]
+

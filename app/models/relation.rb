@@ -37,23 +37,26 @@ class Relation < ActiveRecord::Base
 	def name_translate
 		PlmServices.translate("relation_#{name}")
 	end
+
 	def father_plmtype_translate
 		PlmServices.translate("forobject_#{father_plmtype}")
 	end
+
 	def child_plmtype_translate
 		PlmServices.translate("forobject_#{child_plmtype}")
 	end
-	
 
 	def types_father
-		ret = Typesobject.get_types(father_plmtype)
-		#puts "Relations."+__method__.to_s+":"+father_plmtype.to_s+":"+ret.inspect
+		fname="Relation.#{__method__}:"
+		ret = ::Typesobject.get_types(father_plmtype, true)
+		LOG.debug (fname) {":#{father_plmtype} :  #{ret.inspect}"}
 		ret
 	end
 
 	def types_child
-		ret = Typesobject.get_types(child_plmtype)
-		#puts "Relations."+__method__.to_s+":"+child_plmtype.to_s+":"+ret.inspect
+		fname="Relation.#{__method__}:"
+		ret = ::Typesobject.get_types(child_plmtype, true)
+		LOG.debug (fname) {":#{child_plmtype} :  #{ret.inspect}"}
 		ret
 	end
 
@@ -103,13 +106,13 @@ class Relation < ActiveRecord::Base
 			cond += " or (father_plmtype = '#{type_any_father.forobject}' and (father_typesobject_id = #{type_any_father.id}))" unless type_any_father.nil?
 			cond += ")"
 			cond += " and child_typesobject_id = '#{child_type.id}'" unless child_type.nil?
-			#cond += " and (child_plmtype = '#{child_plmtype}' or child_plmtype = '#{PlmServices.get_property(:PLMTYPE_GENERIC)}')"
-			cond += " and (child_plmtype = '#{child_plmtype}')"
+			cond += " and (child_plmtype = '#{child_plmtype}' or child_plmtype = '#{PlmServices.get_property(:PLMTYPE_GENERIC)}')"
+			#cond += " and (child_plmtype = '#{child_plmtype}')"
 		end
 		ret = find(:all, :order => "name",
       :conditions => [cond],
       :group => "father_plmtype,id")
-		#LOG.debug(fname){"fin:cond=#{cond}, #{ret.size} relations trouvées pour #{father_plmtype}.#{father_type}=>#{child_plmtype}.#{child_type}"}
+		#LOG.debug(fname){"fin:cond=#{cond} : #{ret.size} relations trouvées pour #{father_plmtype}.#{father_type}=>#{child_plmtype}.#{child_type}"}
 		#LOG.debug(fname){"fin:ret(#{ret.count})=#{ret}"}
 		ret
 	end

@@ -30,20 +30,20 @@ end
 
 Rails::Initializer.run do |config|
 
-	config.gem 'haml'
+	#config.gem 'haml'
   # etc
   # maybe some more
   # and so on...
 
   # Note that iconv is a gem in ruby-2.0
-  config.gem 'iconv' if RUBY_VERSION >= "2.0.0"
+  #config.gem 'iconv' if RUBY_VERSION >= "2.0.0"
 
 # Settings in config/environments/* take precedence over those specified here.
 # Application configuration should go into files in config/initializers
 # -- all .rb files in that directory are automatically loaded.
 
-Encoding.default_external = Encoding::UTF_8
-Encoding.default_internal = Encoding::UTF_8
+  Encoding.default_external = Encoding::UTF_8
+  Encoding.default_internal = Encoding::UTF_8
 
 	# config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
 	# Add additional load paths for your own custom dirs
@@ -53,7 +53,8 @@ Encoding.default_internal = Encoding::UTF_8
 	config.autoload_paths += %W[#{Rails.root}/lib/helper]
 	config.autoload_paths += %W[#{Rails.root}/lib/models]
 	config.autoload_paths += %W[#{Rails.root}/lib/ruote/sylrplm]
-
+  config.autoload_paths += %W[/usr/share/ruby/gems/gems/bigdecimal-1.2.5/lib]
+	
 	# Only load the plugins named here, in the order given (default is alphabetical).
 	# :all can be used as a placeholder for all plugins not explicitly named
 	# config.plugins = [ :exception_notification, :ssl_requirement, :all ]

@@ -1,8 +1,4 @@
-<h1><%= t("customer_edit") %></h1>
 <% fonct="edit" %>
-<% form_for(@customer, :html => { :id => h_form_html_id(@customer, fonct) }) do |f| %>
-<%= f.error_messages %>
-<%= render(:partial => "shared/menu_edit", :locals => {:object => @customer, :f => f, :fonct=>fonct}) %>
-<%= render(:partial => "customers/edit",:locals => { :f => f, :fonct=>fonct }) %>
-<%= render(:partial => "shared/submit_edit", :locals => {:object => @customer, :f => f, :fonct=>fonct}) %>
-<% end %>
+<div id="edit_object">
+	<%= render(:partial => "shared/edit_object", :locals=>{:fonct=>"edit", :plm_object=>@customer}) %>
+</div>

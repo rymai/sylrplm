@@ -9,7 +9,7 @@ class SubscriptionsController < ApplicationController
 			authorize
 			params[:query] = current_user.login
 		end
-		@subscriptions = Subscription.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@subscriptions = Subscription.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @subscriptions }
@@ -63,7 +63,7 @@ class SubscriptionsController < ApplicationController
 	def create
 		@subscription = Subscription.new(params[:subscription])
 		respond_to do |format|
-			if params[:fonct] == "new_dup"
+			if params[:fonct][:current] == "new_dup"
 				object_orig=Subscription.find(params[:object_orig_id])
 			st = @subscription.create_duplicate(object_orig)
 			else

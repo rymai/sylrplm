@@ -1,33 +1,26 @@
-<fieldset>
-	<legend>
-		<%= t(:legend_project) %>
-	</legend>
-	<%= f.label t(:label_ident) %>
-	<%= f.text_field :ident %>
-	<br/>
-	<%= f.label t(:label_type) %>
-	<%= f.collection_select(:typesobject_id, @types, :id, :name) %>
-	<br/>
-	<%= f.label t(:label_typeaccess) %>
-	<%= f.collection_select(:typeaccess_id, @types_access, :id, :name) %>
-	<br/>
-	<%= f.label t(:label_designation) %>
-	<%= f.text_field :designation %>
-	<br/>
-	<%= f.label t(:label_description) %>
-	<%= f.text_area :description , :rows => 10 %>
-	<br/>
+<h1><%= t(:legend_project) %></h1>
+<%= h_edit_type_object(f, object, @types) %>
+<%= f.label t(:label_ident) %>
+<%= f.text_field :ident %>
+<br/>
+<%= f.label t(:label_typeaccess) %>
+<%= f.collection_select(:typeaccess_id, @types_access, :id, :name) %>
+<br/>
+<%= f.label t(:label_designation) %>
+<%= f.text_field :designation %>
+<br/>
+<%= f.label t(:label_description) %>
+<%= f.text_area :description , :rows => 10 %>
+<br/>
 
-	<%= f.label t(:label_responsible) %>
-	<%= select_in_list(:project, :owner, @project.owner.login, :users) %>
-	<br/>
-	<%= f.label t(:label_date) %>
-	<%= f.date_select :date %>
-	<br/>
-	<label for="project_users"> <%= t(:label_users) %> </label>
-	<%= select_inout(f, @project, @users, :login) %>
-	<%= h_input_domain(f) %>
-
-</fieldset>
+<%= f.label t(:label_responsible) %>
+<%= select_in_list(:project, :owner, @project.owner.login, :users) %>
+<br/>
+<%= f.label t(:label_date) %>
+<%= f.date_select :date %>
+<br/>
+<label for="project_users"> <%= t(:label_users) %> </label>
+<%= select_inout(f, @project, @users, :login) %>
+<%= h_input_domain(f) %>
 <%= h_type_values(@project, fonct) %>
-<br />
+

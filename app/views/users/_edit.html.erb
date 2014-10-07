@@ -1,3 +1,9 @@
+<h1><%= t(:legend_user) %></h1>
+<% if fonct != "account_edit" %>
+<% if @types != nil %>
+<%= h_edit_type_object(f, object, @types) %>
+<% end %>
+<% end %>
 <label for="user_name"> <%= t(:label_login) %> </label>
 <%= f.text_field :login, :size => 40 %>
 <br/>
@@ -7,19 +13,12 @@
 <label for="user_last_name"> <%= t(:label_last_name) %> </label>
 <%= f.text_field :last_name, :size => 40 %>
 <br/>
-<% if fonct == "add" %> <label for="user_password"> <%= t(:label_password) %> </label>
+<% if fonct == "add" || fonct == "new" %> <label for="user_password"> <%= t(:label_password) %> </label>
 <%= f.password_field :password, :size => 40 %>
 <br/>
 <label for="user_password_confirmation"> <%= t(:label_confirm_password) %> </label>
 <%= f.password_field :password_confirmation, :size => 40 %>
 <br/>
-<% end %>
-<% if fonct != "account_edit" %>
-<% if @types != nil %>
-<%= f.label t(:label_type) %>
-<%= f.collection_select(:typesobject_id, @types, :id, :name) %>
-<br/>
-<% end %>
 <% end %>
 <%= f.label t(:label_email) %>
 <%= f.text_field :email, :size => 40 %>
@@ -72,9 +71,9 @@
 <label for="user_projects"> <%= t(:label_projects) %> </label>
 <%= select_inout(f, @the_user, @projects, :ident) %>
 <br/>
-
-<%= h_type_values(@the_user, fonct) %>
 <%= h_input_domain(f) %>
 <br />
+<% else %>
+<%= h_type_values(@the_user, fonct) %>
 <% end %>
 

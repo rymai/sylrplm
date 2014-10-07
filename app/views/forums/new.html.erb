@@ -1,8 +1,4 @@
-<h1>New forum</h1>
-<% fonct="new"
-form_for(@forum) do |f| %>
-<%= f.error_messages %>
-<%= render(:partial => "shared/menu_new", :locals => {:object => @forum, :f => f, :fonct=>fonct}) %>
-<%= render(:partial => "forums/edit",:locals => { :f => f, :fonct=>fonct }) %>
-<%= render(:partial => "shared/submit_new", :locals => {:object => @forum, :f => f}) %>
-<% end %>
+<% fonct="new" %>
+<div id="edit_object">
+	<%= render(:partial => "shared/edit_object", :locals=>{:fonct=>fonct, :plm_object=>@forum}) %>
+</div>

@@ -198,7 +198,7 @@ var RuoteForms = function() {
 		if(type == 'new') {
 			return EmptyItem;
 		}
-		alert("unknown type '" + type + "'");
+		alert("ruote-forms.toObject:unknown type '" + type + "'");
 	}
 
 	function rcreate(container, tag, attributes, content) {
@@ -273,7 +273,7 @@ var RuoteForms = function() {
 	}
 
 	function addItemButtons(elt) {
-		alert ('addItemButtons:'+elt+':'+CONFIG.with_buttons);
+		//alert ('addItemButtons:'+elt+':'+CONFIG.with_buttons);
 		var e = create(elt, 'div', {
 			'class' : 'rform_buttons',
 		});
@@ -314,7 +314,7 @@ var RuoteForms = function() {
 
 	function addArrayButtons(elt) {
 
-		alert ('addArrayButtons:'+elt);
+		//alert ('addArrayButtons:'+elt);
 		var e = create(elt, 'div', {
 			'class' : 'rform_buttons',
 		});
@@ -371,7 +371,7 @@ var RuoteForms = function() {
 	}
 
 	function render_item(elt, data, options) {
-		alert ('render_item:'+elt+":"+data);
+		//alert ('render_item:'+elt+":"+data);
 		var ei = rcreate(elt, 'div', {
 			'class' : 'rform_item'
 		});
@@ -381,7 +381,7 @@ var RuoteForms = function() {
 	}
 
 	function render_array(elt, data, options) {
-		alert ('render_array:'+elt+":"+data);
+		//alert ('render_array:'+elt+":"+data);
 		var e = rcreate(elt, 'div', {
 			'class' : 'rform_array'
 		});

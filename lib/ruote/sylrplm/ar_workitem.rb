@@ -5,6 +5,8 @@ module Ruote
 		class ArWorkitem < OpenWFE::Extras::ArWorkitem
 			#include Models::PlmObject
 			attr_accessor :link_attributes
+			def get_hash_objects; objects; end
+
 			def link_attributes=(att)
 				@link_attributes = att
 			end
@@ -14,7 +16,7 @@ module Ruote
 			end
 
 			def typesobject
-				Typesobject.find_by_object(model_name)
+				::Typesobject.find_by_object(model_name)
 			end
 
 			def model_name
@@ -27,16 +29,16 @@ module Ruote
 			end
 
 			def cancel?
-				histo=Ruote::Sylrplm::HistoryEntry.find_by_wfid_and_source_and_event(self.wfid,"expool","cancel")
+				histo=Ruote::Sylrplm::HistoryEntry.find_by_wfid_and_source_and_event(self.wfid, "expool", "cancel")
 				!histo.nil?
 			end
 
 			# delete of workitems of a process
 			def self.destroy_process(wfid)
-				fname="ArWorkitem."+__method__.to_s+":"
+				fname="ArWorkitem.#{__method__}"
 				LOG.info (fname) {"wfid=#{wfid}"}
 				find_by_wfid_(wfid).each do |ar|
-				  LOG.info (fname) {"workitem to destroy=#{ar}"}
+					LOG.info (fname) {"workitem to destroy=#{ar}"}
 					ar.destroy
 				end
 			end
@@ -44,72 +46,79 @@ module Ruote
 			def before_destroy
 				fname="ArWorkitem."+__method__.to_s+":"
 				links=Link.find_childs(self)
-				LOG.info (fname) {(links.nil? ? "0" : links.count.to_s)+" liens a detruire"}
+				LOG.info (fname) {"#{(links.nil? ? "0" : links.count.to_s)} liens a detruire"}
 				links.each {|lnk| lnk.destroy}
 			end
 
 			def get_wi_links
-				fname="ArWorkitem."+__method__.to_s+":"
+				fname="ArWorkitem.#{__method__}"
 				ret=[]
-				Link.find_childs(self,"document").each do |link|
-					ret<<{:typeobj =>Document.find(link.child_id), :link=>link}
+				history=HistoryEntry.find_by_wfid_and_event(self.wfid, "proceeded")
+				unless history.nil?
+					Link.find_childs(history, "document").each do |link|
+						ret<<{:typeobj =>Document.find(link.child_id), :link=>link}
+					end
+					Link.find_childs(history, "part").each do |link|
+						ret<<{:typeobj =>Part.find(link.child_id), :link=>link}
+					end
+					Link.find_childs(history, "project").each do |link|
+						ret<<{:typeobj =>Product.find(link.child_id), :link=>link}
+					end
+					Link.find_childs(history, "customer").each do |link|
+						ret<<{:typeobj =>Customer.find(link.child_id), :link=>link}
+					end
+					Link.find_childs(history, "user").each do |link|
+						ret<<{:typeobj =>User.find(link.child_id), :link=>link}
+					end
 				end
-				Link.find_childs(self,"part").each do |link|
-					ret<<{:typeobj =>Part.find(link.child_id), :link=>link}
+				LOG.debug (fname) {"id=#{self.id}, size=#{ret.size}:#{ret.inspect}"}
+				ret
+			end
+
+			def get_plm_objects
+				fname="ArWorkitem.#{__method__}"
+				hash_objects=get_hash_objects
+				ret=[]
+				LOG.debug (fname) {"hash_objects=#{hash_objects} obj=#{hash_objects[:obj]} "}
+				hash_objects[:obj].each do |key|
+					tab=key.split("/")
+					LOG.debug (fname) {"mdl=#{tab[1]}  id=#{tab[2]} "}
+					#TODO remplacer chop par une fonction de service
+					plmobj=PlmServices.get_object(tab[1].chop, tab[2])
+					ret<< plmobj
 				end
-				Link.find_childs(self,"project").each do |link|
-					ret<<{:typeobj =>Product.find(link.child_id), :link=>link}
-				end
-				Link.find_childs(self,"customer").each do |link|
-					ret<<{:typeobj =>Customer.find(link.child_id), :link=>link}
-				end
-				Link.find_childs(self,"user").each do |link|
-					ret<<{:typeobj =>User.find(link.child_id), :link=>link}
-				end
-				##LOG.debug {fname+id.to_s+":"+ret.size.to_s+":"+ret.inspect}
+				LOG.debug (fname) {"ret=#{ret.inspect}"}
 				ret
 			end
 
 			#return associated objects during process
 			def objects
-				fname="ArWorkitem."+__method__.to_s
-				params=self.field_hash[:params]
+				fname="ArWorkitem.#{__method__}"
+				params=self.field_hash["params"]
 				ret=[]
 				unless params.nil?
-					activity=params[:activity]
-					params.delete(:activity)
-					ret = {:act => activity, :obj => params.values}
+					activity=params["activity"]
+					params.delete("activity")
+					ret = {:act => activity, :obj => params.keys}
 				end
-				LOG.debug (fname) {"objects:params=#{params.inspect} ret=#{ret}"}
+				LOG.debug (fname) {"self.field_hash=#{self.field_hash} params=#{params.inspect} ret=#{ret}"}
 				ret
 			end
-			
+
 			def self.get_workitem(wfid)
-				fname="ArWorkitem."+__method__.to_s
+				fname="ArWorkitem.#{__method__}"
 				#LOG.debug (fname) {"wfid=#{wfid}"}
 				require 'pg'
-				#show_activity		  
+				#show_activity
 				ret = find(:first, :conditions => ["wfid = '#{wfid}'"])
 				#ret = find_by_wfid(wfid)
 				#LOG.debug (fname) {"ret=#{ret}"}
 				ret
 			end
-			
-			def show_activity
-				# Output a table of current connections to the DB
-			  conn = PG.connect( dbname: 'sylrplm_development' , user: "postgres", password: "pa33zp62" )
-			  conn.exec( "SELECT * FROM pg_stat_activity" ) do |result|
-			    puts "     PID | User             | Query"
-			  result.each do |row|
-			      puts " %7d | %-16s | %s " %
-			        row.values_at('pid', 'usename', 'query')
-			    end
-			  end
-			end
-			
+
 			# add an object in fields
 			def add_object(object)
-				fname="ArWorkitem."+__method__.to_s
+				fname="ArWorkitem.#{__method__}"
 				ret=0
 				type_object=object.model_name
 				fields = self.field_hash
@@ -121,14 +130,27 @@ module Ruote
 				url+="/"+object.id.to_s
 				label=type_object+":"+object.ident
 				unless fields["params"][url]==label
-					fields["params"][url]=label	
-					ret+=1
-					self.replace_fields(fields)
+					fields["params"][url]=label
+				ret+=1
+				self.replace_fields(fields)
 				else
 					LOG.info (fname) {"objet deja present dans cette tache"}
 				end
 				ret
 			end
+
+			def show_activity
+				# Output a table of current connections to the DB
+				conn = PG.connect( :dbname => "sylrplm_development" , :user => "postgres", :password => "pa33zp62" )
+				conn.exec( "SELECT * FROM pg_stat_activity" ) do |result|
+					puts "     PID | User             | Query"
+					result.each do |row|
+						puts " %7d | %-16s | %s " %
+				        row.values_at('pid', 'usename', 'query')
+					end
+				end
+			end
+
 		end
 	end
 end

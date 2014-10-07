@@ -1,4 +1,8 @@
 <sylrplm_help>
+	 <msg key="help_about" title="A propos de SYLRPLM">
+    	SYLRPLM est une réalisation de Sylvère Coutable avec l'assistance technique de Rémy Coutable.
+    	#bloc=translate(:sylrplm_version, :version => ::SYLRPLM::SYLRPLM_VERSION, :version_date => I18n.localize(::SYLRPLM::SYLRPLM_DATE))=bloc#
+    </msg>
 <msg key="help_main">
 	welcome to the sylrplm application powered by rails&lt;img src="/images/rails.png"&gt;&lt;/img&gt;
 </msg>

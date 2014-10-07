@@ -49,13 +49,13 @@ class CustomersController < ApplicationController
 		#puts "===CustomersController.new:"+params.inspect+" user="+@current_user.inspect
 		@customer = Customer.new(user: current_user)
 		@types    = Typesobject.get_types("customer")
-		@status   = Statusobject.find_for("customer", 2)
+		@status   = Statusobject.get_status("customer", 2)
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @customer }
 		end
 	end
-	
+
 	def new_dup
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
@@ -64,12 +64,13 @@ class CustomersController < ApplicationController
 		@customer=@object
 		#LOG.debug (fname){"@customer=#{@customer.inspect}"}
 		@types    = Typesobject.get_types("customer")
-		@status   = Statusobject.find_for("customer", 2)
+		@status   = Statusobject.get_status("customer", 2)
 		respond_to do |format|
 			format.html # customer/1/new_dup
 			format.xml  { render :xml => @customer }
 		end
 	end
+
 	# GET /customers/1/edit
 	def edit
 		@customer = Customer.find_edit(params[:id])
@@ -88,13 +89,13 @@ class CustomersController < ApplicationController
 		#LOG.debug (fname) {"params=#{params.inspect}"}
 		@customer = Customer.new(params[:customer])
 		@types    = Typesobject.get_types("customer")
-		@status   = Statusobject.find_for(@customer)
+		@status   = Statusobject.get_status(@customer)
 		respond_to do |format|
-			if params[:fonct] == "new_dup"
+			if params[:fonct][:current] == "new_dup"
 				object_orig=Customer.find(params[:object_orig_id])
-				st = @customer.create_duplicate(object_orig)
+			st = @customer.create_duplicate(object_orig)
 			else
-				st = @customer.save
+			st = @customer.save
 			end
 			if st
 				st = ctrl_duplicate_links(params, @customer, current_user)
@@ -116,7 +117,7 @@ class CustomersController < ApplicationController
 		#LOG.debug (fname) {"params=#{params.inspect}"}
 		@customer = Customer.find(params[:id])
 		@types    = Typesobject.get_types(:customer)
-		@status   = Statusobject.find_for(@customer)
+		@status   = Statusobject.get_status(@customer)
 		@customer.update_accessor(current_user)
 		if commit_promote?
 			ctrl_promote(@customer)
@@ -148,6 +149,16 @@ class CustomersController < ApplicationController
 		if commit_revise?
 			ctrl_revise(@customer)
 		end
+	end
+
+	#
+	# update of edit panel after changing the type
+	#
+	def update_type
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"params=#{params.inspect}"}
+		@customer = Customer.find(params[:id])
+		ctrl_update_type @customer, params[:object_type]
 	end
 
 	# DELETE /customers/1
@@ -191,8 +202,8 @@ class CustomersController < ApplicationController
 	def new_forum
 		#puts "CustomerController.new_forum:id=#{params[:id]}"
 		@object = Customer.find(params[:id])
-		@types  = Typesobject.find_for("forum")
-		@status = Statusobject.find_for("forum")
+		@types  = Typesobject.get_types("forum")
+		@status = Statusobject.get_status("forum")
 		@relation_id = params[:relation][:forum]
 		respond_to do |format|
 			flash[:notice] = ""
@@ -250,6 +261,6 @@ class CustomersController < ApplicationController
 	private
 
 	def index_
-		@customers = Customer.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@customers = Customer.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :filter_types => params[:filter_page], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 	end
 end

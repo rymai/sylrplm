@@ -53,7 +53,7 @@ class ProjectsController < ApplicationController
 		@project = Project.new(user: current_user)
 		@types = Typesobject.get_types("project")
 		@types_access    = Typesobject.get_types("project_typeaccess")
-		@status= Statusobject.find_for("project", true)
+		@status= Statusobject.get_status("project", true)
 		@users  = User.all
 		respond_to do |format|
 			format.html # new.html.erb
@@ -67,7 +67,7 @@ class ProjectsController < ApplicationController
 		@object_orig = Project.find(params[:id])
 		@project = @object = @object_orig.duplicate(current_user)
 		@types    = Typesobject.get_types("project")
-		@status   = Statusobject.find_for("project", 2)
+		@status   = Statusobject.get_status("project", 2)
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		@users  = User.all
 		respond_to do |format|
@@ -98,10 +98,10 @@ class ProjectsController < ApplicationController
 		@project = Project.new(params[:project])
 		@types = Typesobject.get_types("project")
 		@types_access = Typesobject.get_types("project_typeaccess")
-		@status = Statusobject.find_for("project")
+		@status = Statusobject.get_status("project")
 		@users  = User.all
 		respond_to do |format|
-			if params[:fonct] == "new_dup"
+			if params[:fonct][:current] == "new_dup"
 				object_orig=Project.find(params[:object_orig_id])
 			st = @project.create_duplicate(object_orig)
 			else
@@ -127,7 +127,7 @@ class ProjectsController < ApplicationController
 		@project = Project.find(params[:id])
 		@types=Typesobject.get_types("project")
 		@types_access    = Typesobject.get_types("project_typeaccess")
-		@status= Statusobject.find_for("project")
+		@status= Statusobject.get_status("project")
 		@users  = User.all
 		@project.update_accessor(current_user)
 		if commit_promote?
@@ -151,6 +151,7 @@ class ProjectsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug (fname){"params=#{params.inspect}"}
 		@project = Project.find(params[:id])
+		@types_access    = Typesobject.get_types("project_typeaccess")
 		if commit_promote?
 			ctrl_promote(@project)
 		end
@@ -160,6 +161,17 @@ class ProjectsController < ApplicationController
 		if commit_revise?
 			ctrl_revise(@project)
 		end
+	end
+
+	#
+	# update of edit panel after changing the type
+	#
+	def update_type
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@project = Project.find(params[:id])
+		@types_access    = Typesobject.get_types("project_typeaccess")
+		ctrl_update_type @project, params[:object_type]
 	end
 
 	# DELETE /projects/1
@@ -204,8 +216,8 @@ class ProjectsController < ApplicationController
 	def new_forum
 		puts 'CustomerController.new_forum:id='+params[:id]
 		@object = Project.find(params[:id])
-		@types = Typesobject.find_for("forum")
-		@status = Statusobject.find_for("forum")
+		@types = Typesobject.get_types("forum")
+		@status = Statusobject.get_status("forum")
 		@relation_id = params[:relation][:forum]
 
 		respond_to do |format|
@@ -232,7 +244,7 @@ class ProjectsController < ApplicationController
 		ctrl_add_objects_from_favorites(@project, :part)
 	end
 
-	def add_users
+	def add_users_obsolete
 		@project = Project.find(params[:id])
 		ctrl_add_objects_from_favorites(@project, :user)
 	end
@@ -277,23 +289,22 @@ class ProjectsController < ApplicationController
 		@parts=@project.parts
 		@customers=@project.customers_up
 		flash[:error] = "" if flash[:error].nil?
-
 		if @favori.get('document').count>0 && @project.relations(:document).count==0
 			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_document))
 		end
 		if @favori.get('part').count>0 && @project.relations(:part).count==0
 			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_part))
 		end
-		if @favori.get('user').count>0 && @project.relations(:user).count==0
-			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
-		end
+		#if @favori.get('user').count>0 && @project.relations(:user).count==0
+		#	flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
+		#end
 		@tree         						= build_tree(@project, @myparams[:view_id], nil, 2)
 		@tree_up      						= build_tree_up(@project, @myparams[:view_id] )
 		@object_plm = @project
 	end
 
 	def index_
-		@projects = Project.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@projects = Project.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
 	end
 
 end

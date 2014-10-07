@@ -1,5 +1,5 @@
 <H1><%= t(:title_tools)%></H1>
-<% form_tag :controller=>:main, :action=>:index, :method=>:get do |form| %>
+<% form_tag("/main", :method=>:get) do |form| %>
 <% if logged_in? %>
 <fieldset>
   <legend>

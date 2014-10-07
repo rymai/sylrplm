@@ -1,5 +1,5 @@
-
-<% unless User.count == 0 %> <h1><%= t(:datas_in_database) %></h1>
+<% unless User.count == 0 || @datas.nil? %>
+<h1><%= t(:datas_in_database) %></h1>
 <table>
 	<tr>
 		<% @datas.each do |domain, values| %> <th> <%= t("ctrl_#{domain}") %></th>
@@ -11,10 +11,10 @@
 			<% @datas[domain].each do |key, value| %>
 			<tr class='<%= cycle("even", "odd") %>'>
 				<td> <%= @datas[domain][key] %></td>
-				<td> <%= t("ctrl_#{key}") %></td>
+				<td> <%= link_to t("ctrl_#{key}") ,{:controller=>get_controller_from_model_type(key), :action=>"index"}   %></td>
 			</tr>
 			<% end %>
 		</table> <% end %> </td>
 	</tr>
 </table>
-<% end %> 
+<% end %>

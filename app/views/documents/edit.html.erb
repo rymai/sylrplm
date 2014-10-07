@@ -1,8 +1,4 @@
-<h1><%= t(:document_edit) %></h1>
 <% fonct="edit" %>
-<% form_for(@document, :html => { :id => h_form_html_id(@document, fonct) }) do |f| %>
-<%= f.error_messages %>
-<%= render(:partial => "shared/menu_edit",:locals => { :object => @document, :f => f, :fonct=>fonct}) %>
-<%= render(:partial => "documents/edit",:locals => { :f => f, :fonct=>fonct }) %>
-<%= render(:partial => "shared/submit_edit",:locals => { :object => @document, :f => f, :fonct=>fonct}) %>
-<% end %>
+<div id="edit_object">
+	<%= render(:partial => "shared/edit_object", :locals=>{:fonct=>fonct, :plm_object=>@document}) %>
+</div>

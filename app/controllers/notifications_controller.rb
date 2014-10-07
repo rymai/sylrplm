@@ -9,7 +9,7 @@ class NotificationsController < ApplicationController
 			#only notifications delivered to current user
 			params[:query] = "#{current_user.login}"
 		end
-		@notifications = Notification.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@notifications = Notification.find_paginate({:user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 		#LOG.info (fname) {"notifs=#{@notifications.inspect}"}
 		# if params.include? :current_user
 		# @notifications[:recordset] = @notifications[:recordset].find_all {|notif| notif.responsible_id == current_user.id }

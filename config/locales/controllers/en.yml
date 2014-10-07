@@ -7,7 +7,7 @@ en:
   ctrl_object_updated: "%{typeobj} %{ident} was successfully updated"
   ctrl_object_not_saved: "%{typeobj} %{ident} not saved"
   ctrl_object_not_found: "%{typeobj} '%{ident}' not found"
-  ctrl_object_not_updated: "%{typeobj} %{ident} not updated"
+  ctrl_object_not_updated: "%{typeobj} %{ident} not updated: %{error}"
   ctrl_object_deleted: "%{typeobj} %{ident} successfully deleted"
   ctrl_object_not_deleted: "%{typeobj} %{ident} could not be deleted"
   ctrl_object_promoted: "%{typeobj} %{ident} was successfully promoted from %{current_rank} to %{new_rank}, validers=%{validersMail}"
@@ -44,9 +44,9 @@ en:
   ctrl_init_done: Initialization done
   count_objects: " : %{number_begin}-%{number_end} / %{total}"
   ctrl_show_no_relation: "%{child_plmtype}(s) to copy but relation '%{father_plmtype}' to '%{child_plmtype}' does not exist"
-  legend_type_values: Specific values
+  legend_type_values: "Specific values of type '%{type}'"
   # access
-  ctrl_object_no_controlers: "No controlers found" 
+  ctrl_object_no_controlers: "No controlers found"
   ctrl_actions_by_roles: Actions by rôle
   # application
   login_login: "Please sign in to access this functionnality."

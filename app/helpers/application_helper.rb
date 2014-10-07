@@ -4,6 +4,33 @@ require "digest/sha1"
 # = ApplicationHelper
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+	#
+	# select on type for update_type by Ajax
+	#
+	def h_edit_type_object(form, object, types)
+		fname=self.class.name+"."+__method__.to_s
+		#LOG.debug (fname){"object=#{object.inspect}"}
+		#LOG.debug (fname){"types=#{types} "}
+		option_readonly ={:readonly => object.column_readonly?(:typesobject_id)}
+		unless object.id.nil?
+			url={:controller => get_controller_from_model_type(object.model_name), :action => "update_type",:id=>object.id}
+			#LOG.debug (fname){"url=#{url} "}
+			with = "'object_type='+value"
+			option_onchange={:onchange => remote_function(:url  => url, :with => with)}
+		else
+			option_onchange=nil
+		end
+		ret = ""
+		ret << form.label(t("label_type"))
+		unless option_onchange.nil?
+			ret << form.collection_select(:typesobject_id, types, :id, :name,option_readonly, option_onchange)
+		else
+			ret << form.collection_select(:typesobject_id, types, :id, :name,option_readonly)
+		end
+		ret << "</br>"
+		ret
+	end
+
 	def h_show_translate item
 		" (#{item})"
 	end
@@ -74,45 +101,6 @@ module ApplicationHelper
 		bloc=""
 		#ne marche pas avec boostrap bloc<<"<a class='menu' onclick=\"return helpPopup('#{help}','#{href}');\" >#{title}</a>";
 		bloc<<"<a class='menu' href='#{href}' >#{title}</a>";
-		bloc
-	end
-
-	def h_help_menu(name,link)
-		bloc=""
-		if(link!=nil && link.strip()!="")
-			bloc<<"<a href='/help?help="+link+"'>"+h_img(name)+"</a>"
-		end
-	end
-
-	def help_window
-		ret = ""
-		ret << "<a onclick=\"return helpWindow('help_#{params[:controller]}_#{params[:action]}');\">#{t(:help_window)}</a>"
-		ret
-	end
-
-	#help on a chapter
-	def help_chapter(chapter)
-		ret = ""
-		ret << "<a onclick=\"return helpWindow('#{chapter}');\">#{t(chapter)}</a>"
-		ret
-	end
-
-	# memorisation du click sur le help
-	def tip_help()
-		bloc=""
-		bloc<<"<img class='help' id='tip_help' src='/images/help.png' onclick='return helpTip();'>"
-		bloc
-	end
-
-	def show_help(key, with_img = true)
-		txt=t(key.to_s)
-		bloc=""
-		if with_img
-			bloc<<"<img class=\"help\" id=\"#{key.to_s}\"  src=\"/images/help.png\"
-    onclick=\"return helpPopup('#{key.to_s}');\" >"
-		else
-			bloc<<"<a href='/help?help="+key.to_s+"' onclick=\"return helpPopup('#{key.to_s}');\">"+txt+"</a>"
-		end
 		bloc
 	end
 
@@ -272,10 +260,9 @@ module ApplicationHelper
 				if method.nil?
 					method = "ident"
 				end
-				if obj.respond_to?(method)
-					mdl=get_model obj.model_name
-				txt = obj.send(method.to_sym)
-				else
+				begin
+					txt = obj.send(method.to_sym)
+				rescue Exception=> e
 				txt = obj.ident
 				end
 				if txt.blank?
@@ -283,10 +270,10 @@ module ApplicationHelper
 				end
 				title = t(name, :obj => obj)
 				ret=link_to( txt, obj, {:title => title } )
-			#LOG.info (fname){"name=#{name} obj=#{obj}, method=#{method} ret=#{ret}"}
+			#LOG.info (fname){"name=#{name} obj=#{obj}, model=#{obj.model_name} , method=#{method} respond?=#{obj.respond_to?(method)} , txt=#{txt} , ret=#{ret}"}
 			end
 		rescue Exception => e
-			LOG.info (fname){"exception name=#{name}  method=#{method} error=#{e}"}
+			LOG.error (fname){"exception name=#{name}  method=#{method} error=#{e}"}
 		end
 		return ret
 	end
@@ -474,34 +461,37 @@ module ApplicationHelper
 	# - define: on les definit (dans typesobject seulement pour le moment)
 	def h_type_values(obj, fonct)
 		fname=self.class.name+"."+__method__.to_s
-		#LOG.info (fname){"obj=#{obj}"}
-		#LOG.info (fname){"fonct=#{fonct}"}
+		#LOG.info (fname){"obj=#{obj} fonct=#{fonct}"}
 		ret=""
-		if obj.respond_to?(:typesobject)
+		if !fonct.include?("new") && obj.respond_to?(:typesobject)
 			unless obj.typesobject.nil?
 				objfields = obj.typesobject.get_fields
+				#LOG.info (fname){"fields=#{objfields} obj.type_values=#{obj.type_values}"}
 				unless objfields.nil?
-					#LOG.info (fname){"fields=#{objfields}"}
 					case fonct
-					when "edit"
+					when "edit", "account_edit"
 						if obj.type_values.nil?
 						obj.type_values=objfields
 						end
 					end
+					ret+="<h1>"
+					ret+=t(:legend_type_values, :type => t("typesobject_name_#{obj.typesobject.name}"))
+					ret+="</h1>"
+					#LOG.info (fname){"type_values=#{obj.type_values}"}
 					unless obj.type_values.nil?
-						ret+="<fieldset><legend>"
-						ret+=t(:legend_type_values)
-						ret+="</legend>"
 						ret+= h_render_fields(obj, fonct, "type_values")
-						#options: all, position, none
-						ret+="</fieldset>"
+					#options: all, position, none
 					end
+				else
+					ret+="<h1>"
+					ret+=t(:legend_type_values, :type =>t("typesobject_name_#{obj.typesobject.name}"))
+					ret+="</h1>"
 				end
 			end
 		end
 		ret
 	end
-	
+
 	def h_history_fields(obj, fonct)
 		history_fields=obj.wi_fields
 		puts "application_helper.h_history_fields:history_fields="+history_fields
@@ -518,10 +508,10 @@ module ApplicationHelper
 		#puts "******************** h_history_fields:ret="+ret
 		ret
 	end
-			
+
 	def h_workitem_fields(obj, fonct)
 		fields=obj.field_hash
-		puts "application_helper.h_workitem_fields:fields=#{fields}"
+		#puts "application_helper.h_workitem_fields:fields=#{fields}"
 		ret=""
 		unless fields.nil?
 			ret+="<fieldset><legend>"
@@ -535,41 +525,42 @@ module ApplicationHelper
 		#puts "******************** h_history_fields:ret="+ret
 		ret
 	end
-			
 
 	def h_render_fields(obj, fonct, method, to_json=false)
 		fname=self.class.name+"."+__method__.to_s
-		LOG.info (fname){"obj=#{obj} fonct=#{fonct} method=#{method}"}
 		fields = obj.send(method)
+		form_id=h_form_html_id(obj, fonct)
+		#LOG.info (fname){"obj=#{obj}, fonct=#{fonct}, method=#{method}, fields=#{fields}, form_id=#{form_id}"}
 		unless fields.nil?
 			if to_json
-				fields=fields.to_json
+			fields=fields.to_json
+			#LOG.info (fname){"fields_json=#{fields}"}
 			end
-			case fonct
-			when "show"
+			buttons="none"
+			edit_key=false
+			edit_value=false
+			if fonct.include? "show"
 				buttons="none"
-				edit_key=false
-				edit_value=false
-			when "edit"
+			edit_key=false
+			edit_value=false
+			end
+			if fonct.include? "edit"
 				buttons="position"
-				edit_key=false
-				edit_value=true
-			when "define"
+			edit_key=false
+			edit_value=true
+			end
+			if fonct.include? "define"
 				buttons="all"
-				edit_key=true
-				edit_value=true
-			else
-				buttons="none"
-				edit_key=false
-				edit_value=false
+			edit_key=true
+			edit_value=true
 			end
 			ret=render(
 				:partial => "shared/form_json",
 				:locals => {
 					:fields => fields,
-					:form_id => h_form_html_id(obj, fonct),
+					:form_id => form_id,
 					:textarea_name => "#{obj.model_name}[#{method}]",
-					:options => {"buttons" => buttons, "edit_key" => edit_key, "edit_value" => edit_value } 
+					:options => {"buttons" => buttons, "edit_key" => edit_key, "edit_value" => edit_value }
 				}
 				)
 		else
@@ -577,7 +568,7 @@ module ApplicationHelper
 		end
 		ret
 	end
-	
+
 	# renvoi l'identifiant du formulaire en fonction de l'objet et de la fonction demandee
 	def h_form_html_id(obj, fonct)
 		"#{fonct}_#{obj.model_name}"
@@ -673,6 +664,16 @@ module ApplicationHelper
 			LOG.warn("failed to find "+model_name+" : #{e}")
 			ret=nil
 		end
+		ret
+	end
+
+	def h_workitems_links(workitem)
+		fname=self.class.name+"."+__method__.to_s
+		ret=""
+		workitem.get_wi_links.each { |obj|
+			LOG.debug (fname){"obj=#{obj}"}
+			ret << h_explorer(obj[:typeobj])
+		}.join(', ')
 		ret
 	end
 

@@ -30,7 +30,15 @@ class Part < ActiveRecord::Base
 	#
 	#has_and_belongs_to_many :documents, :join_table => "links",
 	#:foreign_key => "father_id", :association_foreign_key => "child_id", :conditions => ["father_type='part' AND child_type='document'"]
-
+	
+	has_many :links_forums,
+    :class_name => "Link",
+    :foreign_key => "father_id",
+    :conditions => { father_plmtype: 'part', child_plmtype: 'forum' }
+	has_many :forums,
+    :through => :links_forums,
+    :source => :forum
+    
 	has_many :links_prd_effectivities,
     :class_name => "Link",
     :foreign_key => "father_id",
@@ -47,8 +55,7 @@ class Part < ActiveRecord::Base
     :through => :links_var_effectivities,
     :source => :part_down
 
-
-has_many :links_documents,
+	has_many :links_documents,
     :class_name => "Link",
     :foreign_key => "father_id",
     :conditions => { father_plmtype: 'document', child_plmtype: 'document' }
@@ -135,10 +142,11 @@ has_many :links_documents,
 	def users
 		nil
 	end
+
 	#
 	# this object could have a 3d or 2d model show in tree
 	#
 	def have_model_design?
-			true
+		true
 	end
 end

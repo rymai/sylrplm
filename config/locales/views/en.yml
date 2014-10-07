@@ -1,6 +1,7 @@
 en:
   # general
-  model3d_view: View the model corresponding to the structure 
+  sylrplm_version: Version '%{version}' on %{version_date}
+  model3d_view: View the model corresponding to the structure
   root_model_design: Design model
   customer: client
   document: document
@@ -63,10 +64,11 @@ en:
   paste_part: Paste parts
   paste_documents: Paste documents
   paste_projects: Paste projects
+  paste_objects: "Paste objects"
   add_forum: Add discussion
   freeze: Freeze
   edit: Edit
-  edit_lifecycle: Life cycle 
+  edit_lifecycle: Life cycle
   update: Update
   create: Create
   copy: Copy
@@ -82,6 +84,7 @@ en:
   lifecycle_edit: "Lifecycle of the %{model} '%{obj}'"
   label_liste_mode: List type
   switch_all_links: "All-None"
+  update_type: Refresh on type
   # attributs generaux
   faq_question: Question
   faq_answer: answer
@@ -100,6 +103,11 @@ en:
   label_history_tree: Tree
   label_history_plm_objects: Concerned Object
   label_history_explore: Explore
+  #layouts
+  legend_recent_links: Last actions
+  label_recent_ident: Id
+  label_recent_description: Description
+  label_recent_action: Action
   # messages
   msg.no_item_to_display: "There are no items to display."
   msg_confirm: Are you sure?
@@ -110,6 +118,19 @@ en:
   lng_french: "French"
   # main
   label_preferences: Preferences
+  mnu_documents_any_type: Any type
+  mnu_documents_directory: Directory
+  mnu_parts_any_type: Any type
+  mnu_parts_EFF: Effectivity
+  mnu_parts_PIE: Part
+  mnu_parts_PRD: Product
+  mnu_parts_STR: Structure
+  mnu_parts_VAR: Variant
+  mnu_projects_any_type: Any type
+  mnu_projects_product: Product
+  mnu_projects_$PROJ_ACCOUNT: Personnal Project
+  mnu_customers_any_type: Any type
+  mnu_parts_ISSUE: Issue
   # menus
   mnu_main: Welcome
   mnu_documents: Documents
@@ -153,16 +174,17 @@ en:
   # shared
   legend_link_duplication: "Links Duplication of '%{object_orig}'"
   legend_wi_fields: Processus values
-  label_assoc_documents: Associated Documents 
-  label_assoc_parts: Associated Articles 
-  label_assoc_projects: Associated Projets 
-  label_assoc_customers: Associated Clients 
-  label_assoc_users: Associated UTilisateurs 
-  label_assoc_forums: Associated Discussions 
-  label_assoc_documents_up: Father Documents 
-  label_assoc_parts_up: Father Articles 
-  label_assoc_projects_up: Father Projets 
-  label_assoc_customer_up: Father Clients 
+  label_assoc_documents: Associated Documents
+  label_assoc_parts: Associated Articles
+  label_assoc_projects: Associated Projets
+  label_assoc_customers: Associated Clients
+  label_assoc_users: Associated UTilisateurs
+  label_assoc_forums: Associated Discussions
+  label_assoc_documents_up: Father Documents
+  label_assoc_parts_up: Father Articles
+  label_assoc_projects_up: Father Projets
+  label_assoc_customer_up: Father Clients
+  legend_objects_to_add: Objects to add
   # tree (dans views show)
   label_document_document: Documents
   label_part_document: Documents
@@ -190,8 +212,8 @@ en:
   btn_select: Browser
   label_icon: Icon
   datafiles_list: Associated files
-  datafile_add: Add a file 
-  legend_tree: Structure 
+  datafile_add: Add a file
+  legend_tree: Structure
   label_type_model: Model type
   # fin general
   # access
@@ -204,7 +226,7 @@ en:
   access_show: Detail access
   access_new: New access
   access_reset: Initialization
-  access_new_dup: Access duplication 
+  access_new_dup: Access duplication
   # check
   legend_check: Enter check details
   check_edit: Editing check
@@ -259,7 +281,7 @@ en:
   datafile_show_file: Show the file
   datafile_download_file: Download the file
   datafile_without_file: No file
-  sylrplm_files_list: Files list 
+  sylrplm_files_list: Files list
   # definitions
   definition_simple_sequence: Simple sequence
   definition_leave_request: Leave request
@@ -372,12 +394,12 @@ en:
   favori_document_delete: Remove documents from clipboard
   favori_part_delete: Remove parts from clipboard
   favori_project_delete: Remove projects from clipboard
-  favoris_document: Documents
-  favoris_part: Parts
-  favoris_project: Projects
-  favoris_customer: Customers
-  favoris_user: Users
-  favoris_link: Links
+  favoris_document: Documents (%{size})
+  favoris_part: Parts (%{size})
+  favoris_project: Projects (%{size})
+  favoris_customer: Customers (%{size})
+  favoris_user: Users (%{size})
+  favoris_link: Links (%{size})
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM News
   label_today: Date
@@ -392,7 +414,7 @@ en:
   legend_clipboard: Clipboard
   submit: GO
   CV: Curriculum vitae
-  first_use: "To begin (%{help})"
+  first_use: "First use of the application (%{help})"
   # notifications
   legend_notification: Enter notification details
   notification_edit: Notification edit
@@ -528,7 +550,7 @@ en:
   # session
   legend_login: Please sign in
   legend_context: Indiquez votre rôle, groupe et projet définissant le contexte de la session
-  legend_new_account: Renseignez les informations nécessaires à la création de votre compte 
+  legend_new_account: Renseignez les informations nécessaires à la création de votre compte
   submit_account: Sign in
   submit_login: Login
   submit_new_account: New account
@@ -542,14 +564,14 @@ en:
   statusobjects_new: New status
   statusobjects_show: Detail of status
   statusobjects_edit: Edit the status
-  statusobjects_new_dup: Status duplication 
+  statusobjects_new_dup: Status duplication
   label_name: Name
   label_rank: Rank
   label_promote: Promote
   label_demote: Demote
   label_next_status: Next Status(s)
   label_previous_status: Previous Status
-  label_statusobject_next_statusobject_ids_out: Other status	
+  label_statusobject_next_statusobject_ids_out: Other status
   label_statusobject_next_statusobject_ids_in: Next status
   label_statusobject_previous_statusobject_ids_out: Other status
   label_statusobject_previous_statusobject_ids_in: Previous status
@@ -569,7 +591,7 @@ en:
   subscription_new_dup: Duplication of subscription
   legend_subscription: Subscription
   label_subscription_fortypesobject_ids_in: Subscription objects types
-  label_subscription_fortypesobject_ids_out: Other objects types 
+  label_subscription_fortypesobject_ids_out: Other objects types
   label_subscription_ingroup_ids_in: Subscription on groups
   label_subscription_ingroup_ids_out: Other groups
   label_subscription_inproject_ids_in: Subscription on projects
@@ -683,6 +705,7 @@ en:
   label_participant: Participant
   label_activity: Activity
   label_dispatch_time: Dispatch
+  label_workitem_objects: Concerned objects
   button_task_validate: Validate this task
   # variables de contexte ou autre
   variable_key: Variable name

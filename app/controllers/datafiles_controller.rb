@@ -6,7 +6,7 @@ class DatafilesController < ApplicationController
 	# GET /datafiles
 	# GET /datafiles.xml
 	def index
-		@datafiles = Datafile.find_paginate({ :user=> current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@datafiles = Datafile.find_paginate({ :user=> current_user, :filter_types => params[:filter_types],:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 		#pour voir la liste des fichiers
 		@all_files=Volume.get_all_files(true) if admin_logged_in?
 		respond_to do |format|
@@ -21,7 +21,7 @@ class DatafilesController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
-		@types    = Typesobject.find_for("datafile")
+		@types    = Typesobject.get_types("datafile")
 		if params["doc"]
 			@document = Document.find(params["doc"])
 		#puts "datafiles_controller.show:doc(#{params["doc"]})=#{@document} filedoc=#{@datafile.document}"
@@ -39,7 +39,7 @@ class DatafilesController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@datafile = Datafile.new(user: current_user)
-		@types    = Typesobject.find_for("datafile")
+		@types    = Typesobject.get_types("datafile")
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @datafile }
@@ -51,7 +51,7 @@ class DatafilesController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
-		@types    = Typesobject.find_for("datafile")
+		@types    = Typesobject.get_types("datafile")
 	#TODO@document = Document.find(params["doc"]) if params["doc"]
 	end
 
@@ -60,7 +60,7 @@ class DatafilesController < ApplicationController
 	def create
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
-		@types    = Typesobject.find_for("datafile")
+		@types    = Typesobject.get_types("datafile")
 		@document = Document.find(params["doc"]) if params["doc"]
 		#puts "datafiles_controller.create:errors=#{@datafile.errors.inspect}"
 		respond_to do |format|
@@ -83,7 +83,7 @@ class DatafilesController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
-		@types    = Typesobject.find_for("datafile")
+		@types    = Typesobject.get_types("datafile")
 		@document = Document.find(params["doc"]) if params["doc"]
 		stupd = @datafile.m_update(params, @current_user)
 		respond_to do |format|
@@ -92,12 +92,22 @@ class DatafilesController < ApplicationController
 				format.html { redirect_to(@datafile) }
 				format.xml  { head :ok }
 			else
-			#LOG.debug (fname){"stupd=#{stupd} errors=#{@datafile.errors.inspect}"}
-				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_datafile), :ident => @datafile.ident)
+				LOG.error (fname){"stupd=#{stupd} errors=#{@datafile.errors.full_messages}"}
+				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_datafile), :ident => @datafile.ident, :error => @datafile.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @datafile.errors, :status => :unprocessable_entity }
 			end
 		end
+	end
+
+	#
+	# update of edit panel after changing the type
+	#
+	def update_type
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"params=#{params.inspect}"}
+		@datafile = Datafile.find(params[:id])
+		ctrl_update_type @datafile, params[:object_type]
 	end
 
 	# DELETE /datafiles/1
@@ -111,7 +121,7 @@ class DatafilesController < ApplicationController
 		#@document.remove_datafile(@datafile)
 		#end
 		@datafile.m_destroy
-		@types = Typesobject.find_for("datafile")
+		@types = Typesobject.get_types("datafile")
 		respond_to do |format|
 			if params["doc"]
 				format.html { redirect_to(@document) }
@@ -143,7 +153,7 @@ class DatafilesController < ApplicationController
 		#LOG.debug (fname){"tool=#{tool} disposition=#{disposition}"}
 		#puts "datafiles_controller.send_file_content:"+fields.inspect
 		#
-		# show_file: inline 
+		# show_file: inline
 		#
 		if disposition == "inline"
 			unless tool.nil?
@@ -166,19 +176,19 @@ class DatafilesController < ApplicationController
 					flash = ctrl_send_data(content, @datafile.filename, @datafile.content_type, disposition)
 				end
 			else
-				content = @datafile.read_file_for_download 
+				content = @datafile.read_file_for_download
 				# show_file: inline without tool: send_data inline
 				flash = ctrl_send_data(content, @datafile.filename, @datafile.content_type, disposition)
 			end
 		else
-			# download:attachement: send_file attachement
+		# download:attachement: send_file attachement
 			zipFileInfo=@datafile.zipFile
 			flash = ctrl_send_file(zipFileInfo, disposition)
 		end
 		#
 		flash
 	end
-	
+
 	def ctrl_send_data(content, filename, content_type, disposition)
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"content.length=#{content.length} filename=#{filename} content_type=#{content_type} disposition=#{disposition} "}
@@ -195,10 +205,10 @@ class DatafilesController < ApplicationController
 				format.html { render :action => "show" }
 				format.xml  { render :xml => @datafile.errors, :status => :unprocessable_entity }
 			end
-		flash
+			flash
 		end
 	end
-	
+
 	def ctrl_send_file(tmpfile, disposition)
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug (fname){"tmpfile=#{tmpfile[:file].path} filename=#{tmpfile[:filename]} content_type=#{tmpfile[:content_type]} disposition=#{disposition} "}
@@ -215,8 +225,8 @@ class DatafilesController < ApplicationController
 				format.html { render :action => "show" }
 				format.xml  { render :xml => @datafile.errors, :status => :unprocessable_entity }
 			end
-		flash
+			flash
 		end
 	end
-	
+
 end

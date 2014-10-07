@@ -37,12 +37,12 @@ class PartsController < ApplicationController
 
 	# GET /parts/new
 	# GET /parts/new.xml
-	def new		
+	def new
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@part   = Part.new(user: @current_user)
 		@types  = Typesobject.get_types("part")
-		@status = Statusobject.find_for("part", 2)
+		@status = Statusobject.get_status("part", 2)
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @part }
@@ -55,7 +55,7 @@ class PartsController < ApplicationController
 		@object_orig = Part.find(params[:id])
 		@part = @object = @object_orig.duplicate(current_user)
 		@types    = Typesobject.get_types("part")
-		@status   = Statusobject.find_for("part", 2)
+		@status   = Statusobject.get_status("part", 2)
 		respond_to do |format|
 			format.html # part/1/new_dup
 			format.xml  { render :xml => @part }
@@ -67,7 +67,7 @@ class PartsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@part   = Part.find_edit(params[:id])
-		@types  = Typesobject.find_for("part")
+		@types  = Typesobject.get_types("part")
 	end
 
 	# GET /parts/1/edit_lifecycle
@@ -84,9 +84,9 @@ class PartsController < ApplicationController
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@part   = Part.new(params[:part])
 		@types  = Typesobject.get_types("part")
-		@status = Statusobject.find_for("part")
+		@status = Statusobject.get_status("part")
 		respond_to do |format|
-			if params[:fonct] == "new_dup"
+			if params[:fonct][:current] == "new_dup"
 				object_orig=Part.find(params[:object_orig_id])
 			st = @part.create_duplicate(object_orig)
 			else
@@ -144,6 +144,16 @@ class PartsController < ApplicationController
 		end
 	end
 
+	#
+	# update of edit panel after changing the type
+	#
+	def update_type
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@part = Part.find(params[:id])
+		ctrl_update_type @part, params[:object_type]
+	end
+
 	# DELETE /parts/1
 	# DELETE /parts/1.xml
 	def destroy
@@ -192,8 +202,8 @@ class PartsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@object = Part.find(params[:id])
-		@types = Typesobject.find_for("forum")
-		@status = Statusobject.find_for("forum")
+		@types = Typesobject.get_types("forum")
+		@status = Statusobject.get_status("forum")
 		@relation_id = params["relation"]["forum"]
 		respond_to do |format|
 			flash[:notice] = ""
@@ -279,7 +289,7 @@ class PartsController < ApplicationController
 	end
 
 	def index_
-		@parts = Part.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@parts = Part.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 	end
 
 end

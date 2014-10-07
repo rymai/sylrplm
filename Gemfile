@@ -10,7 +10,7 @@ gem 'activesupport'
 
 gem 'bundler'
 
-gem 'bigdecimal'
+gem 'bigdecimal', :path => "/usr/share/ruby/gems/gems/bigdecimal-1.2.5" 
 gem 'haml'
 gem 'iconv'
 #gem 'test-unit'

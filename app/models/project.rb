@@ -28,6 +28,14 @@ class Project < ActiveRecord::Base
 	#has_many :projects_users, :dependent => :delete_all
 	#has_many :users, :through => :projects_users
 
+	has_many :links_forums,
+    :class_name => "Link",
+    :foreign_key => "father_id",
+    :conditions => { father_plmtype: 'project', child_plmtype: 'forum' }
+	has_many :forums,
+    :through => :links_forums,
+    :source => :forum
+    
 	has_many :links_documents,
     :class_name => "Link",
     :foreign_key => "father_id",

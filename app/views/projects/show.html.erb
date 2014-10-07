@@ -1,6 +1,6 @@
 <H1><%= t(:project_show) %></H1>
-<%= render(:partial => "shared/menu_show", :locals=>{:object => @project, :fonct=>"show"}) %>
 <% fonct="show" %>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @project, :fonct=>fonct}) %>
 <% form_for(@project, :html => { :id => h_form_html_id(@project, fonct) }) do |f| %>
 <%= f.error_messages %>
 <p>
@@ -35,53 +35,15 @@
 	<b><%= t(:label_date) %></b>
 	<%= l @project.date %>
 </p>
-<%= h_type_values(@project, fonct) %>
 <p>
 	<b><%= t("label_domain") %></b>
 	<%= h @project.domain %>
 </p>
+<%= h_type_values(@project, fonct) %>
 <% end %>
-<h1></h1>
-<% files = @project.get_datafiles%>
-<% if files[:total]>0%> <h1><%= t("datafiles_list") %></h1>
-<%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files, :document=>nil, :part=>nil, :project=>@project, :customer=>nil }) %>
-<% end %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("add_datafile"), :action => :new_datafile, :id => @project.id %> </td>
-	</tr>
-</table>
-<h1></h1>
+<%= render(:partial => "shared/show_datafiles", 
+	:locals=> {:plm_object => @project,  :fonct => fonct, :document=>nil, :part=>nil, :project=>@project, :customer=>nil}) %>
 <%= render(:partial => "shared/object_workitems", :object =>@project) %>
-<table class='menu_bas'>
-	<% unless @favori.get('document').count==0 || @project.relations(:document).count==0 %>
-	<tr>
-		<% form_for(@project, :url => {:id => @project.id, :action => "add_docs" }) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @project.relations(:document), :id, :ident)) %></td>
-		<td> <%= submit_tag t("paste_documents") %></td>
-		<% end %>
-	</tr>
-	<% end %>
-	<% unless @favori.get('part').count==0 || @project.relations(:part).count==0 %>
-	<tr>
-		<% form_for(@project, :url => {:id => @project.id, :action => "add_parts" }) do |f| %> <td> <%= select("relation","part", options_from_collection_for_select( @project.relations(:part), :id, :ident)) %></td>
-		<td> <%= submit_tag t("paste_parts") %></td>
-		<% end %>
-	</tr>
-	<% end %>
-	<% unless @favori.get('user').count==0 || @project.relations(:user).count==0 %>
-	<tr>
-		<% form_for(@project, :url => {:id => @project.id, :action => "add_users" }) do |f| %> <td> <%= select("relation","user", options_from_collection_for_select( @project.relations(:user), :id, :ident)) %></td>
-		<td> <%= submit_tag t("paste_users") %></td>
-		<% end %>
-	</tr>
-	<% end %>
-	<% unless @project.relations(:forum).count==0 %>
-	<tr>
-		<% form_for(@project, :url => {:id => @project.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @project.relations(:forum), :id, :ident)) %></td>
-		<td><%= submit_tag t("add_forum") %></td>
-		<% end %>
-	</tr>
-	<% end %>
-</table>
+<%= render(:partial => "shared/objects_to_add", :object =>@project) %>
 
 

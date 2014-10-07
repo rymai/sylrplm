@@ -15,8 +15,8 @@
 		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t("label_name"), "name" %></th>
 		<th <%= sort_td_class_helper "typesobject" %>> <%= sort_link_helper t(:label_typesobject), "typesobject_id" %></th>
 		<th <%= sort_td_class_helper "father_plmtype" %>> <%= sort_link_helper t("label_father_plmtype"), "father_plmtype" %></th>
-		<th <%= sort_td_class_helper "child_plmtype" %>> <%= sort_link_helper t("label_child_plmtype"), "child_plmtype" %></th>
 		<th <%= sort_td_class_helper "father_typesobject" %>> <%= sort_link_helper t("label_father_type"), "father_typesobject_id" %></th>
+		<th <%= sort_td_class_helper "child_plmtype" %>> <%= sort_link_helper t("label_child_plmtype"), "child_plmtype" %></th>
 		<th <%= sort_td_class_helper "child_typesobject" %>> <%= sort_link_helper t("label_child_type"), "child_typesobject_id" %></th>
 		<th><%= t("label_cardin_occur_min")%></th>
 		<th><%= t("label_cardin_occur_max")%></th>
@@ -27,12 +27,12 @@
 	</tr>
 	<% @relations[:recordset].each do |relation| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= h_explorer relation, :name %><%=h h_show_translate relation.name_translate %></td>
+		<td><%= h_explorer relation, :name %><%= h_show_translate relation.name_translate %></td>
 		<td><%= h_explorer relation.typesobject, :name_translate unless relation.typesobject.nil? %></td>
-		<td><%= h relation.father_plmtype_translate %></td>
-		<td><%= h relation.child_plmtype_translate  %></td>
-		<td><%= h_explorer relation.father_typesobject, :name_translate unless relation.father_typesobject.nil? %></td>
-		<td><%= h_explorer relation.child_typesobject, :name_translate unless relation.child_typesobject.nil? %></td>
+		<td><%= h relation.father_plmtype %>(<%= relation.father_plmtype_translate%>)</td>
+		<td><%= h_explorer relation.father_typesobject, :name_translate unless relation.father_typesobject.nil? %>(<%= relation.father_typesobject_id%>)</td>
+		<td><%= h relation.child_plmtype  %>(<%= relation.child_plmtype_translate %>)</td>
+		<td><%= h_explorer relation.child_typesobject, :name_translate unless relation.child_typesobject.nil? %>(<%= relation.child_typesobject_id%>)</td>
 		<td><%= h relation.cardin_occur_min %></td>
 		<td><%= h relation.cardin_occur_max %></td>
 		<td><%= h relation.cardin_use_min %></td>

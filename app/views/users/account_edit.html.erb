@@ -1,30 +1,24 @@
 <h1><%= t(:account_edit, :login => current_user.login) %></h1>
-<% form_for(@the_user, :url => {:controller=>:users , :action=>:account_update})  do |f| %>
+<% fonct = "account_edit" %>
+<% form_for(@the_user, :url => {:controller=>:users , :action=>:account_update}, :html => { :id => h_form_html_id(@the_user, fonct) })  do |f| %>
 <%= f.error_messages %>
-<fieldset>
-	<legend>
-		<%= t(:legend_user) %>
-	</legend>
-	<%= render(:partial => "users/edit",:locals => { :f => f, :fonct => "account_edit" }) %>
+<h1><%= t(:legend_user) %></h1>
+<%= hidden_field_tag :user_action , fonct %>
+	<%= render(:partial => "users/edit",:locals => { :f => f, :fonct => fonct}) %>
 	<table class='menu_bas'>
 		<tr>
 			<td> <%= f.submit t("update") %> </td>
 		</tr>
 	</table>
-</fieldset>
 <%end%>
 
 <% form_for :session, :url => {:controller => :sessions , :action => :login}  do |f| %>
 <%= hidden_field_tag :user_id , @current_user.id %>
-<fieldset>
-	<legend>
-		<%= t(:legend_context) %>
-	</legend>
+<h1><%= t(:legend_context) %></h1>
 	<%= render(:partial => "shared/session_context",:locals => { :form => f}) %>
 	<table class='menu_bas'>
 		<tr>
 			<td> <%= submit_tag t(:submit_login) %> </td>
 		</tr>
 	</table>
-</fieldset>
-<% end %> 
+<% end %>

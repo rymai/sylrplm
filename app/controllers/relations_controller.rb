@@ -5,7 +5,7 @@ class RelationsController < ApplicationController
 	# GET /relations
 	# GET /relations.xml
 	def index
-		@relations = Relation.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@relations = Relation.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @relations }
@@ -26,10 +26,13 @@ class RelationsController < ApplicationController
 	# GET /relations/new.xml
 	def new
 		fname= "#{controller_class_name}.#{__method__}"
+		#LOG.debug (fname) {"params=#{params}"}
 		@relation = Relation.new
 		@datas = @relation.datas
 		@views = View.all
-		#LOG.debug (fname) {"#{typesobject=@relation.typesobject}"}
+		@types  = Typesobject.get_types("relation")
+		@status = Statusobject.get_status("relation")
+		#LOG.debug (fname) {"relation=#{@relation.inspect}"}
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @relation }
@@ -43,6 +46,8 @@ class RelationsController < ApplicationController
 		@relation=@object
 		@datas = @relation.datas
 		@views = View.all
+		@types  = Typesobject.get_types("relation")
+		@status = Statusobject.get_status("relation")
 		respond_to do |format|
 			format.html
 			format.xml  { render :xml => @object }
@@ -55,18 +60,24 @@ class RelationsController < ApplicationController
 		@relation = Relation.find(params[:id])
 		@datas = @relation.datas
 		@views = View.all
+		@types  = Typesobject.get_types("relation")
+		@status = Statusobject.get_status("relation")
 	#LOG.debug (fname) {"#{typesobject=@relation.typesobject}"}
 	end
 
 	# POST /relations
 	# POST /relations.xml
 	def create
-		#puts __FILE__+"."+__method__.to_s+":"+params.inspect
+		fname= "#{controller_class_name}.#{__method__}"
+		LOG.debug (fname) {"params=#{params.inspect}"}
 		@relation = Relation.new(params[:relation])
 		@datas = @relation.datas
 		@views = View.all
+		@types  = Typesobject.get_types("relation")
+		@status = Statusobject.get_status("relation")
 		respond_to do |format|
-			if params[:fonct] == "new_dup"
+			LOG.debug (fname) {"relation=#{@relation.inspect}"}
+			if params[:fonct][:current] == "new_dup"
 				object_orig=Relation.find(params[:object_orig_id])
 			st = @relation.create_duplicate(object_orig)
 			else
@@ -90,6 +101,8 @@ class RelationsController < ApplicationController
 		@relation = Relation.find(params[:id])
 		@datas=@relation.datas
 		@views = View.all
+		@types  = Typesobject.get_types("relation")
+		@status = Statusobject.get_status("relation")
 		@relation.update_accessor(current_user)
 		respond_to do |format|
 			if @relation.update_attributes(params[:relation])
@@ -104,6 +117,19 @@ class RelationsController < ApplicationController
 		end
 	end
 
+	#
+	# update of edit panel after changing the type
+	#
+	def update_type
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@relation = Relation.find(params[:id])
+		@types  = Typesobject.get_types("relation")
+		@status = Statusobject.get_status("relation")
+		@datas = @relation.datas
+		ctrl_update_type @relation, params[:object_type]
+	end
+
 	# DELETE /relations/1
 	# DELETE /relations/1.xml
 	def destroy
@@ -111,7 +137,7 @@ class RelationsController < ApplicationController
 		if @relation.destroy
 			flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_relation), :ident => @relation.ident)
 		else
-			flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_relation), :ident => @project.ident)
+			flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_relation), :ident => @relation.ident)
 		end
 		respond_to do |format|
 			format.html { redirect_to(relations_url) }

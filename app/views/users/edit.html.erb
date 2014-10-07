@@ -1,15 +1,5 @@
-<h1><%= t(:user_edit) %></h1>
 <% fonct="edit" %>
-<% form_for @the_user, :html => { :id => h_form_html_id(@the_user, fonct) } do |f| %>
-<%= f.error_messages %>
-<%= render(:partial => "shared/menu_edit",:locals => { :object => @the_user, :f => f, :fonct=>fonct}) %>
-<fieldset>
-	<legend>
-		<%= t(:legend_user) %>
-	</legend>
-	<%= render(:partial => "users/edit",:locals => { :f => f, :fonct => fonct }) %>
-	<%= render(:partial => "shared/submit_edit",:locals => { :object => @the_user, :f => f, :fonct=>fonct}) %>
-
-</fieldset>
-<%end %>
+<div id="edit_object">
+	<%= render(:partial => "shared/edit_object", :locals=>{:fonct=>fonct, :plm_object=>@the_user}) %>
+</div>
 

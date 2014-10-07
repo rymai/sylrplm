@@ -4,7 +4,7 @@ class TypesobjectsController < ApplicationController
 	# GET /typesobjects
 	# GET /typesobjects.xml
 	def index
-		@typesobjects = Typesobject.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@typesobjects = Typesobject.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @typesobjects }
@@ -59,7 +59,7 @@ class TypesobjectsController < ApplicationController
 		@typesobject = Typesobject.new(params[:typesobject])
 		@objectswithtype=Typesobject.get_objects_with_type
 		respond_to do |format|
-			if params[:fonct] == "new_dup"
+			if params[:fonct][:current] == "new_dup"
 				object_orig=Typesobject.find(params[:object_orig_id])
 			st = @typesobject.create_duplicate(object_orig)
 			else

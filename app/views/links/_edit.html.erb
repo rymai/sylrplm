@@ -1,72 +1,63 @@
 <%
  readonly=fonct=="edit_in_tree"
 %>
-<fieldset>
-	<legend>
-		<%= t(:legend_link_father) %>
-		<%= link_to @link.father.ident, object_path(@link.father) unless @link.father.nil? %>
-	</legend>
-	<%= form.label t(:label_father_plmtype) %>
-	<%if fonct=="edit_in_tree"%>
-	<%= text_field_tag :father_plmtype, @link.father_plmtype , :readonly=>readonly %>
-	<%else%>
-	<%= form.select(:father_plmtype, Typesobject.get_objects_with_type) %>
-	<%end%>
-	<br/>
-	<%= form.label t(:label_father_type) %>
-	<%if fonct=="edit_in_tree"%>
-	<%= text_field_tag :father_type, @link.father.typesobject.name , :readonly=>readonly unless @link.father.nil?%>
-	<%else%>
-	<%= form.collection_select(:father_plmtype, Typesobject.find_all, :id, :name) %>
-	<%end%>
-	<br/>
-	<%= form.label t(:label_father) %>
-	<%= text_field_tag :father, @link.father.to_s, :readonly=>readonly , :size => 50  unless @link.father.nil? %>
-	<br />
-</fieldset>
-<fieldset>
-	<legend>
-		<%= t(:legend_link_values, :type => @link.relation.typesobject.name, :name => @link.relation.name) unless @link.relation.nil? %>
-	</legend>
-	
-	<%=	h_render_fields(@link, fonct, "values") %>
-	
-	<%= form.label :owner %>
-	<%= text_field_tag(:owner, @link.owner.login , :readonly => readonly) unless @link.owner.nil? %>
-</fieldset>
-<fieldset>
-	<legend>
-		<%= t(:legend_link_child) %>
-		<%= link_to @link.child.ident, object_path(@link.child) unless @link.child.nil? %>
-	</legend>
-	<%= form.label t(:label_child_plmtype) %>
-	<%if fonct=="edit_in_tree"%>
-	<%= text_field_tag :child_plmtype, @link.child_plmtype , :readonly=>readonly %>
-	<%else%>
-	<%= form.select(:child_plmtype, Typesobject.get_objects_with_type) %>
-	<%end%>
-	<br/>
-	<%= form.label t(:label_child_type) %>
-	<%if fonct=="edit_in_tree"%>
-	<%= text_field_tag :child_type, @link.child.typesobject.name , :readonly=>readonly unless @link.child.nil? %>
-	<%else%>
-	<%= form.collection_select(:child_plmtype, Typesobject.find_all, :id, :name) %>
-	<%end%>
-	<br/>
-	<%= form.label t(:label_child) %>
-	<%= text_field_tag :child, @link.child.to_s , :readonly=>readonly , :size => 50  unless @link.child.nil? %>
-</fieldset>
-<% unless @root.nil? || !@root.respond_to?(:prd_effectivities) || @root.prd_effectivities.nil? %>
-<fieldset>
-	<legend>
-		<%= t(:legend_link_effectivities) %>
-	</legend>
-	<label for="part_effectivities"> <%= t(:label_effectivities) %> </label>
-	<%= select_tag(:effectivities, options_from_collection_for_select( @root.prd_effectivities, :mdlid, :to_s, @link.effectivities_mdlid), {:style=>"width:450px;", :size=>10, :multiple => true }) %>
-	<br/>
-</fieldset>
+<h1><%= t(:legend_link_father) %>
+<%= link_to @link.father.ident, object_path(@link.father) unless @link.father.nil? %></h1>
+<%= form.label t(:label_father_plmtype) %>
+<%if fonct=="edit_in_tree"%>
+<%= text_field_tag :father_plmtype, @link.father_plmtype , :readonly=>readonly %>
+<%else%>
+<%= form.select(:father_plmtype, Typesobject.get_objects_with_type) %>
+<%end%>
+<br/>
+<%= form.label t(:label_father_type) %>
+<%if fonct=="edit_in_tree"%>
+<%= text_field_tag :father_type, @link.father.typesobject.name , :readonly=>readonly unless @link.father.nil?%>
+<%else%>
+<%= form.collection_select(:father_plmtype, Typesobject.find_all, :id, :name) %>
+<%end%>
+<br/>
+<%= form.label t(:label_father) %>
+<%= text_field_tag :father, @link.father.to_s, :readonly=>readonly , :size => 50  unless @link.father.nil? %>
+<br />
+<!--
+<h1><%= t(:legend_link_values, :type => @link.relation.typesobject.name, :name => @link.relation.name) unless @link.relation.nil? %></h1>
+-->
+<% unless @link.relation.nil? %>
+<h1><%=t(:legend_link)%></h1>
+<%= form.label t(:label_type) %>
+<%= text_field_tag :link_type, @link.relation.typesobject.name, :readonly=>true  %>
+<br/>
+<%= form.label t(:label_name) %>
+<%= text_field_tag :link_name, @link.relation.name, :readonly=>true %>
+<br/>
 <% end %>
-<fieldset>
-	<%= form.label t(:label_domain) %>
-	<%= form.text_field(:domain) %>
-</fieldset>
+<%= h_render_fields(@link, fonct, "type_values") %>
+<%= form.label :owner %>
+<%= text_field_tag(:owner, @link.owner.login , :readonly => readonly) unless @link.owner.nil? %>
+<h1><%= t(:legend_link_child) %>	<%= link_to @link.child.ident, object_path(@link.child) unless @link.child.nil? %></h1>
+<%= form.label t(:label_child_plmtype) %>
+<%if fonct=="edit_in_tree"%>
+<%= text_field_tag :child_plmtype, @link.child_plmtype , :readonly=>readonly %>
+<%else%>
+<%= form.select(:child_plmtype, Typesobject.get_objects_with_type) %>
+<%end%>
+<br/>
+<%= form.label t(:label_child_type) %>
+<%if fonct=="edit_in_tree"%>
+<%= text_field_tag :child_type, @link.child.typesobject.name , :readonly=>readonly unless @link.child.nil? %>
+<%else%>
+<%= form.collection_select(:child_plmtype, Typesobject.find_all, :id, :name) %>
+<%end%>
+<br/>
+<%= form.label t(:label_child) %>
+<%= text_field_tag :child, @link.child.to_s , :readonly=>readonly , :size => 50  unless @link.child.nil? %>
+<% unless @root.nil? || !@root.respond_to?(:prd_effectivities) || !@root.prd_effectivities.any? %>
+<h1><%= t(:legend_link_effectivities) %></h1>
+<label for="part_effectivities"> <%= t(:label_effectivities) %> </label>
+<%= select_tag(:effectivities, options_from_collection_for_select( @root.prd_effectivities, :mdlid, :to_s, @link.effectivities_mdlid), {:style=>"width:450px;", :size=>10, :multiple => true }) %>
+<br/>
+<% end %>
+<h1><%= form.label t(:label_domain) %></h1>
+<%= form.text_field(:domain) %>
+

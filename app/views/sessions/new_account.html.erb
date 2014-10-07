@@ -6,16 +6,30 @@
   <legend>
     <%= t(:legend_new_account) %>
   </legend>
+
    <p>
     <%= form.label t(:label_login) %>
     <%= form.text_field :login %>
   </p>
 
   <p>
+<%= form.label t(:label_first_name) %>
+<%= form.text_field :first_name, :size => 40 %>
+</p>
+
+<p>
+<%= form.label t(:label_last_name) %>
+<%= form.text_field :last_name, :size => 40 %>
+</p>
+
+  <p>
     <%= form.label t(:label_password) %>
     <%= form.password_field :password %>
   </p>
-
+ <p>
+<%= form.label t(:label_confirm_password) %>
+<%= form.password_field :password_confirmation, :size => 40 %>
+</p>
   <p>
     <%= form.label t(:label_new_email) %>
     <%= form.text_field :email %>

@@ -1,5 +1,6 @@
 fr:
   # general
+  sylrplm_version: Version '%{version}' du %{version_date}
   model3d_view: Voir le modèle correspondant à la structure décrite ci dessous
   root_model_design: Modèle 2D/3D
   customer: client
@@ -63,10 +64,11 @@ fr:
   paste_parts: Coller articles
   paste_documents: Coller documents
   paste_projects: Coller projets
+  paste_objects: "Coller les objets sélectionnés"
   add_forum: Ajout discussion
   freeze: Gelé
   edit: Editer
-  edit_lifecycle: Cycle de vie 
+  edit_lifecycle: Cycle de vie
   update: Mettre à jour
   create: Créer
   copy: Copier
@@ -82,6 +84,7 @@ fr:
   lifecycle_edit: "Cycle de vie du %{model} '%{obj}'"
   label_liste_mode: Type de liste
   switch_all_links: "Tous-Aucun"
+  update_type: Rafraichir suivant le type
   # attributs generaux
   faq_question: Question
   faq_answer: Réponse
@@ -100,6 +103,11 @@ fr:
   label_history_tree: Parcours
   label_history_plm_objects: Objet concerné
   label_history_explore: Voir
+  #layouts
+  legend_recent_links: Dernières actions
+  label_recent_ident: Identifiant
+  label_recent_description: Description
+  label_recent_action: Action
   # messages
   msg_no_item_to_display: Il n'y a rien à afficher.
   msg_confirm: Etes vous sûr ?
@@ -110,6 +118,19 @@ fr:
   lng_french: "French"
   # main
   label_preferences: Préférences
+  mnu_documents_any_type: Tous types
+  mnu_documents_directory: Répertoire
+  mnu_parts_any_type: Tous types
+  mnu_parts_EFF: Effectivité
+  mnu_parts_PIE: Article
+  mnu_parts_PRD: Produit
+  mnu_parts_STR: Structure
+  mnu_parts_VAR: Variante
+  mnu_projects_any_type: Tous types
+  mnu_projects_product: Produit
+  mnu_projects_$PROJ_ACCOUNT: Projet personnel
+  mnu_customers_any_type: Tous types
+  mnu_parts_ISSUE: Problème
   # menus
   mnu_main: Accueil
   mnu_documents: Documents
@@ -163,6 +184,7 @@ fr:
   label_assoc_parts_up: Articles pères
   label_assoc_projects_up: Projets pères
   label_assoc_customer_up: Clients pères
+  legend_objects_to_add: Objets à ajouter
   # tree (dans views show)
   label_document_document: Documents associés
   label_part_document: Documents associés
@@ -190,8 +212,8 @@ fr:
   btn_select: Sélectionner
   label_icon: Icône
   datafiles_list: Fichiers associés
-  datafile_add: Ajout d'un fichier 
-  legend_tree: Structure 
+  datafile_add: Ajout d'un fichier
+  legend_tree: Structure
   label_type_model: Type de modèle
   # fin general
   # access
@@ -318,8 +340,8 @@ fr:
   forum_item_response: Répondre
   # forum_items
   legend_forum_item: Renseignez les propriétés du message
-  forum_item_edit: Edition message 
-  forum_item_list: Liste message 
+  forum_item_edit: Edition message
+  forum_item_list: Liste message
   forum_item_show: Détail message
   forum_item_new: Nouveau message
   label_parent: Prédécesseur
@@ -344,7 +366,7 @@ fr:
   help_close_window: Fermer la fenêtre d'aide
   help_general: Aide générale
   help_window: Aide sur cette fenêtre
-  help_first_use: Prise en main
+  help_first_use: "Prise en main de l'application (%{help})"
   help_about: A propos de SYLRPLM
   mnu_help: Aide
   # info
@@ -372,12 +394,12 @@ fr:
   favori_document_delete: Vider presse-papier documents
   favori_part_delete: Vider presse-papier articles
   favori_project_delete: Vider presse-papier projects
-  favoris_document: Documents
-  favoris_part: Articles
-  favoris_project: Projets
-  favoris_customer: Clients
-  favoris_user: Utilisateurs
-  favoris_link: Liens
+  favoris_document: Documents (%{size})
+  favoris_part: Articles (%{size})
+  favoris_project: Projets (%{size})
+  favoris_customer: Clients (%{size})
+  favoris_user: Utilisateurs (%{size})
+  favoris_link: Liens (%{size})
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM Nouveautés
   label_today: Date
@@ -528,12 +550,12 @@ fr:
   # session
   legend_login: Indiquez votre identifiant et mot de passe ou demandez un compte
   legend_context: Indiquez votre rôle, groupe et projet définissant le contexte de la session
-  legend_new_account: Renseignez les informations nécessaires à la création de votre compte 
+  legend_new_account: Renseignez les informations nécessaires à la création de votre compte
   submit_account: Entrer
   submit_login: Login
   submit_new_account: Pas de compte ?
   submit_create_account: Création du compte
-  label_new_email: Adresse de messagerie 
+  label_new_email: Adresse de messagerie
   #shared-tree
   object_tree: Structure
   # statusobjects
@@ -542,14 +564,14 @@ fr:
   statusobjects_new: Nouveau statut d' objet
   statusobjects_show: Détail du statut d' objet
   statusobjects_edit: Edition du statut d' objet
-  statusobjects_new_dup: Duplication de statut  
+  statusobjects_new_dup: Duplication de statut
   label_name: Nom
   label_rank: Rang de promotion
   label_promote: Promotion
   label_demote: Rétrogadation
   label_next_status: Status suivant(s)
   label_previous_status: Status précédent(s)
-  label_statusobject_next_statusobject_ids_out: Non attribués 	
+  label_statusobject_next_statusobject_ids_out: Non attribués
   label_statusobject_next_statusobject_ids_in: Attribués
   label_statusobject_previous_statusobject_ids_out: Non attribués
   label_statusobject_previous_statusobject_ids_in: Attribués
@@ -569,7 +591,7 @@ fr:
   subscription_new_dup: Duplication d' abonnement
   legend_subscription: Abonnement
   label_subscription_fortypesobject_ids_in: Attribués
-  label_subscription_fortypesobject_ids_out: Non attribués 
+  label_subscription_fortypesobject_ids_out: Non attribués
   label_subscription_ingroup_ids_in: Attribués
   label_subscription_ingroup_ids_out: Non attribués
   label_subscription_inproject_ids_in: Attribués
@@ -590,7 +612,7 @@ fr:
   typesobjects_new: Nouveau type d' objet
   typesobjects_show: Détail du type d' objet
   typesobjects_edit:  Edition du type d' objet
-  typesobject_new_dup: Duplication de type d' objet 
+  typesobject_new_dup: Duplication de type d' objet
   label_typesobject_name_translate: Type
   # msg _check_types
   msg_define_types_document: Définissez les types des documents
@@ -649,7 +671,7 @@ fr:
   volume_new: Nouveau volume
   volume_show: Détail du volume
   volume_edit:  Edition du volume
-  volume_new_dup: Duplication de volume 
+  volume_new_dup: Duplication de volume
   label_directory: Répertoire
   label_protocol: Protocole
   label_volume_name: Nom du volume
@@ -683,6 +705,7 @@ fr:
   label_participant: Participant
   label_activity: Activité
   label_dispatch_time: Envoyé le
+  label_workitem_objects: Objet's) concerné(s)'
   button_task_validate: Valider cette tâche
   # variables de contexte ou autre
   variable_key: Nom variable

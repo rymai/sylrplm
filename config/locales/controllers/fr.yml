@@ -7,7 +7,7 @@ fr:
   ctrl_object_updated: "%{typeobj} '%{ident}' modifié avec succès"
   ctrl_object_not_saved: "%{typeobj} '%{ident}' non sauvegardé"
   ctrl_object_not_found: "%{typeobj} '%{ident}' non trouvé"
-  ctrl_object_not_updated: "%{typeobj} '%{ident}' non modifié"
+  ctrl_object_not_updated: "%{typeobj} '%{ident}' non modifié: %{error}"
   ctrl_object_deleted: "%{typeobj} '%{ident}' supprimé avec succès"
   ctrl_object_not_deleted: "%{typeobj} '%{ident}' ne peut être supprimé"
   ctrl_object_promoted: "%{typeobj} '%{ident}' promu de %{current_rank} à %{new_rank}, valideurs=%{validersMail}"
@@ -44,9 +44,9 @@ fr:
   ctrl_init_done: Initialisation effectuée
   count_objects: " : %{number_begin}-%{number_end} / %{total}"
   ctrl_show_no_relation: "%{child_plmtype}(s) à copier mais il n'existe pas de relation entre '%{father_plmtype}' et '%{child_plmtype}'"
-  legend_type_values: Valeurs spécifiques au type
+  legend_type_values: "Valeurs spécifiques au type '%{type}'"
   # access
-  ctrl_object_no_controlers: Controleurs non trouvés 
+  ctrl_object_no_controlers: Controleurs non trouvés
   ctrl_actions_by_roles: Actions par rôle
   # application
   login_login: "Veuillez vous identifier pour accéder à cette fonctionnalité."

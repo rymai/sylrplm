@@ -1,134 +1,64 @@
-<h1><%= t("document_show") %></h1>
-<%= render(:partial => "shared/menu_show", :locals=>{:object => @document, :fonct=>"show"}) %>
+<h1><%= t(:document_show) %></h1>
 <% fonct="show" %>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @document, :fonct=>fonct}) %>
 <% form_for(@document, :html => { :id => h_form_html_id(@document, fonct) }) do |f| %>
 <%= f.error_messages %>
 <p>
-	<b><%= t("label_ident") %></b>
+	<b><%= t(:label_ident) %></b>
 	<%= h @document.ident %>
 </p>
 <p>
-	<b><%= t("label_typesobject") %></b>
+	<b><%= t(:label_typesobject) %></b>
 	<% if(@document.typesobject != nil) %>
 	<%= h @document.typesobject.name_translate %>
 	<% end %>
 </p>
 <p>
-	<b><%= t("label_revision") %></b>
+	<b><%= t(:label_revision) %></b>
 	<%= h @document.revision %>
 </p>
 <p>
-	<b><%= t("label_designation") %></b>
+	<b><%= t(:label_designation) %></b>
 	<%= h @document.designation %>
 </p>
 <p>
-	<b><%= t("label_description") %></b>
+	<b><%= t(:label_description) %></b>
 	<%= h @document.description %>
 </p>
 <p>
-	<b><%= t("label_statusobject") %></b>
+	<b><%= t(:label_statusobject) %></b>
 	<% if(@document.statusobject != nil) %>
 	<%= h @document.statusobject.name_translate %>
 	<% end %>
 </p>
 <p>
-	<b><%= t("label_next_status") %></b>
+	<b><%= t(:label_next_status) %></b>
 	<% unless @document.next_status.nil?  %>
 	<%= h @document.next_status.name_translate %>
 	<% end %>
 </p>
 <p>
-	<b><%= t("label_responsible") %></b>
+	<b><%= t(:label_responsible) %></b>
 	<%= h @document.owner.login %>
 </p>
 <p>
-	<b><%= t("label_date") %></b>
+	<b><%= t(:label_date) %></b>
 	<%= l @document.date %>
 </p>
 <p>
-	<b><%= t("label_domain") %></b>
+	<b><%= t(:label_domain) %></b>
 	<%= h @document.domain %>
 </p>
 <%= h_type_values(@document, fonct) %>
+<% end %> <!-- form -->
 
-<%end %>
-<% files = @document.get_datafiles%>
-<% if files[:total]>0%> <h1><%= t("datafiles_list") %></h1>
-<%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files, :document=>@document, :part=>nil, :project=>nil, :customer=>nil }) %>
-<% end %> <!-- pas de fichier sous un repertoire -->
-<% unless @document.frozen? || @document.directory? %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("add_datafile"), :action => :new_datafile, :id => @document.id %> </td>
-	</tr>
-</table>
-<% end %>
-
-<% render(:partial => "shared/show_objects_in_relations", :locals=> {:object => @document,  :fonct => fonct}) %>
-
+<!-- workitems associated to the document -->
 <%= render(:partial => "shared/object_workitems", :object => @document)  %>
-<% unless @document.directory? %> <!-- pas de fichier sous un repertoire -->
-<h1><%= t("document_check") %></h1>
-<table class='menu_bas'>
-	<% if @document.frozen? %>
-	<tr>
-		<td> <%= t("freeze") %></td>
-	</tr>
-	<% else %>
-	<% unless @document.checked? %>
-	<% form_for(@document, :url => {:id => @document.id, :action => :check_out }, :method => :get) do |f| %>
-	<tr>
-		<td> <%= f.submit t("button_check_out") %></td>
-		<td> <%= label_tag t("label_out_reason") %></td>
-		<td> <%= text_field_tag "check[out_reason]" %></td>
-	</tr>
-	<%end %>
-	<% else %> <!-- info sur reservation -->
-	<tr>
-		<td> <%= t("is_check_out") %></td>
-		<td> <%= t("label_out_reason") %></td>
-		<td> <%= text_field_tag "checkout[out_reason]" , @document.get_check_out.out_reason.force_encoding('utf-8') , :readonly=>:true %> </td>
-		<td> <%= t("label_out_user") %></td>
-		<td> <%= text_field_tag "checkout[out_user]" , @document.get_check_out.out_user, :readonly=>:true %> </td>
-	</tr>
-	<!-- liberation par celui qui a reserve seulement -->
-	<% if @document.can_be_check_in?(current_user) %>
-	<% form_for(@document, :url => {:id => @document.id, :action => :check_in }, :method => :get) do |f| %>
-	<tr>
-		<td> <%= f.submit t("button_check_in") %></td>
-		<td> <%= label_tag t("label_in_reason") %></td>
-		<td> <%= text_field_tag "check[in_reason]" %></td>
-	</tr>
-	<% end %>
-	<% form_for(@document, :url => {:id => @document.id, :action => :check_free }, :method => :get) do |f| %>
-	<tr>
-		<td> <%= f.submit t("button_check_free") %></td>
-		<td> <%= label_tag t("label_in_reason") %></td>
-		<td> <%= text_field_tag "check[in_reason]" %></td>
-	</tr>
-	<% end %>
-	<%end %>
-	<%end %>
-	<% end %>
-</table>
-<% end %>
 
-<% unless @favori.get('document').count==0 %> <h1></h1>
-<table class='menu_bas'>
-	<tr>
-		<% form_for(@document, :url => {:id => @document.id, :action => :add_docs }) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @document.relations(:document), :id, :ident)) %></td>
-		<td><%= submit_tag t("paste_documents") %></td>
-		<% end %>
-	</tr>
-	</td>
-</table>
-<%end%>
-<% unless @document.relations(:forum).count==0 %>
-<tr>
-	<% form_for(@document, :url => {:id => @document.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @document.relations(:forum), :id, :ident)) %></td>
-	<td><%= submit_tag t("add_forum") %></td>
-	<% end %>
-</tr>
-<% end %>
-<h1></h1>
+<%= render(:partial => "documents/check_document", :locals => {:document => @document})  %>
+
+<%= render(:partial => "shared/show_datafiles",
+:locals=> {:plm_object => @document,  :fonct => fonct, :document=>@document, :part=>nil, :project=>nil, :customer=>nil}) %>
+
+<%= render(:partial => "shared/objects_to_add", :object =>@document) %>
 

@@ -24,7 +24,7 @@
 	</tr>
 	<% @typesobjects[:recordset].each do |typesobject| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td> <%= h typesobject.forobject_translate %> </td>
+		<td> <%= h typesobject.forobject_translate %>(<%=typesobject.forobject%>) </td>
 		<td> <%= h_explorer typesobject, :name %> </td>
 		<td> <%= h_explorer typesobject, :name_translate %> </td>
 		<td> <%= h typesobject.description %> </td>

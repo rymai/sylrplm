@@ -1,31 +1,23 @@
-<fieldset>
-	<legend>
-		<%= t(:legend_part) %>
-	</legend>
-	<%= f.label t(:label_ident) %>
-	<%= f.text_field :ident %>
-	<br/>
-	<%= f.label t(:label_type) %>
-	<%= f.collection_select(:typesobject_id, @types, :id, :name) %>
-	<br/>
-	<%= f.label t(:label_revision) %>
-	<%= text_field_tag :revision, @part.revision, :disabled => true %>
-	<%= f.hidden_field :revision, :value => @part.revision %>
-	<br/>
-	<%= f.label t(:label_designation) %>
-	<%= f.text_field :designation %>
-	<br/>
-	<%= f.label t(:label_description) %>
-	<%= f.text_area :description , :rows => 10 %>
-	<br/>
-	<%= f.label t(:label_responsible) %>
-	<%= select_in_list(:part, :owner, @part.owner.login, :users) %>
-	<br/>
-	<%= f.label t(:label_date) %>
-	<%= f.date_select :date %>
-	<br/>
-	<%= h_input_domain(f) %>
-</fieldset>
+<h1><%= t(:legend_part) %></h1>
+<%= h_edit_type_object(f, object, @types) %>
+<%= f.label t(:label_ident) %>
+<%= f.text_field :ident %>
+<br/>
+<%= f.label t(:label_revision) %>
+<%= text_field_tag :revision, @part.revision, :disabled => true %>
+<%= f.hidden_field :revision, :value => @part.revision %>
+<br/>
+<%= f.label t(:label_designation) %>
+<%= f.text_field :designation %>
+<br/>
+<%= f.label t(:label_description) %>
+<%= f.text_area :description , :rows => 10 %>
+<br/>
+<%= f.label t(:label_responsible) %>
+<%= select_in_list(:part, :owner, @part.owner.login, :users) %>
+<br/>
+<%= f.label t(:label_date) %>
+<%= f.date_select :date %>
+<br/>
+<%= h_input_domain(f) %>
 <%= h_type_values(@part, fonct) %>
-<br />
-

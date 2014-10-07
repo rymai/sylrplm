@@ -4,7 +4,7 @@ class VolumesController < ApplicationController
 	# GET /volumes
 	# GET /volumes.xml
 	def index
-		@volumes = Volume.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@volumes = Volume.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @volumes }
@@ -55,7 +55,7 @@ class VolumesController < ApplicationController
 		@volume = Volume.new(params[:volume])
 		#puts "volumes_controller.create:errors="+@volume.errors.count.to_s+":"+@volume.errors.inspect
 		respond_to do |format|
-			if params[:fonct] == "new_dup"
+			if params[:fonct][:current] == "new_dup"
 				object_orig=Volume.find(params[:object_orig_id])
 			st = @volume.create_duplicate(object_orig)
 			else

@@ -114,5 +114,25 @@ class Controller
 			end
 		end
 	end
+
+	def self.get_types_by_features
+		# TODO temporary
+		features = [:document, :part, :project, :customer]
+		features_types = {}
+		features.each do |feature|
+			# TODO temporary
+			plmtype = feature
+			# types, including the generic one
+			types = ::Typesobject.get_types(plmtype, true)
+			features_types[feature]=[]
+			types.each do |type|
+				if type.domain==::SYLRPLM::DOMAIN_ADMIN
+					features_types[feature] << type
+				end
+			end
+		end
+		#puts "Controller.get_types_by_features=#{features_types}"
+		features_types
+	end
 end
 

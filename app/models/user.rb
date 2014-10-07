@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
 	has_and_belongs_to_many :projects
 	##TODO has_many :subscriptions, :foreign_key => :owner_id, :dependent => :delete_all
 
-	validates_presence_of     :login, :typesobject
+	validates_presence_of     :login, :first_name, :last_name , :typesobject
 	#validates :email, :presence => true, :format => {:with => /^[^@\s]+)@((?:[-a-z0-9A-Z]+\.[a-zA-Z]{2,})$/}
 
 	validates_uniqueness_of   :login
@@ -28,15 +28,16 @@ class User < ActiveRecord::Base
 	validates_confirmation_of :password
 
 	before_save :validity
-	
+
 	def validity
 		fname = "#{self.class.name}.#{__method__}:"
+		#LOG.info(fname) {"user=#{self}"}
 		valid = false
 		begin
-			#LOG.info(fname) {"email=#{self.email} : #{PlmServices.isEmail(self.email)}"}
+		#LOG.info(fname) {"email=#{self.email} : #{PlmServices.isEmail(self.email)}"}
 			unless self.email.blank?
 				if PlmServices.isEmail(self.email)
-					valid=true
+				valid=true
 				else
 					self.errors.add("User mail is not valid, example: me.name@free.fr")
 				end
@@ -45,8 +46,9 @@ class User < ActiveRecord::Base
 			end
 		rescue Exception => e
 			msg="Exception during user validity test:<br/>Exception=#{e}"
-			self.errors.add(msg)
+		self.errors.add(msg)
 		end
+		#LOG.info(fname) {"errors=#{errors.inspect}"}
 		valid
 	end
 
@@ -68,7 +70,7 @@ class User < ActiveRecord::Base
 	def initialize(*args)
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.info (fname) {"args=#{args.length}:#{args.inspect}"}
-		#LOG.info (fname) {"errors on user begin=#{self.errors.count}"}
+		#LOG.info (fname) {"errors? on user begin=#{self.errors.count}"}
 		super
 		self.language    = PlmServices.get_property(:LOCAL_DEFAULT)
 		self.volume      = Volume.find_by_name(PlmServices.get_property(:VOLUME_NAME_DEFAULT))
@@ -78,7 +80,7 @@ class User < ActiveRecord::Base
 		if args.size>0
 			unless args[0][:user].nil?
 				validate_user
-				self.set_default_values_with_next_seq
+			self.set_default_values_with_next_seq
 			end
 		end
 		#LOG.info (fname) {"errors on user end=#{self.errors.count}"}
@@ -87,7 +89,7 @@ class User < ActiveRecord::Base
 
 	def user=(auser)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.info (fname) {"auser=#{auser}"}
+	#LOG.info (fname) {"auser=#{auser}"}
 	end
 
 	def self.create_new(params=nil)
@@ -138,13 +140,15 @@ class User < ActiveRecord::Base
 		params["login"]    = aparams["login"]
 		params["password"] = aparams["password"]
 		params["email"]    = aparams["email"]
+		params["first_name"]    = aparams["first_name"]
+		params["last_name"]    = aparams["last_name"]
+		params["password_confirmation"]    = aparams["password_confirmation"]
 		new_user = User.new(params)
 		if new_user.errors.nil? || new_user.errors.count==0
 			if new_user.save
 				#
 				#puts fname+" new_user="+new_user.inspect
 				#puts fname+"urlbase="+urlbase
-
 				if email = PlmMailer.create_new_login(new_user, admin, new_user, urlbase)
 					email.set_content_type("text/html")
 					PlmMailer.deliver(email)
@@ -153,13 +157,13 @@ class User < ActiveRecord::Base
 				else
 					puts fname+" message non cree pour #{new_user.login}"
 					msg = :ctrl_mail_not_created
-					#new_user.destroy
-					#new_user=nil
+				#new_user.destroy
+				#new_user=nil
 				end
 
 			else
 				LOG.error (fname) {" user non sauve: errors= #{new_user.errors.inspect}"}
-				#new_user=nil
+			#new_user=nil
 			end
 		else
 			LOG.error (fname) {" user non cree: errors= #{new_user.errors.inspect}"}
@@ -185,19 +189,19 @@ new_user=nil
 
 	def validate_user
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname) {"attribute roles, groups and project to the user #{login}"}
+		#LOG.info (fname) {"attribute roles, groups and project to the user #{login}"}
 		PlmServices.get_property(:ROLES_USER_DEFAULT).split(",").each do |elname|
-			#LOG.info (fname) {"attribute role #{elname}"}
+		#LOG.info (fname) {"attribute role #{elname}"}
 			el=::Role.find_by_title(elname)
 			self.roles << el unless self.roles.include? el
 		end
 		PlmServices.get_property(:GROUPS_USER_DEFAULT).split(",").each do |elname|
-			#LOG.info (fname) {"attribute group #{elname}"}
+		#LOG.info (fname) {"attribute group #{elname}"}
 			el = ::Group.find_by_name(elname)
 			self.groups << el unless self.groups.include? el
 		end
 		PlmServices.get_property(:PROJECTS_USER_DEFAULT).split(",").each do |elname|
-			#LOG.info (fname) {"attribute project #{elname}"}
+		#LOG.info (fname) {"attribute project #{elname}"}
 			el = ::Project.find_by_ident(elname)
 			self.projects << el unless self.projects.include? el
 		end
@@ -419,7 +423,9 @@ new_user=nil
 		find(:all, :order => "login ASC", :conditions => 'email IS NOT NULL')
 	end
 
-	#user is it a valider ?
+	#
+	# user is it a valider ?
+	#
 	def is_valider
 		ret=false
 		self.roles.each do  |role|
@@ -434,98 +440,53 @@ new_user=nil
 	#          :joins => "inner join roles on users.role_id = roles.id")
 	end
 
-	# recherche du theme
-	def self.find_theme(session)
-		ret = PlmServices.get_property(:THEME_DEFAULT)
-		if session[:user_id]
-			if user = User.find(session[:user_id])
-				if(user.theme!=nil)
-				ret=user.theme
+	#
+	# return all recent links stored for this user
+	#
+	def get_recent_links
+		cond = "links.father_plmtype ='user' and links.father_id = #{self.id} and relations.name = '#{::SYLRPLM::RELATION_RECENT_ACTION}'"
+		::Link.find(:all,
+		:conditions => cond,
+		:joins => "inner join relations on links.relation_id = relations.id",
+		:order => :updated_at)
+	end
+
+	#
+	# store a recent link
+	# destroy old recent link(s) to limit the number
+	#
+	def manage_recents(object_plm, params)
+		fname = "#{self.class.name}.#{__method__}:"
+		max_recents = get_type_value("max_recents")
+		max_recents = (max_recents.nil? ? ::SYLRPLM::MAX_RECENT_ACTION : max_recents.to_i)
+		max_recents = ::SYLRPLM::MAX_RECENT_ACTION  if max_recents > ::SYLRPLM::MAX_RECENT_ACTION
+		#LOG.info(fname) {"user=#{self} object_plm=#{object_plm} max_recents=#{max_recents}"}
+		unless object_plm.nil?
+			if relation_recent = Relation.find_by_name(::SYLRPLM::RELATION_RECENT_ACTION)
+				link_recent = Link.new(father: self, child: object_plm, relation: relation_recent, user: self)
+				link_recent.set_type_value("action", params[:action])
+				recents = self.get_recent_links
+				#LOG.debug(fname) {"recents=#{recents.count}"}
+				if recents.count >= max_recents
+					for i in 0..(recents.count - max_recents)
+						recents[i].destroy
+					end
 				end
-			end
-		else
-			if session[:theme]
-				ret=session[:theme]
-			end
-		end
-		ret
-	end
-
-	# recherche du user connecte
-	def self.find_user(session)
-		if session[:user_id]
-			if  user = User.find(session[:user_id])
-			user
-			else
-				nil
-			end
-		else
-			nil
-		end
-	end
-
-	def self.connected(session)
-		!User.find_userid(session).nil?
-	end
-
-	# recherche de l'id du user connecte
-	def self.find_userid(session)
-		if session[:user_id]
-			if  user = User.find(session[:user_id])
-			user.id
-			else
-				nil
-			end
-		else
-			nil
-		end
-	end
-
-	# recherche du nom du user connecte
-	def self.find_username(session)
-		if session[:user_id]
-			if user = User.find(session[:user_id])
-			user.login
-			else
-				nil
-			end
-		else
-			nil
-		end
-	end
-
-	# recherche du role du user connecte
-	def self.find_userrole(session)
-		if session[:user_id]
-			if  user = User.find(session[:user_id])
-				if(user.role != nil)
-				user.role.title
+				if link_recent.save
+					#LOG.info(fname) {"link saved=#{link_recent},relation=#{relation_recent}" }
 				else
-					nil
+					LOG.warn(fname) {"link not saved=#{link_recent},relation=#{relation_recent}" }
 				end
-			else
-				nil
-			end
-		else
-			nil
-		end
-	end
-
-	# recherche du mail du user connecte
-	def self.find_usermail(session)
-		if session[:user_id]
-			if  user = User.find(session[:user_id])
-				if(user.email != nil)
-				user.email
-				else
-					nil
+				recents = self.get_recent_links
+				if(1==0)
+					LOG.debug(fname) {"recents=#{recents.count}"}
+					recents.each do |recent|
+						LOG.debug(fname) {"recent:#{recent} #{recent.updated_at}"}
+					end
 				end
-			else
-				nil
 			end
-		else
-			nil
 		end
+		true
 	end
 
 	def self.get_conditions(filter)
@@ -542,6 +503,70 @@ new_user=nil
 
 	def create_new_salt
 		self.salt = self.object_id.to_s + rand.to_s
+	end
+
+	def self.connected_obsolete(session)
+		!User.find_userid(session).nil?
+	end
+
+	# recherche de l'id du user connecte
+	def self.find_userid_obsolete(session)
+		if session[:user_id]
+			if  user = User.find(session[:user_id])
+			user.id
+			else
+				nil
+			end
+		else
+			nil
+		end
+	end
+
+	# recherche du nom du user connecte
+	def self.find_username_obsolete(session)
+		if session[:user_id]
+			if user = User.find(session[:user_id])
+			user.login
+			else
+				nil
+			end
+		else
+			nil
+		end
+	end
+
+	# recherche du role du user connecte
+	def self.find_userrole_obsolete(session)
+		if session[:user_id]
+			if  user = User.find(session[:user_id])
+				if(user.role != nil)
+				user.role.title
+				else
+					nil
+				end
+			else
+				nil
+			end
+		else
+			nil
+		end
+	end
+
+	# recherche du mail du user connecte
+	def self.find_usermail_obsolete(session)
+		if session[:user_id]
+			if  user = User.find(session[:user_id])
+				if(user.email != nil)
+				user.email
+				else
+					nil
+				end
+			else
+				nil
+			end
+		else
+			nil
+		end
 	end
 
 end

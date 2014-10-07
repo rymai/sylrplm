@@ -5,4 +5,5 @@
 <%= hidden_field_tag "project_id", @project.id.to_s %>
 <%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f , :fonct=>fonct, :document=>@project}) %>
 <%= render(:partial => "shared/menu_new", :locals => {:object => @datafile, :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "shared/submit_new", :locals => {:object => @project, :f => f, :fonct=>fonct}) %>
 <% end %>

@@ -1,7 +1,5 @@
-	
-
-	class AccessesController < ApplicationController
-		include Controllers::PlmObjectControllerModule
+class AccessesController < ApplicationController
+	include Controllers::PlmObjectControllerModule
 	#
 	access_control(Access.find_for_controller(controller_class_name))
 	before_filter :find_by_id, :only => [:show, :edit, :update, :destroy]
@@ -9,7 +7,7 @@
 	# GET /accesses
 	# GET /accesses.xml
 	def index
-		@accesses = Access.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort] || 'controller, action', :nb_items => get_nb_items(params[:nb_items]) })
+		@accesses = Access.find_paginate({:user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort] || 'controller, action', :nb_items => get_nb_items(params[:nb_items]) })
 		actions_by_roles=Access.get_actions_by_roles
 		@accesses[:actions_by_roles]=actions_by_roles
 		@tree = build_tree_actions_by_roles(actions_by_roles)
@@ -61,11 +59,11 @@
 	def create
 		respond_to do |format|
 			@access = Access.new(params[:access])
-			if params[:fonct] == "new_dup"
+			if params[:fonct][:current] == "new_dup"
 				object_orig=Access.find(params[:object_orig_id])
-				st = @access.create_duplicate(object_orig)
+			st = @access.create_duplicate(object_orig)
 			else
-				st = @access.save
+			st = @access.save
 			end
 			if st
 				flash[:notice] =  t(:ctrl_object_created, :typeobj => 'Access', :ident => @access.controller, :msg => nil)
@@ -115,7 +113,7 @@
 		# - apres l'ajout d'un controller (rare et manuel)
 		# - apres ajout/suppression de role (peut etre automatise)
 		Access.reset
-		@accesses = Access.find_paginate({ :page => params[:page], :query => params[:query], :sort => params[:sort] || 'controller, action', :nb_items => get_nb_items(params[:nb_items]) })
+		@accesses = Access.find_paginate({ :page => params[:page], :filter_types => params[:filter_types], :query => params[:query], :sort => params[:sort] || 'controller, action', :nb_items => get_nb_items(params[:nb_items]) })
 		respond_to do |format|
 			format.html { redirect_to(accesses_path)  }
 			format.xml  { render :xml => @accesses[:recordset] }

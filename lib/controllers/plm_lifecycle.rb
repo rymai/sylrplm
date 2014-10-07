@@ -54,6 +54,14 @@ def ctrl_promote(a_object, withMail=true)
 					st_next = a_object.next_status.name
 					end
 					ctrl_create_process(format, "promotion", a_object, st_from, st_next)
+					if flash[:error].blank?
+						format.html { redirect_to(a_object) }
+						format.xml  { head :ok }
+					else
+						format.html { redirect_to(a_object) }
+						format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
+					end
+
 				else
 					current_rank = a_object.statusobject.name
 					a_object.next_status_id = params[a_object.model_name][:next_status_id]

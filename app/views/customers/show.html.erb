@@ -31,45 +31,14 @@
 	<b><%= t("label_date") %></b>
 	<%= l @customer.date %>
 </p>
-<%= h_type_values(@customer, fonct) %>
 <p>
 	<b><%= t("label_domain") %></b>
 	<%= h @customer.domain %>
 </p>
+<%= h_type_values(@customer, fonct) %>
 <% end %>
-<h1></h1>
-<% files = @customer.get_datafiles%>
-<% if files[:total]>0%> <h1><%= t("datafiles_list") %></h1>
-<%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files,:document=>nil, :part=>nil, :project=>nil, :customer=>@customer }) %>
-<% end %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("add_datafile"), :action => :new_datafile, :id => @customer.id %> </td>
-	</tr>
-</table>
-<h1></h1>
+<%= render(:partial => "shared/show_datafiles", 
+	:locals=> {:plm_object => @customer,  :fonct => fonct, :document=>nil, :part=>nil, :project=>nil, :customer=>@customer}) %>
 <%= render(:partial => "shared/object_workitems", :object =>@customer) %>
-<table class='menu_bas'>
-	<tr>
-		<% unless @favori.get("document").count==0 %>
-		<% form_for(@customer, :url => {:id => @customer.id, :action => "add_docs" }) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @customer.relations(:document), :id, :ident)) %> </td>
-		<td> <%= submit_tag t("paste_documents") %> <td> <% end %>
-	</tr>
-	<tr>
-		<% end %>
-		<% unless @favori.get("project").count==0 %>
-		<% form_for(@customer, :url => {:id => @customer.id, :action => "add_projects" }) do |f| %> <td> <%= select("relation","project", options_from_collection_for_select( @customer.relations(:project), :id, :ident)) %> </td>
-		<td> <%= submit_tag t("paste_projects") %> </td>
-		<% end %>
-		<% end %>
-	</tr>
-</table>
+<%= render(:partial => "shared/objects_to_add", :object =>@customer) %>
 <h1></h1>
-<table class='menu_bas'>
-	<tr>
-		<% unless @customer.relations(:forum).count==0 %>
-		<% form_for(@customer, :url => {:id => @customer.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @customer.relations(:forum), :id, :name)) %></td>
-		<td><%= submit_tag t("add_forum") %></td>
-		<% end %><% end %>
-	</tr>
-</table>

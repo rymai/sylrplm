@@ -4,7 +4,7 @@ class ChecksController < ApplicationController
   # GET /checks
   # GET /checks.xml
   def index
-    @checks = Check.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items])})
+    @checks = Check.find_paginate({:user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items])})
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @checks[:recordset] }

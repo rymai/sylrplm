@@ -1,11 +1,8 @@
 <h1><%= t(:part_show) %></h1>
 <% fonct="show"%>
-<% form_for(@part, :html => { :id => h_form_html_id(@part, fonct) }) do |f| %>
-<%= f.error_messages %><%= render(:partial => "shared/menu_show", :locals=>{:object => @part, :fonct=>"show"}) %>
-<% fonct="show" %>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @part, :fonct=>fonct}) %>
 <% form_for(@part, :html => { :id => h_form_html_id(@part, fonct) }) do |f| %>
 <%= f.error_messages %>
-<% end %>
 <p>
 	<b><%= t(:label_ident) %></b>
 	<%= h @part.ident %>
@@ -42,45 +39,13 @@
 	<b><%= t(:label_date) %></b>
 	<%= l @part.date %>
 </p>
-<%= h_type_values(@part, fonct) %>
 <p>
 	<b><%= t("label_domain") %></b>
 	<%= h @part.domain %>
 </p>
-<% files = @part.get_datafiles%>
-<% if files[:total]>0 %> <h1><%= t("datafiles_list") %></h1>
-<%= render(:partial => "datafiles/index_datafiles", :locals=>{:datafiles=>files, :document=>nil, :part=>@part, :project=>nil, :customer=>nil}) %>
-<% end %>
-<h1></h1>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("add_datafile"), :action => :new_datafile, :id => @part.id %> </td>
-	</tr>
-</table>
-<h1></h1>
-<%= render(:partial => "shared/object_workitems", :object =>@part) %>
 <%= h_type_values(@part, fonct) %>
-<table class='menu_bas'>
-	<% unless @favori.get('document').count==0 || @part.relations(:document).count==0 %>
-	<tr>
-		<% form_for(@part, :url => {:id => @part.id, :action => "add_docs" }, :method => :get) do |f| %> <td> <%= select("relation","document", options_from_collection_for_select( @part.relations(:document), :id, :ident)) %></td>
-		<td><%= submit_tag t("paste_documents") %></td>
-		<% end %>
-	</tr>
-	<%end%>
-	<% unless @favori.get('part').count==0 || @part.relations(:part).count==0 %>
-	<tr>
-		<% form_for(@part, :url => {:id => @part.id, :action => "add_parts" }, :method => :get) do |f| %> <td> <%= select("relation","part", options_from_collection_for_select( @part.relations(:part), :id, :ident)) %></td>
-		<td> <%= submit_tag t("paste_parts") %></td>
-		<% end %>
-	</tr>
-	<% end %>
-	<% unless @part.relations(:forum).count==0 %>
-	<tr>
-		<% form_for(@part, :url => {:id => @part.id, :action => :new_forum }) do |f| %> <td> <%= select("relation","forum", options_from_collection_for_select( @part.relations(:forum), :id, :ident)) %></td>
-		<td><%= submit_tag t("add_forum") %></td>
-		<% end %>
-	</tr>
-	<% end %>
-</table>
 <% end %>
+<%= render(:partial => "shared/show_datafiles",
+	:locals=> {:plm_object => @part,  :fonct => fonct, :document=>nil, :part=>@part, :project=>nil, :customer=>nil}) %>
+<%= render(:partial => "shared/object_workitems", :object =>@part) %>
+<%= render(:partial => "shared/objects_to_add", :object =>@part) %>

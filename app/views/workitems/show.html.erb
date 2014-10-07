@@ -1,22 +1,30 @@
+<% fonct="show" %>
 <h1><%= t("workitems_show") %><%= workitem_path(@workitem) unless @workitem.nil? %></h1>
+<% form_tag("/workitems",{ :id => h_form_html_id(@workitem, fonct) }) do |f| %>
 
 <table>
 	<tr>
-		<td> <%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem, :fonct=>"show"  } %> </td>
+		<td> <%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem, :fonct=>fonct } %> </td>
 	</tr>
 	<tr>
 		<td> <%= t(:label_fields)%> </td>
 		<td>		<pre><%= h @workitem.field_hash.to_json.gsub(/,/, ",\n") unless @workitem.nil? %></pre></td>
 	</tr>
 	<tr>
-		<td> <%= render(:partial => "workitems/wi_links", :locals => { :fonct=>"show" }) %> </td>
+		<td> <%= render(:partial => "workitems/wi_links", :locals => { :fonct=>fonct }) %> </td>
 	</tr>
 </table>
 <br/>
+<%= h_workitem_fields(@workitem, fonct) %>
+<% end %>
 <table class='menu_bas'>
 	<tr >
 		<td colspan='2'> <%= link_to t('edit_task'), edit_workitem_path(@workitem) unless @workitem.nil? %>|<%= link_to t('list'), workitems_path %> </td>
 	</tr>
 </table>
 <br/>
-<%= render_fluo :wfid => @workitem.wfid, :workitems => [ @workitem.expid ] unless @workitem.nil? %>
+
+
+<!--
+	<%= render_fluo :wfid => @workitem.wfid, :workitems => [ @workitem.expid ] unless @workitem.nil? %>
+-->

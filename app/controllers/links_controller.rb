@@ -5,7 +5,7 @@ class LinksController < ApplicationController
 	# GET /links
 	# GET /links.xml
 	def index
-		@links = Link.find_paginate({ :user => current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@links = Link.find_paginate({ :user => current_user, :filter_types => params[:filter_types],:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @links }
@@ -66,7 +66,7 @@ class LinksController < ApplicationController
 	def create
 		@link = Link.new(params[:link])
 		respond_to do |format|
-		#@link.values=params[:link][:values].to_json unless params[:link][:values].nil?
+		#@link.type_values=params[:link][:values].to_json unless params[:link][:values].nil?
 			if @link.save
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_link), :ident => @link.ident)
 				format.html { redirect_to(@link) }
@@ -93,7 +93,7 @@ class LinksController < ApplicationController
 			#values = OpenWFE::Json::from_json(params[:link][:values])
 			#LOG.info(fname) { "values: #{values}" }
 			#########update_att=@link.update_attributes(params[:link])
-			update_att = @link.update(current_user,params[:link])
+			update_att = @link.update_link(current_user,params[:link])
 			#LOG.info(fname) { "update_att: #{update_att} @link.errors=#{@link.errors.inspect}" }
 			@link.errors.clear if update_att
 			update_eff = update_effectivities(@link, params[:effectivities])

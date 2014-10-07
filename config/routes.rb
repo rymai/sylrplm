@@ -20,22 +20,14 @@ ActionController::Routing::Routes.draw do |map|
 	:action => 'add_favori',
 	:conditions => { :method => :get })
 	map.connect(
-	'customers/:id/add_docs',
+	'customers/:id/add_objects',
 	:controller => 'customers',
-	:action => 'add_docs')
+	:action => 'add_objects')
 	map.connect(
 	'customers/:id/remove_link',
 	:controller => 'customers',
 	:action => 'remove_link',
 	:conditions => { :method => :get })
-	map.connect(
-	'customers/:id/add_parts',
-	:controller => 'customers',
-	:action => 'add_parts')
-	map.connect(
-	'customers/:id/add_projects',
-	:controller => 'customers',
-	:action => 'add_projects')
 	map.connect(
 	'customers/:id/new_forum',
 	:controller => 'customers',
@@ -64,7 +56,11 @@ ActionController::Routing::Routes.draw do |map|
 	'customers/:id/show_design',
 	:controller => 'customers',
 	:action => 'show_design')
-	
+	map.connect(
+	'customers/:id/update_type',
+	:controller => 'customers',
+	:action => 'update_type')
+
 	map.resources :datafiles
 	map.connect(
 	'datafiles/:id/show_file',
@@ -78,13 +74,17 @@ ActionController::Routing::Routes.draw do |map|
 	'datafiles/:file_id/del_sylrplm_file',
 	:controller => 'datafiles',
 	:action => 'del_sylrplm_file')
-	
+	map.connect(
+	'datafiles/:id/update_type',
+	:controller => 'datafiles',
+	:action => 'update_type')
+
 	map.resources :definitions, :collection => { :new_process => :get}, :member=> {:new_dup => :get}
 	map.connect(
 	'definitions/:id/tree.js',
 	:controller => 'definitions',
 	:action => 'tree')
-	
+
 	map.resources :documents, :has_many => :documents, :collection => { :empty_favori => :get }, :member=> {:edit_lifecycle => :get, :new_dup => :get}
 	map.connect(
 	'documents/:id/add_favori',
@@ -92,9 +92,9 @@ ActionController::Routing::Routes.draw do |map|
 	:action => 'add_favori',
 	:conditions => { :method => :get })
 	map.connect(
-	'documents/:id/add_docs',
+	'documents/:id/add_objects',
 	:controller => 'documents',
-	:action => 'add_docs')
+	:action => 'add_objects')
 	map.connect(
 	'documents/:id/new_datafile',
 	:controller => 'documents',
@@ -150,7 +150,11 @@ ActionController::Routing::Routes.draw do |map|
 	'documents/:id/show_design',
 	:controller => 'documents',
 	:action => 'show_design')
-	
+	map.connect(
+	'documents/:id/update_type',
+	:controller => 'documents',
+	:action => 'update_type')
+
 	map.connect(
 	'expressions/:wfid/:expid/tree',
 	:controller => 'expressions',
@@ -161,12 +165,16 @@ ActionController::Routing::Routes.draw do |map|
 	:controller => 'expressions',
 	:action => 'update_tree',
 	:conditions => { :method => :put })
-	
+
 	map.resources :forums, :member=> {:edit_lifecycle => :get}
 	map.connect(
 	'forums/:id/update_lifecycle',
 	:controller => 'forums',
 	:action => 'update_lifecycle')
+	map.connect(
+	'forums/:id/update_type',
+	:controller => 'forums',
+	:action => 'update_type')
 	map.resources :forum_items
 
 	map.resources :groups, :member=> {:new_dup => :get}
@@ -174,11 +182,11 @@ ActionController::Routing::Routes.draw do |map|
 	'groups/:id/select_view',
 	:controller => 'groups',
 	:action => 'select_view')
-	
+
 	map.resources :group_definitions
-		
+
 	map.resources :help, :only => [:index]
-	
+
 	map.resources :history
 
 	map.resources :links, :collection => { :reset => :get, :empty_favori => :get}
@@ -200,7 +208,7 @@ ActionController::Routing::Routes.draw do |map|
 	:controller => 'links',
 	:action => 'add_favori',
 	:conditions => { :method => :get })
-	
+
 	map.resources :notifications, :member => { :notify => :get }
 
 	map.resources :parts, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
@@ -225,13 +233,9 @@ ActionController::Routing::Routes.draw do |map|
 	:action => 'revise',
 	:conditions => { :method => :get })
 	map.connect(
-	'parts/:id/add_parts',
+	'parts/:id/add_objects',
 	:controller => 'parts',
-	:action => 'add_parts')
-	map.connect(
-	'parts/:id/add_docs',
-	:controller => 'parts',
-	:action => 'add_docs')
+	:action => 'add_objects')
 	map.connect(
 	'parts/:id/remove_link',
 	:controller => 'parts',
@@ -275,13 +279,17 @@ ActionController::Routing::Routes.draw do |map|
 	'parts/:id/show_design',
 	:controller => 'parts',
 	:action => 'show_design')
-	
+	map.connect(
+	'parts/:id/update_type',
+	:controller => 'parts',
+	:action => 'update_type')
+
 	map.resources :processes
 	map.connect(
 	'processes/:id/tree.js',
 	:controller => 'processes',
 	:action => 'tree')
-	
+
 	map.resources :projects, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	map.connect(
 	'projects/:id/add_favori',
@@ -289,18 +297,14 @@ ActionController::Routing::Routes.draw do |map|
 	:action => 'add_favori',
 	:conditions => { :method => :get })
 	map.connect(
-	'projects/:id/add_docs',
+	'projects/:id/add_objects',
 	:controller => 'projects',
-	:action => 'add_docs')
+	:action => 'add_objects')
 	map.connect(
 	'projects/:id/remove_link',
 	:controller => 'projects',
 	:action => 'remove_link',
 	:conditions => { :method => :get })
-	map.connect(
-	'projects/:id/add_parts',
-	:controller => 'projects',
-	:action => 'add_parts')
 	map.connect(
 	'projects/:id/new_forum',
 	:controller => 'projects',
@@ -309,10 +313,6 @@ ActionController::Routing::Routes.draw do |map|
 	'projects/:id/add_forum',
 	:controller => 'projects',
 	:action => 'add_forum')
-	map.connect(
-	'projects/:id/add_users',
-	:controller => 'projects',
-	:action => 'add_users')
 	map.connect(
 	'projects/:id/promote',
 	:controller => 'projects',
@@ -343,7 +343,11 @@ ActionController::Routing::Routes.draw do |map|
 	'projects/:id/show_design',
 	:controller => 'projects',
 	:action => 'show_design')
-	
+	map.connect(
+	'projects/:id/update_type',
+	:controller => 'projects',
+	:action => 'update_type')
+
 	map.resources :relations, :member=> {:new_dup => :get}
 	map.connect(
 	'relations/update_father',
@@ -353,19 +357,23 @@ ActionController::Routing::Routes.draw do |map|
 	'relations/update_child',
 	:controller => 'relations',
 	:action => 'update_child')
-	
+	map.connect(
+	'relations/:id/update_type',
+	:controller => 'relations',
+	:action => 'update_type')
+
 	map.resources :questions
-	
+
 	map.resources :roles, :member=> {:new_dup => :get}
 	map.connect(
 	'roles/:id/select_view',
 	:controller => 'roles',
 	:action => 'select_view')
-	
+
 	map.resources :roles_users
-	
+
 	map.resources :sequences, :member=> {:new_dup => :get}
-	
+
 	map.resource :sessions, :only => [:new, :create , :destroy]
 	#map.resource :sessions, :only => [:new, :create, :update, :destroy], :member => { :choose_role => :get }
 	# map.resource :sessions, :only => [:new, :create, :update, :destroy]
@@ -381,11 +389,15 @@ ActionController::Routing::Routes.draw do |map|
 	:action => 'activate')
 
 	map.resources :statusobjects, :member=> {:new_dup => :get}
-	
+	map.connect(
+	'statusobjects/:id/update_type',
+	:controller => 'statusobjects',
+	:action => 'update_type')
+
 	map.resources :subscriptions, :member=> {:new_dup => :get}
-	
+
 	map.resources :typesobjects, :member=> {:new_dup => :get}
-		
+
 	map.resources :users, :collection => { :empty_favori => :get }, :member=> {:new_dup => :get}
 	map.connect(
 	'users/:id/activate',
@@ -416,11 +428,15 @@ ActionController::Routing::Routes.draw do |map|
 	'users/:id/account_edit_passwd',
 	:controller => 'users',
 	:action => 'account_edit_passwd')
-	
+	map.connect(
+	'users/:id/update_type',
+	:controller => 'users',
+	:action => 'update_type')
+
 	map.resources :user_groups
-	
+
 	map.resources :views, :member=> {:new_dup => :get}
-		
+
 	map.resources :volumes, :member=> {:new_dup => :get}
 
 	map.resources :workitems
@@ -428,7 +444,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.wfid_resources :errors
 
 	map.wfid_resources :workitems
-	
+
 	map.wfid_resources :expressions
 
 # The priority is based upon order of creation: first created -> highest priority.

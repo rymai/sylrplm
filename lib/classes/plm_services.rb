@@ -1,7 +1,6 @@
 class PlmServices
-	
 	def self.isEmail(str)
-  		str.match(/\A(\S+)@(.+)\.(\S+)\z/)
+		str.match(/\A(\S+)@(.+)\.(\S+)\z/)
 	end
 
 	def self.get_object_by_mdlid(mdlid)
@@ -28,17 +27,17 @@ class PlmServices
 		#end
 		#end
 		# parts devient Part
-		typec = type.camelize
+		typec = "::#{type.camelize}"
 		ret = nil
 		begin
 			mdl = eval typec
 		rescue Exception => e
-		#LOG.warn{fname+e.message}
+			LOG.warn (fname) {"eval '#{typec}':#{e.message}"}
 			begin
-				typec ="Ruote::Sylrplm::"+typec
+				typec ="::Ruote::Sylrplm#{typec}"
 				mdl = eval typec
 			rescue Exception => e
-				LOG.error{fname+e.message}
+				LOG.error{fname+"eval '#{typec}':#{e.message}"}
 			end
 		end
 		unless mdl.nil?
@@ -46,6 +45,11 @@ class PlmServices
 				ret = mdl.find(id)
 			rescue Exception => e
 				LOG.error{fname+e.message}
+				stack=""
+					e.backtrace.each do |x|
+						stack+= x+"\n"
+					end
+					LOG.error (fname) {"stack=\n#{stack}"}
 			end
 		end
 		#LOG.debug (fname){"ret=#{(ret.nil? ? "" : ret.ident)}"}
@@ -146,6 +150,17 @@ class PlmServices
 		type
 	end
 
+	#
+	# execute a ruby bloc
+	#
+	def self.exec_bloc(bloc, code)
+		fname = "PlmServices.#{__method__}"
+		#LOG.debug(fname) {"bloc=#{bloc} , code=#{code}"}
+		ret=eval code
+		#LOG.debug(fname) {"ret=#{ret}"}
+		ret
+	end
+
 	# 1- [["language_fr"]]
 	#
 	#
@@ -177,18 +192,24 @@ class PlmServices
 		if ret==defo
 			# to keep logs about tranlation to do
 			puts "%TODO_TRANSLATE%:#{defo} stack below to see where it is called"
-			begin
-				a=1/0
-			rescue Exception => e
-				stack=""
-				e.backtrace.each do |x|
-					stack+= x+"\n"
+			if(1==1)
+				begin
+					a=1/0
+				rescue Exception => e
+					stack=""
+					nbr=0
+					e.backtrace.each do |x|
+						unless x.include? "plm_services.rb"
+							stack+= x+"\n"
+						end
+						break  if nbr==6
+						nbr+=1
+					end
+					LOG.warn (fname) {"For information on translate missing: stack=\n#{stack}"}
 				end
-				LOG.warn (fname) {"stack=\n#{stack}"}
 			end
-
 		end
-		#LOG.debug(fname) {"key='#{key}', argums='#{argums}' ret=#{ret}"}
+		LOG.debug(fname) {"key='#{key}', argums='#{argums}' ret=#{ret}"} if ret.empty?
 		ret
 	end
 

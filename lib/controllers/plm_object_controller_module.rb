@@ -7,6 +7,16 @@ module Controllers
 	module PlmObjectControllerModule
 	 # extend ActiveSupport::Concern
 
+		def add_objects
+			fname="#{controller_class_name}.#{__method__}"
+			LOG.info() { "params=#{params.inspect}" }
+			obj = PlmServices.get_object(params[:model_name],params[:id])
+			flash = {}
+			flash[:notice] = ""
+			flash[:error] = ""
+			flash = ctrl_add_objects_from_favorites(obj, nil, flash)
+		end
+
 		def add_favori
 	  		fname="#{controller_class_name}.#{__method__}"
 			#LOG.info() { "params=#{params.inspect}" }
@@ -89,8 +99,8 @@ module Controllers
 				end
 
 				if error
-					@types = Typesobject.find_for("forum")
-					@status = Statusobject.find_for("forum")
+					@types = Typesobject.get_types("forum")
+					@status = Statusobject.get_status("forum")
 					@object = object
 					format.html { render :action => :new_forum, :id => object.id }
 				else
@@ -133,6 +143,7 @@ module Controllers
 			when "notifications" then params[:controller].chop
 			when "users" then params[:controller].chop
 			when "links" then params[:controller].chop
+			when "relations" then params[:controller].chop
 			else params[:controller]
 			end
 			#puts name+params[:controller]+"="+ret
@@ -142,7 +153,7 @@ module Controllers
 		def get_controller_from_model_type(model_type)
 			# ajouter le 's' de fin
 			# part devient parts
-			model_type+"s"
+			model_type.to_s+"s"
 		end
 
 		def get_model(params)
@@ -223,7 +234,25 @@ module Controllers
 			#puts "application_controller.get_html_options:"+ret
 			ret
 		end
-		
+
+		def  ctrl_update_type plm_object, type_id
+			fname= "#{self.class.name}.#{__method__}"
+			type=Typesobject.find(type_id)
+			LOG.debug (fname){"type to activate=#{type} on #{plm_object}"}
+			modifs=plm_object.modify_type(type)
+			flash[:info]=""
+			modifs.each do |modif|
+				flash[:info] << modif+"<br/>"
+			end
+			@types = Typesobject.get_types(plm_object.model_name)
+			render :update do |page|
+				LOG.debug (fname){"render page replace:type=#{plm_object.typesobject}"}
+				page.replace_html("edit_object",
+				:partial => "shared/edit_object",
+				:locals=>{:fonct=>"edit", :plm_object=>plm_object} )
+			end
+		end
+
 		def ctrl_show_design(object, type_model_id)
 			fname= "#{self.class.name}.#{__method__}"
 			#LOG.debug (fname){"object=#{object.ident} type_model=#{type_model_id}"}
@@ -245,31 +274,31 @@ module Controllers
 #			              :type => "application/#{type_model.name}",
 						:filename => "#{content["filename"]}",
 						:type => "#{content["content_type"]}",
-						:disposition => "attachment")  
+						:disposition => "attachment")
 					end
 				else
 					respond_to do |format|
 						flash[:error] = "Error during model generation:#{object.errors.inspect}"
 						LOG.debug (fname){"flash=#{flash[:error]} err=#{object.errors.inspect}"}
-						format.html { redirect_to(object) } 
+						format.html { redirect_to(object) }
 						format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
 					end
 				end
 			else
 				respond_to do |format|
 					flash[:error] = "Can t generate the model because type is not defined}"
-					format.html { redirect_to(object) } 
+					format.html { redirect_to(object) }
 					format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
 				end
 			end
 		end
-		
+
 		private
 
 		def ctrl_new_datafile(at_object)
 			fname= "#{self.class.name}.#{__method__}"
 			LOG.debug (fname){"datafile.doc=#{@datafile.document}"}
-			@types  = Typesobject.find_for("datafile")
+			@types  = Typesobject.get_types("datafile")
 			@checkout_needed = at_object.checkout_needed?
 			if @checkout_needed
 				check = Check.get_checkout(at_object)
@@ -323,8 +352,8 @@ module Controllers
 				LOG.debug (fname){"@datafile save st=#{st} datafile=#{@datafile.inspect} err=#{@datafile.errors.inspect}"}
 				if(st==true)
 					#mdl=eval at_object.model_name
-					#@datafile.mdl = at_object 
-					at_object.datafiles << @datafile  
+					#@datafile.mdl = at_object
+					at_object.datafiles << @datafile
 					if @datafile.save && at_object.save
 						if current_user.check_automatic
 							check = Check.get_checkout(at_object)
@@ -346,13 +375,13 @@ module Controllers
 					else
 						#LOG.debug (fname){"@datafile not saved"}
 						flash[:error] = t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
-						@types = Typesobject.find_for("datafile")
+						@types = Typesobject.find_fget_typesor("datafile")
 						format.html { render :action => :new_datafile, :id => at_object.id   }
 					end
 				else
 					#LOG.debug (fname){"@datafile not saved"}
 					flash[:error] = t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
-					@types = Typesobject.find_for("datafile")
+					@types = Typesobject.get_types("datafile")
 					format.html { render :action => :new_datafile, :id => at_object.id   }
 				end
 			end
@@ -364,7 +393,7 @@ module Controllers
 			unless params["links"].nil?
 				#puts "========================="+params["links"].inspect
 				params["links"].each {
-					|key, value| 
+					|key, value|
 					#puts "ctrl_duplicate_links:#{key} is #{value}"
 					value.each do |lnkid|
 						lnk_orig = Link.find(lnkid)
@@ -393,7 +422,7 @@ module Controllers
 			end
 			#puts "#{controller_name}.define_view:end view=#{@myparams[:view_id]}"
 		end
-		  
+
 		#
 		# Creates an HistoryEntry record
 		#
@@ -449,7 +478,7 @@ module Controllers
 		def linkgen
 			LinkGenerator.new(request)
 		end
-		
+
 		def update_accessor(current_user)
 			mdl_name = self.model_name
 		  	params[mdl_name][:owner_id]=current_user.id if self.instance_variable_defined?(:@owner_id)
@@ -463,6 +492,8 @@ module Controllers
 		#
 		def ctrl_create_process(format, process_name, a_object, value1, value2)
 			fname= "#{self.class.name}.#{__method__}"
+			flash[:notice] =nil
+			flash[:error] =nil
 			# create a process
 			begin
 				@definition = Definition.get_by_process_name(process_name, a_object, value1, value2)
@@ -488,17 +519,17 @@ module Controllers
 				unless workitem.nil?
 					flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")
 					add_object_to_workitem(a_object, workitem)
-					format.html { redirect_to(a_object) }
-					format.xml  { head :ok }
+					###format.html { redirect_to(a_object) }
+					###format.xml  { head :ok }
 				else
 					flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")
-					format.html { redirect_to(a_object) }
-					format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
+					###format.html { redirect_to(a_object) }
+					####format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
 				end
 			else
 				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "definition to validate the user not found")
-				format.html { redirect_to(a_object) }
-				format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
+				###format.html { redirect_to(a_object) }
+				###format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
 			end
 		rescue Exception => e
 			LOG.error (fname){ "fei not launched error="+e.inspect}
@@ -509,9 +540,8 @@ module Controllers
 				#format.html { redirect_to new_process_path(:definition_id => @definition.id)}
 				#format.html { redirect_to ({:controller => :definitions , :action => :new_process, :definition_id => @definition.id}) }
 				LOG.error (fname){"a_object=#{a_object}"}
-				format.html { redirect_to(a_object) }
-				format.xml  { render :xml => e, :status => :unprocessable_entity }
-
+				###format.html { redirect_to(a_object) }
+				###format.xml  { render :xml => e, :status => :unprocessable_entity }
 			end
 		end
 
@@ -532,22 +562,24 @@ module Controllers
 			# then we have a form...
 			if @current_user.nil?
 				#syl: no current login, we assume it is ok for all!
-				@current_user=User.find_by_name(PlmServices.get_property(:USER_ADMIN))
+				cur_user=User.find_by_name(PlmServices.get_property(:USER_ADMIN))
+			else
+				cur_user=@current_user
 			end
-			unless @current_user.nil?
+			unless cur_user.nil?
 				if definition_id = params[:definition_id]
 					# is the user allowed to launch that process [definition] ?
 					definition = Definition.find(definition_id)
 					raise ErrorReply.new("you are not allowed to launch this process", 403
-						) unless @current_user.may_launch?(definition)
+						) unless cur_user.may_launch?(definition)
 					params[:definition_url] = definition.local_uri if definition
 				elsif definition_url = params[:definition_url]
 					raise ErrorReply.new("not allowed to launch process definitions from adhoc URIs", 400
-						) unless @current_user.may_launch_from_adhoc_uri?
+						) unless cur_user.may_launch_from_adhoc_uri?
 				elsif definition = params[:definition]
 					# is the user allowed to launch embedded process definitions ?
 					raise ErrorReply.new("not allowed to launch embedded process definitions", 400
-						) unless @current_user.may_launch_embedded_process?
+						) unless cur_user.may_launch_embedded_process?
 				else
 					raise ErrorReply.new("failed to parse launchitem from request parameters", 400)
 				end
@@ -563,7 +595,7 @@ module Controllers
 		end
 
 		def add_object_to_workitem(object, ar_workitem)
-			fname = "plm_lifecycle."+__method__.to_s
+			fname= "#{self.class.name}.#{__method__}"
 			LOG.info (fname) {"#{object} #{ar_workitem}"}
 			return ar_workitem.add_object(object)
 		end

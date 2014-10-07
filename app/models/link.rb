@@ -21,7 +21,7 @@ class Link < ActiveRecord::Base
 
 	#delegate :typesobject_id, :typesobject, to: :relation
 
-	#objets pouvant etre fils:"document", "part", "project", "customer", "forum", "datafile"
+	#objects which could be child of link: "document", "part", "project", "customer", "forum", "datafile"
 	with_options :foreign_key => 'child_id' do |child|
 		child.belongs_to :document_down , :conditions => ["child_plmtype='document'"], :class_name => "Document"
 		child.belongs_to :part_down , :conditions => ["child_plmtype='part'"], :class_name => "Part"
@@ -31,7 +31,7 @@ class Link < ActiveRecord::Base
 		child.belongs_to :datafile_down , :conditions => ["child_plmtype='datafile'"], :class_name => "Datafile"
 	end
 
-	#objets pouvant etre pere:"document", "part", "project", "customer", "definition", "history", "link"(pour les effectivites)
+	#objects which could be father of a link:"document", "part", "project", "customer", "definition", "history", "link"(pour les effectivites)
 	with_options :foreign_key => 'father_id' do |father|
 		father.belongs_to :document_up , :conditions => ["father_plmtype='document'"], :class_name => "Document"
 		father.belongs_to :part_up , :conditions => ["father_plmtype='part'"], :class_name => "Part"
@@ -156,14 +156,14 @@ class Link < ActiveRecord::Base
 
 	def child_ident
 		ret  = "#{child_id}:#{child_plmtype}.#{child_typesobject_id}"
-		ret += "=#{child.ident_plm}"
+		ret += "=#{child.ident_plm}"unless child.nil?
 	end
 
 	def relation=(relation)
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"relation.type=#{relation.typesobject}, fields=#{relation.typesobject.fields}"}
+		#LOG.debug (fname) {"relation.type=#{relation.typesobject}, fields=#{relation.typesobject.fields}"}
 		#TODO pour eviter super: no superclass method `relation=' for #<Link:0x9aceec4> super
-		self.values = relation.typesobject.fields
+		self.type_values = relation.typesobject.fields
 		self.relation_id = relation.id
 	end
 
@@ -177,7 +177,7 @@ class Link < ActiveRecord::Base
 	end
 
 	def ident
-		"#{(father.nil? ? "father null" : father.ident_plm)}-#{(relation.nil? ? "relation null" : relation.ident)}-#{(child.nil? ? "child null" : child.ident_plm)}-#{values}"
+		"#{(father.nil? ? "father null" : father.ident_plm)}-#{(relation.nil? ? "relation null" : relation.ident)}-#{(child.nil? ? "child null" : child.ident_plm)}-#{type_values}"
 	end
 
 	def effectivities_mdlid
@@ -201,10 +201,10 @@ class Link < ActiveRecord::Base
 		fname= "#{self.class.name}.#{__method__}"
 		rel=self.relation
 		unless rel.nil?
-			if self.values.nil?
+			if self.type_values.nil?
 			fields = rel.typesobject.fields
-			self.values = fields unless fields.nil?
-			#OG.info (fname) {"#{fields} : #{self.values}"}
+			self.type_values = fields unless fields.nil?
+			#OG.info (fname) {"#{fields} : #{self.type_values}"}
 			end
 		end
 	end
@@ -213,7 +213,7 @@ class Link < ActiveRecord::Base
 		"link"
 	end
 
-	def update(user, params_link)
+	def update_link(user, params_link)
 		update_accessor(user)
 		update_attributes(params_link)
 	end

@@ -135,7 +135,7 @@ class Statusobject < ActiveRecord::Base
 	#  - 3 par action
 	#  - 0 interdit
 	#
-	def self.find_for(object, choice = 1)
+	def self.get_status(object, choice = 1)
 		fname="#{self.class.name}.#{__method__}"
 		unless object.is_a?(String)
 			#object est un objet

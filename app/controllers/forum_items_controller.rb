@@ -4,7 +4,7 @@ class ForumItemsController < ApplicationController
 	# GET /forum_items
 	# GET /forum_items.xml
 	def index
-		@forum_items = ForumItem.find_paginate({:user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@forum_items = ForumItem.find_paginate({:user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @forum_items }

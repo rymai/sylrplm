@@ -25,7 +25,10 @@ class Typesobject < ActiveRecord::Base
 	end
 
 	def name_translate
-		PlmServices.translate("typesobject_name_#{name}")
+		fname="Typesobject.#{__method__}"
+		ret=PlmServices.translate("typesobject_name_#{name}")
+		#LOG.debug (fname){"name=#{name} tr=#{ret}"}
+		ret
 	end
 
 	def forobject_translate
@@ -46,15 +49,15 @@ class Typesobject < ActiveRecord::Base
 		ret
 	end
 
-	def self.get_types(s_object)
+	def self.get_types(s_object, with_generic=false)
 		fname="Typesobject.#{__method__}(#{s_object})"
-		sgeneric = PlmServices.get_property(:PLMTYPE_GENERIC)
+		sgeneric = PlmServices.get_property(:TYPE_GENERIC)
 		stypes = order_default.find_all_by_forobject(s_object.to_s)
 		ret= []
 		stypes.each do |type|
 		#LOG.debug (fname) {"type:#{type}"}
-			if type.name != sgeneric
-			type.name = type.name_translate
+			if type.name != sgeneric || with_generic
+			###############TODO not here !!! someone need he reel name type.name = type.name_translate
 			ret << type
 			end
 		end
@@ -142,33 +145,33 @@ class Typesobject < ActiveRecord::Base
 		values = get_fields_values()
 		#LOG.debug (fname) {"values=#{values}"}
 		unless values.nil?
-			values.delete("_type_only_") 
+			values.delete("_type_only_")
 			#LOG.debug (fname) {"values after remove=#{values}"}
 			ret = ActiveSupport::JSON.encode(values)
 		end
 		#LOG.debug (fname) {"fields=#{ret}"}
 		ret
 	end
-	
+
 	# renvoie l'objet contenu dans l'attribut fields
 	# it is a hash
-		
+
 	def get_fields_values
 		get_fields_values_(nil)
 	end
-	
+
 	def get_fields_values_by_key(key)
 		get_fields_values_(key)
 	end
-	
+
 	def get_fields_values_type_only_by_key(key)
 		 get_fields_values_type_only[key]
 	end
-	
+
 	def get_fields_values_type_only
 		get_fields_values_("_type_only_")
 	end
-	
+
 	def get_fields_values_(key=nil)
 		fname="Typesobject.#{__method__}:#{name}"
 		ret=nil
@@ -207,5 +210,5 @@ ret=decod
 		#LOG.debug (fname) {"key=#{key} ret=#{ret}"}
 		ret
 	end
-	
+
 end

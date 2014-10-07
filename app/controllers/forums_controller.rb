@@ -25,8 +25,8 @@ class ForumsController < ApplicationController
 	# GET /forums/new.xml
 	def new
 		@forum  = Forum.new(user: current_user)
-		@types  = Typesobject.find_for("forum")
-		@status = Statusobject.find_for("forum")
+		@types  = Typesobject.get_types("forum")
+		@status = Statusobject.get_status("forum")
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @forum }
@@ -36,9 +36,10 @@ class ForumsController < ApplicationController
 	# GET /forums/1/edit
 	def edit
 		@forum  = Forum.find(params[:id])
-		@types  = Typesobject.find_for("forum")
+		@types  = Typesobject.get_types("forum")
+		@status = Statusobject.get_status("forum")
 	end
-	
+
 	# GET /forums/1/edit_lifecycle
 	def edit_lifecycle
 		@forum  = Forum.find(params[:id])
@@ -48,8 +49,8 @@ class ForumsController < ApplicationController
 	# POST /forums.xml
 	def create
 		@forum  = Forum.new(params[:forum])
-		@types  = Typesobject.find_for("forum")
-		@status = Statusobject.find_for("forum")
+		@types  = Typesobject.get_types("forum")
+		@status = Statusobject.get_status("forum")
 		respond_to do |format|
 			if @forum.save
 				@item = @forum.forum_items.build(message: params[:message], user: current_user)
@@ -87,8 +88,8 @@ class ForumsController < ApplicationController
 			end
 		end
 	end
-	
- def update_lifecycle
+
+	def update_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug (fname){"params=#{params.inspect}"}
 		@forum = Forum.find(params[:id])
@@ -102,7 +103,19 @@ class ForumsController < ApplicationController
 			ctrl_revise(@forum)
 		end
 	end
-	
+
+	#
+	# update of edit panel after changing the type
+	#
+	def update_type
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@forum = Forum.find(params[:id])
+		@types  = Typesobject.get_types("forum")
+		@status = Statusobject.get_status("forum")
+		ctrl_update_type @forum, params[:object_type]
+	end
+
 	# DELETE /forums/1
 	# DELETE /forums/1.xml
 	def destroy
@@ -128,6 +141,6 @@ class ForumsController < ApplicationController
 	private
 
 	def index_
-		@forums = Forum.find_paginate({ :user=> current_user,:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@forums = Forum.find_paginate({ :user=> current_user, :filter_types => params[:filter_types],:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 	end
 end

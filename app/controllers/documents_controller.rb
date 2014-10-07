@@ -4,7 +4,6 @@ class DocumentsController < ApplicationController
 	#administration par le menu Access
 	#access_control (Document.controller_access())
 	access_control(Access.find_for_controller(controller_class_name))
-	
 	# GET /documents
 	# GET /documents.xml
 	def index
@@ -46,7 +45,7 @@ class DocumentsController < ApplicationController
 		@document = Document.new(:user => current_user)
 		@types    = Typesobject.get_types("document")
 		@volumes  = Volume.find_all
-		@status   = Statusobject.find_for("document", 2)
+		@status   = Statusobject.get_status("document", 2)
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @document }
@@ -59,7 +58,7 @@ class DocumentsController < ApplicationController
 		@object_orig = Document.find(params[:id])
 		@document = @object = @object_orig.duplicate(current_user)
 		@types    = Typesobject.get_types("document")
-		@status   = Statusobject.find_for("document", 2)
+		@status   = Statusobject.get_status("document", 2)
 		respond_to do |format|
 			format.html # document/1/new_dup
 			format.xml  { render :xml => @document }
@@ -69,9 +68,9 @@ class DocumentsController < ApplicationController
 	# GET /documents/1/edit
 	def edit
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"params=#{params.inspect}"}
+		LOG.debug (fname) {"params=#{params.inspect}"}
 		@document = Document.find_edit(params[:id])
-		@types    = Typesobject.find_for("document")
+		@types    = Typesobject.get_types("document")
 	end
 
 	# GET /documents/1/edit_lifecycle
@@ -89,10 +88,10 @@ class DocumentsController < ApplicationController
 		#contournement pour faire le upload apres la creation pour avoir la revision dans
 		#repository !!!!!!!!!!!!!!
 		@document = Document.new(params[:document])
-		@types    = Typesobject.find_for("document")
-		@status   = Statusobject.find_for("document")
+		@types    = Typesobject.get_types("document")
+		@status   = Statusobject.get_status("document")
 		respond_to do |format|
-			if params[:fonct] == "new_dup"
+			if params[:fonct][:current] == "new_dup"
 				object_orig=Document.find(params[:object_orig_id])
 			st = @document.create_duplicate(object_orig)
 			else
@@ -120,21 +119,27 @@ class DocumentsController < ApplicationController
 		LOG.debug (fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		@volumes  = Volume.find_all
-		@types    = Typesobject.find_for("document")
-		@status   = Statusobject.find_for("document")
-		if commit_promote?
-			ctrl_promote(@document)
+		@types    = Typesobject.get_types("document")
+		@status   = Statusobject.get_status("document")
+		LOG.debug (fname){"document.type=#{@document.typesobject}, commit=#{params["commit"] }"}
+		if params["commit"] == t("update_type")
+			LOG.debug (fname){"commit update_type"}
+			ctrl_update_type @document, params[:document]
 		else
-			@document.update_accessor(current_user)
-			respond_to do |format|
-				if @document.update_attributes(params[:document])
-					flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_document), :ident => @document.ident)
-					format.html { redirect_to(@document) }
-					format.xml  { head :ok }
-				else
-					flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_document), :ident => @document.ident)
-					format.html { render :action => "edit" }
-					format.xml  { render :xml => @document.errors, :status => :unprocessable_entity }
+			if commit_promote?
+				ctrl_promote(@document)
+			else
+				@document.update_accessor(current_user)
+				respond_to do |format|
+					if @document.update_attributes(params[:document])
+						flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_document), :ident => @document.ident)
+						format.html { redirect_to(@document) }
+						format.xml  { head :ok }
+					else
+						flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_document), :ident => @document.ident)
+						format.html { render :action => "edit" }
+						format.xml  { render :xml => @document.errors, :status => :unprocessable_entity }
+					end
 				end
 			end
 		end
@@ -144,7 +149,7 @@ class DocumentsController < ApplicationController
 	# PUT /documents/1.xml
 	def update_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug (fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		if commit_promote?
 			ctrl_promote(@document)
@@ -157,10 +162,20 @@ class DocumentsController < ApplicationController
 		end
 	end
 
+	#
+	# update of edit panel after changing the type
+	#
+	def update_type
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"params=#{params.inspect}"}
+		@document = Document.find(params[:id])
+		ctrl_update_type @document, params[:object_type]
+	end
+
 	def new_forum
 		@object = Document.find(params[:id])
-		@types = Typesobject.find_for("forum")
-		@status = Statusobject.find_for("forum")
+		@types = Typesobject.get_types("forum")
+		@status = Statusobject.get_status("forum")
 		@relation_id = params["relation"]["forum"]
 		respond_to do |format|
 			flash[:notice] = ""
@@ -207,8 +222,8 @@ class DocumentsController < ApplicationController
 		#LOG.debug (fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		@volumes  = Volume.find_all
-		@types    = Typesobject.find_for("document")
-		@status   = Statusobject.find_for("document")
+		@types    = Typesobject.get_types("document")
+		@status   = Statusobject.get_status("document")
 		ctrl_demote(@document)
 	end
 
@@ -314,13 +329,13 @@ class DocumentsController < ApplicationController
 		@tree         						= build_tree(@document, @myparams[:view_id])
 		@tree_up      						= build_tree_up(@document, @myparams[:view_id] )
 		@object_plm = @document
-		#LOG.debug (fname){"taille tree=#{@tree.size}"}
+	#LOG.debug (fname){"taille tree=#{@tree.size}"}
 	end
 
 	def index_
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname){"params=#{params.inspect}"}
-		@documents = Document.find_paginate({ :user=> current_user, :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@documents = Document.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 	end
 
 end

@@ -2,12 +2,13 @@ class UsersController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	##include CheckboxSelectable
 	#
+	filter_parameter_logging :password
 	access_control(Access.find_for_controller(controller_class_name))
 	# GET /users
 	# GET /users.xml
 	def index
 		fname= "#{self.class.name}.#{__method__}"
-		@current_users = User.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@current_users = User.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
 		#LOG.info (fname) {"@current_users=#{@current_users}"}
 		respond_to do |format|
 			format.html # index.html.erb
@@ -98,7 +99,7 @@ class UsersController < ApplicationController
 	def create
 		@the_user    = User.new(params["user"])
 		respond_to do |format|
-			if params[:fonct] == "new_dup"
+			if params[:fonct][:current] == "new_dup"
 				object_orig=User.find(params[:object_orig_id])
 			st = @the_user.create_duplicate(object_orig)
 			else
@@ -154,6 +155,16 @@ class UsersController < ApplicationController
 		end
 	end
 
+	#
+	# update of edit panel after changing the type
+	#
+	def update_type
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname){"params=#{params.inspect}"}
+		@the_user = User.find(params[:id])
+		ctrl_update_type @the_user, params[:object_type]
+	end
+
 	def destroy
 		id = params[:id]
 		if id && @the_user = User.find(id)
@@ -206,17 +217,19 @@ class UsersController < ApplicationController
 				#puts "users_controller.update:update_attributes ok:#{params[:user]}"
 				ok=true
 				else
-				msg = @the_user.errors.inspect
+				msg = @the_user.errors.full_messages
 				ok=false
 				end
 			end
 		else
 			if @the_user.update_attributes(params[:user])
-			#puts "users_controller.update:update_attributes ok:#{params[:user]}"
-			ok=true
+				#puts "users_controller.update:update_attributes ok:#{params[:user]}"
+				ok=true
 			else
-			msg = @the_user.errors.inspect
-			ok=false
+				#puts "users_controller.update:update_attributes ko:#{params[:user]}"
+				msg = @the_user.errors.full_messages
+				#puts "users_controller.update:update_attributes ko:msg=#{msg}"
+				ok=false
 			end
 		end
 
@@ -227,7 +240,7 @@ class UsersController < ApplicationController
 				format.xml  { head :ok }
 			else
 				flash[:error] = t(:ctrl_user_not_updated, :user => @the_user.login, :msg => msg)
-				format.html { redirect_to("/main/tools") }
+				format.html { redirect_to(:controller=>"users", :action=>params[:user_action], :id=>@the_user.id) }
 				format.xml  { render :xml => @the_user.errors, :status => :unprocessable_entity }
 			end
 

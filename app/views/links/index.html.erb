@@ -34,7 +34,7 @@
 		<td><%= h_explorer link.owner, :login unless link.owner.nil? %></td>
 		<td><%= h_explorer link.group, :name unless link.group.nil? %></td>
 		<td><%= h_explorer link.projowner, :ident unless link.projowner.nil?%></td>
-		<td><%= h link.values %></td>
+		<td><%= h link.type_values %></td>
 		<td><%= h link.domain %></td>
 		
 		<td><%= link_to h_img_show.to_s, link %> </td>

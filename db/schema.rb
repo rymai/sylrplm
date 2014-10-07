@@ -287,7 +287,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "father_typesobject_id", :null => false
 		t.integer  "child_typesobject_id",  :null => false
 		t.integer  "relation_id",    :null => false
-		t.string   "values"
+		t.string   "type_values", :limit => 4096
 		t.integer  "owner_id"
 		t.integer  "group_id"
 		t.integer  "projowner_id"

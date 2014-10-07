@@ -81,31 +81,14 @@ module Models
 			# construction de la requete de recherche simple pour toutes les vues index
 			#
 			def find_paginate(params)
-				#puts self.model_name+"."+__method__.to_s+":debut:"+params.inspect
+				fname= "#{self.class.name}.#{__method__}"
+				#puts self.model_name+"."+__method__.to_s+":debut:theparams="+params.inspect
 				#puts self.model_name+"."+__method__.to_s+":debut:"+self.class.name
 				user = params[:user]
 				#puts self.model_name+"."+__method__.to_s+":user="+user.inspect
 				filter_access = {}
 				filter_access[:qry] = ""
 				filter_access[:values] = {}
-				if(false)
-					if column_names.include?("projowner_id")
-						acc_public = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "public")
-						acc_confidential = ::Typesobject.find_by_forobject_and_name("project_typeaccess", "confidential")
-						filter_access[:qry] = ":v_acc_public_id="+qry_projowner_typeaccess+" or :v_acc_confidential_id="+qry_projowner_typeaccess
-						filter_access[:values][:v_acc_public_id] = acc_public.id
-						filter_access[:values][:v_acc_confidential_id] = acc_confidential.id
-					else
-						filter_access[:values][:v_acc_public_id] = nil
-						filter_access[:values][:v_acc_confidential_id] =nil
-					end
-					#puts "#{self.model_name}.#{__method__}:qry=#{filter_access[:qry]}:#{filter_access[:qry].length.to_s}"
-					unless user.nil? || !column_names.include?("group_id")
-						filter_access[:qry] += " or " unless filter_access[:qry] == ""
-						filter_access[:qry] += " group_id = :v_group_id"
-						filter_access[:values][:v_group_id] = user.group.id
-					end
-				end
 
 				#
 				# lecture possible des projets et des groupes du user
@@ -132,6 +115,7 @@ module Models
 				end
 
 				#puts self.model_name+".find_paginate:filter_access="+filter_access.inspect
+				LOG.debug (fname) {"filter_access=#{filter_access.inspect}"}
 
 				if filter_access[:qry] == "()" || filter_access[:qry] == "(" || filter_access[:qry] == ")"
 					filter_access[:qry] = ""
@@ -150,11 +134,32 @@ module Models
 						conditions = [cond[:qry], values]
 					end
 				else
-
+					conditions = [filter_access[:qry], filter_access[:values]]
+				end
+				unless params[:filter_types].nil?
+					# filter on object types from menus
+					types_id=[]
+					filter_types=params[:filter_types]
+					unless filter_types.is_a?(Array)
+						filter_types=[filter_types]
+					end
+					sany_type=PlmServices.get_property(:TYPE_GENERIC)
+					filter_types.each do |stype|
+						idstype = Typesobject.find_by_name(stype).id
+						#puts "#{self.model_name}.find_paginate:stype=#{stype} sany_type=#{sany_type} , idstype=#{idstype}"
+						types_id <<  idstype unless stype == sany_type
+					end
+					#puts "#{self.model_name}.find_paginate:filter_types=#{filter_types} , types_id=#{types_id}"
+					unless types_id.empty?
+						filter_access[:qry] += " and " unless filter_access[:qry].blank?
+						filter_access[:qry] +=" typesobject_id in (#{types_id.join(",")})"
+					end
+					#filter_access[:values][:v_types] = "(#{types_id.join(",")})"
 					conditions = [filter_access[:qry], filter_access[:values]]
 				end
 				#puts self.model_name+".find_paginate:conditions="+conditions.inspect
 				#puts self.model_name+".find_paginate:page="+params[:page].to_s
+				LOG.debug (fname) {"filter_access=#{filter_access.inspect}"}
 				last_rev_only = false
 				unless user.nil?
 					if user.is_admin?
@@ -187,6 +192,7 @@ module Models
 				end
 				#puts self.model_name+".find_paginate:conditions="+conditions.inspect
 				#puts self.model_name+"."+__method__.to_s+":"+recordset.inspect
+				LOG.debug (fname) {"conditions=#{conditions.inspect} : #{recordset.inspect}"}
 				{:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
 			end
 
@@ -500,17 +506,52 @@ module Models
 			self
 		end
 
+		#
 		# renvoie l'objet contenu dans l'attribut type_values
+		#
 		def get_type_values
+			fname = "#{self.class.name}.#{__method__}"
+			decod={}
 			if self.respond_to? :type_values
+				#puts "get_type_values: #{self.inspect} type_value=#{type_values}"
 				unless type_values.blank?
-					puts "get_type_values:values=#{type_values}"
 					decod = ActiveSupport::JSON.decode(type_values)
 				#puts "get_type_values:values=#{type_values} decod=#{decod}"
-				#Rufus::Json.decode(type_values)
 				end
 			end
 			decod
+		end
+
+		#
+		# return a type value
+		#
+		def get_type_value(key)
+			get_type_values[key]
+		end
+
+		#
+		# assign type_values
+		# @param hashmap of type values, examples:
+		# - {"description"=>"my description"}
+		#
+		def set_type_values(new_type_values)
+			fname = "#{self.class.name}.#{__method__}"
+			unless new_type_values.blank?
+				self.type_values = ActiveSupport::JSON.encode(new_type_values)
+			#puts "set_type_values:values=#{type_values} "
+			end
+		end
+
+		#
+		# assign a type value
+		#
+		def set_type_value(key, value)
+			fname = "#{self.class.name}.#{__method__}"
+			values = get_type_values
+			#puts "set_type_value:key=#{key} values=#{values} "
+			values[key] = value
+			set_type_values(values)
+		#puts "set_type_value:key=#{key} values=#{self.type_values} "
 		end
 
 		#

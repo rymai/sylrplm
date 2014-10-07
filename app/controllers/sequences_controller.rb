@@ -4,7 +4,7 @@ class SequencesController < ApplicationController
 	# GET /sequences
 	# GET /sequences.xml
 	def index
-		@sequences = Sequence.find_paginate({:user=> current_user,:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@sequences = Sequence.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @sequences }
@@ -60,7 +60,7 @@ class SequencesController < ApplicationController
 		#@objects=Sequence.getObjectsWithSequence
 		@utilities=html_models_and_columns(@sequence.utility)
 		respond_to do |format|
-			if params[:fonct] == "new_dup"
+			if params[:fonct][:current] == "new_dup"
 				object_orig=Sequence.find(params[:object_orig_id])
 			st = @sequence.create_duplicate(object_orig)
 			else

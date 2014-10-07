@@ -27,9 +27,9 @@ end %>
 
 <% if fonct=="doc_new" %>
 <td> <%= link_to t("customer_show"), customer_path(@customer) unless @customer.nil? %>
-<%= link_to t("document_show"), customer_path(@document) unless @document.nil? %>
-<%= link_to t("part_show"), customer_path(@part) unless @part.nil? %>
-<%= link_to t("project_show"), customer_path(@project) unless @project.nil? %> </td>
+<%= link_to t("document_show"), document_path(@document) unless @document.nil? %>
+<%= link_to t("part_show"), part_path(@part) unless @part.nil? %>
+<%= link_to t("project_show"), project_path(@project) unless @project.nil? %> </td>
 <td> <%= link_to t("list"), datafiles_path %> </td>
 <% else %>
 <td> <%= link_to t("list"), {:controller=>object.controller_name, :action=>"index"} %></td>

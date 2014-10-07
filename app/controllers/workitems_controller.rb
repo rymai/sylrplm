@@ -70,7 +70,8 @@ class WorkitemsController < ApplicationController
 		fname= "workitems_controller.edit:"
 		LOG.debug (fname){"params="+params.inspect}
 		@workitem = find_ar_workitem
-		@wi_links = @workitem.get_wi_links
+		@wi_links = @workitem.get_wi_links unless @workitem.nil?
+		LOG.debug (fname){"@wi_links="+@wi_links.inspect}
 		nb=0
 		["document","part","project","customer","user"].each {|plm| nb+=add_objects(@workitem, plm) }
 		if nb>0
@@ -84,7 +85,8 @@ class WorkitemsController < ApplicationController
 	# GET /workitems/:wfid/:expid
 	#
 	def show
-		#    puts "workitems_controller.show:params="+params.inspect
+		fname= "workitems_controller.show:"
+		LOG.debug (fname){"params="+params.inspect}
 		@workitem = find_ar_workitem
 		@wi_links = @workitem.get_wi_links unless @workitem.nil?
 
@@ -158,7 +160,7 @@ class WorkitemsController < ApplicationController
 					#
 					LOG.info (name) {"apres sleep nb=#{nb}"}
 					process = ruote_engine.process_status(params[:wfid])
-					LOG.info (name) {"apres process_status, process="+process.to_s}					
+					LOG.info (name) {"apres process_status, process="+process.to_s}
 					unless process.nil?
 						tree = process.current_tree
 					else
@@ -203,10 +205,10 @@ class WorkitemsController < ApplicationController
 						#puts name+"activity="+ar_workitem.activity.inspect
 						#puts name+"keywords="+ar_workitem.keywords.inspect
 						# sauve history
-						history_created = history_log('proceeded', 
-							:fei => in_flow_workitem.fei, 
-							:participant => in_flow_workitem.participant_name, 
-							:tree => tree.to_json, 
+						history_created = history_log('proceeded',
+							:fei => in_flow_workitem.fei,
+							:participant => in_flow_workitem.participant_name,
+							:tree => tree.to_json,
 							:message => ar_workitem.objects,
 							:wi_fields => ar_workitem.field_hash.to_json)
 						#LOG.info (name){"history_created=#{history_created}"}
@@ -294,7 +296,7 @@ class WorkitemsController < ApplicationController
 		sleep 0.3
 		ar_workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid_and_expid(params[:wfid], OpenWFE.to_dots(params[:expid])) unless params[:expid].nil?
 		if ar_workitem.nil?
-			ar_workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid(params[:id]) unless params[:id].nil? 
+			ar_workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid(params[:id]) unless params[:id].nil?
 		end
 		ret=current_user.may_see?(ar_workitem) ? ar_workitem : nil unless ar_workitem.nil?
 		#LOG.debug (fname) {"params=#{params} ar_workitem=#{ret.inspect}"}

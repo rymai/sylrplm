@@ -24,6 +24,14 @@ class Customer < ActiveRecord::Base
   belongs_to :group
   belongs_to :projowner, :class_name => "Project"
 
+	has_many :links_forums,
+    :class_name => "Link",
+    :foreign_key => "father_id",
+    :conditions => { father_plmtype: 'customer', child_plmtype: 'forum' }
+	has_many :forums,
+    :through => :links_forums,
+    :source => :forum
+    
   has_many :links_documents,
     :class_name => "Link",
     :foreign_key => "father_id",

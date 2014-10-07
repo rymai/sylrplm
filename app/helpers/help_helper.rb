@@ -33,7 +33,6 @@ module HelpHelper
 	end
 
 	def h_help_key(key)
-
 		#ret = h_help_elem(h_help_root, key)[:el]
 		#puts "h_help_key(#{key})=(#{ret.count})#{ret.inspect}"
 		#ret.each do |tt|
@@ -41,8 +40,12 @@ module HelpHelper
 		#end
 		#ret=h_help_replace(ret)
 		elem = h_elem_key(key)
-		#puts "h_help_key(#{key})elem=#{elem}"
-		ret = h_help_level(elem, false)
+		#puts "========= h_help_key(#{key})elem=#{elem}"
+		unless elem.nil?
+			ret = h_help_level(elem, false)
+		else
+			ret="<h2>No help definition for the key '#{key}'</h2>"
+		end
 		#puts "h_help_key(#{key})=#{ret}"
 		ret
 	end
@@ -143,7 +146,7 @@ module HelpHelper
 
 	def write_help_file(hlp)
 		filename = get_help_file_name
-		puts "help_helper.write_help_file:"+filename
+		#puts "help_helper.write_help_file:"+filename
 		f=File.new(filename,"w")
 		f.write(hlp)
 	end
@@ -165,13 +168,15 @@ module HelpHelper
 	end
 
 	def h_elem_key(key, parent=nil)
+		#puts "h_elem_key:key=#{key} parent=#{parent}"
 		ret=nil
 		if parent.nil?
 			parent = h_help_root
+		#puts "h_elem_key:key=#{key} parent=#{parent}"
 		end
 		parent.elements.each("msg") { |element|
 			if(element.attributes["key"]) == key.to_s
-				#puts "h_elem_key:key=#{key} element=#{element.inspect}"
+			#puts "h_elem_key:key=#{key} element=#{element.inspect}"
 			ret = element
 			break
 			else
@@ -182,30 +187,32 @@ module HelpHelper
 	end
 
 	def h_help_level(elem, with_anchor=true)
-		#puts "h_help_level:with_anchor=#{with_anchor} #{elem} "
+		#puts "=============== h_help_level:with_anchor=#{with_anchor} #{elem} "
 		msg=""
-		msg+="<ul class='help_key'>\n"
-		unless elem.attributes["title"].nil?
-			if with_anchor==true
-				msg+="<a class='help_tr' name='"+elem.attributes["key"]+"'></a>\n"
-				if(elem.attributes["href"]!=nil)
-					msg+="<a class='help_tr' href='"+elem.attributes["href"]+"'>"+elem.attributes["title"]+"</a>\n"
+		unless elem.nil?
+			msg+="<ul class='help_key'>\n"
+			unless elem.attributes["title"].nil?
+				if with_anchor==true
+					msg+="<a class='help_tr' name='"+elem.attributes["key"]+"'></a>\n"
+					if(elem.attributes["href"]!=nil)
+						msg+="<a class='help_tr' href='"+elem.attributes["href"]+"'>"+elem.attributes["title"]+"</a>\n"
+					else
+						msg+="<a class='help_tr' >"+elem.attributes["title"]+"</a>\n"
+					end
+					msg+="<a class='help_tr' href='#help_summary'>"+h_img_tit("help_upper",t(:help_summary))+"</a>\n"
 				else
-					msg+="<a class='help_tr' >"+elem.attributes["title"]+"</a>\n"
+					msg+="<b>#{elem.attributes["title"]}</br></b>"
 				end
-				msg+="<a class='help_tr' href='#help_summary'>"+h_img_tit("help_upper",t(:help_summary))+"</a>\n"
-			else
-				msg+="<b>#{elem.attributes["title"]}</br></b>"
 			end
+			msg+=h_help_transform(elem.text)
+			msg+=h_help_ul(elem)
+			elem.elements.each("msg") { |element|
+				msg+="<li class='help_key'>\n"
+				msg+=  h_help_level(element, with_anchor)
+				msg+="</li>\n"
+			}
+			msg+="</ul>\n"
 		end
-		msg+=h_help_transform(elem.text)
-		msg+=h_help_ul(elem)
-		elem.elements.each("msg") { |element|
-			msg+="<li class='help_key'>\n"
-			msg+=  h_help_level(element, with_anchor)
-			msg+="</li>\n"
-		}
-		msg+="</ul>\n"
 		msg
 	end
 
@@ -289,17 +296,65 @@ module HelpHelper
 		txt.gsub!(':'+10.chr,':<br/>')
 		txt.gsub!('.'+10.chr,'.<br/>')
 		txt.gsub!('\t','')
-		
+		txt.gsub!(/#bloc=(.+?)=bloc#/){|bloc| PlmServices.exec_bloc(bloc, "#{$1}")}
+		#
 		txt.gsub! /#hlp=(.+?)=hlp#/,
 		"<img class='help' id='\\1' src='/images/help.png' onclick=\"return helpPopup('\\1');\"></img>"
+		#
 		txt.gsub! /#img=(.+?)=img#/,
 		"<img class='help_tr' src='/images/\\1'></img>"
+		#
 		txt.gsub! /#jump=(.+?)=jump#/,
 		"<a class='help_tr' href='/main/helpgeneral#\\1' target='_top'>"+t(:help_jump)+"</a>"
+		#
 		txt.gsub! /#lnk=(.+?)=lnk#/,
 		#"<a class='help_tr' href='\\1' target='_blank' title='"+t(:help_lnk_acces)+"'><img src='/images/submit.png'></img></a>"
 		"<a class='help_tr' href='\\1' target='_blank' title='"+t(:help_lnk_acces)+"'>\\1</a>"
-		
+		#
 		txt
 	end
+
+	#help on a chapter
+	def help_chapter(chapter, cls=nil)
+		ret = ""
+		ret << "<a onclick=\"return helpWindow('#{chapter}');\""
+		ret<< "class=#{cls}" unless cls.nil?
+		ret<<">#{t(chapter)}</a>"
+		ret
+	end
+
+	def help_window(cls=nil)
+		ret = ""
+		ret << "<a onclick=\"return helpWindow('help_#{params[:controller]}_#{params[:action]}');\""
+		ret<< "class=#{cls}" unless cls.nil?
+		ret << ">#{t(:help_window)}</a>"
+		ret
+	end
+
+	def h_help_menu(name,link)
+		bloc=""
+		if(link!=nil && link.strip()!="")
+			bloc<<"<a href='/help?help="+link+"'>"+h_img(name)+"</a>"
+		end
+	end
+
+	# memorisation du click sur le help
+	def tip_help()
+		bloc=""
+		bloc<<"<img class='help' id='tip_help' src='/images/help.png' onclick='return helpTip();'>"
+		bloc
+	end
+
+	def show_help(key, with_img = true)
+		txt=t(key.to_s)
+		bloc=""
+		if with_img
+			bloc<<"<img class=\"help\" id=\"#{key.to_s}\"  src=\"/images/help.png\"
+    onclick=\"return helpPopup('#{key.to_s}');\" >"
+		else
+			bloc<<"<a href='/help?help="+key.to_s+"' onclick=\"return helpPopup('#{key.to_s}');\">"+txt+"</a>"
+		end
+		bloc
+	end
+
 end
