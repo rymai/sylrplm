@@ -4,11 +4,6 @@ GIT
   specs:
     sylrplm_ext (0.0.4)
 
-PATH
-  remote: /usr/share/ruby/gems/gems/bigdecimal-1.2.5
-  specs:
-    bigdecimal (1.2.5)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -176,7 +171,6 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   atom-tools (~> 2.0.5)
-  bigdecimal!
   bundler
   capybara
   fog
