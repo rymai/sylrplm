@@ -1,0 +1,46 @@
+<!-- check out/in/free , no files under a directory  -->
+<% unless document.directory? %>
+<h1><%= t("document_check") %></h1>
+<table class='menu_bas'>
+	<% if document.frozen? %>
+	<tr>
+		<td> <%= t("freeze") %></td>
+	</tr>
+	<% else %>
+	<% unless document.checked? %>
+	<% form_for(document, :url => {:id => document.id, :action => :check_out }, :method => :get) do |f| %>
+	<tr>
+		<td> <%= f.submit t("button_check_out") %></td>
+		<td> <%= label_tag t("label_out_reason") %></td>
+		<td> <%= text_field_tag "check[out_reason]" %></td>
+	</tr>
+	<%end %>
+	<% else %> <!-- info sur reservation -->
+	<tr>
+		<td> <%= t("is_check_out") %></td>
+		<td> <%= t("label_out_reason") %></td>
+		<td> <%= text_field_tag "checkout[out_reason]" , document.get_check_out.out_reason.force_encoding('utf-8') , :readonly=>:true %> </td>
+		<td> <%= t("label_out_user") %></td>
+		<td> <%= text_field_tag "checkout[out_user]" , document.get_check_out.out_user, :readonly=>:true %> </td>
+	</tr>
+	<!-- liberation par celui qui a reserve seulement -->
+	<% if document.can_be_check_in?(current_user) %>
+	<% form_for(document, :url => {:id => document.id, :action => :check_in }, :method => :get) do |f| %>
+	<tr>
+		<td> <%= f.submit t("button_check_in") %></td>
+		<td> <%= label_tag t("label_in_reason") %></td>
+		<td> <%= text_field_tag "check[in_reason]" %></td>
+	</tr>
+	<% end %>
+	<% form_for(document, :url => {:id => document.id, :action => :check_free }, :method => :get) do |f| %>
+	<tr>
+		<td> <%= f.submit t("button_check_free") %></td>
+		<td> <%= label_tag t("label_in_reason") %></td>
+		<td> <%= text_field_tag "check[in_reason]" %></td>
+	</tr>
+	<% end %>
+	<%end %>
+	<%end %>
+	<% end %>
+</table>
+<% end %>

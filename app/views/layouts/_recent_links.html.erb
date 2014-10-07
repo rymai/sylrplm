@@ -1,0 +1,17 @@
+<% if logged_in? %>
+<h1><%= t(:legend_recent_links) %></h1>
+<table>
+	<tr>
+		<th><%= t("label_recent_ident")%></th>
+		<th><%= t("label_recent_description")%></th>
+		<th><%= t("label_recent_action")%></th>
+	</tr>
+	<% current_user.get_recent_links.each do |recent| %>
+	<tr>
+		<td><%= h_explorer recent.child  %></td>
+		<td><%= recent.child  %></td>
+		<td><%= recent.get_type_value("action")%></td>
+	</tr>
+	<% end %>
+</table>
+<% end %>

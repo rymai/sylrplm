@@ -1,0 +1,38 @@
+<!-- solution temporaire car la methode count_objects n'est pas reconnue dans favori !!-->
+<% nbr=0
+	["document","part","project","customer","user"].each do |type|
+		nbr += @favori.get(type).count
+	end
+%>
+<% if nbr > 0 %>
+<h1><%= t("legend_objects_to_add") %></h1>
+<% form_for(objects_to_add, :url => {:controller => get_controller_from_model_type(objects_to_add.model_name), :action => :add_objects,:id => objects_to_add.id }) do |f| %>
+<table class='menu_bas'>
+	<%= hidden_field_tag "model_name", objects_to_add.model_name %>
+	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :document}) %>
+	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :part}) %>
+	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :project}) %>
+	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :customer}) %>
+	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :user}) %>
+	<tr>
+		<td><%= submit_tag t("paste_objects") %></td>
+	</tr>
+</table>
+<% end %>
+<% end %>
+<!--
+forum
+-->
+<% if objects_to_add.respond_to?(:forums) %>
+<% if objects_to_add.relations(:forum).count > 0 %>
+<h1></h1>
+<% form_for(objects_to_add, :url => {:id => objects_to_add.id, :action => :new_forum }) do |f| %>
+<table class='menu_bas'>
+	<tr>
+		<td><%= submit_tag t("add_forum") %></td>
+		<td> <%= select("relation","forum", options_from_collection_for_select( objects_to_add.relations(:forum), :id, :ident)) %></td>
+	</tr>
+</table>
+<% end %>
+<% end %>
+<% end %>

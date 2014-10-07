@@ -1,0 +1,27 @@
+<% type_to_add=type_to_add.to_s %>
+<% if plmobj.respond_to?("#{type_to_add}s")%>
+<!--
+	<% puts "******** object_to_add.html.erb: type_to_add=#{type_to_add} count=#{@favori.get(type_to_add).count} relations=#{plmobj.relations(type_to_add).count}" %>
+-->
+<% unless @favori.get(type_to_add).count==0 || plmobj.relations(type_to_add).count==0 %>
+<% @favori.get(type_to_add).each do |favori| %>
+<!--
+<% puts "******** object_to_add.html.erb: favori=#{favori}" %>
+-->
+<% if favori != plmobj %>
+<% plmobj.relations(type_to_add).each do |relation| %>
+<tr>
+	<td><%= check_box_tag("[typetoadd][#{favori.model_name}][#{favori.id}]")  %></td>
+	<td><%= favori %></td>
+	<td><%= text_field_tag("relation[#{type_to_add}][#{relation.id}]", relation.ident, :readonly => true) %>
+<!--
+			<%= select("relation",type_to_add, options_from_collection_for_select( plmobj.relations(type_to_add), :id, :ident)) %>
+-->
+	</td>
+</tr>
+<% end %>
+<% end %>
+<% end %>
+<% end %>
+<% end %>
+

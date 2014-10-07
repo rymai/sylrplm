@@ -1,0 +1,17 @@
+<% @types_features.each do |feature, types|
+mnu_feature=get_controller_from_model_type(feature)
+%>
+<li class="dropdown-submenu" id="#{feature}_menu">
+	<%= h_menu("#","help_#{mnu_feature}",t("mnu_#{mnu_feature}")) %>
+	<ul class="dropdown-menu">
+		<%types.each do |type|
+		mdl = get_controller_from_model_type(type.forobject)
+		#puts __FILE__+type.inspect
+		%>
+		<li>
+			<%= h_menu("/#{mdl}?filter_types=#{type.name}","help_#{mdl}_#{type.name}",t("mnu_#{mdl}_#{type.name}")) %>
+		</li>
+		<% end %>
+	</ul>
+</li>
+<% end %>
