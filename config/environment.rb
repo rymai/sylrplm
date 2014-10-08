@@ -53,7 +53,6 @@ Rails::Initializer.run do |config|
 	config.autoload_paths += %W[#{Rails.root}/lib/helper]
 	config.autoload_paths += %W[#{Rails.root}/lib/models]
 	config.autoload_paths += %W[#{Rails.root}/lib/ruote/sylrplm]
-  config.autoload_paths += %W[/usr/share/ruby/gems/gems/bigdecimal-1.2.5/lib]
 	
 	# Only load the plugins named here, in the order given (default is alphabetical).
 	# :all can be used as a placeholder for all plugins not explicitly named

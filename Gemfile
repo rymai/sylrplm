@@ -9,7 +9,7 @@ gem 'test-unit'
 gem 'activesupport'
 
 gem 'bundler'
-
+gem 'bigdecimal', '~> 1.2.1'
 gem 'haml'
 gem 'iconv'
 #gem 'test-unit'
@@ -71,7 +71,7 @@ group :development do
 	#gem 'ruby-debug-base19'
 	#gem 'ruby-debug-ide19'
 	#gem 'ruby-debug193'
-	gem 'bigdecimal', :path => "/usr/share/ruby/gems/gems/bigdecimal-1.2.5" 
+	#gem 'bigdecimal', :path => "/usr/share/ruby/gems/gems/bigdecimal-1.2.5" 
 	gem 'ruby_debugger'
 	gem 'foreman'
 	gem 'letter_opener'
