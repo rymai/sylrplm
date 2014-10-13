@@ -200,6 +200,7 @@ gem install rufus-scheduler
 --- install heroku
 ---
 [root@localhost sylrplm (master)]# gem install heroku 
+
 ---
 --- install de la cle 
 ---
@@ -208,8 +209,12 @@ gem install rufus-scheduler
 Uploading ssh public key /home/syl/.ssh/id_rsa.pub
 Enter your Heroku credentials.
 Email: sylvere.coutable@laposte.net
-Password: pa33zp62
+Password: syl91.ani
 info: passphrase=syl@localhost
+---------------------
+si pb de connexion heroku login: 
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku login
+---------------------
 
 ---
 --- Create your Heroku application
@@ -220,7 +225,7 @@ http://freezing-stone-916.heroku.com/ | git@heroku.com:freezing-stone-916.git
 Git remote heroku added
 
 renommer l'appli freezing-stone-916.heroku.com en sylrplm sur le site heroku https://api.heroku.com/myapps/sylrplm
-modifier l'url dans le fichier sylrplm/heroku/.git/config 
+modifier l'url dans le fichier sylrplm/.git/config 
 url=git@heroku.com:sylrplm.git
 
 ---
@@ -246,15 +251,6 @@ To git@heroku.com:freezing-stone-916.git
 ---
 $ heroku rake db:migrate
 (in /app)
-
----
---- Next Steps
----
-Now that your application is running, it’s easy to push updates:
-
-   1. Develop and test changes locally.
-   2. Commit code to git.
-   3. Push your changes to Heroku with git push heroku.
 
 ---
 --- essai d'installer ruote dans le projet
@@ -622,16 +618,19 @@ bundle exec rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
 bundle exec rake sylrplm:import_domain[db/custos/sicm,sample.table]
 bundle exec rake sylrplm:update_access
 #pour heroku: 
+si besoin: "Unable to connect to Heroku API, please check internet connectivity and try again" , ajouter au debut de chaque ligne: 
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' 
+normalement, GEM_PATH='' suffit !!
 -recreer la base                                                                                                              
-heroku pg:reset HEROKU_POSTGRESQL_ONYX --confirm sylrplm
-heroku pg:reset SHARED_DATABASE --confirm sylrplm
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku pg:reset HEROKU_POSTGRESQL_ONYX --confirm sylrplm
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku pg:reset SHARED_DATABASE --confirm sylrplm
 -creer les tables
-heroku run rake db:reset
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake db:reset
 -remplir la base
-heroku run rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base,limours]
-heroku run rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
-heroku run rake sylrplm:import_domain[db/custos/sicm,sample.table]
-heroku run rake sylrplm:update_access
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base,limours]
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:import_domain[db/custos/sicm,sample.table]
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:update_access
 
 heroku open;heroku logs -n 500
 
@@ -799,119 +798,8 @@ et /usr/share/ruby/gems/gems/activerecord-2.3.17/lib/active_record/connection_ad
 require 'bigdecimal/bigdecimal.so'
 ### n'existe pas !!! require 'bigdecimal/util'
 
-IMPORTANT!  Nokogiri builds and uses a packaged version of libxslt.
-If this is a concern for you and you want to use the system library
-instead, abort this installation process and reinstall nokogiri as
-follows:
-    gem install nokogiri -- --use-system-libraries
-If you are using Bundler, tell it to use the option:
-    bundle config build.nokogiri --use-system-libraries
-    bundle install
 
-utiliser /usr/bin/bundle car il lance celui de la 1.9 dans /usr/local/bin/bundle
-
-Post-install message from newrelic_rpm:
-# New Relic Ruby Agent Release Notes #
-
-## v3.9.0 ##
-
-* Rack middleware instrumentation
-
-  The Ruby agent now automatically instruments Rack middlewares!
-
-  This means that the agent can now give you a more complete picture of your
-  application's response time, including time spent in middleware. It also means
-  that requests which previously weren't captured by the agent because they
-  never made it to the bottom of your middleware stack (usually a Rails or
-  Sinatra application) will now be captured.
-
-  After installing this version of the Ruby agent, you'll see a new 'Middleware'
-  band on your application's overview graph, and individual middlewares will
-  appear in transaction breakdown charts and transaction traces.
-
-  The agent can instrument middlewares that are added from a config.ru file via
-  Rack::Builder, or via Rails' middleware stack in Rails 3.0+.
-
-  This instrumentation may be disabled with the
-  disable_middlware_instrumentation configuration setting.
-
-  For more details, see the documentation for this feature:
-
-    - http://docs.newrelic.com/docs/ruby/rack-middlewares
-    - http://docs.newrelic.com/docs/ruby/middleware-upgrade-changes
-
-* Capistrano 3.x support
-
-  Recording application deployments using Capistrano 3.x is now supported.
-
-  Many thanks to Jennifer Page for the contribution!
-
-* Better support for Sidekiq's Delayed extensions
-
-  Sidekiq jobs executed via the Delayed extensions (e.g. the #delay method) will
-  now be named after the actual class that #delay was invoked against, and will
-  have their job arguments correctly captured if the sidekiq.capture_params
-  configuration setting is enabled.
-
-  Many thanks to printercu for the contribution!
-
-* Improved Apdex calculation with ignored error classes
-
-  Previously, a transaction resulting in an exception that bubbled up to the top
-  level would always be counted as failing for the purposes of Apdex
-  calculations (unless the transaction name was ignored entirely). Now,
-  exceptions whose classes have been ignored by the
-  error_collector.ignore_errors configuration setting will not cause a
-  transaction to be automatically counted as failing.
-
-* Allow URIs that are not parseable by stdlib's URI if addressable is present
-
-  There are some URIs that are valid by RFC 3986, but not parseable by Ruby's
-  stdlib URI class. The Ruby agent will now attempt to use the addressable gem
-  to parse URIs if it is present, allowing requests against these problematic
-  URIs to be instrumented.
-
-  Many thanks to Craig R Webster and Amir Yalon for their help with this issue!
-
-* More robust error collection from Resque processes
-
-  Previously, traced errors where the exception class was defined in the Resque
-  worker but not in the Resque master process would not be correctly handled by
-  the agent. This has been fixed.
-
-* Allow Sinatra apps to set the New Relic environment without setting RACK_ENV
-
-  The NEW_RELIC_ENV environment variable may now be used to specify the
-  environment the agent should use from its configuration file, independently of
-  RACK_ENV.
-
-  Many thanks to Mario Izquierdo for the contribution!
-
-* Better error handling in Browser Application Monitoring injection
-
-  The agent middleware that injects the JavaScript code necessary for Browser
-  Application Monitoring now does a better job of catching errors that might
-  occur during the injection process.
-
-* Allow disabling of Net::HTTP instrumentation
-
-  Most instrumentation in the Ruby agent can be disabled easily via a
-  configuration setting. Our Net::HTTP instrumentation was previously an
-  exception, but now it can also be disabled with the disable_net_http
-  configuration setting.
-
-* Make Rails constant presence check more defensive
-
-  The Ruby agent now guards against the (rare) case where an application has a
-  Rails constant defined, but no Rails::VERSION constant (because Rails is not
-  actually present).
-
-  Many thanks to Vladimir Kiselev for the contribution!
-
-    See https://github.com/newrelic/rpm/blob/master/CHANGELOG for a full list of
-    changes.
-[syl@localhost sylrplm (master)]$ 
-
+---------------------------------------------------------------------
 If you see errors such as PG::UnableToSend: insufficient data in "T" message or PG::UnableToSend: extraneous data in "T" message, 
 this can indicate that multiple threads are accessing the same connection, and data (or random bytes) may have been transposed between queries.
 
@@ -931,8 +819,12 @@ a faire au demarrage de la machine, service cree
 su - postgres
 cd
 /usr/local/pgsql/bin/pg_ctl -D /home/PostgreSQL -l logfile start
+/usr/bin/pg_ctl -D /home/PostgreSQL -l logfile start
+---------------------------------------------------------------------------------------
+installer le service par /usr/lib/systemd/system/postgresql.service
 ---------------------------------------------------------------------------------------
 
+/
 bd de test
 /usr/local/pgsql/bin/createdb test
 /usr/local/pgsql/bin/psql test
@@ -1004,7 +896,17 @@ su gem update --system 1.8.25
 su gem install bundler
 bundle install
 gem install activerecord-postgresql-adapter
-#gem install test-unit
-ajouter a environnment
-config.autoload_paths += %W[/usr/share/ruby/gems/gems/bigdecimal-1.2.5/lib]
+gem install heroku
 
+#pour contourner une erreur sur require bigdecimal.so:
+cp /usr/lib64/gems/ruby/bigdecimal-1.2.1/bigdecimal.* /home/syl/trav/rubyonrails/sylrplm/lib
+
+------------------------
+installation openscad
+------------------------
+telecharger openscad
+su
+cd openscad-2014.03
+install.sh
+
+associer l'extension scad a openscad dans config du systeme

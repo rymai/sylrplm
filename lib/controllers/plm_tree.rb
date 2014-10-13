@@ -145,9 +145,10 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
               :root_id => root.id)
               # gsub pour eviter une erreur fatale sur le tree: on ne le voit pas !!!
               		rel_name="relation_#{link.relation.name}"
-              		tr_rel_name=t(rel_name)
               		#########.gsub!("'"," ") on perd la traduction !!!!
-              		LOG.info (fname){"rel_name=relation_#{link.relation.name} : #{tr_rel_name} "}
+              		tr_rel_name=t(rel_name).gsub!("'"," ")
+              		#tr_rel_name=rel_name
+              		#LOG.info (fname){"rel_name=relation_#{link.relation.name} : #{rel_name} :  #{t(rel_name)} "}
 					edit_link_a = "<a href=#{edit_link_url} title=\"#{link_values}\">#{img_rel}#{tr_rel_name}</a>"
 					#LOG.debug (fname){"edit_link_a=#{edit_link_a}"}
 					# destroy du lien

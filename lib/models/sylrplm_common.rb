@@ -115,7 +115,7 @@ module Models
 				end
 
 				#puts self.model_name+".find_paginate:filter_access="+filter_access.inspect
-				LOG.debug (fname) {"filter_access=#{filter_access.inspect}"}
+				#LOG.debug (fname) {"filter_access=#{filter_access.inspect}"}
 
 				if filter_access[:qry] == "()" || filter_access[:qry] == "(" || filter_access[:qry] == ")"
 					filter_access[:qry] = ""
@@ -159,7 +159,7 @@ module Models
 				end
 				#puts self.model_name+".find_paginate:conditions="+conditions.inspect
 				#puts self.model_name+".find_paginate:page="+params[:page].to_s
-				LOG.debug (fname) {"filter_access=#{filter_access.inspect}"}
+				#LOG.debug (fname) {"filter_access=#{filter_access.inspect}"}
 				last_rev_only = false
 				unless user.nil?
 					if user.is_admin?
@@ -192,7 +192,7 @@ module Models
 				end
 				#puts self.model_name+".find_paginate:conditions="+conditions.inspect
 				#puts self.model_name+"."+__method__.to_s+":"+recordset.inspect
-				LOG.debug (fname) {"conditions=#{conditions.inspect} : #{recordset.inspect}"}
+				#LOG.debug (fname) {"conditions=#{conditions.inspect} : #{recordset.inspect}"}
 				{:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
 			end
 
