@@ -134,7 +134,7 @@ class Link < ActiveRecord::Base
 
 	def father_ident
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"father=:#{father.inspect}:"}
+		#LOG.debug (fname) {"father=:#{father.inspect}:"}
 		ret  = "#{father_id}:#{father_plmtype}.#{father_typesobject_id}"
 		ret += "=#{(father.nil? ? 'father null' : father.ident_plm)}"
 	end

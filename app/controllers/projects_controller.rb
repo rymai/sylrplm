@@ -101,7 +101,7 @@ class ProjectsController < ApplicationController
 		@status = Statusobject.get_status("project")
 		@users  = User.all
 		respond_to do |format|
-			if params[:fonct][:current] == "new_dup"
+			if fonct_new_dup?
 				object_orig=Project.find(params[:object_orig_id])
 			st = @project.create_duplicate(object_orig)
 			else

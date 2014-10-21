@@ -60,7 +60,7 @@ class SequencesController < ApplicationController
 		#@objects=Sequence.getObjectsWithSequence
 		@utilities=html_models_and_columns(@sequence.utility)
 		respond_to do |format|
-			if params[:fonct][:current] == "new_dup"
+			if fonct_new_dup?
 				object_orig=Sequence.find(params[:object_orig_id])
 			st = @sequence.create_duplicate(object_orig)
 			else

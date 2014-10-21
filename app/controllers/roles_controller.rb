@@ -66,7 +66,7 @@ class RolesController < ApplicationController
 	def create
 		@role = Role.new(params[:role])
 		respond_to do |format|
-			if params[:fonct][:current] == "new_dup"
+			if fonct_new_dup?
 				object_orig=Role.find(params[:object_orig_id])
 			st = @role.create_duplicate(object_orig)
 			else

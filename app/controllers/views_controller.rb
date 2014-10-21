@@ -58,7 +58,7 @@ class ViewsController < ApplicationController
 		@view = View.new(params[:view])
 		@relations=Relation.all
 		respond_to do |format|
-			if params[:fonct][:current] == "new_dup"
+			if fonct_new_dup?
 				object_orig=View.find(params[:object_orig_id])
 			st = @view.create_duplicate(object_orig)
 			else

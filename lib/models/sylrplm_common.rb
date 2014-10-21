@@ -93,7 +93,9 @@ module Models
 				#
 				# lecture possible des projets et des groupes du user
 				#
-				filter_access[:qry] = "("
+        par_open="("
+        par_close=")"
+				filter_access[:qry] = par_open
 				unless user.nil?
 					if column_names.include?("group_id")
 						filter_access[:qry] += " group_id in ("
@@ -101,23 +103,24 @@ module Models
 						filter_access[:qry] += group.id.to_s
 							filter_access[:qry] += "," if i<user.groups.size-1
 						end
-						filter_access[:qry] += ")"
+						filter_access[:qry] += par_close
 					end
 					if column_names.include?("projowner_id")
-						filter_access[:qry] += " or projowner_id in ("
+					  filter_access[:qry] += " or" if filter_access[:qry]!=par_open
+						filter_access[:qry] += " projowner_id in ("
 						user.projects.each_with_index do |project,i|
 						filter_access[:qry] += project.id.to_s
 							filter_access[:qry] += "," if i<user.projects.size-1
 						end
-						filter_access[:qry] += ")"
+						filter_access[:qry] += par_close
 					end
-					filter_access[:qry] += ")"
+					filter_access[:qry] += par_close
 				end
 
 				#puts self.model_name+".find_paginate:filter_access="+filter_access.inspect
 				#LOG.debug (fname) {"filter_access=#{filter_access.inspect}"}
 
-				if filter_access[:qry] == "()" || filter_access[:qry] == "(" || filter_access[:qry] == ")"
+				if filter_access[:qry] == par_open+par_close || filter_access[:qry] == par_open || filter_access[:qry] == par_close
 					filter_access[:qry] = ""
 				end
 				unless params[:query].nil? || params[:query].blank?
@@ -159,7 +162,7 @@ module Models
 				end
 				#puts self.model_name+".find_paginate:conditions="+conditions.inspect
 				#puts self.model_name+".find_paginate:page="+params[:page].to_s
-				#LOG.debug (fname) {"filter_access=#{filter_access.inspect}"}
+				LOG.info(fname) {"filter_access=#{filter_access.inspect}"}
 				last_rev_only = false
 				unless user.nil?
 					if user.is_admin?

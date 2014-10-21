@@ -7,7 +7,7 @@
 <br/>
 <%= f.label t(:label_father_plmtype) %>
 <%= f.select(
-	:father_plmtype, @datas[:types_plm], {},
+	:father_plmtype, @relation.datas[:types_plm], {},
 	{
 		:onchange => "#{remote_function(:url => {:controller => 'relations', :action => 'update_father'}, :with => "'father_plmtype='+value")}"
 	}
@@ -17,7 +17,7 @@
 
 <%= f.label t(:label_child_plmtype) %>
 <%= f.select(
-	:child_plmtype, @datas[:types_plm], {},
+	:child_plmtype, @relation.datas[:types_plm], {},
 	{
 		:onchange => "#{remote_function(:url =>  {:controller => 'relations', :action => 'update_child'}, :with => "'child_plmtype='+value")}"
 	}
@@ -25,6 +25,9 @@
 <br/>
 <%= render(:partial => "relations/child_types") %>
 
+<%= f.label t(:label_paste_way) %>
+<%= f.select(:paste_way, Relation.get_paste_way) %>
+<br/>
 <%= f.label t(:label_cardin_occur_min) %>
 <%= f.text_field :cardin_occur_min %>
 <br/>

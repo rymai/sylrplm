@@ -99,7 +99,7 @@ class UsersController < ApplicationController
 	def create
 		@the_user    = User.new(params["user"])
 		respond_to do |format|
-			if params[:fonct][:current] == "new_dup"
+			if fonct_new_dup?
 				object_orig=User.find(params[:object_orig_id])
 			st = @the_user.create_duplicate(object_orig)
 			else

@@ -7,10 +7,11 @@ Relation_1:
   child_plmtype: document
   father_typesobject_id: '1045584123'
   child_typesobject_id: '1045584116'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -22,10 +23,11 @@ Relation_2:
   child_plmtype: part
   father_typesobject_id: '1045584120'
   child_typesobject_id: '1045584119'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -37,10 +39,11 @@ Relation_3:
   child_plmtype: customer
   father_typesobject_id: '1045584114'
   child_typesobject_id: '1045584114'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -52,10 +55,11 @@ Relation_5:
   child_plmtype: document
   father_typesobject_id: '1045584116'
   child_typesobject_id: '1045584116'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -67,6 +71,7 @@ Relation_7:
   child_plmtype: project
   father_typesobject_id: '1045584114'
   child_typesobject_id: '1045584120'
+  paste_way: "manual"
   cardin_occur_min: '0'
   cardin_occur_max: '1'
   cardin_use_min: '0'
@@ -82,10 +87,11 @@ Relation_8:
   child_plmtype: any_plmtype
   father_typesobject_id: '41165346'
   child_typesobject_id: '1045584123'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -97,10 +103,11 @@ Relation_11:
   child_plmtype: any_plmtype
   father_typesobject_id: '41165346'
   child_typesobject_id: '1045584123'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -112,10 +119,11 @@ Relation_9:
   child_plmtype: forum
   father_typesobject_id: '1045584123'
   child_typesobject_id: '1045584117'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -127,10 +135,11 @@ Relation_20:
   child_plmtype: part
   father_typesobject_id: '989626522'
   child_typesobject_id: '989626524'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -142,10 +151,11 @@ Relation_21:
   child_plmtype: part
   father_typesobject_id: '989626522'
   child_typesobject_id: '989626523'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -157,10 +167,11 @@ Relation_22:
   child_plmtype: part
   father_typesobject_id: '989626523'
   child_typesobject_id: '989626524'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -172,10 +183,11 @@ Relation_23:
   child_plmtype: part
   father_typesobject_id: '989626531'
   child_typesobject_id: '989626524'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -187,10 +199,11 @@ Relation_24:
   child_plmtype: part
   father_typesobject_id: '989626522'
   child_typesobject_id: '989626526'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -202,10 +215,11 @@ Relation_25:
   child_plmtype: part
   father_typesobject_id: '989626526'
   child_typesobject_id: '989626526'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -217,10 +231,11 @@ Relation_26:
   child_plmtype: part
   father_typesobject_id: '989626526'
   child_typesobject_id: '989626525'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -232,10 +247,11 @@ Relation_27:
   child_plmtype: document
   father_typesobject_id: '1045584113'
   child_typesobject_id: '1045584116'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -247,10 +263,11 @@ Relation_28:
   child_plmtype: document
   father_typesobject_id: '1045584116'
   child_typesobject_id: '1045584116'
+  paste_way: "manual"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -262,10 +279,11 @@ Relation_29:
   child_plmtype: any_plmtype
   father_typesobject_id: '1045584123'
   child_typesobject_id: '1045584123'
+  paste_way: "internal"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -277,10 +295,11 @@ Relation_30:
   child_plmtype: any_plmtype
   father_typesobject_id: '1045584123'
   child_typesobject_id: '1045584123'
+  paste_way: "internal"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
 
@@ -292,9 +311,42 @@ Relation_35:
   child_plmtype: any_plmtype
   father_typesobject_id: '1045584123'
   child_typesobject_id: '1045584123'
+  paste_way: "internal"
   cardin_occur_min: '0'
-  cardin_occur_max: "-1"
+  cardin_occur_max: '-1'
   cardin_use_min: '0'
-  cardin_use_max: "-1"
+  cardin_use_max: '-1'
   domain: admin
   type_values: 
+
+Relation_37:
+  id: '37'
+  name: ISSUE_SOLUTION
+  typesobject_id: '672869653'
+  father_plmtype: part
+  child_plmtype: any_plmtype
+  father_typesobject_id: '1045584152'
+  child_typesobject_id: '1045584123'
+  paste_way: "manual"
+  cardin_occur_min: '0'
+  cardin_occur_max: '-1'
+  cardin_use_min: '0'
+  cardin_use_max: '-1'
+  domain: admin
+  type_values: 
+
+Relation_36:
+  id: '36'
+  name: ISSUE_ORIGIN
+  typesobject_id: '672869653'
+  father_plmtype: part
+  child_plmtype: any_plmtype
+  father_typesobject_id: '1045584152'
+  child_typesobject_id: '1045584123'
+  paste_way: "manual"
+  cardin_occur_min: '0'
+  cardin_occur_max: '-1'
+  cardin_use_min: '0'
+  cardin_use_max: '-1'
+  domain: admin
+  type_values: '{}'

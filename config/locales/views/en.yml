@@ -523,6 +523,7 @@ en:
   label_cardin_use_min: Use min
   label_cardin_use_max: Use max
   relation_new_dup: Duplication of relation
+  label_paste_way: Paste way
   # roles
   legend_role: Enter role details
   role_list: Listing of roles

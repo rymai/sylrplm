@@ -28,7 +28,7 @@ class RelationsController < ApplicationController
 		fname= "#{controller_class_name}.#{__method__}"
 		#LOG.debug (fname) {"params=#{params}"}
 		@relation = Relation.new
-		@datas = @relation.datas
+		#@datas = @relation.datas
 		@views = View.all
 		@types  = Typesobject.get_types("relation")
 		@status = Statusobject.get_status("relation")

@@ -127,7 +127,7 @@ class DefinitionsController < ApplicationController
 	def create
 		@definition = Definition.new(params[:definition])
 		respond_to do |format|
-			if params[:fonct][:current] == "new_dup"
+			if fonct_new_dup?
 				object_orig=Definition.find(params[:object_orig_id])
 			st = @definition.create_duplicate(object_orig)
 			else

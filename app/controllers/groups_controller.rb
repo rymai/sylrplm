@@ -108,7 +108,7 @@ class GroupsController < ApplicationController
 	def create
 		@group = Group.new(params[:group])
 		respond_to do |format|
-			if params[:fonct][:current] == "new_dup"
+			if fonct_new_dup?
 				object_orig=Group.find(params[:object_orig_id])
 			st = @group.create_duplicate(object_orig)
 			else

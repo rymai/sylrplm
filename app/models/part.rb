@@ -132,7 +132,7 @@ class Part < ActiveRecord::Base
 		ret=[]
 		parts.each do |part|
 			if part.typesobject.name == "VAR"
-				LOG.info (fname){"part:#{part}"}
+				LOG.debug (fname){"part:#{part}"}
 			ret << part
 			end
 		end

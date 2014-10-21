@@ -14,6 +14,7 @@ module Controllers
 			flash = {}
 			flash[:notice] = ""
 			flash[:error] = ""
+			LOG.info() { "appel ctrl_add_objects_from_favorites" }
 			flash = ctrl_add_objects_from_favorites(obj, nil, flash)
 		end
 
@@ -598,6 +599,13 @@ module Controllers
 			fname= "#{self.class.name}.#{__method__}"
 			LOG.info (fname) {"#{object} #{ar_workitem}"}
 			return ar_workitem.add_object(object)
+		end
+		
+		#
+		# used in create method: does the funct is to duplicate an object ?
+		#
+		def fonct_new_dup?
+		  !params[:fonct].blank? && !params[:fonct][:current].blank? && params[:fonct][:current] == "new_dup"
 		end
 	end
 end

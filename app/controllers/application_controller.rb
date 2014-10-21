@@ -399,7 +399,7 @@ class ApplicationController < ActionController::Base
 			html_title="title='#{mdl_name}'"
 		end
 		fic = icone_fic(object)
-		ret = "<img class='icone' src='#{fic}' #{html_title}></img>"
+		ret = "<img class='icone' src='#{fic}' #{html_title}/>"
 		unless @myparams[:list_mode].blank?
 			if @myparams[:list_mode] != t(:list_mode_details)
 				ret << h_thumbnails(object)
@@ -449,11 +449,14 @@ class ApplicationController < ActionController::Base
 	end
 
 	def h_thumbnails(obj)
+		fname="#{controller_class_name}.#{__method__}"
 		ret=""
 		if obj.respond_to? :thumbnails
 			unless obj.thumbnails.nil?
 				obj.thumbnails.each do |img|
-					ret << "<img class='thumbnail' src=\"#{img.write_file_tmp}\"></img>"
+				  src = img.write_file_tmp
+				  LOG.debug (fname) {"src=#{src} "}
+					ret << "<img class='thumbnail' src='#{src}'/>"
 				end
 			end
 		end

@@ -601,36 +601,9 @@ end
       #TODO syl pour postgresql qui refuse le null
       e.text="text" if e.text.nil?
       
----
---- export et import des custos
----
-rake sylrplm:export_domain[../sylrplm_custos_export,sicm.custo]
-rake sylrplm:export_domain[../sylrplm_custos_export,sample.table]
+
 
 --- verifier et deplacer dans une custo par besoin
--recreer la base
-rake db:drop;rake db:create
--creer les tables
-bundle exec rake db:reset
--remplir la base
-bundle exec rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base,limours]
-bundle exec rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
-bundle exec rake sylrplm:import_domain[db/custos/sicm,sample.table]
-bundle exec rake sylrplm:update_access
-#pour heroku: 
-si besoin: "Unable to connect to Heroku API, please check internet connectivity and try again" , ajouter au debut de chaque ligne: 
-GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' 
-normalement, GEM_PATH='' suffit !!
--recreer la base                                                                                                              
-GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku pg:reset HEROKU_POSTGRESQL_ONYX --confirm sylrplm
-GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku pg:reset SHARED_DATABASE --confirm sylrplm
--creer les tables
-GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake db:reset
--remplir la base
-GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base,limours]
-GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
-GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:import_domain[db/custos/sicm,sample.table]
-GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:update_access
 
 heroku open;heroku logs -n 500
 
@@ -704,17 +677,6 @@ su gem install bundler
 bundle install
 gem install activerecord-postgresql-adapter
 gem install test-unit
-
-pb postgresql sur utf8:
-PG::InvalidParameterValue: ERROR:  new encoding (UTF8) is incompatible with the encoding of the template database (SQL_ASCII)
-
-UPDATE pg_database SET datistemplate = FALSE WHERE datname = 'template1';
-dropdb template1 ou drop database
-createdb --encoding=unicode --template=template0 template1
-CREATE DATABASE template1 WITH TEMPLATE = template0 ENCODING = 'UTF8';
-UPDATE pg_database SET datistemplate = TRUE WHERE datname = 'template1';
-\c template1
-VACUUM FREEZE;
 
 
 When integrating with NewRelic, do not enable the SQL query plan instrumentation. 
@@ -821,7 +783,9 @@ cd
 /usr/local/pgsql/bin/pg_ctl -D /home/PostgreSQL -l logfile start
 /usr/bin/pg_ctl -D /home/PostgreSQL -l logfile start
 ---------------------------------------------------------------------------------------
-installer le service par /usr/lib/systemd/system/postgresql.service
+installer le service par /usr/lib/systemd/system/postgresql.service (modele dans sylrplm/explo)
+control par systemctl status postgresql.service
+erreur systemd: PID file /var/lib/pgsql/data/postmaster.pid not readable (yet?)
 ---------------------------------------------------------------------------------------
 
 /
@@ -880,7 +844,8 @@ postgres 9.1.13 par centre de controle
 -------------------------------------
 lancement du serveur
 /usr/bin/pg_ctl -D /home/PostgreSQL -l logfile start
-ou modif /var/lib/pgsql/data/postgresql.conf : data_directory = '/home/PostgreSQL'
+ou modif /var/lib/pgsql/data/postgresql.conf ou /home/PostgreSQL/postgresql.conf (modele dans sylrplm/explo)
+	data_directory = '/home/PostgreSQL'
 
 -----------------------------------------------------------------
 reinstall de ruby 2.0.0 depuis le gestionnaire de sources
@@ -900,6 +865,62 @@ gem install heroku
 
 #pour contourner une erreur sur require bigdecimal.so:
 cp /usr/lib64/gems/ruby/bigdecimal-1.2.1/bigdecimal.* /home/syl/trav/rubyonrails/sylrplm/lib
+
+--------------------------------
+creation bd
+--------------------------------
+
+-recreer la base
+rake db:drop;
+rake db:create
+ou
+su - postgres
+[postgres@localhost ~]$ /usr/bin/createdb sylrplm_development
+
+pb postgresql sur utf8:
+PG::InvalidParameterValue: ERROR:  new encoding (UTF8) is incompatible with the encoding of the template database (SQL_ASCII)
+
+First, we need to drop template1. Templates can’t be dropped, so we first modify it so t’s an ordinary database:
+UPDATE pg_database SET datistemplate = FALSE WHERE datname = 'template1';
+Now we can drop it:
+DROP DATABASE template1;
+Now its time to create database from template0, with a new default encoding:
+CREATE DATABASE template1 WITH TEMPLATE = template0 ENCODING = 'UNICODE';
+Now modify template1 so it’s actually a template:
+UPDATE pg_database SET datistemplate = TRUE WHERE datname = 'template1';
+Now switch to template1 and VACUUM FREEZE the template:
+\c template1
+VACUUM FREEZE;
+
+
+---
+--- export et import des custos
+---
+rake sylrplm:export_domain[../sylrplm_custos_export,sicm.custo]
+rake sylrplm:export_domain[../sylrplm_custos_export,sample.table]
+
+-creer les tables
+bundle exec rake db:reset
+-remplir la base
+bundle exec rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base,limours]
+bundle exec rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
+bundle exec rake sylrplm:import_domain[db/custos/sicm,sample.table]
+bundle exec rake sylrplm:update_access
+#pour heroku: 
+si besoin: "Unable to connect to Heroku API, please check internet connectivity and try again" , ajouter au debut de chaque ligne: 
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' 
+normalement, GEM_PATH='' suffit !!
+-recreer la base                                                                                                              
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku pg:reset HEROKU_POSTGRESQL_ONYX --confirm sylrplm
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku pg:reset SHARED_DATABASE --confirm sylrplm
+-creer les tables
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake db:reset
+-remplir la base
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base,limours]
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:import_domain[db/custos/sicm,sample.table]
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:update_access
+
 
 ------------------------
 installation openscad

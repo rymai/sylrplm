@@ -1,8 +1,8 @@
 <!-- solution temporaire car la methode count_objects n'est pas reconnue dans favori !!-->
 <% nbr=0
-	["document","part","project","customer","user"].each do |type|
-		nbr += @favori.get(type).count
-	end
+  ["document","part","project","customer","user"].each do |type|
+    nbr += @favori.get(type).count
+  end
 %>
 <% if nbr > 0 %>
 <h1><%= t("legend_objects_to_add") %></h1>
@@ -23,14 +23,15 @@
 <!--
 forum
 -->
-<% if objects_to_add.respond_to?(:forums) %>
-<% if objects_to_add.relations(:forum).count > 0 %>
+<% if objects_to_add.respond_to?(:forums)
+relations=objects_to_add.relations(:forum,:forum)%>
+<% if relations.count > 0 %>
 <h1></h1>
 <% form_for(objects_to_add, :url => {:id => objects_to_add.id, :action => :new_forum }) do |f| %>
 <table class='menu_bas'>
 	<tr>
 		<td><%= submit_tag t("add_forum") %></td>
-		<td> <%= select("relation","forum", options_from_collection_for_select( objects_to_add.relations(:forum), :id, :ident)) %></td>
+		<td> <%= select("relation","forum", options_from_collection_for_select( relations, :id, :ident)) %></td>
 	</tr>
 </table>
 <% end %>

@@ -63,7 +63,7 @@ class SubscriptionsController < ApplicationController
 	def create
 		@subscription = Subscription.new(params[:subscription])
 		respond_to do |format|
-			if params[:fonct][:current] == "new_dup"
+			if fonct_new_dup?
 				object_orig=Subscription.find(params[:object_orig_id])
 			st = @subscription.create_duplicate(object_orig)
 			else

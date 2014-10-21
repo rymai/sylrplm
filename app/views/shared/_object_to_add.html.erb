@@ -9,9 +9,9 @@
 <% puts "******** object_to_add.html.erb: favori=#{favori}" %>
 -->
 <% if favori != plmobj %>
-<% plmobj.relations(type_to_add).each do |relation| %>
+<% plmobj.relations(type_to_add, nil, ::Relation::RELATION_PASTE_WAY_MANUAL).each do |relation| %>
 <tr>
-	<td><%= check_box_tag("[typetoadd][#{favori.model_name}][#{favori.id}]")  %></td>
+	<td><%= check_box_tag( "objecttoadd[#{favori.model_name}][#{favori.id}][#{relation.id}]")  %></td>
 	<td><%= favori %></td>
 	<td><%= text_field_tag("relation[#{type_to_add}][#{relation.id}]", relation.ident, :readonly => true) %>
 <!--

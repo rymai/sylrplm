@@ -36,6 +36,8 @@ def  build_tree(obj, view_id, variant_mdlid = nil, level_max = 9999)
 	###TODO a mettre en option group_tree(tree, 0)
 	#LOG.debug (fname) {"tree size=#{tree.size}"}
 	##LOG.debug (fname) {"tree =#{tree.inspect}"}
+	session[:tree_object] = obj
+	LOG.debug (fname) {"session[:tree_object]=#{session[:tree_object]}"}
 	tree
 end
 
@@ -145,8 +147,9 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
               :root_id => root.id)
               # gsub pour eviter une erreur fatale sur le tree: on ne le voit pas !!!
               		rel_name="relation_#{link.relation.name}"
-              		#########.gsub!("'"," ") on perd la traduction !!!!
-              		tr_rel_name=t(rel_name).gsub!("'"," ")
+              		tr_rel_name=t(rel_name).gsub!("'"," ") 
+              		##quelquefois on perd la traduction !!!!
+              		tr_rel_name="#{link.relation.name}" if tr_rel_name.blank?
               		#tr_rel_name=rel_name
               		#LOG.info (fname){"rel_name=relation_#{link.relation.name} : #{rel_name} :  #{t(rel_name)} "}
 					edit_link_a = "<a href=#{edit_link_url} title=\"#{link_values}\">#{img_rel}#{tr_rel_name}</a>"

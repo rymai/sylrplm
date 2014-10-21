@@ -23,7 +23,8 @@ fr:
   relation_label_document_users: Document utilisateurs
   relation_label_customer_users: Client utilisateurs
   relation_label_project_users: Projet utilisateurs
-  relation_ISSUE_ORIGIN: Origine du problème
+  relation_ISSUE_ORIGIN: Origine du probleme
+  relation_ISSUE_SOLUTION: Solution au probleme
   relation_RECENT_ACTION: Action récente
   #
   typesobject_name_lifecycle: Cycle de vie
@@ -88,7 +89,7 @@ fr:
   typesobject_name_image: Image
   typesobject_name_calculsheet: Tableur
   typesobject_name_volumes_dir: Répertoire des volumes
-  typesobject_name_ISSUE: Problème
+  typesobject_name_ISSUE: Probleme
   # statusobject
   typesobject_name_ready: Prêt
   typesobject_name_approved: Approuvé

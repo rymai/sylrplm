@@ -59,7 +59,7 @@ class AccessesController < ApplicationController
 	def create
 		respond_to do |format|
 			@access = Access.new(params[:access])
-			if params[:fonct][:current] == "new_dup"
+			if fonct_new_dup?
 				object_orig=Access.find(params[:object_orig_id])
 			st = @access.create_duplicate(object_orig)
 			else

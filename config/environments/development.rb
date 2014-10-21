@@ -20,7 +20,7 @@ config.action_mailer.delivery_method = :letter_opener
 config.action_mailer.default_url_options = { host: "localhost:3000" }
 
 # See everything in the log (default is :info)
-config.log_level = :error
+config.log_level = :info
 #FATAL an unhandleable error that results in a program crash
 #ERROR a handleable error condition
 #WARN  a warning

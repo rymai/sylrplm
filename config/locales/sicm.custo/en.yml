@@ -24,6 +24,7 @@ en:
   relation_label_customer_users: Customer users
   relation_label_project_users: Project users
   relation_ISSUE_ORIGIN: Issue Origin
+  relation_ISSUE_SOLUTION: Issue solution
   relation_RECENT_ACTION: Recent action
   #
   typesobject_name_lifecycle: Lifecyle

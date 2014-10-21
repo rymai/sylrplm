@@ -18,6 +18,7 @@
 		<th <%= sort_td_class_helper "father_typesobject" %>> <%= sort_link_helper t("label_father_type"), "father_typesobject_id" %></th>
 		<th <%= sort_td_class_helper "child_plmtype" %>> <%= sort_link_helper t("label_child_plmtype"), "child_plmtype" %></th>
 		<th <%= sort_td_class_helper "child_typesobject" %>> <%= sort_link_helper t("label_child_type"), "child_typesobject_id" %></th>
+		<th><%= t("label_paste_way")%></th>
 		<th><%= t("label_cardin_occur_min")%></th>
 		<th><%= t("label_cardin_occur_max")%></th>
 		<th><%= t("label_cardin_use_min")%></th>
@@ -33,6 +34,7 @@
 		<td><%= h_explorer relation.father_typesobject, :name_translate unless relation.father_typesobject.nil? %>(<%= relation.father_typesobject_id%>)</td>
 		<td><%= h relation.child_plmtype  %>(<%= relation.child_plmtype_translate %>)</td>
 		<td><%= h_explorer relation.child_typesobject, :name_translate unless relation.child_typesobject.nil? %>(<%= relation.child_typesobject_id%>)</td>
+		<td><%= h relation.paste_way%></td>
 		<td><%= h relation.cardin_occur_min %></td>
 		<td><%= h relation.cardin_occur_max %></td>
 		<td><%= h relation.cardin_use_min %></td>

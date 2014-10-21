@@ -130,7 +130,7 @@ fr:
   mnu_projects_product: Produit
   mnu_projects_$PROJ_ACCOUNT: Projet personnel
   mnu_customers_any_type: Tous types
-  mnu_parts_ISSUE: Problème
+  mnu_parts_ISSUE: Probleme
   # menus
   mnu_main: Accueil
   mnu_documents: Documents
@@ -523,6 +523,7 @@ fr:
   label_cardin_use_min: Util min
   label_cardin_use_max: Util max
   relation_new_dup: Duplication de relation
+  label_paste_way: Méthode de collage
   # roles
   legend_role: "Renseignez les propriétés du role"
   role_list: Liste des rôles

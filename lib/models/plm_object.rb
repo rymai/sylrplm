@@ -342,10 +342,11 @@ module Models
 			ret
 		end
 
-		def relations(child_plmtype = nil)
+		def relations(child_plmtype = nil, relation_type_name=nil, relation_paste_way=nil)
 			fname= "#{self.class.name}.#{__method__}"
-			ret=::Relation.relations_for(self, child_plmtype.to_s)
-			#OG.info (fname) {"relations from #{self.model_name} to #{child_plmtype.to_s}:ret=#{ret}"}
+			child_type=nil
+			ret=::Relation.relations_for(self, child_plmtype, child_type, relation_type_name, relation_paste_way)
+			LOG.debug (fname) {"relations from #{self.model_name} to #{child_plmtype.to_s}:ret=#{ret}"}
 			ret
 		end
 

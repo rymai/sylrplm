@@ -91,7 +91,7 @@ class DocumentsController < ApplicationController
 		@types    = Typesobject.get_types("document")
 		@status   = Statusobject.get_status("document")
 		respond_to do |format|
-			if params[:fonct][:current] == "new_dup"
+			if fonct_new_dup?
 				object_orig=Document.find(params[:object_orig_id])
 			st = @document.create_duplicate(object_orig)
 			else

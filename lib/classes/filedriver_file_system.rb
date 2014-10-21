@@ -28,12 +28,12 @@ class FiledriverFileSystem < Filedriver
 	########################################################################
 	def dir_datafile(datafile)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname) {"datafile.volume.dir_name=#{datafile.volume.dir_name} datafile.class.name=#{datafile.class.name} ident=#{datafile.ident}"}
+		LOG.debug (fname) {"datafile.volume.dir_name=#{datafile.volume.dir_name} datafile.class.name=#{datafile.class.name} ident=#{datafile.ident}"}
 		ret=""
 		unless datafile.volume.dir_name.nil? || datafile.ident.nil?
 			ret=File.join datafile.volume.dir_name.gsub("_","-"), datafile.model_name, datafile.ident
 		end
-		LOG.info (fname) {"dir_datafile=#{ret}"}
+		LOG.debug (fname) {"dir_datafile=#{ret}"}
 		ret
 	end
 

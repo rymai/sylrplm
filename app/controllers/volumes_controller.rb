@@ -55,7 +55,7 @@ class VolumesController < ApplicationController
 		@volume = Volume.new(params[:volume])
 		#puts "volumes_controller.create:errors="+@volume.errors.count.to_s+":"+@volume.errors.inspect
 		respond_to do |format|
-			if params[:fonct][:current] == "new_dup"
+			if fonct_new_dup?
 				object_orig=Volume.find(params[:object_orig_id])
 			st = @volume.create_duplicate(object_orig)
 			else

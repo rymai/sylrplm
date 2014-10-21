@@ -9,10 +9,13 @@ def empty_favori
 end
 
 def ctrl_add_objects_from_favorites(object, child_plmtype, flash)
+	fname="#{controller_class_name}.#{__method__}"
+	LOG.info(fname) {"object=#{object} child_plmtype=#{child_plmtype}"}
 	if child_plmtype.nil?
 		#["document", "part", "project", "customer", "user"].each do |childplmtype|
-		unless params[:typetoadd].nil?
-			params[:typetoadd].each do |childplmtype, value|
+		LOG.info(fname) {"params[:objecttoadd]=#{params[:objecttoadd]}"}
+		unless params[:objecttoadd].nil?
+			params[:objecttoadd].each do |childplmtype, value|
 				flash = add_objects_from_favorites(object, childplmtype, flash)
 			end
 		end
@@ -27,15 +30,25 @@ end
 
 def add_objects_from_favorites(object, child_plmtype, flash)
 	fname="#{controller_class_name}.#{__method__}"
+  	LOG.info(fname) {"object=#{object} child_plmtype=#{child_plmtype}"}
   	#LOG.info(fname) {"#{object.inspect}.#{child_plmtype}"}
-  	LOG.info(fname) {"params=#{params}"}
-  	LOG.info(fname) {"notice=#{flash[:notice]}"}
-  	favoris_to_add=params[:typetoadd][child_plmtype]
+    LOG.info(fname) {"params[:relation]=#{params[:relation]}"}
+    LOG.info(fname) {"params[:commit]=#{params[:commit]}"}
+    LOG.info(fname) {"params[:objecttoadd]=#{params[:objecttoadd]}"}
+    LOG.info(fname) {"params[:controller]=#{params[:controller]}"}
+    LOG.info(fname) {"params[:action]=#{params[:action]}"}
+    LOG.info(fname) {"params[:id]=#{params[:id]}"}
+  	#LOG.info(fname) {"notice=#{flash[:notice]}"}
+  	favoris_to_add=params[:objecttoadd][child_plmtype]
   	#LOG.info(fname) {"favoris to add=#{favoris_to_add}"}
   	unless object.nil?
-	 	unless params[:relation][child_plmtype].nil?
-	  		params[:relation][child_plmtype].each do |relation_id, val|
-	  			relation = Relation.find(relation_id)
+  	  #objecttoadd[#{favori.model_name}][#{favori.id}][#{relation.id}]
+	 	unless params[:objecttoadd][child_plmtype].nil?
+	     params[:objecttoadd][child_plmtype].each do |favori_id, favori_val|
+          LOG.info(fname) {"favori_id=#{favori_id} favori_val=#{favori_val} "}
+        favori_val.each do |relation_id, val|
+          LOG.info(fname) {"relation_id=#{relation_id} val=#{val}"}
+    			relation = Relation.find(relation_id)
 		  		plmtype = child_plmtype.to_s
 		  		ctrltype = t("ctrl_#{plmtype}")
 		  		unless @favori.get(plmtype).nil?
@@ -61,6 +74,7 @@ def add_objects_from_favorites(object, child_plmtype, flash)
 			               			:msg => link.errors.first)
 			        		end
 			      		end
+			    	end
 			    	end
 			 	end
 			end

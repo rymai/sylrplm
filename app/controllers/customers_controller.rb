@@ -91,7 +91,7 @@ class CustomersController < ApplicationController
 		@types    = Typesobject.get_types("customer")
 		@status   = Statusobject.get_status(@customer)
 		respond_to do |format|
-			if params[:fonct][:current] == "new_dup"
+			if fonct_new_dup?
 				object_orig=Customer.find(params[:object_orig_id])
 			st = @customer.create_duplicate(object_orig)
 			else

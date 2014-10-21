@@ -59,7 +59,7 @@ class TypesobjectsController < ApplicationController
 		@typesobject = Typesobject.new(params[:typesobject])
 		@objectswithtype=Typesobject.get_objects_with_type
 		respond_to do |format|
-			if params[:fonct][:current] == "new_dup"
+			if !params[:fonct].nil? && !params[:fonct][:current].nil? && params[:fonct][:current] == "new_dup"
 				object_orig=Typesobject.find(params[:object_orig_id])
 			st = @typesobject.create_duplicate(object_orig)
 			else

@@ -12,7 +12,7 @@ Typesobject_502955464:
   id: '502955464'
   forobject: relation
   name: forum
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -20,7 +20,7 @@ Typesobject_598687896:
   id: '598687896'
   forobject: ar_workitem
   name: ar_workitem
-  fields:
+  fields: 
   description: Tache de processus
   domain: admin
 
@@ -54,7 +54,7 @@ Typesobject_672869653:
   id: '672869653'
   forobject: relation
   name: tree
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -70,7 +70,7 @@ Typesobject_804690363:
   id: '804690363'
   forobject: user
   name: virtual_
-  fields: "{}"
+  fields: '{}'
   description: Utilisateur virtuel, pour les batchs ...
   domain: admin
 
@@ -134,8 +134,8 @@ Typesobject_989626531:
 Typesobject_997141214:
   id: '997141214'
   forobject: project
-  name: "$PROJ_ACCOUNT"
-  fields: "{}"
+  name: $PROJ_ACCOUNT
+  fields: '{}'
   description: Type de projet affecte automatiquement a la creation du compte.
   domain: admin
 
@@ -151,7 +151,7 @@ Typesobject_1045584114:
   id: '1045584114'
   forobject: customer
   name: any_type
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -159,7 +159,7 @@ Typesobject_1045584115:
   id: '1045584115'
   forobject: datafile
   name: any_type
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -167,7 +167,7 @@ Typesobject_1045584116:
   id: '1045584116'
   forobject: document
   name: any_type
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -175,7 +175,7 @@ Typesobject_1045584117:
   id: '1045584117'
   forobject: forum
   name: any_type
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -183,7 +183,7 @@ Typesobject_1045584118:
   id: '1045584118'
   forobject: link
   name: any_type
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -191,7 +191,7 @@ Typesobject_1045584119:
   id: '1045584119'
   forobject: part
   name: any_type
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -199,7 +199,7 @@ Typesobject_1045584120:
   id: '1045584120'
   forobject: project
   name: any_type
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -207,7 +207,7 @@ Typesobject_1045584122:
   id: '1045584122'
   forobject: user
   name: any_type
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -215,7 +215,7 @@ Typesobject_1045584123:
   id: '1045584123'
   forobject: any_plmtype
   name: any_type
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -223,7 +223,7 @@ Typesobject_1045584125:
   id: '1045584125'
   forobject: relation
   name: processus
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -231,7 +231,7 @@ Typesobject_1045584126:
   id: '1045584126'
   forobject: relation
   name: documentation
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -300,7 +300,7 @@ Typesobject_41165346:
   id: '41165346'
   forobject: history_entry
   name: history_entry
-  fields:
+  fields: 
   description: Historique de processus
   domain: admin
 
@@ -308,7 +308,7 @@ Typesobject_678514879:
   id: '678514879'
   forobject: any_plmtype
   name: public
-  fields: "{}"
+  fields: '{}'
   description: Projet public
   domain: admin
 
@@ -324,15 +324,15 @@ Typesobject_109967184:
   id: '109967184'
   forobject: definition
   name: plm
-  fields:
-  description:
+  fields: 
+  description: 
   domain: admin
 
 Typesobject_138668910:
   id: '138668910'
   forobject: project_typeaccess
   name: confidential
-  fields:
+  fields: 
   description: Projet confidentiel
   domain: admin
 
@@ -340,7 +340,7 @@ Typesobject_258446918:
   id: '258446918'
   forobject: project_typeaccess
   name: secret
-  fields:
+  fields: 
   description: Projet secret
   domain: admin
 
@@ -348,14 +348,14 @@ Typesobject_258446919:
   id: '258446919'
   forobject: project_typeaccess
   name: public
-  fields:
+  fields: 
   description: Projet public
   domain: admin
 
 Typesobject_218759731:
   id: '218759731'
   forobject: user
-  name: "$NEW_ACCOUNT"
+  name: $NEW_ACCOUNT
   fields: '{"actif": true}'
   description: Type donne au compte a sa creation, en attendant sa validation.
   domain: admin
@@ -372,7 +372,7 @@ Typesobject_382640329:
   id: '382640329'
   forobject: relation
   name: history
-  fields: "{}"
+  fields: '{}'
   description: ''
   domain: admin
 
@@ -430,11 +430,19 @@ Typesobject_1045584150:
   description: Fichier cao 3d par openscad
   domain: admin
 
+Typesobject_1045584152:
+  id: '1045584152'
+  forobject: part
+  name: ISSUE
+  fields: 
+  description: ''
+  domain: admin
+
 Typesobject_17665305:
   id: '17665305'
   forobject: forum
   name: tests
-  fields: "{}"
+  fields: '{}'
   description: Forum sur les tests
   domain: sicm.custo
 
@@ -458,7 +466,7 @@ Typesobject_251879061:
   id: '251879061'
   forobject: forum
   name: specifs
-  fields: "{}"
+  fields: '{}'
   description: Forum sur les specifications
   domain: sicm.custo
 
@@ -466,7 +474,7 @@ Typesobject_312726501:
   id: '312726501'
   forobject: forum
   name: design
-  fields: "{}"
+  fields: '{}'
   description: Forum sur la conception
   domain: sicm.custo
 
@@ -539,7 +547,7 @@ Typesobject_788606013:
   id: '788606013'
   forobject: forum
   name: requirements
-  fields: "{}"
+  fields: '{}'
   description: Forum sur les exigences
   domain: sicm.custo
 
@@ -547,7 +555,7 @@ Typesobject_873691851:
   id: '873691851'
   forobject: document
   name: cdc
-  fields: "{}"
+  fields: '{}'
   description: Cahier des charges
   domain: sicm.custo
 
@@ -563,7 +571,7 @@ Typesobject_959762344:
   id: '959762344'
   forobject: forum
   name: needs
-  fields: "{}"
+  fields: '{}'
   description: Forum sur les besoins
   domain: sicm.custo
 
@@ -571,7 +579,7 @@ Typesobject_975625710:
   id: '975625710'
   forobject: project
   name: standard
-  fields: "{}"
+  fields: '{}'
   description: Projet pour articles standards ou catalogues
   domain: sicm.custo
 

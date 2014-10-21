@@ -291,8 +291,12 @@ module ApplicationHelper
 	def sort_link_helper(text, param)
 		key = param
 		key += " DESC" if params[:sort] == param
+		#
+		#DEPRECATION WARNING: The :overwrite_params option is deprecated. Specify all the necessary parameters instead.
+		#old url = {:overwrite_params => {:sort => key, :page => nil}}
+		url = params.merge(:sort => key, :page => nil)
 		options = {
-			:url => {:overwrite_params => {:sort => key, :page => nil}},
+			:url => url,
 			:update => 'table',
 			:before => "Element.show('spinner')",
 			:success => "Element.hide('spinner')"

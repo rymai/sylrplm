@@ -417,6 +417,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "child_plmtype"
 		t.integer  "father_typesobject_id"
 		t.integer  "child_typesobject_id"
+    t.string   "paste_way"
 		t.integer  "cardin_occur_min"
 		t.integer  "cardin_occur_max"
 		t.integer  "cardin_use_min"
