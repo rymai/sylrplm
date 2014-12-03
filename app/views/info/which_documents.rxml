@@ -1,8 +1,0 @@
-xml.document_list(:for_part => @part.ident) do
-	for doc in @documents
-		xml.document do
-			xml.ident(doc.ident)
-			xml.designation(doc.designation)
-		end
-	end
-end

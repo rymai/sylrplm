@@ -1,0 +1,52 @@
+xml.instruct!
+xml.object(:plmtype=>params[:plmtype], :ident => @plm_object.ident, :designation=>@plm_object.designation) do
+	for col in @plm_object.attributes
+		xml.col(:name=>col[0],:value=>col[1]) 
+	end 
+	xml.links_down do
+		for link in @plm_object.links_childs
+			xml.link do
+				child = link.child
+				relation=link.relation
+				xml.relation do
+					xml.ident(relation.ident)
+					for col in relation.attributes
+						xml.col(:name=>col[0],:value=>col[1]) 
+					end
+				end
+				xml.child do
+				xml.id(child.id)
+					xml.ident(child.ident)
+					xml.designation(child.designation)
+					for col in child.attributes
+						xml.col(:name=>col[0],:value=>col[1]) 
+					end
+				end
+				
+			end
+		end	
+	end
+	xml.links_up do
+		for link in @plm_object.links_fathers
+			xml.link do
+				father = link.father
+				relation=link.relation
+				xml.relation do
+					xml.ident(relation.ident)
+					for col in relation.attributes
+						xml.col(:name=>col[0],:value=>col[1]) 
+					end
+				end
+				xml.father do
+					xml.id(father.id)
+					xml.ident(father.ident)
+					xml.designation(father.designation)
+					for col in father.attributes
+						xml.col(:name=>col[0],:value=>col[1]) 
+					end
+				end
+				
+			end
+		end	
+	end
+end

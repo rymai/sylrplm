@@ -1,0 +1,10 @@
+xml.list_objects do
+	for obj in @plm_objects
+		xml.plm_object do
+			xml.model(obj.model_name)
+			xml.id(obj.id)
+			xml.ident(obj.ident)
+			xml.designation(obj.designation)
+		end
+	end
+end
