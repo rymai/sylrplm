@@ -19,7 +19,7 @@ class SubscriptionsController < ApplicationController
 	# GET /subscriptions/1
 	# GET /subscriptions/1.xml
 	def show
-		@subscription = Subscription.find(params[:id])
+		show_
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @subscription }
@@ -70,7 +70,11 @@ class SubscriptionsController < ApplicationController
 			st = @subscription.save
 			end
 			if st
-				format.html { redirect_to(@subscription, :notice => 'Subscription was successfully created.') }
+				#format.html { redirect_to(@subscription, :notice => 'Subscription was successfully created.') }
+				flash[:notice] = 'Subscription was successfully created.'
+				params[:id]= @subscription.id
+				show_
+				format.html { render :action => "show" }
 				format.xml  { render :xml => @subscription, :status => :created, :location => @subscription }
 			else
 				@ingroups  = Group.all
@@ -86,10 +90,11 @@ class SubscriptionsController < ApplicationController
 	# PUT /subscriptions/1.xml
 	def update
 		@subscription = Subscription.find(params[:id])
-
 		respond_to do |format|
 			if @subscription.update_attributes(params[:subscription])
-				format.html { redirect_to(@subscription, :notice => 'Subscription was successfully updated.') }
+				flash[:notice] = 'Subscription was successfully updated.'
+				show_
+				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
 				@ingroups  = Group.all
@@ -111,5 +116,10 @@ class SubscriptionsController < ApplicationController
 			format.html { redirect_to(subscriptions_url) }
 			format.xml  { head :ok }
 		end
+	end
+	private
+
+	def show_
+		@subscription = Subscription.find(params[:id])
 	end
 end

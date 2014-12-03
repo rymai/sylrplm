@@ -14,11 +14,14 @@ class ForumsController < ApplicationController
 	# GET /forums/1
 	# GET /forums/1.xml
 	def show
-		@forum = Forum.find(params[:id])
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @forum }
 		end
+	end
+
+	def show_
+		@forum = Forum.find(params[:id])
 	end
 
 	# GET /forums/new
@@ -56,7 +59,9 @@ class ForumsController < ApplicationController
 				@item = @forum.forum_items.build(message: params[:message], user: current_user)
 				if @item.save
 					flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_forum), :ident => @forum.ident)
-					format.html { redirect_to(@forum) }
+					params[:id]=@forum.id
+					show_
+					format.html { render :action => "show" }
 					format.xml  { render :xml => @forum, :status => :created, :location => @forum }
 				else
 					flash[:error] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_forum), :msg => nil)
@@ -79,7 +84,8 @@ class ForumsController < ApplicationController
 		respond_to do |format|
 			if @forum.update_attributes(params[:forum])
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_forum), :ident => @forum.ident)
-				format.html { redirect_to(@forum) }
+				show_
+				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
 				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_forum),:ident=>@forum.ident)

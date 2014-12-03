@@ -366,7 +366,7 @@ fr:
   help_close_window: Fermer la fenêtre d'aide
   help_general: Aide générale
   help_window: Aide sur cette fenêtre
-  help_first_use: "Prise en main de l'application (%{help})"
+  help_first_use: "Prise en main de l'application"
   help_about: A propos de SYLRPLM
   mnu_help: Aide
   # info

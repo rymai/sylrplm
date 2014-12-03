@@ -19,12 +19,14 @@ class UsersController < ApplicationController
 	# GET /users/1
 	# GET /users/1.xml
 	def show
-		@the_user = User.find(params[:id])
+		show_
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @the_user }
 		end
 	end
+
+
 
 	# GET /users/new
 	# GET /users/new.xml
@@ -107,7 +109,9 @@ class UsersController < ApplicationController
 			end
 			if st
 				flash.now[:notice] = t(:ctrl_user_created, :user => @the_user.login)
-				format.html { redirect_to(@the_user) }
+				params[:id]= @the_user.id
+				show_
+				format.html { render :action => "show" }
 				format.xml  { render :xml => @the_user, :status => :created, :location => @the_user }
 			else
 				@roles   = Role.all
@@ -143,7 +147,8 @@ class UsersController < ApplicationController
 		respond_to do |format|
 			if @the_user.update_attributes(params_user)
 				flash[:notice] = t(:ctrl_user_updated, :user => @the_user.login)
-				format.html { redirect_to(@the_user) }
+					show_
+				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
 				@subscriptions = Subscription.all
@@ -253,6 +258,10 @@ class UsersController < ApplicationController
 		#renvoie la liste des time zone
 		lst=User.time_zones
 		get_html_options(lst,default,false)
+	end
+
+	def show_
+		@the_user = User.find(params[:id])
 	end
 
 end

@@ -4,51 +4,51 @@
 <% form_for(@relation, :html => { :id => h_form_html_id(@relation, fonct) }) do |f| %>
 <%= f.error_messages %>
 <p>
-	<b>Ident:</b>
+	<b><%= t(:label_ident) %></b>
 	<%= h @relation.ident %>
 </p>
 <p>
-	<b>Name:</b>
+	<b><%= t(:label_name) %></b>
 	<%= h @relation.name %><%=h h_show_translate @relation.name_translate %>
 </p>
 <p>
-	<b>Type:</b>
+	<b><%= t(:label_type) %></b>
 	<%= h @relation.typesobject.name %><%=h h_show_translate @relation.typesobject.name_translate %>
 </p>
 <p>
-	<b>Father plmtype:</b>
+	<b><%= t(:label_father_plmtype) %></b>
 	<%= h @relation.father_plmtype %><%=h h_show_translate @relation.father_plmtype_translate %>
 </p>
 <p>
-	<b>Child plmtype:</b>
+	<b><%= t(:label_child_plmtype) %></b>
 	<%= h @relation.child_plmtype %><%=h h_show_translate @relation.child_plmtype_translate %>
 </p>
 <p>
-	<b>Father type:</b>
+	<b><%= t(:label_father_type) %></b>
 	<%= h @relation.father_typesobject.name %><%=h h_show_translate @relation.father_typesobject.name_translate %>
 </p>
 <p>
-	<b>Child type:</b>
+	<b><%= t(:label_child_type) %></b>
 	<%= h @relation.child_typesobject.name %><%=h h_show_translate @relation.child_typesobject.name_translate %>
 </p>
 <p>
-	<b>Paste Way:</b>
+	<b><%= t(:label_paste_way) %></b>
 	<%= h @relation.paste_way %>
 </p>
 <p>
-	<b>Cardin occur min:</b>
+	<b><%= t(:label_cardin_occur_min) %></b>
 	<%= h @relation.cardin_occur_min %>
 </p>
 <p>
-	<b>Cardin occur max:</b>
+	<b><%= t(:label_cardin_occur_max) %></b>
 	<%= h @relation.cardin_occur_max %>
 </p>
 <p>
-	<b>Cardin use min:</b>
+	<b><%= t(:label_cardin_use_min) %></b>
 	<%= h @relation.cardin_use_min %>
 </p>
 <p>
-	<b>Cardin use max:</b>
+	<b><%= t(:label_cardin_use_max) %></b>
 	<%= h @relation.cardin_use_max %>
 </p>
 <%= h_type_values(@relation, fonct) %>

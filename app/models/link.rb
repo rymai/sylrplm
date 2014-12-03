@@ -256,7 +256,7 @@ class Link < ActiveRecord::Base
 	#    c=child_cls.new(self.child_id)
 	#  end
 
-	def self.find_childs(father, child_plmtype=nil, relation_name=nil)
+  def self.find_childs(father, child_plmtype=nil, relation_name=nil)
 		find_childs_with_father_plmtype(father.model_name, father, child_plmtype, relation_name)
 	end
 
@@ -287,9 +287,19 @@ class Link < ActiveRecord::Base
     :order=>"child_id")
 	end
 
-	def self.find_fathers(child_plmtype, child, father_plmtype)
-		find(:all,
+  def self.find_fathers_obsolete(child_plmtype, child, father_plmtype)
+    find(:all,
     :conditions => ["father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and child_id =#{child.id}"],
+    :order=>"child_id")
+  end
+  def self.find_fathers(child, father_plmtype=nil)
+    unless father_plmtype.nil?
+      cond="child_id =#{child.id} and father_plmtype='#{father_plmtype}'"
+    else
+      cond="child_id =#{child.id}"
+    end
+		find(:all,
+    :conditions => [cond],
     :order=>"child_id")
 	end
 

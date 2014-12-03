@@ -30,8 +30,8 @@ class ApplicationController < ActionController::Base
 		#LOG.info(fname) {"params=#{params}, user=#{current_user}, plm_object=#{@plm_object}"}
   	if logged_in?
   		unless params[:id].nil?
-  			object_plm=PlmServices.get_object(get_model_type(params), params[:id])
-  			current_user.manage_recents object_plm, params
+  		  object_plm= PlmServices.get_object(get_model_type(params), params[:id])
+  			current_user.manage_recents object_plm, params unless object_plm.nil?
   		end
   	end
   	true
@@ -43,9 +43,9 @@ class ApplicationController < ActionController::Base
     @my_filter = true
   end
 
-  def render(*args)
+  def render_(*args)
   	fname= "#{self.class.name}.#{__method__}"
-  	#LOG.debug (fname) {"args=#{args}"}
+  	LOG.debug (fname) {"args=#{args.inspect} flash=#{flash.inspect}"}
   	@datas = get_datas_count
   	if args.nil? || args.count==0
   		super
@@ -77,6 +77,7 @@ class ApplicationController < ActionController::Base
     	redirect_to_main(nil ,msg)
     end
     end
+    LOG.debug (fname) {"end flash=#{flash.inspect}"}
   end
 
   #
@@ -349,7 +350,7 @@ class ApplicationController < ActionController::Base
           redirect_to new_sessions_url
       end
     end
-    #puts "fin de authorize"
+    puts "fin de authorize:ok"
   end
 
   def permission_denied(role, controller, action)

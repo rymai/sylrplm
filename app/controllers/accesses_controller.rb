@@ -20,10 +20,15 @@ class AccessesController < ApplicationController
 	# GET /accesses/1
 	# GET /accesses/1.xml
 	def show
+		show_
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @access }
 		end
+	end
+
+	def show_
+
 	end
 
 	# GET /accesses/new
@@ -67,7 +72,9 @@ class AccessesController < ApplicationController
 			end
 			if st
 				flash[:notice] =  t(:ctrl_object_created, :typeobj => 'Access', :ident => @access.controller, :msg => nil)
-				format.html { redirect_to(@access) }
+				params[:id]=@access.id
+				show_
+				format.html { render :action => "show" }
 				format.xml  { render :xml => @access, :status => :created, :location => @access }
 			else
 				@roles = Role.findall_except_admin
@@ -85,7 +92,8 @@ class AccessesController < ApplicationController
 		respond_to do |format|
 			if @access.update_attributes(params[:access])
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => 'Access', :ident => @access.controller)
-				format.html { redirect_to(@access) }
+				show_
+				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
 				@roles = Role.all

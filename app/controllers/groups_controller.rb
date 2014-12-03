@@ -116,7 +116,9 @@ class GroupsController < ApplicationController
 			end
 			if st
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_group), :ident => @group.name)
-				format.html { redirect_to(@group) }
+				params[:id]=@group.id
+				show_
+				format.html { render :action => "show" }
 				format.xml  { render :xml => @group, :status => :created, :location => @group }
 			else
 				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group), :msg => nil)
@@ -135,7 +137,8 @@ class GroupsController < ApplicationController
 		respond_to do |format|
 			if @group.update_attributes(params[:group])
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_group), :ident => @group.name)
-				format.html { redirect_to(@group) }
+				show_
+				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
 				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_group), :ident => @group.name)

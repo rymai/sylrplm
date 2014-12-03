@@ -57,12 +57,16 @@ class DefinitionsController < ApplicationController
 	# GET /definitions/1.xml
 	#
 	def show
-		@definition = Definition.find(params[:id])
+		show_
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml { render :xml => @definition.to_xml(:request => request) }
 			format.json { render :json => @definition.to_json(:request => request) }
 		end
+	end
+
+	def show_
+		@definition = Definition.find(params[:id])
 	end
 
 	# GET /definitions/:id/tree
@@ -125,6 +129,8 @@ class DefinitionsController < ApplicationController
 	# POST /definitions.xml
 	#
 	def create
+		fname= "#{controller_class_name}.#{__method__}"
+		LOG.debug (fname){"begin:params=#{params}"}
 		@definition = Definition.new(params[:definition])
 		respond_to do |format|
 			if fonct_new_dup?
@@ -135,9 +141,10 @@ class DefinitionsController < ApplicationController
 			end
 			if st
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_definition), :ident => @definition.name)
-				format.html {
-					redirect_to(@definition)
-				}
+				LOG.debug (fname){"flash=#{flash}"}
+				params[:id]=@definition.id
+				show_
+				format.html { render :action => "show" }
 				format.xml {
 					render(
           :xml => @definition.to_xml(:request => request),
@@ -177,7 +184,8 @@ class DefinitionsController < ApplicationController
 		respond_to do |format|
 			if @definition.update_attributes(params[:definition])
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)
-				format.html { redirect_to :action => 'index' }
+				show_
+				format.html { render :action => "show" }
 				format.xml { head :ok }
 				format.json { head :ok }
 			else # there is an error

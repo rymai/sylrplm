@@ -23,13 +23,15 @@ class LinksController < ApplicationController
 	# GET /links/1
 	# GET /links/1.xml
 	def show
-		@link = Link.find(params[:id])
+		show_
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @link }
 		end
 	end
-
+	def show_
+		@link = Link.find(params[:id])
+	end
 	# GET /links/new
 	# GET /links/new.xml
 	def new
@@ -69,7 +71,9 @@ class LinksController < ApplicationController
 		#@link.type_values=params[:link][:values].to_json unless params[:link][:values].nil?
 			if @link.save
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_link), :ident => @link.ident)
-				format.html { redirect_to(@link) }
+				params[:id]=@link.id
+				show_
+				format.html { render :action => "show" }
 				format.xml  { render :xml => @link, :status => :created, :location => @link }
 			else
 				flash[:error] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_link), :msg => nil)
@@ -123,7 +127,8 @@ class LinksController < ApplicationController
 			# LOG.info(fname) { "values=#{values}" }
 			if @link.update_attributes(params[:link])
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_link), :ident => @link.ident)
-				format.html { redirect_to(@link) }
+				show_
+				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
 				# lien non modifie

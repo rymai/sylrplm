@@ -1,46 +1,45 @@
+<p>
+	<%= f.label :name %>
+	<br />
+	<%= f.text_field :name %>
+</p>
+<p>
+	<%= f.label :designation %>
+	<br />
+	<%= f.text_field :designation %>
+</p>
+<p>
+	<%= f.label :description %>
+	<br />
+	<%= f.text_area :description %>
+</p>
 
-	<p>
-		<%= f.label :name %>
-		<br />
-		<%= f.text_field :name %>
-	</p>
-	<p>
-		<%= f.label :designation %>
-		<br />
-		<%= f.text_field :designation %>
-	</p>
-	<p>
-		<%= f.label :description %>
-		<br />
-		<%= f.text_area :description %>
-	</p>
+<p>
+	<%= f.label :oncreate %>
+	<br />
+	<%= f.check_box :oncreate %>
+</p>
+<p>
+	<%= f.label :onupdate %>
+	<br />
+	<%= f.check_box :onupdate %>
+</p>
+<p>
+	<%= f.label :ondestroy %>
+	<br />
+	<%= f.check_box :ondestroy %>
+</p>
+<%= hidden_field :subscription , :owner_id %>
 
-	<p>
-		<%= f.label :oncreate %>
-		<br />
-		<%= f.check_box :oncreate %>
-	</p>
-	<p>
-		<%= f.label :onupdate %>
-		<br />
-		<%= f.check_box :onupdate %>
-	</p>
-	<p>
-		<%= f.label :ondestroy %>
-		<br />
-		<%= f.check_box :ondestroy %>
-	</p>
-	<%= hidden_field :subscription , :owner_id %>
+<label for="subscription_typesobject"> <%= t(:label_typesobject) %> </label>
+<%= select_inout(f, @subscription, @fortypesobjects, :ident, :fortypesobject) %>
 
-	<label for="subscription_typesobject"> <%= t(:label_typesobject) %> </label>
-	<%= select_inout(f, @subscription, @fortypesobjects, :ident, :fortypesobject) %>
+<label for="subscription_groups"> <%= t(:label_groups) %> </label>
+<%= select_inout(f, @subscription, @ingroups, :name, :ingroup) %>
 
-	<label for="subscription_groups"> <%= t(:label_groups) %> </label>
-	<%= select_inout(f, @subscription, @ingroups, :name, :ingroup) %>
+<label for="subscription_projects"> <%= t(:label_projects) %> </label>
+<%= select_inout(f, @subscription, @inprojects, :ident, :inproject) %>
 
-	<label for="subscription_projects"> <%= t(:label_projects) %> </label>
-	<%= select_inout(f, @subscription, @inprojects, :ident, :inproject) %>
-	
-	<%= h_input_domain(f) %>
-	<br/>
-	
+<%= h_input_domain(f) %>
+<br/>
+

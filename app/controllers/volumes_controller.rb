@@ -14,7 +14,7 @@ class VolumesController < ApplicationController
 	# GET /volumes/1
 	# GET /volumes/1.xml
 	def show
-		@volume = Volume.find(params[:id])
+		show_
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @volume }
@@ -63,7 +63,9 @@ class VolumesController < ApplicationController
 			end
 			if st
 				flash[:notice] = t(:ctrl_object_created,:typeobj => t(:ctrl_volume), :ident=>@volume.name)
-				format.html { redirect_to(@volume) }
+				params[:id]= @volume.id
+				show_
+				format.html { render :action => "show" }
 				format.xml  { render :xml => @volume, :status => :created, :location => @volume }
 			else
 				flash[:error] = t(:ctrl_object_not_created,:typeobj => t(:ctrl_volume), :ident=>@volume.name, :msg => nil)
@@ -85,7 +87,8 @@ class VolumesController < ApplicationController
 			if @volume.update_attributes(params[:volume])
 				LOG.info(fname){"volume=#{@volume}"}
 				flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_volume),:ident=>@volume.name)
-				format.html { redirect_to(@volume) }
+				show_
+				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
 				LOG.info(fname){"volume=#{@volume}"}
@@ -115,5 +118,11 @@ class VolumesController < ApplicationController
 				format.xml  { head :ok }
 			end
 		end
+	end
+
+	private
+
+	def show_
+		@volume = Volume.find(params[:id])
 	end
 end

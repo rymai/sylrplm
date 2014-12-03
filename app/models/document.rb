@@ -32,7 +32,7 @@ class Document < ActiveRecord::Base
 	has_many :forums,
     :through => :links_forums,
     :source => :forum
-    
+
 	has_many :links_documents,
     :class_name => "Link",
     :foreign_key => "father_id",
@@ -80,6 +80,7 @@ class Document < ActiveRecord::Base
 	has_many :histories_up,
     :through => :links_histories_up,
     :source => :history_up
+    #
 	def user=(user)
 		def_user(user)
 	end

@@ -74,7 +74,9 @@ class RolesController < ApplicationController
 			end
 			if st
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_role),:ident=>@role.title)
-				format.html { redirect_to(@role) }
+				params[:id]=@role.id
+				show_
+				format.html { render :action => "show" }
 				format.xml  { render :xml => @role, :status => :created, :location => @role }
 			else
 				flash[:error] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_role),:ident=>@role.title, :msg => nil)
@@ -92,7 +94,8 @@ class RolesController < ApplicationController
 		respond_to do |format|
 			if @role.update_attributes(params[:role])
 				flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_role),:ident=>@role.title)
-				format.html { redirect_to(@role) }
+				show_
+				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
 				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_role),:ident=>@role.title)

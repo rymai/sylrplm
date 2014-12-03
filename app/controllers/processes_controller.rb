@@ -50,28 +50,21 @@ class ProcessesController < ApplicationController
   #
   def show
     #    puts "processes_controller.show:"
-
-      @process = ruote_engine.process_status(params[:id])
-
+	show_
     respond_to do |format|
-
       if @process
         format.html # => app/views/show.html.erb
-
         format.json do
           render(:json => OpenWFE::Json.process_to_h(
           @process, :linkgen => LinkGenerator.new(request)).to_json)
         end
-
         format.xml do
           render(
           :xml => OpenWFE::Xml.process_to_xml(
           @process, :linkgen => LinkGenerator.new(request), :indent => 2))
         end
       else
-
         flash[:error] = "process launch failed"
-
         format.html do
           redirect_to :action => 'index'
         end
@@ -121,8 +114,9 @@ class ProcessesController < ApplicationController
       respond_to do |format|
         unless workitem.nil?
           flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")
-          format.html {
-            redirect_to :action => 'show', :id => fei.wfid }
+          	params[:id]=fei.wfid
+				show_
+				format.html { render :action => "show" }
           format.json {
             render :json => "{\"wfid\":#{fei.wfid}}", :status => 201 }
           format.xml {
@@ -196,7 +190,9 @@ class ProcessesController < ApplicationController
   ###############################################################################
   #
   private
-
+def show_
+	@process = ruote_engine.process_status(params[:id])
+end
   def parse_launchitem_mis_dans_lib
     fname=__FILE__+"."+__method__.to_s+":"
     ct = request.content_type.to_s

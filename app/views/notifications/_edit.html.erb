@@ -3,7 +3,7 @@
 		<%= t(:legend_notification) %>
 	</legend>
 	<%= f.label t(:label_object) %>
-	<%= f.text_field :forobject_type %>
+	<%= f.select(:forobject_type, Typesobject.get_objects_with_type) %>
 	<br/>
 	<%= f.label t(:label_object_id) %>
 	<%= f.text_field :forobject_id %>

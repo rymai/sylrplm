@@ -20,6 +20,7 @@
 		<th> <%= t("label_in_date") %> </th>
 		<th> <%= t("label_in_user") %> </th>
 		<th> <%= t("label_in_group") %> </th>
+		<th> <%= t("label_responsible") %> </th>
 		<th> <%= t("label_projowner") %> </th>
 	</tr>
 	<% @checks[:recordset].each do |check| %>
@@ -39,7 +40,9 @@
 		<td></td>
 		<td></td>
 		<td></td>
-		<%end %> <td> <%= h check.projowner.ident %> </td>
+		<%end %>
+		<td><%= h check.user.login unless check.user.nil? %> </td>
+		<td> <%= h check.projowner.ident unless check.projowner.nil? %> </td>
 		<td> <%= link_to h_img_show.to_s, check %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_check_path(check) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, check, :confirm => t("msg_confirm"), :method => :delete %> </td>

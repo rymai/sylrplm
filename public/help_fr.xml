@@ -1255,9 +1255,7 @@
                    <li title="Export custo societe sicm">
                         rake sylrplm:export_domain[db/custos_export,sicm.custo].
                     </li>
-                    <li title="Export exemple table">
-                        rake sylrplm:export_domain[db/custos_export,sample.table].
-                    </li>
+                    
                     <li title="Import custo de base de la  societe sicm">
                         rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base].
                     </li>
@@ -1271,7 +1269,156 @@
         </msg>
 
     </msg>
-    <msg key="help_technical_doc" title="Documentation technique">.
+    <msg key="help_exchange" title="Echanges de données">.
+        Les échanges de données sont possibles suivant en utilisant une des technologies suivantes
+        <msg key="help_exchange_rest" title="Accès aux données par la technologie REST">.
+        	<ul>
+	        	<li title="Liste des objets d'un type donné">
+	            	/info/list_objects/:plmtype.:format .
+	                :plmtype pouvant valoir customer, document, part, project, datafile, question, user, volume.
+	                :format = xml.
+	                exemple: #lnk=/info/list_objects/part.xml=lnk# . 
+	                résultat:. 
+	                &lsaquo;list_objects&rsaquo; .
+		                &lsaquo;plm_object&rsaquo; .
+			                &lsaquo;model&rsaquo;part&lsaquo;/model&rsaquo; .
+			                &lsaquo;id&rsaquo;1&lsaquo;/id&rsaquo; .
+			                &lsaquo;ident&rsaquo;PRT000001&lsaquo;/ident&rsaquo; .
+			                &lsaquo;designation&rsaquo;Table&lsaquo;/designation&rsaquo; .
+		                &lsaquo;/plm_object&rsaquo; .
+	                &lsaquo;/list_objects&rsaquo; .
+	                exemple: #lnk=/info/list_objects/datafile.xml=lnk# .
+	                liste les fichiers . 
+	            </li>
+	            <li title="Definition d'un objet avec ses relations au premier niveau'">
+	            	/info/object_links/:plmtype/:id.:format .
+	                :plmtype pouvant valoir customer, document, part, project, datafile, question, user, volume.
+	                :id etant l'identifiant unique de l'objet (donné par la commande précédente (tag:id.
+	                exemple: #lnk=/info/object_links/part/3.xml=lnk# .
+	                résultat:
+	                &lsaquo;object plmtype="part" ident="PRT000003" designation="Plateau"&rsaquo; .
+	                	&lsaquo;col name="created_at" value="2014-10-19 15:31:15 UTC"/&rsaquo;.
+	                	&lsaquo;col name="date" value="2012-10-28"/&rsaquo;.
+	                	&lsaquo;col name="description" value=""/&rsaquo;.
+	                	&lsaquo;col name="designation" value="Plateau hexagonal"/&rsaquo;.
+	                	&lsaquo;col name="domain" value="sample.table"/&rsaquo;.
+	                	...
+	                	...
+	                	&lsaquo;links_down&rsaquo;.
+	                		&lsaquo;link&rsaquo;.
+	                			&lsaquo;relation&rsaquo;.
+	                				&lsaquo;ident&rsaquo;bom.STR_PIE&lsaquo;/ident&rsaquo;.
+	                				&lsaquo;col name="cardin_occur_max" value="-1"/&rsaquo;.
+	                				&lsaquo;col name="cardin_occur_min" value="0"/&rsaquo;.
+	                				&lsaquo;col name="cardin_use_max" value="-1"/&rsaquo;.
+	                				&lsaquo;col name="cardin_use_min" value="0"/&rsaquo;.
+	                				&lsaquo;col name="child_plmtype" value="part"/&rsaquo;.
+	                				&lsaquo;col name="child_typesobject_id" value="989626525"/&rsaquo;.
+	                				&lsaquo;col name="created_at" value="2014-10-19 15:31:00 UTC"/&rsaquo;.
+	                				&lsaquo;col name="domain" value="admin"/&rsaquo;.
+	                				&lsaquo;col name="father_plmtype" value="part"/&rsaquo;.
+	                				&lsaquo;col name="father_typesobject_id" value="989626526"/&rsaquo;.
+	                				&lsaquo;col name="id" value="26"/&rsaquo;.
+	                				&lsaquo;col name="name" value="STR_PIE"/&rsaquo;.
+	                				&lsaquo;col name="paste_way" value="manual"/&rsaquo;.
+	                				&lsaquo;col name="type_values" value=""/&rsaquo;.
+	                				&lsaquo;col name="typesobject_id" value="989626531"/&rsaquo;.
+	                				&lsaquo;col name="updated_at" value="2014-10-19 15:31:00 UTC"/&rsaquo;.
+	                			&lsaquo;/relation&rsaquo;.
+	                			&lsaquo;child&rsaquo;.
+	                				&lsaquo;id&rsaquo;25&lsaquo;/id&rsaquo;&lsaquo;ident&rsaquo;PRT000026&lsaquo;/ident&rsaquo;.
+	                				&lsaquo;designation&rsaquo;Plateau hexagonal&lsaquo;/designation&rsaquo;.
+	                				&lsaquo;col name="created_at" value="2014-10-19 15:31:15 UTC"/&rsaquo;.
+	                				&lsaquo;col name="date" value="2012-10-28"/&rsaquo;.
+	                				&lsaquo;col name="description" value=""/&rsaquo;.
+	                				&lsaquo;col name="designation" value="Plateau hexagonal"/&rsaquo;.
+	                				&lsaquo;col name="domain" value="sample.table"/&rsaquo;.
+	                				&lsaquo;col name="group_id" value="101"/&rsaquo;.
+	                				&lsaquo;col name="id" value="25"/&rsaquo;.
+	                				&lsaquo;col name="ident" value="PRT000026"/&rsaquo;.
+	                				&lsaquo;col name="next_status_id" value=""/&rsaquo;.
+	                				&lsaquo;col name="owner_id" value="101"/&rsaquo;.
+	                				&lsaquo;col name="previous_status_id" value=""/&rsaquo;.
+	                				&lsaquo;col name="projowner_id" value="3"/&rsaquo;.
+	                				&lsaquo;col name="revision" value="AAA"/&rsaquo;.
+	                				&lsaquo;col name="statusobject_id" value="7"/&rsaquo;.
+	                				&lsaquo;col name="type_values" value=""/&rsaquo;.
+	                				&lsaquo;col name="typesobject_id" value="989626525"/&rsaquo;.
+	                				&lsaquo;col name="updated_at" value="2014-10-19 15:31:15 UTC"/&rsaquo;.
+	                			&lsaquo;/child&rsaquo;.
+	                		&lsaquo;/link&rsaquo;.
+	                		&lsaquo;link&rsaquo;.
+	                			&lsaquo;relation&rsaquo;.
+	                				&lsaquo;ident&rsaquo;bom.STR_PIE&lsaquo;/ident&rsaquo;.
+	                				&lsaquo;col name="cardin_occur_max" value="-1"/&rsaquo;.
+	                				&lsaquo;col name="cardin_occur_min" value="0"/&rsaquo;.
+	                				&lsaquo;col name="cardin_use_max" value="-1"/&rsaquo;.
+	                				&lsaquo;col name="cardin_use_min" value="0"/&rsaquo;.
+	                				&lsaquo;col name="child_plmtype" value="part"/&rsaquo;.
+	                				&lsaquo;col name="child_typesobject_id" value="989626525"/&rsaquo;.
+	                				&lsaquo;col name="created_at" value="2014-10-19 15:31:00 UTC"/&rsaquo;.
+	                				&lsaquo;col name="domain" value="admin"/&rsaquo;.
+	                				&lsaquo;col name="father_plmtype" value="part"/&rsaquo;.
+	                				&lsaquo;col name="father_typesobject_id" value="989626526"/&rsaquo;.
+	                				&lsaquo;col name="id" value="26"/&rsaquo;.
+	                				&lsaquo;col name="name" value="STR_PIE"/&rsaquo;.
+	                				&lsaquo;col name="paste_way" value="manual"/&rsaquo;.
+	                				&lsaquo;col name="type_values" value=""/&rsaquo;.
+	                				&lsaquo;col name="typesobject_id" value="989626531"/&rsaquo;.
+	                				&lsaquo;col name="updated_at" value="2014-10-19 15:31:00 UTC"/&rsaquo;.
+	                			&lsaquo;/relation&rsaquo;.
+	                			&lsaquo;child&rsaquo;.
+	                				&lsaquo;id&rsaquo;24&lsaquo;/id&rsaquo;.
+	                				&lsaquo;ident&rsaquo;PRT000025&lsaquo;/ident&rsaquo;.
+	                				&lsaquo;designation&rsaquo;Plateau carre&lsaquo;/designation&rsaquo;.
+	                				&lsaquo;col name="created_at" value="2014-10-19 15:31:15 UTC"/&rsaquo;.
+	                				&lsaquo;col name="date" value="2012-10-28"/&rsaquo;.
+	                				&lsaquo;col name="description" value=""/&rsaquo;.
+	                				&lsaquo;col name="designation" value="Plateau carre"/&rsaquo;.
+	                				&lsaquo;col name="domain" value="sample.table"/&rsaquo;.
+	                				&lsaquo;col name="group_id" value="101"/&rsaquo;.
+	                				&lsaquo;col name="id" value="24"/&rsaquo;.
+	                				&lsaquo;col name="ident" value="PRT000025"/&rsaquo;.
+	                				&lsaquo;col name="next_status_id" value=""/&rsaquo;.
+	                				&lsaquo;col name="owner_id" value="101"/&rsaquo;.
+	                				&lsaquo;col name="previous_status_id" value=""/&rsaquo;.
+	                				&lsaquo;col name="projowner_id" value="3"/&rsaquo;.
+	                				&lsaquo;col name="revision" value="AAA"/&rsaquo;.
+	                				&lsaquo;col name="statusobject_id" value="7"/&rsaquo;.
+	                				&lsaquo;col name="type_values" value=""/&rsaquo;.
+	                				&lsaquo;col name="typesobject_id" value="989626525"/&rsaquo;.
+	                				&lsaquo;col name="updated_at" value="2014-10-19 15:31:15 UTC"/&rsaquo;.
+	                			&lsaquo;/child&rsaquo;.
+	                		&lsaquo;/link&rsaquo;.
+	                	&lsaquo;/links_down&rsaquo;.
+	                	&lsaquo;links_up&rsaquo; .
+	                				....
+	                				....
+	                	&lsaquo;/links_up&rsaquo;.
+	                &lsaquo;/object_childs&rsaquo;			.
+	                exemple: #lnk=/info/object_links/datafile/14.xml=lnk# .
+	                decode un fichier .
+	            </li>
+	            <li title="download d'un fichier">
+	            	/datafiles/:id/download_file .
+	                :id etant l'identifiant unique du fichier (donné par la commande précédente (tag du datafile :id.
+	                exemple: #lnk=/datafiles/13/download_file=lnk# .
+	                résultat: un fichier zip est telecharge 
+	            </li>
+            </ul>
+    	</msg>
+    		<msg key="help_exchange_import_export" title="Export/Import de données">.
+	        	<ul>
+	        	<li title="Export exemple table">
+	            	rake sylrplm:export_domain[db/custos_export,sample.table].
+	            </li>
+	          	<li title="Import exemple table">
+	                rake sylrplm:import_domain[db/custos/sicm,sample.table].
+	            </li>
+        	</ul>
+    	</msg>
+    </msg>
+   <msg key="help_technical_doc" title="Documentation technique">.
         La documentation technique de l'application décrit les classes,fichiers source et méthodes:#lnk=doc/app/index.html=lnk#.
         Diagramme des classes du modèle de données:#lnk=mdd/models.png=lnk#.
         Diagramme des classes du modèle des controlleurs:#lnk=mdd/controllers.png=lnk#.

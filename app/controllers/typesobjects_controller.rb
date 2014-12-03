@@ -14,13 +14,14 @@ class TypesobjectsController < ApplicationController
 	# GET /typesobjects/1
 	# GET /typesobjects/1.xml
 	def show
-		@typesobject = Typesobject.find(params[:id])
+		show_
 		# objets pouvant etre types
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @typesobject }
 		end
 	end
+
 
 	# GET /typesobjects/new
 	# GET /typesobjects/new.xml
@@ -67,7 +68,9 @@ class TypesobjectsController < ApplicationController
 			end
 			if st
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_typesobject),:ident=>@typesobject.ident)
-				format.html { redirect_to(@typesobject) }
+				params[:id]= @typesobject.id
+				show_
+				format.html { render :action => "show" }
 				format.xml  { render :xml => @typesobject, :status => :created, :location => @typesobject }
 			else
 				flash[:error] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_typesobject),:ident=>@typesobject.name, :msg => nil)
@@ -86,7 +89,8 @@ class TypesobjectsController < ApplicationController
 		respond_to do |format|
 			if @typesobject.update_attributes(params[:typesobject])
 				flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_typesobject),:ident=>@typesobject.name)
-				format.html { redirect_to(@typesobject) }
+				show_
+				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
 				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_typesobject),:ident=>@typesobject.name)
@@ -109,5 +113,11 @@ class TypesobjectsController < ApplicationController
 			format.html { redirect_to(typesobjects_url) }
 			format.xml  { head :ok }
 		end
+	end
+
+	private
+
+	def show_
+		@typesobject = Typesobject.find(params[:id])
 	end
 end

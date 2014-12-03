@@ -93,8 +93,8 @@ module Models
 				#
 				# lecture possible des projets et des groupes du user
 				#
-        par_open="("
-        par_close=")"
+				par_open="("
+				par_close=")"
 				filter_access[:qry] = par_open
 				unless user.nil?
 					if column_names.include?("group_id")
@@ -106,7 +106,7 @@ module Models
 						filter_access[:qry] += par_close
 					end
 					if column_names.include?("projowner_id")
-					  filter_access[:qry] += " or" if filter_access[:qry]!=par_open
+						filter_access[:qry] += " or" if filter_access[:qry]!=par_open
 						filter_access[:qry] += " projowner_id in ("
 						user.projects.each_with_index do |project,i|
 						filter_access[:qry] += project.id.to_s
@@ -203,35 +203,36 @@ module Models
 
 		def before_save
 			fname= "#{self.class.name}.#{__method__}"
-			#LOG.debug (fname) {"debut **********************"}
+			LOG.debug (fname) {"before_save:debut **********************"}
 			if (self.respond_to? :owner) && (self.respond_to? :group)
+				LOG.debug (fname) {"before_save:owner=#{owner} group=#{group}"}
 				unless owner.nil?
 					unless  owner.group.nil?
 						self.group     = owner.group
 					else
 						self.group     = owner.groups[0]
 					end
-				#LOG.info (fname) {"owner=#{owner} group=#{group}"}
 				end
 			end
 			if (self.respond_to? :owner) && (self.respond_to? :projowner)
+				LOG.debug (fname) {"before_save:owner=#{owner} projowner=#{projowner}"}
 				unless owner.nil?
 					unless owner.project.nil?
+						LOG.debug (fname) {"owner.project=#{owner.project}"}
 						self.projowner = owner.project
 					else
 						self.projowner = owner.projects[0]
 					end
-				#LOG.info (fname) {"owner=#{owner}  projowner=#{projowner}"}
 				end
 			end
 			if ((self.respond_to? :domain) && (self.respond_to? :owner))
-				#LOG.debug (fname) {"domain=#{domain} admin?=#{self.owner.role.is_admin? unless self.owner.role.nil?}"}
+				LOG.debug (fname) {"domain=#{domain} admin?=#{self.owner.role.is_admin? unless self.owner.role.nil?}"}
 				if(self.domain=="admin" && !self.owner.role.is_admin?)
 					self.errors.add_to_base('Role is not admin!')
 				return false
 				end
 			end
-			#LOG.debug (fname) {"fin **********************"}
+			LOG.debug (fname) {"fin **********************"}
 			true
 		end
 
@@ -284,7 +285,7 @@ module Models
 			ret+= "/#{revision}" if self.respond_to?("revision")
 			ret+= " #{designation}" if self.respond_to?("designation")
 			ret+= " (#{statusobject.name})" if self.respond_to?("statusobject") && !self.statusobject.nil?
-			##LOG.debug (fname) {"ret=#{ret}"}
+			LOG.debug (fname) {"ret=#{ret}"}
 			ret
 		end
 
@@ -306,6 +307,8 @@ module Models
 		end
 
 		def get_object(type, id)
+			fname=self.class.name+"."+__method__.to_s+":"
+			LOG.debug (fname) {"type=#{type} id=#{id}"}
 			PlmServices.get_object(type, id)
 		end
 
@@ -664,27 +667,27 @@ module Models
 
 		def def_user(user)
 			fname= "#{self.class.name}.#{__method__}"
-			#LOG.info (fname) {"user=#{user.inspect} "}
+			LOG.debug (fname) {"user=#{user.inspect} "}
 			unless user.nil?
-				#LOG.info (fname) {"user=#{user.ident} "}
+				LOG.debug (fname) {"user=#{user.ident} "}
 				if self.respond_to? :owner
-				self.owner = user
-				#LOG.info (fname) {"owner=#{self.owner.ident}"}
+					self.owner = user
+					LOG.debug (fname) {"owner=#{self.owner.ident}"}
 				end
 				if self.respond_to? :group
-				self.group     = user.group
-				#LOG.info (fname) {"group=#{self.group.ident}"}
+					self.group     = user.group
+					LOG.debug (fname) {"group=#{self.group.ident}"}
 				end
 				if self.respond_to? :projowner
-				self.projowner = user.project
-				#LOG.info (fname) {"projowner=#{self.projowner.ident}"}
+					self.projowner = user.project
+					LOG.debug (fname) {"projowner=#{self.projowner.ident}"}
 				end
 				if self.respond_to? :domain
-				self.domain = user.session_domain
-				#LOG.info (fname) {"domain=#{self.domain}"}
+					self.domain = user.session_domain
+					LOG.debug (fname) {"domain=#{self.domain}"}
 				end
 			end
-		#LOG.info (fname) {"self=#{self.inspect}"}
+			LOG.debug (fname) {"self=#{self.inspect}"}
 		end
 
 		def from_revise(from)
@@ -736,6 +739,33 @@ module Models
 				end
 			end
 			LOG.debug (fname){"errors=#{self.errors.size} ret=#{ret}"}
+			ret
+		end
+
+		#
+		# adapt some atttributes of the object depending of the new type
+		#
+		def modify_type(type)
+			typesobject_old=self.typesobject
+			type_values_old=self.type_values
+
+			self.typesobject=type
+			self.type_values=type.fields
+			if self.respond_to? :statusobject
+				statusobject_old=self.statusobject
+				self.statusobject = ::Statusobject.get_first(self)
+				if(self.statusobject != statusobject_old)
+					ret<< "Status changed from #{statusobject_old} to #{self.statusobject}"
+				end
+			end
+			ret=[]
+			if(self.typesobject != typesobject_old)
+				ret<< "Type changed from #{typesobject_old} to #{self.typesobject}"
+			end
+			if(self.type_values != type_values_old)
+				ret<< "Type_values changed from #{type_values_old} to #{self.type_values}"
+			end
+
 			ret
 		end
 

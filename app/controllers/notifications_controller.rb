@@ -25,11 +25,14 @@ class NotificationsController < ApplicationController
 	# GET /notifications/1
 	# GET /notifications/1.xml
 	def show
-		@notification = Notification.find(params[:id])
+		show_
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @notification }
 		end
+	end
+	def show_
+		@notification = Notification.find(params[:id])
 	end
 
 	# GET /notifications/new
@@ -57,7 +60,9 @@ class NotificationsController < ApplicationController
 		respond_to do |format|
 			if @notification.save
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_notification), :ident => @notification.ident)
-				format.html { redirect_to(@notification) }
+				params[:id]=@notification.id
+				show_
+				format.html { render :action => "show" }
 				format.xml  { render :xml => @notification, :status => :created, :location => @notification }
 			else
 				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_notification), :msg => nil)
@@ -76,7 +81,8 @@ class NotificationsController < ApplicationController
 		respond_to do |format|
 			if @notification.update_attributes(params[:notification])
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_notification), :ident => @notification.ident)
-				format.html { redirect_to(@notification) }
+				show_
+				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
 				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_notification), :ident => @notification.ident)

@@ -37,14 +37,7 @@ class PlmServices
         typec ="::Ruote::Sylrplm#{typec}"
         mdl = eval typec
       rescue Exception => e
-        LOG.error{fname+"eval '#{typec}':#{e.message}"}
-      end
-    end
-    unless mdl.nil?
-      begin
-        ret = mdl.find(id)
-      rescue Exception => e
-        LOG.error{fname+e.message}
+        LOG.error{fname+"===================== eval '#{typec}':#{e.message}"}
         stack=""
         cnt=0
         e.backtrace.each do |x|
@@ -53,7 +46,23 @@ class PlmServices
           end
           cnt+=1
         end
-        LOG.error (fname) {"stack=\n#{stack}"}
+        LOG.error (fname) {"===================== stack=\n#{stack}\n========================"}
+      end
+    end
+    unless mdl.nil?
+      begin
+        ret = mdl.find(id)
+      rescue Exception => e
+        LOG.error{fname+"====================="+e.message}
+        stack=""
+        cnt=0
+        e.backtrace.each do |x|
+          if cnt<10
+            stack+= x+"\n"
+          end
+          cnt+=1
+        end
+        LOG.error (fname) {"--------------------- stack=\n#{stack}\n -------------------------"}
       end
     end
     #LOG.debug (fname){"ret=#{(ret.nil? ? "" : ret.ident)}"}

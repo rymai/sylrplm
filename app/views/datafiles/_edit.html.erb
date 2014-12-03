@@ -1,6 +1,6 @@
 <h1><%= t(:legend_datafile) %></h1>
 
-<%= hidden_field_tag "datafile[volume_id]" , @datafile.volume.id %>
+<%= hidden_field_tag "datafile[volume_id]" , @datafile.volume.id unless @datafile.volume.nil? %>
 <%= hidden_field_tag :fonct , fonct %>
 <%= hidden_field_tag "datafile[group_id]" , current_user.group_id %>
 <%= hidden_field_tag "datafile[projowner_id]" , current_user.project_id %>
@@ -15,7 +15,7 @@
 <br/>
 <%= f.label t(:label_volume) %>
 <% if fonct!="edit"%>
-<%= f.collection_select(:volume_id, @datafile.volumes, :id, :name) %>
+<%= f.collection_select(:volume_id, @datafile.volumes, :id, :name) unless @datafile.volumes.nil?%>
 <%else%>
 <%= text_field_tag :volume, @datafile.volume.name, :disabled => true %>
 <%end%>
@@ -39,7 +39,7 @@
 <% end %>
 <% end %>
 <%= f.label t("label_responsible") %>
-<%= select_in_list(:datafile, :owner, @datafile.owner.login, :users) %>
+<%= select_in_list(:datafile, :owner, @datafile.owner.login, :users) unless @datafile.owner.nil? %>
 <br/>
 <%= h_input_domain(f) %>
 <%= h_type_values(@datafile, fonct) %>

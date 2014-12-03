@@ -135,7 +135,7 @@ module Controllers
 		# enlever le 's' de fin
 		# :controller=>parts devient part
 		def get_model_type(params)
-			name=self.class.name+"."+__method__.to_s+":"
+			fname=self.class.name+"."+__method__.to_s
 			ret = case params[:controller]
 			when "documents" then params[:controller].chop
 			when "parts" then params[:controller].chop
@@ -147,7 +147,7 @@ module Controllers
 			when "relations" then params[:controller].chop
 			else params[:controller]
 			end
-			#puts name+params[:controller]+"="+ret
+			LOG.debug (fname) {"#{params[:controller]}=#{ret}"}
 			ret
 		end
 
@@ -158,9 +158,9 @@ module Controllers
 		end
 
 		def get_model(params)
-			name=self.class.name+"."+__method__.to_s+":"
+			fname=self.class.name+"."+__method__.to_s+":"
 			# parts devient Part
-			#puts name+params.inspect
+			LOG.debug (fname) {"params=#{params.inspect}"}
 			eval get_model_type(params).capitalize
 		end
 
@@ -481,11 +481,12 @@ module Controllers
 		end
 
 		def update_accessor(current_user)
+			fname= "#{self.class.name}.#{__method__}"
 			mdl_name = self.model_name
 		  	params[mdl_name][:owner_id]=current_user.id if self.instance_variable_defined?(:@owner_id)
 		  	params[mdl_name][:group_id]=current_user.group_id if self.instance_variable_defined?(:@group_id)
 		  	params[mdl_name][:projowner_id]=current_user.project_id if self.instance_variable_defined?(:@projowner_id)
-		    	#puts "update_accessor:"+params.inspect
+		   LOG.debug (fname) {" params=#{params[mdl_name].inspect}"}
 		end
 
 		#
@@ -600,7 +601,7 @@ module Controllers
 			LOG.info (fname) {"#{object} #{ar_workitem}"}
 			return ar_workitem.add_object(object)
 		end
-		
+
 		#
 		# used in create method: does the funct is to duplicate an object ?
 		#

@@ -15,7 +15,7 @@ class RelationsController < ApplicationController
 	# GET /relations/1
 	# GET /relations/1.xml
 	def show
-		@relation = Relation.find(params[:id])
+		show_
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @relation }
@@ -28,7 +28,6 @@ class RelationsController < ApplicationController
 		fname= "#{controller_class_name}.#{__method__}"
 		#LOG.debug (fname) {"params=#{params}"}
 		@relation = Relation.new
-		#@datas = @relation.datas
 		@views = View.all
 		@types  = Typesobject.get_types("relation")
 		@status = Statusobject.get_status("relation")
@@ -44,7 +43,6 @@ class RelationsController < ApplicationController
 		@object_orig = Relation.find(params[:id])
 		@object = @object_orig.duplicate(current_user)
 		@relation=@object
-		@datas = @relation.datas
 		@views = View.all
 		@types  = Typesobject.get_types("relation")
 		@status = Statusobject.get_status("relation")
@@ -58,11 +56,11 @@ class RelationsController < ApplicationController
 	def edit
 		fname= "#{controller_class_name}.#{__method__}"
 		@relation = Relation.find(params[:id])
-		@datas = @relation.datas
 		@views = View.all
 		@types  = Typesobject.get_types("relation")
 		@status = Statusobject.get_status("relation")
-	#LOG.debug (fname) {"#{typesobject=@relation.typesobject}"}
+	LOG.debug (fname) {"typesobject=#{@relation.typesobject}"}
+	LOG.debug (fname) {"@datas=#{@datas.inspect}\n**********************************"}
 	end
 
 	# POST /relations
@@ -71,7 +69,6 @@ class RelationsController < ApplicationController
 		fname= "#{controller_class_name}.#{__method__}"
 		LOG.debug (fname) {"params=#{params.inspect}"}
 		@relation = Relation.new(params[:relation])
-		@datas = @relation.datas
 		@views = View.all
 		@types  = Typesobject.get_types("relation")
 		@status = Statusobject.get_status("relation")
@@ -85,7 +82,10 @@ class RelationsController < ApplicationController
 			end
 			if st
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_relation),:ident=>@relation.ident)
-				format.html { redirect_to(@relation, :notice => 'Relation was successfully created.') }
+				#format.html { redirect_to(@relation, :notice => 'Relation was successfully created.') }
+				params[:id]=@relation.id
+				show_
+				format.html { render :action => "show" }
 				format.xml  { render :xml => @relation, :status => :created, :location => @relation }
 			else
 				flash[:error] =t(:ctrl_object_not_created, :typeobj =>t(:ctrl_relation), :msg => @relation.ident)
@@ -99,7 +99,6 @@ class RelationsController < ApplicationController
 	# PUT /relations/1.xml
 	def update
 		@relation = Relation.find(params[:id])
-		@datas=@relation.datas
 		@views = View.all
 		@types  = Typesobject.get_types("relation")
 		@status = Statusobject.get_status("relation")
@@ -107,7 +106,9 @@ class RelationsController < ApplicationController
 		respond_to do |format|
 			if @relation.update_attributes(params[:relation])
 				flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_relation),:ident=>@relation.ident)
-				format.html { redirect_to(@relation, :notice => 'Relation was successfully updated.') }
+				show_
+				format.html { render :action => "show" }
+				#format.html { redirect_to(@relation, :notice => 'Relation was successfully updated.') }
 				format.xml  { head :ok }
 			else
 				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_relation),:ident=>@relation.ident)
@@ -126,7 +127,6 @@ class RelationsController < ApplicationController
 		@relation = Relation.find(params[:id])
 		@types  = Typesobject.get_types("relation")
 		@status = Statusobject.get_status("relation")
-		@datas = @relation.datas
 		ctrl_update_type @relation, params[:object_type]
 	end
 
@@ -146,13 +146,21 @@ class RelationsController < ApplicationController
 	end
 
 	def update_father
-		#puts "relations_controller.update_father:params=#{params}"
-		@datas = Relation.datas_by_params(params)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"params=#{params.inspect}"}
+		#inutilise @relation_datas = Relation.datas_by_params(params)
 	end
 
 	def update_child
-		#puts "relations_controller.update_child:params=#{params}"
-		@datas = Relation.datas_by_params(params)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"params=#{params.inspect}"}
+		#inutilise @relation_datas = Relation.datas_by_params(params)
+	end
+
+	private
+
+	def show_
+		@relation = Relation.find(params[:id])
 	end
 
 end

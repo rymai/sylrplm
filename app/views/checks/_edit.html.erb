@@ -3,13 +3,13 @@
 		<%= t(:legend_check) %>
 	</legend>
 	<%= f.label t("label_object") %>
-	<%= f.text_field :checkobject_plmtype %>
+	<%= f.select(:checkobject_plmtype, Typesobject.get_objects_with_type) %>
 	<br/>
 	<%= f.label t("label_object_id") %>
 	<%= f.text_field :checkobject_id %>
 	<br/>
 	<%= f.label t("label_status") %>
-	<%= f.text_field :status %>
+	<%= f.select(:status, @check.select_status) %>
 	<br/>
 	<%= f.label t("label_out_reason") %>
 	<%= f.text_field :out_reason %>
@@ -18,7 +18,9 @@
 	<%= f.date_select :out_date %>
 	<br/>
 	<%= f.label t("label_out_user") %>
-	<%= f.text_field :out_user %>
+	<%= f.collection_select(:out_user_id, User.find_all, :id, :login)%>
+	<%= f.label t("label_out_group") %>
+	<%= f.collection_select(:out_group_id, Group.all, :id, :name)%>
 	<br/>
 	<%= f.label t("label_in_reason") %>
 	<%= f.text_field :in_reason %>
@@ -27,6 +29,8 @@
 	<%= f.date_select :in_date %>
 	<br/>
 	<%= f.label t("label_in_user") %>
-	<%= f.text_field :in_user %>
+	<%= f.collection_select(:in_user_id, User.find_all, :id, :login)%>
+	<%= f.label t("label_in_group") %>
+	<%= f.collection_select(:in_group_id, Group.all, :id, :name)%>
 	<br/>
 </fieldset>

@@ -12,7 +12,7 @@ LOG.formatter = Classes::AppClasses::LogFormatter.new
 #DEBUG INFO WARN ERROR FATAL
 LOG.level  = case Rails.env
 when "development"
-  Logger::INFO
+  Logger::DEBUG
 when "test"
   Logger::WARN
 when "production"

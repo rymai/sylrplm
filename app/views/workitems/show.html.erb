@@ -1,5 +1,4 @@
-<% fonct="show" %>
-<h1><%= t("workitems_show") %><%= workitem_path(@workitem) unless @workitem.nil? %></h1>
+<% fonct="show" %> <h1><%= t("workitems_show") %><%= workitem_path(@workitem) unless @workitem.nil? %></h1>
 <% form_tag("/workitems",{ :id => h_form_html_id(@workitem, fonct) }) do |f| %>
 
 <table>
@@ -24,7 +23,6 @@
 </table>
 <br/>
 
-
 <!--
-	<%= render_fluo :wfid => @workitem.wfid, :workitems => [ @workitem.expid ] unless @workitem.nil? %>
+<%= render_fluo :wfid => @workitem.wfid, :workitems => [ @workitem.expid ] unless @workitem.nil? %>
 -->

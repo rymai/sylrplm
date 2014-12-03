@@ -1,5 +1,6 @@
 <h1><%= t("#{plm_object.model_name}_#{fonct}") %></h1>
 <% form_for(plm_object ,  :html => { :id => h_form_html_id(plm_object, fonct),:multipart => true, }) do |f| %>
+<%= f.error_messages %>
 <% locals={ :f => f,  :object => plm_object, :fonct=>fonct}%>
 <% if plm_object.is_a?(Datafile) %>
 <%= hidden_field_tag "MAX_FILE_SIZE", PlmServices.get_property(:MAX_FILE_SIZE)  %>

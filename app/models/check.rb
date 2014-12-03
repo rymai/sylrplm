@@ -11,6 +11,7 @@ class Check < ActiveRecord::Base
 	belongs_to :in_user, :class_name => "User"
 	belongs_to :out_group, :class_name => "Group"
 	belongs_to :in_group, :class_name => "Group"
+	belongs_to :owner, :class_name => "User"
 	belongs_to :projowner, :class_name => "Project"
 
 	before_save  :validity
@@ -20,6 +21,9 @@ class Check < ActiveRecord::Base
 	CHECK_STATUS_IN      = 2
 	CHECK_STATUS_FREE    = 3
 	#
+	def select_status
+		"<option value='1'>OUT</option><option value='2'>IN</option><option value='3'>FREE</option>"
+	end
 	def validity
 		fname = "#{self.class.name}.#{__method__}"
 		LOG.info (fname) {self.inspect}
@@ -56,7 +60,7 @@ class Check < ActiveRecord::Base
 
 	def initialize(*args)
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.info (fname) {"nbargs=#{args.length}, args=#{args}"}
+		LOG.debug (fname) {"nbargs=#{args.length}, args=#{args}"}
 		super
 		self.status    = CHECK_STATUS_OUT
 		self.out_date  = Time.now.utc
@@ -68,6 +72,8 @@ class Check < ActiveRecord::Base
 	end
 
 	def user=(user)
+		fname = "#{self.class.name}.#{__method__}"
+		LOG.debug (fname) {"check:user=#{user}"}
 		def_user(user)
 		self.out_user = user
 		self.out_group = user.group

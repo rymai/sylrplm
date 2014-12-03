@@ -7,11 +7,11 @@ modifier le fichier ext/Setup en activant des modules
 make
 make install
 
-installer ruby-mysql  
+installer ruby-mysql
 
 mysqladmin -u root password xxxx
 modifier /etc/my.cnf
-datadir = /home/mysql 
+datadir = /home/mysql
 
 mysqladmin -u root -p create sylrplm_development
 mysqladmin -u root -p create sylrplm_test
@@ -28,7 +28,7 @@ ruby script/generate scaffold sequence object:string value:string min:string max
 
 ruby script/generate scaffold subscription designation:string description:text responsible:string group:string oncreate:boolean onupdate:boolean ondestroy:boolean
 
-# plugin pour la pagination 
+# plugin pour la pagination
 #script/plugin install git://github.com/mislav/will_paginate.git
 #To enable the library your Rails 2.1 (or later) project, use the gem configuration method in ?config/environment.rb?
 #Rails::Initializer.run do |config|
@@ -70,14 +70,14 @@ cmd="ruby script/generate controller help"
 mkdir doc
 touch doc/README_FOR_APP
 rake doc:app
-ou mieux 
+ou mieux
 rdoc app config db lib public -x lib/openwfe --visibility=protected -t 'SylRPLM application' -U --op /home/syl/trav/rubyonrails/sylrplm_doc/
 mise en production:
 
 rake db:migrate RAILS_ENV=production
 si pb:
 You probably forgot to do: rake db:create:all.
-But anyway, read the first lines of schema.rb, for the first time on a production environment you should use: 
+But anyway, read the first lines of schema.rb, for the first time on a production environment you should use:
 rake db:schema:load RAILS_ENV=production
 
 creer la base
@@ -98,11 +98,11 @@ github
 Global setup:
 
  Download and install Git: http://kernel.org/pub/software/scm/git/RPMS/i386/git-all-1.7.3.2-1.fc11.i386.rpm
- 
+
   git config --global user.name "Your Name"
   git config --global user.email sylvani@laposte.net
   Add your public key: https://github.com/account#keys
-        
+
 Next steps:
 
   mkdir sylrplm
@@ -113,16 +113,16 @@ Next steps:
   git commit -m 'first commit'
   git remote add origin git@github.com:sylvani/sylrplm.git
   git push origin master
-      
+
   git add .gitignore
   git commit -m 'second commit'
   git push origin master
-  
+
   git add .
   git commit -m 'all commit'
   git push origin master
-  
-    
+
+
 ===========================================================
 generateur de schemas
 ===========================================================
@@ -153,14 +153,14 @@ railroady [options] command
 exporter la base en yml
 ===========================================================
 charger le plugin
-script/plugin install git://github.com/adamwiggins/yaml_db.git 
+script/plugin install git://github.com/adamwiggins/yaml_db.git
 #exporter toute la base dans db/data.yml
-rake db:data:dump 
+rake db:data:dump
 #recharger la base
-rake db:data:load 
-# Create YAML test fixtures from data in an existing database. 
-rake db:fixtures:dump 
-    
+rake db:data:load
+# Create YAML test fixtures from data in an existing database.
+rake db:fixtures:dump
+
 --------------------------------------------------------
 lancer une tache regulierement
 -------------------------------
@@ -199,10 +199,10 @@ gem install rufus-scheduler
 ---
 --- install heroku
 ---
-[root@localhost sylrplm (master)]# gem install heroku 
+[root@localhost sylrplm (master)]# gem install heroku
 
 ---
---- install de la cle 
+--- install de la cle
 ---
 [syl@localhost sylrplm (master)]$ heroku keys:add
 
@@ -212,7 +212,7 @@ Email: sylvere.coutable@laposte.net
 Password: syl91.ani
 info: passphrase=syl@localhost
 ---------------------
-si pb de connexion heroku login: 
+si pb de connexion heroku login:
 GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku login
 ---------------------
 
@@ -225,7 +225,7 @@ http://freezing-stone-916.heroku.com/ | git@heroku.com:freezing-stone-916.git
 Git remote heroku added
 
 renommer l'appli freezing-stone-916.heroku.com en sylrplm sur le site heroku https://api.heroku.com/myapps/sylrplm
-modifier l'url dans le fichier sylrplm/.git/config 
+modifier l'url dans le fichier sylrplm/.git/config
 url=git@heroku.com:sylrplm.git
 
 ---
@@ -267,7 +267,7 @@ gem "ruote", "~>2.1"
 
 bundle install --path vendor
 
---- pour assurer le dev a plusieurs 
+--- pour assurer le dev a plusieurs
 git add Gemfile Gemfile.lock
 
 #puis copier le gem ruote a la place de celui installe ci dessus
@@ -301,8 +301,8 @@ source "https://github.com/jmettraux/ruote/"
 source "http://gems.github.com"
 gem "ruote", ">=2.2"
 gem "rufus-verbs"
-gem "mislav-will_paginate" , ">= 2.3.6" 
-gem "atom-tools" 
+gem "mislav-will_paginate" , ">= 2.3.6"
+gem "atom-tools"
 
 heroku rake gems:install
 
@@ -324,7 +324,7 @@ git commit -am "heroku migrate";git push heroku;heroku rake db:migrate
 --- installer l'outil taps
 gem install taps
 
---- pousser la bd locale vers heroku 
+--- pousser la bd locale vers heroku
 --- le nom est lu dans database.yml
 heroku db:push
 
@@ -332,7 +332,7 @@ Loaded Taps v0.3.23
 Auto-detected local database: mysql://root:pa33zp62@127.0.0.1/sylrplm_development?encoding=utf8
 Enter your Heroku credentials.
 Email: sylvere.coutable@laposte.net
-Password: 
+Password:
 > freezing-stone-916
 Failed to connect to database:
   Sequel::DatabaseConnectionError -> Mysql::Error: Can't connect to MySQL server on '127.0.0.1' (111)
@@ -345,7 +345,7 @@ heroku logs
 heroku addons:add logging:basic
 heroku logs -n 500
 
-#encore mieux 
+#encore mieux
 heroku addons:upgrade logging:expanded
 heroku logs --tail
 
@@ -390,7 +390,7 @@ https://api.heroku.com/myapps
 ---
 --- ruote-kit remplace ruote_plugin
 ---
-git clone http://github.com/tosch/ruote-kit.git && cd ruote-kit 
+git clone http://github.com/tosch/ruote-kit.git && cd ruote-kit
 bundle install
 rackup
 (non utilise)
@@ -413,19 +413,19 @@ pb install des gems
 --- recreer la base avec ou sans les migrations
 ---
 --- (schema seul, pas de data, sans les migrations)
-rake db:drop;rake db:create;rake db:schema:load 
+rake db:drop;rake db:create;rake db:schema:load
 
 --- ou (schema par les migrations)
-rake db:drop;rake db:create;rake db:migrate 
+rake db:drop;rake db:create;rake db:migrate
 
 --- ou (schema+data, il faut db/data.yml)
-rake db:drop;rake db:create;rake db:load 
+rake db:drop;rake db:create;rake db:load
 
 ---
 --- debug: indiquer la pile des appels
 ---
 puts "********************** pg disconnect!"
-	begin 
+	begin
 		a=1
 		b=0
 		a/b
@@ -434,11 +434,11 @@ puts "***************"
 		e.backtrace.each {|x| puts x}
 puts "***************"
 	end
-	
+
 
 
 ======================================================
-charger des fichiers dans amazon 
+charger des fichiers dans amazon
 ======================================================
 http://devcenter.heroku.com/articles/s3
 http://webtempest.com/how-to-allow-image-uploads-in-rails-on-heroku/
@@ -523,8 +523,8 @@ Note bizarre: il est impossible d'utiliser rake > 0.8.7 dû à un bug inconnu ca
 ======================================================
 Empêcher akonadi de démarrer avec KDE 4.5
 ======================================================
-Akonadi quand il démarre prend beaucoup de ressource (surement parce qu’il lance aussi nepomukserver), 
-pour empêcher qu’il démarre il faut aller dans: 
+Akonadi quand il démarre prend beaucoup de ressource (surement parce qu’il lance aussi nepomukserver),
+pour empêcher qu’il démarre il faut aller dans:
 ~/.config/akonadi/akonadiserverrc
 et modifier:
 StartServer=true => StartServer=false
@@ -533,7 +533,7 @@ Pour stopper nepomuk passer le gestionnaire de services dans le centre de config
 ======================================================
 gestion des vues
 une vue comporte 0 a n relations
-a l'affichage d'un objet, on affiche toutes les vues possibles 
+a l'affichage d'un objet, on affiche toutes les vues possibles
 ======================================================
 ruby script/generate scaffold view name:string description:text
 
@@ -545,7 +545,7 @@ rake db:fixtures:load FIXTURES_PATH=db/fixtures/domains/01-mecanique-ameublement
 
 tests auto: voir capybara
 
-todo: 
+todo:
 associer des groupes aux utilisateurs dans la custo (pas facile car pas de domain sur assoc)
 modifier/creer le disque local en donnant un chemin windows et unix , dans sicm.custo (serveur unix ou windows)
 
@@ -565,11 +565,11 @@ verifier la protection des datas: chmod 0700 /home/PostgreSQL
 --- puis install du gem pg:
 ---
 export CONFIGURE_ARGS="with-pg_config=/opt/PostgreSQL/9.2/bin/pg_config with-pg-dir=/opt/PostgreSQL/9.2 with-pg-include=/opt/PostgreSQL/9.2/include with-pg-lib=/opt/PostgreSQL/9.2/lib"
-gem install pg 
+gem install pg
 modifier database.yml:
   adapter: postgresql
   username: postgres
-  
+
 ---
 --- maj ruby 1.9.3 pour etre compatible remy et heroku (ruby 1.9.3 dans Gemfile)
 ---
@@ -586,7 +586,7 @@ ajouter la methode suivante au debut de la classe class PostgreSQLAdapter < Abst
 bundle/ruby/1.9.1/gems/activerecord-2.3.17/lib/active_record/connection_adapters/postgresql_adapter.rb
 # sylrplm: pour eviter le rechargement des connexions
 def requires_reloading?
-	puts "********************************requires_reloading?" 
+	puts "********************************requires_reloading?"
 	false
 end
 
@@ -600,7 +600,7 @@ end
      ...
       #TODO syl pour postgresql qui refuse le null
       e.text="text" if e.text.nil?
-      
+
 
 
 --- verifier et deplacer dans une custo par besoin
@@ -679,11 +679,11 @@ gem install activerecord-postgresql-adapter
 gem install test-unit
 
 
-When integrating with NewRelic, do not enable the SQL query plan instrumentation. 
-It can grab a connection that your application is also trying to use... libpq is thread safe, 
-so long as two threads do not try to manipulate the same PGonn object 
-(http://www.postgresql.org/docs/9.3/static/libpq-threading.html). 
-If you see errors such as PG::UnableToSend: insufficient data in "T" message or PG::UnableToSend: extraneous data in "T" message, 
+When integrating with NewRelic, do not enable the SQL query plan instrumentation.
+It can grab a connection that your application is also trying to use... libpq is thread safe,
+so long as two threads do not try to manipulate the same PGonn object
+(http://www.postgresql.org/docs/9.3/static/libpq-threading.html).
+If you see errors such as PG::UnableToSend: insufficient data in "T" message or PG::UnableToSend: extraneous data in "T" message,
 this can indicate that multiple threads are accessing the same connection, and data (or random bytes) may have been transposed between queries.
 rechercher database pg with one thread dans google
 
@@ -708,11 +708,11 @@ workitems edit
 <tr class="nhover">
     <td class='nomax' colspan="2"> <%= render :partial => 'shared/ruote_forms', :locals => { :fields => @workitem.field_hash , :fonct=>fonct} %> </td>
   </tr>
-  
+
   apres lancement du process, avant lancement 1ere action
   (fei 0.9.21 engine /tmp/promotion-part20140727-12172-e7kmv9 PLMPromotePart 0 20140727-durosuporu demandeur 0.5.1)
   (fei 0.9.21 engine /tmp/promotion-part20140727-12172-e7kmv9 PLMPromotePart 0 20140727-durosuporu demandeur 0.5.1)
-  
+
   ok
   class SimpleSequence < OpenWFE::ProcessDefinition
   description "a tiny sequence"
@@ -762,7 +762,7 @@ require 'bigdecimal/bigdecimal.so'
 
 
 ---------------------------------------------------------------------
-If you see errors such as PG::UnableToSend: insufficient data in "T" message or PG::UnableToSend: extraneous data in "T" message, 
+If you see errors such as PG::UnableToSend: insufficient data in "T" message or PG::UnableToSend: extraneous data in "T" message,
 this can indicate that multiple threads are accessing the same connection, and data (or random bytes) may have been transposed between queries.
 
 install de postgres par le download postgresql-9.1.14.tar.bz2
@@ -794,7 +794,7 @@ bd de test
 /usr/local/pgsql/bin/psql test
 
 export CONFIGURE_ARGS="with-pg_config=/usr/local/pgsql/bin/pg_config"
-[syl@localhost sylrplm (master)]$ gem install pg -v '0.14.1' 
+[syl@localhost sylrplm (master)]$ gem install pg -v '0.14.1'
 
 
 traces ruote a la creation d'un process# Logfile created on 2014-08-02 10:02:07 +0200OpenWFE::Extras::DbPersistedEngine 's_engine' - build_scheduler() version is 2.0.24
@@ -906,11 +906,11 @@ bundle exec rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base,limours]
 bundle exec rake sylrplm:import_domain[db/custos/sicm,sicm.custo]
 bundle exec rake sylrplm:import_domain[db/custos/sicm,sample.table]
 bundle exec rake sylrplm:update_access
-#pour heroku: 
-si besoin: "Unable to connect to Heroku API, please check internet connectivity and try again" , ajouter au debut de chaque ligne: 
-GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' 
+#pour heroku:
+si besoin: "Unable to connect to Heroku API, please check internet connectivity and try again" , ajouter au debut de chaque ligne:
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT=''
 normalement, GEM_PATH='' suffit !!
--recreer la base                                                                                                              
+-recreer la base
 GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku pg:reset HEROKU_POSTGRESQL_ONYX --confirm sylrplm
 GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku pg:reset SHARED_DATABASE --confirm sylrplm
 -creer les tables
@@ -921,7 +921,6 @@ GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:imp
 GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:import_domain[db/custos/sicm,sample.table]
 GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake sylrplm:update_access
 
-
 ------------------------
 installation openscad
 ------------------------
@@ -929,5 +928,15 @@ telecharger openscad
 su
 cd openscad-2014.03
 install.sh
+ension scad a openscad dans config du systeme
 
-associer l'extension scad a openscad dans config du systeme
+commit du 3/12/2014
+- plugin ckeditor for word editor in textarea , implemented only for document
+- improve edit view of some objects: put select tag when it is needed
+- improve edit controller on some objects : render :action=>"show" replace redirect to(@xxxx)
+- improve help_helper: good definition of class cls in help_window method
+- debug document.find_fathers, debug links_documents
+- check: add owner attribute for update_accessor like other objects
+- datafiles: protect edit view against nil volume
+- REST info: add some useful url: info/list_objects/:plmtype.:format = list of objects , info/object_links/:plmtype/:id.:format = decod an object and its child and father links
+

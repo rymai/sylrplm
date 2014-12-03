@@ -262,7 +262,8 @@ end
 #
 def follow_father(model_name, node, obj, relations)
 	model=eval model_name.capitalize
-	links=Link.find_fathers(get_model_name(obj), obj,  model_name)
+  ##links=Link.find_fathers(get_model_name(obj), obj,  model_name)
+  links=Link.find_fathers(obj,  model_name)
 	links.each do |link|
 		father = model.find(link.father_id)
 		url = {:controller => get_controller_from_model_type(model_name), :action => 'show', :id => "#{father.id}"}

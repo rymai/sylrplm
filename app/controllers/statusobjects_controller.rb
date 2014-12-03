@@ -21,7 +21,7 @@ class StatusobjectsController < ApplicationController
 	# GET /statusobjects/1
 	# GET /statusobjects/1.xml
 	def show
-		@statusobject = Statusobject.find(params[:id])
+		show_
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @statusobject }
@@ -78,7 +78,9 @@ class StatusobjectsController < ApplicationController
 			end
 			if st
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
-				format.html { redirect_to(@statusobject) }
+				params[:id]=@statusobject.id
+				show_
+				format.html { render :action => "show" }
 				format.xml  { render :xml => @statusobject, :status => :created, :location => @statusobject }
 			else
 				flash[:error] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name, :msg => nil)
@@ -95,11 +97,11 @@ class StatusobjectsController < ApplicationController
 		@objectswithstatus=Statusobject.get_objects_with_status
 		@statusobject.update_accessor(current_user)
 		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
-
 		respond_to do |format|
 			if @statusobject.update_attributes(params[:statusobject])
 				flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
-				format.html { redirect_to(@statusobject) }
+				show_
+				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
 				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
@@ -132,5 +134,10 @@ class StatusobjectsController < ApplicationController
 			format.html { redirect_to(statusobjects_url) }
 			format.xml  { head :ok }
 		end
+	end
+	private
+
+	def show_
+		@statusobject = Statusobject.find(params[:id])
 	end
 end

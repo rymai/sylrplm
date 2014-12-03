@@ -58,7 +58,7 @@ class Part < ActiveRecord::Base
 	has_many :links_documents,
     :class_name => "Link",
     :foreign_key => "father_id",
-    :conditions => { father_plmtype: 'document', child_plmtype: 'document' }
+    :conditions => { father_plmtype: 'part', child_plmtype: 'document' }
 	has_many :documents,
     :through => :links_documents,
     :source => :document_down

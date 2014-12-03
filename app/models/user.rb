@@ -22,13 +22,10 @@ class User < ActiveRecord::Base
 
 	validates_presence_of     :login, :first_name, :last_name , :typesobject
 	#validates :email, :presence => true, :format => {:with => /^[^@\s]+)@((?:[-a-z0-9A-Z]+\.[a-zA-Z]{2,})$/}
-
 	validates_uniqueness_of   :login
-
 	validates_confirmation_of :password
-
 	before_save :validity
-
+	#
 	def validity
 		fname = "#{self.class.name}.#{__method__}:"
 		#LOG.info(fname) {"user=#{self}"}
@@ -229,9 +226,6 @@ new_user=nil
 		"user"
 	end
 
-	#def typesobject
-	#  Typesobject.find_by_object(model_name)
-	#end
 	def to_s
 		self.login+"/"+(self.role.nil? ? " " :self.role.title)+"/"+(self.group.nil? ? " " : self.group.name)+"/"
 	end
@@ -416,7 +410,10 @@ new_user=nil
 	end
 
 	def self.find_all
-		find(:all, :order=>"login ASC")
+		fname= "#{self.class.name}.#{__method__}"
+		ret=find(:all, :order=>"login ASC")
+		LOG.info (fname) {"all users= #{ret}"}
+		ret
 	end
 
 	def self.find_with_mail
@@ -474,7 +471,7 @@ new_user=nil
 				end
 				if link_recent.save
 					#LOG.info(fname) {"link saved=#{link_recent},relation=#{relation_recent}" }
-				else
+					else
 					LOG.warn(fname) {"link not saved=#{link_recent},relation=#{relation_recent}" }
 				end
 				recents = self.get_recent_links

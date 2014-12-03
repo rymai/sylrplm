@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.integer  "in_user_id"
 		t.integer  "in_group_id"
 		t.date     "in_date"
+		t.integer  "owner_id"
 		t.integer  "projowner_id"
 		t.datetime "created_at"
 		t.datetime "updated_at"

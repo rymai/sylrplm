@@ -14,13 +14,15 @@ class ForumItemsController < ApplicationController
 	# GET /forum_items/1
 	# GET /forum_items/1.xml
 	def show
-		@forum_item = ForumItem.find(params[:id])
+		show
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @forum_item }
 		end
 	end
-
+	def show_
+		@forum_item = ForumItem.find(params[:id])
+	end
 	# GET /forum_items/new
 	# GET /forum_items/new.xml
 	def new
@@ -52,7 +54,9 @@ class ForumItemsController < ApplicationController
 		respond_to do |format|
 			if @forum_item.save
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_forum_item), :ident => @forum_item.id)
-				format.html { redirect_to(@forum_item.forum) }
+				params[:id]=@forum_item.id
+				show_
+				format.html { render :action => "show" }
 				format.xml  { render :xml => @forum_item, :status => :created, :location => @forum_item }
 			else
 				flash[:error] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_forum_item), :msg => nil)
@@ -70,7 +74,8 @@ class ForumItemsController < ApplicationController
 		respond_to do |format|
 			if @forum_item.update_attributes(params[:forum_item])
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_forum_item), :ident => @forum_item.id)
-				format.html { redirect_to(@forum_item) }
+				show_
+				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
 				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_forum_item),:ident=>@forum_item.id)

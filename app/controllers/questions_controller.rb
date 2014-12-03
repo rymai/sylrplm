@@ -9,7 +9,7 @@ class QuestionsController < ApplicationController
 	end
 
 	def show
-		@faq = Question.find params[:id]
+		show_
 	end
 
 	def new
@@ -31,7 +31,9 @@ class QuestionsController < ApplicationController
 		respond_to do |format|
 			if @faq.save
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_faq),:ident=>@faq.id)
-				format.html { redirect_to(@faq) }
+				params[:id]=@faq.id
+				show_
+				format.html { render :action => "show" }
 				format.xml  { render :xml => @faq, :status => :created, :location => @faq }
 			else
 				flash[:error] =t(:ctrl_object_not_created, :typeobj =>t(:ctrl_faq), :msg => nil)
@@ -53,7 +55,8 @@ class QuestionsController < ApplicationController
 		respond_to do |format|
 			if @faq.update_from_params(params[:question], current_user)
 				flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_faq),:ident=>@faq.id)
-				format.html { redirect_to(@faq) }
+				show_
+				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
 				flash[:error] = t(:ctrl_object_notupdated,:typeobj =>t(:ctrl_faq),:ident=>@faq.controller)
@@ -76,4 +79,11 @@ class QuestionsController < ApplicationController
 			format.xml  { head :ok }
 		end
 	end
+
+private
+
+	def show_
+		@faq = Question.find params[:id]
+	end
+
 end

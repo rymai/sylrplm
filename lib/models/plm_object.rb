@@ -21,28 +21,6 @@ module Models
 			end
 		end #ClassMethods
 
- #
-		# adapt some atttributes of the object depending of the new type
-		#
-		def modify_type(type)
-			typesobject_old=self.typesobject
-			type_values_old=self.type_values
-			statusobject_old=self.statusobject
-			self.typesobject=type
-			self.type_values=type.fields
-			self.statusobject = ::Statusobject.get_first(self)
-			ret=[]
-			if(self.typesobject != typesobject_old)
-				ret<< "Type changed from #{typesobject_old} to #{self.typesobject}"
-			end
-			if(self.type_values != type_values_old)
-				ret<< "Type_values changed from #{type_values_old} to #{self.type_values}"
-			end
-			if(self.statusobject != statusobject_old)
-				ret<< "Status changed from #{statusobject_old} to #{self.statusobject}"
-			end
-			ret
-		end
 
 		def edit
 			self.date=DateTime::now()
@@ -360,7 +338,8 @@ module Models
 
 		def get_workitems
 			ret = []
-			links = ::Link.find_fathers(self.model_name, self,  "ar_workitem")
+     ## links = ::Link.find_fathers(self.model_name, self,  "ar_workitem")
+      links = ::Link.find_fathers(self,  "ar_workitem")
 			#puts "plm_object.get_workitems:links="+links.inspect
 			links.each do |link|
 				begin
@@ -379,7 +358,8 @@ module Models
 
 		def get_histories
 			ret = []
-			links = ::Link.find_fathers(self.model_name, self,  "history_entry")
+      ##links = ::Link.find_fathers(self.model_name, self,  "history_entry")
+      links = ::Link.find_fathers(self,  "history_entry")
 			links.each do |link|
 				begin
 					father = Ruote::Sylrplm::HistoryEntry.find(link.father_id) unless Ruote::Sylrplm::HistoryEntry.count(link.father_id)==1
@@ -394,6 +374,22 @@ module Models
 			#puts "plm_object.get_histories:ret="+ret.inspect
 			ret
 		end
+
+    #
+    # return all links from the object
+    #
+    def links_childs
+      fname= "#{self.class.name}.#{__method__}"
+      ret = ::Link.find_childs(self)
+      LOG.debug (fname) {"childs of #{self} : #{ret}"}
+      ret
+    end
+    def links_fathers
+      fname= "#{self.class.name}.#{__method__}"
+      ret = ::Link.find_fathers(self)
+      LOG.debug (fname) {"fathers of #{self} : #{ret}"}
+      ret
+    end
 
 		def add_documents_from_favori(favori)
 			favori.items.each do |item|
@@ -496,7 +492,7 @@ module Models
 
 		def initialize(*args)
 			fname= "#{self.class.name}.#{__method__}"
-			#LOG.info (fname) {"args=#{args.length}:#{args.inspect}"}
+			LOG.debug (fname) {"initialize args=#{args.length}:#{args.inspect}"}
 			super
 			if self.respond_to? :revision
 				if args.size>0 && !args[0].nil? && (!args[0].include?(:revision))

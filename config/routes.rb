@@ -189,6 +189,16 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.resources :history
 
+  #map.resources :info,  :member=> { :part_documents => :get }
+  map.connect(
+  'info/list_objects/:plmtype.:format',
+  :controller => 'info',
+  :action => 'list_objects')
+  map.connect(
+  'info/object_links/:plmtype/:id.:format',
+  :controller => 'info',
+  :action => 'object_links')
+  
 	map.resources :links, :collection => { :reset => :get, :empty_favori => :get}
 	map.connect(
 	'links/:id/edit_in_tree',
@@ -446,7 +456,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.wfid_resources :workitems
 
 	map.wfid_resources :expressions
-
+ 
 # The priority is based upon order of creation: first created -> highest priority.
 
 # Sample of regular route:
