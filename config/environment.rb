@@ -34,6 +34,7 @@ Rails::Initializer.run do |config|
   # etc
   # maybe some more
   # and so on...
+###config.gem 'bigdecimal'
 
   # Note that iconv is a gem in ruby-2.0
   #config.gem 'iconv' if RUBY_VERSION >= "2.0.0"
@@ -48,12 +49,13 @@ Rails::Initializer.run do |config|
 	# config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
 	# Add additional load paths for your own custom dirs
 
+	config.autoload_paths += %W[#{Rails.root}/lib]
 	config.autoload_paths += %W[#{Rails.root}/lib/classes #{Rails.root}/app/helpers]
 	config.autoload_paths += %W[#{Rails.root}/lib/controllers]
 	config.autoload_paths += %W[#{Rails.root}/lib/helper]
 	config.autoload_paths += %W[#{Rails.root}/lib/models]
 	config.autoload_paths += %W[#{Rails.root}/lib/ruote/sylrplm]
-	
+
 	# Only load the plugins named here, in the order given (default is alphabetical).
 	# :all can be used as a placeholder for all plugins not explicitly named
 	# config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -73,10 +75,10 @@ Rails::Initializer.run do |config|
 
 	# The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
 	config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
-  
+
   #I18n.enforce_available_locales will default to true in the future
   config.i18n.enforce_available_locales = false
-	
+
 	# config.i18n.default_locale = :de
 	config.i18n.default_locale = :fr
 
