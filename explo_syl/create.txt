@@ -913,6 +913,7 @@ normalement, GEM_PATH='' suffit !!
 -recreer la base
 GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku pg:reset HEROKU_POSTGRESQL_ONYX --confirm sylrplm
 GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku pg:reset SHARED_DATABASE --confirm sylrplm
+GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku pg:reset DATABASE_URL --confirm sylrplm
 -creer les tables
 GEM_HOME='' BUNDLE_GEMFILE='' GEM_PATH='' RUBYOPT='' heroku run rake db:reset
 -remplir la base
@@ -939,4 +940,7 @@ commit du 3/12/2014
 - check: add owner attribute for update_accessor like other objects
 - datafiles: protect edit view against nil volume
 - REST info: add some useful url: info/list_objects/:plmtype.:format = list of objects , info/object_links/:plmtype/:id.:format = decod an object and its child and father links
-
+- relation: using label for header in views
+- _edit_object.html;erb : general edit view with error viewing
+- workitems: view fields whith nomax class
+- help first_use: improvment

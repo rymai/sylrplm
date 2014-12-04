@@ -9,7 +9,7 @@ gem 'test-unit'
 gem 'activesupport'
 
 gem 'bundler'
-gem 'bigdecimal', '~> 1.2.1'
+##gem 'bigdecimal', '~> 1.2.1'
 gem 'haml'
 gem 'iconv'
 #gem 'test-unit'
@@ -55,7 +55,7 @@ gem 'psych', '~> 2.0.5'
 gem 'zip-zip'
 
 #gem 'string_to_sha1', :git => "git://github.com/sylvani/string_to_sha1.git"
-#gem 'string_to_sha1', :path => "/home/syl/trav/rubyonrails/string_to_sha1" 
+#gem 'string_to_sha1', :path => "/home/syl/trav/rubyonrails/string_to_sha1"
 
 gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
 ###gem 'sylrplm_ext', :path => "/home/syl/trav/rubyonrails/sylrplm_ext"
@@ -64,14 +64,14 @@ group :staging, :production do
 	gem 'thin'
 	gem 'rack-ssl'
 	gem 'newrelic_rpm'
-	#gem 'bigdecimal'
+	##gem 'bigdecimal'
 end
 
 group :development do
 	#gem 'ruby-debug-base19'
 	#gem 'ruby-debug-ide19'
 	#gem 'ruby-debug193'
-	#gem 'bigdecimal', :path => "/usr/share/ruby/gems/gems/bigdecimal-1.2.5" 
+	##gem 'bigdecimal', :path => "/usr/share/ruby/gems/gems/bigdecimal-1.2.5"
 	gem 'ruby_debugger'
 	gem 'foreman'
 	gem 'letter_opener'
