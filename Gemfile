@@ -9,7 +9,10 @@ gem 'test-unit'
 gem 'activesupport'
 
 gem 'bundler'
-##gem 'bigdecimal', '~> 1.2.1'
+
+gem 'bigdecimal', '1.2.1'
+##gem 'bigdecimal'
+
 gem 'haml'
 gem 'iconv'
 #gem 'test-unit'
@@ -22,12 +25,11 @@ gem 'mail', '~>2.3.0'
 gem 'json', '~>1.5.5'
 gem 'log4r'
 gem 'locale'
+
 # connecteur Database
 # be careful, don't activate 0.15.1 version : process processing is ko
 gem 'pg' , '~>0.14.1'
-
 ###gem 'postgres-pr' #, '~> 0.6.3'
-
 #gem 'activerecord-postgresql-adapter', '~> 0.0.1'
 #gem 'mysql2'
 
@@ -49,7 +51,8 @@ gem 'will_paginate' , '~> 2.3.16'
 #gem 'before_render'
 
 #
-gem 'psych', '~> 2.0.5'
+##gem 'psych', '~> 2.0.5'
+gem 'psych', '2.0.6'
 
 # read and create zip files
 gem 'zip-zip'
