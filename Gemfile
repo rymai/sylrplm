@@ -63,6 +63,11 @@ gem 'zip-zip'
 gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
 ###gem 'sylrplm_ext', :path => "/home/syl/trav/rubyonrails/sylrplm_ext"
 
+gem 'foreman'
+	gem 'letter_opener'
+	gem 'railroad'
+	gem 'railroady'
+
 group :staging, :production do
 	gem 'thin'
 	gem 'rack-ssl'
@@ -76,8 +81,5 @@ group :development do
 	#gem 'ruby-debug193'
 	##gem 'bigdecimal', :path => "/usr/share/ruby/gems/gems/bigdecimal-1.2.5"
 	gem 'ruby_debugger'
-	gem 'foreman'
-	gem 'letter_opener'
-	gem 'railroad'
-	gem 'railroady'
+
 end
