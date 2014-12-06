@@ -2,27 +2,27 @@ source 'https://rubygems.org'
 
 #dispo sur bundle 1.2
 #ruby '1.9.3'
-ruby '2.0.0'
+#ruby '2.0.0'
+ruby "2.1.5"
 
-gem 'test-unit'
+#defaut ruby 2.1.5 gem 'test-unit'
 
 gem 'activesupport'
 
 gem 'bundler'
 
-gem 'bigdecimal', '1.2.1'
+##gem 'bigdecimal', '1.2.1'
 ##gem 'bigdecimal'
 
 gem 'haml'
 gem 'iconv'
-#gem 'test-unit'
 gem 'nokogiri'  #, '~>1.5.4' 1.6.3.1
 
 gem 'rails', '2.3.17'
-gem 'rake' #, '10.3.2'
-gem 'rdoc' #, '4.1.1'
+#defaut ruby 2.1.5 gem 'rake' #, '10.3.2'
+#defaut ruby 2.1.5 gem 'rdoc' #, '4.1.1'
 gem 'mail', '~>2.3.0'
-gem 'json', '~>1.5.5'
+#defaut ruby 2.1.5 gem 'json', '~>1.5.5'
 gem 'log4r'
 gem 'locale'
 
@@ -52,7 +52,8 @@ gem 'will_paginate' , '~> 2.3.16'
 
 #
 ##gem 'psych', '~> 2.0.5'
-gem 'psych', '2.0.6'
+
+#defaut ruby 2.1.5 gem 'psych', '2.0.6'
 
 # read and create zip files
 gem 'zip-zip'

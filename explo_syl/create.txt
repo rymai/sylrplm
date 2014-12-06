@@ -944,3 +944,36 @@ commit du 3/12/2014
 - _edit_object.html;erb : general edit view with error viewing
 - workitems: view fields whith nomax class
 - help first_use: improvment
+
+-----------------------------------------
+install ruby 2.1.5 le 6/12/2014
+-----------------------------------------
+
+telechargement ruby-2.1.5.tar.gz
+
+extraction dans ruby-2.1.5
+
+./configure
+
+make
+
+su
+
+make install
+> installing default gems:      /usr/local/lib/ruby/gems/2.1.0 (build_info, cache, doc, extensions, gems, specifications)
+                              bigdecimal 1.2.4
+                              io-console 0.4.2
+                              json 1.8.1
+                              minitest 4.7.5
+                              psych 2.0.5
+                              rake 10.1.0
+                              rdoc 4.1.0
+                              test-unit 2.1.5.0
+=> suppression de ces gems du Gemfile
+
+gem install bundler
+Fetching: bundler-1.7.7.gem (100%)
+Successfully installed bundler-1.7.7
+
+bundle update
+
