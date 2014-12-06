@@ -34,7 +34,6 @@ Rails::Initializer.run do |config|
   # etc
   # maybe some more
   # and so on...
-###config.gem 'bigdecimal'
 
   # Note that iconv is a gem in ruby-2.0
   #config.gem 'iconv' if RUBY_VERSION >= "2.0.0"
@@ -49,7 +48,6 @@ Rails::Initializer.run do |config|
 	# config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
 	# Add additional load paths for your own custom dirs
 
-	config.autoload_paths += %W[#{Rails.root}/lib]
 	config.autoload_paths += %W[#{Rails.root}/lib/classes #{Rails.root}/app/helpers]
 	config.autoload_paths += %W[#{Rails.root}/lib/controllers]
 	config.autoload_paths += %W[#{Rails.root}/lib/helper]
