@@ -12,7 +12,7 @@ gem 'activesupport'
 gem 'bundler'
 
 ##gem 'bigdecimal', '1.2.1'
-##gem 'bigdecimal'
+gem 'bigdecimal'
 
 gem 'haml'
 gem 'iconv'
