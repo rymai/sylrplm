@@ -967,4 +967,17 @@ make install
 gem install bundler
 >Fetching: bundler-1.7.7.gem (100%)
 bundle update, voir bundle.txt
+smartgit: push remote on heroku, le probleme de bigdecimal persiste
+pour le resoudre:
+heroku plugins:install https://github.com/lstoll/heroku-repo.git
+heroku repo:purge_cache
+cela ne resoud pas le pb !!!!!!!!!!!!!!!
+autre conseil sur le web: clean, deploy, restore Gemfile, deploy again
+essai perso:
+heroku repo:reset
+heroku repo:rebuild : reinstall l'application et bundle install
+meme pb:
+LoadError: libruby.so.2.0: cannot open shared object file: No such file or directory - /tmp/build_a51828df33842e54471412f232864174/lib/bigdecimal.so
+
+
 
