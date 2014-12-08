@@ -14,7 +14,7 @@ coverage
 log
 logfile
 tmp
-explo_syl
+explo_syl/*
 rdoc
 public/javascripts/all.js
 public/stylesheets/all.css
