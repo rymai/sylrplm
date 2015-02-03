@@ -1,32 +1,62 @@
-Document_11:
-  id: "11"
+Document_3:
+  id: "3"
   owner_id: "105"
-  typesobject_id: "418777236"
+  typesobject_id: "1045584113"
   statusobject_id: "4"
-  ident: DOC000058
+  ident: DOC000004
   revision: "0"
-  designation: Plan plaque
+  designation: Documents de la table
   description: ""
   date: "2013-06-04"
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values:
+  type_values: "{\"type\": \"\"}"
 
-Document_12:
-  id: "12"
+Document_4:
+  id: "4"
   owner_id: "105"
   typesobject_id: "418777236"
   statusobject_id: "4"
-  ident: DOC000059
+  ident: DOC000006
   revision: "0"
-  designation: Plan pied carre court
+  designation: Plan plateau rectangulaire
   description: ""
   date: "2013-06-04"
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
-  type_values:
+  type_values: "{\"ref_doc\": \"\"}"
+
+Document_5:
+  id: "5"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000008
+  revision: "0"
+  designation: Plan plateau carre
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: "{\"ref_doc\": \"\"}"
+
+Document_6:
+  id: "6"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000053
+  revision: "0"
+  designation: Plan plateau hexagonal
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: "{\"format\": {\"A0\": \"1189*841\", \"A1\": \"841*594\", \"A2\": \"594*420\", \"A3\": \"420*297\", \"A4\": \"297*210\"}}"
 
 Document_7:
   id: "7"
@@ -88,6 +118,36 @@ Document_10:
   domain: sample.table
   type_values:
 
+Document_11:
+  id: "11"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000058
+  revision: "0"
+  designation: Plan plaque
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Document_12:
+  id: "12"
+  owner_id: "105"
+  typesobject_id: "418777236"
+  statusobject_id: "4"
+  ident: DOC000059
+  revision: "0"
+  designation: Plan pied carre court
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
 Document_13:
   id: "13"
   owner_id: "105"
@@ -133,14 +193,14 @@ Document_15:
   domain: sample.table
   type_values:
 
-Document_5:
-  id: "5"
+Document_21:
+  id: "21"
   owner_id: "105"
-  typesobject_id: "418777236"
+  typesobject_id: "353569266"
   statusobject_id: "4"
-  ident: DOC000008
+  ident: DOC000064
   revision: "0"
-  designation: Plan plateau carre
+  designation: Model 3D  plateau rectangulaire
   description: ""
   date: "2013-06-04"
   group_id: "101"
@@ -148,14 +208,14 @@ Document_5:
   domain: sample.table
   type_values: "{\"ref_doc\": \"\"}"
 
-Document_4:
-  id: "4"
+Document_22:
+  id: "22"
   owner_id: "105"
-  typesobject_id: "418777236"
+  typesobject_id: "353569266"
   statusobject_id: "4"
-  ident: DOC000006
+  ident: DOC000065
   revision: "0"
-  designation: Plan plateau rectangulaire
+  designation: Model 3D  plateau carre
   description: ""
   date: "2013-06-04"
   group_id: "101"
@@ -163,32 +223,153 @@ Document_4:
   domain: sample.table
   type_values: "{\"ref_doc\": \"\"}"
 
-Document_3:
-  id: "3"
+Document_23:
+  id: "23"
   owner_id: "105"
-  typesobject_id: "1045584113"
+  typesobject_id: "353569266"
   statusobject_id: "4"
-  ident: DOC000004
+  ident: DOC000066
   revision: "0"
-  designation: Documents de la table
-  description: ""
-  date: "2013-06-04"
-  group_id: "101"
-  projowner_id: "3"
-  domain: sample.table
-  type_values: "{\"type\": \"\"}"
-
-Document_6:
-  id: "6"
-  owner_id: "105"
-  typesobject_id: "418777236"
-  statusobject_id: "4"
-  ident: DOC000053
-  revision: "0"
-  designation: Plan plateau hexagonal
+  designation: Model 3D  plateau hexagonal
   description: ""
   date: "2013-06-04"
   group_id: "101"
   projowner_id: "3"
   domain: sample.table
   type_values: "{\"format\": {\"A0\": \"1189*841\", \"A1\": \"841*594\", \"A2\": \"594*420\", \"A3\": \"420*297\", \"A4\": \"297*210\"}}"
+
+Document_24:
+  id: "24"
+  owner_id: "105"
+  typesobject_id: "353569266"
+  statusobject_id: "4"
+  ident: DOC000067
+  revision: "0"
+  designation: Model 3D   vis
+  description: Model 3D  vis de fixation pieds
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values: "{}"
+
+Document_25:
+  id: "25"
+  owner_id: "105"
+  typesobject_id: "353569266"
+  statusobject_id: "4"
+  ident: DOC000068
+  revision: "0"
+  designation: Model 3D  cote cadre court
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Document_26:
+  id: "26"
+  owner_id: "105"
+  typesobject_id: "353569266"
+  statusobject_id: "4"
+  ident: DOC000069
+  revision: "0"
+  designation: Model 3D  cote cadre long
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Document_27:
+  id: "27"
+  owner_id: "105"
+  typesobject_id: "353569266"
+  statusobject_id: "4"
+  ident: DOC000070
+  revision: "0"
+  designation: Model 3D  patin
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Document_28:
+  id: "28"
+  owner_id: "105"
+  typesobject_id: "353569266"
+  statusobject_id: "4"
+  ident: DOC000071
+  revision: "0"
+  designation: Model 3D  plaque
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Document_29:
+  id: "29"
+  owner_id: "105"
+  typesobject_id: "353569266"
+  statusobject_id: "4"
+  ident: DOC000072
+  revision: "0"
+  designation: Model 3D  pied carre court
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Document_30:
+  id: "30"
+  owner_id: "105"
+  typesobject_id: "353569266"
+  statusobject_id: "4"
+  ident: DOC000073
+  revision: "0"
+  designation: Model 3D  pied carre long
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Document_31:
+  id: "31"
+  owner_id: "105"
+  typesobject_id: "353569266"
+  statusobject_id: "4"
+  ident: DOC000074
+  revision: "0"
+  designation: Model 3D pied rond court
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Document_32:
+  id: "32"
+  owner_id: "105"
+  typesobject_id: "353569266"
+  statusobject_id: "4"
+  ident: DOC000075
+  revision: "0"
+  designation: Model 3D  pied rond long
+  description: ""
+  date: "2013-06-04"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+

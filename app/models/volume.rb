@@ -19,7 +19,7 @@ class Volume < ActiveRecord::Base
 	PROTOCOL_DATABASE_TEXT="database_text"
 	PROTOCOL_DATABASE_BINARY="database_binary"
 	FILE_REV_DELIMITER = "_._"
-	DIR_DELIMITER = "."
+	DIR_DELIMITER = "_"
 	#
 	########################################################################
 	# protocol calls begin
@@ -163,7 +163,7 @@ class Volume < ActiveRecord::Base
 	def dir_name
 		fname= "#{self.class.name}.#{__method__}"
 		env = Volume.rails_env
-		unless env.nil? 
+		unless env.nil?
 			unless self.directory.blank?
 				ret = File.join(self.directory, env)
 			else

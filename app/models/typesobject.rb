@@ -55,16 +55,16 @@ class Typesobject < ActiveRecord::Base
 		stypes = order_default.find_all_by_forobject(s_object.to_s)
 		ret= []
 		stypes.each do |type|
-		#LOG.debug (fname) {"type:#{type}"}
+		LOG.debug (fname) {"type:#{type}"}
 			if type.name != sgeneric || with_generic
-			###############TODO not here !!! someone need he reel name type.name = type.name_translate
-			ret << type
+				###############TODO not here !!! someone need he reel name type.name = type.name_translate
+				ret << type
 			end
 		end
 		unless ret.is_a?(Array)
 			ret = [ret]
 		end
-		LOG.debug (fname) {"types=#{ret.inspect}"}
+		LOG.debug (fname) {"s_object=#{s_object} types=#{ret.inspect}"}
 		ret
 	end
 

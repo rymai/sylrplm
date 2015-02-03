@@ -8,6 +8,7 @@ class Role < ActiveRecord::Base
 
 	belongs_to :father, :class_name => "Role"
 	has_many :childs, :class_name => "Role", :primary_key => "id", :foreign_key => "father_id"
+
 	def self.find_by_name(name)
 		find(:first , :conditions => ["title = '#{name}' "])
 	end

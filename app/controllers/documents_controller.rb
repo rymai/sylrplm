@@ -222,17 +222,6 @@ class DocumentsController < ApplicationController
     end
   end
 
-  #replaced by update_lifecycle
-  def demote_obsolete
-    fname= "#{self.class.name}.#{__method__}"
-    #LOG.debug (fname){"params=#{params.inspect}"}
-    @document = Document.find(params[:id])
-    @volumes  = Volume.find_all
-    @types    = Typesobject.get_types("document")
-    @status   = Statusobject.get_status("document")
-    ctrl_demote(@document)
-  end
-
   def revise
     ctrl_revise(Document)
   end

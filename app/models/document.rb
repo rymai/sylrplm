@@ -25,60 +25,60 @@ class Document < ActiveRecord::Base
 
 	has_many :checks
 
-	has_many :links_forums,
+	has_many :links_document_forum,
     :class_name => "Link",
     :foreign_key => "father_id",
     :conditions => { father_plmtype: 'document', child_plmtype: 'forum' }
 	has_many :forums,
-    :through => :links_forums,
+    :through => :links_document_forum,
     :source => :forum
 
-	has_many :links_documents,
+	has_many :links_document_document,
     :class_name => "Link",
     :foreign_key => "father_id",
     :conditions => { father_plmtype: 'document', child_plmtype: 'document' }
 	has_many :documents,
-    :through => :links_documents,
+    :through => :links_document_document,
     :source => :document_down
 
-	has_many :links_documents_up,
+	has_many :links_document_document_up,
     :class_name => "Link",
     :foreign_key => "child_id",
     :conditions => { father_plmtype: 'document', child_plmtype: 'document' }
 	has_many :documents_up ,
-    :through => :links_documents_up,
+    :through => :links_document_document_up,
     :source => :document_up
 
-	has_many :links_parts_up,
+	has_many :links_part_document_up,
     :class_name => "Link",
     :foreign_key => "child_id",
     :conditions => { father_plmtype: 'part', child_plmtype: 'document' }
 	has_many :parts_up,
-    :through => :links_parts_up,
+    :through => :links_part_document_up,
     :source => :part_up
 
-	has_many :links_projects_up,
+	has_many :links_project_document_up,
     :class_name => "Link",
     :foreign_key => "child_id",
     :conditions => { father_plmtype: 'project', child_plmtype: 'document' }
 	has_many :projects_up,
-    :through => :links_projects_up,
+    :through => :links_project_document_up,
     :source => :project_up
 
-	has_many :links_customers_up,
+	has_many :links_customer_document_up,
     :class_name => "Link",
     :foreign_key => "child_id",
     :conditions => { father_plmtype: 'customer', child_plmtype: 'document' }
 	has_many :customers_up,
-    :through => :links_customers_up,
+    :through => :links_customer_document_up,
     :source => :customer_up
 
-	has_many :links_histories_up,
+	has_many :links_history_document_up,
     :class_name => "Link",
     :foreign_key => "child_id",
     :conditions => { father_plmtype: 'history_entry', child_plmtype: 'document' }
 	has_many :histories_up,
-    :through => :links_histories_up,
+    :through => :links_history_document_up,
     :source => :history_up
     #
 	def user=(user)
@@ -102,10 +102,6 @@ class Document < ActiveRecord::Base
 			ret[:values] = { :v_filter => filter }
 		end
 		ret
-	end
-
-	def self.get_types_obsolete
-		Typesobject.get_types("document")
 	end
 
 	def self.find_all

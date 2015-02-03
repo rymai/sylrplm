@@ -259,8 +259,7 @@ module Controllers
 			#LOG.debug (fname){"object=#{object.ident} type_model=#{type_model_id}"}
 			type_model = Typesobject.find(type_model_id)
 			unless type_model.nil?
-				variant = params[:variant]
-				tree    = build_tree(object, @myparams[:view_id] , variant)
+				tree    = build_tree(object, @myparams[:view_id] , params[:variant])
 				content = build_model_tree(object, tree, type_model)
 				#LOG.debug (fname){"content=#{content}"}
 				unless content["content"].nil?

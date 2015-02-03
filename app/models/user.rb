@@ -442,10 +442,11 @@ new_user=nil
 	#
 	def get_recent_links
 		cond = "links.father_plmtype ='user' and links.father_id = #{self.id} and relations.name = '#{::SYLRPLM::RELATION_RECENT_ACTION}'"
-		::Link.find(:all,
+		links = ::Link.find(:all,
 		:conditions => cond,
 		:joins => "inner join relations on links.relation_id = relations.id",
 		:order => :updated_at)
+
 	end
 
 	#
@@ -502,68 +503,6 @@ new_user=nil
 		self.salt = self.object_id.to_s + rand.to_s
 	end
 
-	def self.connected_obsolete(session)
-		!User.find_userid(session).nil?
-	end
-
-	# recherche de l'id du user connecte
-	def self.find_userid_obsolete(session)
-		if session[:user_id]
-			if  user = User.find(session[:user_id])
-			user.id
-			else
-				nil
-			end
-		else
-			nil
-		end
-	end
-
 	# recherche du nom du user connecte
-	def self.find_username_obsolete(session)
-		if session[:user_id]
-			if user = User.find(session[:user_id])
-			user.login
-			else
-				nil
-			end
-		else
-			nil
-		end
-	end
-
-	# recherche du role du user connecte
-	def self.find_userrole_obsolete(session)
-		if session[:user_id]
-			if  user = User.find(session[:user_id])
-				if(user.role != nil)
-				user.role.title
-				else
-					nil
-				end
-			else
-				nil
-			end
-		else
-			nil
-		end
-	end
-
-	# recherche du mail du user connecte
-	def self.find_usermail_obsolete(session)
-		if session[:user_id]
-			if  user = User.find(session[:user_id])
-				if(user.email != nil)
-				user.email
-				else
-					nil
-				end
-			else
-				nil
-			end
-		else
-			nil
-		end
-	end
 
 end

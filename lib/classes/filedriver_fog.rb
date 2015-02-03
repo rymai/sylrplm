@@ -18,12 +18,11 @@ class FiledriverFog < Filedriver
 	@@instance = nil
 
 	def self.instance
-	  fname= "#{self.class.name}.#{__method__}"
+	  fname= "FiledriverFog.#{__method__}"
     access_key=PlmServices.get_property(:FOG_ACCESS_KEY)
 		access_key_id=PlmServices.get_property(:FOG_ACCESS_KEY_ID)
 		if @@instance.nil?
 		  LOG.info (fname) {"access_key=#{access_key} access_key_id=#{access_key_id}"}
-		  
 			@@instance = FiledriverFog.new
 			# create a connection
 			@@instance.storage = Fog::Storage.new(
@@ -32,10 +31,10 @@ class FiledriverFog < Filedriver
 				:aws_secret_access_key    => access_key,
 				:aws_access_key_id        => access_key_id,
 				# authorize the period (.) in the hostname
-				:path_style => true 
+				:path_style => true
 			})
 		end
-		#puts "SylrplmFog.instance:"+@@instance.inspect
+		LOG.debug (fname) {"@@instance=#{@@instance.inspect}"}
 		return @@instance
 	end
 
@@ -43,7 +42,7 @@ class FiledriverFog < Filedriver
 	# protocol calls begin
 	########################################################################
 	def dir_datafile(datafile)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "FiledriverFog.#{__method__}"
 		#LOG.info (fname) {"ident=#{datafile.ident}"}
 		vol_dir=datafile.volume.dir_name.gsub("_","-")
 		vol_dir=vol_dir.gsub("/",::Volume::DIR_DELIMITER)
@@ -57,7 +56,7 @@ class FiledriverFog < Filedriver
 
 	# renvoie les differentes revisions du fichier existantes dans le repository
 	def revisions_files(datafile)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "FiledriverFog.#{__method__}"
 		ret=[]
 		dir=directory(datafile.dir_repository)
 		unless dir.nil?
@@ -70,7 +69,7 @@ class FiledriverFog < Filedriver
 
 	# full path of the file
 	def repository(datafile)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "FiledriverFog.#{__method__}"
 		ret=""
 		unless datafile.filename.nil?
 			ret = "#{datafile.dir_repository}.#{datafile.filename_repository}"
@@ -79,7 +78,7 @@ class FiledriverFog < Filedriver
 	end
 
 	def read_file(datafile)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "FiledriverFog.#{__method__}"
 		fog_file = retrieve(datafile.dir_repository, datafile.filename_repository)
 		data=fog_file.body unless fog_file.nil?
 		#LOG.debug (fname) {"fog_file=#{fog_file} taille=#{data}"}
@@ -89,7 +88,7 @@ class FiledriverFog < Filedriver
 	#
 	# renvoie un repertoire dans lequel seront uploade les fichiers
 	def create_directory(datafile)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "FiledriverFog.#{__method__}"
 		#LOG.debug (fname) {"datafile.dir_repository=#{datafile.dir_repository}"}
 		directory_key=datafile.dir_repository
 		#dir = create_directory(datafile.dir_repository)
@@ -107,11 +106,11 @@ class FiledriverFog < Filedriver
 	end
 
 	def write_file(datafile, content)
-		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"content size=#{content.length}"}
+		fname= "FiledriverFog.#{__method__}"
+		LOG.debug (fname) {"content size=#{content.length}"}
 		if content.length>0
 			fog_file = upload_content(datafile.dir_repository, datafile.filename_repository, content)
-			#LOG.debug (fname) {"apres write in fog:#{fog_file.inspect}"}
+			LOG.debug (fname) {"apres write in fog:#{fog_file.inspect}"}
 		end
 	end
 
@@ -121,7 +120,7 @@ class FiledriverFog < Filedriver
 	# - fog:
 	# - database: creation de la table de nom=name
 	def create_volume_dir(volume, olddirname)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "FiledriverFog.#{__method__}"
 		ret = volume.directory
 		if volume.dir_name != olddirname
 			ret=nil
@@ -136,7 +135,7 @@ class FiledriverFog < Filedriver
 	end
 
 	def remove_files(datafile)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "FiledriverFog.#{__method__}"
 		dir=directory(datafile.dir_repository)
 		unless dir.nil?
 			dir.files.each do |file|
@@ -148,7 +147,7 @@ class FiledriverFog < Filedriver
 	end
 
 	def files_list(purge = false)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "FiledriverFog.#{__method__}"
 		# list directories
 		#LOG.debug (fname){"purge=#{purge} storage=#{self.storage.inspect}"}
 		ret=[]
@@ -190,7 +189,7 @@ class FiledriverFog < Filedriver
 					params["revision"]=::Datafile.revision_from_file(s3_file.key)
 					#
 					if(fields_dir.size==5)
-						params["datafile_model"] = fields_dir[3] 
+						params["datafile_model"] = fields_dir[3]
 						params["datafile"] =  fields_dir[4]
 						params["volume_dir"] = fields_dir[0] + ::Volume::DIR_DELIMITER + fields_dir[1] + ::Volume::DIR_DELIMITER + fields_dir[2]
 					end
@@ -251,7 +250,7 @@ class FiledriverFog < Filedriver
 	end
 
 	def directory_exists?(adir)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "FiledriverFog.#{__method__}"
 		#LOG.debug (fname){"adir=#{adir}"}
 		dirs = FiledriverFog.instance.storage.directories
 		ret=false
@@ -266,7 +265,7 @@ class FiledriverFog < Filedriver
 	end
 
 	def is_used?(direct, s3_file)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "FiledriverFog.#{__method__}"
 		#key_dir=0-0-0-0.deve.volfog01.datafile.df0000000038
 		fields_dir=direct.key.split(::Volume::DIR_DELIMITER)
 		if fields_dir.size==5
@@ -328,7 +327,8 @@ class FiledriverFog < Filedriver
 
 	# upload d'un contenu
 	def upload_content(directory_key, file_key, content)
-		#puts "sylrplm_fog.upload_content:"+directory_key+" file_key="+file_key
+		fname= "FiledriverFog.#{__method__}"
+		LOG.debug (fname) {"directory_key=#{directory_key}  file_key= #{file_key}"}
 		# upload
 		fog_file = directory(directory_key).files.create({
 			:key    => file_key,
@@ -368,7 +368,7 @@ class FiledriverFog < Filedriver
 	end
 
 	def self.remove_repository(dirkey)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "FiledriverFog.#{__method__}"
 		LOG.info (fname) {"deleting dir:#{dirkey}"}
 		dir = SylrplmFog.instance.directory(dirkey)
 		unless dir.nil?
@@ -381,7 +381,7 @@ class FiledriverFog < Filedriver
 	end
 
 	def remove_file(dirkey, filekey)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "FiledriverFog.#{__method__}"
 		LOG.info (fname) {"deleting dir:#{dirkey},#{filekey}"}
 		dir = FiledriverFog.instance.directory(dirkey)
 		unless dir.nil?

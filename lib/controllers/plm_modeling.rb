@@ -8,9 +8,8 @@ require "zip/zip"
 #
 def get_types_datafiles_on_tree(tree)
 	fname="plm_tree:#{__method__}"
-	ret=[]
 	#LOG.debug (fname) {"#{tree.nodes.count} nodes"}
-	ret = get_types_datafiles_on_node(tree)
+	ret = get_types_datafiles_on_node(tree,0)
 	ret
 end
 
@@ -18,23 +17,32 @@ end
 # get the types of datafiles existing on a node
 # recursive method
 #
-def get_types_datafiles_on_node(node)
+def get_types_datafiles_on_node(node, level)
 	fname="plm_tree:#{__method__}"
 	ret=[]
 	lnk = get_node_link(node)
 	unless lnk.nil?
-		#LOG.debug (fname) {"lnk=#{lnk} child_plmtype=#{lnk.child_plmtype}"}
+		LOG.debug(fname) {"child_plmtype=#{lnk.child_plmtype} lnk=#{lnk.inspect} "}
+		child = lnk.child
 		if lnk.child_plmtype == 'document'
-			child = lnk.child
-			#LOG.debug (fname) {"child=#{child} #{child.datafiles.count} datafiles"}
+			LOG.debug(fname) {"child=#{child} #{child.datafiles.count} datafiles"}
 			child.datafiles.each do |datafile|
-				#LOG.debug (fname) {"datafile.typesobject=#{datafile.typesobject} "}
+				LOG.debug(fname) {"doc.datafile.typesobject=#{datafile.typesobject} "}
 		  	ret << datafile.typesobject unless ret.include?(datafile.typesobject)
+			end
+		end
+		if  lnk.child_plmtype == 'part'
+			docs=child.documents
+			docs.each do |doc|
+				doc.datafiles.each do |datafile|
+					LOG.debug(fname) {"part.doc.datafile.typesobject=#{datafile.typesobject} "}
+			  		ret << datafile.typesobject unless ret.include?(datafile.typesobject)
+				end
 			end
 		end
 	end
 	node.nodes.each do |anode|
-		get_types_datafiles_on_node(anode).each do |type|
+		get_types_datafiles_on_node(anode, level+1).each do |type|
 			ret << type unless ret.include?(type)
 		end
 	end

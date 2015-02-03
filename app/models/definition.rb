@@ -59,24 +59,6 @@ class Definition < ActiveRecord::Base
 		end
 	end
 
-	def validate_uri_old
-		fname= "#{self.class.name}.#{__method__}"
-		content = (open(local_uri).read rescue nil)
-		LOG.debug (fname) {"uri=#{uri}"}
-		LOG.debug (fname) {"local_uri=#{local_uri}"}
-		LOG.debug (fname) {"content=#{content}"}
-		unless content
-			errors.add_to_base("#{full_uri} points to nothing")
-			content="#{full_uri} points to nothing"
-		else
-			@_tree = (RuotePlugin.ruote_engine.get_def_parser.parse(content) rescue nil)
-			unless @_tree
-				errors.add_to_base("#{full_uri} seems not to contain a process definition")
-			end
-		end
-		content
-	end
-
 	def name_translate
 		PlmServices.translate("definition_#{name}")
 	end
@@ -224,10 +206,10 @@ class Definition < ActiveRecord::Base
 		#
 		tmp_file = Tempfile.new("#{self.name}")
 		begin
-   		tmp_file.write(self.uri)
+			tmp_file.write(self.uri)
 		ensure
-   		tmp_file.close
-   		#tmp_file.unlink   # deletes the temp file
+		tmp_file.close
+		#tmp_file.unlink   # deletes the temp file
 		end
 		ret=tmp_file.path
 		#ret="#{tmp_file.path}.def"
@@ -240,12 +222,6 @@ class Definition < ActiveRecord::Base
 		ret
 	end
 
-	def usable_obsolete?
-		f=local_uri
-		LOG.info {"local_uri="+f.to_s}
-		File.exists?(f) unless f.nil?
-	end
-	
 	def usable?
 		!uri.blank?
 	end
@@ -253,11 +229,6 @@ class Definition < ActiveRecord::Base
 	#
 	# Returns the initial workitem payload at launch time (launchitem)
 	#
-	def launch_fields_hash_ori
-		launch_fields ?
-			ActiveSupport::JSON.decode(launch_fields) : { 'attribut_0' => 'valeur_0' , 'attribut_1' => 'valeur_1'}
-	end
-
 	def launch_fields_hash
 		unless launch_fields.nil?
 			ret= ActiveSupport::JSON.decode(launch_fields)

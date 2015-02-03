@@ -30,7 +30,7 @@ class Controller
 				ApplicationController.new.methods).sort.each {|smet|
 					LOG.debug (fname){"controller=#{cont} method=#{smet}"}
 					met = smet.to_s
-					if(met!='init_objects' && met!='login' && met!='logout' && met.index('_old')==nil && !met.end_with?('_') && met.index('_obsolete')==nil && met.index('authorized')==nil)
+					if(met!='init_objects' && met!='login' && met!='logout' && met.index('_old')==nil && !met.end_with?('_') && met.index('_obsolete')==nil && met.index('_essai')==nil && met.index('authorized')==nil)
 						ret<< Controller.new(i,cont,met)
 					elsif (cont=="SessionsController")
 						ret<< Controller.new(i,cont,met)
@@ -115,7 +115,9 @@ class Controller
 		end
 	end
 
-	def self.get_types_by_features
+	def self.get_types_by_features(only_admin=false)
+		fname="Controller.#{__method__}"
+		LOG.info (fname) { "only_admin=#{only_admin}"}
 		# TODO temporary
 		features = [:document, :part, :project, :customer]
 		features_types = {}
@@ -126,12 +128,12 @@ class Controller
 			types = ::Typesobject.get_types(plmtype, true)
 			features_types[feature]=[]
 			types.each do |type|
-				if type.domain==::SYLRPLM::DOMAIN_ADMIN
+				if !only_admin || type.domain==::SYLRPLM::DOMAIN_ADMIN
 					features_types[feature] << type
 				end
 			end
 		end
-		#puts "Controller.get_types_by_features=#{features_types}"
+		LOG.debug (fname) {"ret=#{features_types}"}
 		features_types
 	end
 end

@@ -3,88 +3,86 @@ require_dependency 'controllers/plm_event'
 require_dependency 'controllers/plm_object_controller_module'
 require_dependency 'error_reply'
 
-#require "string_to_sha1/version"
-####require "string_to_sha1"
 require "sylrplm_ext"
-#require "digest/sha1"
 
 class ApplicationController < ActionController::Base
-  include Controllers::PlmObjectControllerModule
-  helper :all # include all helpers, all the time
-  helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?, :get_domain, :get_list_modes, :icone, :h_thumbnails, :tr_def
-  helper_method :get_controller_from_model_type
-  protect_from_forgery # See ActionController::RequestForgeryProtection for details
+	include Controllers::PlmObjectControllerModule
+	# include all helpers, all the time
+	helper :all
+	helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?, :get_domain, :get_list_modes, :icone, :h_thumbnails, :tr_def
+	helper_method :get_controller_from_model_type
+	# See ActionController::RequestForgeryProtection for details
+	protect_from_forgery
 
-  # bug: page non affichee before_render :check_access_data
-  before_filter LogDefinitionFilter
-  before_filter :check_init
-  before_filter :authorize, :except => [:index, :init_objects]
-  before_filter :check_user
-  before_filter :define_variables
-  before_filter :set_locale
-  before_filter :active_check
-  after_filter :manage_recents
-
-  def manage_recents
-  	fname = "#{self.class.name}.#{__method__}:"
+	# bug: page non affichee before_render :check_access_data
+	before_filter LogDefinitionFilter
+	before_filter :check_init
+	before_filter :authorize, :except => [:index, :init_objects]
+	before_filter :check_user
+	before_filter :define_variables
+	before_filter :set_locale
+	before_filter :active_check
+	after_filter :manage_recents
+	def manage_recents
+		fname = "#{self.class.name}.#{__method__}:"
 		#LOG.info(fname) {"params=#{params}, user=#{current_user}, plm_object=#{@plm_object}"}
-  	if logged_in?
-  		unless params[:id].nil?
-  		  object_plm= PlmServices.get_object(get_model_type(params), params[:id])
-  			current_user.manage_recents object_plm, params unless object_plm.nil?
-  		end
-  	end
-  	true
-  end
+		if logged_in?
+			unless params[:id].nil?
+				object_plm= PlmServices.get_object(get_model_type(params), params[:id])
+				current_user.manage_recents object_plm, params unless object_plm.nil?
+			end
+		end
+		true
+	end
 
 	def active_check
 		fname= "#{self.class.name}.#{__method__}"
-  		#LOG.debug (fname) {"active_check"}
-    @my_filter = true
-  end
+		LOG.debug(fname) {"active_check"}
+		@my_filter = true
+	end
 
-  def render_(*args)
-  	fname= "#{self.class.name}.#{__method__}"
-  	LOG.debug (fname) {"args=#{args.inspect} flash=#{flash.inspect}"}
-  	@datas = get_datas_count
-  	if args.nil? || args.count==0
-  		super
-  	else
-  	# args=[{:action=>"index"}]
-		err = nil
-		unless(args[0]["action"] == "index" || (@_params["controller"]=="typesobject" && @_params["action"]=="edit"))
-			err = check_database_consistency(args)
+	def render_(*args)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {"args=#{args.inspect} flash=#{flash.inspect}"}
+		@datas = get_datas_count
+		if args.nil? || args.count==0
+		super
+		else
+		# args=[{:action=>"index"}]
+			err = nil
+			unless(args[0]["action"] == "index" || (@_params["controller"]=="typesobject" && @_params["action"]=="edit"))
+				err = check_database_consistency(args)
+			end
+			#LOG.debug (fname) {"args.action=#{args[0][:action]} err=#{err} err.nil?=#{err.nil?}"}
+			if(err.nil? || err=="")
+				if @my_filter
+					st = check_access_data(args)
+				else
+				st = true
+				end
+				if st == true
+				#true
+				super
+				else
+				#false
+					msg = t(:data_access_forbidden)
+					#LOG.debug (fname) {msg}
+					redirect_to_main(nil, msg)
+				end
+			else
+				msg=t(:database_not_consistency, :msg=>err)
+				LOG.error (fname) {msg}
+				redirect_to_main(nil ,msg)
+			end
 		end
-		#LOG.debug (fname) {"args.action=#{args[0][:action]} err=#{err} err.nil?=#{err.nil?}"}
-  	if(err.nil? || err=="")
-	    if @my_filter
-	    	st = check_access_data(args)
-	    else
-	    	st = true
-	    end
-	    if st == true
-	    	#true
-	    	super
-	    else
-	    	#false
-	    	msg = t(:data_access_forbidden)
-	    	#LOG.debug (fname) {msg}
-	    	redirect_to_main(nil, msg)
-	    end
-    else
-    	msg=t(:database_not_consistency, :msg=>err)
-    	LOG.error (fname) {msg}
-    	redirect_to_main(nil ,msg)
-    end
-    end
-    LOG.debug (fname) {"end flash=#{flash.inspect}"}
-  end
+		LOG.debug (fname) {"end flash=#{flash.inspect}"}
+	end
 
-  #
-  # check some point to be sure of the consistency of the database
-  # host name, used for fog files ..., define by rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base,limours]
-  #
-  def check_database_consistency(*args)
+	#
+	# check some point to be sure of the consistency of the database
+	# host name, used for fog files ..., define by rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base,limours]
+	#
+	def check_database_consistency(*args)
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname) {"args=#{args}"}
 		ret = nil
@@ -93,9 +91,9 @@ class ApplicationController < ActionController::Base
 			ret = t(:host_not_defined)
 		end
 		ret
-  end
+	end
 
-  # return true if user have access on the data
+	# return true if user have access on the data
 	def check_access_data(*args)
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname) {"************** args=#{args}"}
@@ -129,9 +127,9 @@ class ApplicationController < ActionController::Base
 		#
 		#
 		if @_params[:controller]=="main" && @_params[:action]=="index"
-			ret=true
+		ret=true
 		else
-			ret=true #false
+		ret=true #false
 		end
 		ret
 	end
@@ -141,95 +139,95 @@ class ApplicationController < ActionController::Base
 	#   he must have a role, group and project
 	# if not, redirect to index page
 	#
-  def check_user(redirect=true)
-  	fname= "#{self.class.name}.#{__method__}"
+	def check_user(redirect=true)
+		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname) {"redirect=#{redirect}, params=#{params} action=#{params[:action][0,4]}"}
-    flash[:notice] = nil
-    if(params[:action][0,3]!="show")
-	    unless current_user.nil? || current_user.may_access?
-	      flash[:notice] =""
-	      flash[:notice] += t(:ctrl_user_without_roles )+" " if current_user.role.nil?
-	      flash[:notice] += t(:ctrl_user_without_groups )+" " if current_user.group.nil?
-	      flash[:notice] += t(:ctrl_user_without_projects )+" " if current_user.project.nil?
-	      redirect_to(:action => "index") if redirect && !flash[:notice].blank?
-	    end
-    end
-    flash[:notice]
-  end
+		flash[:notice] = nil
+		if(params[:action][0,3]!="show")
+			unless current_user.nil? || current_user.may_access?
+				flash[:notice] =""
+				flash[:notice] += t(:ctrl_user_without_roles )+" " if current_user.role.nil?
+				flash[:notice] += t(:ctrl_user_without_groups )+" " if current_user.group.nil?
+				flash[:notice] += t(:ctrl_user_without_projects )+" " if current_user.project.nil?
+				redirect_to(:action => "index") if redirect && !flash[:notice].blank?
+			end
+		end
+		flash[:notice]
+	end
 
-  def check_user_connect(user)
-    flash[:error] = t(:ctrl_user_not_valid,:user=>user ) unless user.may_connect?
-    #puts "check_user_connect:"+user.inspect+":"+flash[:notice].to_s
-    if user.login==PlmServices.get_property(:USER_ADMIN)
-      flash[:error] = nil
-    end
-    flash[:error]
-  end
+	def check_user_connect(user)
+		flash[:error] = t(:ctrl_user_not_valid,:user=>user ) unless user.may_connect?
+		#puts "check_user_connect:"+user.inspect+":"+flash[:notice].to_s
+		if user.login==PlmServices.get_property(:USER_ADMIN)
+			flash[:error] = nil
+		end
+		flash[:error]
+	end
 
-  def check_init
-    if User.count == 0
-    	LOG.error (fname) {"Database is empty (no user)"}
-      flash[:error]=t(:ctrl_init_to_do)
-      respond_to do |format|
-        format.html{redirect_to_main}
-      end
-    end
-  end
+	def check_init
+		if User.count == 0
+			LOG.error (fname) {"Database is empty (no user)"}
+			flash[:error]=t(:ctrl_init_to_do)
+			respond_to do |format|
+				format.html{redirect_to_main}
+			end
+		end
+	end
 
-  def event
-    event_manager
-  end
+	def event
+		event_manager
+	end
 
-  def render_text(msg)
-    flash[:notice] = msg
-  end
+	def render_text(msg)
+		flash[:notice] = msg
+	end
 
-  class Class
-    def extend?(klass)
-      !(superclass.nil? && (superclass == klass || superclass.extend?(klass)))
-    end
-  end
+	class Class
+		def extend?(klass)
+			!(superclass.nil? && (superclass == klass || superclass.extend?(klass)))
+		end
+	end
 
-  # definition de la langue
-  def set_locale
-    #puts "set_locale:params[:locale]=#{params[:locale]}"
-    if params[:locale]
-      I18n.locale = params[:locale]
-      session[:lng] = I18n.locale
-    else
-      unless @current_user.nil?
-        #puts "set_locale:@current_user=#{@current_user} lng=#{@current_user.language}"
-        I18n.locale = @current_user.language
-      else
-        if session[:lng]
-          I18n.locale = session[:lng]
-        else
-          I18n.locale = PlmServices.get_property(:LOCAL_DEFAULT)
-          session[:lng] = I18n.locale
-        end
-      end
-    end
-    #puts "fin de set_locale"
-  end
+	# definition de la langue
+	def set_locale
+		#puts "set_locale:params[:locale]=#{params[:locale]}"
+		if params[:locale]
+			I18n.locale = params[:locale]
+			session[:lng] = I18n.locale
+		else
+			unless @current_user.nil?
+				#puts "set_locale:@current_user=#{@current_user} lng=#{@current_user.language}"
+				I18n.locale = @current_user.language
+			else
+				if session[:lng]
+					I18n.locale = session[:lng]
+				else
+					I18n.locale = PlmServices.get_property(:LOCAL_DEFAULT)
+					session[:lng] = I18n.locale
+				end
+			end
+		end
+	#puts "fin de set_locale"
+	end
 
-  # definition du domain en cours
-  def set_domain
-    if params[:domain]
-      session[:domain] = params[:domain]
-    end
-  end
+	# definition du domain en cours
+	def set_domain
+		if params[:domain]
+			session[:domain] = params[:domain]
+		end
+	end
 
-  def get_domain
-  	if session[:domain].nil? ||  session[:domain]==""
-  		 ret=PlmServices.get_property(:DOMAIN_DEFAULT)
-  		 ret+=current_user.login unless current_user.nil?
-  	else
-  		ret=session[:domain]
-  	end
-  	ret
-  end
+	def get_domain
+		if session[:domain].nil? ||  session[:domain]==""
+			ret=PlmServices.get_property(:DOMAIN_DEFAULT)
+			ret+=current_user.login unless current_user.nil?
+		else
+			ret=session[:domain]
+		end
+		ret
+	end
 
-  # recherche du theme
+	# recherche du theme
 	def get_session_theme(session)
 		ret = PlmServices.get_property(:THEME_DEFAULT)
 		if session[:user_id]
@@ -247,152 +245,157 @@ class ApplicationController < ActionController::Base
 	end
 
 	# definition des variables globales.
-  def define_variables
-    fname= "#{self.class.name}.#{__method__}"
-    #LOG.debug (fname) {"**** params=#{params.inspect}"}
-    ###puts "************************************************** #{fname.to_sha1} **********************************************"
-    @current_user= current_user
-    @favori      = session[:favori] ||= Favori.new
-    #LOG.info (fname) {"**** favori=#{@favori.inspect}"}
-    @theme       = get_session_theme(session)
-    @language    = PlmServices.get_property(:LOCAL_DEFAULT)
-    @urlbase     = "http://"+request.env["HTTP_HOST"]
-    @themes      = get_themes(@theme)
-    @languages   = get_languages
-    ###########TODO inutile @notification=PlmServices.get_property(:NOTIFICATION_DEFAULT)
-    ###########TODO inutile @time_zone=PlmServices.get_property(:TIME_ZONE_DEFAULT)
-    WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
-    WillPaginate::ViewHelpers.pagination_options[:next_label] = t('label_next')
-    WillPaginate::ViewHelpers.pagination_options[:page_links ] = true  # when false, only previous/next links are rendered (default: true)
-    WillPaginate::ViewHelpers.pagination_options[:inner_window] = 10 # how many links are shown around the current page (default: 4)
-    WillPaginate::ViewHelpers.pagination_options[:page_links ] = true  # when false, only previous/next links are rendered (default: true)
-    WillPaginate::ViewHelpers.pagination_options[:inner_window] = 10 # how many links are shown around the current page (default: 4)
-    WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3 # how many links are around the first and the last page (default: 1)
-    WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '   # string separator for page HTML elements (default: single space)
-    @myparams = params
-    Datafile.host=request.host
-  	#puts "fin de define_variables"
-  	@types_features=::Controller.get_types_by_features
-  end
+	def define_variables
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug (fname) {"**** params=#{params.inspect}"}
+		@current_user= current_user
+		@favori      = session[:favori] ||= Favori.new
+		#LOG.info (fname) {"**** favori=#{@favori.inspect}"}
+		@theme       = get_session_theme(session)
+		@language    = PlmServices.get_property(:LOCAL_DEFAULT)
+		@urlbase     = "http://"+request.env["HTTP_HOST"]
+		@themes      = get_themes(@theme)
+		@languages   = get_languages
+		###########TODO inutile @notification=PlmServices.get_property(:NOTIFICATION_DEFAULT)
+		###########TODO inutile @time_zone=PlmServices.get_property(:TIME_ZONE_DEFAULT)
+		WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
+		WillPaginate::ViewHelpers.pagination_options[:next_label] = t('label_next')
+		# when false, only previous/next links are rendered (default: true)
+		WillPaginate::ViewHelpers.pagination_options[:page_links ] = true
+		# how many links are shown around the current page (default: 4)
+		WillPaginate::ViewHelpers.pagination_options[:inner_window] = 10
+		# when false, only previous/next links are rendered (default: true)
+		WillPaginate::ViewHelpers.pagination_options[:page_links ] = true
+		# how many links are shown around the current page (default: 4)
+		WillPaginate::ViewHelpers.pagination_options[:inner_window] = 10
+		# how many links are around the first and the last page (default: 1)
+		WillPaginate::ViewHelpers.pagination_options[:outer_window] = 3
+		# string separator for page HTML elements (default: single space)
+		WillPaginate::ViewHelpers.pagination_options[:separator ] = ' - '
+		@myparams = params
+		Datafile.host=request.host
+		@types_features=::Controller.get_types_by_features
+		puts "fin de define_variables"
+	end
 
-  def get_list_modes
-  	[t(:list_mode_details), t(:list_mode_details_icon),t(:list_mode_icon)]
-  end
+	def get_list_modes
+		[t(:list_mode_details), t(:list_mode_details_icon),t(:list_mode_icon)]
+	end
 
-  # redirection vers l'action index
-  def redirect_to_index(msg=nil)
-    flash[:notice] = msg if msg
-    redirect_to :action => index
-  end
+	# redirection vers l'action index
+	def redirect_to_index(msg=nil)
+		flash[:notice] = msg if msg
+		redirect_to :action => index
+	end
 
-  # redirection vers l'action index du main si besoin
-  def redirect_to_main(uri=nil, msg=nil)
-  puts "application_controller: redirect_to_main:flash=#{flash.inspect}"
-    flash[:error] = msg if msg
-    redirect_to(uri || { :controller => "main", :action => "index" })
-  end
+	# redirection vers l'action index du main si besoin
+	def redirect_to_main(uri=nil, msg=nil)
+		puts "application_controller: redirect_to_main:flash=#{flash.inspect}"
+		flash[:error] = msg if msg
+		redirect_to(uri || { :controller => "main", :action => "index" })
+	end
 
-  def error_reply (error_message, status=400)
-    if error_message.is_a?(ErrorReply)
-    status = error_message.status
-    error_message = error_message.message
-    end
+	def error_reply (error_message, status=400)
+		if error_message.is_a?(ErrorReply)
+		status = error_message.status
+		error_message = error_message.message
+		end
 
-    flash[:error] = error_message
+		flash[:error] = error_message
 
-    plain_reply = lambda() {
-      render(
+		plain_reply = lambda() {
+			render(
       :text => error_message,
       :status => status,
       :content_type => 'text/plain')
-    }
+		}
 
-    respond_to do |format|
-      format.html { redirect_to '/' }
-      format.json &plain_reply
-      format.xml &plain_reply
-    end
-  end
+		respond_to do |format|
+			format.html { redirect_to '/' }
+			format.json &plain_reply
+			format.xml &plain_reply
+		end
+	end
 
-  rescue_from(ErrorReply) { |e| error_reply(e) }
+	rescue_from(ErrorReply) { |e| error_reply(e) }
 
-  def authorize
-    user_id = session[:user_id] || User.find_by_id(session[:user_id])
-    puts "application_controller.authorize.request_uri="+request.request_uri+" user_id="+user_id.to_s
-    if user_id.nil?
-      puts "authorize:user is nil"
-      #puts "application_controller.authorize.request_uri="+request.request_uri
-      puts "application_controller.authorize.new_sessions_url="+new_sessions_url
-      session[:original_uri] = request.request_uri
-      flash[:notice] = t(:login_login)
-      redirect_to new_sessions_url
-    else
-      user=User.find(user_id)
-      puts "authorize:user=#{user} admin?=#{user.is_admin?}"
-      unless user.is_admin?
-      	#puts "user not admin, user.roles=#{user.roles} user.groups=#{user.groups} user.projects=#{user.projects}"
-        if user.roles.nil? || user.groups.nil? || user.projects.nil?
-          #puts "authorize:roles=#{user.roles}  "
-          #puts "authorize:groups=#{user.groups}  "
-          #puts "authorize:projects=#{user.projects}  "
-          session[:original_uri] = request.request_uri
-          flash[:notice] = t(:login_login)
-          redirect_to new_sessions_url
-        end
-      end
-      if user.roles.nil?  || user.groups.nil? || user.projects.nil? || user.volume.nil?
-          #puts "authorize:roles=#{user.roles}  "
-          #puts "authorize:groups=#{user.groups}  "
-          #puts "authorize:projects=#{user.projects}  "
-          #puts "authorize:volume=#{user.volume} "
-	  			session[:original_uri] = request.request_uri
-          flash[:notice] = t(:login_login)
-          redirect_to new_sessions_url
-      end
-    end
-    puts "fin de authorize:ok"
-  end
+	def authorize
+		user_id = session[:user_id] || User.find_by_id(session[:user_id])
+		puts "application_controller.authorize.request_uri="+request.request_uri+" user_id="+user_id.to_s
+		if user_id.nil?
+			puts "authorize:user is nil"
+			#puts "application_controller.authorize.request_uri="+request.request_uri
+			puts "application_controller.authorize.new_sessions_url="+new_sessions_url
+			session[:original_uri] = request.request_uri
+			flash[:notice] = t(:login_login)
+			redirect_to new_sessions_url
+		else
+			user=User.find(user_id)
+			puts "authorize:user=#{user} admin?=#{user.is_admin?}"
+			unless user.is_admin?
+				#puts "user not admin, user.roles=#{user.roles} user.groups=#{user.groups} user.projects=#{user.projects}"
+				if user.roles.nil? || user.groups.nil? || user.projects.nil?
+					#puts "authorize:roles=#{user.roles}  "
+					#puts "authorize:groups=#{user.groups}  "
+					#puts "authorize:projects=#{user.projects}  "
+					session[:original_uri] = request.request_uri
+					flash[:notice] = t(:login_login)
+					redirect_to new_sessions_url
+				end
+			end
+			if user.roles.nil?  || user.groups.nil? || user.projects.nil? || user.volume.nil?
+				#puts "authorize:roles=#{user.roles}  "
+				#puts "authorize:groups=#{user.groups}  "
+				#puts "authorize:projects=#{user.projects}  "
+				#puts "authorize:volume=#{user.volume} "
+				session[:original_uri] = request.request_uri
+				flash[:notice] = t(:login_login)
+				redirect_to new_sessions_url
+			end
+		end
+		puts "fin de authorize:ok"
+	end
 
-  def permission_denied(role, controller, action)
-  	fname= "#{self.class.name}.#{__method__}"
+	def permission_denied(role, controller, action)
+		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug (fname) {"role=#{role} controller=#{controller} action=#{action}"}
-    flash[:error] = t(:ctrl_no_privilege, :role => role, :controller => controller, :action => action)
-    redirect_to(:action => "index")
-  end
+		flash[:error] = t(:ctrl_no_privilege, :role => role, :controller => controller, :action => action)
+		redirect_to(:action => "index")
+	end
 
-  def permission_granted
-    #flash[:notice] = "Welcome to the secure area !"
-  end
+	def permission_granted
+		#flash[:notice] = "Welcome to the secure area !"
+	end
 
-  def current_user
-  	# recherche du user connecte
-	  ret = @current_user
-    if ret.nil?
-	    if session[:user_id]
+	def current_user
+		# recherche du user connecte
+		ret = @current_user
+		if ret.nil?
+			if session[:user_id]
 				ret = User.find(session[:user_id])
 			end
-    end
-    ret.session_domain=session[:domain] unless ret.nil? || session[:domain].nil?
-    ret
-  end
+		end
+		ret.session_domain=session[:domain] unless ret.nil? || session[:domain].nil?
+		ret
+	end
 
-  def logged_in?
-    current_user != nil
-  end
+	def logged_in?
+		current_user != nil
+	end
 
-  # Returns true if the user is connected and having an admin role
-  def admin_logged_in?
-    ret=false
-    if logged_in?
-      #puts "admin_connected: connected is_admin="+@current_user.is_admin?.to_s
-      if current_user.is_admin?
-        ret = current_user.is_admin?
-      end
-    end
-    ret
-  end
+	# Returns true if the user is connected and having an admin role
+	def admin_logged_in?
+		ret=false
+		if logged_in?
+			#puts "admin_connected: connected is_admin="+@current_user.is_admin?.to_s
+			if current_user.is_admin?
+				ret = current_user.is_admin?
+			end
+		end
+		ret
+	end
 
-  def icone(object)
+	def icone(object)
 		html_title=""
 		unless object.typesobject.nil?
 			#type = "#{object.model_name}_#{object.typesobject.name}"
@@ -410,35 +413,35 @@ class ApplicationController < ActionController::Base
 	end
 
 	def icone_fic(obj)
-  	fname="#{controller_class_name}.#{__method__}"
-    unless obj.model_name.nil? || !obj.respond_to?(:typesobject) || obj.typesobject.nil?
-      ret = "/images/#{obj.model_name}_#{obj.typesobject.name}.png"
-      unless File.exist?("#{RAILS_ROOT}/public#{ret}")
-        ret = "/images/#{obj.model_name}.png"
-        unless File.exist?("#{RAILS_ROOT}/public#{ret}")
-          ret = "/images/default_object.png"
-          unless File.exist?("#{RAILS_ROOT}/public#{ret}")
-        	  ret = ""
-        	end
-      	end
-      end
-    else
-      ret = ""
-    end
-    #LOG.debug  (fname){"icone:#{obj.model_name}:#{obj.typesobject.name}:#{ret}"}
-    ret
-  end
+		fname="#{controller_class_name}.#{__method__}"
+		unless obj.model_name.nil? || !obj.respond_to?(:typesobject) || obj.typesobject.nil?
+			ret = "/images/#{obj.model_name}_#{obj.typesobject.name}.png"
+			unless File.exist?("#{RAILS_ROOT}/public#{ret}")
+				ret = "/images/#{obj.model_name}.png"
+				unless File.exist?("#{RAILS_ROOT}/public#{ret}")
+					ret = "/images/default_object.png"
+					unless File.exist?("#{RAILS_ROOT}/public#{ret}")
+						ret = ""
+					end
+				end
+			end
+		else
+			ret = ""
+		end
+		#LOG.debug  (fname){"icone:#{obj.model_name}:#{obj.typesobject.name}:#{ret}"}
+		ret
+	end
 
 	#
 	# return the image corresponding of an object of plmtype(user, group, customer, part, document, project, ...)
 	#
-  def icone_plmtype(plmtype)
-    ret = "/images/#{plmtype}.png"
-    unless File.exist?("#{RAILS_ROOT}/public#{ret}")
-      ret = ""
-    end
-    ret
-  end
+	def icone_plmtype(plmtype)
+		ret = "/images/#{plmtype}.png"
+		unless File.exist?("#{RAILS_ROOT}/public#{ret}")
+			ret = ""
+		end
+		ret
+	end
 
 	#
 	# verifie qu'un parametre http existe avec la bonne valeur
@@ -455,8 +458,8 @@ class ApplicationController < ActionController::Base
 		if obj.respond_to? :thumbnails
 			unless obj.thumbnails.nil?
 				obj.thumbnails.each do |img|
-				  src = img.write_file_tmp
-				  LOG.debug (fname) {"src=#{src} "}
+					src = img.write_file_tmp
+					LOG.debug (fname) {"src=#{src} "}
 					ret << "<img class='thumbnail' src='#{src}'/>"
 				end
 			end

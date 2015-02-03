@@ -247,11 +247,6 @@ class ProjectsController < ApplicationController
     ctrl_add_objects_from_favorites(@project, :part)
   end
 
-  def add_users_obsolete
-    @project = Project.find(params[:id])
-    ctrl_add_objects_from_favorites(@project, :user)
-  end
-
   #
   # preparation du datafile a associer
   #

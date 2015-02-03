@@ -30,70 +30,97 @@ class Part < ActiveRecord::Base
 	#
 	#has_and_belongs_to_many :documents, :join_table => "links",
 	#:foreign_key => "father_id", :association_foreign_key => "child_id", :conditions => ["father_type='part' AND child_type='document'"]
-	
-	has_many :links_forums,
+
+	has_many :links_part_forum,
     :class_name => "Link",
     :foreign_key => "father_id",
     :conditions => { father_plmtype: 'part', child_plmtype: 'forum' }
-	has_many :forums,
-    :through => :links_forums,
-    :source => :forum
-    
-	has_many :links_prd_effectivities,
-    :class_name => "Link",
-    :foreign_key => "father_id",
-    :conditions => ["father_plmtype='part' and child_plmtype='part' and father_typesobject_id in (select id from typesobjects where name='PRD') and child_typesobject_id in (select id from typesobjects where name='EFF')"]
-	has_many :prd_effectivities ,
-    :through => :links_prd_effectivities,
-    :source => :part_down
 
-	has_many :links_var_effectivities,
-    :class_name => "Link",
-    :foreign_key => "father_id",
-    :conditions => ["father_plmtype='part' and child_plmtype='part' and father_typesobject_id in (select id from typesobjects where name='VAR') and child_typesobject_id in (select id from typesobjects where name='EFF')"]
-	has_many :var_effectivities ,
-    :through => :links_var_effectivities,
-    :source => :part_down
-
-	has_many :links_documents,
+	has_many :links_part_documents,
     :class_name => "Link",
     :foreign_key => "father_id",
     :conditions => { father_plmtype: 'part', child_plmtype: 'document' }
-	has_many :documents,
-    :through => :links_documents,
-    :source => :document_down
 
-	has_many :links_parts,
+	has_many :links_part_part,
     :class_name => "Link",
     :foreign_key => "father_id",
     :conditions => { father_plmtype: 'part', child_plmtype: 'part' }
-	has_many :parts ,
-    :through => :links_parts,
-    :source => :part_down
 
-	has_many :links_parts_up,
+	has_many :links_part_part_up,
     :class_name => "Link",
     :foreign_key => "child_id",
     :conditions => { father_plmtype: 'part', child_plmtype: 'part' }
+
+	has_many :links_project_part_up,
+    :class_name => "Link",
+    :foreign_key => "child_id",
+    :conditions => {father_plmtype: 'project', child_plmtype: 'part' }
+
+	has_many :links_customer_part_up,
+    :class_name => "Link",
+    :foreign_key => "child_id",
+    :conditions =>{father_plmtype: 'customer', child_plmtype: 'part' }
+
+	has_many :forums,
+    :through => :links_part_forum,
+    :source => :forum
+
+	has_many :documents,
+    :through => :links_part_documents,
+    :source => :document_down
+
+	has_many :parts ,
+    :through => :links_part_part,
+    :source => :part_down
+
+	has_many :variants ,
+    :through => :links_part_part,
+    :source => :variant_down
+
+	has_many :effectivities ,
+    :through => :links_part_part,
+    :source => :effectivity_down
+
 	has_many :parts_up ,
-    :through => :links_parts_up,
+    :through => :links_part_part_up,
     :source => :part_up
 
-	has_many :links_projects_up,
-    :class_name => "Link",
-    :foreign_key => "child_id",
-    :conditions => ["father_plmtype='project' and child_plmtype='part'"]
 	has_many :projects_up ,
-    :through => :links_projects_up,
+    :through => :links_project_part_up,
     :source => :project_up
 
-	has_many :links_customers_up,
-    :class_name => "Link",
-    :foreign_key => "child_id",
-    :conditions => ["father_plmtype='customer' and child_plmtype='part'"]
 	has_many :customers_up ,
-    :through => :links_customers_up,
+    :through => :links_customer_part_up,
     :source => :customer_up
+	#
+	#essai
+=begin
+has_many :links_variant_part,
+:class_name => "Link",
+:foreign_key => "father_id",
+:conditions => [ "father_plmtype = 'part' and child_plmtype = 'part'" ]
+
+has_many :variant_effectivities,
+:through => :links_variant_part,
+:source => :effectivity_down
+=end
+	#
+	def variant_effectivities
+		fname= "#{Part}.#{__method__}"
+		ret=[]
+		::Link.find(:all,
+		:conditions => ["father_plmtype='part' and child_plmtype='part' and father_id = #{id}"]
+		).each do |lnk|
+			father=lnk.father
+			child=lnk.child
+			if(father.typesobject.name = "VAR" && child.typesobject.name == "EFF")
+			ret << lnk.child
+			end
+		end
+		LOG.debug (fname){" #{ret.size} variant effectivites from #{self.ident}"}
+		ret
+	end
+
 	#
 	#def to_s
 	#	self.ident+"/"+self.revision+"-"+self.designation+"-"+self.typesobject.name+"-"+self.statusobject.name
@@ -109,11 +136,6 @@ class Part < ActiveRecord::Base
 		obj
 	end
 
-	def self.get_types_part_obsolete
-		Typesobject.find(:all, :order=>"name",
-		:conditions => ["forobject = 'part'"])
-	end
-
 	def self.get_conditions(filter)
 		filter = filter.gsub("*","%")
 		ret={}
@@ -127,7 +149,7 @@ class Part < ActiveRecord::Base
 	#  " or "+qry_owner+" or date LIKE ? "
 	end
 
-	def variants
+	def variants_old
 		fname= "#{self.class.name}.#{__method__}"
 		ret=[]
 		parts.each do |part|

@@ -74,7 +74,7 @@ module ApplicationHelper
 	# 1- current n'a pas le meme identifiant que previous
 	# 2- que les valeurs de l'attribut sont differentes entre les 2objets
 	# att peut etre un attribut "compose" tel que owner.login
-	def h_if_differ_trop_general(current, previous)
+	def h_if_differ_trop_general_obsolete(current, previous)
 		ret = current
 		unless previous.nil?
 			if current == previous
@@ -308,10 +308,6 @@ module ApplicationHelper
 		link_to_remote(text, options, html_options)
 	end
 
-	def h_show_tree_obsolete(obj)
-		"don t use this function, prefer render shared/tree"
-	end
-
 	#
 	# translate the second part of the message (after ":")
 	# => send the first part as a translate variable
@@ -415,6 +411,18 @@ module ApplicationHelper
 		ret
 	end
 
+	#
+	# build a set of strings separated by a comma
+	# each part of the string is composed of the accessor applicated on the object
+	def comma_string (objects, accessor=:name)
+		objects.collect { |o|
+			o.send(accessor)
+		}.join(', ')
+	end
+
+	#
+	# build a set of links separated by a comma
+	# the label of each link is composed of the accessor (attribute of the object) applicated on the object and the translated accessor
 	def comma_links (objects, accessor=:name)
 		objects.collect { |o|
 			name = o.send(accessor)
@@ -425,12 +433,6 @@ module ApplicationHelper
 			end
 			path = send "#{o.class.to_s.downcase}_path", o
 			link_to(h(name), path)
-		}.join(', ')
-	end
-
-	def comma_string (objects, accessor=:name)
-		objects.collect { |o|
-			o.send(accessor)
 		}.join(', ')
 	end
 

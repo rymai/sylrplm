@@ -491,7 +491,7 @@ module Models
 		end
 
 		def initialize(*args)
-			fname= "#{self.class.name}.#{__method__}"
+			fname= "plm_object:#{self.class.name}.#{__method__}"
 			LOG.debug (fname) {"initialize args=#{args.length}:#{args.inspect}"}
 			super
 			if self.respond_to? :revision

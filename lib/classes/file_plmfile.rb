@@ -10,7 +10,7 @@ class SylrplmFile
 	public
 	def initialize(*args)
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.info (fname) {"args=#{args.inspect}"}
+		LOG.info(fname) {"args=#{args.inspect}"}
 		params = args[0]
 		self.protocol = params["protocol"]
 		self.volume_dir = params["volume_dir"]
@@ -25,7 +25,7 @@ class SylrplmFile
 		self.domain = params["domain"]
 		self.id = params["id"]
 		#LOG.info (fname) {"params[id]=#{params["id"]} key=#{self.id}"}
-		LOG.info (fname) {"file=#{self.inspect}"}
+		LOG.info(fname) {"file=#{self.inspect}"}
 	end
 
 	private

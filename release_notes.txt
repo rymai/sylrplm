@@ -10,10 +10,10 @@
 - uniq icone function
 - translation of name of custo objects: types, status, group, role ...
 - less html code in application_helper, using partial render
-- defining m_xxx functions instead of xxx to avoid confusioon with the standard, 
+- defining m_xxx functions instead of xxx to avoid confusioon with the standard,
   ex: datafiles_controller: @datafile=Datafile.m_create(params[:datafile])
 - improve access to definition functions
-- using of xxxx_down instead of xxx in links to avoid confusion 
+- using of xxxx_down instead of xxx in links to avoid confusion
   ex: child.belongs_to :document_down in links.rb
 - add update in link controller
 - improve notification search
@@ -22,3 +22,18 @@
 #------------------------------------------------------------------------------
 - account creation improvment: validate a new user by process/action, assign default roles, groups and projects
 - best view of process and actions
+#------------------------------------------------------------------------------
+# Date: 2015 02 02
+#------------------------------------------------------------------------------
+- views uniformization
+- save input values of variant, view, model type on part structure view
+- sub menus include all menus and not only of admin domain
+- translate some sub menus
+- restructure has_many features for all plm objects
+- add word document to each part of the table sample
+- activate a lot of LOG.debug traces
+- supress father_typesobject_id and child_typesobject_id from Link mdd (copy not useful of the type of father and child objects)
+- debug the list of models types in structure part (function get_type_datafiles_on_node)
+- debug of PlmServices.set_property
+- change delimiter for fog files (. replace -) for a good compatibility
+

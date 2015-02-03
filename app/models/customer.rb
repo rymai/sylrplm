@@ -24,28 +24,28 @@ class Customer < ActiveRecord::Base
   belongs_to :group
   belongs_to :projowner, :class_name => "Project"
 
-	has_many :links_forums,
+	has_many :links_customer_forums,
     :class_name => "Link",
     :foreign_key => "father_id",
     :conditions => { father_plmtype: 'customer', child_plmtype: 'forum' }
 	has_many :forums,
-    :through => :links_forums,
+    :through => :links_customer_forums,
     :source => :forum
-    
-  has_many :links_documents,
+
+  has_many :links_customer_documents,
     :class_name => "Link",
     :foreign_key => "father_id",
     :conditions => ["father_plmtype='customer' and child_plmtype='document'"]
   has_many :documents,
-    :through => :links_documents,
+    :through => :links_customer_documents,
     :source => :document_down
 
-  has_many :links_projects,
+  has_many :links_customer_projects,
     :class_name => "Link",
     :foreign_key => "father_id",
     :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
   has_many :projects ,
-    :through => :links_projects,
+    :through => :links_customer_projects,
     :source => :project_down
 
   def user=(user)

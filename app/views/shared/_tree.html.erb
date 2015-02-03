@@ -19,7 +19,8 @@
 	<tr>
 		<td></td>
 		<td><%= f.label t(:label_variant) %></td>
-		<td><%= select_tag( :variant, options_from_collection_for_select(object.variants, :mdlid, :to_s, (@variant.mdlid unless @variant.nil?)), {:style=>"width:520px",:size=>5}) %></td>
+		<td><%= params[:variant]%><%= select_tag( :variant, options_from_collection_for_select(object.variants, :mdlid, :to_s, params[:variant]),
+		{:style=>"width:520px",:size=>5}) %></td>
 	</tr>
 	<% end %>
 	<% model=false %>
@@ -28,7 +29,7 @@
 	<tr>
 		<td><%= h_image(:model3d_view)%></td>
 		<td><%= label_tag t(:label_type_model) %></td>
-		<td><%= select_tag( :type_model_id, options_from_collection_for_select(get_types_datafiles_on_tree(@tree),:id, :name, @myparams[:typesobject_id].to_i))%></td>
+		<td><%= select_tag( :type_model_id, options_from_collection_for_select(get_types_datafiles_on_tree(@tree),:id, :name, params[:type_model_id].to_i))%></td>
 	</tr>
 	<% model=true %>
 	<% end %>

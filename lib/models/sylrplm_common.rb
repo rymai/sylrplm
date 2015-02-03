@@ -262,21 +262,6 @@ module Models
 			ret
 		end
 
-		# return frozen stat of an object
-		#   return:
-		#     - true if status is the last of the possibles statues for this object plmtype
-		#     - false in other case
-		#
-		def frozen_old?
-			fname="#{self.class.name}.#{__method__}"
-			ret = false
-			unless (self.statusobject.nil? || ::Statusobject.get_last(self).nil?)
-			ret = (self.statusobject.rank == ::Statusobject.get_last(self).rank)
-			#LOG.info (fname) {"#{self.statusobject.rank} last=#{::Statusobject.get_last(self).rank}=#{ret}"}
-			end
-			ret
-		end
-
 		def to_s
 			fname = "#{self.class.name}.#{__method__}"
 			ret = "#{I18n.t("ctrl_"+model_name)}"
@@ -285,7 +270,7 @@ module Models
 			ret+= "/#{revision}" if self.respond_to?("revision")
 			ret+= " #{designation}" if self.respond_to?("designation")
 			ret+= " (#{statusobject.name})" if self.respond_to?("statusobject") && !self.statusobject.nil?
-			LOG.debug (fname) {"ret=#{ret}"}
+			#LOG.debug (fname) {"ret=#{ret}"}
 			ret
 		end
 
@@ -308,7 +293,7 @@ module Models
 
 		def get_object(type, id)
 			fname=self.class.name+"."+__method__.to_s+":"
-			LOG.debug (fname) {"type=#{type} id=#{id}"}
+			#LOG.debug (fname) {"type=#{type} id=#{id}"}
 			PlmServices.get_object(type, id)
 		end
 
@@ -519,7 +504,7 @@ module Models
 			fname = "#{self.class.name}.#{__method__}"
 			decod={}
 			if self.respond_to? :type_values
-				#puts "get_type_values: #{self.inspect} type_value=#{type_values}"
+				LOG.debug(fname) {"#{self.inspect} type_value=#{type_values}"}
 				unless type_values.blank?
 					decod = ActiveSupport::JSON.decode(type_values)
 				#puts "get_type_values:values=#{type_values} decod=#{decod}"

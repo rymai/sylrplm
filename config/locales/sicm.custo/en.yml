@@ -143,6 +143,19 @@ en:
   definition_promotion: Promotion
   definition_promotion.part: Promote any type of part
   definition_promotion.document.ready.approved: Promote a document from ready to approved
+  #menus
+  mnu_documents_calculsheet: Calculsheet
+  mnu_documents_cdc:  CDC
+  mnu_documents_exb: Needs
+  mnu_documents_fmat: Material definition
+  mnu_documents_m3d: Model 3D
+  mnu_documents_norme: Norme
+  mnu_documents_p2d: Drawing
+  mnu_projects_standard: Project of standards
+  mnu_projects_sub-assembly: Project of module
+  mnu_customers_internal: Internal Client
+  mnu_customers_private: Private Client
+  mnu_customers_public: Public Client
   #subscription
   subscription_creator: Conceptor
   subscription_consultant: Consultant

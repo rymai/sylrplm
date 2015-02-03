@@ -5,7 +5,7 @@ class Link < ActiveRecord::Base
 	### verif par soft dans create_new validates_uniqueness_of :child_id, :scope => [:child_plmtype, :father_id, :father_type ]
 	#validates_presence_of :name
 
-	attr_accessor :user, :father, :child, :relation
+	attr_accessor :user
 
 	belongs_to :relation,
     :class_name => "Relation",
@@ -22,13 +22,32 @@ class Link < ActiveRecord::Base
 	#delegate :typesobject_id, :typesobject, to: :relation
 
 	#objects which could be child of link: "document", "part", "project", "customer", "forum", "datafile"
+
 	with_options :foreign_key => 'child_id' do |child|
-		child.belongs_to :document_down , :conditions => ["child_plmtype='document'"], :class_name => "Document"
-		child.belongs_to :part_down , :conditions => ["child_plmtype='part'"], :class_name => "Part"
-		child.belongs_to :project_down , :conditions => ["child_plmtype='project'"], :class_name => "Project"
-		child.belongs_to :customer_down , :conditions => ["child_plmtype='customer'"], :class_name => "Customer"
-		child.belongs_to :forum_down , :conditions => ["child_plmtype='forum'"], :class_name => "Forum"
-		child.belongs_to :datafile_down , :conditions => ["child_plmtype='datafile'"], :class_name => "Datafile"
+		child.belongs_to :document_down ,
+		:conditions => ["child_plmtype = 'document'"],
+		:class_name => "Document"
+		child.belongs_to :part_down ,
+		:conditions => ["child_plmtype = 'part'"],
+		:class_name => "Part"
+		child.belongs_to :project_down ,
+		:conditions => ["child_plmtype='project'"],
+		:class_name => "Project"
+		child.belongs_to :customer_down ,
+		:conditions => ["child_plmtype='customer'"],
+		:class_name => "Customer"
+		child.belongs_to :forum_down ,
+		:conditions => ["child_plmtype='forum'"],
+		:class_name => "Forum"
+		child.belongs_to :datafile_down ,
+		:conditions => ["child_plmtype='datafile'"],
+		:class_name => "Datafile"
+		child.belongs_to :effectivity_down ,
+		:conditions => ["child_plmtype = 'part' and parts.typesobject_id in (select id from typesobjects where name='EFF')"],
+		:class_name => "Part"
+		child.belongs_to :variant_down ,
+		:conditions => ["child_plmtype = 'part' and parts.typesobject_id in (select id from typesobjects where name='VAR')"],
+		:class_name => "Part"
 	end
 
 	#objects which could be father of a link:"document", "part", "project", "customer", "definition", "history", "link"(pour les effectivites)
@@ -40,25 +59,68 @@ class Link < ActiveRecord::Base
 		father.belongs_to :definition_up , :conditions => ["father_plmtype='definition'"], :class_name => "Definition"
 		father.belongs_to :history_up , :conditions => ["father_plmtype='history_entry'"], :class_name => "Ruote::Sylrplm::HistoryEntry"
 		father.belongs_to :link_up , :conditions => ["father_plmtype='link'"], :class_name => "Link"
+		father.belongs_to :variant_up ,
+		:conditions => ["father_plmtype='part' and parts.typesobject_id in (select id from typesobjects where name='VAR')"],
+		:class_name => "Part"
 	end
 
-	has_many :links_effectivities ,
+	has_many :links_link_part,
     :class_name => "Link",
     :foreign_key => "father_id",
-    :conditions => ["father_plmtype='link' and child_plmtype='part' and child_typesobject_id in (select id from typesobjects as t where t.name='EFF')"]
+    :conditions => { father_plmtype: 'link', child_plmtype: 'part' }
+
 	has_many :effectivities ,
-    :through => :links_effectivities,
-    :source => :part_down
+:through => :links_link_part,
+:source => :effectivity_down
 
 	###non validates_uniqueness_of :child_id, scope: [:child_plmtype, :father_id, :father_type]
 	###validates :link_uniqueness, :validity
-	before_save :link_uniqueness, :validity
+	#before_save :link_uniqueness, :validity
+	before_save :validity
 
-	# note sure what this does...
-	def link_uniqueness
-		cond = ["father_plmtype = ? and child_plmtype = ? and father_typesobject_id = ? and child_typesobject_id = ? and relation_id = ? ",
-			father_plmtype, child_plmtype, father_typesobject_id, child_typesobject_id, relation_id]
-		self.errors.add_to_base('Link already exists!') unless ::Link.find(:first, :conditions => cond).nil?
+	def effectivities_old_voircidessus
+		fname = "#{self.class.name}.#{__method__}"
+		#LOG.info (fname) {"self=#{self}"}
+		ret=[]
+		::Link.find(:all,
+		:conditions => ["father_plmtype='link' and child_plmtype='part' and father_id = #{self.id}"]
+		).each do |lnk|
+			LOG.debug(fname) {"lnk=#{lnk.ident} child.type=#{lnk.child.typesobject.name}"}
+			if lnk.child.typesobject.name == 'EFF'
+			ret << lnk.child
+			end
+		end
+		ret
+	end
+
+	def initialize_essai(*args)
+		fname= "link:#{self.class.name}.#{__method__}"
+		LOG.debug (fname) {"initialize args=#{args.length}:#{args.inspect}"}
+		super
+		if args.size>0
+			unless args[0].nil? || args[0][:father].nil? || args[0][:child].nil?
+				father_plmtype=args[0][:father].model_name
+				father_id=args[0][:father].id
+				child_plmtype=args[0][:child].model_name
+				child_id=args[0][:child].id
+			end
+		end
+	end
+
+	""
+	# in fact, this is not useful to test uniqueness here, the cardinality permit to have several links identicals
+	#
+	def link_uniqueness_obsolete
+		fname = "#{self.class.name}.#{__method__}"
+		ret=true
+		cond = ["father_plmtype = ? and child_plmtype = ? and father_id = ? and child_id = ? and relation_id = ? ",
+			father_plmtype, child_plmtype, father_id, child_id, relation_id]
+		unless ::Link.find(:first, :conditions => cond).nil?
+			self.errors.add_to_base('Link already exists!')
+		ret=false
+		end
+		LOG.debug (fname) {"link_uniqueness '#{self}' #{cond} = #{ret}"}
+		ret
 	end
 
 	def designation
@@ -101,6 +163,7 @@ class Link < ActiveRecord::Base
 			msg+="<br/>eception=#{e}"
 		self.errors.add(msg)
 		end
+		LOG.debug (fname) {"validity '#{self}' =#{valid}"}
 		valid
 	end
 
@@ -109,21 +172,6 @@ class Link < ActiveRecord::Base
 		unless nb_used >= relation.cardin_use_min && (relation.cardin_use_max == -1 || nb_used <= relation.cardin_use_max)
 			self.errors.add_to_base('Cardinality is not valid!')
 		end
-	end
-
-	def user=(user)
-		def_user(user)
-	end
-
-	def father=(father)
-		self.father_plmtype        = father.model_name
-		if father.respond_to? :typesobject_id
-		self.father_typesobject_id = father.typesobject_id
-		else
-			anytype=Typesobject.find_by_name(PlmServices.get_property(:TYPE_GENERIC))
-		self.father_typesobject_id = anytype.id
-		end
-		self.father_id             = father.id
 	end
 
 	def father
@@ -135,19 +183,12 @@ class Link < ActiveRecord::Base
 	def father_ident
 		fname = "#{self.class.name}.#{__method__}"
 		#LOG.debug (fname) {"father=:#{father.inspect}:"}
-		ret  = "#{father_id}:#{father_plmtype}.#{father_typesobject_id}"
-		ret += "=#{(father.nil? ? 'father null' : father.ident_plm)}"
-	end
-
-	def child=(child)
-		self.child_plmtype        = child.model_name
-		if child.respond_to? :typesobject_id
-		self.child_typesobject_id = child.typesobject_id
-		else
-			anytype=Typesobject.find_by_name(PlmServices.get_property(:TYPE_GENERIC))
-		self.child_typesobject_id = anytype.id
+		ret  = "#{father_id}"
+		unless father.nil?
+			ret +=":#{father.model_name}"
+			ret += ".#{father.typesobject_id}" if father.respond_to? :typesobject_id
 		end
-		self.child_id             = child.id
+		ret += "=#{(father.nil? ? 'father null' : father.ident_plm)}"
 	end
 
 	def child
@@ -155,16 +196,34 @@ class Link < ActiveRecord::Base
 	end
 
 	def child_ident
-		ret  = "#{child_id}:#{child_plmtype}.#{child_typesobject_id}"
-		ret += "=#{child.ident_plm}"unless child.nil?
+		ret  = "#{child_id}:#{child.model_name}.#{child.typesobject_id}"
+		ret += "=#{child.ident_plm}" unless child.nil?
+	end
+
+	def father=(afather)
+		fname = "#{self.class.name}.#{__method__}"
+		LOG.debug (fname) {"afather=#{afather}"}
+		self.father_plmtype=afather.model_name
+		self.father_id=afather.id
+	end
+
+	def child=(achild)
+		fname = "#{self.class.name}.#{__method__}"
+		LOG.debug (fname) {"achild=#{achild}"}
+		self.child_plmtype=achild.model_name
+		self.child_id=achild.id
 	end
 
 	def relation=(relation)
 		fname = "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"relation.type=#{relation.typesobject}, fields=#{relation.typesobject.fields}"}
+		LOG.debug (fname) {"relation.type=#{relation.typesobject}, fields=#{relation.typesobject.fields}"}
 		#TODO pour eviter super: no superclass method `relation=' for #<Link:0x9aceec4> super
 		self.type_values = relation.typesobject.fields
 		self.relation_id = relation.id
+	end
+
+	def user=(user)
+		def_user(user)
 	end
 
 	def relation_ident
@@ -176,15 +235,24 @@ class Link < ActiveRecord::Base
 		end
 	end
 
+	#
+	# return the identifier of the link
+	#
 	def ident
 		"#{(father.nil? ? "father null" : father.ident_plm)}-#{(relation.nil? ? "relation null" : relation.ident)}-#{(child.nil? ? "child null" : child.ident_plm)}-#{type_values}"
 	end
 
+	#
+	# return the list of mdlid attribute of all effectivities
+	#
 	def effectivities_mdlid
 		@effectivities_mdlid ||= effectivities.map(&:mdlid)
 	end
 
-	#menage des effectivites non presentes dans effs_mdlid: [part.24, part.22]
+	#
+	#menage des effectivites non presentes dans effs_mdlid
+	#argum effectivities_mdlids : list of effectivities to keep, ex [part.24, part.22]
+	#
 	def clean_effectivities(effectivities_mdlids)
 		fname = "#{self.class.name}.#{__method__}"
 		LOG.info (fname) { "effectivities_mdlids: #{effectivities_mdlids}" }
@@ -204,7 +272,7 @@ class Link < ActiveRecord::Base
 			if self.type_values.nil?
 			fields = rel.typesobject.fields
 			self.type_values = fields unless fields.nil?
-			#OG.info (fname) {"#{fields} : #{self.type_values}"}
+			#LOG.info (fname) {"#{fields} : #{self.type_values}"}
 			end
 		end
 	end
@@ -216,11 +284,6 @@ class Link < ActiveRecord::Base
 	def update_link(user, params_link)
 		update_accessor(user)
 		update_attributes(params_link)
-	end
-
-	# creation
-	def self.create_new(father, child, relation, user)
-		raise Exception.new "Don't use this method"
 	end
 
 	# bidouille infame car l'association ne marche pas
@@ -256,7 +319,7 @@ class Link < ActiveRecord::Base
 	#    c=child_cls.new(self.child_id)
 	#  end
 
-  def self.find_childs(father, child_plmtype=nil, relation_name=nil)
+	def self.find_childs(father, child_plmtype=nil, relation_name=nil)
 		find_childs_with_father_plmtype(father.model_name, father, child_plmtype, relation_name)
 	end
 
@@ -287,24 +350,19 @@ class Link < ActiveRecord::Base
     :order=>"child_id")
 	end
 
-  def self.find_fathers_obsolete(child_plmtype, child, father_plmtype)
-    find(:all,
-    :conditions => ["father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and child_id =#{child.id}"],
-    :order=>"child_id")
-  end
-  def self.find_fathers(child, father_plmtype=nil)
-    unless father_plmtype.nil?
-      cond="child_id =#{child.id} and father_plmtype='#{father_plmtype}'"
-    else
-      cond="child_id =#{child.id}"
-    end
+	def self.find_fathers(child, father_plmtype=nil)
+		unless father_plmtype.nil?
+			cond="child_id =#{child.id} and father_plmtype='#{father_plmtype}'"
+		else
+			cond="child_id =#{child.id}"
+		end
 		find(:all,
     :conditions => [cond],
     :order=>"child_id")
 	end
 
 	def self.get_all_fathers(child)
-		name=self.class.name+"."+__method__.to_s+":"
+		fname=self.class.name+"."+__method__.to_s+":"
 		child_plmtype=child.model_name
 		cond="child_plmtype='#{child_plmtype}' and child_id =#{child.id}"
 		ret=find(:all,
@@ -314,10 +372,10 @@ class Link < ActiveRecord::Base
 		ret
 	end
 
-	def self.find_by_father_plmtype_(plmtype)
-		name=self.class.name+"."+__method__.to_s+":"
+	def self.find_by_father_plmtype(plmtype)
+		fname=self.class.name+"."+__method__.to_s+":"
 		#puts name+plmtype
-		find(:all,
+		links = find(:all,
     :conditions => ["father_plmtype='#{plmtype}'"],
     :order=>"father_id DESC , child_id DESC")
 	end
@@ -398,7 +456,7 @@ class Link < ActiveRecord::Base
 		fname="#{self.class.name}.#{__method__}"
 		#LOG.info (fname) {"new_father=#{new_father.inspect}"}
 		ret = self.clone
-		ret.father_plmtype=new_father.model_name
+		#ret.father_plmtype=new_father.model_name
 		ret.father_id = new_father.id
 		ret.def_user(user)
 		#LOG.info (fname) {"new link=#{ret.inspect}"}

@@ -6,10 +6,12 @@ mnu_feature=get_controller_from_model_type(feature)
 	<ul class="dropdown-menu">
 		<%types.each do |type|
 		mdl = get_controller_from_model_type(type.forobject)
-		#puts __FILE__+type.inspect
+		help="help_#{mdl}_#{type.name}"
+		mnu=t("mnu_#{mdl}_#{type.name}")
+		LOG.debug  ("menus_feature") {"Type : #{type.name} , domain=#{type.domain} , help=#{help} , mnu=#{mnu}"}
 		%>
 		<li>
-			<%= h_menu("/#{mdl}?filter_types=#{type.name}","help_#{mdl}_#{type.name}",t("mnu_#{mdl}_#{type.name}")) %>
+			<%= h_menu("/#{mdl}?filter_types=#{type.name}", help, mnu) %>
 		</li>
 		<% end %>
 	</ul>

@@ -143,7 +143,20 @@ fr:
   definition_promotion: Promotion
   definition_promotion-part: Promouvoir un article de n'importe quel type
   definition_promotion-document-ready-approved: Promouvoir un document de n'importe quel type de ready à approved
-  #subscription
+  #menus
+  mnu_documents_calculsheet: Feuille de calcul
+  mnu_documents_cdc: Cahier des charges
+  mnu_documents_exb: Expression de besoins
+  mnu_documents_fmat: Fiche matériau
+  mnu_documents_m3d: Modèle 3D
+  mnu_documents_norme: Norme
+  mnu_documents_p2d: Plan 2D
+  mnu_projects_standard: Projet de standards
+  mnu_projects_sub-assembly: Projet sous ensemble
+  mnu_customers_internal: Client interne
+  mnu_customers_private: Client privé
+  mnu_customers_public: Client public
+ #subscription
   subscription_creator: Concepteur
   subscription_consultant: Consultant
   subscription_project_manager: Chef de projet

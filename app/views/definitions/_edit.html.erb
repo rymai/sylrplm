@@ -5,32 +5,27 @@
 	byId('definition_span').style.display='inline';
 	}
 </script>
-
-<fieldset>
-	<legend>
-		<%= t("label_process_definition")%>
-	</legend>
-	<table>
-		<tr>
-			<th><%= f.label t("label_name")%></th>
-			<td><%= f.text_field :name %></td>
-		</tr>
-		<tr>
-			<th><%= f.label t("label_description")%></th>
-			<td><%= f.text_field :description %></td>
-		</tr>
-		<tr>
-			<th><span id="uri_label"><%= f.label t("label_uri")%></span></th>
+<h1><%= t(:legend_definition) %></h1>
+<table>
+	<tr>
+		<th><%= f.label t("label_name")%></th>
+		<td><%= f.text_field :name %></td>
+	</tr>
+	<tr>
+		<th><%= f.label t("label_description")%></th>
+		<td><%= f.text_field :description %></td>
+	</tr>
+	<tr>
+		<th><span id="uri_label"><%= f.label t("label_uri")%></span></th>
 		<td><span id="uri_span"> <%= f.text_area :uri %></span></td>
-		</tr>
-		<tr>
-			<th><%= f.label t("label_roles_may_launch") %></th>
-			<td><%= select_inout(f, @definition, Role.all, :title) %></td>
-		</tr>
-		<tr>
-			<th><%= f.label t("label_domain") %></th>
-			<td><%= f.text_field :domain %></td>
-		</tr>
-	</table>
+	</tr>
+	<tr>
+		<th><%= f.label t("label_roles_may_launch") %></th>
+		<td><%= select_inout(f, @definition, Role.all, :title) %></td>
+	</tr>
+	<tr>
+		<th><%= f.label t("label_domain") %></th>
+		<td><%= f.text_field :domain %></td>
+	</tr>
+</table>
 
-</fieldset>

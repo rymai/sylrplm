@@ -118,18 +118,20 @@ class FiledriverDatabase < Filedriver
 	def read_file(datafile)
 		fname= "#{self.class.name}.#{__method__}"
 		cmd="SELECT * FROM \"#{datafile.dir_repository}\" WHERE datafile = '#{datafile.ident}' AND filename='#{datafile.filename}' AND revision='#{datafile.revision}'"
-		#LOG.debug (fname) {"cmd=#{cmd}"}
+		LOG.debug (fname) {"cmd=#{cmd}"}
+		data=nil
 		begin
 			records = ActiveRecord::Base.connection.execute(cmd)
 			dsize=records.fsize(records.fnumber("content"))
-			#LOG.debug (fname) {"records(#{dsize})=#{records.fields} records.ntuples=#{records.ntuples}"}
+			LOG.debug (fname) {"records(#{dsize})=#{records.fields} records.ntuples=#{records.ntuples}"}
 			#records.each {|tuple| LOG.debug (fname){"#{tuple.inspect}"}}
 			if records.ntuples == 1
 				content = records[0]["content"]
 				#ActiveSupport::Base64.decode64(data)
 				data=untransform_content(datafile, content)
-			#LOG.debug (fname) {"data size=#{data.size}"}
+				LOG.debug (fname) {"data size=#{data.size}"}
 			else
+				LOG.debug (fname) {"data=nil"}
 				data=nil
 			end
 		rescue Exception => e

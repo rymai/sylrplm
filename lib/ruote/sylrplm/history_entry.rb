@@ -17,11 +17,11 @@ module Ruote
 
 			has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='project'"]
 			has_many :projects , :through => :links_projects, :source => :project_down
-			
+
 			has_many :links_plmobjects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry'"]
 
 			attr_accessor :link_attributes
-			
+
 			def plm_objects
 				fname= "#{self.class.name}.#{__method__}"
 				ret=[]
@@ -35,15 +35,7 @@ module Ruote
 				end
 				ret
 			end
-			
-			def plm_objects_old
-				ret=[]
-				ret.concat self.customers unless self.customers.nil?
-				ret.concat self.documents unless self.documents.nil?
-				ret.concat self.parts unless self.parts.nil?
-				ret.concat self.projects unless self.projects.nil?
-			end
-			
+
 			def link_attributes=(att)
 				fname= "#{self.class.name}.#{__method__}"
 				@link_attributes = att

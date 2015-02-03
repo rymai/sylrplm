@@ -28,38 +28,37 @@ class Project < ActiveRecord::Base
 	#has_many :projects_users, :dependent => :delete_all
 	#has_many :users, :through => :projects_users
 
-	has_many :links_forums,
+	has_many :links_project_forums,
     :class_name => "Link",
     :foreign_key => "father_id",
     :conditions => { father_plmtype: 'project', child_plmtype: 'forum' }
 	has_many :forums,
-    :through => :links_forums,
+    :through => :links_project_forums,
     :source => :forum
-    
-	has_many :links_documents,
+
+	has_many :links_project_documents,
     :class_name => "Link",
     :foreign_key => "father_id",
     :conditions => ["father_plmtype='project' and child_plmtype='document'"]
 	has_many :documents ,
-    :through => :links_documents,
+    :through => :links_project_documents,
     :source => :document_down
 
-	has_many :links_parts,
+	has_many :links_project_parts,
     :class_name => "Link",
     :foreign_key => "father_id",
     :conditions => ["father_plmtype='project' and child_plmtype='part'"]
 	has_many :parts ,
-    :through => :links_parts,
+    :through => :links_project_parts,
     :source => :part_down
 
-	has_many :links_customers_up,
+	has_many :links_project_customers_up,
     :class_name => "Link",
     :foreign_key => "child_id",
     :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
 	has_many :customers_up ,
-    :through => :links_customers_up,
+    :through => :links_project_customers_up,
     :source => :customer_up
-
 
 	def user=(user)
 		def_user(user)
@@ -75,11 +74,6 @@ class Project < ActiveRecord::Base
 		obj=find(object_id)
 		obj.edit
 		obj
-	end
-
-	def self.get_types_project_obsolete
-		Typesobject.find(:all, :order=>"name",
-		:conditions => ["forobject = 'project'"])
 	end
 
 	def add_parts_from_favori(favori)

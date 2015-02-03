@@ -125,7 +125,7 @@ class Datafile < ActiveRecord::Base
 			LOG.debug (fname) {"****************** bloc=\n#{bloc}\n**********"}
 			ret = eval bloc
 		else
-			LOG.debug (fname) {"pas de bloc"}
+			LOG.debug (fname) {"pas de bloc => read_file"}
 		# no code to modify the file, we read the file as is
 		ret = self.read_file
 		end
