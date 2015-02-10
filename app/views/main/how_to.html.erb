@@ -1,0 +1,30 @@
+<H1><%= t(:title_how_to)%></H1>
+<dl>
+	<% @files.each do |doc|%>
+	<%= t(:how_to_subject)%><%= doc[0]%>
+	<dd>
+		<%= t(:how_to_docs)%>
+	</dd>
+	<dd>
+		<dl>
+			<% doc[1][:docfiles].each do |name|%>
+			<dd>
+				<%= link_to name , "../how_to/#{doc[0]}/#{name}" %>
+			</dd>
+			<%end%>
+		</dl>
+	</dd>
+	<dd>
+		<%= t(:how_to_files)%>
+	</dd>
+	<dd>
+		<dl>
+			<% doc[1][:mdlfiles].each do |name|%>
+			<dd>
+				<%= link_to name,  "../how_to/#{doc[0]}/#{name}"  %>
+			</dd>
+			<%end%>
+		</dl>
+	</dd>
+	<%end%>
+</dl>
