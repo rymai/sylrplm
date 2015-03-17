@@ -173,7 +173,7 @@ fr:
   revise_by_action: Reviser par action
   # shared
   legend_link_duplication: "Duplication des liens de '%{object_orig}'"
-  legend_wi_fields: Valeurs du processus
+  legend_wi_fields: Propriétés du processus
   label_assoc_documents: Documents associés
   label_assoc_parts: Articles associés
   label_assoc_projects: Projets associés
@@ -415,6 +415,11 @@ fr:
   submit: GO
   CV: Curriculum vitae
   first_use: Si vous débutez, nous vous invitons à lire la description des principales fonctionnalités de l'application. <br/>Vous pourrez ensuite profiter de la prise en main (%{help}) avant de lire complètement la <a href='/main/helpgeneral'>documentation</a>
+  title_how_to: Tous les sujets du Comment faire
+  how_to_subject: "Sujet : "
+  how_to_files: "Fichiers associé au comment faire"
+  how_to_docs: Document décrivant le comment faire
+  mnu_how_to: Comment faire
   # notifications
   legend_notification: Renseignez les propriétés de la notification
   notification_edit: Edition notification
@@ -615,6 +620,7 @@ fr:
   typesobjects_edit:  Edition du type d' objet
   typesobject_new_dup: Duplication de type d' objet
   label_typesobject_name_translate: Type
+  label_typesobject_rank: Rang du type
   # msg _check_types
   msg_define_types_document: Définissez les types des documents
   msg_define_types_part: Définissez les types des articles

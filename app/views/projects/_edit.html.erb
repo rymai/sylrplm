@@ -19,6 +19,15 @@
 <%= f.label t(:label_date) %>
 <%= f.date_select :date %>
 <br/>
+<%= f.label t(:label_customer) %>
+<% if object.customers_up[0].nil? %>
+<% default=" " %>
+<% else %>
+<% default=object.customers_up[0].ident%>
+<% end %>
+<%= select_in_list(:project_link, :customer,  default  , :customers) %>
+<br/>
+
 <label for="project_users"> <%= t(:label_users) %> </label>
 <%= select_inout(f, @project, @users, :login) %>
 <%= h_input_domain(f) %>

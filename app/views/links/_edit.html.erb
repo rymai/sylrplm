@@ -34,7 +34,9 @@
 <% end %>
 <%= h_render_fields(@link, fonct, "type_values") %>
 <%= form.label :owner %>
+
 <%= text_field_tag(:owner, @link.owner.login , :readonly => readonly) unless @link.owner.nil? %>
+
 <h1><%= t(:legend_link_child) %>	<%= link_to @link.child.ident, object_path(@link.child) unless @link.child.nil? %></h1>
 <%= form.label t(:label_child_plmtype) %>
 <%if fonct=="edit_in_tree"%>
@@ -52,10 +54,10 @@
 <br/>
 <%= form.label t(:label_child) %>
 <%= text_field_tag :child, @link.child.to_s , :readonly=>readonly , :size => 50  unless @link.child.nil? %>
-<% unless @root.nil? || !@root.respond_to?(:prd_effectivities) || !@root.prd_effectivities.any? %>
+<% unless @root.nil? || !@root.respond_to?(:effectivities) || !@root.effectivities.any? %>
 <h1><%= t(:legend_link_effectivities) %></h1>
 <label for="part_effectivities"> <%= t(:label_effectivities) %> </label>
-<%= select_tag(:effectivities, options_from_collection_for_select( @root.prd_effectivities, :mdlid, :to_s, @link.effectivities_mdlid), {:style=>"width:450px;", :size=>10, :multiple => true }) %>
+<%= select_tag(:effectivities, options_from_collection_for_select( @root.effectivities, :mdlid, :to_s, @link.effectivities_mdlid), {:style=>"width:450px;", :size=>10, :multiple => true }) %>
 <br/>
 <% end %>
 <h1><%= form.label t(:label_domain) %></h1>

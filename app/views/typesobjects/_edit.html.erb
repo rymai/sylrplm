@@ -11,11 +11,14 @@
 	<%= f.label t(:label_description) %>
 	<%= f.text_area :description %>
 	<br/>
+	<%= f.label t(:label_typesobject_rank) %>
+	<%= f.text_field :rank %>
+	<br/>
 	<%= f.label t(:label_fields) %>
 	<br/>
 	<%= h_input_domain(f) %>
 	<br />
-	
+
 	<%= h_render_fields(@typesobject, fonct, "fields") %>
-	
+
 </fieldset>

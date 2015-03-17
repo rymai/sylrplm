@@ -60,7 +60,6 @@ class RelationsController < ApplicationController
 		@types  = Typesobject.get_types("relation")
 		@status = Statusobject.get_status("relation")
 	LOG.debug (fname) {"typesobject=#{@relation.typesobject}"}
-	LOG.debug (fname) {"@datas=#{@datas.inspect}\n**********************************"}
 	end
 
 	# POST /relations

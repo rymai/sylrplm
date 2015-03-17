@@ -11,7 +11,7 @@ gem 'activesupport'
 
 gem 'bundler'
 
-##gem 'bigdecimal', '1.2.1'
+##gem 'bigdecimal', '1.2.5'
 gem 'bigdecimal'
 
 gem 'haml'

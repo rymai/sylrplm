@@ -17,7 +17,11 @@
     <%=h @typesobject.description %>
 </p>
 <p>
+    <b><%=t(:label_typesobject_rank) %></b>
+    <%=h @typesobject.rank %>
+</p>
+<p>
     <b><%=t(:label_fields) %></b>
-    <%= h_render_fields(@typesobject, fonct, "fields") %> 
+    <%= h_render_fields(@typesobject, fonct, "fields") %>
 </p>
 <% end %>

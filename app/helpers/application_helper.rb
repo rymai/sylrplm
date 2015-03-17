@@ -520,11 +520,10 @@ module ApplicationHelper
 		#puts "application_helper.h_workitem_fields:fields=#{fields}"
 		ret=""
 		unless fields.nil?
-			ret+="<fieldset><legend>"
+			ret+="<h1>"
 			ret+=t(:legend_wi_fields)
-			ret+="</legend>"
+			ret+="</h1>"
 			ret+= h_render_fields(obj, fonct, "field_hash", true)
-			ret+="</fieldset>"
 		else
 			ret=t("history_no_fields")
 		end

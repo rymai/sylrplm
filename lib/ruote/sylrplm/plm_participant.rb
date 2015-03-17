@@ -63,12 +63,12 @@ class Ruote::PlmParticipant
 					#
 					# phase execution
 					#
-					#puts "PlmParticipant.consume:promote_exec:arworkitem_id="+arworkitem.id.to_s
+					puts "PlmParticipant.consume:promote_exec:arworkitem_id="+arworkitem.id.to_s
 						obj=nil
 						# recherche des liens dont le pere est une tache ayant le meme wfid et ayant la relation requise
 						#
 						# liens dont le pere est une tache
-						execute(task, Link.find_by_father_plmtype_(Ruote::Sylrplm::HistoryEntry.model_name), arworkitem, relation_name)
+						execute(task, Link.find_by_father_plmtype(Ruote::Sylrplm::HistoryEntry.model_name), arworkitem, relation_name)
 						reply_to_engine (workitem)
 					end
 				else
@@ -176,7 +176,7 @@ class Ruote::PlmParticipant
 
 	def execute(task, alinks, arworkitem, relation_name)
 		fname="PlmParticipant.execute:"
-		#puts fname+arworkitem.wfid+":"+relation_name+":"+alinks.inspect
+		LOG.debug(fname) {"#{arworkitem.wfid}:#{relation_name}:#{alinks}"}
 		if alinks.is_a?(Array)
 		links = alinks
 		else
@@ -187,7 +187,7 @@ class Ruote::PlmParticipant
 		links.each do |link|
 		#puts fname+"link="+link.ident
 			father = get_object(link.father_plmtype, link.father_id)
-			#puts fname+"father="+father.inspect
+			LOG.debug(fname) {"father=#{father} father.wfid=#{father.wfid} arworkitem.wfid=#{arworkitem.wfid}"}
 			#puts fname+"father.wfid="+father.wfid + "==?" + arworkitem.wfid
 			# bon wfid du pere
 			unless father.nil? ||  father.wfid != arworkitem.wfid

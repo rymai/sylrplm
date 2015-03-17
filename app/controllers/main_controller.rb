@@ -18,7 +18,6 @@ class MainController < ApplicationController
 			@domains = Controller.get_domains
 			@directory = PlmServices.get_property(:VOLUME_DIRECTORY_DEFAULT)
 		end
-		@datas = get_datas_count
 		@themes = get_themes(@theme)
 		unless params[:theme].nil?
 			@theme = params[:theme]
@@ -59,7 +58,37 @@ class MainController < ApplicationController
 			@main=true
 			format.html # index.html.erb
 		end
+	end
 
+	def how_to
+		fname= "#{self.class.name}.#{__method__}"
+		@files={}
+		urlbase="#{RAILS_ROOT}/public/how_to"
+		Dir.new("#{urlbase}").entries.each do |doc|
+			unless doc == "." || doc == ".."
+				LOG.debug (fname) {"doc=#{doc}"}
+				@files[doc]={}
+				mdlfiles=[]
+				docfiles=[]
+				Dir.new("#{urlbase}/#{doc}").entries.each do |file|
+					unless file =="." || file==".."
+						if file == "files"
+							Dir.new("#{urlbase}/#{doc}/#{file}").entries.each do |mdlfile|
+								unless mdlfile =="." || mdlfile == ".."
+								mdlfiles << "#{file}/#{mdlfile}"
+								end
+							end
+						else
+							docfiles << file
+						end
+					end
+					LOG.debug (fname) {"file=#{file}"}
+					@files[doc][:docfiles] = docfiles
+					@files[doc][:mdlfiles] = mdlfiles
+				end
+			end
+		end
+		LOG.debug (fname) {"@files=#{@files}"}
 	end
 
 	def helpgeneral

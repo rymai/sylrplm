@@ -203,7 +203,6 @@ module Models
 
 		def before_save
 			fname= "#{self.class.name}.#{__method__}"
-			LOG.debug (fname) {"before_save:debut **********************"}
 			if (self.respond_to? :owner) && (self.respond_to? :group)
 				LOG.debug (fname) {"before_save:owner=#{owner} group=#{group}"}
 				unless owner.nil?
@@ -232,7 +231,6 @@ module Models
 				return false
 				end
 			end
-			LOG.debug (fname) {"fin **********************"}
 			true
 		end
 
@@ -264,12 +262,21 @@ module Models
 
 		def to_s
 			fname = "#{self.class.name}.#{__method__}"
+			LOG.debug (fname) {"self=#{self.inspect}"}
 			ret = "#{I18n.t("ctrl_"+model_name)}"
-			ret+= "/#{typesobject.name}" if self.respond_to?("typesobject") && !self.typesobject.nil?
+			if self.respond_to? :typesobject
+				unless typesobject.nil?
+					ret+= "/#{typesobject.name}"
+				end
+			end
 			ret+= ".#{ident}"
-			ret+= "/#{revision}" if self.respond_to?("revision")
-			ret+= " #{designation}" if self.respond_to?("designation")
-			ret+= " (#{statusobject.name})" if self.respond_to?("statusobject") && !self.statusobject.nil?
+			ret+= "/#{revision}" if self.respond_to? :revision
+			ret+= " #{designation}" if self.respond_to? :designation
+			if self.respond_to? :statusobject
+				unless statusobject.nil?
+					ret+= " (#{statusobject.name})"
+				end
+			end
 			#LOG.debug (fname) {"ret=#{ret}"}
 			ret
 		end
@@ -695,11 +702,11 @@ module Models
 			end
 			link_from = ::Link.new(father: self, child: from, relation: rel, user: own)
 			st=link_from.save
-			#LOG.debug (fname){"link_from=#{link_from}:st save=#{st}"}
+			LOG.debug (fname){"link_from=#{link_from.ident}:st save=#{st}"}
 			if !st
 				link_from=nil
 			end
-			#LOG.debug (fname){"link_from=#{link_from}"}
+			LOG.debug (fname){"link_from=#{link_from}"}
 			link_from
 		end
 

@@ -108,9 +108,10 @@ class LinksController < ApplicationController
 				format.html { render action: "edit_in_tree" }
 				format.xml  { head :ok }
 			else
-				LOG.info(fname) { "ko:update_att=#{update_att} update_eff=#{update_eff} effectivities: #{params[:effectivities]}" }
+				strerr="ko:update_att=#{update_att} update_eff=#{update_eff} effectivities: #{params[:effectivities]}"
+				LOG.info(fname) { strerr}
 				# lien non modifie
-				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_link),:ident=>@link.ident)
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_link),:ident=>@link.ident, :error=>strerr)
 				format.html { render action: "edit_in_tree" }
 				format.xml  { render xml: @link.errors, status: :unprocessable_entity }
 			end

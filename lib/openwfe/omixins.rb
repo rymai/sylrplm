@@ -51,7 +51,8 @@ module OpenWFE
       def extract_wfid (o, parent=false)
 
         case o
-          #when String then o
+          #TODO
+          when String then o
           when FlowExpressionId then o.wfid(parent)
           when FlowExpression then o.fei.wfid(parent)
           else o.to_s

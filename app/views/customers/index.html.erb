@@ -5,12 +5,14 @@
 <% end %>
 <% end %>
 <%= h_form_simple_query('/customers', @customers) %>
+<% unless param_equals?("todo", "select") %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_customer"), new_customer_path %> </td>
 		<td> <%= show_help("help_customers") %> </td>
 	</tr>
 </table>
+<%end%>
 <% if @myparams[:list_mode] == t(:list_mode_icon) %>
 <%= h_thumbnails_objs @customers %>
 <% else %>
@@ -42,6 +44,7 @@
 		<td> <%= h_explorer customer.projowner %> </td>
 		<td> <%= l customer.date %> </td>
 		<td> <%= h customer.domain %> </td>
+		<% unless param_equals?("todo", "select") %>
 		<td> <%= link_to h_img_edit.to_s, edit_customer_path(customer) %> </td>
 		<td> <%= link_to h_img_edit_lifecycle.to_s, {:controller=>"customers", :action=>"edit_lifecycle", :id => customer.id} %> </td>
 		<td> <%= link_to h_img_destroy.to_s, customer, :confirm => t("msg_confirm"), :method => :delete %> </td>
@@ -49,17 +52,22 @@
 		<td> <% if logged_in? %>
 		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => customer.id}, :method => :get %>
 		<% end %> </td>
-		<% if customer.revisable?  %> 
+		<% if customer.revisable?  %>
 		<td> <%= h_img_revise.to_s %></td>
+		<%end%>
+		<% else %> <td><%=select_button(customer)%>
+		</td>
 		<%end%>
 	</tr>
 	<% end %>
 </table>
 <% end %>
 <%= will_paginate(@customers[:recordset]) %>
+<% unless param_equals?("todo", "select") %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_customer"), new_customer_path %> </td>
 		<td> <%= show_help("help_customers") %> </td>
 	</tr>
 </table>
+<%end%>

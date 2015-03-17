@@ -36,4 +36,8 @@
 - debug the list of models types in structure part (function get_type_datafiles_on_node)
 - debug of PlmServices.set_property
 - change delimiter for fog files (. replace -) for a good compatibility
-
+#------------------------------------------------------------------------------
+# Date: 2015 03 15
+#------------------------------------------------------------------------------
+add owner, project, group in tree_up
+add customer choice in new/edit project

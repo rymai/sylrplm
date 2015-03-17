@@ -387,7 +387,9 @@ module Controllers
 			end
 		end
 
-
+		#
+		# duplicate each links from the object
+		#
 		def ctrl_duplicate_links(params, obj, user)
 			ret=true
 			unless params["links"].nil?

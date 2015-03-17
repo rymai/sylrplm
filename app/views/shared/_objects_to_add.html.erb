@@ -1,8 +1,8 @@
 <!-- solution temporaire car la methode count_objects n'est pas reconnue dans favori !!-->
 <% nbr=0
-  ["document","part","project","customer","user"].each do |type|
-    nbr += @favori.get(type).count
-  end
+	["document","part","project","customer","user"].each do |type|
+		nbr += @favori.get(type).count
+	end
 %>
 <% if nbr > 0 %>
 <h1><%= t("legend_objects_to_add") %></h1>
@@ -14,6 +14,8 @@
 	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :project}) %>
 	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :customer}) %>
 	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :user}) %>
+</table>
+<table class='menu_bas'>
 	<tr>
 		<td><%= submit_tag t("paste_objects") %></td>
 	</tr>

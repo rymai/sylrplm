@@ -44,7 +44,6 @@ class ApplicationController < ActionController::Base
 	def render_(*args)
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname) {"args=#{args.inspect} flash=#{flash.inspect}"}
-		@datas = get_datas_count
 		if args.nil? || args.count==0
 		super
 		else
@@ -256,6 +255,8 @@ class ApplicationController < ActionController::Base
 		@urlbase     = "http://"+request.env["HTTP_HOST"]
 		@themes      = get_themes(@theme)
 		@languages   = get_languages
+		@datas = get_datas_count
+		LOG.debug(fname) {"@datas=#{@datas}"}
 		###########TODO inutile @notification=PlmServices.get_property(:NOTIFICATION_DEFAULT)
 		###########TODO inutile @time_zone=PlmServices.get_property(:TIME_ZONE_DEFAULT)
 		WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')

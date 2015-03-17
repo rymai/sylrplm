@@ -106,6 +106,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 			link_effectivities = link.effectivities
 			str_eff=""
 			link_effectivities.each do |eff|
+				LOG.debug(fname) {"effectivity=#{eff.inspect}"}
 				str_eff+="#{eff}\n"
 			end
 			LOG.debug(fname) {"effectivities=\n#{str_eff}"}
@@ -239,7 +240,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 	#------------------------------------------------------
 	if father.model_name == "project"
 		projownersnode = tree_level("'prj_#{father.id}'", t(:label_projowners))
-		tree_projowners(projownersnode,  father)
+		tree_projowners(projownersnode,  root, father)
 	node << projownersnode if projownersnode.size > 0
 	end
 	node
@@ -256,11 +257,44 @@ def build_tree_up(obj, view_id)
 	lab=t(:ctrl_object_referencer, :typeobj => t("ctrl_#{obj.model_name}"), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_up", :label => lab ,:open => true})
 	relations = View.find(view_id).relations unless  view_id.nil?
+	add_owners(tree, obj)
 	PlmServices.get_property(:TREE_ORDER).each do |mdl_child|
 		follow_father(mdl_child, tree, obj, relations)
 		session[:tree_object_up] = obj
 	end
 	tree
+end
+
+def add_owners (tree, obj)
+	#
+	# owner project at the creation
+	#
+	add_owner(tree, obj.owner)
+	add_owner(tree, obj.group)
+	if(obj.respond_to? :projowner)
+		add_owner(tree, obj.projowner)
+	end
+	tree
+end
+
+def add_owner(tree, father)
+	url = {:controller => get_controller_from_model_type(father.model_name), :action => 'show', :id => "#{father.id}"}
+	ctrl_name="ctrl_#{father.model_name}"
+	img_rel="<img class=\"icone\" src=\"#{icone_fic(father)}\" title=\"#{father.tooltip}\" />"
+	options={
+		:id => father.id ,
+		:label => "#{img_rel} | #{father.label}",
+		:icon => icone_fic(father),
+		:icon_open => icone_fic(father),
+		:title => clean_text_for_tree(father.tooltip),
+		:url => url_for(url),
+		:open => true
+	}
+	html_options = {
+		:alt => "alt:"+father.ident
+	}
+	cnode = Node.new(options,html_options)
+	tree<<cnode
 end
 
 #
@@ -279,6 +313,8 @@ def follow_father(model_name, node, obj, relations)
 	links=Link.find_fathers(obj,  model_name)
 	links.each do |link|
 		father = model.find(link.father_id)
+		fname="plm_tree:#{controller_class_name}.#{__method__}"
+		LOG.debug(fname) {" father=#{father.ident}"}
 		url = {:controller => get_controller_from_model_type(model_name), :action => 'show', :id => "#{father.id}"}
 		relation = Relation.find(link.relation_id)
 		ctrl_name="ctrl_#{father.model_name}"

@@ -203,6 +203,9 @@
 							<%= help_chapter :help_first_use , "menu" %>
 						</li>
 						<li>
+							<%= link_to t(:mnu_how_to), {:controller=> :main, :action => :how_to}, { :class=>"menu" } %>
+						</li>
+						<li>
 							<%= help_window("menu") %>
 						</li>
 						<li>
@@ -235,7 +238,6 @@
 	<br/>
 	<div id="favorites" class="tab-pane inactive">
 		<%= render('layouts/favorites') %>
-		<%= render('layouts/recent_links') %>
 	</div>
 	<div id="tree" class="tab-pane inactive">
 		<% if @tree || @tree_up %>

@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
 
 # syl 17/11/2010 : route par defaut
 	map.root :controller => "main", :action => "index"
-	map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get, :tools => :get, :helpgeneral => :get}
+	map.resources :main, :controller => "main", :collection => { :news => :get, :contacts => :get, :tools => :get, :helpgeneral => :get, :how_to => :get}
 	#desactivate because connection is mandatory for this action: map.root :controller => "workitems", :action => "index"
 
 	map.resources :accesses, :collection => { :reset => :get}, :member=> {:new_dup => :get}
@@ -198,7 +198,7 @@ ActionController::Routing::Routes.draw do |map|
   'info/object_links/:plmtype/:id.:format',
   :controller => 'info',
   :action => 'object_links')
-  
+
 	map.resources :links, :collection => { :reset => :get, :empty_favori => :get}
 	map.connect(
 	'links/:id/edit_in_tree',
@@ -456,7 +456,7 @@ ActionController::Routing::Routes.draw do |map|
 	map.wfid_resources :workitems
 
 	map.wfid_resources :expressions
- 
+
 # The priority is based upon order of creation: first created -> highest priority.
 
 # Sample of regular route:

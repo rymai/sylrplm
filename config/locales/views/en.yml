@@ -415,6 +415,11 @@ en:
   submit: GO
   CV: Curriculum vitae
   first_use: "First use of the application (%{help})"
+  title_how_to: All subject of How to
+  how_to_subject: "Subjet : "
+  how_to_files: "Files associated to how to"
+  how_to_docs: Description document
+  mnu_how_to: How to
   # notifications
   legend_notification: Enter notification details
   notification_edit: Notification edit
@@ -615,6 +620,7 @@ en:
   typesobjects_edit: Edit the type
   typesobject_new_dup: Duplication of type
   label_typesobject_name_translate: Type
+  label_typesobject_rank: Type rank
   # msg _check_types
   msg_define_types_document: Please, define documents types
   msg_define_types_part: Please, define parts types

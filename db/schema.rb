@@ -279,14 +279,12 @@ ActiveRecord::Schema.define(:version => 0) do
 	add_index "history_entry", ["wfrevision"], :name => "index_history_entry_on_wfrevision"
 
 	create_table "links", :force => true do |t|
-	    t.string   "father_plmtype", :null => false
-	    t.string   "child_plmtype",  :null => false
+		t.string   "father_plmtype", :null => false
+		t.string   "child_plmtype",  :null => false
 		t.integer  "father_id",      :null => false
 		t.integer  "child_id",       :null => false
 		t.datetime "created_at",     :null => false
 		t.datetime "updated_at",     :null => false
-		#t.integer  "father_typesobject_id", :null => false
-		#t.integer  "child_typesobject_id",  :null => false
 		t.integer  "relation_id",    :null => false
 		t.string   "type_values", :limit => 4096
 		t.integer  "owner_id"
@@ -295,13 +293,8 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "domain"
 	end
 
-	#add_index "links", ["father_plmtype","child_plmtype"], :name => "index_links_on_father_plmtype_child_plmtype"
-	#add_index "links", ["father_plmtype","child_plmtype","child_id"], :name => "index_links_on_father_plmtype_child_plmtype_child_id"
-	#add_index "links", ["father_plmtype","child_plmtype","father_id"], :name => "index_links_on_father_plmtype_child_plmtype_father_id"
-	#add_index "links", ["father_plmtype"], :name => "index_links_on_father_plmtype"
-	#add_index "links", ["father_typesobject_id"], :name => "index_links_on_father_typesobject_id"
-	#add_index "links", ["child_plmtype"], :name => "index_links_on_child_plmtype"
-	#add_index "links", ["child_typesobject_id"], :name => "index_links_on_child_typesobject_id"
+	add_index "links", ["father_plmtype"], :name => "index_links_on_father_plmtype"
+	add_index "links", ["child_plmtype"], :name => "index_links_on_child_plmtype"
 	add_index "links", ["father_id"], :name => "index_links_on_father_id"
 	add_index "links", ["child_id"], :name => "index_links_on_child_id"
 	add_index "links", ["owner_id"], :name => "index_links_on_owner_id"
@@ -574,6 +567,7 @@ ActiveRecord::Schema.define(:version => 0) do
 	create_table "typesobjects", :force => true do |t|
 		t.string   "forobject"
 		t.string   "name"
+		t.integer  "rank"
 		t.string   "fields", :limit => 4096
 		t.text     "description"
 		t.datetime "created_at"

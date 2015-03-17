@@ -1,4 +1,4 @@
-<% unless User.count == 0 || @datas.nil? %> <h1><%= t(:datas_in_database) %></h1>
+<% unless User.count == 0 || @datas.nil? %>
 <table>
 	<tr>
 		<% @datas.each do |domain, values| %> <th> <%= t("ctrl_#{domain}") %></th>

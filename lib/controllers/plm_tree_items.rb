@@ -1,24 +1,28 @@
-
 require "controllers/plm_modeling"
 
-
 #------------------------------------------------------
+
 # objects created on a project context
 #------------------------------------------------------
-def tree_projowners(node,  father)
+def tree_projowners(node,  child, father)
 	if father.model_name == "project"
-		tree_objects(node, Customer.find_by_projowner_id(father.id))
-		tree_objects(node, Part.find_by_projowner_id(father.id))
-		tree_objects(node, Document.find_by_projowner_id(father.id))
+		fname="#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"father=#{father} "}
+		tree_objects(node, Customer.find_all_by_projowner_id(father.id))
+		tree_objects(node, Part.find_all_by_projowner_id(father.id))
+		tree_objects(node, Document.find_all_by_projowner_id(father.id))
 	end
 	node
 end
 
 #
+
 # add objects nodes on a node
 # @param node: the node to update
 # @param objs: objects array to
 def tree_objects(node, objs)
+	fname="#{self.class.name}.#{__method__}"
+	LOG.debug (fname){"tree_objects=#{objs} "}
 	if objs.is_a?(Array)
 		objs.each do |obj|
 			pnode=tree_object(obj)
@@ -34,6 +38,7 @@ def tree_objects(node, objs)
 end
 
 #
+
 # create a node corresponding to an object
 # @param obj: the object to associate to the node
 # @return the node corresponding to the object
@@ -68,7 +73,7 @@ def tree_users(node, father)
 		unless father.users.nil?
 			begin
 				father.users.each do |child|
-					#LOG.debug (fname){"child=#{child.inspect}"}
+				#LOG.debug (fname){"child=#{child.inspect}"}
 					url = {:controller => 'users', :action => 'show', :id => child.id}
 					options = {
 						:id => "#{child.id}" ,
@@ -92,6 +97,7 @@ def tree_users(node, father)
 end
 
 #
+
 # roles ou groupes associes a l'objet
 # complete a node with roles or groups nodes associated to an object
 # @param node: current node
@@ -100,34 +106,35 @@ end
 #
 def tree_organization(node, father)
 	fname="plm_tree:#{controller_class_name}.#{__method__}"
-		#LOG.debug (fname){"#{father.ident} father.childs=#{father.childs}"}
-		unless father.childs.nil?
-			begin
-				father.childs.each do |child|
-					url = {:controller => child.controller_name, :action => 'show', :id => child.id}
-					options = {
-						:id => "#{child.id}" ,
-						:label => child.ident_plm ,
-						:icon  => icone_fic(child),
-						:icon_open => icone_fic(child),
-						:title => child.tooltip,
-						:open => false,
-						:url  => url_for(url)
-					}
-					#LOG.debug (fname){"child#{child.ident}"}
-					cnode = Node.new(options, nil)
-					node << cnode
-					tree_organization(cnode, child)
-				end
-			rescue Exception => e
-				LOG.warn (fname){e}
+	#LOG.debug (fname){"#{father.ident} father.childs=#{father.childs}"}
+	unless father.childs.nil?
+		begin
+			father.childs.each do |child|
+				url = {:controller => child.controller_name, :action => 'show', :id => child.id}
+				options = {
+					:id => "#{child.id}" ,
+					:label => child.ident_plm ,
+					:icon  => icone_fic(child),
+					:icon_open => icone_fic(child),
+					:title => child.tooltip,
+					:open => false,
+					:url  => url_for(url)
+				}
+				#LOG.debug (fname){"child#{child.ident}"}
+				cnode = Node.new(options, nil)
+				node << cnode
+				tree_organization(cnode, child)
 			end
+		rescue Exception => e
+			LOG.warn (fname){e}
 		end
+	end
 	#LOG.debug (fname){"node=#{node.inspect}"}
 	node
 end
 
 #
+
 # groupes associes a l'objet
 # complete a node with groups nodes associated to an object
 # @param node: current node
@@ -164,8 +171,6 @@ def tree_groups(node, father)
 	node
 end
 
-
-
 ############################################
 # utilitaires des arbres
 # useful methodes for tree building
@@ -196,6 +201,7 @@ def tree_level(id, title, icon = nil, icon_open = nil, designation = nil, open =
 end
 
 #
+
 # suppress some caracteres not compatible with html
 # transform some caracteres to html tag
 #
@@ -210,6 +216,7 @@ def clean_text_for_tree(txt)
 end
 
 #
+
 # create a html tag for image
 # @param name: image name
 #
@@ -218,6 +225,7 @@ def img(name)
 end
 
 #
+
 # specific cut image
 #
 def img_cut
@@ -225,6 +233,7 @@ def img_cut
 end
 
 #
+
 # suppress identical nodes (same id)
 # for example, each instance of an object at diffrent position in the tree become only one node with the count
 # recursive method
@@ -270,5 +279,4 @@ def group_tree(thenode, level)
 	LOG.info (fname){"#{tab} end ************ #{cur_quantity} noeuds devient #{thenode.nodes.count} "}
 	thenode
 end
-
 

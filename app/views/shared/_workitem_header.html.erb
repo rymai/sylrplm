@@ -1,51 +1,22 @@
 <% unless workitem.nil? %>
-<tr>
-	<td class="wide-first-col">id</td>
-	<td><%= h workitem.id %></td>
-</tr>
-<tr>
-	<td><%= t(:label_wfid)%></td>
-	<td><%= h workitem.wfid %></td>
-</tr>
-<tr>
-	<td><%= t(:label_position)%></td>
-	<td><%= h workitem.full_fei.expname %> <%= h workitem.full_fei.expid %></td>
-</tr>
-<tr>
-	<td><%= t(:label_workflow)%></td>
-	<td><%= h workitem.wfname %> <%= h workitem.wfrevision %></td>
-</tr>
-<tr>
-	<td><%= t(:label_dispatch_time)%></td>
-	<td><%= display_time(workitem, :dispatch_time) %></td>
-</tr>
-<tr>
-	<td><%= t(:label_updated_at)%></td>
-	<td><%= display_time(workitem, :last_modified) %></td>
-</tr>
+<% if admin_logged_in?%>
+	<label>id</label>
+	<%= h workitem.id %>
+</br>
+<%end%>
+	<label><%= t(:label_wfid)%></label>
+	<%= h workitem.wfid %>
+</br>
+	<label><%= t(:label_position)%></label>
+	<%= h workitem.full_fei.expname %> <%= h workitem.full_fei.expid %>
+</br>
+	<label><%= t(:label_workflow)%></label>
+	<%= h workitem.wfname %> <%= h workitem.wfrevision %>
+</br>
+	<label><%= t(:label_dispatch_time)%></label>
+	<%= display_time(workitem, :dispatch_time) %>
+</br>
+	<label><%= t(:label_updated_at)%></label>
+	<%= display_time(workitem, :last_modified) %>
+</br>
 <% end %>
-<% unless @favori.get('document').count==0  %>
-<tr>
-	<td> <%= t("paste_documents") %> </td>
-</tr>
-<%end %>
-<% unless @favori.get('part').count==0  %>
-<tr>
-	<td> <%= t("paste_parts") %> </td>
-</tr>
-<% end %>
-<% unless @favori.get('project').count==0  %>
-<tr>
-	<td> <%= t("paste_projects") %> </td>
-</tr>
-<% end %>
-<% unless @favori.get('customer').count==0 %>
-<tr>
-	<td> <%= t("paste_projects") %> </td>
-</tr>
-<% end %> 
-<% unless @favori.get('user').count==0 %>
-<tr>
-	<td> <%= t("paste_users") %> </td>
-</tr>
-<% end %> 

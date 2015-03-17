@@ -109,7 +109,7 @@ a {
 .menu_bas td {
 	background-color: transparent;
 	border: 0px;
-	padding: 0px;
+	padding: 5px;
 	margin: 0px;
 	/*height: 25px;*/
 	/*font-size: 18px;*/
@@ -127,6 +127,7 @@ a {
 	margin-top: 0;
 	*margin-left: .3em;
 	font-size: 12px;
+	font: bold 100% sans-serif;
 	line-height: 18px;
 	color: #333333;
 	text-align: center;
@@ -175,8 +176,9 @@ input[type=submit] {
 	margin-bottom: 0;
 	*margin-left: .3em;
 	font-size: 12px;
+	font: bold 100% sans-serif;
 	line-height: 18px;
-	height: 18px;
+	height: 22px;
 	color: #333333;
 	text-align: center;
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
@@ -385,4 +387,19 @@ a.menu, a.menu:hover {
 .navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
 	width: 1260px;
 }
+/* workitems/edit */
+#colLeft {
+	float:left;
+	width:50%;
+}
+#colRight {
+	float:left;
+	width:50%;
+}
+table.datas {
+	border: 0px solid black;
+	min-width: 300pt;
+}
+
+
 

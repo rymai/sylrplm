@@ -108,6 +108,7 @@ class Link < ActiveRecord::Base
 	end
 
 	""
+
 	# in fact, this is not useful to test uniqueness here, the cardinality permit to have several links identicals
 	#
 	def link_uniqueness_obsolete
@@ -129,10 +130,14 @@ class Link < ActiveRecord::Base
 
 	def before_save
 		fname = "#{self.class.name}.#{__method__}"
-		#LOG.info (fname) {"self=#{self}"}
 		self.domain = father.domain if father.respond_to?(:domain)
 		self.domain = child.domain if (self.domain.nil? && child.respond_to?(:domain))
-	#LOG.info (fname) {"domain=#{self.domain}"}
+		#LOG.info (fname) {"domain=#{self.domain}"}
+		LOG.debug (fname) {"before_save:self=#{self}"}
+	end
+
+	def user=(user)
+		def_user(user)
 	end
 
 	def validity
@@ -146,11 +151,15 @@ class Link < ActiveRecord::Base
 				msg="relation.child_plmtype:'#{relation.child_plmtype}' <> (child_plmtype:'#{child_plmtype}' and '#{PlmServices.get_property(:PLMTYPE_GENERIC)}')"
 				valid =(child_plmtype == relation.child_plmtype || relation.child_plmtype == PlmServices.get_property(:PLMTYPE_GENERIC))
 				if valid
-					msg="relation.father_type:'#{relation.father_typesobject}' <> (father.type:'#{father.typesobject}' and '#{PlmServices.get_property(:TYPE_GENERIC)}')"
-					valid = (father.typesobject.name==relation.father_typesobject.name || relation.father_typesobject.name == PlmServices.get_property(:TYPE_GENERIC))
+					if father.respond_to? :typesobject
+						msg="relation.father_type:'#{relation.father_typesobject}' <> (father.type:'#{father.typesobject}' and '#{PlmServices.get_property(:TYPE_GENERIC)}')"
+						valid = (father.typesobject.name==relation.father_typesobject.name || relation.father_typesobject.name == PlmServices.get_property(:TYPE_GENERIC))
+					end
 					if valid
-						msg="relation.child_type:'#{relation.child_typesobject}' <> (child.type:'#{child.typesobject}' and '#{PlmServices.get_property(:TYPE_GENERIC)}')"
-						valid = (child.typesobject.name==relation.child_typesobject.name || relation.child_typesobject.name == PlmServices.get_property(:TYPE_GENERIC))
+						if child.respond_to? :typesobject
+							msg="relation.child_type:'#{relation.child_typesobject}' <> (child.type:'#{child.typesobject}' and '#{PlmServices.get_property(:TYPE_GENERIC)}')"
+							valid = (child.typesobject.name==relation.child_typesobject.name || relation.child_typesobject.name == PlmServices.get_property(:TYPE_GENERIC))
+						end
 					end
 				end
 			end
@@ -160,10 +169,10 @@ class Link < ActiveRecord::Base
 		rescue Exception => e
 			valid = false
 			msg="Exception during link validity test:"
-			msg+="<br/>eception=#{e}"
+			msg+="<br/>exception=#{e}"
 		self.errors.add(msg)
 		end
-		LOG.debug (fname) {"validity '#{self}' =#{valid}"}
+		LOG.debug (fname) {"validity '#{self}' =#{valid} msg=#{msg}"}
 		valid
 	end
 
@@ -256,8 +265,8 @@ class Link < ActiveRecord::Base
 	def clean_effectivities(effectivities_mdlids)
 		fname = "#{self.class.name}.#{__method__}"
 		LOG.info (fname) { "effectivities_mdlids: #{effectivities_mdlids}" }
-		links_effectivities.each do |current_link_effectivity|
-			LOG.info (fname) { "current_link_effectivity=#{current_link_effectivity.ident} : #{current_link_effectivity.child.mdlid}" }
+		links_link_part.each do |current_link_effectivity|
+			####LOG.info (fname) { "current_link_effectivity=#{current_link_effectivity.ident} : #{current_link_effectivity.child.mdlid}" }
 			unless effectivities_mdlids.include?(current_link_effectivity.child.mdlid)
 				LOG.info (fname) { "destroy:#{current_link_effectivity.ident}" }
 			current_link_effectivity.destroy
@@ -352,9 +361,9 @@ class Link < ActiveRecord::Base
 
 	def self.find_fathers(child, father_plmtype=nil)
 		unless father_plmtype.nil?
-			cond="child_id =#{child.id} and father_plmtype='#{father_plmtype}'"
+			cond="child_plmtype='#{child.model_name}' and child_id =#{child.id} and father_plmtype='#{father_plmtype}'"
 		else
-			cond="child_id =#{child.id}"
+			cond="child_plmtype='#{child.model_name}' and child_id =#{child.id}"
 		end
 		find(:all,
     :conditions => [cond],
@@ -423,7 +432,8 @@ class Link < ActiveRecord::Base
 		fname="#{self.class.name}.#{__method__}"
 		if obj.respond_to? :typesobject
 			unless obj.typesobject.nil?
-				cond="(child_typesobject_id=#{obj.typesobject_id} and child_id = #{obj.id}) or (father_typesobject_id=#{obj.typesobject_id} and father_id = #{obj.id}) "
+				#TODO cond="(child_typesobject_id=#{obj.typesobject_id} and child_id = #{obj.id}) or (father_typesobject_id=#{obj.typesobject_id} and father_id = #{obj.id}) "
+				cond="(child_id = #{obj.id}) or (father_id = #{obj.id}) "
 				ret = count(:all,
     :conditions => [cond] )
 				puts "linked cond=#{cond} nb=#{ret}"

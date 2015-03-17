@@ -401,8 +401,8 @@ class WorkitemsController < ApplicationController
 		values = {}
 		values["father_plmtype"]        = workitem.model_name
 		values["child_plmtype"]         = item.model_name
-		values["father_typesobject_id"] = Typesobject.find_by_name(workitem.model_name).id
-		values["child_typesobject_id"]  = item.typesobject_id
+		#values["father_typesobject_id"] = Typesobject.find_by_name(workitem.model_name).id
+		#values["child_typesobject_id"]  = item.typesobject_id
 		values["father_id"]             = workitem.id
 		values["child_id"]              = item.id
 		values["relation_id"]           = relation.id

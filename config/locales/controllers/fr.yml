@@ -11,6 +11,8 @@ fr:
   ctrl_object_deleted: "%{typeobj} '%{ident}' supprimé avec succès"
   ctrl_object_not_deleted: "%{typeobj} '%{ident}' ne peut être supprimé"
   ctrl_object_promoted: "%{typeobj} '%{ident}' promu de %{current_rank} à %{new_rank}, valideurs=%{validersMail}"
+  ctrl_object_promote_by_action: "%{typeobj} '%{ident}' en attente de promote par action (Mon Bureau / Mes Actions)"
+  ctrl_object_not_promote_by_action: "Echec de lancement du processus de promote de %{typeobj} '%{ident}'"
   ctrl_object_no_validers: "%{typeobj} '%{ident}' non promu de %{current_rank} à %{new_rank} car pas de valideur(s)"
   ctrl_object_not_promoted: "%{typeobj} '%{ident}' non promu de %{current_rank} à %{new_rank}"
   ctrl_user_no_email: "L'utilisateur '%{user}' n'a pas d'adresse mail"

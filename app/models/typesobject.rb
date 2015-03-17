@@ -10,7 +10,7 @@ class Typesobject < ActiveRecord::Base
 	has_many :customers
 	has_many :statusobject
 
-	named_scope :order_default, :order=>"forobject ASC, name ASC"
+	named_scope :order_default, :order=>"forobject ASC, rank ASC, name ASC"
 	named_scope :find_all , order_default.all
 	#
 	def initialize(params=nil)

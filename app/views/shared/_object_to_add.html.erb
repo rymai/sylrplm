@@ -1,5 +1,5 @@
 <% type_to_add=type_to_add.to_s %>
-<% if plmobj.respond_to?("#{type_to_add}s")%>
+<% if plmobj.respond_to?("#{type_to_add}s") %>
 <!--
 	<% puts "******** object_to_add.html.erb: type_to_add=#{type_to_add} count=#{@favori.get(type_to_add).count} relations=#{plmobj.relations(type_to_add).count}" %>
 -->
@@ -10,15 +10,14 @@
 -->
 <% if favori != plmobj %>
 <% plmobj.relations(type_to_add, nil, ::Relation::RELATION_PASTE_WAY_MANUAL).each do |relation| %>
+<% if(favori.typesobject.name==relation.child_typesobject.name || relation.child_typesobject.name==PlmServices.get_property(:TYPE_GENERIC))%>
 <tr>
 	<td><%= check_box_tag( "objecttoadd[#{favori.model_name}][#{favori.id}][#{relation.id}]")  %></td>
 	<td><%= favori %></td>
 	<td><%= text_field_tag("relation[#{type_to_add}][#{relation.id}]", relation.ident, :readonly => true) %>
-<!--
-			<%= select("relation",type_to_add, options_from_collection_for_select( plmobj.relations(type_to_add), :id, :ident)) %>
--->
 	</td>
 </tr>
+<% end %>
 <% end %>
 <% end %>
 <% end %>

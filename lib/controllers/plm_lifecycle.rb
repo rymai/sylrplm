@@ -48,6 +48,7 @@ def ctrl_promote(a_object, withMail=true)
 			flash[:notice] = t(:ctrl_object_updated, :typeobj => t("ctrl_#{a_object.model_name}"), :ident => a_object.ident)
 			if email_ok==true
 				#LOG.debug (fname){"promote_by_action?=#{object.promote_by_action?}"}
+				current_rank = a_object.statusobject.name
 				if a_object.promote_by_action?
 					st_from = a_object.statusobject.name
 					unless a_object.next_status.nil?
@@ -55,15 +56,18 @@ def ctrl_promote(a_object, withMail=true)
 					end
 					ctrl_create_process(format, "promotion", a_object, st_from, st_next)
 					if flash[:error].blank?
-						format.html { redirect_to(a_object) }
+						flash[:notice] += "<br/>"+t(:ctrl_object_promote_by_action,:typeobj =>t(:ctrl_.to_s+a_object.model_name),:ident=>a_object.ident,:current_rank=>current_rank,:new_rank=>nil,:validersMail=>nil)
+						format.html { render :action => "show" }
+###						format.html { redirect_to(a_object) }
 						format.xml  { head :ok }
 					else
-						format.html { redirect_to(a_object) }
+						flash[:notice] += "<br/>"+t(:ctrl_object_not_promote_by_action,:typeobj =>t(:ctrl_.to_s+a_object.model_name),:ident=>a_object.ident,:current_rank=>current_rank,:new_rank=>nil,:validersMail=>nil)
+						format.html { render :action => "show" }
+###						format.html { redirect_to(a_object) }
 						format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
 					end
 
 				else
-					current_rank = a_object.statusobject.name
 					a_object.next_status_id = params[a_object.model_name][:next_status_id]
 					#LOG.debug (fname){"current_rank=#{current_rank} current_id=#{a_object.statusobject} next_status_id=#{a_object.next_status_id}"}
 					a_object.promote
