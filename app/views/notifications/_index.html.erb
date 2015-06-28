@@ -16,19 +16,47 @@
 	</tr>
 	<% @notifications[:recordset].each do |notification| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td> <% if notification.could_show_object? %>
+		<td>
+		<% if notification.could_show_object? %>
+
 		<%= link_to("#{notification.forobject_type}.#{notification.forobject_id}", {:controller => "#{Notification.get_object_controller(notification.forobject_type)}", :action => :show, :id => "#{notification.forobject_id}"}) %>
+
 		<%else%>
+
 		<%= h ("#{notification.forobject_type}.#{notification.forobject_id}") %> </td>
-		<%end%> <td> <%= h (notification.event_type) %></td><td> <%= h (notification.event_date) %></td><td> <%= h (notification.responsible.try(:login)) %></td> <% if fonct == "index" %> <td> <%= h (notification.notify_date) %></td><td> <%= h (h_tr_messag(notification.notify_users)) %></td><td> <%= link_to h_img_show.to_s, notification %></td><td> <%= link_to h_img_edit.to_s, edit_notification_path(notification) %></td><td> <%= link_to h_img_destroy.to_s, notification, :confirm => t("msg_confirm"), :method => :delete %></td><td> <%= link_to h_img("btn_notify"), :action => :notify, :id => notification.id%></td> <% else %> <td> <%= link_to( t("button_notify"),
+
+		<%end%>
+
+		<td> <%= h (notification.event_type) %></td>
+		<td> <%= h (notification.event_date) %></td>
+		<td> <%= h (notification.responsible.try(:login)) %></td>
+
+		<% if fonct == "index" %>
+
+		<td> <%= h (notification.notify_date) %></td>
+		<td> <%= h (h_tr_messag(notification.notify_users)) %></td>
+		<td> <%= link_to h_img_show.to_s, notification %></td>
+		<td> <%= link_to h_img_edit.to_s, edit_notification_path(notification) %></td>
+		<td> <%= link_to h_img_destroy.to_s, notification, :confirm => t("msg_confirm"), :method => :delete %></td>
+		<td> <%= link_to h_img("btn_notify"), :action => :notify, :id => notification.id%></td>
+
+		<% else %>
+
+		<td> <%= link_to( t("button_notify"),
 		:controller => 'notifications',
 		:action => 'show',
 		:id => notification,
-		:only_path => false)%> </td><td> <%= link_to(t("explorer"),
+		:only_path => false)%>
+		</td>
+		<td>
+			<%= link_to(t("explorer"),
 		:controller => Notification.get_object_controller(notification.forobject_type),
 		:action => 'show',
 		:id => notification.forobject_id,
-		:only_path => false)%> </td> <% end %>
+		:only_path => false)%>
+		</td>
+
+		<% end %>
 	</tr>
 	<% end %>
 </table>

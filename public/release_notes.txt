@@ -2,6 +2,8 @@
 # Release notes of sylrplm application
 #
 #------------------------------------------------------------------------------
+# Version 1.0.1 at 09/20/2014
+#------------------------------------------------------------------------------
 # Date: 2014 04 16
 #------------------------------------------------------------------------------
 - improve showing objects in relation with tue current
@@ -41,3 +43,20 @@
 #------------------------------------------------------------------------------
 add owner, project, group in tree_up
 add customer choice in new/edit project
+------------------------------------------------------------------------------
+# Date: 2015 03 29
+#------------------------------------------------------------------------------
+menus: sort and put anytype in first with divider
+new account: some controles on input
+help: update "help of this window"
+#------------------------------------------------------------------------------
+# Date: 2015 06 28
+------------------------------------------------------------------------------
+complete howto about lifecycle
+uniformization of index views: name, title are translated if possible
+add properties to ISSUE part type
+complete help with gems and release_notes
+add tabs for list, add, remove relations in show view of plm objects
+use ckeditor for all description fields (textarea)
+add father to the Typesobject (for inherit)
+add thmbnails in sample.table

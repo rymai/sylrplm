@@ -1,5 +1,5 @@
 <%
- readonly=fonct=="edit_in_tree"
+ readonly=(fonct=="edit_in_tree")
 %>
 <h1><%= t(:legend_link_father) %>
 <%= link_to @link.father.ident, object_path(@link.father) unless @link.father.nil? %></h1>

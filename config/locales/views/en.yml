@@ -185,6 +185,13 @@ en:
   label_assoc_projects_up: Father Projets
   label_assoc_customer_up: Father Clients
   legend_objects_to_add: Objects to add
+  links_relation_tabs: Objects in relation with
+  label_add_customer: Add a client
+  label_add_document: Add a document
+  label_add_part: Ajdd a part
+  label_add_project: Add a project
+  submit_add_objects: Add objects
+  label_add_forum: Add a forum
   # tree (dans views show)
   label_document_document: Documents
   label_part_document: Documents
@@ -621,6 +628,7 @@ en:
   typesobject_new_dup: Duplication of type
   label_typesobject_name_translate: Type
   label_typesobject_rank: Type rank
+  label_typesobject_father: Father type
   # msg _check_types
   msg_define_types_document: Please, define documents types
   msg_define_types_part: Please, define parts types

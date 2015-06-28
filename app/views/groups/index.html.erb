@@ -20,10 +20,10 @@
 		</thead>
 		<% for group in @groups[:recordset] %>
 		<tr class='<%= cycle("even", "odd") %>'>
-			<td><%= h_explorer group %></td>
+			<td><%= h_explorer group, :name %><%= h_show_translate group.name_translate %></td>
 			<td><%= group.domain %></td>
 			<td><%= comma_links(group.users, :login) %></td>
-			<td><%= h_explorer group.father, :name unless group.father.nil? %></td>
+			<td><%= h_explorer group.father, :name unless group.father.nil?%><%= h_show_translate group.father.name_translate unless group.father.nil?%></td>
 			<td><%= link_to h_img_edit.to_s, edit_group_path(group) %> </td><td><%= link_to h_img_destroy.to_s, group, :confirm => t("msg_confirm"), :method => :delete %> </td>
 			<td> <%= link_to h_img(:duplicate), new_dup_group_path(group) %> </td>
 		</tr>

@@ -41,9 +41,9 @@
 </p>
 <%= h_type_values(@project, fonct) %>
 <% end %>
-<%= render(:partial => "shared/show_datafiles", 
+<%= render(:partial => "shared/show_datafiles",
 	:locals=> {:plm_object => @project,  :fonct => fonct, :document=>nil, :part=>nil, :project=>@project, :customer=>nil}) %>
 <%= render(:partial => "shared/object_workitems", :object =>@project) %>
 <%= render(:partial => "shared/objects_to_add", :object =>@project) %>
 
-
+<%= render(:partial => "shared/links_relation_tabs", :object =>@project) %>

@@ -573,6 +573,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.datetime "created_at"
 		t.datetime "updated_at"
 		t.string   "domain"
+		t.integer  "father_id"
 	end
 
 	add_index "typesobjects", ["forobject", "name"], :name => "index_typesobjects_on_object_and_name", :unique => true

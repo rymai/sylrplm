@@ -11,7 +11,8 @@
 <p>
 	<%= f.label :description %>
 	<br />
-	<%= f.text_area :description %>
+
+    <%= h_text_editor f, object, :description%>
 </p>
 
 <p>

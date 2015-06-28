@@ -20,7 +20,7 @@
 	</tr>
 	<% @views[:recordset].each do |view| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td> <%= h_explorer view, :name_translate %> </td>
+		<td><%= h_explorer view, :name %><%= h_show_translate view.name_translate %></td>
 		<td> <%= h view.description %> </td>
 		<% if admin_logged_in?%> <td> <%= h view.domain %> </td>
 		<% end %> <td> <%= comma_links(view.relations, :name) %></td>

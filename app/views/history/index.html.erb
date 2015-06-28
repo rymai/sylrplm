@@ -1,7 +1,6 @@
 <h1><%= t("history_list") %></h1>
-<% fonct=params[:fonct][:current]
-fonct="all" if fonct.nil?
-puts "************************* fonct="+fonct%>
+<% fonct=params["fonct"]["current"]
+fonct="all" if fonct.nil? %>
 <%= will_paginate(@entries) if fonct=='all' %>
 <%= render(:partial => "history/histories", :object => @entries, :locals => { :fonct => fonct, :obj => nil }  ) %>
 <div class="align-right">

@@ -1,6 +1,8 @@
+<%=puts "favorites:#{@favori.inspect}"%>
 <h1><%= t(:legend_clipboard) %></h1>
 <% %w[document part project customer user].each do |type| %>
 <div id="favori_<%= type %>">
+
 	<%= render 'layouts/favorite', type: type %>
 </div>
 <% end %>

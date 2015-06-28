@@ -1,8 +1,8 @@
 <h1><%= t(:part_show) %></h1>
 <% fonct="show"%>
-<%= render(:partial => "shared/menu_show", :locals=>{:object => @part, :fonct=>fonct}) %>
 <% form_for(@part, :html => { :id => h_form_html_id(@part, fonct) }) do |f| %>
 <%= f.error_messages %>
+<%= render(:partial => "shared/menu_show", :locals=>{:object => @part, :fonct=>fonct}) %>
 <p>
 	<b><%= t(:label_ident) %></b>
 	<%= h @part.ident %>
@@ -46,6 +46,8 @@
 <%= h_type_values(@part, fonct) %>
 <% end %>
 <%= render(:partial => "shared/show_datafiles",
-	:locals=> {:plm_object => @part,  :fonct => fonct, :document=>nil, :part=>@part, :project=>nil, :customer=>nil}) %>
+:locals=> {:plm_object => @part,  :fonct => fonct, :document=>nil, :part=>@part, :project=>nil, :customer=>nil}) %>
 <%= render(:partial => "shared/object_workitems", :object =>@part) %>
 <%= render(:partial => "shared/objects_to_add", :object =>@part) %>
+<%= render(:partial => "shared/links_relation_tabs", :object =>@part) %>
+

@@ -1,6 +1,5 @@
 #require 'active_record/fixtures'
 #require 'populate'
-
 class Controller
 	attr_accessor :id, :name, :method
 	def initialize(i_id,i_name,i_method)
@@ -121,20 +120,41 @@ class Controller
 		# TODO temporary
 		features = [:document, :part, :project, :customer]
 		features_types = {}
+
 		features.each do |feature|
-			# TODO temporary
+		# TODO temporary
 			plmtype = feature
 			# types, including the generic one
-			types = ::Typesobject.get_types(plmtype, true)
+			types = ::Typesobject.get_types(plmtype, false)
 			features_types[feature]=[]
 			types.each do |type|
 				if !only_admin || type.domain==::SYLRPLM::DOMAIN_ADMIN
-					features_types[feature] << type
+				features_types[feature] << type
 				end
 			end
+			LOG.info (fname) { "avant sort:#{features_types[feature]}"}
+			features_types[feature].sort! do |type1 , type2|
+				mdl1 = type1.forobject+"s"
+				mnu1=tr_def("mnu_#{mdl1}_#{type1.name}")
+				mdl2 = type2.forobject+"s"
+				mnu2=tr_def("mnu_#{mdl2}_#{type2.name}")
+				compare=mnu1 <=> mnu2
+				LOG.info (fname) { "compare:#{mnu1}<=>#{mnu2}=#{compare}"}
+				compare
+			end
+			LOG.info (fname) { "apres sort:"}
+			features_types[feature].each { |typ| LOG.info (fname) { "type for #{feature} = #{typ.name}" } }
+			generic_type = Typesobject.generic(feature)
+			LOG.info (fname) { "generic_type for '#{feature}' = '#{generic_type.inspect}'"  }
+			features_types[feature] << generic_type
+
 		end
-		LOG.debug (fname) {"ret=#{features_types}"}
+		##LOG.debug (fname) {"ret=#{features_types}"}
 		features_types
+	end
+
+	def self.tr_def(key)
+		::PlmServices.translate(key,:default=> "%#{key}%")
 	end
 end
 

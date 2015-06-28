@@ -86,8 +86,9 @@ class DatafilesController < ApplicationController
 	# PUT /datafiles/1.xml
 	def update
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug (fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
+		LOG.debug (fname){"revision=#{@datafile.revision}"}
 		@types    = Typesobject.get_types("datafile")
 		@document = Document.find(params["doc"]) if params["doc"]
 		stupd = @datafile.m_update(params, @current_user)

@@ -10,8 +10,12 @@ class Typesobject < ActiveRecord::Base
 	has_many :customers
 	has_many :statusobject
 
+	belongs_to :father, :class_name => "Typesobject"
+
 	named_scope :order_default, :order=>"forobject ASC, rank ASC, name ASC"
 	named_scope :find_all , order_default.all
+	#
+	MODELS_PLM=["customer", "document", "part", "project"]
 	#
 	def initialize(params=nil)
 		super(params)
@@ -22,6 +26,23 @@ class Typesobject < ActiveRecord::Base
 
 	def self.get_all
 		order_default.find_all
+	end
+	def father_name
+		(father ? father.name : "")
+	end
+
+	def others
+		fname="Typesobject.#{__method__}"
+		res = ::Typesobject.find_all_by_forobject(self.forobject)
+		LOG.debug(fname) {"self=#{self.inspect} others=#{res.inspect}"}
+		#
+		if res.is_a?(Array)
+		   ret=res
+		else
+			ret=[]
+			ret<<res
+		end
+		ret
 	end
 
 	def name_translate
@@ -110,7 +131,12 @@ class Typesobject < ActiveRecord::Base
 	end
 
 	def self.generic(s_object)
-		Typesobject.find_by_forobject_and_name(s_object, PlmServices.get_property(:TYPE_GENERIC))
+		fname="Typesobject.#{__method__}(#{s_object})"
+		##Typesobject.find_by_forobject_and_name(s_object, PlmServices.get_property(:TYPE_GENERIC))
+		generic_name=PlmServices.get_property(:TYPE_GENERIC)
+		cond = " forobject = '#{s_object}' and name='#{generic_name}'"
+		ret=order_default.find(:all, :conditions => [cond])[0]
+		ret
 	end
 
 	def self.get_conditions(filter)

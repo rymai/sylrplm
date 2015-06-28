@@ -3,7 +3,7 @@
 		<%= t(:legend_forum_item) %>
 	</legend>
 	<%= f.label t("label_message") %>
-	<%= f.text_area :message %>
+<%= h_text_editor f, @forum_item, :message%>
 	<br/>
 	<%= f.label t("label_id") %>
 	<%= f.text_field :forum_id %>

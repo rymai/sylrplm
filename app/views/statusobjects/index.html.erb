@@ -14,9 +14,9 @@
 <%= will_paginate(@statusobjects[:recordset]) %>
 <table>
 	<tr>
+		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t(:label_name), "name" %> </th>
 		<th <%= sort_td_class_helper "forobject" %>> <%= sort_link_helper t(:label_object), "forobject" %> </th>
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t(:label_typesobject), "typesobject_id" %> </th>
-		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t(:label_name), "name" %> </th>
 		<th <%= sort_td_class_helper "rank" %>> <%= sort_link_helper t(:label_rank), "rank" %> </th>
 		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
 		<th <%= sort_td_class_helper "promote" %>> <%= sort_link_helper t(:label_promote), "promote_id" %> </th>
@@ -28,9 +28,10 @@
 	</tr>
 	<% @statusobjects[:recordset].each do |statusobject| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td> <%= h statusobject.forobject_translate %> </td>
-		<td> <%= h_explorer statusobject.typesobject, :name_translate %> </td>
-		<td> <%= h_explorer statusobject, :name_translate %> </td>
+
+		<td><%= h_explorer statusobject, :name %><%= h_show_translate statusobject.name_translate %></td>
+		<td><%= h_explorer statusobject, :forobject %><%= h_show_translate statusobject.forobject_translate %></td>
+		<td><%= h_explorer statusobject.typesobject, :name %><%= h_show_translate statusobject.typesobject.name_translate %></td>
 		<td> <%= h statusobject.rank %> </td>
 		<td> <%= h statusobject.description %> </td>
 		<td> <%= h statusobject.promote %> </td>

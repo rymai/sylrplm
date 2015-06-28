@@ -14,6 +14,7 @@ class ForumsController < ApplicationController
 	# GET /forums/1
 	# GET /forums/1.xml
 	def show
+		show_
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @forum }

@@ -8,7 +8,7 @@ mnu_feature=get_controller_from_model_type(feature)
 		mdl = get_controller_from_model_type(type.forobject)
 		help="help_#{mdl}_#{type.name}"
 		mnu=t("mnu_#{mdl}_#{type.name}")
-		LOG.debug  ("menus_feature") {"Type : #{type.name} , domain=#{type.domain} , help=#{help} , mnu=#{mnu}"}
+		LOG.debug  ("menus_feature") {"Type : #{type.name} , domain=#{type.domain} , help=#{help} , mnu=#{mnu}, model=#{mdl}"}
 		%>
 		<li>
 			<%= h_menu("/#{mdl}?filter_types=#{type.name}", help, mnu) %>

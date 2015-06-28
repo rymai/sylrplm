@@ -320,7 +320,6 @@ class DocumentsController < ApplicationController
     LOG.debug (fname){"params=#{params.inspect} flash=#{flash.inspect}"}
     define_view
     @document  = Document.find(params[:id])
-    #@relations = Relation.relations_for(@document)
     @tree         						= build_tree(@document, @myparams[:view_id])
     @tree_up      						= build_tree_up(@document, @myparams[:view_id] )
     @object_plm = @document

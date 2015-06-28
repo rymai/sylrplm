@@ -24,6 +24,10 @@ ActionController::Routing::Routes.draw do |map|
 	:controller => 'customers',
 	:action => 'add_objects')
 	map.connect(
+	'customers/:id/add_link_objects',
+	:controller => 'customers',
+	:action => 'add_link_objects')
+	map.connect(
 	'customers/:id/remove_link',
 	:controller => 'customers',
 	:action => 'remove_link',
@@ -95,6 +99,10 @@ ActionController::Routing::Routes.draw do |map|
 	'documents/:id/add_objects',
 	:controller => 'documents',
 	:action => 'add_objects')
+	map.connect(
+	'documents/:id/add_link_objects',
+	:controller => 'documents',
+	:action => 'add_link_objects')
 	map.connect(
 	'documents/:id/new_datafile',
 	:controller => 'documents',
@@ -247,6 +255,10 @@ ActionController::Routing::Routes.draw do |map|
 	:controller => 'parts',
 	:action => 'add_objects')
 	map.connect(
+	'parts/:id/add_link_objects',
+	:controller => 'parts',
+	:action => 'add_link_objects')
+	map.connect(
 	'parts/:id/remove_link',
 	:controller => 'parts',
 	:action => 'remove_link',
@@ -310,6 +322,10 @@ ActionController::Routing::Routes.draw do |map|
 	'projects/:id/add_objects',
 	:controller => 'projects',
 	:action => 'add_objects')
+	map.connect(
+	'projects/:id/add_link_objects',
+	:controller => 'projects',
+	:action => 'add_link_objects')
 	map.connect(
 	'projects/:id/remove_link',
 	:controller => 'projects',
@@ -407,6 +423,10 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :subscriptions, :member=> {:new_dup => :get}
 
 	map.resources :typesobjects, :member=> {:new_dup => :get}
+	map.connect(
+	'typesobjects/:id/update_forobject',
+	:controller => 'typesobjects',
+	:action => 'update_forobject')
 
 	map.resources :users, :collection => { :empty_favori => :get }, :member=> {:new_dup => :get}
 	map.connect(

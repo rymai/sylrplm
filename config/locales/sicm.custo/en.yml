@@ -138,11 +138,11 @@ en:
   view_conception: Design
   view_documentation: Documentation
   #definition
-  definition_validate_user: Validate a new user
+  definition_validate-user: Validate a new user
   definition_revision: Revision
   definition_promotion: Promotion
-  definition_promotion.part: Promote any type of part
-  definition_promotion.document.ready.approved: Promote a document from ready to approved
+  definition_promotion-part: Promote any type of part
+  definition_promotion-document-ready-approved: Promote a document from ready to approved
   #menus
   mnu_documents_calculsheet: Calculsheet
   mnu_documents_cdc:  CDC

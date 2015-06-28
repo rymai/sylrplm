@@ -50,13 +50,14 @@ class ForumItemsController < ApplicationController
 	# POST /forum_items
 	# POST /forum_items.xml
 	def create
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug (fname){"params=#{params.inspect}"}
 		@forum_item = ForumItem.new(params[:forum_item])
 		respond_to do |format|
 			if @forum_item.save
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_forum_item), :ident => @forum_item.id)
 				params[:id]=@forum_item.id
-				show_
-				format.html { render :action => "show" }
+				format.html { redirect_to(@forum_item.forum) }
 				format.xml  { render :xml => @forum_item, :status => :created, :location => @forum_item }
 			else
 				flash[:error] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_forum_item), :msg => nil)

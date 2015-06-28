@@ -51,7 +51,7 @@ class HistoryController < ApplicationController
 			@all = (opts[:conditions] == nil)
 		end
 		#puts "HistoryController.index:params="+params.inspect
-		unless params[:fonct][:current].nil?
+		unless params["fonct"]["current"].nil?
 			if params[:fonct][:current] = 'on_plm_objects'
 				@entries = Ruote::Sylrplm::HistoryEntry.all
 				#puts "HistoryController.index:on_plm_objects:#{@entries.count}"

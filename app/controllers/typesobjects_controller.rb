@@ -22,7 +22,6 @@ class TypesobjectsController < ApplicationController
 		end
 	end
 
-
 	# GET /typesobjects/new
 	# GET /typesobjects/new.xml
 	def new
@@ -48,8 +47,11 @@ class TypesobjectsController < ApplicationController
 
 	# GET /typesobjects/1/edit
 	def edit
+		fname="#{self.class.name}.#{__method__}"
 		@typesobject = Typesobject.find(params[:id])
+		@typesobject.fields="{}" if @typesobject.fields.nil?
 		@objectswithtype=Typesobject.get_objects_with_type
+		LOG.info (fname){"@objectswithtype=#{@objectswithtype}"}
 	end
 
 	# POST /typesobjects
@@ -113,6 +115,19 @@ class TypesobjectsController < ApplicationController
 			format.html { redirect_to(typesobjects_url) }
 			format.xml  { head :ok }
 		end
+	end
+
+	#
+	# update of edit panel after changing the forobject
+	#
+	def update_forobject
+		fname= "#{self.class.name}.#{__method__}"
+		object_forobject=params[:object_forobject]
+		@typesobject = ::Typesobject.find(params[:id])
+		@objectswithtype=Typesobject.get_objects_with_type
+		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug (fname){"object_forobject=#{object_forobject} @typesobject=#{@typesobject.inspect}"}
+		ctrl_update_forobject(@typesobject, params[:object_forobject], )
 	end
 
 	private

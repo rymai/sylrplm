@@ -16,20 +16,20 @@
 	<tr>
 		<th <%= sort_td_class_helper "forobject" %>> <%= sort_link_helper t(:label_object), "forobject" %> </th>
 		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t(:label_name), "name" %> </th>
-		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t(:label_name), "name" %> </th>
 		<th <%= sort_td_class_helper "rank" %>> <%= sort_link_helper t(:label_typesobject_rank), "rank" %> </th>
 		<th <%= sort_td_class_helper "description" %>> <%= sort_link_helper t(:label_description), "description" %> </th>
+		<th> <%= t(:label_typesobject_father) %> </th>
 		<th <%= sort_td_class_helper "fields" %>> <%= sort_link_helper t(:label_fields), "fields" %> </th>
 		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %> </th>
 		<th></th><th></th>
 	</tr>
 	<% @typesobjects[:recordset].each do |typesobject| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td> <%= h typesobject.forobject_translate %>(<%=typesobject.forobject%>) </td>
-		<td> <%= h_explorer typesobject, :name %> </td>
-		<td> <%= h_explorer typesobject, :name_translate %> </td>
+		<td><%= h_explorer typesobject, :forobject %><%= h_show_translate typesobject.forobject_translate %></td>
+		<td> <%= h_explorer typesobject, :name %> <%= h_show_translate typesobject.name_translate %></td>
 		<td> <%= h typesobject.rank %> </td>
 		<td> <%= h typesobject.description %> </td>
+		<td> <%= h_explorer typesobject.father, :name unless typesobject.father.nil?%><%= h_show_translate typesobject.father.name_translate unless typesobject.father.nil?%></td>
 		<td> <%= h typesobject.fields %> </td>
 		<td> <%= h typesobject.domain %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_typesobject_path(typesobject) %> </td>

@@ -31,6 +31,31 @@ module ApplicationHelper
 		ret
 	end
 
+	def h_edit_forobject_object(form, object, forobjects)
+		fname=self.class.name+"."+__method__.to_s
+		LOG.debug (fname){"object=#{object.inspect}"}
+		LOG.debug (fname){"forobjects=#{forobjects}"}
+		option_readonly ={:readonly => object.column_readonly?(:typesobject_id)}
+		unless object.id.nil?
+			url={:controller => get_controller_from_model_type(object.model_name), :action => "update_forobject",:id=>object.id}
+			#LOG.debug (fname){"url=#{url} "}
+			with = "'object_forobject='+value"
+			option_onchange={:onchange => remote_function(:url  => url, :with => with)}
+		else
+			option_onchange=nil
+		end
+		ret = ""
+		ret << form.label(t("label_object"))
+		unless option_onchange.nil?
+			ret << form.select(:forobject, forobjects, option_readonly, option_onchange)
+		else
+			ret << form.select(:forobject, forobjects, option_readonly)
+		end
+		ret << "</br>"
+		ret
+	end
+
+
 	def h_show_translate item
 		" (#{item})"
 	end
@@ -117,6 +142,9 @@ module ApplicationHelper
 	end
 
 	def h_form_simple_query(url, objects)
+		unless params[:filter_types].nil?
+			url += "?filter_types=#{params[:filter_types]}"
+		end
 		render(
 		:partial => "shared/form_simple_query",
 		:locals => {:url => url, :objects => objects}
@@ -268,8 +296,12 @@ module ApplicationHelper
 				if txt.blank?
 				txt = obj.to_s
 				end
+				url=url_for(obj)
+				unless params[:filter_types].nil?
+					url += "?filter_types=#{params[:filter_types]}"
+				end
 				title = t(name, :obj => obj)
-				ret=link_to( txt, obj, {:title => title } )
+				ret=link_to( txt, url, {:title => title } )
 			#LOG.info (fname){"name=#{name} obj=#{obj}, model=#{obj.model_name} , method=#{method} respond?=#{obj.respond_to?(method)} , txt=#{txt} , ret=#{ret}"}
 			end
 		rescue Exception => e
@@ -682,5 +714,43 @@ module ApplicationHelper
 		ret
 	end
 
+	def h_show_a(link)
+	   show_url={:controller => link.child.controller_name,
+						:action => 'show',
+						:id => "#{link.child.id}"}
+	   show_a="<a href=\"#{url_for(show_url)}\" title=\"#{link.child.tooltip}\">#{link.child.label}</a>"
+	end
+
+	def h_edit_link_a(link)
+		rel_name="relation_#{link.relation.name}"
+		tr_rel_name=t(rel_name).gsub!("'"," ")
+		##quelquefois on perd la traduction !!!!
+		tr_rel_name="#{link.relation.name}" if tr_rel_name.blank?
+		link_values = link.type_values.gsub('\\','').gsub('"','') unless link.type_values.nil?
+		img_rel="<img class=\"icone\" src=\"#{icone_fic(link)}\" title=\"#{clean_text_for_tree(link.tooltip)}\" />"
+		edit_link_url = url_for(:controller => 'links',
+		              :action => "edit_in_tree",
+		              :id => link.id,
+		              :object_model => link.father.model_name,
+		              :object_id => link.father.id,
+		              :root_model => "",
+		              :root_id => "")
+		edit_link_a = "<a href=\"#{edit_link_url}\" title=\"#{link_values}\">#{img_rel}#{tr_rel_name}</a>"
+	end
+	def h_remove_link(link)
+		remove_link_url = url_for(:controller => 'links',
+              :action => "remove_link",
+              :id => link.id,
+              :object_model => link.father.model_name,
+              :object_id => link.father.id)
+						remove_link_a = "<a href=\"#{remove_link_url}\">#{img_cut}</a>"
+	end
+
+	def h_text_editor(form, object, attribut)
+		attribut=attribut.to_s
+	   	ret=""
+	   	ret << form.text_area(attribut , :rows => 10, :readonly => object.column_readonly?(attribut))
+	   	ret << "<script>CKEDITOR.replace( \"#{object.model_name}_description\");</script>"
+    end
 end
 

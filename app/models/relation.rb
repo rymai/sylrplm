@@ -109,7 +109,8 @@ class Relation < ActiveRecord::Base
       father_type = nil
       cond = "child_plmtype = '#{child_plmtype}'"
       cond += " and child_typesobject_id = '#{child_type.id}'" unless child_type.nil?
-    elsif !father.nil? && !child_plmtype.blank?
+    #elsif !father.nil? && !child_plmtype.blank?
+     elsif !father.nil?
       father_plmtype = father.model_name
       father_type=father.typesobject
       type_any_any=Typesobject.find_by_forobject_and_name(PlmServices.get_property(:PLMTYPE_GENERIC), PlmServices.get_property(:TYPE_GENERIC))
@@ -123,9 +124,11 @@ class Relation < ActiveRecord::Base
       cond += " or (father_plmtype = '#{type_any_father.forobject}' and (father_typesobject_id = #{type_any_father.id}))" unless type_any_father.nil?
       cond += ")"
       cond += " and child_typesobject_id = '#{child_type.id}'" unless child_type.nil?
-      cond += " and (child_plmtype = '#{child_plmtype}' or child_plmtype = '#{PlmServices.get_property(:PLMTYPE_GENERIC)}')"
+      cond_plm_type=" and (child_plmtype = '#{child_plmtype}' or child_plmtype = '#{PlmServices.get_property(:PLMTYPE_GENERIC)}')"
+      cond+=cond_plm_type unless child_plmtype.blank?
     #cond += " and (child_plmtype = '#{child_plmtype}')"
     end
+    LOG.debug (fname) {"cond=#{cond}"}
     ret = find(:all, :order => "name",
       :conditions => [cond],
       :group => "father_plmtype,id")

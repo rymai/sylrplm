@@ -1,9 +1,5 @@
 <sylrplm_help >
     Bienvenue dans l'application SYLRPLM développée sur "Ruby On Rails" : #img=rails.png=img##lnk=http://www.railsfrance.org/=lnk#
-    <msg key="help_about" title="A propos de SYLRPLM">
-    	SYLRPLM est une réalisation de Sylvère Coutable avec l'assistance technique de Rémy Coutable.
-    	#bloc=translate(:sylrplm_version, :version => ::SYLRPLM::SYLRPLM_VERSION, :version_date => I18n.localize(::SYLRPLM::SYLRPLM_DATE))=bloc#
-    </msg>
     <msg key="help_first_use" title="Prise en main">
     	<ul><li title="Préambule">Tout d'abord, nous vous invitons à prendre connaissance des principales fonctionnalités de l'application: #lnk=/main/helpgeneral=lnk#.</li>
     	<li title="Menus">Ensuite, pour une première prise en main, vous pouvez parcourir, en tant que visiteur non connecté, les différents menus pour consulter les données gérées par l'application.</li>
@@ -1255,7 +1251,7 @@
                    <li title="Export custo societe sicm">
                         rake sylrplm:export_domain[db/custos_export,sicm.custo].
                     </li>
-                    
+
                     <li title="Import custo de base de la  societe sicm">
                         rake sylrplm:import_domain[db/custos/sicm,sicm.custo_base].
                     </li>
@@ -1277,8 +1273,8 @@
 	            	/info/list_objects/:plmtype.:format .
 	                :plmtype pouvant valoir customer, document, part, project, datafile, question, user, volume.
 	                :format = xml.
-	                exemple: #lnk=/info/list_objects/part.xml=lnk# . 
-	                résultat:. 
+	                exemple: #lnk=/info/list_objects/part.xml=lnk# .
+	                résultat:.
 	                &lsaquo;list_objects&rsaquo; .
 		                &lsaquo;plm_object&rsaquo; .
 			                &lsaquo;model&rsaquo;part&lsaquo;/model&rsaquo; .
@@ -1288,7 +1284,7 @@
 		                &lsaquo;/plm_object&rsaquo; .
 	                &lsaquo;/list_objects&rsaquo; .
 	                exemple: #lnk=/info/list_objects/datafile.xml=lnk# .
-	                liste les fichiers . 
+	                liste les fichiers .
 	            </li>
 	            <li title="Definition d'un objet avec ses relations au premier niveau'">
 	            	/info/object_links/:plmtype/:id.:format .
@@ -1403,7 +1399,7 @@
 	            	/datafiles/:id/download_file .
 	                :id etant l'identifiant unique du fichier (donné par la commande précédente (tag du datafile :id.
 	                exemple: #lnk=/datafiles/13/download_file=lnk# .
-	                résultat: un fichier zip est telecharge 
+	                résultat: un fichier zip est telecharge
 	            </li>
             </ul>
     	</msg>
@@ -1491,6 +1487,9 @@
         </ul>
     </msg>
     <msg key="help_about" title="A propos de SYLRPLM">
+    	SYLRPLM est une réalisation de Sylvère Coutable avec l'assistance technique de Rémy Coutable.
+    	#bloc=translate(:sylrplm_version, :version => ::SYLRPLM::SYLRPLM_VERSION, :version_date => I18n.localize(::SYLRPLM::SYLRPLM_DATE))=bloc#.
+    	Release notes: #lnk=/release_notes.txt=lnk#
         <msg key="help_contrib" title="Contributeurs">
             <ul>
                 <li title="Concepteur">Sylvère Coutable, consultant expert intégration PLM</li>
@@ -1499,13 +1498,41 @@
                 <li title="Graphisme">Sylvère Coutable assisté de Rémy Coutable</li>
             </ul>
         </msg>
-        <msg key="help_plugins" title="Plugins">
+        <msg key="help_plugins" title="Principaux Plugins/Gems utilisés">
             <ul>
-                <li title="Pagination">will_paginate
-                    Implémentation:config/environment.rb:config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
+            	 <li title="ProcessusManagement">ruote
+                    Implémentation:Gemfile.
+                    gem 'ruote', '~>2.2.0'.
+                    gem 'rufus-scheduler' , '~>2.0.19'.
                 </li>
-                <li title="Autorisations">acl_system2
-                    Implémentation:vendor/plugins/acl_system2</li>
+                <li title="Pagination">will_paginate.
+                	Pagination des listes d'objets.
+                    Implémentation:Gemfile: gem 'will_paginate', :version => '~> 2.3.16'.
+                </li>
+                <li title="Autorisations">acl_system2.
+                	Gestion des autorisations aux actions des controllers suivant le role actif.
+                    Implémentation:vendor/plugins/acl_system2
+                </li>
+               <li title="Cloud">fog.
+               	    Stockage de fichier sur le "Cloud".
+                    Implémentation dans Gemfile: gem 'fog'
+                </li>
+              <li title="Mail">mail.
+               	    Envoi de Mails .
+                    Implémentation dans Gemfile: gem 'mail', '~>2.3.0'
+                </li>
+              <li title="PostgressDriver">pg.
+               	    Driver pour le SGDB postgres.
+                    Implémentation in Gemfile: gem 'pg' , '~>0.14.1'
+                </li>
+              <li title="Zip">zip.
+               	    zip et unzip de fichiers.
+                    Implémentation in Gemfile: gem 'zip-zip'
+                </li>
+                 <li title="Zip">sylrplm_ext.
+               	    Fonctions utiles pour le helper et les views.
+                    Implémentation dans Gemfile: gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
+                </li>
             </ul>
         </msg>
     </msg>

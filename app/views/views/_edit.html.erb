@@ -6,7 +6,7 @@
 	<%= f.text_field :name %>
 	<br />
 	<%= f.label t(:label_description) %>
-	<%= f.text_area :description %>
+	<%= h_text_editor f, object, :description%>
 	<br />
 	<%= f.label t(:label_relations) %>
 	<%= select_inout(f, @view, @relations, :ident) %>

@@ -37,8 +37,8 @@
 </p>
 <%= h_type_values(@customer, fonct) %>
 <% end %>
-<%= render(:partial => "shared/show_datafiles", 
+<%= render(:partial => "shared/show_datafiles",
 	:locals=> {:plm_object => @customer,  :fonct => fonct, :document=>nil, :part=>nil, :project=>nil, :customer=>@customer}) %>
 <%= render(:partial => "shared/object_workitems", :object =>@customer) %>
 <%= render(:partial => "shared/objects_to_add", :object =>@customer) %>
-<h1></h1>
+<%= render(:partial => "shared/links_relation_tabs", :object =>@customer) %>

@@ -344,7 +344,7 @@ class Link < ActiveRecord::Base
 		unless relation_name.nil?
 			ret=[]
 			links.each do |lnk|
-				ret<<lnk unless lnk.relation.name==relation_name
+				ret<<lnk if lnk.relation.name==relation_name
 			end
 		else
 		ret=links

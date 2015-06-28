@@ -6,8 +6,8 @@
 	<%= f.text_field :title %>
 	<br/>
 	<%= f.label t(:label_description) %>
-	<%= f.text_area :description %>
-	<br/>
+    <%= h_text_editor f, object, :description%>
+ 	<br/>
 	<%= f.label t("label_role_father") %>
 	<%= f.collection_select(:father_id, @role.others, :id, :title,  {:include_blank => true}) %>
 	<br/>

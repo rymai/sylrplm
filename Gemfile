@@ -1,11 +1,14 @@
+#http remplace https car pb openssl
 source 'https://rubygems.org'
 
 #dispo sur bundle 1.2
 #ruby '1.9.3'
 #ruby '2.0.0'
-ruby "2.1.5"
+ruby "2.1.6"
 
 #defaut ruby 2.1.5 gem 'test-unit'
+
+gem 'rb-readline'
 
 gem 'activesupport'
 
@@ -16,7 +19,7 @@ gem 'bigdecimal'
 
 gem 'haml'
 gem 'iconv'
-gem 'nokogiri'  #, '~>1.5.4' 1.6.3.1
+gem 'nokogiri'  ,'1.6.6.2' #, '~>1.5.4' 1.6.3.1
 
 gem 'rails', '2.3.17'
 #defaut ruby 2.1.5 gem 'rake' #, '10.3.2'
@@ -81,6 +84,6 @@ group :development do
 	#gem 'ruby-debug-ide19'
 	#gem 'ruby-debug193'
 	##gem 'bigdecimal', :path => "/usr/share/ruby/gems/gems/bigdecimal-1.2.5"
-	gem 'ruby_debugger'
+	###gem 'ruby_debugger'
 
 end

@@ -5,12 +5,14 @@
 <% end %>
 <% end %>
 <%= h_form_simple_query('/projects', @projects) %>
+<% unless param_equals?("todo", "select") %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_project"), new_project_path %> </td>
 		<td> <%= show_help("help_projects") %> </td>
 	</tr>
 </table>
+<%end%>
 <% if @myparams[:list_mode] == t(:list_mode_icon) %>
 <%= h_thumbnails_objs @projects %>
 <% else %>
@@ -27,7 +29,7 @@
 		<th <%= sort_td_class_helper "group" %>> <%= sort_link_helper t(:label_group), "group_id" %> </th>
 		<th <%= sort_td_class_helper "date" %>> <%= sort_link_helper t(:label_date) , "date" %> </th>
 		<th <%= sort_td_class_helper "users" %>> <%= sort_link_helper t(:label_users) , "users" %> </th>
-		<th <%= sort_td_class_helper "domain" %>><%= sort_link_helper t("label_domain"), "domain" %></th><th></th>
+		<th <%= sort_td_class_helper "domain" %>><%= sort_link_helper t(:label_domain), "domain" %></th><th></th>
 		<th></th><th></th>
 		<th></th>
 	</tr>
@@ -44,6 +46,7 @@
 		<td> <%= l project.date unless project.date.nil? %> </td>
 		<td> <%= comma_links(project.users, :login) %></td>
 		<td> <%= project.domain %></td>
+		<% unless param_equals?("todo", "select") %>
 		<td> <%= link_to h_img_edit.to_s, edit_project_path(project) %> </td>
 		<td> <%= link_to h_img_edit_lifecycle.to_s, {:controller=>"projects", :action=>"edit_lifecycle", :id => project.id} %> </td>
 		<td> <%= link_to h_img_destroy.to_s, project, :confirm => t(:msg_confirm), :method => :delete %> </td>
@@ -51,17 +54,21 @@
 		<td> <% if logged_in? %>
 		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => project.id}, :method => :get %>
 		<% end %> </td>
-		<% if project.revisable?  %> 
+		<% if project.revisable?  %>
 		<td> <%= h_img_revise.to_s %></td>
+		<%end%>
+		<% else %> <td><%= select_button(project)%> </td>
 		<%end%>
 	</tr>
 	<% end %>
 </table>
 <% end %>
 <%= will_paginate(@projects[:recordset]) %>
+<% unless param_equals?("todo", "select") %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_project"), new_project_path %> </td>
 		<td> <%= show_help("help_projects") %> </td>
 	</tr>
 </table>
+<%end%>

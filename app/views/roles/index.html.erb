@@ -18,9 +18,11 @@
 	</tr>
 	<% @roles[:recordset].each do |role| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= h_explorer role, :title_translate %></td>
+		<td><%= h_explorer role, :title %><%= h_show_translate role.title_translate %></td>
 		<td> <%= role.description %> </td>
-		<td> <%= h_explorer role.father, :title_translate unless role.father.nil? %> <td><%= comma_links(role.users, :login) %></td>
+		<td><%= h_explorer role.father, :name unless role.father.nil?%><%= h_show_translate role.father.title_translate unless role.father.nil? %></td>
+		<td> <%= h_explorer role.father, :title_translate unless role.father.nil? %>
+		<td><%= comma_links(role.users, :login) %></td>
 		<td> <%= link_to h_img_edit.to_s, edit_role_path(role) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, role, :confirm => t(:msg_confirm), :method => :delete %> </td>
 		<td> <%= link_to h_img(:duplicate), new_dup_role_path(role) %> </td>

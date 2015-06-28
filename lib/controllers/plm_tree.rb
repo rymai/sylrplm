@@ -64,7 +64,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 	str_level=""
 	(1..level).each {|i| str_level += "."}
 	fname="#{str_level}:plm_tree:#{controller_class_name}.#{__method__}"
-	LOG.debug(fname) {"==== tree or node=#{node.size} , father=#{father.ident}, relations=#{relations.size}, level=#{level}"}
+	LOG.debug(fname) {"==== tree or node=#{node.size} , father=#{father.ident}, level=#{level}"}
 	return if level >= level_max
 	#
 	#------------------------------------------------------
@@ -167,7 +167,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 					tr_rel_name="#{link.relation.name}" if tr_rel_name.blank?
 					link_values = link.type_values.gsub('\\','').gsub('"','') unless link.type_values.nil?
 					img_rel="<img class=\"icone\" src=\"#{icone_fic(link)}\" title=\"#{clean_text_for_tree(link.tooltip)}\" />"
-					edit_link_a = "<a href=#{edit_link_url} title=\"#{link_values}\">#{img_rel}#{tr_rel_name}</a>"
+					edit_link_a = "<a href=\"#{edit_link_url}\" title=\"#{link_values}\">#{img_rel}#{tr_rel_name}</a>"
 					LOG.debug (fname){"edit_link_a=#{edit_link_a}"}
 					#
 					# show child

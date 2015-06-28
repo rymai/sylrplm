@@ -1,5 +1,5 @@
 <h1><%= t(:legend_forum) %></h1>
-<%= h_edit_type_object(f, object, @types) %>
+<%= h_edit_type_object(f, @forum, @types) %>
 <%= f.label :statusobject_id %>
 <%= f.collection_select(:statusobject_id, @status, :id, :name) %>
 <br/>

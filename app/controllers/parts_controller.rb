@@ -23,7 +23,8 @@ class PartsController < ApplicationController
 
 	def select_view
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect} #{params["commit"].force_encoding("utf-8")}==? #{t("root_model_design").force_encoding("utf-8")}"}
+		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug (fname){"#{params["commit"].force_encoding("utf-8")}==? #{t("root_model_design").force_encoding("utf-8")}"}
 		if params["commit"].force_encoding("utf-8") == t("root_model_design").force_encoding("utf-8")
 			show_design
 		else
@@ -306,6 +307,9 @@ class PartsController < ApplicationController
 	end
 
 	def index_
+		fname= "#{controller_class_name}.#{__method__}"
+		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug (fname){"filter_types=#{params[:filter_types]}"}
 		@parts = Part.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 	end
 

@@ -265,7 +265,7 @@ class Datafile < ActiveRecord::Base
 
 	def update_attributes_repos(params, user)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug (fname){"params=#{params.inspect}"}
 		parameters = params[:datafile]
 		uploaded_file = parameters[:uploaded_file]
 		parameters[:volume]=user.volume unless parameters[:volume].nil?
@@ -274,7 +274,7 @@ class Datafile < ActiveRecord::Base
 			LOG.debug (fname){"params[volume_id]=#{params["volume_id"]} uploaded_file=#{uploaded_file}"}
 			if(uploaded_file)
 				###TODO syl ??? parameters.delete(:uploaded_file)
-				#LOG.debug (fname){"rev=#{revision} next=#{revision.next}"}
+				LOG.debug (fname){"uploaded_file:rev=#{revision} next=#{revision.next}"}
 				parameters[:revision]=self.revision.next
 				self.update_attributes(parameters)
 				self.create_directory
@@ -282,7 +282,8 @@ class Datafile < ActiveRecord::Base
 			else
 				unless params[:restore_file].nil?
 					from_rev=Datafile.revision_from_file(params[:restore_file])
-					if from_rev!=self.revision.to_s
+					LOG.debug (fname){"from_rev=#{from_rev} revision=#{revision}"}
+					if from_rev!=nil && from_rev != self.revision.to_s
 						if false
 							# on remet la revision demandee active en creant une nouvelle revision
 							parameters[:revision]=self.revision.next
@@ -363,7 +364,9 @@ class Datafile < ActiveRecord::Base
 
 	# return the filename without the dir path and the extension
 	def file_name
-		File.basename(self.filename).split(".")[0]
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {"filename=#{filename}"}
+		File.basename(self.filename).split(".")[0] unless self.filename.blank?
 	end
 
 	def file_fullname

@@ -81,14 +81,14 @@
   'update expression',
   :title => 'modifies the expression directly (warning this may ruin your process instance)',
   :confirm => 'Are you sure ?')
-%> | 
+%> |
       <%= link_to_function 'cancel', 'toggleEditor()' %> |
       <%= link_to_function 'reset', 'tredReset()' %> |
       <%= link_to_function 'undo', 'FluoTred.undo("tred")' %>
 
     </div>
 
-    <input type="hidden" name="tree" id="tree-field" value=""></input>
+    <input type="hidden" name="tree" id="tree-field" value=""/>
 
   <% end %>
 

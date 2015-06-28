@@ -14,6 +14,7 @@
 		<td> <%= h_img_sub(:filter)%> </td>
 	</tr>
 </table>
+<%= hidden_field_tag("filter_types" , @myparams["filter_types"]) unless @myparams.nil?%>
 <%= hidden_field_tag("todo" , @myparams["todo"]) unless @myparams.nil?%>
 <%= hidden_field_tag("html_ident" , @myparams["html_ident"]) unless @myparams.nil?%>
 <% end %>

@@ -22,7 +22,7 @@
 	</tr>
 	<% @volumes[:recordset].each do |volume| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td> <%= h_explorer volume, :name %> </td>
+		<td><%= h_explorer volume, :name %></td>
 		<td> <%= h volume.description %> </td>
 		<td> <%= h volume.directory %> </td>
 		<td> <%= h volume.protocol %> </td>

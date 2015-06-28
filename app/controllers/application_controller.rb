@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 	# include all helpers, all the time
 	helper :all
 	helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?, :get_domain, :get_list_modes, :icone, :h_thumbnails, :tr_def
-	helper_method :get_controller_from_model_type
+	helper_method :get_controller_from_model_type, :icone_fic
 	# See ActionController::RequestForgeryProtection for details
 	protect_from_forgery
 

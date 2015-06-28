@@ -117,7 +117,7 @@ class FiledriverDatabase < Filedriver
 
 	def read_file(datafile)
 		fname= "#{self.class.name}.#{__method__}"
-		cmd="SELECT * FROM \"#{datafile.dir_repository}\" WHERE datafile = '#{datafile.ident}' AND filename='#{datafile.filename}' AND revision='#{datafile.revision}'"
+		cmd="SELECT * FROM \"#{datafile.dir_repository}\" WHERE datafile = '#{datafile.ident}' AND filename='#{datafile.file_fullname}' AND revision='#{datafile.revision}'"
 		LOG.debug (fname) {"cmd=#{cmd}"}
 		data=nil
 		begin

@@ -21,11 +21,11 @@ module Classes
       def debug(arg=nil)
         $stdout.puts "LOG.debug"
       end
-  
+
       def info(arg=nil)
         $stdout.puts "LOG.info"
       end
-  
+
       def warn(arg=nil)
         $stdout.puts "LOG.warn"
       end
@@ -41,5 +41,5 @@ module YAML
     end
     def YAML.load_erb file_name
       YAML::load(YAML::include(file_name))
-    end  
+    end
 end

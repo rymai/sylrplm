@@ -118,7 +118,7 @@ module Models
 				end
 
 				#puts self.model_name+".find_paginate:filter_access="+filter_access.inspect
-				#LOG.debug (fname) {"filter_access=#{filter_access.inspect}"}
+				LOG.debug (fname) {"filter_access=#{filter_access.inspect}"}
 
 				if filter_access[:qry] == par_open+par_close || filter_access[:qry] == par_open || filter_access[:qry] == par_close
 					filter_access[:qry] = ""
@@ -147,10 +147,15 @@ module Models
 						filter_types=[filter_types]
 					end
 					sany_type=PlmServices.get_property(:TYPE_GENERIC)
+					LOG.debug (fname) {"filter_types=#{filter_types}"}
 					filter_types.each do |stype|
-						idstype = Typesobject.find_by_name(stype).id
-						#puts "#{self.model_name}.find_paginate:stype=#{stype} sany_type=#{sany_type} , idstype=#{idstype}"
+						objtype=Typesobject.find_by_name(stype)
+						LOG.debug (fname) {"objtype=#{objtype}"}
+						unless objtype.nil?
+							idstype = objtype.id
+							LOG.debug (fname) {"stype=#{stype} sany_type=#{sany_type} , objtype=#{objtype} idstype=#{idstype}"}
 						types_id <<  idstype unless stype == sany_type
+						end
 					end
 					#puts "#{self.model_name}.find_paginate:filter_types=#{filter_types} , types_id=#{types_id}"
 					unless types_id.empty?
@@ -264,7 +269,7 @@ module Models
 			fname = "#{self.class.name}.#{__method__}"
 			LOG.debug (fname) {"self=#{self.inspect}"}
 			ret = "#{I18n.t("ctrl_"+model_name)}"
-			if self.respond_to? :typesobject
+			if self.respond_to? :typesobject_id
 				unless typesobject.nil?
 					ret+= "/#{typesobject.name}"
 				end
@@ -272,7 +277,7 @@ module Models
 			ret+= ".#{ident}"
 			ret+= "/#{revision}" if self.respond_to? :revision
 			ret+= " #{designation}" if self.respond_to? :designation
-			if self.respond_to? :statusobject
+			if self.respond_to? :statusobject_id
 				unless statusobject.nil?
 					ret+= " (#{statusobject.name})"
 				end

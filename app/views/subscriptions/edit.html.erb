@@ -3,6 +3,6 @@
 <% form_for @subscription  do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "shared/menu_edit",:locals => { :object => @subscription, :f => f, :fonct=>fonct}) %>
-<%= render(:partial => "subscriptions/edit",:locals => { :f => f, :fonct => fonct }) %>
+<%= render(:partial => "subscriptions/edit",:locals => { :object => @subscription, :f => f, :fonct => fonct }) %>
 <%= render(:partial => "shared/submit_edit",:locals => { :object => @subscription, :f => f, :fonct=>fonct}) %>
 <%end %>

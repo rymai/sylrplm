@@ -13,14 +13,14 @@
 	</tr>
 	<% @subscriptions[:recordset].each do |subscription| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= h h_explorer subscription, :name_translate %></td>
+		<td><%= h_explorer subscription, :name %><%= h_show_translate subscription.name_translate %></td>
 		<td><%= h subscription.designation %></td>
 		<td><%= h h_explorer subscription.owner %></td>
 		<td><%= h subscription.oncreate %></td>
 		<td><%= h subscription.onupdate %></td>
 		<td><%= h subscription.ondestroy %></td>
-		<td><%= h_value_or_default(comma_links(subscription.fortypesobject, :ident),t(:msg_tobedefine)) %></td>
-		<td><%= h_value_or_default(comma_links(subscription.ingroup, :ident),t(:msg_tobedefine)) %></td>
+		<td><%= h_value_or_default(comma_links(subscription.fortypesobject, :name),t(:msg_tobedefine)) %></td>
+		<td><%= h_value_or_default(comma_links(subscription.ingroup, :name),t(:msg_tobedefine)) %></td>
 		<td><%= h_value_or_default(comma_links(subscription.inproject, :ident),t(:msg_tobedefine)) %></td>
 		<td><%= h subscription.domain %></td>
 		<td><%= link_to h_img_edit.to_s, edit_subscription_path(subscription) %></td>

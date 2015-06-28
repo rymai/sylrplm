@@ -198,7 +198,7 @@ var RuoteForms = function() {
 		if(type == 'new') {
 			return EmptyItem;
 		}
-		alert("ruote-forms.toObject:unknown type '" + type + "'");
+		//alert("ruote-forms.toObject:unknown type '" + type + "'");
 	}
 
 	function rcreate(container, tag, attributes, content) {
@@ -329,7 +329,7 @@ var RuoteForms = function() {
 
 	}
 
-	function addEntryButtons(elt) {
+	function addEntryButtons(elt,options) {
 		//alert ('addEntryButtons:'+elt);
 		var e = create(elt, 'div', {
 			'class' : 'rform_buttons',
@@ -345,14 +345,14 @@ var RuoteForms = function() {
 			ec.onclick = function() {
 				var target = this.parentNode.parentNode;
 				var k = target.firstChild.firstChild.firstChild.value;
-				var n = render_entry(target.parentNode, [k, EmptyItem], {});
+				var n = render_entry(target.parentNode, [k, EmptyItem], options);
 				target.parentNode.replaceChild(n, target);
 				return false;
 			}
 		}
 	}
 
-	function addHashButtons(elt) {
+	function addHashButtons(elt, options) {
 		//alert ('addHashButtons:'+elt)
 		var e = create(elt, 'div', {
 			'class' : 'rform_buttons',
@@ -362,7 +362,7 @@ var RuoteForms = function() {
 				'src' : CONFIG.img_add
 			});
 			ea.onclick = function() {
-				var ne = render_entry(e.parentNode, ['', EmptyItem], {});
+				var ne = render_entry(e.parentNode, ['', EmptyItem], options);
 				var r = addToCollection(ne);
 				focusIn(ne);
 				return r;
@@ -393,7 +393,7 @@ var RuoteForms = function() {
 	}
 
 	function render_entry(elt, data, options) {
-		//alert ('render_entry:'+elt+":"+data+' buttons='+options['buttons']);
+		//alert ('render_entry:'+elt+":"+data+' buttons='+options['buttons']+' edit_key='+options['edit_key']+' edit_value='+options['edit_value']);
 		var e = rcreate(elt, 'div', {
 			'class' : 'rform_entry'
 		});
@@ -403,18 +403,21 @@ var RuoteForms = function() {
 		var ev = rcreate(e, 'div', {
 			'class' : 'rform_value'
 		});
-		addEntryButtons(e);
+		addEntryButtons(e, options);
 		//syl: key
 		options["read-only"] = !options["edit_key"]
-		render(ek, data[0], options);
+		var ekr=render(ek, data[0], options);
 		//syl:value
 		options["read-only"] = !options["edit_value"]
-		var evv = render(ev, data[1], options);
+		//alert('render_entry:edit_key='+options['edit_key']+' edit_value='+options['edit_value']);
+		var evr = render(ev, data[1], options);
 		return e;
 	}
+	function update_options(options) {
 
+	}
 	function render_object(elt, data, options) {
-		//alert ('render_object:'+elt+":"+data)
+		//alert ('render_object:'+elt+":"+data+' edit_key='+options["edit_key"]+' edit_value='+options["edit_value"]);
 		var e = rcreate(elt, 'div', {
 			'class' : 'rform_hash'
 		});
@@ -422,7 +425,7 @@ var RuoteForms = function() {
 		for(var k in data) {
 			render_entry(e, [k, data[k]], options);
 		}
-		addHashButtons(e);
+		addHashButtons(e,options);
 		return e;
 	}
 
@@ -491,10 +494,14 @@ var RuoteForms = function() {
 		//alert('render_string:data='+data+':'+data.length+",opt="+options)
 		//alert('render_string:read-only='+options['read-only']+' data='+data);
 		var klass = options['class'] || 'rform_string';
+		//syl: key
+		options["read-only"] = !options["edit_key"]
 		var e = rcreate(elt, 'span', {
 			'class' : klass
 		});
 		opt = {}
+		//syl:value
+		options["read-only"] = !options["edit_value"]
 		//e.innerHTML = escapeHtml(data);
 		if(options['read-only']) {
 			opt['readonly'] = 'true';
@@ -535,7 +542,7 @@ var RuoteForms = function() {
 	}
 
 	function render(elt, data, options) {
-		//alert('render:data='+data+':'+data.length+",read-only="+options['read-only'])
+		//alert('render:data='+data+':'+data.length+",read-only="+options['read-only']+' edit_key='+options["edit_key"]+' edit_value='+options["edit_value"]);
 		if(data == EmptyItem || data == null)
 			return render_new(elt, options);
 		var t = data['__class'] || ( typeof data);
@@ -554,7 +561,7 @@ var RuoteForms = function() {
 		if(options && options['buttons']) {
 			CONFIG.with_buttons = options['buttons'];
 		}
-		//alert('renderForm:' + container + ' data=' + data + ' options[read-only]=' + options['read-only'] + ' with_buttons=' + CONFIG.with_buttons);
+		//alert('renderForm:' + container + ' data=' + data + ' options[read-only]=' + options['read-only']+' key:'+options['edit_key']+' value:'+ options['edit_value'] + ' with_buttons=' + CONFIG.with_buttons);
 		container = byId(container);
 
 		if(!container.className.match(/rform_root/))

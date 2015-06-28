@@ -10,7 +10,7 @@
 <%= f.text_field :designation %>
 <br/>
 <%= f.label t(:label_description) %>
-<%= f.text_area :description , :rows => 10 %>
+<%= h_text_editor f, object, :description%>
 <br/>
 
 <%= f.label t(:label_responsible) %>

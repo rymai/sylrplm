@@ -5,12 +5,14 @@
 <% end %>
 <% end %>
 <%= h_form_simple_query('/documents', @documents) %>
+<% unless param_equals?("todo", "select") %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_document"), new_document_path %></td>
 		<td> <%= show_help("help_documents") %></td>
 	</tr>
 </table>
+<%end%>
 <% if @myparams[:list_mode] == t(:list_mode_icon) %>
 <%= h_thumbnails_objs @documents %>
 <% else %>
@@ -55,6 +57,9 @@
 		<%else%>
 		<%= h_img_checkin.to_s %>
 		<% end%> </td>
+
+		<% unless param_equals?("todo", "select") %>
+
 		<td> <%= link_to h_img_edit.to_s, edit_document_path(document) %></td>
 		<td> <%= link_to h_img_edit_lifecycle.to_s, {:controller=>"documents", :action=>"edit_lifecycle", :id => document.id} %> </td>
 		<td> <%= link_to h_img_destroy.to_s, document, :confirm => t("msg_confirm"), :method => :delete %></td>
@@ -67,15 +72,22 @@
 		<% if document.revisable?  %>
 		<td> <%= h_img_revise.to_s %></td>
 		<%end%>
+		<%else%>
+		<td>
+		<input type="button" value="select" class="btn-select" onclick="callSelect('<%= @myparams["html_ident"]%>','<%= document.id%>','<%= document.ident%>')" />
+</td>
+		<%end%>
 	</tr>
 	<% previous=document %>
 	<% end %>
 </table>
 <% end %>
 <%= will_paginate(@documents[:recordset]) %>
+<% unless param_equals?("todo", "select") %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_document"), new_document_path  %></td>
 		<td> <%= show_help("help_documents") %></td>
 	</tr>
 </table>
+<%end%>

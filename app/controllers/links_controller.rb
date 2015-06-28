@@ -52,6 +52,10 @@ class LinksController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.info (fname){"params=#{params.inspect}"}
 		@link = Link.find(params[:id])
+		LOG.info (fname){"type_values=#{@link.type_values} rel;type.values=#{@link.relation.typesobject.fields}"}
+		if(@link.type_values).blank?
+		@link.type_values=@link.relation.typesobject.type_values
+		end
 		@object_in_explorer = PlmServices.get_object(params[:object_model], params[:object_id])
 		@root = PlmServices.get_object(params[:root_model], params[:root_id])
 		#LOG.info (fname){"link=#{@link}"}

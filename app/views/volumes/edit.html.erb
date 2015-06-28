@@ -2,7 +2,7 @@
 <% fonct="edit" %>
 <% form_for(@volume) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "shared/menu_edit",:locals => { :object => @volume, :f => f, :fonct=>fonct}) %> 
-<%= render(:partial => "volumes/edit",:locals => { :f => f, :fonct=>fonct }) %>
-<%= render(:partial => "shared/submit_edit",:locals => { :object => @volume, :f => f, :fonct=>fonct}) %> 
+<%= render(:partial => "shared/menu_edit",:locals => { :object => @volume, :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "volumes/edit",:locals => { :object => @volume, :f => f, :fonct=>fonct }) %>
+<%= render(:partial => "shared/submit_edit",:locals => { :object => @volume, :f => f, :fonct=>fonct}) %>
 <% end %>

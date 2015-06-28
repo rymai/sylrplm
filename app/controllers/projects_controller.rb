@@ -297,7 +297,6 @@ class ProjectsController < ApplicationController
 		fname= "#{controller_class_name}.#{__method__}"
 		define_view
 		@project = Project.find(params[:id])
-		#@relations               = Relation.relations_for(@project)
 		@documents=@project.documents
 		@parts=@project.parts
 		@customers=@project.customers_up

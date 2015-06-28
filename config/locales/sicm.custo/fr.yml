@@ -138,7 +138,7 @@ fr:
   view_conception: Conception
   view_documentation: Documentation
   #definition
-  definition_validate_user: Valider un nouvel utilisateur
+  definition_validate-user: Valider un nouvel utilisateur
   definition_revision: Revision
   definition_promotion: Promotion
   definition_promotion-part: Promouvoir un article de n'importe quel type

@@ -2,14 +2,15 @@
 	<legend>
 		<%= t(:legend_typesobject) %>
 	</legend>
-	<%= f.label t(:label_object) %>
-	<%= f.select(:forobject, @objectswithtype) %>
-	<br/>
+	<%= h_edit_forobject_object(f, object, @objectswithtype) %>
 	<%= f.label t(:label_name) %>
 	<%= f.text_field :name %>
 	<br/>
 	<%= f.label t(:label_description) %>
-	<%= f.text_area :description %>
+	<%= h_text_editor f, object, :description%>
+	<br/>
+	<%= f.label t(:label_typesobject_father) %>
+	<%= f.collection_select(:father_id, object.others, :id, :name,  {:include_blank => true}) %>
 	<br/>
 	<%= f.label t(:label_typesobject_rank) %>
 	<%= f.text_field :rank %>
@@ -18,7 +19,5 @@
 	<br/>
 	<%= h_input_domain(f) %>
 	<br />
-
-	<%= h_render_fields(@typesobject, fonct, "fields") %>
-
+	<%= h_render_fields(object, fonct, "fields") %>
 </fieldset>

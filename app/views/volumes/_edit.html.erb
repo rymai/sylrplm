@@ -2,7 +2,7 @@
 	<legend>
 		<%= t(:legend_volume) %>
 	</legend>
-	<input type="hidden" name="olddir" value="<%= @volume.directory %>"/>
+	<input type="hidden" id="olddir" name="olddir"  value="<%= @volume.directory %>"/>
 	<%= f.label t(:label_name) %>
 	<%= f.text_field :name , :readonly=>(fonct=="edit" && !admin_logged_in?)%>
 	<br/>
@@ -29,7 +29,7 @@
 	<%= f.text_area :decompress %>
 	<br/>
 	<%= f.label t(:label_description) %>
-	<%= f.text_area :description %>
+	<%= h_text_editor f, object, :description%>
 	<br/>
 	<%= f.label t(:label_volume_groups) %>
 	<%= select_inout(f, @volume, Group.all, :name) %>

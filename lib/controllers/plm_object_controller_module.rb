@@ -7,6 +7,30 @@ module Controllers
 	module PlmObjectControllerModule
 	 # extend ActiveSupport::Concern
 
+		def add_link_objects
+			fname="#{controller_class_name}.#{__method__}"
+			LOG.info(fname) { "params=#{params.inspect}" }
+			object=::PlmServices.get_object(get_model_type(params), params[:id])
+			::Typesobject::MODELS_PLM.each do |plmtype|
+			params.each do |key,value|
+				if(key.index("link_")==0)
+					unless params[key]["#{plmtype}_id"].blank?
+						LOG.info(fname) { "child:#{plmtype}.#{params[key]["#{plmtype}_id"]}" }
+						child=::PlmServices.get_object(plmtype, params[key]["#{plmtype}_id"])
+						relation=::PlmServices.get_object("relation", params[:relation_id])
+						lnk=Link.new(father: object, child: child, relation: relation, user: current_user)
+						st=lnk.save
+					end
+				end
+			end
+			end
+			respond_to do |format|
+				#format.html { render :controller => params[:controller], :action => "show", :id =>  params[:id]}
+				format.html { redirect_to object}
+          format.xml  { head :ok }
+		end
+		end
+
 		def add_objects
 			fname="#{controller_class_name}.#{__method__}"
 			LOG.info() { "params=#{params.inspect}" }
@@ -248,6 +272,18 @@ module Controllers
 			@types = Typesobject.get_types(plm_object.model_name)
 			render :update do |page|
 				LOG.debug (fname){"render page replace:type=#{plm_object.typesobject}"}
+				page.replace_html("edit_object",
+				:partial => "shared/edit_object",
+				:locals=>{:fonct=>"edit", :plm_object=>plm_object} )
+			end
+		end
+
+		def  ctrl_update_forobject(plm_object, forobject)
+			fname= "#{self.class.name}.#{__method__}"
+			LOG.debug (fname){"update=#{plm_object} with #{forobject}"}
+			@types = plm_object.others
+			plm_object.forobject=forobject
+			render :update do |page|
 				page.replace_html("edit_object",
 				:partial => "shared/edit_object",
 				:locals=>{:fonct=>"edit", :plm_object=>plm_object} )
