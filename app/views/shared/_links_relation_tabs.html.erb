@@ -1,0 +1,58 @@
+<h1><%= t("links_relation_tabs") %></h1>
+<div class="onglet ombrage">
+	<ul class="nav nav-pills" id="OngletDesRelations">
+		<% object.relations(nil, nil, ::Relation::RELATION_PASTE_WAY_MANUAL).each do |relation|
+		if( ::Typesobject::MODELS_PLM.include?(relation.child_plmtype))
+		%>
+		<li class="ombrageSmall">
+			<a href="#<%= relation.name%>" data-toggle="tab"> <%= relation.ident %> </a>
+		</li>
+		<% end %>
+		<% end %>
+	</ul>
+	<div class="tab-content">
+		<% object.relations(nil, nil, ::Relation::RELATION_PASTE_WAY_MANUAL).each do |relation|
+
+		if( ::Typesobject::MODELS_PLM.include?(relation.child_plmtype))
+		puts "links_relation_tabs:relation.child_plmtype=#{relation.child_plmtype} in #{::Typesobject::MODELS_PLM}"
+		%>
+		<div id="<%= relation.name%>" class="tab-pane">
+			<% default=nil
+			fonct="add_object"
+			form_for(object ,:url => {:controller=>get_controller_from_model_type(object.model_name), :action=>"add_link_objects", :id => object.id} , :html => { :id => h_form_html_id(object, fonct) }) do |f|
+			%>
+			<%= f.error_messages %>
+			<table>
+				<% plmtypes=[]
+				if relation.child_plmtype==PlmServices.get_property(:PLMTYPE_GENERIC)
+				plmtypes=::Typesobject::MODELS_PLM
+				else
+				plmtypes<<relation.child_plmtype
+				end
+				plmtypes.each do |plmtype|
+				%>
+					<tr>
+						<td> <%= t("label_add_#{plmtype}") %> </td>
+						<td> <%= select_in_list("link_#{relation.name}", plmtype,  default  , "#{plmtype}s") %> </td>
+						<input type="hidden" id="relation_id" name="relation_id" value="<%= relation.id%>"/>
+					</tr>
+					<%end%>
+					<tr>
+						<td> <%= f.submit t("submit_add_objects") %> </td>
+					</tr>
+					<tr>
+						<td><%= t(:label_relation)%></td>
+						<td><%= t(:label_child)%></td>
+					</tr>
+					<% Link.find_childs(object, nil, relation.name).each do |lnk| %>
+					<tr>
+						<%= render(:partial => "links/relation_object", :locals =>{:link =>lnk}) %>
+					</tr>
+					<%end%>
+			</table>
+			<%end%>
+		</div>
+		<%end%>
+		<%end%>
+	</div>
+</div>
