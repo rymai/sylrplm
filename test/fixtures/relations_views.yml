@@ -1,0 +1,230 @@
+relation_id_1_view_id_1_domain_admin:
+  relation_id: 1
+  view_id: 1
+  domain: admin
+
+relation_id_1_view_id_3_domain_admin:
+  relation_id: 1
+  view_id: 3
+  domain: admin
+
+relation_id_1_view_id_4_domain_admin:
+  relation_id: 1
+  view_id: 4
+  domain: admin
+
+relation_id_2_view_id_1_domain_admin:
+  relation_id: 2
+  view_id: 1
+  domain: admin
+
+relation_id_2_view_id_3_domain_admin:
+  relation_id: 2
+  view_id: 3
+  domain: admin
+
+relation_id_3_view_id_3_domain_admin:
+  relation_id: 3
+  view_id: 3
+  domain: admin
+
+relation_id_5_view_id_1_domain_admin:
+  relation_id: 5
+  view_id: 1
+  domain: admin
+
+relation_id_5_view_id_3_domain_admin:
+  relation_id: 5
+  view_id: 3
+  domain: admin
+
+relation_id_5_view_id_4_domain_admin:
+  relation_id: 5
+  view_id: 4
+  domain: admin
+
+relation_id_7_view_id_1_domain_admin:
+  relation_id: 7
+  view_id: 1
+  domain: admin
+
+relation_id_7_view_id_3_domain_admin:
+  relation_id: 7
+  view_id: 3
+  domain: admin
+
+relation_id_8_view_id_1_domain_admin:
+  relation_id: 8
+  view_id: 1
+  domain: admin
+
+relation_id_11_view_id_1_domain_admin:
+  relation_id: 11
+  view_id: 1
+  domain: admin
+
+relation_id_9_view_id_1_domain_admin:
+  relation_id: 9
+  view_id: 1
+  domain: admin
+
+relation_id_9_view_id_3_domain_admin:
+  relation_id: 9
+  view_id: 3
+  domain: admin
+
+relation_id_9_view_id_4_domain_admin:
+  relation_id: 9
+  view_id: 4
+  domain: admin
+
+relation_id_20_view_id_1_domain_admin:
+  relation_id: 20
+  view_id: 1
+  domain: admin
+
+relation_id_20_view_id_2_domain_admin:
+  relation_id: 20
+  view_id: 2
+  domain: admin
+
+relation_id_21_view_id_1_domain_admin:
+  relation_id: 21
+  view_id: 1
+  domain: admin
+
+relation_id_21_view_id_2_domain_admin:
+  relation_id: 21
+  view_id: 2
+  domain: admin
+
+relation_id_22_view_id_1_domain_admin:
+  relation_id: 22
+  view_id: 1
+  domain: admin
+
+relation_id_22_view_id_2_domain_admin:
+  relation_id: 22
+  view_id: 2
+  domain: admin
+
+relation_id_23_view_id_1_domain_admin:
+  relation_id: 23
+  view_id: 1
+  domain: admin
+
+relation_id_23_view_id_2_domain_admin:
+  relation_id: 23
+  view_id: 2
+  domain: admin
+
+relation_id_24_view_id_1_domain_admin:
+  relation_id: 24
+  view_id: 1
+  domain: admin
+
+relation_id_24_view_id_3_domain_admin:
+  relation_id: 24
+  view_id: 3
+  domain: admin
+
+relation_id_25_view_id_1_domain_admin:
+  relation_id: 25
+  view_id: 1
+  domain: admin
+
+relation_id_25_view_id_3_domain_admin:
+  relation_id: 25
+  view_id: 3
+  domain: admin
+
+relation_id_26_view_id_1_domain_admin:
+  relation_id: 26
+  view_id: 1
+  domain: admin
+
+relation_id_26_view_id_3_domain_admin:
+  relation_id: 26
+  view_id: 3
+  domain: admin
+
+relation_id_27_view_id_1_domain_admin:
+  relation_id: 27
+  view_id: 1
+  domain: admin
+
+relation_id_27_view_id_3_domain_admin:
+  relation_id: 27
+  view_id: 3
+  domain: admin
+
+relation_id_27_view_id_4_domain_admin:
+  relation_id: 27
+  view_id: 4
+  domain: admin
+
+relation_id_28_view_id_1_domain_admin:
+  relation_id: 28
+  view_id: 1
+  domain: admin
+
+relation_id_28_view_id_3_domain_admin:
+  relation_id: 28
+  view_id: 3
+  domain: admin
+
+relation_id_28_view_id_4_domain_admin:
+  relation_id: 28
+  view_id: 4
+  domain: admin
+
+relation_id_29_view_id_1_domain_admin:
+  relation_id: 29
+  view_id: 1
+  domain: admin
+
+relation_id_29_view_id_3_domain_admin:
+  relation_id: 29
+  view_id: 3
+  domain: admin
+
+relation_id_29_view_id_4_domain_admin:
+  relation_id: 29
+  view_id: 4
+  domain: admin
+
+relation_id_30_view_id_1_domain_admin:
+  relation_id: 30
+  view_id: 1
+  domain: admin
+
+relation_id_30_view_id_3_domain_admin:
+  relation_id: 30
+  view_id: 3
+  domain: admin
+
+relation_id_30_view_id_4_domain_admin:
+  relation_id: 30
+  view_id: 4
+  domain: admin
+
+relation_id_37_view_id_1_domain_admin:
+  relation_id: 37
+  view_id: 1
+  domain: admin
+
+relation_id_37_view_id_3_domain_admin:
+  relation_id: 37
+  view_id: 3
+  domain: admin
+
+relation_id_36_view_id_1_domain_admin:
+  relation_id: 36
+  view_id: 1
+  domain: admin
+
+relation_id_36_view_id_3_domain_admin:
+  relation_id: 36
+  view_id: 3
+  domain: admin
+

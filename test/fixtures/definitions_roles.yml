@@ -1,0 +1,35 @@
+definition_id_3_role_id_1_domain_admin:
+  definition_id: 3
+  role_id: 1
+  domain: admin
+
+definition_id_7_role_id_2_domain_admin:
+  definition_id: 7
+  role_id: 2
+  domain: admin
+
+definition_id_4_role_id_1_domain_admin:
+  definition_id: 4
+  role_id: 1
+  domain: admin
+
+role_id_1_definition_id_8_domain_admin:
+  role_id: 1
+  definition_id: 8
+  domain: admin
+
+role_id_2_definition_id_5_domain_admin:
+  role_id: 2
+  definition_id: 5
+  domain: admin
+
+role_id_2_definition_id_6_domain_admin:
+  role_id: 2
+  definition_id: 6
+  domain: admin
+
+role_id_2_definition_id_10_domain_admin:
+  role_id: 2
+  definition_id: 10
+  domain: admin
+

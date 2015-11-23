@@ -1,0 +1,60 @@
+volume_id_1_group_id_1_domain_admin:
+  volume_id: 1
+  group_id: 1
+  domain: admin
+
+volume_id_1_group_id_101_domain_admin:
+  volume_id: 1
+  group_id: 101
+  domain: admin
+
+volume_id_2_group_id_1_domain_admin:
+  volume_id: 2
+  group_id: 1
+  domain: admin
+
+volume_id_2_group_id_101_domain_admin:
+  volume_id: 2
+  group_id: 101
+  domain: admin
+
+volume_id_7_group_id_1_domain_admin:
+  volume_id: 7
+  group_id: 1
+  domain: admin
+
+volume_id_7_group_id_101_domain_admin:
+  volume_id: 7
+  group_id: 101
+  domain: admin
+
+volume_id_9_group_id_1_domain_admin:
+  volume_id: 9
+  group_id: 1
+  domain: admin
+
+volume_id_9_group_id_101_domain_admin:
+  volume_id: 9
+  group_id: 101
+  domain: admin
+
+volume_id_8_group_id_1_domain_admin:
+  volume_id: 8
+  group_id: 1
+  domain: admin
+
+volume_id_8_group_id_101_domain_admin:
+  volume_id: 8
+  group_id: 101
+  domain: admin
+
+volume_id_10_group_id_1_domain_admin:
+  volume_id: 10
+  group_id: 1
+  domain: admin
+
+volume_id_10_group_id_101_domain_admin:
+  volume_id: 10
+  group_id: 101
+  domain: admin
+

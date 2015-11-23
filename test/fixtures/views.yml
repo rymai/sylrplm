@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  name: view1
-  description: MyText
-
-two:
-  name: view2
-  description: MyText
