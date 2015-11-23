@@ -10,24 +10,21 @@
 <%= will_paginate(@links[:recordset]) %>
 <table>
 	<tr>
-		<th><%= t(:label_id) %> </th>
-		<th><%= t(:label_ident) %> </th>
-		<th><%= t(:label_domain) %> </th>
-		<th><%= t(:label_father) %> </th>
-		<th><%= t(:label_relation) %> </th>
-		<th><%= t(:label_child) %> </th>
-		<th><%= t(:label_responsible) %> </th>
-		<th><%= t(:label_group) %> </th>
-		<th><%= t(:label_projowner) %> </th>
+		<th <%= sort_td_class_helper "id" %>> <%= sort_link_helper t("label_id"), "id" %> </th>
+		<th style="width:50px"><%= t(:label_ident) %> </th>
+		<th style="width:50px" <%= sort_td_class_helper "father" %>> <%= sort_link_helper t("label_father"), "father_id" %> </th>
+		<th style="width:50px" <%= sort_td_class_helper "relation" %>> <%= sort_link_helper t("label_relation"), "relation_id" %> </th>
+		<th style="width:50px" <%= sort_td_class_helper "child" %>> <%= sort_link_helper t("label_child"), "child_id" %> </th>
+		<th <%= sort_td_class_helper "responsible" %>> <%= sort_link_helper t("label_responsible"), "owner_id" %> </th>
+		<th <%= sort_td_class_helper "group" %>> <%= sort_link_helper t("label_group"), "group_id" %> </th>
+		<th <%= sort_td_class_helper "projowner" %>> <%= sort_link_helper t("label_projowner"), "projowner_id" %> </th>
 		<th><%= t(:label_values) %> </th>
-		<th><%= t(:label_domain) %></th>
-		
+		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t("label_domain"), "domain" %> </th>
 	</tr>
 	<% @links[:recordset].each do |link| %>
 	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= h link.id %></td>
 		<td><%= h link.ident %></td>
-		<td><%= h link.domain %></td>
 		<td><%= h link.father_ident %></td>
 		<td><%= h link.relation_ident %></td>
 		<td><%= h link.child_ident %></td>
@@ -36,13 +33,13 @@
 		<td><%= h_explorer link.projowner, :ident unless link.projowner.nil?%></td>
 		<td><%= h link.type_values %></td>
 		<td><%= h link.domain %></td>
-		
+
 		<td><%= link_to h_img_show.to_s, link %> </td>
 		<td><%= link_to h_img_edit.to_s, edit_link_path(link) %> </td>
 		<td><%= link_to h_img_destroy.to_s, link, :confirm => t(:msg_confirm), :method => :delete %> </td>
 		<% if logged_in? %> <td><%= link_to_remote  h_img(:copy).to_s, :url => {:controller => "links", :action => "add_favori", :id => link.id}, :method => :get  %></td>
 		<% end %>
-		
+
 	</tr>
 	<% end %>
 </table>

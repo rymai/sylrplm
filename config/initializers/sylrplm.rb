@@ -9,7 +9,8 @@ require 'classes/app_classes'
 require 'os_functions'
 
 module SYLRPLM
-
+	fname="sylrplm.rb:"
+	puts ">>>>#{fname}"
 	#########################################
 	# version
 	SYLRPLM_VERSION					= "1.0.1"
@@ -28,8 +29,8 @@ module SYLRPLM
 	# repertoires des chargements
 	#TODO not yet in property
 	DIR_FIXTURES               = "#{Rails.root}/db/fixtures"
-	#TODO not yet in property
-	VOLUME_DIRECTORY_DEFAULT___  = case OsFunctions.os
+	# for local volumes
+	VOLUME_DIRECTORY_DEFAULT  = case OsFunctions.os
 	when "linux"
 		"/home/syl/trav/rubyonrails/sylrplm-data"
 	when "mac"
@@ -37,61 +38,75 @@ module SYLRPLM
 	when "windows"
 		"C:\\sylrplm-data"
 	end
-
 	# document de type directory (pour eviter par exemple d'y mettre des fichiers)
-	#TYPE_DOC_DIRECTORY        = 'directory'
-	# type de user: personne physique.
-	#TYPE_USER_PERSON          = 'person_'
-	# type du projet affecte par defaut a un user lors de sa creation
-	#TYPE_PROJ_ACCOUNT         = '$PROJ_ACCOUNT'
-	# valeurs des types d'acces a un  projet
-	#TYPEACCESS_PUBLIC         = 'public'
-	#TYPEACCESS_CONFIDENTIAL   = 'confidential'
-	#TYPEACCESS_SECRET         = 'secret'
+	TYPE_DOC_DIRECTORY        = "directory"
 
 	#
 	# no more used, use PlmServices.get_property("HELP_SUMMARY_LEVEL") for example
 	# properties are now stored in Typesobject table and managed by PlmServices
 	#
-	if false
-		###########################################
-		#
-		# plm objects names / nom de certains objets plm
-		#
-		# groupes
-		GROUP_ADMINS              = 'admins'
-		# Roles
-		ROLE_ADMIN                = 'admin'
-		ROLE_CONSULTANT           = 'consultant'
-		ROLE_CREATOR              = 'creator'
-		ROLE_VALIDER              = 'valider'
-		ROLE_PROJECT_MANAGER      = 'project_manager'
-		ROLE_ANALYST              = 'analyst'
-		ROLE_DESIGNER             = 'designer'
-		# User administrator
-		USER_ADMIN                = 'admin'
-		#
-		# types value / valeurs des types
-		#
-		# n'importe quel object plm
-		PLMTYPE_GENERIC           = 'any_plmtype'
-		# n'importe quel type
-		TYPE_GENERIC              = 'any_type'
-		# type de user: personne physique.
-		TYPE_USER_PERSON          = 'person_'
-		# type de user: user virtuel, pour batchs...
-		TYPE_USER_VIRTUAL         = 'virtual_'
-		# Type attribué a un nouvel utilisateur avant sa validation
-		TYPE_USER_NEW_ACCOUNT     = '$NEW_ACCOUNT'
-		# type du projet affecte par defaut a un user lors de sa creation
-		TYPE_PROJ_ACCOUNT         = '$PROJ_ACCOUNT'
-		# valeurs des types d'acces a un  projet
-		TYPEACCESS_PUBLIC         = 'public'
-		TYPEACCESS_CONFIDENTIAL   = 'confidential'
-		TYPEACCESS_SECRET         = 'secret'
 
-		# type de l'image representative d'un document
-		TYPE_DATAFILE_THUMBNAIL   = 'thumbnail'
+	###########################################
+	#
+	# plm objects names / nom de certains objets plm
+	#
+	# sites
+
+	# groupes
+	GROUP_ADMINS              = 'admins'
+	GROUP_CONSULTANTS   = 'consultants'
+	# Roles
+	ROLE_ADMIN                = 'admin'
+	ROLE_CONSULTANT           = 'consultant'
+	ROLE_CREATOR              = 'creator'
+	ROLE_VALIDER              = 'valider'
+	ROLE_PROJECT_MANAGER      = 'project_manager'
+	ROLE_ANALYST              = 'analyst'
+	ROLE_DESIGNER             = 'designer'
+	# User administrator
+	USER_ADMIN                = 'admin'
+	#
+	# types value / valeurs des types
+	#
+	# n'importe quel object plm
+	PLMTYPE_GENERIC           = 'any_plmtype'
+	# n'importe quel type
+	TYPE_GENERIC              = 'any_type'
+	# type de user: personne physique.
+	TYPE_USER_PERSON          = 'person_'
+	# type de user: user virtuel, pour batchs...
+	TYPE_USER_VIRTUAL         = 'virtual_'
+	# Type attribué a un nouvel utilisateur avant sa validation
+	TYPE_USER_NEW_ACCOUNT     = '$NEW_ACCOUNT'
+	# type du projet affecte par defaut a un user lors de sa creation
+	TYPE_PROJ_ACCOUNT         = '$PROJ_ACCOUNT'
+	# type de l'image representative d'un document
+	TYPE_DATAFILE_THUMBNAIL   = 'thumbnail'
+
+	TYPEACCESS_PUBLIC         = 'public'
+	TYPEACCESS_CONFIDENTIAL   = 'confidential'
+	TYPEACCESS_SECRET         = 'secret'
+
+	DOCUMENT_REVISE = "true"
+	CUSTOMER_REVISE = "false"
+	PART_REVISE = "true"
+	PROJECT_REVISE = "false"
+
+	THEME_DEFAULT="white"
+	TREE_ORDER=["forum", "document", "part", "project", "customer"]
+	TREE_UP_ORDER=["document", "part", "project", "customer"]
+	TREE_GROUP=false
+	TREE_RELATION_STOP=["FROM_REVISION", "FROM_DUPLICATE"]
+
+	NB_ITEMS_PER_PAGE=30
+
+	SITE_CENTRAL                               =  "limours"
+
+	FOG_ACCESS_KEY="/3TLl+gwrWQj/2HGfKWj5ntc3UIQNwjPCGkqDWHG"
+	FOG_ACCESS_KEY_ID="AKIAIUD54MZOYMFWXYEQ"
+
+	if false
+		# valeurs des types d'acces a un  projet
 
 		# valeurs de certains objets
 		########TODO inutile ??? RELATION_GENERIC          = 'any_relation'
@@ -132,5 +147,6 @@ module SYLRPLM
 
 	end
 
+	puts "<<<<#{fname}"
 end
 

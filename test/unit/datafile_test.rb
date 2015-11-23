@@ -23,7 +23,7 @@ class DatafileTest < ActiveSupport::TestCase
 		d1 = Datafile.new(:ident => "DF01",
 		:typesobject_id => "646247456",
 		:revision => 1,
-		:volume => volumes(:volume_one) ,
+		:volume => volumes(:Volume_2) ,
 		:owner => u,
 		:group => u.group,
 		:projowner => u.project)
@@ -32,7 +32,7 @@ class DatafileTest < ActiveSupport::TestCase
 		d2 = Datafile.new(:ident => "DF01",
 		:typesobject_id => "646247456",
 		:revision => 1,
-		:volume => volumes(:volume_one) ,
+		:volume => volumes(:Volume_2) ,
 		:owner => u,
 		:group => u.group,
 		:projowner => u.project)
@@ -42,7 +42,7 @@ class DatafileTest < ActiveSupport::TestCase
 		d3 = Datafile.new(:ident => "DF01",
 		:typesobject_id => "646247456",
 		:revision => 2,
-		:volume => volumes(:volume_one) ,
+		:volume => volumes(:Volume_2) ,
 		:owner => u,
 		:group => u.group,
 		:projowner => u.project)
@@ -51,25 +51,26 @@ class DatafileTest < ActiveSupport::TestCase
 	end
 
 	def test_with_user
+		fname= "#{self.class.name}.#{__method__}:"
 		u = users(:user_admin)
-		#puts "u=#{u.inspect}"
-		o1 = Datafile.new(:user => u)
-		#puts "test_with_user:o1=#{o1.inspect}"
-		assert !o1.valid?
-		assert o1.errors.invalid?(:ident)
-		assert o1.errors.invalid?(:typesobject)
-		#assert o1.errors.invalid?(:revision)
-		assert o1.errors.invalid?(:volume)
-		o1 = Datafile.new(:ident=>"DF0003",
-		:typesobject_id => "646247456",
+		o1 = Datafile.new(	:typesobject_id => "646247456",
 		:revision => 1,
-		:volume => volumes(:volume_one) ,
 		:owner => u,
 		:group => u.group,
 		:projowner => u.project)
-		#puts "test_with_user:o1=#{o1.inspect}"
-		assert o1.valid?
-		o1
+		assert !o1.valid?
+		LOG.debug(fname) {" o1=#{o1.inspect}"}
+		assert o1.errors.invalid?(:ident)
+		assert o1.invalid?(:volume)
+		o2 = Datafile.new(:ident=>"DF0003",
+		:typesobject_id => "646247456",
+		:revision => 1,
+		:volume => volumes(:Volume_2) ,
+		:owner => u,
+		:group => u.group,
+		:projowner => u.project)
+		LOG.debug(fname) {" o2=#{o2.inspect}"}
+		assert o2.valid?
 	end
 
 end

@@ -20,6 +20,8 @@ class DatafilesController < ApplicationController
 	def show
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug (fname){"params=#{params.inspect} flash=#{flash.inspect}"}
+		show_
+		LOG.debug (fname){"@datafile=#{@datafile.inspect} flash=#{flash.inspect}"}
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @datafile }

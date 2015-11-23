@@ -46,7 +46,7 @@ en:
   ###########################
   # formattage
   ###########################
-  
+
   activerecord:
     errors:
       messages:
@@ -54,3 +54,13 @@ en:
         status_not_valid: "Bad status"
         exception_validity: "Exception during %{model} validating:<br/>%{exception}"
         datafile_write_bad_format: The file %{filename} could not be saved, choose another volume.
+       #sylrplm_common
+        type_values_type_badly_defined: "%{key}=%{value} : type is badly defined: %{field}"
+        type_values_value_undefined: "%{key}=%{value}: type is undefined"
+        type_values_value_not_found: "%{key}=%{value}: value not found"
+        type_values_string_too_long: "%{key}=%{value} is too long: %{value.length} > %{nbc}"
+        type_values_value_not_type: "%{key}=%{value}: is not a %{type}"
+        type_values_value_bad_format: "%{key}=%{value}: is a %{type} but is badly formatted %{fmt}"
+        type_values_value_outside_limit: "%{key}=%{value} of type %{type} is outside the limit: %{sign} %{limit}"
+        #typesobject
+        field_badly_formatted: "Field of type '%{type}' is badly formatted, key='%{key}', fields=%{fields} exception=%{exception}"

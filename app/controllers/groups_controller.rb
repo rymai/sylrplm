@@ -28,14 +28,19 @@ class GroupsController < ApplicationController
 	# GET /groups.xml
 	#
 	def index
-
-		@groups = Group.find_paginate({:user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
-
+		index_
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml { render :xml => @groups }
 			format.json { render :json => @groups }
 		end
+	end
+	def index_
+		@groups = Group.find_paginate({:user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+	end
+
+	def index_execute
+		ctrl_index_execute
 	end
 
 	# GET /groups/1
@@ -141,7 +146,7 @@ class GroupsController < ApplicationController
 				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
-				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_group), :ident => @group.name)
+				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_group), :ident => @group.name, :error => @group.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @group.errors, :status => :unprocessable_entity }
 			end

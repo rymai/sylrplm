@@ -97,7 +97,7 @@ class AccessesController < ApplicationController
 				format.xml  { head :ok }
 			else
 				@roles = Role.all
-				flash[:error] = t(:ctrl_object_not_updated, :typeobj => 'Access', :ident => @access.controller)
+				flash[:error] = t(:ctrl_object_not_updated, :typeobj => 'Access', :ident => @access.controller, :error => @access.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @access.errors, :status => :unprocessable_entity }
 			end

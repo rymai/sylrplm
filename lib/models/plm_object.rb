@@ -64,6 +64,7 @@ module Models
 		def revisable?
 			fname= "#{self.model_name}.#{__method__}"
 			###ret = (has_attribute?("revision") && frozen? && last_revision?)
+			LOG.debug(fname) {"#{fname} revise_by_menu?=#{revise_by_menu?} revise_by_action?=#{revise_by_action?} "}
 			ret = revise_by_menu? || revise_by_action?
 			ret
 		end
@@ -74,21 +75,38 @@ module Models
 		#
 		def revise_by_menu?
 			fname= "#{self.model_name}.#{__method__}"
-			brev=PlmServices.get_property("#{self.model_name.upcase}_REVISE")
-			ret = (brev == true && has_attribute?("revision") && self.statusobject.revise_id==1) unless self.statusobject.nil?
-			#LOG.debug (fname){"#{self}:#{self.model_name.upcase}_REVISE=#{brev}: status=#{self.statusobject.revise_id}:#{ret}"}
+			ret = false
+			unless self.statusobject.nil?
+				brev=PlmServices.get_property("#{self.model_name.upcase}_REVISE")
+				LOG.debug(fname) {"#{fname} #{self} statusobject=#{statusobject} #{self.model_name.upcase}_REVISE='#{brev}'"}
+				if brev
+					LOG.debug(fname) {"#{fname} has_attribute?revision #{has_attribute?('revision')} revise1='#{self.statusobject.revise_id==1}' "}
+					if has_attribute?("revision")
+						if self.statusobject.revise_id==1
+							ret=true
+						end
+					end
+				end
+			end
 			ret
 		end
 
 		def revise_by_action?
 			fname= "#{self.model_name}.#{__method__}"
-			brev=PlmServices.get_property("#{self.model_name.upcase}_REVISE")
-			ret = brev == true && has_attribute?("revision") && self.statusobject.revise_id==2 unless self.statusobject.nil?
-			#LOG.debug (fname){"#{self}:#{self.model_name.upcase}_REVISE=#{brev}: status=#{self.statusobject.revise_id}:#{ret}"}
+			unless self.statusobject.nil?
+				brev=PlmServices.get_property("#{self.model_name.upcase}_REVISE")
+			ret = (brev && has_attribute?("revision") && self.statusobject.revise_id==2)
+			end
 			ret
 		end
 
-		def revise
+		def revise_without_links
+			revise false
+		end
+		# Revise the object.
+		# Params
+		# +with_links+:: existing links are copied on the revision
+		def revise(with_links = true)
 			fname= "#{self.model_name}.#{__method__}"
 			#LOG.debug (fname){"#{self.ident}"}
 			# recherche si c'est la derniere revision
@@ -98,24 +116,34 @@ module Models
 				admin = User.find_by_name(PlmServices.get_property(:ROLE_ADMIN))
 				obj = self.clone
 				obj.set_default_values_without_next_seq
+				obj.typesobject = self.typesobject
 				obj.statusobject = ::Statusobject.get_first(self)
 				obj.revision = next_revision
-				LOG.debug (fname){"#{self.ident} rev=#{obj.inspect}"}
+				LOG.debug(fname) {"#{self.ident} rev=#{obj.inspect}"}
 				if self.has_attribute?(:filename)
-					if(self.filename!=nil)
-					content = self.read_file
-					obj.write_file(content)
+					if (self.filename!=nil)
+					  content = self.read_file
+					  obj.write_file(content)
 					end
 				end
 				st = obj.save
 				if !st
 					obj = nil
 				else
-				st = obj.from_revise(self)
-				end
-			return obj
+					# add the relation FROM_REVISION
+				  st = obj.from_revise(self)
+				  if !st
+				    obj.destroy
+					obj = nil
+				  else
+				  	if with_links
+				    st = obj.clone_links(self)
+				   end
+				  end
+			  end
+			  return obj
 			else
-				LOG.debug (fname){"#{self.ident} not revisable"}
+				LOG.debug(fname) {"#{self.ident} not revisable"}
 				return nil
 			end
 		end
@@ -291,16 +319,18 @@ module Models
 
 		def promote
 			fname= "#{self.class.name}.#{__method__}"
-			st_cur_name = statusobject.name
-			LOG.info (fname) {"st_cur_name=#{st_cur_name} next_status=#{self.next_status}"}
+			st_cur_name = self.statusobject.name
+			LOG.debug(fname) {"st_cur_name=#{st_cur_name} next_status=#{self.next_status}"}
+			LOG.debug(fname) {"self=#{self.inspect}"}
 			#self.statusobject=::Statusobject.find(self.next_status_id)
 			unless self.next_status.nil?
 			self.statusobject=self.next_status
 			#puts "Document.promote:res=#{res}:#{st_cur_name}->#{statusobject.name}"
 			else
-				raise Exception.new("Error during promotion: Next status not found")
+				raise  Exception.new("Error during promotion: Next status not found")
 			end
-			self.next_status=nil
+			self.next_status = ::Statusobject.get_next_status(self)
+			self.previous_status = ::Statusobject.get_previous_status(self)
 			ret = self
 			#puts "object.promote:#{st_cur_name} -> #{self.statusobject.name} ret=#{ret}"
 			ret
@@ -315,7 +345,8 @@ module Models
 			else
 				raise Exception.new("Error during demote: Previous status not found")
 			end
-			self.previous_status=nil
+			self.next_status = ::Statusobject.get_next_status(self)
+			self.previous_status = ::Statusobject.get_previous_status(self)
 			ret = self
 			#puts "object.demote:#{st_cur_name} -> #{self.statusobject.name} ret=#{ret}"
 			ret
@@ -512,6 +543,16 @@ module Models
 				self.statusobject = ::Statusobject.get_first(self)
 				end
 			end
+			if (self.respond_to? :next_status)
+				if args.size>0 && !args[0].nil? && (!args[0].include?(:next_status_id))
+				self.next_status = ::Statusobject.get_next_status(self)
+				end
+			end
+			if (self.respond_to? :previous_status)
+				if args.size>0 && !args[0].nil? && (!args[0].include?(:previous_status_id))
+				self.previous_status = ::Statusobject.get_previous_status(self)
+				end
+			end
 
 			if args.size>0
 				unless args[0].nil? || args[0][:user].nil?
@@ -522,6 +563,7 @@ module Models
 					end
 				end
 			end
+			LOG.debug (fname) {"initialize : type_values=#{self.type_values}"} if self.respond_to? :type_values
 
 		end
 

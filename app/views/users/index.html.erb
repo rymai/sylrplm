@@ -3,25 +3,17 @@
 <% form_for(@user) do |f| %>
 <%= f.error_messages %>
 <% end %>
-<% end %>
+<% else %>
 
 <%= h_form_simple_query('/users',@current_users) %>
-
+<% form_tag({:controller=>:users, :action=>:index_execute}) do %>
 <% unless param_equals?("todo", "select") %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("new_user"), new_user_path %></td>
-		<td> <%= show_help("help_users") %></td>
-	</tr>
-</table>
+<%= h_menu_index_action("user")%>
 <% end %>
 <%= render(:partial => "users/index",:locals => { :fonct => "index_users"}) %>
 
 <% unless param_equals?("todo", "select") %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("new_user"), new_user_path %></td>
-		<td> <%= show_help("help_users") %></td>
-	</tr>
-</table>
-<% end %> 
+<%= h_menu_index_action("user")%>
+<% end %>
+<% end %>
+<% end %>

@@ -117,19 +117,23 @@ class Controller
 	def self.get_types_by_features(only_admin=false)
 		fname="Controller.#{__method__}"
 		LOG.info (fname) { "only_admin=#{only_admin}"}
+		ret={}
 		# TODO temporary
 		features = [:document, :part, :project, :customer]
 		features_types = {}
-
 		features.each do |feature|
-		# TODO temporary
+			features_types[feature]=[]
+			# TODO temporary
 			plmtype = feature
 			# types, including the generic one
 			types = ::Typesobject.get_types(plmtype, false)
-			features_types[feature]=[]
 			types.each do |type|
 				if !only_admin || type.domain==::SYLRPLM::DOMAIN_ADMIN
-				features_types[feature] << type
+					unless type.nil?
+					features_types[feature] << type
+					else
+						LOG.error(fname) {"Error:  a type of #{feature} is nil"}
+					end
 				end
 			end
 			LOG.info (fname) { "avant sort:#{features_types[feature]}"}
@@ -142,15 +146,21 @@ class Controller
 				LOG.info (fname) { "compare:#{mnu1}<=>#{mnu2}=#{compare}"}
 				compare
 			end
-			LOG.info (fname) { "apres sort:"}
-			features_types[feature].each { |typ| LOG.info (fname) { "type for #{feature} = #{typ.name}" } }
 			generic_type = Typesobject.generic(feature)
+			divider=Typesobject.new ({:name=>"divider",:forobject=>feature})
 			LOG.info (fname) { "generic_type for '#{feature}' = '#{generic_type.inspect}'"  }
-			features_types[feature] << generic_type
+			ret[feature]=[]
+			ret[feature] << generic_type
+			ret[feature] << divider
+			features_types[feature].each do |menus|
+				ret[feature] << menus
+			end
+			LOG.info (fname) { "apres sort:"}
+			ret[feature].each { |typ| LOG.info (fname) { "type for #{feature} = #{typ.name}" } }
 
 		end
 		##LOG.debug (fname) {"ret=#{features_types}"}
-		features_types
+		ret
 	end
 
 	def self.tr_def(key)

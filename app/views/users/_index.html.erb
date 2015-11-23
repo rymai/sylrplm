@@ -36,11 +36,14 @@
 		<td><%= h_value_or_default(comma_links(user.projects, :ident),t(:msg_tobedefine)) %></td>
 		<td> <%= user.last_revision %></td>
 		<td> <%= user.check_automatic %></td>
-		<% unless param_equals?("todo", "select") %> <td> <%= link_to h_img(:edit), edit_user_path(user) %> </td><td> <%= link_to h_img_destroy.to_s, user, :confirm => t(:msg_confirm), :method => :delete %></td>
+		<% unless param_equals?("todo", "select") %>
+		<td> <%= link_to h_img(:edit), edit_user_path(user) %> </td>
 		<td> <%= link_to h_img(:duplicate), new_dup_user_path(user) %> </td>
 		<td> <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => user.id}, :method => :get if logged_in? %></td>
+		<td> <%= h_destroy(user) %> </td>
+		<td><%= check_box(:action_on,user.id) %></td>
 		<% else %> <td>
-		<input type="button" value="select" class="btn-select" onclick="callSelect('<%= @myparams["html_ident"]%>','<%= user.id%>','<%= user.login%>')" />
+		<%= select_button(user)%>
 		</td>
 		<% end %>
 	</tr>

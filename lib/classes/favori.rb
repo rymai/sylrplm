@@ -4,6 +4,11 @@ class Favori
 	def initialize
 		@items={}
 	end
+	@@PLM_TYPE_AS_FAVORI=["customer","document","part","project","user"]
+
+	def self.can_favori?(model_name)
+		@@PLM_TYPE_AS_FAVORI.include?(model_name)
+	end
 
 	def add(obj)
 		#puts "favori.add:"+obj.model_name

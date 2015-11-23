@@ -4,11 +4,20 @@ class ViewsController < ApplicationController
 	# GET /views
 	# GET /views.xml
 	def index
-		@views = View.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		index_
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @views }
 		end
+	end
+
+	def index_
+		@views = View.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+
+	end
+
+	def index_execute
+		ctrl_index_execute
 	end
 
 	# GET /views/1
@@ -90,7 +99,7 @@ class ViewsController < ApplicationController
 				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
-				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_view),:ident=>@view.name)
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_view),:ident=>@view.name, :error => @view.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @view.errors, :status => :unprocessable_entity }
 			end

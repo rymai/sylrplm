@@ -85,11 +85,14 @@ en:
   label_liste_mode: List type
   switch_all_links: "All-None"
   update_type: Refresh on type
+  submit_copy: Copy
+  submit_destroy: Delete
   # attributs generaux
   faq_question: Question
   faq_answer: answer
   updated_at: Updated at
   id: Id
+  not_revisable: Unrevisable
   # histories
   label_history_since: Sin d
   label_history_source: Source
@@ -126,6 +129,8 @@ en:
   mnu_parts_PRD: Product
   mnu_parts_STR: Structure
   mnu_parts_VAR: Variant
+  mnu_parts_MEETING: Meeting
+  mnu_parts_DECISION: Decision
   mnu_projects_any_type: Any type
   mnu_projects_product: Product
   mnu_projects_$PROJ_ACCOUNT: Personnal Project
@@ -213,6 +218,7 @@ en:
   label_part_forum: Discussions
   label_project_forum: Discussions
   label_customer_forum: Discussions
+  label_document_customer: Clients
   label_view: View
   label_variant: Variant
   label_all_variants: All variants

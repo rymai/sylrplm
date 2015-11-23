@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
 
 	def render_(*args)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug(fname) {"args=#{args.inspect} flash=#{flash.inspect}"}
+		LOG.debug(fname) {">>>>args=#{args.inspect} flash=#{flash.inspect}"}
 		if args.nil? || args.count==0
 		super
 		else
@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
 				redirect_to_main(nil ,msg)
 			end
 		end
-		LOG.debug (fname) {"end flash=#{flash.inspect}"}
+		LOG.debug (fname) {"<<<< flash=#{flash.inspect}"}
 	end
 
 	#
@@ -86,7 +86,7 @@ class ApplicationController < ActionController::Base
 		#LOG.debug (fname) {"args=#{args}"}
 		ret = nil
 		if Datafile.host.nil?
-			# "Host not defined, define it in Type object property/sites/central=xxx"
+			# "Host not defined, define it in Type object property/sites/SITE_CENTRAL=xxx"
 			ret = t(:host_not_defined)
 		end
 		ret
@@ -155,22 +155,29 @@ class ApplicationController < ActionController::Base
 	end
 
 	def check_user_connect(user)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {">>>>user=#{user}"}
 		flash[:error] = t(:ctrl_user_not_valid,:user=>user ) unless user.may_connect?
 		#puts "check_user_connect:"+user.inspect+":"+flash[:notice].to_s
 		if user.login==PlmServices.get_property(:USER_ADMIN)
 			flash[:error] = nil
 		end
+		LOG.debug(fname) {"<<<<user=#{user} flash[:error]=#{flash[:error]}"}
 		flash[:error]
 	end
 
 	def check_init
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {">>>>"}
 		if User.count == 0
 			LOG.error (fname) {"Database is empty (no user)"}
 			flash[:error]=t(:ctrl_init_to_do)
+			LOG.debug(fname) {"<<<<flash[:error]=#{flash[:error]}"}
 			respond_to do |format|
 				format.html{redirect_to_main}
 			end
 		end
+
 	end
 
 	def event
@@ -189,6 +196,8 @@ class ApplicationController < ActionController::Base
 
 	# definition de la langue
 	def set_locale
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {">>>>"}
 		#puts "set_locale:params[:locale]=#{params[:locale]}"
 		if params[:locale]
 			I18n.locale = params[:locale]
@@ -206,29 +215,38 @@ class ApplicationController < ActionController::Base
 				end
 			end
 		end
-	#puts "fin de set_locale"
+	LOG.debug(fname) {"<<<<session=#{session}"}
 	end
 
 	# definition du domain en cours
 	def set_domain
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {">>>>"}
 		if params[:domain]
 			session[:domain] = params[:domain]
 		end
+		LOG.debug(fname) {"<<<<session[:domain]=#{session[:domain]}"}
 	end
 
 	def get_domain
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {">>>>"}
 		if session[:domain].nil? ||  session[:domain]==""
 			ret=PlmServices.get_property(:DOMAIN_DEFAULT)
 			ret+=current_user.login unless current_user.nil?
 		else
 			ret=session[:domain]
 		end
+		LOG.debug(fname) {"<<<<session[:domain]=#{session[:domain]} ret=#{ret}"}
 		ret
 	end
 
 	# recherche du theme
 	def get_session_theme(session)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {">>>> session=#{session}"}
 		ret = PlmServices.get_property(:THEME_DEFAULT)
+		LOG.debug(fname) {"session=#{session} theme_default=#{ret}"}
 		if session[:user_id]
 			if user = User.find(session[:user_id])
 				if(user.theme!=nil)
@@ -240,21 +258,27 @@ class ApplicationController < ActionController::Base
 				ret=session[:theme]
 			end
 		end
+		LOG.debug(fname) {"<<<< session=#{session} theme=#{ret}"}
 		ret
 	end
 
 	# definition des variables globales.
 	def define_variables
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"**** params=#{params.inspect}"}
+		LOG.debug(fname) {">>>>params=#{params.inspect}"}
 		@current_user= current_user
 		@favori      = session[:favori] ||= Favori.new
 		#LOG.info (fname) {"**** favori=#{@favori.inspect}"}
 		@theme       = get_session_theme(session)
+		LOG.debug(fname) {"@theme=#{@theme}"}
 		@language    = PlmServices.get_property(:LOCAL_DEFAULT)
-		@urlbase     = "http://"+request.env["HTTP_HOST"]
+		LOG.debug(fname) {"@language=#{@language}"}
+		@urlbase    = get_urlbase
+		LOG.debug(fname) {"@urlbase=#{@urlbase}"}
 		@themes      = get_themes(@theme)
+		LOG.debug(fname) {"@themes=#{@themes}"}
 		@languages   = get_languages
+		LOG.debug(fname) {"@languages=#{@languages}"}
 		@datas = get_datas_count
 		LOG.debug(fname) {"@datas=#{@datas}"}
 		###########TODO inutile @notification=PlmServices.get_property(:NOTIFICATION_DEFAULT)
@@ -276,7 +300,14 @@ class ApplicationController < ActionController::Base
 		@myparams = params
 		Datafile.host=request.host
 		@types_features=::Controller.get_types_by_features
-		puts "fin de define_variables"
+		LOG.debug(fname) {"<<<<params=#{params.inspect}"}
+	end
+
+	def get_urlbase
+		ret    = request.env["HTTP_REFERER"]
+		if ret.nil?
+			ret="http://#{request.env["HTTP_HOST"]}" # until request.env["HTTP_HOST"].nil?
+		end
 	end
 
 	def get_list_modes
@@ -321,40 +352,43 @@ class ApplicationController < ActionController::Base
 	rescue_from(ErrorReply) { |e| error_reply(e) }
 
 	def authorize
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"}
 		user_id = session[:user_id] || User.find_by_id(session[:user_id])
-		puts "application_controller.authorize.request_uri="+request.request_uri+" user_id="+user_id.to_s
+		LOG.debug(fname){"request_uri=#{request.request_uri} user_id=#{user_id}"}
 		if user_id.nil?
-			puts "authorize:user is nil"
-			#puts "application_controller.authorize.request_uri="+request.request_uri
-			puts "application_controller.authorize.new_sessions_url="+new_sessions_url
+			LOG.debug(fname){"user is nil: new_sessions_url=#{new_sessions_url}"}
 			session[:original_uri] = request.request_uri
 			flash[:notice] = t(:login_login)
+			LOG.debug(fname){"user is nil: redirect_to #{new_sessions_url}  "}
 			redirect_to new_sessions_url
 		else
 			user=User.find(user_id)
-			puts "authorize:user=#{user} admin?=#{user.is_admin?}"
+			LOG.debug(fname){"user=#{user} admin?=#{user.is_admin?}"}
 			unless user.is_admin?
-				#puts "user not admin, user.roles=#{user.roles} user.groups=#{user.groups} user.projects=#{user.projects}"
+				LOG.debug(fname){"user not admin: user.roles=#{user.roles} user.groups=#{user.groups} user.projects=#{user.projects}"}
 				if user.roles.nil? || user.groups.nil? || user.projects.nil?
-					#puts "authorize:roles=#{user.roles}  "
-					#puts "authorize:groups=#{user.groups}  "
-					#puts "authorize:projects=#{user.projects}  "
+					LOG.debug(fname){"user not admin: roles=#{user.roles} "}
+					LOG.debug(fname){"user not admin: groups=#{user.groups}  "}
+					LOG.debug(fname){"user not admin: projects=#{user.projects}  "}
 					session[:original_uri] = request.request_uri
 					flash[:notice] = t(:login_login)
+					LOG.debug(fname){"user not admin: redirect_to #{new_sessions_url}  "}
 					redirect_to new_sessions_url
 				end
 			end
 			if user.roles.nil?  || user.groups.nil? || user.projects.nil? || user.volume.nil?
-				#puts "authorize:roles=#{user.roles}  "
-				#puts "authorize:groups=#{user.groups}  "
-				#puts "authorize:projects=#{user.projects}  "
-				#puts "authorize:volume=#{user.volume} "
+				LOG.debug(fname){"roles=#{user.roles} "}
+					LOG.debug(fname){"groups=#{user.groups}  "}
+					LOG.debug(fname){"projects=#{user.projects}  "}
+				LOG.debug(fname){"volume=#{user.volume} "}
 				session[:original_uri] = request.request_uri
 				flash[:notice] = t(:login_login)
+				LOG.debug(fname){"redirect_to #{new_sessions_url}  "}
 				redirect_to new_sessions_url
 			end
 		end
-		puts "fin de authorize:ok"
+		LOG.debug(fname){"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"}
 	end
 
 	def permission_denied(role, controller, action)

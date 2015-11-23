@@ -192,6 +192,19 @@ class Statusobject < ActiveRecord::Base
 		ret
 	end
 
+	def self.get_next_status(obj)
+		fname="#{self.class.name}.#{__method__}"
+		ret=obj.statusobject.next_statusobjects.first
+		LOG.debug(fname){"ret=#{ret}"}
+		ret
+	end
+	def self.get_previous_status(obj)
+		fname="#{self.class.name}.#{__method__}"
+		ret=obj.statusobject.previous_statusobjects.last
+		LOG.debug(fname){"ret=#{ret}"}
+		ret
+	end
+
 	def self.get_last(obj)
 		any_type=::Typesobject.find_by_forobject_and_name(obj.model_name, PlmServices.get_property(:TYPE_GENERIC))
 		any_type=::Typesobject.find_by_name(PlmServices.get_property(:TYPE_GENERIC)) if any_type.nil?
@@ -203,14 +216,14 @@ class Statusobject < ActiveRecord::Base
 	end
 
 	def self.get_conditions(filter)
-		filter = filters.gsub("*","%")
+		filter = filter.gsub("*","%")
 		ret={}
 		unless filter.nil?
-			ret[:qry] = "object LIKE :v_filter or name LIKE :v_filter or description LIKE :v_filter or rank LIKE :v_filter or promote LIKE :v_filter or demote LIKE :v_filter or to_char(updated_at, 'YYYY/MM/DD') LIKE :v_filter"
+			#TODO ajouter or promote LIKE :v_filter or demote LIKE :v_filter
+			ret[:qry] = "forobject LIKE :v_filter or name LIKE :v_filter or description LIKE :v_filter  or to_char(updated_at, 'YYYY/MM/DD') LIKE :v_filter"
 			ret[:values]={:v_filter => filter}
 		end
 		ret
-	#conditions = ["object LIKE ? or name LIKE ? or description LIKE ? or rank LIKE ? or promote LIKE ? or demote LIKE ? ",
 	end
 
 	def ident

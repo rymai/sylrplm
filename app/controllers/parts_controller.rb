@@ -11,6 +11,10 @@ class PartsController < ApplicationController
 		end
 	end
 
+	 def index_execute
+		ctrl_index_execute
+	end
+
 	# GET /parts/1
 	# GET /parts/1.xml
 	def show
@@ -66,7 +70,7 @@ class PartsController < ApplicationController
 	# GET /parts/1/edit
 	def edit
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug (fname){"part edit params=#{params.inspect}"}
 		@part   = Part.find_edit(params[:id])
 		@types  = Typesobject.get_types("part")
 	end
@@ -82,7 +86,7 @@ class PartsController < ApplicationController
 	# POST /parts.xml
 	def create
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug (fname){"params=#{params.inspect}"}
 		@part   = Part.new(params[:part])
 		@types  = Typesobject.get_types("part")
 		@status = Statusobject.get_status("part")
@@ -97,6 +101,7 @@ class PartsController < ApplicationController
 				st = ctrl_duplicate_links(params, @part, current_user)
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
 				params[:id]=@part.id
+				LOG.debug (fname) {"create type_values=#{@part.type_values.inspect}"} if @part.respond_to? :type_values
 				show_
 				format.html { render :action => "show"}
 				format.xml  { render :xml => @part, :status => :created, :location => @part }
@@ -112,21 +117,23 @@ class PartsController < ApplicationController
 	# PUT /parts/1.xml
 	def update
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug (fname){"params=#{params.inspect}"}
 		@part = Part.find(params[:id])
 		@part.update_accessor(current_user)
 		if commit_promote?
 			ctrl_promote(@part)
 		else
 			respond_to do |format|
-				if @part.update_attributes(params[:part])
+				st=@part.update_attributes(params[:part])
+				LOG.debug (fname){"st update=#{st}"}
+				if st
 					flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
 					format.html { redirect_to(@part) }
 					format.xml  { head :ok }
 				else
-					flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
-					show_
-					format.html { render :action => "show"}
+					flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_part),:ident=>@part.ident, :error => @part.errors.full_messages)
+					edit
+					format.html { render :action => "edit"}
 					format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
 				end
 			end
@@ -162,7 +169,7 @@ class PartsController < ApplicationController
 	# DELETE /parts/1.xml
 	def destroy
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"destroy.params=#{params.inspect}"}
 		@part = Part.find(params[:id])
 		respond_to do |format|
 			unless @part.nil?
@@ -308,8 +315,8 @@ class PartsController < ApplicationController
 
 	def index_
 		fname= "#{controller_class_name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
-		LOG.debug (fname){"filter_types=#{params[:filter_types]}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"filter_types=#{params[:filter_types]}"}
 		@parts = Part.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 	end
 

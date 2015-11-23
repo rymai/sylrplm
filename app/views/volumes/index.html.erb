@@ -1,11 +1,7 @@
 <h1><%= t(:volume_list) %><%= h_count_objects(@volumes) %></h1>
 <%= h_form_simple_query('/volumes', @volumes) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:new_volume), new_volume_path %> </td>
-		<td> <%= show_help("help_volumes") %> </td>
-	</tr>
-</table>
+<% form_tag({:controller=>:volumes, :action=>:index_execute}) do %>
+<%= h_menu_index_action("volume")%>
 <%= will_paginate(@volumes[:recordset]) %>
 <table>
 	<tr>
@@ -31,15 +27,12 @@
 		<td> <%= h volume.compress %> </td>
 		<td> <%= h volume.decompress %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_volume_path(volume) %> </td>
-		<td> <%= link_to h_img_destroy.to_s, volume, :confirm =>t(:msg_confirm), :method => :delete %> </td>
 		<td> <%= link_to h_img(:duplicate), new_dup_volume_path(volume) %> </td>
+		<td> <%= link_to h_img_destroy.to_s, volume, :confirm =>t(:msg_confirm), :method => :delete %> </td>
+		<td><%= check_box(:action_on,volume.id) %></td>
 	</tr>
 	<% end %>
 </table>
 <%= will_paginate(@volumes[:recordset]) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:new_volume), new_volume_path %> </td>
-		<td> <%= show_help("help_volumes") %> </td>
-	</tr>
-</table>
+<%= h_menu_index_action("volume")%>
+<%end%>

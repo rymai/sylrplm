@@ -14,7 +14,7 @@ LOG.level  = case Rails.env
 when "development"
   Logger::DEBUG
 when "test"
-  Logger::WARN
+  Logger::ERROR
 when "production"
   Logger::ERROR
 end
@@ -23,7 +23,7 @@ LOG.progname="Constantes"
 LOG.info {"Constantes du module SYLRPLM:"}
 SYLRPLM.constants.sort.each do |c|
   v = SYLRPLM.const_get(c)
-  LOG.debug("Constantes"){"#{c}\t\t= #{v}"}
+  LOG.debug("Constante"){"#{c}\t\t= #{v}"}
 end
 LOG.info ("sylrplm"){"env=#{Rails.env.inspect} loglevel=#{LOG.level}"}
 LOG.info ("sylrplm"){"--------------------------------------------"}

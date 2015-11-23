@@ -1,16 +1,12 @@
-<h1><%= t(:typesobjects_list) %><%= h_count_objects(@typesobjects)%> </h1>
+<h1><%= t(:typesobject_list) %><%= h_count_objects(@typesobjects)%> </h1>
 <% unless @typesobject.nil? %>
 <% form_for(@typesobject) do |f| %>
 <%= f.error_messages %>
 <% end %>
-<% end %>
+<% else %>
 <%= h_form_simple_query('/typesobjects', @typesobjects) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:new_typesobject), new_typesobject_path %> </td>
-		<td> <%= show_help("help_typesobjects") %> </td>
-	</tr>
-</table>
+<% form_tag({:controller=>:typesobjects, :action=>:index_execute}) do %>
+<%= h_menu_index_action("typesobject")%>
 <%= will_paginate(@typesobjects[:recordset]) %>
 <table>
 	<tr>
@@ -21,7 +17,7 @@
 		<th> <%= t(:label_typesobject_father) %> </th>
 		<th <%= sort_td_class_helper "fields" %>> <%= sort_link_helper t(:label_fields), "fields" %> </th>
 		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %> </th>
-		<th></th><th></th>
+		<th></th><th></th><th></th>
 	</tr>
 	<% @typesobjects[:recordset].each do |typesobject| %>
 	<tr class='<%= cycle("even", "odd") %>'>
@@ -34,14 +30,12 @@
 		<td> <%= h typesobject.domain %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_typesobject_path(typesobject) %> </td>
 		<td> <%= h_menu_duplicate(typesobject) %> </td>
-		<td> <%= link_to h_img_destroy.to_s, typesobject, :confirm => t(:msg_confirm), :method => :delete %> </td>
+		<td> <%= h_destroy(typesobject) %> </td>
+	<td><%= check_box(:action_on,typesobject.id) %></td>
 	</tr>
 	<% end %>
 </table>
 <%= will_paginate(@typesobjects[:recordset]) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:new_typesobject), new_typesobject_path %> </td>
-		<td> <%= show_help("help_typesobjects") %> </td>
-	</tr>
-</table>
+<%= h_menu_index_action("typesobject")%>
+<%end%>
+<%end%>

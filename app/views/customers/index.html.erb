@@ -1,17 +1,13 @@
-<h1><%= t("customer_list") %><%= h_count_objects(@customers) %></h1>
+<h1><%= t(:customer_list) %><%= h_count_objects(@customers) %></h1>
 <% unless @customer.nil? %>
 <% form_for(@customer) do |f| %>
 <%= f.error_messages %>
 <% end %>
-<% end %>
+<% else %>
 <%= h_form_simple_query('/customers', @customers) %>
+<% form_tag({:controller=>:customers, :action=>:index_execute}) do %>
 <% unless param_equals?("todo", "select") %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("new_customer"), new_customer_path %> </td>
-		<td> <%= show_help("help_customers") %> </td>
-	</tr>
-</table>
+<%=h_menu_index_action("customer")%>
 <%end%>
 <% if @myparams[:list_mode] == t(:list_mode_icon) %>
 <%= h_thumbnails_objs @customers %>
@@ -31,6 +27,7 @@
 		<th <%= sort_td_class_helper "domain" %>><%= sort_link_helper t("label_domain"), "domain" %></th>
 		<th></th><th></th>
 		<th></th><th></th>
+		<th></th><th></th>
 	</tr>
 	<% @customers[:recordset].each do |customer| %>
 	<tr class='<%= cycle("even", "odd") %>'>
@@ -41,22 +38,22 @@
 		<td> <%= h_explorer customer.statusobject, :name_translate unless customer.statusobject.nil? %> </td>
 		<td> <%= h_explorer customer.owner, :login %> </td>
 		<td> <%= h_explorer customer.group, :name_translate %> </td>
-		<td> <%= h_explorer customer.projowner %> </td>
+		<td> <%= h_explorer customer.projowner %> (<%= customer.projowner.typeaccess.name_translate unless customer.projowner.typeaccess.nil? %>)</td>
 		<td> <%= l customer.date %> </td>
 		<td> <%= h customer.domain %> </td>
 		<% unless param_equals?("todo", "select") %>
 		<td> <%= link_to h_img_edit.to_s, edit_customer_path(customer) %> </td>
 		<td> <%= link_to h_img_edit_lifecycle.to_s, {:controller=>"customers", :action=>"edit_lifecycle", :id => customer.id} %> </td>
-		<td> <%= link_to h_img_destroy.to_s, customer, :confirm => t("msg_confirm"), :method => :delete %> </td>
 		<td> <%= link_to h_img(:duplicate), new_dup_customer_path(customer) %> </td>
 		<td> <% if logged_in? %>
 		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => customer.id}, :method => :get %>
 		<% end %> </td>
+		<td><%= h_destroy(customer) %></td>
+		<td><%= check_box(:action_on,customer.id) %></td>
 		<% if customer.revisable?  %>
 		<td> <%= h_img_revise.to_s %></td>
 		<%end%>
-		<% else %> <td><%=select_button(customer)%>
-		</td>
+		<% else %> <td><%= select_button(customer)%> </td>
 		<%end%>
 	</tr>
 	<% end %>
@@ -64,10 +61,7 @@
 <% end %>
 <%= will_paginate(@customers[:recordset]) %>
 <% unless param_equals?("todo", "select") %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("new_customer"), new_customer_path %> </td>
-		<td> <%= show_help("help_customers") %> </td>
-	</tr>
-</table>
+<%=h_menu_index_action("customer")%>
 <%end%>
+<%end%>
+<% end %>

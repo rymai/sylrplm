@@ -7,13 +7,22 @@ class UsersController < ApplicationController
 	# GET /users
 	# GET /users.xml
 	def index
-		fname= "#{self.class.name}.#{__method__}"
-		@current_users = User.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
-		#LOG.info (fname) {"@current_users=#{@current_users}"}
+		index_
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @current_users }
 		end
+	end
+
+	def index_
+		fname= "#{self.class.name}.#{__method__}"
+		@current_users = User.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+	#LOG.info (fname) {"@current_users=#{@current_users}"}
+
+	end
+
+	def index_execute
+		ctrl_index_execute
 	end
 
 	# GET /users/1
@@ -25,8 +34,6 @@ class UsersController < ApplicationController
 			format.xml  { render :xml => @the_user }
 		end
 	end
-
-
 
 	# GET /users/new
 	# GET /users/new.xml
@@ -147,7 +154,7 @@ class UsersController < ApplicationController
 		respond_to do |format|
 			if @the_user.update_attributes(params_user)
 				flash[:notice] = t(:ctrl_user_updated, :user => @the_user.login)
-					show_
+				show_
 				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
@@ -228,13 +235,13 @@ class UsersController < ApplicationController
 			end
 		else
 			if @the_user.update_attributes(params[:user])
-				#puts "users_controller.update:update_attributes ok:#{params[:user]}"
-				ok=true
+			#puts "users_controller.update:update_attributes ok:#{params[:user]}"
+			ok=true
 			else
-				#puts "users_controller.update:update_attributes ko:#{params[:user]}"
-				msg = @the_user.errors.full_messages
-				#puts "users_controller.update:update_attributes ko:msg=#{msg}"
-				ok=false
+			#puts "users_controller.update:update_attributes ko:#{params[:user]}"
+			msg = @the_user.errors.full_messages
+			#puts "users_controller.update:update_attributes ko:msg=#{msg}"
+			ok=false
 			end
 		end
 

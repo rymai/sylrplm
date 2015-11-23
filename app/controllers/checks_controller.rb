@@ -66,11 +66,11 @@ class ChecksController < ApplicationController
 		@check.update_accessor(current_user)
 		respond_to do |format|
 			if @check.update_attributes(params[:check])
-				flash[:notice] = t(:ctrl_object_updated, :typeobj => 'Check', :ident => @check.controller)
+				flash[:notice] = t(:ctrl_object_updated, :typeobj => 'Check', :ident => @check.ident)
 				format.html { redirect_to(@check) }
 				format.xml  { head :ok }
 			else
-				flash[:error] = t(:ctrl_object_not_updated, :typeobj => 'Check', :ident => @check.controller)
+				flash[:error] = t(:ctrl_object_not_updated, :typeobj => 'Check', :ident => @check.ident, :error => @check.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @check.errors, :status => :unprocessable_entity }
 			end

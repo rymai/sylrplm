@@ -27,17 +27,17 @@ namespace :sylrplm do
   end
   desc 'run the scheduler'
   task :run_scheduler => [:connect, :environment] do |t, args|
-	
+
 		#p Rufus.parse_time_string '500'      # => 0.5
 		#p Rufus.parse_time_string '1000'     # => 1.0
 		#p Rufus.parse_time_string '1h'       # => 3600.0
 		#p Rufus.parse_time_string '1h10s'    # => 3610.0
 		#p Rufus.parse_time_string '1w2d'     # => 777600.0
-		
+
 		#p Rufus.to_time_string 60              # => "1m"
 		#p Rufus.to_time_string 3661            # => "1h1m1s"
 		#p Rufus.to_time_string 7 * 24 * 3600   # => "1w"
-		
+
 		#mm hh jj MMM JJJ tâche
 		#mm représente les minutes (de 0 à 59)
 		#    hh représente l'heure (de 0 à 23)
@@ -82,7 +82,7 @@ namespace :sylrplm do
     puts "import_domain:path is #{path}, domain is #{domain}, site is #{site}"
     fixtures_path = "#{path}/#{domain}"
     unless domain.empty?
-      
+
 	    #props= PlmServices.get_properties("sites")
     	###truncate
       #Rake::Task["db:fixtures:load FIXTURES_PATH=#{fixtures_path}"].invoke
@@ -92,14 +92,14 @@ namespace :sylrplm do
       puts "import_domain:metadata loading terminated"
       unless site.blank?
      	puts "import_domain:volumes creation"
-	    PlmServices.set_property("sites","central",site) 
-	    Volume.find_all.each do |vol| 
+	    #PlmServices.set_property("sites","central",site)
+	    Volume.find_all.each do |vol|
 	    	 vol.save
 	    	end
 	    end
       puts "import_domain:loading of datafiles if needed"
       # chargement des fichiers
-      #PlmServices.set_property("sites","central",site) 
+      #PlmServices.set_property("sites","central",site)
      	props= PlmServices.get_properties("sites")
       Datafile.all.each do |file|
       	unless file.filename.nil?
@@ -115,9 +115,9 @@ namespace :sylrplm do
       $stdout.puts "Path and Domain are mandatory"
     end
   end
-  
+
   desc 'update access datas'
-  task :update_access => [:connect, :environment] do 
+  task :update_access => [:connect, :environment] do
       ::Access.reset
   end
 
@@ -202,21 +202,21 @@ namespace :sylrplm do
       assocs = {}
       domains = []
       domains << "admin"
-      domains << adomain 
+      domains << adomain
      puts "************************************"
      stars="*********************************************\n"
      puts "Loop on domain"
       domains.each do |domain|
         puts "Domain:#{domain} -------------------------------"
-        Object.subclasses_of(ActiveRecord::Base).each do |model|         
-  				begin                     
+        Object.subclasses_of(ActiveRecord::Base).each do |model|
+  				begin
            reflections = model.reflect_on_all_associations(:has_and_belongs_to_many)
            # puts "#{model}.reflections=#{reflections.count}" if reflections.count>0
             # reflections.each do |r|
               # puts "#{r}:#{model} have #{r.macro} to #{r.name} on table=#{r.options[:join_table]}"+
               # " active_record=#{r.active_record} class_name=#{r.class_name}"+
               # " foreign_key=#{r.association_foreign_key} key_name=#{r.primary_key_name}"
-            # end          
+            # end
             # model attributs list
             cols=[]
             #model.columns.reject{ |c| c.primary}. each do |col|
@@ -240,7 +240,7 @@ namespace :sylrplm do
                   out_yml.write( obj.to_yaml)
                   reflections.each do |r|
                   	rname = r.name.to_s
-                  	#puts "reflexion=#{r.inspect} dernier caractere=#{rname[rname.length-1,1]}"                	
+                  	#puts "reflexion=#{r.inspect} dernier caractere=#{rname[rname.length-1,1]}"
                     rname = rname.chop if rname[rname.length-1,1]=="s"
                     #puts "**************** rname=#{rname}"
                     #ext_ids = obj.send("#{r.association_foreign_key}s")
@@ -274,15 +274,15 @@ namespace :sylrplm do
               out_yml.close
               out_yml = nil
             #
-            end      
+            end
           rescue Exception => e
             $stderr.puts "Error during export_domain:#{e}"
             stack=""
       			e.backtrace.each do |x|
         		puts x+"\n"
-      		end 
+      		end
           out_yml.close unless out_yml.nil?
-          rel_yml.close unless rel_yml.nil?     
+          rel_yml.close unless rel_yml.nil?
           end
         end
       end
@@ -291,7 +291,7 @@ namespace :sylrplm do
       assocs.keys.each do |key|
         out_yml = File.open("#{fixtures_path}/#{key}.yml", "w")
         puts "Opening #{out_yml.inspect} "
-        assocs[key].each do |assoc|   
+        assocs[key].each do |assoc|
           #out_yml.write "#{r.primary_key_name}_#{obj.id}_#{r.association_foreign_key}_#{ext_id}:\n"
           str=""
           head=""

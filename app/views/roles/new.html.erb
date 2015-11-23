@@ -3,7 +3,7 @@
 <% form_for(@role) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "shared/menu_new", :locals => {:object => @role, :f => f, :fonct=>fonct}) %>
-<%= render(:partial => "roles/edit",:locals => { :f => f, :fonct=>fonct }) %>
+<%= render(:partial => "roles/edit",:locals => {:object => @role, :f => f, :fonct=>fonct }) %>
 <%= render(:partial => "shared/submit_new", :locals => {:object => @role, :f => f, :fonct=>fonct}) %>
 
 <% end %>

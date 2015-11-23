@@ -131,8 +131,10 @@ has_many :variant_effectivities,
 
 	# modifie les attributs avant edition
 	def self.find_edit(object_id)
+		fname= "#{self.class.name}.#{__method__}"
 		obj=find(object_id)
 		obj.edit
+		LOG.debug (fname) {"part find_edit :type_values=#{obj.type_values}"} if obj.respond_to? :type_values
 		obj
 	end
 

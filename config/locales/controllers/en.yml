@@ -62,7 +62,7 @@ en:
   list_mode_details_icon: Details with icon
   list_mode_icon: Icon only
   data_access_forbidden: "Data access forbidden: %{msg}"
-  host_not_defined: "Host not defined, define it in Type object property/sites/central=xxx"
+  host_not_defined: "Host not defined, define it in Type object property/sites/SITE_CENTRAL=xxx"
   database_not_consistency: "Database not consistency: %{msg}"
   # customers
   ctrl_customer: "Customer"

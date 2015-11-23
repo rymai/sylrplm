@@ -85,11 +85,14 @@ fr:
   label_liste_mode: Type de liste
   switch_all_links: "Tous-Aucun"
   update_type: Rafraichir suivant le type
+  submit_copy: Copie
+  submit_destroy: Supprime
   # attributs generaux
   faq_question: Question
   faq_answer: Réponse
   updated_at: Mis à jour
   id: Id
+  not_revisable: Non révisable
   # histories
   label_history_since: Depuis
   label_history_source: Source
@@ -126,6 +129,8 @@ fr:
   mnu_parts_PRD: Produit
   mnu_parts_STR: Structure
   mnu_parts_VAR: Variante
+  mnu_parts_MEETING: Réunion
+  mnu_parts_DECISION: Décision
   mnu_projects_any_type: Tous types
   mnu_projects_product: Produit
   mnu_projects_$PROJ_ACCOUNT: Projet personnel
@@ -193,26 +198,27 @@ fr:
   label_add_forum: Ajouter un forum
   submit_add_objects: Ajouter les objets
   # tree (dans views show)
-  label_document_document: Documents associés
-  label_part_document: Documents associés
-  label_project_document: Documents associés
+  label_document_document: Documents associés au document
+  label_part_document: Documents associés à l article
+  label_project_document: Documents associés au projet
   label_customer_document: Documents associés
-  label_document_part: Articles associés
-  label_part_part: Articles associés
-  label_project_part: Articles associés
-  label_customer_part: Articles associés
-  label_document_project: Projets associés
-  label_part_project: Projets associés
-  label_project_project: Projets associés
-  label_customer_project: Projets associés
-  label_document_user: Utilisateurs associés
-  label_part_user: Utilisateurs associés
-  label_project_user: Utilisateurs associés
-  label_customer_user: Utilisateurs associés
-  label_document_forum: Discussions associées
-  label_part_forum: Discussions associées
-  label_project_forum: Discussions associées
-  label_customer_forum: Discussions associées
+  label_document_part: Articles associés au document
+  label_part_part: Articles associés à l article
+  label_project_part: Articles associés au projet
+  label_customer_part: Articles associés au client
+  label_document_project: Projets associés au document
+  label_part_project: Projets associés à l article
+  label_project_project: Projets associés  au projet
+  label_customer_project: Projets associés au client
+  label_document_user: Utilisateurs associés au document
+  label_part_user: Utilisateurs associés à l article
+  label_project_user: Utilisateurs associés au projet
+  label_customer_user: Utilisateurs associés au client
+  label_document_forum: Discussions associées au document
+  label_part_forum: Discussions associées à l article
+  label_project_forum: Discussions associées au projet
+  label_customer_forum: Discussions associées au client
+  label_document_customer: Client associés au document
   label_view: Vue
   label_variant: Variante
   label_all_variants: Toutes variantes
@@ -621,10 +627,10 @@ fr:
   legend_account: Mon compte
   # typesobjects
   legend_typesobject: "Renseignez les propriétés du type d' objets"
-  typesobjects_list: Liste des types d' objets
-  typesobjects_new: Nouveau type d' objet
-  typesobjects_show: Détail du type d' objet
-  typesobjects_edit:  Edition du type d' objet
+  typesobject_list: Liste des types d' objets
+  typesobject_new: Nouveau type d' objet
+  typesobject_show: Détail du type d' objet
+  typesobject_edit:  Edition du type d' objet
   typesobject_new_dup: Duplication de type d' objet
   label_typesobject_name_translate: Type
   label_typesobject_rank: Rang du type

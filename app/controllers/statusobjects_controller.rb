@@ -11,11 +11,20 @@ class StatusobjectsController < ApplicationController
 	# GET /statusobjects
 	# GET /statusobjects.xml
 	def index
-		@statusobjects = Statusobject.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		index_
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @statusobjects }
 		end
+	end
+
+	def index_
+		@statusobjects = Statusobject.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+
+	end
+
+	def index_execute
+		ctrl_index_execute
 	end
 
 	# GET /statusobjects/1
@@ -104,7 +113,7 @@ class StatusobjectsController < ApplicationController
 				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
-				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name, :error => @statusobject.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @statusobject.errors, :status => :unprocessable_entity }
 			end

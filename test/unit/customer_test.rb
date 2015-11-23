@@ -15,13 +15,13 @@ class CustomerTest < ActiveSupport::TestCase
 
 	def test_unique_ident
 		customer1a = Customer.new(:ident => "Customer01",
-		:designation => "Mon customer")
+		:designation => "Mon customer",:owner_id=>1)
 		assert customer1a.valid?
 		assert customer1a.save
 		customer1b = Customer.new(:ident => "Customer01",
-		:designation => "Mon customer")
+		:designation => "Mon customer",:owner_id=>1)
 		assert !customer1b.valid?
 		assert_equal  I18n.translate('activerecord.errors.messages')[:taken] , customer1b.errors.on(:ident)
 	end
-	
+
 end

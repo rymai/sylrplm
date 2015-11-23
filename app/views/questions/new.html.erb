@@ -3,7 +3,7 @@
 <% form_for(@faq) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "shared/menu_new", :locals => {:object => @faq, :f => f, :fonct=>fonct}) %>
-<%= render(:partial => "questions/edit",:locals => { :f => f, :fonct=>fonct }) %>
+<%= render(:partial => "questions/edit",:locals => {:object => @faq, :f => f, :fonct=>fonct }) %>
 <%= render(:partial => "shared/submit_new", :locals => {:object => @faq, :f => f, :fonct=>fonct}) %>
 
 <% end %>

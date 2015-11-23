@@ -10,7 +10,6 @@
 		<table>
 			<% @datas[domain].each do |key, value| %>
 			<tr class='<%= cycle("even", "odd") %>'>
-				<%puts "domain=#{domain} key=#{key} value=#{value}"%>
 				<td> <%= @datas[domain][key] %></td>
 				<td> <%= link_to t("ctrl_#{key}") ,{:controller=>get_controller_from_model_type(key), :action=>"index"}   %></td>
 			</tr>

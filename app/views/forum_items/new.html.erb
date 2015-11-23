@@ -1,11 +1,11 @@
 <h1><%= t(:forum_item_new) %></h1>
 <% form_for(@forum_item) do |f| %>
 <%= f.error_messages %>
-<%= render(:partial => "forum_items/edit",:locals => { :f => f, :fonct=>"new" }) %>
+<%= render(:partial => "forum_items/edit",:locals => { :object=>@forum_item, :f => f, :fonct=>"new" }) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= f.submit t(:create) %> </td>
 		<td> <%= link_to t(:list), forum_items_path %> </td>
 	</tr>
 </table>
-<% end %> 
+<% end %>

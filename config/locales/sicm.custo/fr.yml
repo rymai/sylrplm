@@ -90,6 +90,8 @@ fr:
   typesobject_name_calculsheet: Tableur
   typesobject_name_volumes_dir: Répertoire des volumes
   typesobject_name_ISSUE: Probleme
+  typesobject_name_MEETING: Réunion
+  typesobject_name_DECISION: Décision
   # statusobject
   typesobject_name_ready: Prêt
   typesobject_name_approved: Approuvé
@@ -153,6 +155,7 @@ fr:
   mnu_documents_p2d: Plan 2D
   mnu_projects_standard: Projet de standards
   mnu_projects_sub-assembly: Projet sous ensemble
+  mnu_projects_public: Projet publique
   mnu_customers_internal: Client interne
   mnu_customers_private: Client privé
   mnu_customers_public: Client public

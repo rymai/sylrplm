@@ -159,7 +159,7 @@ module Controllers
 		# enlever le 's' de fin
 		# :controller=>parts devient part
 		def get_model_type(params)
-			fname=self.class.name+"."+__method__.to_s
+			fname="#{self.class.name}.#{__method__}:"
 			ret = case params[:controller]
 			when "documents" then params[:controller].chop
 			when "parts" then params[:controller].chop
@@ -169,6 +169,9 @@ module Controllers
 			when "users" then params[:controller].chop
 			when "links" then params[:controller].chop
 			when "relations" then params[:controller].chop
+			when "volumes" then params[:controller].chop
+			when "typesobjects" then params[:controller].chop
+			when "statusobjects" then params[:controller].chop
 			else params[:controller]
 			end
 			LOG.debug (fname) {"#{params[:controller]}=#{ret}"}
@@ -182,15 +185,28 @@ module Controllers
 		end
 
 		def get_model(params)
-			fname=self.class.name+"."+__method__.to_s+":"
+			fname="#{self.class.name}.#{__method__}:"
 			# parts devient Part
 			LOG.debug (fname) {"params=#{params.inspect}"}
 			eval get_model_type(params).capitalize
 		end
 
 		def get_model_name(model)
+			fname="#{self.class.name}.#{__method__}:"
 			# Part devient part
-			model.class.name.downcase
+			ret=model.class.name.downcase
+			LOG.debug (fname) {"model=#{model} get_model_name=#{ret}"}
+			ret
+		end
+
+		def get_model_from_controller
+			fname="#{self.class.name}.#{__method__}:"
+			#PartsController devient Part
+			pos=self.class.name.index("sController")
+			model_name=self.class.name[0,pos]
+			ret=eval model_name
+			LOG.debug (fname) {"model_name=#{model_name} model=#{ret}"}
+			ret
 		end
 
 		def get_themes(default)
@@ -260,7 +276,7 @@ module Controllers
 			ret
 		end
 
-		def  ctrl_update_type plm_object, type_id
+		def  ctrl_update_type(plm_object, type_id)
 			fname= "#{self.class.name}.#{__method__}"
 			type=Typesobject.find(type_id)
 			LOG.debug (fname){"type to activate=#{type} on #{plm_object}"}
@@ -411,7 +427,7 @@ module Controllers
 					else
 						#LOG.debug (fname){"@datafile not saved"}
 						flash[:error] = t(:ctrl_object_not_saved,:typeobj =>t(:ctrl_datafile),:ident=>nil,:msg=>nil)
-						@types = Typesobject.find_fget_typesor("datafile")
+						@types = Typesobject.get_types("datafile")
 						format.html { render :action => :new_datafile, :id => at_object.id   }
 					end
 				else
@@ -524,6 +540,44 @@ module Controllers
 		  	params[mdl_name][:group_id]=current_user.group_id if self.instance_variable_defined?(:@group_id)
 		  	params[mdl_name][:projowner_id]=current_user.project_id if self.instance_variable_defined?(:@projowner_id)
 		   LOG.debug (fname) {" params=#{params[mdl_name].inspect}"}
+		end
+
+
+		#
+		# execute an action on several objects from index page
+		#
+		def ctrl_index_execute()
+			fname= "#{self.class.name}.#{__method__}"
+			LOG.debug(fname){"params=#{params}"}
+			LOG.debug(fname){"action_on=#{params["action_on"]}"}
+			model=get_model_from_controller
+			params["action_on"].each do |id,check|
+				#LOG.debug(fname){"id #{id} check=#{check} commit=#{params["commit"]}"}
+				if(check.to_i == 1)
+					LOG.debug(fname){"id #{id} ok check=#{check} commit=#{params["commit"]} #{t("submit_copy")} #{t("submit_destroy")}"}
+					#object = eval "#{model}.find(#{id})"
+					object = model.find(id)
+					if(params["commit"] == t("submit_copy"))
+					#d'apres plm_object_controller add_favori
+					LOG.debug(fname){"add favori #{object}"}
+					@favori.add(object)
+					end
+					if(params["commit"] == t("submit_destroy"))
+						LOG.debug(fname){"destroy #{object}"}
+					object.destroy
+					end
+				else
+					#LOG.debug(fname){"id #{id} ko check=#{check}"}
+				end
+			end
+			index_
+			respond_to do |format|
+				params[:controller]=
+				url={:controller=>get_controller_from_model_type(model.name.downcase), :action=>"index"}
+				LOG.debug(fname){"ctrl_index_execute:url= #{url}"}
+				format.html { redirect_to(url) }
+				format.xml  { render :xml => @parts[:recordset] }
+			end
 		end
 
 		#

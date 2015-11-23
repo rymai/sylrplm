@@ -16,6 +16,8 @@ class Typesobject < ActiveRecord::Base
 	named_scope :find_all , order_default.all
 	#
 	MODELS_PLM=["customer", "document", "part", "project"]
+	NO_TYPE="-NO_TYPE-"
+
 	#
 	def initialize(params=nil)
 		super(params)
@@ -27,6 +29,7 @@ class Typesobject < ActiveRecord::Base
 	def self.get_all
 		order_default.find_all
 	end
+
 	def father_name
 		(father ? father.name : "")
 	end
@@ -37,10 +40,10 @@ class Typesobject < ActiveRecord::Base
 		LOG.debug(fname) {"self=#{self.inspect} others=#{res.inspect}"}
 		#
 		if res.is_a?(Array)
-		   ret=res
+		ret=res
 		else
-			ret=[]
-			ret<<res
+		ret=[]
+		ret<<res
 		end
 		ret
 	end
@@ -76,10 +79,10 @@ class Typesobject < ActiveRecord::Base
 		stypes = order_default.find_all_by_forobject(s_object.to_s)
 		ret= []
 		stypes.each do |type|
-		LOG.debug (fname) {"type:#{type}"}
+			LOG.debug (fname) {"type:#{type}"}
 			if type.name != sgeneric || with_generic
-				###############TODO not here !!! someone need he reel name type.name = type.name_translate
-				ret << type
+			###############TODO not here !!! someone need he reel name type.name = type.name_translate
+			ret << type
 			end
 		end
 		unless ret.is_a?(Array)
@@ -158,15 +161,23 @@ class Typesobject < ActiveRecord::Base
 	#we take all fields except _type_only_
 	def get_fields
 		fname="Typesobject.#{__method__}:#{name}"
+		LOG.debug (fname) {">>>>"}
 		ret=nil
 		values = get_fields_values()
-		#LOG.debug (fname) {"values=#{values}"}
+		LOG.debug(fname) {"avant remove type=#{values}"}
+		newvalues={}
 		unless values.nil?
-			values.delete("_type_only_")
-			#LOG.debug (fname) {"values after remove=#{values}"}
-			ret = ActiveSupport::JSON.encode(values)
+			##modif de codage des valeurs values.delete("_type_only_")
+			values.each do |key,value|
+				unless key[0,"_type_only_".length]=="_type_only_"
+					newvalues[key]=value[::Models::SylrplmCommon::TYPE_VALUES_VALUE]
+					newvalues[key]="" if newvalues[key].blank?
+				end
+			end
+			LOG.debug(fname) {"apres remove type=#{newvalues}"}
+			ret = ActiveSupport::JSON.encode(newvalues)
 		end
-		#LOG.debug (fname) {"fields=#{ret}"}
+		LOG.debug (fname) {"<<<<fields=#{ret}"}
 		ret
 	end
 
@@ -183,42 +194,30 @@ class Typesobject < ActiveRecord::Base
 
 	def get_fields_values_type_only_by_key(key)
 		fname="Typesobject.#{__method__}:#{name}"
-		LOG.debug (fname) {"key=#{key}"}
+		LOG.debug(fname) {"key=#{key}  self=#{self}"}
 		fields_values = get_fields_values_type_only
-		fields_values[key] unless fields_values.nil?
+		fields_values["_type_only_#{key}"] unless fields_values.nil?
 	end
 
 	def get_fields_values_type_only
-		get_fields_values_("_type_only_")
+		fname="Typesobject.#{__method__}:#{name}"
+		ret=get_fields_values_
+		LOG.debug(fname) {"fields_values=#{ret}"}
+		ret.each do |key,value|
+			if key.start_with?("_type_only_")
+				ret.delete(key)
+			end
+		end
 	end
 
 	def get_fields_values_(key=nil)
 		fname="Typesobject.#{__method__}:#{name}"
+		LOG.debug(fname) {">>>>key=#{key} self=#{self}"}
 		ret=nil
 		if self.respond_to? :fields
 			unless fields.blank?
-				#LOG.debug (fname) {"key=#{key} fields=#{fields}"}
-				begin
-					decod = ActiveSupport::JSON.decode(fields)
-					#LOG.debug (fname) {"key=#{key} decod=#{decod}"}
-=begin
-ret={}
-begin
-decod.each do |decod_part|
-ret[decod_part[0]] = eval(decod_part[1])
-LOG.debug (fname) {"eval(#{decod_part[1]}=#{ret[decod_part[0]]}"}
-end
-rescue Exception=>e
-LOG.error (fname) {"key=#{key} Decod is not a ruby bloc : #{decod} : #{e}"}
-ret=decod
-end
-=end
-					ret=decod
-				rescue Exception => e
-					LOG.error (fname) {"key=#{key} Error during field decoding from JSON : fields=#{fields}"}
-					LOG.error (fname) {"key=#{key} Error during field decoding from JSON : Exception=#{e}"}
-					ret=nil
-				end
+				LOG.debug(fname) {"key='#{key}' fields=#{fields}"}
+				ret = self.decod_json(fields, key, self.name)
 			end
 		end
 		#LOG.debug (fname) {"key=#{key} ret=#{ret}"}
@@ -227,7 +226,7 @@ end
 			ret=ret[key]
 			end
 		end
-		#LOG.debug (fname) {"key=#{key} ret=#{ret}"}
+		LOG.debug(fname) {"key=#{key} ret=#{ret}"}
 		ret
 	end
 

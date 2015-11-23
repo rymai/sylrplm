@@ -1,15 +1,13 @@
-<h1>Listing relations</h1>
+<h1><%= t(:relation_list) %><%= h_count_objects(@relations)%> </h1>
 <% unless @relation.nil? %>
 <% form_for(@relation) do |f| %>
 <%= f.error_messages %>
 <% end %>
-<% end %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:new_relation), new_relation_path %> </td>
-		<td> <%= show_help("help_relations") %> </td>
-	</tr>
-</table>
+<% else %>
+<%= h_form_simple_query('/relations', @relations) %>
+<% form_tag({:controller=>:relations, :action=>:index_execute}) do %>
+<%= h_menu_index_action("relation")%>
+<%= will_paginate(@relations[:recordset]) %>
 <table>
 	<tr>
 		<th <%= sort_td_class_helper "name" %>> <%= sort_link_helper t("label_name"), "name" %></th>
@@ -24,7 +22,7 @@
 		<th><%= t("label_cardin_use_min")%></th>
 		<th><%= t("label_cardin_use_max")%></th>
 		<th><%= t("label_views")%></th>
-		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %></th><th></th><th></th>
+		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %></th><th></th><th></th><th></th>
 	</tr>
 	<% @relations[:recordset].each do |relation| %>
 	<tr class='<%= cycle("even", "odd") %>'>
@@ -45,12 +43,11 @@
 
 		<td> <%= h_menu_duplicate(relation) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, relation, :confirm => t(:msg_confirm), :method => :delete %> </td>
+		<td><%= check_box(:action_on,relation.id) %></td>
 	</tr>
 	<% end %>
 </table>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:new_relation), new_relation_path %> </td>
-		<td> <%= show_help("help_relations") %> </td>
-	</tr>
-</table>
+<%= will_paginate(@relations[:recordset]) %>
+<%= h_menu_index_action("relation")%>
+<%end%>
+<%end%>

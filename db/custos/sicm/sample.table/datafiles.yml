@@ -15,9 +15,7 @@ Datafile_14:
   group_id: '1'
   projowner_id: '1'
   domain: sample.table
-  type_values: '{"app_name": "", "app_version": "", "build_model_datafile": "", "tool":
-    "/usr/bin/libreoffice --writer", "build_model_tree_begin": "", "build_model_tree_file":
-    "", "build_model_tree_end": "end  \n"}'
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
 
 Datafile_15:
   id: '15'
@@ -35,9 +33,7 @@ Datafile_15:
   group_id: '1'
   projowner_id: '1'
   domain: sample.table
-  type_values: '{"app_name": "", "app_version": "", "build_model_datafile": "", "tool":
-    "", "build_model_tree_begin": "", "build_model_tree_file": "", "build_model_tree_end":
-    "end  \n"}'
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
 
 Datafile_16:
   id: '16'
@@ -55,9 +51,7 @@ Datafile_16:
   group_id: '1'
   projowner_id: '1'
   domain: sample.table
-  type_values: '{"app_name": "", "app_version": "", "build_model_datafile": "", "tool":
-    "", "build_model_tree_begin": "", "build_model_tree_file": "", "build_model_tree_end":
-    ""}'
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
 
 Datafile_17:
   id: '17'
@@ -75,9 +69,7 @@ Datafile_17:
   group_id: '1'
   projowner_id: '1'
   domain: sample.table
-  type_values: '{"app_name": "", "app_version": "", "build_model_datafile": "", "tool":
-    "", "build_model_tree_begin": "", "build_model_tree_file": "", "build_model_tree_end":
-    ""}'
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
 
 Datafile_18:
   id: '18'
@@ -95,9 +87,7 @@ Datafile_18:
   group_id: '1'
   projowner_id: '1'
   domain: sample.table
-  type_values: '{"app_name": "", "app_version": "", "build_model_datafile": "", "tool":
-    "/usr/bin/libreoffice --writer", "build_model_tree_begin": "", "build_model_tree_file":
-    "", "build_model_tree_end": ""}'
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
 
 Datafile_19:
   id: '19'
@@ -115,7 +105,7 @@ Datafile_19:
   group_id: '1'
   projowner_id: '1'
   domain: sample.table
-  type_values: '{"code": ""}'
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
 
 Datafile_20:
   id: '20'
@@ -133,9 +123,7 @@ Datafile_20:
   group_id: '1'
   projowner_id: '1'
   domain: sample.table
-  type_values: '{"app_name": "", "app_version": "", "build_model_datafile": "", "tool":
-    "/usr/bin/libreoffice --writer", "build_model_tree_begin": "", "build_model_tree_file":
-    "", "build_model_tree_end": "end  \n"}'
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
 
 Datafile_21:
   id: '21'
@@ -153,9 +141,7 @@ Datafile_21:
   group_id: '1'
   projowner_id: '1'
   domain: sample.table
-  type_values: '{"app_name": "", "app_version": "", "build_model_datafile": "", "tool":
-    "", "build_model_tree_begin": "", "build_model_tree_file": "", "build_model_tree_end":
-    "end  \n"}'
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
 
 Datafile_22:
   id: '22'
@@ -173,9 +159,7 @@ Datafile_22:
   group_id: '1'
   projowner_id: '1'
   domain: sample.table
-  type_values: '{"app_name": "", "app_version": "", "build_model_datafile": "", "tool":
-    "", "build_model_tree_begin": "", "build_model_tree_file": "", "build_model_tree_end":
-    ""}'
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
 
 Datafile_23:
   id: '23'
@@ -193,9 +177,7 @@ Datafile_23:
   group_id: '1'
   projowner_id: '1'
   domain: sample.table
-  type_values: '{"app_name": "", "app_version": "", "build_model_datafile": "", "tool":
-    "/usr/bin/libreoffice --writer", "build_model_tree_begin": "", "build_model_tree_file":
-    "", "build_model_tree_end": "end  \n"}'
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
 
 Datafile_24:
   id: '24'
@@ -213,9 +195,7 @@ Datafile_24:
   group_id: '1'
   projowner_id: '1'
   domain: sample.table
-  type_values: '{"app_name": "", "app_version": "", "build_model_datafile": "", "tool":
-    "", "build_model_tree_begin": "", "build_model_tree_file": "", "build_model_tree_end":
-    ""}'
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
 
 Datafile_25:
   id: '25'
@@ -233,9 +213,7 @@ Datafile_25:
   group_id: '1'
   projowner_id: '1'
   domain: sample.table
-  type_values: '{"app_name": "", "app_version": "", "build_model_datafile": "", "tool":
-    "", "build_model_tree_begin": "", "build_model_tree_file": "", "build_model_tree_end":
-    ""}'
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
 
 Datafile_1:
   id: '1'
@@ -248,12 +226,12 @@ Datafile_1:
   volume_id: '1'
   revision: '2'
   ident: DF0000000001
-  filename: plateau_rectangulaire.scad
+  filename: db/custos/sicm/sample.table/datafiles/plateau_rectangulaire.scad
   content_type: application/vnd.oasis.opendocument.text
   group_id: '101'
   projowner_id: '2'
   domain: sample.table
-  type_values: '{"code": ""}'
+  type_values:
 
 Datafile_2:
   id: '2'
@@ -266,12 +244,12 @@ Datafile_2:
   volume_id: '1'
   revision: '2'
   ident: DF0000000002
-  filename: plateau_carre.scad
+  filename: db/custos/sicm/sample.table/datafiles/plateau_carre.scad
   content_type: application/vnd.oasis.opendocument.text
   group_id: '101'
   projowner_id: '2'
   domain: sample.table
-  type_values: '{"code": ""}'
+  type_values:
 
 Datafile_3:
   id: '3'
@@ -284,7 +262,7 @@ Datafile_3:
   volume_id: '1'
   revision: '1'
   ident: DF0000000003
-  filename: plateau_hexagonal.scad
+  filename: db/custos/sicm/sample.table/datafiles/plateau_hexagonal.scad
   content_type: application/vnd.oasis.opendocument.text
   group_id: '101'
   projowner_id: '2'
@@ -302,7 +280,7 @@ Datafile_4:
   volume_id: '7'
   revision: '1'
   ident: DF0000000004
-  filename: plaque.scad
+  filename: db/custos/sicm/sample.table/datafiles/plaque.scad
   content_type: application/vnd.oasis.opendocument.text
   group_id: '101'
   projowner_id: '2'
@@ -320,7 +298,7 @@ Datafile_6:
   volume_id: '7'
   revision: '1'
   ident: DF0000000006
-  filename: pied_carre_court.scad
+  filename: db/custos/sicm/sample.table/datafiles/pied_carre_court.scad
   content_type: application/vnd.oasis.opendocument.text
   group_id: '101'
   projowner_id: '2'
@@ -338,7 +316,7 @@ Datafile_7:
   volume_id: '7'
   revision: '1'
   ident: DF0000000007
-  filename: vis.scad
+  filename: db/custos/sicm/sample.table/datafiles/vis.scad
   content_type: application/vnd.oasis.opendocument.text
   group_id: '101'
   projowner_id: '2'
@@ -356,12 +334,12 @@ Datafile_8:
   volume_id: '7'
   revision: '1'
   ident: DF0000000008
-  filename: cote_cadre_court.scad
+  filename: db/custos/sicm/sample.table/datafiles/cote_cadre_court.scad
   content_type: application/vnd.oasis.opendocument.text
   group_id: '101'
   projowner_id: '2'
   domain: sample.table
-  type_values: '{"code": ""}'
+  type_values:
 
 Datafile_9:
   id: '9'
@@ -374,7 +352,7 @@ Datafile_9:
   volume_id: '7'
   revision: '1'
   ident: DF0000000009
-  filename: cote_cadre_long.scad
+  filename: db/custos/sicm/sample.table/datafiles/cote_cadre_long.scad
   content_type: application/vnd.oasis.opendocument.text
   group_id: '101'
   projowner_id: '2'
@@ -392,7 +370,7 @@ Datafile_10:
   volume_id: '7'
   revision: '1'
   ident: DF0000000010
-  filename: patin.scad
+  filename: db/custos/sicm/sample.table/datafiles/patin.scad
   content_type: application/vnd.oasis.opendocument.text
   group_id: '101'
   projowner_id: '2'
@@ -410,7 +388,7 @@ Datafile_11:
   volume_id: '7'
   revision: '1'
   ident: DF0000000011
-  filename: pied_carre_long.scad
+  filename: db/custos/sicm/sample.table/datafiles/pied_carre_long.scad
   content_type: application/vnd.oasis.opendocument.text
   group_id: '101'
   projowner_id: '2'
@@ -428,7 +406,7 @@ Datafile_12:
   volume_id: '7'
   revision: '1'
   ident: DF0000000012
-  filename: pied_rond_court.scad
+  filename: db/custos/sicm/sample.table/datafiles/pied_rond_court.scad
   content_type: application/vnd.oasis.opendocument.text
   group_id: '101'
   projowner_id: '2'
@@ -446,7 +424,7 @@ Datafile_13:
   volume_id: '7'
   revision: '1'
   ident: DF0000000013
-  filename: pied_rond_long.scad
+  filename: db/custos/sicm/sample.table/datafiles/pied_rond_long.scad
   content_type: application/vnd.oasis.opendocument.text
   group_id: '101'
   projowner_id: '2'
@@ -464,7 +442,7 @@ Datafile_31:
   volume_id: '7'
   revision: '1'
   ident: DF0000000037
-  filename: plateau_carre.png
+  filename: db/custos/sicm/sample.table/datafiles/plateau_carre.png
   content_type: image/png
   group_id: '101'
   projowner_id: '2'
@@ -482,7 +460,7 @@ Datafile_27:
   volume_id: '7'
   revision: '1'
   ident: DF0000000032
-  filename: vis.png
+  filename: db/custos/sicm/sample.table/datafiles/vis.png
   content_type: image/png
   group_id: '101'
   projowner_id: '2'
@@ -500,7 +478,7 @@ Datafile_33:
   volume_id: '7'
   revision: '2'
   ident: DF0000000040
-  filename: pied_carre_long.png
+  filename: db/custos/sicm/sample.table/datafiles/pied_carre_long.png
   content_type: image/png
   group_id: '101'
   projowner_id: '2'
@@ -518,7 +496,7 @@ Datafile_28:
   volume_id: '7'
   revision: '1'
   ident: DF0000000034
-  filename: plaque.png
+  filename: db/custos/sicm/sample.table/datafiles/plaque.png
   content_type: image/png
   group_id: '101'
   projowner_id: '2'
@@ -536,7 +514,7 @@ Datafile_29:
   volume_id: '7'
   revision: '1'
   ident: DF0000000035
-  filename: cote_cadre_long.png
+  filename: db/custos/sicm/sample.table/datafiles/cote_cadre_long.png
   content_type: image/png
   group_id: '101'
   projowner_id: '2'
@@ -554,7 +532,7 @@ Datafile_30:
   volume_id: '7'
   revision: '2'
   ident: DF0000000036
-  filename: cote_cadre_court.png
+  filename: db/custos/sicm/sample.table/datafiles/cote_cadre_court.png
   content_type: image/png
   group_id: '101'
   projowner_id: '2'
@@ -572,7 +550,7 @@ Datafile_32:
   volume_id: '7'
   revision: '1'
   ident: DF0000000039
-  filename: pied_carre_court.png
+  filename: db/custos/sicm/sample.table/datafiles/pied_carre_court.png
   content_type: image/png
   group_id: '101'
   projowner_id: '2'
@@ -590,7 +568,7 @@ Datafile_34:
   volume_id: '7'
   revision: '1'
   ident: DF0000000042
-  filename: pied_rond_long.png
+  filename: db/custos/sicm/sample.table/datafiles/pied_rond_long.png
   content_type: image/png
   group_id: '101'
   projowner_id: '2'
@@ -608,7 +586,7 @@ Datafile_26:
   volume_id: '7'
   revision: '1'
   ident: DF0000000031
-  filename: plateau_hexagonal.png
+  filename: db/custos/sicm/sample.table/datafiles/plateau_hexagonal.png
   content_type: image/png
   group_id: '101'
   projowner_id: '2'
@@ -626,7 +604,7 @@ Datafile_35:
   volume_id: '7'
   revision: '1'
   ident: DF0000000043
-  filename: pied_rond_long.png
+  filename: db/custos/sicm/sample.table/datafiles/pied_rond_long.png
   content_type: image/png
   group_id: '101'
   projowner_id: '2'
@@ -644,7 +622,7 @@ Datafile_36:
   volume_id: '7'
   revision: '1'
   ident: DF0000000044
-  filename: patin.png
+  filename: db/custos/sicm/sample.table/datafiles/patin.png
   content_type: image/png
   group_id: '101'
   projowner_id: '2'
@@ -662,7 +640,7 @@ Datafile_37:
   volume_id: '7'
   revision: '1'
   ident: DF0000000045
-  filename: plateau_rectangulaire.png
+  filename: db/custos/sicm/sample.table/datafiles/plateau_rectangulaire.png
   content_type: image/png
   group_id: '101'
   projowner_id: '2'
@@ -680,7 +658,7 @@ Datafile_38:
   volume_id: '7'
   revision: '1'
   ident: DF0000000033
-  filename: table.png
+  filename: db/custos/sicm/sample.table/datafiles/table.png
   content_type: image/png
   group_id: '101'
   projowner_id: '2'

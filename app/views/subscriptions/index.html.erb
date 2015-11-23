@@ -3,14 +3,10 @@
 <% form_for(@subscription) do |f| %>
 <%= f.error_messages %>
 <% end %>
-<% end %>
+<% else %>
 <%= h_form_simple_query('/subscriptions', @subscriptions) %>
-<table class='menu_bas'>
-	<tr>
-		<td><%= link_to t("new_subscription"), new_subscription_path %></td>
-		<td><%= show_help("help_subscriptions") %></td>
-	</tr>
-</table>
+<% form_tag({:controller=>:subscriptions, :action=>:index_execute}) do %>
+<%= h_menu_index_action("subscription")%>
 <% if @myparams[:list_mode] == t(:list_mode_icon) %>
 <%= h_thumbnails_objs @subscriptions %>
 <% else %>
@@ -18,9 +14,6 @@
 <%= render(:partial => "subscriptions/index", :locals=>{:subscriptions=>@subscriptions, :funct => "index"}) %>
 <%= will_paginate(@subscriptions[:recordset]) %>
 <% end %>
-<table class='menu_bas'>
-	<tr>
-		<td><%= link_to t("new_subscription"), new_subscription_path %></td>
-		<td><%= show_help("help_subscriptions") %></td>
-	</tr>
-</table>
+<%= h_menu_index_action("subscription")%>
+<%end%>
+<%end%>

@@ -226,3 +226,13 @@ fr:
         status_not_valid: "Le statut n'est pas valide"
         exception_validity: "Exception durant la validation de %{model}:<br/>%{exception}"
         datafile_write_bad_format: Le fichier %{filename} ne peut être écrit en base, choisissez un autre volume.
+        #sylrplm_common
+        type_values_type_badly_defined: "%{key}=%{value} : le type esl mal definis: %{field}, contactez l'administrateur"
+        type_values_value_undefined: "%{key}=%{value}: le type n' est pas  definis, contactez l'administrateur"
+        type_values_value_not_found: "%{key}=%{value}: valeur  non trouvée"
+        type_values_string_too_long: "%{key}=%{value} est trop long: %{value.length} > %{nbc}"
+        type_values_value_not_type: "%{key}=%{value}: n'est pas du type %{type}"
+        type_values_value_bad_format: "%{key}=%{value}: est du type %{type} mais n'a pas le bon format %{fmt}"
+        type_values_value_outside_limit: "%{key}=%{value} du type %{type} est en dehors des limites: %{sign} %{limit}"
+        #typesobject
+        field_badly_formatted: "Le champ du type '%{type}' est mal formatté, clé='%{key}', fields=%{fields} exception=%{exception}"

@@ -3,6 +3,14 @@ class NotificationsController < ApplicationController
 	# GET /notifications.xml
 	before_filter :authorize, :except => nil
 	def index
+		index_
+		respond_to do |format|
+			format.html # index.html.erb
+			format.xml  { render :xml => @notifications[:recordset] }
+		end
+	end
+
+	def index_
 		fname="#{controller_name }.#{__method__}:"
 		#LOG.info (fname) {"params=#{params.inspect}"}
 		if params.include? :current_user
@@ -10,16 +18,17 @@ class NotificationsController < ApplicationController
 			params[:query] = "#{current_user.login}"
 		end
 		@notifications = Notification.find_paginate({:user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
-		#LOG.info (fname) {"notifs=#{@notifications.inspect}"}
-		# if params.include? :current_user
-		# @notifications[:recordset] = @notifications[:recordset].find_all {|notif| notif.responsible_id == current_user.id }
-		# @notifications[:total] = @notifications[:recordset].count
-		# LOG.info (fname) {"notifs=#{@notifications.inspect}"}
-		# end
-		respond_to do |format|
-			format.html # index.html.erb
-			format.xml  { render :xml => @notifications[:recordset] }
-		end
+	#LOG.info (fname) {"notifs=#{@notifications.inspect}"}
+	# if params.include? :current_user
+	# @notifications[:recordset] = @notifications[:recordset].find_all {|notif| notif.responsible_id == current_user.id }
+	# @notifications[:total] = @notifications[:recordset].count
+	# LOG.info (fname) {"notifs=#{@notifications.inspect}"}
+	# end
+
+	end
+
+	def index_execute
+		ctrl_index_execute
 	end
 
 	# GET /notifications/1
@@ -31,6 +40,7 @@ class NotificationsController < ApplicationController
 			format.xml  { render :xml => @notification }
 		end
 	end
+
 	def show_
 		@notification = Notification.find(params[:id])
 	end
@@ -85,7 +95,7 @@ class NotificationsController < ApplicationController
 				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
-				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_notification), :ident => @notification.ident)
+				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_notification), :ident => @notification.ident, :error => @notification.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @notification.errors, :status => :unprocessable_entity }
 			end

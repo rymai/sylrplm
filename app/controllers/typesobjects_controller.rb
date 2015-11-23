@@ -4,11 +4,22 @@ class TypesobjectsController < ApplicationController
 	# GET /typesobjects
 	# GET /typesobjects.xml
 	def index
-		@typesobjects = Typesobject.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		index_
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @typesobjects }
 		end
+	end
+
+	def index_
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {"filter_types=#{params[:filter_types]} query=#{params[:query]}"}
+		@typesobjects = Typesobject.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+
+	end
+
+	def index_execute
+		ctrl_index_execute
 	end
 
 	# GET /typesobjects/1
@@ -48,10 +59,13 @@ class TypesobjectsController < ApplicationController
 	# GET /typesobjects/1/edit
 	def edit
 		fname="#{self.class.name}.#{__method__}"
+		LOG.info(fname){">>>>params=#{params}"}
 		@typesobject = Typesobject.find(params[:id])
+		#pour tester le champ field et avoir une erreur
+		fieldsvalues=@typesobject.get_fields_values
 		@typesobject.fields="{}" if @typesobject.fields.nil?
 		@objectswithtype=Typesobject.get_objects_with_type
-		LOG.info (fname){"@objectswithtype=#{@objectswithtype}"}
+		LOG.info(fname){"<<<<@typesobject=#{@typesobject} @objectswithtype=#{@objectswithtype} @typesobject.fields=#{@typesobject.fields} errors=#{@typesobject.errors.full_messages}"}
 	end
 
 	# POST /typesobjects
@@ -95,7 +109,7 @@ class TypesobjectsController < ApplicationController
 				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
-				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_typesobject),:ident=>@typesobject.name)
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_typesobject),:ident=>@typesobject.name, :error => @typesobject.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @typesobject.errors, :status => :unprocessable_entity }
 			end

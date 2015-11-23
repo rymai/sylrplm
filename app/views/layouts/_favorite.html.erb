@@ -1,5 +1,4 @@
 <% favs = @favori.get(type)%>
-<%=puts "favorite:type=#{type}"%>
 <div class="favori-title">
 	<%= t("favoris_#{type}",:size=> favs.count) %>
 	<% if favs.present? %>

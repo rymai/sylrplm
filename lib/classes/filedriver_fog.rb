@@ -18,11 +18,11 @@ class FiledriverFog < Filedriver
 	@@instance = nil
 
 	def self.instance
-	  fname= "FiledriverFog.#{__method__}"
-    access_key=PlmServices.get_property(:FOG_ACCESS_KEY)
-		access_key_id=PlmServices.get_property(:FOG_ACCESS_KEY_ID)
+		fname= "FiledriverFog.#{__method__}"
+		access_key=::SYLRPLM::FOG_ACCESS_KEY
+		access_key_id=::SYLRPLM::FOG_ACCESS_KEY_ID
 		if @@instance.nil?
-		  LOG.info (fname) {"access_key=#{access_key} access_key_id=#{access_key_id}"}
+			LOG.info (fname) {"access_key=#{access_key} access_key_id=#{access_key_id}"}
 			@@instance = FiledriverFog.new
 			# create a connection
 			@@instance.storage = Fog::Storage.new(
@@ -151,10 +151,11 @@ class FiledriverFog < Filedriver
 		# list directories
 		#LOG.debug (fname){"purge=#{purge} storage=#{self.storage.inspect}"}
 		ret=[]
+		files_fog=[]
 		begin
 			ret = self.storage.directories
 			ret.each do |ddd|
-				#LOG.debug (fname){"directorie=#{ddd.inspect}"}
+			#LOG.debug (fname){"directorie=#{ddd.inspect}"}
 				ddd.files.each do |s3_file|
 					if(purge==true )
 						is_used = is_used?(ddd, s3_file)
@@ -172,42 +173,41 @@ class FiledriverFog < Filedriver
 					end
 				end
 			end
-		rescue Exception=>e
-			LOG.error (fname){"fog access error:#{e}"}
-		end
-		files_fog=[]
-		begin
-			ret.each do |s3_dir|
-				s3_dir.files.each do |s3_file|
-				#LOG.debug (fname) {"dir=#{s3_dir.inspect} s3_file=#{s3_file.inspect}"}
-				# 0-0-0-0.deve.volfog01.datafile.df0000000057
-					fields_dir = s3_dir.key.split(::Volume::DIR_DELIMITER)
-					params = {}
-					# abort.png
-					params["filename"]=::Datafile.filename_from_file(s3_file.key)
-					# 1
-					params["revision"]=::Datafile.revision_from_file(s3_file.key)
-					#
-					if(fields_dir.size==5)
-						params["datafile_model"] = fields_dir[3]
-						params["datafile"] =  fields_dir[4]
-						params["volume_dir"] = fields_dir[0] + ::Volume::DIR_DELIMITER + fields_dir[1] + ::Volume::DIR_DELIMITER + fields_dir[2]
+			begin
+				ret.each do |s3_dir|
+					s3_dir.files.each do |s3_file|
+					#LOG.debug (fname) {"dir=#{s3_dir.inspect} s3_file=#{s3_file.inspect}"}
+					# 0-0-0-0.deve.volfog01.datafile.df0000000057
+						fields_dir = s3_dir.key.split(::Volume::DIR_DELIMITER)
+						params = {}
+						# abort.png
+						params["filename"]=::Datafile.filename_from_file(s3_file.key)
+						# 1
+						params["revision"]=::Datafile.revision_from_file(s3_file.key)
+						#
+						if(fields_dir.size==5)
+							params["datafile_model"] = fields_dir[3]
+							params["datafile"] =  fields_dir[4]
+							params["volume_dir"] = fields_dir[0] + ::Volume::DIR_DELIMITER + fields_dir[1] + ::Volume::DIR_DELIMITER + fields_dir[2]
+						end
+						params["protocol"]=self.protocol
+						params["size"]=s3_file.content_length
+						params["domain"]=""
+						params["updated_at"]=s3_file.last_modified
+						params["id"]=buildFileId(s3_dir.key, s3_file.key)
+						#LOG.debug (fname) {"id=#{params["id"]}"}
+						sylrplmfile=SylrplmFile.new(params)
+						files_fog<<sylrplmfile
 					end
-					params["protocol"]=self.protocol
-					params["size"]=s3_file.content_length
-					params["domain"]=""
-					params["updated_at"]=s3_file.last_modified
-					params["id"]=buildFileId(s3_dir.key, s3_file.key)
-					#LOG.debug (fname) {"id=#{params["id"]}"}
-					sylrplmfile=SylrplmFile.new(params)
-					files_fog<<sylrplmfile
 				end
+			rescue Exception=>e
+				cmd="Exception during files_list:#{e.message}"
+				#LOG.error (fname){cmd}
+				### TODO: la mettre sur la base sans objet particulier volume.errors.add_to_base(cmd)
+				e.backtrace.each {|x| LOG.error x}
 			end
 		rescue Exception=>e
-			cmd="Exception during files_list:#{e.message}"
-			#LOG.error (fname){cmd}
-			### TODO: la mettre sur la base sans objet particulier volume.errors.add_to_base(cmd)
-			e.backtrace.each {|x| LOG.error x}
+			LOG.error (fname){"fog access error:#{e}"}
 		end
 		files_fog
 	end
@@ -257,8 +257,8 @@ class FiledriverFog < Filedriver
 		#dirs.include? adir
 		dirs.each do |dir|
 			if dir.key==adir
-				ret=true
-				break
+			ret=true
+			break
 			end
 		end
 		ret
@@ -297,8 +297,8 @@ class FiledriverFog < Filedriver
 	def directory(directory_key)
 		fname= "#{self.class.name}.#{__method__}"
 		begin
-		ret=storage.directories.get(directory_key)
-		#puts "sylrplm_fog.directory("+directory_key+")="+ret.inspect
+			ret=storage.directories.get(directory_key)
+			#puts "sylrplm_fog.directory("+directory_key+")="+ret.inspect
 		rescue Exception => exc
 			LOG.debug (fname){"Exception during fog access, verify the network, dir_key=#{directory_key} exception=#{exc}"}
 			ret=nil

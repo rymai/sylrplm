@@ -1,8 +1,9 @@
-<h1><%= t(:typesobjects_edit) %></h1>
+<h1><%= t(:typesobject_edit) %></h1>
 <% fonct="define0" %>
 <div id="edit_object">
 	<% form_id = h_form_html_id(@typesobject, fonct) %>
 	<% form_for(@typesobject, :html => { :id => form_id }) do |f| %>
+	<% LOG.debug("typesobject.edit"){"errors=#{f.error_messages}"} %>
 	<%= f.error_messages %>
 	<%= render(:partial => "shared/menu_edit", :locals => { :object => @typesobject, :f => f, :fonct=>fonct}) %>
 	<%= render(:partial => "typesobjects/edit",:locals => {

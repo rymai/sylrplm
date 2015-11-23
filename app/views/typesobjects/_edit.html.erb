@@ -15,9 +15,9 @@
 	<%= f.label t(:label_typesobject_rank) %>
 	<%= f.text_field :rank %>
 	<br/>
-	<%= f.label t(:label_fields) %>
-	<br/>
 	<%= h_input_domain(f) %>
+	<br/>
+	<%= f.label t(:label_fields) %>
 	<br />
 	<%= h_render_fields(object, fonct, "fields") %>
 </fieldset>

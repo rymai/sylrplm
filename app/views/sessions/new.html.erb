@@ -1,5 +1,5 @@
 <% h_title t(:connect) %> <h1><%= t(:legend_login) %></h1>
-<% form_for :session, url: { controller: :sessions, action: :create} do |form| %>
+<% form_for :session, :url => { controller: :sessions, action: :create}, :html => {:id=>"session"} do |form| %>
 <%= form.error_messages %>
 
 <p>
@@ -15,7 +15,7 @@
 </p>
 <table class='menu_bas'>
 	<tr>
-		<td> <%= submit_tag t(:submit_account) %> </td>
+		<td> <%= submit_tag t(:submit_account) , :id => 'commit' %> </td>
 	</tr>
 </table>
 <!-- <%= render(:partial => "users/index",:locals => { :fonct => "new_session"}) %> -->

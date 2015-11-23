@@ -4,13 +4,19 @@ class RolesController < ApplicationController
 	# GET /roles
 	# GET /roles.xml
 	def index
-
-		@roles = Role.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
-
+		index_
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @roles }
 		end
+	end
+
+	def index_
+		@roles = Role.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+	end
+
+	def index_execute
+		ctrl_index_execute
 	end
 
 	# GET /roles/1
@@ -98,7 +104,7 @@ class RolesController < ApplicationController
 				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
-				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_role),:ident=>@role.title)
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_role),:ident=>@role.title, :error => @role.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @role.errors, :status => :unprocessable_entity }
 			end

@@ -5,10 +5,11 @@
 <%= f.error_messages %>
 <%= render(:partial => "shared/menu_new", :locals => {:object => @view, :f => f, :fonct=>fonct}) %>
 <%= render(:partial => "views/edit",:locals => {
+:object => @view,
 :f => f,
 :fonct => fonct,
 :form_id => form_id })
 %>
 <%= render(:partial => "shared/submit_new", :locals => {:object => @view, :f => f, :fonct=>fonct}) %>
 
-<% end %> 
+<% end %>

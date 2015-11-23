@@ -236,7 +236,8 @@ class Datafile < ActiveRecord::Base
 	def self.host
 		fname= "#{self.class.name}.#{__method__}"
 		#ret=@@host
-		ret=PlmServices.get_property("central","sites")
+		#ret=PlmServices.get_property("central","sites")
+		ret=PlmServices.get_property("SITE_CENTRAL")
 		#LOG.debug (fname) {"host_name:#{ret}"}
 		ret
 	end

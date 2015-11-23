@@ -26,6 +26,7 @@
 		<td><%= link_to h_img_edit.to_s, edit_subscription_path(subscription) %></td>
 		<td> <%= h_menu_duplicate(subscription) %> </td>
 		<td><%= h_destroy(subscription) %></td>
+		<td><%= check_box(:action_on,subscription.id) %></td>
 	</tr>
 	<% end %>
 </table>

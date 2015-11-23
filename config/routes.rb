@@ -15,6 +15,10 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.resources :customers, :has_many => :documents, :collection => { :empty_favori => :get }, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	map.connect(
+	'customers/index_execute',
+	:controller => 'customers',
+	:action => 'index_execute')
+	map.connect(
 	'customers/:id/add_favori',
 	:controller => 'customers',
 	:action => 'add_favori',
@@ -85,11 +89,19 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.resources :definitions, :collection => { :new_process => :get}, :member=> {:new_dup => :get}
 	map.connect(
+	'definitions/index_execute',
+	:controller => 'definitions',
+	:action => 'index_execute')
+	map.connect(
 	'definitions/:id/tree.js',
 	:controller => 'definitions',
 	:action => 'tree')
 
 	map.resources :documents, :has_many => :documents, :collection => { :empty_favori => :get }, :member=> {:edit_lifecycle => :get, :new_dup => :get}
+	map.connect(
+	'documents/index_execute',
+	:controller => 'documents',
+	:action => 'index_execute')
 	map.connect(
 	'documents/:id/add_favori',
 	:controller => 'documents',
@@ -187,6 +199,10 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.resources :groups, :member=> {:new_dup => :get}
 	map.connect(
+	'groups/index_execute',
+	:controller => 'groups',
+	:action => 'index_execute')
+	map.connect(
 	'groups/:id/select_view',
 	:controller => 'groups',
 	:action => 'select_view')
@@ -230,6 +246,10 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :notifications, :member => { :notify => :get }
 
 	map.resources :parts, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
+	map.connect(
+	'parts/index_execute',
+	:controller => 'parts',
+	:action => 'index_execute')
 	map.connect(
 	'parts/:id/add_favori',
 	:controller => 'parts',
@@ -314,6 +334,10 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.resources :projects, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	map.connect(
+	'projects/index_execute',
+	:controller => 'projects',
+	:action => 'index_execute')
+	map.connect(
 	'projects/:id/add_favori',
 	:controller => 'projects',
 	:action => 'add_favori',
@@ -376,6 +400,10 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.resources :relations, :member=> {:new_dup => :get}
 	map.connect(
+	'relations/index_execute',
+	:controller => 'relations',
+	:action => 'index_execute')
+	map.connect(
 	'relations/update_father',
 	:controller => 'relations',
 	:action => 'update_father')
@@ -392,6 +420,10 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.resources :roles, :member=> {:new_dup => :get}
 	map.connect(
+	'roles/index_execute',
+	:controller => 'roles',
+	:action => 'index_execute')
+	map.connect(
 	'roles/:id/select_view',
 	:controller => 'roles',
 	:action => 'select_view')
@@ -399,7 +431,10 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :roles_users
 
 	map.resources :sequences, :member=> {:new_dup => :get}
-
+	map.connect(
+	'sequences/index_execute',
+	:controller => 'sequences',
+	:action => 'index_execute')
 	map.resource :sessions, :only => [:new, :create , :destroy]
 	#map.resource :sessions, :only => [:new, :create, :update, :destroy], :member => { :choose_role => :get }
 	# map.resource :sessions, :only => [:new, :create, :update, :destroy]
@@ -416,19 +451,35 @@ ActionController::Routing::Routes.draw do |map|
 
 	map.resources :statusobjects, :member=> {:new_dup => :get}
 	map.connect(
+	'statusobjects/index_execute',
+	:controller => 'statusobjects',
+	:action => 'index_execute')
+	map.connect(
 	'statusobjects/:id/update_type',
 	:controller => 'statusobjects',
 	:action => 'update_type')
 
 	map.resources :subscriptions, :member=> {:new_dup => :get}
+	map.connect(
+	'subscriptions/index_execute',
+	:controller => 'subscriptions',
+	:action => 'index_execute')
 
 	map.resources :typesobjects, :member=> {:new_dup => :get}
+	map.connect(
+	'typesobjects/index_execute',
+	:controller => 'typesobjects',
+	:action => 'index_execute')
 	map.connect(
 	'typesobjects/:id/update_forobject',
 	:controller => 'typesobjects',
 	:action => 'update_forobject')
 
 	map.resources :users, :collection => { :empty_favori => :get }, :member=> {:new_dup => :get}
+	map.connect(
+	'users/index_execute',
+	:controller => 'users',
+	:action => 'index_execute')
 	map.connect(
 	'users/:id/activate',
 	:controller => 'users',
@@ -466,9 +517,15 @@ ActionController::Routing::Routes.draw do |map|
 	map.resources :user_groups
 
 	map.resources :views, :member=> {:new_dup => :get}
-
+	map.connect(
+	'views/index_execute',
+	:controller => 'views',
+	:action => 'index_execute')
 	map.resources :volumes, :member=> {:new_dup => :get}
-
+	map.connect(
+	'volumes/index_execute',
+	:controller => 'volumes',
+	:action => 'index_execute')
 	map.resources :workitems
 
 	map.wfid_resources :errors

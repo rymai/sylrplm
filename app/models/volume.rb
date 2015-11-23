@@ -106,7 +106,7 @@ class Volume < ActiveRecord::Base
 		#LOG.debug (fname) {"params=#{params_volume}"}
 		super
 		if params_volume.nil?
-			self.directory = PlmServices.get_property(:VOLUME_DIRECTORY_DEFAULT)
+			self.directory = ::SYLRPLM::VOLUME_DIRECTORY_DEFAULT
 		self.set_default_values(1)
 		end
 		self
@@ -162,7 +162,7 @@ class Volume < ActiveRecord::Base
 	# env=
 	def dir_name
 		fname= "#{self.class.name}.#{__method__}"
-		env = Volume.rails_env
+		env = ::Volume::rails_env
 		unless env.nil?
 			unless self.directory.blank?
 				ret = File.join(self.directory, env)
@@ -171,14 +171,14 @@ class Volume < ActiveRecord::Base
 			end
 			ret = File.join(ret, self.name)
 		end
-		#LOG.info (fname) {"dir_name=#{ret}"}
+		LOG.debug(fname) {"env=#{env} dir_name=#{ret}"}
 		ret
 	end
 
 	def self.rails_env
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "Volume.#{__method__}"
 		host = Datafile::host
-		#LOG.info (fname) {"Datafile::host=#{host} Rails.env=#{Rails.env}"}
+		LOG.debug(fname) {"Datafile::host=#{host} Rails.env=#{Rails.env}"}
 		File.join(Datafile::host,Rails.env[0,4]) unless host.nil?
 	end
 

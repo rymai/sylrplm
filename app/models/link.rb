@@ -19,6 +19,8 @@ class Link < ActiveRecord::Base
 	belongs_to :projowner,
     :class_name => "Project"
 
+	NO_CHILD="-NO_CHILD-"
+	NO_FATHER="-NO_FATHER-"
 	#delegate :typesobject_id, :typesobject, to: :relation
 
 	#objects which could be child of link: "document", "part", "project", "customer", "forum", "datafile"
@@ -132,7 +134,6 @@ class Link < ActiveRecord::Base
 		fname = "#{self.class.name}.#{__method__}"
 		self.domain = father.domain if father.respond_to?(:domain)
 		self.domain = child.domain if (self.domain.nil? && child.respond_to?(:domain))
-		#LOG.info (fname) {"domain=#{self.domain}"}
 		LOG.debug (fname) {"before_save:self=#{self}"}
 	end
 
@@ -191,13 +192,24 @@ class Link < ActiveRecord::Base
 
 	def father_ident
 		fname = "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"father=:#{father.inspect}:"}
-		ret  = "#{father_id}"
+		ret=""
 		unless father.nil?
-			ret +=":#{father.model_name}"
-			ret += ".#{father.typesobject_id}" if father.respond_to? :typesobject_id
+			ret  = "#{father_id}:#{father.model_name}"
+			if father.respond_to? :typesobject
+				ret += "#{father.typesobject}"
+			else
+				msg=I18n.t(:database_not_consistency, :msg=>"#{father} has no type !")
+				LOG.error("Error on:#{self.inspect}")
+				LOG.error("Error:#{msg}")
+			ret += ::Typesobject::NO_TYPE
+			end
+			ret += "=#{father.ident_plm}"
+		else
+			msg=I18n.t(:database_not_consistency, :msg=>" no child !")
+			LOG.error("Error on:#{self.inspect}")
+			LOG.error("Error:#{msg}")
+		ret += ::Link::NO_FATHER
 		end
-		ret += "=#{(father.nil? ? 'father null' : father.ident_plm)}"
 	end
 
 	def child
@@ -205,8 +217,25 @@ class Link < ActiveRecord::Base
 	end
 
 	def child_ident
-		ret  = "#{child_id}:#{child.model_name}.#{child.typesobject_id}"
-		ret += "=#{child.ident_plm}" unless child.nil?
+		fname = "#{self.class.name}.#{__method__}"
+		ret=""
+		unless child.nil?
+			ret  = "#{child_id}:#{child.model_name}"
+			if child.respond_to? :typesobject
+				ret += "#{child.typesobject}"
+			else
+				msg=I18n.t(:database_not_consistency, :msg=>"#{child} has no type !")
+				LOG.error("Error on:#{self.inspect}")
+				LOG.error("Error:#{msg}")
+			ret += ::Typesobject::NO_TYPE
+			end
+			ret += "=#{child.ident_plm}"
+		else
+			msg=I18n.t(:database_not_consistency, :msg=>" no child !")
+			LOG.error("Error on:#{self.inspect}")
+			LOG.error("Error:#{msg}")
+		ret += ::Link::NO_CHILD
+		end
 	end
 
 	def father=(afather)
@@ -266,7 +295,7 @@ class Link < ActiveRecord::Base
 		fname = "#{self.class.name}.#{__method__}"
 		LOG.info (fname) { "effectivities_mdlids: #{effectivities_mdlids}" }
 		links_link_part.each do |current_link_effectivity|
-			####LOG.info (fname) { "current_link_effectivity=#{current_link_effectivity.ident} : #{current_link_effectivity.child.mdlid}" }
+		####LOG.info (fname) { "current_link_effectivity=#{current_link_effectivity.ident} : #{current_link_effectivity.child.mdlid}" }
 			unless effectivities_mdlids.include?(current_link_effectivity.child.mdlid)
 				LOG.info (fname) { "destroy:#{current_link_effectivity.ident}" }
 			current_link_effectivity.destroy
@@ -333,6 +362,7 @@ class Link < ActiveRecord::Base
 	end
 
 	def self.find_childs_with_father_plmtype(father_plmtype, father, child_plmtype=nil, relation_name=nil)
+		fname=self.class.name+"."+__method__.to_s+":"
 		unless child_plmtype.nil?
 			cond="father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and father_id =#{father.id}"
 		else
@@ -349,6 +379,7 @@ class Link < ActiveRecord::Base
 		else
 		ret=links
 		end
+
 		#puts "Link.find_childs_with_father_plmtype:"+father.model_name+"."+father.id.to_s+"."+child_plmtype+":'"+cond+"'= "+ret.inspect
 		ret
 	end
@@ -432,12 +463,15 @@ class Link < ActiveRecord::Base
 		fname="#{self.class.name}.#{__method__}"
 		if obj.respond_to? :typesobject
 			unless obj.typesobject.nil?
-				#TODO cond="(child_typesobject_id=#{obj.typesobject_id} and child_id = #{obj.id}) or (father_typesobject_id=#{obj.typesobject_id} and father_id = #{obj.id}) "
-				cond="(child_id = #{obj.id}) or (father_id = #{obj.id}) "
-				ret = count(:all,
+				relation_recent_action = ::Relation.find_by_name(::SYLRPLM::RELATION_RECENT_ACTION)
+				cond="child_plmtype = '#{obj.model_name}' and child_id = #{obj.id} and relation_id !=#{relation_recent_action.id}"
+				ret = find(:all,
     :conditions => [cond] )
-				puts "linked cond=#{cond} nb=#{ret}"
-			ret>0
+				LOG.debug "linked cond=#{cond} nb=#{ret.count}"
+				ret.each do |lnk|
+					LOG.debug "linked link=#{lnk.ident}"
+				end
+			ret.count>0
 			else
 				LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no type for #{obj.ident_plm}"}
 			false

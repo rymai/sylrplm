@@ -3,14 +3,10 @@
 <% form_for(@statusobject) do |f| %>
 <%= f.error_messages %>
 <% end %>
-<% end %>
+<% else %>
 <%= h_form_simple_query('/statusobjects', @statusobjects) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:new_statusobject), new_statusobject_path %> </td>
-		<td> <%= show_help("help_statusobjects") %> </td>
-	</tr>
-</table>
+<% form_tag({:controller=>:statusobjects, :action=>:index_execute}) do %>
+<%= h_menu_index_action("statusobject")%>
 <%= will_paginate(@statusobjects[:recordset]) %>
 <table>
 	<tr>
@@ -24,7 +20,7 @@
 		<th <%= sort_td_class_helper "revise" %>> <%= sort_link_helper t(:label_revise), "revise" %> </th>
 		<th> <%= t(:label_next_status) %> </th>
 		<th> <%= t(:label_previous_status) %> </th>
-		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %> </th><th></th><th></th>
+		<th <%= sort_td_class_helper "domain" %>> <%= sort_link_helper t(:label_domain), "domain" %> </th><th></th><th></th><th></th>
 	</tr>
 	<% @statusobjects[:recordset].each do |statusobject| %>
 	<tr class='<%= cycle("even", "odd") %>'>
@@ -44,13 +40,11 @@
 
 		<td> <%= h_menu_duplicate(statusobject) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, statusobject, :confirm => t(:msg_confirm), :method => :delete %> </td>
+		<td><%= check_box(:action_on,statusobject.id) %></td>
 	</tr>
 	<% end %>
 </table>
 <%= will_paginate(@statusobjects[:recordset]) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:new_statusobject), new_statusobject_path %> </td>
-		<td> <%= show_help("help_statusobjects") %> </td>
-	</tr>
-</table>
+<%= h_menu_index_action("statusobject")%>
+<%end%>
+<%end%>

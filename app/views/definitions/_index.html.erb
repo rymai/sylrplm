@@ -1,4 +1,3 @@
-
 <%unless @definitions.length <= 0 %>
 <table class='coll'>
 	<thead>
@@ -16,7 +15,7 @@
 	<% for definition in @definitions %>
 	<tr class='<%= cycle("even", "odd") %>'>
 		<% if admin_logged_in? %>
-			<td> <%= definition.id %> </td>
+		<td> <%= definition.id %> </td>
 		<% end %>
 		<td><%= h_explorer definition, :name %><%= h_show_translate definition.name_translate %></td>
 		<td title="<%= h definition.description %>"> <%= h truncate(definition.description, :length => 40) %> </td>
@@ -27,19 +26,13 @@
 		<td><%= link_to(
 		h_img_edit.to_s,
 		edit_definition_path(definition)) %></td>
-
 		<td> <%= h_menu_duplicate(definition) %> </td>
-
-		<td><%= link_to(
-		h_img_destroy.to_s,
-		definition,
-		:confirm => t("msg_confirm"),
-		:method => :delete) %></td>
+		<td> <%= h_destroy(definition) %> </td>
+		<td><%= check_box(:action_on,definition.id) %></td>
 		<% else %>
 		<td class='menu_bas'><%= link_to(
 		t("launchthis"),
-		new_process_path(:definition_id => definition.id)) if definition.usable? %>
-		</td>
+		new_process_path(:definition_id => definition.id)) if definition.usable? %> </td>
 		<% end %>
 	</tr>
 	<% end %>

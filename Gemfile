@@ -6,6 +6,8 @@ source 'https://rubygems.org'
 #ruby '2.0.0'
 ruby "2.1.6"
 
+gem 'rails', '2.3.17'
+
 #defaut ruby 2.1.5 gem 'test-unit'
 
 gem 'rb-readline'
@@ -13,6 +15,7 @@ gem 'rb-readline'
 gem 'activesupport'
 
 gem 'bundler'
+gem 'actionpack'
 
 ##gem 'bigdecimal', '1.2.5'
 gem 'bigdecimal'
@@ -21,7 +24,7 @@ gem 'haml'
 gem 'iconv'
 gem 'nokogiri'  ,'1.6.6.2' #, '~>1.5.4' 1.6.3.1
 
-gem 'rails', '2.3.17'
+
 #defaut ruby 2.1.5 gem 'rake' #, '10.3.2'
 #defaut ruby 2.1.5 gem 'rdoc' #, '4.1.1'
 gem 'mail', '~>2.3.0'
@@ -46,16 +49,12 @@ gem 'fog'  #, '~>1.1.2'
 gem 'rufus-verbs', '~>1.0.0'
 gem 'atom-tools' , '~>2.0.5'
 gem 'rufus-scheduler' , '~>2.0.19'
-gem 'capybara'
 
 # paginate Views of a lot of lines
 gem 'will_paginate' , '~> 2.3.16'
 
-#gem 'before_render'
-
 #
 ##gem 'psych', '~> 2.0.5'
-
 #defaut ruby 2.1.5 gem 'psych', '2.0.6'
 
 # read and create zip files
@@ -76,7 +75,6 @@ group :staging, :production do
 	gem 'thin'
 	gem 'rack-ssl'
 	gem 'newrelic_rpm'
-	##gem 'bigdecimal'
 end
 
 group :development do
@@ -85,5 +83,13 @@ group :development do
 	#gem 'ruby-debug193'
 	##gem 'bigdecimal', :path => "/usr/share/ruby/gems/gems/bigdecimal-1.2.5"
 	###gem 'ruby_debugger'
+
+group :test do
+  gem 'capybara'
+  gem 'selenium'
+  gem 'selenium-webdriver'
+  gem 'launchy'
+  gem 'rspec'
+end
 
 end

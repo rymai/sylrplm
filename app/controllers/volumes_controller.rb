@@ -4,11 +4,21 @@ class VolumesController < ApplicationController
 	# GET /volumes
 	# GET /volumes.xml
 	def index
-		@volumes = Volume.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		index_
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @volumes }
 		end
+	end
+
+	def index_
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"current_user=#{current_user} params=#{params} "}
+		@volumes = Volume.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+	end
+
+	def index_execute
+		ctrl_index_execute
 	end
 
 	# GET /volumes/1
@@ -92,7 +102,7 @@ class VolumesController < ApplicationController
 				format.xml  { head :ok }
 			else
 				LOG.info(fname){"volume=#{@volume}"}
-				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_volume),:ident=>@volume.name,:msg=>@volume.errors.inspect)
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_volume),:ident=>@volume.name, :error => @volume.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @volume.errors, :status => :unprocessable_entity }
 			end

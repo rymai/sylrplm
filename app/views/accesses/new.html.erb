@@ -3,6 +3,6 @@
 <% form_for(@access) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "shared/menu_new", :locals => {:object => @access, :f => f, :fonct=>fonct}) %>
-<%= render(:partial => "accesses/edit",:locals => { :f => f, :fonct=>fonct }) %>
+<%= render(:partial => "accesses/edit",:locals => {:object => @access, :f => f, :fonct=>fonct }) %>
 <%= render(:partial => "shared/submit_new", :locals => {:object => @access, :f => f, :fonct=>fonct}) %>
-<% end %> 
+<% end %>

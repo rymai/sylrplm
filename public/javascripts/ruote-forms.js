@@ -393,24 +393,27 @@ var RuoteForms = function() {
 	}
 
 	function render_entry(elt, data, options) {
-		//alert ('render_entry:'+elt+":"+data+' buttons='+options['buttons']+' edit_key='+options['edit_key']+' edit_value='+options['edit_value']);
-		var e = rcreate(elt, 'div', {
-			'class' : 'rform_entry'
-		});
-		var ek = rcreate(e, 'div', {
-			'class' : 'rform_key'
-		});
-		var ev = rcreate(e, 'div', {
-			'class' : 'rform_value'
-		});
-		addEntryButtons(e, options);
-		//syl: key
-		options["read-only"] = !options["edit_key"]
-		var ekr=render(ek, data[0], options);
-		//syl:value
-		options["read-only"] = !options["edit_value"]
-		//alert('render_entry:edit_key='+options['edit_key']+' edit_value='+options['edit_value']);
-		var evr = render(ev, data[1], options);
+		//alert ('render_entry:'+elt+":"+data+":"+data[0][0]+' buttons='+options['buttons']+' edit_key='+options['edit_key']+' edit_value='+options['edit_value']);
+		var e=null;
+		//if(!options["edit_value"] || data[0][0] != '$') {
+			var e = rcreate(elt, 'div', {
+				'class' : 'rform_entry'
+			});
+			var ek = rcreate(e, 'div', {
+				'class' : 'rform_key'
+			});
+			var ev = rcreate(e, 'div', {
+				'class' : 'rform_value'
+			});
+			addEntryButtons(e, options);
+			//syl: key
+			options["read-only"] = !options["edit_key"]
+			var ekr=render(ek, data[0], options);
+			//syl:value
+			options["read-only"] = !options["edit_value"]
+			//alert('render_entry:edit_key='+options['edit_key']+' edit_value='+options['edit_value']);
+			var evr = render(ev, data[1], options);
+		//}
 		return e;
 	}
 	function update_options(options) {

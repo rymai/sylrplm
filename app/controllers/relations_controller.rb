@@ -5,11 +5,21 @@ class RelationsController < ApplicationController
 	# GET /relations
 	# GET /relations.xml
 	def index
-		@relations = Relation.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		index_
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @relations }
 		end
+	end
+
+	def index_
+		@relations = Relation.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+
+
+	end
+
+	def index_execute
+		ctrl_index_execute
 	end
 
 	# GET /relations/1
@@ -59,7 +69,7 @@ class RelationsController < ApplicationController
 		@views = View.all
 		@types  = Typesobject.get_types("relation")
 		@status = Statusobject.get_status("relation")
-	LOG.debug (fname) {"typesobject=#{@relation.typesobject}"}
+		LOG.debug (fname) {"typesobject=#{@relation.typesobject}"}
 	end
 
 	# POST /relations
@@ -110,7 +120,7 @@ class RelationsController < ApplicationController
 				#format.html { redirect_to(@relation, :notice => 'Relation was successfully updated.') }
 				format.xml  { head :ok }
 			else
-				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_relation),:ident=>@relation.ident)
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_relation),:ident=>@relation.ident, :error => @project.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @relation.errors, :status => :unprocessable_entity }
 			end
@@ -147,13 +157,13 @@ class RelationsController < ApplicationController
 	def update_father
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug (fname){"params=#{params.inspect}"}
-		#inutilise @relation_datas = Relation.datas_by_params(params)
+	#inutilise @relation_datas = Relation.datas_by_params(params)
 	end
 
 	def update_child
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug (fname){"params=#{params.inspect}"}
-		#inutilise @relation_datas = Relation.datas_by_params(params)
+	#inutilise @relation_datas = Relation.datas_by_params(params)
 	end
 
 	private

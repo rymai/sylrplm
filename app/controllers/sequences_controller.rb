@@ -4,11 +4,20 @@ class SequencesController < ApplicationController
 	# GET /sequences
 	# GET /sequences.xml
 	def index
-		@sequences = Sequence.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		index_
 		respond_to do |format|
 			format.html # index.html.erb
 			format.xml  { render :xml => @sequences }
 		end
+	end
+
+	def index_
+		@sequences = Sequence.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+
+	end
+
+	def index_execute
+		ctrl_index_execute
 	end
 
 	# GET /sequences/1
@@ -94,7 +103,7 @@ class SequencesController < ApplicationController
 				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
-				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility)
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility, :error => @role.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @sequence.errors, :status => :unprocessable_entity }
 			end

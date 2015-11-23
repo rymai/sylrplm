@@ -18,6 +18,10 @@ class ProjectsController < ApplicationController
 		end
 	end
 
+   def index_execute
+		ctrl_index_execute
+	end
+
 	# GET /projects/1
 	# GET /projects/1.xml
 	# affichage d'un projet
@@ -157,7 +161,7 @@ class ProjectsController < ApplicationController
 					format.html { render :action => "show"}
 					format.xml  { head :ok }
 				else
-					flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
+					flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_project),:ident=>@project.ident, :error => @project.errors.full_messages)
 					format.html { render :action => "edit" }
 					format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
 				end

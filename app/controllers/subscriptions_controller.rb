@@ -5,15 +5,24 @@ class SubscriptionsController < ApplicationController
 	# GET /subscriptions
 	# GET /subscriptions.xml
 	def index
+		index_
+		respond_to do |format|
+			format.html # index.html.erb
+			format.xml  { render :xml => @subscriptions }
+		end
+	end
+
+	def index_
 		if params.include? :current_user
 			authorize
 			params[:query] = current_user.login
 		end
 		@subscriptions = Subscription.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
-		respond_to do |format|
-			format.html # index.html.erb
-			format.xml  { render :xml => @subscriptions }
-		end
+
+	end
+
+	def index_execute
+		ctrl_index_execute
 	end
 
 	# GET /subscriptions/1

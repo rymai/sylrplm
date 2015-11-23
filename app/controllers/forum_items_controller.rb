@@ -79,7 +79,7 @@ class ForumItemsController < ApplicationController
 				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
-				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_forum_item),:ident=>@forum_item.id)
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_forum_item),:ident=>@forum_item.id, :error => @forum_item.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @forum_item.errors, :status => :unprocessable_entity }
 			end

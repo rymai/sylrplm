@@ -635,7 +635,7 @@ Link_53:
   father_id: "1"
   child_id: "5"
   relation_id: "24"
-  type_values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "0", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "3"
@@ -882,7 +882,7 @@ Link_72:
   father_id: "33"
   child_id: "30"
   relation_id: "26"
-  type_values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "0", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "3"
@@ -895,7 +895,7 @@ Link_52:
   father_id: "1"
   child_id: "4"
   relation_id: "24"
-  type_values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": -2, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "0", "relation_matrix_dz": "-2", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -908,7 +908,7 @@ Link_75:
   father_id: "33"
   child_id: "32"
   relation_id: "26"
-  type_values: "{\"matrix\": {\"DX\": -3, \"DY\": -3, \"DZ\": 1.5, \"RX\": 180, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "-3", "relation_matrix_dy": "-3", "relation_matrix_dz": "1.5", "relation_matrix_rx": "180", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -921,7 +921,7 @@ Link_51:
   father_id: "1"
   child_id: "3"
   relation_id: "24"
-  type_values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 2, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "0", "relation_matrix_dz": "2", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -934,7 +934,7 @@ Link_82:
   father_id: "27"
   child_id: "28"
   relation_id: "26"
-  type_values: "{\"matrix\": {\"DX\": 0, \"DY\": 24, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "24", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -973,7 +973,7 @@ Link_88:
   father_id: "34"
   child_id: "33"
   relation_id: "25"
-  type_values: "{\"matrix\": {\"DX\": 0, \"DY\": 0, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "0", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "3"
@@ -1337,7 +1337,7 @@ Link_76:
   father_id: "33"
   child_id: "32"
   relation_id: "26"
-  type_values: "{\"matrix\": {\"DX\": 3, \"DY\": 3, \"DZ\": 1.5, \"RX\": 180, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "3", "relation_matrix_dy": "3", "relation_matrix_dz": "1.5", "relation_matrix_rx": "180", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -1350,7 +1350,7 @@ Link_80:
   father_id: "26"
   child_id: "28"
   relation_id: "26"
-  type_values: "{\"matrix\": {\"DX\": 0, \"DY\": 19, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "19", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -1363,7 +1363,7 @@ Link_78:
   father_id: "26"
   child_id: "28"
   relation_id: "26"
-  type_values: "{\"matrix\": {\"DX\": 0, \"DY\": -19, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 90}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "-19", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "90", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -1376,7 +1376,7 @@ Link_81:
   father_id: "26"
   child_id: "28"
   relation_id: "26"
-  type_values: "{\"matrix\": {\"DX\": 0, \"DY\": -19, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "-19", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -1389,7 +1389,7 @@ Link_89:
   father_id: "5"
   child_id: "34"
   relation_id: "25"
-  type_values: "{\"matrix\": {\"DX\": 30, \"DY\": 30, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "30", "relation_matrix_dy": "30", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -1402,7 +1402,7 @@ Link_79:
   father_id: "26"
   child_id: "28"
   relation_id: "26"
-  type_values: "{\"matrix\": {\"DX\": 0, \"DY\": 19, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 90}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "19", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "90", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -1415,7 +1415,7 @@ Link_90:
   father_id: "5"
   child_id: "34"
   relation_id: "25"
-  type_values: "{\"matrix\": {\"DX\": 30, \"DY\": -30, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "30", "relation_matrix_dy": "-30", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -1428,7 +1428,7 @@ Link_91:
   father_id: "5"
   child_id: "34"
   relation_id: "25"
-  type_values: "{\"matrix\": {\"DX\": -30, \"DY\": 30, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "-30", "relation_matrix_dy": "30", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -1441,7 +1441,7 @@ Link_92:
   father_id: "5"
   child_id: "34"
   relation_id: "25"
-  type_values: "{\"matrix\": {\"DX\": -30, \"DY\": -30, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "-30", "relation_matrix_dy": "-30", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -1454,7 +1454,7 @@ Link_74:
   father_id: "33"
   child_id: "32"
   relation_id: "26"
-  type_values: "{\"matrix\": {\"DX\": 3, \"DY\": -3, \"DZ\": 1.5, \"RX\": 180, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"fsdsdffs\"}"
+  type_values: '{"relation_matrix_dx": "3", "relation_matrix_dy": "-3", "relation_matrix_dz": "1.5", "relation_matrix_rx": "180", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -1467,7 +1467,7 @@ Link_77:
   father_id: "33"
   child_id: "32"
   relation_id: "26"
-  type_values: "{\"matrix\": {\"DX\": -3, \"DY\": 3, \"DZ\": 1.5, \"RX\": 180, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "-3", "relation_matrix_dy": "3", "relation_matrix_dz": "1.5", "relation_matrix_rx": "180", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -1480,7 +1480,7 @@ Link_84:
   father_id: "27"
   child_id: "29"
   relation_id: "26"
-  type_values: "{\"matrix\": {\"DX\": 0, \"DY\": -19, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 90}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "-19", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "90", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -1493,7 +1493,7 @@ Link_85:
   father_id: "27"
   child_id: "29"
   relation_id: "26"
-  type_values: "{\"matrix\": {\"DX\": 0, \"DY\": 19, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 90}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "19", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "90", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"
@@ -1506,7 +1506,7 @@ Link_83:
   father_id: "27"
   child_id: "28"
   relation_id: "26"
-  type_values: "{\"matrix\": {\"DX\": 0, \"DY\": -24, \"DZ\": 0, \"RX\": 0, \"RY\": 0, \"RZ\": 0}, \"link_infos\": \"\"}"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "-24", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
   owner_id: "101"
   group_id: "101"
   projowner_id: "2"

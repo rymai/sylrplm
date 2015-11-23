@@ -1,4 +1,41 @@
 class PlmServices
+
+	@@plmcache={}
+
+	def self.get_property_cache(prop_name)
+		fname = "PlmServices.#{__method__}"
+		ret=nil
+		prop_name=prop_name.to_s
+		unless @@plmcache["property"].nil?
+			#LOG.debug(fname) {"prop_name=#{prop_name} #{@@plmcache["property"].count} =#{@@plmcache["property"][prop_name]} properties in cache:#{@@plmcache["property"]}"}
+			ret=@@plmcache["property"][prop_name]
+		end
+		LOG.debug(fname) {"propName=#{prop_name} ret=#{ret}"}
+		ret
+	end
+
+	def self.set_property_cache(prop_name, value)
+		fname = "PlmServices.#{__method__}"
+		prop_name=prop_name.to_s
+		if @@plmcache["property"].nil?
+			@@plmcache["property"]={}
+		end
+		@@plmcache["property"][prop_name]=value
+		#LOG.debug(fname) {"prop_name=#{prop_name} value=#{value} #{@@plmcache["property"].count} properties in cache"}
+	end
+
+	# reset the cache of properties
+	def self.reset_property_cache
+		fname = "PlmServices.#{__method__}"
+		#LOG.debug(fname) {"reset cache"}
+		@@plmcache["property"]=nil
+	end
+
+	# reset the cache
+	def self.reset_cache
+		@@plmcache=nil
+	end
+
 	def self.isEmail(str)
 		str.match(/\A(\S+)@(.+)\.(\S+)\z/)
 	end
@@ -15,29 +52,17 @@ class PlmServices
 
 	def self.get_object(type, id )
 		fname = "PlmServices.#{__method__}(#{type},#{id})"
-		#if id.nil?
-		# type= 'part.6'
-		#fields=type.split('.')
-		#if fields.count==2
-		#	type = fields[0]
-		#	id = fields[1]
-		#else
-		#	LOG.error (fname){"Type #{type} bad formatted}"}
-		#	return nil
-		#end
-		#end
-		# parts devient Part
+		# part devient Part
 		typec = "::#{type.camelize}"
 		ret = nil
 		begin
 			mdl = eval typec
 		rescue Exception => e
-			LOG.warn (fname) {"eval '#{typec}':#{e.message}"}
 			begin
-				typec ="::Ruote::Sylrplm#{typec}"
-				mdl = eval typec
-			rescue Exception => e
-				LOG.error(fname) {"===================== eval '#{typec}':#{e.message}"}
+				typecr ="::Ruote::Sylrplm#{typec}"
+				mdl = eval typecr
+			rescue Exception => er
+				LOG.error(fname) {"eval #{typec}=>#{e.message} , #{typecr}=>#{er.message}"}
 				stack=""
 				cnt=0
 				e.backtrace.each do |x|
@@ -46,7 +71,7 @@ class PlmServices
 					end
 					cnt+=1
 				end
-				LOG.error(fname) {"===================== stack=\n#{stack}\n========================"}
+				LOG.error(fname) {"===================== stack=\n#{stack}\n====================================================="}
 			end
 		end
 		unless mdl.nil?
@@ -65,7 +90,7 @@ class PlmServices
 				LOG.error (fname) {"--------------------- stack=\n#{stack}\n -------------------------"}
 			end
 		end
-		#LOG.debug (fname){"ret=#{(ret.nil? ? "" : ret.ident)}"}
+		LOG.debug (fname){"object not found}"} if ret.nil?
 		ret
 	end
 
@@ -78,7 +103,7 @@ class PlmServices
 		types = ::Typesobject.find_all_by_forobject(::SYLRPLM::PLM_PROPERTIES, :order => :name)
 		ret = {}
 		types.each do |typ|
-		#LOG.debug(fname) {"atype_ident=#{atype_ident} type=#{typ}"}
+		LOG.debug(fname) {"atype_ident=#{atype_ident} type=#{typ}"}
 			ident = "#{typ.name}"
 			if atype_ident.nil?
 			# all properties
@@ -114,41 +139,53 @@ class PlmServices
 	#
 	def self.get_property(prop_name, atype_ident=nil)
 		fname = "PlmServices.#{__method__}"
-		props = get_properties(atype_ident)
-		ret=nil
-		ret_key=nil
-		prop_name=prop_name.to_s.strip
-		props.each do |key, value|
-		#LOG.debug(fname) {"key=#{key}, value=#{value}"}
-			unless value.nil? || value[prop_name].nil?
-			ret = value[prop_name]
-			ret_key = key
-			break
-			end
-		end
-		#
-		if ret.nil?
-			# the property is not in a typesobject, we search in SYLRPLM variables
-			begin
-				var = "::SYLRPLM::#{prop_name}"
-				ret = eval var
-				LOG.warn(fname) {"variable #{prop_name} does not exists in TypesObjects/#{atype_ident} but found in config file sylrplm.rb"}
-			rescue Exception=>e
-				LOG.error(fname) {"variable #{var} does not exists in TypesObjects/#{atype_ident} and not found in config file sylrplm.rb"}
-				begin
-					s=100/0
-				rescue Exception => e
-					stack=""
-					e.backtrace.each do |x|
-						stack+= x+"\n"
-					end
-					LOG.warn (fname) {"stack pour information sur l appelant a get_property=\n#{stack}"}
+		LOG.debug(fname) {">>>>prop_name=#{prop_name}"}
+		ret=get_property_cache(prop_name)
+		unless  ret.nil?
+			#LOG.debug(fname) {"<<<<prop_name=#{prop_name}, atype_ident=#{atype_ident}, ret=#{ret} found in cache"}
+		else
+			props = get_properties(atype_ident)
+			ret=nil
+			ret_key=nil
+			 prop_name=prop_name.to_s.strip
+			props.each do |key, value|
+				#LOG.debug(fname) {"prop_name=#{prop_name} key=#{key}, value=#{value}"}
+				#value=val[::Models::SylrplmCommon::TYPE_VALUES_VALUE][prop_name]
+				unless value.nil? || value[prop_name].nil?
+					ret = value[prop_name][::Models::SylrplmCommon::TYPE_VALUES_VALUE]
+					#LOG.debug(fname) {"prop_name=#{prop_name} key=#{key}, value=#{value} ret=#{ret}"}
+				ret_key = key
+				break
+				else
+					#LOG.debug(fname) {"prop_name=#{prop_name} key=#{key}, value=#{value} not found"}
 				end
 			end
-		#LOG.debug(fname) {"prop_name=#{prop_name}, atype_ident=#{atype_ident}, ret=#{ret} found in SYLRPLM variables"}
-		else
-		#LOG.debug(fname) {"prop_name=#{prop_name}, atype_ident=#{atype_ident}, ret=#{ret} found in #{ret_key} properties"  }
+			#
+			if ret.nil?
+				# the property is not in a typesobject, we search in SYLRPLM variables
+				begin
+					var = "::SYLRPLM::#{prop_name}"
+					ret = eval var
+					#LOG.warn(fname) {"variable #{prop_name} does not exists in TypesObjects/#{atype_ident} but found in config file sylrplm.rb"}
+				rescue Exception=>e
+					LOG.error(fname) {"variable #{var} does not exists in TypesObjects/#{atype_ident} and not found in config file sylrplm.rb"}
+					begin
+						s=100/0
+					rescue Exception => e
+						stack=""
+						e.backtrace.each do |x|
+							stack+= x+"\n"
+						end
+						LOG.warn (fname) {"stack pour information sur l appelant a get_property=\n#{stack}"}
+					end
+				end
+				LOG.debug(fname) {"prop_name=#{prop_name}, atype_ident=#{atype_ident}, ret=#{ret} found in SYLRPLM variables"}
+			else
+				LOG.debug(fname) {"prop_name=#{prop_name}, atype_ident=#{atype_ident}, ret=#{ret} found in #{ret_key} properties"  }
+			end
+			set_property_cache(prop_name, ret)
 		end
+		LOG.debug(fname) {"<<<<prop_name=#{prop_name}, ret=#{ret}"  }
 		ret
 	end
 
@@ -163,7 +200,7 @@ class PlmServices
 		type=::Typesobject.new(params)
 		st=type.save
 		else
-			st=type.update_attributes(params)
+		st=type.update_attributes(params)
 		end
 		LOG.debug(fname) {"st=#{st}, atype_ident=#{atype_ident}, name=#{type.name}, fields=#{type.fields}, error=#{type.errors.full_messages}"}
 		type
@@ -231,5 +268,6 @@ class PlmServices
 		LOG.debug(fname) {"key='#{key}', argums='#{argums}' ret=#{ret}"} if ret.empty?
 		ret
 	end
+
 
 end

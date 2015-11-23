@@ -51,7 +51,7 @@ new account: some controles on input
 help: update "help of this window"
 #------------------------------------------------------------------------------
 # Date: 2015 06 28
-------------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 complete howto about lifecycle
 uniformization of index views: name, title are translated if possible
 add properties to ISSUE part type
@@ -59,4 +59,12 @@ complete help with gems and release_notes
 add tabs for list, add, remove relations in show view of plm objects
 use ckeditor for all description fields (textarea)
 add father to the Typesobject (for inherit)
-add thmbnails in sample.table
+add thumbnails in sample.table
+#------------------------------------------------------------------------------
+# Date: 2015  11 23
+#------------------------------------------------------------------------------
+add checkbox on index views
+structure properties: type, maxi, mini, ...
+tests : functional , unit and fixtures
+user interface tests with capybara/selenium/Rspec (begin)
+

@@ -1,14 +1,14 @@
-<h1><%= t(:typesobjects_new) %></h1>
+<h1><%= t(:typesobject_new) %></h1>
 <% fonct="new"
   form_id=fonct+"_typesobject" %>
 <% form_for(@typesobject, :html => { :id => form_id }) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "shared/menu_new", :locals => {:object => @typesobject, :f => f, :fonct=>fonct}) %>
-<%= render(:partial => "typesobjects/edit",:locals => {
+<%= render(:partial => "typesobjects/edit",:locals => {:object => @typesobject,
 :f => f,
 :fonct => fonct,
 :form_id => form_id })
 %>
 <%= render(:partial => "shared/submit_new", :locals => {:object => @typesobject, :f => f, :fonct=>fonct}) %>
 
-<% end %> 
+<% end %>

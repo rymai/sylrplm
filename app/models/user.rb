@@ -476,6 +476,7 @@ new_user=nil
 					LOG.warn(fname) {"link not saved=#{link_recent},relation=#{relation_recent}" }
 				end
 				recents = self.get_recent_links
+				# traces
 				if(1==0)
 					LOG.debug(fname) {"recents=#{recents.count}"}
 					recents.each do |recent|

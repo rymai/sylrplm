@@ -95,12 +95,15 @@ class Document < ActiveRecord::Base
 	end
 
 	def self.get_conditions(filters)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {"filters=#{filters}"}
 		filter = filters.gsub("*", "%")
 		ret = {}
 		unless filter.nil?
 			ret[:qry] = "ident LIKE :v_filter or revision LIKE :v_filter or designation LIKE :v_filter or to_char(date, 'YYYY/MM/DD') LIKE :v_filter "
 			ret[:values] = { :v_filter => filter }
 		end
+		LOG.debug(fname) {"filters=#{filters} ret=#{ret}"}
 		ret
 	end
 

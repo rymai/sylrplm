@@ -5,7 +5,7 @@ class Access < ActiveRecord::Base
   include ::Models::SylrplmCommon
 	include ::Caboose
 	include ::Caboose::AccessControl
-	
+
   attr_accessor :controller_and_action
 
   attr_accessible :controller_and_action, :roles, :id, :controller, :action
@@ -34,17 +34,17 @@ class Access < ActiveRecord::Base
 		access_actions=Access.find(:all, :order => "controller, roles, action")
 		LOG.debug (fname){"begin list access_actions"}
 		controllers_actions={}
-		access_actions.each { |aa| 
+		access_actions.each { |aa|
 			controllers_actions[aa.controller]={} if controllers_actions[aa.controller].nil?
 			controllers_actions[aa.controller][aa.action]=aa.roles
 		}
 		actions_by_roles={}
-		user=User.find_by_name("syl")
+		user=User.find_by_name(PlmServices.get_property(:USER_ADMIN))
 		::Role.find(:all,:order => "title").each { |arole|
 			actions_by_roles[arole]={}
 			user.role=arole
 			#puts "user=#{user}"
-			access_actions.each { |aa| 
+			access_actions.each { |aa|
 				#c=c.access_context[:user] c.action_name c.controller_name
 				#actions: {:add_datafile=>"(admin | creator | designer | valider | analyst | project_manager | plm_actor) & (!consultant)", :add_docs=>"(admin | creator ...
 				c=(eval aa.controller).new
@@ -61,7 +61,7 @@ class Access < ActiveRecord::Base
 		actions_by_roles.each_key { |role|
 			puts "******************************************************"
 			puts "role=#{role} , #{actions_by_roles[role].count} controllers"
-			actions_by_roles[role].each { |controller| 
+			actions_by_roles[role].each { |controller|
 				unless controller[1].nil?
 					if controller[1].count>0
 				#puts "controller=#{controller[0]} , #{controller[1].count} actions=#{controller[1]}"
@@ -72,7 +72,7 @@ class Access < ActiveRecord::Base
 		LOG.debug (fname){"end list access_actions"}
 		actions_by_roles
 	end
-	
+
 	def self.allowed?(actions, action, access_context)
         if actions.has_key? action
           ret=RoleHandler.new.process(actions[action].dup, access_context)
@@ -87,8 +87,8 @@ class Access < ActiveRecord::Base
           return true
         end
       end
-      
-	
+
+
   def self.reset
     #delete et remplissage des autorisations
     delete_all
@@ -126,7 +126,7 @@ class Access < ActiveRecord::Base
     ret[:cat_consultants] << consultant.title unless consultant.nil?
     #puts "#{__method__.to_s}:cat_admins=#{ret[:cat_admins]}"
     #puts "#{__method__.to_s}:cat_consultants=#{ret[:cat_consultants]}"
-    ret[:cat_creators] = Role.all.collect { |r| r.title } 
+    ret[:cat_creators] = Role.all.collect { |r| r.title }
     #puts "#{__method__.to_s}:roles=#{ret[:cat_creators]}"
     ret[:cat_creators]-= ret[:cat_admins]
     ret[:cat_creators]-= ret[:cat_consultants]
@@ -149,7 +149,7 @@ class Access < ActiveRecord::Base
       memo
     end.join(' | ')
   end
-  
+
   #ecrit !_role pour chaque role
   def self.roles_prefixe(lst, yes_no)
     ret=""
@@ -159,17 +159,17 @@ class Access < ActiveRecord::Base
     end
     ret
   end
-  
+
   def self.roles_prefixe_remy(lst, yes_no)
     lst.inject([]) do |memo, r|
       memo << r unless r.nil?
       memo
     end.join(' | ')
   end
-  
+
   #
   # remplissage initial des autorisations
-  # 
+  #
   def self.init
     puts "acces.init:remplissage des autorisations"
     destroy_all
@@ -211,12 +211,12 @@ class Access < ActiveRecord::Base
           #puts "acces.init:#{controller.name} #{controller.method}: seulement admin"
           roles=nil
           if controller.method != "show" && controller.method[0,7] != "account"
-            #roles = "admin" 
+            #roles = "admin"
             roles = roles_admin acc_roles
           end
         else
         # les fonctions plm
-          if %w["show"].include?(controller.method) 
+          if %w["show"].include?(controller.method)
            # puts "acces.init:#{controller.name} #{controller.method}:fonctions plm:show index: "
             #roles = "admin | designer | valider | consultant"
            roles=roles_admin_or_creator_or_consultant acc_roles
@@ -231,7 +231,7 @@ class Access < ActiveRecord::Base
       exist = find_by_controller_and_roles("#{controller.name}.#{controller.method}",roles)
       #puts "acces.init:#{controller.name} #{controller.method}: exist=#{exist} roles=#{roles}"
       unless exist.nil? && roles.nil?
-      	create(:controller_and_action => "#{controller.name}.#{controller.method}", :roles => roles) 
+      	create(:controller_and_action => "#{controller.name}.#{controller.method}", :roles => roles)
       end
     end
   end

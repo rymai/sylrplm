@@ -62,7 +62,7 @@ fr:
   list_mode_details_icon: Details avec apercu
   list_mode_icon: Apercu seul
   data_access_forbidden: "Accès interdit à ces données: %{msg}"
-  host_not_defined: "Host non défini, le définir dans Type object property/sites/central=xxx"
+  host_not_defined: "Host non défini, le définir dans Type object property/sites/SITE_CENTRAL=xxx"
   database_not_consistency: "Database not consistency: %{msg}"
   # customers
   ctrl_customer: Client

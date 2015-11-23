@@ -141,8 +141,19 @@ class Node
 			ret = self.label == other_node.label
 			end
 		end
-		#LOG.debug(fname){"#{other_node.obj_child.ident} == #{self.obj_child.ident} = #{ret}"} if ret
+		LOG.debug(fname){"equals?: #{other_node.obj_child.ident} == #{self.obj_child.ident} = #{ret}"} if ret
 		ret
+	end
+
+	def remove(node)
+		fname="Node:#{__method__}"
+		LOG.debug(fname){"remove #{node} size=#{@nodes.size}"}
+		@nodes.each do |nod|
+			if nod.id==node.id
+				LOG.debug(fname){"#{node} equals #{nod}"}
+			@nodes.delete(nod)
+			end
+		end
 	end
 
 	def size

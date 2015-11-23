@@ -3,22 +3,18 @@
 <% form_for(@project) do |f| %>
 <%= f.error_messages %>
 <% end %>
-<% end %>
+<% else %>
 <%= h_form_simple_query('/projects', @projects) %>
+<% form_tag({:controller=>:projects, :action=>:index_execute}) do %>
 <% unless param_equals?("todo", "select") %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("new_project"), new_project_path %> </td>
-		<td> <%= show_help("help_projects") %> </td>
-	</tr>
-</table>
+<%= h_menu_index_action("project")%>
 <%end%>
 <% if @myparams[:list_mode] == t(:list_mode_icon) %>
 <%= h_thumbnails_objs @projects %>
 <% else %>
 <%= will_paginate(@projects[:recordset]) %>
-<table>
-	<tr>
+<table id='list_objects' name='list_objects'>
+	<tr id='header'>
 		<th><%= h_img(:label_icon) %></th>
 		<th <%= sort_td_class_helper "ident" %>> <%= sort_link_helper t(:label_ident), "ident" %> </th>
 		<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t(:label_typesobject), "typesobject_id" %> </th>
@@ -32,9 +28,13 @@
 		<th <%= sort_td_class_helper "domain" %>><%= sort_link_helper t(:label_domain), "domain" %></th><th></th>
 		<th></th><th></th>
 		<th></th>
+		<th></th>
+		<th></th>
 	</tr>
-	<% @projects[:recordset].each do |project| %>
-	<tr class='<%= cycle("even", "odd") %>'>
+	<% ind=0
+	@projects[:recordset].each do |project|
+	ind+=1 %>
+	<tr id=<%=ind%> class='<%= cycle("even", "odd") %>'>
 		<td> <%= icone(project) %> </td>
 		<td> <%= h_explorer project %> </td>
 		<td> <%= h_explorer project.typesobject, :name_translate unless project.typesobject.nil? %></td>
@@ -49,14 +49,15 @@
 		<% unless param_equals?("todo", "select") %>
 		<td> <%= link_to h_img_edit.to_s, edit_project_path(project) %> </td>
 		<td> <%= link_to h_img_edit_lifecycle.to_s, {:controller=>"projects", :action=>"edit_lifecycle", :id => project.id} %> </td>
-		<td> <%= link_to h_img_destroy.to_s, project, :confirm => t(:msg_confirm), :method => :delete %> </td>
 		<td> <%= link_to h_img(:duplicate), new_dup_project_path(project) %> </td>
-		<td> <% if logged_in? %>
+		<td> <% if logged_in? %></td>
 		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => project.id}, :method => :get %>
-		<% end %> </td>
+		<% end %>
+		<td><%= h_destroy(project) %></td>
 		<% if project.revisable?  %>
 		<td> <%= h_img_revise.to_s %></td>
 		<%end%>
+		<td><%= check_box(:action_on,project.id) %></td>
 		<% else %> <td><%= select_button(project)%> </td>
 		<%end%>
 	</tr>
@@ -65,10 +66,7 @@
 <% end %>
 <%= will_paginate(@projects[:recordset]) %>
 <% unless param_equals?("todo", "select") %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("new_project"), new_project_path %> </td>
-		<td> <%= show_help("help_projects") %> </td>
-	</tr>
-</table>
+<%= h_menu_index_action("project")%>
+<%end%>
+<%end%>
 <%end%>

@@ -1,15 +1,7 @@
 <h1><%= t("definitions_list") %></h1>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("new_definition"), new_definition_path %> </td>
-		<td> <%= show_help("help_definitions") %> </td>
-	</tr>
-</table>
+<% form_tag({:controller=>:definitions, :action=>:index_execute}) do %>
+<%= h_menu_index_action("definition")%>
 <%= render(:partial => "definitions/index",:locals => { :fonct=>"index" }) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t("new_definition"), new_definition_path %> </td>
-		<td> <%= show_help("help_definitions") %> </td>
-	</tr>
-</table>
+<%= h_menu_index_action("definition")%>
+<%end%>
 

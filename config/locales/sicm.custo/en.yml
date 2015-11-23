@@ -90,6 +90,8 @@ en:
   typesobject_name_calculsheet: Spreadsheet
   typesobject_name_volumes_dir: Volume directory
   typesobject_name_ISSUE: Issue
+  typesobject_name_MEETING: Meeting
+  typesobject_name_DECISION: Decision
   # statusobject
   typesobject_name_ready: Ready
   typesobject_name_approved: Approved
@@ -153,6 +155,7 @@ en:
   mnu_documents_p2d: Drawing
   mnu_projects_standard: Project of standards
   mnu_projects_sub-assembly: Project of module
+  mnu_projects_public: Public project
   mnu_customers_internal: Internal Client
   mnu_customers_private: Private Client
   mnu_customers_public: Public Client

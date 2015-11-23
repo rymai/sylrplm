@@ -5,14 +5,18 @@ mnu_feature=get_controller_from_model_type(feature)
 	<%= h_menu("#","help_#{mnu_feature}",t("mnu_#{mnu_feature}")) %>
 	<ul class="dropdown-menu">
 		<%types.each do |type|
+			LOG.debug("menus_feature") {"feature=#{feature} type=#{type}"}
 		mdl = get_controller_from_model_type(type.forobject)
 		help="help_#{mdl}_#{type.name}"
 		mnu=t("mnu_#{mdl}_#{type.name}")
-		LOG.debug  ("menus_feature") {"Type : #{type.name} , domain=#{type.domain} , help=#{help} , mnu=#{mnu}, model=#{mdl}"}
-		%>
+		LOG.debug("menus_feature") {"Type : #{type.name} , domain=#{type.domain} , help=#{help} , mnu=#{mnu}, model=#{mdl}"}
+		if(type.name=="divider")%>
+		<li class="divider"></li>
+		<%else%>
 		<li>
 			<%= h_menu("/#{mdl}?filter_types=#{type.name}", help, mnu) %>
 		</li>
+		<% end %>
 		<% end %>
 	</ul>
 </li>

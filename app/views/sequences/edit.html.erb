@@ -3,7 +3,7 @@
 <% form_for(@sequence) do |f| %>
 <%= f.error_messages %>
 <%= render(:partial => "shared/menu_edit",:locals => { :object => @sequence, :f => f, :fonct=>fonct}) %>
-<%= render(:partial => "sequences/edit",:locals => { :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "sequences/edit",:locals => {:object => @sequence, :f => f, :fonct=>fonct}) %>
 <%= render(:partial => "shared/submit_edit",:locals => { :object => @sequence, :f => f, :fonct=>fonct}) %>
 
 <% end %>

@@ -2,44 +2,51 @@ require File.dirname(__FILE__)+'/../test_helper'
 
 class PartsControllerTest < ActionController::TestCase
   test "should get index" do
-    get :index
+    login_as_admin(@request)
+     get :index
     assert_response :success
     assert_not_nil assigns(:parts)
   end
 
   test "should get new" do
-    get :new
+     login_as_admin(@request)
+     get :new
     assert_response :success
   end
 
   test "should create part" do
-    assert_difference('Part.count') do
-      post :create, :part => { }
+     login_as_admin(@request)
+     assert_difference('Part.count') do
+      post :create, :part => { :owner=>users(:user_admin),:ident=>"part001", :designation=>"designation1",:date=>"2015/10/11"}
     end
-
-    assert_redirected_to part_path(assigns(:part))
+assert_response :success
+    #assert_redirected_to part_path(assigns(:part))
   end
 
   test "should show part" do
-    get :show, :id => parts(:one).to_param
+     login_as_admin(@request)
+     get :show, :id => parts(:Part_1).to_param
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, :id => parts(:one).to_param
+     login_as_admin(@request)
+     get :edit, :id => parts(:Part_1).to_param
     assert_response :success
   end
 
   test "should update part" do
-    put :update, :id => parts(:one).to_param, :part => { }
+     login_as_admin(@request)
+     put :update, :id => parts(:Part_1).to_param, :part => { }
     assert_redirected_to part_path(assigns(:part))
   end
 
   test "should destroy part" do
-    assert_difference('Part.count', -1) do
-      delete :destroy, :id => parts(:one).to_param
+     login_as_admin(@request)
+     post :create, :part => { :owner=>users(:user_admin),:ident=>"part002", :designation=>"designation2",:date=>"2015/10/11"}
+     assert_difference('Part.count', -1) do
+      delete :destroy, :id => Part.find_by_ident("part002").to_param
     end
-
     assert_redirected_to parts_path
   end
 end

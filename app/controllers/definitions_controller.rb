@@ -29,7 +29,7 @@ class DefinitionsController < ApplicationController
 	access_control(Access.find_for_controller(controller_class_name))
 	#
 	def index
-		@definitions = Definition.find_all_for(@current_user)
+		index_
 		unless @definitions.length==0
 			respond_to do |format|
 				format.html # index.html.erb
@@ -37,6 +37,14 @@ class DefinitionsController < ApplicationController
 				format.json { render :json => @definitions.to_json(:request => request) }
 			end
 		end
+	end
+
+	def index_
+		@definitions = Definition.find_all_for(@current_user)
+	end
+
+	def index_execute
+		ctrl_index_execute
 	end
 
 	def new_process
@@ -191,7 +199,7 @@ class DefinitionsController < ApplicationController
 			else # there is an error
 				LOG.error @definition.errors.inspect
 				LOG.error @definition.inspect
-				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)
+				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name, :error => @definition.errors.full_messages)
 				format.html {
 					render(:action => 'edit')
 				}

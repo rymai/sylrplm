@@ -4,6 +4,23 @@ require "digest/sha1"
 # = ApplicationHelper
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+	def h_menu_index_action(model_name)
+		fname=self.class.name+"."+__method__.to_s
+		ret=""
+		ret += "<table class='menu_bas'>"
+		ret +=	"<tr>"
+		link=t("new_#{model_name}")
+		url={:controller=>get_controller_from_model_type(model_name), :action=>:new}
+		LOG.debug(fname){"link=#{link} url=#{url}"}
+		linkto=eval "link_to('#{link}', #{url})"
+		ret += "<td>#{linkto}</td>"
+		ret += "#{h_menu_execute_submit(model_name)}"
+		help = show_help("help_#{model_name}s")
+		ret +=	"<td>#{help}</td>"
+		ret +=	"</tr>"
+		ret += "</table>"
+	end
+
 	#
 	# select on type for update_type by Ajax
 	#
@@ -54,7 +71,6 @@ module ApplicationHelper
 		ret << "</br>"
 		ret
 	end
-
 
 	def h_show_translate item
 		" (#{item})"
@@ -125,7 +141,7 @@ module ApplicationHelper
 	def h_menu(href,help,title)
 		bloc=""
 		#ne marche pas avec boostrap bloc<<"<a class='menu' onclick=\"return helpPopup('#{help}','#{href}');\" >#{title}</a>";
-		bloc<<"<a class='menu' href='#{href}' >#{title}</a>";
+		bloc<<"<a class='menu' id='#{title} name='#{title}' href='#{href}' >#{title}</a>";
 		bloc
 	end
 
@@ -504,7 +520,7 @@ module ApplicationHelper
 		if !fonct.include?("new") && obj.respond_to?(:typesobject)
 			unless obj.typesobject.nil?
 				objfields = obj.typesobject.get_fields
-				#LOG.info (fname){"fields=#{objfields} obj.type_values=#{obj.type_values}"}
+				LOG.info (fname){"fields=#{objfields} obj.type_values=#{obj.type_values}"}
 				unless objfields.nil?
 					case fonct
 					when "edit", "account_edit"
@@ -567,7 +583,7 @@ module ApplicationHelper
 		fname=self.class.name+"."+__method__.to_s
 		fields = obj.send(method)
 		form_id=h_form_html_id(obj, fonct)
-		#LOG.info (fname){"obj=#{obj}, fonct=#{fonct}, method=#{method}, fields=#{fields}, form_id=#{form_id}"}
+		LOG.info (fname){">>>>obj=#{obj}, fonct=#{fonct}, method=#{method}, fields=#{fields}, form_id=#{form_id}"}
 		unless fields.nil?
 			if to_json
 			fields=fields.to_json
@@ -603,6 +619,7 @@ module ApplicationHelper
 		else
 			ret=""
 		end
+		LOG.info (fname){"<<<<obj=#{obj}, fonct=#{fonct}, method=#{method} ret=#{ret}"}
 		ret
 	end
 
@@ -715,10 +732,10 @@ module ApplicationHelper
 	end
 
 	def h_show_a(link)
-	   show_url={:controller => link.child.controller_name,
-						:action => 'show',
-						:id => "#{link.child.id}"}
-	   show_a="<a href=\"#{url_for(show_url)}\" title=\"#{link.child.tooltip}\">#{link.child.label}</a>"
+		show_url={:controller => link.child.controller_name,
+			:action => 'show',
+			:id => "#{link.child.id}"}
+		show_a="<a href=\"#{url_for(show_url)}\" title=\"#{link.child.tooltip}\">#{link.child.label}</a>"
 	end
 
 	def h_edit_link_a(link)
@@ -737,20 +754,34 @@ module ApplicationHelper
 		              :root_id => "")
 		edit_link_a = "<a href=\"#{edit_link_url}\" title=\"#{link_values}\">#{img_rel}#{tr_rel_name}</a>"
 	end
+
 	def h_remove_link(link)
 		remove_link_url = url_for(:controller => 'links',
               :action => "remove_link",
               :id => link.id,
               :object_model => link.father.model_name,
               :object_id => link.father.id)
-						remove_link_a = "<a href=\"#{remove_link_url}\">#{img_cut}</a>"
+		remove_link_a = "<a href=\"#{remove_link_url}\">#{img_cut}</a>"
 	end
 
 	def h_text_editor(form, object, attribut)
 		attribut=attribut.to_s
-	   	ret=""
-	   	ret << form.text_area(attribut , :rows => 10, :readonly => object.column_readonly?(attribut))
-	   	ret << "<script>CKEDITOR.replace( \"#{object.model_name}_description\");</script>"
-    end
+		ret=""
+		ret << form.text_area(attribut , :rows => 10, :readonly => object.column_readonly?(attribut))
+		ret << "<script>CKEDITOR.replace( \"#{object.model_name}_description\");</script>"
+	end
+
+	:private
+
+	def h_menu_execute_submit(model_name)
+		ret=""
+		submit_copy=t("submit_copy")
+		submit_destroy=t("submit_destroy")
+		if logged_in? && Favori.can_favori?(model_name)
+			ret<< "<td>#{submit_tag(submit_copy)}</td>"
+		end
+		ret<<	"<td>#{submit_tag(submit_destroy)}</td>"
+		ret
+	end
 end
 

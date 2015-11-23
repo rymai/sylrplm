@@ -2,6 +2,21 @@ require 'classes/plm_services'
 
 module Models
 	module SylrplmCommon
+		#
+		#constants about type_values attribute existing on each plm object
+		#
+		FORMAT_DATE||="%Y/%m/%d:%H:%M:%S"
+		TYPE_VALUES_TYPE||="$TYPE"
+		TYPE_VALUES_VALUE||="$VALUE"
+		TYPE_VALUES_MAXI||="$MAXI"
+		TYPE_VALUES_MINI||="$MINI"
+		TYPE_VALUES_TYPE_BOOLEAN||="BOOLEAN"
+		TYPE_VALUES_TYPE_DATE||="DATE"
+		TYPE_VALUES_TYPE_DECIMAL||="DECIMAL"
+		TYPE_VALUES_TYPE_INTEGER||="INTEGER"
+		TYPE_VALUES_TYPE_STRING||="STRING"
+		TYPE_VALUES_TYPE_TIME||="TIME"
+		TYPE_VALUES_TYPE_TIMESTAMP||="TIMESTAMP"
 		# extend ActiveSupport::Concern # only in Rails 3.x ...
 		def self.included(base)
 			# ça appelle extend du sous module ClassMethods sur "base", la classe dans laquelle tu as inclu la lib
@@ -63,6 +78,14 @@ module Models
 				"parent_id in(select id from forum_items where message LIKE :v_filter)"
 			end
 
+			def qry_promote
+				"promote_id in(select id from forum_items where message LIKE :v_filter)"
+			end
+
+			def qry_parent
+				"parent_id in(select id from forum_items where message LIKE :v_filter)"
+			end
+
 			def truncate_words(text, len = 5, end_string = " ...")
 				return if text == nil
 				words = text.split()
@@ -82,14 +105,12 @@ module Models
 			#
 			def find_paginate(params)
 				fname= "#{self.class.name}.#{__method__}"
-				#puts self.model_name+"."+__method__.to_s+":debut:theparams="+params.inspect
-				#puts self.model_name+"."+__method__.to_s+":debut:"+self.class.name
+				LOG.debug(fname) {"params=#{params}"}
 				user = params[:user]
 				#puts self.model_name+"."+__method__.to_s+":user="+user.inspect
 				filter_access = {}
 				filter_access[:qry] = ""
 				filter_access[:values] = {}
-
 				#
 				# lecture possible des projets et des groupes du user
 				#
@@ -123,9 +144,9 @@ module Models
 				if filter_access[:qry] == par_open+par_close || filter_access[:qry] == par_open || filter_access[:qry] == par_close
 					filter_access[:qry] = ""
 				end
-				unless params[:query].nil? || params[:query].blank?
+				unless params[:query].blank?
 					cond = get_conditions(params[:query])
-					#puts self.model_name+".find_paginate:cond="+cond.inspect
+					LOG.debug(fname) {"apres get_conditions query=#{params[:query]}  cond=#{cond}"}
 					unless cond.nil?
 						values=filter_access[:values].merge(cond[:values])
 					else
@@ -139,7 +160,9 @@ module Models
 				else
 					conditions = [filter_access[:qry], filter_access[:values]]
 				end
-				unless params[:filter_types].nil?
+				LOG.debug(fname) {"apres params[query] query=#{params[:query]}  conditions=#{conditions}"}
+				unless params[:filter_types].blank?
+					filter_access={:qry=>conditions[0], :values=>conditions[1]}
 					# filter on object types from menus
 					types_id=[]
 					filter_types=params[:filter_types]
@@ -165,13 +188,11 @@ module Models
 					#filter_access[:values][:v_types] = "(#{types_id.join(",")})"
 					conditions = [filter_access[:qry], filter_access[:values]]
 				end
-				#puts self.model_name+".find_paginate:conditions="+conditions.inspect
-				#puts self.model_name+".find_paginate:page="+params[:page].to_s
-				LOG.info(fname) {"filter_access=#{filter_access.inspect}"}
+				LOG.debug(fname) {"apres params[:filter_types] filter_types=#{params[:filter_types]}  conditions=#{conditions}"}
 				last_rev_only = false
 				unless user.nil?
 					if user.is_admin?
-						puts self.model_name+"le user admin voit tout"
+						LOG.debug(fname) {"le user admin #{user} voit tout"}
 						conditions = nil
 					last_rev_only = false
 					else
@@ -180,34 +201,60 @@ module Models
 						end
 					end
 				end
-				if last_rev_only
-					# seulement la derniere revision
-					select = "distinct on (ident) *"
-					order="ident asc, revision desc"
-					order+=","+params[:sort] unless params[:sort].nil?
-					recordset = self.paginate(:page => params[:page],
-					:conditions => conditions,
-					:order => order,
-					:select => select,
-					:per_page => params[:nb_items])
+				LOG.debug(fname) {"apres user =#{user}  conditions=#{conditions}"}
+				unless (conditions.nil? || conditions[0].blank? || conditions[1]=={})
+					if last_rev_only
+						# seulement la derniere revision
+						select = "distinct on (ident) *"
+						order="ident asc, revision desc"
+						order+=","+params[:sort] unless params[:sort].nil?
+						recordset = self.paginate(:page => params[:page],
+						:conditions => conditions,
+						:order => order,
+						:select => select,
+						:per_page => params[:nb_items])
+					else
+					# toutes les revisions
+						recordset = self.paginate( :page => params[:page],
+						:conditions => conditions,
+						:order => params[:sort],
+						:per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
+					)
+					end
 				else
-				# toutes les revisions
-					recordset = self.paginate( :page => params[:page],
-					:conditions => conditions,
-					:order => params[:sort],
-					:per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
-				)
+				recordset = self.paginate( :page => params[:page],
+						:order => params[:sort],
+						:per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
+					)
 				end
 				#puts self.model_name+".find_paginate:conditions="+conditions.inspect
 				#puts self.model_name+"."+__method__.to_s+":"+recordset.inspect
-				#LOG.debug (fname) {"conditions=#{conditions.inspect} : #{recordset.inspect}"}
+				LOG.debug (fname) {"fin conditions=#{conditions} : #{recordset.count unless recordset.nil?}"}
 				{:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
+
 			end
 
+		# end of class methods
+		end
+
+		#begin of methods
+		def decod_json(text_json, key, name)
+			fname= "#{self.class.name}.#{__method__}"
+			begin
+				decod = ActiveSupport::JSON.decode(text_json)
+				#LOG.debug(fname) {"key='#{key}' decod=#{decod} self=#{self}"}
+				ret=decod
+			rescue Exception => e
+				LOG.error(fname) {"key='#{key}' Error during field decoding from JSON : fields=#{text_json}"}
+				LOG.error(fname) {"key='#{key}' Error during field decoding from JSON : Exception=#{e}"}
+				self.errors.add_to_base(I18n.translate('activerecord.errors.messages.field_badly_formatted', :type => name, :key=>key, :fields=> text_json, :exception => e))
+				ret=nil
+			end
 		end
 
 		def before_save
 			fname= "#{self.class.name}.#{__method__}"
+			LOG.debug (fname) {"debut before_save type_values=#{self.type_values}"} if self.respond_to? :type_values
 			if (self.respond_to? :owner) && (self.respond_to? :group)
 				LOG.debug (fname) {"before_save:owner=#{owner} group=#{group}"}
 				unless owner.nil?
@@ -233,21 +280,97 @@ module Models
 				LOG.debug (fname) {"domain=#{domain} admin?=#{self.owner.role.is_admin? unless self.owner.role.nil?}"}
 				if(self.domain=="admin" && !self.owner.role.is_admin?)
 					self.errors.add_to_base('Role is not admin!')
-				return false
+				ret=false
 				end
 			end
-			true
+			if ret==true
+				if (self.respond_to? :typesobject)
+					if(self.type_values.nil?)
+						fields=typesobject.get_fields
+						LOG.debug (fname){"fields=#{fields}"}
+					self.type_values=fields
+					end
+				end
+				ret=check_type_values
+				if self.class.name=="Typesobject"
+					if self.forobject==::SYLRPLM::PLM_PROPERTIES
+						PlmServices.reset_property_cache
+					end
+				end
+			end
+			LOG.debug (fname) {"ret=#{ret}"}
+			ret
 		end
 
 		def before_destroy
+			fname= "#{self.class.name}.#{__method__}"
 			#unless Favori.get(self.model_name).count.zero?
 			#  raise "Can't delete because of links:"+self.ident
 			#end
-			if ::Link.linked?(self)
+			lnk=::Link.linked?(self)
+			LOG.debug(fname) {"before_destroy:self=#{self} linked?=#{lnk}"}
+			if lnk
 				#raise "Can't delete "+self.ident+" because of links:"
 				self.errors.add_to_base "Can't delete "+self.ident+" because of links"
-			return false
+			ret=false
+			else
+			ret=true
 			end
+			ret
+		end
+
+		def check_type_values
+			fname= "#{self.class.name}.#{__method__}"
+			ret=true
+			self.errors.clear
+			if self.respond_to? :type_values
+				objTypeValues = get_type_values
+				typeFieldsValues = self.typesobject.get_fields_values
+				LOG.debug(fname) {">>>> check_type_values type_values=#{self.type_values} , objTypeValues=#{objTypeValues.inspect} , typeFieldsValues=#{typeFieldsValues.inspect}"}
+				objTypeValues.each do |key, value|
+					LOG.debug(fname) {"key=#{key} value=#{value}"}
+					unless value.nil?
+						field = typeFieldsValues[key]
+						LOG.debug(fname) {"field=#{field}"}
+						unless field.nil?
+							typeField=field[TYPE_VALUES_TYPE]
+							LOG.debug(fname) {"typeField=#{typeField}"}
+							unless typeField.nil?
+								# all is ok, we can check the value
+								typeFields=typeField.split("(")
+								if typeFields.size==2
+								thetype=typeFields[0]
+								else
+								thetype=typeField
+								end
+								method="check_type_values_#{thetype}"
+								LOG.debug(fname) {"typeFields=#{typeFields} method=#{method}"}
+								st = self.send(method, key, field, thetype, value)
+								if !st
+								ret=false
+								end
+								LOG.debug(fname) {"field=#{field} $TYPE=#{typeField} method=#{method} st=#{st} ret=#{ret}"}
+							else
+								self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_type_badly_defined',:key=>key , :value=>value, :field=>field)
+							end
+						else
+							self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_value_undefined',:key=>key , :value=>value)
+						ret = false
+						end
+					else
+						self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_value_not_found',:key=>key , :value=>value)
+					ret = false
+					end
+				end
+			end
+			if self.errors.count>0
+				LOG.debug(fname) {"errors=#{self.errors.inspect} #{self.errors.full_messages}"}
+				self.errors.each do |attribute, error|
+					LOG.debug(fname) {"attribute=#{attribute} error=#{error}"}
+				end
+			end
+			LOG.debug(fname) {"<<<<ret=#{ret}"}
+			ret
 		end
 
 		#
@@ -269,15 +392,19 @@ module Models
 			fname = "#{self.class.name}.#{__method__}"
 			LOG.debug (fname) {"self=#{self.inspect}"}
 			ret = "#{I18n.t("ctrl_"+model_name)}"
-			if self.respond_to? :typesobject_id
-				unless typesobject.nil?
-					ret+= "/#{typesobject.name}"
+			begin
+				if self.respond_to? :typesobject
+					unless typesobject.nil?
+						ret+= "/#{typesobject.name}"
+					end
 				end
+			rescue Exception=>e
+				LOG.error (fname) {"Error:#{e.full_message}"}
 			end
 			ret+= ".#{ident}"
 			ret+= "/#{revision}" if self.respond_to? :revision
 			ret+= " #{designation}" if self.respond_to? :designation
-			if self.respond_to? :statusobject_id
+			if self.respond_to? :statusobject
 				unless statusobject.nil?
 					ret+= " (#{statusobject.name})"
 				end
@@ -595,12 +722,25 @@ module Models
 
 		def ident_plm
 			fname = "#{self.class.name}.#{__method__}"
-			if self.respond_to?(:revision)
+			if self.respond_to? :revision
 				ret="#{ident}/#{revision}"
 			else
 				ret=ident
 			end
-			#LOG.info (fname){"ident_plm=#{ret}"}
+			sep="."
+			ret+="("
+			if self.respond_to? :typesobject
+				unless self.typesobject.nil?
+				ret+= self.typesobject.name
+				end
+			end
+			if self.respond_to? :statusobject
+				unless self.statusobject.nil?
+				ret+= sep+self.statusobject.name
+				end
+			end
+			ret+=")"
+			LOG.info (fname){"ident_plm=#{ret}"}
 			ret
 		end
 
@@ -696,7 +836,7 @@ module Models
 		end
 
 		def from_function(from, function)
-			fname= "#{self.model_name}.#{__method__}:#{function}:"
+			fname= "#{self.model_name}.#{__method__}"
 			LOG.debug (fname){"from=#{from} function=#{function}"}
 			rel=::Relation.find_by_name(function)
 			#LOG.debug (fname){"rel=#{rel}"}
@@ -705,7 +845,7 @@ module Models
 			else
 				own=nil
 			end
-			link_from = ::Link.new(father: self, child: from, relation: rel, user: own)
+			link_from = ::Link.new(father_plmtype: self.model_name, child_plmtype: from.model_name, father_id: self.id, child_id: from.id, relation_id: rel.id, owner_id: own.id)
 			st=link_from.save
 			LOG.debug (fname){"link_from=#{link_from.ident}:st save=#{st}"}
 			if !st
@@ -713,6 +853,23 @@ module Models
 			end
 			LOG.debug (fname){"link_from=#{link_from}"}
 			link_from
+		end
+
+		def clone_links(from)
+			fname= "#{self.model_name}.#{__method__}"
+			ret={}
+			::Link.find_childs(from).each do |link|
+				LOG.debug(fname) {"#{link.inspect}"}
+				newlink = link.clone
+				newlink.father = self
+				st = newlink.save
+				if st
+				ret[link] = newlink
+				else
+					ret[link] = nil
+				end
+			end
+			ret
 		end
 
 		def have_lifecycle?
@@ -743,11 +900,11 @@ module Models
 		# adapt some atttributes of the object depending of the new type
 		#
 		def modify_type(type)
+			fname= "#{self.model_name}.#{__method__}"
 			typesobject_old=self.typesobject
 			type_values_old=self.type_values
-
 			self.typesobject=type
-			self.type_values=type.fields
+			self.type_values=type.get_fields
 			if self.respond_to? :statusobject
 				statusobject_old=self.statusobject
 				self.statusobject = ::Statusobject.get_first(self)
@@ -766,5 +923,243 @@ module Models
 			ret
 		end
 
+		:private
+
+		def check_type_values_STRING(key, field, thetype, value)
+			fname= "#{self.class.name}.#{__method__}"
+			ret=true
+			typeField=field[TYPE_VALUES_TYPE]
+			nbc = check_length(typeField, value)
+			if(nbc>0)
+				if value.length>nbc
+					self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_string_too_long',:key=>key , :value=>value, :nbc=>nbc)
+				ret=false
+				end
+			end
+
+			LOG.debug(fname) {"typeField=#{typeField} nbc=#{nbc} value=#{value} ret=#{ret}"}
+			ret
+		end
+
+		def check_type_values_DATE(key, field, thetype, value)
+			fname= "#{self.class.name}.#{__method__}"
+			ret=true
+			typeField=field[TYPE_VALUES_TYPE]
+			date = check_date("#{value}:10:10:10")
+			if date.nil?
+				ret=false
+				self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_value_not_type',:key=>key , :value=>value, :type=>thetype)
+				LOG.debug(fname) {"add_to_base:#{self.errors.size}"}
+			end
+			if ret
+				ret = check_limits(key, thetype, value, field[TYPE_VALUES_MINI], field[TYPE_VALUES_MAXI])
+			end
+			LOG.debug(fname) {"typeField=#{typeField} value=#{value} date=#{(date.nil? ? "null" : date)} ret=#{ret}"}
+			ret
+		end
+
+		def check_type_values_TIME(key, field, thetype, value)
+			fname= "#{self.class.name}.#{__method__}"
+			ret=true
+			typeField=field[TYPE_VALUES_TYPE]
+			date = check_date("1970/01/01:#{value}")
+			if date.nil?
+				ret=false
+				self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_value_not_type',:key=>key , :value=>value, :type=>thetype)
+				LOG.debug(fname) {"add_to_base:#{self.errors.size}"}
+			end
+			if ret
+				ret = check_limits(key, thetype, value, field[TYPE_VALUES_MINI], field[TYPE_VALUES_MAXI])
+			end
+			LOG.debug(fname) {"typeField=#{typeField} value=#{value} date=#{(date.nil? ? "null" : date)} ret=#{ret}"}
+			ret
+		end
+
+		def check_type_values_TIMESTAMP(key, field, thetype, value)
+			fname= "#{self.class.name}.#{__method__}"
+			ret=true
+			typeField=field[TYPE_VALUES_TYPE]
+			date = check_date(value)
+			if date.nil?
+				ret=false
+				self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_value_not_type',:key=>key , :value=>value, :type=>thetype)
+				LOG.debug(fname) {"add_to_base:#{self.errors.size}"}
+			end
+			if ret
+				ret = check_limits(key, thetype, value, field[TYPE_VALUES_MINI], field[TYPE_VALUES_MAXI])
+			end
+			LOG.debug(fname)  {"typeField=#{typeField} value=#{value} date=#{(date.nil? ? "null" : date)} ret=#{ret}"}
+			ret
+		end
+
+		def check_type_values_INTEGER(key, field, thetype, value)
+			fname= "#{self.class.name}.#{__method__}"
+			ret=true
+			typeField=field[TYPE_VALUES_TYPE]
+			begin
+				ret= /\A[-+]?\d+\z/ === value
+				if ret==false
+					self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_value_not_type',:key=>key , :value=>value, :type=>thetype)
+					LOG.debug(fname) {"add_to_base:blank #{self.errors.size}"}
+				end
+			rescue Exception => e
+				ret=false
+				self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_value_not_type',:key=>key , :value=>value, :type=>thetype)
+				LOG.debug(fname) {"add_to_base:error #{self.errors.size} : #{e}"}
+			end
+			if ret
+				ret = check_limits(key, thetype, value.to_i, field[TYPE_VALUES_MINI].to_i, field[TYPE_VALUES_MAXI].to_i)
+			end
+			LOG.debug(fname) {"key=#{key} field=#{field} value=#{value} ret=#{ret}"}
+			ret
+		end
+
+		def check_type_values_DECIMAL(key, field, thetype, value)
+			fname= "#{self.class.name}.#{__method__}"
+			ret=true
+			typeField=field[TYPE_VALUES_TYPE]
+			LOG.debug(fname) {"typeField=#{typeField} thetype=#{thetype} value=#{value} "}
+			begin
+				unless value !~ /^\s*[+-]?((\d+_?)*\d+(\.(\d+_?)*\d+)?|\.(\d+_?)*\d+)(\s*|([eE][+-]?(\d+_?)*\d+)\s*)$/
+					ret = check_precision(typeField, value)
+					if(ret==false)
+						self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_value_bad_format',:key=>key , :value=>value, :type=>thetype, :fmt=>typeField)
+						LOG.debug(fname) {"add_to_base : check_precision #{self.errors.size}"}
+					end
+				else
+					ret=false
+					self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_value_not_type',:key=>key , :value=>value, :type=>thetype)
+					LOG.debug(fname) {"add_to_base : blank #{self.errors.size}"}
+				end
+			rescue Exception => e
+				ret=false
+				self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_value_not_type',:key=>key , :value=>value, :type=>thetype)
+				LOG.debug(fname) {"add_to_base : error #{self.errors.size} : #{e}"}
+			end
+			if ret
+				ret = check_limits(key, thetype, value.to_f, field[TYPE_VALUES_MINI].to_f, field[TYPE_VALUES_MAXI].to_f)
+			end
+			LOG.debug(fname) {"typeField=#{typeField} value=#{value}  ret=#{ret}"}
+			ret
+		end
+
+		def check_type_values_BOOLEAN(key, field, thetype, value)
+			fname= "#{self.class.name}.#{__method__}"
+			ret=true
+			typeField=field[TYPE_VALUES_TYPE]
+			if value!="true" && value!="false" && value!="yes" && value!="no"
+				ret=false
+				self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_value_not_type',:key=>key , :value=>value, :type=>thetype)
+				LOG.debug(fname) {"add_to_base:#{self.errors.size}"}
+			end
+			LOG.debug(fname) {"typeField=#{typeField} value=#{value} ret=#{ret}"}
+			ret
+		end
+
+		# read the type and find the arguments:
+		# param typeField the type to analyse
+		# - STRING(123) : 123 is the maxi length of the string
+		# - DECIMAL(5.3) : 5 characters and 3 after .
+		#
+		def get_typefield_args(typeField)
+			fname= "#{self.class.name}.#{__method__}"
+			ret=nil
+			f=typeField.split("(");
+			LOG.debug(fname) {"typeField=#{typeField} f=#{f}"}
+			if(f.size==2)
+				ff=f[1].split(")")
+				LOG.debug(fname) {"typeField=#{typeField} f=#{f} ff=#{ff}"}
+				if(ff.size==1)
+					precision=ff[0].split(".")
+					LOG.debug(fname) {"typeField=#{typeField}  precision=#{precision}"}
+					if(precision.size==2)
+						nbc=precision[0].to_i
+						nbdec=precision[1].to_i
+						ret= [nbc, nbdec]
+					else
+						if(precision.size==1)
+							ret=[precision[0].to_i]
+						end
+					end
+				end
+			end
+			LOG.debug(fname) {"typeField=#{typeField} ret=#{ret}"}
+			ret
+		end
+
+		def check_precision(typeField, value)
+			fname= "#{self.class.name}.#{__method__}"
+			args=get_typefield_args(typeField)
+			nbc=args[0].to_i
+			nbdec=args[1].to_i
+			ret=true
+			#TODO: enlever le . et le + ou -
+			length=value.length
+			length-=1 unless value.index(".").nil?
+			length-=1 unless value.index("+").nil?
+			length-=1 unless value.index("-").nil?
+			LOG.debug(fname) {"typeField=#{typeField} value=#{value} length=#{length}"}
+			if(value.length>nbc+1)
+				LOG.debug(fname) {"typeField=#{typeField} value=#{value} value too long:#{value.length}>#{nbc+1}"}
+			ret=false
+			else
+				fv=value.split(".")
+				if(fv.size==2)
+					if(fv[1].length>nbdec)
+						LOG.debug(fname) {"typeField=#{typeField} value=#{value} value too much dec#{fv[1].length}>#{nbdec}"}
+					ret=false
+					end
+				end
+			end
+			LOG.debug(fname) {"typeField=#{typeField} value=#{value} ret=#{ret}"}
+			ret
+		end
+
+		def check_length(typeField, value)
+			fname= "#{self.class.name}.#{__method__}"
+			args=get_typefield_args(typeField)
+			nbc=0
+			LOG.debug(fname) {"typeField=#{typeField} value=#{value} args=#{args}"}
+			unless args.nil?
+			nbc=args[0].to_i
+			end
+			LOG.debug(fname) {"typeField=#{typeField} value=#{value} nbc=#{nbc}"}
+			nbc
+		end
+
+		def check_date(value)
+			fname= "#{self.class.name}.#{__method__}"
+			begin
+				date = Date.strptime(value,FORMAT_DATE)
+				LOG.debug(fname) {"value=#{value} format=#{FORMAT_DATE} : date=#{date}"}
+			rescue Exception=>e
+				date=nil
+				LOG.debug(fname) {"value=#{value} format=#{FORMAT_DATE} : bad format"}
+			end
+			date
+		end
+
+		# test min and max
+		def check_limits(key, thetype, value, min, max)
+			fname= "#{self.class.name}.#{__method__}"
+			ret=true
+			LOG.debug(fname) {"value=#{value} min=#{min} max=#{max}"}
+			unless min.blank?
+				if value < min
+					ret=false
+					self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_value_outside_limit',:key=>key , :value=>value, :type=>thetype, :sign=>"<",:limit=>min)
+				end
+				LOG.debug(fname) {"add_to_base: limit #{self.errors.size}"}
+			end
+			unless max.blank?
+				if value > max
+					ret=false
+					self.errors.add_to_base I18n.translate('activerecord.errors.messages.type_values_value_outside_limit',:key=>key , :value=>value, :type=>thetype, :sign=>">",:limit=>max)
+					LOG.debug(fname) {"add_to_base: limit #{self.errors.size}"}
+				end
+			end
+			LOG.debug(fname) {"value=#{value} min=#{min} max=#{max} ret=#{ret}"}
+			ret
+		end
 	end
 end

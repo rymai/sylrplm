@@ -1,15 +1,10 @@
 <h1><%= t(:sequence_list) %><%= h_count_objects(@sequences) %></h1>
 <%= h_form_simple_query('/sequences', @sequences) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:new_sequence), new_sequence_path %> </td>
-		<td> <%= show_help("help_sequences") %> </td>
-	</tr>
-</table>
+<% form_tag({:controller=>:sequences, :action=>:index_execute}) do %>
+<%= h_menu_index_action("sequence")%>
 <%= will_paginate(@sequences[:recordset]) %>
 <table>
 	<tr>
-
 		<th <%= sort_td_class_helper :utility %>> <%= sort_link_helper t(:label_utility), :utility %> </th>
 		<th <%= sort_td_class_helper :sequence %>> <%= sort_link_helper t(:label_sequence), :sequence %> </th>
 		<th <%= sort_td_class_helper :modify %>> <%= sort_link_helper t(:label_modify), :modify %> </th>
@@ -17,7 +12,7 @@
 		<th <%= sort_td_class_helper :min %>> <%= sort_link_helper t(:label_min), :min %> </th>
 		<th <%= sort_td_class_helper :max %>> <%= sort_link_helper t(:label_max), :max %> </th>
 		<th <%= sort_td_class_helper :domain %>> <%= sort_link_helper t(:label_domain), :domain %> </th>
-
+		<th></th>
 		<th></th>
 		<th></th>
 	</tr>
@@ -33,13 +28,10 @@
 		<td> <%= link_to h_img_edit.to_s, edit_sequence_path(sequence) %> </td>
 		<td> <%= h_menu_duplicate(sequence) %> </td>
 		<td> <%= link_to h_img_destroy.to_s, sequence, :confirm => t(:msg_confirm), :method => :delete %> </td>
+		<td><%= check_box(:action_on,sequence.id) %></td>
 	</tr>
 	<% end %>
 </table>
 <%= will_paginate(@sequences[:recordset]) %>
-<table class='menu_bas'>
-	<tr>
-		<td> <%= link_to t(:new_sequence), new_sequence_path %> </td>
-		<td> <%= show_help("help_sequences") %> </td>
-	</tr>
-</table>
+<%= h_menu_index_action("sequence")%>
+<%end%>

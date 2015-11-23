@@ -1,17 +1,19 @@
 Document_3:
-  id: "3"
-  owner_id: "105"
-  typesobject_id: "1045584113"
-  statusobject_id: "4"
+  id: '3'
+  owner_id: '105'
+  typesobject_id: '1045584113'
+  statusobject_id: '4'
+  next_status_id:
+  previous_status_id:
   ident: DOC000004
-  revision: "0"
+  revision: '0'
   designation: Documents de la table
-  description: ""
-  date: "2013-06-04"
-  group_id: "101"
-  projowner_id: "3"
+  description: ''
+  date: '2013-06-04'
+  group_id: '101'
+  projowner_id: '3'
   domain: sample.table
-  type_values: "{\"type\": \"\"}"
+  type_values: '{"type": ""}'
 
 Document_4:
   id: "4"
