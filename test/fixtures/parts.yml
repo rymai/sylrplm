@@ -1,0 +1,494 @@
+Part_1:
+  id: "1"
+  owner_id: "101"
+  typesobject_id: "989626522"
+  statusobject_id: "7"
+  ident: PRT000001
+  revision: AAA
+  designation: Table
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_3:
+  id: "3"
+  owner_id: "101"
+  typesobject_id: "989626526"
+  statusobject_id: "7"
+  ident: PRT000003
+  revision: AAA
+  designation: Plateau
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_4:
+  id: "4"
+  owner_id: "101"
+  typesobject_id: "989626526"
+  statusobject_id: "7"
+  ident: PRT000004
+  revision: AAA
+  designation: Cadre
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_5:
+  id: "5"
+  owner_id: "101"
+  typesobject_id: "989626526"
+  statusobject_id: "7"
+  ident: PRT000005
+  revision: AAA
+  designation: Pieds
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_6:
+  id: "6"
+  owner_id: "101"
+  typesobject_id: "989626523"
+  statusobject_id: "7"
+  ident: PRT000006
+  revision: AAA
+  designation: Table traditionnelle courte haute
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_7:
+  id: "7"
+  owner_id: "101"
+  typesobject_id: "989626523"
+  statusobject_id: "7"
+  ident: PRT000007
+  revision: AAA
+  designation: Table traditionnelle courte basse
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_8:
+  id: "8"
+  owner_id: "101"
+  typesobject_id: "989626523"
+  statusobject_id: "7"
+  ident: PRT000008
+  revision: AAA
+  designation: Table traditionnelle longue haute
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_9:
+  id: "9"
+  owner_id: "101"
+  typesobject_id: "989626523"
+  statusobject_id: "7"
+  ident: PRT000009
+  revision: AAA
+  designation: Table traditionnelle longue basse
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_10:
+  id: "10"
+  owner_id: "101"
+  typesobject_id: "989626523"
+  statusobject_id: "7"
+  ident: PRT000010
+  revision: AAA
+  designation: Table moderne haute
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_11:
+  id: "11"
+  owner_id: "101"
+  typesobject_id: "989626523"
+  statusobject_id: "7"
+  ident: PRT000011
+  revision: AAA
+  designation: Table moderne basse
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_12:
+  id: "12"
+  owner_id: "101"
+  typesobject_id: "989626524"
+  statusobject_id: "7"
+  ident: PRT000012
+  revision: AAA
+  designation: Pietement rond
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_13:
+  id: "13"
+  owner_id: "101"
+  typesobject_id: "989626524"
+  statusobject_id: "7"
+  ident: PRT000013
+  revision: AAA
+  designation: Pietement carre
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_14:
+  id: "14"
+  owner_id: "101"
+  typesobject_id: "989626524"
+  statusobject_id: "7"
+  ident: PRT000014
+  revision: AAA
+  designation: Forme carre
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_15:
+  id: "15"
+  owner_id: "101"
+  typesobject_id: "989626524"
+  statusobject_id: "7"
+  ident: PRT000015
+  revision: AAA
+  designation: Forme rectangulaire
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_16:
+  id: "16"
+  owner_id: "101"
+  typesobject_id: "989626524"
+  statusobject_id: "7"
+  ident: PRT000017
+  revision: AAA
+  designation: Forme hexagonale
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_17:
+  id: "17"
+  owner_id: "101"
+  typesobject_id: "989626524"
+  statusobject_id: "7"
+  ident: PRT000018
+  revision: AAA
+  designation: Taille basse
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_18:
+  id: "18"
+  owner_id: "101"
+  typesobject_id: "989626524"
+  statusobject_id: "7"
+  ident: PRT000019
+  revision: AAA
+  designation: Taille haute
+  description: ""
+  date: "2012-10-27"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_19:
+  id: "19"
+  owner_id: "101"
+  typesobject_id: "989626525"
+  statusobject_id: "7"
+  ident: PRT000020
+  revision: AAA
+  designation: Pied rond court
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_20:
+  id: "20"
+  owner_id: "101"
+  typesobject_id: "989626525"
+  statusobject_id: "7"
+  ident: PRT000021
+  revision: AAA
+  designation: Pied rond long
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_21:
+  id: "21"
+  owner_id: "101"
+  typesobject_id: "989626525"
+  statusobject_id: "7"
+  ident: PRT000022
+  revision: AAA
+  designation: Pied carre long
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_22:
+  id: "22"
+  owner_id: "101"
+  typesobject_id: "989626525"
+  statusobject_id: "7"
+  ident: PRT000023
+  revision: AAA
+  designation: Pied carre court
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_23:
+  id: "23"
+  owner_id: "101"
+  typesobject_id: "989626525"
+  statusobject_id: "7"
+  ident: PRT000024
+  revision: AAA
+  designation: Plateau rectangulaire
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_24:
+  id: "24"
+  owner_id: "101"
+  typesobject_id: "989626525"
+  statusobject_id: "7"
+  ident: PRT000025
+  revision: AAA
+  designation: Plateau carre
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_25:
+  id: "25"
+  owner_id: "101"
+  typesobject_id: "989626525"
+  statusobject_id: "7"
+  ident: PRT000026
+  revision: AAA
+  designation: Plateau hexagonal
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_26:
+  id: "26"
+  owner_id: "101"
+  typesobject_id: "989626526"
+  statusobject_id: "7"
+  ident: PRT000027
+  revision: AAA
+  designation: Cadre carre
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_27:
+  id: "27"
+  owner_id: "101"
+  typesobject_id: "989626526"
+  statusobject_id: "7"
+  ident: PRT000028
+  revision: AAA
+  designation: Cadre rectangulaire
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_28:
+  id: "28"
+  owner_id: "101"
+  typesobject_id: "989626525"
+  statusobject_id: "7"
+  ident: PRT000029
+  revision: AAA
+  designation: Cote cadre court
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_29:
+  id: "29"
+  owner_id: "101"
+  typesobject_id: "989626525"
+  statusobject_id: "7"
+  ident: PRT000030
+  revision: AAA
+  designation: Cote cadre long
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_30:
+  id: "30"
+  owner_id: "101"
+  typesobject_id: "989626525"
+  statusobject_id: "7"
+  ident: PRT000031
+  revision: AAA
+  designation: Plaque
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_31:
+  id: "31"
+  owner_id: "101"
+  typesobject_id: "989626525"
+  statusobject_id: "7"
+  ident: PRT000032
+  revision: AAA
+  designation: Patin
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_32:
+  id: "32"
+  owner_id: "101"
+  typesobject_id: "989626525"
+  statusobject_id: "7"
+  ident: PRT000033
+  revision: AAA
+  designation: "Vis "
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_33:
+  id: "33"
+  owner_id: "101"
+  typesobject_id: "989626526"
+  statusobject_id: "7"
+  ident: PRT000034
+  revision: AAA
+  designation: Fixation pied
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:
+
+Part_34:
+  id: "34"
+  owner_id: "101"
+  typesobject_id: "989626526"
+  statusobject_id: "7"
+  ident: PRT000035
+  revision: AAA
+  designation: Pied
+  description: ""
+  date: "2012-10-28"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  type_values:

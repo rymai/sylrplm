@@ -1,0 +1,1515 @@
+
+
+Link_174:
+  id: "174"
+  father_id: "3"
+  child_id: "5"
+  relation_id: "27"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: document
+  child_plmtype: document
+
+Link_175:
+  id: "175"
+  father_id: "3"
+  child_id: "6"
+  relation_id: "27"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: document
+  child_plmtype: document
+
+Link_176:
+  id: "176"
+  father_id: "3"
+  child_id: "8"
+  relation_id: "27"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: document
+  child_plmtype: document
+
+Link_177:
+  id: "177"
+  father_id: "3"
+  child_id: "9"
+  relation_id: "27"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: document
+  child_plmtype: document
+
+Link_178:
+  id: "178"
+  father_id: "3"
+  child_id: "10"
+  relation_id: "27"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: document
+  child_plmtype: document
+
+Link_179:
+  id: "179"
+  father_id: "3"
+  child_id: "12"
+  relation_id: "27"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: document
+  child_plmtype: document
+
+Link_180:
+  id: "180"
+  father_id: "3"
+  child_id: "13"
+  relation_id: "27"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: document
+  child_plmtype: document
+
+Link_181:
+  id: "181"
+  father_id: "3"
+  child_id: "14"
+  relation_id: "27"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: document
+  child_plmtype: document
+
+Link_182:
+  id: "182"
+  father_id: "3"
+  child_id: "15"
+  relation_id: "27"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: document
+  child_plmtype: document
+
+Link_183:
+  id: "183"
+  father_id: "3"
+  child_id: "11"
+  relation_id: "27"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: document
+  child_plmtype: document
+
+Link_184:
+  id: "184"
+  father_id: "3"
+  child_id: "7"
+  relation_id: "27"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: document
+  child_plmtype: document
+#
+# part document
+#
+Link_171:
+  id: "171"
+  father_id: "23"
+  child_id: "4"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_172:
+  id: "172"
+  father_id: "24"
+  child_id: "5"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_173:
+  id: "173"
+  father_id: "25"
+  child_id: "6"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_186:
+  id: "186"
+  father_id: "32"
+  child_id: "7"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_188:
+  id: "188"
+  father_id: "28"
+  child_id: "8"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_189:
+  id: "189"
+  father_id: "29"
+  child_id: "9"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_190:
+  id: "190"
+  father_id: "31"
+  child_id: "10"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_185:
+  id: "185"
+  father_id: "30"
+  child_id: "11"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_187:
+  id: "187"
+  father_id: "22"
+  child_id: "12"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_191:
+  id: "191"
+  father_id: "21"
+  child_id: "13"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_192:
+  id: "192"
+  father_id: "19"
+  child_id: "14"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_193:
+  id: "193"
+  father_id: "20"
+  child_id: "15"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+# part document scad
+Link_1711:
+  id: "1711"
+  father_id: "23"
+  child_id: "21"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_1721:
+  id: "1721"
+  father_id: "24"
+  child_id: "22"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_1731:
+  id: "1731"
+  father_id: "25"
+  child_id: "23"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_1861:
+  id: "1861"
+  father_id: "32"
+  child_id: "24"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_1881:
+  id: "1881"
+  father_id: "28"
+  child_id: "25"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_1891:
+  id: "1891"
+  father_id: "29"
+  child_id: "26"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_1901:
+  id: "1901"
+  father_id: "31"
+  child_id: "27"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_1851:
+  id: "1851"
+  father_id: "30"
+  child_id: "28"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_1871:
+  id: "1871"
+  father_id: "22"
+  child_id: "29"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_1911:
+  id: "1911"
+  father_id: "21"
+  child_id: "30"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_1921:
+  id: "1921"
+  father_id: "19"
+  child_id: "31"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_1931:
+  id: "1931"
+  father_id: "20"
+  child_id: "32"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "1"
+  group_id: "1"
+  projowner_id: "1"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+#
+#part part
+#
+Link_38:
+  id: "38"
+  father_id: "1"
+  child_id: "6"
+  relation_id: "21"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_39:
+  id: "39"
+  father_id: "1"
+  child_id: "7"
+  relation_id: "21"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_40:
+  id: "40"
+  father_id: "1"
+  child_id: "8"
+  relation_id: "21"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_41:
+  id: "41"
+  father_id: "1"
+  child_id: "9"
+  relation_id: "21"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_42:
+  id: "42"
+  father_id: "1"
+  child_id: "10"
+  relation_id: "21"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_43:
+  id: "43"
+  father_id: "1"
+  child_id: "11"
+  relation_id: "21"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_44:
+  id: "44"
+  father_id: "1"
+  child_id: "12"
+  relation_id: "20"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_45:
+  id: "45"
+  father_id: "1"
+  child_id: "13"
+  relation_id: "20"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_46:
+  id: "46"
+  father_id: "1"
+  child_id: "14"
+  relation_id: "20"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_47:
+  id: "47"
+  father_id: "1"
+  child_id: "15"
+  relation_id: "20"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_48:
+  id: "48"
+  father_id: "1"
+  child_id: "16"
+  relation_id: "20"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_49:
+  id: "49"
+  father_id: "1"
+  child_id: "17"
+  relation_id: "20"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_50:
+  id: "50"
+  father_id: "1"
+  child_id: "18"
+  relation_id: "20"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_53:
+  id: "53"
+  father_id: "1"
+  child_id: "5"
+  relation_id: "24"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "0", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_54:
+  id: "54"
+  father_id: "6"
+  child_id: "13"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_55:
+  id: "55"
+  father_id: "6"
+  child_id: "14"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_56:
+  id: "56"
+  father_id: "6"
+  child_id: "18"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_57:
+  id: "57"
+  father_id: "7"
+  child_id: "13"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_58:
+  id: "58"
+  father_id: "7"
+  child_id: "14"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_59:
+  id: "59"
+  father_id: "7"
+  child_id: "17"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_60:
+  id: "60"
+  father_id: "8"
+  child_id: "13"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_61:
+  id: "61"
+  father_id: "8"
+  child_id: "15"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_62:
+  id: "62"
+  father_id: "8"
+  child_id: "18"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_63:
+  id: "63"
+  father_id: "9"
+  child_id: "13"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_64:
+  id: "64"
+  father_id: "9"
+  child_id: "15"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_65:
+  id: "65"
+  father_id: "9"
+  child_id: "17"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_66:
+  id: "66"
+  father_id: "10"
+  child_id: "12"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_67:
+  id: "67"
+  father_id: "10"
+  child_id: "16"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_68:
+  id: "68"
+  father_id: "10"
+  child_id: "18"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_69:
+  id: "69"
+  father_id: "11"
+  child_id: "12"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_70:
+  id: "70"
+  father_id: "11"
+  child_id: "16"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_71:
+  id: "71"
+  father_id: "11"
+  child_id: "17"
+  relation_id: "22"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_72:
+  id: "72"
+  father_id: "33"
+  child_id: "30"
+  relation_id: "26"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "0", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_52:
+  id: "52"
+  father_id: "1"
+  child_id: "4"
+  relation_id: "24"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "0", "relation_matrix_dz": "-2", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_75:
+  id: "75"
+  father_id: "33"
+  child_id: "32"
+  relation_id: "26"
+  type_values: '{"relation_matrix_dx": "-3", "relation_matrix_dy": "-3", "relation_matrix_dz": "1.5", "relation_matrix_rx": "180", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_51:
+  id: "51"
+  father_id: "1"
+  child_id: "3"
+  relation_id: "24"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "0", "relation_matrix_dz": "2", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_82:
+  id: "82"
+  father_id: "27"
+  child_id: "28"
+  relation_id: "26"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "24", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_86:
+  id: "86"
+  father_id: "3"
+  child_id: "23"
+  relation_id: "26"
+  type_values: "{}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_87:
+  id: "87"
+  father_id: "3"
+  child_id: "24"
+  relation_id: "26"
+  type_values: "{}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_88:
+  id: "88"
+  father_id: "34"
+  child_id: "33"
+  relation_id: "25"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "0", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_93:
+  id: "93"
+  father_id: "4"
+  child_id: "26"
+  relation_id: "25"
+  type_values: "{}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_94:
+  id: "94"
+  father_id: "4"
+  child_id: "27"
+  relation_id: "25"
+  type_values: "{}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_95:
+  id: "95"
+  father_id: "34"
+  child_id: "19"
+  relation_id: "26"
+  type_values: "{}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_96:
+  id: "96"
+  father_id: "34"
+  child_id: "20"
+  relation_id: "26"
+  type_values: "{}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_97:
+  id: "97"
+  father_id: "34"
+  child_id: "21"
+  relation_id: "26"
+  type_values: "{}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_98:
+  id: "98"
+  father_id: "34"
+  child_id: "22"
+  relation_id: "26"
+  type_values: "{}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_117:
+  id: "117"
+  father_id: "98"
+  child_id: "13"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_119:
+  id: "119"
+  father_id: "98"
+  child_id: "17"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_122:
+  id: "122"
+  father_id: "82"
+  child_id: "15"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_123:
+  id: "123"
+  father_id: "84"
+  child_id: "15"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_124:
+  id: "124"
+  father_id: "94"
+  child_id: "15"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_125:
+  id: "125"
+  father_id: "93"
+  child_id: "14"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_126:
+  id: "126"
+  father_id: "87"
+  child_id: "14"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_127:
+  id: "127"
+  father_id: "86"
+  child_id: "15"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_128:
+  id: "128"
+  father_id: "96"
+  child_id: "12"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_129:
+  id: "129"
+  father_id: "96"
+  child_id: "18"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_130:
+  id: "130"
+  father_id: "95"
+  child_id: "12"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_131:
+  id: "131"
+  father_id: "95"
+  child_id: "17"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_132:
+  id: "132"
+  father_id: "3"
+  child_id: "1"
+  relation_id: "2"
+  type_values: "{}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: project
+  child_plmtype: part
+
+Link_152:
+  id: "152"
+  father_id: "1"
+  child_id: "3"
+  relation_id: "7"
+  type_values: "{}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: customer
+  child_plmtype: project
+
+Link_154:
+  id: "154"
+  father_id: "153"
+  child_id: "16"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_155:
+  id: "155"
+  father_id: "3"
+  child_id: "25"
+  relation_id: "26"
+  type_values: "{}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_156:
+  id: "156"
+  father_id: "155"
+  child_id: "16"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_157:
+  id: "157"
+  father_id: "97"
+  child_id: "13"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_158:
+  id: "158"
+  father_id: "97"
+  child_id: "18"
+  relation_id: "23"
+  type_values: "{\"conf_type\": \"\", \"conf_code\": \"\"}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: link
+  child_plmtype: part
+
+Link_168:
+  id: "168"
+  father_id: "1"
+  child_id: "3"
+  relation_id: "1"
+  type_values: "{}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: document
+
+Link_170:
+  id: "170"
+  father_id: "3"
+  child_id: "4"
+  relation_id: "27"
+  type_values: "{}"
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "3"
+  domain: sample.table
+  father_plmtype: document
+  child_plmtype: document
+
+Link_76:
+  id: "76"
+  father_id: "33"
+  child_id: "32"
+  relation_id: "26"
+  type_values: '{"relation_matrix_dx": "3", "relation_matrix_dy": "3", "relation_matrix_dz": "1.5", "relation_matrix_rx": "180", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_80:
+  id: "80"
+  father_id: "26"
+  child_id: "28"
+  relation_id: "26"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "19", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_78:
+  id: "78"
+  father_id: "26"
+  child_id: "28"
+  relation_id: "26"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "-19", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "90", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_81:
+  id: "81"
+  father_id: "26"
+  child_id: "28"
+  relation_id: "26"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "-19", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_89:
+  id: "89"
+  father_id: "5"
+  child_id: "34"
+  relation_id: "25"
+  type_values: '{"relation_matrix_dx": "30", "relation_matrix_dy": "30", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_79:
+  id: "79"
+  father_id: "26"
+  child_id: "28"
+  relation_id: "26"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "19", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "90", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_90:
+  id: "90"
+  father_id: "5"
+  child_id: "34"
+  relation_id: "25"
+  type_values: '{"relation_matrix_dx": "30", "relation_matrix_dy": "-30", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_91:
+  id: "91"
+  father_id: "5"
+  child_id: "34"
+  relation_id: "25"
+  type_values: '{"relation_matrix_dx": "-30", "relation_matrix_dy": "30", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_92:
+  id: "92"
+  father_id: "5"
+  child_id: "34"
+  relation_id: "25"
+  type_values: '{"relation_matrix_dx": "-30", "relation_matrix_dy": "-30", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_74:
+  id: "74"
+  father_id: "33"
+  child_id: "32"
+  relation_id: "26"
+  type_values: '{"relation_matrix_dx": "3", "relation_matrix_dy": "-3", "relation_matrix_dz": "1.5", "relation_matrix_rx": "180", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_77:
+  id: "77"
+  father_id: "33"
+  child_id: "32"
+  relation_id: "26"
+  type_values: '{"relation_matrix_dx": "-3", "relation_matrix_dy": "3", "relation_matrix_dz": "1.5", "relation_matrix_rx": "180", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_84:
+  id: "84"
+  father_id: "27"
+  child_id: "29"
+  relation_id: "26"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "-19", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "90", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_85:
+  id: "85"
+  father_id: "27"
+  child_id: "29"
+  relation_id: "26"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "19", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "90", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part
+
+Link_83:
+  id: "83"
+  father_id: "27"
+  child_id: "28"
+  relation_id: "26"
+  type_values: '{"relation_matrix_dx": "0", "relation_matrix_dy": "-24", "relation_matrix_dz": "0", "relation_matrix_rx": "0", "relation_matrix_ry": "0", "relation_matrix_rz": "0", "link_infos": ""}'
+  owner_id: "101"
+  group_id: "101"
+  projowner_id: "2"
+  domain: sample.table
+  father_plmtype: part
+  child_plmtype: part

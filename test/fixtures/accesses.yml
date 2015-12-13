@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  controller: "PartsController"
+  action: "show"
+  roles: "(admin | creator | designer | valider | analyst | project_manager | plm_actor) & (!consultant)"
+two:
+  controller: "PartsController"
+  action: "index"
+  roles: "(admin | creator | designer | valider | analyst | project_manager | plm_actor) & (!consultant)"

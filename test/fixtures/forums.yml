@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  typesobject_id: 989626522
+  statusobject_id: 14
+  subject: MyString
+  description: MyText
+  owner_id: 1
+
+two:
+  typesobject_id: 989626522
+  statusobject_id: 14
+  subject: MyString
+  description: MyText
+  owner_id: 1

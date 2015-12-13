@@ -1,0 +1,23 @@
+View_1:
+  id: "1"
+  name: standard
+  description:
+  domain: admin
+
+View_2:
+  id: "2"
+  name: configuration
+  description:
+  domain: admin
+
+View_3:
+  id: "3"
+  name: conception
+  description:
+  domain: admin
+
+View_4:
+  id: "4"
+  name: documentation
+  description: ""
+  domain: admin

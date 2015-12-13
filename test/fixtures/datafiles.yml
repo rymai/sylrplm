@@ -1,0 +1,666 @@
+
+Datafile_14:
+  id: '14'
+  owner_id: '1'
+  typesobject_id: '889037033'
+  customer_id:
+  document_id: '15'
+  part_id:
+  project_id:
+  volume_id: '2'
+  revision: '1'
+  ident: DF0000000014
+  filename: db/custos/sicm/sample.table/datafiles/pied_rond_long.odt
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '1'
+  projowner_id: '1'
+  domain: sample.table
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
+
+Datafile_15:
+  id: '15'
+  owner_id: '1'
+  typesobject_id: '889037033'
+  customer_id:
+  document_id: '11'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000015
+  filename: db/custos/sicm/sample.table/datafiles/plaque.odt
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '1'
+  projowner_id: '1'
+  domain: sample.table
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
+
+Datafile_16:
+  id: '16'
+  owner_id: '1'
+  typesobject_id: '889037033'
+  customer_id:
+  document_id: '12'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '2'
+  ident: DF0000000016
+  filename: db/custos/sicm/sample.table/datafiles/pied_carre_court.odt
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '1'
+  projowner_id: '1'
+  domain: sample.table
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
+
+Datafile_17:
+  id: '17'
+  owner_id: '1'
+  typesobject_id: '889037033'
+  customer_id:
+  document_id: '6'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '2'
+  ident: DF0000000017
+  filename: db/custos/sicm/sample.table/datafiles/plateau_hexagonal.odt
+  content_type:
+  group_id: '1'
+  projowner_id: '1'
+  domain: sample.table
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
+
+Datafile_18:
+  id: '18'
+  owner_id: '1'
+  typesobject_id: '889037033'
+  customer_id:
+  document_id: '4'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '2'
+  ident: DF0000000018
+  filename: db/custos/sicm/sample.table/datafiles/plateau_rectangulaire.odt
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '1'
+  projowner_id: '1'
+  domain: sample.table
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
+
+Datafile_19:
+  id: '19'
+  owner_id: '1'
+  typesobject_id: '889037033'
+  customer_id:
+  document_id: '5'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '2'
+  ident: DF0000000019
+  filename: db/custos/sicm/sample.table/datafiles/plateau_carre.odt
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '1'
+  projowner_id: '1'
+  domain: sample.table
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
+
+Datafile_20:
+  id: '20'
+  owner_id: '1'
+  typesobject_id: '889037033'
+  customer_id:
+  document_id: '7'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000020
+  filename: db/custos/sicm/sample.table/datafiles/vis.odt
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '1'
+  projowner_id: '1'
+  domain: sample.table
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
+
+Datafile_21:
+  id: '21'
+  owner_id: '1'
+  typesobject_id: '889037033'
+  customer_id:
+  document_id: '8'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000021
+  filename: db/custos/sicm/sample.table/datafiles/cote_cadre_court.odt
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '1'
+  projowner_id: '1'
+  domain: sample.table
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
+
+Datafile_22:
+  id: '22'
+  owner_id: '1'
+  typesobject_id: '889037033'
+  customer_id:
+  document_id: '14'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '2'
+  ident: DF0000000022
+  filename: db/custos/sicm/sample.table/datafiles/pied_rond_court.odt
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '1'
+  projowner_id: '1'
+  domain: sample.table
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
+
+Datafile_23:
+  id: '23'
+  owner_id: '1'
+  typesobject_id: '889037033'
+  customer_id:
+  document_id: '13'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000023
+  filename: db/custos/sicm/sample.table/datafiles/pied_carre_long.odt
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '1'
+  projowner_id: '1'
+  domain: sample.table
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
+
+Datafile_24:
+  id: '24'
+  owner_id: '1'
+  typesobject_id: '889037033'
+  customer_id:
+  document_id: '10'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '2'
+  ident: DF0000000024
+  filename: db/custos/sicm/sample.table/datafiles/patin.odt
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '1'
+  projowner_id: '1'
+  domain: sample.table
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
+
+Datafile_25:
+  id: '25'
+  owner_id: '1'
+  typesobject_id: '889037033'
+  customer_id:
+  document_id: '9'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '2'
+  ident: DF0000000025
+  filename: db/custos/sicm/sample.table/datafiles/cote_cadre_long.odt
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '1'
+  projowner_id: '1'
+  domain: sample.table
+  type_values: '{"datafile_appli_name": "", "datafile_appli_version": ""}'
+
+Datafile_1:
+  id: '1'
+  owner_id: '105'
+  typesobject_id: '1045584150'
+  customer_id:
+  document_id: '21'
+  part_id:
+  project_id:
+  volume_id: '1'
+  revision: '2'
+  ident: DF0000000001
+  filename: db/custos/sicm/sample.table/datafiles/plateau_rectangulaire.scad
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_2:
+  id: '2'
+  owner_id: '105'
+  typesobject_id: '1045584150'
+  customer_id:
+  document_id: '22'
+  part_id:
+  project_id:
+  volume_id: '1'
+  revision: '2'
+  ident: DF0000000002
+  filename: db/custos/sicm/sample.table/datafiles/plateau_carre.scad
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_3:
+  id: '3'
+  owner_id: '105'
+  typesobject_id: '1045584150'
+  customer_id:
+  document_id: '23'
+  part_id:
+  project_id:
+  volume_id: '1'
+  revision: '1'
+  ident: DF0000000003
+  filename: db/custos/sicm/sample.table/datafiles/plateau_hexagonal.scad
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_4:
+  id: '4'
+  owner_id: '105'
+  typesobject_id: '1045584150'
+  customer_id:
+  document_id: '28'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000004
+  filename: db/custos/sicm/sample.table/datafiles/plaque.scad
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_6:
+  id: '6'
+  owner_id: '105'
+  typesobject_id: '1045584150'
+  customer_id:
+  document_id: '29'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000006
+  filename: db/custos/sicm/sample.table/datafiles/pied_carre_court.scad
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_7:
+  id: '7'
+  owner_id: '105'
+  typesobject_id: '1045584150'
+  customer_id:
+  document_id: '24'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000007
+  filename: db/custos/sicm/sample.table/datafiles/vis.scad
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_8:
+  id: '8'
+  owner_id: '105'
+  typesobject_id: '1045584150'
+  customer_id:
+  document_id: '25'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000008
+  filename: db/custos/sicm/sample.table/datafiles/cote_cadre_court.scad
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_9:
+  id: '9'
+  owner_id: '105'
+  typesobject_id: '1045584150'
+  customer_id:
+  document_id: '26'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000009
+  filename: db/custos/sicm/sample.table/datafiles/cote_cadre_long.scad
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_10:
+  id: '10'
+  owner_id: '105'
+  typesobject_id: '1045584150'
+  customer_id:
+  document_id: '27'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000010
+  filename: db/custos/sicm/sample.table/datafiles/patin.scad
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_11:
+  id: '11'
+  owner_id: '105'
+  typesobject_id: '1045584150'
+  customer_id:
+  document_id: '30'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000011
+  filename: db/custos/sicm/sample.table/datafiles/pied_carre_long.scad
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_12:
+  id: '12'
+  owner_id: '105'
+  typesobject_id: '1045584150'
+  customer_id:
+  document_id: '31'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000012
+  filename: db/custos/sicm/sample.table/datafiles/pied_rond_court.scad
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_13:
+  id: '13'
+  owner_id: '105'
+  typesobject_id: '1045584150'
+  customer_id:
+  document_id: '32'
+  part_id:
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000013
+  filename: db/custos/sicm/sample.table/datafiles/pied_rond_long.scad
+  content_type: application/vnd.oasis.opendocument.text
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_31:
+  id: '31'
+  owner_id: '101'
+  typesobject_id: '646247457'
+  customer_id:
+  document_id:
+  part_id: '24'
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000037
+  filename: db/custos/sicm/sample.table/datafiles/plateau_carre.png
+  content_type: image/png
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_27:
+  id: '27'
+  owner_id: '101'
+  typesobject_id: '646247457'
+  customer_id:
+  document_id:
+  part_id: '32'
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000032
+  filename: db/custos/sicm/sample.table/datafiles/vis.png
+  content_type: image/png
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_33:
+  id: '33'
+  owner_id: '101'
+  typesobject_id: '646247457'
+  customer_id:
+  document_id:
+  part_id: '21'
+  project_id:
+  volume_id: '7'
+  revision: '2'
+  ident: DF0000000040
+  filename: db/custos/sicm/sample.table/datafiles/pied_carre_long.png
+  content_type: image/png
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_28:
+  id: '28'
+  owner_id: '101'
+  typesobject_id: '646247457'
+  customer_id:
+  document_id:
+  part_id: '30'
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000034
+  filename: db/custos/sicm/sample.table/datafiles/plaque.png
+  content_type: image/png
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_29:
+  id: '29'
+  owner_id: '101'
+  typesobject_id: '646247457'
+  customer_id:
+  document_id:
+  part_id: '29'
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000035
+  filename: db/custos/sicm/sample.table/datafiles/cote_cadre_long.png
+  content_type: image/png
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_30:
+  id: '30'
+  owner_id: '101'
+  typesobject_id: '646247457'
+  customer_id:
+  document_id:
+  part_id: '28'
+  project_id:
+  volume_id: '7'
+  revision: '2'
+  ident: DF0000000036
+  filename: db/custos/sicm/sample.table/datafiles/cote_cadre_court.png
+  content_type: image/png
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_32:
+  id: '32'
+  owner_id: '101'
+  typesobject_id: '646247457'
+  customer_id:
+  document_id:
+  part_id: '22'
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000039
+  filename: db/custos/sicm/sample.table/datafiles/pied_carre_court.png
+  content_type: image/png
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_34:
+  id: '34'
+  owner_id: '101'
+  typesobject_id: '646247457'
+  customer_id:
+  document_id:
+  part_id: '20'
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000042
+  filename: db/custos/sicm/sample.table/datafiles/pied_rond_long.png
+  content_type: image/png
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_26:
+  id: '26'
+  owner_id: '101'
+  typesobject_id: '646247457'
+  customer_id:
+  document_id:
+  part_id: '25'
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000031
+  filename: db/custos/sicm/sample.table/datafiles/plateau_hexagonal.png
+  content_type: image/png
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_35:
+  id: '35'
+  owner_id: '101'
+  typesobject_id: '646247457'
+  customer_id:
+  document_id:
+  part_id: '19'
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000043
+  filename: db/custos/sicm/sample.table/datafiles/pied_rond_long.png
+  content_type: image/png
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_36:
+  id: '36'
+  owner_id: '101'
+  typesobject_id: '646247457'
+  customer_id:
+  document_id:
+  part_id: '31'
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000044
+  filename: db/custos/sicm/sample.table/datafiles/patin.png
+  content_type: image/png
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_37:
+  id: '37'
+  owner_id: '101'
+  typesobject_id: '646247457'
+  customer_id:
+  document_id:
+  part_id: '23'
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000045
+  filename: db/custos/sicm/sample.table/datafiles/plateau_rectangulaire.png
+  content_type: image/png
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:
+
+Datafile_38:
+  id: '38'
+  owner_id: '101'
+  typesobject_id: '646247457'
+  customer_id:
+  document_id:
+  part_id: '1'
+  project_id:
+  volume_id: '7'
+  revision: '1'
+  ident: DF0000000033
+  filename: db/custos/sicm/sample.table/datafiles/table.png
+  content_type: image/png
+  group_id: '101'
+  projowner_id: '2'
+  domain: sample.table
+  type_values:

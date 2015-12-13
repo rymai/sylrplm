@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  checkobject_plmtype: part
+  checkobject_id: 1
+  status: 1
+  out_reason: MyString
+  out_date: 2009-12-11
+  out_user_id: 1
+  in_reason: MyString
+  in_date: 2009-12-11
+  in_user_id: 1
+
+two:
+  checkobject_plmtype: document
+  checkobject_id: 1
+  status: 1
+  out_reason: MyString
+  out_date: 2009-12-11
+  out_user_id: 1
+  in_reason: MyString
+  in_date: 2009-12-11
+  in_user_id: 1

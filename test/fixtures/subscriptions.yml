@@ -1,0 +1,66 @@
+Subscription_1:
+  id: "1"
+  name: creator
+  designation: bob_creator
+  description: part and project for creator
+  owner_id: "1"
+  oncreate: t
+  onupdate: t
+  ondestroy: t
+  domain: sicm.custo
+
+Subscription_2:
+  id: "2"
+  name: consultant
+  designation: alice_consultant
+  description: alice_consultant
+  owner_id: "1"
+  oncreate: t
+  onupdate: t
+  ondestroy: t
+  domain: sicm.custo
+
+Subscription_3:
+  id: "3"
+  name: project_manager
+  designation: charly_project_manager
+  description: ""
+  owner_id: "1"
+  oncreate: t
+  onupdate: t
+  ondestroy: t
+  domain: sicm.custo
+
+Subscription_4:
+  id: "4"
+  name: designer
+  designation: robert_designer
+  description: robert_designer
+  owner_id: "1"
+  oncreate: t
+  onupdate: t
+  ondestroy: t
+  domain: sicm.custo
+
+Subscription_5:
+  id: "5"
+  name: analyst
+  designation: sylvia_analyst
+  description: analyst
+  owner_id: "1"
+  oncreate: t
+  onupdate: t
+  ondestroy: t
+  domain: sicm.custo
+
+Subscription_6:
+  id: "6"
+  name: admin
+  designation: subscription admin
+  description: ""
+  owner_id: "1"
+  oncreate: t
+  onupdate: t
+  ondestroy: t
+  domain: sicm.custo
+
