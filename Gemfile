@@ -78,6 +78,7 @@ group :staging, :production do
 end
 
 group :development do
+	gem 'heroku'
 	#gem 'ruby-debug-base19'
 	#gem 'ruby-debug-ide19'
 	#gem 'ruby-debug193'
