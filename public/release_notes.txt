@@ -67,4 +67,5 @@ add checkbox on index views
 structure properties: type, maxi, mini, ...
 tests : functional , unit and fixtures
 user interface tests with capybara/selenium/Rspec (begin)
+essai cedar
 
