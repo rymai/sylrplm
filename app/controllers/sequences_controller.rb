@@ -1,6 +1,6 @@
 class SequencesController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control (Access.find_for_controller(controller_class_name()))
+	access_control (Access.find_for_controller(controller_name.classify))
 	# GET /sequences
 	# GET /sequences.xml
 	def index
@@ -112,7 +112,7 @@ class SequencesController < ApplicationController
 
 	# DELETE /sequences/1
 	# DELETE /sequences/1.xml
-	def destroy
+	def destroy_old
 		@sequence = Sequence.find(params[:id])
 		if @sequence.destroy
 			flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_sequence),:ident=>@sequence.utility)

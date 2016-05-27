@@ -1,6 +1,6 @@
 class VolumesController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control (Access.find_for_controller(controller_class_name()))
+	access_control (Access.find_for_controller(controller_name.classify))
 	# GET /volumes
 	# GET /volumes.xml
 	def index
@@ -46,7 +46,7 @@ class VolumesController < ApplicationController
 		@object_orig = Volume.find(params[:id])
 		@object = @object_orig.duplicate(current_user)
 		@volume=@object
-		LOG.debug (fname) {"object=#{@object}"}
+		LOG.debug(fname) {"object=#{@object}"}
 		respond_to do |format|
 			format.html
 			format.xml  { render :xml => @object }
@@ -88,7 +88,7 @@ class VolumesController < ApplicationController
 	# PUT /volumes/1
 	# PUT /volumes/1.xml
 	def update
-		fname=self.class.name+"."+__method__.to_s+":"
+		fname="#{self.class.name}.#{__method__}"+":"
 		#LOG.info(fname){"id=#{params[:id]}"}
 		@volume = Volume.find(params[:id])
 		@volume.update_accessor(current_user)

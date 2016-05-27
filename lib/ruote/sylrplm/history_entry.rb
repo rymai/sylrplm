@@ -6,19 +6,27 @@ module Ruote
 			#include Models::PlmObject
 			include Models::SylrplmCommon
 
-			has_many :links_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='customer'"]
+			#rails2 has_many :links_customers, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='customer'"]
+			has_many :links_customers, -> { where(father_plmtype: 'history_entry'  , child_plmtype: 'customer') }, :class_name => "Link", :foreign_key => "child_id"
+
 			has_many :customers , :through => :links_customers, :source => :customer_down
 
-			has_many :links_documents, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='document'"]
+			#rails2 has_many :links_documents, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='document'"]
+			has_many :links_documents, -> { where(father_plmtype: 'history_entry'  , child_plmtype: 'document') }, :class_name => "Link", :foreign_key => "child_id"
+
 			has_many :documents , :through => :links_documents, :source => :document_down
 
-			has_many :links_parts, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='part'"]
+			#rails2 has_many :links_parts, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='part'"]
+			has_many :links_parts, -> { where(father_plmtype: 'history_entry'  , child_plmtype: 'part') }, :class_name => "Link", :foreign_key => "child_id"
 			has_many :parts , :through => :links_parts, :source => :part_down
 
-			has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='project'"]
+			#rails2 has_many :links_projects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry' and child_plmtype='project'"]
+			has_many :links_projects, -> { where(father_plmtype: 'history_entry'  , child_plmtype: 'project') }, :class_name => "Link", :foreign_key => "child_id"
+
 			has_many :projects , :through => :links_projects, :source => :project_down
 
-			has_many :links_plmobjects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry'"]
+			#rails2 has_many :links_plmobjects, :class_name => "Link", :foreign_key => "child_id", :conditions => ["father_plmtype='history_entry'"]
+			has_many :links_plmobjects, -> { where(father_plmtype: 'history_entry' ) }, :class_name => "Link", :foreign_key => "child_id"
 
 			attr_accessor :link_attributes
 

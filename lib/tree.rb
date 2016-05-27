@@ -43,7 +43,7 @@ class Tree < Node
     end
 
     #syl "<script>\nd = new dTree('d');\n#{@buffer_nodes}document.write(d);\n</script>"
-    "<script>\n#{@options[:js_name]} = new dTree('#{@options[:js_name]}');\n#{@buffer_nodes}document.write(#{@options[:js_name]});\n</script>"
+    "<script>\n#{@options[:js_name]} = new dTree('#{@options[:js_name]}');\n#{@buffer_nodes}document.write(#{@options[:js_name]});\n</script>".html_safe
   end
 
 

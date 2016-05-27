@@ -1,7 +1,7 @@
 class RelationsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	layout "application"
-	#access_control (Access.find_for_controller(controller_class_name()))
+	#access_control (Access.find_for_controller(controller_name.classify))
 	# GET /relations
 	# GET /relations.xml
 	def index
@@ -35,13 +35,13 @@ class RelationsController < ApplicationController
 	# GET /relations/new
 	# GET /relations/new.xml
 	def new
-		fname= "#{controller_class_name}.#{__method__}"
-		#LOG.debug (fname) {"params=#{params}"}
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug(fname) {"params=#{params}"}
 		@relation = Relation.new
 		@views = View.all
 		@types  = Typesobject.get_types("relation")
 		@status = Statusobject.get_status("relation")
-		#LOG.debug (fname) {"relation=#{@relation.inspect}"}
+		#LOG.debug(fname) {"relation=#{@relation.inspect}"}
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @relation }
@@ -64,25 +64,25 @@ class RelationsController < ApplicationController
 
 	# GET /relations/1/edit
 	def edit
-		fname= "#{controller_class_name}.#{__method__}"
+		fname= "#{self.class.name}.#{__method__}"
 		@relation = Relation.find(params[:id])
 		@views = View.all
 		@types  = Typesobject.get_types("relation")
 		@status = Statusobject.get_status("relation")
-		LOG.debug (fname) {"typesobject=#{@relation.typesobject}"}
+		LOG.debug(fname) {"typesobject=#{@relation.typesobject}"}
 	end
 
 	# POST /relations
 	# POST /relations.xml
 	def create
-		fname= "#{controller_class_name}.#{__method__}"
-		LOG.debug (fname) {"params=#{params.inspect}"}
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {"params=#{params.inspect}"}
 		@relation = Relation.new(params[:relation])
 		@views = View.all
 		@types  = Typesobject.get_types("relation")
 		@status = Statusobject.get_status("relation")
 		respond_to do |format|
-			LOG.debug (fname) {"relation=#{@relation.inspect}"}
+			LOG.debug(fname) {"relation=#{@relation.inspect}"}
 			if params[:fonct][:current] == "new_dup"
 				object_orig=Relation.find(params[:object_orig_id])
 			st = @relation.create_duplicate(object_orig)
@@ -132,7 +132,7 @@ class RelationsController < ApplicationController
 	#
 	def update_type
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@relation = Relation.find(params[:id])
 		@types  = Typesobject.get_types("relation")
 		@status = Statusobject.get_status("relation")
@@ -141,7 +141,7 @@ class RelationsController < ApplicationController
 
 	# DELETE /relations/1
 	# DELETE /relations/1.xml
-	def destroy
+	def destroy_old
 		@relation = Relation.find(params[:id])
 		if @relation.destroy
 			flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_relation), :ident => @relation.ident)
@@ -156,13 +156,13 @@ class RelationsController < ApplicationController
 
 	def update_father
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 	#inutilise @relation_datas = Relation.datas_by_params(params)
 	end
 
 	def update_child
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 	#inutilise @relation_datas = Relation.datas_by_params(params)
 	end
 

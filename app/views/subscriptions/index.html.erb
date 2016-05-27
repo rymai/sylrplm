@@ -1,11 +1,11 @@
 <h1><%= t(:subscription_list) %><%= h_count_objects(@subscriptions) %></h1>
 <% unless @subscription.nil? %>
-<% form_for(@subscription) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@subscription) do |f| %>
+<%= form_errors_for @subscription %>
 <% end %>
 <% else %>
 <%= h_form_simple_query('/subscriptions', @subscriptions) %>
-<% form_tag({:controller=>:subscriptions, :action=>:index_execute}) do %>
+<%= form_tag({:controller=>:subscriptions, :action=>:index_execute}) do %>
 <%= h_menu_index_action("subscription")%>
 <% if @myparams[:list_mode] == t(:list_mode_icon) %>
 <%= h_thumbnails_objs @subscriptions %>

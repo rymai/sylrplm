@@ -1,6 +1,7 @@
-<h1><%= t("#{plm_object.model_name}_#{fonct}") %></h1>
-<% form_for(plm_object ,  :html => { :id => h_form_html_id(plm_object, fonct),:multipart => true, }) do |f| %>
-<%= f.error_messages %>
+
+<%= form_for(plm_object ,  :html => {:action=>:create,  :id => h_form_html_id(plm_object, fonct),:multipart => true, }) do |f| %>
+<%= form_errors_for plm_object %>
+<h1><%= t("#{plm_object.modelname}_#{fonct}") %></h1>
 <% locals={ :f => f,  :object => plm_object, :fonct=>fonct}%>
 <% if plm_object.is_a?(Datafile) %>
 <%= hidden_field_tag "MAX_FILE_SIZE", PlmServices.get_property(:MAX_FILE_SIZE)  %>
@@ -13,7 +14,7 @@ else
 end %>
 <%= hidden_field_tag "object_orig_id", object_orig.id if object_orig_ok %>
 <%= hidden_field_tag "fonct[current]", fonct  %>
-<%= hidden_field plm_object.model_name , :revision if  plm_object.respond_to? :revision %>
+<%= hidden_field plm_object.modelname , :revision if  plm_object.respond_to? :revision %>
 <% fonct_menu="new" if fonct.include? "new"%>
 <% fonct_menu="edit" if fonct.include? "edit"%>
 <%= render(:partial => "shared/menu_#{fonct_menu}",:locals => locals) %>

@@ -1,7 +1,7 @@
 class AccessesController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	#
-	access_control(Access.find_for_controller(controller_class_name))
+	access_control(Access.find_for_controller(controller_name.classify))
 	before_filter :find_by_id, :only => [:show, :edit, :update, :destroy]
 	before_filter :find_controllers, :only => [:new, :new_dup, :edit, :create, :update]
 	# GET /accesses
@@ -106,7 +106,7 @@ class AccessesController < ApplicationController
 
 	# DELETE /accesses/1
 	# DELETE /accesses/1.xml
-	def destroy
+	def destroy_old
 		@access.destroy
 		flash[:notice] = t(:ctrl_object_deleted, :typeobj => 'Access', :ident => @access.controller)
 		respond_to do |format|

@@ -37,7 +37,7 @@ module WillPaginate::Finder::ClassMethods
   #     [
   #       # parameter_name[, column_name]
   #       'wfid',
-  #       [ 'workflow', 'wfname' ],
+  #       [ 'workflow', 'wf_name' ],
   #       [ 'store', 'store_name' ],
   #       [ 'participant', 'participant_name' ]
   #     ],

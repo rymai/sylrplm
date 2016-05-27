@@ -1,15 +1,15 @@
 require 'classes/controller'
+require 'will_paginate'
 
 class MainController < ApplicationController
-
-	#access_control(Access.find_for_controller(controller_class_name))
+	#access_control(Access.find_for_controller(controller_name.classify))
 	skip_before_filter :authorize, :check_user
 	#def infos
 	#  request.env["PATH_INFO"] +":"+__FILE__+":"+__LINE__.to_s
 	#end
 	def index
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.info (fname){"params=#{params.inspect}"}
+		#LOG.info(fname){"params=#{params.inspect}"}
 		unless params[:domain].blank?
 			# creation du domaine demande: status et types d'objets
 			st=Controller.init_db(params)
@@ -46,14 +46,10 @@ class MainController < ApplicationController
 			opts = { :order => 'dispatch_time DESC' }
 			opts[:conditions] = { :store_name => @current_user.store_names }
 			opts[:page] = (params[:page].nil? ? PlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i :  params[:page])
-			@workitems = Ruote::Sylrplm::ArWorkitem.paginate_by_params(
-	[# parameter_name[, column_name]
-	'wfid',[ 'workflow', 'wfname' ],	[ 'store', 'store_name' ],	[ 'participant', 'participant_name' ]
-	],
-	params,
-	opts)
+		#TODO rails4
+		#@workitems = Ruote::Sylrplm::ArWorkitem.paginate_by_params([# parameter_name[, column_name] 'wfid',[ 'workflow', 'wf_name' ],	[ 'store', 'store_name' ],	[ 'participant', 'participant_name' ]],params,opts)
 		end
-		#LOG.debug (fname) {"@workitems=#{@workitems.inspect}"}
+		#LOG.debug(fname) {"@workitems=#{@workitems.inspect}"}
 		respond_to do |format|
 			@main=true
 			format.html # index.html.erb
@@ -63,10 +59,11 @@ class MainController < ApplicationController
 	def how_to
 		fname= "#{self.class.name}.#{__method__}"
 		@files={}
-		urlbase="#{RAILS_ROOT}/public/how_to"
+		LOG.debug(fname) {"RAILS_ROOT=#{Rails.root}"}
+		urlbase="#{Rails.root}/public/how_to"
 		Dir.new("#{urlbase}").entries.each do |doc|
 			unless doc == "." || doc == ".."
-				LOG.debug (fname) {"doc=#{doc}"}
+				LOG.debug(fname) {"doc=#{doc}"}
 				@files[doc]={}
 				mdlfiles=[]
 				docfiles=[]
@@ -75,20 +72,20 @@ class MainController < ApplicationController
 						if file == "files"
 							Dir.new("#{urlbase}/#{doc}/#{file}").entries.each do |mdlfile|
 								unless mdlfile =="." || mdlfile == ".."
-								mdlfiles << "#{file}/#{mdlfile}"
+									mdlfiles << "#{file}/#{mdlfile}"
 								end
 							end
 						else
-							docfiles << file
+						docfiles << file
 						end
 					end
-					LOG.debug (fname) {"file=#{file}"}
+					LOG.debug(fname) {"file=#{file}"}
 					@files[doc][:docfiles] = docfiles
 					@files[doc][:mdlfiles] = mdlfiles
 				end
 			end
 		end
-		LOG.debug (fname) {"@files=#{@files}"}
+		LOG.debug(fname) {"@files=#{@files}"}
 	end
 
 	def helpgeneral

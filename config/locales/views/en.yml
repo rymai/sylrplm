@@ -87,6 +87,11 @@ en:
   update_type: Refresh on type
   submit_copy: Copy
   submit_destroy: Delete
+  form_validation_errors: "%{errors_number} errors prevented the form from being saved."
+  button_abort: Abort
+  button_delete: Delete
+  button_replay: Replay
+  button_update: Update
   # attributs generaux
   faq_question: Question
   faq_answer: answer
@@ -98,7 +103,7 @@ en:
   label_history_source: Source
   label_history_event: Event
   label_history_wfid: Identifiant
-  label_history_wfname: Name
+  label_history_wf_name: Name
   label_history_wfrev: Revision
   label_history_fei: Step
   label_history_participant: Participant
@@ -123,6 +128,7 @@ en:
   label_preferences: Preferences
   mnu_documents_any_type: Any type
   mnu_documents_directory: Directory
+  mnu_parts_TEST: Test
   mnu_parts_any_type: Any type
   mnu_parts_EFF: Effectivity
   mnu_parts_PIE: Part
@@ -178,7 +184,7 @@ en:
   revise_by_action: Revise by action
   # shared
   legend_link_duplication: "Links Duplication of '%{object_orig}'"
-  legend_wi_fields: Processus values
+  legend_fields: Processus values
   label_assoc_documents: Associated Documents
   label_assoc_parts: Associated Articles
   label_assoc_projects: Associated Projets
@@ -312,7 +318,8 @@ en:
   button_remove: Remove
   label_fields: Attributs
   label_objects: Objets in relation
-  button_swap: Raw data
+  button_swap_code: Raw data
+  button_swap_values: Values
   button_reset: Défault
   button_undo: Cancel
   label_definitions_attributs: Attributs
@@ -718,10 +725,12 @@ en:
   # workitems
   label_relation: Relation
   label_wfid: Processus
-  label_workflow: Definition
+  label_workflow: Task
   label_since: Since
+  label_dispatched_at: Dispatched at
+  label_launched_at: Launched at
   label_expid: Expression
-  label_wfrevision: Revision
+  label_wf_revision: Revision
   label_store: Store
   label_participant: Participant
   label_activity: Activity

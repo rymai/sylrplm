@@ -1,20 +1,28 @@
 class Role < ActiveRecord::Base
 	include Models::SylrplmCommon
+
+	attr_accessible :id, :title, :description, :father_id, :domain
+
 	validates_presence_of :title
 	validates_uniqueness_of :title
 
-	has_and_belongs_to_many :users
-	has_and_belongs_to_many :definitions
+	has_and_belongs_to_many :users, :join_table=>:roles_users
+	has_and_belongs_to_many :definitions, :join_table=>:definitions_roles
 
 	belongs_to :father, :class_name => "Role"
 	has_many :childs, :class_name => "Role", :primary_key => "id", :foreign_key => "father_id"
-
 	def self.find_by_name(name)
-		find(:first , :conditions => ["title = '#{name}' "])
+		#TODO verifier
+		where("title = '#{name}' ").first
 	end
 
 	def self.findall_except_admin()
-		find(:all , :conditions => ["title <> 'admin' "])
+		#TODO verifier
+		where("title <> 'admin' ").all.to_a
+	end
+
+	def self.get_all
+		Role.all
 	end
 
 	def father_name
@@ -24,7 +32,7 @@ class Role < ActiveRecord::Base
 	def ident; title; end
 
 	def typesobject
-		Typesobject.find_by_forobject(model_name)
+		Typesobject.find_by_forobject(modelname).to_a
 	end
 
 	def title_translate
@@ -42,7 +50,7 @@ class Role < ActiveRecord::Base
 	#return the list of validers
 	def self.get_validers
 		ret=[]
-		all(:conditions => "title like 'valid%'").each do |role|
+		all.where("title like 'valid%'").to_a.each do |role|
 			role.users.each do |user|
 				ret<<user
 			end

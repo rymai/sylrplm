@@ -75,10 +75,10 @@
 		<%end %>
 		<% end %> </td>
 		<% unless document.nil? %> <td> <%= link_to h_img_edit.to_s, edit_datafile_path(datafile, :doc => document.id) %> </td>
-		<td> <%= link_to h_img_destroy.to_s, datafile_path(datafile, :doc => document.id), :method => :delete, :confirm => t("msg_confirm") %> </td>
+		<td> <%= button_to t(:destroy), datafile_path(datafile, :doc => document.id), :method => :delete, :confirm => t("msg_confirm") %> </td>
 		<%else %>
 		<td> <%= link_to h_img_edit.to_s, edit_datafile_path(datafile), :controller=> "datafiles" %> </td>
-		<td> <%= link_to h_img_destroy.to_s, datafile, :controller=> "datafiles", :confirm => t("msg_confirm"), :method => :delete %> </td>
+		<td> <%= h_destroy(datafile) %> </td>
 		<%end %>
 	</tr>
 	<% end %>

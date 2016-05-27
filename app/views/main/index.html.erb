@@ -1,7 +1,7 @@
 <h1><%= t(:hello) %></h1>
 <!-- <h2><%= t(:tit_language) %><%= I18n.locale.to_s %></h2> -->
 <p class='notice'>
-	<%= t(:first_use,:help => show_help(:help_first_use,true))%>
+	<%= t(:first_use,:help => show_help(:help_first_use,true)).html_safe%>
 </p>
 <p>
 	<%= h_help_key(:help_main_functions)%>

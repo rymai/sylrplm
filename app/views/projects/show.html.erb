@@ -1,8 +1,8 @@
 <H1><%= t(:project_show) %></H1>
 <% fonct="show" %>
 <%= render(:partial => "shared/menu_show", :locals=>{:object => @project, :fonct=>fonct}) %>
-<% form_for(@project, :html => { :id => h_form_html_id(@project, fonct) }) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@project, :html => { :id => h_form_html_id(@project, fonct) }) do |f| %>
+<%= form_errors_for @project %>
 <p>
 	<b><%= t(:label_ident) %></b>
 	<%= h @project.ident %>

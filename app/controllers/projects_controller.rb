@@ -2,7 +2,7 @@
 #require 'lib/controllers/plm_init_controller_module'
 class ProjectsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	#access_control (Access.find_for_controller(controller_class_name()))
+	#access_control (Access.find_for_controller(controller_name.classify))
 	#before_filter :authorize, :only => [ :show, :edit , :new, :destroy ]
 	# GET /projects
 	# GET /projects.xml
@@ -36,8 +36,8 @@ class ProjectsController < ApplicationController
 	end
 
 	def select_view
-		fname= "#{controller_class_name}.#{__method__}"
-		#LOG.debug (fname){"begin:params=#{params}"}
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug(fname){"begin:params=#{params}"}
 		if params["commit"].force_encoding("utf-8") == t("root_model_design").force_encoding("utf-8")
 			show_design
 		else
@@ -67,7 +67,7 @@ class ProjectsController < ApplicationController
 
 	def new_dup
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@object_orig = Project.find(params[:id])
 		@project = @object = @object_orig.duplicate(current_user)
 		@types    = Typesobject.get_types("project")
@@ -131,7 +131,7 @@ class ProjectsController < ApplicationController
 	# maj d'un projet (apres validation du edit)
 	def update
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@project = Project.find(params[:id])
 		@types=Typesobject.get_types("project")
 		@types_access    = Typesobject.get_types("project_typeaccess")
@@ -144,12 +144,12 @@ class ProjectsController < ApplicationController
 			respond_to do |format|
 				if @project.update_attributes(params[:project])
 					customer_id=params[:project_link][:customer_id]
-					LOG.debug (fname){"params[:project_link]=#{params[:project_link]} customer_id=#{customer_id}"}
+					LOG.debug(fname){"params[:project_link]=#{params[:project_link]} customer_id=#{customer_id}"}
 					unless customer_id.blank?
 						customer=Customer.find(customer_id)
 						relation=Relation.find_by_name("ask_for")
 						link_customer=Link.find_by_father_plmtype_and_father_id_and_child_plmtype_and_child_id_and_relation_id("customer", customer.id,"project",@project.id,relation.id)
-						LOG.debug (fname){"link_customer=#{link_customer.inspect}"}
+						LOG.debug(fname){"link_customer=#{link_customer.inspect}"}
 						if link_customer.nil?
 						link_customer = Link.new(father: customer, child: @project, relation: relation, user: current_user)
 						if link_customer.save
@@ -171,7 +171,7 @@ class ProjectsController < ApplicationController
 
 	def update_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@project = Project.find(params[:id])
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		if commit_promote?
@@ -190,7 +190,7 @@ class ProjectsController < ApplicationController
 	#
 	def update_type
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@project = Project.find(params[:id])
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		ctrl_update_type @project, params[:object_type]
@@ -198,7 +198,7 @@ class ProjectsController < ApplicationController
 
 	# DELETE /projects/1
 	# DELETE /projects/1.xml
-	def destroy
+	def destroy_old
 		@project = Project.find(params[:id])
 		respond_to do |format|
 			unless @project.nil?
@@ -271,7 +271,7 @@ class ProjectsController < ApplicationController
 	#
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@project = Project.find(params[:id])
 		@datafile = Datafile.new({:user => current_user, :theproject => @project})
 		ctrl_new_datafile(@project)
@@ -282,15 +282,15 @@ class ProjectsController < ApplicationController
 	#
 	def add_datafile
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@project = Project.find(params[:id])
 		ctrl_add_datafile(@project)
 	end
 
 	def show_design
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
-		#LOG.debug (fname){"myparams=#{@myparams.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"myparams=#{@myparams.inspect}"}
 		project = Project.find(params[:id])
 		ctrl_show_design(project, params[:type_model_id])
 	end
@@ -298,7 +298,7 @@ class ProjectsController < ApplicationController
 	private
 
 	def show_
-		fname= "#{controller_class_name}.#{__method__}"
+		fname= "#{self.class.name}.#{__method__}"
 		define_view
 		@project = Project.find(params[:id])
 		@documents=@project.documents

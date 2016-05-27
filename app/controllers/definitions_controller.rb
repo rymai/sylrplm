@@ -26,7 +26,7 @@ class DefinitionsController < ApplicationController
 	# GET /definitions.xml
 	#
 	before_filter :authorize, :except => nil
-	access_control(Access.find_for_controller(controller_class_name))
+	access_control(Access.find_for_controller(controller_name.classify))
 	#
 	def index
 		index_
@@ -48,8 +48,9 @@ class DefinitionsController < ApplicationController
 	end
 
 	def new_process
-		fname= "#{controller_class_name}.#{__method__}"
-		LOG.debug (fname){"begin:params=#{params}"}
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"begin:params=#{params}"}
+		LOG.debug(fname) {" flash#{flash.inspect}"}
 		@definitions = Definition.find_all_for(@current_user)
 		unless @definitions.length==0
 			respond_to do |format|
@@ -75,26 +76,27 @@ class DefinitionsController < ApplicationController
 
 	def show_
 		@definition = Definition.find(params[:id])
+		@roles=Role.get_all
 	end
 
 	# GET /definitions/:id/tree
 	# GET /definitions/:id/tree.js
 	#
 	def tree
-		fname= "#{controller_class_name}.#{__method__}"
-		LOG.debug (fname){"begin:params=#{params}"}
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"tree:begin:params=#{params}"}
 		@definition = Definition.find(params[:id])
-		LOG.debug (fname){"def=#{@definition.inspect}"}
+		LOG.debug(fname){"def=#{@definition.inspect}"}
 		uri = @definition.local_uri
 		# TODO : reject outside definitions ?
 		pdef = (open(uri).read rescue nil)
-		#LOG.debug (fname){"pdef=#{pdef}"}
+		LOG.debug(fname){"tree:pdef=#{pdef}"}
 		var = params[:var] || 'proc_tree'
 		# TODO : use Rails callback thing (:callback)
 		tree = pdef ?
 			RuotePlugin.ruote_engine.get_def_parser.parse(pdef) :
 			nil
-		#LOG.debug (fname){"tree=#{tree.inspect}"}
+		LOG.debug(fname){"tree:definitions.tree=#{tree.inspect}"}
 		render(
     :text => "var #{var} = #{tree.to_json};",
     :content_type => 'text/javascript')
@@ -137,8 +139,8 @@ class DefinitionsController < ApplicationController
 	# POST /definitions.xml
 	#
 	def create
-		fname= "#{controller_class_name}.#{__method__}"
-		LOG.debug (fname){"begin:params=#{params}"}
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"begin:params=#{params}"}
 		@definition = Definition.new(params[:definition])
 		respond_to do |format|
 			if fonct_new_dup?
@@ -149,7 +151,7 @@ class DefinitionsController < ApplicationController
 			end
 			if st
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_definition), :ident => @definition.name)
-				LOG.debug (fname){"flash=#{flash}"}
+				LOG.debug(fname){"flash=#{flash}"}
 				params[:id]=@definition.id
 				show_
 				format.html { render :action => "show" }
@@ -187,17 +189,22 @@ class DefinitionsController < ApplicationController
 	# PUT /definitions/1.xml
 	#
 	def update
+		fname= "#{self.class.name}.#{__method__}"
 		@definition = Definition.find(params[:id])
 		@definition.update_accessor(current_user)
 		respond_to do |format|
-			if @definition.update_attributes(params[:definition])
+			st=@definition.update_attributes(params[:definition])
+			LOG.debug(fname) {"definition.errors=#{@definition.errors.full_messages}"}
+			unless st.nil?
+				LOG.debug(fname) {"definition=#{@definition.inspect}"}
+				LOG.debug(fname) {"roles=#{@definition.roles.inspect}"}
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name)
 				show_
 				format.html { render :action => "show" }
 				format.xml { head :ok }
 				format.json { head :ok }
 			else # there is an error
-				LOG.error @definition.errors.inspect
+				LOG.error @definition.errors.full_messages
 				LOG.error @definition.inspect
 				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_definition), :ident => @definition.name, :error => @definition.errors.full_messages)
 				format.html {
@@ -216,7 +223,7 @@ class DefinitionsController < ApplicationController
 	# DELETE /definitions/1
 	# DELETE /definitions/1.xml
 	#
-	def destroy
+	def destroy_old
 		@definition = Definition.find(params[:id])
 		@definition.destroy
 		flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_definition), :ident => @definition.name)
@@ -226,6 +233,7 @@ class DefinitionsController < ApplicationController
 			format.json { head :ok }
 		end
 	end
+private
 
 end
 

@@ -2,8 +2,8 @@ class UsersController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	##include CheckboxSelectable
 	#
-	filter_parameter_logging :password
-	access_control(Access.find_for_controller(controller_class_name))
+
+	access_control(Access.find_for_controller(controller_name.classify))
 	# GET /users
 	# GET /users.xml
 	def index
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 	def index_
 		fname= "#{self.class.name}.#{__method__}"
 		@current_users = User.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
-	#LOG.info (fname) {"@current_users=#{@current_users}"}
+	#LOG.info(fname) {"@current_users=#{@current_users}"}
 
 	end
 
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
 		@projects  = Project.all
 		@themes  = get_themes(@theme)
 		@time_zones = get_time_zones(@time_zone)
-		@volumes = Volume.find_all
+		@volumes = Volume.all.to_a
 		@types    = Typesobject.get_types("user")
 		@subscriptions = Subscription.all
 		respond_to do |format|
@@ -64,7 +64,7 @@ class UsersController < ApplicationController
 		@projects  = Project.all
 		@themes  = get_themes(@theme)
 		@time_zones = get_time_zones(@time_zone)
-		@volumes = Volume.find_all
+		@volumes = Volume.all.to_a
 		@types    = Typesobject.get_types("user")
 		@subscriptions = Subscription.all
 		respond_to do |format|
@@ -82,7 +82,7 @@ class UsersController < ApplicationController
 		@projects  = Project.all
 		@themes  = get_themes(@theme)
 		@time_zones = get_time_zones(@the_user.time_zone)
-		@volumes = Volume.find_all
+		@volumes = Volume.all.to_a
 		@types    = Typesobject.get_types("user")
 		@subscriptions = Subscription.all
 	#puts __FILE__+"."+__method__.to_s+":"+@roles.inspect
@@ -126,7 +126,7 @@ class UsersController < ApplicationController
 				@projects  = Project.all
 				@themes  = get_themes(@theme)
 				@time_zones = get_time_zones(@the_user.time_zone)
-				@volumes = Volume.find_all
+				@volumes = Volume.all
 				@types    = Typesobject.get_types("user")
 				@subscriptions = Subscription.all
 				flash.now[:error] = t(:ctrl_user_not_created, :user => @the_user.login, :msg =>@the_user.errors.inspect)
@@ -139,7 +139,7 @@ class UsersController < ApplicationController
 	def update
 		fname= "#{self.class.name}.#{__method__}"
 		@the_user    = User.find(params[:id])
-		@volumes = Volume.find_all
+		@volumes = Volume.all
 		@roles   = Role.all
 		@projects  = Project.all
 		@groups   = Group.all
@@ -172,12 +172,12 @@ class UsersController < ApplicationController
 	#
 	def update_type
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@the_user = User.find(params[:id])
 		ctrl_update_type @the_user, params[:object_type]
 	end
 
-	def destroy
+	def destroy_old
 		id = params[:id]
 		if id && @the_user = User.find(id)
 			if id != session[:user_id]
@@ -204,7 +204,7 @@ class UsersController < ApplicationController
 		@themes  = get_themes(@theme)
 		@time_zones = get_time_zones(@the_user.time_zone)
 		@subscriptions = Subscription.all
-		@volumes = Volume.find_all
+		@volumes = Volume.get_all
 	end
 
 	# GET /users/1/account_edit_passwd
@@ -217,7 +217,7 @@ class UsersController < ApplicationController
 		@the_user    = User.find(params[:id])
 		@themes  = get_themes(@theme)
 		@time_zones = get_time_zones(@the_user.time_zone)
-		@volumes = Volume.find_all
+		@volumes = Volume.get_all
 		#puts "users_controller.update:password=#{params[:user][:password]}"
 		ok=true
 		unless params[:user][:password].nil?

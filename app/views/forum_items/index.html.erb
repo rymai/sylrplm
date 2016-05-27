@@ -39,7 +39,7 @@
 		<%= h forum_item.projowner.ident unless forum_item.projowner.nil? %>
 		</td>
 		<td> <%= link_to h_img_edit.to_s, edit_forum_item_path(forum_item) %> </td>
-		<td> <%= link_to h_img_destroy.to_s, forum_item, :confirm => t(:msg_confirm), :method => :delete %> </td>
+		<td> <%= h_destroy(forum_item)%> </td>
 	</tr>
 	<% end %>
 </table>

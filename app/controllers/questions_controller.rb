@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
 
 	skip_before_filter :authorize
 
-	access_control (Access.find_for_controller(controller_class_name()))
+	access_control (Access.find_for_controller(controller_name.classify))
 	def index
 		@faqs = Question.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
 	end
@@ -66,7 +66,7 @@ class QuestionsController < ApplicationController
 		end
 	end
 
-	def destroy
+	def destroy_old
 		@faq = Question.find params[:id]
 		id=@faq.id
 		if @faq.destroy

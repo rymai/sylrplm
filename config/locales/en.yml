@@ -64,3 +64,9 @@ en:
         type_values_value_outside_limit: "%{key}=%{value} of type %{type} is outside the limit: %{sign} %{limit}"
         #typesobject
         field_badly_formatted: "Field of type '%{type}' is badly formatted, key='%{key}', fields=%{fields} exception=%{exception}"
+
+  flash:
+    notice:
+      proceeded: "Workitem '%{fei}' executed"
+    error:
+      not_proceeded: "Workitem '%{fei}' not executed"

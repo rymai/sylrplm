@@ -8,7 +8,7 @@ Typesobject_1045584135:
   rank:
   fields: '{"DOCUMENT_REVISE": {"$TYPE": "BOOLEAN", "$VALUE":"true"}, "CUSTOMER_REVISE": {"$TYPE": "BOOLEAN", "$VALUE":"false"}, "PART_REVISE": {"$TYPE": "BOOLEAN", "$VALUE":"true"},
     "PROJECT_REVISE":{"$TYPE": "BOOLEAN", "$VALUE":"true"}}'
-  description: paramÃ©trage du cycle de vie
+  description: parametrage du cycle de vie
   domain: admin
   father_id:
 
@@ -515,17 +515,15 @@ Typesobject_889037033:
   forobject: datafile
   name: writer
   rank:
-  fields: '{"datafile_appli_name": {"$TYPE": "STRING", "$VALUE": ""}, "datafile_appli_version":
-    {"$TYPE": "STRING", "$VALUE": ""}, "_type_only_build_model_datafile": {"$TYPE":
-    "STRING", "$VALUE": "require \\"zip/zip\\"\\nstringio = Zip::ZipOutputStream::write_buffer(::StringIO.new(\\"#{@filename}.zip\\"))
-    do |zio| \\nzio.put_next_entry(@filename) \\nzio.write @content \\nend \\nstringio.rewind
-    \\nbinary_data = stringio.sysread"}, "_type_only_tool": {"$TYPE": "STRING", "$VALUE":
-    "/usr/bin/libreoffice --writer"}, "_type_only_build_model_tree_begin": {"$TYPE":
-    "STRING", "$VALUE": "require \\"zip/zip\\" \\nret_type=\\"application/zip\\"\\nret_filename=\\"#{plmobject.ident}.zip\\"\\nret
-    = Tempfile.new(\\"#{ret_filename}-#{Time.now}\\")\\nZip::ZipOutputStream.open(ret.path)
-    do |zio|"}, "_type_only_build_model_tree_file": {"$TYPE": "STRING", "$VALUE":
-    "zio.put_next_entry(datafile.file_fullname)  \\nzio.write content ", "build_model_tree_end":
-    "end  \\n"}}'
+  fields: '{
+    "datafile_appli_name":{"$TYPE":"STRING","$VALUE":""},
+    "datafile_appli_version":{"$TYPE":"STRING","$VALUE":""},
+    "_type_only_build_model_datafile":{"$TYPE":"STRING","$VALUE":"require \"zip/zip\"\nstringio=Zip::ZipOutputStream::write_buffer(::StringIO.new(\"#{@filename}.zip\")) do |zio|\nzio.put_next_entry(@filename)\nzio.write @content\\nend\nstringio.rewind\nbinary_data=stringio.sysread"},
+    "_type_only_tool": {"$TYPE": "STRING", "$VALUE":"/usr/bin/libreoffice --writer"},
+    "_type_only_build_model_tree_begin":{"$TYPE":"STRING", "$VALUE": "require \"zip/zip\"\nret_type=\"application/zip\"\nret_filename=\"#{plmobject.ident}.zip \"\nret=Tempfile.new(\"#{ret_filename}-#{Time.now}\")\nZip::ZipOutputStream.open(ret.path)do |zio|"},
+    "_type_only_build_model_tree_file": {"$TYPE": "STRING", "$VALUE":"zio.put_next_entry(datafile.file_fullname) \nzio.write content"},
+    "build_model_tree_end":{"$TYPE":"STRING","$VALUE":"end\n"}
+    }'
   description: "<p>Traitement de texte</p>"
   domain: admin
   father_id:

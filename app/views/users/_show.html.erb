@@ -1,5 +1,5 @@
 <table>
-	<%= h_attribut_trtd(user, :id)  if current_user.is_admin? %>
+	<%= h_attribut_trtd(user, :id)  if user.is_admin? %>
 	<%= h_attribut_trtd(user, :login) %>
 	<%= h_attribut_trtd(user, :first_name) %>
 	<%= h_attribut_trtd(user, :last_name) %>

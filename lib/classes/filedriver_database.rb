@@ -16,7 +16,7 @@ class FiledriverDatabase < Filedriver
 		fname= "#{self.class.name}.#{__method__}"
 		# datafile dir is the table name
 		ret="#{vol_table_name(datafile.volume)}"
-		#LOG.info (fname) {"datafile=#{datafile} ret=#{ret}"}
+		#LOG.info(fname) {"datafile=#{datafile} ret=#{ret}"}
 		ret
 	end
 
@@ -28,7 +28,7 @@ class FiledriverDatabase < Filedriver
 		records.each do |record|
 			ret << record["filename"]
 		end
-		#LOG.debug (fname) {"ret=#{ret}"}
+		#LOG.debug(fname) {"ret=#{ret}"}
 		ret
 	end
 
@@ -45,13 +45,13 @@ class FiledriverDatabase < Filedriver
 	# renvoie un repertoire dans lequel seront uploader les fichiers
 	def create_directory(datafile)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"datafile=#{datafile}"}
+		#LOG.debug(fname) {"datafile=#{datafile}"}
 		true
 	end
 
 	def write_file(datafile, content)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"content size=#{content.length} encodage=#{datafile.volume.encode}"}
+		#LOG.debug(fname) {"content size=#{content.length} encodage=#{datafile.volume.encode}"}
 		ret=true
 		if content.length>0
 			table=datafile.dir_repository
@@ -64,46 +64,46 @@ class FiledriverDatabase < Filedriver
 			begin
 				cmd="INSERT INTO \"#{table}\"  (datafile,filename,revision,content,domain,size)"
 				cmd+=" VALUES ('#{datafile.ident}','#{datafile.filename}','#{datafile.revision}','#{content_encode}','#{datafile.domain}',#{content.length})"
-				#tres long LOG.debug (fname) {"cmd=#{cmd}"}
+				#tres long LOG.debug(fname) {"cmd=#{cmd}"}
 				ret=ActiveRecord::Base.connection.execute(cmd)
 			rescue Exception=>e
-				LOG.warn (fname) {"Warning INSERT ret=#{ret} e=#{e.message[0,100]}, because this file exists, then, we UPDATE"}
+				LOG.warn(fname) {"Warning INSERT ret=#{ret} e=#{e.message[0,100]}, because this file exists, then, we UPDATE"}
 				cmd="UPDATE #{table} set content='#{content_encode}' where datafile='#{datafile.ident}' and filename='#{datafile.filename}' and revision='#{datafile.revision}'"
-				#tres long LOG.debug (fname) {"cmd=#{cmd}"}
+				#tres long LOG.debug(fname) {"cmd=#{cmd}"}
 				begin
 					ret=ActiveRecord::Base.connection.execute(cmd)
 					ret=true
-					#LOG.debug (fname) {"Success update ret=#{ret} "}
+					#LOG.debug(fname) {"Success update ret=#{ret} "}
 				rescue Exception=>e
-					LOG.debug (fname) {"Error update ret=#{ret} e=#{e.message}"}
+					LOG.debug(fname) {"Error update ret=#{ret} e=#{e.message}"}
 					msg="PG::Error: ERROR:  unterminated quoted string"
 					msg=e.message[0,30] if e.message.index(msg).nil?
-					datafile.errors.add_to_base("Exception during update:#{msg}")
+					datafile.errors.add(:base,"Exception during update:#{msg}")
 				ret=false
 				end
 			end
-			#LOG.debug (fname) {"apres insert ou update ret=#{ret}"}
+			#LOG.debug(fname) {"apres insert ou update ret=#{ret}"}
 			if ret
 				begin
 					content_decode = read_file(datafile)
 					unless content_decode.nil?
 						st =  content_decode.length==content.length
 						st =  content_decode==content if st
-						#LOG.debug (fname) {"encode/decode #{content.size} / #{content_encode.size} / #{content_decode.size}=#{st}"}
+						#LOG.debug(fname) {"encode/decode #{content.size} / #{content_encode.size} / #{content_decode.size}=#{st}"}
 						unless st
 							ret = false
-							datafile.errors.add_to_base(I18n.translate('activerecord.errors.messages.datafile_write_bad_format', :filename=>datafile.filename))
+							datafile.errors.add(:base,I18n.translate('activerecord.errors.messages.datafile_write_bad_format', :filename=>datafile.filename))
 						end
 					else
 						ret = false
-						datafile.errors.add_to_base("Error reading the file #{datafile.filename}")
+						datafile.errors.add(:base,"Error reading the file #{datafile.filename}")
 					end
 				rescue Exception => e
-					LOG.error (fname){"Exception during write_file:to_s=#{e.message}"}
+					LOG.error(fname){"Exception during write_file:to_s=#{e.message}"}
 					unless e.message.index("PG::Error: ERROR:").nil?
-						datafile.errors.add_to_base(I18n.translate('activerecord.errors.messages.datafile_write_bad_format', :filename=>datafile.filename))
+						datafile.errors.add(:base,I18n.translate('activerecord.errors.messages.datafile_write_bad_format', :filename=>datafile.filename))
 					else
-						datafile.errors.add_to_base("Exception during write_file")
+						datafile.errors.add(:base,"Exception during write_file")
 					end
 					e.backtrace.each {|x| LOG.error x}
 				ret=false
@@ -118,25 +118,25 @@ class FiledriverDatabase < Filedriver
 	def read_file(datafile)
 		fname= "#{self.class.name}.#{__method__}"
 		cmd="SELECT * FROM \"#{datafile.dir_repository}\" WHERE datafile = '#{datafile.ident}' AND filename='#{datafile.file_fullname}' AND revision='#{datafile.revision}'"
-		LOG.debug (fname) {"cmd=#{cmd}"}
+		LOG.debug(fname) {"cmd=#{cmd}"}
 		data=nil
 		begin
 			records = ActiveRecord::Base.connection.execute(cmd)
 			dsize=records.fsize(records.fnumber("content"))
-			LOG.debug (fname) {"records(#{dsize})=#{records.fields} records.ntuples=#{records.ntuples}"}
-			#records.each {|tuple| LOG.debug (fname){"#{tuple.inspect}"}}
+			LOG.debug(fname) {"records(#{dsize})=#{records.fields} records.ntuples=#{records.ntuples}"}
+			#records.each {|tuple| LOG.debug(fname){"#{tuple.inspect}"}}
 			if records.ntuples == 1
 				content = records[0]["content"]
 				#ActiveSupport::Base64.decode64(data)
 				data=untransform_content(datafile, content)
-				LOG.debug (fname) {"data size=#{data.size}"}
+				LOG.debug(fname) {"data size=#{data.size}"}
 			else
-				LOG.debug (fname) {"data=nil"}
+				LOG.debug(fname) {"data=nil"}
 				data=nil
 			end
 		rescue Exception => e
-			LOG.error (fname){"Exception during read_file:#{e.message}"}
-			datafile.errors.add_to_base("Exception during read_file:#{e.message}")
+			LOG.error(fname){"Exception during read_file:#{e.message}"}
+			datafile.errors.add(:base,"Exception during read_file:#{e.message}")
 			e.backtrace.each {|x| LOG.error x}
 		end
 		data
@@ -155,23 +155,23 @@ class FiledriverDatabase < Filedriver
 			cmd="SELECT * FROM \"#{table_name}\""
 			records = ActiveRecord::Base.connection.execute(cmd)
 			dsize=records.fsize(records.fnumber("content"))
-			#LOG.debug (fname) {"cmd=#{cmd} records=(#{dsize})=#{records.fields}:#{records.count}"}
+			#LOG.debug(fname) {"cmd=#{cmd} records=(#{dsize})=#{records.fields}:#{records.count}"}
 			records.each {|tuple|
 				tuple.delete("content")
 				tuple["id"]=buildFileId(table_name, tuple["id"])
 				tuple["volume_dir"]=table_name
 				tuple["protocol"]=self.protocol
-				#LOG.debug (fname) {"tuple=#{tuple}"}
+				#LOG.debug(fname) {"tuple=#{tuple}"}
 				dodel=false
 				if(purge==true )
 					is_used = is_used?(tuple)
-					#LOG.debug (fname){"\tfile:#{tuple.inspect} is_used?=#{is_used}"}
+					#LOG.debug(fname){"\tfile:#{tuple.inspect} is_used?=#{is_used}"}
 					if(!is_used)
 						delete_file(tuple["id"])
 					dodel=true
 					end
 				end
-				#LOG.debug (fname) {"file=#{tuple} dodel=#{dodel}"}
+				#LOG.debug(fname) {"file=#{tuple} dodel=#{dodel}"}
 				unless dodel
 					file=SylrplmFile.new(tuple)
 				files<<file
@@ -179,8 +179,8 @@ class FiledriverDatabase < Filedriver
 			}
 		rescue Exception=>e
 			cmd="Exception during files_list:#{e.message}"
-			LOG.error (fname){cmd}
-			volume.errors.add_to_base(cmd)
+			LOG.error(fname){cmd}
+			volume.errors.add(:base,cmd)
 			e.backtrace.each {|x| LOG.error x}
 		end
 		files
@@ -190,7 +190,7 @@ class FiledriverDatabase < Filedriver
 		fname= "#{self.class.name}.#{__method__}"
 		fid = splitId(id)
 		cmd="DELETE FROM #{fid[:table_name]} WHERE id='#{fid[:file_id]}'"
-		LOG.debug (fname){"cmd=#{cmd}"}
+		LOG.debug(fname){"cmd=#{cmd}"}
 		ActiveRecord::Base.connection.execute(cmd)
 	end
 
@@ -219,7 +219,7 @@ class FiledriverDatabase < Filedriver
 		#TODO remplacer Datafile.find par (eval datafile_model) pour permettre le changement de nom du modele des datafiles
 		datafiles = Datafile.find_by_ident_and_revision_and_filename(tuple["datafile"], tuple["revision"], tuple["filename"])
 		ret = !datafiles.nil?
-		#LOG.debug (fname){"ret=#{ret}"}
+		#LOG.debug(fname){"ret=#{ret}"}
 		ret
 	end
 
@@ -263,7 +263,7 @@ class FiledriverDatabase < Filedriver
 
 	def self.remove_repository(dirkey)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname) {"deleting dir:#{dirkey}"}
+		LOG.info(fname) {"deleting dir:#{dirkey}"}
 	end
 
 end

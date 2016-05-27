@@ -4,6 +4,22 @@ class Check < ActiveRecord::Base
 	include Models::SylrplmCommon
 
 	attr_accessor :user
+	attr_accessible :id
+
+	attr_accessible :checkobject_plmtype
+	attr_accessible :checkobject_id
+	attr_accessible :status
+	attr_accessible :automatic
+	attr_accessible :out_reason
+	attr_accessible :out_user_id
+	attr_accessible :out_group_id
+	attr_accessible :out_date
+	attr_accessible :in_reason
+	attr_accessible :in_user_id
+	attr_accessible :in_group_id
+	attr_accessible :in_date
+	attr_accessible :owner_id
+	attr_accessible :projowner_id
 
 	validates_presence_of :checkobject_plmtype, :checkobject_id, :status, :out_user, :out_date, :out_reason, :out_group
 
@@ -24,9 +40,10 @@ class Check < ActiveRecord::Base
 	def select_status
 		"<option value='1'>OUT</option><option value='2'>IN</option><option value='3'>FREE</option>"
 	end
+
 	def validity
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.info (fname) {self.inspect}
+		LOG.info(fname) {self.inspect}
 		valid = true
 		begin
 			case status
@@ -40,10 +57,10 @@ class Check < ActiveRecord::Base
 			valid = false
 			self.errors.add(:status, I18n.translate('activerecord.errors.messages.status_not_valid'))
 			end
-			#LOG.info (fname) {"status=#{status} in_user=#{in_user} in_group=#{in_group} in_reason=#{in_reason} in_date=#{in_date} valid=#{valid}"}
+			#LOG.info(fname) {"status=#{status} in_user=#{in_user} in_group=#{in_group} in_reason=#{in_reason} in_date=#{in_date} valid=#{valid}"}
 		rescue Exception => e
 			valid = false
-			self.errors.add_to_base(I18n.translate('activerecord.errors.messages.exception_validity', :model => 'check', :exception => e))
+			self.errors.add(:base,I18n.translate('activerecord.errors.messages.exception_validity', :model => 'check', :exception => e))
 		end
 		valid
 	end
@@ -55,13 +72,25 @@ class Check < ActiveRecord::Base
 
 	#
 	def self.get_checkout(object)
-		find(:last, :conditions => ["checkobject_plmtype = ? and checkobject_id = ? and status = ?", object.model_name, object.id, CHECK_STATUS_OUT])
+		fname = "#{self.class.name}.#{__method__}"
+		#rails 2 find(:last, :conditions => ["checkobject_plmtype = ? and checkobject_id = ? and status = ?", object.modelname, object.id, CHECK_STATUS_OUT])
+		where="checkobject_plmtype = '#{object.modelname}' and checkobject_id = '#{object.id}' and status = '#{CHECK_STATUS_OUT}'"
+		ret=Check.where(where).to_a
+		if ret.is_a?(Array)
+			if ret.size==1
+			ret=ret[0]
+			else
+				ret=nil
+			end
+		end
+		LOG.debug(fname) {"check.get_checkout object=#{object}, where=#{where} ret=#{ret}"}
+		ret
 	end
 
 	def initialize(*args)
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"nbargs=#{args.length}, args=#{args}"}
-		super
+		LOG.debug(fname) {"check.initialize nbargs=#{args.length}, args=#{args}"}
+		super(*args)
 		self.status    = CHECK_STATUS_OUT
 		self.out_date  = Time.now.utc
 		if args.size > 0
@@ -69,22 +98,26 @@ class Check < ActiveRecord::Base
 			self.set_default_values_with_next_seq
 			end
 		end
+		user=self.owner
+		self.out_user_id = user.id
+		self.out_group_id= user.group_id
+		self.projowner_id = user.project_id
 	end
 
-	def user=(user)
+	# obsolete car fait dans initialize ci dessus
+	def user_obsolete=(user)
 		fname = "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"check:user=#{user}"}
+		LOG.debug(fname) {"check:user=#{user}"}
 		def_user(user)
-		self.out_user = user
-		self.out_group = user.group
-		self.projowner = user.project
-		self.out_date = Time.now.utc
+		self.out_user_id = user.id
+		self.out_group_id= user.group_id
+		self.projowner_id = user.project_id
+		LOG.debug(fname) {"check:user= self=#{self.inspect}"}
 	end
 
 	def object_to_check=(obj)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.info (fname) {"obj=#{obj}"}
-		self.checkobject_plmtype  = obj.model_name
+		self.checkobject_plmtype  = obj.modelname
 		self.checkobject_id = obj.id
 	end
 

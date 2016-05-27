@@ -1,6 +1,6 @@
 class CustomersController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control(Access.find_for_controller(controller_class_name))
+	access_control(Access.find_for_controller(controller_name.classify))
 	# GET /customers
 	# GET /customers.xml
 	def index
@@ -62,11 +62,11 @@ class CustomersController < ApplicationController
 
 	def new_dup
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@object_orig = Customer.find(params[:id])
 		@object = @object_orig.duplicate(current_user)
 		@customer=@object
-		#LOG.debug (fname){"@customer=#{@customer.inspect}"}
+		LOG.debug(fname){"new customer=#{@customer.inspect}"}
 		@types    = Typesobject.get_types("customer")
 		@status   = Statusobject.get_status("customer", 2)
 		respond_to do |format|
@@ -90,7 +90,7 @@ class CustomersController < ApplicationController
 	# POST /customers.xml
 	def create
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"params=#{params.inspect}"}
+		#LOG.debug(fname) {"params=#{params.inspect}"}
 		@customer = Customer.new(params[:customer])
 		@types    = Typesobject.get_types("customer")
 		@status   = Statusobject.get_status(@customer)
@@ -120,7 +120,7 @@ class CustomersController < ApplicationController
 	# PUT /customers/1.xml
 	def update
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"params=#{params.inspect}"}
+		#LOG.debug(fname) {"params=#{params.inspect}"}
 		@customer = Customer.find(params[:id])
 		@types    = Typesobject.get_types(:customer)
 		@status   = Statusobject.get_status(@customer)
@@ -145,7 +145,7 @@ class CustomersController < ApplicationController
 
 	def update_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@customer = Customer.find(params[:id])
 		if commit_promote?
 			ctrl_promote(@customer)
@@ -163,14 +163,14 @@ class CustomersController < ApplicationController
 	#
 	def update_type
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@customer = Customer.find(params[:id])
 		ctrl_update_type @customer, params[:object_type]
 	end
 
 	# DELETE /customers/1
 	# DELETE /customers/1.xml
-	def destroy
+	def destroy_old
 		@customer = Customer.find(params[:id])
 		respond_to do |format|
 			unless @customer.nil?
@@ -242,7 +242,7 @@ class CustomersController < ApplicationController
 	#
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@customer = Customer.find(params[:id])
 		@datafile = Datafile.new({:user => current_user, :thecustomer => @customer})
 		ctrl_new_datafile(@customer)
@@ -253,15 +253,15 @@ class CustomersController < ApplicationController
 	#
 	def add_datafile
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@customer = Customer.find(params[:id])
 		ctrl_add_datafile(@customer)
 	end
 
 	def show_design
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
-		#LOG.debug (fname){"myparams=#{@myparams.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"myparams=#{@myparams.inspect}"}
 		customer = Customer.find(params[:id])
 		ctrl_show_design(customer, params[:type_model_id])
 	end

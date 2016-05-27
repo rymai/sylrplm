@@ -1,8 +1,8 @@
 class InfoController < ApplicationController
-  access_control(Access.find_for_controller(controller_class_name))
+  access_control(Access.find_for_controller(controller_name.classify))
   def list_objects
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname) {"params=#{params.inspect}"}
+    LOG.debug(fname) {"params=#{params.inspect}"}
     param={}
     param[:controller]=params[:plmtype]
     mdl = get_model param
@@ -14,7 +14,7 @@ class InfoController < ApplicationController
 
   def object_links
     fname= "#{self.class.name}.#{__method__}"
-    LOG.debug (fname) {"params=#{params.inspect}"}
+    LOG.debug(fname) {"params=#{params.inspect}"}
     param={}
     param[:controller]=params[:plmtype]
     mdl = get_model param

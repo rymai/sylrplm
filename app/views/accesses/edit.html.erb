@@ -1,7 +1,7 @@
 <h1><%= t("access_edit")%></h1>
 <% fonct="edit"%>
-<% form_for(@access) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@access) do |f| %>
+<%= form_errors_for @access %>
 <%= render(:partial => "shared/menu_edit", :locals => {:object => @access, :f => f, :fonct=>fonct}) %>
 <%= render(:partial =>"accesses/edit", :locals => {:object => @access, :f => f, :fonct => "edit" })%>
 <%= render(:partial => "shared/submit_edit", :locals => {:object => @access, :f => f, :fonct=>fonct}) %>

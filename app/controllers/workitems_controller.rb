@@ -1,406 +1,284 @@
-#
-#  workitems_controller.rb
-#  sylrplm
-#
-#  Created by Sylvère on 2012-02-04.
-#  Copyright 2012 Sylvère. All rights reserved.
-#
-require 'openwfe/representations'
-require 'ruote/sylrplm/workitems'
-require 'classes/plm_services'
+require "ruote/workitem"
 
+#
+# ruote workitems
+#
 class WorkitemsController < ApplicationController
-	include Controllers::PlmObjectControllerModule
-	before_filter :authorize, :except => nil
-	access_control(Access.find_for_controller(controller_class_name))
-	# GET /workitems
-	#  or
-	# GET /workitems?q=:q || GET /workitems?query=:q
-	#  or
-	# GET /workitems?p=:p || GET /workitems?participant=:p
-	#
+	include Ruote
+	include Ruote::Sylrplm
 	def index
-		puts "workitems_controller.index:params="+params.inspect
-		@workitems=[]
-		unless @current_user.nil?
-			@query = params[:q] || params[:query]
-			#puts "workitems_controller.index:current_user.store_names="+@current_user.store_names.inspect
-			if @query
-				@workitems = Ruote::Sylrplm::ArWorkitem.search(@query, @current_user.is_admin? ? nil : @current_user.store_names)
-			else
-				opts = { :order => 'dispatch_time DESC' }
-				opts[:conditions] = { :store_name => @current_user.store_names }
-				opts[:page] = (params[:page].nil? ? PlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i :  params[:page])
-				@workitems = Ruote::Sylrplm::ArWorkitem.paginate_by_params(
-				[
-					# parameter_name[, column_name]
-					'wfid',
-					[ 'workflow', 'wfname' ],
-					[ 'store', 'store_name' ],
-					[ 'participant', 'participant_name' ]
-				],
-				params,
-			opts)
-			end
-		end
-		@workitems.each do |en|
-			en.link_attributes={"relation"=>""}
-		end
-		##puts "workitems_controller.index:workitems="+@workitems.inspect
-		# TODO : escape pagination for XML and JSON ??
-		respond_to do |format|
-			format.html
-			# => app/views/workitems/index.html.erb
-			format.json do
-				render(:json => OpenWFE::Json.workitems_to_h(
-          @workitems,
-          :linkgen => linkgen).to_json)
-			end
-			format.xml do
-				render(:xml => OpenWFE::Xml.workitems_to_xml(
-          @workitems,
-          :indent => 2, :linkgen => linkgen))
-			end
-		end
+		index_
+	end
+
+	def show
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"params="+params.inspect}
+		#@workitem =  RuoteKit.storage_participant[params[:id]]
+		sleep 0.2
+		@workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid(params[:wfid])
+		LOG.debug(fname){"@workitem="+@workitem.inspect}
+		return error_reply('no workitem', 404) unless @workitem
+		@wi_links = @workitem.get_wi_links unless @workitem.nil?
+		LOG.debug(fname){"@wi_links="+@wi_links.inspect}
+	#@form = Form.for(@workitem)
 	end
 
 	# GET /workitems/:wfid/:expid/edit
 	#
 	def edit
-		fname= "workitems_controller.edit:"
-		LOG.debug (fname){"params="+params.inspect}
-		@workitem = find_ar_workitem
-		@wi_links = @workitem.get_wi_links unless @workitem.nil?
-		LOG.debug (fname){"@wi_links="+@wi_links.inspect}
-		nb=0
-		["document","part","project","customer","user"].each {|plm| nb+=add_objects(@workitem, plm) }
-		if nb>0
-		@workitem.save
-		end
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"params="+params.inspect}
+		@workitem = RuoteKit.storage_participant[params[:id]]
 		return error_reply('no workitem', 404) unless @workitem
-
-	# only responds in HTML...
-	end
-
-	# GET /workitems/:wfid/:expid
-	#
-	def show
-		fname= "workitems_controller.show:"
-		LOG.debug (fname){"params="+params.inspect}
-		@workitem = find_ar_workitem
+		LOG.debug(fname){"@workitem="+@workitem.inspect}
+		LOG.debug(fname){"@workitem.fei="+@workitem.fei.to_h.inspect}
+		LOG.debug(fname){"@workitem.participant="+@workitem.participant_name}
+		LOG.debug(fname){"@workitem.params="+@workitem.params.inspect}
+		LOG.debug(fname){"@workitem.fields="+@workitem.fields.inspect}
 		@wi_links = @workitem.get_wi_links unless @workitem.nil?
-
-		return error_reply('no workitem', 404) if @workitem.nil?
-
-		respond_to do |format|
-			format.html # => app/views/show.html.erb
-			format.json { render :json => OpenWFE::Json.workitem_to_h(
-        @workitem, :linkgen => linkgen).to_json }
-			format.xml { render :xml => OpenWFE::Xml.workitem_to_xml(
-        @workitem, :indent => 2, :linkgen => linkgen) }
+		LOG.debug(fname){"@wi_links="+@wi_links.inspect}
+		nb=0
+		["document","part","project","customer","user"].each { |plm|
+			nb+=add_objects_to_workitem(@workitem, plm)
+		}
+		LOG.debug(fname){"#{nb} fields=#{@workitem.fields}"}
+		nb = 0
+		ar_workitem = nil
+		sleep 0.3
+		while nb < 5 and ar_workitem.nil?
+			nb+=1
+			ar_workitem = find_ar_workitem(@workitem)
 		end
+		LOG.info(fname) {"apres sleep nb=#{nb}: ar_workitem=#{ar_workitem.inspect} "}
+		if ar_workitem.nil?
+			ar_workitem=Ruote::Sylrplm::ArWorkitem.create_from_wi(@workitem,current_user)
+		else
+			ar_workitem=Ruote::Sylrplm::ArWorkitem.update_from_wi(ar_workitem, @workitem,current_user)
+		end
+		process=RuoteKit.engine.process(@workitem.wfid)
+		tree=nil
+		tree = process.current_tree.to_json unless process.nil?
+		LOG.debug(fname){"process=#{process} tree=#{tree}"}
+		ar_workitem.tree=tree
+		stsave=ar_workitem.save
+		LOG.debug(fname){"ar_workitem stsave=#{stsave} sauve=#{ar_workitem}"}
+		relation=@workitem.fields["relation"]
+		unless relation.nil?
+			create_links(ar_workitem, @workitem.wfid, relation)
+		end
+		RuoteKit.storage_participant.update(@workitem)
 	end
 
-	# PUT /workitems/:wfid/:expid
-	#
 	def update
-		name=self.class.name+"."+__method__.to_s+":"
-		#LOG.info (name) {"debut:params="+params.inspect}
-		# select du ArWorkitem stocké en base ou sur fichier
-		ar_workitem = find_ar_workitem
-		return error_reply('no workitem', 404) unless ar_workitem
-		#puts name+"ar_workitem="+ar_workitem.last_modified.to_s+":params="+ar_workitem.field_hash[:params].inspect
-		# creation du InFlowWorkItem depuis le ar_workitem
-		in_flow_workitem = ar_workitem.to_owfe_workitem
-		#puts name+"in_flow_workitem="+in_flow_workitem.inspect
-		# get WorkItem a partir des params du request
-		workitem = parse_workitem
-		#puts name+"workitem="+workitem.inspect
-		workitem_ident = "#{in_flow_workitem.fei.wfid}/#{OpenWFE.to_uscores(in_flow_workitem.fei.expid)}"
-		#puts name+"workitem_ident="+workitem_ident
-		if store_name = params[:store_name]
-			#
-			# delegation de la tache
-			#
-			LOG.info{ name+"delegation:store="+store_name}
-			ar_workitem.store_name = store_name
-			ar_workitem.save!
-			flash[:notice] = t(:ctrl_workitem_delegated, :ident => workitem_ident, :store => store_name)
-			history_log(
-        'delegated',
-        :inflow => in_flow_workitem, :message => "wi delegated to '#{store_name}'")
-		elsif params[:state] == 'proceeded'
-			#
-			# task execution
-			#
-			LOG.info {name+":debut proceeded:wfid="+params[:wfid]}
-			in_flow_workitem.attributes = workitem.attributes
-			#LOG.debug (name) {"ar_workitem="+ar_workitem.inspect}
-			#LOG.debug (name) {"in_flow_workitem="+in_flow_workitem.inspect}
-			respond_to do |format|
-				begin
-					LOG.info (name){"avant reply:in_flow_workitem=#{in_flow_workitem.inspect}"}
-					#sleep 0.3
-					RuotePlugin.ruote_engine.reply(in_flow_workitem)
-					sleep 0.3
-					#
-					# attente traitement par plm_participant
-					#
-					#LOG.info (name){"avant sleep:participant_name=#{in_flow_workitem.participant_name} dispatch=#{ar_workitem.dispatch_time},modified=#{ar_workitem.last_modified}"}
-					LOG.info (name){"apres reply, avant sleep:ar_workitem=#{ar_workitem.inspect}"}
-					#LOG.info (name){"avant sleep:params="+ar_workitem.field_hash[:params].inspect}
-					nb = 0
-					arw = ar_workitem
-					while nb < 5 and !arw.nil? and (arw.last_modified == ar_workitem.last_modified)
-						#LOG.debug (name){" boucle #{nb}:#{arw.last_modified}"}
-						nb+=1
-						arw = find_ar_workitem
-						LOG.info (name) {"during loop #{nb}: arw=#{arw.inspect} \n arw.last_modified =#{arw.last_modified} ar_workitem.last_modified=#{ar_workitem.last_modified}:#{arw.last_modified == ar_workitem.last_modified}"}
-					end
-					#
-					LOG.info (name) {"apres sleep nb=#{nb}"}
-					process = ruote_engine.process_status(params[:wfid])
-					LOG.info (name) {"apres process_status, process="+process.to_s}
-					unless process.nil?
-						tree = process.current_tree
-					else
-						tree = nil
-					end
-					#
-					#if ar_workitem.cancel?
-					#puts name+"cancel"
-					#
-					opts = { :page => nil,
-						:conditions => ["wfid = '"+params[:wfid]+"'"],
-						:order => 'created_at DESC' }
-					errors = OpenWFE::Extras::ProcessError.paginate(opts)
-					errs = ""
-					errors.each do  |er|
-						e = er.as_owfe_error
-						LOG.info (name) {":"+e.inspect}
-						errs+="</br>"+e.message.to_s
-						er.destroy
-					end
-					ok = false
-					unless errs.empty?
-						#
-						# errors
-						#
-						flash[:error] = t( :ctrl_workitem_canceled, :ident => workitem_ident)
-						flash[:error]+= errs
-						format.html { redirect_to :action => 'index'}
-					#return error_reply(flash[:notice], 1001)
-					else
-						#
-						# successful
-						#
-					# recup du workitem sauve en base eventuellement modifie par le participant
-						ar_workitem = find_ar_workitem
-						return error_reply('no workitem', 404) unless ar_workitem
-						LOG.info (name){"apres sleep:participant_name=#{in_flow_workitem.participant_name} dispatch=#{ar_workitem.dispatch_time},modified=#{ar_workitem.last_modified}"}
-						LOG.info (name){"apres sleep:ar_workitem=#{ar_workitem.inspect}"}
-						LOG.info (name){"apres sleep:params="+ar_workitem.field_hash[:params].inspect}
-						puts name+"field_hash="+ar_workitem.field_hash.inspect
-						puts name+"wi_fields="+ar_workitem.wi_fields.inspect
-						#puts name+"activity="+ar_workitem.activity.inspect
-						#puts name+"keywords="+ar_workitem.keywords.inspect
-						# sauve history
-						history_created = history_log('proceeded',
-							:fei => in_flow_workitem.fei,
-							:participant => in_flow_workitem.participant_name,
-							:tree => tree.to_json,
-							:message => ar_workitem.objects,
-							:wi_fields => ar_workitem.field_hash.to_json)
-						#LOG.info (name){"history_created=#{history_created}"}
-						LOG.info (name){"history_created:#{history_created.id} wi_fields=#{history_created.wi_fields}"}
-						unless history_created.nil?
-							create_links(ar_workitem, params[:wfid], history_created)
-							if history_created.errors.count == 0
-								flash[:notice] = t(:ctrl_workitem_proceeded, :ident => workitem_ident)
-							ok = true
-							else
-								flash[:error] = t( :ctrl_workitem_not_proceeded, :ident => workitem_ident, :msg => history_created.errors.inspect)
-							###raise PlmProcessException.new("#{name}:error executing workitem #{workitem_ident}:#{history_created.errors.inspect}", 10002)
-							end
-						else
-							flash[:error] = t( :ctrl_workitem_not_proceeded, :ident => workitem_ident)
-						end
-					end
-					sleep 0.1
-					LOG.info (name){"workitem processing ok=#{ok}, destroy de ArWorkitem.#{ar_workitem.id}"}
-					Ruote::Sylrplm::ArWorkitem.destroy(ar_workitem.id)
-					unless ok
-						#
-						# error during  workitem processing, cancel the process
-						#
-						ruote_engine.cancel_process(params[:wfid])
-						flash[:error] += "<br/>#{t(:ctrl_process_canceled, :ident => params[:wfid])}"
-					###raise PlmProcessException.new("#{name}:error creating workitem #{workitem_ident}:#{link.errors.inspect}", 10001)
-					#LOG.error (name) {flash[:notice]}
-					end
-
-					format.html { redirect_to :action => 'index'}
-					format.xml  { render :xml => e, :status => :unprocessable_entity }
-					#return error_reply(flash[:notice], 1003)
-
-				rescue Exception => e
-
-					flash[:error] = t(:ctrl_workitem_not_updated, :ident => "#{workitem_ident}:#{e}")
-					LOG.error (name){"in_flow_workitem=+#{in_flow_workitem.inspect}"}
-					LOG.error (name){" error=#{e.inspect}"}
-					e.backtrace.each {|x| LOG.error x}
-					format.html { redirect_to workitems_path }
-					format.xml  { render :xml => e, :status => :unprocessable_entity }
-				#return error_reply(flash[:notice], 1004)
-
-				end
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"update:params=#{params}"}
+		ok=true
+		fields = Rufus::Json.decode(params[:workitem][:fields])
+		@workitem = RuoteKit.storage_participant[params[:id]]
+		@workitem.fields.merge!(fields)
+		submit = params[:state]
+		LOG.debug(fname){"submit=#{submit}"}
+		LOG.debug(fname){"workitem.wf_name=#{@workitem.wf_name}"}
+		flash={:notice=>"", :error=>""}
+		if submit == 'proceeded'
+			LOG.debug(fname){"proceed workitem:#{@workitem} #{@workitem.sid}"}
+			unless @workitem.nil?
+				LOG.debug(fname){"fields workitem: #{@workitem.fields}"}
+				RuoteKit.storage_participant.proceed(@workitem)
+				flash[:notice] = I18n.t('flash.notice.proceeded', :fei => @workitem.fei.sid)
+			else
+				flash[:error] = I18n.t('flash.error.not_proceeded', :fei => nil)
+			ok=false
 			end
 		else
-		# modification du contenu de la tache
-		#puts name+"att="+workitem.attributes.inspect
-			ar_workitem.replace_fields(workitem.attributes)
-			history_log('saved', :inflow => in_flow_workitem, :message => 'wi saved')
-			respond_to do |format|
-				flash[:notice] = t(:ctrl_workitem_updated, :ident => workitem_ident)
-				format.html { redirect_to :action => 'index'}
+			if submit == 'release'
+				@workitem.participant_name = 'anyone'
+			elsif submit == 'take'
+				@workitem.participant_name = session[:username]
+			end
+			RuoteKit.storage_participant.update(@workitem)
+		end
+		LOG.debug(fname) {"flash:#{flash}"}
+		nb = 0
+		arw = nil
+		sleep 0.5
+		while nb < 10 and arw.nil?
+			nb+=1
+			arw = find_ar_workitem(@workitem)
+		end
+		LOG.info(fname) {"apres sleep nb=#{nb}: arw=#{arw.inspect} "}
+		@process=RuoteKit.engine.process(@workitem.wfid)
+		unless arw.nil?
+			#LOG.debug(fname){"@workitem.sid=#{@workitem.sid} arworkitem.sid=#{arw.sid}"}
+			LOG.info(fname) {"apres sleep arw.errors=#{arw.errors.full_messages}"}
+
+			LOG.info(fname) {"apres process_status, process=#{@process} "}
+			flash[:error] +="<br/>#{arw.error}" unless arw.error.blank?
+			unless @process.nil?
+				LOG.info(fname) {"apres process_status, errors=#{@process.errors.size}"}
+				unless arw.error.blank?
+				@process.errors << arw.error
+				ok=false
+				end
+			else
+				tree = nil
+			ok=false
+			end
+			#arw.tree=tree
+			arw.source=current_user.login
+			arw.event=submit
+			arw.message = arw.objects
+			arw.participant = @workitem.participant_name
+			arw.save
+			workitem_ident = "#{@workitem.fei.wfid}/#{PlmServices.to_uscores(@workitem.fei.expid)}"
+			if arw.errors.count == 0
+				flash[:notice] += t(:ctrl_workitem_proceeded, :ident => workitem_ident)
+			else
+			flash[:error] += t( :ctrl_workitem_not_proceeded, :ident => workitem_ident, :msg => arw.errors.inspect)
+				arw.errors.each do |err|
+					@process.errors.add(:base,err.message)
+				end
+			ok=false
+			end
+		else
+			ok=false
+			flash[:error] += "<br/>ar_workitem not found"
+		end
+		unless ok
+			#
+			# error during  workitem processing, cancel the process
+			#
+			begin
+				LOG.error(fname){"RuoteKit.engine.cancel_process(#{@process})"}
+				RuoteKit.engine.cancel_process(@process.wfid) unless @process.nil?
+			rescue Exception=>e
+				LOG.error(fname){"RuoteKit.engine.cancel_process error=#{e}"}
+			end
+			flash[:error] += "<br/>#{t(:ctrl_process_canceled, :ident => params[:wfid])}"
+		end
+		index_
+		respond_to do |format|
+			LOG.error(fname) {"flash=#{flash}"}
+			format.html do
+				render :action => :index
 			end
 		end
-		#LOG.info {name+"fin"}
 	end
 
-	def destroy
-		fname = "WorkitemsController."+__method__.to_s+":"
-		LOG.info (fname){"params="+params.inspect}
-		ar_workitem = find_ar_workitem
-		unless ar_workitem.nil?
-			ar_workitem.destroy
-			flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_workitem), :ident => ar_workitem.ident)
-		end
-		respond_to do |format|
-			format.html { redirect_to(workitems_url) }
-			format.xml  { head :ok }
-		end
+	:private
+
+	def index_
+		fname= "#{self.class.name}.#{__method__}"
+		@workitems = RuoteKit.storage_participant
 	end
 
-	###################
-	# methodes privees
-	###################
-	private
-
-	#
-	# find workitem, says 'unauthorized' if the user is attempting to
-	# see / update an off-limit workitem
-	#
-	def find_ar_workitem
-		fname="WorkitemsController.#{__method__}"
-		sleep 0.3
-		ar_workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid_and_expid(params[:wfid], OpenWFE.to_dots(params[:expid])) unless params[:expid].nil?
-		if ar_workitem.nil?
-			ar_workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid(params[:id]) unless params[:id].nil?
-		end
-		ret=current_user.may_see?(ar_workitem) ? ar_workitem : nil unless ar_workitem.nil?
-		#LOG.debug (fname) {"params=#{params} ar_workitem=#{ret.inspect}"}
-		ret
-	end
-
-	def add_objects(ar_workitem, type_object)
-		name="WorkitemsController."+__method__.to_s+":"
+	def add_objects_to_workitem(ar_workitem, type_object)
+		fname= "#{self.class.name}.#{__method__}"
 		msg=""
 		ret=0
 		favori=@favori.get(type_object)
+		LOG.debug(fname){"type_object=#{type_object} favori=#{favori.inspect}"}
 		if favori.count>0
-			fields = ar_workitem.field_hash
+			fields = ar_workitem.fields
 			if fields == nil
 				fields = {}
 				fields["params"] = {}
 			end
-			#puts name+"favori="+favori.inspect
-			#puts name+"avant add: workitem="+ar_workitem.id.to_s+ " fields="+fields.inspect
 			favori.each do |item|
-			#TODO bidouille
-				url="/"+type_object+"s"
-				url+="/"+item.id.to_s
-				label=type_object+":"+item.ident
-				#puts "workitems_controller.add_objects:url="+url+" label="+label+ " fields="+fields["params"].inspect
+				LOG.debug(fname){"favori=#{item.inspect}"}
+				#TODO bidouille
+				url="#{Ruote::Sylrplm::ArWorkitem::SEP_URL}#{type_object}s"
+				url+="#{Ruote::Sylrplm::ArWorkitem::SEP_URL}#{item.id}"
+				label="#{type_object}#{Ruote::Sylrplm::ArWorkitem::SEP_TYPE_ITEM}#{item.ident}"
+				LOG.debug(fname){"url=#{url} label=#{label}  fields=#{fields}"}
+				new_param={url=>label}
 				fields["params"][url]=label
-				msg += "\nField added:"+label
+				LOG.debug(fname){"fields[params] merge=#{fields["params"]}"}
+				msg += " Field added:#{url} #{label}"
 				ret+=1
 			end
-			ar_workitem.replace_fields(fields)
-			#LOG.info (name){"apres add: fields="+ar_workitem.field_hash.inspect}
+			ar_workitem.fields=fields
+			LOG.info(fname){"apres add: fields=#{ar_workitem.fields}"}
 			empty_favori_by_type(type_object)
 		else
-			msg += "\nNothing to add:"+type_object
+			msg += " Nothing to add:"+type_object
 		end
-		#puts  "workitems_controller.add_objects:"+type_object+"="+ret.to_s+":"+msg
+		LOG.debug(fname){"#{type_object}=#{ret} msg=#{msg}"}
 		ret
 	end
 
 	#
-	def create_links(cur_wi, wfid, history)
-		fname="WorkitemsController."+__method__.to_s+":"
-		#puts fname+"cur_wi="+cur_wi.id.to_s+":"+cur_wi.wfid.to_s+":"+cur_wi.expid.to_s
-		LOG.debug (fname){"wfid=#{wfid} "}
-		#LOG.debug (fname){"history=#{history}"}
-		#LOG.debug (fname){"field_hash=#{cur_wi.field_hash}"}
-		params = cur_wi.field_hash["params"]
-		LOG.debug (fname){"params=#{params}"}
+	def create_links(ar_workitem, wfid, relation_name)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"wfid=#{wfid} "}
+		params = eval(ar_workitem.fields)["params"]
+		LOG.debug(fname){"params=#{params}"}
 		unless params.nil?
 			params.keys.each do |url|
 				v = params[url]
-				sv = v.split("#")
-				if sv.size == 2
-					sp = url.split("/")
-					#puts fname+"sp "+sp.size.to_s+":"+sp[0].to_s
-					if sp.size == 3 && sp[0] != url
-						#puts fname+sp[1]+"("+sp[1].size.to_s+"):"+sp[2]
-						cls = sp[1].chop
-						id = sp[2]
-						relation_name = sv[0]
-						item = PlmServices.get_object(cls, id)
-						unless item.nil?
-							relation = link_relation(history, item, relation_name)
-							unless relation.nil?
-								link = link_object(history, item, relation)
-								if link.save
-									LOG.info(fname){"save ok:link id="+link.id.to_s}
-								#{ link: link, msg: "ctrl_link_#{item.ident}" }
-								else
-									LOG.error(fname){"Error during saving the link :"+link.errors.inspect}
-									##raise PlmProcessException.new(fname+"error save :"+link.errors.inspect, 10002)
-									link.errors.each do |err|
-										history.errors.add err
+				LOG.debug(fname){"url=#{url} v=#{v}"}
+				unless v.nil?
+					sv = v.split(Ruote::Sylrplm::ArWorkitem::SEP_TYPE_ITEM)
+					LOG.debug(fname){"sv=#{sv}"}
+					if sv.size == 2
+						sp = url.split(Ruote::Sylrplm::ArWorkitem::SEP_URL)
+						LOG.debug(fname){"sp=#{sp} "}
+						if sp.size == 3 && sp[0] != url
+							cls = sp[1].chop
+							id = sp[2]
+							LOG.debug(fname){"class=#{cls} id=#{id} relation_name=#{relation_name}"}
+							item = PlmServices.get_object(cls, id)
+							LOG.debug(fname){"item=#{item}"}
+							unless item.nil?
+								relation = link_relation(ar_workitem, item, relation_name)
+								unless relation.nil?
+									link = link_object(ar_workitem, item, relation)
+									if link.save
+										LOG.info(fname){"save ok:link id="+link.id.to_s}
+									#{ link: link, msg: "ctrl_link_#{item.ident}" }
+									else
+										LOG.error(fname){"Error during saving the link :"+link.errors.inspect}
+										##raise PlmProcessException.new(fname+"error save :"+link.errors.inspect, 10002)
+										link.errors.each do |err|
+											ar_workitem.errors.add(:base, err)
+										end
+										msg="Link non sauve:#{link.errors.full_messages}'"
+										raise PlmProcessException.new(msg, 10004)
 									end
+								else
+									msg="No relation with name='#{relation_name}'"
+									ar_workitem.errors.add(:base,msg)
+									raise PlmProcessException.new(msg, 10005)
 								end
 							else
-								history.errors.add "No relation with name='#{relation_name}'"
+								msg="Object not found: '#{cls}.#{id}'"
+								ar_workitem.errors.add(:base, msg)
+								raise PlmProcessException.new(msg, 10006)
 							end
-						else
-							history.errors.add "Object not found: '#{cls}.#{id}'"
 						end
 					end
 				end
 			end
 		end
-
 	end
 
-	def link_relation (workitem, item, relation_name)
-		fname = "WorkitemsController."+__method__.to_s+":"
-		relation = Relation.by_values_and_name(workitem.model_name, item.model_name, workitem.model_name, item.typesobject.name, relation_name)
+	def link_relation(workitem, item, relation_name)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {"workitem=#{workitem} item=#{item} relation_name=#{relation_name}"}
+		relation = Relation.by_values_and_name(workitem.modelname, item.modelname, workitem.modelname, item.typesobject.name, relation_name)
 		if relation.nil?
 			msg = "No relation '#{relation_name}' for workitem:#{workitem} and item:#{item}"
-			LOG.debug (fname) {msg}
-		workitem.errors.add msg
+			LOG.debug(fname) {msg}
+			workitem.errors.add(:base,msg)
 		end
 		relation
 	end
 
 	def link_object(workitem, item, relation)
-		fname = "WorkitemsController."+__method__.to_s+":"
+		fname= "#{self.class.name}.#{__method__}"
 		values = {}
-		values["father_plmtype"]        = workitem.model_name
-		values["child_plmtype"]         = item.model_name
+		values["father_plmtype"]        = workitem.modelname
+		values["child_plmtype"]         = item.modelname
 		#values["father_typesobject_id"] = Typesobject.find_by_name(workitem.model_name).id
 		#values["child_typesobject_id"]  = item.typesobject_id
 		values["father_id"]             = workitem.id
@@ -414,25 +292,16 @@ class WorkitemsController < ApplicationController
 	end
 
 	#
-	# parsing incoming workitems
+	# find workitem, says 'unauthorized' if the user is attempting to
+	# see / update an off-limit workitem
 	#
-	def parse_workitem
-		begin
-			ct = request.content_type.to_s
-			# TODO : deal with Atom[Pub]
-			return OpenWFE::Xml::workitem_from_xml(request.body.read) \
-			if ct.match(/xml$/)
-			return OpenWFE::Json.workitem_from_json(request.body.read) \
-			if ct.match(/json$/)
-			wi = OpenWFE::WorkItem.from_h(params)
-			wi.attributes = ActiveSupport::JSON.decode(wi.attributes) \
-			if wi.attributes.is_a?(String)
-			wi
-		rescue Exception => e
-			LOG.error {"failed to parse workitem : #{e}"}
-			nil
-		end
+	def find_ar_workitem(workitem)
+		fname="WorkitemsController.#{__method__}"
+		sleep 0.2
+		ar_workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid(workitem.wfid)
+		#TODOret=current_user.may_see?(ar_workitem) ? ar_workitem : nil unless ar_workitem.nil?
+		LOG.debug(fname) {"wfid=#{workitem.wfid} ar_workitem=#{ar_workitem}"}
+		ar_workitem
 	end
-
 end
 

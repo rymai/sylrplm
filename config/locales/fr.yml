@@ -236,3 +236,9 @@ fr:
         type_values_value_outside_limit: "%{key}=%{value} du type %{type} est en dehors des limites: %{sign} %{limit}"
         #typesobject
         field_badly_formatted: "Le champ du type '%{type}' est mal formatté, clé='%{key}', fields=%{fields} exception=%{exception}"
+
+  flash:
+    notice:
+      proceeded: Workitem '%{fei}' exécuté
+    error:
+      not_proceeded: Workitem '%{fei}' non exécuté

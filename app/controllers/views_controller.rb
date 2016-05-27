@@ -1,6 +1,6 @@
 class ViewsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control (Access.find_for_controller(controller_class_name()))
+	access_control (Access.find_for_controller(controller_name.classify))
 	# GET /views
 	# GET /views.xml
 	def index
@@ -58,7 +58,7 @@ class ViewsController < ApplicationController
 		fname = "#{self.class.name}.#{__method__}"
 		@view = View.find(params[:id])
 		@relations=Relation.all
-		LOG.debug (fname){"@view=#{@view}"}
+		LOG.debug(fname){"@view=#{@view}"}
 	end
 
 	# POST /views
@@ -108,7 +108,7 @@ class ViewsController < ApplicationController
 
 	# DELETE /views/1
 	# DELETE /views/1.xml
-	def destroy
+	def destroy_old
 		@view = View.find(params[:id])
 		if @view.destroy
 			flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_view),:ident=>@view.name)

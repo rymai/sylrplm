@@ -1,7 +1,7 @@
 class SubscriptionsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	before_filter :authorize, :except => nil
-	access_control(Access.find_for_controller(controller_class_name))
+	access_control(Access.find_for_controller(controller_name.classify))
 	# GET /subscriptions
 	# GET /subscriptions.xml
 	def index
@@ -117,7 +117,7 @@ class SubscriptionsController < ApplicationController
 
 	# DELETE /subscriptions/1
 	# DELETE /subscriptions/1.xml
-	def destroy
+	def destroy_old
 		@subscription = Subscription.find(params[:id])
 		@subscription.destroy
 

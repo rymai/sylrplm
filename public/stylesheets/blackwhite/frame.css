@@ -249,7 +249,7 @@ td.favori {
 }
 /* END:favori */
 
-p.error {
+p.error{
 	font: 140% sans-serif;
 	border: 1px solid #666;
 	color: red;

@@ -1,11 +1,11 @@
 <h1><%= t(:relation_list) %><%= h_count_objects(@relations)%> </h1>
 <% unless @relation.nil? %>
-<% form_for(@relation) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@relation) do |f| %>
+<%= form_errors_for @relation %>
 <% end %>
 <% else %>
 <%= h_form_simple_query('/relations', @relations) %>
-<% form_tag({:controller=>:relations, :action=>:index_execute}) do %>
+<%= form_tag({:controller=>:relations, :action=>:index_execute}) do %>
 <%= h_menu_index_action("relation")%>
 <%= will_paginate(@relations[:recordset]) %>
 <table>
@@ -42,7 +42,7 @@
 		<td> <%= link_to h_img_edit.to_s, edit_relation_path(relation) %> </td>
 
 		<td> <%= h_menu_duplicate(relation) %> </td>
-		<td> <%= link_to h_img_destroy.to_s, relation, :confirm => t(:msg_confirm), :method => :delete %> </td>
+		<td> <%= h_destroy(relation) %> </td>
 		<td><%= check_box(:action_on,relation.id) %></td>
 	</tr>
 	<% end %>

@@ -1,6 +1,6 @@
 <% fonct="show" %>
-<% form_for(@forum, :html => { :id => h_form_html_id(@forum, fonct) }) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@forum, :html => { :id => h_form_html_id(@forum, fonct) }) do |f| %>
+<%= form_errors_for @forum %>
 <p>
 	<b>Type:</b>
 	<%= h @forum.typesobject.name_translate %>

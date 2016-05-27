@@ -2,12 +2,12 @@
 <div class="favori-title">
 	<%= t("favoris_#{type}",:size=> favs.count) %>
 	<% if favs.present? %>
-	<%= link_to_remote(h_img(:remove_all), url: { controller: type.pluralize, action: 'empty_favori' }, method: :get) %>
+	<%= link_to(h_img(:remove_all), { controller: type.pluralize, action: 'empty_favori' }, :remote => true, :method => :get) %>
 	<% end %>
 </div>
 <% if favs.present? %>
 <table class='datas'>
-	<%= render :partial => 'layouts/favorite_item', collection: favs %>
+	<%= render :partial => 'layouts/favorite_item', :collection => favs %>
 </table>
 <% end %>
 

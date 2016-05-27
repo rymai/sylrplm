@@ -19,9 +19,9 @@ class DatafilesController < ApplicationController
 	# GET /datafiles/1.xml
 	def show
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect} flash=#{flash.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect} flash=#{flash.inspect}"}
 		show_
-		LOG.debug (fname){"@datafile=#{@datafile.inspect} flash=#{flash.inspect}"}
+		LOG.debug(fname){"@datafile=#{@datafile.inspect} flash=#{flash.inspect}"}
 		respond_to do |format|
 			format.html # show.html.erb
 			format.xml  { render :xml => @datafile }
@@ -42,8 +42,9 @@ class DatafilesController < ApplicationController
 	# GET /datafiles/new.xml
 	def new
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@datafile = Datafile.new(user: current_user)
+		LOG.debug(fname){"new @datafile=#{@datafile.inspect}"}
 		@types    = Typesobject.get_types("datafile")
 		respond_to do |format|
 			format.html # new.html.erb
@@ -54,7 +55,7 @@ class DatafilesController < ApplicationController
 	# GET /datafiles/1/edit
 	def edit
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
 		@types    = Typesobject.get_types("datafile")
 	#TODO@document = Document.find(params["doc"]) if params["doc"]
@@ -64,7 +65,7 @@ class DatafilesController < ApplicationController
 	# POST /datafiles.xml
 	def create
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@types    = Typesobject.get_types("datafile")
 		@document = Document.find(params["doc"]) if params["doc"]
 		#puts "datafiles_controller.create:errors=#{@datafile.errors.inspect}"
@@ -88,20 +89,21 @@ class DatafilesController < ApplicationController
 	# PUT /datafiles/1.xml
 	def update
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"update: params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
-		LOG.debug (fname){"revision=#{@datafile.revision}"}
+		LOG.debug(fname){"update: revision=#{@datafile.revision}"}
 		@types    = Typesobject.get_types("datafile")
 		@document = Document.find(params["doc"]) if params["doc"]
 		stupd = @datafile.m_update(params, @current_user)
 		respond_to do |format|
 			if stupd && !@datafile.have_errors?
+				LOG.debug(fname){"update: ok=#{@datafile.inspect}"}
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_datafile), :ident => @datafile.ident)
 				show_
 				format.html { render :action => "show" }
 				format.xml  { head :ok }
 			else
-				LOG.error (fname){"stupd=#{stupd} errors=#{@datafile.errors.full_messages}"}
+				LOG.error(fname){"update: ko stupd=#{stupd} errors=#{@datafile.errors.full_messages}"}
 				flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_datafile), :ident => @datafile.ident, :error => @datafile.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @datafile.errors, :status => :unprocessable_entity }
@@ -114,16 +116,16 @@ class DatafilesController < ApplicationController
 	#
 	def update_type
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
 		ctrl_update_type @datafile, params[:object_type]
 	end
 
 	# DELETE /datafiles/1
 	# DELETE /datafiles/1.xml
-	def destroy
+	def destroy_old
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
 		#if params["doc"]
 		#	@document = Document.find(params["doc"])
@@ -143,13 +145,13 @@ class DatafilesController < ApplicationController
 
 	def show_file
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		send_file_content("inline")
 	end
 
 	def download_file
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		send_file_content("attachment")
 	end
 
@@ -161,7 +163,7 @@ class DatafilesController < ApplicationController
 		begin
 			@datafile = Datafile.find(params[:id])
 			tool = @datafile.typesobject.get_fields_values_by_key("tool")
-			LOG.debug (fname){"datafile=#{@datafile} tool=#{tool} disposition=#{disposition}"}
+			LOG.debug(fname){"datafile=#{@datafile} tool=#{tool} disposition=#{disposition}"}
 			#puts "datafiles_controller.send_file_content:"+fields.inspect
 			if disposition == "inline"
 				#
@@ -175,7 +177,7 @@ class DatafilesController < ApplicationController
 						repos = @datafile.write_file_tmp
 						dirtmpfile = File.join(RAILS_ROOT,repos)
 						cmd = "#{tool} #{dirtmpfile} &"
-						#LOG.debug (fname){"tool=#{tool} cmd=#{cmd}"}
+						#LOG.debug(fname){"tool=#{tool} cmd=#{cmd}"}
 						system(cmd)
 						flash[:notice] = "File showed with tool #{tool}"
 						respond_to do |format|
@@ -185,7 +187,7 @@ class DatafilesController < ApplicationController
 					rescue Exception => e
 						flash[:notice] = "Tool #{tool} does not work"
 						content = @datafile.read_file_for_download
-						#LOG.debug (fname){"content.length=#{content.length}"}
+						#LOG.debug(fname){"content.length=#{content.length}"}
 						error = ctrl_send_data(content, @datafile.filename, @datafile.content_type, disposition)
 					end
 				else
@@ -220,7 +222,7 @@ class DatafilesController < ApplicationController
 			flash={} if flash.nil?
 			flash[:notice]=error
 			flash[:error]=error
-			LOG.debug (fname){"flash=#{flash.inspect}"}
+			LOG.debug(fname){"flash=#{flash.inspect}"}
 			respond_to do |format|
 				unless @datafile.nil?
 					format.html { render :action => "show" }
@@ -235,7 +237,7 @@ class DatafilesController < ApplicationController
 
 	def ctrl_send_data(content, filename, content_type, disposition)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"content.length=#{content.length} filename=#{filename} content_type=#{content_type} disposition=#{disposition} "}
+		LOG.debug(fname){"content.length=#{content.length} filename=#{filename} content_type=#{content_type} disposition=#{disposition} "}
 		error=nil
 		begin
 			send_data(content,
@@ -252,7 +254,7 @@ class DatafilesController < ApplicationController
 
 	def ctrl_send_file(tmpfile, disposition)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"size=#{tmpfile[:size]} tmpfile=#{tmpfile[:file].path} filename=#{tmpfile[:filename]} content_type=#{tmpfile[:content_type]} disposition=#{disposition} "}
+		LOG.debug(fname){"size=#{tmpfile[:size]} tmpfile=#{tmpfile[:file].path} filename=#{tmpfile[:filename]} content_type=#{tmpfile[:content_type]} disposition=#{disposition} "}
 		error=nil
 		begin
 			if tmpfile[:size] > 0

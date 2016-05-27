@@ -1,6 +1,6 @@
 <h1><%= t(:forum_item_new) %></h1>
-<% form_for(@forum_item) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@forum_item) do |f| %>
+<%= form_errors_for @forum_item %>
 <%= render(:partial => "forum_items/edit",:locals => { :object=>@forum_item, :f => f, :fonct=>"new" }) %>
 <table class='menu_bas'>
 	<tr>

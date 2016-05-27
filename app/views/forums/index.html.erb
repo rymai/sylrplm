@@ -1,7 +1,7 @@
 <h1><%= t(:forum_list) %><%= h_count_objects(@forums) %></h1>
 <% unless @forum.nil? %>
-<% form_for(@forum) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@forum) do |f| %>
+<%= form_errors_for @forum %>
 <% end %>
 <% end %>
 <%= h_form_simple_query('/forums', @forums) %>
@@ -41,7 +41,7 @@
 		<td><%= forum.forum_items.length %></td>
 		<% unless forum.frozen? %> <td> <%= link_to h_img_edit.to_s, edit_forum_path(forum) %> </td>
 		<td> <%= link_to h_img_edit_lifecycle.to_s, {:controller=>"forums", :action=>"edit_lifecycle", :id => forum.id} %> </td>
-		<td> <%= link_to h_img_destroy, forum, :confirm => t("msg_confirm"), :method => :delete %> </td>
+		<td> <%= h_destroy(forum) %> </td>
 		<% end %>
 	</tr>
 	<% end %>

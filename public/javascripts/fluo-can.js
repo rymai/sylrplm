@@ -129,6 +129,7 @@ var FluoCanvas = function() {
 	}
 
 	function drawDiamond (c, height) {
+		//alert('drawDiamond:height='+height);
 		var h = height / 2;
 		for (var i = 0; i < 2; i++) {
 			c.beginPath();
@@ -407,8 +408,9 @@ var FluoCan = function() {
 
 	function drawAttributes (c, exp, expname, strchild, width, height) {
 		if (expname) {
-			//alert('drawAttributes:c='+c+' exp0='+exp[0])
-			FluoCanvas.drawText(c, exp[0], width, height);
+			var txt=exp.expid+'.'+exp[0];
+			//alert('drawAttributes: txt='+txt+' ,expname='+expname)
+			FluoCanvas.drawText(c, txt, width, height);
 			carriageReturn(c);
 		}
 		var ct = strchild && childText(exp);
@@ -627,7 +629,7 @@ var FluoCan = function() {
 	TextHandler.render = function (c, exp) {
 		var h = getHeight(c, exp);
 		var w = getWidth(c, exp);
-		
+
 		FluoCanvas.drawText(c, this.getText(exp), h, w);
 	};
 	TextHandler.getText = function (exp) {
@@ -914,7 +916,7 @@ var FluoCan = function() {
 	}
 
 	function renderFlow (context, flow, options) {
-	
+
 		if ( ! options)
 			options = {};
 
@@ -931,7 +933,7 @@ var FluoCan = function() {
 		setOption(context, options, 'horizontal');
 
 		context.save();
-//alert('renderFlow:'+context+":\n flow=******************"+flow)
+//alert('renderFlow:'+context+"\n flow="+flow+"\n options="+options)
 		if (context.canvas.horizontal == true) {
 			context.translate(0, flow.width + 2);
 			context.rotate(-Math.PI/2);
@@ -971,7 +973,8 @@ var FluoCan = function() {
 	}
 
 	function drawWorkitem (c, exp) {
-		var ww = c.measure('wi');
+		var txt=exp.expid;
+		var ww = c.measure(txt);
 		c.save();
 		if (c.canvas.horizontal == true) {
 			c.rotate(Math.PI/2);
@@ -982,25 +985,32 @@ var FluoCan = function() {
 		c.fillStyle = '#F4D850';
 		c.moveTo(0, 0);
 		c.beginPath();
-		c.arc(0, 0, 10, Math.PI, 0, false);
-		c.lineTo(0, 20);
-		c.lineTo(-10, 0);
+		//c.arc(0, 0, 10, Math.PI, 0, false);
+		//c.lineTo(0, 20);
+		//c.lineTo(-10, 0);
+		c.arc(0, 0, 15, Math.PI, 0, false);
+		c.lineTo(0, 30);
+		c.lineTo(-15, 0);
 		c.fill();
 		c.fillStyle = 'black';
 		c.moveTo(0, 0);
 		c.beginPath();
-		c.arc(0, 0, 10, Math.PI, 0, false);
-		c.lineTo(0, 20);
-		c.lineTo(-10, 0);
+		//c.arc(0, 0, 10, Math.PI, 0, false);
+		//c.lineTo(0, 20);
+		//c.lineTo(-10, 0);
+		c.arc(0, 0, 15, Math.PI, 0, false);
+		c.lineTo(0, 30);
+		c.lineTo(-15, 0);
 		c.stroke();
 		c.translate(-ww/2, 3);
-		c.write('wi');
+		c.write(txt);
 		c.restore();
 	}
 
 	function renderExp (c, exp) {
-//alert('renderExp:'+exp)
 		var handler = getHandler(c, exp);
+
+//alert('renderExp:'+exp.expid+' handler='+handler.name);
 
 		if (handler.adjust && ! exp.adjusted) {
 			handler.adjust(exp);
@@ -1020,7 +1030,7 @@ var FluoCan = function() {
 		}
 
 		handler.render(c, exp);
-
+//alert('workitems='+c.canvas.workitems+ ' exp.expid='+exp.expid)
 		if (c.canvas.workitems.indexOf(exp.expid) > -1) { // workitem
 			drawWorkitem(c, exp);
 		}
@@ -1177,6 +1187,7 @@ var FluoCan = function() {
 	}
 
 	function toggleMinor (canvas) {
+		//alert('toggleMinor: canvas='+canvas);
 		canvas = resolveCanvas(canvas);
 		canvas.hideMinor = ! canvas.hideMinor;
 		clearDimCache(canvas.flow);

@@ -25,9 +25,10 @@ class FiledriverDatabaseBinary  < FiledriverDatabase
 
 	class VolumeTablesBinary < ActiveRecord::Migration
 		def self.init_table(table_name)
-			#puts "establish_connection="+ActiveRecord::Base.establish_connection
-			database_conf=Rails::Configuration.new.database_configuration
-			#puts "database_configuration=#{database_conf.inspect}"
+			puts "VolumeTablesBinary:establish_connection="+ActiveRecord::Base.establish_connection
+			#rails2 database_conf=Rails::Configuration.new.database_configuration
+			database_conf=Rails.application.config.database_configuration
+			puts "VolumeTablesBinary:database_configuration=#{database_conf.inspect}"
 			unless ActiveRecord::Base.connection.table_exists? table_name
 				create_table table_name do |t|
 					t.column :datafile_model, :string
@@ -53,12 +54,12 @@ class FiledriverDatabaseBinary  < FiledriverDatabase
 		def self.delete_table(table_name)
 			fname= "#{self.class.name}.#{__method__}"
 			if ActiveRecord::Base.connection.table_exists? table_name
-				#LOG.debug (fname) {"table_name to drop =#{table_name}"}
+				#LOG.debug(fname) {"table_name to drop =#{table_name}"}
 				ret = drop_table table_name
 			else
 			ret=true
 			end
-			LOG.debug (fname) {"table_name=#{table_name} ret=#{ret}"}
+			LOG.debug(fname) {"table_name=#{table_name} ret=#{ret}"}
 			ret
 		end
 
@@ -76,19 +77,19 @@ class FiledriverDatabaseBinary  < FiledriverDatabase
 		fname= "#{self.class.name}.#{__method__}"
 		if !olddirname.blank? && volume.dir_name != olddirname
 			ret=nil
-			volume.errors.add_to_base "The directory of database volume can't be moved"
+			self.errors.add :base, "The directory of database volume can't be moved"
 		else
 			ret = vol_table_name(volume)
 			VolumeTablesBinary.init_table(ret)
 		end
-		LOG.debug (fname) {"ret=#{ret}"}
+		LOG.debug(fname) {"ret=#{ret}"}
 		ret
 	end
 
 	def delete_volume_dir(volume)
 		fname= "#{self.class.name}.#{__method__}"
 		ret = VolumeTablesBinary.delete_table(vol_table_name(volume))
-		LOG.debug (fname) {"ret=#{ret}"}
+		LOG.debug(fname) {"ret=#{ret}"}
 		ret
 	end
 

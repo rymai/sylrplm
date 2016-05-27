@@ -1,14 +1,18 @@
 require_dependency 'models/sylrplm_common'
-require_dependency 'caboose/access_control'
+require_dependency 'acl_system2/lib/caboose/access_control'
+require_dependency 'acl_system2/lib/caboose/role_handler'
+require_dependency 'acl_system2/lib/caboose/logic_parser'
 
 class Access < ActiveRecord::Base
   include ::Models::SylrplmCommon
 	include ::Caboose
 	include ::Caboose::AccessControl
 
+	before_save :before_save_
+	before_destroy :before_destroy_
   attr_accessor :controller_and_action
 
-  attr_accessible :controller_and_action, :roles, :id, :controller, :action
+  attr_accessible  :id, :roles,:controller, :action, :domain
 
   validates_presence_of :controller, :action, :roles
   validates_uniqueness_of :action, :scope => :controller
@@ -23,16 +27,17 @@ class Access < ActiveRecord::Base
   end
 
   def self.find_for_controller(controller)
-    self.all(order: "controller", conditions: ["controller like '#{controller}'"]).inject({}) do |memo, access|
-      memo[access.action.to_sym] = access.roles
+    #rails2 self.all(order: "controller", conditions: ["controller like '#{controller}'"]).inject({}) do |memo, access|
+    self.all.order("controller").where("controller like '#{controller}'").inject({}) do |memo, access|
+     memo[access.action.to_sym] = access.roles
       memo
     end
   end
 
 	def self.get_actions_by_roles
 		fname= "#{self.class.name}.#{__method__}"
-		access_actions=Access.find(:all, :order => "controller, roles, action")
-		LOG.debug (fname){"begin list access_actions"}
+		access_actions=Access.all.order("controller, roles, action")
+		LOG.debug(fname){"begin list access_actions:#{access_actions.size}"}
 		controllers_actions={}
 		access_actions.each { |aa|
 			controllers_actions[aa.controller]={} if controllers_actions[aa.controller].nil?
@@ -40,36 +45,30 @@ class Access < ActiveRecord::Base
 		}
 		actions_by_roles={}
 		user=User.find_by_name(PlmServices.get_property(:USER_ADMIN))
-		::Role.find(:all,:order => "title").each { |arole|
+		roles=::Role.all.order("title").to_a
+		roles.each { |arole|
 			actions_by_roles[arole]={}
 			user.role=arole
-			#puts "user=#{user}"
 			access_actions.each { |aa|
-				#c=c.access_context[:user] c.action_name c.controller_name
-				#actions: {:add_datafile=>"(admin | creator | designer | valider | analyst | project_manager | plm_actor) & (!consultant)", :add_docs=>"(admin | creator ...
-				c=(eval aa.controller).new
-				#puts "access_control:c=#{c.inspect}"
+					c=(eval aa.controller).new
 				access_context={:user => user}
 				actions=controllers_actions[aa.controller]
-				#puts "aa.action=#{aa.action} actions=#{actions}"
 				st = allowed?(actions, aa.action, access_context)
 				actions_by_roles[arole][aa.controller]=[] if actions_by_roles[arole][aa.controller].nil?
 				actions_by_roles[arole][aa.controller]<<aa.action if st==true
 				#puts "controller= #{aa.controller} , action= #{aa.action} , roles= #{aa.roles} , user=#{user}, st=#{st}"
 			}
 		}
+		# traces
 		actions_by_roles.each_key { |role|
-			puts "******************************************************"
-			puts "role=#{role} , #{actions_by_roles[role].count} controllers"
 			actions_by_roles[role].each { |controller|
 				unless controller[1].nil?
 					if controller[1].count>0
-				#puts "controller=#{controller[0]} , #{controller[1].count} actions=#{controller[1]}"
+				LOG.debug(fname){"controller=#{controller[0]} , #{controller[1].count} actions=#{controller[1]}"}
 				end
 				end
 			}
 		}
-		LOG.debug (fname){"end list access_actions"}
 		actions_by_roles
 	end
 
@@ -122,15 +121,10 @@ class Access < ActiveRecord::Base
     admin = Role.find_by_name(PlmServices.get_property(:ROLE_ADMIN))
     consultant = Role.find_by_name(PlmServices.get_property(:ROLE_CONSULTANT))
     ret[:cat_admins] << admin.title unless admin.nil?
-    #ret[:cat_consultants] = cons.users.collect{ |u| u.login } unless cons.nil?
     ret[:cat_consultants] << consultant.title unless consultant.nil?
-    #puts "#{__method__.to_s}:cat_admins=#{ret[:cat_admins]}"
-    #puts "#{__method__.to_s}:cat_consultants=#{ret[:cat_consultants]}"
     ret[:cat_creators] = Role.all.collect { |r| r.title }
-    #puts "#{__method__.to_s}:roles=#{ret[:cat_creators]}"
     ret[:cat_creators]-= ret[:cat_admins]
     ret[:cat_creators]-= ret[:cat_consultants]
-    #puts "#{__method__.to_s}:#{ret.inspect}"
     ret
   end
 

@@ -8,13 +8,16 @@ class Relation < ActiveRecord::Base
 	validates_numericality_of :cardin_use_min, { :only_integer => true, :greater_than_or_equal_to => 0 }
 	#
 	attr_accessor :link_attributes
+	attr_accessible :id, :name, :typesobject_id, :father_plmtype, :child_plmtype, :father_typesobject_id, :child_typesobject_id
+	attr_accessible :paste_way, :cardin_occur_min, :cardin_occur_max,  :cardin_use_min, :cardin_use_max, :domain , :type_values
+
 	#
 	belongs_to :typesobject
 	belongs_to :father_typesobject, class_name: "Typesobject"
 	belongs_to :child_typesobject, class_name: "Typesobject"
 
 	has_many :links
-	has_and_belongs_to_many :views
+	has_and_belongs_to_many :views, :join_table=>:relations_views
 	#
 	RELATION_FROM_REVISION = "FROM_REVISION"
 	RELATION_FROM_DUPLICATE = "FROM_DUPLICATE"
@@ -23,8 +26,8 @@ class Relation < ActiveRecord::Base
 	RELATION_PASTE_WAY_MANUAL = "manual"
 	RELATION_PASTE_WAY_INTERNAL = "internal"
 	def validate
-		errors.add_to_base I18n.t("valid_relation_cardin_occur_max") if !cardin_occur_max.nil? && cardin_occur_max != -1 && cardin_occur_max < cardin_occur_min
-		errors.add_to_base I18n.t("valid_relation_cardin_use_max") if !cardin_use_max.nil? && cardin_use_max != -1 && cardin_use_max < cardin_use_min
+		self.errors.add :base, I18n.t("valid_relation_cardin_occur_max") if !cardin_occur_max.nil? && cardin_occur_max != -1 && cardin_occur_max < cardin_occur_min
+		self.errors.add :base, I18n.t("valid_relation_cardin_use_max") if !cardin_use_max.nil? && cardin_use_max != -1 && cardin_use_max < cardin_use_min
 	end
 
 	def initialize(*args)
@@ -53,14 +56,14 @@ class Relation < ActiveRecord::Base
 	def types_father
 		fname="Relation.#{__method__}:"
 		ret = ::Typesobject.get_types(father_plmtype, true)
-		LOG.debug (fname) {":#{father_plmtype} :  #{ret.inspect}"}
+		LOG.debug(fname) {":#{father_plmtype} :  #{ret.inspect}"}
 		ret
 	end
 
 	def types_child
 		fname="Relation.#{__method__}:"
 		ret = ::Typesobject.get_types(child_plmtype, true)
-		LOG.debug (fname) {":#{child_plmtype} :  #{ret.inspect}"}
+		LOG.debug(fname) {":#{child_plmtype} :  #{ret.inspect}"}
 		ret
 	end
 
@@ -97,7 +100,7 @@ class Relation < ActiveRecord::Base
 	#
 	def self.relations_for(father, child_plmtype=nil, child_type=nil, relation_type_name=nil, relation_paste_way=nil)
 		fname="Relations.#{__method__}"
-		LOG.debug (fname) {"father=#{father} child_plmtype=#{child_plmtype} child_type=#{child_type} relation_type_name=#{relation_type_name} relation_paste_way=#{relation_paste_way}"}
+		LOG.debug(fname) {"father=#{father} child_plmtype=#{child_plmtype} child_type=#{child_type} relation_type_name=#{relation_type_name} relation_paste_way=#{relation_paste_way}"}
 		child_plmtype=child_plmtype.to_s
 		child_type=child_type.to_s unless child_type.nil?
 		relation_type_name=relation_type_name.to_s
@@ -114,7 +117,7 @@ class Relation < ActiveRecord::Base
 			cond += " and child_typesobject_id = '#{child_type.id}'" unless child_type.nil?
 		#elsif !father.nil? && !child_plmtype.blank?
 		elsif !father.nil?
-			father_plmtype = father.model_name
+			father_plmtype = father.modelname
 
 			type_any_any=Typesobject.find_by_forobject_and_name(PlmServices.get_property(:PLMTYPE_GENERIC), PlmServices.get_property(:TYPE_GENERIC))
 			type_father_any=Typesobject.find_by_forobject_and_name(father_plmtype, PlmServices.get_property(:TYPE_GENERIC))
@@ -135,10 +138,8 @@ class Relation < ActiveRecord::Base
 		cond+=cond_plm_type unless child_plmtype.blank?
 		#cond += " and (child_plmtype = '#{child_plmtype}')"
 		end
-		LOG.debug (fname) {"cond=#{cond}"}
-		ret = find(:all, :order => "name",
-      :conditions => [cond],
-      :group => "father_plmtype,id")
+		LOG.debug(fname) {"cond=#{cond}"}
+		ret = all.where(cond).order("name").group("father_plmtype,id").to_a
 		LOG.debug(fname){"ret=#{ret.count}"}
 		ret.each do |rel|
 			LOG.debug(fname){"rel.typesobject.name=#{rel.typesobject.name} rel.paste_way=#{rel.paste_way}"}
@@ -177,21 +178,26 @@ class Relation < ActiveRecord::Base
 	end
 
 	def self.by_values_and_name(father_plmtype, child_plmtype, father_type, child_type, name)
-		###cond="(father_plmtype='#{father_plmtype}' or father_plmtype='#{::SYLRPLM::PLMTYPE_GENERIC}')"
+		fname="Relations.#{__method__}:"
 		cond="(father_plmtype='#{father_plmtype}')"
 		cond+=" and"
 		cond+=" (child_plmtype='#{child_plmtype}' or child_plmtype='#{PlmServices.get_property(:PLMTYPE_GENERIC)}')"
 		cond+=" and name='#{name}'"
-		#puts "Relations."+__method__.to_s+":"+cond
-		find(:first,
-      :conditions => [ cond ])
+		ret=where(cond).first
+		LOG.debug(fname) {"cond=#{cond} ret=#{ret.inspect}"}
+		ret
 	end
 
 	def self.by_types(father_plmtype, child_plmtype, father_typesobject_id, child_typesobject_id)
-		cond="father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}' and father_typesobject_id='#{father_typesobject_id}' and child_typesobject_id='#{child_typesobject_id}' "
-		puts "Relations."+__method__.to_s+":"+cond
-		find(:first,
-      :conditions => [ cond ])
+		fname="Relations.#{__method__}:"
+		generic_type=Typesobject.find_by_name(PlmServices.get_property(:TYPE_GENERIC))
+		cond="father_plmtype='#{father_plmtype}' and child_plmtype='#{child_plmtype}'";
+		cond+=" and (father_typesobject_id='#{father_typesobject_id}' or father_typesobject_id='#{generic_type.id}')";
+		cond+=" and (child_typesobject_id='#{child_typesobject_id}' or child_typesobject_id='#{generic_type.id}')"
+		#rails2 find(:first,   :conditions => [ cond ])
+		ret=where(cond).first
+		LOG.debug(fname) {"Relation.by_types:cond=#{cond} ret=#{ret.inspect}"}
+		ret
 	end
 
 	def datas
@@ -201,10 +207,10 @@ class Relation < ActiveRecord::Base
 		ret[:types_child] = types_child
 		ret[:types_plm]   = Typesobject.get_objects_with_type
 		ret[:types]       = Typesobject.get_types(:relation)
-		#LOG.debug (fname) {"types_father=#{ret[:types_father]}"}
-		#LOG.debug (fname) {"types_child=#{ret[:types_child]}"}
-		#LOG.debug (fname) {"types_plm=#{ret[:types_plm]}"}
-		#LOG.debug (fname) {"types=#{ret[:types].inspect}"}
+		#LOG.debug(fname) {"types_father=#{ret[:types_father]}"}
+		#LOG.debug(fname) {"types_child=#{ret[:types_child]}"}
+		#LOG.debug(fname) {"types_plm=#{ret[:types_plm]}"}
+		#LOG.debug(fname) {"types=#{ret[:types].inspect}"}
 		ret
 	end
 
@@ -212,9 +218,9 @@ class Relation < ActiveRecord::Base
 		fname="Relations.#{__method__}:"
 		ret={}
 		ret[:types_father]=Typesobject.get_types(params["father_plmtype"]) unless params["father_plmtype"].nil?
-		#LOG.info (fname) {"types_father for '#{params["father_plmtype"]}'=#{ret[:types_father]}"}
+		#LOG.info(fname) {"types_father for '#{params["father_plmtype"]}'=#{ret[:types_father]}"}
 		ret[:types_child]=Typesobject.get_types(params["child_plmtype"]) unless params["child_plmtype"].nil?
-		#LOG.info (fname) {"types_child for '#{params["child_plmtype"]}'=#{ret[:types_child]}"}
+		#LOG.info(fname) {"types_child for '#{params["child_plmtype"]}'=#{ret[:types_child]}"}
 		ret
 	end
 

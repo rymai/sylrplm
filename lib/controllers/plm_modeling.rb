@@ -1,4 +1,3 @@
-require "zip/zip"
 
 ######################################################
 
@@ -9,7 +8,7 @@ require "zip/zip"
 #
 def get_types_datafiles_on_tree(tree)
 	fname="plm_tree:#{__method__}"
-	#LOG.debug (fname) {"#{tree.nodes.count} nodes"}
+	#LOG.debug(fname) {"#{tree.nodes.count} nodes"}
 	ret = get_types_datafiles_on_node(tree,0)
 	ret
 end
@@ -60,7 +59,7 @@ end
 # @param customer or document or part or project
 #
 def build_model_tree(plmobject, tree, type_model)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	fname="plm_tree:"#{self.class.name}.#{__method__}"
 	nodes = tree.nodes
 	matrix = nil
 	files = []
@@ -90,7 +89,7 @@ def build_model_tree(plmobject, tree, type_model)
 			ret << "#{content}#{10.chr}"
 		else
 			datafile.errors.each do |type,err|
-				plmobject.errors.add_to_base err
+				plmobject.errors.add :base ,  err
 			end
 			return nil
 		end
@@ -100,19 +99,19 @@ def build_model_tree(plmobject, tree, type_model)
 		ret << "}#{10.chr}"
 		ret << "#{plmobject.ident}();#{10.chr}"
 	end
-	plmobject.errors.add_to_base errors unless errors.blank?
+	plmobject.errors.add(:base, errors) unless errors.blank?
 	{"content"=>ret, "filename"=>ret_filename, "content_type"=>ret_type}
 end
 
 def read_node(plmobject, node, type_model, ret, mx, files, errors)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	fname="plm_tree:"#{self.class.name}.#{__method__}"
 	lnk = get_node_link(node)
 	LOG.debug(fname) {"plmobject=#{plmobject} type_model=#{type_model} ret=#{ret} mx=#{mx} files=#{files} node.id=#{node.id} lnk=#{lnk}"}
 	unless lnk.nil?
 		child = lnk.child
 		rb_values = nil
 		yamx=false
-		if lnk.father_plmtype == plmobject.model_name && lnk.child_plmtype == 'document'
+		if lnk.father_plmtype == plmobject.modelname && lnk.child_plmtype == 'document'
 			child.datafiles.each do |datafile|
 				if datafile.typesobject.name == type_model.name
 					files << datafile unless files.include?(datafile)
@@ -174,7 +173,7 @@ end
 #
 
 def build_model_tree_old(plmobject, tree, type_model)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	fname="plm_tree:"#{self.class.name}.#{__method__}"
 	bloc=""
 	bloc << "nodes = tree.nodes\n"
 	bloc << "matrix = nil\n"
@@ -182,7 +181,7 @@ def build_model_tree_old(plmobject, tree, type_model)
 	bloc << "ret_filename = \"\#{plmobject.ident}.\#{type_model.name}\"\n"
 	bloc << "ret_type = \"application/\#{type_model.name}\"\n"
 	bloc << bloc_read_node(type_model)+"\n"
-	bloc <<"LOG.debug (fname) {\" type_model=#{type_model}\"}\n"
+	bloc <<"LOG.debug(fname) {\" type_model=#{type_model}\"}\n"
 	bloc << "#{type_model.get_fields_values_type_only_by_key("build_model_tree_begin")}\n"
 	bloc << "if nodes.count > 0\n"
 	bloc << "		nodes.each do |nod|\n"
@@ -204,16 +203,16 @@ def build_model_tree_old(plmobject, tree, type_model)
 	bloc << "		puts '<<build_model_tree_file'\n"
 	bloc << "		else\n"
 	bloc << "			datafile.errors.each do |type,err|\n"
-	bloc << "					plmobject.errors.add_to_base err\n"
+	bloc << "					plmobject.errors.add :base , err\n"
 	bloc << "			end\n"
 	bloc << "			return nil\n"
 	bloc << "		end\n"
 	bloc << "end\n"
 	bloc << "#{type_model.get_fields_values_type_only_by_key("build_model_tree_end")}\n"
 	bloc << "{\"content\"=>ret, \"filename\"=>ret_filename, \"content_type\"=>ret_type}\n"
-	LOG.debug (fname) {"****************** bloc=\n#{bloc}\n**********"}
+	LOG.debug(fname) {"****************** bloc=\n#{bloc}\n**********"}
 	ret=eval bloc
-	LOG.debug (fname) {"****************** ret=\n#{ret}"}
+	LOG.debug(fname) {"****************** ret=\n#{ret}"}
 	ret
 end
 
@@ -223,14 +222,14 @@ end
 # recursive method
 #
 def bloc_read_node_old(type_model)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	fname="plm_tree:"#{self.class.name}.#{__method__}"
 	bloc=""
 	bloc << "def read_node(plmobject, node, type_model, ret, mx, files)\n"
 	bloc << "  lnk = get_node_link(node)\n"
 	bloc << "  child = lnk.child\n"
 	bloc << "  rb_values = nil\n"
 	bloc << "  yamx=false\n"
-	bloc << "  if lnk.father_plmtype == plmobject.model_name && lnk.child_plmtype == 'document'\n"
+	bloc << "  if lnk.father_plmtype == plmobject.modelname && lnk.child_plmtype == 'document'\n"
 	#
 	# get the model content
 	#
@@ -297,7 +296,7 @@ def get_node_link(node)
 	begin
 		lnk = Link.find(node.id) unless node.id==0
 	rescue Exception => e
-		LOG.warn (fname) {"node #{node.id} is not a link"}
+		LOG.warn(fname) {"node #{node.id} is not a link"}
 	end
 	lnk
 end

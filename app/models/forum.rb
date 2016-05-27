@@ -1,21 +1,24 @@
 class Forum < ActiveRecord::Base
-  #pour def_user seulement
-  include Models::PlmObject
-  include Models::SylrplmCommon
+	#pour def_user seulement
+ 	include Models::PlmObject
+  	include Models::SylrplmCommon
 
-  attr_accessor :user
+  	attr_accessor :user
+	attr_accessible :owner_id, :typesobject_id, :statusobject_id, :next_status_id, :previous_status_id, :subject
+	attr_accessible :description,  :group_id, :projowner_id, :domain , :type_values
 
-  validates_presence_of :statusobject_id, :typesobject_id, :subject
+  	validates_presence_of :statusobject_id, :typesobject_id, :subject
 
-  belongs_to :typesobject
-  belongs_to :statusobject
+  	belongs_to :typesobject
+  	belongs_to :statusobject
 	belongs_to :next_status, :class_name => "Statusobject"
 	belongs_to :previous_status, :class_name => "Statusobject"
-  belongs_to :owner, :class_name => "User"
-  belongs_to :group
-  belongs_to :projowner, :class_name => "Project"
+  	belongs_to :owner, :class_name => "User"
+  	belongs_to :group
+  	belongs_to :projowner, :class_name => "Project"
 
-  has_many :forum_items, :conditions => { parent_id: nil }
+  	#rails2 has_many :forum_items, :conditions => { parent_id: nil }
+ 	has_many :forum_items, -> { where(parent_id: nil ) }
 
   def user=(user)
 		def_user(user)

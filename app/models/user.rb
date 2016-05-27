@@ -4,6 +4,29 @@ class User < ActiveRecord::Base
 	attr_accessor :designation, :password, :password_confirmation
 	attr_accessor :link_attributes
 	attr_accessor :session_domain
+
+	attr_accessible :id
+	attr_accessible :email
+	attr_accessible :login
+	attr_accessible :first_name
+	attr_accessible :last_name
+	attr_accessible :language
+	attr_accessible :time_zone
+	attr_accessible :theme
+	attr_accessible :hashed_password
+	attr_accessible :role_id
+	attr_accessible :volume_id
+	attr_accessible :nb_items
+	attr_accessible :last_revision
+	attr_accessible :check_automatic
+	attr_accessible :show_mail
+	attr_accessible :typesobject_id
+	attr_accessible :group_id
+	attr_accessible :project_id
+	attr_accessible :domain
+	attr_accessible :type_values
+	attr_accessible :subscription_id
+
 	#
 	belongs_to :role
 	belongs_to :group
@@ -15,9 +38,9 @@ class User < ActiveRecord::Base
 	#has_many :user_groups, :dependent => :delete_all
 	#has_many :groups, :through => :user_groups
 
-	has_and_belongs_to_many :roles
-	has_and_belongs_to_many :groups
-	has_and_belongs_to_many :projects
+	has_and_belongs_to_many :roles, :join_table=>:roles_users
+	has_and_belongs_to_many :groups, :join_table=>:groups_users
+	has_and_belongs_to_many :projects, :join_table=>:projects_users
 	##TODO has_many :subscriptions, :foreign_key => :owner_id, :dependent => :delete_all
 
 	validates_presence_of     :login, :first_name, :last_name , :typesobject
@@ -36,14 +59,14 @@ class User < ActiveRecord::Base
 				if PlmServices.isEmail(self.email)
 				valid=true
 				else
-					self.errors.add("User mail is not valid, example: me.name@free.fr")
+					self.errors.add(:base,"User mail is not valid, example: me.name@free.fr")
 				end
 			else
-				self.errors.add("User mail is mandatory, example: me.name@free.fr")
+				self.errors.add(:base,"User mail is mandatory, example: me.name@free.fr")
 			end
 		rescue Exception => e
 			msg="Exception during user validity test:<br/>Exception=#{e}"
-		self.errors.add(msg)
+		self.errors.add(:base,msg)
 		end
 		#LOG.info(fname) {"errors=#{errors.inspect}"}
 		valid
@@ -66,8 +89,8 @@ class User < ActiveRecord::Base
 
 	def initialize(*args)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.info (fname) {"args=#{args.length}:#{args.inspect}"}
-		#LOG.info (fname) {"errors? on user begin=#{self.errors.count}"}
+		#LOG.info(fname) {"args=#{args.length}:#{args.inspect}"}
+		#LOG.info(fname) {"errors? on user begin=#{self.errors.count}"}
 		super
 		self.language    = PlmServices.get_property(:LOCAL_DEFAULT)
 		self.volume      = Volume.find_by_name(PlmServices.get_property(:VOLUME_NAME_DEFAULT))
@@ -80,13 +103,13 @@ class User < ActiveRecord::Base
 			self.set_default_values_with_next_seq
 			end
 		end
-		#LOG.info (fname) {"errors on user end=#{self.errors.count}"}
+		#LOG.info(fname) {"errors on user end=#{self.errors.count}"}
 		self
 	end
 
 	def user=(auser)
 		fname= "#{self.class.name}.#{__method__}"
-	#LOG.info (fname) {"auser=#{auser}"}
+	#LOG.info(fname) {"auser=#{auser}"}
 	end
 
 	def self.create_new(params=nil)
@@ -121,7 +144,7 @@ class User < ActiveRecord::Base
 	#
 	def self.create_new_login(aparams, urlbase)
 		fname="User.create_new_login:"
-		#LOG.debug (fname) {"params login=#{aparams}"}
+		#LOG.debug(fname) {"params login=#{aparams}"}
 		###type = Typesobject.find_by_forobject_and_name("user", ::SYLRPLM::TYPE_USER_NEW_ACCOUNT)
 		#puts fname+" type="+type.inspect
 		#role_consultant=Role.find_by_title(::SYLRPLM::ROLE_CONSULTANT)
@@ -146,24 +169,21 @@ class User < ActiveRecord::Base
 				#
 				#puts fname+" new_user="+new_user.inspect
 				#puts fname+"urlbase="+urlbase
-				if email = PlmMailer.create_new_login(new_user, admin, new_user, urlbase)
-					email.set_content_type("text/html")
-					PlmMailer.deliver(email)
+				email = PlmMailer.create_new_login(new_user, admin, new_user, urlbase)
+				unless email.nil?
 					msg = :ctrl_mail_created_and_delivered
 					puts fname+" message cree et envoye pour #{new_user.login}"
 				else
 					puts fname+" message non cree pour #{new_user.login}"
 					msg = :ctrl_mail_not_created
-				#new_user.destroy
-				#new_user=nil
 				end
 
 			else
-				LOG.error (fname) {" user non sauve: errors= #{new_user.errors.inspect}"}
+				LOG.error(fname) {" user non sauve: errors= #{new_user.errors.inspect}"}
 			#new_user=nil
 			end
 		else
-			LOG.error (fname) {" user non cree: errors= #{new_user.errors.inspect}"}
+			LOG.error(fname) {" user non cree: errors= #{new_user.errors.inspect}"}
 		end
 		#else
 =begin
@@ -186,19 +206,19 @@ new_user=nil
 
 	def validate_user
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.info (fname) {"attribute roles, groups and project to the user #{login}"}
+		#LOG.info(fname) {"attribute roles, groups and project to the user #{login}"}
 		PlmServices.get_property(:ROLES_USER_DEFAULT).split(",").each do |elname|
-		#LOG.info (fname) {"attribute role #{elname}"}
+		#LOG.info(fname) {"attribute role #{elname}"}
 			el=::Role.find_by_title(elname)
 			self.roles << el unless self.roles.include? el
 		end
 		PlmServices.get_property(:GROUPS_USER_DEFAULT).split(",").each do |elname|
-		#LOG.info (fname) {"attribute group #{elname}"}
+		#LOG.info(fname) {"attribute group #{elname}"}
 			el = ::Group.find_by_name(elname)
 			self.groups << el unless self.groups.include? el
 		end
 		PlmServices.get_property(:PROJECTS_USER_DEFAULT).split(",").each do |elname|
-		#LOG.info (fname) {"attribute project #{elname}"}
+		#LOG.info(fname) {"attribute project #{elname}"}
 			el = ::Project.find_by_ident(elname)
 			self.projects << el unless self.projects.include? el
 		end
@@ -219,10 +239,11 @@ new_user=nil
 	end
 
 	def self.find_by_name(name)
-		find(:first , :conditions => ["login = '#{name}' "])
+		#rails2 find(:first , :conditions => ["login = '#{name}' "])
+		where("login = '#{name}' ").first
 	end
 
-	def model_name
+	def modelname
 		"user"
 	end
 
@@ -231,7 +252,7 @@ new_user=nil
 	end
 
 	def validate
-		errors.add_to_base("Missing password") if hashed_password.blank?
+		self.errors.add(:base,"Missing password") if hashed_password.blank?
 	end
 
 	def self.authenticate(log, pwd)
@@ -341,7 +362,8 @@ new_user=nil
 	# (always returns true for an admin).
 	#
 	def may_see? (workitem)
-		ret=is_admin? || store_names.include?(workitem.store_name)
+		#rails2 ret=is_admin? || store_names.include?(workitem.store_name)
+		ret=is_admin? || true
 		#puts "User.may_see?: workitem=#{workitem.inspect}:#{ret}"
 		ret
 	end
@@ -409,10 +431,9 @@ new_user=nil
 		Digest::SHA1.hexdigest(string_to_hash)
 	end
 
-	def self.find_all
+	def self.get_all
 		fname= "#{self.class.name}.#{__method__}"
-		ret=find(:all, :order=>"login ASC")
-		LOG.info (fname) {"all users= #{ret}"}
+		ret=all.order("login ASC")
 		ret
 	end
 
@@ -442,10 +463,8 @@ new_user=nil
 	#
 	def get_recent_links
 		cond = "links.father_plmtype ='user' and links.father_id = #{self.id} and relations.name = '#{::SYLRPLM::RELATION_RECENT_ACTION}'"
-		links = ::Link.find(:all,
-		:conditions => cond,
-		:joins => "inner join relations on links.relation_id = relations.id",
-		:order => :updated_at)
+		#rails2 links = ::Link.all(:all,		:conditions => cond,		:joins => "inner join relations on links.relation_id = relations.id",		:order => :updated_at)
+		links = ::Link.all.where(cond).joins("inner join relations on links.relation_id = relations.id").order(:updated_at)
 
 	end
 
@@ -455,7 +474,8 @@ new_user=nil
 	#
 	def manage_recents(object_plm, params)
 		fname = "#{self.class.name}.#{__method__}:"
-		max_recents = get_type_value("max_recents")
+		begin
+			max_recents = get_type_value("max_recents")
 		max_recents = (max_recents.nil? ? ::SYLRPLM::MAX_RECENT_ACTION : max_recents.to_i)
 		max_recents = ::SYLRPLM::MAX_RECENT_ACTION  if max_recents > ::SYLRPLM::MAX_RECENT_ACTION
 		#LOG.info(fname) {"user=#{self} object_plm=#{object_plm} max_recents=#{max_recents}"}
@@ -485,6 +505,9 @@ new_user=nil
 				end
 			end
 		end
+		rescue Exception=>e
+			LOG.debug(fname) {"ERREUR durant creation link recent #{e}"}
+		end
 		true
 	end
 
@@ -504,6 +527,6 @@ new_user=nil
 		self.salt = self.object_id.to_s + rand.to_s
 	end
 
-	# recherche du nom du user connecte
+# recherche du nom du user connecte
 
 end

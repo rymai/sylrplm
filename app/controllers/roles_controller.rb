@@ -1,6 +1,6 @@
 class RolesController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control (Access.find_for_controller(controller_class_name()))
+	access_control (Access.find_for_controller(controller_name.classify))
 	# GET /roles
 	# GET /roles.xml
 	def index
@@ -113,7 +113,7 @@ class RolesController < ApplicationController
 
 	# DELETE /roles/1
 	# DELETE /roles/1.xml
-	def destroy
+	def destroy_old
 		@role = Role.find(params[:id])
 		if @role.destroy
 			flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_role),:ident=>@role.title)

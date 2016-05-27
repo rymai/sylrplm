@@ -2,7 +2,7 @@
 <table class='menu_bas'>
 	<tr>
 		<% if (params[:workflow] or params[:launcher]) %> <td> <%= link_to( t(:workitems_all), processes_path)  %> </td>
-		<% end%> 
+		<% end%>
 		<td> <%= link_to(t("launch"), {:controller=>"definitions",:action=>"new_process"}, :title => 'launch a new process from a definition') %> </td>
 	</tr>
 </table>
@@ -10,39 +10,39 @@
 	<thead>
 		<tr>
 			<th>wfid</th>
-			<th>workflow</th>
-			<th>since</th>
-			<th>launcher</th>
-			<th>br</th>
+			<th>size</th>
+			<th>position</th>
 			<th>err</th>
-			<th class='align-right'><%= @processes.total_entries %> instances</th>
+			<th class='align-right'><%= @processes.size %> instances</th>
 		</tr>
 	</thead>
 	<% for ps in @processes %>
 	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= link_to_slice(ps, :wfid) %></td>
-		<td><%= link_to_slice(ps, :wfname, :workflow) %> <%= h ps.wfrevision %></td>
-		<td><%= h display_time(ps.launch_time) %></td>
-		<td><%= ps.launcher ? link_to_slice(ps, :launcher) : '-' %></td>
-		<td><%= h ps.branches %></td>
+		<td><%=ps.expressions.size%></td>
+		<td><%=ps.position.inspect%></td>
+		<td>	<% ps.position.each do |pos|
+          		fei, pname, info = pos%>
+          		<%="fei=#{fei} pname=#{pname} info=#{info}"%>
+          	<%end%>
+          </td>
 		<td><%= link_to_if(ps.errors.size > 0,
 		h(ps.errors.size),
-		errors_path(ps.wfid)) %></td>
-		<td class="coll_buttons"> <%= link_to h_img_show.to_s, process_path(ps.wfid) %> |
-		<%= link_to_if @current_user!=nil && @current_user.is_launcher?(ps), h_img_abort, process_path(ps.wfid), :confirm => 'Are you sure ?', :method => :delete %> </td>
+		{:controller=>:errors, :action=>:index,:id=>ps.wfid}) %></td>
+		<td class="coll_buttons"> <%= link_to h_img_show.to_s, process_path(ps.wfid) %>
+			<% if logged_in?%>
+			</td><td class="coll_buttons"><%= button_to t(:button_abort), process_path(ps.wfid), :method => :delete, :data=>{:confirm => 'Are you sure ?'} %> </td>
+			<%end%>
 	</tr>
 	<% end -%>
 </table>
-<%= will_paginate(@processes) %>
+<% #will_paginate(@processes)
+%>-
 <table class='menu_bas'>
 	<tr>
 		<% if (params[:workflow] or params[:launcher]) %> <td> <%= link_to( t(:workitems_all), processes_path)  %> </td>
-		<% end%> 
+		<% end%>
 		<td> <%= link_to(t("launch"), {:controller=>"definitions",:action=>"new_process"}, :title => 'launch a new process from a definition') %> </td>
 	</tr>
 </table>
-<div id="help">
-	<p>
-		List of process instances. With sufficient rights, you can abort them or even modify them.
-	</p>
-</div>
+

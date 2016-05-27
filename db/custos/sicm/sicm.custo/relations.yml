@@ -13,7 +13,7 @@ Relation_1:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_2:
   id: '2'
@@ -29,7 +29,7 @@ Relation_2:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_3:
   id: '3'
@@ -45,7 +45,7 @@ Relation_3:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_5:
   id: '5'
@@ -61,7 +61,7 @@ Relation_5:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_7:
   id: '7'
@@ -77,15 +77,15 @@ Relation_7:
   cardin_use_min: '0'
   cardin_use_max: '2'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_8:
   id: '8'
   name: applicable
   typesobject_id: '382640329'
-  father_plmtype: history_entry
+  father_plmtype: ar_workitem
   child_plmtype: any_plmtype
-  father_typesobject_id: '41165346'
+  father_typesobject_id: '598687896'
   child_typesobject_id: '1045584123'
   paste_way: "manual"
   cardin_occur_min: '0'
@@ -93,15 +93,47 @@ Relation_8:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
+
+Relation_15:
+  id: '15'
+  name: revise_from
+  typesobject_id: '382640329'
+  father_plmtype: ar_workitem
+  child_plmtype: any_plmtype
+  father_typesobject_id: '598687896'
+  child_typesobject_id: '1045584123'
+  paste_way: "manual"
+  cardin_occur_min: '0'
+  cardin_occur_max: '-1'
+  cardin_use_min: '0'
+  cardin_use_max: '-1'
+  domain: admin
+  type_values:
+
+Relation_16:
+  id: '16'
+  name: revise_to
+  typesobject_id: '382640329'
+  father_plmtype: ar_workitem
+  child_plmtype: any_plmtype
+  father_typesobject_id: '598687896'
+  child_typesobject_id: '1045584123'
+  paste_way: "manual"
+  cardin_occur_min: '0'
+  cardin_occur_max: '-1'
+  cardin_use_min: '0'
+  cardin_use_max: '-1'
+  domain: admin
+  type_values:
 
 Relation_11:
   id: '11'
   name: reference
   typesobject_id: '382640329'
-  father_plmtype: history_entry
+  father_plmtype: ar_workitem
   child_plmtype: any_plmtype
-  father_typesobject_id: '41165346'
+  father_typesobject_id: '598687896'
   child_typesobject_id: '1045584123'
   paste_way: "manual"
   cardin_occur_min: '0'
@@ -109,7 +141,7 @@ Relation_11:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_9:
   id: '9'
@@ -125,7 +157,7 @@ Relation_9:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_20:
   id: '20'
@@ -141,7 +173,7 @@ Relation_20:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_21:
   id: '21'
@@ -157,7 +189,7 @@ Relation_21:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_22:
   id: '22'
@@ -173,7 +205,7 @@ Relation_22:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_23:
   id: '23'
@@ -189,7 +221,7 @@ Relation_23:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_24:
   id: '24'
@@ -205,7 +237,7 @@ Relation_24:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_25:
   id: '25'
@@ -221,7 +253,7 @@ Relation_25:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_26:
   id: '26'
@@ -237,7 +269,7 @@ Relation_26:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_27:
   id: '27'
@@ -253,7 +285,7 @@ Relation_27:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_28:
   id: '28'
@@ -269,7 +301,7 @@ Relation_28:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_29:
   id: '29'
@@ -285,7 +317,7 @@ Relation_29:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_30:
   id: '30'
@@ -301,7 +333,7 @@ Relation_30:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_35:
   id: '35'
@@ -317,7 +349,7 @@ Relation_35:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_37:
   id: '37'
@@ -333,7 +365,7 @@ Relation_37:
   cardin_use_min: '0'
   cardin_use_max: '-1'
   domain: admin
-  type_values: 
+  type_values:
 
 Relation_36:
   id: '36'

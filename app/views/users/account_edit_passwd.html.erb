@@ -1,6 +1,6 @@
 <h1><%= t(:account_edit, :login => current_user.login) %></h1>
-<% form_for(@the_user, :url => {:controller=>:users , :action=>:account_update})  do |form| %>
-<%= form.error_messages %>
+<%= form_for(@the_user, :url => {:controller=>:users , :action=>:account_update})  do |form| %>
+<%= form_errors_for @the_user %>
 <%= hidden_field_tag :user_action , "account_edit_passwd" %>
 <label for="user_password"> <%= t(:label_password) %> </label>
 <%= form.password_field :password, :size => 40 %>

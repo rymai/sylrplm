@@ -11,16 +11,16 @@ require "controllers/plm_tree_items"
 # build the tree, main method called by controller
 #
 def  build_tree(obj, view_id, variant_mdlid = nil, level_max = 9999)
-	fname="plm_tree.#{controller_class_name}.#{__method__}"
-	LOG.debug (fname) {"variant_mdlid=#{variant_mdlid}, level_max=#{level_max}"}
-	label = t(:ctrl_object_explorer, :typeobj => t("ctrl_#{obj.model_name}"), :ident => obj.label)
+	fname="plm_tree."#{self.class.name}.#{__method__}"
+	LOG.debug(fname) {"variant_mdlid=#{variant_mdlid}, level_max=#{level_max}"}
+	label = t(:ctrl_object_explorer, :typeobj => t("ctrl_#{obj.modelname}"), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_down", :label => label, :open => true })
 	view=View.find(view_id) unless  view_id.nil?
 	relations = View.find(view_id).relations unless view.nil?
 	unless relations.nil?
-		LOG.debug (fname) {"view=#{view}"}
+		LOG.debug(fname) {"view=#{view}"}
 	else
-		LOG.debug (fname){"Toutes les relations sont a afficher"}
+		LOG.debug(fname){"Toutes les relations sont a afficher"}
 	end
 	if variant_mdlid.nil?
 		variant = nil
@@ -41,9 +41,9 @@ def  build_tree(obj, view_id, variant_mdlid = nil, level_max = 9999)
 	follow_tree(obj, tree, obj, relations, var_effectivities, 0, level_max)
 	###TODO a mettre en option group_tree(tree, 0)
 	LOG.debug(fname) {"tree size=#{tree.size}"}
-	##LOG.debug (fname) {"tree =#{tree.inspect}"}
+	##LOG.debug(fname) {"tree =#{tree.inspect}"}
 	session[:tree_object] = obj
-	LOG.debug (fname) {"session[:tree_object]=#{session[:tree_object]}"}
+	LOG.debug(fname) {"session[:tree_object]=#{session[:tree_object]}"}
 	tree
 end
 
@@ -63,45 +63,45 @@ end
 def follow_tree(root, node, father, relations, var_effectivities, level, level_max)
 	str_level="  "
 	(1..level).each {|i| str_level += "."}
-	fname="#{str_level}:plm_tree:#{controller_class_name}.#{__method__}"
+	fname="#{str_level}:plm_tree:"#{self.class.name}.#{__method__}"
 	LOG.debug(fname) {"==== tree or node=#{node.size} , father=#{father.ident}, level=#{level}"}
 	return if level >= level_max
 	#
 	#------------------------------------------------------
 	# associated users: begin
 	#------------------------------------------------------
-	usersnode = tree_level("'users_#{father.id}'", t("label_#{father.model_name}_users"), icone_plmtype("user"), icone_plmtype("user"))
+	usersnode = tree_level("'users_#{father.id}'", t("label_#{father.modelname}_users"), icone_plmtype("user"), icone_plmtype("user"))
 	tree_users(usersnode, father)
 	node << usersnode if usersnode.size > 0
 	if(father.respond_to?(:childs))
-		organode = tree_level("'#{father.model_name}_#{father.id}'", t("label_#{father.model_name}_#{father.controller_name}"), icone_plmtype(father.model_name), icone_plmtype(father.model_name))
+		organode = tree_level("'#{father.modelname}_#{father.id}'", t("label_#{father.modelname}_#{father.controller_name}"), icone_plmtype(father.modelname), icone_plmtype(father.modelname))
 		tree_organization(organode, father)
 	node << organode if organode.size > 0
 	end
 	#if(father.is_a?(Group))
-	#	groupsnode = tree_level("'groups_#{father.id}'", t("label_#{father.model_name}_groups"), icone_plmtype("group"), icone_plmtype("group"))
+	#	groupsnode = tree_level("'groups_#{father.id}'", t("label_#{father.modelname}_groups"), icone_plmtype("group"), icone_plmtype("group"))
 	#	tree_groups(groupsnode, father)
 	#	node << groupsnode if groupsnode.size > 0
 	#end
 
-	#LOG.debug (fname) {"usersnode.size=#{usersnode.size}"}
+	#LOG.debug(fname) {"usersnode.size=#{usersnode.size}"}
 	#------------------------------------------------------
 	# associated users: end
 	#------------------------------------------------------
-	# LOG.info (fname) {"SYLRPLM::TREE_GROUP=#{SYLRPLM::TREE_GROUP}"}
+	# LOG.info(fname) {"SYLRPLM::TREE_GROUP=#{SYLRPLM::TREE_GROUP}"}
 	tree_group=PlmServices.get_property(:TREE_GROUP)
 	PlmServices.get_property(:TREE_ORDER).each do |mdl_child|
 		tree_group=PlmServices.get_property(:TREE_GROUP)
-		LOG.debug (fname) {"\t====debut affichage: #{mdl_child} tree_group=#{tree_group}"}
+		LOG.debug(fname) {"\t====debut affichage: #{mdl_child} tree_group=#{tree_group}"}
 		if tree_group=="true"
-			snode = tree_level("'grp_#{father.id}_#{mdl_child}'", t("label_#{father.model_name}_#{mdl_child}"), icone_plmtype(mdl_child), icone_plmtype(mdl_child), nil, true)
+			snode = tree_level("'grp_#{father.id}_#{mdl_child}'", t("label_#{father.modelname}_#{mdl_child}"), icone_plmtype(mdl_child), icone_plmtype(mdl_child), nil, true)
 		node<<snode
 
 		end
 		links = Link.find_childs(father,  mdl_child)
-		#LOG.debug (fname) {"links(#{mdl_child})=#{links.inspect}"}
+		#LOG.debug(fname) {"links(#{mdl_child})=#{links.inspect}"}
 		links.each do |link|
-			LOG.debug (fname) {"\t\t====mdl_child=#{mdl_child} debut link: #{link.child_plmtype} #{link.ident}"}
+			LOG.debug(fname) {"\t\t====mdl_child=#{mdl_child} debut link: #{link.child_plmtype} #{link.ident}"}
 			#
 			# on teste si une des effectivites du lien est comprise dans la variante en cours
 			#
@@ -124,7 +124,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 			else
 				if var_effectivities.count==0
 					link_to_show = true
-					LOG.debug (fname){"pas d'effectivites de variante => on affiche"}
+					LOG.debug(fname){"pas d'effectivites de variante => on affiche"}
 				else
 					link_to_show = true
 					link_effectivities.each do |link_eff|
@@ -138,11 +138,11 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 				end
 			end
 			if(link_to_show == true)
-				LOG.info (fname){"branche affichee: link=#{link.ident}"}
+				LOG.info(fname){"branche affichee: link=#{link.ident}"}
 				child = PlmServices.get_object(link.child_plmtype, link.child_id)
 				# edit du lien
 				relation = Relation.find(link.relation_id)
-				LOG.debug (fname){"relation=#{relation.id}.#{relation.ident}"}
+				LOG.debug(fname){"relation=#{relation.id}.#{relation.ident}"}
 				# pas de relations demandees => toutes
 				if relations.nil? || relations.count==0
 				show_relation=true
@@ -150,16 +150,16 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 				show_relation = relations.include?(relation)
 				end
 				if show_relation
-					LOG.info (fname){"show_relation:#{relation.id}.#{relation.ident}, type=#{relation.typesobject.ident}"}
+					LOG.info(fname){"show_relation:#{relation.id}.#{relation.ident}, type=#{relation.typesobject.ident}"}
 					#
 					# edit du lien
 					#
 					edit_link_url = url_for(:controller => 'links',
               :action => "edit_in_tree",
               :id => link.id,
-              :object_model => father.model_name,
+              :object_model => father.modelname,
               :object_id => father.id,
-              :root_model => root.model_name,
+              :root_model => root.modelname,
               :root_id => root.id)
 					# gsub pour eviter une erreur fatale sur le tree: on ne le voit pas !!!
 					rel_name="relation_#{link.relation.name}"
@@ -169,14 +169,14 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 					link_values = link.type_values.gsub('\\','').gsub('"','') unless link.type_values.nil?
 					img_rel="<img class=\"icone\" src=\"#{icone_fic(link)}\" title=\"#{clean_text_for_tree(link.tooltip)}\" />"
 					edit_link_a = "<a href=\"#{edit_link_url}\" title=\"#{link_values}\">#{img_rel}#{tr_rel_name}</a>"
-					LOG.debug (fname){"edit_link_a=#{edit_link_a}"}
+					LOG.debug(fname){"edit_link_a=#{edit_link_a}"}
 					#
 					# show child
 					#
 					show_url={:controller => child.controller_name,
 						:action => 'show',
 						:id => "#{child.id}"}
-					ctrl_name="ctrl_#{child.model_name}"
+					ctrl_name="ctrl_#{child.modelname}"
 					show_a="<a href=\"#{url_for(show_url)}\" title=\"#{child.tooltip}\">#{child.label}</a>"
 					#
 					# destroy du lien
@@ -187,7 +187,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 						remove_link_url = url_for(:controller => 'links',
               :action => "remove_link",
               :id => link.id,
-              :object_model => father.model_name,
+              :object_model => father.modelname,
               :object_id => father.id)
 						remove_link_a = "<a href=\"#{remove_link_url}\">#{img_cut}</a>"
 					end
@@ -213,10 +213,10 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 					cnode.label+="(#{cnode.size})" if cnode.size>0
 					unless snode.nil?
 					snode << cnode
-						#LOG.debug (fname) {"ajout snode.size=#{snode.size}"}
+					#LOG.debug(fname) {"ajout snode.size=#{snode.size}"}
 					else
 						node << cnode
-						LOG.debug (fname) {"ajout node.size=#{node.size}"}
+						LOG.debug(fname) {"ajout node.size=#{node.size}"}
 					end
 				else
 				# on parcours la branche sans afficher ce noeud
@@ -228,7 +228,7 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 					end
 					follow_tree(root,thenode, child, relations, var_effectivities, level+=1, level_max)
 					node<<thenode
-					LOG.debug (fname) {"ajout thenode.size=#{thenode.size}"}
+					LOG.debug(fname) {"ajout thenode.size=#{thenode.size}"}
 				end
 			else
 			# on n'affiche pas cette branche
@@ -239,19 +239,19 @@ def follow_tree(root, node, father, relations, var_effectivities, level, level_m
 		LOG.debug(fname) {"node.size=#{node.size}"}
 		unless snode.nil?
 			LOG.debug(fname) {"remove snode.size=#{snode.size}"}
-			node.remove(snode) if snode.size == 0
+		node.remove(snode) if snode.size == 0
 		end
-		LOG.debug (fname) {"fin de type: mdl_child=#{mdl_child} node.size=#{node.size}"}
+		LOG.debug(fname) {"fin de type: mdl_child=#{mdl_child} node.size=#{node.size}"}
 	end
 	#------------------------------------------------------
 	# objects created on this project context
 	#------------------------------------------------------
-	if father.model_name == "project"
+	if father.modelname == "project"
 		projownersnode = tree_level("'prj_#{father.id}'", t(:label_projowners))
 		tree_projowners(projownersnode,  root, father)
 	node << projownersnode if projownersnode.size > 0
 	end
-	LOG.debug (fname) {"<<<<node.size=#{node.size}"}
+	LOG.debug(fname) {"<<<<node.size=#{node.size}"}
 	node
 end
 
@@ -263,9 +263,9 @@ end
 # build the ascending tree, main method called by controller
 #
 def build_tree_up(obj, view_id)
-	fname="plm_tree.#{controller_class_name}.#{__method__}"
+	fname="plm_tree."#{self.class.name}.#{__method__}"
 	LOG.debug(fname) {"build_tree_up:obj=#{obj.inspect}"}
-	lab=t(:ctrl_object_referencer, :typeobj => t("ctrl_#{obj.model_name}"), :ident => obj.label)
+	lab=t(:ctrl_object_referencer, :typeobj => t("ctrl_#{obj.modelname}"), :ident => obj.label)
 	tree = Tree.new({:js_name=>"tree_up", :label => lab ,:open => true})
 	relations = View.find(view_id).relations unless  view_id.nil?
 	add_owners(tree, obj)
@@ -277,7 +277,7 @@ def build_tree_up(obj, view_id)
 end
 
 def add_owners (tree, obj)
-	fname="plm_tree.#{controller_class_name}.#{__method__}"
+	fname="plm_tree."#{self.class.name}.#{__method__}"
 	#
 	# owner project at the creation
 	#
@@ -291,47 +291,49 @@ def add_owners (tree, obj)
 end
 
 def add_owner(tree, father)
-	url = {:controller => get_controller_from_model_type(father.model_name), :action => 'show', :id => "#{father.id}"}
-	ctrl_name="ctrl_#{father.model_name}"
-	img_rel="<img class=\"icone\" src=\"#{icone_fic(father)}\" title=\"#{father.tooltip}\" />"
-	options={
-		:id => father.id ,
-		:label => "#{img_rel} | #{father.label}",
-		:icon => icone_fic(father),
-		:icon_open => icone_fic(father),
-		:title => clean_text_for_tree(father.tooltip),
-		:url => url_for(url),
-		:open => true
-	}
-	html_options = {
-		:alt => "alt:"+father.ident
-	}
-	cnode = Node.new(options,html_options)
+	unless father.nil?
+		url = {:controller => get_controller_from_model_type(father.modelname), :action => 'show', :id => "#{father.id}"}
+		ctrl_name="ctrl_#{father.modelname}"
+		img_rel="<img class=\"icone\" src=\"#{icone_fic(father)}\" title=\"#{father.tooltip}\" />"
+		options={
+			:id => father.id ,
+			:label => "#{img_rel} | #{father.label}",
+			:icon => icone_fic(father),
+			:icon_open => icone_fic(father),
+			:title => clean_text_for_tree(father.tooltip),
+			:url => url_for(url),
+			:open => true
+		}
+		html_options = {
+			:alt => "alt:"+father.ident
+		}
+		cnode = Node.new(options,html_options)
 	tree<<cnode
+	end
 end
 
 #
 
 # ascending path of the tree , recursive method
 # only one level
-# @param model_name: model name of the father of the node (part/project/customer ...)
+# @param modelname: model name of the father of the node (part/project/customer ...)
 # @param node: current node
 # @param obj: object child of the node
 # @param relations: relations array to take into account
 # @return the node after adding other node(s)
 #
-def follow_father(model_name, node, obj, relations)
-	model=eval model_name.capitalize
-	##links=Link.find_fathers(get_model_name(obj), obj,  model_name)
-	links=Link.find_fathers(obj,  model_name)
+def follow_father(modelname, node, obj, relations)
+	model=eval modelname.capitalize
+	##links=Link.find_fathers(get_modelname(obj), obj,  modelname)
+	links=Link.find_fathers(obj,  modelname)
 	links.each do |link|
 		begin
 			father = model.find(link.father_id)
-			fname="plm_tree:#{controller_class_name}.#{__method__}"
+			fname="plm_tree:"#{self.class.name}.#{__method__}"
 			LOG.debug(fname) {" father=#{father.ident}"}
-			url = {:controller => get_controller_from_model_type(model_name), :action => 'show', :id => "#{father.id}"}
+			url = {:controller => get_controller_from_model_type(modelname), :action => 'show', :id => "#{father.id}"}
 			relation = Relation.find(link.relation_id)
-			ctrl_name="ctrl_#{father.model_name}"
+			ctrl_name="ctrl_#{father.modelname}"
 			img_rel="<img class=\"icone\" src=\"#{icone_fic(link)}\" title=\"#{link.tooltip}\" />"
 			options={
 				:id => link.id ,

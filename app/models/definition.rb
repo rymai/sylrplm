@@ -28,19 +28,64 @@ require 'tempfile'
 #
 class Definition < ActiveRecord::Base
 	include Models::SylrplmCommon
-	include LinksMixin
-	#
+	#rails2include LinksMixin
+
+	attr_accessible :name, :description, :uri, :launch_fields,  :domain
+
 	#has_many :group_definitions, :dependent => :delete_all
 	#has_many :groups, :through => :group_definitions
 	#has_many :role_definitions, :dependent => :delete_all
 	#has_many :roles, :through => :role_definitions
-	has_and_belongs_to_many :roles
+	has_and_belongs_to_many :roles, :join_table=>:definitions_roles
 	#
 	# validations
 	validates_presence_of :name, :uri
 	#
 	validates_uniqueness_of :name
 	SEP_NAME = '-'
+
+	def name_
+		unless tree.nil?
+			tree[1]['name'] || tree[1].find { |k, v| v.nil? }.first
+		end
+	end
+
+	def revision
+		fname= "#{self.class.name}.#{__method__}"
+		begin
+		unless tree.nil?
+			tree[1]['revision']
+		end
+		rescue Exception =>e
+			LOG.error(fname) {"Error=#{e}"}
+		end
+	end
+
+	def tree
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.debug(fname) {"definition.id=#{id}"}
+		ret=nil
+		unless uri.blank?
+			begin
+				ret=Ruote::Reader.read(uri)
+			rescue Exception=>e
+				LOG.error(fname) {"Error=#{e}"}
+				LOG.debug(fname) {"id=#{id} uri=#{uri}"}
+			end
+		end
+		ret
+	end
+
+	def tree_json
+		Rufus::Json.encode(tree)
+	end
+
+	# Makes sure the 'definition' column contains a string that is Ruby code.
+	#
+	def rubyize!
+		self.definition = Ruote::Reader.to_ruby(tree).strip
+	end
+
 	def validate
 		super
 		validate_uri
@@ -48,13 +93,13 @@ class Definition < ActiveRecord::Base
 
 	def validate_uri
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"uri=#{uri}"}
+		LOG.debug(fname) {"uri=#{uri}"}
 		if uri.blank?
-			errors.add_to_base("nothing to do !!!")
+			self.errors.add(:base,"nothing to do !!!")
 		else
 			@_tree = (RuotePlugin.ruote_engine.get_def_parser.parse(uri) rescue nil)
 			unless @_tree
-				errors.add_to_base("uri seems not to contain a process definition!!!")
+				self.errors.add(:base,"uri seems not to contain a process definition!!!")
 			end
 		end
 	end
@@ -89,13 +134,13 @@ class Definition < ActiveRecord::Base
 		fname= "#{self.class.name}.#{__method__}"
 		ret = nil
 		unless a_object.nil? || process_name.blank?
-			plmtype=a_object.model_name
+			plmtype=a_object.modelname
 			objtype=a_object.typesobject.name
 			unless (value1.nil? || value2.nil?)
 				# 1- process_name.plmtype.typesobject.value1.value2
 				name = "#{process_name}#{SEP_NAME}#{plmtype}#{SEP_NAME}#{objtype}#{SEP_NAME}#{value1}#{SEP_NAME}#{value2}"
 				ret = find_by_name(name)
-				LOG.debug (fname) {"1-name=#{name} ret=#{ret}"}
+				LOG.debug(fname) {"1-name=#{name} ret=#{ret}"}
 			end
 			if ret.nil?
 				# 2- process_name.plmtype.typesobject.value1
@@ -103,7 +148,7 @@ class Definition < ActiveRecord::Base
 					name = "#{process_name}#{SEP_NAME}#{plmtype}#{SEP_NAME}#{objtype}#{SEP_NAME}#{value1}"
 					ret = find_by_name(name)
 				end
-				LOG.debug (fname) {"2-name=#{name} ret=#{ret}"}
+				LOG.debug(fname) {"2-name=#{name} ret=#{ret}"}
 			end
 			if ret.nil?
 				unless value2.nil?
@@ -111,14 +156,14 @@ class Definition < ActiveRecord::Base
 					name = "#{process_name}#{SEP_NAME}#{plmtype}#{SEP_NAME}#{objtype}#{SEP_NAME}#{SEP_NAME}#{value2}"
 					ret = find_by_name(name)
 				end
-				LOG.debug (fname) {"3-name=#{name} ret=#{ret}"}
+				LOG.debug(fname) {"3-name=#{name} ret=#{ret}"}
 			end
 			if ret.nil?
 				unless (value1.nil? || value2.nil?)
 					# 4- process_name.plmtype.value1.value2
 					name = "#{process_name}#{SEP_NAME}#{plmtype}#{SEP_NAME}#{value1}#{SEP_NAME}#{value2}"
 					ret = find_by_name(name)
-					LOG.debug (fname) {"4-name=#{name} ret=#{ret}"}
+					LOG.debug(fname) {"4-name=#{name} ret=#{ret}"}
 				end
 			end
 			if ret.nil?
@@ -127,7 +172,7 @@ class Definition < ActiveRecord::Base
 					name = "#{process_name}#{SEP_NAME}#{plmtype}#{SEP_NAME}#{value1}"
 					ret = find_by_name(name)
 				end
-				LOG.debug (fname) {"5-name=#{name} ret=#{ret}"}
+				LOG.debug(fname) {"5-name=#{name} ret=#{ret}"}
 			end
 			if ret.nil?
 				unless value2.nil?
@@ -135,25 +180,25 @@ class Definition < ActiveRecord::Base
 					name = "#{process_name}#{SEP_NAME}#{plmtype}#{SEP_NAME}#{SEP_NAME}#{value2}"
 					ret = find_by_name(name)
 				end
-				LOG.debug (fname) {"6-name=#{name} ret=#{ret}"}
+				LOG.debug(fname) {"6-name=#{name} ret=#{ret}"}
 			end
 			if ret.nil?
 				# 7- process_name.plmtype.typesobject
 				name = "#{process_name}#{SEP_NAME}#{plmtype}#{SEP_NAME}#{objtype}"
 				ret=find_by_name(name)
-				LOG.debug (fname) {"7-name=#{name} ret=#{ret}"}
+				LOG.debug(fname) {"7-name=#{name} ret=#{ret}"}
 			end
 			if ret.nil?
 				# 8- process_name.plmtype
 				name = "#{process_name}#{SEP_NAME}#{plmtype}"
 				ret=find_by_name(name)
-				LOG.debug (fname) {"8-name=#{name} ret=#{ret}"}
+				LOG.debug(fname) {"8-name=#{name} ret=#{ret}"}
 			end
 			if ret.nil?
 				# 9- process_name
 				name = "#{process_name}"
 				ret=find_by_name(name)
-				LOG.debug (fname) {"9-name=#{name} ret=#{ret}"}
+				LOG.debug(fname) {"9-name=#{name} ret=#{ret}"}
 			end
 		end
 		ret
@@ -163,9 +208,9 @@ class Definition < ActiveRecord::Base
 	# Finds all the definitions the user has the right to see
 	#
 	def self.find_all_for (user)
-		all = find(:all)
+		alls = all
 		unless user.nil?
-			user.is_admin? ? all : all.select { |d| ! d.is_special? }
+			user.is_admin? ? alls : alls.select { |d| ! d.is_special? }
 		else
 		[]
 		end
@@ -193,7 +238,7 @@ class Definition < ActiveRecord::Base
 	def local_uri_obsolete
 		return nil unless self.uri
 		u = full_uri
-		u[0, 1] == '/' ? "#{RAILS_ROOT}/public#{u}" : u
+		u[0, 1] == '/' ? "#{config.root}/public#{u}" : u
 	end
 
 	#
@@ -218,7 +263,7 @@ class Definition < ActiveRecord::Base
 		#	f.close
 		#end
 		#tmp_file.write(self.uri)
-		#LOG.debug (fname) {"local_uri=#{ret}"}
+		#LOG.debug(fname) {"local_uri=#{ret}"}
 		ret
 	end
 
@@ -230,7 +275,7 @@ class Definition < ActiveRecord::Base
 	# Returns the initial workitem payload at launch time (launchitem)
 	#
 	def launch_fields_hash
-		unless launch_fields.nil?
+		unless launch_fields.blank?
 			ret= ActiveSupport::JSON.decode(launch_fields)
 		else
 			ret={}
@@ -247,7 +292,7 @@ class Definition < ActiveRecord::Base
 	def definition_obsolete= (s)
 		#    puts "definition.definition("+s.inspect+")"
 		return if s.blank?
-		pref = "#{RAILS_ROOT}/public"
+		pref = "#{config.root}/public"
 		base = "/definitions/#{OpenWFE.ensure_for_filename(self.name)}"
 		i = ''
 		fn = pref + base + i.to_s + '.def'

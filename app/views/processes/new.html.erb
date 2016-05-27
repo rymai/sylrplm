@@ -1,5 +1,5 @@
 <h1><%= t("processes_new") %></h1>
-<% form_tag('/processes', { :id => 'workitem_form', :multipart => true }) do %>
+<%= form_tag('/processes', { :id => 'workitem_form', :multipart => true }) do %>
 <%= hidden_field_tag 'definition_id', @definition.id %>
 <table>
 	<tr>
@@ -13,9 +13,9 @@
 <table class='menu_bas'>
 	<tr>
 		<td><%= submit_tag t('launch_process') %></td>
-		<td><%= link_to t("list"), :back %> </td>
+		<td><%= link_to t("list"), processes_path %> </td>
 	</tr>
 </table>
 <% end -%>
 
-<%= render_fluo :definition => @definition %> 
+<%= render_fluo :definition => @definition %>

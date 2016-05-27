@@ -1,8 +1,8 @@
 <h1><%= t(:document_show) %></h1>
 <% fonct="show" %>
 <%= render(:partial => "shared/menu_show", :locals=>{:object => @document, :fonct=>fonct}) %>
-<% form_for(@document, :html => { :id => h_form_html_id(@document, fonct) }) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@document, :html => { :id => h_form_html_id(@document, fonct) }) do |f| %>
+<%= form_errors_for @document %>
 <p>
 	<b><%= t(:label_ident) %></b>
 	<%= h @document.ident %>
@@ -39,11 +39,11 @@
 </p>
 <p>
 	<b><%= t(:label_responsible) %></b>
-	<%= h @document.owner.login %>
+	<%= h @document.owner.login unless @document.owner.nil? %>
 </p>
 <p>
 	<b><%= t(:label_date) %></b>
-	<%= l @document.date %>
+	<%= l @document.date unless @document.date.nil? %>
 </p>
 <p>
 	<b><%= t(:label_domain) %></b>

@@ -4,34 +4,36 @@ require "digest/sha1"
 # = ApplicationHelper
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-	def h_menu_index_action(model_name)
-		fname=self.class.name+"."+__method__.to_s
+	def h_menu_index_action(modelname)
+		fname="#{self.class.name}.#{__method__}"
 		ret=""
 		ret += "<table class='menu_bas'>"
 		ret +=	"<tr>"
-		link=t("new_#{model_name}")
-		url={:controller=>get_controller_from_model_type(model_name), :action=>:new}
+		link=t("new_#{modelname}")
+		url={:controller=>get_controller_from_model_type(modelname), :action=>:new}
 		LOG.debug(fname){"link=#{link} url=#{url}"}
 		linkto=eval "link_to('#{link}', #{url})"
 		ret += "<td>#{linkto}</td>"
-		ret += "#{h_menu_execute_submit(model_name)}"
-		help = show_help("help_#{model_name}s")
+		ret += "#{h_menu_execute_submit(modelname)}"
+		help = show_help("help_#{modelname}s")
 		ret +=	"<td>#{help}</td>"
 		ret +=	"</tr>"
 		ret += "</table>"
+		#LOG.debug(fname){"h_menu_index_action=#{ret}"}
+		ret.html_safe
 	end
 
 	#
 	# select on type for update_type by Ajax
 	#
 	def h_edit_type_object(form, object, types)
-		fname=self.class.name+"."+__method__.to_s
-		#LOG.debug (fname){"object=#{object.inspect}"}
-		#LOG.debug (fname){"types=#{types} "}
+		fname="#{self.class.name}.#{__method__}"
+		#LOG.debug(fname){"object=#{object.inspect}"}
+		#LOG.debug(fname){"types=#{types} "}
 		option_readonly ={:readonly => object.column_readonly?(:typesobject_id)}
 		unless object.id.nil?
-			url={:controller => get_controller_from_model_type(object.model_name), :action => "update_type",:id=>object.id}
-			#LOG.debug (fname){"url=#{url} "}
+			url={:controller => get_controller_from_model_type(object.modelname), :action => "update_type",:id=>object.id}
+			#LOG.debug(fname){"url=#{url} "}
 			with = "'object_type='+value"
 			option_onchange={:onchange => remote_function(:url  => url, :with => with)}
 		else
@@ -45,17 +47,17 @@ module ApplicationHelper
 			ret << form.collection_select(:typesobject_id, types, :id, :name,option_readonly)
 		end
 		ret << "</br>"
-		ret
+		ret.html_safe unless ret.html_safe?
 	end
 
 	def h_edit_forobject_object(form, object, forobjects)
-		fname=self.class.name+"."+__method__.to_s
-		LOG.debug (fname){"object=#{object.inspect}"}
-		LOG.debug (fname){"forobjects=#{forobjects}"}
+		fname="#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"object=#{object.inspect}"}
+		LOG.debug(fname){"forobjects=#{forobjects}"}
 		option_readonly ={:readonly => object.column_readonly?(:typesobject_id)}
 		unless object.id.nil?
-			url={:controller => get_controller_from_model_type(object.model_name), :action => "update_forobject",:id=>object.id}
-			#LOG.debug (fname){"url=#{url} "}
+			url={:controller => get_controller_from_model_type(object.modelname), :action => "update_forobject",:id=>object.id}
+			#LOG.debug(fname){"url=#{url} "}
 			with = "'object_forobject='+value"
 			option_onchange={:onchange => remote_function(:url  => url, :with => with)}
 		else
@@ -69,7 +71,7 @@ module ApplicationHelper
 			ret << form.select(:forobject, forobjects, option_readonly)
 		end
 		ret << "</br>"
-		ret
+		ret.html_safe
 	end
 
 	def h_show_translate item
@@ -78,7 +80,7 @@ module ApplicationHelper
 
 	def h_menu_duplicate(object_plm)
 		# new_dup_customer_path
-		url="{new_dup_object_plm.model_name}_path"
+		url="{new_dup_object_plm.modelname}_path"
 		link_to h_img(:duplicate),  {:controller => object_plm.controller_name, :action => :new_dup, :id => object_plm.id}
 	end
 
@@ -138,11 +140,15 @@ module ApplicationHelper
 		ret
 	end
 
-	def h_menu(href,help,title)
+	def h_menu_rails2(href,help,title)
 		bloc=""
 		#ne marche pas avec boostrap bloc<<"<a class='menu' onclick=\"return helpPopup('#{help}','#{href}');\" >#{title}</a>";
 		bloc<<"<a class='menu' id='#{title} name='#{title}' href='#{href}' >#{title}</a>";
 		bloc
+	end
+
+	def h_menu(href,help,title)
+		link_to  title , href, :class=>'menu', :id => title, :name=>title
 	end
 
 	def h_count_objects(objects)
@@ -206,7 +212,7 @@ module ApplicationHelper
 	end
 
 	def h_img_base(name, title, cls)
-		"<img class='#{cls}' src='/images/#{name}.png' title='#{title}'/>"
+		"<img class='#{cls}' src='/images/#{name}.png' title='#{title}'/>".html_safe
 	end
 
 	def h_img_cut
@@ -290,14 +296,14 @@ module ApplicationHelper
 	end
 
 	def h_explorer (obj, method = nil)
-		fname=self.class.name+"."+__method__.to_s
-		#LOG.info (fname){"obj=#{obj}, method=#{method}"}
+		fname="#{self.class.name}.#{__method__}"
+		#LOG.info(fname){"obj=#{obj}, method=#{method}"}
 		h_link_to("explorer_obj", obj, method)
 	end
 
 	def h_link_to (name, obj, method = nil)
-		fname=self.class.name+"."+__method__.to_s
-		#LOG.info (fname){"name=#{name} obj=#{obj}, method=#{method}"}
+		fname="#{self.class.name}.#{__method__}"
+		#LOG.info(fname){"name=#{name} obj=#{obj}, method=#{method}"}
 		ret=""
 		begin
 			unless obj.nil?
@@ -318,16 +324,20 @@ module ApplicationHelper
 				end
 				title = t(name, :obj => obj)
 				ret=link_to( txt, url, {:title => title } )
-			#LOG.info (fname){"name=#{name} obj=#{obj}, model=#{obj.model_name} , method=#{method} respond?=#{obj.respond_to?(method)} , txt=#{txt} , ret=#{ret}"}
+			#LOG.info(fname){"name=#{name} obj=#{obj}, model=#{obj.modelname} , method=#{method} respond?=#{obj.respond_to?(method)} , txt=#{txt} , ret=#{ret}"}
 			end
 		rescue Exception => e
-			LOG.error (fname){"exception name=#{name}  method=#{method} error=#{e}"}
+			LOG.error(fname){"exception name=#{name}  method=#{method} error=#{e}"}
 		end
 		return ret
 	end
 
+	def h_destroy_old(obj)
+		link_to( h_img_destroy, obj, method: :delete, data: { confirm: t(:msg_confirm) } )
+	end
+
 	def h_destroy(obj)
-		link_to( h_img_destroy.to_s, obj, :confirm => t(:msg_confirm), :method => :delete)
+		button_to( t(:button_delete), obj, method: :delete, data: { confirm: t(:msg_confirm) } )
 	end
 
 	def sort_td_class_helper(param)
@@ -347,13 +357,14 @@ module ApplicationHelper
 			:url => url,
 			:update => 'table',
 			:before => "Element.show('spinner')",
-			:success => "Element.hide('spinner')"
+			:success => "Element.hide('spinner')",
+			:remote => true
 		}
 		html_options = {
 			:title => t("h_sort_by_field"),
 			:href => url_for(:action => 'index', :params => params.merge({:sort => key, :page => nil}))
 		}
-		link_to_remote(text, options, html_options)
+		link_to(text, options, html_options)
 	end
 
 	#
@@ -361,11 +372,11 @@ module ApplicationHelper
 	# => send the first part as a translate variable
 	# exemple : notifications.send_notifications send "#{user.login}:#{msg}", msg could be nothing_to_notify,mail_delivered or mail_not_created
 	def h_tr_messag(msg)
-		fname=self.class.name+"."+__method__.to_s
+		fname="#{self.class.name}.#{__method__}"
 		ret=""
 		unless msg.blank?
 			msg.split(",").each do |u|
-			#LOG.info (fname){"part of message=#{u}"}
+			#LOG.info(fname){"part of message=#{u}"}
 				fields = u.split(":")
 				ret += "," unless ret.blank?
 				if fields.count>1
@@ -396,10 +407,13 @@ module ApplicationHelper
 	#         # => 1d16h18m
 	#
 	def display_since (object, accessor=nil)
+		return ""
+		#TODO
 		t = accessor ? object.send(accessor) : object
 		return "" unless t
 		d = Time.now - t
 		Rufus::to_duration_string(d, :drop_seconds => false)
+
 	end
 
 	def object_path(obj)
@@ -407,8 +421,8 @@ module ApplicationHelper
 	end
 
 	def h_input_domain(f)
-		fname=self.class.name+"."+__method__.to_s
-		#LOG.info (fname){"admin_logged_in?=#{admin_logged_in?} DOMAIN_FOR_ALL=#{PlmServices.get_property(:DOMAIN_FOR_ALL)}"}
+		fname="#{self.class.name}.#{__method__}"
+		#LOG.info(fname){"admin_logged_in?=#{admin_logged_in?} DOMAIN_FOR_ALL=#{PlmServices.get_property(:DOMAIN_FOR_ALL)}"}
 		ret=""
 		if admin_logged_in? || PlmServices.get_property(:DOMAIN_FOR_ALL)==true
 			ret = h_input_text(f ,:domain)
@@ -423,7 +437,7 @@ module ApplicationHelper
 	end
 
 	def h_attribut_trtd(obj, accessor)
-		fname=self.class.name+"."+__method__.to_s
+		fname="#{self.class.name}.#{__method__}"
 		final_obj=obj
 		final_acc=accessor.to_s
 		# recherche de l'objet final dans l'accesseur:
@@ -443,7 +457,7 @@ module ApplicationHelper
 		ret+="<td>"
 		begin
 			vacc="v_"+final_acc.to_s
-			#LOG.info (fname){"final_obj=#{final_obj} final_acc=#{final_acc} labacc=#{labacc}"}
+			#LOG.info(fname){"final_obj=#{final_obj} final_acc=#{final_acc} labacc=#{labacc}"}
 			if final_obj.respond_to?(vacc)
 			val=final_obj.send(vacc).to_s
 			else
@@ -451,12 +465,12 @@ module ApplicationHelper
 			end
 			ret+=val
 		rescue Exception => e
-			LOG.warn (fname){e}
+			LOG.warn(fname){e}
 			ret+="???"
 		end
 		ret+="</td>"
 		ret+="</tr>"
-		ret
+		ret.html_safe
 	end
 
 	#
@@ -481,7 +495,7 @@ module ApplicationHelper
 			end
 			path = send "#{o.class.to_s.downcase}_path", o
 			link_to(h(name), path)
-		}.join(', ')
+		}.join(', ').html_safe
 	end
 
 	#
@@ -514,13 +528,13 @@ module ApplicationHelper
 	# - edit: on peut les editer
 	# - define: on les definit (dans typesobject seulement pour le moment)
 	def h_type_values(obj, fonct)
-		fname=self.class.name+"."+__method__.to_s
-		#LOG.info (fname){"obj=#{obj} fonct=#{fonct}"}
+		fname="#{self.class.name}.#{__method__}"
+		#LOG.info(fname){"obj=#{obj} fonct=#{fonct}"}
 		ret=""
 		if !fonct.include?("new") && obj.respond_to?(:typesobject)
 			unless obj.typesobject.nil?
 				objfields = obj.typesobject.get_fields
-				LOG.info (fname){"fields=#{objfields} obj.type_values=#{obj.type_values}"}
+				LOG.info(fname){"fields=#{objfields} obj.type_values=#{obj.type_values}"}
 				unless objfields.nil?
 					case fonct
 					when "edit", "account_edit"
@@ -531,7 +545,7 @@ module ApplicationHelper
 					ret+="<h1>"
 					ret+=t(:legend_type_values, :type => t("typesobject_name_#{obj.typesobject.name}"))
 					ret+="</h1>"
-					#LOG.info (fname){"type_values=#{obj.type_values}"}
+					#LOG.info(fname){"type_values=#{obj.type_values}"}
 					unless obj.type_values.nil?
 						ret+= h_render_fields(obj, fonct, "type_values")
 					#options: all, position, none
@@ -543,51 +557,35 @@ module ApplicationHelper
 				end
 			end
 		end
-		ret
-	end
-
-	def h_history_fields(obj, fonct)
-		history_fields=obj.wi_fields
-		puts "application_helper.h_history_fields:history_fields="+history_fields
-		ret=""
-		unless history_fields.nil?
-			ret+="<fieldset><legend>"
-			ret+=t(:legend_wi_fields)
-			ret+="</legend>"
-			ret+= h_render_fields(obj, fonct, "wi_fields")
-			ret+="</fieldset>"
-		else
-			ret=t("history_no_fields")
-		end
-		#puts "******************** h_history_fields:ret="+ret
-		ret
+		ret.html_safe
 	end
 
 	def h_workitem_fields(obj, fonct)
-		fields=obj.field_hash
+		fields=obj.fields
 		#puts "application_helper.h_workitem_fields:fields=#{fields}"
 		ret=""
 		unless fields.nil?
 			ret+="<h1>"
-			ret+=t(:legend_wi_fields)
+			ret+=t(:legend_fields)
 			ret+="</h1>"
-			ret+= h_render_fields(obj, fonct, "field_hash", true)
+			ret+= h_render_fields(obj, fonct, "fields", true)
 		else
 			ret=t("history_no_fields")
 		end
 		#puts "******************** h_history_fields:ret="+ret
-		ret
+		ret.html_safe
 	end
 
 	def h_render_fields(obj, fonct, method, to_json=false)
-		fname=self.class.name+"."+__method__.to_s
+		fname="#{self.class.name}.#{__method__}"
 		fields = obj.send(method)
 		form_id=h_form_html_id(obj, fonct)
-		LOG.info (fname){">>>>obj=#{obj}, fonct=#{fonct}, method=#{method}, fields=#{fields}, form_id=#{form_id}"}
+		LOG.info(fname){">>>>h_render_fields: obj=#{obj}, fonct=#{fonct}, method=#{method}, form_id=#{form_id}"}
+		#LOG.info(fname){">>>>fields=#{fields}"}
 		unless fields.nil?
 			if to_json
 			fields=fields.to_json
-			#LOG.info (fname){"fields_json=#{fields}"}
+			#LOG.info(fname){">>>>fields_json=#{fields}"}
 			end
 			buttons="none"
 			edit_key=false
@@ -607,32 +605,132 @@ module ApplicationHelper
 			edit_key=true
 			edit_value=true
 			end
+			options="{\"buttons\" : \"#{buttons}\", \"edit_key\" : \"#{edit_key}\", \"edit_value\" : \"#{edit_value}\"}"
+			LOG.info(fname){">>>>options=#{options}"}
 			ret=render(
 				:partial => "shared/form_json",
 				:locals => {
 					:fields => fields,
 					:form_id => form_id,
-					:textarea_name => "#{obj.model_name}[#{method}]",
-					:options => {"buttons" => buttons, "edit_key" => edit_key, "edit_value" => edit_value }
+					:textarea_name => "#{obj.modelname}[#{method}]",
+					:options => options
 				}
 				)
 		else
 			ret=""
 		end
-		LOG.info (fname){"<<<<obj=#{obj}, fonct=#{fonct}, method=#{method} ret=#{ret}"}
+		LOG.info(fname){"<<<<h_render_fields: obj=#{obj}, fonct=#{fonct}, method=#{method} "}
+		#LOG.info(fname){"<<<<h_render_fields: ret=#{ret}"}
 		ret
 	end
 
 	# renvoi l'identifiant du formulaire en fonction de l'objet et de la fonction demandee
 	def h_form_html_id(obj, fonct)
-		"#{fonct}_#{obj.model_name}"
+		"#{fonct}_#{obj.modelname}"
+	end
+
+	def get_tree_definition(definition_id)
+		fname="#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"definition_id=#{definition_id} "}
+		definition = Definition.find(definition_id)
+		var = 'proc_tree'
+		tree_json = definition.tree_json
+		LOG.debug(fname){"tree=#{tree_json} "}
+		render(:text => "var #{var} = #{tree_json};", :content_type => 'text/javascript')
+	end
+
+	def get_tree_process(process_id)
+		fname="#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"begin:params=#{params}"}
+		process = RuoteKit.engine.process(process_id)
+		var ='proc_tree'
+		unless process.nil?
+			render_text="var #{var} = #{process.current_tree.to_json};"
+		else
+			opts={}
+			opts[:page]=nil
+			opts[:conditions]="wfid = '"+params[:id]+"' and event = 'proceeded'" #TODO
+		#puts fname+" opts="+opts.inspect
+		#history = Ruote::Sylrplm::HistoryEntry.paginate(opts)
+		#TODO render_text = "var #{var} = #{history.last.tree};"
+		end
+		LOG.info(fname){"render_text=#{render_text}"}
+		render(:text => render_text,:content_type => 'text/javascript')
 	end
 
 	#
 	# FLUO
 	#
 	def render_fluo (opts)
+		fname="#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"opts=#{opts} "}
+		tree = if d = opts[:definition]
+			#"<script src=\"/definitions/#{d.id}/tree.js?var=proc_tree\"></script>"
+			"<script>#{get_tree_definition(d.id)}</script>"
+		elsif pr = opts[:process]
+			#"<script src=\"/processes/#{pr.wfid}/tree.js?var=proc_tree\"></script>"
+			"<script>#{get_tree_process(pr.wfid)}</script>"
+		elsif i = opts[:wfid]
+			#"<script src=\"/processes/#{i}/tree.js?var=proc_tree\"></script>"
+			"<script>#{get_tree_process(i)}</script>"
+		elsif t = opts[:tree]
+			"<script>var proc_tree = #{t.to_json};</script>"
+		elsif t = opts[:tree_json]
+			"<script>var proc_tree = #{t};</script>"
+		else
+			'<script>var proc_tree = null;</script>'
+		end
+		hl = if e = opts[:expid]
+			"\nFluoCan.highlight('fluo', '#{e}');"
+		else
+			''
+		end
+		more="<a class=\"menu_bas\">#{t('label_more')}</a>"
+		less="<a class=\"menu_bas\">#{t('label_less')}</a>"
+		if opts[:process]
+			workitems = opts[:workitems]
+		else
+		workitems = []
+		opts[:workitems].each do |wi|
+			workitems << PlmServices.to_dots(wi)
+		end unless opts[:workitems].nil?
+		end
+		%{
+      <!-- fluo -->
+      <script src="/javascripts/fluo-json.js"></script>
+      <script src="/javascripts/fluo-can.js"></script>
+      <script>
+        var proc_tree = null;
+          // initial default value (overriden by following scripts)
+      </script>
+      <div id='fluo_minor_toggle' style='cursor: pointer;'>
+            <table><tr><td class='menu_bas'><div id='fluo_toggle'>#{more}</div></td></tr></table>
+      </div>
+      <a id='dataurl_link'>
+        <canvas id="fluo" width="50" height="50"></canvas>
+      </a>
+      #{tree}
+      <script>
+        if (proc_tree) {
+          FluoCan.renderFlow(
+            'fluo', proc_tree, { 'workitems': #{workitems.inspect} });
+          FluoCan.toggleMinor('fluo');
+          FluoCan.crop('fluo');#{hl}
+          var a = document.getElementById('dataurl_link');
+          a.href = document.getElementById('fluo').toDataURL();
+          var toggle = document.getElementById('fluo_toggle');
+          toggle.onclick = function () {
+            FluoCan.toggleMinor('fluo');
+            FluoCan.crop('fluo');
+            if (toggle.innerHTML == '#{more}') toggle.innerHTML = '#{less}'
+            else toggle.innerHTML = '#{more}';
+          };
+        }
+      </script>
+        }.html_safe
+	end
 
+	def render_fluo_old (opts)
 		tree = if d = opts[:definition]
 			"<script src=\"/definitions/#{d.id}/tree.js?var=proc_tree\"></script>"
 		elsif pr = opts[:process]
@@ -646,7 +744,6 @@ module ApplicationHelper
 		else
 			'<script>var proc_tree = null;</script>'
 		end
-
 		hl = if e = opts[:expid]
 			"\nFluoCan.highlight('fluo', '#{e}');"
 		else
@@ -654,42 +751,30 @@ module ApplicationHelper
 		end
 		more="<a class=\"menu_bas\">#{t('label_more')}</a>"
 		less="<a class=\"menu_bas\">#{t('label_less')}</a>"
-
 		workitems = Array(opts[:workitems])
 
 		%{
-      <!-- fluo -->
-
       <script src="/javascripts/fluo-json.js"></script>
       <script src="/javascripts/fluo-can.js"></script>
-
       <script>
         var proc_tree = null;
           // initial default value (overriden by following scripts)
       </script>
-
       <div id='fluo_minor_toggle' style='cursor: pointer;'>
             <table><tr><td class='menu_bas'><div id='fluo_toggle'>#{more}</div></td></tr></table>
       </div>
-
       <a id='dataurl_link'>
         <canvas id="fluo" width="50" height="50"></canvas>
       </a>
-
       #{tree}
-
       <script>
         if (proc_tree) {
-
           FluoCan.renderFlow(
             'fluo', proc_tree, { 'workitems': #{workitems.inspect} });
-
           FluoCan.toggleMinor('fluo');
           FluoCan.crop('fluo');#{hl}
-
           var a = document.getElementById('dataurl_link');
           a.href = document.getElementById('fluo').toDataURL();
-
           var toggle = document.getElementById('fluo_toggle');
           toggle.onclick = function () {
             FluoCan.toggleMinor('fluo');
@@ -711,24 +796,24 @@ module ApplicationHelper
 		link_to(v, (param_name || accessor) => v)
 	end
 
-	def get_model(model_name)
+	def get_model(modelname)
 		begin
-			ret=eval model_name.camelize
+			ret=eval modelname.camelize
 		rescue Exception => e
-			LOG.warn("failed to find "+model_name+" : #{e}")
+			LOG.warn("failed to find "+modelname+" : #{e}")
 			ret=nil
 		end
 		ret
 	end
 
 	def h_workitems_links(workitem)
-		fname=self.class.name+"."+__method__.to_s
+		fname="#{self.class.name}.#{__method__}"
 		ret=""
 		workitem.get_wi_links.each { |obj|
-			LOG.debug (fname){"obj=#{obj}"}
+			LOG.debug(fname){"obj=#{obj}"}
 			ret << h_explorer(obj[:typeobj])
 		}.join(', ')
-		ret
+		ret.html_safe
 	end
 
 	def h_show_a(link)
@@ -748,7 +833,7 @@ module ApplicationHelper
 		edit_link_url = url_for(:controller => 'links',
 		              :action => "edit_in_tree",
 		              :id => link.id,
-		              :object_model => link.father.model_name,
+		              :object_model => link.father.modelname,
 		              :object_id => link.father.id,
 		              :root_model => "",
 		              :root_id => "")
@@ -759,7 +844,7 @@ module ApplicationHelper
 		remove_link_url = url_for(:controller => 'links',
               :action => "remove_link",
               :id => link.id,
-              :object_model => link.father.model_name,
+              :object_model => link.father.modelname,
               :object_id => link.father.id)
 		remove_link_a = "<a href=\"#{remove_link_url}\">#{img_cut}</a>"
 	end
@@ -768,20 +853,51 @@ module ApplicationHelper
 		attribut=attribut.to_s
 		ret=""
 		ret << form.text_area(attribut , :rows => 10, :readonly => object.column_readonly?(attribut))
-		ret << "<script>CKEDITOR.replace( \"#{object.model_name}_description\");</script>"
+		ret << "<script>CKEDITOR.replace( \"#{object.modelname}_description\");</script>"
+		ret.html_safe
 	end
 
 	:private
 
-	def h_menu_execute_submit(model_name)
+	def h_menu_execute_submit(modelname)
 		ret=""
 		submit_copy=t("submit_copy")
 		submit_destroy=t("submit_destroy")
-		if logged_in? && Favori.can_favori?(model_name)
+		if logged_in? && Favori.can_favori?(modelname)
 			ret<< "<td>#{submit_tag(submit_copy)}</td>"
 		end
 		ret<<	"<td>#{submit_tag(submit_destroy)}</td>"
 		ret
 	end
+
+	# Displays object errors
+	def form_errors_for(plm_object=nil)
+		fname="#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"plm_object=#{plm_object}"}
+		unless plm_object.blank?
+			errors=plm_object.errors
+			err_msg=[]
+			if(errors.is_a?(Array))
+				errors.each do |err|
+					if(err.is_a?(String))
+					err_msg<<err
+					else
+						if err.respond_to? :message
+						err_msg << err.message
+						else
+						err_msg<<err
+						end
+					end
+				end
+			else
+				plm_object.errors.full_messages.each do |message|
+					err_msg << message
+				end
+			end
+			LOG.debug(fname){"errors=#{err_msg}"}
+		end
+		render(:partial=>'shared/form_errors', :locals=>{:err_msg => err_msg}) unless plm_object.blank?
+	end
+
 end
 

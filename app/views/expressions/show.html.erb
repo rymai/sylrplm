@@ -1,134 +1,86 @@
-<h1><%= t("expressions_show") %><%= h @expression.fei.wfid %></h1><%= javascript_include_tag 'fluo-tred' %>
-	<
-	script > linkToCss('fluo-tred');
-
+<h1><%= t("expressions_show") %> <%= h @expression.fei.wfid %></h1>
+<%= javascript_include_tag 'fluo-tred' %>
+<script >
+	linkToCss('fluo-tred');
 	function repositionFooter() {
-
 		var e = byId('editor')
 		var f = byId('footer-block');
-
-		if(e.style.display == 'block') {
+		if (e.style.display == 'block') {
 			f.style.top = "" + (e.offsetTop + e.offsetHeight + 15) + "px";
 			f.style.position = 'absolute';
 		} else {
 			f.style.position = 'static';
 		}
 	}
-
 	function toggleEditor() {
 		repositionFooter(toggleVisibility('editor'));
 	}
 </script>
-
 <div style="float: left;">
-
-  <div class='content_title'><%= expression_path(@expression) %></div>
-
-  <% form_for(
-    :expression,
-    @expression,
-    :url => { :action => 'destroy' },
-    :html => { :method => :delete }) do |f|
-  %>
-    <table>
-
-      <tr>
-        <td class="wide-first-col">class</td>
-        <td><%= h @expression.class %></td>
-      </tr>
-      <tr>
-        <td>process</td>
-        <td><%= link_to h(@expression.fei.wfid), process_path(@expression.fei.wfid) %></td>
-      </tr>
-
-      <tr class='button-row'>
-        <td colspan='2'>
-          <%= f.submit(
-          'cancel expression',
-          :title => 'cancels this expression, removes its branch from the process tree',
-          :confirm => 'Are you sure ?'
-          ) %> |
-          <%= link_to_function 'edit', 'toggleEditor()' %> |
-          <%= link_to 'back', :back %>
-        <td>
-      </tr>
-
-    </table>
-  <% end %>
-
-  <% form_for(
-    :expression,
-    @expression,
-    :url => { :action => 'update' },
-    :html => { :method => :put, :onkeypress => 'return filterEnterKeyOut(event);' }) do |f|
-  %>
-    <div id="editor">
-
-      <div id="editor-in">
-
-        <div id="tred">
-        </div>
-
-        <div id="flu">
-          <canvas id="editor-fluo" width="200" height="200"></canvas>
-        </div>
-
-        <div style="clear: both;"></div>
-
-      </div>
-
-      <%= f.submit(
-  'update expression',
-  :title => 'modifies the expression directly (warning this may ruin your process instance)',
-  :confirm => 'Are you sure ?')
-%> |
-      <%= link_to_function 'cancel', 'toggleEditor()' %> |
-      <%= link_to_function 'reset', 'tredReset()' %> |
-      <%= link_to_function 'undo', 'FluoTred.undo("tred")' %>
-
-    </div>
-
-    <input type="hidden" name="tree" id="tree-field" value=""/>
-
-  <% end %>
-
+	<table>
+		<tr>
+			<td class="wide-first-col">class</td>
+			<td><%= h @expression.class %></td>
+		</tr>
+		<tr>
+			<td>process</td>
+			<td><%= link_to h(@expression.fei.wfid), process_path(@expression.fei.wfid) %></td>
+		</tr>
+		<tr class='button-row'>
+			<td colspan='2'><td class="coll_buttons"><%= button_to t(:button_delete), {:action=>:destroy,:wfid=>@expression.fei.wfid,:expid=>@expression.fei.expid}, :method => :delete, :data=>{:confirm => 'Are you sure ?'}%> </td>
+			<td><%= link_to_function t('edit'), 'toggleEditor()' %></td>
+			<td><%= link_to 'back', :back %></td>
+		</tr>
+	</table>
+	<!--%= form_for(
+	:expression,
+	@expression,
+	:url => { :action => 'update' },
+	:html => { :method => :put, :onkeypress => 'return filterEnterKeyOut(event);' }) do |f|
+	%-->
+	<div id="editor">
+		<div id="editor-in">
+			<div id="tred"></div>
+			<div id="flu">
+				<canvas id="editor-fluo" width="200" height="200"></canvas>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+		<td class="coll_buttons"><%= button_to t(:button_update), {:controller=>:expressions,:action=>:update, :wfid=>@expression.wfid, :expid=>@expression.fei.expid},:method => :put, :data=>{:confirm => 'Are you sure ?'}%> </td>
+		<%= link_to_function 'cancel', 'toggleEditor()' %>
+		<%= link_to_function 'reset', 'tredReset()' %>
+		<%= link_to_function 'undo', 'FluoTred.undo("tred")' %>
+	</div>
+	<input type="hidden" name="tree" id="tree-field" value=""/>
 </div>
-
 <div class="align-right">
-
-  <%= render_fluo(
-    :process => @process,
-    :workitems => @process.workitem_expids,
-    :expid => @expression.fei.expid)
+	<%= render_fluo(
+	:process => @process,
+	:workitems => @process.workitems,
+	:expid => @expression.fei.expid)
 %>
-
 </div>
-
 <script>
-
-  var tred = byId('tred');
-  var originalTree = <%= @expression.raw_representation.to_json %>
-		;
-		var treeField = byId('tree-field');
-
-		tred.onOver = function(expid) {
-			FluoCan.highlight('editor-fluo', expid);
-		};
-		tred.onChange = function(tree) {
-			FluoCan.renderFlow('editor-fluo', tree);
-			FluoCan.crop('editor-fluo');
-			treeField.value = FluoTred.asJson(tred);
-			repositionFooter();
-		};
-		function tredReset() {
-			FluoTred.renderFlow(tred, originalTree);
-			treeField.value = FluoTred.asJson(tred);
-			FluoCan.renderFlow('editor-fluo', originalTree);
-			FluoCan.crop('editor-fluo');
-			repositionFooter();
-		}
-
-		tredReset();
-
+	var tred = byId('tred');
+	//rails2 var originalTree = <!--%= @expression.raw_representation.to_json %-->;
+	var originalTree = <%= @expression.fei.to_json %>;
+	var treeField = byId('tree-field');
+	tred.onOver = function(expid) {
+		FluoCan.highlight('editor-fluo', expid);
+	};
+	tred.onChange = function(tree) {
+		FluoCan.renderFlow('editor-fluo', tree);
+		FluoCan.crop('editor-fluo');
+		treeField.value = FluoTred.asJson(tred);
+		repositionFooter();
+	};
+	function tredReset() {
+		FluoTred.renderFlow(tred, originalTree);
+		treeField.value = FluoTred.asJson(tred);
+		FluoCan.renderFlow('editor-fluo', originalTree);
+		FluoCan.crop('editor-fluo');
+		repositionFooter();
+	}
+	tredReset();
 </script>
 

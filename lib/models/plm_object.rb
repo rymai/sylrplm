@@ -1,7 +1,10 @@
-require 'ruote/sylrplm/workitems'
+#require 'ruote/sylrplm/workitems'
 
 module Models
 	module PlmObject
+
+		public
+
 		# modifie les attributs avant edition
 		def self.included(base)
 			base.extend(ClassMethods)
@@ -44,25 +47,27 @@ module Models
 		end
 
 		def last_revision
-			fname= "#{self.model_name}.#{__method__}"
+			fname= "#{self.modelname}.#{__method__}"
 			cls=eval self.class.name
-			cls.find(:last, :order=>"revision ASC",  :conditions => ["ident = '#{ident}'"])
+			#rails2 cls.find(:last, :order=>"revision ASC",  :conditions => ["ident = '#{ident}'"])
+			cls.where("ident = '#{ident}'").order("revision ASC").last
 		end
 
 		def first_revision
-			fname= "#{self.model_name}.#{__method__}"
+			fname= "#{self.modelname}.#{__method__}"
 			cls=eval self.class.name
-			cls.find(:first, :order=>"revision ASC",  :conditions => ["ident = '#{ident}'"])
+			#rails2 cls.find(:first, :order=>"revision ASC",  :conditions => ["ident = '#{ident}'"])
+			cls.where("ident = '#{ident}'").order("revision ASC").first
 		end
 
 		def last_revision?
-			fname= "#{self.model_name}.#{__method__}"
+			fname= "#{self.modelname}.#{__method__}"
 			ret = (self.revision == self.last_revision.revision)
 			ret
 		end
 
 		def revisable?
-			fname= "#{self.model_name}.#{__method__}"
+			fname= "#{self.modelname}.#{__method__}"
 			###ret = (has_attribute?("revision") && frozen? && last_revision?)
 			LOG.debug(fname) {"#{fname} revise_by_menu?=#{revise_by_menu?} revise_by_action?=#{revise_by_action?} "}
 			ret = revise_by_menu? || revise_by_action?
@@ -74,11 +79,11 @@ module Models
 		# on suppose donc qu'un process existe
 		#
 		def revise_by_menu?
-			fname= "#{self.model_name}.#{__method__}"
+			fname= "#{self.modelname}.#{__method__}"
 			ret = false
 			unless self.statusobject.nil?
-				brev=PlmServices.get_property("#{self.model_name.upcase}_REVISE")
-				LOG.debug(fname) {"#{fname} #{self} statusobject=#{statusobject} #{self.model_name.upcase}_REVISE='#{brev}'"}
+				brev=PlmServices.get_property("#{self.modelname.upcase}_REVISE")
+				LOG.debug(fname) {"#{fname} #{self} statusobject=#{statusobject} #{self.modelname.upcase}_REVISE='#{brev}'"}
 				if brev
 					LOG.debug(fname) {"#{fname} has_attribute?revision #{has_attribute?('revision')} revise1='#{self.statusobject.revise_id==1}' "}
 					if has_attribute?("revision")
@@ -92,9 +97,9 @@ module Models
 		end
 
 		def revise_by_action?
-			fname= "#{self.model_name}.#{__method__}"
+			fname= "#{self.modelname}.#{__method__}"
 			unless self.statusobject.nil?
-				brev=PlmServices.get_property("#{self.model_name.upcase}_REVISE")
+				brev=PlmServices.get_property("#{self.modelname.upcase}_REVISE")
 			ret = (brev && has_attribute?("revision") && self.statusobject.revise_id==2)
 			end
 			ret
@@ -103,43 +108,52 @@ module Models
 		def revise_without_links
 			revise false
 		end
+
 		# Revise the object.
 		# Params
 		# +with_links+:: existing links are copied on the revision
 		def revise(with_links = true)
-			fname= "#{self.model_name}.#{__method__}"
-			#LOG.debug (fname){"#{self.ident}"}
+			fname= "#{self.modelname}.#{__method__}"
+			#LOG.debug(fname){"#{self.ident}"}
 			# recherche si c'est la derniere revision
 			rev_cur = self.revision
 			last_rev = last_revision
+			next_rev= next_revision
 			if revisable?
+				LOG.debug(fname){"rev_cur=#{rev_cur} last_rev=#{last_rev} next_rev=#{next_rev}"}
 				admin = User.find_by_name(PlmServices.get_property(:ROLE_ADMIN))
-				obj = self.clone
-				obj.set_default_values_without_next_seq
+				#rails2 obj = self.clone
+				obj = self.dup
+				LOG.debug(fname) {"designation origine=#{self.designation} revision=#{obj.designation} "}
 				obj.typesobject = self.typesobject
 				obj.statusobject = ::Statusobject.get_first(self)
-				obj.revision = next_revision
-				LOG.debug(fname) {"#{self.ident} rev=#{obj.inspect}"}
+				obj.revision = next_rev
+				LOG.debug(fname) {"origine=#{self.inspect} "}
+				LOG.debug(fname) {"revision=#{obj.inspect}"}
 				if self.has_attribute?(:filename)
-					if (self.filename!=nil)
+					unless self.filename.nil?
 					  content = self.read_file
 					  obj.write_file(content)
 					end
 				end
 				st = obj.save
-				if !st
-					obj = nil
-				else
-					# add the relation FROM_REVISION
-				  st = obj.from_revise(self)
-				  if !st
-				    obj.destroy
-					obj = nil
-				  else
-				  	if with_links
-				    st = obj.clone_links(self)
-				   end
-				  end
+				if st
+					#params={ "links"=>{"part"=>["82", "84", "85", "83"]}}
+					params=nil
+					st=obj.duplicate_links(params,user)
+					if st
+						# add the relation FROM_REVISION
+					  	st = obj.from_revise(self)
+					  	if st
+					  		if with_links
+					    		st = obj.clone_links(self)
+					   		end
+					  	end
+				  	end
+			  end
+			  if !st
+			  	obj.destroy
+			  	obj = nil
 			  end
 			  return obj
 			else
@@ -149,7 +163,7 @@ module Models
 		end
 
 		def next_revision
-			fname= "#{self.model_name}.#{__method__}"
+			fname= "#{self.modelname}.#{__method__}"
 			next_revision = self.revision
 			found = false
 			modl = eval self.class.name
@@ -157,7 +171,7 @@ module Models
 				next_revision = next_revision.next
 				obj=nil
 				begin
-					LOG.debug (fname){"find_by_ident_and_revision"}
+					LOG.debug(fname){"find_by_ident_and_revision"}
 					obj = modl.find_by_ident_and_revision(self.ident, next_revision)
 					if obj.nil?
 					found = true
@@ -169,9 +183,52 @@ module Models
 			next_revision
 		end
 
+		#si params.nil?, on duplique tous les liens
+		def duplicate_links(params,user)
+			fname= "#{self.modelname}.#{__method__}"
+			LOG.debug(fname){"duplicate_links: params=#{params}"}
+			ret=true
+			unless params.nil? || params["links"].nil?
+				params["links"].each {
+					|key, id_objs|
+					id_objs.each do |lnkid|
+						lnk_orig = Link.find(lnkid)
+						LOG.debug(fname){"lnk_orig=#{lnk_orig.inspect}"}
+						duplicate_link lnk_orig
+					end
+				}
+			else
+				["document", "part", "project"].each do |child_model|
+					link_method="links_#{self.modelname}_#{child_model}s"
+					if self.respond_to? link_method
+						links_to_childs=self.send(link_method).to_a
+						links_to_childs.each do |lnk_orig|
+							LOG.debug(fname){"lnk_orig=#{lnk_orig.inspect}"}
+							duplicate_link lnk_orig
+						end
+					end
+				end
+			end
+		end
+
+		def duplicate_link lnk_orig
+			fname= "#{self.modelname}.#{__method__}"
+			unless lnk_orig.nil?
+				lnk_new = lnk_orig.duplicate(self, user)
+				LOG.debug(fname){"lnk_new=#{lnk_new.inspect}"}
+				unless lnk_new.nil?
+					lnk_new.save unless lnk_new.nil?
+				else
+					ret=false
+				end
+			else
+				ret=false
+			end
+			ret
+		end
 		# a valider si avant dernier status
 		def could_validate?
-			mdl = model_name
+			mdl = modelname
 			!(self.statusobject.nil? || ::Statusobject.get_last(self).nil?) &&
 			self.statusobject.rank == ::Statusobject.get_last(self).rank-1
 		end
@@ -192,7 +249,7 @@ module Models
 					ret = true
 					end
 				else
-					LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{self.ident}"}
+					LOG.error(fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{self.ident}"}
 				end
 			end
 			ret
@@ -209,7 +266,7 @@ module Models
 					end
 				end
 			else
-				LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{self.ident}"}
+				LOG.error(fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{self.ident}"}
 			end
 			ret
 		end
@@ -224,16 +281,16 @@ module Models
 					ret = true
 					end
 				else
-					LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{self.ident}"}
+					LOG.error(fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{self.ident}"}
 				end
 			end
 			deja=false
-			if ret && choice==3
+			#if ret && choice==3
 			# by action, test if a process already started for the same action on the object
 			###deja = Ruote::Sylrplm::Process.exists_on_object_for_action?(self, "promote")
 			###ret = !deja
-			end
-			###LOG.debug (fname) { "#{self.ident} choice=#{choice} deja=#{deja} ret=#{ret}"}
+			#end
+			LOG.debug(fname) { "#{self.ident} choice=#{choice} ret=#{ret}"}
 			ret
 		end
 
@@ -247,7 +304,7 @@ module Models
 					ret = true
 					end
 				else
-					LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{self.ident}"}
+					LOG.error(fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{self.ident}"}
 				end
 			end
 			if ret && choice==3
@@ -255,7 +312,7 @@ module Models
 				deja = Ruote::Sylrplm::Process.exists_on_object_for_action?(self, "demote")
 			ret = !deja
 			end
-			#puts "#{fname}<== #{ret}"
+			LOG.debug(fname) { "#{self.ident} choice=#{choice} ret=#{ret}"}
 			ret
 		end
 
@@ -356,7 +413,7 @@ module Models
 			fname= "#{self.class.name}.#{__method__}"
 			child_type=nil
 			ret=::Relation.relations_for(self, child_plmtype, child_type, relation_type_name, relation_paste_way)
-			LOG.debug (fname) {"relations from #{self.model_name} to #{child_plmtype.to_s}:ret=#{ret}"}
+			LOG.debug(fname) {"relations from #{self.modelname} to #{child_plmtype.to_s}:ret=#{ret}"}
 			ret
 		end
 
@@ -369,8 +426,9 @@ module Models
 		end
 
 		def get_workitems
+			fname= "#{self.class.name}.#{__method__}"
 			ret = []
-     ## links = ::Link.find_fathers(self.model_name, self,  "ar_workitem")
+     ## links = ::Link.find_fathers(self.modelname, self,  "ar_workitem")
       links = ::Link.find_fathers(self,  "ar_workitem")
 			#puts "plm_object.get_workitems:links="+links.inspect
 			links.each do |link|
@@ -384,13 +442,13 @@ module Models
 					LOG.info "plm_object.get_workitems:erreur="+e.inspect
 				end
 			end
-			#puts "plm_object.get_workitems:ret="+ret.inspect
+			LOG.debug(fname) {"get_workitems=#{ret} "}
 			ret
 		end
 
 		def get_histories
 			ret = []
-      ##links = ::Link.find_fathers(self.model_name, self,  "history_entry")
+      ##links = ::Link.find_fathers(self.modelname, self,  "history_entry")
       links = ::Link.find_fathers(self,  "history_entry")
 			links.each do |link|
 				begin
@@ -413,13 +471,13 @@ module Models
     def links_childs
       fname= "#{self.class.name}.#{__method__}"
       ret = ::Link.find_childs(self)
-      LOG.debug (fname) {"childs of #{self} : #{ret}"}
+      LOG.debug(fname) {"childs of #{self} : #{ret}"}
       ret
     end
     def links_fathers
       fname= "#{self.class.name}.#{__method__}"
       ret = ::Link.find_fathers(self)
-      LOG.debug (fname) {"fathers of #{self} : #{ret}"}
+      LOG.debug(fname) {"fathers of #{self} : #{ret}"}
       ret
     end
 
@@ -523,58 +581,82 @@ module Models
 		end
 
 		def initialize(*args)
-			fname= "plm_object:#{self.class.name}.#{__method__}"
-			LOG.debug (fname) {"initialize args=#{args.length}:#{args.inspect}"}
-			super
-			if self.respond_to? :revision
-				if args.size>0 && !args[0].nil? && (!args[0].include?(:revision))
-					self.revision = "1"
-				end
-			end
+			fname= "PlmObject:#{self.class.name}.#{__method__}"
+			LOG.debug(fname) {"initialize debut args=#{args.length}:#{args.inspect}"}
+			LOG.debug(fname) {"initialize debut : self=#{self.inspect}"}
+			super(*args)
+			initialize_(*args)
+			LOG.debug(fname) {"initialize fin: self=#{self.inspect}"}
+		end
 
+		def after_initialize_(*args)
+			fname= "plm_object:#{self.class.name}.#{__method__}"
+			LOG.debug(fname) {"after_initialize args=#{args.length}:#{args.inspect}"}
+			LOG.debug(fname) {"after_initialize self=#{self.inspect}"}
+			initialize_
+		end
+
+		def initialize_(*args)
+			fname= "plm_object:#{self.class.name}.#{__method__}"
+			LOG.debug(fname) {"initialize_ debut args=#{args.length}:#{args.inspect}"}
+			LOG.debug(fname) {"initialize_ debut : self=#{self.inspect}"}
+			#on passe 2 fois ici: sur le new et sur le create, sur le new, le controller met le user en argument, sur le create, le controlleur met les parametres saisies
+			phase_new = ! (args[0].nil? || args[0][:user].nil?)
+			unless args[0].nil?
+				user=args[0][:user]
+				LOG.debug(fname) {"initialize_ debut : phase_new={phase_new} user=#{user}"}
+				def_user(user)
+			end
 			if (self.respond_to? :typesobject)
 				if args.size>0 && !args[0].nil? && (!args[0].include?(:typesobject_id))
-				self.typesobject = ::Typesobject.get_default(self)
+				self.typesobject_id = ::Typesobject.get_default(self).id
+				LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.typesobject_id}"}
 				end
 			end
-
 			if (self.respond_to? :statusobject)
 				if args.size>0 && !args[0].nil? && (!args[0].include?(:statusobject_id))
-				self.statusobject = ::Statusobject.get_first(self)
+				self.statusobject_id = ::Statusobject.get_first(self).id
+				LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.statusobject_id}"}
 				end
 			end
 			if (self.respond_to? :next_status)
 				if args.size>0 && !args[0].nil? && (!args[0].include?(:next_status_id))
-				self.next_status = ::Statusobject.get_next_status(self)
+				nextst=::Statusobject.get_next_status(self)
+				self.next_status_id = nextst.id unless nextst.nil?
+				LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.next_status_id}"}
 				end
 			end
 			if (self.respond_to? :previous_status)
 				if args.size>0 && !args[0].nil? && (!args[0].include?(:previous_status_id))
-				self.previous_status = ::Statusobject.get_previous_status(self)
+				prevst=::Statusobject.get_previous_status(self)
+				self.previous_status_id = prevst.id unless prevst.nil?
+				LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.previous_status_id}"}
 				end
 			end
 
-			if args.size>0
-				unless args[0].nil? || args[0][:user].nil?
-					self.set_default_values_with_next_seq
-					if (self.respond_to? :statusobject)
+
+			if phase_new
+				self.set_default_values_with_next_seq
+				LOG.debug(fname) {"initialize_ self apres set_default_values_with_next_seq=#{self.inspect}"}
+				if (self.respond_to? :statusobject)
 					# recalculate the status here because depending of the type modified above
-					self.statusobject = ::Statusobject.get_first(self)
-					end
+					self.statusobject_id = ::Statusobject.get_first(self).id
+					LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.statusobject_id}"}
 				end
 			end
-			LOG.debug (fname) {"initialize : type_values=#{self.type_values}"} if self.respond_to? :type_values
+			LOG.debug(fname) {"initialize_ fin: type_values fin=#{self.type_values}"} if self.respond_to? :type_values
+			LOG.debug(fname) {"initialize_ fin: self=#{self.inspect}"}
 
 		end
 
 		# identifiant informatique : model + id
 		def mdlid
-			model_name+"."+id.to_s
+			modelname+"."+id.to_s
 		end
 
 		def add_datafile(params,user)
 			fname= "#{self.class.name}.#{__method__}"
-			LOG.info (fname){"Don't use this method but: document.datafiles.build(params[:datafile])"}
+			LOG.info(fname){"Don't use this method but: document.datafiles.build(params[:datafile])"}
 		end
 
 		def remove_datafile(item)

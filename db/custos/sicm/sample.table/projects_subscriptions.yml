@@ -1,5 +1,44 @@
-<% require 'yaml' %>
-<%= ::YAML::include("db/custos/sicm/sicm.custo/projects_subscriptions.yml") %>
+project_id_2_subscription_id_1_domain_admin:
+  project_id: 2
+  subscription_id: 1
+  domain: admin
+
+project_id_2_subscription_id_2_domain_admin:
+  project_id: 2
+  subscription_id: 2
+  domain: admin
+
+project_id_2_subscription_id_3_domain_admin:
+  project_id: 2
+  subscription_id: 3
+  domain: admin
+
+project_id_2_subscription_id_4_domain_admin:
+  project_id: 2
+  subscription_id: 4
+  domain: admin
+
+project_id_2_subscription_id_5_domain_admin:
+  project_id: 2
+  subscription_id: 5
+  domain: admin
+
+
+project_id_1_subscription_id_6_domain_admin:
+  project_id: 1
+  subscription_id: 6
+  domain: admin
+
+subscription_id_6_project_id_3_domain_sicm.custo:
+  subscription_id: 6
+  project_id: 3
+  domain: sicm.custo
+
+project_id_2_subscription_id_6_domain_admin:
+  project_id: 2
+  subscription_id: 6
+  domain: admin
+
 
 project_id_3_subscription_id_1_domain_sample.table:
   project_id: 3

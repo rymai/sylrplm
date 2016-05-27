@@ -1,11 +1,11 @@
 <h1><%= t(:statusobjects_list) %><%= h_count_objects(@statusobjects)%> </h1>
 <% unless @statusobject.nil? %>
-<% form_for(@statusobject) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@statusobject) do |f| %>
+<%= form_errors_for @statusobject %>
 <% end %>
 <% else %>
 <%= h_form_simple_query('/statusobjects', @statusobjects) %>
-<% form_tag({:controller=>:statusobjects, :action=>:index_execute}) do %>
+<%= form_tag({:controller=>:statusobjects, :action=>:index_execute}) do %>
 <%= h_menu_index_action("statusobject")%>
 <%= will_paginate(@statusobjects[:recordset]) %>
 <table>
@@ -39,7 +39,7 @@
 		<td> <%= link_to h_img_edit.to_s, edit_statusobject_path(statusobject) %> </td>
 
 		<td> <%= h_menu_duplicate(statusobject) %> </td>
-		<td> <%= link_to h_img_destroy.to_s, statusobject, :confirm => t(:msg_confirm), :method => :delete %> </td>
+		<td> <%= h_destroy(statusobject) %> </td>
 		<td><%= check_box(:action_on,statusobject.id) %></td>
 	</tr>
 	<% end %>

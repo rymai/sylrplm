@@ -3,14 +3,16 @@ class DocumentsController < ApplicationController
 	#droits d'acces suivant le controller et l'action demandee
 	#administration par le menu Access
 	#access_control (Document.controller_access())
-	access_control(Access.find_for_controller(controller_class_name))
-	# GET /documents
+	access_control(Access.find_for_controller(controller_name.classify))
+	  respond_to :html, :js
+
+# GET /documents
 	# GET /documents.xml
 	def index
 		index_
 		respond_to do |format|
 			format.html # index.html.erb
-			format.xml  { render :xml => @documents[:recordset] }
+			format.xml  { render :xml => @documents }
 		end
 	end
 
@@ -44,11 +46,12 @@ class DocumentsController < ApplicationController
 	# GET /documents/new.xml
 	def new
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"params=#{params.inspect}"}
+		LOG.debug(fname) {"params=#{params.inspect}"}
 		params={}
 		@document = Document.new(:user => current_user)
+		LOG.debug(fname) {"new:@document=#{@document.inspect}"}
 		@types    = Typesobject.get_types("document")
-		@volumes  = Volume.find_all
+		@volumes  = Volume.all.to_a
 		@status   = Statusobject.get_status("document", 2)
 		respond_to do |format|
 			format.html # new.html.erb
@@ -58,7 +61,7 @@ class DocumentsController < ApplicationController
 
 	def new_dup
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@object_orig = Document.find(params[:id])
 		@document = @object = @object_orig.duplicate(current_user)
 		@types    = Typesobject.get_types("document")
@@ -72,7 +75,7 @@ class DocumentsController < ApplicationController
 	# GET /documents/1/edit
 	def edit
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"params=#{params.inspect}"}
+		LOG.debug(fname) {"params=#{params.inspect}"}
 		@document = Document.find_edit(params[:id])
 		@types    = Typesobject.get_types("document")
 	end
@@ -80,7 +83,7 @@ class DocumentsController < ApplicationController
 	# GET /documents/1/edit_lifecycle
 	def edit_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"params=#{params.inspect}"}
+		#LOG.debug(fname) {"params=#{params.inspect}"}
 		@document = Document.find_edit(params[:id])
 	end
 
@@ -88,10 +91,14 @@ class DocumentsController < ApplicationController
 	# POST /documents.xml
 	def create
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"params=#{params.inspect}"}
+		LOG.debug(fname) {"create:params=#{params.inspect}"}
 		#contournement pour faire le upload apres la creation pour avoir la revision dans
 		#repository !!!!!!!!!!!!!!
+		#docpar=document_params
+		#LOG.debug(fname) {"create:document_params=#{docpar}"}
 		@document = Document.new(params[:document])
+		#rails4 @document = Document.new(docpar)
+		LOG.debug(fname) {"create:@document=#{@document.inspect}"}
 		@types    = Typesobject.get_types("document")
 		@status   = Statusobject.get_status("document")
 		respond_to do |format|
@@ -103,7 +110,6 @@ class DocumentsController < ApplicationController
 			end
 			if st
 				st = ctrl_duplicate_links(params, @document, current_user)
-				#puts "===DocumentsController.create:ok:"+@document.inspect
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_document), :ident => @document.ident)
 				###format.html { redirect_to(@document) }
 				# tout ceci pour ne pas perdre le flash
@@ -112,27 +118,26 @@ class DocumentsController < ApplicationController
 				format.html { render :action => "show"}
 				format.xml  { render :xml => @document, :status => :created, :location => @document }
 			else
-			#puts "===DocumentsController.create:ko:"+@document.inspect
 				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_document), :msg => nil)
+				LOG.debug(fname) {"errors=#{@document.errors.full_messages}"}
 				format.html { render :action => "new" }
 				format.xml  { render :xml => @document.errors, :status => :unprocessable_entity }
 			end
 		end
-		LOG.debug (fname) {"flash=#{flash.inspect}"}
 	end
 
 	# PUT /documents/1
 	# PUT /documents/1.xml
 	def update
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
-		@volumes  = Volume.find_all
+		@volumes  = Volume.all.to_a
 		@types    = Typesobject.get_types("document")
 		@status   = Statusobject.get_status("document")
-		LOG.debug (fname){"document.type=#{@document.typesobject}, commit=#{params["commit"] }"}
+		LOG.debug(fname){"document.type=#{@document.typesobject}, commit=#{params["commit"] }"}
 		if params["commit"] == t("update_type")
-			LOG.debug (fname){"commit update_type"}
+			LOG.debug(fname){"commit update_type"}
 			ctrl_update_type @document, params[:document]
 		else
 			if commit_promote?
@@ -159,7 +164,7 @@ class DocumentsController < ApplicationController
 	# PUT /documents/1.xml
 	def update_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		if commit_promote?
 			ctrl_promote(@document)
@@ -177,7 +182,7 @@ class DocumentsController < ApplicationController
 	#
 	def update_type
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		ctrl_update_type @document, params[:object_type]
 	end
@@ -204,9 +209,9 @@ class DocumentsController < ApplicationController
 
 	# DELETE /documents/1
 	# DELETE /documents/1.xml
-	def destroy
+	def destroy_old
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@document= Document.find(params[:id])
 		respond_to do |format|
 			unless @document.nil?
@@ -232,9 +237,10 @@ class DocumentsController < ApplicationController
 
 	def check_out
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		chk = @document.check_out(params[:check],@current_user)
+		LOG.debug(fname){"params[:check]=#{params[:check]} check_out=#{chk}"}
 		unless chk.nil?
 			flash[:notice] = t(:ctrl_object_checkout, :typeobj => t(:ctrl_document), :ident => @document.ident, :reason => params[:check][:out_reason])
 		else
@@ -248,7 +254,7 @@ class DocumentsController < ApplicationController
 
 	def check_in
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		chk = @document.check_in(params[:check], current_user)
 		respond_to do |format|
@@ -266,7 +272,7 @@ class DocumentsController < ApplicationController
 
 	def check_free
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		chk = @document.check_free(params[:check], current_user)
 		respond_to do |format|
@@ -275,7 +281,7 @@ class DocumentsController < ApplicationController
 			else
 				flash[:error] = t(:ctrl_object_not_checkfree, :typeobj => t(:ctrl_document), :ident => @document.ident)
 			end
-			format.xml  { head :ok }
+			format.xml  { headrameters into a new or create method the after_initializ :ok }
 			format.html { redirect_to(@document) }
 		end
 	end
@@ -285,7 +291,7 @@ class DocumentsController < ApplicationController
 	#
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		@datafile = Datafile.new({:user => current_user, :thedocument => @document})
 		ctrl_new_datafile(@document)
@@ -296,45 +302,58 @@ class DocumentsController < ApplicationController
 	#
 	def add_datafile
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
-		#LOG.debug (fname){"document=#{@document.inspect}"}
+		LOG.debug(fname){"document=#{@document.inspect}"}
 		ctrl_add_datafile(@document)
-		LOG.debug (fname){"datafile=#{@datafile.inspect}"}
+		LOG.debug(fname){"datafile=#{@datafile.inspect}"}
 	end
 
 	def add_docs
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@document = Document.find(params[:id])
 		ctrl_add_objects_from_favorites(@document, :document)
 	end
 
 	def show_design
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
-		#LOG.debug (fname){"myparams=#{@myparams.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"myparams=#{@myparams.inspect}"}
 		document = Document.find(params[:id])
 		ctrl_show_design(document, params[:type_model_id])
 	end
+
 	private
 
 	def show_
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect} flash=#{flash.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect} flash=#{flash.inspect}"}
 		define_view
 		@document  = Document.find(params[:id])
-		LOG.debug (fname){"params[:id]=#{params[:id]} @document=#{@document}"}
+		LOG.debug(fname){"params[:id]=#{params[:id]} @document=#{@document}"}
 		@tree         						= build_tree(@document, @myparams[:view_id])
 		@tree_up      						= build_tree_up(@document, @myparams[:view_id] )
 		@object_plm = @document
-		LOG.debug (fname){"taille tree=#{@tree.size} flash=#{flash.inspect}"}
+		LOG.debug(fname){"taille tree=#{@tree.size} flash=#{flash.inspect}"}
 	end
 
 	def index_
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@documents = Document.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+	end
+
+	def document_params
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"document_params debut=#{params.inspect}"}
+		ret=nil
+		ret=params.require(:document).permit(:id,:ident,  :revision, :typesobject_id, :statusobject_id, :designation, :description, :owner_id, :date)
+		#ret=params.require(:document).permit()
+		#params.require(:document).permit!
+		LOG.debug(fname){"document_params fin=#{params.inspect}"}
+		LOG.debug(fname){"ret fin=#{ret.inspect}"}
+		ret
 	end
 
 end

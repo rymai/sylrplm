@@ -28,12 +28,12 @@ class FiledriverFileSystem < Filedriver
 	########################################################################
 	def dir_datafile(datafile)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"datafile.volume.dir_name=#{datafile.volume.dir_name} datafile.class.name=#{datafile.class.name} ident=#{datafile.ident}"}
+		LOG.debug(fname) {"datafile.volume.dir_name=#{datafile.volume.dir_name} datafile.class.name=#{datafile.class.name} ident=#{datafile.ident}"}
 		ret=""
 		unless datafile.volume.dir_name.nil? || datafile.ident.nil?
-			ret=File.join datafile.volume.dir_name.gsub("_","-"), datafile.model_name, datafile.ident
+			ret=File.join datafile.volume.dir_name.gsub("_","-"), datafile.modelname, datafile.ident
 		end
-		LOG.debug (fname) {"dir_datafile=#{ret}"}
+		LOG.debug(fname) {"dir_datafile=#{ret}"}
 		ret
 	end
 
@@ -74,7 +74,7 @@ class FiledriverFileSystem < Filedriver
 			nctot = File.size(datafile.repository)
 			data = f.sysread(nctot)
 			f.close
-			LOG.debug (fname) {"fin lecture #{datafile.repository}: #{nctot}"}
+			LOG.debug(fname) {"fin lecture #{datafile.repository}: #{nctot}"}
 		else
 			data=nil
 		end
@@ -84,14 +84,14 @@ class FiledriverFileSystem < Filedriver
 	# renvoie un repertoire dans lequel seront uploade les fichiers
 	def create_directory(datafile)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"dir_repository=#{datafile.dir_repository}"}
+		#LOG.debug(fname) {"dir_repository=#{datafile.dir_repository}"}
 		FileUtils.mkdir_p(datafile.dir_repository) unless directory_exists?(datafile.dir_repository)
 	end
 
 	def write_file(datafile, content)
 		fname= "#{self.class.name}.#{__method__}"
 		repos=datafile.repository
-		LOG.debug (fname) {"content size=#{content.length} repos=#{repos}"}
+		LOG.debug(fname) {"content size=#{content.length} repos=#{repos}"}
 		if content.length>0
 			f = File.open(repos, "wb")
 			begin
@@ -102,7 +102,7 @@ class FiledriverFileSystem < Filedriver
 			end
 		f.close
 		end
-		#LOG.debug (fname) {"ecriture terminee"}
+		#LOG.debug(fname) {"ecriture terminee"}
 	end
 
 	#
@@ -113,15 +113,15 @@ class FiledriverFileSystem < Filedriver
 	def create_volume_dir(volume, olddirname)
 		fname= "#{self.class.name}.#{__method__}"
 		vol_dir_name=volume.dir_name
-		LOG.debug (fname) {"olddirname=#{olddirname} vol_dir_name=#{vol_dir_name}"}
+		LOG.debug(fname) {"olddirname=#{olddirname} vol_dir_name=#{vol_dir_name}"}
 		ret=nil
 		if (!File.exists?(vol_dir_name))
 			begin
 				FileUtils.mkdir_p(vol_dir_name)
 				ret=vol_dir_name
 			rescue Exception => e
-				volume.errors.add_to_base e.inspect
-				LOG.error (fname) {"mkdir.self.directory failed:#{e.inspect}"}
+				volume.errors.add :base , e.inspect
+				LOG.error(fname) {"mkdir.self.directory failed:#{e.inspect}"}
 				ret=nil
 			end
 		end
@@ -132,35 +132,35 @@ class FiledriverFileSystem < Filedriver
 				if(dirto != dirfrom)
 					begin
 						dirvolto=File.dirname(dirto)
-						LOG.debug (fname) {"changement de repertoire de #{dirfrom} to #{dirvolto}"}
+						LOG.debug(fname) {"changement de repertoire de #{dirfrom} to #{dirvolto}"}
 						FileUtils.mv(Dir.glob(File.join(dirfrom,"*")), dirto, :force => true)
 						#dir = File.join(volume.directory,self.name)
 						ret = dirto
 					rescue Exception => e
-						LOG.error (fname) {"FileUtils.mv(#{dirfrom}, #{dirto}) failed:#{e.inspect}"}
+						LOG.error(fname) {"FileUtils.mv(#{dirfrom}, #{dirto}) failed:#{e.inspect}"}
 						ret=nil
 					end
 				end
 			else
-				LOG.info (fname) {"File.exists?(#{dirfrom}):#{File.exists?(dirfrom)}"}
+				LOG.info(fname) {"File.exists?(#{dirfrom}):#{File.exists?(dirfrom)}"}
 				ret=nil
 			end
 		else
-			#LOG.info (fname) {"creation du volume"}
+			#LOG.info(fname) {"creation du volume"}
 			dir = vol_dir_name
 			if !File.exists?(dir)
 				begin
 					FileUtils.mkdir_p(dir)
 					ret = dir
 				rescue Exception => e
-					volume.errors.add_to_base e.inspect
+					volume.errors.add(:base, e.inspect)
 					ret=nil
 				end
 			else
 			ret = dir
 			end
 		end
-		#LOG.debug (fname) {"ret=#{ret}"}
+		#LOG.debug(fname) {"ret=#{ret}"}
 		return ret
 	end
 
@@ -171,17 +171,17 @@ class FiledriverFileSystem < Filedriver
 				strm = FileUtils.remove_dir volume.dir_name
 			rescue Exception => e
 			#e.backtrace.each {|x| puts x}
-				LOG.debug (fname) {"volume.destroy_volume:error="+e.inspect}
-				volume.errors.add_to_base I18n.t(:check_volume_no_rmdir, :name => volume.name, :dir => volume.directory)
+				LOG.debug(fname) {"volume.destroy_volume:error="+e.inspect}
+				volume.errors.add(:base, I18n.t(:check_volume_no_rmdir, :name => volume.name, :dir => volume.directory))
 			strm=false
 			end
 		else
-			volume.errors.add_to_base I18n.t(:check_volume_no_dir, :name => volume.name, :dir => volume.directory)
+			volume.errors.add(:base,I18n.t(:check_volume_no_dir, :name => volume.name, :dir => volume.directory))
 		#le repertoire n'existe pas, c'est pas grave
 		strm=true
 		end
 		ret=strm
-		#LOG.debug (fname) {"ret=#{ret}"}
+		#LOG.debug(fname) {"ret=#{ret}"}
 		ret
 	end
 
@@ -192,7 +192,7 @@ class FiledriverFileSystem < Filedriver
 		if File.exists?(dir)
 			Dir.foreach(dir) { |file|
 				repos=File.join(dir,file)
-				#LOG.debug (fname) {"datafile.remove_files:file="+repos}
+				#LOG.debug(fname) {"datafile.remove_files:file="+repos}
 				if File.file?(repos)
 					File.unlink(repos)
 				end
@@ -206,10 +206,10 @@ class FiledriverFileSystem < Filedriver
 		path=volume.dir_name
 		files_system=[]
 		Pathname.glob(path + "/**/*") do |dir|
-			#LOG.debug (fname) {"dir/file=#{dir}"}
+			#LOG.debug(fname) {"dir/file=#{dir}"}
 			if dir.file?() then
 				stat=File.stat(dir)
-				#LOG.debug (fname){"\tstat:#{stat.inspect}"}
+				#LOG.debug(fname){"\tstat:#{stat.inspect}"}
 				params = fields_from_path(dir)
 				params["protocol"]=self.protocol
 				params["size"]=stat.size
@@ -221,7 +221,7 @@ class FiledriverFileSystem < Filedriver
 				dodel=false
 				if(purge==true )
 					is_used = is_used?(volume, params)
-					#LOG.debug (fname){"\tfile:#{params.inspect} is_used?=#{is_used}"}
+					#LOG.debug(fname){"\tfile:#{params.inspect} is_used?=#{is_used}"}
 					if(!is_used)
 						delete_file(params["id"])
 					dodel=true
@@ -244,7 +244,7 @@ class FiledriverFileSystem < Filedriver
 		dir=File.dirname(path)
 		# _._1_._add_forum.png
 		file=File.basename(path)
-		#LOG.debug (fname) {"dir=#{dir} file=#{file}"}
+		#LOG.debug(fname) {"dir=#{dir} file=#{file}"}
 		# add_forum.png
 		ret["filename"]=::Datafile.filename_from_file(file)
 		# 1
@@ -263,10 +263,10 @@ class FiledriverFileSystem < Filedriver
 
 	def delete_file(file_id)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"file_id=#{file_id}"}
+		#LOG.debug(fname) {"file_id=#{file_id}"}
 		fid = splitId(file_id)
 		fullpath=fid[:fullpath]
-		LOG.debug (fname) {"fullpath=#{fullpath} file?:#{File.file?(fullpath)}"}
+		LOG.debug(fname) {"fullpath=#{fullpath} file?:#{File.file?(fullpath)}"}
 		if File.file?(fullpath)
 			File.unlink(fullpath)
 		end
@@ -302,7 +302,7 @@ class FiledriverFileSystem < Filedriver
 		#/home/syl/trav/rubyonrails/sylrplm-data/0-0-0-0/deve/vollocal01/Datafile/DF0000000017
 		datafiles = Datafile.find_by_ident_and_revision_and_filename(params["datafile"], params["revision"], params["filename"])
 		ret = !datafiles.nil?
-		#LOG.debug (fname){"ret=#{ret}"}
+		#LOG.debug(fname){"ret=#{ret}"}
 		ret
 	end
 
@@ -344,7 +344,7 @@ class FiledriverFileSystem < Filedriver
 
 	def self.remove_repository(dirkey)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname) {"deleting dir:#{dirkey}"}
+		LOG.info(fname) {"deleting dir:#{dirkey}"}
 	end
 
 	def protocol

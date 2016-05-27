@@ -7,7 +7,7 @@
 #
 class StatusobjectsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control (Access.find_for_controller(controller_class_name()))
+	access_control (Access.find_for_controller(controller_name.classify))
 	# GET /statusobjects
 	# GET /statusobjects.xml
 	def index
@@ -41,7 +41,8 @@ class StatusobjectsController < ApplicationController
 	# GET /statusobjects/new.xml
 	def new
 		@statusobject = Statusobject.new
-		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
+		#rails2@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
+		@types    = ::Typesobject.get_types(@statusobject.forobject)
 		@objectswithstatus=Statusobject.get_objects_with_status
 		respond_to do |format|
 			format.html # new.html.erb
@@ -54,7 +55,8 @@ class StatusobjectsController < ApplicationController
 		@object_orig = Statusobject.find(params[:id])
 		@object = @object_orig.duplicate(current_user)
 		@statusobject=@object
-		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
+		#rails2@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
+		@types    = ::Typesobject.get_types(@statusobject.forobject)
 		@objectswithstatus=Statusobject.get_objects_with_status
 		respond_to do |format|
 			format.html
@@ -65,10 +67,11 @@ class StatusobjectsController < ApplicationController
 	# GET /statusobjects/1/edit
 	def edit
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@statusobject = Statusobject.find(params[:id])
-		#LOG.debug (fname){"@statusobject=#{@statusobject}"}
-		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
+		#LOG.debug(fname){"@statusobject=#{@statusobject}"}
+		#rails2@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
+		@types    = ::Typesobject.get_types(@statusobject.forobject)
 		@objectswithstatus=Statusobject.get_objects_with_status
 	end
 
@@ -76,7 +79,8 @@ class StatusobjectsController < ApplicationController
 	# POST /statusobjects.xml
 	def create
 		@statusobject = Statusobject.new(params[:statusobject])
-		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
+		#rails2@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
+		@types    = ::Typesobject.get_types(@statusobject.forobject)
 		@objectswithstatus=Statusobject.get_objects_with_status
 		respond_to do |format|
 			if fonct_new_dup?
@@ -105,7 +109,8 @@ class StatusobjectsController < ApplicationController
 		@statusobject = Statusobject.find(params[:id])
 		@objectswithstatus=Statusobject.get_objects_with_status
 		@statusobject.update_accessor(current_user)
-		@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
+		#rails2@types    = ::Typesobject.find(:all, :order => "name", :conditions => ["forobject = '#{@statusobject.forobject}'"])
+		@types    = ::Typesobject.get_types(@statusobject.forobject)
 		respond_to do |format|
 			if @statusobject.update_attributes(params[:statusobject])
 				flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)
@@ -125,14 +130,14 @@ class StatusobjectsController < ApplicationController
 	#
 	def update_type
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@statusobject = Statusobject.find(params[:id])
 		ctrl_update_type @statusobject, params[:object_type]
 	end
 
 	# DELETE /statusobjects/1
 	# DELETE /statusobjects/1.xml
-	def destroy
+	def destroy_old
 		@statusobject = Statusobject.find(params[:id])
 		if @statusobject.destroy
 			flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_statusobject),:ident=>@statusobject.name)

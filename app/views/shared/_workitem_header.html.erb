@@ -2,21 +2,24 @@
 <% if admin_logged_in?%>
 	<label>id</label>
 	<%= h workitem.id %>
+	<label>sid</label>
+	<%= h workitem.sid %>
 </br>
 <%end%>
 	<label><%= t(:label_wfid)%></label>
 	<%= h workitem.wfid %>
 </br>
 	<label><%= t(:label_position)%></label>
-	<%= h workitem.full_fei.expname %> <%= h workitem.full_fei.expid %>
+	 <%= h workitem.expid %>
 </br>
 	<label><%= t(:label_workflow)%></label>
-	<%= h workitem.wfname %> <%= h workitem.wfrevision %>
+	<%= h workitem.label %>
 </br>
-	<label><%= t(:label_dispatch_time)%></label>
-	<%= display_time(workitem, :dispatch_time) %>
+	<label><%= t(:label_launched_at)%></label>
+	<%= workitem.launched_at %>
 </br>
-	<label><%= t(:label_updated_at)%></label>
-	<%= display_time(workitem, :last_modified) %>
+	<label><%= t(:label_dispatched_at)%></label>
+	<%= workitem.dispatched_at %>
 </br>
+
 <% end %>
