@@ -180,19 +180,21 @@ module Controllers
 		def get_model_type(params)
 			fname="#{self.class.name}.#{__method__}:"
 			ret = case params[:controller]
-			when "documents" then params[:controller].chop
-			when "parts" then params[:controller].chop
-			when "projects" then params[:controller].chop
+			when "checks" then params[:controller].chop
 			when "customers" then params[:controller].chop
-			when "notifications" then params[:controller].chop
-			when "users" then params[:controller].chop
-			when "links" then params[:controller].chop
-			when "relations" then params[:controller].chop
-			when "volumes" then params[:controller].chop
-			when "typesobjects" then params[:controller].chop
-			when "statusobjects" then params[:controller].chop
+			when "datafiles" then params[:controller].chop
 			when "definitions" then params[:controller].chop
+			when "documents" then params[:controller].chop
+			when "links" then params[:controller].chop
+			when "notifications" then params[:controller].chop
+			when "parts" then params[:controller].chop
 			when "processes" then "process"
+			when "projects" then params[:controller].chop
+			when "relations" then params[:controller].chop
+			when "statusobjects" then params[:controller].chop
+			when "typesobjects" then params[:controller].chop
+			when "users" then params[:controller].chop
+			when "volumes" then params[:controller].chop
 			else params[:controller]
 			end
 			LOG.debug(fname) {"#{params[:controller]}=#{ret}"}
@@ -251,6 +253,7 @@ module Controllers
 		end
 
 		def get_languages
+			fname="#{self.class.name}.#{__method__}:"
 			#renvoie la liste des langues
 			dirname = "#{Rails.root}/config/locales/*.yml"
 			ret = []
@@ -258,7 +261,7 @@ module Controllers
 				lng = File.basename(dir, '.*')
 				ret << [t("language_"+lng), lng]
 			end
-			#puts "application_controller.get_languages"+dirname+"="+ret.inspect
+			LOG.debug(fname) {"#{dirname}=#{ret}"}
 			ret
 		end
 
@@ -429,7 +432,9 @@ module Controllers
 			LOG.debug(fname){"ctrl_add_datafile: params=#{params.inspect}"}
 			respond_to do |format|
 				#@datafile = at_object.datafiles.build(params[:datafile])
+				LOG.debug(fname){"ctrl_add_datafile: params[:datafile]=#{params[:datafile]} "}
 				@datafile=Datafile.new(params[:datafile].merge({:user=>current_user}))
+				@datafile.update_attributes(params[:datafile])
 				LOG.debug(fname){"ctrl_add_datafile: on sauve @datafile=#{@datafile} "}
 				st= @datafile.save
 				LOG.debug(fname){"ctrl_add_datafile: @datafile save st=#{st} datafile=#{@datafile.inspect} err=#{@datafile.errors.full_messages}"}
@@ -615,7 +620,8 @@ module Controllers
 				#
 				# launch the process
 				#
-				triplet = RuotePlugin.ruote_engine.launch(li, options)
+				#triplet = RuotePlugin.ruote_engine.launch(li, options)
+				triplet = RuoteKit.engine.launch(li, options)
 				#wait_for=true=> return [ message, info, fei ]
 				LOG.debug(fname) {"ctrl_create_process: triplet=#{triplet}"}
 					if wait_for
@@ -725,5 +731,32 @@ module Controllers
 		def fonct_new_dup?
 		  !params[:fonct].blank? && !params[:fonct][:current].blank? && params[:fonct][:current] == "new_dup"
 		end
+
+		def ctrl_destroy
+		fname= "#{self.class.name}.#{__method__}"
+		#"controller"=>"documents", "action"=>"destroy", "id"=>"4"
+		mdl=get_model_type(params)
+		mdlobj=get_model(params)
+		@object = mdlobj.find(params[:id])
+		key="ctrl_#{mdl}"
+		respond_to do |format|
+			unless @object.nil?
+				if @object.destroy
+					flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(key), :ident => @object.ident)
+					url=url_for({:controller=>params[:controller], :action=>:index})
+					format.html { redirect_to(url) }
+					format.xml  { head :ok }
+				else
+					flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(key), :ident => @object.ident)
+					index_
+					format.html { render :action => "index" }
+					format.xml  { render :xml => @object.errors, :status => :unprocessable_entity }
+				end
+			else
+				flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_project), :ident => @object.ident)
+			end
+		end
+	end
+
 	end
 end

@@ -44,8 +44,8 @@ class WorkitemsController < ApplicationController
 		LOG.debug(fname){"#{nb} fields=#{@workitem.fields}"}
 		nb = 0
 		ar_workitem = nil
-		sleep 0.3
-		while nb < 5 and ar_workitem.nil?
+		sleep 0.5
+		while nb < 10 and ar_workitem.nil?
 			nb+=1
 			ar_workitem = find_ar_workitem(@workitem)
 		end
@@ -55,6 +55,7 @@ class WorkitemsController < ApplicationController
 		else
 			ar_workitem=Ruote::Sylrplm::ArWorkitem.update_from_wi(ar_workitem, @workitem,current_user)
 		end
+		LOG.debug(fname){"RuoteKit.engine.process:@workitem.wfid="+@workitem.wfid}
 		process=RuoteKit.engine.process(@workitem.wfid)
 		tree=nil
 		tree = process.current_tree.to_json unless process.nil?
@@ -75,20 +76,29 @@ class WorkitemsController < ApplicationController
 		ok=true
 		fields = Rufus::Json.decode(params[:workitem][:fields])
 		@workitem = RuoteKit.storage_participant[params[:id]]
+		LOG.debug(fname) {"@workitems debut=#{RuoteKit.storage_participant.query(:wfid => @workitem.wfid).size}"}
 		@workitem.fields.merge!(fields)
 		submit = params[:state]
 		LOG.debug(fname){"submit=#{submit}"}
 		LOG.debug(fname){"workitem.wf_name=#{@workitem.wf_name}"}
 		flash={:notice=>"", :error=>""}
 		if submit == 'proceeded'
-			LOG.debug(fname){"proceed workitem:#{@workitem} #{@workitem.sid}"}
+			LOG.debug(fname){"avant proceed workitem:#{@workitem} #{@workitem.sid}"}
 			unless @workitem.nil?
-				LOG.debug(fname){"fields workitem: #{@workitem.fields}"}
+				LOG.debug(fname){"avant proceed: fields workitem: #{@workitem.fields}"}
+				# Returns nil in case of success, true if the workitem is already gone and the newer version of the workitem if the workitem changed in the mean time.
+				st=RuoteKit.storage_participant.update(@workitem)
+				LOG.debug(fname){"RuoteKit.storage_participant.update:#{st}"}
+				LOG.debug(fname) {"@workitems proceed avant=#{RuoteKit.storage_participant.query(:wfid => @workitem.wfid).size}"}
 				RuoteKit.storage_participant.proceed(@workitem)
 				flash[:notice] = I18n.t('flash.notice.proceeded', :fei => @workitem.fei.sid)
+				@workitems = RuoteKit.storage_participant
+				LOG.debug(fname) {"@workitems proceed apres=#{RuoteKit.storage_participant.query(:wfid => @workitem.wfid).size}"}
 			else
+				LOG.debug(fname){"workitem is null"}
 				flash[:error] = I18n.t('flash.error.not_proceeded', :fei => nil)
-			ok=false
+				ok=false
+				LOG.error(fname){"1error=#{flash[:error]}"}
 			end
 		else
 			if submit == 'release'
@@ -97,52 +107,63 @@ class WorkitemsController < ApplicationController
 				@workitem.participant_name = session[:username]
 			end
 			RuoteKit.storage_participant.update(@workitem)
+			LOG.debug(fname){"RuoteKit.storage_participant.update:#{st}"}
 		end
 		LOG.debug(fname) {"flash:#{flash}"}
 		nb = 0
 		arw = nil
 		sleep 0.5
 		while nb < 10 and arw.nil?
+			sleep 0.2
 			nb+=1
+			#
+			# recherche du workitem
+			#
 			arw = find_ar_workitem(@workitem)
 		end
-		LOG.info(fname) {"apres sleep nb=#{nb}: arw=#{arw.inspect} "}
-		@process=RuoteKit.engine.process(@workitem.wfid)
+		LOG.info(fname) {"apres sleep nb=#{nb}: arw=#{arw.inspect} @workitem.wfid=#{@workitem.wfid}"}
+		sleep 0.5
+		begin
+			@process=RuoteKit.engine.process(@workitem.wfid)
+		rescue Exception=>e
+			LOG.error(fname){"error recup process for #{@workitem.wfid} =#{e}"}
+		end
+		LOG.info(fname) {"apres RuoteKit.engine.process, process=#{@process}"}
 		unless arw.nil?
-			#LOG.debug(fname){"@workitem.sid=#{@workitem.sid} arworkitem.sid=#{arw.sid}"}
-			LOG.info(fname) {"apres sleep arw.errors=#{arw.errors.full_messages}"}
-
-			LOG.info(fname) {"apres process_status, process=#{@process} "}
-			flash[:error] +="<br/>#{arw.error}" unless arw.error.blank?
 			unless @process.nil?
-				LOG.info(fname) {"apres process_status, errors=#{@process.errors.size}"}
 				unless arw.error.blank?
-				@process.errors << arw.error
-				ok=false
+					flash[:error] +="<br/>#{arw.error}"
+					LOG.info(fname) {"apres RuoteKit.engine.process, errors=#{@process.errors.size}"}
+					@process.errors << arw.error
+					ok=false
+					LOG.error(fname){"2error=#{@process.errors.full_messages}"}
 				end
 			else
-				tree = nil
+				LOG.error(fname){"@process is nil"}
 			ok=false
 			end
-			#arw.tree=tree
-			arw.source=current_user.login
+			arw.def_user(current_user)
 			arw.event=submit
-			arw.message = arw.objects
-			arw.participant = @workitem.participant_name
+			#??? arw.message = arw.objects
+			arw.participant_name= @workitem.participant_name
 			arw.save
 			workitem_ident = "#{@workitem.fei.wfid}/#{PlmServices.to_uscores(@workitem.fei.expid)}"
 			if arw.errors.count == 0
 				flash[:notice] += t(:ctrl_workitem_proceeded, :ident => workitem_ident)
 			else
 			flash[:error] += t( :ctrl_workitem_not_proceeded, :ident => workitem_ident, :msg => arw.errors.inspect)
-				arw.errors.each do |err|
-					@process.errors.add(:base,err.message)
+				unless @process.nil?
+					arw.errors.each do |err|
+						@process.errors.add(:base,err.message)
+					end
 				end
-			ok=false
+				ok=false
+				LOG.error(fname){"4error=#{flash[:error]}"}
 			end
 		else
 			ok=false
 			flash[:error] += "<br/>ar_workitem not found"
+			LOG.error(fname){"5error=#{flash[:error]}"}
 		end
 		unless ok
 			#
@@ -156,9 +177,9 @@ class WorkitemsController < ApplicationController
 			end
 			flash[:error] += "<br/>#{t(:ctrl_process_canceled, :ident => params[:wfid])}"
 		end
-		index_
 		respond_to do |format|
-			LOG.error(fname) {"flash=#{flash}"}
+			LOG.error(fname) {"fin de update flash=#{flash}"}
+			index_
 			format.html do
 				render :action => :index
 			end
@@ -169,7 +190,8 @@ class WorkitemsController < ApplicationController
 
 	def index_
 		fname= "#{self.class.name}.#{__method__}"
-		@workitems = RuoteKit.storage_participant
+		@workitems = RuoteKit.storage_participant.all(:order=>[:label,:wfid,:expid])
+		LOG.debug(fname) {"@workitems=#{RuoteKit.storage_participant.query(:wfid => @workitem.wfid).size}"} unless @workitem.nil?
 	end
 
 	def add_objects_to_workitem(ar_workitem, type_object)
@@ -235,10 +257,8 @@ class WorkitemsController < ApplicationController
 									link = link_object(ar_workitem, item, relation)
 									if link.save
 										LOG.info(fname){"save ok:link id="+link.id.to_s}
-									#{ link: link, msg: "ctrl_link_#{item.ident}" }
 									else
 										LOG.error(fname){"Error during saving the link :"+link.errors.inspect}
-										##raise PlmProcessException.new(fname+"error save :"+link.errors.inspect, 10002)
 										link.errors.each do |err|
 											ar_workitem.errors.add(:base, err)
 										end
@@ -279,8 +299,6 @@ class WorkitemsController < ApplicationController
 		values = {}
 		values["father_plmtype"]        = workitem.modelname
 		values["child_plmtype"]         = item.modelname
-		#values["father_typesobject_id"] = Typesobject.find_by_name(workitem.model_name).id
-		#values["child_typesobject_id"]  = item.typesobject_id
 		values["father_id"]             = workitem.id
 		values["child_id"]              = item.id
 		values["relation_id"]           = relation.id

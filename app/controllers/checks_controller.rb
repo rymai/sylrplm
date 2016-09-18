@@ -77,13 +77,4 @@ class ChecksController < ApplicationController
 		end
 	end
 
-	# DELETE /checks/1
-	# DELETE /checks/1.xml
-	def destroy_oldCheck.find(params[:id])
-		@check.destroy
-		respond_to do |format|
-			format.html { redirect_to(checks_url) }
-			format.xml  { head :ok }
-		end
-	end
 end

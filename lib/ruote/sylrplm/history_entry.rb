@@ -68,8 +68,8 @@ module Ruote
 			end
 
 			def ident
-				#fei.to_s+"_"+wfid.to_s+"_"+wfname.to_s
-				[wfid, wfname].join("_")
+				#fei.to_s+"_"+wfid.to_s+"_"+wf_name.to_s
+				[wfid, wf_name].join("_")
 			end
 
 			def cancel?

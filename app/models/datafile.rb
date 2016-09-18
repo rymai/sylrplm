@@ -1,6 +1,6 @@
 require 'tmpdir'
-require 'rubygems'
-require 'zip'
+#require 'rubygems'
+#require 'zip'
 
 #require "zip/zipfilesystem"
 #require "zip/zip"

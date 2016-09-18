@@ -18,8 +18,8 @@
 	<%= h @entry.wfid %>
 </p>
 <p>
-	<b>wfname:</b>
-	<%= h @entry.wfname %>
+	<b>wf_name:</b>
+	<%= h @entry.wf_name %>
 </p>
 <p>
 	<b>fei:</b>
@@ -45,7 +45,7 @@
 </p>
 <table class='menu_bas'>
 	<tr>
-		<% unless @object.nil? %> 
+		<% unless @object.nil? %>
 		<td> <%= link_to t(@object.model_name+"_show"), send(@object.model_name+"_path", @object) %> </td>
 		<% end %>
 		<td> <%= link_to t("list"), "/history" %> </td>

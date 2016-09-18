@@ -9,30 +9,31 @@
 <table class='coll'>
 	<thead>
 		<tr>
-			<th>wfid</th>
-			<th>size</th>
-			<th>position</th>
-			<th>err</th>
-			<th class='align-right'><%= @processes.size %> instances</th>
+			<th><%= t(:label_wfid)%></th>
+			<th><%= t(:label_definition_name)%></th>
+			<th><%= t(:label_definition_revision)%></th>
+			<th><%= t(:label_nb_positions)%></th>
+			<th><%= t(:label_positions)%></th>
+			<th><%= t(:label_errors)%></th>
+			<th class='align-right'><%= @processes.size %> <%= t(:label_instances)%></th>
 		</tr>
 	</thead>
 	<% for ps in @processes %>
 	<tr class='<%= cycle("even", "odd") %>'>
 		<td><%= link_to_slice(ps, :wfid) %></td>
-		<td><%=ps.expressions.size%></td>
-		<td><%=ps.position.inspect%></td>
-		<td>	<% ps.position.each do |pos|
-          		fei, pname, info = pos%>
-          		<%="fei=#{fei} pname=#{pname} info=#{info}"%>
-          	<%end%>
-          </td>
+		<td><%= ps.definition_name%></td>
+		<td><%= ps.definition_revision%></td>
+		<td><%= ps.position.size%></td>
+		<td> <% ps.position.each do |pos|
+		fei, pname, info = pos%>
+		<%= "fei=#{fei}" %></br><%= "pname=#{pname}" %></br><%= "info=#{info}"%>
+		<%end%> </td>
 		<td><%= link_to_if(ps.errors.size > 0,
 		h(ps.errors.size),
 		{:controller=>:errors, :action=>:index,:id=>ps.wfid}) %></td>
 		<td class="coll_buttons"> <%= link_to h_img_show.to_s, process_path(ps.wfid) %>
-			<% if logged_in?%>
-			</td><td class="coll_buttons"><%= button_to t(:button_abort), process_path(ps.wfid), :method => :delete, :data=>{:confirm => 'Are you sure ?'} %> </td>
-			<%end%>
+		<% if logged_in?%> </td><td class="coll_buttons"><%= button_to t(:button_abort), process_path(ps.wfid), :method => :delete %> </td>
+		<%end%>
 	</tr>
 	<% end -%>
 </table>

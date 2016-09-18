@@ -30,7 +30,7 @@
 		</tr>
 	</table>
 	<h1></h1>
-	<%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem, :fonct=>fonct } %>
+	<%= render :partial => 'workitems/workitem_header', :locals => { :workitem => @workitem, :fonct=>fonct } %>
 	<%= h_workitem_fields(@workitem, fonct)%>
 	<%= render(:partial => "workitems/wi_links", :locals => { :fonct=>fonct } ) %>
 	</table>

@@ -21,19 +21,19 @@
 #
 # Made in Japan.
 #++
-require 'ruote/sylrplm/workitems'
+require 'ruote/sylrplm/sylrplm'
 
 class HistoryController < ApplicationController
 	###before_filter :login_required
 	# GET /history
 	#
 	def index
-
-		#puts "history_controller.index:params="+params.inspect
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"params=#{params}"}
 		opts = { :page => params[:page], :order => 'created_at DESC' }
 
 		cs = [
-			:source, :wfid, :event, :participant, :wfname
+			:source, :wfid, :event, :participant, :wf_name
 		].inject([[]]) do |a, p|
 			if v = params[p]
 				a.first << "#{p} = ?"
@@ -51,15 +51,21 @@ class HistoryController < ApplicationController
 			@all = (opts[:conditions] == nil)
 		end
 		#puts "HistoryController.index:params="+params.inspect
-		unless params["fonct"]["current"].nil?
+		unless params["fonct"].nil? || params["fonct"]["current"].nil?
 			if params[:fonct][:current] = 'on_plm_objects'
 				@entries = Ruote::Sylrplm::HistoryEntry.all
 				#puts "HistoryController.index:on_plm_objects:#{@entries.count}"
 			end
 		end
-		@entries = Ruote::Sylrplm::HistoryEntry.paginate(opts) if @entries.nil?
-
-		@entries.each do |en|
+		#@entries = Ruote::Sylrplm::HistoryEntry.paginate(opts) if @entries.nil?
+		LOG.debug(fname){"opts=#{opts}"}
+		@entries = Ruote::Sylrplm::HistoryEntry.where(opts[:conditions]).order(opts[:order])  if @entries.nil?
+		 if @entries.nil?
+		 	@entries=[]
+		else
+			@entries=@entries.to_a
+		end
+		@entries.to_a.each do |en|
 			en.link_attributes={"relation"=>""}
 		end
 	# TODO : XML and JSON

@@ -503,6 +503,12 @@ fr:
   label_errors: Erreurs
   launch_process: Lancer le processus
   abort process: Abandonner le processus
+  label_definition_name: Nom définition
+  label_definition_revision: Révision définition
+  label_nb_positions: Nombre d'étapes
+  label_positions: Etapes
+  label_errors: Erreurs
+  label_instances: Instances
   # projects
   legend_project: "Renseignez les propriétés du projet"
   project_edit: Edition projet
@@ -673,6 +679,8 @@ fr:
   label_show_mail: Montrer l'adresse mail
   language_fr: Français
   language_en: Anglais
+  language_simple_form_fr: Français
+  language_simple_form_en: Anglais
   label_user_role_ids_in: Attribués
   label_user_role_ids_out: Non atribués
   label_user_group_ids_in: " d'appartenance"

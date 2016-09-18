@@ -86,15 +86,16 @@ class DefinitionsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"tree:begin:params=#{params}"}
 		@definition = Definition.find(params[:id])
-		LOG.debug(fname){"def=#{@definition.inspect}"}
+		#LOG.debug(fname){"def=#{@definition.inspect}"}
 		uri = @definition.local_uri
 		# TODO : reject outside definitions ?
 		pdef = (open(uri).read rescue nil)
-		LOG.debug(fname){"tree:pdef=#{pdef}"}
+		#LOG.debug(fname){"tree:pdef=#{pdef}"}
 		var = params[:var] || 'proc_tree'
 		# TODO : use Rails callback thing (:callback)
 		tree = pdef ?
-			RuotePlugin.ruote_engine.get_def_parser.parse(pdef) :
+			#RuotePlugin.ruote_engine.get_def_parser.parse(pdef) :
+			RuoteKit.engine.get_def_parser.parse(pdef) :
 			nil
 		LOG.debug(fname){"tree:definitions.tree=#{tree.inspect}"}
 		render(
@@ -142,12 +143,13 @@ class DefinitionsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"begin:params=#{params}"}
 		@definition = Definition.new(params[:definition])
+		@definition.rubyize!
 		respond_to do |format|
 			if fonct_new_dup?
 				object_orig=Definition.find(params[:object_orig_id])
 			st = @definition.create_duplicate(object_orig)
 			else
-			st = @definition.save
+			st = @definition.save!
 			end
 			if st
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_definition), :ident => @definition.name)
@@ -192,6 +194,7 @@ class DefinitionsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		@definition = Definition.find(params[:id])
 		@definition.update_accessor(current_user)
+		@definition.rubyize!
 		respond_to do |format|
 			st=@definition.update_attributes(params[:definition])
 			LOG.debug(fname) {"definition.errors=#{@definition.errors.full_messages}"}
@@ -220,20 +223,7 @@ class DefinitionsController < ApplicationController
 		end
 	end
 
-	# DELETE /definitions/1
-	# DELETE /definitions/1.xml
-	#
-	def destroy_old
-		@definition = Definition.find(params[:id])
-		@definition.destroy
-		flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_definition), :ident => @definition.name)
-		respond_to do |format|
-			format.html { redirect_to(definitions_url) }
-			format.xml { head :ok }
-			format.json { head :ok }
-		end
-	end
-private
+	private
 
 end
 

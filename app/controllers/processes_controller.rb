@@ -9,7 +9,7 @@ class ProcessesController < ApplicationController
 	# GET /processes
 	#
 	def index
-		fname="process_controllers.#{__method__}"
+		fname= "#{self.class.name}.#{__method__}"
 		@processes = RuoteKit.engine.processes
 		#LOG.debug(fname){"@processes=#{@processes.size}:#{@processes}"}
 		LOG.debug(fname){"#{@processes.size} processes"}
@@ -32,7 +32,7 @@ class ProcessesController < ApplicationController
 	# GET /processes/1
 	#
 	def show
-		fname="process_controllers.#{__method__}"
+		fname= "#{self.class.name}.#{__method__}"
 		show_
 		respond_to do |format|
 			if @process
@@ -84,53 +84,98 @@ class ProcessesController < ApplicationController
 		begin
 			definition_uri=@definition.uri
 			LOG.debug(fname) {" definition_uri=#{definition_uri}"}
+			#appelle /usr/lib64/ruby/gems/2.1.0/gems/ruote-2.3.0.3/lib/ruote/receiver/base.rb
+			fei_wfid = RuoteKit.engine.launch(definition_uri)
+			LOG.debug(fname) {" process lance: fei_wfid(#{fei_wfid}) launched options=#{options}"}
+			# blocks until the process terminates or gets into an error
+			flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{fei_wfid}")
+			params[:id]=fei_wfid
+			sleep(1.0)
+			show_
+			respond_to do |format|
+				format.html { render :action => "show" }
+				format.json {
+					render :json => "{\"wfid\":#{fei_wfid}}", :status => 201 }
+				format.xml {
+					render :xml => "<wfid>#{fei_wfid}</wfid>", :status => 201 }
+			end
+		rescue Exception => e
+			LOG.error(fname) { "fei not launched error="+e.inspect}
+			LOG.error(fname) {" options=#{options}"}
+			e.backtrace.each {|x| LOG.error {x}}
+			respond_to do |format|
+				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "fei not launched error=#{e}")
+				LOG.debug(fname) {" flash[:error]#{flash[:error]} redirect_to  definitions/new_process"}
+				format.html { render :action => :new}
+				format.xml  { render :xml => e, :status => :unprocessable_entity }
+			end
+		end
+	end
+
+	# POST /processes
+	#
+	def create_old
+		fname= "#{self.class.name}.#{__method__}"
+		@definition = Definition.find(params[:definition_id])
+		variables = { :launcher => @current_user.login }
+		options = { :fields=>@definition.launch_fields}
+		begin
+			definition_uri=@definition.uri
+			LOG.debug(fname) {" definition_uri=#{definition_uri}"}
+			#appelle /usr/lib64/ruby/gems/2.1.0/gems/ruote-2.3.0.3/lib/ruote/receiver/base.rb
 			fei_wfid = RuoteKit.engine.launch(definition_uri)
 			LOG.debug(fname) {" process lance: fei_wfid(#{fei_wfid}) launched options=#{options}"}
 			# blocks until the process terminates or gets into an error
 			loop=0
 			proc=nil
 			while(loop<10 && proc==nil)
-				sleep(0.4)
 				proc=::RuoteKit.engine.process(fei_wfid)
+				sleep(0.2)
 				loop+=1
-				LOG.debug(fname) {"process=#{proc}"}
+			#LOG.debug(fname) {"process=#{proc}"}
 			end
 			unless proc.nil?
 				err = proc.errors
 				LOG.debug(fname) {"intercepted an error ??? : #{proc.errors}"} unless proc.errors.nil?
-			end
-			#
-			respond_to do |format|
-				workitems = proc.workitems
-				LOG.debug(fname) {"workitems still open : #{workitems.size}"}
-				workitem=nil
-				workitems.each do |wi|
-					LOG.debug(fname) {"wi.fei.wfid=#{wi.fei.wfid} fei_wfid=#{fei_wfid}"}
-					if wi.fei.wfid==fei_wfid
-					workitem=wi
-					break
+				#
+				respond_to do |format|
+					workitems = proc.workitems
+					LOG.debug(fname) {"workitems still open : #{workitems.size}"}
+					workitem=nil
+					workitems.each do |wi|
+						LOG.debug(fname) {"wi.fei.wfid=#{wi.fei.wfid} fei_wfid=#{fei_wfid}"}
+						if wi.fei.wfid==fei_wfid
+						workitem=wi
+						break
+						end
 					end
+					LOG.debug(fname) {"workitem=#{workitem.inspect} "}
+					unless  workitem.nil?
+						flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem} #{fei_wfid}")
+						params[:id]=fei_wfid
+						show_
+						format.html { render :action => "show" }
+						format.json {
+							render :json => "{\"wfid\":#{fei_wfid}}", :status => 201 }
+						format.xml {
+							render :xml => "<wfid>#{fei_wfid}</wfid>", :status => 201 }
+					else
+						flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem for wfid #{fei_wfid} non trouve")
+						format.html { render :action => "new" , :definition_id => params[:definition_id]}
+						format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
+					end
+					LOG.debug(fname) {" flash=#{flash}"}
 				end
-				LOG.debug(fname) {"workitem=#{workitem.inspect} "}
-				unless workitem.nil?
-					flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem} #{fei_wfid}")
-					params[:id]=fei_wfid
-					show_
-					format.html { render :action => "show" }
-					format.json {
-						render :json => "{\"wfid\":#{fei_wfid}}", :status => 201 }
-					format.xml {
-						render :xml => "<wfid>#{fei_wfid}</wfid>", :status => 201 }
-				else
-					flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")
+			else
+				respond_to do |format|
+					flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "process for wfid #{fei_wfid} not found")
 					format.html { render :action => "new" , :definition_id => params[:definition_id]}
 					format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
 				end
-				LOG.debug(fname) {" flash=#{flash}"}
 			end
 		rescue Exception => e
-			LOG.error { "fei not launched error="+e.inspect}
-			LOG.error {" options=#{options}"}
+			LOG.error(fname) { "fei not launched error="+e.inspect}
+			LOG.error(fname) {" options=#{options}"}
 			e.backtrace.each {|x| LOG.error {x}}
 			respond_to do |format|
 				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "fei not launched error=#{e}")
@@ -144,12 +189,11 @@ class ProcessesController < ApplicationController
 	# DELETE /processes/:id
 	#
 	def destroy
-		fname="process_controllers.#{__method__}"
+		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"begin:params=#{params}"}
 		begin
 			@process = RuoteKit.engine.process(params[:id])
-			RuoteKit.engine.cancel_process(params[:id])
-			sleep 0.200
+			RuoteKit.engine.remove_process(params[:id])
 			redirect_to :action => :index
 		rescue Exception => e
 			LOG.error(fname) {" pb destroy #{params[:id]}, e=#{e}"}

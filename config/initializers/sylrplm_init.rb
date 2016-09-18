@@ -1,7 +1,6 @@
 #
 require 'rufus/scheduler'
 
-
 #
 # fichier de log specifique
 #
@@ -10,6 +9,7 @@ LOG           = Logger.new(logfile, 'daily')
 # Install custom formatter!
 NOLOGS=["Typesobject.get_types",
 	"PlmServices.get_propert",
+	"PlmServices.get_object",
 	"menus_feature",
 	"get_type_values",
 	"get_types_by_features",
@@ -42,9 +42,12 @@ NOLOGS=["Typesobject.get_types",
 	#"ArWorkitem.create_from_wi",
 	"h_render_fields",
 	#"index_",
-	"get_tree_process"
-	]
-	#NOLOGS=[]
+	"get_tree_process",
+	"get_checkout",
+	"get_tree_definition|tree=",
+	"get_languages"
+]
+#NOLOGS=[]
 LOG.formatter = Classes::AppClasses::LogFormatter.new(NOLOGS)
 #@logger.datetime_format = "%Y-%m-%d %H:%M:%S"
 #DEBUG INFO WARN ERROR FATAL

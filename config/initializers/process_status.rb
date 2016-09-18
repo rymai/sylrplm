@@ -4,5 +4,8 @@ module Ruote
 		def modelname
 			"processstatus"
 		end
+		def id
+			wfid
+		end
 	end
 end

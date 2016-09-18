@@ -43,7 +43,6 @@ class Definition < ActiveRecord::Base
 	#
 	validates_uniqueness_of :name
 	SEP_NAME = '-'
-
 	def name_
 		unless tree.nil?
 			tree[1]['name'] || tree[1].find { |k, v| v.nil? }.first
@@ -53,9 +52,9 @@ class Definition < ActiveRecord::Base
 	def revision
 		fname= "#{self.class.name}.#{__method__}"
 		begin
-		unless tree.nil?
-			tree[1]['revision']
-		end
+			unless tree.nil?
+				tree[1]['revision']
+			end
 		rescue Exception =>e
 			LOG.error(fname) {"Error=#{e}"}
 		end
@@ -83,7 +82,11 @@ class Definition < ActiveRecord::Base
 	# Makes sure the 'definition' column contains a string that is Ruby code.
 	#
 	def rubyize!
-		self.definition = Ruote::Reader.to_ruby(tree).strip
+		fname= "#{self.class.name}.#{__method__}"
+		#syl self.definition = Ruote::Reader.to_ruby(tree).strip
+		self.uri = Ruote::Reader.to_ruby(tree).strip
+		LOG.debug(fname) {"uri=#{self.uri}"}
+		self.uri
 	end
 
 	def validate
@@ -97,7 +100,9 @@ class Definition < ActiveRecord::Base
 		if uri.blank?
 			self.errors.add(:base,"nothing to do !!!")
 		else
-			@_tree = (RuotePlugin.ruote_engine.get_def_parser.parse(uri) rescue nil)
+		#@_tree = (RuotePlugin.ruote_engine.get_def_parser.parse(uri) rescue nil)
+			@_tree = (RuoteKit.engine.get_def_parser.parse(uri) rescue nil)
+			LOG.debug(fname) {"@_tree=#{@_tree}"}
 			unless @_tree
 				self.errors.add(:base,"uri seems not to contain a process definition!!!")
 			end

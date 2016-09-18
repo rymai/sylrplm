@@ -1,4 +1,6 @@
-<h1><%= t("processes_show") %><%= h @process.wfid %></h1>
+<h1><%= t("processes_show") %><%= params[:id]%></h1>
+<% unless @process.nil?%>
+<%= h @process.wfid %></h1>
 <table>
 	<tr>
 		<td class="wide-first-col">wfid</td>
@@ -29,12 +31,12 @@
 	</tr>
 	<%@process.variables.each do |name,value| %>
 	<tr>
-		<td><%= "#{name}"%></td><td><%= "#{value}"%></td>
+		<td><%= "#{name}"%></td><td><%= truncate(value.to_s,:length=>40) %></td>
 	</tr>
 	<%end%>
 	<tr>
 		<td><%= t('label_current_tree')%></td>
-		<td><%= link_to @process.current_tree %></td>
+		<td><%= truncate(@process.current_tree.to_s ,:length=>40) %></td>
 	</tr>
 	<tr>
 		<td><%= t('label_errors')%></td>
@@ -70,4 +72,4 @@
 	</tr>
 </table>
 <%= render_fluo(:process => @process, :workitems => @process.workitems) %>
-
+<%end%>

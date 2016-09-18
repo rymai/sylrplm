@@ -1,5 +1,5 @@
-require 'zip'
-require 'zip/zip'
+#require 'zip'
+#require 'zip/zip'
 
 class Filedriver
 

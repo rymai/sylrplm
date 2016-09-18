@@ -8,9 +8,9 @@ module Ruote
 		class ArWorkitem < ActiveRecord::Base
 			include Models::PlmObject
 			include Models::SylrplmCommon
-			attr_accessor :link_attributes
-			attr_accessible :sid, :wfid, :expid, :wf_name, :wf_revision,:participant_name,:fields
-			attr_accessible :launched_at, :dispatched_at, :owner_id, :projowner_id
+			attr_accessor :link_attributes, :tree, :error, :user
+			attr_accessible :wfid, :expid, :wf_name, :wf_revision, :participant_name, :fields, :event
+			attr_accessible :owner_id, :projowner_id
 			belongs_to :owner, :class_name => "User"
 			belongs_to :projowner, :class_name => "Project"
 
@@ -91,15 +91,19 @@ module Ruote
 			def self.build_params(i_workitem,i_user)
 				params={}
 				params[:wfid]=i_workitem.wfid
-				params[:sid]=i_workitem.sid
+				#params[:sid]=i_workitem.sid
 				params[:expid]=i_workitem.fei.expid
 				params[:wf_name]=i_workitem.wf_name
 				params[:wf_revision]=i_workitem.wf_revision
 				params[:participant_name]=i_workitem.participant_name
-				params[:launched_at]=i_workitem.launched_at
-				params[:dispatched_at]=i_workitem.dispatched_at
-				params[:owner_id]=i_user.id
-				params[:projowner_id]=i_user.project_id
+				#params[:store_name]=i_workitem.store_name
+				#params[:activity]=i_workitem.activity
+				#params[:keywords]=i_workitem.keywords
+
+				#params[:launched_at]=i_workitem.launched_at
+				#params[:dispatched_at]=i_workitem.dispatched_at
+				#params[:owner_id]=i_user.id
+				#params[:projowner_id]=i_user.project_id
 				params
 			end
 
@@ -134,9 +138,9 @@ module Ruote
 						mdl=eval typeplm.capitalize
 						Link.find_childs(history, typeplm).each do |link|
 							begin
-							ret<<{:typeobj =>mdl.find(link.child_id), :link=>link}
+								ret<<{:typeobj =>mdl.find(link.child_id), :link=>link}
 							rescue Exception => e
-							LOG.warn(fname) {"Error: #{e}"}
+								LOG.warn(fname) {"Error: #{e}"}
 							end
 						end
 					end

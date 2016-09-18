@@ -1,17 +1,16 @@
 <script>
 	function pick(workitemPath) {
-		var form = document.getElementById('workitem_delegation_form');
-		form.action = workitemPath;
-		form.submit();
+	var form=document.getElementById('workitem_delegation_form');
+	form.action=workitemPath;
+	form.submit();
 	}
-
 	function doSearch() {
-		var q = document.getElementById('query').value;
-		if (q == '')
-			return;
-		q = encodeURI(q);
-		h = document.location.href.split('?')[0];
-		document.location.href = h + '?q=' + q;
+	var q=document.getElementById('query').value;
+	if(q=='')
+		return;
+	q=encodeURI(q);
+	h=document.location.href.split('?')[0];
+	document.location.href=h+'?q='+q;
 	}
 </script>
 <% unless @process.nil? %>
@@ -33,19 +32,13 @@
 	<thead>
 		<tr>
 			<% if current_user.is_admin?%>
-			<th> <%= t(:label_id)%> </th>
-			<th> <%= t(:label_sid)%> </th>
 			<% end %>
 			<% if fonct == "show_only" %>
 			<th> <%= t(:label_relation)%> </th>
 			<% end %>
-			<th> <%= t(:label_ident)%> </th>
 			<th> <%= t(:label_label)%> </th>
 			<th> <%= t(:label_wfid)%> </th>
 			<th> <%= t(:label_expid)%> </th>
-			<th> <%= t(:label_error)%> </th>
-			<th> <%= t(:label_launched)%> </th>
-			<th> <%= t(:label_dispatched)%> </th>
 			<th> <%= t(:label_participant)%> </th>
 			<th> <%= t(:label_workitem_objects)%> </th>
 			<th> <%= t(:label_objects)%></th>
@@ -56,32 +49,21 @@
 	<% for workitem in workitems %>
 	<tr class='<%= cycle("even", "odd") %>'>
 		<% if current_user.is_admin?%>
-		<td> <%= workitem.id %> </td>
-		<td> <%= workitem.sid %> </td>
 		<% end %>
 		<% if fonct == "show_only" %>
 		<td> <%= workitem.link_attributes["relation"].name %> </td>
 		<% end %>
-		<td> <%= link_to workitem.ident, {:controller=>:workitems,:action=>:show, :id=>workitem.sid, :wfid=>workitem.wfid} %> </td>
 		<td> <%= h workitem.label %> </td>
 		<td> <%= h workitem.wfid  %> </td>
 		<td> <%= h workitem.expid %> </td>
-		<td> <%= workitem.error %> </td>
-		<td> <%= display_since(workitem, :launched_at) %> </td>
-		<td> <%= display_since(workitem, :dispatched_at) %> </td>
 		<td> <%= link_to_slice(workitem, :participant_name, :participant) %> </td>
 		<td> <%= comma_links(workitem.get_plm_objects, :ident)  %> </td>
 		<td> <%= h_workitems_links(workitem)  %> </td>
 		<td> <%= h_explorer workitem.owner, :login %> </td>
-		<td> <%if workitem.respond_to? :projowner %>
-		<%= h_explorer workitem.projowner %> (<%= workitem.projowner.typeaccess.name_translate unless workitem.projowner.typeaccess.nil? %>)
-		<%end%> <td> <% if fonct != "show_only" %> <td class='menu_bas'> <%= link_to_if current_user.may_see?(workitem) , t("edit_task"), {:controller=>:workitems, :action=>:edit, :id=>workitem.sid, :wfid=>workitem.wfid} %> </td>
+
+		<% if fonct != "show_only" %> <td class='menu_bas'> <%= link_to_if current_user.may_see?(workitem) , t("edit_task"), {:controller=>:workitems, :action=>:edit, :id=>workitem.sid, :wfid=>workitem.wfid} %> </td>
 		<td class='menu_bas'> <%= link_to_function t("pick"), "pick('#{{:controller=>:workitems,:action=>:show, :id=>workitem.sid, :wfid=>workitem.wfid}}');" %> </td>
 		<% end %>
-
-		<td class='menu_bas'><% if fonct != "show_only" %>
-		<%= h_destroy(workitem)  if @current_user.is_admin? %>
-		<% end %> </td>
 	</tr>
 	<% end -%>
 </table>

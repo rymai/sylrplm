@@ -21,23 +21,6 @@ module Ruote
 				all_processes
 			end
 
-			def self.get_all_old
-				fname= "Process.#{__method__}"
-				v=RuotePlugin.ruote_engine.process_statuses.values
-				vv=[]
-				v.each do  |ps|
-				     LOG.debug(fname){"Process: ps=#{ps} launch_time=#{ps.launch_time}"}
-					unless ps.launch_time.nil?
-					vv<<ps
-					end
-				end
-				all_processes = vv.sort_by { |ps|
-					ps.launch_time
-				}.reverse
-				LOG.debug(fname){"Process: fin all_processes=#{all_processes} "}
-				all_processes
-			end
-
 			def self.exists_on_object_for_action?(object, action)
 				fname= "Process.#{__method__}"
 				all_processes = get_all

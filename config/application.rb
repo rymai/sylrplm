@@ -5,7 +5,7 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Sylrplm3
+module Sylrplm
 	class Application < Rails::Application
 
 		#ne sert a rien a priori, raw marche sans

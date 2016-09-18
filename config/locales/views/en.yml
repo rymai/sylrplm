@@ -503,6 +503,12 @@ en:
   label_errors: Errors
   launch_process: Launch new process instance
   abort process: Abort the process
+  label_definition_name: Definition name
+  label_definition_revision: Definition revision
+  label_nb_positions: Steps number
+  label_positions: Steps
+  label_errors: Errors
+  label_instances: Instances
   # projects
   legend_project: Enter project details
   project_edit: Edit a project
@@ -673,6 +679,8 @@ en:
   label_show_mail: Show mail adress
   language_fr: French
   language_en: English
+  language_simple_form_fr: French
+  language_simple_form_en: English
   label_user_role_ids_in: User roles
   label_user_role_ids_out: Other roles
   label_user_group_ids_in: User groups

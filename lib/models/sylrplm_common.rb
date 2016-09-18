@@ -267,7 +267,7 @@ module Models
 				begin
 					belong_<<mdl_.find(id) unless id.blank?
 				rescue Exception => e
-					LOG.error(fname) {"Error=#{e}"}
+					LOG.warn(fname) {"Warning=#{e}"}
 				end
 			end
 		end

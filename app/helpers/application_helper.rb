@@ -332,10 +332,6 @@ module ApplicationHelper
 		return ret
 	end
 
-	def h_destroy_old(obj)
-		link_to( h_img_destroy, obj, method: :delete, data: { confirm: t(:msg_confirm) } )
-	end
-
 	def h_destroy(obj)
 		button_to( t(:button_delete), obj, method: :delete, data: { confirm: t(:msg_confirm) } )
 	end
@@ -855,6 +851,12 @@ module ApplicationHelper
 		ret << form.text_area(attribut , :rows => 10, :readonly => object.column_readonly?(attribut))
 		ret << "<script>CKEDITOR.replace( \"#{object.modelname}_description\");</script>"
 		ret.html_safe
+	end
+
+	def truncate_words(text, len = 5, end_string = " ...")
+		return if text.blank?
+		words = text.split()
+		words[0..(len-1)].join(' ') + (words.length > len ? end_string : '')
 	end
 
 	:private

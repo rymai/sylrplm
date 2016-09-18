@@ -53,38 +53,53 @@ class PlmServices
 	end
 
 	def self.get_object(type, id )
-		fname = "PlmServices.#{__method__}(#{type},#{id})"
+		fname = "PlmServices.#{__method__}"
+		LOG.debug(fname){"type=#{type},id=#{id}"}
 		# part devient Part
 		typec = "::#{type.camelize}"
+		#typec=type.camelize
 		ret = nil
 		begin
-		#LOG.debug(fname) {"eval #{typec}"}
 			mdl = eval typec
-		rescue Exception => e
+			#mdl=mdl[0,index(mdl,":")]
+			LOG.debug(fname) {"mdl=eval #{typec}=#{mdl}"}
+		rescue Exception => e1
+			LOG.error(fname) {"error1:#{typec}=>:#{e1.message} "}
 			begin
-				typecr ="::Ruote::Sylrplm#{typec}"
+				typecr ="::Ruote::#{typec}"
 				mdl = eval typecr
-			rescue Exception => er
-				LOG.error(fname) {"eval #{typec}=>#{e.message} , #{typecr}=>#{er.message}"}
-				if(false)
-					stack=""
-					cnt=0
-					e.backtrace.each do |x|
-						if cnt<10
-							stack+= x+"\n"
+			rescue Exception => e2
+				LOG.error(fname) {"error2:#{typecr}=>#{e2.message}"}
+				begin
+					typecr ="::Ruote::Sylrplm#{typec}"
+					mdl = eval typecr
+				rescue Exception => e3
+					LOG.error(fname) {"error3:#{typecr}=>#{e3.message}"}
+					if(true)
+						stack=""
+						cnt=0
+						e3.backtrace.each do |x|
+							if cnt<10
+								stack+= x+"\n"
+							end
+							cnt+=1
 						end
-						cnt+=1
+						LOG.error(fname) {"stack=\n#{stack}\n"}
 					end
-					LOG.error(fname) {"======= stack=\n#{stack}\n=========================="}
 				end
 			end
 		end
+		#
 		unless mdl.nil?
 			begin
+				if(mdl.to_s=="Ruote::Sylrplm::Process" || mdl.to_s=="Process")
+				ret=::RuoteKit.engine.process(id)
+				else
 				ret = mdl.find(id)
+				end
 			rescue Exception => e
-				LOG.error(fname) {"==========#{e.message}"}
-				if(false)
+				LOG.error(fname) {"error:#{e.message}"}
+				if(true)
 					stack=""
 					cnt=0
 					e.backtrace.each do |x|
@@ -93,7 +108,7 @@ class PlmServices
 						end
 						cnt+=1
 					end
-					LOG.error(fname) {"--------------------- stack=\n#{stack}\n -------------------------"}
+					LOG.error(fname) {"stack=\n#{stack}\n"}
 				end
 			end
 		end
@@ -261,10 +276,14 @@ class PlmServices
 		ret=I18n.translate(key, argums)
 		if ret==defo
 			# to keep logs about tranlation to do
-			puts "%TODO_TRANSLATE%:#{defo} stack below to see where it is called"
-			if(1==1)
+			if(false)
+				LOG.warn(fname) {"%TODO_TRANSLATE%:#{defo}"}
+			else
+				LOG.warn(fname) {"%TODO_TRANSLATE%:#{defo} stack below to see where it is called"}
 				begin
-					a=1/0
+					a=1
+					b=0
+					c=a/b
 				rescue Exception => e
 					stack=""
 					nbr=0

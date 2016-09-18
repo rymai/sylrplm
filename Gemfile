@@ -9,7 +9,6 @@ gem 'responders'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
 
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -59,7 +58,7 @@ gem 'yajl-ruby', :require => 'yajl'
 #gem 'ruote', git: 'https://github.com/jmettraux/ruote.git'
 gem 'ruote'
 gem 'ruote-extras'
-#gem 'ruote-postgres' , :git => "git://github.com/ifad/ruote-postgres.git"
+gem 'ruote-postgres' , :git => "git://github.com/ifad/ruote-postgres.git"
 gem 'ruote-kit', :git => 'http://github.com/tosch/ruote-kit.git'
 
 gem 'fog'  #, '~>1.1.2'
@@ -75,16 +74,12 @@ gem 'rufus-scheduler'
 gem 'will_paginate'
 #sylrplm fin
 
-# read and create zip files
-#gem 'zip-zip', require: 'rubyzip'
-#gem 'rubyzip',  "~> 1.1", require: 'zip'
-# will load new rubyzip version
-#gem 'rubyzip', '>= 1.0.0'
-#gem 'rubyzip',  "~> 1.1", require: 'zip'
-# will load compatibility for old rubyzip API.
-gem 'zip-zip'
-#gem 'rubyzip', '1.0.0'
+# 		will load compatibility for old rubyzip API.
+#gem 'zip-zip'
+# 		read and create zip files
+#gem 'rubyzip', '1.1.7'
 gem 'rubyzip'
+
 #gem 'string_to_sha1', :git => "git://github.com/sylvani/string_to_sha1.git"
 #gem 'string_to_sha1', :path => "/home/syl/trav/rubyonrails/string_to_sha1"
 gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
@@ -109,7 +104,7 @@ group :staging, :production do
 end
 
 group :development do
-	#gem 'heroku'
+	gem 'heroku'
 	#gem 'heroku' , '3.42.22'
 	#gem 'ruby-debug-base19'
 	#gem 'ruby-debug-ide19'
