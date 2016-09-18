@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
 	before_filter :set_locale
 	before_filter :active_check
 
-   #TODO after_filter :manage_recents
+   after_filter :manage_recents
 
 	def manage_recents
 		fname = "#{self.class.name}.#{__method__}:"
