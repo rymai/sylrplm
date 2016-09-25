@@ -7,9 +7,11 @@ class AccessesController < ApplicationController
 	# GET /accesses
 	# GET /accesses.xml
 	def index
+		fname= "#{self.class.name}.#{__method__}"
 		@accesses = Access.find_paginate({:user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort] || 'controller, action', :nb_items => get_nb_items(params[:nb_items]) })
 		actions_by_roles=Access.get_actions_by_roles
 		@accesses[:actions_by_roles]=actions_by_roles
+		LOG.debug(fname) {"access=#{@accesses}"}
 		@tree = build_tree_actions_by_roles(actions_by_roles)
 		respond_to do |format|
 			format.html # index.html.erb
@@ -62,8 +64,13 @@ class AccessesController < ApplicationController
 	# POST /accesses
 	# POST /accesses.xml
 	def create
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {"params=#{params}"}
 		respond_to do |format|
-			@access = Access.new(params[:access])
+			par=Access.prepare(params[:access])
+			LOG.debug(fname) {"par=#{par}"}
+			@access = Access.new(par)
+			LOG.debug(fname) {"@access=#{@access}"}
 			if fonct_new_dup?
 				object_orig=Access.find(params[:object_orig_id])
 			st = @access.create_duplicate(object_orig)

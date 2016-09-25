@@ -37,6 +37,8 @@ class PartsController < ApplicationController
 			show_
 			respond_to do |format|
 				format.html { render :action => "show" }
+				#format.html
+  			    #format.html { redirect_to(@part) }
 				format.xml  { render :xml => @part }
 			end
 		end
@@ -280,8 +282,10 @@ class PartsController < ApplicationController
 		if all_variant == "on"
 			params[:variant]=nil
 		end
-		@tree         = build_tree(@part, @myparams[:view_id] , params[:variant])
+		LOG.debug(fname){"----------------build_tree begin"}
+		@tree         =build_tree(@part, @myparams[:view_id] , params[:variant])
 		@tree_up      = build_tree_up(@part, @myparams[:view_id] )
+		LOG.debug(fname){"----------------build_tree end"}
 		@object_plm = @part
 		LOG.debug(fname){"begin:params=#{params}"}
 		#LOG.debug(fname){"taille tree=#{@tree.size}"}

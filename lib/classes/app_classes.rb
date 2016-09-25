@@ -17,7 +17,8 @@ module Classes
 						border        = "!" * print_message.length
 						ret=[border, print_message, border].join("\n") + "\n"
 					else
-						print_message =[severity.ljust(5), datetime.to_s, program_name.to_s, message.to_s].join("|")
+						#print_message =[severity.ljust(5), datetime.to_s, program_name.to_s, message.to_s].join("|")
+						print_message =[severity.ljust(5), program_name.to_s, message.to_s].join("|")
 						ret= print_message + "\n"
 					end
 					puts print_message

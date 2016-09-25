@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
 			end
 		rescue Exception => e
 			msg="Exception during user validity test:<br/>Exception=#{e}"
-		self.errors.add(:base,msg)
+			self.errors.add(:base,msg)
 		end
 		#LOG.info(fname) {"errors=#{errors.inspect}"}
 		valid
@@ -395,6 +395,11 @@ new_user=nil
 		ret
 	end
 
+	def can_edit?
+		#TODO
+		true
+	end
+
 	# verifie si le user a un contexte de connexion : role, group, projet deja defini
 	def have_context?
 		unless self.role.nil? || self.group.nil? || self.project.nil?
@@ -476,35 +481,35 @@ new_user=nil
 		fname = "#{self.class.name}.#{__method__}:"
 		begin
 			max_recents = get_type_value("max_recents")
-		max_recents = (max_recents.nil? ? ::SYLRPLM::MAX_RECENT_ACTION : max_recents.to_i)
-		max_recents = ::SYLRPLM::MAX_RECENT_ACTION  if max_recents > ::SYLRPLM::MAX_RECENT_ACTION
-		#LOG.info(fname) {"user=#{self} object_plm=#{object_plm} max_recents=#{max_recents}"}
-		unless object_plm.nil?
-			if relation_recent = Relation.find_by_name(::SYLRPLM::RELATION_RECENT_ACTION)
-				link_recent = Link.new(father: self, child: object_plm, relation: relation_recent, user: self)
-				link_recent.set_type_value("action", params[:action])
-				recents = self.get_recent_links
-				#LOG.debug(fname) {"recents=#{recents.count}"}
-				if recents.count >= max_recents
-					for i in 0..(recents.count - max_recents)
-						recents[i].destroy
+			max_recents = (max_recents.nil? ? ::SYLRPLM::MAX_RECENT_ACTION : max_recents.to_i)
+			max_recents = ::SYLRPLM::MAX_RECENT_ACTION  if max_recents > ::SYLRPLM::MAX_RECENT_ACTION
+			#LOG.info(fname) {"user=#{self} object_plm=#{object_plm} max_recents=#{max_recents}"}
+			unless object_plm.nil?
+				if relation_recent = Relation.find_by_name(::SYLRPLM::RELATION_RECENT_ACTION)
+					link_recent = Link.new(father: self, child: object_plm, relation: relation_recent, user: self)
+					link_recent.set_type_value("action", params[:action])
+					recents = self.get_recent_links
+					#LOG.debug(fname) {"recents=#{recents.count}"}
+					if recents.count >= max_recents
+						for i in 0..(recents.count - max_recents)
+							recents[i].destroy
+						end
 					end
-				end
-				if link_recent.save
-					#LOG.info(fname) {"link saved=#{link_recent},relation=#{relation_recent}" }
-					else
-					LOG.warn(fname) {"link not saved=#{link_recent},relation=#{relation_recent}" }
-				end
-				recents = self.get_recent_links
-				# traces
-				if(1==0)
-					LOG.debug(fname) {"recents=#{recents.count}"}
-					recents.each do |recent|
-						LOG.debug(fname) {"recent:#{recent} #{recent.updated_at}"}
+					if link_recent.save
+						#LOG.info(fname) {"link saved=#{link_recent},relation=#{relation_recent}" }
+						else
+						LOG.warn(fname) {"link not saved=#{link_recent},relation=#{relation_recent}" }
+					end
+					recents = self.get_recent_links
+					# traces
+					if(1==0)
+						LOG.debug(fname) {"recents=#{recents.count}"}
+						recents.each do |recent|
+							LOG.debug(fname) {"recent:#{recent} #{recent.updated_at}"}
+						end
 					end
 				end
 			end
-		end
 		rescue Exception=>e
 			LOG.debug(fname) {"ERREUR durant creation link recent #{e}"}
 		end

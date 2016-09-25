@@ -22,8 +22,20 @@ class Access < ActiveRecord::Base
   end
 
   def controller_and_action=(controller_and_action)
+  	fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"controller_and_action=#{controller_and_action}"}
     controller_and_action        = controller_and_action.split('.')
     self.controller, self.action = controller_and_action.shift(2) if controller_and_action.size > 1
+  end
+  def self.prepare(params)
+  	fname= "#{self.class.name}.#{__method__}"
+  	ret={}
+  	controller_action        = params[:controller_and_action].split('.')
+    controller, action = controller_action.shift(2) if controller_action.size > 1
+    ret[:controller]=controller
+    ret[:action]=action
+    ret[:roles]=params[:roles]
+    ret
   end
 
   def self.find_for_controller(controller)
@@ -165,7 +177,8 @@ class Access < ActiveRecord::Base
   # remplissage initial des autorisations
   #
   def self.init
-    puts "acces.init:remplissage des autorisations"
+    fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"remplissage des autorisations"}
     destroy_all
     acc_roles = Access.access_roles
     #puts "acces.init:#{acc_roles.count} acc_roles"
@@ -223,9 +236,10 @@ class Access < ActiveRecord::Base
         end
       end
       exist = find_by_controller_and_roles("#{controller.name}.#{controller.method}",roles)
-      #puts "acces.init:#{controller.name} #{controller.method}: exist=#{exist} roles=#{roles}"
       unless exist.nil? && roles.nil?
-      	create(:controller_and_action => "#{controller.name}.#{controller.method}", :roles => roles)
+      	#LOG.debug(fname){"#{controller.name} #{controller.method}: exist=#{exist} roles=#{roles}"}
+      	acc=new(:controller => controller.name, :action=>controller.method, :roles => roles)
+      	acc.save
       end
     end
   end

@@ -14,7 +14,7 @@
 		<% links_relation_tabs.relations(nil, nil, ::Relation::RELATION_PASTE_WAY_MANUAL).each do |relation|
 
 		if( ::Typesobject::MODELS_PLM.include?(relation.child_plmtype))
-		puts "links_relation_tabs:relation.child_plmtype=#{relation.child_plmtype} in #{::Typesobject::MODELS_PLM}"
+		puts "links_relation_tabs:relation.child_plmtype=#{relation.child_plmtype} in #{::Typesobject::MODELS_PLM} begin"
 		%>
 		<div id="<%= relation.name%>" class="tab-pane">
 			<% default=nil
@@ -29,6 +29,7 @@
 				else
 				plmtypes<<relation.child_plmtype
 				end
+				puts "links_relation_tabs:plmtypes=#{plmtypes}"
 				plmtypes.each do |plmtype|
 				%>
 					<tr>
@@ -52,7 +53,9 @@
 			</table>
 			<%end%>
 		</div>
-		<%end%>
+
+		<%puts "links_relation_tabs:relation.child_plmtype=#{relation.child_plmtype} in #{::Typesobject::MODELS_PLM} end"
+		end%>
 		<%end%>
 	</div>
 </div>

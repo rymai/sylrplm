@@ -1,7 +1,6 @@
 #require 'lib/models/plm_object'
 #require 'openwfe/representations'
 #require 'ruote/part/local_participant'
-
 class Part < ActiveRecord::Base
 	include Ruote::LocalParticipant
 	include Models::PlmObject
@@ -59,9 +58,6 @@ class Part < ActiveRecord::Base
 	#rails2 has_many :links_customer_part_up,    :class_name => "Link",    :foreign_key => "child_id",    :conditions =>{father_plmtype: 'customer', child_plmtype: 'part' }
 	has_many :links_customer_parts_up, -> { where(father_plmtype: 'customer'  , child_plmtype: 'document') },    :class_name => "Link",    :foreign_key => "child_id"
 	has_many :customers_up ,    :through => :links_customer_parts_up,    :source => :customer_up
-
-
-
 	#
 	#essai
 =begin
@@ -78,14 +74,21 @@ has_many :variant_effectivities,
 	def variant_effectivities
 		fname= "#{Part}.#{__method__}"
 		ret=[]
-		::Link.find(:all,
-		:conditions => ["father_plmtype='part' and child_plmtype='part' and father_id = #{id}"]
-		).each do |lnk|
-			father=lnk.father
-			child=lnk.child
-			if(father.typesobject.name = "VAR" && child.typesobject.name == "EFF")
-			ret << lnk.child
+		begin
+			cond="father_plmtype='part' and child_plmtype='part' and father_id = #{id}"
+
+			#::Link.find(:all,
+			#:conditions => ["father_plmtype='part' and child_plmtype='part' and father_id = #{id}"]
+			::Link.all.where(cond).each do |lnk|
+				father=lnk.father
+				child=lnk.child
+				if(father.typesobject.name == "VAR" && child.typesobject.name == "EFF")
+				ret << lnk.child
+				end
 			end
+		rescue Exception=>e
+			LOG.error(fname){"ERROR finding effectivities : #{e}"}
+			PlmServices.stack("variant_effectivities",20)
 		end
 		LOG.debug(fname){" #{ret.size} variant effectivites from #{self.ident}"}
 		ret
@@ -119,18 +122,6 @@ has_many :variant_effectivities,
 		ret
 	#conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
 	#  " or "+qry_owner+" or date LIKE ? "
-	end
-
-	def variants_old
-		fname= "#{self.class.name}.#{__method__}"
-		ret=[]
-		parts.each do |part|
-			if part.typesobject.name == "VAR"
-				LOG.debug(fname){"part:#{part}"}
-			ret << part
-			end
-		end
-		ret
 	end
 
 	def users

@@ -45,7 +45,7 @@ class Node
 		@nodes=[]
 		@options = DEFAULT_OPTIONS.merge(options)
 
-		@id=options[:id] || self.object_id.abs
+		#@id=options[:id] || self.object_id.abs
 		if options[:link_to_remote]
 			internal_link_to_remote(@label,options[:link_to_remote] , html_options)
 		end
@@ -61,9 +61,21 @@ class Node
 	end
 
 	def id
-		return @id || self.object_id.abs
+		options[:id]
+		#return @id || self.object_id.abs
 	end
-
+	def link
+		@options[:link]
+	end
+	def label
+		@options[:label]
+	end
+	def title
+		@options[:title]
+	end
+	def url
+		@options[:url]
+	end
 	def child(options={},html_options={})
 		case options
 		when Node
@@ -164,26 +176,42 @@ class Node
 	def size_all
 		fname="Node:#{__method__}"
 		ret=0
-		ret=self.size_all_(ret, 0)
+		level=0
+		begin
+			ret=self.size_all_(ret, level)
+		rescue Exception=>e
+			LOG.error(fname){"EXCEPTION during nodes size calculation: #{e} "}
+		ret=-1
+		end
+		ret
+	end
+
+	def to_s
+		fname="Node:#{__method__}"
+		#syl @nodes.to_s
+		LOG.debug(fname){">>>>>>"}
+		ret="#{@nodes.count}:#{@nodes}"
+		LOG.debug(fname){"<<<<<<"}
 		ret
 	end
 
 	def size_all_(ret, level)
 		fname="Node:#{__method__}"
-		#LOG.debug(fname){"==>level=#{level}, nodes:#{nodes.size}, ret=#{ret}"}
-		level+=1
-		nodes.each do |nod|
-			ret= 1+ nod.size_all_(ret, level)
+		blank=">".rjust(level)
+		msg="#{blank} lev=#{level} nb=#{nodes.size} #{ret}"
+		msg+= " #{link.father.ident_plm} #{link.relation.name} #{link.child.ident_plm}" unless link.nil?
+		puts msg
+		if(level<50)
+			level+=1
+			nodes.each do |nod|
+				ret= 1 + nod.size_all_(ret, level)
+			end
+		else
+			raise Exception.new("Too many levels, certainly because of loop in links")
 		end
-		#LOG.debug(fname){"<==level=#{level}, ret=#{ret}"}
+		#LOG.debug(fname){"<<<level=#{level}, ret=#{ret}"}
 		ret
 	end
-
-	def to_s
-		#syl @nodes.to_s
-		"#{@nodes.count}:#{@nodes}"
-	end
-
 	private
 
 	def url_formater(options,parameters_for_method_reference)

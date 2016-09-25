@@ -27,7 +27,7 @@ class Controller
 				#ApplicationController.new.methods
 				(eval("#{cont}.new.methods") -
 				ApplicationController.new.methods).sort.each {|smet|
-					LOG.debug(fname){"controller=#{cont} method=#{smet}"}
+					#LOG.debug(fname){"controller=#{cont} method=#{smet}"}
 					met = smet.to_s
 					if(met!='init_objects' && met!='login' && met!='logout' && met.index('_old')==nil && !met.end_with?('_') && met.index('_obsolete')==nil && met.index('_essai')==nil && met.index('authorized')==nil)
 						ret<< Controller.new(i,cont,met)
@@ -38,7 +38,7 @@ class Controller
 				}
 			end
 		end
-		puts
+		LOG.debug(fname){"Number of controllers and methods=#{ret.count}"}
 		ret
 	end
 

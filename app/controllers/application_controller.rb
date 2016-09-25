@@ -429,11 +429,18 @@ class ApplicationController < ActionController::Base
 	end
 
 	def icone(object)
+			fname= "#{self.class.name}.#{__method__}"
+
 		html_title=""
-		unless object.typesobject.nil?
-			#type = "#{object.modelname}_#{object.typesobject.name}"
-			mdl_name = t("typesobject_name_#{object.typesobject.name}")
+		type=object.typesobject
+		unless type.nil?
+			LOG.debug(fname) {"object=#{object} typesobject=#{type} "}
+			begin
+			mdl_name = t("typesobject_name_#{type.name}")
 			html_title="title='#{mdl_name}'"
+		rescue Exception=>e
+						LOG.warn(fname) {"Exception:#{e}"}
+		end
 		end
 		fic = icone_fic(object)
 		ret = "<img class='icone' src='#{fic}' #{html_title}/>"
@@ -448,7 +455,12 @@ class ApplicationController < ActionController::Base
 	def icone_fic(obj)
 		fname="#{self.class.name}.#{__method__}"
 		unless obj.modelname.nil? || !obj.respond_to?(:typesobject) || obj.typesobject.nil?
-			ret = "/images/#{obj.modelname}_#{obj.typesobject.name}.png"
+			begin
+				ret = "/images/#{obj.modelname}_#{obj.typesobject.name}.png"
+			rescue Exception=>e
+						LOG.warn(fname) {"Exception:#{e}"}
+				ret = "/images/#{obj.modelname}.png"
+			end
 			unless File.exist?("#{Rails.root}/public#{ret}")
 				ret = "/images/#{obj.modelname}.png"
 				unless File.exist?("#{Rails.root}/public#{ret}")

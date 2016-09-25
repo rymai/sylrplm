@@ -300,6 +300,7 @@ class Link < ActiveRecord::Base
 
 	def after_find
 		fname= "#{self.class.name}.#{__method__}"
+		LOG.info(fname) {"--------------------------------------------------"}
 		rel=self.relation
 		unless rel.nil?
 			if self.type_values.nil?
@@ -321,17 +322,25 @@ class Link < ActiveRecord::Base
 
 	# bidouille infame car l'association ne marche pas
 	def relation
+		fname= "#{self.class.name}.#{__method__}"
+		#LOG.error(fname) {"relation:#{relation_id}"}
+		##PlmServices.stack("link relation",100)
+		ret=nil
 		begin
-			Relation.find(relation_id)
+			ret=Relation.find(relation_id)
 		rescue Exception => e
-			fname= "#{self.class.name}.#{__method__}"
 			LOG.error(fname) {"relation not found:#{e}"}
-			nil
+			ret=nil
 		end
+		#LOG.error(fname) {"relation:#{relation_id} : #{ret}"}
+		ret
 	end
 
 	def relation_name
-		(self.relation.nil? ? "nil" : self.relation.name )
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.error(fname) {"-----------------------------------------"}
+		rel=self.relation
+		(ret.nil? ? "nil" : ret.name )
 	end
 
 	def self.valid?(father, child, relation)
@@ -419,6 +428,7 @@ class Link < ActiveRecord::Base
 	end
 
 	def self.nb_occured(father, relation)
+		fname="#{self.class.name}.#{__method__}"
 		ret=0
 		links = find(:all, :include => :relation,
     :conditions => ["relations.father_plmtype = ? and relations.child_plmtype= ? and relations.child_typesobject_id = ? and father_id = ?",
@@ -429,8 +439,9 @@ class Link < ActiveRecord::Base
 	end
 
 	def self.nb_used(relation)
+		fname="#{self.class.name}.#{__method__}"
 		ret=0
-		puts "Link.nb_used:"+relation.child_plmtype+":"+relation.child_typesobject_id.to_s
+		LOG.debug(fname) {"Link.nb_used:#{relation.child_plmtype}:#{relation.child_typesobject_id}"}
 		links = find(:all, :include => :relation, :conditions => ["relations.child_plmtype = ? and relations.child_typesobject_id = ?", relation.child_plmtype, relation.child_typesobject_id])
 		ret = links.count unless links.nil?
 		ret

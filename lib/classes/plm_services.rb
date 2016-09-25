@@ -302,6 +302,27 @@ class PlmServices
 		ret
 	end
 
+	def self.stack(msg, level)
+		fname = "PlmServices.#{__method__}"
+		LOG.warn(fname) {"#{msg}: level=#{level}"}
+		begin
+			a=1
+			b=0
+			c=a/b
+		rescue Exception => e
+			stack=""
+			nbr=0
+			e.backtrace.each do |x|
+				break  if nbr==level
+				unless x.include? "plm_services.rb"
+					stack+= x+"\n"
+				nbr+=1
+				end
+			end
+			LOG.warn(fname) {"#{msg}: stack=\n#{stack}"}
+		end
+	end
+
 	# Swaps from dots to underscores
 	#
 	#   swapdots "0_0_1" # => "0.0.1"

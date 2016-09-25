@@ -1,4 +1,3 @@
-
 ######################################################
 
 # build a modeling file
@@ -8,8 +7,11 @@
 #
 def get_types_datafiles_on_tree(tree)
 	fname="plm_tree:#{__method__}"
+	ret=[]
+	unless tree.nil?
 	#LOG.debug(fname) {"#{tree.nodes.count} nodes"}
 	ret = get_types_datafiles_on_node(tree,0)
+	end
 	ret
 end
 
@@ -21,30 +23,34 @@ end
 def get_types_datafiles_on_node(node, level)
 	fname="plm_tree:#{__method__}"
 	ret=[]
-	lnk = get_node_link(node)
-	unless lnk.nil?
-		LOG.debug(fname) {"child_plmtype=#{lnk.child_plmtype} lnk=#{lnk.inspect} "}
-		child = lnk.child
-		if lnk.child_plmtype == 'document'
-			LOG.debug(fname) {"child=#{child} #{child.datafiles.count} datafiles"}
-			child.datafiles.each do |datafile|
-				LOG.debug(fname) {"doc.datafile.typesobject=#{datafile.typesobject} "}
-				ret << datafile.typesobject unless ret.include?(datafile.typesobject)
-			end
-		end
-		if  lnk.child_plmtype == 'part'
-			docs=child.documents
-			docs.each do |doc|
-				doc.datafiles.each do |datafile|
-					LOG.debug(fname) {"part.doc.datafile.typesobject=#{datafile.typesobject} "}
-					ret << datafile.typesobject unless ret.include?(datafile.typesobject)
+	unless node.nil?
+		lnk = get_node_link(node)
+		unless lnk.nil?
+			child = lnk.child
+			LOG.debug(fname) {"child_plmtype=#{lnk.child_plmtype} lnk=#{lnk.inspect} child=#{child} "}
+			unless child.nil?
+				if lnk.child_plmtype == 'document'
+					LOG.debug(fname) {"child=#{child} #{child.datafiles.count} datafiles"}
+					child.datafiles.each do |datafile|
+						LOG.debug(fname) {"doc.datafile.typesobject=#{datafile.typesobject} "}
+						ret << datafile.typesobject unless ret.include?(datafile.typesobject)
+					end
+				end
+				if  lnk.child_plmtype == 'part'
+					docs=child.documents
+					docs.each do |doc|
+						doc.datafiles.each do |datafile|
+							LOG.debug(fname) {"part.doc.datafile.typesobject=#{datafile.typesobject} "}
+							ret << datafile.typesobject unless ret.include?(datafile.typesobject)
+						end
+					end
 				end
 			end
 		end
-	end
-	node.nodes.each do |anode|
-		get_types_datafiles_on_node(anode, level+1).each do |type|
-			ret << type unless ret.include?(type)
+		node.nodes.each do |anode|
+			get_types_datafiles_on_node(anode, level+1).each do |type|
+				ret << type unless ret.include?(type)
+			end
 		end
 	end
 	ret
@@ -293,10 +299,12 @@ end
 def get_node_link(node)
 	fname="plm_tree:#{__method__}"
 	lnk=nil
-	begin
-		lnk = Link.find(node.id) unless node.id==0
-	rescue Exception => e
-		LOG.warn(fname) {"node #{node.id} is not a link"}
+	unless node.nil?
+		begin
+			lnk = Link.find(node.id) unless node.id==0
+		rescue Exception => e
+			LOG.warn(fname) {"node #{node.id} is not a link"}
+		end
 	end
 	lnk
 end

@@ -316,7 +316,7 @@ Rails.application.routes.draw do
 	match 'parts/:id/demote', :to => 'parts#demote', via: [:get, :post]
 
 	#rails2 map.connect(	'parts/:id/select_view',	:controller => 'parts',	:action => 'select_view')
-	match 	'parts/:id/select_view', :to => 'parts#select_view', via: [:get, :post]
+	match 	'parts/:id/select_view', :to => 'parts#select_view', via: [:get, :post, :patch]
 
 	#rails2 map.connect(	'parts/:id/new_datafile',	:controller => 'parts',	:action => 'new_datafile')
 	match 	'parts/:id/new_datafile', :to => 'parts#new_datafile', via: [:get, :post]

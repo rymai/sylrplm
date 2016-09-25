@@ -413,7 +413,7 @@ module Models
 			fname= "#{self.class.name}.#{__method__}"
 			child_type=nil
 			ret=::Relation.relations_for(self, child_plmtype, child_type, relation_type_name, relation_paste_way)
-			LOG.debug(fname) {"relations from #{self.modelname} to #{child_plmtype.to_s}:ret=#{ret}"}
+			LOG.debug(fname) {"relations from #{self.modelname} to #{child_plmtype.to_s}:ret=#{ret.size}"}
 			ret
 		end
 

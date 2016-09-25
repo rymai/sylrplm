@@ -535,7 +535,12 @@ module Models
 			ret="#{label}(#{modelname}.#{id}"
 			if self.respond_to?(:typesobject)
 				unless self.typesobject.nil?
-					ret += ":#{get_model(modelname).truncate_words(self.typesobject.description, 7)}"
+					begin
+						ret += ":#{get_model(modelname).truncate_words(self.typesobject.description, 7)}"
+					rescue Exception=>e
+						LOG.warn(fname) {"Exception:#{e}"}
+						ret += ":#{get_model(modelname)}"
+					end
 				else
 				#LOG.warn(fname) {"DB_CONSISTENCY_ERROR:this object has no type:#{self.inspect}"}
 				end
