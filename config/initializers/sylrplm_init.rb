@@ -55,9 +55,9 @@ LOG.level  = case Rails.env
 when "development"
 	Logger::DEBUG
 when "test"
-	Logger::ERROR
+	Logger::DEBUG
 when "production"
-	Logger::ERROR
+	Logger::DEBUG
 end
 LOG.info("sylrplm"){"Lancement SYLRPLM"}
 LOG.progname="Constantes"
