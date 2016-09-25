@@ -1,20 +1,20 @@
 if Rails.env.production?
   ActionMailer::Base.smtp_settings = {
-    address:        'smtp.mandrillapp.com',
-    port:           '465',
-    authentication: :plain,
-    user_name:      ENV['MANDRILL_USERNAME'],
-    password:       ENV['MANDRILL_APIKEY'],
-    domain:         'heroku.com'
+    address:              'smtp.sendgrid.net',
+    port:                 '587',
+    authentication:       :plain,
+    user_name:            ENV['SENDGRID_USERNAME'],
+    password:             ENV['SENDGRID_PASSWORD'],
+    domain:               'heroku.com',
+    enable_starttls_auto: true
   }
   ActionMailer::Base.delivery_method = :smtp
-end
 
-if Rails.env.development?
+elsif Rails.env.development?
   ActionMailer::Base.smtp_settings = {
-    address:        'smtp.free.fr',
-    port:           '25',
-    domain:         'free.fr'
+    address: 'smtp.free.fr',
+    port:    '25',
+    domain:  'free.fr'
   }
   ActionMailer::Base.delivery_method = :smtp
 end
