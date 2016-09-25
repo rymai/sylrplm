@@ -14,7 +14,7 @@
 <%= f.date_select :out_date %>
 <br/>
 <%= f.label t("label_out_user") %>
-<%= f.collection_select(:out_user_id, User.find_all, :id, :login)%>
+<%= f.collection_select(:out_user_id, User.get_all, :id, :login)%>
 <%= f.label t("label_out_group") %>
 <%= f.collection_select(:out_group_id, Group.all, :id, :name)%>
 <br/>
@@ -25,7 +25,7 @@
 <%= f.date_select :in_date %>
 <br/>
 <%= f.label t("label_in_user") %>
-<%= f.collection_select(:in_user_id, User.find_all, :id, :login)%>
+<%= f.collection_select(:in_user_id, User.get_all, :id, :login)%>
 <%= f.label t("label_in_group") %>
 <%= f.collection_select(:in_group_id, Group.all, :id, :name)%>
 <br/>

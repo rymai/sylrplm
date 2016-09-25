@@ -1,6 +1,6 @@
 class TypesobjectsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control (Access.find_for_controller(controller_class_name()))
+	access_control (Access.find_for_controller(controller_name.classify))
 	# GET /typesobjects
 	# GET /typesobjects.xml
 	def index
@@ -72,7 +72,7 @@ class TypesobjectsController < ApplicationController
 	# POST /typesobjects.xml
 	def create
 		fname="#{self.class.name}.#{__method__}"
-		#LOG.info (fname){"params=#{params}"}
+		#LOG.info(fname){"params=#{params}"}
 		@typesobject = Typesobject.new(params[:typesobject])
 		@objectswithtype=Typesobject.get_objects_with_type
 		respond_to do |format|
@@ -118,7 +118,7 @@ class TypesobjectsController < ApplicationController
 
 	# DELETE /typesobjects/1
 	# DELETE /typesobjects/1.xml
-	def destroy
+	def destroy_old
 		@typesobject = Typesobject.find(params[:id])
 		if @typesobject.destroy
 			flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_typesobject),:ident=>@typesobject.name)
@@ -139,8 +139,8 @@ class TypesobjectsController < ApplicationController
 		object_forobject=params[:object_forobject]
 		@typesobject = ::Typesobject.find(params[:id])
 		@objectswithtype=Typesobject.get_objects_with_type
-		LOG.debug (fname){"params=#{params.inspect}"}
-		LOG.debug (fname){"object_forobject=#{object_forobject} @typesobject=#{@typesobject.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"object_forobject=#{object_forobject} @typesobject=#{@typesobject.inspect}"}
 		ctrl_update_forobject(@typesobject, params[:object_forobject], )
 	end
 

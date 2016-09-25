@@ -28,24 +28,27 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "fei"
 		t.string   "wfid"
 		t.string   "expid"
-		t.string   "wfname"
-		t.string   "wfrevision"
+		t.string   "wf_name"
+		t.string   "wf_revision"
 		t.string   "participant_name"
-		t.string   "store_name"
-		t.text     "wi_fields"
-		t.string   "activity"
-		t.text     "keywords"
-		t.datetime "dispatch_time"
-		t.datetime "last_modified"
+		t.string   "event"
+		#t.string   "store_name"
+		t.text     "fields"
+		#t.string   "activity"
+		#t.text     "keywords"
+		t.integer  "owner_id"
+		t.integer  "projowner_id"
+		t.datetime "created_at"
+		t.datetime "updated_at"
 	end
 
 	add_index "ar_workitems", ["expid"], :name => "index_ar_workitems_on_expid"
 	add_index "ar_workitems", ["fei"], :name => "index_ar_workitems_on_fei", :unique => true
 	add_index "ar_workitems", ["participant_name"], :name => "index_ar_workitems_on_participant_name"
-	add_index "ar_workitems", ["store_name"], :name => "index_ar_workitems_on_store_name"
+	#add_index "ar_workitems", ["store_name"], :name => "index_ar_workitems_on_store_name"
 	add_index "ar_workitems", ["wfid"], :name => "index_ar_workitems_on_wfid"
-	add_index "ar_workitems", ["wfname"], :name => "index_ar_workitems_on_wfname"
-	add_index "ar_workitems", ["wfrevision"], :name => "index_ar_workitems_on_wfrevision"
+	add_index "ar_workitems", ["wf_name"], :name => "index_ar_workitems_on_wfname"
+	add_index "ar_workitems", ["wf_revision"], :name => "index_ar_workitems_on_wfrevision"
 
 	create_table "checks", :force => true do |t|
 		t.string   "checkobject_plmtype"
@@ -260,13 +263,13 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "source",      :null => false
 		t.string   "event",       :null => false
 		t.string   "wfid"
-		t.string   "wfname"
-		t.string   "wfrevision"
+		t.string   "wf_name"
+		t.string   "wf_revision"
 		t.string   "fei"
 		t.string   "participant"
 		t.string   "message"
 		t.text     "tree"
-		t.text     "wi_fields"
+		t.text     "fields"
 		t.datetime "created_at"
 	end
 
@@ -275,8 +278,8 @@ ActiveRecord::Schema.define(:version => 0) do
 	add_index "history_entry", ["participant"], :name => "index_history_entry_on_participant"
 	add_index "history_entry", ["source"], :name => "index_history_entry_on_source"
 	add_index "history_entry", ["wfid"], :name => "index_history_entry_on_wfid"
-	add_index "history_entry", ["wfname"], :name => "index_history_entry_on_wfname"
-	add_index "history_entry", ["wfrevision"], :name => "index_history_entry_on_wfrevision"
+	add_index "history_entry", ["wf_name"], :name => "index_history_entry_on_wf_name"
+	add_index "history_entry", ["wf_revision"], :name => "index_history_entry_on_wf_revision"
 
 	create_table "links", :force => true do |t|
 		t.string   "father_plmtype", :null => false
@@ -508,7 +511,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.datetime "updated_at"
 		t.string   "domain"
 	end
-	add_index "statusobjects_nexts", ["statusobject_id", "other_statusobject_id"], :name => "index_statusobjects_nexts_on_statusobjects_id_and_other_statusobject_id", :unique => true
+	add_index "statusobjects_nexts", ["statusobject_id", "other_statusobject_id"], :name => "index_stobjs_nexts_on_stobj_id_and_other_stobj_id", :unique => true
 
 	create_table "statusobjects_previous", :id => false, :force => true do |t|
 		t.integer  "statusobject_id",    :null => false
@@ -517,7 +520,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.datetime "updated_at"
 		t.string   "domain"
 	end
-	add_index "statusobjects_previous", ["statusobject_id", "other_statusobject_id"], :name => "index_statusobjects_previous_on_statusobject_id_and_other_statusobject_id", :unique => true
+	add_index "statusobjects_previous", ["statusobject_id", "other_statusobject_id"], :name => "index_stobjs_prevs_on_stobj_id_and_other_stobj_id", :unique => true
 
 	create_table "subscriptions" , :force => true do |t|
 		t.string   "name"
@@ -542,7 +545,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "domain"
 	end
 
-	add_index "subscriptions_typesobjects", ["subscription_id", "typesobject_id"], :name => "index_subscription_typesobjects_on_subscription_id_and_typesobject_id", :unique => true
+	add_index "subscriptions_typesobjects", ["subscription_id", "typesobject_id"], :name => "index_subs_typesobjs_on_sub_id_and_typesobj_id", :unique => true
 
 	create_table "projects_subscriptions", :id => false, :force => true do |t|
 		t.integer  "subscription_id",    :null => false
@@ -552,7 +555,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "domain"
 	end
 
-	add_index "projects_subscriptions", ["subscription_id", "project_id"], :name => "index_subscription_projects_on_subscription_id_and_project_id", :unique => true
+	add_index "projects_subscriptions", ["subscription_id", "project_id"], :name => "index_subs_projects_on_sub_id_and_project_id", :unique => true
 
 	create_table "groups_subscriptions", :id => false, :force => true do |t|
 		t.integer  "subscription_id",    :null => false
@@ -562,7 +565,7 @@ ActiveRecord::Schema.define(:version => 0) do
 		t.string   "domain"
 	end
 
-	add_index "groups_subscriptions", ["subscription_id", "group_id"], :name => "index_subscription_groups_on_subscription_id_and_group_id", :unique => true
+	add_index "groups_subscriptions", ["subscription_id", "group_id"], :name => "index_sub_groups_on_sub_id_and_group_id", :unique => true
 
 	create_table "typesobjects", :force => true do |t|
 		t.string   "forobject"

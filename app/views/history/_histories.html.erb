@@ -6,8 +6,8 @@
 		<th><%= h t(:label_history_source)%></th>
 		<th><%= h t(:label_history_event)%></th>
 		<th><%= h t(:label_history_wfid)%></th>
-		<th><%= h t(:label_history_wfname)%></th>
-		<th><%= h t(:label_history_wfrev)%></th>
+		<th><%= h t(:label_history_wf_name)%></th>
+		<th><%= h t(:label_history_wf_rev)%></th>
 		<th><%= h t(:label_history_fei)%></th>
 		<th><%= h t(:label_history_participant)%></th>
 		<th><%= h t(:label_history_message)%></th>
@@ -20,8 +20,8 @@
 	<% histories.each do |entry|
 	fei = entry.full_fei
 	sfei = fei ? "#{fei.sub_instance_id} #{fei.expname} #{fei.expid}" : ''
-	cat = entry.created_at.to_s 
-	plm_objects=entry.plm_objects 
+	cat = entry.created_at.to_s
+	plm_objects=entry.plm_objects
 	ok = true
 	ok = false if (fonct=='on_plm_objects' && plm_objects.count ==0)
 	if ok %>
@@ -32,8 +32,8 @@
 		<td class="source"><%= view_link(entry, :source) %></td>
 		<td class="event"><%= view_link(entry, :event) %></td>
 		<td class="wfid"><%= view_link(entry, :wfid) %></td>
-		<td class="wfname"><%= view_link(entry, :wfname) %></td>
-		<td class="wrevision"><%= h entry.wfrevision %></td>
+		<td class="wfname"><%= view_link(entry, :wf_name) %></td>
+		<td class="wrevision"><%= h entry.wf_revision %></td>
 		<td class="fei"><%= sfei %></td>
 		<td class="participant"><%= view_link(entry, :participant) %></td>
 		<td class="message" title="<%= h entry.message %>"><%= h truncate(entry.message, :length => 40) %></td>

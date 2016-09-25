@@ -1,6 +1,6 @@
 class LinksController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control(Access.find_for_controller(controller_class_name))
+	access_control(Access.find_for_controller(controller_name.classify))
 
 	# GET /links
 	# GET /links.xml
@@ -50,21 +50,21 @@ class LinksController < ApplicationController
 	# GET /links/1/edit_in_tree
 	def edit_in_tree
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.info (fname){"params=#{params.inspect}"}
+		#LOG.info(fname){"params=#{params.inspect}"}
 		@link = Link.find(params[:id])
-		LOG.info (fname){"type_values=#{@link.type_values} rel;type.values=#{@link.relation.typesobject.fields}"}
+		LOG.info(fname){"type_values=#{@link.type_values} rel;type.values=#{@link.relation.typesobject.fields}"}
 		if(@link.type_values).blank?
 		@link.type_values=@link.relation.typesobject.type_values
 		end
 		@object_in_explorer = PlmServices.get_object(params[:object_model], params[:object_id])
 		@root = PlmServices.get_object(params[:root_model], params[:root_id])
-		#LOG.info (fname){"link=#{@link}"}
-		#LOG.info (fname){"owner=#{(@link.owner.nil? ? "no owner" : @link.owner)}"}
-		#LOG.info (fname){"link effectivities=#{@link.links_effectivities}"}
-		#LOG.info (fname){"effectivities=#{@link.effectivities}"}
-		#LOG.info (fname){"effectivities_mdlid=#{@link.effectivities_mdlid}"}
-		#LOG.info (fname){"object_in_explorer=#{@object_in_explorer}"}
-		#LOG.info (fname){"root=#{@root}"}
+		#LOG.info(fname){"link=#{@link}"}
+		#LOG.info(fname){"owner=#{(@link.owner.nil? ? "no owner" : @link.owner)}"}
+		#LOG.info(fname){"link effectivities=#{@link.links_effectivities}"}
+		#LOG.info(fname){"effectivities=#{@link.effectivities}"}
+		#LOG.info(fname){"effectivities_mdlid=#{@link.effectivities_mdlid}"}
+		#LOG.info(fname){"object_in_explorer=#{@object_in_explorer}"}
+		#LOG.info(fname){"root=#{@root}"}
 	end
 
 	# POST /links
@@ -168,7 +168,7 @@ class LinksController < ApplicationController
 		@link = Link.find(params[:id])
 		@link.destroy
 		respond_to do |format|
-		  LOG.debug (fname) {"session[:tree_object] =#{session[:tree_object]}"}
+		  LOG.debug(fname) {"session[:tree_object] =#{session[:tree_object]}"}
 			format.html { redirect_to(session[:tree_object].nil? ? links_url : session[:tree_object]) }
 			format.xml  { head :ok }
 		end
@@ -182,7 +182,7 @@ class LinksController < ApplicationController
 		effectivities = Array(effectivities)
 		return true if effectivities.empty?
 		ret = false
-		if relation = Relation.find_by_name("LINK_EFF")
+		if relation = Relation.find_by_name(::Link::LINKNAME_LINK_EFF)
 			LOG.info(fname) { "relation link_effectivity ok=#{relation}" }
 			# menage des autres effectivites
 			link.clean_effectivities(effectivities)
@@ -192,7 +192,7 @@ class LinksController < ApplicationController
 					#LOG.info(fname) { "effectivity: #{effectivity}" }
 					link_eff = Link.new(father: link, child: effectivity, relation: relation, user: current_user)
 					if link_eff.save
-						ctrltype = t("ctrl_#{effectivity.model_name}")
+						ctrltype = t("ctrl_#{effectivity.modelname}")
 						flash[:notice] << t(:ctrl_object_added, typeobj: ctrltype, ident: effectivity.ident, relation: relation.ident, msg: "ctrl_link_#{link_eff.ident}")
 					else
 						# lien link-effectivite non sauve

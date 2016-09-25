@@ -1,13 +1,13 @@
 require 'logger'
 require 'active_record'
 require 'action_controller'
-require 'application_controller'
-require 'plugins/acl_system2/lib/caboose/access_control'
-require 'main_helper'
+#rails2 require 'controllers/application_controller'
+#rails2 require 'vendor/plugins/acl_system2/lib/caboose/access_control'
+#rails2 require 'helpers/main_helper'
 #
 require 'models/sylrplm_common'
 require 'models/plm_object'
-require 'ruote_routing'
+require 'ruote/sylrplm/sylrplm'
 require 'classes/app_classes'
 require 'controllers/plm_event'
 require 'controllers/plm_favorites'
@@ -18,9 +18,19 @@ require 'controllers/plm_object_controller_module'
 require 'rufus/scheduler'
 
 namespace :sylrplm do
-
-  task :load_config => :rails_env do
-    ActiveRecord::Base.configurations = Rails::Configuration.new.database_configuration
+ #ruby2  task :load_config => :rails_env do
+ task :load_config do
+ 	include ::Rails
+    #ruby2 ActiveRecord::Base.configurations = Rails::Configuration.new.database_configuration
+     #ActiveRecord::Base.configurations = ::Rails::Application::Configuration.database_configuration()
+    ActiveRecord::Base.configurations = Rails.application.config.database_configuration
+    puts "#{__FILE__} ActiveRecord::Base.configurations=#{ActiveRecord::Base.configurations[Rails.env]}"
+   #ActiveRecord::ConnectionAdapters::ConnectionPool.new Rails.application.config.database_configuration[Rails.env]
+   #
+   #ActiveRecord::Base.connection_pool.checkout
+   ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[Rails.env])
+  #ActiveRecord::Base.connection
+  ActiveRecord::Base.connection.reconnect!
     ActiveRecord::Base.logger = Logger.new(STDOUT)
     ActiveRecord::Base.logger.level = Logger::ERROR
     $stdout.puts "Database configuration=#{ActiveRecord::Base.configurations}"
@@ -79,7 +89,7 @@ namespace :sylrplm do
     domain = args.domain.to_s
     path = args.path.to_s
     site=args.site.to_s
-    puts "import_domain:path is #{path}, domain is #{domain}, site is #{site}"
+    puts "============import_domain:path is #{path}, domain is #{domain}, site is #{site}"
     fixtures_path = "#{path}/#{domain}"
     unless domain.empty?
 
@@ -87,30 +97,36 @@ namespace :sylrplm do
     	###truncate
       #Rake::Task["db:fixtures:load FIXTURES_PATH=#{fixtures_path}"].invoke
       ENV["FIXTURES_PATH"] = fixtures_path
-      puts "import_domain:fixtures_path=#{ENV['FIXTURES_PATH']}, metadata loading"
+      puts "============import_domain:fixtures_path=#{ENV['FIXTURES_PATH']}, metadata loading"
       Rake::Task["db:fixtures:load"].invoke
-      puts "import_domain:metadata loading terminated"
+      puts "============import_domain:metadata loading terminated"
       unless site.blank?
-     	puts "import_domain:volumes creation"
-	    #PlmServices.set_property("sites","central",site)
-	    Volume.find_all.each do |vol|
-	    	 vol.save
+     		puts "============import_domain:volumes creation"
+	    	#PlmServices.set_property("sites","central",site)
+	    	Volume.all.each do |vol|
+	    		puts "============import_domain:vol.save:#{vol}"
+	    		vol.save
 	    	end
-	    end
-      puts "import_domain:loading of datafiles if needed"
+	  end
+     puts "============import_domain:loading of datafiles if needed"
       # chargement des fichiers
       #PlmServices.set_property("sites","central",site)
      	props= PlmServices.get_properties("sites")
-      Datafile.all.each do |file|
-      	unless file.filename.nil?
-      		puts "import of #{file.filename} protocol=#{file.volume.protocol} file_field=#{file.file_field}"
-      		file.file_import = {}
-      		file.file_import[:file] = File.new(file.filename)
-      		file.file_import[:original_filename] = file.filename
-					st = file.save
-					#puts "import_domain:save file_field=#{file.file_field}, filename:#{file.filename}=#{st}"
+      	puts "import_domain:sites=#{props}"
+      	Datafile.all.each do |file|
+      		unless file.filename.nil?
+	      		puts "import of #{file.inspect}"
+	      		puts "import of #{file.filename} protocol=#{file.volume.protocol} file_field=#{file.file_field}"
+	      		file.file_import = {}
+	      		file.file_import[:file] = File.new(file.filename)
+	      		file.file_import[:original_filename] = file.filename
+				st = file.save
+				puts "import_domain:save file_field=#{file.file_field}, filename:#{file.filename}=#{st}"
+      		else
+      			puts "import_domain:save file.filename null dans #{file.inspect}"
+      		end
       	end
-      end
+       puts "============import_domain:loading of datafiles if needed terminated"
     else
       $stdout.puts "Path and Domain are mandatory"
     end
@@ -208,7 +224,8 @@ namespace :sylrplm do
      puts "Loop on domain"
       domains.each do |domain|
         puts "Domain:#{domain} -------------------------------"
-        Object.subclasses_of(ActiveRecord::Base).each do |model|
+        #rails2 Object.subclasses_of(ActiveRecord::Base).each do |model|
+         ActiveRecord::Base.subclasses.each do |model|
   				begin
            reflections = model.reflect_on_all_associations(:has_and_belongs_to_many)
            # puts "#{model}.reflections=#{reflections.count}" if reflections.count>0
@@ -415,7 +432,7 @@ namespace :sylrplm do
 
   def load_models
     # loading models
-    Dir.glob(RAILS_ROOT + '/app/models/*.rb').each { |file|
+    Dir.glob(Rails.root + '/app/models/*.rb').each { |file|
       begin
         $stdout.puts file
         require file

@@ -87,6 +87,11 @@ fr:
   update_type: Rafraichir suivant le type
   submit_copy: Copie
   submit_destroy: Supprime
+  form_validation_errors: "%{errors_number} erreurs durant la sauvegarde du formulaire."
+  button_abort: Stopper
+  button_delete: Supprimer
+  button_replay: Rejouer
+  button_update: Mettre à jour
   # attributs generaux
   faq_question: Question
   faq_answer: Réponse
@@ -98,7 +103,7 @@ fr:
   label_history_source: Source
   label_history_event: Evénement
   label_history_wfid: Identifiant
-  label_history_wfname: Nom
+  label_history_wf_name: Nom
   label_history_wfrev: Revision
   label_history_fei: Etape
   label_history_participant: Participant
@@ -123,6 +128,7 @@ fr:
   label_preferences: Préférences
   mnu_documents_any_type: Tous types
   mnu_documents_directory: Répertoire
+  mnu_parts_TEST: Test
   mnu_parts_any_type: Tous types
   mnu_parts_EFF: Effectivité
   mnu_parts_PIE: Article
@@ -178,7 +184,7 @@ fr:
   revise_by_action: Reviser par action
   # shared
   legend_link_duplication: "Duplication des liens de '%{object_orig}'"
-  legend_wi_fields: Propriétés du processus
+  legend_fields: Propriétés du processus
   label_assoc_documents: Documents associés
   label_assoc_parts: Articles associés
   label_assoc_projects: Projets associés
@@ -312,7 +318,8 @@ fr:
   button_remove: Enlever
   label_fields: Attributs
   label_objects: Objets en relation
-  button_swap: Code interne
+  button_swap_code: Code interne
+  button_swap_values: Valeurs
   button_reset: Défaut
   button_undo: Annuler
   label_definitions_attributs: Attributs
@@ -427,7 +434,7 @@ fr:
   legend_clipboard: Presse papier
   submit: GO
   CV: Curriculum vitae
-  first_use: Si vous débutez, nous vous invitons à lire la description des principales fonctionnalités de l'application. <br/>Vous pourrez ensuite profiter de la prise en main (%{help}) avant de lire complètement la <a href='/main/helpgeneral'>documentation</a>
+  first_use: "Si vous débutez, nous vous invitons à lire la description des principales fonctionnalités de l'application. <br/>Vous pourrez ensuite profiter de la prise en main (%{help}) avant de lire complètement la <a href='/main/helpgeneral'>documentation</a>"
   title_how_to: Tous les sujets du Comment faire
   how_to_subject: "Sujet : "
   how_to_files: "Fichiers associé au comment faire"
@@ -496,6 +503,12 @@ fr:
   label_errors: Erreurs
   launch_process: Lancer le processus
   abort process: Abandonner le processus
+  label_definition_name: Nom définition
+  label_definition_revision: Révision définition
+  label_nb_positions: Nombre d'étapes
+  label_positions: Etapes
+  label_errors: Erreurs
+  label_instances: Instances
   # projects
   legend_project: "Renseignez les propriétés du projet"
   project_edit: Edition projet
@@ -666,6 +679,8 @@ fr:
   label_show_mail: Montrer l'adresse mail
   language_fr: Français
   language_en: Anglais
+  language_simple_form_fr: Français
+  language_simple_form_en: Anglais
   label_user_role_ids_in: Attribués
   label_user_role_ids_out: Non atribués
   label_user_group_ids_in: " d'appartenance"
@@ -718,10 +733,12 @@ fr:
   # workitems
   label_relation: Relation
   label_wfid: Processus
-  label_workflow: Définition
+  label_workflow: Tâche
   label_since: Depuis
+  label_dispatched_at: Dispatché
+  label_launched_at: Lançé
   label_expid: Expression
-  label_wfrevision: Révision
+  label_wf_revision: Révision
   label_store: Store
   label_participant: Participant
   label_activity: Activité

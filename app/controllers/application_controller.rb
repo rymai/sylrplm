@@ -2,27 +2,32 @@ require_dependency 'filters/log_definition_filter'
 require_dependency 'controllers/plm_event'
 require_dependency 'controllers/plm_object_controller_module'
 require_dependency 'error_reply'
+require_dependency 'acl_system2/lib/caboose/access_control'
 
 require "sylrplm_ext"
 
 class ApplicationController < ActionController::Base
 	include Controllers::PlmObjectControllerModule
+	include Caboose::AccessControl
 	# include all helpers, all the time
+	respond_to :html, :js, :json
 	helper :all
 	helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?, :get_domain, :get_list_modes, :icone, :h_thumbnails, :tr_def
 	helper_method :get_controller_from_model_type, :icone_fic
 	# See ActionController::RequestForgeryProtection for details
-	protect_from_forgery
+	#rails2 protect_from_forgery
 
 	# bug: page non affichee before_render :check_access_data
-	before_filter LogDefinitionFilter
+	#rails4 ko before_filter LogDefinitionFilter
 	before_filter :check_init
 	before_filter :authorize, :except => [:index, :init_objects]
 	before_filter :check_user
 	before_filter :define_variables
 	before_filter :set_locale
 	before_filter :active_check
-	after_filter :manage_recents
+
+   after_filter :manage_recents
+
 	def manage_recents
 		fname = "#{self.class.name}.#{__method__}:"
 		#LOG.info(fname) {"params=#{params}, user=#{current_user}, plm_object=#{@plm_object}"}
@@ -30,8 +35,8 @@ class ApplicationController < ActionController::Base
 			unless params[:id].nil?
 				object_plm= PlmServices.get_object(get_model_type(params), params[:id])
 				current_user.manage_recents object_plm, params unless object_plm.nil?
+				end
 			end
-		end
 		true
 	end
 
@@ -52,7 +57,7 @@ class ApplicationController < ActionController::Base
 			unless(args[0]["action"] == "index" || (@_params["controller"]=="typesobject" && @_params["action"]=="edit"))
 				err = check_database_consistency(args)
 			end
-			#LOG.debug (fname) {"args.action=#{args[0][:action]} err=#{err} err.nil?=#{err.nil?}"}
+			#LOG.debug(fname) {"args.action=#{args[0][:action]} err=#{err} err.nil?=#{err.nil?}"}
 			if(err.nil? || err=="")
 				if @my_filter
 					st = check_access_data(args)
@@ -65,16 +70,16 @@ class ApplicationController < ActionController::Base
 				else
 				#false
 					msg = t(:data_access_forbidden)
-					#LOG.debug (fname) {msg}
+					#LOG.debug(fname) {msg}
 					redirect_to_main(nil, msg)
 				end
 			else
 				msg=t(:database_not_consistency, :msg=>err)
-				LOG.error (fname) {msg}
+				LOG.error(fname) {msg}
 				redirect_to_main(nil ,msg)
 			end
 		end
-		LOG.debug (fname) {"<<<< flash=#{flash.inspect}"}
+		LOG.debug(fname) {"<<<< flash=#{flash.inspect}"}
 	end
 
 	#
@@ -83,7 +88,7 @@ class ApplicationController < ActionController::Base
 	#
 	def check_database_consistency(*args)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"args=#{args}"}
+		#LOG.debug(fname) {"args=#{args}"}
 		ret = nil
 		if Datafile.host.nil?
 			# "Host not defined, define it in Type object property/sites/SITE_CENTRAL=xxx"
@@ -95,8 +100,8 @@ class ApplicationController < ActionController::Base
 	# return true if user have access on the data
 	def check_access_data(*args)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"************** args=#{args}"}
-		##############instance_variable_names.each  {|vi| LOG.debug (fname) {"#{vi} = #{eval vi}"}}
+		#LOG.debug(fname) {"************** args=#{args}"}
+		##############instance_variable_names.each  {|vi| LOG.debug(fname) {"#{vi} = #{eval vi}"}}
 		#@current_user = syl/creator/SICM/
 		#index:
 		#@_params = {"controller"=>"documents", "action"=>"index"}
@@ -140,7 +145,7 @@ class ApplicationController < ActionController::Base
 	#
 	def check_user(redirect=true)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"redirect=#{redirect}, params=#{params} action=#{params[:action][0,4]}"}
+		#LOG.debug(fname) {"redirect=#{redirect}, params=#{params} action=#{params[:action][0,4]}"}
 		flash[:notice] = nil
 		if(params[:action][0,3]!="show")
 			unless current_user.nil? || current_user.may_access?
@@ -157,20 +162,20 @@ class ApplicationController < ActionController::Base
 	def check_user_connect(user)
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname) {">>>>user=#{user}"}
-		flash[:error] = t(:ctrl_user_not_valid,:user=>user ) unless user.may_connect?
+		msg = t(:ctrl_user_not_valid,:user=>user ) unless user.may_connect?
 		#puts "check_user_connect:"+user.inspect+":"+flash[:notice].to_s
 		if user.login==PlmServices.get_property(:USER_ADMIN)
-			flash[:error] = nil
+			msg = nil
 		end
-		LOG.debug(fname) {"<<<<user=#{user} flash[:error]=#{flash[:error]}"}
-		flash[:error]
+		LOG.debug(fname) {"<<<<user=#{user} msg=#{msg}"}
+		msg
 	end
 
 	def check_init
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname) {">>>>"}
 		if User.count == 0
-			LOG.error (fname) {"Database is empty (no user)"}
+			LOG.error(fname) {"Database is empty (no user)"}
 			flash[:error]=t(:ctrl_init_to_do)
 			LOG.debug(fname) {"<<<<flash[:error]=#{flash[:error]}"}
 			respond_to do |format|
@@ -268,7 +273,7 @@ class ApplicationController < ActionController::Base
 		LOG.debug(fname) {">>>>params=#{params.inspect}"}
 		@current_user= current_user
 		@favori      = session[:favori] ||= Favori.new
-		#LOG.info (fname) {"**** favori=#{@favori.inspect}"}
+		#LOG.info(fname) {"**** favori=#{@favori.inspect}"}
 		@theme       = get_session_theme(session)
 		LOG.debug(fname) {"@theme=#{@theme}"}
 		@language    = PlmServices.get_property(:LOCAL_DEFAULT)
@@ -300,6 +305,8 @@ class ApplicationController < ActionController::Base
 		@myparams = params
 		Datafile.host=request.host
 		@types_features=::Controller.get_types_by_features
+		flash[:notice]=""
+		flash[:error]=""
 		LOG.debug(fname) {"<<<<params=#{params.inspect}"}
 	end
 
@@ -353,30 +360,21 @@ class ApplicationController < ActionController::Base
 
 	def authorize
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug(fname){">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"}
-		user_id = session[:user_id] || User.find_by_id(session[:user_id])
-		LOG.debug(fname){"request_uri=#{request.request_uri} user_id=#{user_id}"}
+		LOG.debug(fname){">>>>>>>>>> #{request.env['REQUEST_URI']} >>>>>>>>>>>>>>>>>>>>>>>"}
+		LOG.debug(fname){"params=#{params}"}
+		unless session[:user_id].nil?
+		user_id = session[:user_id] || User.find(session[:user_id])
+		end
+		#LOG.debug(fname){"request_uri=#{request.env["REQUEST_URI"]} user_id=#{user_id}"}
 		if user_id.nil?
-			LOG.debug(fname){"user is nil: new_sessions_url=#{new_sessions_url}"}
-			session[:original_uri] = request.request_uri
+			#LOG.debug(fname){"user is nil: new_sessions_url=#{new_sessions_url}"}
+			session[:original_uri] = request.env["REQUEST_URI"]
 			flash[:notice] = t(:login_login)
-			LOG.debug(fname){"user is nil: redirect_to #{new_sessions_url}  "}
-			redirect_to new_sessions_url
+			LOG.debug(fname){"user is nil: redirect_to #{new_session_url}  "}
+			redirect_to new_session_url
 		else
 			user=User.find(user_id)
 			LOG.debug(fname){"user=#{user} admin?=#{user.is_admin?}"}
-			unless user.is_admin?
-				LOG.debug(fname){"user not admin: user.roles=#{user.roles} user.groups=#{user.groups} user.projects=#{user.projects}"}
-				if user.roles.nil? || user.groups.nil? || user.projects.nil?
-					LOG.debug(fname){"user not admin: roles=#{user.roles} "}
-					LOG.debug(fname){"user not admin: groups=#{user.groups}  "}
-					LOG.debug(fname){"user not admin: projects=#{user.projects}  "}
-					session[:original_uri] = request.request_uri
-					flash[:notice] = t(:login_login)
-					LOG.debug(fname){"user not admin: redirect_to #{new_sessions_url}  "}
-					redirect_to new_sessions_url
-				end
-			end
 			if user.roles.nil?  || user.groups.nil? || user.projects.nil? || user.volume.nil?
 				LOG.debug(fname){"roles=#{user.roles} "}
 					LOG.debug(fname){"groups=#{user.groups}  "}
@@ -384,16 +382,16 @@ class ApplicationController < ActionController::Base
 				LOG.debug(fname){"volume=#{user.volume} "}
 				session[:original_uri] = request.request_uri
 				flash[:notice] = t(:login_login)
-				LOG.debug(fname){"redirect_to #{new_sessions_url}  "}
+				LOG.debug(fname){"user incomplet redirect_to #{new_sessions_url}  "}
 				redirect_to new_sessions_url
 			end
 		end
-		LOG.debug(fname){"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"}
+		LOG.debug(fname){"<<<<<<<<<<< OKOKOK <<<<<<<<<<<<<<<<"}
 	end
 
 	def permission_denied(role, controller, action)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"role=#{role} controller=#{controller} action=#{action}"}
+		LOG.debug(fname) {"role=#{role} controller=#{controller} action=#{action}"}
 		flash[:error] = t(:ctrl_no_privilege, :role => role, :controller => controller, :action => action)
 		redirect_to(:action => "index")
 	end
@@ -431,11 +429,18 @@ class ApplicationController < ActionController::Base
 	end
 
 	def icone(object)
+			fname= "#{self.class.name}.#{__method__}"
+
 		html_title=""
-		unless object.typesobject.nil?
-			#type = "#{object.model_name}_#{object.typesobject.name}"
-			mdl_name = t("typesobject_name_#{object.typesobject.name}")
+		type=object.typesobject
+		unless type.nil?
+			LOG.debug(fname) {"object=#{object} typesobject=#{type} "}
+			begin
+			mdl_name = t("typesobject_name_#{type.name}")
 			html_title="title='#{mdl_name}'"
+		rescue Exception=>e
+						LOG.warn(fname) {"Exception:#{e}"}
+		end
 		end
 		fic = icone_fic(object)
 		ret = "<img class='icone' src='#{fic}' #{html_title}/>"
@@ -444,18 +449,23 @@ class ApplicationController < ActionController::Base
 				ret << h_thumbnails(object)
 			end
 		end
-		ret
+		ret.html_safe
 	end
 
 	def icone_fic(obj)
-		fname="#{controller_class_name}.#{__method__}"
-		unless obj.model_name.nil? || !obj.respond_to?(:typesobject) || obj.typesobject.nil?
-			ret = "/images/#{obj.model_name}_#{obj.typesobject.name}.png"
-			unless File.exist?("#{RAILS_ROOT}/public#{ret}")
-				ret = "/images/#{obj.model_name}.png"
-				unless File.exist?("#{RAILS_ROOT}/public#{ret}")
+		fname="#{self.class.name}.#{__method__}"
+		unless obj.modelname.nil? || !obj.respond_to?(:typesobject) || obj.typesobject.nil?
+			begin
+				ret = "/images/#{obj.modelname}_#{obj.typesobject.name}.png"
+			rescue Exception=>e
+						LOG.warn(fname) {"Exception:#{e}"}
+				ret = "/images/#{obj.modelname}.png"
+			end
+			unless File.exist?("#{Rails.root}/public#{ret}")
+				ret = "/images/#{obj.modelname}.png"
+				unless File.exist?("#{Rails.root}/public#{ret}")
 					ret = "/images/default_object.png"
-					unless File.exist?("#{RAILS_ROOT}/public#{ret}")
+					unless File.exist?("#{Rails.root}/public#{ret}")
 						ret = ""
 					end
 				end
@@ -463,7 +473,7 @@ class ApplicationController < ActionController::Base
 		else
 			ret = ""
 		end
-		#LOG.debug  (fname){"icone:#{obj.model_name}:#{obj.typesobject.name}:#{ret}"}
+		#LOG.debug  (fname){"icone:#{obj.modelname}:#{obj.typesobject.name}:#{ret}"}
 		ret
 	end
 
@@ -472,7 +482,7 @@ class ApplicationController < ActionController::Base
 	#
 	def icone_plmtype(plmtype)
 		ret = "/images/#{plmtype}.png"
-		unless File.exist?("#{RAILS_ROOT}/public#{ret}")
+		unless File.exist?("#{config.root}/public#{ret}")
 			ret = ""
 		end
 		ret
@@ -488,13 +498,13 @@ class ApplicationController < ActionController::Base
 	end
 
 	def h_thumbnails(obj)
-		fname="#{controller_class_name}.#{__method__}"
+		fname="#{self.class.name}.#{__method__}"
 		ret=""
 		if obj.respond_to? :thumbnails
 			unless obj.thumbnails.nil?
 				obj.thumbnails.each do |img|
 					src = img.write_file_tmp
-					LOG.debug (fname) {"src=#{src} "}
+					LOG.debug(fname) {"src=#{src} "}
 					ret << "<img class='thumbnail' src='#{src}'/>"
 				end
 			end
@@ -512,5 +522,16 @@ class ApplicationController < ActionController::Base
 		#puts "t:#{args.inspect} env:#{Rails.env}:#{tr}"
 		tr
 	end
+
+		# DELETE /parts/1
+	# DELETE /parts/1.xml
+	def destroy
+		#menu index/delete "controller"=>"parts", "action"=>"destroy", "id"=>"36"
+		#action index/supprime "commit"=>"Supprime", "_method"=>"delete", "action_on"=>{"1"=>"0", "3"=>..."0", "35"=>"0"}, "controller"=>"parts", "action"=>"destroy", "id"=>"action"
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"destroy.params=#{params.inspect}"}
+		ctrl_destroy
+	end
+
 end
 

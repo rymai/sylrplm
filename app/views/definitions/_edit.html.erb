@@ -1,8 +1,8 @@
 <script>
 	function showDefinitionBox() {
-	byId('uri_label').innerHTML='definition';
-	byId('uri_span').style.display='none';
-	byId('definition_span').style.display='inline';
+		byId('uri_label').innerHTML = 'definition';
+		byId('uri_span').style.display = 'none';
+		byId('definition_span').style.display = 'inline';
 	}
 </script>
 <h1><%= t(:legend_definition) %></h1>
@@ -19,6 +19,11 @@
 		<th><span id="uri_label"><%= f.label t("label_uri")%></span></th>
 		<td><span id="uri_span"> <%= f.text_area :uri %></span></td>
 	</tr>
+	<tr>
+		<th><%= f.label t("label_launch_fields")%></th>
+		<td><%= f.text_area :launch_fields %></td>
+	</tr>
+
 	<tr>
 		<th><%= f.label t("label_roles_may_launch") %></th>
 		<td><%= select_inout(f, @definition, Role.all, :title) %></td>

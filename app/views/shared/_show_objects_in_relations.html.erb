@@ -1,54 +1,24 @@
 <h1><%=t(:legend_link_duplication, :object_orig => object)%></h1>
-<% if object.respond_to? :links_documents %>
-<h2><%= object.links_documents.count %> <%= t(:label_assoc_documents) %></h2>
+<% ["document", "part", "project"].each do |child_model|
+link_method="links_#{object.modelname}_#{child_model}s"
+if object.respond_to? link_method
+links_to_childs=object.send(link_method).to_a%>
+<h2><%= links_to_childs.count %> <%= t("label_assoc_#{link_method}") %></h2>
 <table class='menu_bas'>
-	<% links=object.links_documents %>
-	<% if links.count>0 %>
+	<% if links_to_childs.count>0 %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= check_box_tag("all[document]","document", {:checked => 'checked'},{ :onchange=>'switchCheckBox(this);'}) %><%= t(:switch_all_links) %></td>
+		<td><%= check_box_tag("all[#{child_model}]","#{link_method}", {:checked => 'checked'},{ :onchange=>'switchCheckBox(this);'}) %><%= t(:switch_all_links) %></td>
 	</tr>
-	<% links.each do |lnk| %>
+	<% links_to_childs.each do |lnk| %>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= check_box_tag("links[document][]","#{lnk.id}", {:checked => 'checked'}) %><%= lnk.child %></td>
+		<td><%= check_box_tag("links[#{child_model}][]","#{lnk.id}", {:checked => 'checked'}) %><%= lnk.child %></td>
 	</tr>
 	<% end %>
 	<% end %>
 </table>
 <% end %>
-
-<% if object.respond_to? :links_parts %>
-<h2><%= object.links_parts.count %> <%= t(:label_assoc_parts) %></h2>
-<table class='menu_bas'>
-	<% links=object.links_parts %>
-	<% if links.count>0 %>
-	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= check_box_tag("all[part]","part", {:checked => 'checked'},{ :onchange=>'switchCheckBox(this);'}) %><%= t(:switch_all_links) %></td>
-	</tr>
-	<% links.each do |lnk| %>
-	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= check_box_tag("links[part][]","#{lnk.id}", {:checked => 'checked'}) %><%= lnk.child %></td>
-	</tr>
-	<% end %>
-	<% end %>
-</table>
-<% end %>
-
-<% if object.respond_to? :links_projects %>
-<h2><%= object.links_projects.count %> <%= t(:label_assoc_projects) %></h2>
-<table class='menu_bas'>
-	<% links=object.links_projects %>
-	<% if links.count>0 %>
-	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= check_box_tag("all[project]","project", {:checked => 'checked'},{ :onchange=>'switchCheckBox(this);'}) %><%= t(:switch_all_links) %></td>
-	</tr>
-	<% links.each do |lnk| %>
-	<tr class='<%= cycle("even", "odd") %>'>
-		<td><%= check_box_tag("links[project][]","#{lnk.id}", {:checked => 'checked'}) %><%= lnk.child %></td>
-	</tr>
-	<% end %>
-	<% end %>
-</table>
 <%end%>
+
 
 <% if fonct != "new_dup" %>
 

@@ -17,7 +17,7 @@ class Controller
 		fname= "#{self.class.name}.#{__method__}"
 		ret=[]
 		i=0
-		controllers = Dir.new("#{RAILS_ROOT}/app/controllers").entries
+		controllers = Dir.new("#{Rails.root}/app/controllers").entries
 		controllers.each do |controller|
 			if controller =~ /_controller.rb/
 				###puts "Controller.get_controllers:"+controller
@@ -27,7 +27,7 @@ class Controller
 				#ApplicationController.new.methods
 				(eval("#{cont}.new.methods") -
 				ApplicationController.new.methods).sort.each {|smet|
-					LOG.debug (fname){"controller=#{cont} method=#{smet}"}
+					#LOG.debug(fname){"controller=#{cont} method=#{smet}"}
 					met = smet.to_s
 					if(met!='init_objects' && met!='login' && met!='logout' && met.index('_old')==nil && !met.end_with?('_') && met.index('_obsolete')==nil && met.index('_essai')==nil && met.index('authorized')==nil)
 						ret<< Controller.new(i,cont,met)
@@ -38,7 +38,7 @@ class Controller
 				}
 			end
 		end
-		puts
+		LOG.debug(fname){"Number of controllers and methods=#{ret.count}"}
 		ret
 	end
 
@@ -105,7 +105,7 @@ class Controller
 			vol.set_directory
 			puts "Controller.update_admin="+vol.name+" protocol="+vol.protocol+" dir="+vol.directory.to_s
 			vol.save
-			User.find_all.each do |auser|
+			User.get_all.each do |auser|
 				auser.volume=vol
 				##auser.password=auser.login
 				auser.save
@@ -116,7 +116,7 @@ class Controller
 
 	def self.get_types_by_features(only_admin=false)
 		fname="Controller.#{__method__}"
-		LOG.info (fname) { "only_admin=#{only_admin}"}
+		LOG.info(fname) { "only_admin=#{only_admin}"}
 		ret={}
 		# TODO temporary
 		features = [:document, :part, :project, :customer]
@@ -127,6 +127,7 @@ class Controller
 			plmtype = feature
 			# types, including the generic one
 			types = ::Typesobject.get_types(plmtype, false)
+			LOG.debug(fname) {"types for #{feature}=#{types}l"}
 			types.each do |type|
 				if !only_admin || type.domain==::SYLRPLM::DOMAIN_ADMIN
 					unless type.nil?
@@ -136,30 +137,30 @@ class Controller
 					end
 				end
 			end
-			LOG.info (fname) { "avant sort:#{features_types[feature]}"}
+			LOG.info(fname) { "avant sort:#{features_types[feature]}"}
 			features_types[feature].sort! do |type1 , type2|
 				mdl1 = type1.forobject+"s"
 				mnu1=tr_def("mnu_#{mdl1}_#{type1.name}")
 				mdl2 = type2.forobject+"s"
 				mnu2=tr_def("mnu_#{mdl2}_#{type2.name}")
 				compare=mnu1 <=> mnu2
-				LOG.info (fname) { "compare:#{mnu1}<=>#{mnu2}=#{compare}"}
+				LOG.info(fname) { "compare:#{mnu1}<=>#{mnu2}=#{compare}"}
 				compare
 			end
 			generic_type = Typesobject.generic(feature)
 			divider=Typesobject.new ({:name=>"divider",:forobject=>feature})
-			LOG.info (fname) { "generic_type for '#{feature}' = '#{generic_type.inspect}'"  }
+			LOG.info(fname) { "generic_type for '#{feature}' = '#{generic_type.inspect}'"  }
 			ret[feature]=[]
 			ret[feature] << generic_type
 			ret[feature] << divider
 			features_types[feature].each do |menus|
 				ret[feature] << menus
 			end
-			LOG.info (fname) { "apres sort:"}
-			ret[feature].each { |typ| LOG.info (fname) { "type for #{feature} = #{typ.name}" } }
+			LOG.info(fname) { "apres sort:"}
+			ret[feature].each { |typ| LOG.info(fname) { "type for #{feature} = #{typ.name}" } }
 
 		end
-		##LOG.debug (fname) {"ret=#{features_types}"}
+		LOG.debug(fname) {"ret=#{ret}"}
 		ret
 	end
 

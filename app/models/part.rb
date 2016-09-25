@@ -1,7 +1,6 @@
 #require 'lib/models/plm_object'
-require 'openwfe/representations'
-require 'ruote/part/local_participant'
-
+#require 'openwfe/representations'
+#require 'ruote/part/local_participant'
 class Part < ActiveRecord::Base
 	include Ruote::LocalParticipant
 	include Models::PlmObject
@@ -11,12 +10,12 @@ class Part < ActiveRecord::Base
 	validates_uniqueness_of :ident, :scope => :revision
 
 	attr_accessor :user, :link_attributes
+	attr_accessible :id, :owner_id, :typesobject_id, :statusobject_id, :next_status_id, :previous_status_id, :ident, :revision, :designation, :description,  :date, :owner, :group_id, :projowner_id, :domain , :type_values
 
 	has_many :datafiles, :dependent => :destroy
 
-	has_many :thumbnails,
-  	:class_name => "Datafile",
-  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='thumbnail')"
+	#rails2 has_many :thumbnails,  	:class_name => "Datafile",  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='thumbnail')"
+	has_many :thumbnails, -> { where("typesobject_id = (select id from typesobjects as t where t.name='thumbnail')") },  	:class_name => "Datafile"
 
 	belongs_to :typesobject
 	belongs_to :statusobject
@@ -31,67 +30,34 @@ class Part < ActiveRecord::Base
 	#has_and_belongs_to_many :documents, :join_table => "links",
 	#:foreign_key => "father_id", :association_foreign_key => "child_id", :conditions => ["father_type='part' AND child_type='document'"]
 
-	has_many :links_part_forum,
-    :class_name => "Link",
-    :foreign_key => "father_id",
-    :conditions => { father_plmtype: 'part', child_plmtype: 'forum' }
+	#rails2 has_many :links_part_forum,    :class_name => "Link",    :foreign_key => "father_id",    :conditions => { father_plmtype: 'part', child_plmtype: 'forum' }
+	has_many :links_part_forums, -> { where(father_plmtype: 'part'  , child_plmtype: 'forum') },    :class_name => "Link",    :foreign_key => "father_id"
+	has_many :forums,    :through => :links_part_forums,    :source => :forum
 
-	has_many :links_part_documents,
-    :class_name => "Link",
-    :foreign_key => "father_id",
-    :conditions => { father_plmtype: 'part', child_plmtype: 'document' }
+	#rails2 has_many :links_part_documents,    :class_name => "Link",    :foreign_key => "father_id",    :conditions => { father_plmtype: 'part', child_plmtype: 'document' }
+	has_many :links_part_documents, -> { where(father_plmtype: 'part'  , child_plmtype: 'document') },    :class_name => "Link",    :foreign_key => "father_id"
+	has_many :documents,    :through => :links_part_documents,    :source => :document_down
 
-	has_many :links_part_part,
-    :class_name => "Link",
-    :foreign_key => "father_id",
-    :conditions => { father_plmtype: 'part', child_plmtype: 'part' }
+	#rails2 has_many :links_part_part,    :class_name => "Link",    :foreign_key => "father_id",    :conditions => { father_plmtype: 'part', child_plmtype: 'part' }
+	has_many :links_part_parts, -> { where(father_plmtype: 'part'  , child_plmtype: 'part') },    :class_name => "Link",    :foreign_key => "father_id"
+	has_many :parts ,    :through => :links_part_parts,    :source => :part_down
+	has_many :variants ,    :through => :links_part_parts,    :source => :variant_down
+	has_many :effectivities ,    :through => :links_part_parts,    :source => :effectivity_down
 
-	has_many :links_part_part_up,
-    :class_name => "Link",
-    :foreign_key => "child_id",
-    :conditions => { father_plmtype: 'part', child_plmtype: 'part' }
+	#rails2 has_many :links_part_document_up,    :class_name => "Link",    :foreign_key => "child_id",    :conditions => { father_plmtype: 'part', child_plmtype: 'document' }
+	#has_many :links_part_document_up, -> { where(father_plmtype: 'part'  , child_plmtype: 'document') },    :class_name => "Link",    :foreign_key => "child_id"
 
-	has_many :links_project_part_up,
-    :class_name => "Link",
-    :foreign_key => "child_id",
-    :conditions => {father_plmtype: 'project', child_plmtype: 'part' }
+	#rails2 has_many :links_part_part_up,    :class_name => "Link",    :foreign_key => "child_id",    :conditions => { father_plmtype: 'part', child_plmtype: 'part' }
+	has_many :links_part_parts_up, -> { where(father_plmtype: 'part'  , child_plmtype: 'part') },    :class_name => "Link",    :foreign_key => "child_id"
+	has_many :parts_up ,    :through => :links_part_parts_up,    :source => :part_up
 
-	has_many :links_customer_part_up,
-    :class_name => "Link",
-    :foreign_key => "child_id",
-    :conditions =>{father_plmtype: 'customer', child_plmtype: 'part' }
+	#rails2 has_many :links_project_part_up,    :class_name => "Link",    :foreign_key => "child_id",    :conditions => {father_plmtype: 'project', child_plmtype: 'part' }
+	has_many :links_project_parts_up, -> { where(father_plmtype: 'project'  , child_plmtype: 'part') },    :class_name => "Link",    :foreign_key => "child_id"
+	has_many :projects_up ,    :through => :links_project_parts_up,    :source => :project_up
 
-	has_many :forums,
-    :through => :links_part_forum,
-    :source => :forum
-
-	has_many :documents,
-    :through => :links_part_documents,
-    :source => :document_down
-
-	has_many :parts ,
-    :through => :links_part_part,
-    :source => :part_down
-
-	has_many :variants ,
-    :through => :links_part_part,
-    :source => :variant_down
-
-	has_many :effectivities ,
-    :through => :links_part_part,
-    :source => :effectivity_down
-
-	has_many :parts_up ,
-    :through => :links_part_part_up,
-    :source => :part_up
-
-	has_many :projects_up ,
-    :through => :links_project_part_up,
-    :source => :project_up
-
-	has_many :customers_up ,
-    :through => :links_customer_part_up,
-    :source => :customer_up
+	#rails2 has_many :links_customer_part_up,    :class_name => "Link",    :foreign_key => "child_id",    :conditions =>{father_plmtype: 'customer', child_plmtype: 'part' }
+	has_many :links_customer_parts_up, -> { where(father_plmtype: 'customer'  , child_plmtype: 'document') },    :class_name => "Link",    :foreign_key => "child_id"
+	has_many :customers_up ,    :through => :links_customer_parts_up,    :source => :customer_up
 	#
 	#essai
 =begin
@@ -108,16 +74,23 @@ has_many :variant_effectivities,
 	def variant_effectivities
 		fname= "#{Part}.#{__method__}"
 		ret=[]
-		::Link.find(:all,
-		:conditions => ["father_plmtype='part' and child_plmtype='part' and father_id = #{id}"]
-		).each do |lnk|
-			father=lnk.father
-			child=lnk.child
-			if(father.typesobject.name = "VAR" && child.typesobject.name == "EFF")
-			ret << lnk.child
+		begin
+			cond="father_plmtype='part' and child_plmtype='part' and father_id = #{id}"
+
+			#::Link.find(:all,
+			#:conditions => ["father_plmtype='part' and child_plmtype='part' and father_id = #{id}"]
+			::Link.all.where(cond).each do |lnk|
+				father=lnk.father
+				child=lnk.child
+				if(father.typesobject.name == "VAR" && child.typesobject.name == "EFF")
+				ret << lnk.child
+				end
 			end
+		rescue Exception=>e
+			LOG.error(fname){"ERROR finding effectivities : #{e}"}
+			PlmServices.stack("variant_effectivities",20)
 		end
-		LOG.debug (fname){" #{ret.size} variant effectivites from #{self.ident}"}
+		LOG.debug(fname){" #{ret.size} variant effectivites from #{self.ident}"}
 		ret
 	end
 
@@ -134,7 +107,7 @@ has_many :variant_effectivities,
 		fname= "#{self.class.name}.#{__method__}"
 		obj=find(object_id)
 		obj.edit
-		LOG.debug (fname) {"part find_edit :type_values=#{obj.type_values}"} if obj.respond_to? :type_values
+		LOG.debug(fname) {"part find_edit :type_values=#{obj.type_values}"} if obj.respond_to? :type_values
 		obj
 	end
 
@@ -149,18 +122,6 @@ has_many :variant_effectivities,
 		ret
 	#conditions = ["ident LIKE ? or "+qry_type+" or revision LIKE ? or designation LIKE ? or "+qry_status+
 	#  " or "+qry_owner+" or date LIKE ? "
-	end
-
-	def variants_old
-		fname= "#{self.class.name}.#{__method__}"
-		ret=[]
-		parts.each do |part|
-			if part.typesobject.name == "VAR"
-				LOG.debug (fname){"part:#{part}"}
-			ret << part
-			end
-		end
-		ret
 	end
 
 	def users

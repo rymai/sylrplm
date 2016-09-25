@@ -1,7 +1,7 @@
 <h1><%= t("links_relation_tabs") %></h1>
 <div class="onglet ombrage">
 	<ul class="nav nav-pills" id="OngletDesRelations">
-		<% object.relations(nil, nil, ::Relation::RELATION_PASTE_WAY_MANUAL).each do |relation|
+		<% links_relation_tabs.relations(nil, nil, ::Relation::RELATION_PASTE_WAY_MANUAL).each do |relation|
 		if( ::Typesobject::MODELS_PLM.include?(relation.child_plmtype))
 		%>
 		<li class="ombrageSmall">
@@ -11,17 +11,17 @@
 		<% end %>
 	</ul>
 	<div class="tab-content">
-		<% object.relations(nil, nil, ::Relation::RELATION_PASTE_WAY_MANUAL).each do |relation|
+		<% links_relation_tabs.relations(nil, nil, ::Relation::RELATION_PASTE_WAY_MANUAL).each do |relation|
 
 		if( ::Typesobject::MODELS_PLM.include?(relation.child_plmtype))
-		puts "links_relation_tabs:relation.child_plmtype=#{relation.child_plmtype} in #{::Typesobject::MODELS_PLM}"
+		puts "links_relation_tabs:relation.child_plmtype=#{relation.child_plmtype} in #{::Typesobject::MODELS_PLM} begin"
 		%>
 		<div id="<%= relation.name%>" class="tab-pane">
 			<% default=nil
 			fonct="add_object"
-			form_for(object ,:url => {:controller=>get_controller_from_model_type(object.model_name), :action=>"add_link_objects", :id => object.id} , :html => { :id => h_form_html_id(object, fonct) }) do |f|
+			form_for(links_relation_tabs ,:url => {:controller=>get_controller_from_model_type(links_relation_tabs.modelname), :action=>"add_link_objects", :id => links_relation_tabs.id} , :html => { :id => h_form_html_id(links_relation_tabs, fonct) }) do |f|
 			%>
-			<%= f.error_messages %>
+			<%= form_errors_for links_relation_tabs %>
 			<table>
 				<% plmtypes=[]
 				if relation.child_plmtype==PlmServices.get_property(:PLMTYPE_GENERIC)
@@ -29,6 +29,7 @@
 				else
 				plmtypes<<relation.child_plmtype
 				end
+				puts "links_relation_tabs:plmtypes=#{plmtypes}"
 				plmtypes.each do |plmtype|
 				%>
 					<tr>
@@ -44,7 +45,7 @@
 						<td><%= t(:label_relation)%></td>
 						<td><%= t(:label_child)%></td>
 					</tr>
-					<% Link.find_childs(object, nil, relation.name).each do |lnk| %>
+					<% Link.find_childs(links_relation_tabs, nil, relation.name).each do |lnk| %>
 					<tr>
 						<%= render(:partial => "links/relation_object", :locals =>{:link =>lnk}) %>
 					</tr>
@@ -52,7 +53,9 @@
 			</table>
 			<%end%>
 		</div>
-		<%end%>
+
+		<%puts "links_relation_tabs:relation.child_plmtype=#{relation.child_plmtype} in #{::Typesobject::MODELS_PLM} end"
+		end%>
 		<%end%>
 	</div>
 </div>

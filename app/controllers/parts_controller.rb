@@ -1,6 +1,8 @@
 class PartsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control(Access.find_for_controller(controller_class_name))
+	respond_to :html, :js, :json
+	access_control(Access.find_for_controller(controller_name.classify))
+	#
 	# GET /parts
 	# GET /parts.xml
 	def index
@@ -11,7 +13,7 @@ class PartsController < ApplicationController
 		end
 	end
 
-	 def index_execute
+	def index_execute
 		ctrl_index_execute
 	end
 
@@ -27,14 +29,16 @@ class PartsController < ApplicationController
 
 	def select_view
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
-		LOG.debug (fname){"#{params["commit"].force_encoding("utf-8")}==? #{t("root_model_design").force_encoding("utf-8")}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"#{params["commit"].force_encoding("utf-8")}==? #{t("root_model_design").force_encoding("utf-8")}"}
 		if params["commit"].force_encoding("utf-8") == t("root_model_design").force_encoding("utf-8")
 			show_design
 		else
 			show_
 			respond_to do |format|
 				format.html { render :action => "show" }
+				#format.html
+  			    #format.html { redirect_to(@part) }
 				format.xml  { render :xml => @part }
 			end
 		end
@@ -44,7 +48,7 @@ class PartsController < ApplicationController
 	# GET /parts/new.xml
 	def new
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@part   = Part.new(user: @current_user)
 		@types  = Typesobject.get_types("part")
 		@status = Statusobject.get_status("part", 2)
@@ -56,13 +60,13 @@ class PartsController < ApplicationController
 
 	def new_dup
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"new_dup: params=#{params.inspect}"}
 		@object_orig = Part.find(params[:id])
 		@part = @object = @object_orig.duplicate(current_user)
 		@types    = Typesobject.get_types("part")
 		@status   = Statusobject.get_status("part", 2)
 		respond_to do |format|
-			format.html # part/1/new_dup
+			format.html # part/1/edit
 			format.xml  { render :xml => @part }
 		end
 	end
@@ -70,7 +74,7 @@ class PartsController < ApplicationController
 	# GET /parts/1/edit
 	def edit
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"part edit params=#{params.inspect}"}
+		LOG.debug(fname){"part edit params=#{params.inspect}"}
 		@part   = Part.find_edit(params[:id])
 		@types  = Typesobject.get_types("part")
 	end
@@ -78,7 +82,7 @@ class PartsController < ApplicationController
 	# GET /parts/1/edit_lifecycle
 	def edit_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@part   = Part.find_edit(params[:id])
 	end
 
@@ -86,7 +90,7 @@ class PartsController < ApplicationController
 	# POST /parts.xml
 	def create
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"create: params=#{params.inspect}"}
 		@part   = Part.new(params[:part])
 		@types  = Typesobject.get_types("part")
 		@status = Statusobject.get_status("part")
@@ -101,7 +105,7 @@ class PartsController < ApplicationController
 				st = ctrl_duplicate_links(params, @part, current_user)
 				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
 				params[:id]=@part.id
-				LOG.debug (fname) {"create type_values=#{@part.type_values.inspect}"} if @part.respond_to? :type_values
+				LOG.debug(fname) {"create type_values=#{@part.type_values.inspect}"} if @part.respond_to? :type_values
 				show_
 				format.html { render :action => "show"}
 				format.xml  { render :xml => @part, :status => :created, :location => @part }
@@ -117,7 +121,7 @@ class PartsController < ApplicationController
 	# PUT /parts/1.xml
 	def update
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@part = Part.find(params[:id])
 		@part.update_accessor(current_user)
 		if commit_promote?
@@ -125,7 +129,7 @@ class PartsController < ApplicationController
 		else
 			respond_to do |format|
 				st=@part.update_attributes(params[:part])
-				LOG.debug (fname){"st update=#{st}"}
+				LOG.debug(fname){"st update=#{st}"}
 				if st
 					flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_part),:ident=>@part.ident)
 					format.html { redirect_to(@part) }
@@ -142,7 +146,7 @@ class PartsController < ApplicationController
 
 	def update_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@part = Part.find(params[:id])
 		if commit_promote?
 			ctrl_promote(@part)
@@ -160,58 +164,34 @@ class PartsController < ApplicationController
 	#
 	def update_type
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@part = Part.find(params[:id])
 		ctrl_update_type @part, params[:object_type]
 	end
 
-	# DELETE /parts/1
-	# DELETE /parts/1.xml
-	def destroy
-		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug(fname){"destroy.params=#{params.inspect}"}
-		@part = Part.find(params[:id])
-		respond_to do |format|
-			unless @part.nil?
-				if @part.destroy
-					flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_part), :ident => @part.ident)
-					format.html { redirect_to(parts_url) }
-					format.xml  { head :ok }
-				else
-					flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_part), :ident => @part.ident)
-					index_
-					format.html { render :action => "index" }
-					format.xml  { render :xml => @part.errors, :status => :unprocessable_entity }
-				end
-			else
-				flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_part), :ident => @part.ident)
-			end
-		end
-	end
-
 	def revise
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		ctrl_revise(Part)
 	end
 
 	def add_docs
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@part = Part.find(params[:id])
 		ctrl_add_objects_from_favorites(@part, :document)
 	end
 
 	def add_parts
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@part = Part.find(params[:id])
 		ctrl_add_objects_from_favorites(@part, :part)
 	end
 
 	def new_forum
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@object = Part.find(params[:id])
 		@types = Typesobject.get_types("forum")
 		@status = Statusobject.get_status("forum")
@@ -227,21 +207,21 @@ class PartsController < ApplicationController
 
 	def add_forum
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@part = Part.find(params[:id])
 		ctrl_add_forum(@part)
 	end
 
 	def promote
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@part = Part.find(params[:id])
 		ctrl_promote(@part)
 	end
 
 	def demote
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@part = Part.find(params[:id])
 		ctrl_demote(@part)
 	end
@@ -251,7 +231,7 @@ class PartsController < ApplicationController
 	#
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@part = Part.find(params[:id])
 		@datafile = Datafile.new({:user => current_user, :thepart => @part})
 		ctrl_new_datafile(@part)
@@ -262,14 +242,14 @@ class PartsController < ApplicationController
 	#
 	def add_datafile
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@part = Part.find(params[:id])
 		ctrl_add_datafile(@part)
 	end
 
 	def show_design
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		part = Part.find(params[:id])
 		ctrl_show_design(part, params[:type_model_id])
 	end
@@ -277,13 +257,13 @@ class PartsController < ApplicationController
 	private
 
 	def show_
-		fname= "#{controller_class_name}.#{__method__}"
+		fname= "#{self.class.name}.#{__method__}"
 		#
 		define_view
 		#
 		prop_name="#{current_user.login}.part_structure"
 		prop=PlmServices.get_property( prop_name,"form_values")
-		LOG.debug (fname){"prop=#{prop.inspect}"}
+		LOG.debug(fname){"prop=#{prop.inspect}"}
 		unless prop.nil?
 			params[:variant] = prop[:variant] if params[:variant].blank?
 			params[:view_id] = prop[:view_id] if params[:view_id].blank?
@@ -294,30 +274,32 @@ class PartsController < ApplicationController
 		{:variant=>params[:variant], :view_id=>params[:view_id], :all_variants=>params[:all_variants], :type_model_id=>params[:type_model_id]})
 		#
 		@part                    = Part.find(params[:id])
-		@other_parts = Part.paginate(:page => params[:page],
-		:conditions => ["id != #{@part.id}"],
-		:order => 'ident ASC',
+		#rails2 @other_parts = Part.paginate(:page => params[:page], :conditions => ["id != #{@part.id}"], :order => 'ident ASC', :per_page => PlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i)
+		@other_parts = Part.where("id != #{@part.id}").order('ident ASC').paginate(:page => params[:page],
 		:per_page => PlmServices.get_property(:NB_ITEMS_PER_PAGE).to_i)
 		@first_status = Statusobject.get_first(@part)
 		all_variant=(params[:all_variants].nil? ? "no" : params[:all_variants])
 		if all_variant == "on"
 			params[:variant]=nil
 		end
-		@tree         = build_tree(@part, @myparams[:view_id] , params[:variant])
+		LOG.debug(fname){"----------------build_tree begin"}
+		@tree         =build_tree(@part, @myparams[:view_id] , params[:variant])
 		@tree_up      = build_tree_up(@part, @myparams[:view_id] )
+		LOG.debug(fname){"----------------build_tree end"}
 		@object_plm = @part
-		LOG.debug (fname){"begin:params=#{params}"}
-		#LOG.debug (fname){"taille tree=#{@tree.size}"}
-		LOG.debug (fname){"variant=#{@variant}"}
-	#LOG.debug (fname){"variant eff=#{@variant.var_effectivities}"} unless @variant.nil?
-	#LOG.debug (fname){"end:view=#{View.find(@myparams[:view_id]).to_s}"}
+		LOG.debug(fname){"begin:params=#{params}"}
+		#LOG.debug(fname){"taille tree=#{@tree.size}"}
+		LOG.debug(fname){"variant=#{@variant}"}
+	#LOG.debug(fname){"variant eff=#{@variant.var_effectivities}"} unless @variant.nil?
+	#LOG.debug(fname){"end:view=#{View.find(@myparams[:view_id]).to_s}"}
 	end
 
 	def index_
-		fname= "#{controller_class_name}.#{__method__}"
+		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"params=#{params.inspect}"}
 		LOG.debug(fname){"filter_types=#{params[:filter_types]}"}
 		@parts = Part.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		LOG.debug(fname){"parts=#{@parts.size}"}
 	end
 
 end

@@ -1,8 +1,8 @@
 <h1><%= t(:datafile_show) %></h1>
 <% fonct="show" %>
 <%= render(:partial => "shared/menu_show", :locals=>{:object =>@datafile, :fonct=>fonct}) %>
-<% form_for(@datafile, :html => { :id => h_form_html_id(@datafile, fonct) }) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@datafile, :html => { :id => h_form_html_id(@datafile, fonct) }) do |f| %>
+<%= form_errors_for @datafile %>
 
 <p>
 	<b><%= t("label_ident") %></b>

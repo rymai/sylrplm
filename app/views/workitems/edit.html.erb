@@ -13,8 +13,8 @@
 	}
 </script>
 <% fonct="edit"%>
-<% form_tag(
-workitem_path(@workitem),
+<%= form_tag(
+{:controller=>:workitems, :action=>:update, :id=>@workitem.sid,:method=>:put},
 :id => h_form_html_id(@workitem, fonct),
 :method => :put,
 :multipart => true) do -%>
@@ -22,35 +22,29 @@ workitem_path(@workitem),
 <!-- :( -->
 
 <div id='colLeft' >
-<table class='menu_bas'>
-	<tr >
-		<td><%= link_to_function(t("update"), 'saveWi()') %> </td>
-		<td><%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> </td>
-		<td><%= link_to(t("list"), workitems_path) %> </td>
-	</tr>
-</table>
-<h1></h1>
-	<%= render :partial => 'shared/workitem_header', :locals => { :workitem => @workitem, :fonct=>fonct } %>
-
-
-			<%= h_workitem_fields(@workitem, fonct)%>
-
-
-		<%= render(:partial => "workitems/wi_links", :locals => { :fonct=>fonct } ) %>
+	<table class='menu_bas'>
+		<tr >
+			<td><%= link_to_function(t("update"), 'saveWi()') %> </td>
+			<td><%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> </td>
+			<td><%= link_to(t("list"), workitems_path) %> </td>
+		</tr>
+	</table>
+	<h1></h1>
+	<%= render :partial => 'workitems/workitem_header', :locals => { :workitem => @workitem, :fonct=>fonct } %>
+	<%= h_workitem_fields(@workitem, fonct)%>
+	<%= render(:partial => "workitems/wi_links", :locals => { :fonct=>fonct } ) %>
 	</table>
 	<h1></h1>
 	<table class='menu_bas'>
-	<tr >
-		<td><%= link_to_function(t("update"), 'saveWi()') %> </td>
-		<td><%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> </td>
-		<td><%= link_to(t("list"), workitems_path) %> </td>
-	</tr>
-</table>
+		<tr >
+			<td><%= link_to_function(t("update"), 'saveWi()') %> </td>
+			<td><%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> </td>
+			<td><%= link_to(t("list"), workitems_path) %> </td>
+		</tr>
+	</table>
 </div>
 <div id='colRight' >
-	<%= render_fluo :wfid => @workitem.wfid, :workitems => [ @workitem.expid ] %>
+	<%= render_fluo :wfid => @workitem.wfid, :workitems => [ @workitem.fei.expid ] %>
 </div>
 <% end -%>
-
-
 

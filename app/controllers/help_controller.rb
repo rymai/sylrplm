@@ -1,5 +1,5 @@
 class HelpController < ApplicationController
-  access_control(Access.find_for_controller(controller_class_name))
+  access_control(Access.find_for_controller(controller_name.classify))
   layout "help"
 
   def index

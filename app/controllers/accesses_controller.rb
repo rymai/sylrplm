@@ -1,15 +1,17 @@
 class AccessesController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	#
-	access_control(Access.find_for_controller(controller_class_name))
+	access_control(Access.find_for_controller(controller_name.classify))
 	before_filter :find_by_id, :only => [:show, :edit, :update, :destroy]
 	before_filter :find_controllers, :only => [:new, :new_dup, :edit, :create, :update]
 	# GET /accesses
 	# GET /accesses.xml
 	def index
+		fname= "#{self.class.name}.#{__method__}"
 		@accesses = Access.find_paginate({:user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort] || 'controller, action', :nb_items => get_nb_items(params[:nb_items]) })
 		actions_by_roles=Access.get_actions_by_roles
 		@accesses[:actions_by_roles]=actions_by_roles
+		LOG.debug(fname) {"access=#{@accesses}"}
 		@tree = build_tree_actions_by_roles(actions_by_roles)
 		respond_to do |format|
 			format.html # index.html.erb
@@ -62,8 +64,13 @@ class AccessesController < ApplicationController
 	# POST /accesses
 	# POST /accesses.xml
 	def create
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {"params=#{params}"}
 		respond_to do |format|
-			@access = Access.new(params[:access])
+			par=Access.prepare(params[:access])
+			LOG.debug(fname) {"par=#{par}"}
+			@access = Access.new(par)
+			LOG.debug(fname) {"@access=#{@access}"}
 			if fonct_new_dup?
 				object_orig=Access.find(params[:object_orig_id])
 			st = @access.create_duplicate(object_orig)
@@ -106,7 +113,7 @@ class AccessesController < ApplicationController
 
 	# DELETE /accesses/1
 	# DELETE /accesses/1.xml
-	def destroy
+	def destroy_old
 		@access.destroy
 		flash[:notice] = t(:ctrl_object_deleted, :typeobj => 'Access', :ident => @access.controller)
 		respond_to do |format|

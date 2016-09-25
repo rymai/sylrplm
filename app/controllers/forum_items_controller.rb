@@ -1,6 +1,6 @@
 class ForumItemsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control(Access.find_for_controller(controller_class_name))
+	access_control(Access.find_for_controller(controller_name.classify))
 	# GET /forum_items
 	# GET /forum_items.xml
 	def index
@@ -20,9 +20,11 @@ class ForumItemsController < ApplicationController
 			format.xml  { render :xml => @forum_item }
 		end
 	end
+
 	def show_
 		@forum_item = ForumItem.find(params[:id])
 	end
+
 	# GET /forum_items/new
 	# GET /forum_items/new.xml
 	def new
@@ -51,7 +53,7 @@ class ForumItemsController < ApplicationController
 	# POST /forum_items.xml
 	def create
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@forum_item = ForumItem.new(params[:forum_item])
 		respond_to do |format|
 			if @forum_item.save
@@ -70,6 +72,8 @@ class ForumItemsController < ApplicationController
 	# PUT /forum_items/1
 	# PUT /forum_items/1.xml
 	def update
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@forum_item = ForumItem.find(params[:id])
 		@forum_item.update_accessor(current_user)
 		respond_to do |format|
@@ -89,8 +93,11 @@ class ForumItemsController < ApplicationController
 	# DELETE /forum_items/1
 	# DELETE /forum_items/1.xml
 	def destroy
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@forum_item = ForumItem.find(params[:id])
-		@forum      = @forum_item.forum
+		LOG.debug(fname){"destroy: @forum_item=#{@forum_item.inspect}"}
+		@forum      = Forum.find(@forum_item.forum_id)
 		@forum_item.destroy
 		respond_to do |format|
 			flash[:notice] = flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_forum_item), :ident => @forum_item.id)

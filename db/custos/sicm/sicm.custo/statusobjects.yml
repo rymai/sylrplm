@@ -1,5 +1,5 @@
 
-Statusobject_4: 
+Statusobject_4:
   id: "4"
   forobject: document
   typesobject_id: "1045584116"
@@ -11,7 +11,7 @@ Statusobject_4:
   revise_id: "0"
   domain: admin
 
-Statusobject_5: 
+Statusobject_5:
   id: "5"
   forobject: document
   typesobject_id: "1045584116"
@@ -23,7 +23,7 @@ Statusobject_5:
   revise_id: "1"
   domain: admin
 
-Statusobject_6: 
+Statusobject_6:
   id: "6"
   forobject: document
   typesobject_id: "1045584116"
@@ -35,7 +35,7 @@ Statusobject_6:
   revise_id: "1"
   domain: admin
 
-Statusobject_7: 
+Statusobject_7:
   id: "7"
   forobject: part
   typesobject_id: "1045584119"
@@ -47,19 +47,19 @@ Statusobject_7:
   revise_id: "0"
   domain: admin
 
-Statusobject_8: 
+Statusobject_8:
   id: "8"
   forobject: part
   typesobject_id: "1045584119"
   name: ready
   description: Pret pour la validation
   rank: "2"
-  promote_id: "3"
+  promote_id: "2"
   demote_id: "1"
-  revise_id: "1"
+  revise_id: "2"
   domain: admin
 
-Statusobject_10: 
+Statusobject_10:
   id: "10"
   forobject: project
   typesobject_id: "1045584120"
@@ -71,7 +71,7 @@ Statusobject_10:
   revise_id: "0"
   domain: admin
 
-Statusobject_11: 
+Statusobject_11:
   id: "11"
   forobject: project
   typesobject_id: "1045584120"
@@ -83,7 +83,7 @@ Statusobject_11:
   revise_id: "1"
   domain: admin
 
-Statusobject_12: 
+Statusobject_12:
   id: "12"
   forobject: project
   typesobject_id: "1045584120"
@@ -95,7 +95,7 @@ Statusobject_12:
   revise_id: "0"
   domain: admin
 
-Statusobject_14: 
+Statusobject_14:
   id: "14"
   forobject: forum
   typesobject_id: "1045584117"
@@ -107,7 +107,7 @@ Statusobject_14:
   revise_id: "0"
   domain: admin
 
-Statusobject_15: 
+Statusobject_15:
   id: "15"
   forobject: forum
   typesobject_id: "1045584117"
@@ -119,7 +119,7 @@ Statusobject_15:
   revise_id: "0"
   domain: admin
 
-Statusobject_21: 
+Statusobject_21:
   id: "21"
   forobject: customer
   typesobject_id: "1045584114"
@@ -131,7 +131,7 @@ Statusobject_21:
   revise_id: "1"
   domain: admin
 
-Statusobject_22: 
+Statusobject_22:
   id: "22"
   forobject: customer
   typesobject_id: "1045584114"
@@ -143,7 +143,7 @@ Statusobject_22:
   revise_id: "0"
   domain: admin
 
-Statusobject_9: 
+Statusobject_9:
   id: "9"
   forobject: part
   typesobject_id: "1045584119"
@@ -152,5 +152,5 @@ Statusobject_9:
   rank: "3"
   promote_id: "0"
   demote_id: "0"
-  revise_id: "2"
+  revise_id: "3"
   domain: admin

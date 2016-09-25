@@ -1,19 +1,23 @@
 <script>
 	function pick(workitemPath) {
-		var form = document.getElementById('workitem_delegation_form');
-		form.action = workitemPath;
-		form.submit();
+	var form=document.getElementById('workitem_delegation_form');
+	form.action=workitemPath;
+	form.submit();
 	}
-
 	function doSearch() {
-		var q = document.getElementById('query').value;
-		if(q == '')
-			return;
-		q = encodeURI(q);
-		h = document.location.href.split('?')[0];
-		document.location.href = h + '?q=' + q;
+	var q=document.getElementById('query').value;
+	if(q=='')
+		return;
+	q=encodeURI(q);
+	h=document.location.href.split('?')[0];
+	document.location.href=h+'?q='+q;
 	}
 </script>
+<% unless @process.nil? %>
+<%= form_tag({:controller=>:processes, :action=>:index}) do %>
+<%= form_errors_for @process %>
+<%end%>
+<%end%>
 <table>
 	<tr>
 		<td>
@@ -23,63 +27,51 @@
 		</div></td>
 	</tr>
 </table>
+
 <table class='coll'>
 	<thead>
 		<tr>
-			<% if current_user.is_admin?%> <th> <%= t(:label_id)%> </th>
+			<% if current_user.is_admin?%>
 			<% end %>
 			<% if fonct == "show_only" %>
-
 			<th> <%= t(:label_relation)%> </th>
 			<% end %>
+			<th> <%= t(:label_label)%> </th>
 			<th> <%= t(:label_wfid)%> </th>
 			<th> <%= t(:label_expid)%> </th>
-			<th> <%= t(:label_wfrevision)%> </th>
-			<th> <%= t(:label_workflow)%> </th>
-			<th> <%= t(:label_since)%> </th>
-			<th> <%= t(:label_store)%> </th>
 			<th> <%= t(:label_participant)%> </th>
-			<th> <%= t(:label_activity)%> </th>
 			<th> <%= t(:label_workitem_objects)%> </th>
 			<th> <%= t(:label_objects)%></th>
+			<th> <%= t(:label_responsible)%></th>
+			<th> <%= t(:label_project)%></th>
 		</tr>
 	</thead>
 	<% for workitem in workitems %>
-	<% fei = workitem.full_fei%>
 	<tr class='<%= cycle("even", "odd") %>'>
-		<% if current_user.is_admin?%> <td> <%= workitem.id %> </td>
+		<% if current_user.is_admin?%>
 		<% end %>
 		<% if fonct == "show_only" %>
 		<td> <%= workitem.link_attributes["relation"].name %> </td>
 		<% end %>
-		<td> <%= link_to h(fei.wfid), workitems_path(fei.wfid) %> </td>
-		<td> <%= workitem.full_fei.expid %> </td>
-		<td> <%= workitem.wfrevision %> </td>
-		<td> <%= link_to_slice(workitem, :wfname, :workflow) %> </td>
-		<td> <%= display_since(workitem, :dispatch_time) %> </td>
-		<td> <%= link_to_slice(workitem, :store_name, :store) %> </td>
+		<td> <%= h workitem.label %> </td>
+		<td> <%= h workitem.wfid  %> </td>
+		<td> <%= h workitem.expid %> </td>
 		<td> <%= link_to_slice(workitem, :participant_name, :participant) %> </td>
-		<td> <%= h workitem.activity %> </td>
 		<td> <%= comma_links(workitem.get_plm_objects, :ident)  %> </td>
 		<td> <%= h_workitems_links(workitem)  %> </td>
+		<td> <%= h_explorer workitem.owner, :login %> </td>
 
-		<td > <%= link_to h_img_show.to_s, workitem_url(workitem) %></td>
-		<td class='menu_bas'> <% if fonct != "show_only" %>
-		<%= link_to_if current_user.may_see?(workitem) , t("edit_task"), edit_workitem_url(workitem) %>
-		<% end %> </td>
-		<td class='menu_bas'> <% if fonct != "show_only" %>
-		<%= link_to_function t("pick"), "pick('#{workitem_url(workitem)}');" %>
-		<% end %> </td>
-		<td class='menu_bas'><% if fonct != "show_only" %>
-		<%= link_to_if @current_user.is_admin? , h_img_destroy.to_s, workitem_url(workitem), :method => :delete , :confirm =>t(:msg_confirm)  %>
-		<% end %> </td>
+		<% if fonct != "show_only" %> <td class='menu_bas'> <%= link_to_if current_user.may_see?(workitem) , t("edit_task"), {:controller=>:workitems, :action=>:edit, :id=>workitem.sid, :wfid=>workitem.wfid} %> </td>
+		<td class='menu_bas'> <%= link_to_function t("pick"), "pick('#{{:controller=>:workitems,:action=>:show, :id=>workitem.sid, :wfid=>workitem.wfid}}');" %> </td>
+		<% end %>
 	</tr>
 	<% end -%>
 </table>
-<% form_tag(
+<%= form_tag(
 '/none',
 :id => 'workitem_delegation_form',
 :method => :put,
 :multipart => true) do -%>
 <input type="hidden" name="store_name" id="store_name" value="<%= current_user.login %>" />
 <% end %>
+

@@ -1,13 +1,13 @@
 <%= hidden_field_tag("filter_types" , @myparams["filter_types"]) unless @myparams.nil?%> <h1><%= t(:part_list) %><%= h_count_objects(@parts) %></h1>
 <% unless @part.nil?
 form_for(@part) do |form| %>
-<%= form.error_messages %>
+<%= form_errors_for @part %>
 <% end%>
 <% else %>
 <%= h_form_simple_query("/parts", @parts) %>
-<% form_tag({:controller=>:parts, :action=>:index_execute}) do %>
+<%= form_tag({:controller=>:parts, :action=>:index_execute}) do %>
 <% unless param_equals?("todo", "select") %>
-<%=h_menu_index_action("part")%>
+<%= h_menu_index_action("part")%>
 <%end%>
 <% if @myparams[:list_mode] == t(:list_mode_icon) %>
 <%= h_thumbnails_objs @parts %>
@@ -43,7 +43,7 @@ form_for(@part) do |form| %>
 		<td><%= h_explorer part.statusobject, :name_translate unless part.statusobject.nil? %> </td>
 		<td><%= h_explorer part.owner, :login %></td>
 		<td><%= h_explorer part.group, :name_translate %></td>
-		<td><%= h_explorer part.projowner %>(<%= part.projowner.typeaccess.name_translate unless part.projowner.typeaccess.nil? %>)</td>
+		<td><%= h_explorer part.projowner %>(<%= part.projowner.typeaccess.name_translate unless (part.projowner.nil? || part.projowner.typeaccess.nil?) %>)</td>
 		<td><%= l part.date %></td>
 		<td><%= part.domain %></td>
 		<td><%= part.type_values %></td>
@@ -51,9 +51,9 @@ form_for(@part) do |form| %>
 		<td><%= link_to h_img_edit.to_s, edit_part_path(part) %></td>
 		<td> <%= link_to h_img_edit_lifecycle.to_s, {:controller=>"parts", :action=>"edit_lifecycle", :id => part.id} %> </td>
 		<td> <%= link_to h_img(:duplicate), new_dup_part_path(part) %> </td>
-		<% if logged_in? %>
-		<td> <%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => part.id}, :method => :get %></td>
-		<%end%>
+
+		<td> <%= link_to h_img(:copy), add_favori_part_path(part), :remote => true  if logged_in? %></td>
+
 		<td><%= h_destroy(part) %></td>
 		<% if part.revisable?  %>
 		<td> <%= h_img_revise.to_s %></td>
@@ -67,7 +67,7 @@ form_for(@part) do |form| %>
 <% end %>
 <%= will_paginate(@parts[:recordset]) %>
 <% unless param_equals?("todo", "select") %>
-<%=h_menu_index_action("part")%>
+<%= h_menu_index_action("part")%>
 <%end%>
 <%end%>
 <%end%>

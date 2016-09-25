@@ -1,11 +1,11 @@
 <h1><%= t(:customer_list) %><%= h_count_objects(@customers) %></h1>
 <% unless @customer.nil? %>
-<% form_for(@customer) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@customer) do |f| %>
+<%= form_errors_for @customer %>
 <% end %>
 <% else %>
 <%= h_form_simple_query('/customers', @customers) %>
-<% form_tag({:controller=>:customers, :action=>:index_execute}) do %>
+<%= form_tag({:controller=>:customers, :action=>:index_execute}) do %>
 <% unless param_equals?("todo", "select") %>
 <%=h_menu_index_action("customer")%>
 <%end%>
@@ -45,9 +45,9 @@
 		<td> <%= link_to h_img_edit.to_s, edit_customer_path(customer) %> </td>
 		<td> <%= link_to h_img_edit_lifecycle.to_s, {:controller=>"customers", :action=>"edit_lifecycle", :id => customer.id} %> </td>
 		<td> <%= link_to h_img(:duplicate), new_dup_customer_path(customer) %> </td>
-		<td> <% if logged_in? %>
-		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => customer.id}, :method => :get %>
-		<% end %> </td>
+
+		<td> <%= link_to h_img(:copy), add_favori_customer_path(customer), remote: true  if logged_in? %></td>
+
 		<td><%= h_destroy(customer) %></td>
 		<td><%= check_box(:action_on,customer.id) %></td>
 		<% if customer.revisable?  %>

@@ -8,7 +8,7 @@
 	</tr>
 	<% else %>
 	<% unless document.checked? %>
-	<% form_for(document, :url => {:id => document.id, :action => :check_out }, :method => :get) do |f| %>
+	<%= form_for(document, :url => {:id => document.id, :action => :check_out }, :method => :get) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_out") %></td>
 		<td> <%= label_tag t("label_out_reason") %></td>
@@ -25,14 +25,14 @@
 	</tr>
 	<!-- liberation par celui qui a reserve seulement -->
 	<% if document.can_be_check_in?(current_user) %>
-	<% form_for(document, :url => {:id => document.id, :action => :check_in }, :method => :get) do |f| %>
+	<%= form_for(document, :url => {:id => document.id, :action => :check_in }, :method => :get) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_in") %></td>
 		<td> <%= label_tag t("label_in_reason") %></td>
 		<td> <%= text_field_tag "check[in_reason]" %></td>
 	</tr>
 	<% end %>
-	<% form_for(document, :url => {:id => document.id, :action => :check_free }, :method => :get) do |f| %>
+	<%= form_for(document, :url => {:id => document.id, :action => :check_free }, :method => :get) do |f| %>
 	<tr>
 		<td> <%= f.submit t("button_check_free") %></td>
 		<td> <%= label_tag t("label_in_reason") %></td>

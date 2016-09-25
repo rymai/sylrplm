@@ -22,7 +22,7 @@ class FiledriverFog < Filedriver
 		access_key=::SYLRPLM::FOG_ACCESS_KEY
 		access_key_id=::SYLRPLM::FOG_ACCESS_KEY_ID
 		if @@instance.nil?
-			LOG.info (fname) {"access_key=#{access_key} access_key_id=#{access_key_id}"}
+			LOG.info(fname) {"access_key=#{access_key} access_key_id=#{access_key_id}"}
 			@@instance = FiledriverFog.new
 			# create a connection
 			@@instance.storage = Fog::Storage.new(
@@ -34,7 +34,7 @@ class FiledriverFog < Filedriver
 				:path_style => true
 			})
 		end
-		LOG.debug (fname) {"@@instance=#{@@instance.inspect}"}
+		LOG.debug(fname) {"@@instance=#{@@instance.inspect}"}
 		return @@instance
 	end
 
@@ -43,7 +43,7 @@ class FiledriverFog < Filedriver
 	########################################################################
 	def dir_datafile(datafile)
 		fname= "FiledriverFog.#{__method__}"
-		#LOG.info (fname) {"ident=#{datafile.ident}"}
+		#LOG.info(fname) {"ident=#{datafile.ident}"}
 		vol_dir=datafile.volume.dir_name.gsub("_","-")
 		vol_dir=vol_dir.gsub("/",::Volume::DIR_DELIMITER)
 		ret="#{vol_dir}#{::Volume::DIR_DELIMITER}#{datafile.class.name}#{::Volume::DIR_DELIMITER}#{datafile.ident}"
@@ -81,7 +81,7 @@ class FiledriverFog < Filedriver
 		fname= "FiledriverFog.#{__method__}"
 		fog_file = retrieve(datafile.dir_repository, datafile.filename_repository)
 		data=fog_file.body unless fog_file.nil?
-		#LOG.debug (fname) {"fog_file=#{fog_file} taille=#{data}"}
+		#LOG.debug(fname) {"fog_file=#{fog_file} taille=#{data}"}
 		data
 	end
 
@@ -89,7 +89,7 @@ class FiledriverFog < Filedriver
 	# renvoie un repertoire dans lequel seront uploade les fichiers
 	def create_directory(datafile)
 		fname= "FiledriverFog.#{__method__}"
-		#LOG.debug (fname) {"datafile.dir_repository=#{datafile.dir_repository}"}
+		#LOG.debug(fname) {"datafile.dir_repository=#{datafile.dir_repository}"}
 		directory_key=datafile.dir_repository
 		#dir = create_directory(datafile.dir_repository)
 		unless directory_exists?(directory_key)
@@ -107,10 +107,10 @@ class FiledriverFog < Filedriver
 
 	def write_file(datafile, content)
 		fname= "FiledriverFog.#{__method__}"
-		LOG.debug (fname) {"content size=#{content.length}"}
+		LOG.debug(fname) {"content size=#{content.length}"}
 		if content.length>0
 			fog_file = upload_content(datafile.dir_repository, datafile.filename_repository, content)
-			LOG.debug (fname) {"apres write in fog:#{fog_file.inspect}"}
+			LOG.debug(fname) {"apres write in fog:#{fog_file.inspect}"}
 		end
 	end
 
@@ -124,9 +124,9 @@ class FiledriverFog < Filedriver
 		ret = volume.directory
 		if volume.dir_name != olddirname
 			ret=nil
-			volume.errors.add_to_base "The directory of fog volume can't be moved"
+			volume.errors.add(:base, "The directory of fog volume can't be moved")
 		end
-		LOG.debug (fname) {"ret=#{ret}"}
+		LOG.debug(fname) {"ret=#{ret}"}
 		return ret
 	end
 
@@ -149,26 +149,26 @@ class FiledriverFog < Filedriver
 	def files_list(purge = false)
 		fname= "FiledriverFog.#{__method__}"
 		# list directories
-		#LOG.debug (fname){"purge=#{purge} storage=#{self.storage.inspect}"}
+		#LOG.debug(fname){"purge=#{purge} storage=#{self.storage.inspect}"}
 		ret=[]
 		files_fog=[]
 		begin
 			ret = self.storage.directories
 			ret.each do |ddd|
-			#LOG.debug (fname){"directorie=#{ddd.inspect}"}
+			#LOG.debug(fname){"directorie=#{ddd.inspect}"}
 				ddd.files.each do |s3_file|
 					if(purge==true )
 						is_used = is_used?(ddd, s3_file)
-						#LOG.debug (fname){"\tfile:#{s3_file.inspect} is_used?=#{is_used}"}
+						#LOG.debug(fname){"\tfile:#{s3_file.inspect} is_used?=#{is_used}"}
 						if(!is_used)
 						s3_file.destroy
 						end
 					end
 				end
 				if(purge==true)
-					#LOG.debug (fname){"ddd.files.count=#{ddd.files.count}"}
+					#LOG.debug(fname){"ddd.files.count=#{ddd.files.count}"}
 					if(ddd.files.count==0)
-						LOG.info (fname){"destroy de #{ddd.inspect}"}
+						LOG.info(fname){"destroy de #{ddd.inspect}"}
 					ddd.destroy
 					end
 				end
@@ -176,7 +176,7 @@ class FiledriverFog < Filedriver
 			begin
 				ret.each do |s3_dir|
 					s3_dir.files.each do |s3_file|
-					#LOG.debug (fname) {"dir=#{s3_dir.inspect} s3_file=#{s3_file.inspect}"}
+					#LOG.debug(fname) {"dir=#{s3_dir.inspect} s3_file=#{s3_file.inspect}"}
 					# 0-0-0-0.deve.volfog01.datafile.df0000000057
 						fields_dir = s3_dir.key.split(::Volume::DIR_DELIMITER)
 						params = {}
@@ -195,19 +195,19 @@ class FiledriverFog < Filedriver
 						params["domain"]=""
 						params["updated_at"]=s3_file.last_modified
 						params["id"]=buildFileId(s3_dir.key, s3_file.key)
-						#LOG.debug (fname) {"id=#{params["id"]}"}
+						#LOG.debug(fname) {"id=#{params["id"]}"}
 						sylrplmfile=SylrplmFile.new(params)
 						files_fog<<sylrplmfile
 					end
 				end
 			rescue Exception=>e
 				cmd="Exception during files_list:#{e.message}"
-				#LOG.error (fname){cmd}
+				#LOG.error(fname){cmd}
 				### TODO: la mettre sur la base sans objet particulier volume.errors.add_to_base(cmd)
 				e.backtrace.each {|x| LOG.error x}
 			end
 		rescue Exception=>e
-			LOG.error (fname){"fog access error:#{e}"}
+			LOG.error(fname){"fog access error:#{e}"}
 		end
 		files_fog
 	end
@@ -251,7 +251,7 @@ class FiledriverFog < Filedriver
 
 	def directory_exists?(adir)
 		fname= "FiledriverFog.#{__method__}"
-		#LOG.debug (fname){"adir=#{adir}"}
+		#LOG.debug(fname){"adir=#{adir}"}
 		dirs = FiledriverFog.instance.storage.directories
 		ret=false
 		#dirs.include? adir
@@ -274,12 +274,12 @@ class FiledriverFog < Filedriver
 			volume_name=fields_dir[2]
 			datafile_model=fields_dir[3].capitalize
 			datafile_ident=fields_dir[4].upcase!
-			#LOG.debug (fname){"#{(fields_dir.count==5 ? "OK(5)" : "KO(#{fields_dir.count})")} direct.key=#{direct.key} volume_name=#{volume_name} datafile_model=#{datafile_model} datafile_ident=#{datafile_ident}"}
+			#LOG.debug(fname){"#{(fields_dir.count==5 ? "OK(5)" : "KO(#{fields_dir.count})")} direct.key=#{direct.key} volume_name=#{volume_name} datafile_model=#{datafile_model} datafile_ident=#{datafile_ident}"}
 			#key_file:--1--pied_rond_long.odt
 			fields_file=s3_file.key.split(::Volume::FILE_REV_DELIMITER)
 			file_rev=fields_file[1]
 			file_name=fields_file[2]
-			#LOG.debug (fname){"#{(fields_file.count==3 ? "OK(3)" : "KO(#{fields_file.count})")} s3_file.key=#{s3_file.key} file_rev=#{file_rev} file_name=#{file_name}"}
+			#LOG.debug(fname){"#{(fields_file.count==3 ? "OK(3)" : "KO(#{fields_file.count})")} s3_file.key=#{s3_file.key} file_rev=#{file_rev} file_name=#{file_name}"}
 			#
 			if(fields_dir.count==5 && fields_file.count==3)
 				datafiles = (eval datafile_model).find_by_ident_and_revision_and_filename(datafile_ident, file_rev, file_name)
@@ -290,7 +290,7 @@ class FiledriverFog < Filedriver
 		else
 		ret=false
 		end
-		#LOG.debug (fname){"ret=#{ret}"}
+		#LOG.debug(fname){"ret=#{ret}"}
 		ret
 	end
 
@@ -300,7 +300,7 @@ class FiledriverFog < Filedriver
 			ret=storage.directories.get(directory_key)
 			#puts "sylrplm_fog.directory("+directory_key+")="+ret.inspect
 		rescue Exception => exc
-			LOG.debug (fname){"Exception during fog access, verify the network, dir_key=#{directory_key} exception=#{exc}"}
+			LOG.debug(fname){"Exception during fog access, verify the network, dir_key=#{directory_key} exception=#{exc}"}
 			ret=nil
 		end
 		ret
@@ -328,7 +328,7 @@ class FiledriverFog < Filedriver
 	# upload d'un contenu
 	def upload_content(directory_key, file_key, content)
 		fname= "FiledriverFog.#{__method__}"
-		LOG.debug (fname) {"directory_key=#{directory_key}  file_key= #{file_key}"}
+		LOG.debug(fname) {"directory_key=#{directory_key}  file_key= #{file_key}"}
 		# upload
 		fog_file = directory(directory_key).files.create({
 			:key    => file_key,
@@ -369,11 +369,11 @@ class FiledriverFog < Filedriver
 
 	def self.remove_repository(dirkey)
 		fname= "FiledriverFog.#{__method__}"
-		LOG.info (fname) {"deleting dir:#{dirkey}"}
+		LOG.info(fname) {"deleting dir:#{dirkey}"}
 		dir = SylrplmFog.instance.directory(dirkey)
 		unless dir.nil?
 			dir.files.each do |file|
-				LOG.info (fname) {"deleting fog file:#{file.inspect}"}
+				LOG.info(fname) {"deleting fog file:#{file.inspect}"}
 				file.destroy
 			end
 		dir.destroy
@@ -382,14 +382,14 @@ class FiledriverFog < Filedriver
 
 	def remove_file(dirkey, filekey)
 		fname= "FiledriverFog.#{__method__}"
-		LOG.info (fname) {"deleting dir:#{dirkey},#{filekey}"}
+		LOG.info(fname) {"deleting dir:#{dirkey},#{filekey}"}
 		dir = FiledriverFog.instance.directory(dirkey)
 		unless dir.nil?
 			dir.files.each do |file|
-				LOG.info (fname) {"deleting fog file:#{file.inspect}"}
+				LOG.info(fname) {"deleting fog file:#{file.inspect}"}
 				file.destroy if file.key==filekey
 			end
-			LOG.info (fname) {"dir=#{dir.inspect}"}
+			LOG.info(fname) {"dir=#{dir.inspect}"}
 		dir.destroy if dir.files.size==0
 		end
 	end

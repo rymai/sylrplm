@@ -1,0 +1,23 @@
+<% unless workitem.nil? %>
+<% if admin_logged_in?%>
+	<label>sid</label>
+	<%= h workitem.sid %>
+</br>
+<%end%>
+	<label><%= t(:label_wfid)%></label>
+	<%= h workitem.wfid %>
+</br>
+	<label><%= t(:label_position)%></label>
+	 <%= h workitem.expid %>
+</br>
+	<label><%= t(:label_workflow)%></label>
+	<%= h workitem.label %>
+</br>
+	<label><%= t(:label_launched_at)%></label>
+	<%= workitem.launched_at %>
+</br>
+	<label><%= t(:label_dispatched_at)%></label>
+	<%= workitem.dispatched_at %>
+</br>
+
+<% end %>

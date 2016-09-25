@@ -1,7 +1,7 @@
 <h1><%= t(:volume_show) %></h1>
 <% fonct="show" %>
-<% form_for(@volume) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@volume) do |f| %>
+<%= form_errors_for @volume %>
 <%= render(:partial => "shared/menu_show", :locals=>{:object => @volume, :fonct=>fonct}) %>
 
 <p>

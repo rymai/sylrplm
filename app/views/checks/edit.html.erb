@@ -1,7 +1,7 @@
 <h1><%= t("check_edit")%></h1>
 <% fonct="edit"%>
-<% form_for(@check) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@check) do |f| %>
+<%= form_errors_for @check %>
 <%= render(:partial => "shared/menu_edit", :locals => {:object => @check, :f => f, :fonct=>fonct}) %>
 <%= render(:partial => "checks/edit",:locals => {:object => @check, :f => f, :fonct=>fonct }) %>
 <%= render(:partial => "shared/submit_edit", :locals => {:object => @check, :f => f, :fonct=>fonct}) %>

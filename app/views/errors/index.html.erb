@@ -9,37 +9,25 @@
 		return true;
 	}
 </script>
-<% form_tag('', :id => 'replay_form', :method => :delete) do -%>
+<%= form_tag('', :id => 'replay_form', :method => :delete) do -%>
 <% end %>
 <table class="coll">
-	<thead>
 		<tr>
 			<th>date</th>
 			<th>wfid</th>
 			<th>expid</th>
 			<th>call</th>
-			<th>trace</th>
+			<th>delete</th>
 			<th><!-- buttons --></th>
 		</tr>
-	</thead>
-	<tbody>
-		<% @errors.each do |error|
-		e = error.as_owfe_error -%>
+		<% @errors.each do |e| %>
 		<tr class='<%= cycle("even", "odd") %>'>
-			<td><%= h display_time(e.date) %> .<%= h e.date.usec.to_s[0, 3] %></td>
+			<td><%= h e.at %></td>
 			<td><%= h e.wfid %></td>
-			<td><%= link_to h(e.fei.expid), expression_path(e.fei) %></td>
+			<td><%= button_to h(e.fei.expid), {:controller=>:expressions,:action=>:show,:wfid=>e.wfid, :expid=>e.fei.expid} %></td>
 			<td><%= h e.message %></td>
-			<td title="<%= h e.stacktrace %>">
-				<%= h truncate(e.stacktrace, :length => 40) unless e.stacktrace.is_a?(Array) %></td>
-			<td class="coll_buttons"> <%= link_to_function(
-			'replay', "return replayError('#{error_path(error)}');") %> </td>
+			<td class="coll_buttons"><%= button_to t(:button_replay), error_path(e.fei.wfid), :method => :delete, :data=>{:confirm => 'Are you sure ?'}%> </td>
 		</tr>
 		<% end %>
-	</tbody>
-	<tfoot></tfoot>
 </table>
-<div class="align-right">
-	<%= @all ? '' : link_to('all', :controller => 'errors') %>
-	<%= will_paginate(@errors) %>
-</div>
+

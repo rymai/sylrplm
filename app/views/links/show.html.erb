@@ -1,7 +1,7 @@
 <h1><%= t("link_show") %></h1>
 <%= render(:partial => "shared/menu_show", :locals=>{:object => @link, :fonct=>"show"}) %>
-<% form_for(@link) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@link) do |f| %>
+<%= form_errors_for @link %>
 <p>
 	<b><%= t(:label_father_plmtype) %></b>
 	<%= h @link.father_plmtype %>

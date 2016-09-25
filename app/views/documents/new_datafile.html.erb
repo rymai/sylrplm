@@ -1,7 +1,7 @@
 <h1><%= t(:datafile_add) %></h1>
 <% fonct="doc_new"%>
-<% form_for @datafile, :html => { :multipart => true}, :url => { :action=>"add_datafile",:id=>@document.id }  do |f| %>
-<%= f.error_messages %>
+<%= form_for @datafile, :html => { :multipart => true}, :url => { :action=>"add_datafile",:id=>@document.id }  do |f| %>
+<%= form_errors_for @datafile %>
 <%= hidden_field_tag "document_id", @document.id.to_s %>
 <%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f , :fonct=>fonct, :document=>@document}) %>
 <%= render(:partial => "shared/submit_new", :locals => {:object => @datafile, :f => f, :fonct=>fonct}) %>

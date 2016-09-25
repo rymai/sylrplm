@@ -1,7 +1,9 @@
 class SessionsController < ApplicationController
 
 	skip_before_filter :authorize, :check_user
-	filter_parameter_logging :password
+def index
+
+end
 	def new
 		puts "sessions_controller.new"+params.inspect
 		puts "sessions_controller.new:flash="+flash[:notice] unless flash[:notice].nil?
@@ -59,6 +61,8 @@ class SessionsController < ApplicationController
 	end
 
 	def create
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {"params=#{params}"}
 		par=params[:session]
 		#puts "sessions_controller.create"+params.inspect
 		@current_users = User.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
@@ -74,7 +78,7 @@ class SessionsController < ApplicationController
 				# user reconnu, verif si il peut se connecter (role, groupe, projet, ...)
 				flash[:notice] = check_user_connect(cur_user)
 				if flash[:notice].nil?
-					#puts "sessions_controller.create:il peut se connecter"
+					LOG.debug(fname) {"create: il peut se connecter"}
 					@current_user = cur_user
 					session[:user_id] = cur_user.id
 					flash[:notice] = t(:ctrl_role_needed)
@@ -84,14 +88,16 @@ class SessionsController < ApplicationController
 							# le user devra aller dans outil/editer pour changer de contexte
 							uri=session[:original_uri]
 							session[:original_uri]=nil
+							LOG.debug(fname) {"create: have_context => #{uri}" }
 							format.html { redirect_to_main(uri) }
 						else
+							LOG.debug(fname) {"create: have_context=>edit pour le role/groupe/projet"}
 							format.html { render :action => :edit }
 						end
 						format.xml { head :ok }
 					end
 				else
-				#puts "sessions_controller.create:il ne peut se connecter"
+				LOG.debug(fname) {"create: il ne peut se connecter"}
 					@current_user=nil
 					session[:user_id] = nil
 					respond_to do |format|
@@ -100,7 +106,7 @@ class SessionsController < ApplicationController
 					end
 				end
 			else
-			#puts "sessions_controller.create:user non reconnu"
+			  LOG.debug(fname) {"create: login/mot de passe non reconnu=> nouvelle saisie"}
 				@current_user=nil
 				session[:user_id] = nil
 				flash[:error] = t(:ctrl_invalid_login)
@@ -113,11 +119,11 @@ class SessionsController < ApplicationController
 		elsif params[:commit] == t(:submit_new_account)
 			#session[:login]=nil
 			#session[:password]=nil
-			puts "================= sessions_controller.create:demande de compte, on demande plus d'infos"
+			LOG.debug(fname) {"create: demande de compte, on demande plus d'infos"}
 			# demande de compte, on demande plus d'infos
 			flash[:notice] = t(:ctrl_account_needed)
 			respond_to do |format|
-				format.html { render :action => :new_account }
+				format.html { render :action => :new_account_sessions }
 				format.xml { head :ok }
 			end
 		end
@@ -126,7 +132,7 @@ class SessionsController < ApplicationController
 
 	def create_account
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"validation du compte, #{params.inspect}"}
+		#LOG.debug(fname) {"validation du compte, #{params.inspect}"}
 		par = params[:session]
 		# pour affichage dans la vue
 		@current_users = User.find_paginate({:user=> current_user, :filter_types => params[:filter_types], :page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items => get_nb_items(params[:nb_items])})
@@ -135,19 +141,19 @@ class SessionsController < ApplicationController
 		respond_to do |format|
 
 		# if par["login"].empty? || par["password"].empty? || par["new_email"].empty? || par["language"].empty?
-		# 	LOG.debug (fname) {"validation du compte ko"}
+		# 	LOG.debug(fname) {"validation du compte ko"}
 		# 	@current_user=nil
 		# 	session[:user_id] = nil
 		# 	flash[:error] =t(:ctrl_invalid_login)
 		# 	format.html { render :new_account }
 		# 	format.xml { render :xml => errs, :status => :unprocessable_entity }
 		# else
-		#LOG.debug (fname) {"validation du compte ok"}
+		#LOG.debug(fname) {"validation du compte ok"}
 		# tout est saisis: creation du nouveau compte
 			cur_user = User.create_new_login(par, @urlbase)
-			#LOG.debug (fname){"cur_user=#{cur_user.inspect} errors=#{cur_user.errors.inspect}"}
+			#LOG.debug(fname){"cur_user=#{cur_user.inspect} errors=#{cur_user.errors.inspect}"}
 			if  cur_user.errors.nil? || cur_user.errors.count==0
-				#LOG.debug (fname){"create_process"}
+				#LOG.debug(fname){"create_process"}
 				current_toremove=false
 				if @current_user.nil?
 					@current_user = User.find_by_login(PlmServices.get_property(:USER_ADMIN))
@@ -165,18 +171,18 @@ class SessionsController < ApplicationController
 					format.html { render :action => "edit" }
 					format.xml { head :ok }
 				else
-				#LOG.debug (fname){"flash=#{flash[:notice]}"}
+				#LOG.debug(fname){"flash=#{flash[:notice]}"}
 					session[:user_id] = @current_user.id unless @current_user.nil?
 					#format.html { redirect_to_main(nil , "The validated process is active, Try to connect later from the mail you receive") }
 					format.html { redirect_to_main(nil, "The validated process is active, Try to connect later from the mail you receive") }
-					#LOG.debug (fname){"render to main, flash=#{flash[:notice]} new_sessions_url=#{new_sessions_url}"}
+					#LOG.debug(fname){"render to main, flash=#{flash[:notice]} new_sessions_url=#{new_sessions_url}"}
 					format.xml {render :xml => errs, :status => :unprocessable_entity }
 				end
 			else
 				flash[:error] = t(:ctrl_new_account_not_created, :user=>par["login"])
 				@session=cur_user
-				#LOG.debug (fname){"render new_account:session=#{session}"}
-				format.html { render :new_account }
+				#LOG.debug(fname){"render new_account:session=#{session}"}
+				format.html { render :new_account_sessions }
 				format.xml {render :xml => errs, :status => :unprocessable_entity }
 			end
 		### TODO cur_user.destroy unless (cur_user.nil? && !cur_user.errors.nil? && cur_user.errors==0)

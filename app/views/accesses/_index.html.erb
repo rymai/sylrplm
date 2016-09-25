@@ -12,7 +12,7 @@
 		<td> <%= h acc.roles %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_access_path(acc) %> </td>
 		<td> <%= h_menu_duplicate(acc) %> </td>
-		<td> <%= link_to h_img_destroy.to_s, acc, :confirm => t("msg_confirm"), :method => :delete %> </td>
+		<td> <%= h_destroy(acc) %> </td>
 	</tr>
 	<% end %>
 </table>

@@ -1,13 +1,26 @@
 <h1><%= t("workitems_list") %></h1>
 <table class='menu_bas'>
 	<tr>
-		<td> <%= request.query_string.size > 0 or params[:wfid] ? link_to( t("workitems_all"), :controller => 'workitems') : link_to( t("mnu_flw_workitems"), :controller => 'workitems') %> </td>
+		<td><%=request.query_string%>:<%=params[:wfid]%>
+			<% if (request.query_string.size > 0 or params[:wfid]) %>
+			<%= link_to( t("workitems_all"), :controller => 'workitems') %>
+			<%else%>
+			<%= link_to( t("mnu_flw_workitems"), :controller => 'workitems') %>
+			<%end%>
+		</td>
 	</tr>
 </table>
-<%= render(:partial => "workitems/workitems", :object =>  @workitems, :locals => {  :fonct=>"index" } ) %>
+<%= render(:partial => "workitems/workitems", :object =>  @workitems, :locals => {  :workitem=> @workitem, :fonct=>"index" } ) %>
 <table class='menu_bas'>
 	<tr>
-		<% if request.query_string.size > 0 or params[:wfid] %> <td> <%= link_to t("workitems_all"), :controller => 'workitems' %> </td>
-		<% end%>
+		<td>
+			<% if (request.query_string.size > 0 or params[:wfid]) %>
+			<%= link_to( t("workitems_all"), :controller => 'workitems') %>
+			<%else%>
+			<%= link_to( t("mnu_flw_workitems"), :controller => 'workitems') %>
+			<%end%>
+		</td>
 	</tr>
 </table>
+
+

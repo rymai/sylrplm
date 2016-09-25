@@ -11,6 +11,18 @@
 class Statusobject < ActiveRecord::Base
 	include Models::SylrplmCommon
 
+
+
+	attr_accessible :forobject
+	attr_accessible :typesobject_id
+	attr_accessible :name
+	attr_accessible :description
+	attr_accessible :rank
+	attr_accessible :promote_id
+	attr_accessible :demote_id
+	attr_accessible :revise_id
+	attr_accessible :domain
+
 	validates_presence_of :forobject, :name, :rank
 	validates_uniqueness_of :name, :scope => :forobject, :scope => :rank
 
@@ -37,14 +49,17 @@ class Statusobject < ActiveRecord::Base
 	has_and_belongs_to_many :next_statusobjects, :join_table => "statusobjects_nexts", :class_name => "Statusobject", :foreign_key => "other_statusobject_id"
 	has_and_belongs_to_many :previous_statusobjects, :join_table => "statusobjects_previous", :class_name => "Statusobject", :foreign_key => "other_statusobject_id"
 
-	named_scope :order_default, :order => "forobject,rank,name ASC"
-	named_scope :order_desc, :order => "forobject,rank,name DESC"
-	named_scope :cond_object, lambda{|obj| {:conditions=> ["forobject = ?",obj] }}
-	named_scope :find_all , order_default.all
+	#rails4 named_scope :order_default, :order => "forobject,rank,name ASC"
+	#rails4 named_scope :order_desc, :order => "forobject,rank,name DESC"
+	#rails4 named_scope :cond_object, lambda{|obj| {:conditions=> ["forobject = ?",obj] }}
+	#rails4 named_scope :find_all , order_default.all
 
 	PREFIX_PROMOTE="status_promote_"
 	PREFIX_DEMOTE="status_demote_"
 	PREFIX_REVISE="status_revise_"
+	ORDER_DEFAULT="forobject,rank,name ASC"
+	ORDER_DESC="forobject,rank,name DESC"
+
 	#
 	def initialize(*args)
 		super
@@ -57,9 +72,9 @@ class Statusobject < ActiveRecord::Base
 		self[:forobject] = "document"
 
 		if (self.respond_to? :typesobject)
-			if args.size==0 || (args.size>0 && (!args[0].include?(:typesobject)))
+			#rails2 if args.size==0 || (args.size>0 && (!args[0].include?(:typesobject)))
 				self[:typesobject] = ::Typesobject.find_for(self.forobject).first
-			end
+			#rails2end
 		end
 
 		if args.size>0
@@ -113,7 +128,7 @@ class Statusobject < ActiveRecord::Base
 	end
 
 	def get_others_status
-		any_type = ::Typesobject.find_by_forobject_and_name(self.forobject, PlmServices.get_property(:TYPE_GENERIC))
+		any_type = ::Typesobject.all.where(forobject: self.forobject, name: PlmServices.get_property(:TYPE_GENERIC)).to_a
 		objtype = self.typesobject
 		objtype = any_type if self.typesobject.nil?
 		cond = ""
@@ -121,7 +136,8 @@ class Statusobject < ActiveRecord::Base
 		##cond << " forobject = '#{self.forobject}' and (typesobject_id=#{objtype.id} or typesobject_id=#{any_type.id} or typesobject_id is null)"
 		cond << " forobject = '#{self.forobject}' and (typesobject_id=#{objtype.id} or typesobject_id is null)"
 		#puts "get_others_status:objtype=#{objtype} any_type=#{any_type} cond=#{cond}"
-		ret=Statusobject.order_default.find(:all, :conditions => [cond]).each  do |status|
+		#rails2 ret=Statusobject.order_default.find(:all, :conditions => [cond]).each  do |status|
+		ret=Statusobject.where(cond).order(ORDER_DEFAULT).to_a.each  do |status|
 			status.name = status.name_translate
 		end
 		ret
@@ -142,8 +158,8 @@ class Statusobject < ActiveRecord::Base
 			stat_cur = object.statusobject
 			unless stat_cur.nil?
 				LOG.info(fname){"choice(#{choice}),promote_id(#{stat_cur.promote_id}),demote_id(#{stat_cur.demote_id})"}
-				#cond="object = '#{object.model_name}' && ((demote_id = #{choice} && rank <= #{stat_cur.rank}) || (promote_id = #{choice} && rank >= #{stat_cur.rank})) "
-				cond_object="forobject = '#{object.model_name}'"
+				#cond="object = '#{object.modelname}' && ((demote_id = #{choice} && rank <= #{stat_cur.rank}) || (promote_id = #{choice} && rank >= #{stat_cur.rank})) "
+				cond_object="forobject = '#{object.modelname}'"
 				cond_promote="rank >= #{stat_cur.rank}" if stat_cur.promote_id == choice
 				cond_demote="rank <= #{stat_cur.rank}" if stat_cur.demote_id == choice
 				if !cond_promote.nil? &&  !cond_demote.nil?
@@ -160,14 +176,15 @@ class Statusobject < ActiveRecord::Base
 					cond="#{cond_object} and (#{cond_}) "
 				end
 			else
-				LOG.error (fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{object.ident}"}
+				LOG.error(fname) {"DATABASE_CONSISTENCY_ERROR: no status for #{object.ident}"}
 			end
 		else
 		# object est une string
 			cond="forobject = '#{object}'"
 		end
-		#LOG.debug (fname) {"cond= #{cond}"}
-		ret = Statusobject.order_default.find(:all, :conditions => [cond]) unless cond.nil?
+		#LOG.debug(fname) {"cond= #{cond}"}
+		#rails2 ret = Statusobject.order_default.find(:all, :conditions => [cond]) unless cond.nil?
+		ret = Statusobject.all.where(cond).order(ORDER_DEFAULT) unless cond.nil?
 		#LOG.debug(fname){"stat_cur=#{stat_cur} choice(#{choice})=>cond_promote(#{cond_promote}),cond_demote(#{cond_demote}),cond(#{cond}) ret=#{ret}"}
 		ret.each  do |status|
 			status.name = status.name_translate
@@ -178,16 +195,18 @@ class Statusobject < ActiveRecord::Base
 	#
 	def self.get_first(obj)
 		fname="#{self.class.name}.#{__method__}"
-		any_type=::Typesobject.find_by_forobject_and_name(obj.model_name, PlmServices.get_property(:TYPE_GENERIC))
+		any_type=::Typesobject.find_by_forobject_and_name(obj.modelname, PlmServices.get_property(:TYPE_GENERIC))
 		any_type=::Typesobject.find_by_name(PlmServices.get_property(:TYPE_GENERIC)) if any_type.nil?
-		if obj.respond_to? :typesobject
-		objtype = obj.typesobject
+		if obj.respond_to? (:typesobject) and !obj.typesobject_id.nil?
+		objtype = ::Typesobject.find(obj.typesobject_id)
+		LOG.debug(fname){"obj=#{obj.inspect} objtype=#{obj.typesobject_id}  = #{objtype}"}
 		else
 		objtype = any_type
 		end
-		#LOG.debug(fname){"obj=#{obj} objtype=#{objtype} any_type=#{any_type}"}
-		cond="forobject='#{obj.model_name}' and (typesobject_id=#{objtype.id} or typesobject_id=#{any_type.id} or typesobject_id is null)"
-		ret=Statusobject.order_default.find(:first, :conditions => [cond])
+		LOG.debug(fname){"obj=#{obj} objtype=#{objtype} any_type=#{any_type}"}
+		cond="forobject='#{obj.modelname}' and (typesobject_id=#{objtype.id} or typesobject_id=#{any_type.id} or typesobject_id is null)"
+		#rails2 ret=Statusobject.order_default.find(:first, :conditions => [cond])
+		ret=Statusobject.where(cond).order(ORDER_DEFAULT).first
 		#LOG.info(fname){"status.get_first:cond=#{cond} : #{ret}"}
 		ret
 	end
@@ -206,11 +225,12 @@ class Statusobject < ActiveRecord::Base
 	end
 
 	def self.get_last(obj)
-		any_type=::Typesobject.find_by_forobject_and_name(obj.model_name, PlmServices.get_property(:TYPE_GENERIC))
+		any_type=::Typesobject.find_by_forobject_and_name(obj.modelname, PlmServices.get_property(:TYPE_GENERIC))
 		any_type=::Typesobject.find_by_name(PlmServices.get_property(:TYPE_GENERIC)) if any_type.nil?
 		obj.typesobject=any_type if obj.typesobject.nil?
-		cond="forobject='#{obj.model_name}' and (typesobject_id=#{obj.typesobject_id} or typesobject_id= #{any_type.id} or typesobject_id is null)"
-		ret=Statusobject.order_default.find(:last, :conditions => [cond])
+		cond="forobject='#{obj.modelname}' and (typesobject_id=#{obj.typesobject_id} or typesobject_id= #{any_type.id} or typesobject_id is null)"
+		#rails2 ret=Statusobject.order_default.find(:last, :conditions => [cond])
+		ret = Statusobject.where(cond).order(ORDER_DEFAULT).last
 		#puts "cond=#{cond} get_last:#{ret}"
 		ret
 	end

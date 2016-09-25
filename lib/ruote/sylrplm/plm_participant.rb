@@ -10,230 +10,237 @@
 # alors que cette classe est stockee par ruote
 ############################################################################
 require 'ruote'
-require 'ruote/sylrplm/plm_process_exception'
+require 'ruote/sylrplm/sylrplm'
 
-class Ruote::PlmParticipant
-	include OpenWFE::LocalParticipant
-	include Models::SylrplmCommon
-	#
-	# By default, returns false. When returning true the dispatch to the
-	# participant will not be done in his own thread.
-	#
-	def do_not_thread
-		fname="PlmParticipant.do_not_thread:"
-		puts fname
-		true
-	end
+module  Ruote
+	class PlmParticipant < Ruote::Participant
+		include ::Models::SylrplmCommon
+		#
+		# By default, returns false. When returning true the dispatch to the
+		# participant will not be done in his own thread.
+		#
+		def do_not_thread
+			fname="#{self.class.name}.#{__method__}"
+			LOG.debug(fname) {""}
+			true
+		end
 
-	def initialize(work=nil, opts=nil)
-		fname="PlmParticipant.initialize"
-		puts fname+":opts="+opts.nil?.to_s+" work="+work.inspect
-		@opts = opts
-	end
+		def initialize(work=nil, opts=nil)
+			fname="#{self.class.name}.#{__method__}"
+			LOG.debug(fname) {"opts=#{opts.nil?} work=#{work.inspect}"}
+			@opts = opts
+		end
 
-	def consume(workitem)
-		fname="PlmParticipant.consume:"
-		puts fname+":debut *******************************************"
-		#puts "PlmParticipant.consume:workitem="+workitem.inspect+" opts="+@opts.nil?.to_s
-		#puts "PlmParticipant.consume:attributes="+workitem.attributes.inspect
-		begin
-			unless workitem.attributes.nil?
-				unless workitem.attributes["params"].nil?
-					task = get_param(workitem, "task")
-					step = get_param(workitem, "step")
-					relation_name = get_param(workitem, "relation", nil)
+		#rails2 def consume(workitem)
+		def on_workitem
+			fname="#{self.class.name}.#{__method__}"
+			LOG.debug(fname) {"workitem=#{workitem.inspect}, opts?=#{@opts.nil?}"}
+			LOG.debug(fname) {"workitem.h=#{workitem.to_h}"}
+			process=RuoteKit.engine.process(workitem.wfid)
+			begin
+				unless workitem.nil?
+					unless workitem.params.nil?
+						task = get_param(workitem, "task")
+						step = get_param(workitem, "step")
+						relation_name = get_param(workitem, "relation", nil)
+					end
 				end
-			end
-			msg="task(#{task}), step(#{step}), relation(#{relation_name})"
-			puts fname+msg
-			unless task.nil? || step.nil? || relation_name.nil?
-				fexpid=workitem.flow_expression_id
-				#puts fname+"instance_id:"+fexpid.workflow_instance_id
-				#puts fname+"expression_id:"+fexpid.expression_id
-				#Ruote::Sylrplm::ArWorkitem.all.each { |ar| puts ar.wfid }
-				arworkitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid(fexpid.workflow_instance_id)
-				unless arworkitem.nil?
-					unless step == "exec"
+				msg="task(#{task}), step(#{step}), relation(#{relation_name})"
+				LOG.debug(fname) {msg}
+				unless task.nil? || step.nil? || relation_name.nil?
+					fei=workitem.fei
+					LOG.debug(fname) {"instance_id=#{fei.wfid} expression_id=#{fei.expid}"}
+					arworkitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid(workitem.wfid)
+					LOG.debug(fname) {"arworkitem=#{arworkitem}"}
+					unless workitem.nil?
+						unless step == "exec"
+							#
+							# tout sauf exec
+							#
+							objs = check( task,  step, relation_name, arworkitem)
+							create_link(arworkitem, objs, task, step, relation_name)
+							reply_to_engine (workitem)
+						else
 						#
-						# tout sauf exec
+						# phase execution
 						#
-						check_objects(arworkitem, task, step, relation_name)
-						reply_to_engine (workitem)
+							obj=nil
+							# old: recherche des liens dont le pere est une tache ayant le meme wfid et ayant la relation requise
+							#
+							# liens dont le pere est une tache
+							objs = execute( task,  arworkitem)
+							create_link(arworkitem, objs, task, step, relation_name)
+							reply_to_engine(workitem)
+						end
 					else
-					#
-					# phase execution
-					#
-					puts "PlmParticipant.consume:promote_exec:arworkitem_id="+arworkitem.id.to_s
-						obj=nil
-						# recherche des liens dont le pere est une tache ayant le meme wfid et ayant la relation requise
-						#
-						# liens dont le pere est une tache
-						execute(task, Link.find_by_father_plmtype(Ruote::Sylrplm::HistoryEntry.model_name), arworkitem, relation_name)
-						reply_to_engine (workitem)
+						msg="#{fname}: arworkitem(#{workitem.wfid}) non trouve"
+						raise PlmProcessException.new(msg, 10008)
 					end
 				else
-					msg=fname+"arworkitem("+fexpid.workflow_instance_id+") non trouve"
-					raise PlmProcessException.new(msg, 10008)
+					msg="#{fname}: task(#{task}) or step(#{step}) or relation(#{relation_name}) undefined"
+					raise PlmProcessException.new(msg, 10009)
 				end
-			else
-				msg=fname+"task(#{task}) or step(#{step}) or relation(#{relation_name}) undefined"
-				raise PlmProcessException.new(msg, 10009)
+			rescue Exception => e
+				stack=""
+				e.backtrace.each do |x|
+					stack+= x+"\n"
+				end
+				LOG.debug(fname) {"exception:#{task}/#{step}:err=#{e}:stack=\n#{stack}"}
+				process_error = Ruote::ProcessError.new({:wfid=>process.wfid, :fei=>fei, :message=>e.to_s, :workitem=>workitem, :klass=>"fatal", :msg=>stack})
+			arworkitem.error=e.message unless arworkitem.nil?
 			end
-		rescue Exception => e
-			stack=""
-			e.backtrace.each do |x|
-				stack+= x+"\n"
-			end
-			puts fname+"exception:#{task}/#{step}:err=#{e}:stack=\n#{stack}"
-			pe = get_error_journal.record_error(OpenWFE::ProcessError.new(fexpid, e.to_s, workitem, "fatal", stack))
-			get_engine.replay_at_error(pe)
-			get_engine.cancel_process(fexpid)
+			arworkitem.save
+			LOG.debug(fname) {"fin fin arworkitem=#{arworkitem}  id=#{arworkitem.id}"}
 		end
-		puts fname+"fin *******************************************"
-	end
 
-	private
+		private
 
-	def check_objects(arworkitem, task, step, relation_name)
-		fname="#{self.class.name}.#{__method__}"
-		#prise en compte des objets transmis par le ar_workitem
-		nb_applicable=0
-		unless arworkitem.field_hash.nil?
-			fields = arworkitem.field_hash
-			LOG.info (fname) {"params avant replace=#{fields['params'].inspect}"}
-			# voir workitems_controller pour la construction de ce parametre
-			# /activity : rien a faire
-			# /documents/3 : document(3)
-			# apres split:
-			# 0 = ""
-			# 1 = plmtype de l'objet, par exemple "document"
-			# 2 = id de l'objet, par exemple 3
-			#puts "PlmParticipant.consume:url="+url
-			fields["params"].keys.each do |url|
-				v = fields["params"][url]
-				sv = v.split("#")
-				# url non encore traitee
-				if sv.size == 1
-					sp = url.split("/")
-					#puts "PlmParticipant.consume:sp "+sp.size.to_s+":"+sp[0].to_s
-					if sp.size == 3 && sp[0] != url
-						#puts "PlmParticipant.consume:"+sp[1]+"("+sp[1].size.to_s+"):"+sp[2]
-						cls=sp[1].chop
-						id=sp[2]
-						#rel=sp[3]
-						#puts "v.consume:cls=#{cls.inspect} id=#{id.inspect}"
-						#link_=add_object(arworkitem, cls, id, relation_name)
-						v = relation_name+"#"+v
-						# verif si on peut appliquer la methode sur l'objet
-						if relation_name=="applicable"
-							obj = get_object(cls, id)
-							unless obj.nil?
-								tst=task+"_by_action?"
-								if obj.respond_to?(tst)
-									if obj.send(tst)
-										#tout est ok
-										fields["params"][url] = v
-										msg="Object #{url} could be #{task} by action flow"
-										LOG.info (fname) {msg}
-									nb_applicable+=1
-									else
-										msg="#{tst}=false on Object #{url} which could not be #{task} by action flow"
-										LOG.info (fname) {msg}
-									nb_applicable+=1
-									end
-								else
-									msg="Check Method #{tst} is missing for Object #{url}"
-									LOG.info (fname) {msg}
-								nb_applicable+=1
-								# ce n'est pas bloquant, on executera la fonction quand meme dans execute
-								#raise PlmProcessException.new(msg, 10004)
-								end
-							else
-								msg=fname+"Object #{url} does not exist"
-								raise PlmProcessException.new(msg, 10005)
-							end
-						else
-							fields["params"][url] = v
-						nb_applicable+=1
-						end
+		def check(task,  step, relation_name, arworkitem)
+			fname="#{self.class.name}.#{__method__}"
+			objects=get_objects_in_workitem(arworkitem)
+			ret=[]
+			objects.each do |obj|
+				LOG.debug(fname) {"avant check: obj=#{obj} task=#{task}"}
+				unless obj.nil?
+					byaction=obj.send("#{task}_by_action?")
+					unless byaction
+						msg=fname+"Object #{obj} can't be #{task} by action"
+						raise PlmProcessException.new(msg, 10001)
+					else
+					ret<<obj
 					end
 				end
-			# enlever le parametre pour ne pas le retrouver sur les taches suivantes
-			###fields["params"].delete(url)
 			end
+			ret
 		end
-		LOG.info (fname) {"params apres replace=#{fields['params'].inspect} nb_applicable=#{nb_applicable}"}
-		#
-		# on doit avoir au moins un objet sur lequel s'applique le processus
-		#
-		if step!= "exec" && relation_name == "applicable" && nb_applicable==0
-			puts fname+":step=#{step} relation_name=#{relation_name} nb_applicable=#{nb_applicable}"
-			msg = fname+":No applicable object for task(#{task}) and step(#{step}) and relation(#{relation_name}) and nb_applicable(#{nb_applicable})"
-			####raise PlmProcessException.new(msg, 10006)
-		end
-		arworkitem.replace_fields(fields) unless fields.nil?
-	end
 
-	def execute(task, alinks, arworkitem, relation_name)
-		fname="PlmParticipant.execute:"
-		LOG.debug(fname) {"#{arworkitem.wfid}:#{relation_name}:#{alinks}"}
-		if alinks.is_a?(Array)
-		links = alinks
-		else
-		links = []
-		links << alinks unless alinks.nil?
-		end
-		puts fname+arworkitem.wfid+":"+relation_name+":"+links.count.to_s+" links"
-		links.each do |link|
-		#puts fname+"link="+link.ident
-			father = get_object(link.father_plmtype, link.father_id)
-			LOG.debug(fname) {"father=#{father} father.wfid=#{father.wfid} arworkitem.wfid=#{arworkitem.wfid}"}
-			#puts fname+"father.wfid="+father.wfid + "==?" + arworkitem.wfid
-			# bon wfid du pere
-			unless father.nil? ||  father.wfid != arworkitem.wfid
-				# bonne relation
-				if link.relation.name == relation_name
-					obj = get_object(link.child_plmtype, link.child_id)
-					puts fname+"avant exec:obj="+obj.inspect
-					unless obj.nil?
-						objnew = obj.send(task)
-						puts fname+"apres exec:objnew="+objnew.inspect
-						unless objnew.nil?
-							begin
-								objnew.save
-							rescue Exception => e
-								msg=fname+"Object #{objnew} not saved:Error=#{e}"
-								raise PlmProcessException.new(msg, 10010)
+		def execute( task, arworkitem)
+			fname="#{self.class.name}.#{__method__}"
+			objects=get_objects_in_workitem(arworkitem)
+			ret=[]
+			objects.each do |obj|
+				LOG.debug(fname) {"avant exec:obj=#{obj} task=#{task}"}
+				unless obj.nil?
+					objnew = obj.send(task)
+					LOG.debug(fname) {"apres exec:objnew=#{objnew}"}
+					unless objnew.nil?
+						begin
+							st=objnew.save
+							if st
+							ret<<objnew
+							else
+								msg=fname+"Object #{objnew} not saved"
+								raise PlmProcessException.new(msg, 10012)
 							end
-						else
-							msg=fname+"Object #{obj} not modified"
+						rescue Exception => e
+							msg=fname+"Object #{objnew} not saved:Error=#{e}"
 							raise PlmProcessException.new(msg, 10010)
 						end
-
 					else
-						msg=fname+"Object #{url} does not exist"
-						raise PlmProcessException.new(msg, 10011)
+						msg=fname+"Object #{obj} not modified"
+						raise PlmProcessException.new(msg, 10010)
 					end
 				else
-				#puts fname+"link.relation.name(#{link.relation.name}) != relation_name(#{relation_name})"
-				end
-			else
-				if father.nil?
-					puts fname+"father(#{father})=nil"
-				else
-					puts fname+"father.wfid(#{father.wfid}) != arworkitem.wfid(#{arworkitem.wfid})"
+					msg=fname+"Object #{url} does not exist"
+					raise PlmProcessException.new(msg, 10011)
 				end
 			end
+			ret
 		end
-	end
 
-	def get_param(workitem, param, default=nil)
-		ret=workitem.attributes["params"][param] unless workitem.attributes["params"][param].nil?
-		if ret.nil?
-		ret=default
+		def create_link( arworkitem, objects, task, step, relation_name)
+			fname="#{self.class.name}.#{__method__}"
+			LOG.debug(fname) {"arworkitem=#{arworkitem} objects=#{objects} task=#{task} step=#{step} relation_name=#{relation_name}"}
+			ret=[]
+			link=nil
+			objects.each do |item|
+				link=nil
+				relation = link_relation(arworkitem, item, relation_name)
+				unless relation.nil?
+					link = link_object(arworkitem, item, relation)
+					if link.save
+						LOG.info(fname){"save ok:link id=#{link.id}"}
+					else
+						LOG.error(fname){"Error during saving the link:#{link.errors.full_messages}"}
+						raise PlmProcessException.new(link.errors.full_messages, 10005)
+					end
+				else
+					msg=fname+" No relation with name='#{relation_name}'"
+					LOG.debug(fname) {msg}
+					raise PlmProcessException.new(msg, 10005)
+				end
+				ret<<link
+			end
+			LOG.info(fname){"links crees=#{ret}"}
+			ret
 		end
-		ret
-	end
 
+		def link_relation(arworkitem, item, relation_name)
+			fname="#{self.class.name}.#{__method__}:"
+			LOG.debug(fname) {"arworkitem=#{arworkitem} item=#{item} relation_name=#{relation_name}"}
+			relation = Relation.by_values_and_name(arworkitem.modelname, item.modelname, arworkitem.modelname, item.typesobject.name, relation_name)
+			if relation.nil?
+				msg = fname+" No relation '#{relation_name}' for workitem:#{arworkitem} and item:#{item}"
+				LOG.debug(fname) {msg}
+				raise PlmProcessException.new(msg, 10005)
+			end
+			relation
+		end
+
+		def link_object(arworkitem, item, relation)
+			fname="#{self.class.name}.#{__method__}"
+			LOG.debug(fname) {"arworkitem=#{arworkitem} item=#{item} relation=#{relation}"}
+			values = {}
+			values["father_plmtype"]        = arworkitem.modelname
+			values["child_plmtype"]         = item.modelname
+			values["father_id"]             = arworkitem.id
+			values["child_id"]              = item.id
+			values["relation_id"]           = relation.id
+			# en attendant mieux: user processus ou recup user en cours ...
+			#user=User.find_by_name(PlmServices.get_property(:USER_ADMIN))
+			#on prend celui du workitem (HistoryEntry)
+			user=User.find(arworkitem.owner_id)
+			link = Link.new(values.merge(user: user))
+			LOG.debug(fname) {"link=#{link}"}
+			link
+		end
+
+		def get_param(workitem, param, default=nil)
+			fname="#{self.class.name}.#{__method__}"
+			ret=workitem.params[param] unless workitem.params[param].nil?
+			if ret.nil?
+			ret=default
+			end
+			ret
+		end
+
+		def get_objects_in_workitem(arworkitem)
+			fname="#{self.class.name}.#{__method__}"
+			fields = eval(arworkitem.fields)
+			LOG.info(fname) {"params avant analyse=#{fields['params']}"}
+			ret=[]
+			fields["params"].keys.each do |url|
+				LOG.info(fname) {"params:url=#{url}"}
+				urlvalue = fields["params"][url]
+				LOG.debug(fname){"url=#{url} urlvalue=#{urlvalue}"}
+				unless urlvalue.nil?
+					sv = urlvalue.split(Ruote::Sylrplm::ArWorkitem::SEP_TYPE_ITEM)
+					if sv.size == 2
+						sp = url.split(Ruote::Sylrplm::ArWorkitem::SEP_URL)
+						if sp.size == 3 && sp[0] != url
+							LOG.info(fname) {"sp1=#{sp[1]}(#{sp[1].size}):#{sp[2]}"}
+							cls=sp[1].chop
+							id=sp[2]
+							LOG.debug(fname){"class=#{cls} id=#{id}"}
+							obj = get_object(cls, id)
+						ret<<obj
+						end
+					end
+				end
+			end
+			LOG.debug(fname){"ret=#{ret} "}
+			ret
+		end
+
+	end
 end
-

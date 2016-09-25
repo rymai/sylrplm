@@ -20,9 +20,9 @@
 	}
 </script>
 
-		<%=  t(:label_definitions_attributs) %> <a href="" onclick="swapForm(); return false;"> <%=  t(:button_swap)%></a>
-		<span id="rf_buttons"> <a href="" onclick="RuoteForms.resetForm('rform'); return false;"> <%=  t(:button_reset)%><a href="" onclick="RuoteForms.undo('rform'); return false;"> <%=  t(:button_undo)%></a></span>
-	
+		<%=  t(:label_definitions_attributs) %> <a id='button_swap'  href="#" onclick="swapForm('<%=t(:button_swap_values)%>', '<%=t(:button_swap_code)%>'); return false;"> <%=  t(:button_swap_code)%></a>
+		<span id="rf_buttons"> <a href="#" onclick="RuoteForms.resetForm('rform'); return false;"> <%=  t(:button_reset)%><a href="" onclick="RuoteForms.undo('rform'); return false;"> <%=  t(:button_undo)%></a></span>
+
 	<div id="fields_ta" style="display: none;">
 		<textarea id="fields" name="<%= textarea_name ||= 'fields' %>"><%= fields.to_json -%></textarea>
 	</div>
@@ -32,7 +32,7 @@
 	<div class="fieldhead">
 		<script>
 			byId('<%= form_id ||= 'workitem_form' %>').onsubmit = function () {
-				swapForm();
+				swapForm('<%=t(:button_swap_values)%>', '<%=t(:button_swap_code)%>');
 				return true;
 			};
 			RuoteForms.renderForm('rform',<%= fields.to_json %>);

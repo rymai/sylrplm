@@ -1,6 +1,6 @@
 <h1><%= t(:role_list) %><%= h_count_objects(@roles) %></h1>
 <%= h_form_simple_query('/roles', @roles) %>
-<% form_tag({:controller=>:roles, :action=>:index_execute}) do %>
+<%= form_tag({:controller=>:roles, :action=>:index_execute}) do %>
 <%= h_menu_index_action("role")%>
 <%= will_paginate(@roles[:recordset]) %>
 <table>
@@ -21,7 +21,7 @@
 		<td><%= comma_links(role.users, :login) %></td>
 		<td> <%= link_to h_img_edit.to_s, edit_role_path(role) %> </td>
 		<td> <%= link_to h_img(:duplicate), new_dup_role_path(role) %> </td>
-		<td> <%= link_to h_img_destroy.to_s, role, :confirm => t(:msg_confirm), :method => :delete %> </td>
+		<td> <%= h_destroy(role) %> </td>
 		<td><%= check_box(:action_on,role.id) %></td>
 	</tr>
 	<% end %>

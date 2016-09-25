@@ -3,17 +3,18 @@
 #
 class Group < ActiveRecord::Base
 	include Models::SylrplmCommon
+	attr_accessible :id, :name, :father_id,  :domain
 
 	#has_many :user_groups, :dependent => :delete_all
 	#has_many :users, :through => :user_groups
 	validates_presence_of :name
 	validates_uniqueness_of :name
-	has_and_belongs_to_many :users
+	has_and_belongs_to_many :users, :join_table=>:groups_users
 
-	has_and_belongs_to_many :subscriptions
+	has_and_belongs_to_many :subscriptions, :join_table=>:groups_subscriptions
 	#has_many :group_definitions, :dependent => :delete_all
 	#has_many :definitions, :through => :group_definitions
-	has_and_belongs_to_many :volumes
+	has_and_belongs_to_many :volumes, :join_table=>:groups_volumes
 	has_many :childs, :class_name => "Group", :primary_key => "id", :foreign_key => "father_id"
 	belongs_to :father, :class_name => "Group"
 	#
@@ -34,7 +35,7 @@ class Group < ActiveRecord::Base
 	end
 
 	def typesobject
-		Typesobject.find_by_forobject(model_name)
+		Typesobject.find_by_forobject(modelname)
 	end
 
 	def father_name

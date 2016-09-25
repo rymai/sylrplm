@@ -1,7 +1,7 @@
 <h1><%= t(:volume_new) %></h1>
 <% fonct="new" %>
-<% form_for(@volume) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@volume) do |f| %>
+<%= form_errors_for @volume %>
 <%= render(:partial => "shared/menu_new", :locals => {:object => @volume, :f => f, :fonct=>fonct}) %>
 <%= render(:partial => "volumes/edit",:locals => { :object => @volume, :f => f, :fonct=>fonct }) %>
 <%= render(:partial => "shared/submit_new", :locals => {:object => @volume, :f => f, :fonct=>fonct}) %>

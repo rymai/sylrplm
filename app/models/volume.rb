@@ -6,13 +6,18 @@ require 'pathname'
 class Volume < ActiveRecord::Base
 	include Models::SylrplmCommon
 
+	attr_accessible :id, :name, :directory, :protocol, :encode, :decode, :compress, :decompress, :designation, :description, :domain
+
 	validates_presence_of :name, :protocol
-	validates_format_of :name, :with =>/^([a-z]|[A-Z]|[0-9]||[.])+$/
+	validates_format_of :name, :with =>/\A([a-z]|[A-Z]|[0-9]||[.])+\Z/
 	validates_uniqueness_of :name
 
 	has_many :users
-	has_and_belongs_to_many :groups
+	has_and_belongs_to_many :groups, :join_table=>:groups_volumes
 	has_many :datafiles
+
+	before_save :before_save_
+	after_save :after_save_
 
 	PROTOCOL_FILE_SYSTEM="file_system"
 	PROTOCOL_FOG="fog"
@@ -28,7 +33,7 @@ class Volume < ActiveRecord::Base
 	def protocol_driver
 		fname= "#{self.class.name}.#{__method__}"
 		ret=(eval ("filedriver_#{protocol}".camelize)).instance
-		#LOG.debug (fname)  {"volume=#{name} protocol=#{protocol} driver=#{ret}"}
+		#LOG.debug(fname)  {"volume=#{name} protocol=#{protocol} driver=#{ret}"}
 		ret
 	end
 
@@ -40,33 +45,33 @@ class Volume < ActiveRecord::Base
 	#
 	def set_directory
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"debut old_dir_name=#{@old_dir_name}"}
+		#LOG.debug(fname) {"debut old_dir_name=#{@old_dir_name}"}
 		dir = protocol_driver.create_volume_dir(self,@old_dir_name)
 		if dir.nil?
 			ret = false
-			self.errors.add_to_base I18n.t(:ctrl_object_not_created,:typeobj => I18n.t(:ctrl_volume), :ident=>self.name, :msg => nil)
+			self.errors.add :base, I18n.t(:ctrl_object_not_created,:typeobj => I18n.t(:ctrl_volume), :ident=>self.name, :msg => nil)
 		else
 		ret = true
 		end
-		#LOG.debug (fname) {"fin dir=#{dir} ret=#{ret}"}
+		#LOG.debug(fname) {"fin dir=#{dir} ret=#{ret}"}
 		ret
 	end
 
 	def destroy_volume
 		fname= "#{self.class.name}.#{__method__}"
 		if !is_used?
-			#LOG.debug (fname) {"not used, protocol=#{protocol}"}
+			#LOG.debug(fname) {"not used, protocol=#{protocol}"}
 			ret = protocol_driver.delete_volume_dir(self)
 			if ret
 			ret = self.destroy
 			else
-				self.errors.add_to_base I18n.t(:check_volume_is_used, :ident=>self.name)
+				self.errors.add(:base, I18n.t(:check_volume_is_used, :ident=>self.name))
 			end
 		else
-			self.errors.add_to_base I18n.t(:check_volume_is_used, :ident=>self.name)
+			self.errors.add(:base,I18n.t(:check_volume_is_used, :ident=>self.name))
 		ret=false
 		end
-		LOG.info (fname) {"ret=#{ret} errors=#{self.errors.inspect}"}
+		LOG.info(fname) {"ret=#{ret} errors=#{self.errors.inspect}"}
 		ret
 	end
 
@@ -78,7 +83,7 @@ class Volume < ActiveRecord::Base
 		fname= "#{self.class.name}.#{__method__}"
 		files_system={}
 		files_database={}
-		Volume.find_all.each { |vol|
+		Volume.get_all.each { |vol|
 			files_system[vol.name]=vol.protocol_driver.files_list(vol,purge) if vol.protocol==::Volume::PROTOCOL_FILE_SYSTEM
 			files_database[vol.name]=vol.protocol_driver.files_list(vol,purge) if vol.protocol==::Volume::PROTOCOL_DATABASE_TEXT || vol.protocol==::Volume::PROTOCOL_DATABASE_BINARY
 		}
@@ -89,24 +94,24 @@ class Volume < ActiveRecord::Base
 		all_files[:fog_files]=fogfiles
 		all_files[:file_system_files]=files_system
 		all_files[:database_files]=files_database
-		#LOG.debug (fname) {"files_database=#{files_database}"}
-		#LOG.debug (fname) {"files_system=#{files_system}"}
-		#LOG.debug (fname) {"fogfiles=#{fogfiles}"}
+		#LOG.debug(fname) {"files_database=#{files_database}"}
+		#LOG.debug(fname) {"files_system=#{files_system}"}
+		#LOG.debug(fname) {"fogfiles=#{fogfiles}"}
 		all_files
 	end
 
 	def validate
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"protocol=#{protocol} directory=#{directory} old_dir_name=#{@old_dir_name}"}
-		errors.add_to_base I18n.t("valid_volume_directory_needed", :protocol=>protocol) if [PROTOCOL_FILE_SYSTEM].include? protocol && directory.blank?
+		#LOG.debug(fname) {"protocol=#{protocol} directory=#{directory} old_dir_name=#{@old_dir_name}"}
+		self.errors.add :base, I18n.t("valid_volume_directory_needed", :protocol=>protocol) if [PROTOCOL_FILE_SYSTEM].include? protocol && directory.blank?
 	end
 
 	def initialize(params_volume=nil)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"params=#{params_volume}"}
+		#LOG.debug(fname) {"params=#{params_volume}"}
 		super
 		if params_volume.nil?
-			self.directory = ::SYLRPLM::VOLUME_DIRECTORY_DEFAULT
+		self.directory = ::SYLRPLM::VOLUME_DIRECTORY_DEFAULT
 		self.set_default_values(1)
 		end
 		self
@@ -120,40 +125,44 @@ class Volume < ActiveRecord::Base
 		[PROTOCOL_FILE_SYSTEM, PROTOCOL_DATABASE_TEXT, PROTOCOL_DATABASE_BINARY, PROTOCOL_FOG].sort
 	end
 
-	def self.find_all
-		find(:all, :order=>"name")
+	def self.get_all
+		fname= "#{self.class.name}.#{__method__}"
+		#rails2 find(:all, :order=>"name")
+		ret=all.order(:name)
+		LOG.debug(fname) {"all volumes#{ret.inspect}"}
+		ret
 	end
 
 	def self.find_first
-		find(:first, :order=>"name")
+		order(:name).first
 	end
 
 	def is_used?
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"users.count=#{users.count} datafiles.count=#{datafiles.count}"}
+		#LOG.debug(fname) {"users.count=#{users.count} datafiles.count=#{datafiles.count}"}
 		self.users.count >0 || self.datafiles.count >0
 	end
 
-	def before_save
+	def before_save_
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname) {"debut"}
+		LOG.debug(fname) {"debut"}
 		ret=set_directory
-		#LOG.debug (fname) {"fin: ret=#{ret}"}
+		LOG.debug(fname) {"fin: ret=#{ret}"}
 		ret
 	end
 
 	def update_attributes(params_volume)
 		fname= "#{self.class.name}.#{__method__}"
 		@old_dir_name = dir_name
-		#LOG.debug (fname) {"debut old_dir_name=#{@old_dir_name} params=#{params_volume}"}
+		#LOG.debug(fname) {"debut old_dir_name=#{@old_dir_name} params=#{params_volume}"}
 		ret = super(params_volume)
-		#LOG.debug (fname) {"fin apres super  old_dir_name=#{@old_dir_name} ret=#{ret}"}
+		#LOG.debug(fname) {"fin apres super  old_dir_name=#{@old_dir_name} ret=#{ret}"}
 		ret
 	end
 
-	def after_save
+	def after_save_
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"volume=#{self.inspect}"}
+		LOG.debug(fname) {"volume=#{self.inspect}"}
 	end
 
 	#
@@ -167,7 +176,7 @@ class Volume < ActiveRecord::Base
 			unless self.directory.blank?
 				ret = File.join(self.directory, env)
 			else
-				ret = env
+			ret = env
 			end
 			ret = File.join(ret, self.name)
 		end

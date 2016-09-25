@@ -1,6 +1,10 @@
+
+
 class ForumsController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control(Access.find_for_controller(controller_class_name))
+
+	access_control(Access.find_for_controller(controller_name.classify))
+
 	# GET /forums
 	# GET /forums.xml
 	def index
@@ -98,7 +102,7 @@ class ForumsController < ApplicationController
 
 	def update_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"params=#{params.inspect}"}
+		LOG.debug(fname){"params=#{params.inspect}"}
 		@forum = Forum.find(params[:id])
 		if commit_promote?
 			ctrl_promote(@forum)
@@ -116,7 +120,7 @@ class ForumsController < ApplicationController
 	#
 	def update_type
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug (fname){"params=#{params.inspect}"}
+		#LOG.debug(fname){"params=#{params.inspect}"}
 		@forum = Forum.find(params[:id])
 		@types  = Typesobject.get_types("forum")
 		@status = Statusobject.get_status("forum")

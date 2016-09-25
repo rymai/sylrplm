@@ -1,10 +1,11 @@
 class ForumItem < ActiveRecord::Base
-	
+
 	#pour def_user seulement
   include Models::PlmObject
   include Models::SylrplmCommon
 
 	attr_accessor :user
+attr_accessible :id, :forum_id, :parent_id, :owner_id, :message, :group_id, :projowner_id, :domain
 
 	validates_presence_of :forum_id, :message
 
@@ -24,31 +25,31 @@ class ForumItem < ActiveRecord::Base
 	has_many :forum_item,
   :class_name => "ForumItem",
   :foreign_key => "parent_id"
-  
+
 	def user=(user)
 		def_user(user)
 	end
 
 	def forum=(forum)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname){"forum=#{forum}"}
+		LOG.info(fname){"forum=#{forum}"}
 		self.forum_id=forum.id
 	end
 
 	def initialize(*args)
 		super
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.info (fname){"args=#{args.length}:#{args.inspect}"}
+		LOG.info(fname){"args=#{args.length}:#{args.inspect}"}
 		if args.length >=1
-			LOG.info (fname){"message=#{args[0][:message]}"}
+			LOG.info(fname){"message=#{args[0][:message]}"}
 			self.message=args[0][:message]
 		end
 	end
-	
+
 	def ident
-		"#{self.id}.#{self.message}"	
+		"#{self.id}.#{self.message}"
 	end
-	
+
 	def self.get_conditions(filter)
 		filter = filters.gsub("*","%")
 		ret = {}

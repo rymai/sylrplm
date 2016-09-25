@@ -1,10 +1,10 @@
 <h1><%= t(:forum_new) %></h1>
-<% form_for( @forum, :url => { :controller => @object.controller_name,
+<%= form_for( @forum, :url => { :controller => @object.controller_name,
 :action => "add_forum" ,
 :id => @object.id }, :method => :get ) do |f| %>
-<%= f.error_messages %>
+<%= form_errors_for @forum %>
 <%= hidden_field_tag :relation_id , @relation_id %>
-<%= render(:partial => "forums/edit",:locals => { :f => f, :fonct=>"add" }) %>
+<%= render(:partial => "forums/edit",:locals => { :object=> @forum, :f => f, :fonct=>"add" }) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= f.submit t(:add_forum) %> </td>

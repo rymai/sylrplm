@@ -27,7 +27,7 @@
 	<%= text_field_tag :filename, @datafile.filename, :disabled => true %>
 	<br/>
 	<% if !@checkout_needed || ( !@datafile.document.nil? && @datafile.document.can_be_check_in?(current_user)) %>
-	<%= f.label "..." %>
+	<%= label_tag "..." %>
 	<%= f.file_field(:uploaded_file) %>
 	<br/>
 	<%= f.label t(:label_content_type) %>

@@ -1,11 +1,11 @@
 <h1><%= t(:project_list) %><%= h_count_objects(@projects) %></h1>
 <% unless @project.nil? %>
-<% form_for(@project) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@project) do |f| %>
+<%= form_errors_for @project %>
 <% end %>
 <% else %>
 <%= h_form_simple_query('/projects', @projects) %>
-<% form_tag({:controller=>:projects, :action=>:index_execute}) do %>
+<%= form_tag({:controller=>:projects, :action=>:index_execute}) do %>
 <% unless param_equals?("todo", "select") %>
 <%= h_menu_index_action("project")%>
 <%end%>
@@ -50,9 +50,9 @@
 		<td> <%= link_to h_img_edit.to_s, edit_project_path(project) %> </td>
 		<td> <%= link_to h_img_edit_lifecycle.to_s, {:controller=>"projects", :action=>"edit_lifecycle", :id => project.id} %> </td>
 		<td> <%= link_to h_img(:duplicate), new_dup_project_path(project) %> </td>
-		<td> <% if logged_in? %></td>
-		<%= link_to_remote h_img(:copy).to_s, :url => {:action => :add_favori, :id => project.id}, :method => :get %>
-		<% end %>
+
+		<td> <%= link_to h_img(:copy), add_favori_project_path(project), remote: true  if logged_in? %></td>
+
 		<td><%= h_destroy(project) %></td>
 		<% if project.revisable?  %>
 		<td> <%= h_img_revise.to_s %></td>

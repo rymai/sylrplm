@@ -23,7 +23,7 @@
 		<td> <%= h_explorer question.responder, :login unless  question.responder.nil? %> </td>
 		<td> <%= h question.answer %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_question_path(question) %> </td>
-		<td> <%= link_to h_img_destroy.to_s, question, :confirm => t(:msg_confirm), :method => :delete %> </td>
+		<td> <%= h_destroy(question) %> </td>
 	</tr>
 	<% end %>
 </table>

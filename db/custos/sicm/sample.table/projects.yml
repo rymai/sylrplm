@@ -1,5 +1,32 @@
-<% require 'yaml' %>
-<%= ::YAML::include("db/custos/sicm/sicm.custo/projects.yml") %>
+Project_1:
+  id: "1"
+  owner_id: "1"
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("project", ::SYLRPLM::TYPE_PROJ_ACCOUNT).id %>
+  statusobject_id: "10"
+  ident: PROJECT-admin
+  revision: 1
+  designation: Projet par defaut pour l administrateur
+  description:
+  date: "2012-04-07"
+  group_id: "1"
+  typeaccess_id: <%= Typesobject.find_by_forobject_and_name("project_typeaccess", ::SYLRPLM::TYPEACCESS_PUBLIC).id %>
+  domain: admin
+
+Project_2:
+  id: "2"
+  owner_id: "1"
+  typesobject_id: <%= Typesobject.find_by_forobject_and_name("project", ::SYLRPLM::TYPE_PROJ_ACCOUNT).id %>
+  statusobject_id: "10"
+  ident: PROJECT-users
+  revision: 1
+  designation: Projet par defaut pour les users
+  description:
+  date: "2012-04-07"
+  group_id: "1"
+  typeaccess_id: <%= Typesobject.find_by_forobject_and_name("project_typeaccess", ::SYLRPLM::TYPEACCESS_CONFIDENTIAL).id%>
+  domain: admin
+
+
 
 Project_3:
   id: "3"

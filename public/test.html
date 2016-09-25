@@ -1,0 +1,34 @@
+<script src='/javascripts/fluo-json.js'></script><script src='/javascripts/fluo-can.js'></script>
+<script>var proc_tree = null;</script>
+<div id='fluo_minor_toggle' style='cursor: pointer;'>
+	<table>
+		<tr>
+			<td class='menu_bas'>
+			<div id='fluo_toggle'>
+				<a class="menu_bas">Détails</a>
+			</div></td>
+		</tr>
+	</table>
+</div><a id='dataurl_link'><canvas id='fluo' width='50' height='50'></canvas></a><script src="/definitions/5/tree.js?var=proc_tree"></script>
+<script>
+	if (proc_tree) {
+		FluoCan.renderFlow('fluo', proc_tree, {
+			'workitems' : workitems.inspect
+		});
+		FluoCan.toggleMinor('fluo');
+		FluoCan.crop('fluo');
+		hlvar
+		a = document.getElementById('dataurl_link');
+		a.href = document.getElementById('fluo').toDataURL();
+		var toggle = document.getElementById('fluo_toggle');
+		toggle.onclick = function() {
+			FluoCan.toggleMinor('fluo');
+			FluoCan.crop('fluo');
+			if (toggle.innerHTML == '<a class="menu_bas">Détails</a>')
+				toggle.innerHTML = '<a class="menu_bas">Sans détails</a>';
+			else
+				toggle.innerHTML = '<a class="menu_bas">Détails</a>';
+		};
+	}
+</script>
+}

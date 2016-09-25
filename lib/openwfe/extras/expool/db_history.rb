@@ -70,8 +70,10 @@ module OpenWFE::Extras
   class HistoryEntry < ActiveRecord::Base
     include SingleConnectionMixin
 
-   #TODO syl set_table_name('history')
-   set_table_name('history_entry')
+    #TODO syl set_table_name('history')
+    #ko rails 4set_table_name('history_entry')
+    #ok rails4
+    self.table_name = 'history_entry'
 
     #
     # returns a FlowExpressionId instance if the entry has a 'fei' or
@@ -112,7 +114,7 @@ module OpenWFE::Extras
       #  self.new(opts).save! rescue nil
       #end
       #_syl_ pour recuperer l'entry
-      #puts "********** db_history.log:wi_fields=#{ret.wi_fields}"
+      #puts "********** db_history.log:wi_fields=#{ret.fields}"
       (st ? ret : nil)
     end
   end

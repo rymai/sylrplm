@@ -1,23 +1,20 @@
 <% h_title t(:connect) %> <h1><%= t(:legend_login) %></h1>
-<% form_for :session, :url => { controller: :sessions, action: :create}, :html => {:id=>"session"} do |form| %>
-<%= form.error_messages %>
-
+<%= form_for :session, :url => { controller: :sessions, action: :create}, :html => {:id=>"session"} do |form| %>
 <p>
-	<%= form.label t(:label_login) %>
-	<%= form.text_field :login %>
+	<%= form.label ( t(:label_login))  %>
+	<%= form.text_field( :login)  %>
 </p>
 <p>
-	<%= form.label t(:label_password) %>
-	<%= form.password_field :password %>
+	<%= form.label (t(:label_password))  %>
+	<%= form.password_field (:password )%>
 </p>
 <p>
-	<%= form.label "" %><%= link_to t(:submit_new_account), new_account_path%>
+	<%= form.label "" %><%= link_to( t(:submit_new_account), new_account_sessions_path)  %>
 </p>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= submit_tag t(:submit_account) , :id => 'commit' %> </td>
 	</tr>
 </table>
-<!-- <%= render(:partial => "users/index",:locals => { :fonct => "new_session"}) %> -->
 
 <% end %>

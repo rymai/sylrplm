@@ -5,12 +5,15 @@ require "controllers/plm_modeling"
 # objects created on a project context
 #------------------------------------------------------
 def tree_projowners(node,  child, father)
-	if father.model_name == "project"
+	if father.modelname == "project"
 		fname="#{self.class.name}.#{__method__}"
-		LOG.debug (fname){"father=#{father} "}
-		tree_objects(node, Customer.find_all_by_projowner_id(father.id))
-		tree_objects(node, Part.find_all_by_projowner_id(father.id))
-		tree_objects(node, Document.find_all_by_projowner_id(father.id))
+		LOG.debug(fname){"father=#{father} "}
+		#rails2 tree_objects(node, Customer.find_all_by_projowner_id(father.id))
+		#rails2 tree_objects(node, Part.find_all_by_projowner_id(father.id))
+		#rails2 tree_objects(node, Document.find_all_by_projowner_id(father.id))
+		tree_objects(node, Customer.find_by_projowner_id(father.id))
+		tree_objects(node, Part.find_by_projowner_id(father.id))
+		tree_objects(node, Document.find_by_projowner_id(father.id))
 	end
 	node
 end
@@ -22,7 +25,7 @@ end
 # @param objs: objects array to
 def tree_objects(node, objs)
 	fname="#{self.class.name}.#{__method__}"
-	LOG.debug (fname){"tree_objects=#{objs} "}
+	LOG.debug(fname){"tree_objects=#{objs} "}
 	if objs.is_a?(Array)
 		objs.each do |obj|
 			pnode=tree_object(obj)
@@ -46,8 +49,8 @@ end
 def tree_object(obj)
 	url={:controller => obj.controller_name, :action => :show, :id => "#{obj.id}"}
 	options={
-		:id => "'#{obj.model_name}_#{obj.ident_plm}'",
-		:label => t("ctrl_"+obj.model_name)+':'+obj.ident_plm ,
+		:id => "'#{obj.modelname}_#{obj.ident_plm}'",
+		:label => t("ctrl_"+obj.modelname)+':'+obj.ident_plm ,
 		:icon=>icone_fic(obj),
 		:icon_open=>icone_fic(obj),
 		:title => obj.designation,
@@ -67,13 +70,13 @@ end
 # @return the completed node
 #
 def tree_users(node, father)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	fname="plm_tree:"#{self.class.name}.#{__method__}"
 	if father.respond_to? :users
-		#LOG.debug (fname){"#{father.ident} father.users=#{father.users}"}
+		#LOG.debug(fname){"#{father.ident} father.users=#{father.users}"}
 		unless father.users.nil?
 			begin
 				father.users.each do |child|
-				#LOG.debug (fname){"child=#{child.inspect}"}
+				#LOG.debug(fname){"child=#{child.inspect}"}
 					url = {:controller => 'users', :action => 'show', :id => child.id}
 					options = {
 						:id => "#{child.id}" ,
@@ -84,7 +87,7 @@ def tree_users(node, father)
 						:open => false,
 						:url  => url_for(url)
 					}
-					#LOG.debug (fname){"user:#{child.ident}"}
+					#LOG.debug(fname){"user:#{child.ident}"}
 					cnode = Node.new(options, nil)
 					node << cnode
 				end
@@ -105,8 +108,8 @@ end
 # @return the completed node
 #
 def tree_organization(node, father)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	#LOG.debug (fname){"#{father.ident} father.childs=#{father.childs}"}
+	fname="plm_tree:"#{self.class.name}.#{__method__}"
+	#LOG.debug(fname){"#{father.ident} father.childs=#{father.childs}"}
 	unless father.childs.nil?
 		begin
 			father.childs.each do |child|
@@ -120,16 +123,16 @@ def tree_organization(node, father)
 					:open => false,
 					:url  => url_for(url)
 				}
-				#LOG.debug (fname){"child#{child.ident}"}
+				#LOG.debug(fname){"child#{child.ident}"}
 				cnode = Node.new(options, nil)
 				node << cnode
 				tree_organization(cnode, child)
 			end
 		rescue Exception => e
-			LOG.warn (fname){e}
+			LOG.warn(fname){e}
 		end
 	end
-	#LOG.debug (fname){"node=#{node.inspect}"}
+	#LOG.debug(fname){"node=#{node.inspect}"}
 	node
 end
 
@@ -142,9 +145,9 @@ end
 # @return the completed node
 #
 def tree_groups(node, father)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	fname="plm_tree:"#{self.class.name}.#{__method__}"
 	if father.respond_to? :groups
-		LOG.debug (fname){"#{father.ident} father.groups=#{father.groups}"}
+		LOG.debug(fname){"#{father.ident} father.groups=#{father.groups}"}
 		unless father.groups.nil?
 			begin
 				father.groups.each do |child|
@@ -158,16 +161,16 @@ def tree_groups(node, father)
 						:open => false,
 						:url  => url_for(url)
 					}
-					LOG.debug (fname){"group:#{child.ident}"}
+					LOG.debug(fname){"group:#{child.ident}"}
 					cnode = Node.new(options, nil)
 					node << cnode
 				end
 			rescue Exception => e
-				LOG.warn (fname){e}
+				LOG.warn(fname){e}
 			end
 		end
 	end
-	LOG.debug (fname){"node=#{node.inspect}"}
+	LOG.debug(fname){"node=#{node.inspect}"}
 	node
 end
 
@@ -188,7 +191,7 @@ end
 # @return the intermediate node
 #
 def tree_level(id, title, icon = nil, icon_open = nil, designation = nil, open = false)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	fname="plm_tree:"#{self.class.name}.#{__method__}"
 	options={
 		:id => id,
 		:label => title,
@@ -241,10 +244,10 @@ end
 # @param level: the current level
 def group_tree(thenode, level)
 	# elimination des doublons avec comptage
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
+	fname="plm_tree:"#{self.class.name}.#{__method__}"
 	cur_quantity = thenode.nodes.count
 	tab=" "*(level+1)
-	LOG.info (fname){"#{tab} begin ************ #{cur_quantity} noeuds devient #{thenode.nodes.count} "}
+	LOG.info(fname){"#{tab} begin ************ #{cur_quantity} noeuds devient #{thenode.nodes.count} "}
 	begin
 	# on sauve le tableau des fils
 		old_nodes = thenode.nodes
@@ -252,7 +255,7 @@ def group_tree(thenode, level)
 		thenode.nodes = []
 		# parcours des fils
 		old_nodes.each do |node|
-		###LOG.debug (fname) {"#{tab}node=#{node.id}:#{node.obj_child.ident}:#{node.quantity}"}
+		###LOG.debug(fname) {"#{tab}node=#{node.id}:#{node.obj_child.ident}:#{node.quantity}"}
 		# on ajoute la 1ere occurence de ce noeud
 			if node.quantity.nil?
 			node.quantity = 1
@@ -274,9 +277,9 @@ def group_tree(thenode, level)
 			group_tree(node, level+=1)
 		end
 	rescue Exception => e
-		LOG.debug (fname){"#{tab}error:#{e}"}
+		LOG.debug(fname){"#{tab}error:#{e}"}
 	end
-	LOG.info (fname){"#{tab} end ************ #{cur_quantity} noeuds devient #{thenode.nodes.count} "}
+	LOG.info(fname){"#{tab} end ************ #{cur_quantity} noeuds devient #{thenode.nodes.count} "}
 	thenode
 end
 

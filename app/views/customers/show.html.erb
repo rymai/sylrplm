@@ -1,8 +1,8 @@
 <H1><%= t("customer_show") %></H1>
 <% fonct="show" %>
 <%= render(:partial => "shared/menu_show", :locals => {:object => @customer, :fonct => fonct}) %>
-<% form_for(@customer, :html => { :id => h_form_html_id(@customer, fonct) }) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@customer, :html => { :id => h_form_html_id(@customer, fonct) }) do |f| %>
+<%= form_errors_for @customer %>
 <p>
 	<b><%= t("label_ident") %></b>
 	<%= h @customer.ident %>

@@ -1,0 +1,12 @@
+<% if err_msg.count > 0 %>
+<fieldset class='error'>
+  <p class='error'>
+    <%= t(:form_validation_errors, :errors_number=>err_msg.count)%>
+  </p>
+  <ul class='error'>
+    <% err_msg.each do |message| %>
+      <li class='error'><%= message %></li>
+    <% end %>
+  </ul>
+</fieldset>
+<%end%>

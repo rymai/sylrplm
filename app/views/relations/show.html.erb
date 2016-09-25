@@ -1,8 +1,8 @@
 <h1><%=t(:relation_show)%></h1>
 <%= render(:partial => "shared/menu_show", :locals=>{:object => @relation, :fonct=>"show"}) %>
 <% fonct="show" %>
-<% form_for(@relation, :html => { :id => h_form_html_id(@relation, fonct) }) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@relation, :html => { :id => h_form_html_id(@relation, fonct) }) do |f| %>
+<%= form_errors_for @relation %>
 <p>
 	<b><%= t(:label_ident) %></b>
 	<%= h @relation.ident %>

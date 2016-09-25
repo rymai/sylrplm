@@ -228,3 +228,13 @@ relation_id_36_view_id_3_domain_admin:
   view_id: 3
   domain: admin
 
+relation_id_15_view_id_1_domain_admin:
+  relation_id: 15
+  view_id: 1
+  domain: admin
+
+relation_id_16_view_id_1_domain_admin:
+  relation_id: 16
+  view_id: 1
+  domain: admin
+

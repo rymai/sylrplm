@@ -2,13 +2,13 @@
 # construction des arbres descendants
 ############################################
 def  build_tree_actions_by_roles(actions_by_roles)
-	fname="plm_tree:#{controller_class_name}.#{__method__}"
-	LOG.debug (fname) {"begin"}
+	fname="plm_tree:"#{self.class.name}.#{__method__}"
+	LOG.debug(fname) {"begin"}
 	lab=t(:ctrl_actions_by_roles)
 	tree = Tree.new({:js_name=>"tree_down", :label => lab, :open => true })
 	id=0
 	actions_by_roles.each_key do |role|
-		LOG.debug (fname) {"role=#{role}"}
+		LOG.debug(fname) {"role=#{role}"}
 		##role = Role.find_by_title(srole)
 		id+=1
 		options={
@@ -54,6 +54,6 @@ def  build_tree_actions_by_roles(actions_by_roles)
 			end
 		end
 	end
-	LOG.debug (fname) {"tree size=#{tree.size}"}
+	LOG.debug(fname) {"tree size=#{tree.size}"}
 	tree
 end

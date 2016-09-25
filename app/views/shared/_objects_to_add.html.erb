@@ -6,9 +6,10 @@
 %>
 <% if nbr > 0 %>
 <h1><%= t("legend_objects_to_add") %></h1>
-<% form_for(objects_to_add, :url => {:controller => get_controller_from_model_type(objects_to_add.model_name), :action => :add_objects,:id => objects_to_add.id }) do |f| %>
+<%= puts "objects_to_add:#{objects_to_add} #{objects_to_add.modelname}" %>
+<%= form_for(objects_to_add, :url => {:controller => get_controller_from_model_type(objects_to_add.modelname), :action => :add_objects,:id => objects_to_add.id }) do |f| %>
 <table class='menu_bas'>
-	<%= hidden_field_tag "model_name", objects_to_add.model_name %>
+	<%= hidden_field_tag "modelname", objects_to_add.modelname %>
 	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :document}) %>
 	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :part}) %>
 	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :project}) %>
@@ -29,7 +30,7 @@ forum
 relations=objects_to_add.relations(:forum,:forum)%>
 <% if relations.count > 0 %>
 <h1></h1>
-<% form_for(objects_to_add, :url => {:id => objects_to_add.id, :action => :new_forum }) do |f| %>
+<%= form_for(objects_to_add, :url => {:id => objects_to_add.id, :action => :new_forum }) do |f| %>
 <table class='menu_bas'>
 	<tr>
 		<td><%= submit_tag t("add_forum") %></td>

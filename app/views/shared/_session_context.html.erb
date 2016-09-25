@@ -1,4 +1,4 @@
-<% form_for :session, :url => {:controller => :sessions , :action => :login}  do |form| %>
+<%= form_for :session, :url => {:controller => :sessions , :action => :login}  do |form| %>
 <%= hidden_field_tag :user_id , @current_user.id %>
 <%= form.label t(:label_role) %>
 <%= form.collection_select(:role_id, @current_user.roles, :id, :title, :options => {}, :selected => @current_user.role_id) %>

@@ -103,7 +103,7 @@ class GroupsController < ApplicationController
 		@group = Group.find(params[:id])
 		@ug_locals = {
 			:in_elements => @group.users || [],
-			:out_elements => User.find(:all) - @group.users
+			:out_elements => User.all - @group.users
 		}
 	end
 
@@ -156,7 +156,7 @@ class GroupsController < ApplicationController
 	# DELETE /groups/1
 	# DELETE /groups/1.xml
 	#
-	def destroy
+	def destroy_old
 
 		@group = Group.find(params[:id])
 		@group.destroy

@@ -1,7 +1,7 @@
-<h1><%= t(:lifecycle_edit, :model => t(@customer.model_name), :obj => @customer.to_s) %></h1>
+<h1><%= t(:lifecycle_edit, :model => t(@customer.modelname), :obj => @customer.to_s) %></h1>
 <% fonct="edit_lifecycle" %>
 <%= render(:partial => "shared/menu_edit", :locals => {:object => @customer, :fonct=>fonct}) %>
-<% form_for(@customer, :url => {:controller=>"customers", :action=>"update_lifecycle", :id => @customer.id}, :method=>:get, :html => { :id => h_form_html_id(@customer, fonct) }) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@customer, :url => {:controller=>"customers", :action=>"update_lifecycle", :id => @customer.id}, :method=>:get, :html => { :id => h_form_html_id(@customer, fonct) }) do |f| %>
+<%= form_errors_for @customer %>
 <%= render(:partial => "customers/edit_lifecycle",:locals => { :fonct=>fonct, :f=>f }) %>
 <% end %>

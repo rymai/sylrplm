@@ -1,5 +1,7 @@
-class PlmServices
+require 'ruote/sylrplm/sylrplm'
 
+class PlmServices
+	include ::Ruote::Sylrplm
 	@@plmcache={}
 
 	def self.get_property_cache(prop_name)
@@ -21,7 +23,7 @@ class PlmServices
 			@@plmcache["property"]={}
 		end
 		@@plmcache["property"][prop_name]=value
-		#LOG.debug(fname) {"prop_name=#{prop_name} value=#{value} #{@@plmcache["property"].count} properties in cache"}
+	#LOG.debug(fname) {"prop_name=#{prop_name} value=#{value} #{@@plmcache["property"].count} properties in cache"}
 	end
 
 	# reset the cache of properties
@@ -45,52 +47,72 @@ class PlmServices
 		if fields.size == 2
 			get_object(fields[0], fields[1])
 		else
-			LOG.error (fname){"Type #{type} bad formatted}"}
+			LOG.error(fname){"Type #{type} bad formatted}"}
 			nil
 		end
 	end
 
 	def self.get_object(type, id )
-		fname = "PlmServices.#{__method__}(#{type},#{id})"
+		fname = "PlmServices.#{__method__}"
+		LOG.debug(fname){"type=#{type},id=#{id}"}
 		# part devient Part
 		typec = "::#{type.camelize}"
+		#typec=type.camelize
 		ret = nil
 		begin
 			mdl = eval typec
-		rescue Exception => e
+			#mdl=mdl[0,index(mdl,":")]
+			LOG.debug(fname) {"mdl=eval #{typec}=#{mdl}"}
+		rescue Exception => e1
+			LOG.error(fname) {"error1:#{typec}=>:#{e1.message} "}
 			begin
-				typecr ="::Ruote::Sylrplm#{typec}"
+				typecr ="::Ruote::#{typec}"
 				mdl = eval typecr
-			rescue Exception => er
-				LOG.error(fname) {"eval #{typec}=>#{e.message} , #{typecr}=>#{er.message}"}
-				stack=""
-				cnt=0
-				e.backtrace.each do |x|
-					if cnt<10
-						stack+= x+"\n"
+			rescue Exception => e2
+				LOG.error(fname) {"error2:#{typecr}=>#{e2.message}"}
+				begin
+					typecr ="::Ruote::Sylrplm#{typec}"
+					mdl = eval typecr
+				rescue Exception => e3
+					LOG.error(fname) {"error3:#{typecr}=>#{e3.message}"}
+					if(true)
+						stack=""
+						cnt=0
+						e3.backtrace.each do |x|
+							if cnt<10
+								stack+= x+"\n"
+							end
+							cnt+=1
+						end
+						LOG.error(fname) {"stack=\n#{stack}\n"}
 					end
-					cnt+=1
 				end
-				LOG.error(fname) {"===================== stack=\n#{stack}\n====================================================="}
 			end
 		end
+		#
 		unless mdl.nil?
 			begin
+				if(mdl.to_s=="Ruote::Sylrplm::Process" || mdl.to_s=="Process")
+				ret=::RuoteKit.engine.process(id)
+				else
 				ret = mdl.find(id)
-			rescue Exception => e
-				LOG.error{fname+"====================="+e.message}
-				stack=""
-				cnt=0
-				e.backtrace.each do |x|
-					if cnt<10
-						stack+= x+"\n"
-					end
-					cnt+=1
 				end
-				LOG.error (fname) {"--------------------- stack=\n#{stack}\n -------------------------"}
+			rescue Exception => e
+				LOG.error(fname) {"error:#{e.message}"}
+				if(true)
+					stack=""
+					cnt=0
+					e.backtrace.each do |x|
+						if cnt<10
+							stack+= x+"\n"
+						end
+						cnt+=1
+					end
+					LOG.error(fname) {"stack=\n#{stack}\n"}
+				end
 			end
 		end
-		LOG.debug (fname){"object not found}"} if ret.nil?
+		#LOG.debug(fname){"object not found}"} if ret.nil?
 		ret
 	end
 
@@ -100,10 +122,17 @@ class PlmServices
 	# props_user = PlmServices.get_properties("user_default")
 	def self.get_properties(atype_ident = nil)
 		fname="PlmServices.#{__method__}"
-		types = ::Typesobject.find_all_by_forobject(::SYLRPLM::PLM_PROPERTIES, :order => :name)
+		#rails4 types = ::Typesobject.find_all_by_forobject(::SYLRPLM::PLM_PROPERTIES, :order => :name)
+		types = ::Typesobject.order(:name).where(:forobject=>::SYLRPLM::PLM_PROPERTIES).to_a
+		if  types.is_a?(Array)
+		array_types=types
+		else
+		array_types=[]
+		array_types << types
+		end
 		ret = {}
-		types.each do |typ|
-		LOG.debug(fname) {"atype_ident=#{atype_ident} type=#{typ}"}
+		array_types.each do |typ|
+			LOG.debug(fname) {"atype_ident=#{atype_ident} type=#{typ}"}
 			ident = "#{typ.name}"
 			if atype_ident.nil?
 			# all properties
@@ -143,21 +172,21 @@ class PlmServices
 		ret=get_property_cache(prop_name)
 		unless  ret.nil?
 			#LOG.debug(fname) {"<<<<prop_name=#{prop_name}, atype_ident=#{atype_ident}, ret=#{ret} found in cache"}
-		else
+			else
 			props = get_properties(atype_ident)
 			ret=nil
 			ret_key=nil
-			 prop_name=prop_name.to_s.strip
+			prop_name=prop_name.to_s.strip
 			props.each do |key, value|
-				#LOG.debug(fname) {"prop_name=#{prop_name} key=#{key}, value=#{value}"}
-				#value=val[::Models::SylrplmCommon::TYPE_VALUES_VALUE][prop_name]
+			#LOG.debug(fname) {"prop_name=#{prop_name} key=#{key}, value=#{value}"}
+			#value=val[::Models::SylrplmCommon::TYPE_VALUES_VALUE][prop_name]
 				unless value.nil? || value[prop_name].nil?
 					ret = value[prop_name][::Models::SylrplmCommon::TYPE_VALUES_VALUE]
-					#LOG.debug(fname) {"prop_name=#{prop_name} key=#{key}, value=#{value} ret=#{ret}"}
+					LOG.debug(fname) {"prop_name=#{prop_name} key=#{key}, value=#{value} ret=#{ret}"}
 				ret_key = key
 				break
 				else
-					#LOG.debug(fname) {"prop_name=#{prop_name} key=#{key}, value=#{value} not found"}
+					LOG.debug(fname) {"prop_name=#{prop_name} key=#{key}, value=#{value} not found"}
 				end
 			end
 			#
@@ -176,7 +205,7 @@ class PlmServices
 						e.backtrace.each do |x|
 							stack+= x+"\n"
 						end
-						LOG.warn (fname) {"stack pour information sur l appelant a get_property=\n#{stack}"}
+					####LOG.warn(fname) {"stack pour information sur l appelant a get_property=\n#{stack}"}
 					end
 				end
 				LOG.debug(fname) {"prop_name=#{prop_name}, atype_ident=#{atype_ident}, ret=#{ret} found in SYLRPLM variables"}
@@ -247,10 +276,14 @@ class PlmServices
 		ret=I18n.translate(key, argums)
 		if ret==defo
 			# to keep logs about tranlation to do
-			puts "%TODO_TRANSLATE%:#{defo} stack below to see where it is called"
-			if(1==1)
+			if(false)
+				LOG.warn(fname) {"%TODO_TRANSLATE%:#{defo}"}
+			else
+				LOG.warn(fname) {"%TODO_TRANSLATE%:#{defo} stack below to see where it is called"}
 				begin
-					a=1/0
+					a=1
+					b=0
+					c=a/b
 				rescue Exception => e
 					stack=""
 					nbr=0
@@ -261,7 +294,7 @@ class PlmServices
 						break  if nbr==6
 						nbr+=1
 					end
-					LOG.warn (fname) {"For information on translate missing: stack=\n#{stack}"}
+					LOG.warn(fname) {"For information on translate missing: stack=\n#{stack}"}
 				end
 			end
 		end
@@ -269,5 +302,44 @@ class PlmServices
 		ret
 	end
 
+	def self.stack(msg, level)
+		fname = "PlmServices.#{__method__}"
+		LOG.warn(fname) {"#{msg}: level=#{level}"}
+		begin
+			a=1
+			b=0
+			c=a/b
+		rescue Exception => e
+			stack=""
+			nbr=0
+			e.backtrace.each do |x|
+				break  if nbr==level
+				unless x.include? "plm_services.rb"
+					stack+= x+"\n"
+				nbr+=1
+				end
+			end
+			LOG.warn(fname) {"#{msg}: stack=\n#{stack}"}
+		end
+	end
+
+	# Swaps from dots to underscores
+	#
+	#   swapdots "0_0_1" # => "0.0.1"
+	#   swapdots "0.0.1" # => "0_0_1"
+	#
+	# DEPRECATED since 0.9.21
+	#
+	def self.swapdots (s)
+		s.index('.') ? s.gsub(/\./, '_') : s.gsub(/\_/, '.')
+	end
+
+	def self.to_dots (s)
+		s.gsub(/\_/, '.')
+	end
+
+	def self.to_uscores (s)
+		s.gsub(/\./, '_')
+	end
 
 end

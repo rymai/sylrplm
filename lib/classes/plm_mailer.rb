@@ -1,4 +1,4 @@
-class PlmMailer_obsolete < ActionMailer::Base
+class PlmMailer < ActionMailer::Base
   def self.listUserMail(users, userExclude=nil)
     ret=[]
     users.each do |user|
@@ -19,7 +19,7 @@ class PlmMailer_obsolete < ActionMailer::Base
     body["theme"]=from.theme
     content_type "text/html"
   end
-  
+
   def new_login(object, from, to, urlbase, sent_at = Time.now)
     subject    'PLMMailer#new_login'
     recipients to.email

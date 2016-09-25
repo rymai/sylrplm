@@ -1,7 +1,7 @@
-<h1><%= t(:lifecycle_edit, :model => t(@forum.model_name), :obj => @forum.to_s) %></h1>
+<h1><%= t(:lifecycle_edit, :model => t(@forum.modelname), :obj => @forum.to_s) %></h1>
 <% fonct="edit_lifecycle" %>
 <%= render(:partial => "shared/menu_edit",:locals => { :object => @forum, :fonct=>fonct}) %>
-<% form_for(@forum, :url => {:controller=>"forums", :action=>"update_lifecycle", :id => @forum.id}, :method=>:get) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@forum, :url => {:controller=>"forums", :action=>"update_lifecycle", :id => @forum.id}, :method=>:get) do |f| %>
+<%= form_errors_for @forum %>
 <%= render(:partial => "forums/edit_lifecycle",:locals => {  :fonct=>fonct }) %>
-<% end %> 
+<% end %>

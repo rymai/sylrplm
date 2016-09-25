@@ -1,13 +1,15 @@
 class Sequence < ActiveRecord::Base
 	include Models::SylrplmCommon
+
+	attr_accessible :id, :value, :min, :max, :utility, :modify, :sequence, :domain
+
 	validates_presence_of :utility, :value
 	validates_uniqueness_of :utility
 	#
-	
 	def ident
-		"#{self.utility}.#{self.value}.mod:#{self.modify}.seq:#{self.sequence}"	
+		"#{self.utility}.#{self.value}.mod:#{self.modify}.seq:#{self.sequence}"
 	end
-	
+
 	def self.get_next_seq(utility)
 		current=find_for(utility)
 		ret=nil
@@ -34,24 +36,26 @@ class Sequence < ActiveRecord::Base
 		Module.constants.select do |constant_name|
 			constant = eval constant_name
 			isClass=constant.is_a? Class
-			#puts 'Sequence.get_constants='+constant.to_s+' class='+isClass.to_s
+		#puts 'Sequence.get_constants='+constant.to_s+' class='+isClass.to_s
 		#if not constant.nil? && isClass && constant.extend? ActiveRecord::Base
 
 		end
 	end
 
-	def self.find_all
-		find(:all, :order=>"utility")
+	def self.get_all
+		#rails2 find(:all, :order=>"utility")
+		all.order(:utility)
 	end
 
 	def self.find_for(utility)
-		find(:first, :order=>"utility", :conditions => ["utility = '#{utility}' "])
+		#rails2 find(:first, :order=>"utility", :conditions => ["utility = '#{utility}' "])
+		where("utility = '#{utility}' ").order(:utility).first
 	end
 
 	# recherche des attributs d'un modele
 	def self.find_cols_for(model)
 		ret=[]
-		find_all.each do |line|
+		get_all.each do |line|
 			tokens=line.split(".")[0]
 			if(tokens[0]==model)
 			ret<<tokens[1]
@@ -63,7 +67,7 @@ class Sequence < ActiveRecord::Base
 	# recherche d'un attribut d'un modele
 	def self.find_col_for(model,col)
 		ret=nil
-		find_all.each do |line|
+		get_all.each do |line|
 			tokens=line.utility.split(".")
 			#puts "Sequence.find_col_for:#{model}.#{col}:#{tokens.inspect}"
 			#puts "Sequence.find_col_for:tokens[0] '#{tokens[0]}' == '#{model.to_s}' ? #{tokens[0] == model.to_s}"

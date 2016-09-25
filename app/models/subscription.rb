@@ -11,16 +11,18 @@ class Subscription < ActiveRecord::Base
 	# pour def_user
 	include Models::PlmObject
 	#
+attr_accessible :id, :name, :designation, :description,  :owner_id, :oncreate, :onupdate, :ondestroy, :domain
+
 	validates_presence_of :name, :designation
 	validates_uniqueness_of :name
 	#
 	belongs_to :owner, :class_name => "User"
 	# les types d'objet pour lesquels l'abonnement s' applique
-	has_and_belongs_to_many :fortypesobject, :class_name => "Typesobject"
+	has_and_belongs_to_many :fortypesobject, :class_name => "Typesobject", :join_table=>:subscriptions_typesobjects
 	# les projets pour lesquels l'abonnement s' applique
-	has_and_belongs_to_many :inproject, :class_name => "Project"
+	has_and_belongs_to_many :inproject, :class_name => "Project", :join_table=>:projects_subscriptions
 	# les groupes pour lesquels l'abonnement s' applique
-	has_and_belongs_to_many :ingroup, :class_name => "Group"
+	has_and_belongs_to_many :ingroup, :class_name => "Group", :join_table=>:groups_subscriptions
 	#
 	def user=(user)
 		def_user(user)
@@ -29,11 +31,11 @@ class Subscription < ActiveRecord::Base
 	def ident
 		name
 	end
-	
+
 	def name_translate
 		PlmServices.translate("subscription_#{name}")
 	end
-	
+
 	def self.get_conditions(filter)
 		filter = filter.gsub("*","%")
 		ret = {}

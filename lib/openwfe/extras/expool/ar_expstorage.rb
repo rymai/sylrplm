@@ -26,6 +26,10 @@
 require 'base64'
 
 require 'openwfe/service'
+
+#syl
+require 'openwfe/expressions/expression_map'
+
 require 'openwfe/rudefinitions'
 require 'openwfe/expool/expstorage'
 require 'openwfe/extras/singlecon'
@@ -123,7 +127,7 @@ module OpenWFE::Extras
         YAML::dump(flow_expression) :
         Base64.encode64(Marshal.dump(flow_expression))
       #puts  "ExpressionTables.[]=:e=#{e.svalue.size}"
-      
+
       #TODO syl pour postgresql qui refuse le null
       ###if e.respond_to? :text
       e.text="text" if e.text.nil?

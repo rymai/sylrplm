@@ -21,140 +21,140 @@
 #
 # Made in Japan.
 #++
-
-
 class ExpressionsController < ApplicationController
+	###before_filter :login_required
+	# GET /expressions/:wfid/:expid
+	#
+	def show
+		#puts "expressions_controller.show:params="+params.inspect
+		find_expression
 
-  ###before_filter :login_required
+		respond_to do |format|
 
-  # GET /expressions/:wfid/:expid
-  #
-  def show
-    #puts "expressions_controller.show:params="+params.inspect
-    find_expression
+			format.html
+			# => app/views/expressions/show.html.erb
 
-    respond_to do |format|
-
-      format.html
-        # => app/views/expressions/show.html.erb
-
-      format.json do
-        render(:json => OpenWFE::Json.expression_to_h(
+			format.json do
+				render(:json => OpenWFE::Json.expression_to_h(
           @expression,
           :linkgen => linkgen).to_json)
-      end
+			end
 
-      format.xml do
-        render(:xml => OpenWFE::Xml.expression_to_xml(
+			format.xml do
+				render(:xml => OpenWFE::Xml.expression_to_xml(
           @expression,
           :indent => 2, :linkgen => linkgen))
-      end
-    end
-  end
+			end
+		end
+	end
 
-  # PUT /expressions/:wfid/:expid
-  #
-  def update
+	# PUT /expressions/:wfid/:expid
+	#
+	def update
 
-    #puts "expressions_controller.update:params="+params.inspect
-    find_expression
+		#puts "expressions_controller.update:params="+params.inspect
+		find_expression
 
-    ruote_engine.update_expression_tree(@expression, parse_tree)
+		RuoteKit.engine.update_expression_tree(@expression, parse_tree)
 
-    redirect_to :action => 'show'
-  end
+		redirect_to :action => 'show'
+	end
 
-  # DELETE /expressions/:wfid/:expid
-  #
-  def destroy
+	# DELETE /expressions/:wfid/:expid
+	#
+	def destroy
 
-   #puts "expressions_controller.destroy:params="+params.inspect
-    find_expression
+		#puts "expressions_controller.destroy:params="+params.inspect
+		find_expression
 
-    ruote_engine.cancel_expression(@expression)
+		RuoteKit.engine.cancel_expression(@expression)
 
-    sleep 0.3
+		sleep 0.3
 
-    @process = ruote_engine.process_status(params[:wfid])
+		#rails2 @process = ruote_engine.process_status(params[:wfid])
+		@process = RuoteKit.engine.process(params[:wfid])
 
-    redirect_to(@process ? process_path(@process.wfid) : processes_path)
-  end
+		redirect_to(@process ? process_path(@process.wfid) : processes_path)
+	end
 
-  # GET /expressions/:wfid/:expid/tree
-  #
-  def show_tree
+	# GET /expressions/:wfid/:expid/tree
+	#
+	def show_tree
 
-    #puts "expressions_controller.show_tree:params="+params.inspect
-    find_expression
+		#puts "expressions_controller.show_tree:params="+params.inspect
+		find_expression
 
-    respond_to do |format|
+		respond_to do |format|
 
-      format.html do
-        render(:json => @expression.raw_representation.to_json)
-      end
+			format.html do
+				render(:json => @expression.raw_representation.to_json)
+			end
 
-      format.json do
-        render(:json => @expression.raw_representation.to_json)
-      end
-    end
-  end
+			format.json do
+				render(:json => @expression.raw_representation.to_json)
+			end
+		end
+	end
 
-  # UPDATE /expressions/:wfid/:expid/tree
-  #
-  def update_tree
-    #puts "expressions_controller.update_tree:params="+params.inspect
+	# UPDATE /expressions/:wfid/:expid/tree
+	#
+	def update_tree
+		#puts "expressions_controller.update_tree:params="+params.inspect
 
-    # TODO, well maybe
-  end
+		# TODO, well maybe
+	end
 
-  private
+	private
 
-#  def authorized?
-#    #
-#    # only admins may see and edit expressions
-#    #
-#    @current_user && @current_user.is_admin?
-#  end
+	#  def authorized?
+	#    #
+	#    # only admins may see and edit expressions
+	#    #
+	#    @current_user && @current_user.is_admin?
+	#  end
 
-  def find_expression
+	def find_expression
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"params="+params.inspect}
+		wfid = params[:wfid]
+		#rails2  expid = OpenWFE.to_dots(params[:expid])
+		expid = PlmServices.to_dots(params[:expid])
 
-    wfid = params[:wfid]
-    expid = OpenWFE.to_dots(params[:expid])
-
-    @process = ruote_engine.process_status(params[:wfid])
-
-    @expression = @process.all_expressions.find { |fexp|
+		#rails2 @process = ruote_engine.process_status(params[:wfid])
+		@process = RuoteKit.engine.process(params[:wfid])
+		#LOG.debug(fname){"expressions="+@process.expressions.inspect}
+		@expression = @process.expressions.find { |fexp|
       fexp.fei.wfid == wfid &&
-      fexp.fei.expid == expid &&
-      (not fexp.is_a?(OpenWFE::Environment))
+      fexp.fei.expid == expid
     }
-  end
+		#LOG.debug(fname){"@expression=#{@expression}"}
+	end
 
-  # parse incoming expression (update)
-  #
-  def parse_tree
+	# parse incoming expression (update)
+	#
+	def parse_tree
 
-    begin
+		begin
 
-      ct = request.content_type.to_s
+			ct = request.content_type.to_s
 
-      return request.body.read \
-        if ct.match(/xml$/) # TODO
+			return request.body.read \
+			if ct.match(/xml$/) # TODO
 
-      return request.body.read \
-        if ct.match(/json$/) # TODO
+			return request.body.read \
+			if ct.match(/json$/) # TODO
 
-      #
-      # then we simply have a form...
+			#
+			# then we simply have a form...
 
-      ActiveSupport::JSON.decode(params[:tree])
+			ActiveSupport::JSON.decode(params[:tree])
 
-    rescue Exception => e
+		rescue Exception => e
 
-      LOG.warn("failed to parse expression : #{e}")
+			LOG.warn("failed to parse expression : #{e}")
 
-      nil
-    end
-  end
+			nil
+		end
+	end
 
 end

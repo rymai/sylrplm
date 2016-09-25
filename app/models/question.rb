@@ -1,8 +1,12 @@
 class Question < ActiveRecord::Base
 	include Models::PlmObject
 	include Models::SylrplmCommon
+
 	validates_presence_of :question
+
 	attr_accessor  :user
+	attr_accessible :id, :question, :answer, :position, :asker_id, :responder_id, :domain
+
 	belongs_to :asker,
   :class_name => "User"
 
@@ -23,11 +27,11 @@ class Question < ActiveRecord::Base
 		self.responder = user if self.answer.present?
 		end
 	end
-	
+
 	def ident
-		self.question	
+		self.question
 	end
-	
+
 	def self.get_conditions(filter)
 		filter = filters.gsub("*","%")
 		ret={}

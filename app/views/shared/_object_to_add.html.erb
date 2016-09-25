@@ -12,7 +12,7 @@
 <% plmobj.relations(type_to_add, nil, ::Relation::RELATION_PASTE_WAY_MANUAL).each do |relation| %>
 <% if(favori.typesobject.name==relation.child_typesobject.name || relation.child_typesobject.name==PlmServices.get_property(:TYPE_GENERIC))%>
 <tr>
-	<td><%= check_box_tag( "objecttoadd[#{favori.model_name}][#{favori.id}][#{relation.id}]")  %></td>
+	<td><%= check_box_tag( "objecttoadd[#{favori.modelname}][#{favori.id}][#{relation.id}]")  %></td>
 	<td><%= favori %></td>
 	<td><%= text_field_tag("relation[#{type_to_add}][#{relation.id}]", relation.ident, :readonly => true) %>
 	</td>

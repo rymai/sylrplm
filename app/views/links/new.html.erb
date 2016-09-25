@@ -1,7 +1,7 @@
 <h1>New link</h1><% fonct="new"
 form_id=fonct+"_link" %>
-<% form_for(@link, :html => { :id => form_id }) do |f| %>
-<%= f.error_messages %>
+<%= form_for(@link, :html => { :id => form_id }) do |f| %>
+<%= form_errors_for @link %>
 <%= render(:partial => "shared/menu_new", :locals => {:object => @link, :f => f, :fonct=>fonct}) %>
 <%= render(
 :partial => "links/edit",

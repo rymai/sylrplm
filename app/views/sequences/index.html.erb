@@ -1,6 +1,6 @@
 <h1><%= t(:sequence_list) %><%= h_count_objects(@sequences) %></h1>
 <%= h_form_simple_query('/sequences', @sequences) %>
-<% form_tag({:controller=>:sequences, :action=>:index_execute}) do %>
+<%= form_tag({:controller=>:sequences, :action=>:index_execute}) do %>
 <%= h_menu_index_action("sequence")%>
 <%= will_paginate(@sequences[:recordset]) %>
 <table>
@@ -27,7 +27,7 @@
 		<td> <%= h sequence.domain %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_sequence_path(sequence) %> </td>
 		<td> <%= h_menu_duplicate(sequence) %> </td>
-		<td> <%= link_to h_img_destroy.to_s, sequence, :confirm => t(:msg_confirm), :method => :delete %> </td>
+		<td> <%= h_destroy(sequence) %> </td>
 		<td><%= check_box(:action_on,sequence.id) %></td>
 	</tr>
 	<% end %>

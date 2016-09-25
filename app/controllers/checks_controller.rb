@@ -1,6 +1,6 @@
 class ChecksController < ApplicationController
 	include Controllers::PlmObjectControllerModule
-	access_control(Access.find_for_controller(controller_class_name))
+	access_control(Access.find_for_controller(controller_name.classify))
 	# GET /checks
 	# GET /checks.xml
 	def index
@@ -25,7 +25,7 @@ class ChecksController < ApplicationController
 	# GET /checks/new.xml
 	def new
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"params=#{params.inspect}"}
+		LOG.debug(fname) {"params=#{params.inspect}"}
 		@check = Check.new(:user => current_user)
 		respond_to do |format|
 			format.html # new.html.erb
@@ -42,12 +42,12 @@ class ChecksController < ApplicationController
 	# POST /checks.xml
 	def create
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug (fname) {"params=#{params.inspect}"}
+		LOG.debug(fname) {"params=#{params.inspect}"}
 		@check = Check.new(params[:check])
 		@check.owner=current_user unless current_user.nil?
 		respond_to do |format|
 			if @check.save
-				LOG.debug (fname) {"@check.owner.name=#{@check.owner.login}"}
+				LOG.debug(fname) {"@check.owner.name=#{@check.owner.login}"}
 				flash[:notice] = t(:ctrl_object_created, :typeobj => 'Check', :ident => @check.id)
 				format.html { redirect_to(@check) }
 				format.xml  { render :xml => @check, :status => :created, :location => @check }
@@ -77,14 +77,4 @@ class ChecksController < ApplicationController
 		end
 	end
 
-	# DELETE /checks/1
-	# DELETE /checks/1.xml
-	def destroy
-		@check = Check.find(params[:id])
-		@check.destroy
-		respond_to do |format|
-			format.html { redirect_to(checks_url) }
-			format.xml  { head :ok }
-		end
-	end
 end

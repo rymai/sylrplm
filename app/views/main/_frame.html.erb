@@ -1,245 +1,239 @@
 <div class="navbar navbar-fixed-top">
 	<div class="navbar-inner">
-			<div class="btn-toolbar" >
-				<ul class="nav nav-tabs">
-					<li class="active">
-						<a class="brand" href="#main" data-toggle="tab"> <%= @page_title || "SYLRPLM" %> </a>
-					</li>
-					<% if @tree || @tree_up %>
-					<li >
-						<a class="brand" href="#tree" data-toggle="tab"><%= t(:legend_tree) %></a>
-					</li>
-					<% end %>
-					<li >
-						<a class="brand" href="#favorites" data-toggle="tab"><%= t(:legend_clipboard) %></a>
-					</li>
-					<% if logged_in? %>
+		<div class="btn-toolbar" >
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a class="brand" href="#main" data-toggle="tab"> <%= @page_title || "SYLRPLM" %> </a>
+				</li>
+				<% if @tree || @tree_up %>
+				<li >
+					<a class="brand" href="#tree" data-toggle="tab"><%= t(:legend_tree) %></a>
+				</li>
+				<% end %>
+				<li >
+					<a class="brand" href="#favorites" data-toggle="tab"><%= t(:legend_clipboard) %></a>
+				</li>
+				<% if logged_in? %>
+				<li>
+					<a class="brand" href="#" title="<%= t(:user_connected,
+					:login => @current_user.login,
+					:role => @current_user.role.try(:title),
+					:group => @current_user.group.try(:name),
+					:project => @current_user.project.try(:ident))%>"> <%= @current_user.login %></a>
+				</li>
+				<li>
+					<%= link_to h_img("disconnect"), {:controller=>:sessions,:action=>:destroy}, :method => :delete, :class=>"brand" %>
+				</li>
+				<% else %>
+				<li>
+					<%= link_to t("connect"), new_session_url , :class=>"brand"%>
+				</li>
+				<% end %>
+
+			</ul><!-- nav nav-tabs -->
+
+			<div class="btn-group">
+				<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					<%= t(:legend_desktop)%> <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
 					<li>
-						<a class="brand" href="#" title="<%= t(:user_connected,
-						:login => @current_user.login,
-						:role => @current_user.role.try(:title),
-						:group => @current_user.group.try(:name),
-						:project => @current_user.project.try(:ident))%>"> <%= @current_user.login %></a>
+						<%= h_menu("/main","help_main",t("mnu_main")) %>
 					</li>
 					<li>
-						<%= link_to h_img("disconnect"), sessions_path, :method => :delete, :class=>"brand" %>
+						<%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
 					</li>
-					<% else %>
 					<li>
-						<%= link_to t("connect"), new_sessions_url , :class=>"brand"%>
+						<%= h_menu("/notifications?current_user", "help_notifications",t("mnu_my_notifications")) %>
 					</li>
-					<% end %>
+					<li>
+						<%= h_menu("/main/tools", "help_tools",t("mnu_tools")) %>
+					</li>
+				</ul>
+			</div><!-- /btn-group -->
+			<div class="btn-group">
+				<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					<%= t(:legend_plm_objects)%> <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<%= render(:partial => "main/menus_feature") %>
+					<li>
+						<%= h_menu("/history?fonct=on_plm_objects", "help_flw_history",t("mnu_flw_history")) %>
+					</li>
+				</ul>
+			</div><!-- /btn-group -->
 
-				</ul><!-- nav nav-tabs -->
+			<div class="btn-group">
+				<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					<%= t(:legend_collab)%> <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li>
+						<%= h_menu("/questions","help_questions",t("mnu_questions")) %>
+					</li>
+					<li>
+						<%= h_menu("/main/news","help_news",t("mnu_news")) %>
+					</li>
+					<li>
+						<%= h_menu("/forums","help_forums",t("mnu_forums")) %>
+					</li>
+					<li>
+						<%= h_menu("/main/contacts","help_contacts",t("mnu_contact")) %>
+					</li>
+				</ul>
+			</div><!-- /btn-group -->
 
-				<div class="btn-group">
-					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-						<%= t(:legend_desktop)%> <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu">
-						<li>
-							<%= h_menu("/main","help_main",t("mnu_main")) %>
-						</li>
-						<li>
-							<%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
-						</li>
-						<li>
-							<%= h_menu("/notifications?current_user", "help_notifications",t("mnu_my_notifications")) %>
-						</li>
-						<li>
-							<%= h_menu("/main/tools", "help_tools",t("mnu_tools")) %>
-						</li>
-					</ul>
-				</div><!-- /btn-group -->
-				<div class="btn-group">
-					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-						<%= t(:legend_plm_objects)%> <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu">
-						<%= render(:partial => "main/menus_feature") %>
-						<li>
-							<%= h_menu("/history?fonct=on_plm_objects", "help_flw_history",t("mnu_flw_history")) %>
-						</li>
-					</ul>
-				</div><!-- /btn-group -->
+			<div class="btn-group">
+				<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					<%= t(:legend_processes)%> <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li>
+						<%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
+					</li>
+					<li>
+						<%= h_menu("/definitions/new_process", "help_flw_processes",t("mnu_flw_new_process")) %>
+					</li>
+					<li>
+						<%= h_menu("/processes", "help_flw_processes",t("mnu_flw_processes")) %>
+					</li>
+				</ul>
+			</div><!-- /btn-group -->
+			<div class="btn-group">
+				<button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+					<%= t(:legend_admin) %> <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li class="dropdown-submenu" id="organizationmenu">
+						<a class='menu' tabindex="-1" href="#"><%= t(:legend_organization)%></a>
+						<ul class="dropdown-menu">
+							<li>
+								<%= h_menu("/users","help_users",t("mnu_users")) %>
+							</li>
+							<li>
+								<%= h_menu("/roles","help_roles",t("mnu_roles")) %>
+							</li>
+							<li>
+								<%= h_menu("/groups","help_groups",t("mnu_groups")) %>
+							</li>
+							<li>
+								<%= h_menu("/volumes","help_volumes",t("mnu_volumes")) %>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<%= h_menu("/accesses","help_accesses",t("mnu_acces")) %>
+							</li>
+						</ul>
+					</li>
 
-				<div class="btn-group">
-					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-						<%= t(:legend_collab)%> <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu">
-						<li>
-							<%= h_menu("/questions","help_questions",t("mnu_questions")) %>
-						</li>
-						<li>
-							<%= h_menu("/main/news","help_news",t("mnu_news")) %>
-						</li>
-						<li>
-							<%= h_menu("/forums","help_forums",t("mnu_forums")) %>
-						</li>
-						<li>
-							<%= h_menu("/main/contacts","help_contacts",t("mnu_contact")) %>
-						</li>
-					</ul>
-				</div><!-- /btn-group -->
+					<li class="dropdown-submenu" id="parammenu">
+						<a class='menu' tabindex="-1" href="#"><%= t(:legend_param)%></a>
+						<ul class="dropdown-menu">
+							<li>
+								<%= h_menu("/typesobjects","help_typesobjects",t("mnu_types_objects")) %>
+							</li>
+							<li>
+								<%= h_menu("/statusobjects","help_statusobjects",t("mnu_status_objects")) %>
+							</li>
+							<li>
+								<%= h_menu("/sequences","help_sequences",t("mnu_sequences")) %>
+							</li>
+							<li>
+								<%= h_menu("/relations","help_relations",t("mnu_relations")) %>
+							</li>
 
-				<div class="btn-group">
-					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-						<%= t(:legend_processes)%> <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu">
-						<li>
-							<%= h_menu("/workitems", "help_flw_workitems",t("mnu_flw_workitems")) %>
-						</li>
-						<li>
-							<%= h_menu("/definitions/new_process", "help_flw_processes",t("mnu_flw_new_process")) %>
-						</li>
-						<li>
-							<%= h_menu("/processes", "help_flw_processes",t("mnu_flw_processes")) %>
-						</li>
-					</ul>
-				</div><!-- /btn-group -->
-				<div class="btn-group">
-					<button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-						<%= t(:legend_admin) %> <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu">
-						<li class="dropdown-submenu" id="organizationmenu">
-							<a class='menu' tabindex="-1" href="#"><%= t(:legend_organization)%></a>
-							<ul class="dropdown-menu">
-								<li>
-									<%= h_menu("/users","help_users",t("mnu_users")) %>
-								</li>
-								<li>
-									<%= h_menu("/roles","help_roles",t("mnu_roles")) %>
-								</li>
-								<li>
-									<%= h_menu("/groups","help_groups",t("mnu_groups")) %>
-								</li>
-								<li>
-									<%= h_menu("/volumes","help_volumes",t("mnu_volumes")) %>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<%= h_menu("/accesses","help_accesses",t("mnu_acces")) %>
-								</li>
-							</ul>
-						</li>
+							<li>
+								<%= h_menu("/views","help_views",t("mnu_views")) %>
+							</li>
+							<li>
+								<%= h_menu("/definitions", "help_flw_definitions",t("mnu_flw_definitions")) %>
+							</li>
+							<li>
+								<%= h_menu("/subscriptions", "help_subscriptions",t("mnu_subscriptions")) %>
+							</li>
+						</ul>
+					</li>
 
-						<li class="dropdown-submenu" id="parammenu">
-							<a class='menu' tabindex="-1" href="#"><%= t(:legend_param)%></a>
-							<ul class="dropdown-menu">
-								<li>
-									<%= h_menu("/typesobjects","help_typesobjects",t("mnu_types_objects")) %>
-								</li>
-								<li>
-									<%= h_menu("/statusobjects","help_statusobjects",t("mnu_status_objects")) %>
-								</li>
-								<li>
-									<%= h_menu("/sequences","help_sequences",t("mnu_sequences")) %>
-								</li>
-								<li>
-									<%= h_menu("/relations","help_relations",t("mnu_relations")) %>
-								</li>
+					<li class="dropdown-submenu" id="debugmenu">
+						<a class='menu' tabindex="-1" href="#"><%= t(:legend_debug)%></a>
+						<ul class="dropdown-menu">
+							<li>
+								<%= h_menu("/notifications", "help_notifications",t("mnu_notifications")) %>
+							</li>
+							<li>
+								<%= h_menu("/datafiles", "help_datafiles",t("mnu_datafiles")) %>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<%= h_menu("/history", "help_flw_history",t("mnu_flw_history")) %>
+							</li>
+							<li>
+								<%= h_menu("/errors", "help_flw_errors",t("mnu_flw_errors")) %>
+							</li>
+							<li>
+								<%= h_menu("/forum_items", "help_forum_items",t("mnu_forum_items")) %>
+							</li>
+							<li>
+								<%= h_menu("/links", "help_links",t("mnu_links")) %>
+							</li>
+							<li>
+								<%= h_menu("/checks", "help_checks",t("mnu_checks")) %>
+							</li>
+						</ul>
+					</li>
 
-								<li>
-									<%= h_menu("/views","help_views",t("mnu_views")) %>
-								</li>
-								<li>
-									<%= h_menu("/definitions", "help_flw_definitions",t("mnu_flw_definitions")) %>
-								</li>
-								<li>
-									<%= h_menu("/subscriptions", "help_subscriptions",t("mnu_subscriptions")) %>
-								</li>
-							</ul>
-						</li>
+				</ul>
+			</div><!-- /btn-group -->
 
-						<li class="dropdown-submenu" id="debugmenu">
-							<a class='menu' tabindex="-1" href="#"><%= t(:legend_debug)%></a>
-							<ul class="dropdown-menu">
-								<li>
-									<%= h_menu("/notifications", "help_notifications",t("mnu_notifications")) %>
-								</li>
-								<li>
-									<%= h_menu("/datafiles", "help_datafiles",t("mnu_datafiles")) %>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<%= h_menu("/history", "help_flw_history",t("mnu_flw_history")) %>
-								</li>
-								<li>
-									<%= h_menu("/errors", "help_flw_errors",t("mnu_flw_errors")) %>
-								</li>
-								<li>
-									<%= h_menu("/forum_items", "help_forum_items",t("mnu_forum_items")) %>
-								</li>
-								<li>
-									<%= h_menu("/links", "help_links",t("mnu_links")) %>
-								</li>
-								<li>
-									<%= h_menu("/checks", "help_checks",t("mnu_checks")) %>
-								</li>
-							</ul>
-						</li>
-
-					</ul>
-				</div><!-- /btn-group -->
-
-				<div class="btn-group">
-					<button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-						<%= t(:mnu_help) %> <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu">
-						<li>
-							<%= link_to t(:help_general), {:controller=> :main, :action => :helpgeneral}, {:target => "_blank", :class=>"menu" } %>
-						</li>
-						<!--
-						<li>
-						<a href="#"><%= tip_help() %></a>
-						</li>
-						-->
-						<li>
-							<%= help_chapter :help_first_use , "menu" %>
-						</li>
-						<li>
-							<%= link_to t(:mnu_how_to), {:controller=> :main, :action => :how_to}, { :class=>"menu" } %>
-						</li>
-						<li>
-							<%= help_window("menu") %>
-						</li>
-						<li>
-							<%= help_chapter :help_about, "menu" %>
-						</li>
-					</ul>
-				</div>
-			</div><!-- /btn-toolbar -->
+			<div class="btn-group">
+				<button class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+					<%= t(:mnu_help) %> <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li>
+						<%= link_to t(:help_general), {:controller=> :main, :action => :helpgeneral}, {:target => "_blank", :class=>"menu" } %>
+					</li>
+					<li>
+						<%= help_chapter :help_first_use , "menu" %>
+					</li>
+					<li>
+						<%= link_to t(:mnu_how_to), {:controller=> :main, :action => :how_to}, { :class=>"menu" } %>
+					</li>
+					<li>
+						<%= help_window("menu") %>
+					</li>
+					<li>
+						<%= help_chapter :help_about, "menu" %>
+					</li>
+				</ul>
+			</div>
+		</div><!-- /btn-toolbar -->
 	</div><!-- /navbar-inner -->
 </div><!-- /navbar -->
 
 <script type="text/javascript">
 	$(function() {
-		try {
-			$('.dropdown-toggle').dropdown();
-		} catch(err) {
-			txt = "There was an error on this page.\n\n";
-			txt += "Error description: " + err.message + "\n\n";
-			txt += "Click OK to continue.\n\n";
-			alert(txt);
-			return true;
-		}
+	try {
+	$('.dropdown-toggle').dropdown();
+	} catch(err) {
+	txt="There was an error on this page.\n\n";
+	txt+="Error description: "+err.message+"\n\n";
+	txt+="Click OK to continue.\n\n";
+	alert(txt);
+	return true;
+	}
 	});
-
 </script>
 <div class="tab-content">
 	<br/>
 	<br/>
 	<br/>
-	<div id="favorites" class="tab-pane inactive">
+	<div id="favorites" name="favorites" class="tab-pane inactive">
 		<%= render('layouts/favorites') %>
 	</div>
 	<div id="tree" class="tab-pane inactive">
 		<% if @tree || @tree_up %>
-		<%= render(:partial => "shared/tree", :object => @object_plm ) %>
+		<%= render(:partial => "shared/tree", :locals=>{:object => @object_plm} ) %>
 		<% end %>
 	</div>
 

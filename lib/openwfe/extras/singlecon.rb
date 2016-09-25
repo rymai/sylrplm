@@ -42,8 +42,10 @@ module Extras
       target_module.module_eval do
 
         def self.connection
-          ActiveRecord::Base.verify_active_connections!
+         #rails2  ActiveRecord::Base.verify_active_connections!
+          #ActiveRecord::Base.verify_active_connections!
           @@connection ||= ActiveRecord::Base.connection_pool.checkout
+		#puts "#{__FILE__} : connection active= #{connection.active?}"
           @@connection.active? || @@connection.reconnect!
           @@connection
         end

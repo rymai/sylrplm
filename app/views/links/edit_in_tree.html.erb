@@ -1,11 +1,11 @@
 <h1><%= t("link_edit_in_tree") %>
 <% fonct="edit_in_tree"
 	form_id=fonct+"_link" %>
-<% form_for(@link, :url => {:controller => :links , :action => :update_in_tree}, :html => { :id => form_id }) do |f| %>
-<%= f.error_messages %>
-<%= hidden_field_tag 'object_model' , @object_in_explorer.model_name %>
+<%= form_for(@link, :url => {:controller => :links , :action => :update_in_tree}, :html => { :id => form_id }) do |f| %>
+<%= form_errors_for @link %>
+<%= hidden_field_tag 'object_model' , @object_in_explorer.modelname %>
 <%= hidden_field_tag 'object_id' , @object_in_explorer.id %>
-<%= hidden_field_tag 'root_model' , @root.model_name unless @root.nil?%>
+<%= hidden_field_tag 'root_model' , @root.modelname unless @root.nil?%>
 <%= hidden_field_tag 'root_id' , @root.id unless @root.nil? %>
 <%= render(
 :partial => "links/edit",

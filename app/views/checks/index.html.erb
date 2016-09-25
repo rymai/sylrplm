@@ -45,7 +45,7 @@
 		<td> <%= h check.projowner.ident unless check.projowner.nil? %> </td>
 		<td> <%= link_to h_img_show.to_s, check %> </td>
 		<td> <%= link_to h_img_edit.to_s, edit_check_path(check) %> </td>
-		<td> <%= link_to h_img_destroy.to_s, check, :confirm => t("msg_confirm"), :method => :delete %> </td>
+		<td> <%= h_destroy(check)%> </td>
 	</tr>
 	<% end %>
 </table>

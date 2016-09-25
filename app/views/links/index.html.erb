@@ -36,9 +36,8 @@
 
 		<td><%= link_to h_img_show.to_s, link %> </td>
 		<td><%= link_to h_img_edit.to_s, edit_link_path(link) %> </td>
-		<td><%= link_to h_img_destroy.to_s, link, :confirm => t(:msg_confirm), :method => :delete %> </td>
-		<% if logged_in? %> <td><%= link_to_remote  h_img(:copy).to_s, :url => {:controller => "links", :action => "add_favori", :id => link.id}, :method => :get  %></td>
-		<% end %>
+		<td><%= h_destroy(link) %> </td>
+		<td> <%= link_to h_img(:copy), add_favori_link_path(link), remote: true  if logged_in? %></td>
 
 	</tr>
 	<% end %>
