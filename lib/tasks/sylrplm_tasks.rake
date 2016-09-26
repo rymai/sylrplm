@@ -24,12 +24,7 @@ namespace :sylrplm do
     #ruby2 ActiveRecord::Base.configurations = Rails::Configuration.new.database_configuration
      #ActiveRecord::Base.configurations = ::Rails::Application::Configuration.database_configuration()
     ActiveRecord::Base.configurations = Rails.application.config.database_configuration
-    puts "#{__FILE__} ActiveRecord::Base.configurations=#{ActiveRecord::Base.configurations[Rails.env]}"
-   #ActiveRecord::ConnectionAdapters::ConnectionPool.new Rails.application.config.database_configuration[Rails.env]
-   #
-   #ActiveRecord::Base.connection_pool.checkout
    ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[Rails.env])
-  #ActiveRecord::Base.connection
   ActiveRecord::Base.connection.reconnect!
     ActiveRecord::Base.logger = Logger.new(STDOUT)
     ActiveRecord::Base.logger.level = Logger::ERROR

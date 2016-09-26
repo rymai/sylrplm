@@ -93,8 +93,12 @@ class DefinitionsController < ApplicationController
 		#LOG.debug(fname){"tree:pdef=#{pdef}"}
 		var = params[:var] || 'proc_tree'
 		# TODO : use Rails callback thing (:callback)
-		tree = pdef ?
+		if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+			end
+			tree = pdef ?
 			#RuotePlugin.ruote_engine.get_def_parser.parse(pdef) :
+
 			RuoteKit.engine.get_def_parser.parse(pdef) :
 			nil
 		LOG.debug(fname){"tree:definitions.tree=#{tree.inspect}"}

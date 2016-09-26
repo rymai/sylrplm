@@ -37,6 +37,9 @@ include Ruote
 
 		@all = (opts[:conditions] == nil)
 		@errors = []
+		if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+			end
 		RuoteKit.engine.processes.each do |ps|
 			ps.errors.each do |err|
 				@errors<<err
