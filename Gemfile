@@ -10,6 +10,8 @@ gem 'responders'
 gem 'rails', '4.2.5'
 #heroku: to enable all platform features
 gem 'rails_12factor'
+#observer remove from core Rails4
+gem 'rails-observers'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
