@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby.ruby2.1
+#!/usr/bin/env ruby.ruby2.1.2
 require 'pathname'
 
 # path to your application root.
