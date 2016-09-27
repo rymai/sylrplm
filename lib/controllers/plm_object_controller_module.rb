@@ -336,7 +336,7 @@ module Controllers
 		def ctrl_show_design(object, type_model_id)
 			fname= "#{self.class.name}.#{__method__}"
 			#LOG.debug(fname){"object=#{object.ident} type_model=#{type_model_id}"}
-			type_model = Typesobject.find(type_model_id)
+			type_model = Typesobject.find(type_model_id) unless type_model_id.nil?
 			unless type_model.nil?
 				tree    = build_tree(object, @myparams[:view_id] , params[:variant])
 				content = build_model_tree(object, tree, type_model)
@@ -360,13 +360,14 @@ module Controllers
 						flash[:error] = "Error during model generation:#{object.errors.inspect}"
 						LOG.debug(fname){"flash=#{flash[:error]} err=#{object.errors.inspect}"}
 						format.html { redirect_to(object) }
+						format.html { render :action => "show"  }
 						format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
 					end
 				end
 			else
 				respond_to do |format|
 					flash[:error] = "Can t generate the model because type is not defined}"
-					format.html { redirect_to(object) }
+						format.html { render :action => "show"  }
 					format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
 				end
 			end
