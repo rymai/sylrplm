@@ -1,26 +1,28 @@
-<!-- solution temporaire car la methode count_objects n'est pas reconnue dans favori !!-->
+<!-- solution temporaire car la methode count_objects n'est pas reconnue dans clipboard !!-->
 <% nbr=0
 	["document","part","project","customer","user"].each do |type|
-		nbr += @favori.get(type).count
+		nbr += @clipboard.get(type).count
 	end
 %>
 <% if nbr > 0 %>
 <h1><%= t("legend_objects_to_add") %></h1>
-<%= puts "objects_to_add:#{objects_to_add} #{objects_to_add.modelname}" %>
 <%= form_for(objects_to_add, :url => {:controller => get_controller_from_model_type(objects_to_add.modelname), :action => :add_objects,:id => objects_to_add.id }) do |f| %>
 <table class='menu_bas'>
 	<%= hidden_field_tag "modelname", objects_to_add.modelname %>
+	<%@nbrobjs=0%>
 	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :document}) %>
 	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :part}) %>
 	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :project}) %>
 	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :customer}) %>
 	<%= render(:partial => "shared/object_to_add", :locals => {:plmobj => objects_to_add, :type_to_add => :user}) %>
 </table>
+<%if @nbrobjs>0%>
 <table class='menu_bas'>
 	<tr>
 		<td><%= submit_tag t("paste_objects") %></td>
 	</tr>
 </table>
+<%end%>
 <% end %>
 <% end %>
 <!--

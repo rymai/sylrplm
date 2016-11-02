@@ -273,7 +273,7 @@ module OpenWFE
           @date = date
           @static = static
           @dynamic = dynamic
-          @participants = participants
+          @object_plmicipants = participants
         end
 
         def to_s
@@ -294,7 +294,7 @@ module OpenWFE
           s << "=== . ===\n\n"
 
           #s <<  "participants :\n"
-          #@participants.each do |fei, v|
+          #@object_plmicipants.each do |fei, v|
           #  s << " - #{fei.to_short_s}\n"
           #end
 

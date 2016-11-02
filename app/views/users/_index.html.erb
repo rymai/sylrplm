@@ -39,7 +39,7 @@
 		<% unless param_equals?("todo", "select") %>
 		<td> <%= link_to h_img(:edit), edit_user_path(user) %> </td>
 		<td> <%= link_to h_img(:duplicate), new_dup_user_path(user) %> </td>
-		<td> <%= link_to h_img(:copy), add_favori_user_path(user), remote: true if logged_in? %></td>
+		<td> <%= link_to h_img(:copy), add_clipboard_user_path(user), remote: true if logged_in? %></td>
 		<td> <%= h_destroy(user) %> </td>
 		<td><%= check_box(:action_on,user.id) %></td>
 		<% else %> <td>

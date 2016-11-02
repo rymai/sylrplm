@@ -32,8 +32,8 @@ class DatafilesController < ApplicationController
 		@datafile = Datafile.find(params[:id])
 		@types    = Typesobject.get_types("datafile")
 		if params["doc"]
-			@document = Document.find(params["doc"])
-		#puts "datafiles_controller.show:doc(#{params["doc"]})=#{@document} filedoc=#{@datafile.document}"
+			@object_plm = Document.find(params["doc"])
+		#puts "datafiles_controller.show:doc(#{params["doc"]})=#{@object_plm} filedoc=#{@datafile.document}"
 		end
 	#puts "datafiles_controller.show:doc=#{@datafile.document} part=#{@datafile.part} project=#{@datafile.project} cust=#{@datafile.customer}"
 	end
@@ -58,7 +58,7 @@ class DatafilesController < ApplicationController
 		#LOG.debug(fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
 		@types    = Typesobject.get_types("datafile")
-	#TODO@document = Document.find(params["doc"]) if params["doc"]
+	#TODO@object_plm = Document.find(params["doc"]) if params["doc"]
 	end
 
 	# POST /datafiles
@@ -67,7 +67,7 @@ class DatafilesController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"params=#{params.inspect}"}
 		@types    = Typesobject.get_types("datafile")
-		@document = Document.find(params["doc"]) if params["doc"]
+		@object_plm = Document.find(params["doc"]) if params["doc"]
 		#puts "datafiles_controller.create:errors=#{@datafile.errors.inspect}"
 		respond_to do |format|
 			@datafile=Datafile.m_create(params)
@@ -93,7 +93,7 @@ class DatafilesController < ApplicationController
 		@datafile = Datafile.find(params[:id])
 		LOG.debug(fname){"update: revision=#{@datafile.revision}"}
 		@types    = Typesobject.get_types("datafile")
-		@document = Document.find(params["doc"]) if params["doc"]
+		@object_plm = Document.find(params["doc"]) if params["doc"]
 		stupd = @datafile.m_update(params, @current_user)
 		respond_to do |format|
 			if stupd && !@datafile.have_errors?
@@ -128,14 +128,14 @@ class DatafilesController < ApplicationController
 		#LOG.debug(fname){"params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
 		#if params["doc"]
-		#	@document = Document.find(params["doc"])
-		#@document.remove_datafile(@datafile)
+		#	@object_plm = Document.find(params["doc"])
+		#@object_plm.remove_datafile(@datafile)
 		#end
 		@datafile.m_destroy
 		@types = Typesobject.get_types("datafile")
 		respond_to do |format|
 			if params["doc"]
-				format.html { redirect_to(@document) }
+				format.html { redirect_to(@object_plm) }
 			else
 				format.html { redirect_to(datafiles_url) }
 			end

@@ -1,6 +1,6 @@
 require_dependency 'controllers/plm_tree'
 require_dependency 'controllers/tree_actions_by_roles'
-require_dependency 'controllers/plm_favorites'
+require_dependency 'controllers/plm_clipboard'
 require_dependency 'controllers/plm_lifecycle'
 
 module Controllers
@@ -38,43 +38,43 @@ module Controllers
 			flash = {}
 			flash[:notice] = ""
 			flash[:error] = ""
-			LOG.info() { "appel ctrl_add_objects_from_favorites" }
-			flash = ctrl_add_objects_from_favorites(obj, nil, flash)
+			LOG.info() { "appel ctrl_add_objects_from_clipboardtes" }
+			flash = ctrl_add_objects_from_clipboardtes(obj, nil, flash)
 		end
 
-		def add_favori
+		def add_clipboard
 	  		fname="#{self.class.name}.#{__method__}"
 			LOG.info(fname) { "params=#{params.inspect}" }
 			model = get_model(params)
 			modelname=get_model_type(params)
 			obj = model.find(params[:id])
-			LOG.info(fname) { "favori(#{modelname})=#{@favori.get(modelname).count}" }
-			@favori.add(obj)
-			LOG.info(fname) { "favori(#{modelname})=#{@favori.get(modelname).count}" }
+			LOG.info(fname) { "clipboard(#{modelname})=#{@clipboard.get(modelname).count}" }
+			@clipboard.add(obj)
+			LOG.info(fname) { "clipboard(#{modelname})=#{@clipboard.get(modelname).count}" }
 			LOG.info(fname) { "apres index_ " }
 			#index_
 			respond_to do |format|
 				LOG.info(fname) { "format=#{request.format}"}
 				#TODO normalement le format html n'est pas appelle mais en rails4, ajax ne fonctionne pas, donc il appelle le html
 				#format.html { render :action => :index}
-				format.js { render('shared/refresh_favorites') }
-				format.json { render('shared/refresh_favorites') }
+				format.js { render('shared/refresh_clipboards') }
+				format.json { render('shared/refresh_clipboards') }
 			end
 		end
 
-		def empty_favori
+		def empty_clipboard
 			fname="#{self.class.name}.#{__method__}"
 			LOG.info(fname) { "params=#{params}}" }
 			modelname=get_model_type(params)
-			LOG.info(fname) { "favori #{modelname} avant=#{@favori.get(modelname).count}" }
-			empty_favori_by_type(modelname)
-			LOG.info(fname) { "favori #{modelname} apres=#{@favori.get(modelname).count}" }
+			LOG.info(fname) { "clipboard #{modelname} avant=#{@clipboard.get(modelname).count}" }
+			empty_clipboard_by_type(modelname)
+			LOG.info(fname) { "clipboard #{modelname} apres=#{@clipboard.get(modelname).count}" }
 			#index_
 			LOG.info(fname) { "format=#{request.format}"}
 			respond_to do |format|
 				#format.html { render :action => :index}
-				format.js { render 'shared/refresh_favorites' }
-				format.json { render 'shared/refresh_favorites' }
+				format.js { render 'shared/refresh_clipboards' }
+				format.json { render 'shared/refresh_clipboards' }
 			end
 		end
 
@@ -428,6 +428,23 @@ module Controllers
 			end
 		end
 
+		def ctrl_index
+			fname= "#{self.class.name}.#{__method__}"
+			@object_plm=get_object_plm_from_params(params)
+				if @object_plm.nil?
+					index_
+					respond_to do |format|
+						format.html # index.html.erb
+						format.xml  { render :xml => @object_plms }
+					end
+				else
+					# current object exist : portal
+					LOG.debug(fname){"object_plm=#{@object_plm} => portal"}
+					params[:id]=@object_plm.id
+					show
+				end
+		end
+
 		def ctrl_add_datafile(at_object)
 			fname= "#{self.class.name}.#{__method__}"
 			LOG.debug(fname){"ctrl_add_datafile: params=#{params.inspect}"}
@@ -580,9 +597,9 @@ module Controllers
 					#object = eval "#{model}.find(#{id})"
 					object = model.find(id)
 					if(params["commit"] == t("submit_copy"))
-					#d'apres plm_object_controller add_favori
-					LOG.debug(fname){"add favori #{object}"}
-					@favori.add(object)
+					#d'apres plm_object_controller add_clipboard
+					LOG.debug(fname){"add clipboard #{object}"}
+					@clipboard.add(object)
 					end
 					if(params["commit"] == t("submit_destroy"))
 						LOG.debug(fname){"destroy #{object}"}
@@ -598,7 +615,7 @@ module Controllers
 				url={:controller=>get_controller_from_model_type(model.name.downcase), :action=>"index"}
 				LOG.debug(fname){"ctrl_index_execute:url= #{url}"}
 				format.html { redirect_to(url) }
-				format.xml  { render :xml => @parts[:recordset] }
+				format.xml  { render :xml => @object_plms[:recordset] }
 			end
 		end
 

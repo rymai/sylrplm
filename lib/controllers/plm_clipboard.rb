@@ -1,18 +1,18 @@
-def empty_favori_by_type(type=nil)
+def empty_clipboard_by_type(type=nil)
   fname="#{self.class.name}.#{__method__}"
   LOG.info(fname) {"type=#{type}"}
-  @favori.reset(type)
+  @clipboard.reset(type)
 end
 
 
 
-def empty_favori_obsolete
+def empty_clipboard_obsolete
   fname="#{self.class.name}.#{__method__}"
   LOG.info(fname) {"params=#{params.inspect}"}
-  empty_favori_by_type(get_model_type(params))
+  empty_clipboard_by_type(get_model_type(params))
 end
 
-def ctrl_add_objects_from_favorites(object, child_plmtype, flash)
+def ctrl_add_objects_from_clipboardtes(object, child_plmtype, flash)
 	fname="#{self.class.name}.#{__method__}"
 	LOG.info(fname) {"object=#{object} child_plmtype=#{child_plmtype}"}
 	if child_plmtype.nil?
@@ -20,11 +20,11 @@ def ctrl_add_objects_from_favorites(object, child_plmtype, flash)
 		LOG.info(fname) {"params[:objecttoadd]=#{params[:objecttoadd]}"}
 		unless params[:objecttoadd].nil?
 			params[:objecttoadd].each do |childplmtype, value|
-				flash = add_objects_from_favorites(object, childplmtype, flash)
+				flash = add_objects_from_clipboardtes(object, childplmtype, flash)
 			end
 		end
 	else
-		flash = add_objects_from_favorites(object, child_plmtype, flash)
+		flash = add_objects_from_clipboardtes(object, child_plmtype, flash)
 	end
 	respond_to do |format|
 		format.html { redirect_to(object) }
@@ -32,7 +32,7 @@ def ctrl_add_objects_from_favorites(object, child_plmtype, flash)
   end
 end
 
-def add_objects_from_favorites(object, child_plmtype, flash)
+def add_objects_from_clipboardtes(object, child_plmtype, flash)
 	fname="#{self.class.name}.#{__method__}"
   	LOG.info(fname) {"object=#{object} child_plmtype=#{child_plmtype}"}
   	#LOG.info(fname) {"#{object.inspect}.#{child_plmtype}"}
@@ -45,24 +45,24 @@ def add_objects_from_favorites(object, child_plmtype, flash)
   	begin
 
 	  	#LOG.info(fname) {"notice=#{flash[:notice]}"}
-	  	favoris_to_add=params[:objecttoadd][child_plmtype]
-	  	#LOG.info(fname) {"favoris to add=#{favoris_to_add}"}
+	  	clipboards_to_add=params[:objecttoadd][child_plmtype]
+	  	#LOG.info(fname) {"clipboards to add=#{clipboards_to_add}"}
 	  	unless object.nil?
-	  	  #objecttoadd[#{favori.modelname}][#{favori.id}][#{relation.id}]
+	  	  #objecttoadd[#{clipboard.modelname}][#{clipboard.id}][#{relation.id}]
 		 	unless params[:objecttoadd][child_plmtype].nil?
-		     params[:objecttoadd][child_plmtype].each do |favori_id, favori_val|
-	          LOG.info(fname) {"favori_id=#{favori_id} favori_val=#{favori_val} "}
-	        favori_val.each do |relation_id, val|
+		     params[:objecttoadd][child_plmtype].each do |clipboard_id, clipboard_val|
+	          LOG.info(fname) {"clipboard_id=#{clipboard_id} clipboard_val=#{clipboard_val} "}
+	        clipboard_val.each do |relation_id, val|
 	          LOG.info(fname) {"relation_id=#{relation_id} val=#{val}"}
 	    			relation = Relation.find(relation_id)
 			  		plmtype = child_plmtype.to_s
 			  		ctrltype = t("ctrl_#{plmtype}")
-			  		unless @favori.get(plmtype).nil?
-				  		@favori.get(plmtype).each do |item|
-				      		favori_item=favoris_to_add[item.id.to_s]
-				      		LOG.info(fname) {"adding? item=#{item.id} : #{favori_item}"}
+			  		unless @clipboard.get(plmtype).nil?
+				  		@clipboard.get(plmtype).each do |item|
+				      		clipboard_item=clipboards_to_add[item.id.to_s]
+				      		LOG.info(fname) {"adding? item=#{item.id} : #{clipboard_item}"}
 				      		# object!=item : avoid to link object to himself
-				      		if(object!=item && !favori_item.nil?)
+				      		if(object!=item && !clipboard_item.nil?)
 				      			#LOG.info(fname) {"adding=#{item}"}
 				        		link = Link.new(father: object, child: item, relation: relation, user: current_user)
 				        		if link.save
@@ -71,7 +71,7 @@ def add_objects_from_favorites(object, child_plmtype, flash)
 				               			:ident => item.ident,
 				               			:relation => relation.ident,
 				               			:msg => "ctrl_link_#{link.ident}")
-				             		@favori.remove(item)
+				             		@clipboard.remove(item)
 				        		else
 				          			flash[:notice] << t(:ctrl_object_not_added,
 				               			:typeobj => ctrltype,

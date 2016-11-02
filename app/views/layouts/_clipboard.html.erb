@@ -1,0 +1,13 @@
+<% favs = @clipboard.get(type)%>
+<div class="clipboard-title">
+	<%= t("clipboards_#{type}",:size=> favs.count) %>
+	<% if favs.present? %>
+	<%= link_to(h_img(:remove_all), { controller: type.pluralize, action: 'empty_clipboard' }, :remote => true, :method => :get) %>
+	<% end %>
+</div>
+<% if favs.present? %>
+<table class='datas'>
+	<%= render :partial => 'layouts/clipboard_item', :collection => favs %>
+</table>
+<% end %>
+

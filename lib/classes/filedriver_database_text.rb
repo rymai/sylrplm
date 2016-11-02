@@ -1,6 +1,7 @@
 require 'classes/filedriver'
 require 'classes/filedriver_database'
-
+require 'rubygems'
+require 'zip'
 class FiledriverDatabaseText < FiledriverDatabase
 
 	private

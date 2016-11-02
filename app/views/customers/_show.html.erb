@@ -1,0 +1,44 @@
+<H1><%= t("customer_show") %></H1>
+<% fonct="show" %>
+<%= render(:partial => "shared/menu_show", :locals => {:object => @object_plm, :fonct => fonct}) %>
+<%= form_for(@object_plm, :html => { :id => h_form_html_id(@object_plm, fonct) }) do |f| %>
+<%= form_errors_for @object_plm %>
+<p>
+	<b><%= t("label_ident") %></b>
+	<%= h @object_plm.ident %>
+</p>
+<p>
+	<b><%= t("label_typesobject") %></b>
+	<%= h @object_plm.typesobject.name_translate unless @object_plm.typesobject.nil? %>
+</p>
+<p>
+	<b><%= t("label_designation") %></b>
+	<%= h @object_plm.designation %>
+</p>
+<p>
+	<b><%= t("label_description") %></b>
+	<%= h @object_plm.description %>
+</p>
+<p>
+	<b><%= t("label_statusobject") %></b>
+	<%= h @object_plm.statusobject.name_translate unless @object_plm.statusobject.nil? %>
+</p>
+<p>
+	<b><%= t("label_responsible") %></b>
+	<%= h @object_plm.owner.login %>
+</p>
+<p>
+	<b><%= t("label_date") %></b>
+	<%= l @object_plm.date %>
+</p>
+<p>
+	<b><%= t("label_domain") %></b>
+	<%= h @object_plm.domain %>
+</p>
+<%= h_type_values(@object_plm, fonct) %>
+<% end %>
+<%= render(:partial => "shared/show_datafiles",
+	:locals=> {:plm_object => @object_plm,  :fonct => fonct, :document=>nil, :part=>nil, :project=>nil, :customer=>@object_plm}) %>
+<%= render(:partial => "shared/object_workitems", :object =>@object_plm) %>
+<%= render(:partial => "shared/objects_to_add", :object =>@object_plm) %>
+<%= render(:partial => "shared/links_relation_tabs", :object =>@object_plm) %>

@@ -163,13 +163,13 @@ module ApplicationHelper
 		t("count_objects",:number_begin=>num_begin,:number_end=>num_end,:total=>objects[:total])
 	end
 
-	def h_form_simple_query(url, objects)
+	def h_form_simple_query(url, objects, object_plm=nil)
 		unless params[:filter_types].nil?
 			url += "?filter_types=#{params[:filter_types]}"
 		end
 		render(
 		:partial => "shared/form_simple_query",
-		:locals => {:url => url, :objects => objects}
+		:locals => {:url => url, :objects => objects, :object_plm=>object_plm}
 		)
 	end
 
@@ -181,7 +181,7 @@ module ApplicationHelper
 			ret << icone(obj)
 			ret << "</span>"
 		end
-		ret
+		ret.html_safe
 	end
 
 	def h_img_path(name)
@@ -865,7 +865,7 @@ module ApplicationHelper
 		ret=""
 		submit_copy=t("submit_copy")
 		submit_destroy=t("submit_destroy")
-		if logged_in? && Favori.can_favori?(modelname)
+		if logged_in? && Clipboard.can_clipboard?(modelname)
 			ret<< "<td>#{submit_tag(submit_copy)}</td>"
 		end
 		ret<<	"<td>#{submit_tag(submit_destroy)}</td>"

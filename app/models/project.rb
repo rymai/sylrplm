@@ -61,8 +61,8 @@ class Project < ActiveRecord::Base
 		obj
 	end
 
-	def add_parts_from_favori(favori)
-		favori.items.each do |item|
+	def add_parts_from_clipboard(clipboard)
+		clipboard.items.each do |item|
 			parts << item
 		end
 	end
@@ -96,6 +96,6 @@ class Project < ActiveRecord::Base
 	# this object could have a 3d or 2d model show in tree
 	#
 	def have_model_design?
-		true
+		false
 	end
 end

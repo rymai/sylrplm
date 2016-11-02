@@ -1,5 +1,5 @@
-#require 'zip'
-#require 'zip/zip'
+#require 'rubygems'
+require 'zip'
 
 class Filedriver
 
@@ -50,15 +50,24 @@ class Filedriver
 				@content=content
 				@filename=datafile.filename
 				#LOG.debug(fname) {"@filename=#{@filename} @content=#{@content}"}
-				#require 'zip/zip'
-				stringio = Zip::ZipOutputStream::write_buffer(::StringIO.new("@filename"))  do |zio|
-					zio.put_next_entry(@filename)
-					zio.write @content
-				end
-				stringio.rewind
-				compress = stringio.sysread
-				LOG.debug(fname) {"datafile.volume.compress='#{datafile.volume.compress}'========"}
+				#stringio = ::Zip::OutputStream.new(@filename)
+				#zio=new Zip::ZipOutputStream(stringio)
+				#stringio = Zip::ZipOutputStream::write_buffer(stringio)  do |zio|
+				#st =Zip::ZipOutputStream::open(@filename) do |zio|
+					#zio.put_next_entry(@filename)
+					#zio.write @content
+					#zio.finish
+				#end
+				#stringio.rewind
+				#LOG.debug(fname) {"datafile.volume.compress='#{datafile.volume.compress}'========"}
 				#compress = eval datafile.volume.compress
+				#zio = Zip::OutputStream.open(@filename)
+				stringio=::StringIO.new('')
+				Zip::OutputStream.write_buffer(stringio) do |zos|
+  					zos.put_next_entry(@filename)
+  					zos.write @content
+				end
+				compress=stringio
 				LOG.debug(fname) {"compress:size=#{compress.length}"}
 			else
 			compress = content
@@ -67,7 +76,7 @@ class Filedriver
 				# ActiveSupport::Base64.encode64
 				#encode_fields=datafile.volume.encode.split(".")
 				#content_encode=(eval encode_fields[0]).send(encode_fields[1], compress)
-				@content=compress
+				@content=compress.to_s
 				@filename=datafile.filename
 				LOG.debug(fname) {"code datafile.volume.encode='#{datafile.volume.encode}'========"}
 				content_encode = eval datafile.volume.encode

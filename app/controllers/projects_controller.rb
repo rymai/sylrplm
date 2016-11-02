@@ -11,15 +11,24 @@ class ProjectsController < ApplicationController
 	# les objets sont filtres d'apres le parametre query (requete simple d'egalite
 	#   sur tous les attributs)
 	def index
-		index_
-		respond_to do |format|
-			format.html # index.html.erb
-			format.xml  { render :xml => @projects[:recordset] }
-		end
+		ctrl_index
 	end
 
    def index_execute
 		ctrl_index_execute
+	end
+
+def show
+    	fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"params=#{params.inspect}"}
+		#  object with his tree if ask
+		show_
+		# objects
+		index_
+		respond_to do |format|
+			format.html   { render :action => "show" }
+			format.xml  { render :xml => @object_plm }
+		end
 	end
 
 	# GET /projects/1
@@ -27,11 +36,11 @@ class ProjectsController < ApplicationController
 	# affichage d'un projet
 	# liste des attributs avec leur valeur
 	# arbre montrant la structure du projet: le client et les parts
-	def show
+	def show_old
 		show_
 		respond_to do |format|
 			format.html # show.html.erb
-			format.xml  { render :xml => @project }
+			format.xml  { render :xml => @object_plm }
 		end
 	end
 
@@ -44,7 +53,7 @@ class ProjectsController < ApplicationController
 			show_
 			respond_to do |format|
 				format.html { render :action => "show" }
-				format.xml  { render :xml => @project }
+				format.xml  { render :xml => @object_plm }
 			end
 		end
 	end
@@ -54,14 +63,14 @@ class ProjectsController < ApplicationController
 	# nouveau projet
 	# on definit les listes de valeur pour le type et le statut
 	def new
-		@project = Project.new(user: current_user)
+		@object_plm = Project.new(user: current_user)
 		@types = Typesobject.get_types("project")
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		@status= Statusobject.get_status("project", true)
 		@users  = User.all
 		respond_to do |format|
 			format.html # new.html.erb
-			format.xml  { render :xml => @project }
+			format.xml  { render :xml => @object_plm }
 		end
 	end
 
@@ -69,21 +78,21 @@ class ProjectsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug(fname){"params=#{params.inspect}"}
 		@object_orig = Project.find(params[:id])
-		@project = @object = @object_orig.duplicate(current_user)
+		@object_plm = @object = @object_orig.duplicate(current_user)
 		@types    = Typesobject.get_types("project")
 		@status   = Statusobject.get_status("project", 2)
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		@users  = User.all
 		respond_to do |format|
 			format.html # project/1/new_dup
-			format.xml  { render :xml => @project }
+			format.xml  { render :xml => @object_plm }
 		end
 	end
 
 	# GET /projects/1/edit
 	# modification d'un projet
 	def edit
-		@project = Project.find_edit(params[:id])
+		@object_plm = Project.find_edit(params[:id])
 		@types=Typesobject.get_types("project")
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		@users  = User.all
@@ -92,14 +101,14 @@ class ProjectsController < ApplicationController
 	# GET /projects/1/edit_lifecycle
 	# modification d'un projet
 	def edit_lifecycle
-		@project = Project.find_edit(params[:id])
+		@object_plm = Project.find_edit(params[:id])
 	end
 
 	# POST /projects
 	# POST /projects.xml
 	# creation d'un projet (apres validation du new)
 	def create
-		@project = Project.new(params[:project])
+		@object_plm = Project.new(params[:project])
 		@types = Typesobject.get_types("project")
 		@types_access = Typesobject.get_types("project_typeaccess")
 		@status = Statusobject.get_status("project")
@@ -107,21 +116,21 @@ class ProjectsController < ApplicationController
 		respond_to do |format|
 			if fonct_new_dup?
 				object_orig=Project.find(params[:object_orig_id])
-			st = @project.create_duplicate(object_orig)
+			st = @object_plm.create_duplicate(object_orig)
 			else
-			st = @project.save
+			st = @object_plm.save
 			end
 			if st
-				st = ctrl_duplicate_links(params, @project, current_user)
-				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
-				params[:id]=@project.id
+				st = ctrl_duplicate_links(params, @object_plm, current_user)
+				flash[:notice] = t(:ctrl_object_created,:typeobj =>t(:ctrl_project),:ident=>@object_plm.ident)
+				params[:id]=@object_plm.id
 				show_
 				format.html { render :action => "show"}
-				format.xml  { render :xml => @project, :status => :created, :location => @project }
+				format.xml  { render :xml => @object_plm, :status => :created, :location => @object_plm }
 			else
-				flash[:error] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_project),:ident=>@project.ident, :msg => nil)
+				flash[:error] = t(:ctrl_object_not_created,:typeobj =>t(:ctrl_project),:ident=>@object_plm.ident, :msg => nil)
 				format.html { render :action => "new" }
-				format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
+				format.xml  { render :xml => @object_plm.errors, :status => :unprocessable_entity }
 			end
 		end
 	end
@@ -132,38 +141,38 @@ class ProjectsController < ApplicationController
 	def update
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"params=#{params.inspect}"}
-		@project = Project.find(params[:id])
+		@object_plm = Project.find(params[:id])
 		@types=Typesobject.get_types("project")
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		@status= Statusobject.get_status("project")
 		@users  = User.all
-		@project.update_accessor(current_user)
+		@object_plm.update_accessor(current_user)
 		if commit_promote?
-			ctrl_promote(@project)
+			ctrl_promote(@object_plm)
 		else
 			respond_to do |format|
-				if @project.update_attributes(params[:project])
+				if @object_plm.update_attributes(params[:project])
 					customer_id=params[:project_link][:customer_id]
 					LOG.debug(fname){"params[:project_link]=#{params[:project_link]} customer_id=#{customer_id}"}
 					unless customer_id.blank?
 						customer=Customer.find(customer_id)
 						relation=Relation.find_by_name("ask_for")
-						link_customer=Link.find_by_father_plmtype_and_father_id_and_child_plmtype_and_child_id_and_relation_id("customer", customer.id,"project",@project.id,relation.id)
+						link_customer=Link.find_by_father_plmtype_and_father_id_and_child_plmtype_and_child_id_and_relation_id("customer", customer.id,"project",@object_plm.id,relation.id)
 						LOG.debug(fname){"link_customer=#{link_customer.inspect}"}
 						if link_customer.nil?
-						link_customer = Link.new(father: customer, child: @project, relation: relation, user: current_user)
+						link_customer = Link.new(father: customer, child: @object_plm, relation: relation, user: current_user)
 						if link_customer.save
 						end
 						end
 					end
-					flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_project),:ident=>@project.ident)
+					flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_project),:ident=>@object_plm.ident)
 					show_
 					format.html { render :action => "show"}
 					format.xml  { head :ok }
 				else
-					flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_project),:ident=>@project.ident, :error => @project.errors.full_messages)
+					flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_project),:ident=>@object_plm.ident, :error => @object_plm.errors.full_messages)
 					format.html { render :action => "edit" }
-					format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
+					format.xml  { render :xml => @object_plm.errors, :status => :unprocessable_entity }
 				end
 			end
 		end
@@ -172,16 +181,16 @@ class ProjectsController < ApplicationController
 	def update_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"params=#{params.inspect}"}
-		@project = Project.find(params[:id])
+		@object_plm = Project.find(params[:id])
 		@types_access    = Typesobject.get_types("project_typeaccess")
 		if commit_promote?
-			ctrl_promote(@project)
+			ctrl_promote(@object_plm)
 		end
 		if commit_demote?
-			ctrl_demote(@project)
+			ctrl_demote(@object_plm)
 		end
 		if commit_revise?
-			ctrl_revise(@project)
+			ctrl_revise(@object_plm)
 		end
 	end
 
@@ -191,29 +200,29 @@ class ProjectsController < ApplicationController
 	def update_type
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug(fname){"params=#{params.inspect}"}
-		@project = Project.find(params[:id])
+		@object_plm = Project.find(params[:id])
 		@types_access    = Typesobject.get_types("project_typeaccess")
-		ctrl_update_type @project, params[:object_type]
+		ctrl_update_type @object_plm, params[:object_type]
 	end
 
 	# DELETE /projects/1
 	# DELETE /projects/1.xml
 	def destroy_old
-		@project = Project.find(params[:id])
+		@object_plm = Project.find(params[:id])
 		respond_to do |format|
-			unless @project.nil?
-				if @project.destroy
-					flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_project), :ident => @project.ident)
+			unless @object_plm.nil?
+				if @object_plm.destroy
+					flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_project), :ident => @object_plm.ident)
 					format.html { redirect_to(projects_url) }
 					format.xml  { head :ok }
 				else
-					flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_project), :ident => @project.ident)
+					flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_project), :ident => @object_plm.ident)
 					index_
 					format.html { render :action => "index" }
-					format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
+					format.xml  { render :xml => @object_plm.errors, :status => :unprocessable_entity }
 				end
 			else
-				flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_project), :ident => @project.ident)
+				flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_project), :ident => @object_plm.ident)
 			end
 		end
 
@@ -257,13 +266,13 @@ class ProjectsController < ApplicationController
 	end
 
 	def add_docs
-		@project = Project.find(params[:id])
-		ctrl_add_objects_from_favorites(@project, :document)
+		@object_plm = Project.find(params[:id])
+		ctrl_add_objects_from_clipboardtes(@object_plm, :document)
 	end
 
 	def add_parts
-		@project = Project.find(params[:id])
-		ctrl_add_objects_from_favorites(@project, :part)
+		@object_plm = Project.find(params[:id])
+		ctrl_add_objects_from_clipboardtes(@object_plm, :part)
 	end
 
 	#
@@ -272,9 +281,9 @@ class ProjectsController < ApplicationController
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug(fname){"params=#{params.inspect}"}
-		@project = Project.find(params[:id])
-		@datafile = Datafile.new({:user => current_user, :theproject => @project})
-		ctrl_new_datafile(@project)
+		@object_plm = Project.find(params[:id])
+		@datafile = Datafile.new({:user => current_user, :theproject => @object_plm})
+		ctrl_new_datafile(@object_plm)
 	end
 
 	#
@@ -283,8 +292,8 @@ class ProjectsController < ApplicationController
 	def add_datafile
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug(fname){"params=#{params.inspect}"}
-		@project = Project.find(params[:id])
-		ctrl_add_datafile(@project)
+		@object_plm = Project.find(params[:id])
+		ctrl_add_datafile(@object_plm)
 	end
 
 	def show_design
@@ -300,27 +309,27 @@ class ProjectsController < ApplicationController
 	def show_
 		fname= "#{self.class.name}.#{__method__}"
 		define_view
-		@project = Project.find(params[:id])
-		@documents=@project.documents
-		@parts=@project.parts
-		@customers=@project.customers_up
+		@object_plm = Project.find(params[:id])
+		@object_plms=@object_plm.documents
+		@object_plms=@object_plm.parts
+		@object_plms=@object_plm.customers_up
 		flash[:error] = "" if flash[:error].nil?
-		if @favori.get('document').count>0 && @project.relations(:document).count==0
+		if @clipboard.get('document').count>0 && @object_plm.relations(:document).count==0
 			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_document))
 		end
-		if @favori.get('part').count>0 && @project.relations(:part).count==0
+		if @clipboard.get('part').count>0 && @object_plm.relations(:part).count==0
 			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_part))
 		end
-		#if @favori.get('user').count>0 && @project.relations(:user).count==0
+		#if @clipboard.get('user').count>0 && @object_plm.relations(:user).count==0
 		#	flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_user))
 		#end
-		@tree         						= build_tree(@project, @myparams[:view_id], nil, 2)
-		@tree_up      						= build_tree_up(@project, @myparams[:view_id] )
-		@object_plm = @project
+		@tree         						= build_tree(@object_plm, @myparams[:view_id], nil, 2)
+		@tree_up      						= build_tree_up(@object_plm, @myparams[:view_id] )
+		@object_plm = @object_plm
 	end
 
 	def index_
-		@projects = Project.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@object_plms = Project.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
 	end
 
 end

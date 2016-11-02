@@ -1,9 +1,9 @@
 <h1><%= t(:datafile_add) %></h1>
 <% fonct="doc_new"%>
-<%= form_for @datafile, :html => { :multipart => true}, :url => { :action=>"add_datafile",:id=>@customer.id }  do |f| %>
-<%= form_errors_for @customer %>
-<%= hidden_field_tag "customer_id", @customer.id.to_s %>
-<%= render(:partial => "shared/menu_new", :locals => {:object => @customer, :f => f, :fonct=>fonct}) %>
-<%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f , :fonct=>fonct, :document=>@customer}) %>
-<%= render(:partial => "shared/submit_new", :locals => {:object => @customer, :f => f, :fonct=>fonct}) %>
+<%= form_for @datafile, :html => { :multipart => true}, :url => { :action=>"add_datafile",:id=>@object_plm.id }  do |f| %>
+<%= form_errors_for @object_plm %>
+<%= hidden_field_tag "customer_id", @object_plm.id.to_s %>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @object_plm, :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "datafiles/edit_datafile",:locals => { :f => f , :fonct=>fonct, :document=>@object_plm}) %>
+<%= render(:partial => "shared/submit_new", :locals => {:object => @object_plm, :f => f, :fonct=>fonct}) %>
 <% end %>

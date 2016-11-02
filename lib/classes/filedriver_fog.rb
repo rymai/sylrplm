@@ -1,7 +1,7 @@
 # acces au serveur de fichier fog sur le cloud
 require 'fog'
 require 'classes/filedriver'
-
+require 'zip'
 class FiledriverFog < Filedriver
 
 	private

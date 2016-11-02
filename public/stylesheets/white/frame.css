@@ -1,5 +1,53 @@
-/**************************************/
 
+/* ===================================
+ * surcharge bootstrap
+ * ===================================
+ */
+
+/* onglet du haut gauche*/
+.navbar .brand {
+	display: block;
+	float: left;
+	padding: 2px 4px 2px;
+	margin-left: 0px;
+	font-size: 12px;
+	height: 14px;
+	line-height: 14px;
+	font-weight: 200;
+	color: #777777;
+	text-shadow: 0 1px 0 #ffffff;
+}
+
+.container {
+	margin-right: 0px;
+	margin-left: 0px;
+	*zoom: 1;
+}
+
+/*
+.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
+	width: 1260px;
+}
+*/
+
+.btn-toolbar {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 0;
+}
+
+.navbar-inner {
+   height:40px;
+}
+
+/*=================================
+ * specific sylrplm
+ *=================================
+ */
+body {
+	border:0;
+	padding:0;
+}
 th, td {
 	padding: 1px;
 	line-height: 14px;
@@ -80,12 +128,15 @@ a {
 	/*border-top: 1px solid black;*/
 }
 #main {
+	/*
 	padding-top: 5px;
 	padding-left: 5px;
-	/*margin: 0 0 0 180px;*/
+	*/
 	/*background: #333;*/
 	border: none;
-	border-left: 1px solid black;
+	/*border-left: 1px solid black;*/
+	border:0;
+	padding:0;
 }
 /*
  #menu fieldset legend {
@@ -166,6 +217,18 @@ a {
 	background-color: #e6e6e6;
 	*background-color: #d9d9d9;
 }
+table.datas {
+	border: 0px solid black;
+	min-width: 300px;
+}
+
+/* sous menus du haut*/
+a.menu, a.menu:hover {
+	font-size: 12px;
+	height: 14px;
+	line-height: 14px;
+}
+
 
 input[type=submit] {
 	/*background: transparent url('/images/btn_submit.png') no-repeat center center;*/
@@ -347,63 +410,28 @@ p {
 	padding: 0px;
 }
 
-/* boostrap */
-
-/* onglet du haut gauche*/
-.navbar .brand {
-	display: block;
-	float: left;
-	padding: 2px 4px 2px;
-	margin-left: 0px;
-	font-size: 12px;
-	height: 14px;
-	line-height: 14px;
-	font-weight: 200;
-	color: #777777;
-	text-shadow: 0 1px 0 #ffffff;
+/* workitems/edit and portal*/
+#colLeft, #colRight,#object_details {
+	border-color: #BFBFBF;
+	border-style: solid;
+	border-width:0px;
 }
-
-/* sous menus du haut*/
-a.menu, a.menu:hover {
-	font-size: 12px;
-	height: 14px;
-	line-height: 14px;
-}
-
-/*
- .navbar .nav > li > a {
- color: #000000;
- text-shadow: 0 0px 0 #ffffff;
- }
- .navbar .nav > li > a:focus,
- .navbar .nav > li > a:hover {
- color: #AAAAAA;
- }
- */
-
-/* surcharge bootstrap */
-.container {
-	margin-right: 0px;
-	margin-left: 0px;
-	*zoom: 1;
-}
-
-.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container {
-	width: 1260px;
-}
-/* workitems/edit */
 #colLeft {
 	float:left;
-	width:50%;
+	width:59%;
+	border-color: #005577;
+	border-right-width: 10px;
 }
 #colRight {
 	float:left;
-	width:50%;
+	width:39%;
 }
-table.datas {
-	border: 0px solid black;
-	min-width: 300pt;
+#object_details{
+	border-color: #005577;
+	border-bottom-width: 10px;
 }
+
+
 
 
 

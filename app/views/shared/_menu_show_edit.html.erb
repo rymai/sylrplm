@@ -9,9 +9,9 @@
 <% end %>
 
 <% begin %>
-<% if Controller.route_exists?(object.controller_name, "add_favori")%>
+<% if Controller.route_exists?(object.controller_name, "add_clipboard")%>
 <% if logged_in?%>
-<td><%= link_to  t("copy") , {:controller => object.controller_name, :action => "add_favori", :id => object.id}  , :remote=> :true%></td>
+<td><%= link_to  t("copy") , {:controller => object.controller_name, :action => "add_clipboard", :id => object.id}  , :remote=> :true%></td>
 <% end %>
 <% end %>
 <% rescue Exception => e %>

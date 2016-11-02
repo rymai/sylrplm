@@ -11,7 +11,7 @@
 				</li>
 				<% end %>
 				<li >
-					<a class="brand" href="#favorites" data-toggle="tab"><%= t(:legend_clipboard) %></a>
+					<a class="brand" href="#clipboards" data-toggle="tab"><%= t(:legend_clipboard) %></a>
 				</li>
 				<% if logged_in? %>
 				<li>
@@ -213,23 +213,22 @@
 
 <script type="text/javascript">
 	$(function() {
-	try {
-	$('.dropdown-toggle').dropdown();
-	} catch(err) {
-	txt="There was an error on this page.\n\n";
-	txt+="Error description: "+err.message+"\n\n";
-	txt+="Click OK to continue.\n\n";
-	alert(txt);
-	return true;
-	}
+		try {
+			$('.dropdown-toggle').dropdown();
+		} catch(err) {
+			txt = "There was an error on this page.\n\n";
+			txt += "Error description: " + err.message + "\n\n";
+			txt += "Click OK to continue.\n\n";
+			alert(txt);
+			return true;
+		}
 	});
 </script>
 <div class="tab-content">
 	<br/>
 	<br/>
-	<br/>
-	<div id="favorites" name="favorites" class="tab-pane inactive">
-		<%= render('layouts/favorites') %>
+	<div id="clipboards" name="clipboards" class="tab-pane inactive">
+		<%= render('layouts/clipboards') %>
 	</div>
 	<div id="tree" class="tab-pane inactive">
 		<% if @tree || @tree_up %>
@@ -255,6 +254,8 @@
 		<% end %>
 		<%= yield :layout %>
 	</div>
+	<br/>
+	<br/>
 	<br/>
 	<br/>
 </div>

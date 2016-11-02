@@ -35,22 +35,22 @@ Rails.application.routes.draw do
 	#rails2 map.resources :checks
 	resources :checks
 
-	#rails2 map.resources :customers, :has_many => :documents, :collection => { :empty_favori => :get }, :member=> {:edit_lifecycle => :get,:new_dup => :get}
+	#rails2 map.resources :customers, :has_many => :documents, :collection => { :empty_clipboard => :get }, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	resources :customers do
 		member do
 			get :edit_lifecycle
 			get :new_dup
 		end
 		collection do
-			get :empty_favori
+			get :empty_clipboard
 		end
 	end
 
 	#rails2 map.connect(	'customers/index_execute',	:controller => 'customers',	:action => 'index_execute')
 	match 'customers/index_execute', :to => 'customers#index_execute', via: [:get, :post]
 
-	#rails2 map.connect(	'customers/:id/add_favori',	:controller => 'customers',	:action => 'add_favori',	:conditions => { :method => :get })
-	match 'customers/:id/add_favori', :to => 'customers#add_favori', via: [:get, :post], as: :add_favori_customer
+	#rails2 map.connect(	'customers/:id/add_clipboard',	:controller => 'customers',	:action => 'add_clipboard',	:conditions => { :method => :get })
+	match 'customers/:id/add_clipboard', :to => 'customers#add_clipboard', via: [:get, :post], as: :add_clipboard_customer
 
 	#rails2 map.connect(	'customers/:id/add_objects',	:controller => 'customers',	:action => 'add_objects')
 	match 'customers/:id/add_objects', :to => 'customers#add_objects', via: [:patch]
@@ -68,7 +68,7 @@ Rails.application.routes.draw do
 	match 'customers/:id/add_forum', :to => 'customers#add_forum', via: [:get, :post]
 
 	#rails2 map.connect(	'customers/:id/select_view',	:controller => 'customers',	:action => 'select_view')
-	match 'customers/:id/select_view', :to => 'customers#select_view', via: [:get, :post]
+	match 'customers/:id/select_view', :to => 'customers#select_view', via:[:patch]
 
 	#rails2 map.connect(	'customers/:id/new_datafile',	:controller => 'customers',	:action => 'new_datafile')
 	match 'customers/:id/new_datafile', :to => 'customers#new_datafile', via: [:get, :post]
@@ -115,21 +115,21 @@ Rails.application.routes.draw do
 	#rails2map.connect(	'definitions/:id/tree.js',	:controller => 'definitions',	:action => 'tree')
 	match 'definitions/tree', :to => 'definitions#tree', via: [:get, :post]
 
-	#rails2 map.resources :documents, :has_many => :documents, :collection => { :empty_favori => :get }, :member=> {:edit_lifecycle => :get, :new_dup => :get}
+	#rails2 map.resources :documents, :has_many => :documents, :collection => { :empty_clipboard => :get }, :member=> {:edit_lifecycle => :get, :new_dup => :get}
 	resources :documents do
 		member do
 			get :edit_lifecycle
 			get :new_dup
 		end
 		collection do
-			get :empty_favori
+			get :empty_clipboard
 		end
 	end
 	#rails2 map.connect(	'documents/index_execute',	:controller => 'documents',	:action => 'index_execute')
 	match 'documents/index_execute', :to => 'documents#index_execute', via: [:get, :post]
 
-	#rails2 map.connect(	'documents/:id/add_favori',	:controller => 'documents',	:action => 'add_favori',	:conditions => { :method => :get })
-	match 'documents/:id/add_favori', :to => 'documents#add_favori', via: [:get, :post], as: :add_favori_document
+	#rails2 map.connect(	'documents/:id/add_clipboard',	:controller => 'documents',	:action => 'add_clipboard',	:conditions => { :method => :get })
+	match 'documents/:id/add_clipboard', :to => 'documents#add_clipboard', via: [:get, :post], as: :add_clipboard_document
 
 	#rails2 map.connect(	'documents/:id/add_objects',	:controller => 'documents',	:action => 'add_objects')
 	match 'documents/:id/add_objects', :to => 'documents#add_objects', via: [:patch]
@@ -162,7 +162,7 @@ Rails.application.routes.draw do
 	match 'documents/:id/check_free',	 :to => 'documents#check_free', via: [:get, :post]
 
 	#rails2 map.connect(	'documents/:id/select_view',	:controller => 'documents',	:action => 'select_view')
-	match 'documents/:id/select_view', :to => 'documents#select_view', via: [:get, :post]
+	match 'documents/:id/select_view', :to => 'documents#select_view', via: [:patch]
 
 	#rails2 map.connect(	'documents/:id/update_lifecycle',	:controller => 'documents',	:action => 'update_lifecycle')
 	match 	'documents/:id/update_lifecycle', :to => 'documents#update_lifecycle', via: [:get, :post]
@@ -225,7 +225,7 @@ Rails.application.routes.draw do
 	match 	'groups/index_execute', :to => 'groups#index_execute', via: [:get, :post]
 
 	#rails2 map.connect(	'groups/:id/select_view',	:controller => 'groups',	:action => 'select_view')
-	match 'groups/:id/select_view', :to => 'groups#select_view', via: [:get, :post]
+	match 'groups/:id/select_view', :to => 'groups#select_view', via: [:patch]
 
 	#rails2 map.resources :group_definitions
 	resources :group_definitions
@@ -242,11 +242,11 @@ Rails.application.routes.draw do
 	#rails2 map.connect(	'info/object_links/:plmtype/:id.:format',	:controller => 'info',	:action => 'object_links')
 	match 	'info/object_links/:plmtype/:id.:format', :to => 'info#object_links', via: [:get, :post]
 
-	#rails2 map.resources :links, :collection => { :reset => :get, :empty_favori => :get}
+	#rails2 map.resources :links, :collection => { :reset => :get, :empty_clipboard => :get}
 	resources :links do
 		collection do
 			get :reset
-			get :empty_favori
+			get :empty_clipboard
 		end
 	end
 	#rails2 map.connect(	'links/:id/edit_in_tree',	:controller => 'links',	:action => 'edit_in_tree',	:conditions => { :method => :get })
@@ -258,8 +258,8 @@ Rails.application.routes.draw do
 	#rails2 map.connect(	'links/:id/remove_link',	:controller => 'links',	:action => 'remove_link')
 	match 'links/:id/remove_link', :to => 'links#remove_link', via: [:get, :post]
 
-	#rails2 map.connect(	'links/:id/add_favori',	:controller => 'links',	:action => 'add_favori',	:conditions => { :method => :get })
-	match 'links/:id/add_favori', :to => 'links#add_favori', via: [:get, :post], as: :add_favori_link
+	#rails2 map.connect(	'links/:id/add_clipboard',	:controller => 'links',	:action => 'add_clipboard',	:conditions => { :method => :get })
+	match 'links/:id/add_clipboard', :to => 'links#add_clipboard', via: [:get, :post], as: :add_clipboard_link
 
 	#rails2 map.resources :notifications, :member => { :notify => :get }
 	resources :notifications do
@@ -267,23 +267,23 @@ Rails.application.routes.draw do
 			get :notify
 		end
 	end
-	#rails2 map.resources :parts, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
+	#rails2 map.resources :parts, :has_many => :documents, :collection => { :empty_clipboard => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	resources :parts do
 		member do
 			get :edit_lifecycle
 			get :new_dup
-			get :add_favori
+			get :add_clipboard
 		end
 		collection do
-			get :empty_favori
+			get :empty_clipboard
 		end
 	end
 	#rails2 map.connect(	'parts/index_execute',	:controller => 'parts',	:action => 'index_execute')
 	match 'parts/action', :to => 'parts#index_execute', via: [:get, :post]
 
-	#rails2 map.connect(	'parts/:id/add_favori',	:controller => 'parts',	:action => 'add_favori',	:conditions => { :method => :get })
-	#match 'parts/:id/add_favori', :to => 'parts#add_favori', :via=> [:get], :as => :add_favori_part , :defaults => { :format => 'js' }
-	#match 'parts/:id/add_favori', :to => 'parts#add_favori', :via=> [:get, :post], :as => :add_favori_part
+	#rails2 map.connect(	'parts/:id/add_clipboard',	:controller => 'parts',	:action => 'add_clipboard',	:conditions => { :method => :get })
+	#match 'parts/:id/add_clipboard', :to => 'parts#add_clipboard', :via=> [:get], :as => :add_clipboard_part , :defaults => { :format => 'js' }
+	#match 'parts/:id/add_clipboard', :to => 'parts#add_clipboard', :via=> [:get, :post], :as => :add_clipboard_part
 
 	#rails2 map.connect(	'parts/:id/promote',	:controller => 'parts',	:action => 'promote',	:conditions => { :method => :get })
 	match 'parts/:id/promote', :to => 'parts#promote', via: [:get, :post]
@@ -316,7 +316,7 @@ Rails.application.routes.draw do
 	match 'parts/:id/demote', :to => 'parts#demote', via: [:get, :post]
 
 	#rails2 map.connect(	'parts/:id/select_view',	:controller => 'parts',	:action => 'select_view')
-	match 	'parts/:id/select_view', :to => 'parts#select_view', via: [:get, :post, :patch]
+	match 	'parts/:id/select_view', :to => 'parts#select_view', via: [ :patch]
 
 	#rails2 map.connect(	'parts/:id/new_datafile',	:controller => 'parts',	:action => 'new_datafile')
 	match 	'parts/:id/new_datafile', :to => 'parts#new_datafile', via: [:get, :post]
@@ -339,21 +339,21 @@ Rails.application.routes.draw do
 	#rails2 map.connect(	'processes/:id/tree.js',	:controller => 'processes',	:action => 'tree')
 	match 'processes/:id/tree.js', :to => 'processes#tree', via: [:get, :post]
 
-	#rails2 map.resources :projects, :has_many => :documents, :collection => { :empty_favori => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
+	#rails2 map.resources :projects, :has_many => :documents, :collection => { :empty_clipboard => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	resources :projects do
 		member do
 			get :edit_lifecycle
 			get :new_dup
 		end
 		collection do
-			get :empty_favori
+			get :empty_clipboard
 		end
 	end
 	#rails2 map.connect(	'projects/index_execute',	:controller => 'projects',	:action => 'index_execute')
 	match 'projects/index_execute', :to => 'projects#index_execute', via: [:get, :post]
 
-	#rails2 map.connect(	'projects/:id/add_favori',	:controller => 'projects',	:action => 'add_favori',	:conditions => { :method => :get })
-	match 	'projects/:id/add_favori', :to => 'projects#add_favori', via: [:get, :post], as: :add_favori_project
+	#rails2 map.connect(	'projects/:id/add_clipboard',	:controller => 'projects',	:action => 'add_clipboard',	:conditions => { :method => :get })
+	match 	'projects/:id/add_clipboard', :to => 'projects#add_clipboard', via: [:get, :post], as: :add_clipboard_project
 
 	#rails2 map.connect(	'projects/:id/add_objects',	:controller => 'projects',	:action => 'add_objects')
 	match 'projects/:id/add_objects', :to => 'projects#add_objects', via: [:patch]
@@ -377,7 +377,7 @@ Rails.application.routes.draw do
 	match 'projects/:id/demote', :to => 'projects#demote', via: [:get, :post]
 
 	#rails2 map.connect(	'projects/:id/select_view',	:controller => 'projects',	:action => 'select_view')
-	match 'projects/:id/select_view', :to => 'projects#select_view', via: [:get, :post]
+	match 'projects/:id/select_view', :to => 'projects#select_view', via:[:patch]
 
 	#rails2 map.connect(	'projects/:id/new_datafile',	:controller => 'projects',	:action => 'new_datafile')
 	match 'projects/:id/new_datafile', :to => 'projects#new_datafile', via: [:get, :post]
@@ -425,7 +425,7 @@ Rails.application.routes.draw do
 	match 'roles/index_execute', :to => 'roles#index_execute', via: [:get, :post]
 
 	#rails2 map.connect(	'roles/:id/select_view',	:controller => 'roles',	:action => 'select_view')
-	match 'roles/:id/select_view', :to => 'roles#select_view', via: [:get, :post]
+	match 'roles/:id/select_view', :to => 'roles#select_view', via:[:patch]
 
 	#rails2 map.resources :sequences, :member=> {:new_dup => :get}
 	resources :sequences do
@@ -487,10 +487,10 @@ Rails.application.routes.draw do
 	#rails2 map.connect(	'typesobjects/:id/update_forobject' ,	:controller => 'typesobjects',	:action => 'update_forobject')
 	match 'typesobjects/:id/update_forobject', :to => 'typesobjects#update_forobject', via: [:get, :post]
 
-	#rails2 map.resources :users, :collection => { :empty_favori => :get }, :member=> {:new_dup => :get}
+	#rails2 map.resources :users, :collection => { :empty_clipboard => :get }, :member=> {:new_dup => :get}
 	resources :users do
 		collection do
-			get :empty_favori
+			get :empty_clipboard
 		end
 		member do
 			get :new_dup
@@ -502,8 +502,8 @@ Rails.application.routes.draw do
 	#rails2 map.connect(	'users/:id/activate',	:controller => 'users',	:action => 'activate')
 	match 'users/:id/activate', :to => 'users#activate', via: [:get, :post]
 
-	#rails2 map.connect(	'users/:id/add_favori',	:controller => 'users',	:action => 'add_favori',	:conditions => { :method => :get })
-	match 'users/:id/add_favori', :to => 'users#add_favori', via: [:get, :post], as: :add_favori_user
+	#rails2 map.connect(	'users/:id/add_clipboard',	:controller => 'users',	:action => 'add_clipboard',	:conditions => { :method => :get })
+	match 'users/:id/add_clipboard', :to => 'users#add_clipboard', via: [:get, :post], as: :add_clipboard_user
 
 	#rails2 map.connect(	'users/browse',	:controller => 'users',	:action => 'browse')
 	match 'users/browse', :to => 'users#browse', via: [:get, :post]
@@ -550,7 +550,6 @@ Rails.application.routes.draw do
 	#rails2 map.wfid_resources :workitems
 	resources :workitems
 	match 'workitems/:wfid/show', :to => 'workitems#show', via: [:get, :post]
-
 
 	#rails2 map.wfid_resources :expressions
 	resources :expressions

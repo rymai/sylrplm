@@ -210,7 +210,7 @@ function doUnload() {
 }
 
 function switchCheckBox(obj) {
-	
+
 	listname='links['+obj.value+'][]'
 	list=document.getElementsByName(listname);
 	//alert('switchCheckBox:name='+obj.name+' id='+obj.id+' value='+obj.value+' listname='+listname)

@@ -78,11 +78,10 @@ gem 'rufus-scheduler'
 gem 'will_paginate'
 #sylrplm fin
 
-# 		will load compatibility for old rubyzip API.
-#gem 'zip-zip'
+
 # 		read and create zip files
 #gem 'rubyzip', '1.1.7'
-gem 'rubyzip'
+###gem 'rubyzip'
 
 #gem 'string_to_sha1', :git => "git://github.com/sylvani/string_to_sha1.git"
 #gem 'string_to_sha1', :path => "/home/syl/trav/rubyonrails/string_to_sha1"
@@ -99,6 +98,11 @@ gem 'protected_attributes'
 
 gem 'simple_form', '~> 3.1.0.rc1'
 
+group :norb do
+# 		will load compatibility for old rubyzip API.
+#gem 'zip-zip'
+#gem 'selenium-webdriver'
+end
 
 group :staging, :production do
 	#gem 'thin'
@@ -114,12 +118,17 @@ group :development do
 	#gem 'ruby-debug-ide19'
 	#gem 'ruby-debug193'
 	##gem 'bigdecimal', :path => "/usr/share/ruby/gems/gems/bigdecimal-1.2.5"
-	###gem 'ruby_debugger'
+	gem 'byebug'
+	#gem 'ruby-debug-ide'
+	#gem 'web_console'
+	#gem 'awesome_print'
+
 
 group :test do
   gem 'capybara'
-  gem 'selenium'
-  gem 'selenium-webdriver'
+
+  #pb selenium=>jar-wrapper=>zip incompatible avec rubyzip!!!
+  #gem 'selenium'
   gem 'launchy'
   gem 'rspec'
   gem 'rspec-core'

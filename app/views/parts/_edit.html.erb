@@ -4,8 +4,8 @@
 <%= f.text_field :ident %>
 <br/>
 <%= f.label t(:label_revision) %>
-<%= text_field_tag :revision, @part.revision, :disabled => true %>
-<%= f.hidden_field :revision, :value => @part.revision %>
+<%= text_field_tag :revision, @object_plm.revision, :disabled => true %>
+<%= f.hidden_field :revision, :value => @object_plm.revision %>
 <br/>
 <%= f.label t(:label_designation) %>
 <%= f.text_field :designation %>
@@ -14,10 +14,10 @@
 <%= h_text_editor f, object, :description%>
 <br/>
 <%= f.label t(:label_responsible) %>
-<%= select_in_list(:part, :owner, @part.owner.login, :users) %>
+<%= select_in_list(:part, :owner, @object_plm.owner.login, :users) %>
 <br/>
 <%= f.label t(:label_date) %>
 <%= f.date_select :date %>
 <br/>
 <%= h_input_domain(f) %>
-<%= h_type_values(@part, fonct) %>
+<%= h_type_values(@object_plm, fonct) %>

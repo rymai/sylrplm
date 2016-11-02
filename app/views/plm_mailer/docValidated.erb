@@ -5,51 +5,51 @@
 
 <p>
   <b><%=t(:label_ident)%><</b>
-  <%=h @document.ident %>
+  <%=h @object_plm.ident %>
 </p>
 
 <p>
   <b><%=t(:label_type)%><</b>
-  <% if(@document.typesobject != nil) %>
-  	<%=h @document.typesobject.id %>:<%=h @document.typesobject.name %>
+  <% if(@object_plm.typesobject != nil) %>
+  	<%=h @object_plm.typesobject.id %>:<%=h @object_plm.typesobject.name %>
   <% end %> 
 </p>
 
 <p>
   <b><%=t(:label_revision)%><</b>
-  <%=h @document.revision %>
+  <%=h @object_plm.revision %>
 </p>
 
 <p>
   <b><%=t(:label_designation)%><</b>
-  <%=h @document.designation %>
+  <%=h @object_plm.designation %>
 </p>
 
 <p>
   <b><%=t(:label_description)%><</b>
-  <%=h @document.description %>
+  <%=h @object_plm.description %>
 </p>
 
 <p>
   <b><%=t(:label_status)%><</b>
-  <% if(@document.statusobject != nil) %>
-  	<%=h @document.statusobject.id %>:<%=h @document.statusobject.name %>
+  <% if(@object_plm.statusobject != nil) %>
+  	<%=h @object_plm.statusobject.id %>:<%=h @object_plm.statusobject.name %>
   <% end %> 
 </p>
 
 <p>
   <b><%=t(:label_responsible)%><</b>
-  <%=h @document.owner.login %>
+  <%=h @object_plm.owner.login %>
 </p>
 
 
 <p>
   <b><%=t(:label_date)%><</b>
-  <%=h @document.date %>
+  <%=h @object_plm.date %>
 </p>
 
 
-<%=t(:direct_access)%><a href="<%= @urlbase %><%= url_for(:controller=>"documents", :action=>'show', :id => @document.id) %>" title="<%= @document.ident %>" ><%=h @document.ident %></a>
+<%=t(:direct_access)%><a href="<%= @urlbase %><%= url_for(:controller=>"documents", :action=>'show', :id => @object_plm.id) %>" title="<%= @object_plm.ident %>" ><%=h @object_plm.ident %></a>
 
 
 

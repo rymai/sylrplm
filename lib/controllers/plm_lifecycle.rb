@@ -96,7 +96,7 @@ def ctrl_promote(a_object, withMail=true)
 				format.xml  { render :xml => a_object.errors, :status => :unprocessable_entity }
 			end
 		else
-			flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_document), :ident => @document.ident, :error => @document.errors.full_messages)
+			flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_document), :ident => @object_plm.ident, :error => @object_plm.errors.full_messages)
 			format.html { render :action => "edit_lifecycle" }
 			format.xml  { render :xml => a_object.errors, :status => :unprocessable_entity }
 		end

@@ -1,5 +1,11 @@
 fr:
   # general
+  window_details_hide: Cacher détails
+  window_details_show: Montrer détails
+  window_list_hide: Cacher liste
+  window_list_show: Montrer liste
+  window_tree_hide: Cacher structure
+  window_tree_show: Montrer structure
   sylrplm_version: Version '%{version}' du %{version_date}
   model3d_view: Voir le modèle correspondant à la structure décrite ci dessous
   root_model_design: Modèle 2D/3D
@@ -411,15 +417,15 @@ fr:
   label_domain: Domaine
   submit_create_domain: Créer le domaine
   label_theme: Thème
-  favori_document_delete: Vider presse-papier documents
-  favori_part_delete: Vider presse-papier articles
-  favori_project_delete: Vider presse-papier projects
-  favoris_document: Documents (%{size})
-  favoris_part: Articles (%{size})
-  favoris_project: Projets (%{size})
-  favoris_customer: Clients (%{size})
-  favoris_user: Utilisateurs (%{size})
-  favoris_link: Liens (%{size})
+  clipboard_document_delete: Vider presse-papier documents
+  clipboard_part_delete: Vider presse-papier articles
+  clipboard_project_delete: Vider presse-papier projects
+  clipboards_document: Documents (%{size})
+  clipboards_part: Articles (%{size})
+  clipboards_project: Projets (%{size})
+  clipboards_customer: Clients (%{size})
+  clipboards_user: Utilisateurs (%{size})
+  clipboards_link: Liens (%{size})
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM Nouveautés
   label_today: Date

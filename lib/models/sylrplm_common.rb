@@ -230,8 +230,9 @@ module Models
 				#puts self.modelname+".find_paginate:conditions="+conditions.inspect
 				#puts self.modelname+"."+__method__.to_s+":"+recordset.inspect
 				LOG.debug(fname) {"fin conditions=#{conditions} : #{recordset.count unless recordset.nil?}"}
-				{:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
-
+				ret={:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
+				LOG.debug(fname) {"ret=#{ret}"}
+				ret
 			end
 
 		# end of class methods
@@ -975,7 +976,7 @@ module Models
 
 		def before_destroy_
 			fname= "#{self.class.name}.#{__method__}"
-			#unless Favori.get(self.modelname).count.zero?
+			#unless Clipboard.get(self.modelname).count.zero?
 			#  raise "Can't delete because of links:"+self.ident
 			#end
 			lnk=::Link.linked?(self)

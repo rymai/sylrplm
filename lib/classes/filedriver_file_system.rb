@@ -1,5 +1,5 @@
 require 'classes/filedriver'
-
+require 'zip'
 class FiledriverFileSystem < Filedriver
 
 	private

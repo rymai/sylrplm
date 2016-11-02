@@ -42,7 +42,7 @@ class UsersController < ApplicationController
 		@the_user = User.new(user: current_user)
 		@roles   = Role.all
 		@groups  = Group.all
-		@projects  = Project.all
+		@object_plms  = Project.all
 		@themes  = get_themes(@theme)
 		@time_zones = get_time_zones(@time_zone)
 		@volumes = Volume.all.to_a
@@ -61,7 +61,7 @@ class UsersController < ApplicationController
 		@the_user = @object
 		@roles   = Role.all
 		@groups  = Group.all
-		@projects  = Project.all
+		@object_plms  = Project.all
 		@themes  = get_themes(@theme)
 		@time_zones = get_time_zones(@time_zone)
 		@volumes = Volume.all.to_a
@@ -79,7 +79,7 @@ class UsersController < ApplicationController
 		@the_user = User.find(params[:id])
 		@roles   = Role.all
 		@groups  = Group.all
-		@projects  = Project.all
+		@object_plms  = Project.all
 		@themes  = get_themes(@theme)
 		@time_zones = get_time_zones(@the_user.time_zone)
 		@volumes = Volume.all.to_a
@@ -123,7 +123,7 @@ class UsersController < ApplicationController
 			else
 				@roles   = Role.all
 				@groups   = Group.all
-				@projects  = Project.all
+				@object_plms  = Project.all
 				@themes  = get_themes(@theme)
 				@time_zones = get_time_zones(@the_user.time_zone)
 				@volumes = Volume.all
@@ -141,7 +141,7 @@ class UsersController < ApplicationController
 		@the_user    = User.find(params[:id])
 		@volumes = Volume.all
 		@roles   = Role.all
-		@projects  = Project.all
+		@object_plms  = Project.all
 		@groups   = Group.all
 		@themes = get_themes(@theme)
 		@time_zones = get_time_zones(@the_user.time_zone)

@@ -1,5 +1,13 @@
 en:
   # general
+  window_details_hide: Hide détails
+  window_details_show: Show détails
+  window_list_hide: Hide list
+  window_list_show: Show list
+  window_tree_hide: Hide structure
+  window_tree_show: Show structure
+  window_hide: Hide %{name}
+  window_show: Show %{name}
   sylrplm_version: Version '%{version}' on %{version_date}
   model3d_view: View the model corresponding to the structure
   root_model_design: Design model
@@ -411,15 +419,15 @@ en:
   label_domain: Domain
   submit_create_domain: Create domain
   label_theme: Theme
-  favori_document_delete: Remove documents from clipboard
-  favori_part_delete: Remove parts from clipboard
-  favori_project_delete: Remove projects from clipboard
-  favoris_document: Documents (%{size})
-  favoris_part: Parts (%{size})
-  favoris_project: Projects (%{size})
-  favoris_customer: Customers (%{size})
-  favoris_user: Users (%{size})
-  favoris_link: Links (%{size})
+  clipboard_document_delete: Remove documents from clipboard
+  clipboard_part_delete: Remove parts from clipboard
+  clipboard_project_delete: Remove projects from clipboard
+  clipboards_document: Documents (%{size})
+  clipboards_part: Parts (%{size})
+  clipboards_project: Projects (%{size})
+  clipboards_customer: Customers (%{size})
+  clipboards_user: Users (%{size})
+  clipboards_link: Links (%{size})
   title_contacts: SYLRPLM Contacts
   title_news: SYLRPLM News
   label_today: Date

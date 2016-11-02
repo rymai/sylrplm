@@ -198,16 +198,16 @@ class WorkitemsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		msg=""
 		ret=0
-		favori=@favori.get(type_object)
-		LOG.debug(fname){"type_object=#{type_object} favori=#{favori.inspect}"}
-		if favori.count>0
+		clipboard=@clipboard.get(type_object)
+		LOG.debug(fname){"type_object=#{type_object} clipboard=#{clipboard.inspect}"}
+		if clipboard.count>0
 			fields = ar_workitem.fields
 			if fields == nil
 				fields = {}
 				fields["params"] = {}
 			end
-			favori.each do |item|
-				LOG.debug(fname){"favori=#{item.inspect}"}
+			clipboard.each do |item|
+				LOG.debug(fname){"clipboard=#{item.inspect}"}
 				#TODO bidouille
 				url="#{Ruote::Sylrplm::ArWorkitem::SEP_URL}#{type_object}s"
 				url+="#{Ruote::Sylrplm::ArWorkitem::SEP_URL}#{item.id}"
@@ -221,7 +221,7 @@ class WorkitemsController < ApplicationController
 			end
 			ar_workitem.fields=fields
 			LOG.info(fname){"apres add: fields=#{ar_workitem.fields}"}
-			empty_favori_by_type(type_object)
+			empty_clipboard_by_type(type_object)
 		else
 			msg += " Nothing to add:"+type_object
 		end

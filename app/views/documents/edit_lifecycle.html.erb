@@ -1,7 +1,7 @@
-<h1><%= t(:lifecycle_edit, :model => t(@document.modelname), :obj => @document.to_s) %></h1>
+<h1><%= t(:lifecycle_edit, :model => t(@object_plm.modelname), :obj => @object_plm.to_s) %></h1>
 <% fonct="edit_lifecycle" %>
-<%= render(:partial => "shared/menu_edit",:locals => { :object => @document, :fonct=>fonct, :fonct=>fonct}) %>
-<%= form_for(@document, :url => {:controller=>"documents", :action=>"update_lifecycle", :id => @document.id}, :method=>:get, :html => { :id => h_form_html_id(@document, fonct) }) do |f| %>
-<%= form_errors_for @document %>
+<%= render(:partial => "shared/menu_edit",:locals => { :object => @object_plm, :fonct=>fonct, :fonct=>fonct}) %>
+<%= form_for(@object_plm, :url => {:controller=>"documents", :action=>"update_lifecycle", :id => @object_plm.id}, :method=>:get, :html => { :id => h_form_html_id(@object_plm, fonct) }) do |f| %>
+<%= form_errors_for @object_plm %>
 <%= render(:partial => "documents/edit_lifecycle",:locals => { :f => f, :fonct=>fonct }) %>
 <% end %>

@@ -478,7 +478,7 @@ class Link < ActiveRecord::Base
 	# * +new_father+ the new_father become the father of the new link
 	# * +user+ - The user which proceed the duplicate action
 	# == Usage from controller or script:
-	#    if @customer.save
+	#    if @object_plm.save
 	#		  lnk_orig = Link.find(lnkid)
 	#			#puts "=========================lnk_orig="+lnk_orig.inspect
 	#			lnk_new = lnk_orig.duplicate(new_obj, user)

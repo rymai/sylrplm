@@ -200,7 +200,7 @@ class Node
 		blank=">".rjust(level)
 		msg="#{blank} lev=#{level} nb=#{nodes.size} #{ret}"
 		msg+= " #{link.father.ident_plm} #{link.relation.name} #{link.child.ident_plm}" unless link.nil?
-		puts msg
+		#puts msg
 		if(level<50)
 			level+=1
 			nodes.each do |nod|

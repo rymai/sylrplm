@@ -1,14 +1,24 @@
 class CustomersController < ApplicationController
 	include Controllers::PlmObjectControllerModule
 	access_control(Access.find_for_controller(controller_name.classify))
-	# GET /customers
-	# GET /customers.xml
-	def index
+
+    def show
+    	fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"params=#{params.inspect}"}
+		#  object with his tree if ask
+		show_
+		# objects
 		index_
 		respond_to do |format|
-			format.html # index.html.erb
-			format.xml  { render :xml => @customers[:recordset] }
+			format.html   { render :action => "show" }
+			format.xml  { render :xml => @object_plm }
 		end
+	end
+
+# GET /customers
+	# GET /customers.xml
+	def index
+		ctrl_index
 	end
 
 	def index_execute
@@ -17,11 +27,11 @@ class CustomersController < ApplicationController
 
 	# GET /customers/1
 	# GET /customers/1.xml
-	def show
+	def show_old
 		show_
 		respond_to do |format|
 			format.html # show.html.erb
-			format.xml  { render :xml => @customer }
+			format.xml  { render :xml => @object_plm }
 		end
 	end
 
@@ -29,34 +39,35 @@ class CustomersController < ApplicationController
 		if params["commit"].force_encoding("utf-8") == t("root_model_design").force_encoding("utf-8")
 			show_design
 		else
-			show_
+			#  object with his tree if ask
+		show_
+		# objects
+		index_
 			respond_to do |format|
 				format.html { render :action => "show" }
-				format.xml  { render :xml => @customer }
+				format.xml  { render :xml => @object_plm }
 			end
 		end
 	end
 
 	def show_
-		define_view
-		@customer                = Customer.find(params[:id])
-		@documents               = @customer.documents
-		@projects                = @customer.projects
-		@tree         						= build_tree(@customer, @myparams[:view_id], nil, 3)
-		@tree_up      						= build_tree_up(@customer, @myparams[:view_id] )
-		@object_plm = @customer
+		unless params[:id].nil?
+			@object_plm                = Customer.find(params[:id])
+			@tree         						= build_tree(@object_plm, @myparams[:view_id], nil, 3)
+			@tree_up      						= build_tree_up(@object_plm, @myparams[:view_id] )
+		end
 	end
 
 	# GET /customers/new
 	# GET /customers/new.xml
 	def new
 		#puts "===CustomersController.new:"+params.inspect+" user="+@current_user.inspect
-		@customer = Customer.new(user: current_user)
+		@object_plm = Customer.new(user: current_user)
 		@types    = Typesobject.get_types("customer")
 		@status   = Statusobject.get_status("customer", 2)
 		respond_to do |format|
 			format.html # new.html.erb
-			format.xml  { render :xml => @customer }
+			format.xml  { render :xml => @object_plm }
 		end
 	end
 
@@ -65,25 +76,25 @@ class CustomersController < ApplicationController
 		LOG.debug(fname){"params=#{params.inspect}"}
 		@object_orig = Customer.find(params[:id])
 		@object = @object_orig.duplicate(current_user)
-		@customer=@object
-		LOG.debug(fname){"new customer=#{@customer.inspect}"}
+		@object_plm=@object
+		LOG.debug(fname){"new customer=#{@object_plm.inspect}"}
 		@types    = Typesobject.get_types("customer")
 		@status   = Statusobject.get_status("customer", 2)
 		respond_to do |format|
 			format.html # customer/1/new_dup
-			format.xml  { render :xml => @customer }
+			format.xml  { render :xml => @object_plm }
 		end
 	end
 
 	# GET /customers/1/edit
 	def edit
-		@customer = Customer.find_edit(params[:id])
+		@object_plm = Customer.find_edit(params[:id])
 		@types    = Typesobject.get_types("customer")
 	end
 
 	# GET /customers/1/edit_lifecycle
 	def edit_lifecycle
-		@customer = Customer.find_edit(params[:id])
+		@object_plm = Customer.find_edit(params[:id])
 	end
 
 	# POST /customers
@@ -91,27 +102,27 @@ class CustomersController < ApplicationController
 	def create
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug(fname) {"params=#{params.inspect}"}
-		@customer = Customer.new(params[:customer])
+		@object_plm = Customer.new(params[:customer])
 		@types    = Typesobject.get_types("customer")
-		@status   = Statusobject.get_status(@customer)
+		@status   = Statusobject.get_status(@object_plm)
 		respond_to do |format|
 			if fonct_new_dup?
 				object_orig=Customer.find(params[:object_orig_id])
-			st = @customer.create_duplicate(object_orig)
+			st = @object_plm.create_duplicate(object_orig)
 			else
-			st = @customer.save
+			st = @object_plm.save
 			end
 			if st
-				st = ctrl_duplicate_links(params, @customer, current_user)
-				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
-				params[:id]=@customer.id
+				st = ctrl_duplicate_links(params, @object_plm, current_user)
+				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_customer), :ident => @object_plm.ident)
+				params[:id]=@object_plm.id
 				show_
 				format.html { render :action => "show" }
-				format.xml  { render :xml => @customer, :status => :created, :location => @customer }
+				format.xml  { render :xml => @object_plm, :status => :created, :location => @object_plm }
 			else
-				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_customer), :msg => @customer.errors)
+				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_customer), :msg => @object_plm.errors)
 				format.html { render :action => :new }
-				format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
+				format.xml  { render :xml => @object_plm.errors, :status => :unprocessable_entity }
 			end
 		end
 	end
@@ -121,23 +132,23 @@ class CustomersController < ApplicationController
 	def update
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug(fname) {"params=#{params.inspect}"}
-		@customer = Customer.find(params[:id])
+		@object_plm = Customer.find(params[:id])
 		@types    = Typesobject.get_types(:customer)
-		@status   = Statusobject.get_status(@customer)
-		@customer.update_accessor(current_user)
+		@status   = Statusobject.get_status(@object_plm)
+		@object_plm.update_accessor(current_user)
 		if commit_promote?
-			ctrl_promote(@customer)
+			ctrl_promote(@object_plm)
 		else
 			respond_to do |format|
-				if @customer.update_attributes(params[:customer])
-					flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+				if @object_plm.update_attributes(params[:customer])
+					flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_customer), :ident => @object_plm.ident)
 					show_
 					format.html { render :action => "show" }
 					format.xml  { head :ok }
 				else
-					flash[:error] = t(:ctrl_object_notupdated, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+					flash[:error] = t(:ctrl_object_notupdated, :typeobj => t(:ctrl_customer), :ident => @object_plm.ident)
 					format.html { render :action => :edit }
-					format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
+					format.xml  { render :xml => @object_plm.errors, :status => :unprocessable_entity }
 				end
 			end
 		end
@@ -146,15 +157,15 @@ class CustomersController < ApplicationController
 	def update_lifecycle
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug(fname){"params=#{params.inspect}"}
-		@customer = Customer.find(params[:id])
+		@object_plm = Customer.find(params[:id])
 		if commit_promote?
-			ctrl_promote(@customer)
+			ctrl_promote(@object_plm)
 		end
 		if commit_demote?
-			ctrl_demote(@customer)
+			ctrl_demote(@object_plm)
 		end
 		if commit_revise?
-			ctrl_revise(@customer)
+			ctrl_revise(@object_plm)
 		end
 	end
 
@@ -164,28 +175,28 @@ class CustomersController < ApplicationController
 	def update_type
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"params=#{params.inspect}"}
-		@customer = Customer.find(params[:id])
-		ctrl_update_type @customer, params[:object_type]
+		@object_plm = Customer.find(params[:id])
+		ctrl_update_type @object_plm, params[:object_type]
 	end
 
 	# DELETE /customers/1
 	# DELETE /customers/1.xml
 	def destroy_old
-		@customer = Customer.find(params[:id])
+		@object_plm = Customer.find(params[:id])
 		respond_to do |format|
-			unless @customer.nil?
-				if @customer.destroy
-					flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+			unless @object_plm.nil?
+				if @object_plm.destroy
+					flash[:notice] = t(:ctrl_object_deleted, :typeobj => t(:ctrl_customer), :ident => @object_plm.ident)
 					format.html { redirect_to(customers_url) }
 					format.xml  { head :ok }
 				else
-					flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+					flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_customer), :ident => @object_plm.ident)
 					index_
 					format.html { render :action => "index" }
-					format.xml  { render :xml => @customer.errors, :status => :unprocessable_entity }
+					format.xml  { render :xml => @object_plm.errors, :status => :unprocessable_entity }
 				end
 			else
-				flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_customer), :ident => @customer.ident)
+				flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_customer), :ident => @object_plm.ident)
 			end
 		end
 	end
@@ -228,13 +239,13 @@ class CustomersController < ApplicationController
 
 	def add_docs
 		#puts "#{self.class.name}.#{__method__}:#{params.inspect}"
-		@customer = Customer.find(params[:id])
-		ctrl_add_objects_from_favorites(@customer, :document)
+		@object_plm = Customer.find(params[:id])
+		ctrl_add_objects_from_clipboardtes(@object_plm, :document)
 	end
 
 	def add_projects
-		@customer = Customer.find(params[:id])
-		ctrl_add_objects_from_favorites(@customer, :project)
+		@object_plm = Customer.find(params[:id])
+		ctrl_add_objects_from_clipboardtes(@object_plm, :project)
 	end
 
 	#
@@ -243,9 +254,9 @@ class CustomersController < ApplicationController
 	def new_datafile
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug(fname){"params=#{params.inspect}"}
-		@customer = Customer.find(params[:id])
-		@datafile = Datafile.new({:user => current_user, :thecustomer => @customer})
-		ctrl_new_datafile(@customer)
+		@object_plm = Customer.find(params[:id])
+		@datafile = Datafile.new({:user => current_user, :thecustomer => @object_plm})
+		ctrl_new_datafile(@object_plm)
 	end
 
 	#
@@ -254,8 +265,8 @@ class CustomersController < ApplicationController
 	def add_datafile
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug(fname){"params=#{params.inspect}"}
-		@customer = Customer.find(params[:id])
-		ctrl_add_datafile(@customer)
+		@object_plm = Customer.find(params[:id])
+		ctrl_add_datafile(@object_plm)
 	end
 
 	def show_design
@@ -268,6 +279,6 @@ class CustomersController < ApplicationController
 	private
 
 	def index_
-		@customers = Customer.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :filter_types => params[:filter_page], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@object_plms = Customer.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :filter_types => params[:filter_page], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 	end
 end

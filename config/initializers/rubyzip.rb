@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'zip'
+#require 'zip'
 
   #::Zip.setup do |c|
    #c.on_exists_proc = true

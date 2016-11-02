@@ -1,15 +1,15 @@
 <h1><%= t("object_tree")%></h1>
-<%puts "_tree.html:debut"%>
-<% unless @views.nil? %>
 <%= form_for(object, :url => {:id => object.id, :action => "select_view" }) do |f| %> <!-- -->
 <input type='hidden' name='root_id' value='<%= object.id%>'>
 <input type='hidden' name='root_model' value='<%= object.modelname%>'>
 <table>
+	<% unless @views.nil?%>
 	<tr>
 		<td></td>
 		<td><%= f.label t(:label_view) %></td>
 		<td><%= select_tag(:view_id, options_from_collection_for_select( @views, :id, :name, @myparams[:view_id].to_i))%></td>
 	</tr>
+	<%end%>
 	<tr></tr>
 	<% unless object.variants.nil? || object.variants.count==0 %>
 	<tr>
@@ -24,18 +24,14 @@
 		{:style=>"width:520px",:size=>5}) %></td>
 	</tr>
 	<% end %>
-
-<%puts "_tree.html:model"%>
 	<% model=false %>
 	<% if object.respond_to? :have_model_design?%>
 	<% if object.have_model_design?%>
-	<%puts "_tree.html:model go"%>
 	<tr>
 		<td><%= h_image(:model3d_view)%></td>
 		<td><%= label_tag t(:label_type_model) %></td>
-		<td><!--%= select_tag( :type_model_id, options_from_collection_for_select(get_types_datafiles_on_tree(@tree),:id, :name, params[:type_model_id].to_i))%--></td>
+		<td><%= select_tag( :type_model_id, options_from_collection_for_select(get_types_datafiles_on_tree(@tree),:id, :name, params[:type_model_id].to_i))%></td>
 	</tr>
-	<%puts "_tree.html:model fin go"%>
 	<% model=true %>
 	<% end %>
 	<% end %>
@@ -50,12 +46,9 @@
 		<% end %>
 	</tr>
 </table>
-<% end %>
 
-<%puts "_tree.html:trees"%>
 <div id='dtree'>
 	<% if @tree && @tree.size>0 %>
-	<%puts "_tree.html:tree size=#{@tree.size}"%>
 	<table>
 		<tr>
 			<td><a href='#' onclick='openCloseAllTree(tree_down);'><%= t("h_open_close_all_tree")%></a></td><td><%= h t(:tree_branch_size)%></td>
@@ -64,11 +57,9 @@
 			<td><%= @tree.size_all%></td>
 		</tr>
 	</table>
-	<%puts "_tree.html:tree=#{@tree.size}"%>
 	<%= @tree.to_s%>
 	<% end %>
 	<% if @tree_up && @tree_up.size>0 %>
-	<%puts "_tree.html:tree_up size=#{@tree_up.size}"%>
 	<table>
 		<tr>
 			<td><a href='#' onclick='openCloseAllTree(tree_up);'><%= t("h_open_close_all_tree")%></a></td><td><%= h t(:tree_branch_size)%></td>
@@ -77,7 +68,6 @@
 			<td><%= @tree_up.size_all%></td>
 		</tr>
 	</table>
-	<%puts "_tree.html:tree=#{@tree_up.size}"%>
 	<%= @tree_up.to_s %>
 	<% end %>
 </div>

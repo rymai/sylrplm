@@ -481,8 +481,8 @@ module Models
       ret
     end
 
-		def add_documents_from_favori(favori)
-			favori.items.each do |item|
+		def add_documents_from_clipboard(clipboard)
+			clipboard.items.each do |item|
 				documents << item
 			end
 		end
@@ -495,8 +495,8 @@ module Models
 			documents.delete( document)
 		end
 
-		def add_parts_from_favori(favori)
-			favori.items.each do |item|
+		def add_parts_from_clipboard(clipboard)
+			clipboard.items.each do |item|
 				parts << item
 			end
 		end
@@ -509,8 +509,8 @@ module Models
 			parts.delete( part)
 		end
 
-		def add_projects_from_favori(favori)
-			favori.items.each do |item|
+		def add_projects_from_clipboard(clipboard)
+			clipboard.items.each do |item|
 				projects << item
 			end
 		end
@@ -523,8 +523,8 @@ module Models
 			projects.delete( item)
 		end
 
-		def add_users_from_favori(favori)
-			favori.items.each do |item|
+		def add_users_from_clipboard(clipboard)
+			clipboard.items.each do |item|
 				users << item
 			end
 		end

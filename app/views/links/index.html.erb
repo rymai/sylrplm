@@ -37,7 +37,7 @@
 		<td><%= link_to h_img_show.to_s, link %> </td>
 		<td><%= link_to h_img_edit.to_s, edit_link_path(link) %> </td>
 		<td><%= h_destroy(link) %> </td>
-		<td> <%= link_to h_img(:copy), add_favori_link_path(link), remote: true  if logged_in? %></td>
+		<td> <%= link_to h_img(:copy), add_clipboard_link_path(link), remote: true  if logged_in? %></td>
 
 	</tr>
 	<% end %>

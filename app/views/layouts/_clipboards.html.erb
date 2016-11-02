@@ -1,0 +1,12 @@
+<h1><%= t(:legend_clipboard) %></h1>
+<% %w[document part project customer user].each do |type| %>
+<div id="clipboard_<%= type %>">
+	<%= render 'layouts/clipboard', type: type %>
+</div>
+<% end %>
+<% if admin_logged_in? %>
+<div id="clipboard_link">
+	<%= render 'layouts/clipboard', type: 'link' %>
+</div>
+<% end %>
+<%= render(:partial =>'layouts/recent_links') %>

@@ -42,7 +42,7 @@ module Extras
       @block_template = block
 
       @company_id = params[:company_id]
-      #@project_id = params[:project_id]
+      #@object_plm_id = params[:project_id]
 
       @responsible_party_id = params[:responsible_party_id]
       @todo_list_id = params[:todo_list_id]

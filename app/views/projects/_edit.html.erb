@@ -14,7 +14,7 @@
 <br/>
 
 <%= f.label t(:label_responsible) %>
-<%= select_in_list(:project, :owner, @project.owner.login, :users) %>
+<%= select_in_list(:project, :owner, @object_plm.owner.login, :users) %>
 <br/>
 <%= f.label t(:label_date) %>
 <%= f.date_select :date %>
@@ -29,7 +29,7 @@
 <br/>
 
 <label for="project_users"> <%= t(:label_users) %> </label>
-<%= select_inout(f, @project, @users, :login) %>
+<%= select_inout(f, @object_plm, @users, :login) %>
 <%= h_input_domain(f) %>
-<%= h_type_values(@project, fonct) %>
+<%= h_type_values(@object_plm, fonct) %>
 

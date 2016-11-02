@@ -1,17 +1,16 @@
-class Favori
+class Clipboard
 	include Controllers::PlmObjectControllerModule
 	attr_reader :items
 	def initialize
 		@items={}
 	end
-	@@PLM_TYPE_AS_FAVORI=["customer","document","part","project","user"]
+	@@PLM_TYPE_AS_CLIPBOARD=["customer","document","part","project","user"]
 
-	def self.can_favori?(modelname)
-		@@PLM_TYPE_AS_FAVORI.include?(modelname)
+	def self.can_clipboard?(modelname)
+		@@PLM_TYPE_AS_CLIPBOARD.include?(modelname)
 	end
 
 	def add(obj)
-		#puts "favori.add:"+obj.modelname
 		unless @items[obj.modelname].nil?
 			current_item=@items[obj.modelname].find { |item| item.id==obj.id }
 		else
@@ -20,11 +19,10 @@ class Favori
 		if(not current_item)
 		@items[obj.modelname] << obj
 		end
-	#puts "favori.add:"+@items.inspect
 	end
 
 	def remove(obj)
-		puts "favori.remove:"+obj.modelname+":"+@items[obj.modelname].inspect
+		puts "clipboard.remove:"+obj.modelname+":"+@items[obj.modelname].inspect
 		@items[obj.modelname].delete(obj)
 	end
 
@@ -41,17 +39,14 @@ class Favori
 	end
 
 	def count
-		#puts "favori.count_object"
 		nbr = 0
-		@items.each do |type, favoris|
-			#puts "favori.count_object:#{type}=#{favoris.count}"
-			nbr += favoris.count unless favoris.nil?
+		@items.each do |type, clipboards|
+			nbr += clipboards.count unless clipboards.nil?
 		end
 		nbr
 	end
 
 	def get(type)
-		#puts "favori.get:"+@items[type].inspect
 		unless @items[type].nil?
 		@items[type]
 		else

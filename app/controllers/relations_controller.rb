@@ -120,7 +120,7 @@ class RelationsController < ApplicationController
 				#format.html { redirect_to(@relation, :notice => 'Relation was successfully updated.') }
 				format.xml  { head :ok }
 			else
-				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_relation),:ident=>@relation.ident, :error => @project.errors.full_messages)
+				flash[:error] = t(:ctrl_object_not_updated,:typeobj =>t(:ctrl_relation),:ident=>@relation.ident, :error => @object_plm.errors.full_messages)
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @relation.errors, :status => :unprocessable_entity }
 			end

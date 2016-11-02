@@ -12,7 +12,7 @@ class Customer < ActiveRecord::Base
 	has_many :datafiles, :dependent => :destroy
 
 	#rails2 has_many :thumbnails, -> { where(father_plmtype: 'document'  , child_plmtype: 'document') },  	:class_name => "Datafile",  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='thumbnail')"
-	has_many :thumbnails, -> { "typesobject_id = (select id from typesobjects as t where t.name='thumbnail')" },  	:class_name => "Datafile"
+	has_many :thumbnails, -> { where "typesobject_id = (select id from typesobjects as t where t.name='thumbnail')" } ,  	:class_name => "Datafile"
 
 	has_many :projects
 
@@ -49,16 +49,16 @@ class Customer < ActiveRecord::Base
 		find(customer_id).tap { |customer| customer.edit }
 	end
 
-	def add_projects_from_favori(favori)
-		projects += favori.items
+	def add_projects_from_clipboard(clipboard)
+		projects += clipboard.items
 	end
 
 	def remove_project(project)
 		projects.delete(project)
 	end
 
-	def add_documents_from_favori(favori)
-		documents += favori.items
+	def add_documents_from_clipboard(clipboard)
+		documents += clipboard.items
 	end
 
 	def self.get_conditions(filters)
@@ -91,6 +91,6 @@ class Customer < ActiveRecord::Base
 	# this object could have a 3d or 2d model show in tree
 	#
 	def have_model_design?
-		true
+		false
 	end
 end
