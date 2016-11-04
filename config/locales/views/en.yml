@@ -6,8 +6,6 @@ en:
   window_list_show: Show list
   window_tree_hide: Hide structure
   window_tree_show: Show structure
-  window_hide: Hide %{name}
-  window_show: Show %{name}
   sylrplm_version: Version '%{version}' on %{version_date}
   model3d_view: View the model corresponding to the structure
   root_model_design: Design model
@@ -300,6 +298,7 @@ en:
   label_volume: Volume
   label_repository: Repository
   label_content_type: Mime type
+  label_datafile_object: PLM object
   label_datafile_document: Document
   label_datafile_part: Part
   label_datafile_project: Project

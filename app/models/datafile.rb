@@ -1,9 +1,4 @@
 require 'tmpdir'
-#require 'rubygems'
-#require 'zip'
-
-#require "zip/zipfilesystem"
-#require "zip/zip"
 class Datafile < ActiveRecord::Base
 	include Models::PlmObject
 	include Models::SylrplmCommon
@@ -462,8 +457,8 @@ class Datafile < ActiveRecord::Base
 		fname= "#{self.class.name}.#{__method__}"
 		content = read_file_for_download
 		repos=nil
-		LOG.debug(fname) {"content.length=#{content.length}"}
-		if content.length>0
+		unless content.nil? || content.size<=0
+			LOG.debug(fname) {"content.length=#{content.length}"}
 			dir_repos=File.join("public","tmp")
 			FileUtils.mkdir_p(dir_repos) unless File.exists?(dir_repos)
 			tmpfilename=repository.gsub("/","_")
@@ -486,9 +481,9 @@ class Datafile < ActiveRecord::Base
 			else
 				LOG.debug(fname) {"#{repos} already existing, using it"}
 			end
-		end
 		ret = File.join("/tmp",tmpfilename)
-		LOG.info(fname) {"src=#{ret} exist=#{File.exists?(repos)}"}
+		end
+		#LOG.info(fname) {"src=#{ret.to_s} exist=#{File.exists?(repos)}"}
 		ret
 	end
 

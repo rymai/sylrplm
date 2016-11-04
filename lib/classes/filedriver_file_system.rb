@@ -115,7 +115,8 @@ class FiledriverFileSystem < Filedriver
 		vol_dir_name=volume.dir_name
 		LOG.debug(fname) {"olddirname=#{olddirname} vol_dir_name=#{vol_dir_name}"}
 		ret=nil
-		if (!File.exists?(vol_dir_name))
+		stat=::File::Stat.new(vol_dir_name)
+		unless stat.directory?
 			begin
 				FileUtils.mkdir_p(vol_dir_name)
 				ret=vol_dir_name
@@ -148,7 +149,8 @@ class FiledriverFileSystem < Filedriver
 		else
 			#LOG.info(fname) {"creation du volume"}
 			dir = vol_dir_name
-			if !File.exists?(dir)
+			stat=::File::Stat.new(dir)
+			unless stat.directory?
 				begin
 					FileUtils.mkdir_p(dir)
 					ret = dir

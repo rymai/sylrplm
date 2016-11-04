@@ -4,6 +4,37 @@ class PlmServices
 	include ::Ruote::Sylrplm
 	@@plmcache={}
 
+	def self.zip_in_stringio(filename, content)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {"filename=#{filename } content=#{content.size}"}
+		stringio = Zip::OutputStream::write_buffer(::StringIO.new) do |zio|
+		zio.put_next_entry(filename)
+		  zio.write content
+		end
+		stringio.rewind
+		binary_data = stringio.sysread
+	end
+
+	def self.unzip_stringio(content)
+		fname= "#{self.class.name}.#{__method__}"
+		ret=nil
+		unless content.blank?
+			LOG.debug(fname) {"content=#{content.size}"}
+			stringio=::StringIO.new(content)
+			LOG.debug(fname) {"stringio=#{stringio.inspect}"}
+			Zip::InputStream.open(stringio) do |zio|
+				LOG.debug(fname) {"zio=#{zio}"}
+				while (entry = zio.get_next_entry)
+					LOG.debug(fname) {"zio.read:#{entry.name}"}
+					ret = zio.read
+				end
+			end
+		else
+			raise Exception.new "Content to unzip is null or empty"
+		end
+		ret
+	end
+
 	def self.get_property_cache(prop_name)
 		fname = "PlmServices.#{__method__}"
 		ret=nil

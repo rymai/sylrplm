@@ -57,7 +57,9 @@ class FiledriverDatabase < Filedriver
 			table=datafile.dir_repository
 			# encode = ActiveSupport::Base64.encode64
 			#
+			LOG.debug(fname) {"transform+encode #{datafile} content=#{content.size}"}
 			content_encode=transform_content(datafile, content)
+			LOG.debug(fname) {"content_encode=#{content_encode.size} "}
 		end
 		unless content_encode.nil?
 			ActiveRecord::Base.connection.commit_db_transaction() ;
@@ -129,7 +131,6 @@ class FiledriverDatabase < Filedriver
 				content = records[0]["content"]
 				#ActiveSupport::Base64.decode64(data)
 				data=untransform_content(datafile, content)
-				LOG.debug(fname) {"data size=#{data.size}"}
 			else
 				LOG.debug(fname) {"data=nil"}
 				data=nil
@@ -139,6 +140,7 @@ class FiledriverDatabase < Filedriver
 			datafile.errors.add(:base,"Exception during read_file:#{e.message}")
 			e.backtrace.each {|x| LOG.error x}
 		end
+		PlmServices.stack "Error during read_file:data is null", 5 if data.nil?
 		data
 	end
 

@@ -476,6 +476,7 @@ DEPENDENCIES
   responders
   rspec
   rspec-core
+  rubyzip
   rufus-scheduler
   rufus-verbs
   ruote

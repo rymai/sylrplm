@@ -1,29 +1,29 @@
 
-Volume_1: 
+Volume_1:
   id: "1"
   name: volfog01
-  directory: 
+  directory:
   protocol: fog
-  encode: 
-  decode: 
-  compress: 
-  decompress: 
+  encode:
+  decode:
+  compress:
+  decompress:
   description: volume de depart sur fog
   domain: admin
 
-Volume_2: 
+Volume_2:
   id: "2"
   name: vollocal01
   directory: /home/syl/trav/rubyonrails/sylrplm-data
   protocol: file_system
-  encode: 
-  decode: 
-  compress: 
-  decompress: 
+  encode:
+  decode:
+  compress:
+  decompress:
   description: volume en local sur le serveur
   domain: admin
 
-Volume_7: 
+Volume_7:
   id: "7"
   name: table01
   directory: ""
@@ -33,25 +33,13 @@ Volume_7:
 
   decode: Base64.decode64(@content)
   compress: |-
-    require 'zip/zip'
-    stringio = Zip::ZipOutputStream::write_buffer(::StringIO.new("@filename")) do |zio|
-    zio.put_next_entry(@filename)
-      zio.write @content
-    end
-    stringio.rewind
-    binary_data = stringio.sysread
+    PlmServices.zip_in_stringio(@filename,@content)
   decompress: |-
-    require 'zip/zip'
-    Zip::ZipInputStream.open(::StringIO.new(@content)) do |zio|
-      while (entry = zio.get_next_entry)
-        ret = zio.read
-      end
-      ret
-    end
+    PlmServices.unzip_stringio @content
   description: "volume en base pour tous types de fichiers "
   domain: admin
 
-Volume_9: 
+Volume_9:
   id: "9"
   name: table03
   directory: ""
@@ -63,7 +51,7 @@ Volume_9:
   description: "volume en base pour tous types de fichiers "
   domain: admin
 
-Volume_8: 
+Volume_8:
   id: "8"
   name: table02
   directory: ""
@@ -71,25 +59,13 @@ Volume_8:
   encode: ""
   decode: ""
   compress: |-
-    require 'zip/zip'
-    stringio = Zip::ZipOutputStream::write_buffer(::StringIO.new("@filename")) do |zio|
-      zio.put_next_entry(@filename)
-      zio.write(@content)
-    end
-    stringio.rewind
-    binary_data = stringio.sysread
+    PlmServices.zip_in_stringio(@filename,@content)
   decompress: |-
-    require 'zip/zip'
-    Zip::ZipInputStream.open(::StringIO.new(@content)) do |zio|
-      while (entry = zio.get_next_entry)
-        ret = zio.read
-      end
-      ret
-    end
+    PlmServices.unzip_stringio @content
   description: volume en base , fonctionne pour aucun fichier  !!!
   domain: admin
 
-Volume_10: 
+Volume_10:
   id: "10"
   name: table04
   directory: ""

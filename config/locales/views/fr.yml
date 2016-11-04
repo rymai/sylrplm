@@ -188,6 +188,7 @@ fr:
   demote_by_select: Retrograder par selection
   revise_by_menu: Reviser par menu
   revise_by_action: Reviser par action
+  label_datafile_object: PLM object
   # shared
   legend_link_duplication: "Duplication des liens de '%{object_orig}'"
   legend_fields: Propriétés du processus
@@ -298,6 +299,7 @@ fr:
   label_volume: Volume
   label_repository: Nom complet
   label_content_type: Type de contenu
+  label_datafile_object: Objet PLM
   label_datafile_document: Document
   label_datafile_part: Article
   label_datafile_project: Projet

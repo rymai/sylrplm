@@ -1,4 +1,7 @@
-class SylrplmFile
+require 'ruote/sylrplm/sylrplm'
+
+
+class PlmIoServices
 	public
 
 	attr_reader :id, :protocol, :volume_dir, :datafile_model, :datafile, :filename, :revision, :acceded_at, :created_at, :updated_at, :size, :domain

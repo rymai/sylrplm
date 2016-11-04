@@ -5,18 +5,17 @@
 		<th <%= sort_td_class_helper :ident %>> <%= sort_link_helper t(:label_ident), :ident %> </th>
 		<th <%= sort_td_class_helper :revision %>> <%= sort_link_helper t(:label_revision), :revision %> </th>
 		<th <%= sort_td_class_helper :typesobject_id %>> <%= sort_link_helper t(:label_typesobject), :typesobject_id %> </th>
-		<th <%= sort_td_class_helper :document %>> <%= sort_link_helper t(:label_datafile_document), :document %> </th>
-		<th <%= sort_td_class_helper :part %>> <%= sort_link_helper t(:label_datafile_part), :part %> </th>
-		<th <%= sort_td_class_helper :project %>> <%= sort_link_helper t(:label_datafile_project), :project %> </th>
-		<th <%= sort_td_class_helper :customer %>> <%= sort_link_helper t(:label_datafile_customer), :customer %> </th>
+		<th <%= sort_td_class_helper :plm_object %>> <%= sort_link_helper t(:label_datafile_object), :plm_object %> </th>
 		<th <%= sort_td_class_helper :volume_id %>> <%= sort_link_helper t(:label_volume), :volume_id %> </th>
 		<th <%= sort_td_class_helper :filename %>> <%= sort_link_helper t(:label_filename), :filename %> </th>
-		<th <%= sort_td_class_helper :content_type %>> <%= sort_link_helper t(:label_content_type), :content_type %> </th>
 		<th <%= sort_td_class_helper :owner %>> <%= sort_link_helper t(:label_responsible), :owner %> </th>
 		<th <%= sort_td_class_helper :group %>> <%= sort_link_helper t(:label_group), :group %> </th>
 		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), :projowner %> </th>
+		<% if admin_logged_in?%>
+		<th <%= sort_td_class_helper :content_type %>> <%= sort_link_helper t(:label_content_type), :content_type %> </th>
 		<th <%= sort_td_class_helper :created_at %>> <%= sort_link_helper t(:label_date), :created_at %> </th>
 		<th <%= sort_td_class_helper :domain %>> <%= sort_link_helper t(:label_domain), :domain %> </th>
+		<%end%>
 		<th></th>
 		<th></th>
 		<th></th>
@@ -34,24 +33,22 @@
 		<% else %>
 		<%= datafile.document.ident unless datafile.document.nil? %>
 		<% end %>
-		<%end %> </td>
-		<td> <% unless datafile.part.nil? %>
+		<%end %>
+		<% unless datafile.part.nil? %>
 		<% unless datafile.part == part %>
 		<%= link_to datafile.part.ident, part_path(datafile.part) %>
 		<% else %>
 		<%= datafile.part.ident unless datafile.part.nil?%>
 		<% end %>
-
-		<%end %> </td>
-		<td> <% unless datafile.project.nil? %>
+		<%end %>
+		<% unless datafile.project.nil? %>
 		<% unless datafile.project == project %>
 		<%= link_to datafile.project.ident, project_path(datafile.project) %>
 		<% else %>
 		<%= datafile.project.ident unless datafile.project.nil?%>
 		<% end %>
-
-		<%end %> </td>
-		<td> <% unless datafile.customer.nil? %>
+		<%end %>
+		<% unless datafile.customer.nil? %>
 		<% unless datafile.customer == customer %>
 		<%= link_to datafile.customer.ident, customer_path(datafile.customer) %>
 		<% else %>
@@ -59,14 +56,16 @@
 		<% end %>
 		<% end %> <td> <%= link_to "#{datafile.volume.name}.#{datafile.volume.protocol}", volume_path(datafile.volume) %> </td>
 		<td><a href="<%= url_for(:controller=> 'datafiles',:action=>'show_file', :id => datafile.id) %>" title="<%= datafile.repository %>"><%= h datafile.filename %></a></td>
-		<td> <% if datafile.content_type != nil %>
-		<%= datafile.content_type[0..20] %>
-		<%end %> </td>
 		<td> <%= link_to datafile.owner.login, user_path(datafile.owner) %> </td>
 		<td> <%= link_to datafile.group.name, group_path(datafile.group) %> </td>
 		<td> <%= link_to datafile.projowner.ident, project_path(datafile.projowner) %> </td>
+		<% if admin_logged_in?%>
+		<td> <% if datafile.content_type != nil %>
+		<%= datafile.content_type[0..20] %>
+		<%end %> </td>
 		<td> <%= l datafile.updated_at %> </td>
 		<td> <%= h datafile.domain %> </td>
+		<%end%>
 		<td> <% unless document.nil? %>
 		<% unless datafile.filename.nil? %>
 		<%= link_to h_img(:download), :id => datafile.id, :controller=> "datafiles", :action => :download_file %>

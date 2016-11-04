@@ -1,8 +1,7 @@
-#require 'rubygems'
 require 'zip'
 
 class Filedriver
-
+	include Zip
 	private
 	def initialize
 		puts "Filedriver.initialize"
@@ -45,29 +44,11 @@ class Filedriver
 		#LOG.debug(fname) {"debut:#{content}"}
 		begin
 			unless datafile.volume.compress.blank?
-				#LOG.debug(fname) {"code datafile.volume.compress='#{datafile.volume.compress}'"}
 				#compress = zip_content(content, datafile.filename)
 				@content=content
 				@filename=datafile.filename
-				#LOG.debug(fname) {"@filename=#{@filename} @content=#{@content}"}
-				#stringio = ::Zip::OutputStream.new(@filename)
-				#zio=new Zip::ZipOutputStream(stringio)
-				#stringio = Zip::ZipOutputStream::write_buffer(stringio)  do |zio|
-				#st =Zip::ZipOutputStream::open(@filename) do |zio|
-					#zio.put_next_entry(@filename)
-					#zio.write @content
-					#zio.finish
-				#end
-				#stringio.rewind
-				#LOG.debug(fname) {"datafile.volume.compress='#{datafile.volume.compress}'========"}
-				#compress = eval datafile.volume.compress
-				#zio = Zip::OutputStream.open(@filename)
-				stringio=::StringIO.new('')
-				Zip::OutputStream.write_buffer(stringio) do |zos|
-  					zos.put_next_entry(@filename)
-  					zos.write @content
-				end
-				compress=stringio
+				LOG.debug(fname) {"compress filename=#{@filename} content=#{@content.size} code=#{datafile.volume.compress}"}
+				compress = eval datafile.volume.compress
 				LOG.debug(fname) {"compress:size=#{compress.length}"}
 			else
 			compress = content
@@ -78,8 +59,9 @@ class Filedriver
 				#content_encode=(eval encode_fields[0]).send(encode_fields[1], compress)
 				@content=compress.to_s
 				@filename=datafile.filename
-				LOG.debug(fname) {"code datafile.volume.encode='#{datafile.volume.encode}'========"}
+				LOG.debug(fname) {"encode filename=#{@filename} content=#{@content.size} code=#{datafile.volume.encode}"}
 				content_encode = eval datafile.volume.encode
+				#test content_encode = PlmServices.zip_in_stringio(@filename,@content)
 				LOG.debug(fname) {"encode:size=#{content_encode.length}"}
 			else
 			content_encode = compress
@@ -100,23 +82,19 @@ class Filedriver
 		#LOG.debug(fname) {"data=#{data}"}
 		begin
 			unless datafile.volume.decode.blank?
-				# ActiveSupport::Base64.decode64
-				#decode_fields=datafile.volume.decode.split(".")
-				#data=(eval decode_fields[0]).send(decode_fields[1], data)
 				@content=data
 				@filename=datafile.filename
 				#LOG.debug(fname) {"datafile.volume.decode=#{datafile.volume.decode}"}
 				data = eval datafile.volume.decode
-				#LOG.debug(fname) {"decode:size=#{data.length}"}
+			#LOG.debug(fname) {"decode:size=#{data.length}"}
 			end
 			unless datafile.volume.decompress.blank?
-				#decompress = unzip_content(data, datafile.filename)
 				@content=data
-				@filename=datafile.filename
 				#LOG.debug(fname) {"datafile.volume.decompress=#{datafile.volume.decompress} , data.length:#{data.length}"}
-				#LOG.debug(fname) {"@content=#{@content}"}
+				LOG.debug(fname) {"@content avant eval =#{@content.size} bloc=#{datafile.volume.decompress}"}
 				decompress = eval datafile.volume.decompress
-				#LOG.debug(fname) {"decompress:size=#{decompress.length}"}
+				#decompress = PlmServices.unzip_stringio @content
+				LOG.debug(fname) {"after evalsize=#{decompress.nil? ? "0" : decompress.length}"}
 			else
 			decompress = data
 			end
