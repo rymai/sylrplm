@@ -85,8 +85,8 @@ gem 'rubyzip'
 
 #gem 'string_to_sha1', :git => "git://github.com/sylvani/string_to_sha1.git"
 #gem 'string_to_sha1', :path => "/home/syl/trav/rubyonrails/string_to_sha1"
-###gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
-gem 'sylrplm_ext', :path => "/home/syl/trav/rubyonrails/sylrplm_ext"
+gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
+#gem 'sylrplm_ext', :path => "/home/syl/trav/rubyonrails/sylrplm_ext"
 
 #If you would like to use RJS, you need to include
 gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'

@@ -16,6 +16,12 @@ GIT
       rails (~> 4.0)
 
 GIT
+  remote: git://github.com/sylvani/sylrplm_ext.git
+  revision: a3822ce037a801a4a90fe6a6061c1036baf5314a
+  specs:
+    sylrplm_ext (0.0.4)
+
+GIT
   remote: http://github.com/tosch/ruote-kit.git
   revision: e213dc9e8402d81f85baf4bab5ddc2ac24e6182a
   specs:
@@ -24,11 +30,6 @@ GIT
       rufus-json (>= 0.2.5)
       sinatra (>= 1.2.0)
       sinatra-respond_to (>= 0.7.0)
-
-PATH
-  remote: ../sylrplm_ext
-  specs:
-    sylrplm_ext (0.0.4)
 
 GEM
   remote: https://rubygems.org/
@@ -177,7 +178,7 @@ GEM
       multi_json (~> 1.10)
     fog-local (0.3.1)
       fog-core (~> 1.27)
-    fog-openstack (0.1.15)
+    fog-openstack (0.1.17)
       fog-core (>= 1.40)
       fog-json (>= 1.0)
       ipaddress (>= 0.8)
@@ -185,7 +186,7 @@ GEM
       fog-core (~> 1.27)
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
-    fog-profitbricks (2.0.1)
+    fog-profitbricks (3.0.0)
       fog-core (~> 1.42)
       fog-json (~> 1.0)
     fog-rackspace (0.1.2)
@@ -222,7 +223,7 @@ GEM
     fog-voxel (0.1.0)
       fog-core
       fog-xml
-    fog-vsphere (1.5.0)
+    fog-vsphere (1.5.1)
       fog-core
       rbvmomi (~> 1.9)
     fog-xenserver (0.2.3)
@@ -238,7 +239,7 @@ GEM
       activesupport (>= 4.1.0)
     haml (4.0.7)
       tilt
-    heroku (3.43.13)
+    heroku (3.43.14)
       heroku-api (= 0.4.2)
       launchy (= 2.4.3)
       multi_json (= 1.11.2)
@@ -289,7 +290,7 @@ GEM
     protected_attributes (1.1.3)
       activemodel (>= 4.0.1, < 5.0)
     public_suffix (2.0.4)
-    rack (1.6.4)
+    rack (1.6.5)
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
