@@ -1,5 +1,13 @@
 en:
   # general
+  nb_files: Nb. files
+  ui_table_not_define: Table not existing for controller %{controller} and action %{action} , see the administrator
+  label_father: Father
+  label_father_tr: Father
+  label_next: Next
+  label_previous: Previous
+  label_owner: Owner
+  label_name_translate: Name
   window_details_hide: Hide détails
   window_details_show: Show détails
   window_list_hide: Hide list
@@ -65,6 +73,9 @@ en:
   new_group: New group
   new_relation: New relation
   new_view: New view
+  new_link: New link
+  new_ui_column: New UI column
+  new_ui_table: New UI table
   new_link: New link
   paste_users: Paste users
   paste_part: Paste parts
@@ -178,6 +189,8 @@ en:
   mnu_views: Views
   mnu_subscriptions: Subscriptions
   mnu_my_subscriptions: My subscriptions
+  mnu_tables: Tables
+  mnu_columns: Columns
   cut: "Cut"
   revise: "Revise"
   promote_by_menu: "Promote"
@@ -188,6 +201,7 @@ en:
   demote_by_select: Demote by select
   revise_by_menu: Revise by menu
   revise_by_action: Revise by action
+  label_datafile_object: PLM object
   # shared
   legend_link_duplication: "Links Duplication of '%{object_orig}'"
   legend_fields: Processus values
@@ -341,7 +355,7 @@ en:
   label_revision: Revision
   label_extension: Extension
   add_datafile: Add file
-  label_nbfiles: Nb files
+  label_nb_files: Nb files
   button_check_out: Check Out
   is_check_out: Is Check Out
   button_check_in: Check In
@@ -494,7 +508,7 @@ en:
   expressions_show: Detail expression
   history_list: Processes history
   history_show: Processus executed
-  processes_list: List processes
+  processes_list: List processesprises en compte
   processes_show: Detail process
   processes_new: New process
   workitems_edit: Edit task
@@ -525,7 +539,7 @@ en:
   project_new_dup: Duplicate project
   label_customer: Client
   label_users: Collaborators
-  label_typeaccess: Confidentiality
+  label_confidentiality: Confidentiality
   label_project_user_ids_in: Affected
   label_project_user_ids_out: Unaffected
   # questions
@@ -752,6 +766,35 @@ en:
   label_dispatch_time: Dispatch
   label_workitem_objects: Concerned objects
   button_task_validate: Validate this task
+  #ui_columns
+  label_type_column: Column type
+  label_visible_guest: Visible by guest
+  label_visible_user: Visible by user
+  label_visible_admin: Visible by admin
+  label_visible_support: Visible by support
+  label_editable: Editable
+  label_type_index: Index type
+  label_type_show: Show type
+  label_type_editable: Edit Type
+  label_type_editable_file: File Types
+  label_sortable: Sortable
+  label_ui_tables: Tables
+  legend_column: Column
+  label_belong_object: Objet
+  label_belong_method: Method
+  label_input_size: Size
+  label_value_mini: Minimal value
+  label_value_maxi: Maximal value
+  #ui_table
+  legend_table: Table
+  label_title: Title
+  label_type_table: Table type
+  label_pagination: Pagination
+  label_ui_columns: Columns
+  label_ui_columns_order: Columns order
+  label_ui_table_ui_column_ids_out: Columns
+  label_ui_table_ui_column_ids_in: Columns in table
+  #ui_table
   # variables de contexte ou autre
   variable_key: Variable name
   variable_value: Value

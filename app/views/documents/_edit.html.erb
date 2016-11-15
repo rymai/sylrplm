@@ -1,5 +1,4 @@
-<%= puts "document.view._edit:document=#{object.inspect}" %>
-<h1><%= t(:legend_document) %></h1>
+<%= puts "document.view._edit:document=#{object.inspect}" %> <h1><%= t(:legend_document) %></h1>
 <%= h_edit_type_object(f, object, @types) %>
 <%= f.label t("label_ident") %>
 <%= f.text_field :ident , :readonly => object.column_readonly?(:ident) %>
@@ -14,7 +13,7 @@
 <%= h_text_editor f, object, :description%>
 <br/>
 <%= f.label t("label_responsible") %>
-<%= select_in_list(:document, :owner, object.owner.login, :users) %>
+<%= select_in_list(:document, :owner, object.owner.login, :users) unless object.owner.nil?%>
 <br/>
 <%= f.label t("label_date") %>
 <%= f.date_select :date %>

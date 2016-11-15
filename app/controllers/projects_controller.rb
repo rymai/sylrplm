@@ -310,9 +310,9 @@ def show
 		fname= "#{self.class.name}.#{__method__}"
 		define_view
 		@object_plm = Project.find(params[:id])
-		@object_plms=@object_plm.documents
-		@object_plms=@object_plm.parts
-		@object_plms=@object_plm.customers_up
+		@documents=@object_plm.documents
+		@parts=@object_plm.parts
+		@customer_up=@object_plm.customers_up
 		flash[:error] = "" if flash[:error].nil?
 		if @clipboard.get('document').count>0 && @object_plm.relations(:document).count==0
 			flash[:error] += t(:ctrl_show_no_relation,:father_plmtype => t(:ctrl_project),:child_plmtype => t(:ctrl_document))
@@ -325,7 +325,6 @@ def show
 		#end
 		@tree         						= build_tree(@object_plm, @myparams[:view_id], nil, 2)
 		@tree_up      						= build_tree_up(@object_plm, @myparams[:view_id] )
-		@object_plm = @object_plm
 	end
 
 	def index_

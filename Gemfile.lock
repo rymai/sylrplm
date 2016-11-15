@@ -16,12 +16,6 @@ GIT
       rails (~> 4.0)
 
 GIT
-  remote: git://github.com/sylvani/sylrplm_ext.git
-  revision: a3822ce037a801a4a90fe6a6061c1036baf5314a
-  specs:
-    sylrplm_ext (0.0.4)
-
-GIT
   remote: http://github.com/tosch/ruote-kit.git
   revision: e213dc9e8402d81f85baf4bab5ddc2ac24e6182a
   specs:
@@ -30,6 +24,11 @@ GIT
       rufus-json (>= 0.2.5)
       sinatra (>= 1.2.0)
       sinatra-respond_to (>= 0.7.0)
+
+PATH
+  remote: ../sylrplm_ext
+  specs:
+    sylrplm_ext (0.0.4)
 
 GEM
   remote: https://rubygems.org/
@@ -76,7 +75,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.4.0)
+    addressable (2.5.0)
+      public_suffix (~> 2.0, >= 2.0.2)
     arel (6.0.3)
     atom-tools (2.0.5)
     bigdecimal (1.2.7)
@@ -188,7 +188,7 @@ GEM
     fog-profitbricks (2.0.1)
       fog-core (~> 1.42)
       fog-json (~> 1.0)
-    fog-rackspace (0.1.1)
+    fog-rackspace (0.1.2)
       fog-core (>= 1.35)
       fog-json (>= 1.0)
       fog-xml (>= 0.1)
@@ -288,6 +288,7 @@ GEM
     pg (0.19.0)
     protected_attributes (1.1.3)
       activemodel (>= 4.0.1, < 5.0)
+    public_suffix (2.0.4)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
@@ -334,8 +335,7 @@ GEM
       json (>= 1.8)
       nokogiri (~> 1.5)
       trollop (~> 2.1)
-    rdoc (4.2.2)
-      json (~> 1.4)
+    rdoc (4.3.0)
     ref (2.0.0)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
@@ -429,14 +429,17 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.3)
       execjs (>= 0.3.0, < 3)
-    unicorn (5.1.0)
+    unicorn (5.2.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
     will_paginate (3.1.5)
     xml-simple (1.1.5)
     xpath (2.0.0)
       nokogiri (~> 1.3)
-    yajl-ruby (1.2.1)
+    yajl-ruby (1.3.0)
+    yaml_db (0.4.2)
+      rails (>= 3.0, < 5.1)
+      rake (>= 0.8.7)
 
 PLATFORMS
   ruby
@@ -492,6 +495,7 @@ DEPENDENCIES
   unicorn
   will_paginate
   yajl-ruby
+  yaml_db
 
 BUNDLED WITH
    1.11.2

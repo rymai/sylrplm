@@ -6,7 +6,7 @@
     <%= t(:legend_account) %>
   </legend>
   <%= render(:partial => "users/show",:locals => { :user => current_user, :fonct => "show" }) %>
-  <table class='menu_bas'>
+  <table class='menu_toolbar'>
     <tr>
       <td> <%= link_to t(:account_edit, :login => current_user.login), :id => current_user.id, :controller=>:users, :action=>:account_edit %> </td>
       <td> <%= link_to t(:account_edit_passwd, :login => current_user.login), {:controller=>:users, :action=>:account_edit_passwd, :id=>current_user.id} %> </td>

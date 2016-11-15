@@ -7,48 +7,46 @@
 	tree_show=t("window_tree_show")
 %>
 <script>
-	function toggleWindowVisibility(anchor, divid, show, hide) {
-		if (( typeof divid) == 'string') {
-			var e = document.getElementById(divid);
-			//alert('win:'+divid+' e='+e+' style='+e.style.display+' \n anchor='+anchor+' text='+anchor.value, ' \n show='+show+' hide='+hide);
-			if (e.style.display == 'block') {
-				e.style.display = 'none';
-				anchor.innerHTML = show;
-			} else {
-				e.style.display = 'block';
-				anchor.innerHTML = hide;
-			}
-			// modif marge and width of the three windows
-			var details = document.getElementById('object_details');
-			var list = document.getElementById('object_list');
-			var tree = document.getElementById('object_tree');
-			var colLeft = document.getElementById('colLeft');
-			var colRight = document.getElementById('colLeft');
-			var left_none = details.style.display == 'none' && list.style.display == 'none';
-			var right_none = tree.style.display == 'none';
-			console.log('>>>toggleWindowVisibility:left_none=' + left_none + ' right_none=' + right_none + ' colLeft=' + colLeft.style.width + ' colRight=' + colRight.style.width);
-			if (left_none && right_none) {
-				//TODO does not change the width !!
-				//colLeft.setAttribute("style", "width:0%");
-				//colRight.setAttribute("style", "width:0%");
-			} else {
-				if (left_none) {
-					//colLeft.setAttribute("style", "width:0%");
-					//colRight.setAttribute("style", "width:100%");
-				} else if (right_none) {
-					//colLeft.setAttribute("style", "width:100%");
-					//colRight.setAttribute("style", "width:0%");
-				} else {
-					//colLeft.setAttribute("style", "width:60%");
-					//colRight.setAttribute("style", "width:40%");
-				}
-			}
-			console.log('<<<toggleWindowVisibility: left_none=' + left_none + ' right_none=' + right_none + ' colLeft=' + colLeft.style.width + ' colRight=' + colRight.style.width);
-		}
+	function toggleWindowVisibility(anchor,divid,show,hide) {
+	if(( typeof divid)=='string') {
+	var e=document.getElementById(divid);
+	//alert('win:'+divid+' e='+e+' style='+e.style.display+' \n anchor='+anchor+' text='+anchor.value, ' \n show='+show+' hide='+hide);
+	if(e.style.display=='block') {
+	e.style.display='none';
+	anchor.innerHTML=show;
+	} else {
+	e.style.display='block';
+	anchor.innerHTML=hide;
 	}
-
-	function postion(el, x, y, size) {
-
+	// modif marge and width of the three windows
+	var details=document.getElementById('object_details');
+	var list=document.getElementById('object_list');
+	var tree=document.getElementById('object_tree');
+	var colLeft=document.getElementById('colLeft');
+	var colRight=document.getElementById('colLeft');
+	var left_none=details.style.display=='none'&&list.style.display=='none';
+	var right_none=tree.style.display=='none';
+	console.log('>>>toggleWindowVisibility:left_none='+left_none+' right_none='+right_none+' colLeft='+colLeft.style.width+' colRight='+colRight.style.width);
+	if(left_none&&right_none) {
+	//TODO does not change the width !!
+	//colLeft.setAttribute("style", "width:0%");
+	//colRight.setAttribute("style", "width:0%");
+	} else {
+	if(left_none) {
+	//colLeft.setAttribute("style", "width:0%");
+	//colRight.setAttribute("style", "width:100%");
+	} else if(right_none) {
+	//colLeft.setAttribute("style", "width:100%");
+	//colRight.setAttribute("style", "width:0%");
+	} else {
+	//colLeft.setAttribute("style", "width:60%");
+	//colRight.setAttribute("style", "width:40%");
+	}
+	}
+	console.log('<<<toggleWindowVisibility: left_none='+left_none+' right_none='+right_none+' colLeft='+colLeft.style.width+' colRight='+colRight.style.width);
+	}
+	}
+	function postion(el,x,y,size) {
 	}
 </script>
 
@@ -58,28 +56,34 @@
 	<a onclick="toggleWindowVisibility(this ,'object_list','<%= list_show%>','<%= list_hide%>');"><%= list_hide%></a>
 	<a onclick="toggleWindowVisibility(this, 'object_tree','<%= tree_show%>','<%= tree_hide%>');"><%= tree_hide%></a>
 </div>
-<div id="colLeft"  name="colLeft">
-	<div id="object_details"  name="object_details" style="display: block;">
+<div id="rowOne"  name="rowOne">
+	<div id="colLeft" name="colLeft">
+		<div id="object_details"  name="object_details" style="display: block;">
 		<% unless @object_plm.nil?%>
-		<% controller=get_controller_from_model_type(@object_plm.modelname)%>
-		<%= render :partial => "#{controller}/show"%>
+			<% controller=get_controller_from_model_type(@object_plm.modelname)%>
+			<%= render :partial => "#{controller}/show"%>
 		<%end%>
+		</div>
 	</div>
-	<div id="object_list" name="object_list" style="display: block;">
-		<% unless @object_plms.nil? %>
-		<% controller=get_controller_from_model_type(@object_plms[:recordset][0].modelname)%>
-		<%= render :partial =>  "#{controller}/index"%>
-		<%end%>
+	<div id="colRight" name="colRight">
+		<div id="object_tree" name="object_tree" style="display: block;">
+			<div id="tree" class="tab-pane inactive">
+				<% if @object_plm && (@tree || @tree_up) %>
+					<%= render(:partial => "shared/tree", :locals=>{:object => @object_plm} ) %>
+				<% end %>
+			</div>
+		</div>
 	</div>
 </div>
-<!-- right column: explorer-->
-<div id="colRight"  name="colRight">
-	<div id="object_tree" name="object_tree" style="display: block;">
-		<div id="tree" class="tab-pane inactive">
-			<% if @object_plm && (@tree || @tree_up) %>
-			<%= render(:partial => "shared/tree", :locals=>{:object => @object_plm} ) %>
-			<% end %>
-		</div>
+<div id="rowTwo"  name="rowTwo">
+	<div id="object_list" name="object_list" style="display: block;">
+		<% unless @object_plms.nil? %>
+		<% puts "@object_plms=#{@object_plms.inspect}"%>
+		<% puts "@object_plms=#{@object_plms.to_a.inspect}"%>
+		<% obj=@object_plms[:recordset][0]
+		controller=get_controller_from_model_type(obj.modelname)%>
+		<%= render :partial =>  "#{controller}/index"%>
+		<%end%>
 	</div>
 </div>
 

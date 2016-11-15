@@ -9,7 +9,7 @@
 <% frozen=plm_object.frozen if plm_object.respond_to? :frozen %>
 <% directory=plm_object.directory if plm_object.respond_to? :directory %>
 <% unless frozen || directory %>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td> <%= link_to t("add_datafile"), :action => :new_datafile, :id => plm_object.id %> </td>
 	</tr>

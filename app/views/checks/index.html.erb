@@ -1,6 +1,6 @@
 <h1><%= t("check_list") %><%= h_count_objects(@checks) %></h1>
 <%= h_form_simple_query('/checks', @checks) %>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td> <%= link_to t("new_check"), new_check_path %> </td>
 		<td> <%= show_help("help_checks") %> </td>
@@ -50,7 +50,7 @@
 	<% end %>
 </table>
 <%= will_paginate(@checks[:recordset]) %>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td> <%= link_to t("new_check"), new_check_path %> </td>
 		<td> <%= show_help("help_checks") %> </td>

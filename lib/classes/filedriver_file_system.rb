@@ -210,6 +210,7 @@ class FiledriverFileSystem < Filedriver
 		Pathname.glob(path + "/**/*") do |dir|
 			#LOG.debug(fname) {"dir/file=#{dir}"}
 			if dir.file?() then
+				begin
 				stat=File.stat(dir)
 				#LOG.debug(fname){"\tstat:#{stat.inspect}"}
 				params = fields_from_path(dir)
@@ -232,6 +233,9 @@ class FiledriverFileSystem < Filedriver
 				unless dodel
 					sylrplmfile=SylrplmFile.new(params)
 				files_system<<sylrplmfile
+				end
+				rescue
+					LOG.error(fname) {"can't analyse the file : #{dir}"}
 				end
 			end
 		end

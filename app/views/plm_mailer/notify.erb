@@ -9,7 +9,7 @@
 		<div id="container">
 			<h2><%= t(:notification_notify, :subscription => @user.subscription, :user => @user.login)%></h12
 			<br>
-			<%= render(:partial => "notifications/index", :locals=>{:fonct=>"notify"}) %>
+			<%= render(:partial => "notifications/notify") %>
 		</div>
 	</body>
 </html>

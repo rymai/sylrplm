@@ -273,7 +273,7 @@ module OpenWFE
           @date = date
           @static = static
           @dynamic = dynamic
-          @object_plmicipants = participants
+          @participants = participants
         end
 
         def to_s

@@ -207,7 +207,8 @@ module Models
 						# seulement la derniere revision
 						select = "distinct on (ident) *"
 						order="ident asc, revision desc"
-						order+=","+params[:sort] unless params[:sort].nil?
+						order+=",#{params[:sort]}" unless params[:sort].nil?
+						LOG.debug(fname) {"last_rev_only sort=#{order}  , select=#{select} , conditions=#{conditions}"}
 						recordset = self.paginate(:page => params[:page],
 						:conditions => conditions,
 						:order => order,
@@ -219,19 +220,32 @@ module Models
 					#rails2 :conditions => conditions,
 					#rails2 :order => params[:sort],
 					#rails2 :per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
-						recordset = order(params[:sort]).where(conditions).paginate( :page => params[:page],:per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
+						LOG.debug(fname) {"all revisions sort=#{params[:sort]}  , conditions=#{conditions}"}
+						recordset = self.paginate( :page => params[:page],
+						:conditions => conditions,
+						:order => params[:sort],
+						:per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
 					)
+
 					end
 				else
 				#rails2 recordset = self.paginate( :page => params[:page],						:order => params[:sort],						:per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
-					recordset = self.order(params[:sort]).paginate( :page => params[:page],	:per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
+				LOG.debug(fname) {"no conditions  sort=#{params[:sort]}"}
+					recordset = self.order(params[:sort]).paginate( :page => params[:page],
+					#kokoko :order=>params[:sort],
+					:per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
 				)
 				end
 				#puts self.modelname+".find_paginate:conditions="+conditions.inspect
 				#puts self.modelname+"."+__method__.to_s+":"+recordset.inspect
 				LOG.debug(fname) {"fin conditions=#{conditions} : #{recordset.count unless recordset.nil?}"}
-				ret={:recordset => recordset, :query => params[:query], :page => params[:page], :total => self.count(:conditions => conditions), :nb_items => params[:nb_items], :conditions => conditions}
-				LOG.debug(fname) {"ret=#{ret}"}
+				ret={:recordset => recordset,
+					:query => params[:query],
+					:page => params[:page],
+					:total => self.count(:conditions => conditions),
+					:nb_items => params[:nb_items],
+					:conditions => conditions}
+				LOG.debug(fname) {"ret records=#{ret[recordset].size}"} unless ret[recordset].nil?
 				ret
 			end
 
@@ -246,6 +260,7 @@ module Models
 			unless params.nil?
 				params.each do |attr_name, attr_value|
 					begin
+						LOG.debug(fname) {"update_attribute #{attr_name} = #{attr_value}"}
 						update_attribute(attr_name, attr_value) if respond_to?(attr_name)
 					rescue Exception=>e
 						LOG.error(fname) {"Error=#{e}"}
@@ -390,19 +405,22 @@ module Models
 		end
 
 		def modelname
+			fname="#{self.class.name}.#{__method__}"+":"
 			# Part devient part
-			self.class.name.downcase
+			ret=self.class.name.underscore
+			ret
 		end
 
 		def controller_name
+			fname="#{self.class.name}.#{__method__}:"
 			# Part devient parts
-			ret=self.class.name.downcase
+			ret=self.class.name.underscore
 			if self.class.name == "Access"
 				ret+="es"
 			else
 				ret+="s"
 			end
-			#puts "controller_name:#{self.class.name} = #{ret}"
+			#LOG.debug(fname){"controller_name:#{self.class.name} = #{ret}"}
 			ret
 		end
 
@@ -786,36 +804,42 @@ module Models
 
 		def def_user(user)
 			fname= "#{self.class.name}.#{__method__}"
-			LOG.debug(fname) {"def_user:user=#{user.inspect} "}
+			LOG.debug(fname) {"def_user: user=#{user.inspect} "}
+			LOG.debug(fname) {"def_user: self=#{self.inspect} "}
 			# on prend les infos du owner si le user est null
-			if self.respond_to? (:owner)
-				if user.nil?
-				user = self.owner
+			begin
+				if self.respond_to?(:owner)
+					if user.nil?
+					user = self.owner
+					end
 				end
-			end
-			unless user.nil?
-				msg="user=#{user.inspect} "
-				if self.respond_to? :owner
-					self.owner_id = user.id
-					msg<< " owner=#{self.owner_id}"
+				unless user.nil?
+					msg="user=#{user.inspect} "
+					if self.respond_to? :owner
+						self.owner_id = user.id
+						msg<< " owner=#{self.owner_id}"
+					end
+					if self.respond_to? :group
+						self.group_id     = user.group_id
+						msg<<" group=#{self.group_id}"
+					end
+					if self.respond_to? :projowner
+						self.projowner_id = user.project_id
+						msg<<" projowner=#{self.projowner_id}"
+					end
+					if self.respond_to? :domain
+						self.domain = user.session_domain
+						msg<<" domain=#{self.domain}"
+					end
+					# datafile
+					if self.respond_to? :volume
+						self.volume_id = user.volume_id
+						msg<< "volume=#{self.volume}"
+					end
 				end
-				if self.respond_to? :group
-					self.group_id     = user.group_id
-					msg<<" group=#{self.group_id}"
-				end
-				if self.respond_to? :projowner
-					self.projowner_id = user.project_id
-					msg<<" projowner=#{self.projowner_id}"
-				end
-				if self.respond_to? :domain
-					self.domain = user.session_domain
-					msg<<" domain=#{self.domain}"
-				end
-				# datafile
-				if self.respond_to? :volume
-					self.volume_id = user.volume_id
-					msg<< "volume=#{self.volume}"
-				end
+			rescue Exception => e
+				err="ERROR: #{e}"
+				LOG.error(fname){err}
 			end
 			LOG.debug(fname) {"def_user end:infos=#{msg}"}
 			LOG.debug(fname) {"def_user end:self=#{self.inspect}"}

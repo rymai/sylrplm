@@ -5,7 +5,7 @@
 <%= form_errors_for @forum %>
 <%= hidden_field_tag :relation_id , @relation_id %>
 <%= render(:partial => "forums/edit",:locals => { :object=> @forum, :f => f, :fonct=>"add" }) %>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td> <%= f.submit t(:add_forum) %> </td>
 	</tr>

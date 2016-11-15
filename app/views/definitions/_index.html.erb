@@ -30,7 +30,7 @@
 		<td> <%= h_destroy(definition) %> </td>
 		<td><%= check_box(:action_on,definition.id) %></td>
 		<% else %>
-		<td class='menu_bas'><%= link_to(
+		<td class='menu_toolbar'><%= link_to(
 		t("launchthis"),
 		new_process_path(:definition_id => definition.id)) if definition.usable? %> </td>
 		<% end %>

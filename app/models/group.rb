@@ -34,6 +34,10 @@ class Group < ActiveRecord::Base
 		nil
 	end
 
+	def revisable?
+		false
+	end
+
 	def typesobject
 		Typesobject.find_by_forobject(modelname)
 	end

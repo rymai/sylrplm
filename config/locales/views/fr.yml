@@ -1,5 +1,13 @@
 fr:
   # general
+  nb_files: Nb. fichiers
+  ui_table_not_define: Table absente pour le  controller %{controller} et l'action %{action} , contacter l' administrateur
+  label_father: Père
+  label_father_tr: Père
+  label_next: Suite
+  label_previous: Précédent
+  label_owner: Propriétaire
+  label_name_translate: Nom
   window_details_hide: Cacher détails
   window_details_show: Montrer détails
   window_list_hide: Cacher liste
@@ -66,6 +74,8 @@ fr:
   new_relation: Nouvelle relation
   new_view: Nouvelle vue
   new_link: Nouveau lien
+  new_ui_column: Nouvelle colonne UI
+  new_ui_table: Nouvelle table UI
   paste_users: Coller utilisateurs
   paste_parts: Coller articles
   paste_documents: Coller documents
@@ -178,6 +188,8 @@ fr:
   mnu_views: Vues
   mnu_subscriptions: Abonnements
   mnu_my_subscriptions: Mes abonnements
+  mnu_tables: Tables
+  mnu_columns: Colonnes
   cut: "Couper"
   revise: "Réviser"
   promote_by_menu: Promouvoir par menu
@@ -526,7 +538,7 @@ fr:
   project_new_dup: Dupliquer projet
   label_customer: Client
   label_users: Collaborateurs
-  label_typeaccess: Confidentialité
+  label_confidentiality: Confidentialité
   label_project_user_ids_in: Affecté
   label_project_user_ids_out: Non affecté
   # questions
@@ -753,6 +765,34 @@ fr:
   label_dispatch_time: Envoyé le
   label_workitem_objects: Objet's) concerné(s)'
   button_task_validate: Valider cette tâche
+  #ui_columns
+  label_type_column: Type de colonne
+  label_title: Titre
+  label_visible_guest: Visible du visiteur
+  label_visible_user: Visible du user
+  label_visible_admin: Visible du admin
+  label_visible_support: Visible du support
+  label_editable: Editable
+  label_type_index: Type index
+  label_type_show: Type d'affichage
+  label_type_editable: Type édition
+  label_type_editable_file: Types de fichiers
+  label_sortable: Tri possible
+  label_ui_tables: Tables
+  legend_column: Colonne
+  label_belong_object: Objet
+  label_belong_method: Methode à appliquer
+  label_input_size: Taille saisie
+  label_value_mini: Valeur minimale
+  label_value_maxi: Valeur maximum
+  #ui_table
+  label_type_table: Type de table
+  label_pagination: Pagination
+  label_ui_columns: Colonnes
+  label_ui_columns_order: Choix et ordre des colonnes
+  legend_table: Table
+  label_ui_table_ui_column_ids_out: Colonnes disponibles
+  label_ui_table_ui_column_ids_in: Colonnes de la table
   # variables de contexte ou autre
   variable_key: Nom variable
   variable_value: Valeur

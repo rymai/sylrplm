@@ -15,6 +15,7 @@ class VolumesController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"current_user=#{current_user} params=#{params} "}
 		@volumes = Volume.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@object_plms=@volumes
 	end
 
 	def index_execute

@@ -49,7 +49,7 @@ class NotificationsController < ApplicationController
 	# GET /notifications/new.xml
 	def new
 		@notification = Notification.new(:user => current_user)
-		@users=User.find(:all)
+		@users=User.all.to_a
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @notification }
@@ -59,14 +59,14 @@ class NotificationsController < ApplicationController
 	# GET /notifications/1/edit
 	def edit
 		@notification = Notification.find(params[:id])
-		@users=User.find(:all)
+		@users=User.all.to_a
 	end
 
 	# POST /notifications
 	# POST /notifications.xml
 	def create
 		@notification = Notification.new(params[:notification])
-		@users=User.find(:all)
+		@users=User.all.to_a
 		respond_to do |format|
 			if @notification.save
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_notification), :ident => @notification.ident)
@@ -87,7 +87,7 @@ class NotificationsController < ApplicationController
 	def update
 		@notification = Notification.find(params[:id])
 		@notification.update_accessor(current_user)
-		@users=User.find(:all)
+		@users=User.all.to_a
 		respond_to do |format|
 			if @notification.update_attributes(params[:notification])
 				flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_notification), :ident => @notification.ident)

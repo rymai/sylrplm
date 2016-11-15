@@ -4,9 +4,8 @@ class DocumentsController < ApplicationController
 	#administration par le menu Access
 	#access_control (Document.controller_access())
 	access_control(Access.find_for_controller(controller_name.classify))
-	  respond_to :html, :js
-
-# GET /documents
+	respond_to :html, :js
+	# GET /documents
 	# GET /documents.xml
 	def index
 		ctrl_index
@@ -16,8 +15,8 @@ class DocumentsController < ApplicationController
 		ctrl_index_execute
 	end
 
-def show
-    	fname= "#{self.class.name}.#{__method__}"
+	def show
+		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"params=#{params.inspect}"}
 		#  object with his tree if ask
 		show_
@@ -105,7 +104,9 @@ def show
 		#repository !!!!!!!!!!!!!!
 		#docpar=document_params
 		#LOG.debug(fname) {"create:document_params=#{docpar}"}
+
 		@object_plm = Document.new(params[:document])
+		@object_plm.def_user(current_user)
 		#rails4 @object_plm = Document.new(docpar)
 		LOG.debug(fname) {"create:@object_plm=#{@object_plm.inspect}"}
 		@types    = Typesobject.get_types("document")

@@ -7,7 +7,8 @@ module ApplicationHelper
 	def h_menu_index_action(modelname)
 		fname="#{self.class.name}.#{__method__}"
 		ret=""
-		ret += "<table class='menu_bas'>"
+		ret += "<div id='menu_index_action' class='menu_toolbar'>"
+		ret += "<table class='menu_toolbar'>"
 		ret +=	"<tr>"
 		link=t("new_#{modelname}")
 		url={:controller=>get_controller_from_model_type(modelname), :action=>:new}
@@ -16,11 +17,13 @@ module ApplicationHelper
 		ret += "<td>#{linkto}</td>"
 		ret += "#{h_menu_execute_submit(modelname)}"
 		help = show_help("help_#{modelname}s")
+		ret << "<td id='separator_vertical'></td>"
 		ret +=	"<td>#{help}</td>"
 		ret +=	"</tr>"
 		ret += "</table>"
+		ret += "</div>"
 		#LOG.debug(fname){"h_menu_index_action=#{ret}"}
-		ret.html_safe
+		ret.html_safe unless ret.html_safe?
 	end
 
 	#
@@ -71,7 +74,7 @@ module ApplicationHelper
 			ret << form.select(:forobject, forobjects, option_readonly)
 		end
 		ret << "</br>"
-		ret.html_safe
+		ret.html_safe unless ret.html_safe?
 	end
 
 	def h_show_translate item
@@ -144,7 +147,7 @@ module ApplicationHelper
 		bloc=""
 		#ne marche pas avec boostrap bloc<<"<a class='menu' onclick=\"return helpPopup('#{help}','#{href}');\" >#{title}</a>";
 		bloc<<"<a class='menu' id='#{title} name='#{title}' href='#{href}' >#{title}</a>";
-		bloc
+		bloc.html_safe? unless ret.html_safe?
 	end
 
 	def h_menu(href,help,title)
@@ -185,7 +188,7 @@ module ApplicationHelper
 	end
 
 	def h_img_path(name)
-		"<img src=\"#{name}\"></img>"
+		"<img src=\"#{name}\"></img>".html_safe unless ret.html_safe?
 	end
 
 	def h_image(name, title=nil)
@@ -212,7 +215,8 @@ module ApplicationHelper
 	end
 
 	def h_img_base(name, title, cls)
-		"<img class='#{cls}' src='/images/#{name}.png' title='#{title}'/>".html_safe
+		ret="<img class='#{cls}' src='/images/#{name}.png' title='#{title}'/>"
+		ret.html_safe unless ret.html_safe?
 	end
 
 	def h_img_cut
@@ -466,7 +470,7 @@ module ApplicationHelper
 		end
 		ret+="</td>"
 		ret+="</tr>"
-		ret.html_safe
+		ret.html_safe unless ret.html_safe?
 	end
 
 	#
@@ -543,7 +547,8 @@ module ApplicationHelper
 					ret+="</h1>"
 					#LOG.info(fname){"type_values=#{obj.type_values}"}
 					unless obj.type_values.nil?
-						ret+= h_render_fields(obj, fonct, "type_values")
+						f=h_render_fields(obj, fonct, "type_values")
+						ret+= f unless f.nil?
 					#options: all, position, none
 					end
 				else
@@ -553,7 +558,7 @@ module ApplicationHelper
 				end
 			end
 		end
-		ret.html_safe
+		ret.html_safe unless ret.html_safe?
 	end
 
 	def h_workitem_fields(obj, fonct)
@@ -569,7 +574,7 @@ module ApplicationHelper
 			ret=t("history_no_fields")
 		end
 		#puts "******************** h_history_fields:ret="+ret
-		ret.html_safe
+		ret.html_safe unless ret.html_safe?
 	end
 
 	def h_render_fields(obj, fonct, method, to_json=false)
@@ -616,8 +621,8 @@ module ApplicationHelper
 			ret=""
 		end
 		LOG.info(fname){"<<<<h_render_fields: obj=#{obj}, fonct=#{fonct}, method=#{method} "}
-		#LOG.info(fname){"<<<<h_render_fields: ret=#{ret}"}
-		ret
+		LOG.info(fname){"<<<<h_render_fields: ret=#{ret}"}
+		ret.html_safe unless ret.html_safe?
 	end
 
 	# renvoi l'identifiant du formulaire en fonction de l'objet et de la fonction demandee
@@ -681,8 +686,8 @@ module ApplicationHelper
 		else
 			''
 		end
-		more="<a class=\"menu_bas\">#{t('label_more')}</a>"
-		less="<a class=\"menu_bas\">#{t('label_less')}</a>"
+		more="<a class=\"menu_toolbar\">#{t('label_more')}</a>"
+		less="<a class=\"menu_toolbar\">#{t('label_less')}</a>"
 		if opts[:process]
 			workitems = opts[:workitems]
 		else
@@ -700,7 +705,7 @@ module ApplicationHelper
           // initial default value (overriden by following scripts)
       </script>
       <div id='fluo_minor_toggle' style='cursor: pointer;'>
-            <table><tr><td class='menu_bas'><div id='fluo_toggle'>#{more}</div></td></tr></table>
+            <table><tr><td class='menu_toolbar'><div id='fluo_toggle'>#{more}</div></td></tr></table>
       </div>
       <a id='dataurl_link'>
         <canvas id="fluo" width="50" height="50"></canvas>
@@ -723,64 +728,7 @@ module ApplicationHelper
           };
         }
       </script>
-        }.html_safe
-	end
-
-	def render_fluo_old (opts)
-		tree = if d = opts[:definition]
-			"<script src=\"/definitions/#{d.id}/tree.js?var=proc_tree\"></script>"
-		elsif pr = opts[:process]
-			"<script src=\"/processes/#{pr.wfid}/tree.js?var=proc_tree\"></script>"
-		elsif i = opts[:wfid]
-			"<script src=\"/processes/#{i}/tree.js?var=proc_tree\"></script>"
-		elsif t = opts[:tree]
-			"<script>var proc_tree = #{t.to_json};</script>"
-		elsif t = opts[:tree_json]
-			"<script>var proc_tree = #{t};</script>"
-		else
-			'<script>var proc_tree = null;</script>'
-		end
-		hl = if e = opts[:expid]
-			"\nFluoCan.highlight('fluo', '#{e}');"
-		else
-			''
-		end
-		more="<a class=\"menu_bas\">#{t('label_more')}</a>"
-		less="<a class=\"menu_bas\">#{t('label_less')}</a>"
-		workitems = Array(opts[:workitems])
-
-		%{
-      <script src="/javascripts/fluo-json.js"></script>
-      <script src="/javascripts/fluo-can.js"></script>
-      <script>
-        var proc_tree = null;
-          // initial default value (overriden by following scripts)
-      </script>
-      <div id='fluo_minor_toggle' style='cursor: pointer;'>
-            <table><tr><td class='menu_bas'><div id='fluo_toggle'>#{more}</div></td></tr></table>
-      </div>
-      <a id='dataurl_link'>
-        <canvas id="fluo" width="50" height="50"></canvas>
-      </a>
-      #{tree}
-      <script>
-        if (proc_tree) {
-          FluoCan.renderFlow(
-            'fluo', proc_tree, { 'workitems': #{workitems.inspect} });
-          FluoCan.toggleMinor('fluo');
-          FluoCan.crop('fluo');#{hl}
-          var a = document.getElementById('dataurl_link');
-          a.href = document.getElementById('fluo').toDataURL();
-          var toggle = document.getElementById('fluo_toggle');
-          toggle.onclick = function () {
-            FluoCan.toggleMinor('fluo');
-            FluoCan.crop('fluo');
-            if (toggle.innerHTML == '#{more}') toggle.innerHTML = '#{less}'
-            else toggle.innerHTML = '#{more}';
-          };
-        }
-      </script>
-        }
+        }.html_safe unless ret.html_safe?
 	end
 
 	#
@@ -809,7 +757,7 @@ module ApplicationHelper
 			LOG.debug(fname){"obj=#{obj}"}
 			ret << h_explorer(obj[:typeobj])
 		}.join(', ')
-		ret.html_safe
+		ret.html_safe unless ret.html_safe?
 	end
 
 	def h_show_a(link)
@@ -817,6 +765,7 @@ module ApplicationHelper
 			:action => 'show',
 			:id => "#{link.child.id}"}
 		show_a="<a href=\"#{url_for(show_url)}\" title=\"#{link.child.tooltip}\">#{link.child.label}</a>"
+		show_a.html_safe unless show_a.html_safe?
 	end
 
 	def h_edit_link_a(link)
@@ -834,6 +783,7 @@ module ApplicationHelper
 		              :root_model => "",
 		              :root_id => "")
 		edit_link_a = "<a href=\"#{edit_link_url}\" title=\"#{link_values}\">#{img_rel}#{tr_rel_name}</a>"
+		edit_link_a.html_safe  unless edit_link_a.html_safe?
 	end
 
 	def h_remove_link(link)
@@ -843,6 +793,7 @@ module ApplicationHelper
               :object_model => link.father.modelname,
               :object_id => link.father.id)
 		remove_link_a = "<a href=\"#{remove_link_url}\">#{img_cut}</a>"
+		remove_link_a.html_safe unless remove_link_a.html_safe?
 	end
 
 	def h_text_editor(form, object, attribut)
@@ -850,7 +801,7 @@ module ApplicationHelper
 		ret=""
 		ret << form.text_area(attribut , :rows => 10, :readonly => object.column_readonly?(attribut))
 		ret << "<script>CKEDITOR.replace( \"#{object.modelname}_description\");</script>"
-		ret.html_safe
+		ret.html_safe unless ret.html_safe?
 	end
 
 	def truncate_words(text, len = 5, end_string = " ...")
@@ -863,13 +814,14 @@ module ApplicationHelper
 
 	def h_menu_execute_submit(modelname)
 		ret=""
+		ret << "<td id='separator_vertical'></td>"
 		submit_copy=t("submit_copy")
 		submit_destroy=t("submit_destroy")
 		if logged_in? && Clipboard.can_clipboard?(modelname)
 			ret<< "<td>#{submit_tag(submit_copy)}</td>"
 		end
 		ret<<	"<td>#{submit_tag(submit_destroy)}</td>"
-		ret
+		ret.html_safe unless ret.html_safe?
 	end
 
 	# Displays object errors

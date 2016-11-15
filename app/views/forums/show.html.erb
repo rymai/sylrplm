@@ -35,7 +35,7 @@
 	<%= render(:partial => "forums/f_item", :collection => @forum.forum_items) %>
 </ul>
 <% end %>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<% if @forum.frozen? %> <td><%= t("freeze")%></td>
 		<% else %> <td><%= link_to t("edit"), edit_forum_path(@forum) %></td>

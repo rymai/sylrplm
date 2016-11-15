@@ -75,7 +75,7 @@ def ctrl_promote(a_object, withMail=true)
 					new_rank = a_object.statusobject.name
 					if a_object.save
 						if withMail==true
-							askUserMail=a_object.owner.email
+							askUserMail=a_object.owner.email unless a_object.owner.nil?
 							email=nil
 							validers=[]#TODO pour test
 							validersMail = ::PlmMailer.listUserMail(validers, current_user)

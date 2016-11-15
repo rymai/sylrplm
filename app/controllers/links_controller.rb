@@ -71,6 +71,7 @@ class LinksController < ApplicationController
 	# POST /links.xml
 	def create
 		@link = Link.new(params[:link])
+		@link.def_user(current_user)
 		respond_to do |format|
 		#@link.type_values=params[:link][:values].to_json unless params[:link][:values].nil?
 			if @link.save

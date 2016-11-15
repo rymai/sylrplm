@@ -1,7 +1,9 @@
-<table class='menu_bas'>
+<div id="menu_show" class="menu_toolbar">
+	<table class='menu_toolbar'>
 	<tr>
 		<td> <%= link_to t("edit"), {:controller=>object.controller_name, :action=>"edit", :id => object.id} %> </td>
 		<%= render(:partial => "shared/menu_show_edit", :locals => {:object => object, :f => nil, :fonct=>fonct}) %>
 		<%= render(:partial => "shared/menu_common", :locals => {:object => object, :f => nil, :fonct=>fonct}) %>
 	</tr>
 </table>
+</div>

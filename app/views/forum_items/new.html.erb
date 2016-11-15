@@ -2,7 +2,7 @@
 <%= form_for(@forum_item) do |f| %>
 <%= form_errors_for @forum_item %>
 <%= render(:partial => "forum_items/edit",:locals => { :object=>@forum_item, :f => f, :fonct=>"new" }) %>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td> <%= f.submit t(:create) %> </td>
 		<td> <%= link_to t(:list), forum_items_path %> </td>

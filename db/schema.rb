@@ -9,6 +9,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+# These are extensions that must be enabled in order to support this database
+#enable_extension "plpgsql"
+
 ActiveRecord::Schema.define(:version => 0) do
 
 	create_table "accesses", :force => true do |t|
@@ -581,6 +584,49 @@ ActiveRecord::Schema.define(:version => 0) do
 
 	add_index "typesobjects", ["forobject", "name"], :name => "index_typesobjects_on_object_and_name", :unique => true
 	add_index "typesobjects", ["name"], :name => "index_typesobjects_on_name"
+
+ create_table "ui_columns", force: :cascade do |t|
+    t.string   "ident"
+    # attribute, free
+    t.string   "type_column"
+    t.text     "description"
+    # for explorer
+    t.text     "belong_object"
+    # attribute or method name or image name
+    t.text     "belong_method"
+    t.boolean  "visible_guest"
+    t.boolean  "visible_user"
+    t.boolean  "visible_admin"
+    t.boolean  "visible_support"
+    t.boolean  "editable"
+    t.boolean  "sortable"
+    #type_show=textarea:20*30, text or textarea: nb car
+    t.string   "input_size"
+    #type_show=integer or float or string
+    t.string   "value_mini"
+    t.string   "value_maxi"
+    t.string   "type_show"
+    t.string   "type_index"
+    t.string   "type_editable"
+    t.string   "type_editable_file"
+    t.string   "domain"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  add_index "ui_columns", ["ident"], :name => "index_ui_columns_on_ident"
+
+  create_table "ui_tables", force: :cascade do |t|
+    t.string   "ident"
+    t.string   "type_table"
+    t.text       "description"
+    t.text    "ui_columns"
+    t.integer  "pagination"
+    t.text   "menus_action"
+    t.string   "domain"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+  add_index "ui_tables", ["ident"], :name => "index_ui_tables_on_ident"
 
 	create_table "users", :force => true do |t|
 		t.string   "email"

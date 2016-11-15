@@ -5,7 +5,7 @@
 <h1><%= t(:legend_user) %></h1>
 <%= hidden_field_tag :user_action , fonct %>
 	<%= render(:partial => "users/edit",:locals => { :f => f, :fonct => fonct}) %>
-	<table class='menu_bas'>
+	<table class='menu_toolbar'>
 		<tr>
 			<td> <%= f.submit t("update") %> </td>
 		</tr>
@@ -16,7 +16,7 @@
 <%= hidden_field_tag :user_id , @current_user.id %>
 <h1><%= t(:legend_context) %></h1>
 	<%= render(:partial => "shared/session_context",:locals => { :form => f}) %>
-	<table class='menu_bas'>
+	<table class='menu_toolbar'>
 		<tr>
 			<td> <%= submit_tag t(:submit_login) %> </td>
 		</tr>

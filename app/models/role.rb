@@ -47,6 +47,10 @@ class Role < ActiveRecord::Base
 		nil
 	end
 
+	def revisable?
+		false
+	end
+
 	#return the list of validers
 	def self.get_validers
 		ret=[]

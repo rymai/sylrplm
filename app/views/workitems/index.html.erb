@@ -1,5 +1,5 @@
 <h1><%= t("workitems_list") %></h1>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td><%=request.query_string%>:<%=params[:wfid]%>
 			<% if (request.query_string.size > 0 or params[:wfid]) %>
@@ -11,7 +11,7 @@
 	</tr>
 </table>
 <%= render(:partial => "workitems/workitems", :object =>  @workitems, :locals => {  :workitem=> @workitem, :fonct=>"index" } ) %>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td>
 			<% if (request.query_string.size > 0 or params[:wfid]) %>

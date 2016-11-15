@@ -43,7 +43,7 @@
 	<br/>
 	<%=	h_history_fields(@entry, fonct) %>
 </p>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<% unless @object.nil? %>
 		<td> <%= link_to t(@object.model_name+"_show"), send(@object.model_name+"_path", @object) %> </td>

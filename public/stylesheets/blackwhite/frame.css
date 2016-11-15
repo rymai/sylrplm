@@ -272,27 +272,27 @@ p.notice {
 }
 /* menus en bas des listes*/
 
-table.menu_bas {
+table.menu_toolbar {
 	margin-top: 1px;
 	margin-bottom: 1px;
 }
-table.menu_bas .menu_bas tr {
+table.menu_toolbar .menu_toolbar tr {
 	border: 0px;
 }
-a, th a, a.help_tr, .help a, a.menu, .menu_bas input, input.menu_bas {
+a, th a, a.help_tr, .help a, a.menu, .menu_toolbar input, input.menu_toolbar {
 	border: 0px;
 	text-decoration: none;
 	cursor: pointer;
 	color: #CCCCCC;
 	font-weight: bold;
 }
-.menu_bas td {
+.menu_toolbar td {
 	background: #333;
 	border: 0px;
 	height: 25px;
 	color: white;
 }
-.menu_bas a, a.menu_bas {
+.menu_toolbar a, a.menu_toolbar {
 	padding: 2px;
 	margin: 0px;
 	border: none;
@@ -300,7 +300,7 @@ a, th a, a.help_tr, .help a, a.menu, .menu_bas input, input.menu_bas {
 	background: transparent url('/images/btn_submit.png') repeat center center;
 	height: 25px;
 }
-.menu_bas a:hover {
+.menu_toolbar a:hover {
 	background: transparent url('/images/btn_submit_hover.png') repeat center center;
 	color: #EEEEEE;
 }

@@ -81,14 +81,16 @@ module Models
 		def revise_by_menu?
 			fname= "#{self.modelname}.#{__method__}"
 			ret = false
-			unless self.statusobject.nil?
-				brev=PlmServices.get_property("#{self.modelname.upcase}_REVISE")
-				LOG.debug(fname) {"#{fname} #{self} statusobject=#{statusobject} #{self.modelname.upcase}_REVISE='#{brev}'"}
-				if brev
-					LOG.debug(fname) {"#{fname} has_attribute?revision #{has_attribute?('revision')} revise1='#{self.statusobject.revise_id==1}' "}
-					if has_attribute?("revision")
-						if self.statusobject.revise_id==1
-							ret=true
+			if self.respond_to? :statusobject
+				unless self.statusobject.nil?
+					brev=PlmServices.get_property("#{self.modelname.upcase}_REVISE")
+					LOG.debug(fname) {"#{fname} #{self} statusobject=#{statusobject} #{self.modelname.upcase}_REVISE='#{brev}'"}
+					if brev
+						LOG.debug(fname) {"#{fname} has_attribute?revision #{has_attribute?('revision')} revise1='#{self.statusobject.revise_id==1}' "}
+						if has_attribute?("revision")
+							if self.statusobject.revise_id==1
+								ret=true
+							end
 						end
 					end
 				end
@@ -98,9 +100,11 @@ module Models
 
 		def revise_by_action?
 			fname= "#{self.modelname}.#{__method__}"
-			unless self.statusobject.nil?
+			if self.respond_to? :statusobject
+				unless self.statusobject.nil?
 				brev=PlmServices.get_property("#{self.modelname.upcase}_REVISE")
-			ret = (brev && has_attribute?("revision") && self.statusobject.revise_id==2)
+				ret = (brev && has_attribute?("revision") && self.statusobject.revise_id==2)
+				end
 			end
 			ret
 		end
@@ -581,71 +585,80 @@ module Models
 		end
 
 		def initialize(*args)
+			super(*args)
 			fname= "PlmObject:#{self.class.name}.#{__method__}"
 			LOG.debug(fname) {"initialize debut args=#{args.length}:#{args.inspect}"}
-			LOG.debug(fname) {"initialize debut : self=#{self.inspect}"}
-			super(*args)
 			initialize_(*args)
 			LOG.debug(fname) {"initialize fin: self=#{self.inspect}"}
 		end
 
 		def after_initialize_(*args)
-			fname= "plm_object:#{self.class.name}.#{__method__}"
+			fname= "PlmObject:#{self.class.name}.#{__method__}"
 			LOG.debug(fname) {"after_initialize args=#{args.length}:#{args.inspect}"}
 			LOG.debug(fname) {"after_initialize self=#{self.inspect}"}
 			initialize_
 		end
 
 		def initialize_(*args)
-			fname= "plm_object:#{self.class.name}.#{__method__}"
-			LOG.debug(fname) {"initialize_ debut args=#{args.length}:#{args.inspect}"}
-			LOG.debug(fname) {"initialize_ debut : self=#{self.inspect}"}
+			fname= "PlmObject:#{self.class.name}.#{__method__}"
+			LOG.debug(fname) {"debut args=#{args.length}:#{args.inspect}"}
+			LOG.debug(fname) {"debut : self=#{self.inspect}"}
 			#on passe 2 fois ici: sur le new et sur le create, sur le new, le controller met le user en argument, sur le create, le controlleur met les parametres saisies
 			phase_new = ! (args[0].nil? || args[0][:user].nil?)
+			#
+			#controller:new
+			#
 			unless args[0].nil?
 				user=args[0][:user]
-				LOG.debug(fname) {"initialize_ debut : phase_new={phase_new} user=#{user}"}
+				LOG.debug(fname) {"debut : phase_new={phase_new} user=#{user}"}
 				def_user(user)
 			end
-			if (self.respond_to? :typesobject)
-				if args.size>0 && !args[0].nil? && (!args[0].include?(:typesobject_id))
-				self.typesobject_id = ::Typesobject.get_default(self).id
-				LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.typesobject_id}"}
+			#
+			# any case
+			#
+			begin
+				if (self.respond_to? :typesobject)
+					if args.size>0 && !args[0].nil? && (!args[0].include?(:typesobject_id))
+					self.typesobject_id = ::Typesobject.get_default(self).id
+					LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.typesobject_id}"}
+					end
 				end
-			end
-			if (self.respond_to? :statusobject)
-				if args.size>0 && !args[0].nil? && (!args[0].include?(:statusobject_id))
-				self.statusobject_id = ::Statusobject.get_first(self).id
-				LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.statusobject_id}"}
-				end
-			end
-			if (self.respond_to? :next_status)
-				if args.size>0 && !args[0].nil? && (!args[0].include?(:next_status_id))
-				nextst=::Statusobject.get_next_status(self)
-				self.next_status_id = nextst.id unless nextst.nil?
-				LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.next_status_id}"}
-				end
-			end
-			if (self.respond_to? :previous_status)
-				if args.size>0 && !args[0].nil? && (!args[0].include?(:previous_status_id))
-				prevst=::Statusobject.get_previous_status(self)
-				self.previous_status_id = prevst.id unless prevst.nil?
-				LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.previous_status_id}"}
-				end
-			end
-
-
-			if phase_new
-				self.set_default_values_with_next_seq
-				LOG.debug(fname) {"initialize_ self apres set_default_values_with_next_seq=#{self.inspect}"}
 				if (self.respond_to? :statusobject)
-					# recalculate the status here because depending of the type modified above
+					if args.size>0 && !args[0].nil? && (!args[0].include?(:statusobject_id))
 					self.statusobject_id = ::Statusobject.get_first(self).id
 					LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.statusobject_id}"}
+					end
 				end
+				if (self.respond_to? :next_status)
+					if args.size>0 && !args[0].nil? && (!args[0].include?(:next_status_id))
+					nextst=::Statusobject.get_next_status(self)
+					self.next_status_id = nextst.id unless nextst.nil?
+					LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.next_status_id}"}
+					end
+				end
+				if (self.respond_to? :previous_status)
+					if args.size>0 && !args[0].nil? && (!args[0].include?(:previous_status_id))
+					prevst=::Statusobject.get_previous_status(self)
+					self.previous_status_id = prevst.id unless prevst.nil?
+					LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.previous_status_id}"}
+					end
+				end
+				if phase_new
+					# new
+					self.set_default_values_with_next_seq
+					LOG.debug(fname) {"initialize_ self apres set_default_values_with_next_seq=#{self.inspect}"}
+					if (self.respond_to? :statusobject)
+						# recalculate the status here because depending of the type modified above
+						self.statusobject_id = ::Statusobject.get_first(self).id
+						LOG.debug(fname) {"initialize_ self.typesobject_id=#{self.statusobject_id}"}
+					end
+				end
+				LOG.debug(fname) {"initialize_ fin: type_values fin=#{self.type_values}"} if self.respond_to? :type_values
+				LOG.debug(fname) {"initialize_ fin: self=#{self.inspect}"}
+			rescue Exception => e
+				err="ERROR: #{e}"
+				LOG.error(fname){err}
 			end
-			LOG.debug(fname) {"initialize_ fin: type_values fin=#{self.type_values}"} if self.respond_to? :type_values
-			LOG.debug(fname) {"initialize_ fin: self=#{self.inspect}"}
 
 		end
 

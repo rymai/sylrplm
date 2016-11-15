@@ -5,11 +5,6 @@
 				<li class="active">
 					<a class="brand" href="#main" data-toggle="tab"> <%= @page_title || "SYLRPLM" %> </a>
 				</li>
-				<% if @tree || @tree_up %>
-				<li >
-					<a class="brand" href="#tree" data-toggle="tab"><%= t(:legend_tree) %></a>
-				</li>
-				<% end %>
 				<li >
 					<a class="brand" href="#clipboards" data-toggle="tab"><%= t(:legend_clipboard) %></a>
 				</li>
@@ -143,6 +138,12 @@
 							</li>
 
 							<li>
+								<%= h_menu("/ui_tables","help_tables",t("mnu_tables")) %>
+							</li>
+							<li>
+								<%= h_menu("/ui_columns","help_columns",t("mnu_columns")) %>
+							</li>
+							<li>
 								<%= h_menu("/views","help_views",t("mnu_views")) %>
 							</li>
 							<li>
@@ -229,11 +230,6 @@
 	<br/>
 	<div id="clipboards" name="clipboards" class="tab-pane inactive">
 		<%= render('layouts/clipboards') %>
-	</div>
-	<div id="tree" class="tab-pane inactive">
-		<% if @tree || @tree_up %>
-		<%= render(:partial => "shared/tree", :locals=>{:object => @object_plm} ) %>
-		<% end %>
 	</div>
 
 	<div id="main" class="tab-pane active">

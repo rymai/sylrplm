@@ -14,8 +14,9 @@ class Document < ActiveRecord::Base
 	###attr_accessor :id, :revision, :typesobject_id, :designation, :description, :owner_id, :date, :ident,:owner,:group_id,:projowner_id
 
 	#rails4: indispensable pour creer/updater
-	attr_accessible :id, :revision, :typesobject_id, :statusobject_id, :next_status_id, :previous_status_id, :ident, :designation, :description, :owner_id, :date,:owner,:group_id,:projowner_id, :domain, :type_values
-
+	attr_accessible :id, :revision, :typesobject_id, :statusobject_id, :next_status_id, :previous_status_id, :ident
+	attr_accessible :designation, :description, :date,:owner, :domain, :type_values
+	attr_accessible :owner_id, :group_id, :projowner_id
 	validates_presence_of :ident , :designation
 	validates_uniqueness_of :ident, :scope => :revision
 	#validates_format_of :ident, :with => /^(doc|img)[0-9]+$/, :message=>" doit commencer par doc ou img suivi de chiffres"
@@ -73,7 +74,7 @@ end
 	#def_user(user)
 	end
 
-	#essai, appelle 10 fois par document !!!
+	#essai, ok mais appelle 10 fois par document !!!
 	#def after_find
 	#puts "Document:after_find: ident="+ident+" type="+modelname+"."+typesobject.name+" proj="+projowner.ident+" group="+group.name
 	#end

@@ -68,6 +68,7 @@ class DatafilesController < ApplicationController
 		LOG.debug(fname){"params=#{params.inspect}"}
 		@types    = Typesobject.get_types("datafile")
 		@object_plm = Document.find(params["doc"]) if params["doc"]
+		@object_plm.def_user(current_user)
 		#puts "datafiles_controller.create:errors=#{@datafile.errors.inspect}"
 		respond_to do |format|
 			@datafile=Datafile.m_create(params)

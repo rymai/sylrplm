@@ -62,6 +62,42 @@ index_customers:
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 17:13:33.253587000 Z
 
+index_roles:
+  id: 6
+  ident: index_roles
+  type_table: index
+  description: ''
+  ui_columns: title,description, father, father_tr, users
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:42:58.342491000 Z
+  updated_at: 2016-11-14 06:46:48.645155000 Z
+
+index_groups:
+  id: 7
+  ident: index_groups
+  type_table: index
+  description: ''
+  ui_columns: name, name_translate, father, father_tr, users,domain
+  pagination: 10
+  menus_action: 
+  domain: ''
+  created_at: 2016-11-14 06:57:05.243211000 Z
+  updated_at: 2016-11-14 07:18:56.939701000 Z
+
+index_volumes:
+  id: 8
+  ident: index_volumes
+  type_table: index
+  description: ''
+  ui_columns: name,description,directory, protocol, encode, decode, compress, decompress,users,
+  pagination: 
+  menus_action: 
+  domain: ''
+  created_at: 2016-11-14 20:17:15.528740000 Z
+  updated_at: 2016-11-14 20:22:55.843163000 Z
+
 index:
   id: 1
   ident: index
@@ -124,3 +160,39 @@ index_customers:
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 17:13:33.253587000 Z
+
+index_roles:
+  id: 6
+  ident: index_roles
+  type_table: index
+  description: ''
+  ui_columns: title,description, father, father_tr, users
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:42:58.342491000 Z
+  updated_at: 2016-11-14 06:46:48.645155000 Z
+
+index_groups:
+  id: 7
+  ident: index_groups
+  type_table: index
+  description: ''
+  ui_columns: name, name_translate, father, father_tr, users,domain
+  pagination: 10
+  menus_action: 
+  domain: ''
+  created_at: 2016-11-14 06:57:05.243211000 Z
+  updated_at: 2016-11-14 07:18:56.939701000 Z
+
+index_volumes:
+  id: 8
+  ident: index_volumes
+  type_table: index
+  description: ''
+  ui_columns: name,description,directory, protocol, encode, decode, compress, decompress,users,
+  pagination: 
+  menus_action: 
+  domain: ''
+  created_at: 2016-11-14 20:17:15.528740000 Z
+  updated_at: 2016-11-14 20:22:55.843163000 Z

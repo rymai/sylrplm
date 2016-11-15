@@ -72,6 +72,10 @@ class User < ActiveRecord::Base
 		valid
 	end
 
+	def revisable?
+		false
+	end
+
 	#
 	# User and Group share this method, which returns login and name respectively
 	#

@@ -1,6 +1,6 @@
 <h1><%= t(:link_list) %><%= h_count_objects(@links) %></h1>
 <%= h_form_simple_query('/links', @links) %>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td> <%= link_to t(:new_link), new_link_path %> </td>
 		<td> <%= link_to t(:link_reset), reset_links_path %> </td>
@@ -43,7 +43,7 @@
 	<% end %>
 </table>
 <%= will_paginate(@links[:recordset]) %>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td> <%= link_to t(:new_link), new_link_path %> </td>
 		<td> <%= link_to t(:link_reset), reset_links_path %> </td>

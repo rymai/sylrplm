@@ -25,7 +25,7 @@
 </p>
 <p>
 	<b><%= t("label_responsible") %></b>
-	<%= h @object_plm.owner.login %>
+	<%= h @object_plm.owner.login unless @object_plm.owner.nil?%>
 </p>
 <p>
 	<b><%= t("label_date") %></b>

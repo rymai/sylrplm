@@ -53,7 +53,7 @@ Rails.application.configure do
 
 	# See everything in the log (default is :info)
 	#ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
-	config.log_level = :warn
+	config.log_level = :error
 #FATAL an unhandleable error that results in a program crash
 #ERROR a handleable error condition
 #WARN  a warning

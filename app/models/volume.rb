@@ -37,6 +37,10 @@ class Volume < ActiveRecord::Base
 		ret
 	end
 
+	def revisable?
+		false
+	end
+
 	#
 	# definit et cree le repertoire du  volume, celui ci depend du protocol
 	# - file_systeme: directory=repertoire sur le disque du serveur: /home/syl/trav/rubyonrails/sylrplm-data-development/vol-local-01/

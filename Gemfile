@@ -64,7 +64,7 @@ gem 'ruote'
 gem 'ruote-extras'
 gem 'ruote-postgres' , :git => "git://github.com/ifad/ruote-postgres.git"
 gem 'ruote-kit', :git => 'http://github.com/tosch/ruote-kit.git'
-
+gem 'yaml_db'
 gem 'fog'  #, '~>1.1.2'
 #gem 'rufus-verbs', '~>1.0.0'
 #gem 'atom-tools' , '~>2.0.5'
@@ -85,8 +85,8 @@ gem 'rubyzip'
 
 #gem 'string_to_sha1', :git => "git://github.com/sylvani/string_to_sha1.git"
 #gem 'string_to_sha1', :path => "/home/syl/trav/rubyonrails/string_to_sha1"
-gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
-###gem 'sylrplm_ext', :path => "/home/syl/trav/rubyonrails/sylrplm_ext"
+###gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
+gem 'sylrplm_ext', :path => "/home/syl/trav/rubyonrails/sylrplm_ext"
 
 #If you would like to use RJS, you need to include
 gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'

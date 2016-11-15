@@ -22,7 +22,7 @@
 <!-- :( -->
 
 <div id='colLeft' >
-	<table class='menu_bas'>
+	<table class='menu_toolbar'>
 		<tr >
 			<td><%= link_to_function(t("update"), 'saveWi()') %> </td>
 			<td><%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> </td>
@@ -35,7 +35,7 @@
 	<%= render(:partial => "workitems/wi_links", :locals => { :fonct=>fonct } ) %>
 	</table>
 	<h1></h1>
-	<table class='menu_bas'>
+	<table class='menu_toolbar'>
 		<tr >
 			<td><%= link_to_function(t("update"), 'saveWi()') %> </td>
 			<td><%= submit_tag t("proceed"), :onclick => "proceedWi(); return false;" %> </td>

@@ -1,20 +1,15 @@
 class Typesobject < ActiveRecord::Base
 	include Models::SylrplmCommon
-
-attr_accessible :id, :forobject, :name, :rank, :fields, :description, :domain , :father_id
-
+	attr_accessible :id, :forobject, :name, :rank, :fields, :description, :domain , :father_id
 	validates_presence_of :forobject, :name
 	validates_uniqueness_of :name, :scope => :forobject
-
 	has_many :datafiles
 	has_many :documents
 	has_many :parts
 	has_many :projects
 	has_many :customers
 	#bug! has_many :statusobject
-
 	belongs_to :father, :class_name => "Typesobject"
-
 	#rails4 named_scope :order_default, :order=>"forobject ASC, rank ASC, name ASC"
 	#rails4 named_scope :find_all , order_default.all
 	ORDER_DEFAULT="forobject ASC, rank ASC, name ASC"

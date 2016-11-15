@@ -57,6 +57,7 @@ class ForumsController < ApplicationController
 	# POST /forums.xml
 	def create
 		@forum  = Forum.new(params[:forum])
+		@forum.def_user(current_user)
 		@types  = Typesobject.get_types("forum")
 		@status = Statusobject.get_status("forum")
 		respond_to do |format|
@@ -153,5 +154,6 @@ class ForumsController < ApplicationController
 
 	def index_
 		@forums = Forum.find_paginate({ :user=> current_user, :filter_types => params[:filter_types],:page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@object_plms=@forums
 	end
 end

@@ -1,7 +1,5 @@
-require_dependency 'controllers/plm_tree'
-require_dependency 'controllers/tree_actions_by_roles'
-require_dependency 'controllers/plm_clipboard'
-require_dependency 'controllers/plm_lifecycle'
+require_dependency 'controllers/controllers'
+
 
 module Controllers
 	module PlmObjectControllerModule
@@ -266,25 +264,32 @@ module Controllers
 		end
 
 		def html_models_and_columns(default = nil)
+			fname="#{self.class.name}.#{__method__}:"
 			lst=[]
-			Dir.new("#{config.root}/app/models").entries.each do |model|
+			Dir.new("#{Rails.root}/app/models").entries.each do |model|
 				unless %w[. .. _obsolete _old Copy].include?(model)
-					mdl = model.camelize.gsub('.rb', '')
+					model = model.camelize.gsub('.rb', '')
 					begin
-						#mdl.constantize.content_columns.each do |col|
-						mdl.constantize.columns.each do |col|
-							lst<<["#{mdl}.#{col.name}","#{mdl}.#{col.name}"] unless %w[created_at updated_at owner].include?(col.name)
-						end
-					rescue
+						LOG.debug(fname) {"#{model}=#{model}"}
+						model.constantize.columns.each do |col|
+						acol=["#{model}.#{col.name}","#{model}.#{col.name}"]
+						LOG.debug(fname){"msg col=#{col.name} : #{acol}"}
+						lst<<acol unless %w[created_at updated_at owner].include?(col.name)
+					end
+					rescue Exception => e
+						msg="ERROR: on model #{model}#{e}"
+						LOG.error(fname){msg}
+					end
 					# do nothing
 				end
 			end
-		end
-			##puts __FILE__+"."+__method__.to_s+":"+lst.inspect
-			get_html_options(lst.sort, default)
+			#ret=get_html_options(lst.sort, default)
+			ret=lst
+			LOG.debug(fname){"lst=#{lst.size} "}
+			ret
 		end
 
-		def  get_html_options(lst, default, translate=false)
+		def  get_html_options_obsolete(lst, default, translate=false)
 			ret=""
 			lst.each do |item|
 				if translate
@@ -433,6 +438,7 @@ module Controllers
 			@object_plm=get_object_plm_from_params(params)
 				if @object_plm.nil?
 					index_
+					LOG.debug(fname){"@object_plms=#{@object_plms}"}
 					respond_to do |format|
 						format.html # index.html.erb
 						format.xml  { render :xml => @object_plms }

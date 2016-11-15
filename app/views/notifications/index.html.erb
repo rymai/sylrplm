@@ -8,8 +8,8 @@
 	</tr>
 </table>
 <%= will_paginate(@notifications[:recordset]) %>
-<%= render(:partial => "notifications/index", :locals=>{:fonct=>"index"}) %>
-<%= will_paginate(@notifications[:recordset]) %> 
+<%= render(:partial => "notifications/index") %>
+<%= will_paginate(@notifications[:recordset]) %>
 <table class='menu_bas'>
 	<tr>
 		<td> <%= link_to t("new_notification"), new_notification_path %></td>

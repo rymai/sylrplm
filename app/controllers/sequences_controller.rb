@@ -56,9 +56,11 @@ class SequencesController < ApplicationController
 
 	# GET /sequences/1/edit
 	def edit
+		fname= "#{self.class.name}.#{__method__}"
 		@sequence = Sequence.find(params[:id])
 		#@objects=Sequence.getObjectsWithSequence
 		@utilities=html_models_and_columns(@sequence.utility)
+
 
 	end
 

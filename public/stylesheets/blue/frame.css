@@ -232,23 +232,23 @@ input, option, select, textarea {
 	background-color: #DDDDDD;
 }
 
-table.menu_bas {
+table.menu_toolbar {
 	border: 0px;
 	/*background-color: #bcb;*/
 }
 
-.menu_bas tr {
+.menu_toolbar tr {
 	border: 0px;
 	}
 
-.menu_bas td {
+.menu_toolbar td {
 	background-color:#CCCCFF;
 	border: 1px solid ;
 	padding-left: 2px;
 	padding-right: 2px;
 }
 
-.menu_bas a , a.menu_bas, .menu_bas input, input.menu_bas {
+.menu_toolbar a , a.menu_toolbar, .menu_toolbar input, input.menu_toolbar {
 	border: 0px;
 	text-decoration: none;
 	cursor:pointer;

@@ -55,6 +55,7 @@ class ForumItemsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"params=#{params.inspect}"}
 		@forum_item = ForumItem.new(params[:forum_item])
+		@forum_item.def_user(current_user)
 		respond_to do |format|
 			if @forum_item.save
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_forum_item), :ident => @forum_item.id)

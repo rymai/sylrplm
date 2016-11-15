@@ -136,14 +136,14 @@ module UiTablesHelper
 		begin
 			show=show? col
 			LOG.debug(fname) {"========> begin column"}
-			LOG.debug(fname) {"ident=#{col.ident} ,  type_show=#{col.type_show}"}
+			LOG.debug(fname) {"ident=#{col.ident} ,  type_index=#{col.type_index},  type_show=#{col.type_show}"}
 			LOG.debug(fname) {"admin_logged_in?=#{admin_logged_in?} , visible_admin=#{col.visible_admin}"}
 			LOG.debug(fname) {"logged_in?=#{logged_in?} visible_user=#{col.visible_user}"}
 			LOG.debug(fname) {"visible_guest=#{col.visible_guest} "}
 			LOG.debug(fname) {"==>> show=#{show} "}
 			LOG.debug(fname) {"type_editable=#{col.type_editable} type_editable_file=#{col.type_editable_file} "}
 			LOG.debug(fname) {"belong_object=#{col.belong_object} method=#{col.belong_method} "}
-			LOG.debug(fname) {"size=#{col.input_size}  mini=#{col.value_mini} maxi=#{col.value_maxi} "}
+			LOG.debug(fname) {"size=#{col.input_size} (#{col.input_size.nil?}) mini=#{col.value_mini} maxi=#{col.value_maxi} "}
 			if(show)
 				ret+= "<td>"
 				unless col.belong_object.blank?
@@ -156,7 +156,7 @@ module UiTablesHelper
 				LOG.debug(fname) {"belong_object=#{belong_object} belong_method=#{belong_method} "}
 				type_table=@UI_TABLE.type_table
 				if(type_table=="index")
-					type_col=col.type_index
+				type_col=col.type_index
 				end
 				if(type_col=="explorer")
 					ret+=build_explorer(belong_object,belong_method,col,type_table)
@@ -263,13 +263,19 @@ module UiTablesHelper
 	def build_comma(object,method,col,type_table)
 		fname="#{self.class.name}.#{__method__}"
 		LOG.info(fname){"obj=#{obj}, method=#{method}"}
-		comma(object, method)
+		txt=comma(object, method)
+			LOG.debug(fname) {"col truncate before= #{col}"}
+		txt=truncate_text(txt,col)
+		txt
 	end
 
 	def build_comma_links(object,method,col,type_table)
 		fname="#{self.class.name}.#{__method__}"
 		LOG.info(fname){"object=#{object}, method=#{method} col=#{col.ident}"}
-		comma_links(object, method)
+		txt=comma_links(object, method)
+			LOG.debug(fname) {"col truncate before= #{col}"}
+		txt=truncate_text(txt,col)
+		txt
 	end
 
 	def build_text(object,method,col,type_table)
@@ -279,9 +285,11 @@ module UiTablesHelper
 			belong_method=get_belong_method(object, col)
 			LOG.debug(fname) {"object=#{object} col=#{col.ident} belong_method=#{belong_method}"}
 			txt = object.send(belong_method.to_sym)
+			LOG.debug(fname) {"col truncate before= #{col}"}
+			txt=truncate_text(txt,col)
 		rescue Exception=> e
 			LOG.error(fname){"Warning:#{e}"}
-			txt = "#{e}"
+			txt = "Warning:#{e}"
 		end
 		txt.to_s
 	end
@@ -292,6 +300,8 @@ module UiTablesHelper
 		begin
 			belong_method=get_belong_method object, col
 			txt = object.send(belong_method.to_sym)
+			LOG.debug(fname) {"col truncate before= #{col}"}
+			txt=truncate_text(txt,col)
 		rescue Exception=> e
 			LOG.error(fname){"Warning:#{e}"}
 			txt = "!!!!! #{col.ident}"
@@ -301,6 +311,31 @@ module UiTablesHelper
 
 	def build_image(object,col,type_table)
 
+	end
+
+	def truncate_text(txt,column)
+		fname= "#{self.class.name}.#{__method__}"
+		ret=txt
+		LOG.debug(fname) {"col truncate= #{column}"}
+		begin
+			unless column.input_size.nil?
+				len=column.input_size.to_i
+				LOG.debug(fname) {"txt truncate before = #{txt}"}
+				ret=truncate(txt,:length=>len) if len>0
+				LOG.debug(fname) {"txt truncate after = #{txt}"}
+			end
+		rescue Exception=>e
+			stack=""
+			cnt=0
+			e.backtrace.each do |x|
+				if cnt<10
+					stack+= x+"\n"
+				end
+				cnt+=1
+			end
+			LOG.debug(fname) {"Error:#{e}\nstack=\n#{stack}\n"}
+		end
+		ret
 	end
 
 	def get_belong_method(object, col)

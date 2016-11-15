@@ -103,6 +103,7 @@ class CustomersController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug(fname) {"params=#{params.inspect}"}
 		@object_plm = Customer.new(params[:customer])
+		@object_plm.def_user(current_user)
 		@types    = Typesobject.get_types("customer")
 		@status   = Statusobject.get_status(@object_plm)
 		respond_to do |format|

@@ -4,8 +4,13 @@ class QuestionsController < ApplicationController
 	skip_before_filter :authorize
 
 	access_control (Access.find_for_controller(controller_name.classify))
-	def index
+	def index_
 		@faqs = Question.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@object_plms=@faqs
+	end
+
+	def index
+		ctrl_index
 	end
 
 	def show
@@ -80,7 +85,7 @@ class QuestionsController < ApplicationController
 		end
 	end
 
-private
+	private
 
 	def show_
 		@faq = Question.find params[:id]

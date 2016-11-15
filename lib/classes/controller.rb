@@ -27,7 +27,7 @@ class Controller
 				#ApplicationController.new.methods
 				(eval("#{cont}.new.methods") -
 				ApplicationController.new.methods).sort.each {|smet|
-					#LOG.debug(fname){"controller=#{cont} method=#{smet}"}
+				#LOG.debug(fname){"controller=#{cont} method=#{smet}"}
 					met = smet.to_s
 					if(met!='init_objects' && met!='login' && met!='logout' && met.index('_old')==nil && !met.end_with?('_') && met.index('_obsolete')==nil && met.index('_essai')==nil && met.index('authorized')==nil)
 						ret<< Controller.new(i,cont,met)
@@ -43,12 +43,13 @@ class Controller
 	end
 
 	def self.route_exists?(controller, action)
+		fname= "#{self.class.name}.#{__method__}"
 		cont = "#{controller}_controller".camelize
-		#puts "Controller.route_exists?(#{cont}, #{action})"
+		LOG.debug(fname){"Controller.route_exists? controller=#{controller} , cont=#{cont} , action=#{action})"}
 		methods=eval("::#{cont}.new.methods")
-		#puts "Controller.route_exists?:methods=#{methods}"
+		#LOG.debug(fname){"Controller.route_exists?:methods=#{methods}"}
 		ret = methods.include? action.to_sym
-		#puts "Controller.route_exists?(#{cont}, #{action.to_sym})=#{ret}"
+		LOG.debug(fname){"Controller.route_exists?(#{cont}, #{action.to_sym})=#{ret}"}
 		ret
 	end
 

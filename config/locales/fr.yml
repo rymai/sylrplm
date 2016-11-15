@@ -40,8 +40,8 @@ fr:
   # plugins
   ###########################
   # will_paginate
-  label_previous: Précédente
-  label_next: Suivante
+  will_paginate.previous_label: Précédente
+  will_paginate.next_label: Suivante
 
   ###########################
   # formattage

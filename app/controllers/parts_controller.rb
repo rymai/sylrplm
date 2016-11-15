@@ -101,6 +101,7 @@ class PartsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"create: params=#{params.inspect}"}
 		@object_plm   = Part.new(params[:part])
+		@object_plm.def_user(current_user)
 		@types  = Typesobject.get_types("part")
 		@status = Statusobject.get_status("part")
 		respond_to do |format|

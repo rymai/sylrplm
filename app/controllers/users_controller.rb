@@ -4,6 +4,8 @@ class UsersController < ApplicationController
 	#
 
 	access_control(Access.find_for_controller(controller_name.classify))
+
+
 	# GET /users
 	# GET /users.xml
 	def index
@@ -17,8 +19,8 @@ class UsersController < ApplicationController
 	def index_
 		fname= "#{self.class.name}.#{__method__}"
 		@current_users = User.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
-	#LOG.info(fname) {"@current_users=#{@current_users}"}
-
+		#LOG.info(fname) {"@current_users=#{@current_users}"}
+		@object_plms=@current_users
 	end
 
 	def index_execute
@@ -107,6 +109,7 @@ class UsersController < ApplicationController
 
 	def create
 		@the_user    = User.new(params["user"])
+		@the_user.def_user(current_user)
 		respond_to do |format|
 			if fonct_new_dup?
 				object_orig=User.find(params[:object_orig_id])

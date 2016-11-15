@@ -10,7 +10,7 @@
 		<td class='nomax' colspan="2" class="nhover"> <%= render(:partial => 'shared/ruote_forms', :locals => { :fields => @definition.launch_fields_hash }) %> </td>
 	</tr>
 </table>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td><%= submit_tag t('launch_process') %></td>
 		<td><%= link_to t("list"), processes_path %> </td>

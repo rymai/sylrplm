@@ -1,6 +1,7 @@
 #rails 4 ActionController::Routing::Routes.draw do |map|
 Rails.application.routes.draw do
 
+
 ###get 'ajax/:action', to: 'ajax#:action', :defaults => { :format => 'json' }
 
 #rails2 map.resources :subscriptions
@@ -56,7 +57,7 @@ Rails.application.routes.draw do
 	match 'customers/:id/add_objects', :to => 'customers#add_objects', via: [:patch]
 
 	#rails2 map.connect(	'customers/:id/add_link_objects',	:controller => 'customers',	:action => 'add_link_objects')
-	match 'customers/:id/add_link_objects', :to => 'customers#add_link_objects', via: [:get, :post]
+	match 'customers/:id/add_link_objects', :to => 'customers#add_link_objects', via:  [:patch]
 
 	#rails2 map.connect(	'customers/:id/remove_link',	:controller => 'customers',	:action => 'remove_link',	:conditions => { :method => :get })
 	match 'customers/:id/remove_link', :to => 'customers#remove_link', via: [:get, :post]
@@ -135,7 +136,7 @@ Rails.application.routes.draw do
 	match 'documents/:id/add_objects', :to => 'documents#add_objects', via: [:patch]
 
 	#rails2 map.connect(	'documents/:id/add_link_objects',	:controller => 'documents',	:action => 'add_link_objects')
-	match 'documents/:id/add_link_objects', :to => 'documents#add_link_objects', via: [:get, :post]
+	match 'documents/:id/add_link_objects', :to => 'documents#add_link_objects', via:  [:patch]
 
 	#rails2 map.connect(	'documents/:id/new_datafile',	:controller => 'documents',	:action => 'new_datafile')
 	match 'documents/:id/new_datafile', :to => 'documents#new_datafile', via: [:get, :post]
@@ -200,6 +201,7 @@ Rails.application.routes.draw do
 	end
 	#rails2 map.connect(	'forums/:id/update_lifecycle',	:controller => 'forums',	:action => 'update_lifecycle')
 	match 'forums/update_lifecycle', :to => 'forums#update_lifecycle', via: [:get, :post]
+	match 'forums/index_execute', :to => 'forums#index_execute', via: [:get, :post]
 
 	#rails2 map.connect(	'forums/:id/update_type',	:controller => 'forums',	:action => 'update_type')
 	match 'forums/update_type', :to => 'forums#update_type', via: [:get, :post]
@@ -298,7 +300,7 @@ Rails.application.routes.draw do
 	match 'parts/:id/add_objects', :to => 'parts#add_objects', via: [:patch]
 
 	#rails2 map.connect(	'parts/:id/add_link_objects',	:controller => 'parts',	:action => 'add_link_objects')
-	match 	'parts/:id/add_link_objects', :to => 'parts#add_link_objects', via: [:get, :post]
+	match 	'parts/:id/add_link_objects', :to => 'parts#add_link_objects', via:  [:patch]
 
 	#rails2 map.connect(	'parts/:id/remove_link',	:controller => 'parts',	:action => 'remove_link',	:conditions => { :method => :get })
 	match 'parts/:id/remove_link', :to => 'parts#remove_link', via: [:get, :post]
@@ -359,7 +361,7 @@ Rails.application.routes.draw do
 	match 'projects/:id/add_objects', :to => 'projects#add_objects', via: [:patch]
 
 	#rails2 map.connect(	'projects/:id/add_link_objects',	:controller => 'projects',	:action => 'add_link_objects')
-	match 	'projects/:id/add_link_objects', :to => 'projects#add_link_objects', via: [:get, :post]
+	match 	'projects/:id/add_link_objects', :to => 'projects#add_link_objects', via:  [:patch]
 
 	#rails2 map.connect(	'projects/:id/remove_link',	:controller => 'projects',	:action => 'remove_link',	:conditions => { :method => :get })
 	match 'projects/:id/remove_link', :to => 'projects#remove_link', via: [:get, :post]
@@ -414,6 +416,7 @@ Rails.application.routes.draw do
 
 	#rails2 map.resources :questions
 	resources :questions
+	match 'questions/index_execute', :to => 'questions#index_execute', via: [:get, :post]
 
 	#rails2 map.resources :roles, :member=> {:new_dup => :get}
 	resources :roles do
@@ -525,6 +528,22 @@ Rails.application.routes.draw do
 
 	#rails2 map.resources :user_groups
 	resources :user_groups
+
+	#
+	resources :ui_columns do
+	member do
+			get :new_dup
+		end
+	end
+	match 'ui_columns/index_execute', :to => 'ui_columns#index_execute', via: [:get, :post]
+
+		#
+  	resources :ui_tables do
+	member do
+			get :new_dup
+		end
+	end
+	match 'ui_tables/index_execute', :to => 'ui_tables#index_execute', via: [:get, :post]
 
 	#rails2 map.resources :views, :member=> {:new_dup => :get}
 	resources :views do

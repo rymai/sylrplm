@@ -61,8 +61,8 @@
 		<td> <%= h_workitems_links(workitem)  %> </td>
 		<td> <%= h_explorer workitem.owner, :login %> </td>
 
-		<% if fonct != "show_only" %> <td class='menu_bas'> <%= link_to_if current_user.may_see?(workitem) , t("edit_task"), {:controller=>:workitems, :action=>:edit, :id=>workitem.sid, :wfid=>workitem.wfid} %> </td>
-		<td class='menu_bas'> <%= link_to_function t("pick"), "pick('#{{:controller=>:workitems,:action=>:show, :id=>workitem.sid, :wfid=>workitem.wfid}}');" %> </td>
+		<% if fonct != "show_only" %> <td class='menu_toolbar'> <%= link_to_if current_user.may_see?(workitem) , t("edit_task"), {:controller=>:workitems, :action=>:edit, :id=>workitem.sid, :wfid=>workitem.wfid} %> </td>
+		<td class='menu_toolbar'> <%= link_to_function t("pick"), "pick('#{{:controller=>:workitems,:action=>:show, :id=>workitem.sid, :wfid=>workitem.wfid}}');" %> </td>
 		<% end %>
 	</tr>
 	<% end -%>

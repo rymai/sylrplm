@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
 
 	# bug: page non affichee before_render :check_access_data
 	#rails4 ko before_filter LogDefinitionFilter
+
 	before_filter :run_debug
 	before_filter :check_init
 	before_filter :authorize, :except => [:index, :init_objects]
@@ -27,7 +28,7 @@ class ApplicationController < ActionController::Base
 	before_filter :set_locale
 	before_filter :active_check
 
-  ##### after_filter :manage_recents
+    after_filter :manage_recents
 
 	def run_debug
 	   	if Rails.env=="development"
@@ -51,6 +52,35 @@ class ApplicationController < ActionController::Base
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname) {"active_check"}
 		@my_filter = true
+	end
+
+	def render *args
+	define_table args
+	super
+	end
+
+	def define_table(*args)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {"====>args=#{args.inspect} "}
+		LOG.debug(fname) {"params=#{params.inspect} "}
+		action=params[:action]
+		# for portal, show visualize 3 views
+		if action=="show"
+			action="index"
+		end
+		action_controller="#{action}_#{params[:controller]}"
+		action_controller_type="#{action_controller}_#{params[:filter_types]}"
+		@UI_TABLE=UiTable.find_by_ident(action_controller_type)
+		LOG.debug(fname) {"action_controller_type='#{action_controller_type}' => @UI_TABLE='#{@UI_TABLE.inspect}'"}
+		if @UI_TABLE.nil?
+			#
+			@UI_TABLE=UiTable.find_by_ident(action_controller)
+			LOG.debug(fname) {"<====action_controller='#{action_controller}', => @UI_TABLE='#{@UI_TABLE.inspect}'"}
+			if @UI_TABLE.nil?
+				@UI_TABLE=UiTable.find_by_ident(action)
+				LOG.debug(fname) {"<====action='#{action}', => @UI_TABLE='#{@UI_TABLE.inspect}'"}
+			end
+		end
 	end
 
 	def render_(*args)
@@ -186,7 +216,7 @@ class ApplicationController < ActionController::Base
 			flash[:error]=t(:ctrl_init_to_do)
 			LOG.debug(fname) {"<<<<flash[:error]=#{flash[:error]}"}
 			respond_to do |format|
-				format.html{redirect_to_main}
+				format.html{redirect_to_main(nil,"check_init")}
 			end
 		end
 
@@ -337,7 +367,7 @@ class ApplicationController < ActionController::Base
 
 	# redirection vers l'action index du main si besoin
 	def redirect_to_main(uri=nil, msg=nil)
-		puts "application_controller: redirect_to_main:flash=#{flash.inspect}"
+		puts "application_controller: redirect_to_main:flash=#{flash.inspect} msg=#{msg}"
 		flash[:error] = msg if msg
 		redirect_to(uri || { :controller => "main", :action => "index" })
 	end
@@ -439,7 +469,7 @@ class ApplicationController < ActionController::Base
 	def icone(object)
 		fname= "#{self.class.name}.#{__method__}"
 		html_title=""
-		type=object.typesobject
+		type=object.typesobject if object.respond_to? :typesobject
 		unless type.nil?
 			LOG.debug(fname) {"object=#{object} typesobject=#{type} "}
 			begin

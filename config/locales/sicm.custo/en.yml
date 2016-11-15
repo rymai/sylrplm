@@ -166,4 +166,10 @@ en:
   subscription_designer: Designer
   subscription_analyst: Analyst
   subscription_admin: Administrator
+  # sheet on show details view
+  tree_describe_by: Describe by
+  bom_link_STR_PIE: Part
+  bom_link_STR_STR: Structure
+  tree_define_by: Defined by
+  tree_hierarchic_to: Hierarchy
 

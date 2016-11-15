@@ -13,6 +13,7 @@ class RolesController < ApplicationController
 
 	def index_
 		@roles = Role.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
+		@object_plms=@roles
 	end
 
 	def index_execute
@@ -44,7 +45,6 @@ class RolesController < ApplicationController
 	# GET /roles/new.xml
 	def new
 		@role = Role.new
-
 		respond_to do |format|
 			format.html # new.html.erb
 			format.xml  { render :xml => @role }
@@ -108,21 +108,6 @@ class RolesController < ApplicationController
 				format.html { render :action => "edit" }
 				format.xml  { render :xml => @role.errors, :status => :unprocessable_entity }
 			end
-		end
-	end
-
-	# DELETE /roles/1
-	# DELETE /roles/1.xml
-	def destroy_old
-		@role = Role.find(params[:id])
-		if @role.destroy
-			flash[:notice] = t(:ctrl_object_deleted,:typeobj =>t(:ctrl_role),:ident=>@role.title)
-		else
-			flash[:error] = t(:ctrl_object_not_deleted, :typeobj => t(:ctrl_role), :ident => @role.title)
-		end
-		respond_to do |format|
-			format.html { redirect_to(roles_url) }
-			format.xml  { head :ok }
 		end
 	end
 

@@ -5,7 +5,7 @@
 <% end %>
 <% end %>
 <%= h_form_simple_query('/datafiles', @datafiles) %>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td> <%= link_to t("new_datafile"), new_datafile_path %> </td>
 		<td> <%= show_help("help_datafiles") %> </td>
@@ -18,7 +18,7 @@
 <h1><%=t(:sylrplm_files_list)%></h1>
 <%= render(:partial => "datafiles/index_sylrplm_files", :locals=>{:files=>@all_files}) %>
 
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td> <%= link_to t("new_datafile"), new_datafile_path %> </td>
 		<td> <%= show_help("help_datafiles") %> </td>

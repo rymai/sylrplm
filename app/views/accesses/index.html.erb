@@ -1,6 +1,6 @@
 <h1><%= t("access_list") %><%= h_count_objects(@accesses)%> </h1>
 <%= h_form_simple_query('/accesses', @accesses) %>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td> <%= link_to t("new_access"), new_access_path %> </td>
 		<% if admin_logged_in? %>
@@ -12,7 +12,7 @@
 <%= will_paginate(@accesses[:recordset]) %>
 <%= render(:partial => "accesses/index", :locals => {:fonct=>"index"}) %>
 <%= will_paginate(@accesses[:recordset]) %>
-<table class='menu_bas'>
+<table class='menu_toolbar'>
 	<tr>
 		<td> <%= link_to t("new_access"), new_access_path %> </td>
 		<td> <%= show_help("help_access") %> </td>

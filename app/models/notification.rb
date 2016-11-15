@@ -83,7 +83,12 @@ class Notification < ActiveRecord::Base
 	end
 
 	def to_s
-		id.to_s+" "+event_type+" "+forobject_type+":"+forobject_id.to_s+" at "+event_date.to_s+" by "+responsible.login+" => "+notify_date.to_s
+		if responsible.nil?
+			login="unknown"
+		else
+			login=responsible.login
+		end
+		"#{id} #{event_type} #{forobject_type}:#{forobject_id} at #{event_date} by #{login} => #{notify_date}"
 	end
 
 	def self.get_conditions(filter)
@@ -108,7 +113,7 @@ class Notification < ActiveRecord::Base
 		# loop on users with a valid email
 		#
 		User.find_with_mail.each do |user|
-			#LOG.debug(fname) {"user=#{user} subscription=#{user.subscription}"}
+		#LOG.debug(fname) {"user=#{user} subscription=#{user.subscription}"}
 			to_notify = notify_user(user, id)
 			#
 			# send notifications for the user
