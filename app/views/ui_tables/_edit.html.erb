@@ -1,0 +1,28 @@
+
+<div class="form-inputs">
+	<%= f.label t(:label_ident) %>
+	<%= f.text_field (:ident )%>
+	<br/>
+	<%= f.label t(:label_type_table) %>
+	<%= f.text_field (:type_table) %>
+	<br/>
+	<%= f.label t(:label_description) %>
+	<%= h_text_editor(f, @ui_table,:description)%>
+	<br/>
+	<%= f.label t(:label_pagination) %>
+	<%= f.number_field (:pagination) %>
+	<br/>
+
+	<%= f.label t(:label_ui_columns) %>
+	<%= text_area_tag(:ui_columns_ident,comma_string(@columns,:ident))%>
+	<br/>
+	<%= f.label t(:label_ui_columns_order) %>
+	<% puts __FILE__+" "+@ui_table_columns.inspect%>
+	<%= text_area(:ui_table, :ui_columns)%>
+	<br/>
+	<%= f.label t(:label_domain) %>
+	<%= f.text_field (:domain) %>
+	<br/>
+	<br/>
+</div>
+

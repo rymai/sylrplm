@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Ident:</strong>
+  <%= @ui_table.ident %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @ui_table.type_table %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @ui_table.description %>
+</p>
+
+<p>
+  <strong>Pagination:</strong>
+  <%= @ui_table.pagination %>
+</p>
+
+<p>
+  <strong>Domain:</strong>
+  <%= @ui_table.domain %>
+</p>
+
+<%= link_to 'Edit', edit_ui_table_path(@ui_table) %> |
+<%= link_to 'Back', ui_tables_path %>

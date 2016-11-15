@@ -1,0 +1,20 @@
+<h1><%= t(:ui_column_edit) %></h1>
+<% fonct="edit" %>
+<div id="edit_object">
+	<% form_id = h_form_html_id(@ui_column, fonct) %>
+	<%= form_for(@ui_column, :html => { :id => form_id }) do |f| %>
+<%= form_errors_for @ui_column %>
+	<%= render(:partial => "shared/menu_edit", :locals => { :object => @ui_column, :f => f, :fonct=>fonct}) %>
+	<%= render(:partial => "ui_columns/edit",:locals => {
+	:f => f,
+	:fonct => fonct,
+	:form_id => form_id,
+	:object => @ui_column})
+%>
+	<%= render(:partial => "shared/submit_edit",:locals =>
+	{ :object => @ui_column,
+	:f => f,
+	:form_id => form_id, :fonct=>fonct}) %>
+</div>
+<% end %>
+

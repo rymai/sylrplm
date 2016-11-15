@@ -1,0 +1,14 @@
+<h1><%= t(:ui_table_new) %></h1>
+<% fonct="new"
+  form_id=fonct+"_ui_table" %>
+<%= form_for(@ui_table, :html => { :id => form_id }) do |f| %>
+<%= form_errors_for @ui_table %>
+<%= render(:partial => "shared/menu_new", :locals => {:object => @ui_table, :f => f, :fonct=>fonct}) %>
+<%= render(:partial => "ui_tables/edit",:locals => {:object => @ui_table,
+:f => f,
+:fonct => fonct,
+:form_id => form_id })
+%>
+<%= render(:partial => "shared/submit_new", :locals => {:object => @ui_table, :f => f, :fonct=>fonct}) %>
+
+<% end %>

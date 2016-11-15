@@ -1,0 +1,29 @@
+<table>
+	<tr>
+		<th><%= t "label_ident" %></th>
+		<th><%= t "label_event_type" %></th>
+		<th><%= t "label_event_date" %></th>
+		<th><%= t "label_responsible" %></th>
+	</tr>
+	<% @notifications[:recordset].each do |notification| %>
+	<tr class='<%= cycle("even", "odd") %>'>
+		<td> <%= h ("#{notification.forobject_type}.#{notification.forobject_id}") %> </td>
+
+		<td> <%= h (notification.event_type) %></td>
+		<td> <%= h (notification.event_date) %></td>
+		<td> <%= h (notification.responsible.try(:login)) %></td>
+
+		<td> <%= link_to( t("button_notify"),
+		:controller => 'notifications',
+		:action => 'show',
+		:id => notification,
+		:only_path => false)%> </td>
+		<td> <%= link_to(t("explorer"),
+		:controller => Notification.get_object_controller(notification.forobject_type),
+		:action => 'show',
+		:id => notification.forobject_id,
+		:only_path => false)%> </td>
+
+	</tr>
+	<% end %>
+</table>

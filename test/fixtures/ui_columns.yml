@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ident: MyString
+  type: 
+  description: MyText
+  title: MyString
+  visible_user: false
+  visible_admin: false
+  visible_support: false
+  editable: false
+  type_show: MyString
+  type_editable: MyString
+  type_editable_file: MyString
+
+two:
+  ident: MyString
+  type: 
+  description: MyText
+  title: MyString
+  visible_user: false
+  visible_admin: false
+  visible_support: false
+  editable: false
+  type_show: MyString
+  type_editable: MyString
+  type_editable_file: MyString

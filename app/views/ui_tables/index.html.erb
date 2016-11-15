@@ -1,0 +1,44 @@
+<h1><%= t(:ui_table_list) %><%= h_count_objects(@ui_tables)%> </h1>
+<% unless @ui_table.nil? %>
+<%= form_for(@ui_table) do |f| %>
+<%= form_errors_for @ui_table %>
+<% end %>
+<% else %>
+<%= h_form_simple_query('/ui_tables', @ui_tables) %>
+<%= form_tag({:controller=>:typesobjects, :action=>:index_execute}) do %>
+<%= h_menu_index_action("ui_table")%>
+<%= will_paginate(@ui_tables[:recordset]) %>
+<table>
+  <thead>
+    <tr>
+      <th>Ident</th>
+      <th>Type</th>
+      <th>Description</th>
+      <th>Pagination</th>
+      <th>Colonnes</th>
+      <th>Domain</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @ui_tables[:recordset].each do |ui_table| %>
+      <tr>
+        <td><%= ui_table.ident %></td>
+        <td><%= ui_table.type_table %></td>
+        <td><%= ui_table.description %></td>
+        <td><%= ui_table.pagination %></td>
+        <td><%= ui_table.ui_columns %></td>
+        <td><%= ui_table.domain %></td>
+        <td> <%= link_to h_img_edit, edit_ui_table_path(ui_table) %> </td>
+		<td> <%= h_menu_duplicate(ui_table) %> </td>
+		<td> <%= h_destroy(ui_table) %> </td>
+		<td><%= check_box(:action_on,ui_table.id) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate(@ui_tables[:recordset]) %>
+<%= h_menu_index_action("ui_table")%>
+<%end%>
+<%end%>

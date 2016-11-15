@@ -1,0 +1,76 @@
+
+index:
+  id: 1
+  ident: index
+  type_table: 
+  description: 
+  ui_columns: id, ident, revision, designation,  typesobject, statusobject, owner, group,project,
+    date, nbfiles, domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+index_projects:
+  id: 2
+  ident: index_projects
+  type_table: 
+  description: 
+  ui_columns: id, ident, revision, designation,  typesobject, statusobject, confidentiality,owner,
+    group, users, date, domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+index_customers:
+  id: 3
+  ident: index_customers
+  type_table: 
+  description: 
+  ui_columns: id, ident, designation,  typesobject, statusobject, owner, group, project,date,  domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+index:
+  id: 1
+  ident: index
+  type_table: 
+  description: 
+  ui_columns: id, ident, revision, designation,  typesobject, statusobject, owner, group,project,
+    date, nbfiles, domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+index_projects:
+  id: 2
+  ident: index_projects
+  type_table: 
+  description: 
+  ui_columns: id, ident, revision, designation,  typesobject, statusobject, confidentiality,owner,
+    group, users, date, domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+index_customers:
+  id: 3
+  ident: index_customers
+  type_table: 
+  description: 
+  ui_columns: id, ident, designation,  typesobject, statusobject, owner, group, project,date,  domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z

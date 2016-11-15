@@ -1,0 +1,1 @@
+json.partial! "ui_tables/ui_table", ui_table: @ui_table

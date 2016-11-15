@@ -1,0 +1,616 @@
+
+id:
+  id: 1
+  ident: id
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: 
+  visible_user: false
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+ident:
+  id: 2
+  ident: ident
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+typesobject:
+  id: 3
+  ident: typesobject
+  type_column: ''
+  description: ''
+  belong_object: typesobject
+  belong_method: name_translate
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+revision:
+  id: 4
+  ident: revision
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+statusobject:
+  id: 5
+  ident: statusobject
+  type_column: ''
+  description: ''
+  belong_object: statusobject
+  belong_method: name_translate
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+domain:
+  id: 6
+  ident: domain
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: 
+  visible_user: false
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+nbfiles:
+  id: 7
+  ident: nbfiles
+  type_column: ''
+  description: ''
+  belong_object: datafiles
+  belong_method: length
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+owner:
+  id: 8
+  ident: owner
+  type_column: ''
+  description: ''
+  belong_object: owner
+  belong_method: name_translate
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+group:
+  id: 9
+  ident: group
+  type_column: ''
+  description: ''
+  belong_object: group
+  belong_method: name_translate
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+project:
+  id: 10
+  ident: project
+  type_column: ''
+  description: ''
+  belong_object: projowner
+  belong_method: name_translate
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+designation:
+  id: 11
+  ident: designation
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+date:
+  id: 12
+  ident: date
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+confidentiality:
+  id: 13
+  ident: confidentiality
+  type_column: ''
+  description: ''
+  belong_object: typeaccess
+  belong_method: name_translate
+  visible_guest: 
+  visible_user: false
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+users:
+  id: 14
+  ident: users
+  type_column: ''
+  description: ''
+  belong_object: users
+  belong_method: login
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma_links
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+id:
+  id: 1
+  ident: id
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: 
+  visible_user: false
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+ident:
+  id: 2
+  ident: ident
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+typesobject:
+  id: 3
+  ident: typesobject
+  type_column: ''
+  description: ''
+  belong_object: typesobject
+  belong_method: name_translate
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+revision:
+  id: 4
+  ident: revision
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+statusobject:
+  id: 5
+  ident: statusobject
+  type_column: ''
+  description: ''
+  belong_object: statusobject
+  belong_method: name_translate
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+domain:
+  id: 6
+  ident: domain
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: 
+  visible_user: false
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+nbfiles:
+  id: 7
+  ident: nbfiles
+  type_column: ''
+  description: ''
+  belong_object: datafiles
+  belong_method: length
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+owner:
+  id: 8
+  ident: owner
+  type_column: ''
+  description: ''
+  belong_object: owner
+  belong_method: name_translate
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+group:
+  id: 9
+  ident: group
+  type_column: ''
+  description: ''
+  belong_object: group
+  belong_method: name_translate
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+project:
+  id: 10
+  ident: project
+  type_column: ''
+  description: ''
+  belong_object: projowner
+  belong_method: name_translate
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+designation:
+  id: 11
+  ident: designation
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+date:
+  id: 12
+  ident: date
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+confidentiality:
+  id: 13
+  ident: confidentiality
+  type_column: ''
+  description: ''
+  belong_object: typeaccess
+  belong_method: name_translate
+  visible_guest: 
+  visible_user: false
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z
+
+users:
+  id: 14
+  ident: users
+  type_column: ''
+  description: ''
+  belong_object: users
+  belong_method: login
+  visible_guest: 
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma_links
+  type_editable: 
+  type_editable_file: 
+  domain: 
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 08:28:52.000000000 Z

@@ -1,0 +1,71 @@
+<h1><%= t(:ui_column_list) %>
+	<%= h_count_objects(@ui_columns)%> </h1>
+<% unless @ui_column.nil? %>
+<%= form_for(@ui_column) do |f| %>
+<%= form_errors_for @ui_column %>
+<% end %>
+<% else %>
+<%= h_form_simple_query('/ui_columns', @ui_columns) %>
+<%= form_tag({:controller=>:ui_columns, :action=>:index_execute}) do %>
+<%= h_menu_index_action("ui_column")%>
+<%= will_paginate(@ui_columns[:recordset]) %>
+<table>
+	<thead>
+		<tr>
+			<th <%= sort_td_class_helper "ident" %>> <%= sort_link_helper t("label_ident"), "ident" %></th>
+			<th <%= sort_td_class_helper "typesobject_id" %>> <%= sort_link_helper t("label_typesobject"), "typesobject_id" %> </th>
+			<th>Description</th>
+			<th <%= sort_td_class_helper "visible_guest" %>> <%= sort_link_helper t("label_visible_guest"), "visible_guest" %></th>
+			<th <%= sort_td_class_helper "visible_user" %>> <%= sort_link_helper t("label_visible_user"), "visible_user" %></th>
+			<th <%= sort_td_class_helper "visible_admin" %>> <%= sort_link_helper t("label_visible_adùin"), "visible_admin" %></th>
+			<th <%= sort_td_class_helper "visible_support" %>> <%= sort_link_helper t("label_visible_support"), "visible_support" %></th>
+			<th>Tri possible</th>
+			<th>Editable</th>
+			<th>Belong Object</th>
+			<th>Method</th>
+			<th>Size</th>
+			<th>Mini</th>
+			<th>Maxi</th>
+			<th>Type Index</th>
+			<th>Type show</th>
+			<th>Type editable</th>
+			<th>Type editable file</th>
+			<th>Domain</th>
+			<th colspan="3"></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<% @ui_columns[:recordset].each do |ui_column| %>
+		<tr>
+			<td><%= ui_column.ident %></td>
+			<td><%= ui_column.type_column %></td>
+			<td><%= ui_column.description %></td>
+			<td><%= ui_column.visible_guest %></td>
+			<td><%= ui_column.visible_user %></td>
+			<td><%= ui_column.visible_admin %></td>
+			<td><%= ui_column.visible_support %></td>
+			<td><%= ui_column.sortable %></td>
+			<td><%= ui_column.editable %></td>
+			<td><%= ui_column.belong_object %></td>
+			<td><%= ui_column.belong_method %></td>
+			<td><%= ui_column.input_size %></td>
+			<td><%= ui_column.value_mini %></td>
+			<td><%= ui_column.value_maxi %></td>
+			<td><%= ui_column.type_index %></td>
+			<td><%= ui_column.type_show %></td>
+			<td><%= ui_column.type_editable %></td>
+			<td><%= ui_column.type_editable_file %></td>
+			<td><%= ui_column.domain %></td>
+			<td> <%= link_to h_img_edit, edit_ui_column_path(ui_column) %> </td>
+			<td> <%= h_menu_duplicate(ui_column) %> </td>
+			<td> <%= h_destroy(ui_column) %> </td>
+			<td><%= check_box(:action_on,ui_column.id) %></td>
+		</tr>
+		<% end %>
+	</tbody>
+</table>
+<%= will_paginate(@ui_columns[:recordset]) %>
+<%= h_menu_index_action("ui_column")%>
+<%end%>
+<%end%>

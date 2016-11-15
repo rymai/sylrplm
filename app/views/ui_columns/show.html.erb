@@ -1,0 +1,8 @@
+<h1><%= t(:ui_column_show) %></h1>
+<% fonct="show" %>
+<%= form_for(@ui_column, :html => { :id => h_form_html_id(@ui_column, fonct) }) do |f| %>
+<%= form_errors_for @ui_column %>
+<%= render(:partial => "shared/menu_show",:locals => { :object => @ui_column, :fonct => fonct, :f => f }) %>
+<%= render(:partial => "ui_columns/"+fonct,:locals => { :user => @ui_column, :fonct => fonct, :f => f }) %>
+<%= render(:partial => "shared/menu_show",:locals => { :object => @ui_column, :fonct => fonct, :f => f }) %>
+<% end %>
