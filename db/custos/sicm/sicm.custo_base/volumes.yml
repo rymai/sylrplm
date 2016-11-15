@@ -11,17 +11,6 @@ Volume_1:
   description: volume de depart sur fog
   domain: admin
 
-Volume_2:
-  id: "2"
-  name: vollocal01
-  directory: /home/syl/trav/rubyonrails/sylrplm-data
-  protocol: file_system
-  encode:
-  decode:
-  compress:
-  decompress:
-  description: volume en local sur le serveur
-  domain: admin
 
 Volume_7:
   id: "7"
