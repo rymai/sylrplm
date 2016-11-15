@@ -1,0 +1,78 @@
+
+Volume_1:
+  id: "1"
+  name: volfog01
+  directory:
+  protocol: fog
+  encode:
+  decode:
+  compress:
+  decompress:
+  description: volume de depart sur fog
+  domain: admin
+
+Volume_2:
+  id: "2"
+  name: vollocal01
+  directory: /home/syl/trav/rubyonrails/sylrplm-data
+  protocol: file_system
+  encode:
+  decode:
+  compress:
+  decompress:
+  description: volume en local sur le serveur
+  domain: admin
+
+Volume_7:
+  id: "7"
+  name: table01
+  directory: ""
+  protocol: database_text
+  encode: |
+    Base64.encode64(@content)
+
+  decode: Base64.decode64(@content)
+  compress: |-
+    PlmServices.zip_in_stringio(@filename,@content)
+  decompress: |-
+    PlmServices.unzip_stringio @content
+  description: "volume en base pour tous types de fichiers "
+  domain: admin
+
+Volume_9:
+  id: "9"
+  name: table03
+  directory: ""
+  protocol: database_text
+  encode: Base64.encode64(@content)
+  decode: Base64.decode64(@content)
+  compress: ""
+  decompress: ""
+  description: "volume en base pour tous types de fichiers "
+  domain: admin
+
+Volume_8:
+  id: "8"
+  name: table02
+  directory: ""
+  protocol: database_text
+  encode: ""
+  decode: ""
+  compress: |-
+    PlmServices.zip_in_stringio(@filename,@content)
+  decompress: |-
+    PlmServices.unzip_stringio @content
+  description: volume en base , fonctionne pour aucun fichier  !!!
+  domain: admin
+
+Volume_10:
+  id: "10"
+  name: table04
+  directory: ""
+  protocol: database_text
+  encode: ""
+  decode: ""
+  compress: ""
+  decompress: ""
+  description: volume en base pour fichiers ascii sans guillemets
+  domain: admin

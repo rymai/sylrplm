@@ -1,0 +1,743 @@
+
+
+
+Typesobject_1045584135:
+  id: '1045584135'
+  forobject: sylrplm_properties
+  name: lifecycle
+  rank:
+  fields: '{"DOCUMENT_REVISE": {"$TYPE": "BOOLEAN", "$VALUE":"true"}, "CUSTOMER_REVISE": {"$TYPE": "BOOLEAN", "$VALUE":"false"}, "PART_REVISE": {"$TYPE": "BOOLEAN", "$VALUE":"true"},
+    "PROJECT_REVISE":{"$TYPE": "BOOLEAN", "$VALUE":"true"}}'
+  description: parametrage du cycle de vie
+  domain: admin
+  father_id:
+
+Typesobject_502955464:
+  id: '502955464'
+  forobject: relation
+  name: forum
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_672869653:
+  id: '672869653'
+  forobject: relation
+  name: tree
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_804690363:
+  id: '804690363'
+  forobject: user
+  name: virtual_
+  rank:
+  fields: "{}"
+  description: Utilisateur virtuel, pour les batchs ...
+  domain: admin
+  father_id:
+
+Typesobject_997141214:
+  id: '997141214'
+  forobject: project
+  name: "$PROJ_ACCOUNT"
+  rank:
+  fields: "{}"
+  description: Type de projet affecte automatiquement a la creation du compte.
+  domain: admin
+  father_id:
+
+Typesobject_1045584114:
+  id: '1045584114'
+  forobject: customer
+  name: any_type
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584115:
+  id: '1045584115'
+  forobject: datafile
+  name: any_type
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584116:
+  id: '1045584116'
+  forobject: document
+  name: any_type
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584117:
+  id: '1045584117'
+  forobject: forum
+  name: any_type
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584119:
+  id: '1045584119'
+  forobject: part
+  name: any_type
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584120:
+  id: '1045584120'
+  forobject: project
+  name: any_type
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584122:
+  id: '1045584122'
+  forobject: user
+  name: any_type
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584123:
+  id: '1045584123'
+  forobject: any_plmtype
+  name: any_type
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584125:
+  id: '1045584125'
+  forobject: relation
+  name: processus
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584126:
+  id: '1045584126'
+  forobject: relation
+  name: documentation
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584132:
+  id: '1045584132'
+  forobject: sylrplm_properties
+  name: types_values
+  rank:
+  fields: '{"TYPE_DOC_DIRECTORY": {"$TYPE": "STRING", "$VALUE":"directory"}}'
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584134:
+  id: '1045584134'
+  forobject: sylrplm_properties
+  name: others
+  rank:
+  fields: '{"HELP_SUMMARY_LEVEL": {"$TYPE": "INTEGER", "$VALUE":"3"}, "DOMAIN_DEFAULT": {"$TYPE": "STRING", "$VALUE":"user."}, "DOMAIN_FOR_ALL":
+    {"$TYPE": "BOOLEAN", "$VALUE":"true"}}'
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584133:
+  id: '1045584133'
+  forobject: sylrplm_properties
+  name: volumes
+  rank:
+  fields: '{"MAX_FILE_SIZE":{"$TYPE": "INTEGER", "$VALUE":"500000"}}'
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_382640329:
+  id: '382640329'
+  forobject: relation
+  name: history
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584129:
+  id: '1045584129'
+  forobject: sylrplm_properties
+  name: user_default
+  rank:
+  fields: '{"LOCAL_DEFAULT": {"$TYPE": "STRING","$VALUE":"fr"}, "VOLUME_NAME_DEFAULT": {"$TYPE": "STRING","$VALUE":"vol_local_01"}, "TYPE_USER_DEFAULT": {"$TYPE": "STRING","$VALUE":"$NEW_ACCOUNT"}, "ROLES_USER_DEFAULT": {"$TYPE": "STRING","$VALUE":"consultant"}, "GROUPS_USER_DEFAULT": {"$TYPE": "STRING","$VALUE":"consultants,SICM"}, "PROJECTS_USER_DEFAULT": {"$TYPE": "STRING","$VALUE":["PROJECT-users","PROJET TABLE"]}, "TYPE_USER_VALIDATE": {"$TYPE": "STRING","$VALUE":"person_"}}'
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584118:
+  id: '1045584118'
+  forobject: link
+  name: any_type_obsolete
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584113:
+  id: '1045584113'
+  forobject: document
+  name: directory
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_989626523:
+  id: '989626523'
+  forobject: part
+  name: VAR
+  rank:
+  fields: '{"variant_type": {"$TYPE": "STRING"}, "variant_code": {"$TYPE": "STRING"}}'
+  description: "<p>Variante de produit</p>"
+  domain: admin
+  father_id:
+
+Typesobject_989626522:
+  id: '989626522'
+  forobject: part
+  name: PRD
+  rank:
+  fields: '{"product_objective": {"$TYPE": "STRING"}}'
+  description: "<p>Produit</p>"
+  domain: admin
+  father_id:
+
+Typesobject_802476987:
+  id: '802476987'
+  forobject: datafile
+  name: spreadsheet
+  rank:
+  fields: '{"datafile_appli_name": {"$TYPE": "STRING"}, "datafile_appli_version":
+    {"$TYPE": "STRING"}}'
+  description: "<p>Fichier tableur</p>"
+  domain: admin
+  father_id:
+
+Typesobject_446111194:
+  id: '446111194'
+  forobject: user
+  name: person_
+  rank:
+  fields: '{"user_adress": {"$TYPE": "STRING(128)"}, "max_recents": {"$TYPE": "INTEGER",
+    "$VALUE": "5"}}'
+  description: "<p>Personne physique.</p>"
+  domain: admin
+  father_id:
+
+Typesobject_646247456:
+  id: '646247456'
+  forobject: datafile
+  name: text
+  rank:
+  fields: '{"datafile_editor": {"$TYPE": "STRING", "$VALUE": "notepad++"}}'
+  description: "<p>Fichier texte</p>"
+  domain: admin
+  father_id:
+
+Typesobject_989626524:
+  id: '989626524'
+  forobject: part
+  name: EFF
+  rank:
+  fields: '{"effectivity_type": {"$TYPE": "STRING"}}'
+  description: "<p>Effectivite, liee au produit, a la variante et au link</p>"
+  domain: admin
+  father_id:
+
+Typesobject_989626530:
+  id: '989626530'
+  forobject: relation
+  name: configuration
+  rank:
+  fields: '{"relation_config_type": {"$TYPE": "STRING"}, "relation_config_code": {"$TYPE":
+    "STRING"}}'
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_89393353:
+  id: '89393353'
+  forobject: project
+  name: product
+  rank:
+  fields: '{"project_code": {"$TYPE": "STRING(12)"}}'
+  description: "<p>Projet pour un produit</p>"
+  domain: admin
+  father_id:
+
+Typesobject_598687896:
+  id: '598687896'
+  forobject: ar_workitem
+  name: ar_workitem
+  rank:
+  fields: "{}"
+  description: "<p>Tache de processus</p>"
+  domain: admin
+  father_id:
+
+Typesobject_646247457:
+  id: '646247457'
+  forobject: datafile
+  name: thumbnail
+  rank:
+  fields: "{}"
+  description: "<p>Image repr&Atilde;&copy;sentative du document</p>"
+  domain: admin
+  father_id:
+
+Typesobject_41165346:
+  id: '41165346'
+  forobject: history_entry
+  name: history_entry
+  rank:
+  fields: "{}"
+  description: "<p>Historique de processus</p>"
+  domain: admin
+  father_id:
+
+Typesobject_109967184:
+  id: '109967184'
+  forobject: definition
+  name: plm
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_138668910:
+  id: '138668910'
+  forobject: project_typeaccess
+  name: confidential
+  rank:
+  fields: "{}"
+  description: "<p>Projet confidentiel</p>"
+  domain: admin
+  father_id:
+
+Typesobject_258446918:
+  id: '258446918'
+  forobject: project_typeaccess
+  name: secret
+  rank:
+  fields: "{}"
+  description: "<p>Projet secret</p>"
+  domain: admin
+  father_id:
+
+Typesobject_258446919:
+  id: '258446919'
+  forobject: project_typeaccess
+  name: public
+  rank:
+  fields: "{}"
+  description: "<p>Projet public</p>"
+  domain: admin
+  father_id:
+
+Typesobject_989626531:
+  id: '989626531'
+  forobject: link
+  name: bom_link
+  rank:
+  fields:
+  description: "<p>pour definir les relations from link de type bom</p>"
+  domain: admin
+  father_id:
+
+Typesobject_989626525:
+  id: '989626525'
+  forobject: part
+  name: PIE
+  rank:
+  fields: '{"part_role": {"$TYPE": "STRING"}}'
+  description: "<p>Piece</p>"
+  domain: admin
+  father_id:
+
+Typesobject_989626526:
+  id: '989626526'
+  forobject: part
+  name: STR
+  rank:
+  fields: '{"structure_type": {"$TYPE": "STRING"}, "structure_effectivity": {"$TYPE":
+    "STRING"}}'
+  description: "<p>Structure</p>"
+  domain: admin
+  father_id:
+
+Typesobject_1045584150:
+  id: '1045584150'
+  forobject: datafile
+  name: scad
+  rank:
+  fields: '{"datafile_tool": {"$TYPE" : "STRING", "$VALUE" : "openscad"} , "_type_only_build_model_datafile":{"$TYPE" : "STRING", "$VALUE" : "ret <<\"//data#{10.chr}\"\nret << \"#{content}#{10.chr}\"\nret << \"#{datafile.file_name}();#{10.chr}\"\n"} , "_type_only_build_model_tree_file": {"$TYPE" : "STRING", "$VALUE" : "ret << \"//file#{10.chr}\"\nret << \"#{content}#{10.chr}\"\n"} , "_type_only_build_model_tree_end": {"$TYPE" : "STRING", "$VALUE" :"ret << \"\"\nret << \"}#{10.chr}\"\nret << \"#{plmobject.ident}();#{10.chr}\"\n"} , "_type_only_build_model_tree_begin": {"$TYPE" : "STRING", "$VALUE" :"ret = \"\"\nret << \"module #{plmobject.ident}() {#{10.chr}\"\n"} , "_type_only_build_model_tree_matrix": {"$TYPE" : "STRING", "$VALUE" : "ret << \"//tmx#{10.chr}\"\nif mx.nil?\nret<<\"#{datafile.file_name}();\"\nelse\nret<<\"toto\"\nend\nret << \"#{10.chr}\"\n" }, "_type_only_build_model_tree_rotate" : {"$TYPE" : "STRING", "$VALUE" : "ret<< \"rotate([#{mx_rx(mx)}, #{mx_ry(mx)},#{mx_rz(mx)}])#{10.chr}\"\n"} , "_type_only_build_model_tree_translate":{"$TYPE" : "STRING", "$VALUE" : "ret << \"translate([#{mx_tx(mx)}, #{mx_ty(mx)}, #{mx_tz(mx)}])#{10.chr}\"\n"}, "_type_only_build_model_tree_nodes_before": {"$TYPE" : "STRING", "$VALUE" : "ret << \"\"\nret <<\"{#{10.chr}\""} , "_type_only_build_model_tree_nodes_after": {"$TYPE" : "STRING", "$VALUE" : "ret << \"\"\nret <<\"}#{10.chr}\""} , "_type_only_build_file_content": {"$TYPE" : "STRING", "$VALUE" : "ret=\"#{content}#{10.chr}#{self.file_name}();#{10.chr}\""} , "_type_only_build_tree_file_content": {"$TYPE" : "STRING", "$VALUE" : "ret=content.gsub(\"#{self.file_name}();\",\"\")"
+    } , "datafile_comment": {"$TYPE" : "STRING", "$VALUE" : ""}}'
+  description: Fichier cao 3d par openscad
+  domain: admin
+  father_id:
+
+Typesobject_1045584154:
+  id: '1045584154'
+  forobject: sylrplm_properties
+  name: form_values
+  rank:
+  fields: '{"admin.part_structure":{"variant":null,"view_id":1,"all_variants":null,"type_model_id":null}}'
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_218759731:
+  id: '218759731'
+  forobject: user
+  name: "$NEW_ACCOUNT"
+  rank:
+  fields: '{"user_active": {"$TYPE": "BOOLEAN"}}'
+  description: "<p>Type donne au compte a sa creation, en attendant sa validation.</p>"
+  domain: admin
+  father_id:
+
+Typesobject_291198241:
+  id: '291198241'
+  forobject: relation
+  name: bom
+  rank:
+  fields: '{"relation_matrix_dx": {"$TYPE": "DECIMAL", "$VALUE": "0"}, "relation_matrix_dy":
+    {"$TYPE": "DECIMAL", "$VALUE": "0"}, "relation_matrix_dz": {"$TYPE": "DECIMAL",
+    "$VALUE": "0"}, "relation_matrix_rx": {"$TYPE": "DECIMAL", "$VALUE": "0"}, "relation_matrix_ry":
+    {"$TYPE": "DECIMAL", "$VALUE": "0"}, "relation_matrix_rz": {"$TYPE": "DECIMAL",
+    "$VALUE": "0"}}'
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584152:
+  id: '1045584152'
+  forobject: part
+  name: ISSUE
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584128:
+  id: '1045584128'
+  forobject: datafile
+  name: brl-cad
+  rank:
+  fields: '{"datafile_tool": {"$TYPE": "STRING", "$VALUE": "racine"}}'
+  description: "<p>Fichier cao 3d par BRL-CAD pour afficher, utilisez mged ou archer</p>"
+  domain: admin
+  father_id:
+
+Typesobject_1045584155:
+  id: '1045584155'
+  forobject: part
+  name: MEETING
+  rank:
+  fields: '{"meeting_date": {"$TYPE": "DATE"}, "meeting_duration": {"$TYPE": "TIME"}}'
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584156:
+  id: '1045584156'
+  forobject: part
+  name: DECISION
+  rank:
+  fields: '{"decision_decision": {"$TYPE": "STRING", "$VALUE": ["decision_ok", "decision_ko",
+    "decision_no"]}}'
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_1045584159:
+  id: '1045584159'
+  forobject: part
+  name: TEST
+  rank:
+  fields: '{"description": {"$TYPE": "STRING(4)", "$VALUE": "1234"}, "time": {"$TYPE":
+    "TIME", "$VALUE": "10:15:25", "$MINI": "00:00:00", "$MAXI": "20:00:00"}, "date":
+    {"$TYPE": "DATE", "$VALUE": "2015/01/01", "$MINI": "1970/01/01", "$MAXI": "2100/12/31"},
+    "timestamp": {"$TYPE": "TIMESTAMP", "$VALUE": "2015/01/01:10:15:25", "$MINI":
+    "1970/01/01:00:00:00", "$MAXI": "2100/12/31:23:59:59"}, "integer": {"$TYPE": "INTEGER",
+    "$VALUE": "100", "$MINI": "-32667", "$MAXI": "+32667"}, "decimal": {"$TYPE": "DECIMAL(8.3)",
+    "$VALUE": "115.253", "$MINI": "-999.99", "$MAXI": "+999.99"}, "boolean": {"$TYPE":
+    "BOOLEAN", "$VALUE": "true"}}'
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_889037033:
+  id: '889037033'
+  forobject: datafile
+  name: writer
+  rank:
+  fields: '{
+    "datafile_appli_name":{"$TYPE":"STRING","$VALUE":""},
+    "datafile_appli_version":{"$TYPE":"STRING","$VALUE":""},
+    "_type_only_build_model_datafile":{"$TYPE":"STRING","$VALUE":"require \"zip/zip\"\nstringio=Zip::ZipOutputStream::write_buffer(::StringIO.new(\"#{@filename}.zip\")) do |zio|\nzio.put_next_entry(@filename)\nzio.write @content\\nend\nstringio.rewind\nbinary_data=stringio.sysread"},
+    "_type_only_tool": {"$TYPE": "STRING", "$VALUE":"/usr/bin/libreoffice --writer"},
+    "_type_only_build_model_tree_begin":{"$TYPE":"STRING", "$VALUE": "require \"zip/zip\"\nret_type=\"application/zip\"\nret_filename=\"#{plmobject.ident}.zip \"\nret=Tempfile.new(\"#{ret_filename}-#{Time.now}\")\nZip::ZipOutputStream.open(ret.path)do |zio|"},
+    "_type_only_build_model_tree_file": {"$TYPE": "STRING", "$VALUE":"zio.put_next_entry(datafile.file_fullname) \nzio.write content"},
+    "build_model_tree_end":{"$TYPE":"STRING","$VALUE":"end\n"}
+    }'
+  description: "<p>Traitement de texte</p>"
+  domain: admin
+  father_id:
+
+Typesobject_678514879:
+  id: '678514879'
+  forobject: project
+  name: public
+  rank:
+  fields: "{}"
+  description: ''
+  domain: admin
+  father_id:
+
+Typesobject_17665305:
+  id: '17665305'
+  forobject: forum
+  name: tests
+  rank:
+  fields: "{}"
+  description: Forum sur les tests
+  domain: sicm.custo
+  father_id:
+
+Typesobject_251879061:
+  id: '251879061'
+  forobject: forum
+  name: specifs
+  rank:
+  fields: "{}"
+  description: Forum sur les specifications
+  domain: sicm.custo
+  father_id:
+
+Typesobject_312726501:
+  id: '312726501'
+  forobject: forum
+  name: design
+  rank:
+  fields: "{}"
+  description: Forum sur la conception
+  domain: sicm.custo
+  father_id:
+
+Typesobject_788606013:
+  id: '788606013'
+  forobject: forum
+  name: requirements
+  rank:
+  fields: "{}"
+  description: Forum sur les exigences
+  domain: sicm.custo
+  father_id:
+
+Typesobject_873691851:
+  id: '873691851'
+  forobject: document
+  name: cdc
+  rank:
+  fields: "{}"
+  description: Cahier des charges
+  domain: sicm.custo
+  father_id:
+
+Typesobject_959762344:
+  id: '959762344'
+  forobject: forum
+  name: needs
+  rank:
+  fields: "{}"
+  description: Forum sur les besoins
+  domain: sicm.custo
+  father_id:
+
+Typesobject_975625710:
+  id: '975625710'
+  forobject: project
+  name: standard
+  rank:
+  fields: "{}"
+  description: Projet pour articles standards ou catalogues
+  domain: sicm.custo
+  father_id:
+
+Typesobject_994999514:
+  id: '994999514'
+  forobject: datafile
+  name: image
+  rank:
+  fields: '{"datafile_appli_name": {"$TYPE": "STRING"}, "datafile_appli_version":
+    {"$TYPE": "STRING"}}'
+  description: "<p>fichier image jpg gif bmp</p>"
+  domain: sicm.custo
+  father_id:
+
+Typesobject_423945440:
+  id: '423945440'
+  forobject: customer
+  name: private
+  rank:
+  fields: '{"client_code": {"$TYPE": "STRING(12)"} '
+  description: "<p>Client externe a acces restreint</p>"
+  domain: sicm.custo
+  father_id:
+
+Typesobject_353569266:
+  id: '353569266'
+  forobject: document
+  name: m3d
+  rank:
+  fields: '{"m3d_definition": {"$TYPE": "STRING", "$VALUE": ["ebauche", "semi_fini",
+    "fini"]}}'
+  description: "<p>Numerisation 3D</p>"
+  domain: sicm.custo
+  father_id:
+
+Typesobject_942363587:
+  id: '942363587'
+  forobject: datafile
+  name: catia
+  rank:
+  fields: '{"datafile_version_catia": {"$TYPE": "STRING"}}'
+  description: "<p>CAO Catia</p>"
+  domain: sicm.custo
+  father_id:
+
+Typesobject_418777236:
+  id: '418777236'
+  forobject: document
+  name: p2d
+  rank:
+  fields: '{"p2d_format": {"$TYPE": "STRING(2)", "$VALUE": ["A0", "A1", "A2", "A3",
+    "A4"]}}'
+  description: "<p>Numerisation 2D</p>"
+  domain: sicm.custo
+  father_id:
+
+Typesobject_360315624:
+  id: '360315624'
+  forobject: datafile
+  name: autocad
+  rank:
+  fields: '{"datafile_code": {"$TYPE": "STRING"}}'
+  description: "<p>DAO Autocad</p>"
+  domain: sicm.custo
+  father_id:
+
+Typesobject_423945441:
+  id: '423945441'
+  forobject: customer
+  name: internal
+  rank:
+  fields: '{"client_code":  {"$TYPE": "STRING(12)"}'
+  description: "<p>Service ou direction interne a l&#39;entreprise</p>"
+  domain: sicm.custo
+  father_id:
+
+Typesobject_423945442:
+  id: '423945442'
+  forobject: customer
+  name: public
+  rank:
+  fields: '{"client_code": {"$TYPE": "STRING(12)"} '
+  description: "<p>Client externe accessible a tous</p>"
+  domain: sicm.custo
+  father_id:
+
+Typesobject_117029505:
+  id: '117029505'
+  forobject: document
+  name: norme
+  rank:
+  fields: '{"datafile_norme_type": {"$TYPE": "STRING", "$VALUE": ["norme_nf", "norme_uk",
+    "norme_de", "norme_it", "norme_sp"]}, "norme_reference": {"$TYPE": "STRING"}}'
+  description: "<p>Norme applicable</p>"
+  domain: sicm.custo
+  father_id:
+
+Typesobject_64093143:
+  id: '64093143'
+  forobject: document
+  name: fmat
+  rank:
+  fields: '{"material_code": {"$TYPE": "STRING"}}'
+  description: "<p>Fiche matiere</p>"
+  domain: sicm.custo
+  father_id:
+
+Typesobject_314246312:
+  id: '314246312'
+  forobject: project
+  name: sub-assembly
+  rank:
+  fields: '{"project_code": {"$TYPE": "STRING(12)"}}'
+  description: "<p>Projet pour un sous ensemble</p>"
+  domain: sicm.custo
+  father_id:
+
+Typesobject_1016696961:
+  id: '1016696961'
+  forobject: document
+  name: calculsheet
+  rank:
+  fields: '{"document_reference": {"$TYPE": "STRING"}}'
+  description: "<p>Feuille de calcul</p>"
+  domain: sicm.custo
+  father_id:
+
+Typesobject_569273268:
+  id: '569273268'
+  forobject: document
+  name: exb
+  rank:
+  fields: '{"exb_reference": {"$TYPE": "STRING"}}'
+  description: "<p>Expression de besoin</p>"
+  domain: sicm.custo
+  father_id:
