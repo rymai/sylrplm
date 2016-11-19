@@ -98,6 +98,58 @@ index_volumes:
   created_at: 2016-11-14 20:17:15.528740000 Z
   updated_at: 2016-11-14 20:22:55.843163000 Z
 
+index_relations:
+  id: 9
+  ident: index_relations
+  type_table: index
+  description: ''
+  ui_columns: name, name_translate,  typesobject, father_plmtype,father_plmtype_translate
+    ,father_typesobject,child_plmtype,child_plmtype_translate,child_typesobject,paste_way,
+    cardin_occur_min, cardin_occur_max, cardin_use_min, cardin_use_max, views, domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:42:57.702664000 Z
+  updated_at: 2016-11-17 06:44:37.765015000 Z
+
+index_sequences:
+  id: 12
+  ident: index_sequences
+  type_table: index
+  description: ''
+  ui_columns: id, utility, sequence, modify, value, min, max,domain
+  pagination: 
+  menus_action: 
+  domain: ''
+  created_at: 2016-11-17 07:04:10.650911000 Z
+  updated_at: 2016-11-17 07:11:22.055874000 Z
+
+index_typesobjects:
+  id: 10
+  ident: index_typesobjects
+  type_table: index
+  description: ''
+  ui_columns: id, name, name_translate, forobject, forobject_translate,  rank, description,
+    father, fields, domain
+  pagination: 
+  menus_action: 
+  domain: ''
+  created_at: 2016-11-17 07:00:00.698698000 Z
+  updated_at: 2016-11-17 19:36:28.740309000 Z
+
+index_statusobjects:
+  id: 11
+  ident: index_statusobjects
+  type_table: index
+  description: ''
+  ui_columns: id, name, name_translate, forobject,forobject_translate,  typesobject,
+    rank, description, promote, demote, revise, next_statusobjects, previous_statusobjects,  domain
+  pagination: 
+  menus_action: 
+  domain: ''
+  created_at: 2016-11-17 07:01:59.355497000 Z
+  updated_at: 2016-11-17 19:51:37.030001000 Z
+
 index:
   id: 1
   ident: index
@@ -196,3 +248,55 @@ index_volumes:
   domain: ''
   created_at: 2016-11-14 20:17:15.528740000 Z
   updated_at: 2016-11-14 20:22:55.843163000 Z
+
+index_relations:
+  id: 9
+  ident: index_relations
+  type_table: index
+  description: ''
+  ui_columns: name, name_translate,  typesobject, father_plmtype,father_plmtype_translate
+    ,father_typesobject,child_plmtype,child_plmtype_translate,child_typesobject,paste_way,
+    cardin_occur_min, cardin_occur_max, cardin_use_min, cardin_use_max, views, domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:42:57.702664000 Z
+  updated_at: 2016-11-17 06:44:37.765015000 Z
+
+index_sequences:
+  id: 12
+  ident: index_sequences
+  type_table: index
+  description: ''
+  ui_columns: id, utility, sequence, modify, value, min, max,domain
+  pagination: 
+  menus_action: 
+  domain: ''
+  created_at: 2016-11-17 07:04:10.650911000 Z
+  updated_at: 2016-11-17 07:11:22.055874000 Z
+
+index_typesobjects:
+  id: 10
+  ident: index_typesobjects
+  type_table: index
+  description: ''
+  ui_columns: id, name, name_translate, forobject, forobject_translate,  rank, description,
+    father, fields, domain
+  pagination: 
+  menus_action: 
+  domain: ''
+  created_at: 2016-11-17 07:00:00.698698000 Z
+  updated_at: 2016-11-17 19:36:28.740309000 Z
+
+index_statusobjects:
+  id: 11
+  ident: index_statusobjects
+  type_table: index
+  description: ''
+  ui_columns: id, name, name_translate, forobject,forobject_translate,  typesobject,
+    rank, description, promote, demote, revise, next_statusobjects, previous_statusobjects,  domain
+  pagination: 
+  menus_action: 
+  domain: ''
+  created_at: 2016-11-17 07:01:59.355497000 Z
+  updated_at: 2016-11-17 19:51:37.030001000 Z

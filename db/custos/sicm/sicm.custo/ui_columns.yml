@@ -743,6 +743,654 @@ decode:
   created_at: 2016-11-14 20:21:56.199929000 Z
   updated_at: 2016-11-14 20:24:36.928433000 Z
 
+father_plmtype:
+  id: 32
+  ident: father_plmtype
+  type_column: ident
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:49:52.827933000 Z
+  updated_at: 2016-11-16 19:49:52.827933000 Z
+
+child_plmtype:
+  id: 33
+  ident: child_plmtype
+  type_column: index
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:53:03.530533000 Z
+  updated_at: 2016-11-16 19:53:03.530533000 Z
+
+father_typesobject:
+  id: 34
+  ident: father_typesobject
+  type_column: ''
+  description: ''
+  belong_object: father_typesobject
+  belong_method: name_translate
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:54:24.357436000 Z
+  updated_at: 2016-11-16 19:54:24.357436000 Z
+
+child_typesobject:
+  id: 35
+  ident: child_typesobject
+  type_column: ''
+  description: ''
+  belong_object: child_typesobject
+  belong_method: name_translate
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:54:48.521883000 Z
+  updated_at: 2016-11-16 19:54:48.521883000 Z
+
+paste_way:
+  id: 36
+  ident: paste_way
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:58:14.465075000 Z
+  updated_at: 2016-11-16 19:58:14.465075000 Z
+
+cardin_occur_min:
+  id: 37
+  ident: cardin_occur_min
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:58:52.445129000 Z
+  updated_at: 2016-11-16 19:58:52.445129000 Z
+
+cardin_occur_max:
+  id: 38
+  ident: cardin_occur_max
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:59:15.455344000 Z
+  updated_at: 2016-11-16 19:59:15.455344000 Z
+
+cardin_use_min:
+  id: 39
+  ident: cardin_use_min
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:59:30.838796000 Z
+  updated_at: 2016-11-16 19:59:30.838796000 Z
+
+cardin_use_max:
+  id: 40
+  ident: cardin_use_max
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:59:39.357242000 Z
+  updated_at: 2016-11-16 19:59:39.357242000 Z
+
+views:
+  id: 41
+  ident: views
+  type_column: ''
+  description: ''
+  belong_object: views
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '10'
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma
+  type_index: comma
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 20:00:28.261420000 Z
+  updated_at: 2016-11-16 20:17:11.182377000 Z
+
+father_plmtype_translate:
+  id: 42
+  ident: father_plmtype_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: father_plmtype_translate
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: sicm.custo
+  created_at: 2016-11-17 06:42:50.088046000 Z
+  updated_at: 2016-11-17 06:42:50.088046000 Z
+
+child_plmtype_translate:
+  id: 43
+  ident: child_plmtype_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: child_plmtype_translate
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 06:43:19.247179000 Z
+  updated_at: 2016-11-17 06:43:19.247179000 Z
+
+utility:
+  id: 44
+  ident: utility
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 07:08:13.707733000 Z
+  updated_at: 2016-11-17 07:08:13.707733000 Z
+
+sequence:
+  id: 45
+  ident: sequence
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 07:08:27.463637000 Z
+  updated_at: 2016-11-17 07:08:27.463637000 Z
+
+modify:
+  id: 46
+  ident: modify
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 07:08:43.199445000 Z
+  updated_at: 2016-11-17 07:08:43.199445000 Z
+
+value:
+  id: 47
+  ident: value
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 07:08:51.676297000 Z
+  updated_at: 2016-11-17 07:08:51.676297000 Z
+
+min:
+  id: 48
+  ident: min
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 07:09:02.484923000 Z
+  updated_at: 2016-11-17 07:09:02.484923000 Z
+
+max:
+  id: 49
+  ident: max
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 07:09:10.151586000 Z
+  updated_at: 2016-11-17 07:09:10.151586000 Z
+
+forobject:
+  id: 50
+  ident: forobject
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:25:20.009744000 Z
+  updated_at: 2016-11-17 19:25:20.009744000 Z
+
+rank:
+  id: 51
+  ident: rank
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:26:00.084767000 Z
+  updated_at: 2016-11-17 19:26:00.084767000 Z
+
+fields:
+  id: 52
+  ident: fields
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '20'
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:26:53.760804000 Z
+  updated_at: 2016-11-17 19:26:53.760804000 Z
+
+forobject_translate:
+  id: 53
+  ident: forobject_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:35:53.769282000 Z
+  updated_at: 2016-11-17 19:35:53.769282000 Z
+
+promote:
+  id: 54
+  ident: promote
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:48:29.473496000 Z
+  updated_at: 2016-11-17 19:48:29.473496000 Z
+
+demote:
+  id: 55
+  ident: demote
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:48:40.907629000 Z
+  updated_at: 2016-11-17 19:48:40.907629000 Z
+
+revise:
+  id: 56
+  ident: revise
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:48:46.407443000 Z
+  updated_at: 2016-11-17 19:48:46.407443000 Z
+
+previous_statusobjects:
+  id: 58
+  ident: previous_statusobjects
+  type_column: ''
+  description: ''
+  belong_object: previous_statusobjects
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '10'
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma
+  type_index: comma
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:51:07.082546000 Z
+  updated_at: 2016-11-17 19:54:23.248904000 Z
+
+next_statusobjects:
+  id: 57
+  ident: next_statusobjects
+  type_column: ''
+  description: ''
+  belong_object: next_statusobjects
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '10'
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma
+  type_index: comma
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:50:51.499417000 Z
+  updated_at: 2016-11-17 19:55:57.980366000 Z
+
 designation:
   id: 11
   ident: designation
@@ -1486,3 +2134,651 @@ decode:
   domain: ''
   created_at: 2016-11-14 20:21:56.199929000 Z
   updated_at: 2016-11-14 20:24:36.928433000 Z
+
+father_plmtype:
+  id: 32
+  ident: father_plmtype
+  type_column: ident
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:49:52.827933000 Z
+  updated_at: 2016-11-16 19:49:52.827933000 Z
+
+child_plmtype:
+  id: 33
+  ident: child_plmtype
+  type_column: index
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:53:03.530533000 Z
+  updated_at: 2016-11-16 19:53:03.530533000 Z
+
+father_typesobject:
+  id: 34
+  ident: father_typesobject
+  type_column: ''
+  description: ''
+  belong_object: father_typesobject
+  belong_method: name_translate
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:54:24.357436000 Z
+  updated_at: 2016-11-16 19:54:24.357436000 Z
+
+child_typesobject:
+  id: 35
+  ident: child_typesobject
+  type_column: ''
+  description: ''
+  belong_object: child_typesobject
+  belong_method: name_translate
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:54:48.521883000 Z
+  updated_at: 2016-11-16 19:54:48.521883000 Z
+
+paste_way:
+  id: 36
+  ident: paste_way
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:58:14.465075000 Z
+  updated_at: 2016-11-16 19:58:14.465075000 Z
+
+cardin_occur_min:
+  id: 37
+  ident: cardin_occur_min
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:58:52.445129000 Z
+  updated_at: 2016-11-16 19:58:52.445129000 Z
+
+cardin_occur_max:
+  id: 38
+  ident: cardin_occur_max
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:59:15.455344000 Z
+  updated_at: 2016-11-16 19:59:15.455344000 Z
+
+cardin_use_min:
+  id: 39
+  ident: cardin_use_min
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:59:30.838796000 Z
+  updated_at: 2016-11-16 19:59:30.838796000 Z
+
+cardin_use_max:
+  id: 40
+  ident: cardin_use_max
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 19:59:39.357242000 Z
+  updated_at: 2016-11-16 19:59:39.357242000 Z
+
+views:
+  id: 41
+  ident: views
+  type_column: ''
+  description: ''
+  belong_object: views
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '10'
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma
+  type_index: comma
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-16 20:00:28.261420000 Z
+  updated_at: 2016-11-16 20:17:11.182377000 Z
+
+father_plmtype_translate:
+  id: 42
+  ident: father_plmtype_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: father_plmtype_translate
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: sicm.custo
+  created_at: 2016-11-17 06:42:50.088046000 Z
+  updated_at: 2016-11-17 06:42:50.088046000 Z
+
+child_plmtype_translate:
+  id: 43
+  ident: child_plmtype_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: child_plmtype_translate
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 06:43:19.247179000 Z
+  updated_at: 2016-11-17 06:43:19.247179000 Z
+
+utility:
+  id: 44
+  ident: utility
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 07:08:13.707733000 Z
+  updated_at: 2016-11-17 07:08:13.707733000 Z
+
+sequence:
+  id: 45
+  ident: sequence
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 07:08:27.463637000 Z
+  updated_at: 2016-11-17 07:08:27.463637000 Z
+
+modify:
+  id: 46
+  ident: modify
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 07:08:43.199445000 Z
+  updated_at: 2016-11-17 07:08:43.199445000 Z
+
+value:
+  id: 47
+  ident: value
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 07:08:51.676297000 Z
+  updated_at: 2016-11-17 07:08:51.676297000 Z
+
+min:
+  id: 48
+  ident: min
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 07:09:02.484923000 Z
+  updated_at: 2016-11-17 07:09:02.484923000 Z
+
+max:
+  id: 49
+  ident: max
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 07:09:10.151586000 Z
+  updated_at: 2016-11-17 07:09:10.151586000 Z
+
+forobject:
+  id: 50
+  ident: forobject
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:25:20.009744000 Z
+  updated_at: 2016-11-17 19:25:20.009744000 Z
+
+rank:
+  id: 51
+  ident: rank
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:26:00.084767000 Z
+  updated_at: 2016-11-17 19:26:00.084767000 Z
+
+fields:
+  id: 52
+  ident: fields
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '20'
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:26:53.760804000 Z
+  updated_at: 2016-11-17 19:26:53.760804000 Z
+
+forobject_translate:
+  id: 53
+  ident: forobject_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:35:53.769282000 Z
+  updated_at: 2016-11-17 19:35:53.769282000 Z
+
+promote:
+  id: 54
+  ident: promote
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:48:29.473496000 Z
+  updated_at: 2016-11-17 19:48:29.473496000 Z
+
+demote:
+  id: 55
+  ident: demote
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:48:40.907629000 Z
+  updated_at: 2016-11-17 19:48:40.907629000 Z
+
+revise:
+  id: 56
+  ident: revise
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:48:46.407443000 Z
+  updated_at: 2016-11-17 19:48:46.407443000 Z
+
+previous_statusobjects:
+  id: 58
+  ident: previous_statusobjects
+  type_column: ''
+  description: ''
+  belong_object: previous_statusobjects
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '10'
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma
+  type_index: comma
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:51:07.082546000 Z
+  updated_at: 2016-11-17 19:54:23.248904000 Z
+
+next_statusobjects:
+  id: 57
+  ident: next_statusobjects
+  type_column: ''
+  description: ''
+  belong_object: next_statusobjects
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '10'
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma
+  type_index: comma
+  type_editable: 
+  type_editable_file: 
+  domain: ''
+  created_at: 2016-11-17 19:50:51.499417000 Z
+  updated_at: 2016-11-17 19:55:57.980366000 Z
