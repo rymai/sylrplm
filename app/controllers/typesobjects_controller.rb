@@ -4,6 +4,9 @@ class TypesobjectsController < ApplicationController
 	# GET /typesobjects
 	# GET /typesobjects.xml
 	def index
+		ctrl_index
+	end
+	def index_old
 		index_
 		respond_to do |format|
 			format.html # index.html.erb
@@ -15,7 +18,7 @@ class TypesobjectsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname) {"filter_types=#{params[:filter_types]} query=#{params[:query]}"}
 		@typesobjects = Typesobject.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
-
+@object_plms=@typesobjects
 	end
 
 	def index_execute

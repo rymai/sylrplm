@@ -559,10 +559,14 @@ en:
   relation_new: New relation
   relation_list: List of relations
   legend_relation: Relation
-  label_father_plmtype: Father PLMType
   label_father_type: Father type
-  label_child_plmtype: Child PLMType
   label_child_type: Child type
+  label_father_plmtype: Father PLMType
+  label_child_plmtype: Child PLMType
+  label_father_plmtype_translate: Father PLMType
+  label_child_plmtype_translate: Child PLMType
+  label_father_typesobject: Father type
+  label_child_typesobject: Child type
   label_cardin_occur_min: Minimal occurence
   label_cardin_occur_max: Maximal occurence
   label_cardin_use_min: Minimal usage
@@ -628,6 +632,8 @@ en:
   label_statusobject_next_statusobject_ids_in: Next status
   label_statusobject_previous_statusobject_ids_out: Other status
   label_statusobject_previous_statusobject_ids_in: Previous status
+  label_next_statusobjects: Next status
+  label_previous_statusobjects: Previous status
   label_revise: Revisable
   # msg _check_status
   msg_define_status_document: Please, define documents status
@@ -669,6 +675,8 @@ en:
   label_typesobject_name_translate: Type
   label_typesobject_rank: Type rank
   label_typesobject_father: Father type
+  label_forobject: Object
+  label_forobject_translate: Object
   # msg _check_types
   msg_define_types_document: Please, define documents types
   msg_define_types_part: Please, define parts types

@@ -5,6 +5,10 @@ class RelationsController < ApplicationController
 	# GET /relations
 	# GET /relations.xml
 	def index
+		ctrl_index
+	end
+
+	def index_old
 		index_
 		respond_to do |format|
 			format.html # index.html.erb
@@ -14,7 +18,7 @@ class RelationsController < ApplicationController
 
 	def index_
 		@relations = Relation.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
-
+		@object_plms=@relations
 
 	end
 

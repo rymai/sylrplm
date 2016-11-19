@@ -4,6 +4,10 @@ class ViewsController < ApplicationController
 	# GET /views
 	# GET /views.xml
 	def index
+		ctrl_index
+	end
+
+	def index_old
 		index_
 		respond_to do |format|
 			format.html # index.html.erb
@@ -13,7 +17,7 @@ class ViewsController < ApplicationController
 
 	def index_
 		@views = View.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
-
+		@object_plms=@views
 	end
 
 	def index_execute

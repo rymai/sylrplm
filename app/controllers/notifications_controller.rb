@@ -2,6 +2,10 @@ class NotificationsController < ApplicationController
 	# GET /notifications
 	# GET /notifications.xml
 	before_filter :authorize, :except => nil
+	def oindex
+		ctrl_index
+	end
+
 	def index
 		index_
 		respond_to do |format|
@@ -18,6 +22,7 @@ class NotificationsController < ApplicationController
 			params[:query] = "#{current_user.login}"
 		end
 		@notifications = Notification.find_paginate({:user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
+		@object_plms=@notifications
 	#LOG.info(fname) {"notifs=#{@notifications.inspect}"}
 	# if params.include? :current_user
 	# @notifications[:recordset] = @notifications[:recordset].find_all {|notif| notif.responsible_id == current_user.id }

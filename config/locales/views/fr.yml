@@ -299,6 +299,7 @@ fr:
   label_statusobject: Statut
   label_date: Date
   label_description: Description
+  label_statusobject: Statut
   label_typesobject: Type
   # datafile
   legend_datafile: Renseignez les propriétés du fichier de données
@@ -558,10 +559,14 @@ fr:
   relation_new: Nouvelle relation
   relation_list: Liste des relations
   legend_relation: Relation
-  label_father_plmtype: PLMType du père
   label_father_type: Type du père
-  label_child_plmtype: PLMType du fils
   label_child_type: Type du fils
+  label_father_plmtype: PLMType père
+  label_child_plmtype: PLMType fils
+  label_father_plmtype_translate: PLMType père
+  label_child_plmtype_translate: PLMType fils
+  label_father_typesobject: Type père
+  label_child_typesobject: Type fils
   label_cardin_occur_min: Occurence minimale
   label_cardin_occur_max: Occurence maximale
   label_cardin_use_min: Usage minimal
@@ -618,7 +623,7 @@ fr:
   statusobjects_edit: Edition du statut d' objet
   statusobjects_new_dup: Duplication de statut
   label_name: Nom
-  label_rank: Rang de promotion
+  label_rank: Rang
   label_promote: Promotion
   label_demote: Rétrogadation
   label_next_status: Status suivant(s)
@@ -627,6 +632,8 @@ fr:
   label_statusobject_next_statusobject_ids_in: Attribués
   label_statusobject_previous_statusobject_ids_out: Non attribués
   label_statusobject_previous_statusobject_ids_in: Attribués
+  label_next_statusobjects: Prochain statut
+  label_previous_statusobjects: Statut précédent
   label_revise: Révisable
   # msg _check_status
   msg_define_status_document: Définissez les statuts des documents
@@ -668,6 +675,8 @@ fr:
   label_typesobject_name_translate: Type
   label_typesobject_rank: Rang du type
   label_typesobject_father: Parent du  type
+  label_forobject: Objet
+  label_forobject_translate: Objet
   # msg _check_types
   msg_define_types_document: Définissez les types des documents
   msg_define_types_part: Définissez les types des articles

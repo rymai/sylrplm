@@ -2,7 +2,7 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 
 #require File.expand_path(File.dirname(__FILE__) + "/../config/initializers/sylrplm_init")
-require 'test_help'
+#require 'test_help'
 
 # require File.dirname(__FILE__) + '/../lib/caboose/logic_parser'
 # require File.dirname(__FILE__) + '/../lib/caboose/role_handler'
@@ -32,20 +32,22 @@ class ActiveSupport::TestCase
 	# The only drawback to using transactional fixtures is when you actually
 	# need to test transactions.  Since your test is bracketed by a transaction,
 	# any transactions started in your code will be automatically rolled back.
-	self.use_transactional_fixtures = true
+
+	#SYL TODO error self.use_transactional_fixtures = true
 
 	# Instantiated fixtures are slow, but give you @david where otherwise you
 	# would need people(:david).  If you don't want to migrate your existing
 	# test cases which use the @david style and don't mind the speed hit (each
 	# instantiated fixtures translates to a database query per test method),
 	# then set this back to true.
-	self.use_instantiated_fixtures  = false
+
+	#syl TODO error self.use_instantiated_fixtures  = false
 
 	# Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
 	#
 	# Note: You'll currently still have to declare fixtures explicitly in integration tests
 	# -- they do not yet inherit this setting
-	fixtures :all
+	#syl TODO fixtures :all
 	# Add more helper methods to be used by all tests here...
 	def login_as_admin(request)
 		u = users(:user_admin)
@@ -63,7 +65,7 @@ class ActiveSupport::TestCase
 end
 
 class CapybaraTestCase <  ActiveSupport::TestCase
-	include Capybara::DSL
+	#SYL TODOinclude Capybara::DSL
 	def teardown
 		Capybara.reset_sessions!
 		Capybara.use_default_driver

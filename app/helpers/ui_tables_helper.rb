@@ -184,8 +184,10 @@ module UiTablesHelper
 			LOG.debug(fname) {"<======== end column"}
 
 		rescue Exception=> e
-			LOG.error(fname){"Warning:#{e}"}
+			LOG.warn(fname){"Warning:#{e}"}
 			ret += "#{col.ident}:#{e}"
+			LOG.warn(fname) {"stack=#{e.backtrace.join("\n")}"}
+
 		end
 		ret
 	end
@@ -232,8 +234,10 @@ module UiTablesHelper
 			ret+= h_destroy(object)
 			ret+= "</td>"
 			ret+= "<td>"
-			if object.revisable?
-				ret+=h_img_revise
+			if object.respond_to? :revisable
+				if object.revisable?
+					ret+=h_img_revise
+				end
 			end
 			ret+= "</td>"
 			ret+="<td>"
@@ -262,9 +266,9 @@ module UiTablesHelper
 
 	def build_comma(object,method,col,type_table)
 		fname="#{self.class.name}.#{__method__}"
-		LOG.info(fname){"obj=#{obj}, method=#{method}"}
-		txt=comma(object, method)
-			LOG.debug(fname) {"col truncate before= #{col}"}
+		LOG.info(fname){"object=#{object}, method=#{method}"}
+		txt=comma_string(object, method)
+		LOG.debug(fname) {"col truncate before= #{col}"}
 		txt=truncate_text(txt,col)
 		txt
 	end
@@ -273,7 +277,7 @@ module UiTablesHelper
 		fname="#{self.class.name}.#{__method__}"
 		LOG.info(fname){"object=#{object}, method=#{method} col=#{col.ident}"}
 		txt=comma_links(object, method)
-			LOG.debug(fname) {"col truncate before= #{col}"}
+		LOG.debug(fname) {"col truncate before= #{col}"}
 		txt=truncate_text(txt,col)
 		txt
 	end

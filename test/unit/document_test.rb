@@ -1,7 +1,7 @@
 require File.expand_path("../../test_helper", __FILE__)
 
 class DocumentTest < ActiveSupport::TestCase
-	fixtures :users, :groups, :groups_users, :projects, :projects_users, :statusobjects, :typesobjects
+	#syl TODO fixtures :users, :groups, :groups_users, :projects, :projects_users, :statusobjects, :typesobjects
 	# Replace this with your real tests.
 	test "the truth" do
 		assert true

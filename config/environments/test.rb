@@ -1,3 +1,5 @@
+Rails.application.configure do
+
 # Settings specified here will take precedence over those in config/environment.rb
 
 # The test environment is used exclusively to run your application's
@@ -10,10 +12,10 @@ config.cache_classes = true
 config.whiny_nils = true
 
 # Show full error reports and disable caching
-config.action_controller.consider_all_requests_local = true
+#error config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = false
 config.action_view.cache_template_loading            = true
-
+config.eager_load=false
 # Disable request forgery protection in test environment
 config.action_controller.allow_forgery_protection    = false
 
@@ -30,3 +32,4 @@ config.action_mailer.default_url_options = {
 # config.active_record.schema_format = :sql
 
 config.log_level = :debug
+end

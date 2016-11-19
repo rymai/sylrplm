@@ -202,7 +202,8 @@ module Models
 					end
 				end
 				LOG.debug(fname) {"apres user =#{user}  conditions=#{conditions}"}
-				unless (conditions.nil? || conditions[0].blank? || conditions[1]=={})
+				#unless (conditions.nil? || conditions[0].blank? || conditions[1]=={})
+				unless (conditions.nil? || conditions[0].blank? )
 					if last_rev_only
 						# seulement la derniere revision
 						select = "distinct on (ident) *"

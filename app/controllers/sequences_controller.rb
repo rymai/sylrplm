@@ -4,6 +4,10 @@ class SequencesController < ApplicationController
 	# GET /sequences
 	# GET /sequences.xml
 	def index
+		ctrl_index
+	end
+
+	def index
 		index_
 		respond_to do |format|
 			format.html # index.html.erb
@@ -13,7 +17,7 @@ class SequencesController < ApplicationController
 
 	def index_
 		@sequences = Sequence.find_paginate({:user=> current_user, :filter_types => params[:filter_types],:page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items=>get_nb_items(params[:nb_items])})
-
+		@object_plms=@sequences
 	end
 
 	def index_execute
@@ -60,7 +64,6 @@ class SequencesController < ApplicationController
 		@sequence = Sequence.find(params[:id])
 		#@objects=Sequence.getObjectsWithSequence
 		@utilities=html_models_and_columns(@sequence.utility)
-
 
 	end
 

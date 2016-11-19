@@ -26,6 +26,8 @@ en:
   relation_ISSUE_ORIGIN: Issue Origin
   relation_ISSUE_SOLUTION: Issue solution
   relation_RECENT_ACTION: Recent action
+  relation_revise_from: Revise from
+  relation_revise_to: Revise to
   #
   typesobject_name_lifecycle: Lifecyle
   typesobject_name_objects_names: Names
