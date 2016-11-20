@@ -82,7 +82,6 @@ GEM
     atom-tools (2.0.5)
     bigdecimal (1.2.7)
     blankslate (2.1.2.4)
-    browser (2.3.0)
     builder (3.2.2)
     byebug (9.0.6)
     capybara (2.10.1)
@@ -434,6 +433,7 @@ GEM
     unicorn (5.2.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
+    useragent (0.16.8)
     will_paginate (3.1.5)
     xml-simple (1.1.5)
     xpath (2.0.0)
@@ -452,7 +452,6 @@ DEPENDENCIES
   activesupport
   atom-tools
   bigdecimal
-  browser
   bundler
   byebug
   capybara
@@ -496,6 +495,7 @@ DEPENDENCIES
   therubyracer
   uglifier (>= 1.3.0)
   unicorn
+  useragent
   will_paginate
   yajl-ruby
   yaml_db
