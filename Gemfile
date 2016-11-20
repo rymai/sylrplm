@@ -98,6 +98,9 @@ gem 'protected_attributes'
 
 gem 'simple_form', '~> 3.1.0.rc1'
 
+#detect mobile
+gem 'browser'
+
 group :norb do
 # 		will load compatibility for old rubyzip API.
 #gem 'zip-zip'

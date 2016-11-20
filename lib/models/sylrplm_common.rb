@@ -210,9 +210,7 @@ module Models
 						order="ident asc, revision desc"
 						order+=",#{params[:sort]}" unless params[:sort].nil?
 						LOG.debug(fname) {"last_rev_only sort=#{order}  , select=#{select} , conditions=#{conditions}"}
-						recordset = self.paginate(:page => params[:page],
-						:conditions => conditions,
-						:order => order,
+						recordset = self.where(conditions)..order(params[:sort]).paginate(:page => params[:page],
 						:select => select,
 						:per_page => params[:nb_items])
 					else
@@ -222,9 +220,7 @@ module Models
 					#rails2 :order => params[:sort],
 					#rails2 :per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
 						LOG.debug(fname) {"all revisions sort=#{params[:sort]}  , conditions=#{conditions}"}
-						recordset = self.paginate( :page => params[:page],
-						:conditions => conditions,
-						:order => params[:sort],
+						recordset = self.where(conditions).order(params[:sort]).paginate( :page => params[:page],
 						:per_page => (params[:nb_items].nil? ? 20 : params[:nb_items])
 					)
 

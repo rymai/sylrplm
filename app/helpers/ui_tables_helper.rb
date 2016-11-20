@@ -202,58 +202,60 @@ module UiTablesHelper
 	def build_right_action_menus(object)
 		fname="#{self.class.name}.#{__method__}"
 		ret=""
-		unless param_equals?("todo", "select")
-			controller=get_controller_from_model_type(object.modelname)
-			ret+= "<td>"
-			ret+= link_to( h_img_edit,  {:controller=>controller, :action=>'edit', :id => object.id})
-			ret+= "</td>"
-			ret+= "<td>"
-			begin
-				ret+=link_to( h_img_edit_lifecycle, {:controller=>controller, :action=>'edit_lifecycle', :id => object.id})
-			rescue Exception => e
-				LOG.info(fname){"no lifecycle for #{object}"}
-			end
-			ret+="</td>"
-			ret+= "<td>"
-			begin
-				ret+= link_to( h_img(:duplicate),  {:controller=>controller, :action=>'new_dup', :id => object.id})
-			rescue Exception => e
-				LOG.info(fname){"no new dup for #{object}"}
-			end
-			ret+= "</td>"
-			ret+= "<td>"
-			if logged_in?
+		unless mobile?
+			unless param_equals?("todo", "select")
+				controller=get_controller_from_model_type(object.modelname)
+				ret+= "<td>"
+				ret+= link_to( h_img_edit,  {:controller=>controller, :action=>'edit', :id => object.id})
+				ret+= "</td>"
+				ret+= "<td>"
 				begin
-					ret+=link_to(h_img(:copy),  {:controller=>controller, :action=>'add_clipboard', :id => object.id}, remote: true)
+					ret+=link_to( h_img_edit_lifecycle, {:controller=>controller, :action=>'edit_lifecycle', :id => object.id})
 				rescue Exception => e
-					LOG.info(fname){"no new add clipboard for #{object}"}
+					LOG.info(fname){"no lifecycle for #{object}"}
 				end
-			end
-			ret+= "</td>"
-			ret+= "<td>"
-			ret+= h_destroy(object)
-			ret+= "</td>"
-			ret+= "<td>"
-			if object.respond_to? :revisable
-				if object.revisable?
-					ret+=h_img_revise
+				ret+="</td>"
+				ret+= "<td>"
+				begin
+					ret+= link_to( h_img(:duplicate),  {:controller=>controller, :action=>'new_dup', :id => object.id})
+				rescue Exception => e
+					LOG.info(fname){"no new dup for #{object}"}
 				end
-			end
-			ret+= "</td>"
-			ret+="<td>"
-			if(object.respond_to? :checked?)
-				if object.checked?
-					ret+=h_img_checkout  if object.checked?
+				ret+= "</td>"
+				ret+= "<td>"
+				if logged_in?
+					begin
+						ret+=link_to(h_img(:copy),  {:controller=>controller, :action=>'add_clipboard', :id => object.id}, remote: true)
+					rescue Exception => e
+						LOG.info(fname){"no new add clipboard for #{object}"}
+					end
+				end
+				ret+= "</td>"
+				ret+= "<td>"
+				ret+= h_destroy(object)
+				ret+= "</td>"
+				ret+= "<td>"
+				if object.respond_to? :revisable
+					if object.revisable?
+						ret+=h_img_revise
+					end
+				end
+				ret+= "</td>"
+				ret+="<td>"
+				if(object.respond_to? :checked?)
+					if object.checked?
+						ret+=h_img_checkout  if object.checked?
+					else
+						ret+=h_img_checkin
+					end
 				else
-					ret+=h_img_checkin
+					ret+="no check"
 				end
+				ret+="</td>"
+				ret+= "<td>#{check_box(:action_on,object.id)}</td>"
 			else
-				ret+="no check"
+				ret+="<td>select_button(object)}</td>"
 			end
-			ret+="</td>"
-			ret+= "<td>#{check_box(:action_on,object.id)}</td>"
-		else
-			ret+="<td>select_button(object)}</td>"
 		end
 		ret
 	end

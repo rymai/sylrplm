@@ -5,9 +5,11 @@
 				<li class="active">
 					<a class="brand" href="#main" data-toggle="tab"> <%= @page_title || "SYLRPLM" %> </a>
 				</li>
+				<% unless mobile?%>
 				<li >
 					<a class="brand" href="#clipboards" data-toggle="tab"><%= t(:legend_clipboard) %></a>
 				</li>
+				<%end%>
 				<% if logged_in? %>
 				<li>
 					<a class="brand" href="#" title="<%= t(:user_connected,
@@ -26,7 +28,7 @@
 				<% end %>
 
 			</ul><!-- nav nav-tabs -->
-
+			<% unless mobile?%>
 			<div class="btn-group">
 				<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 					<%= t(:legend_desktop)%> <span class="caret"></span>
@@ -46,6 +48,7 @@
 					</li>
 				</ul>
 			</div><!-- /btn-group -->
+			<%end%>
 			<div class="btn-group">
 				<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 					<%= t(:legend_plm_objects)%> <span class="caret"></span>
@@ -58,6 +61,7 @@
 				</ul>
 			</div><!-- /btn-group -->
 
+			<% unless mobile?%>
 			<div class="btn-group">
 				<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 					<%= t(:legend_collab)%> <span class="caret"></span>
@@ -94,6 +98,7 @@
 					</li>
 				</ul>
 			</div><!-- /btn-group -->
+
 			<div class="btn-group">
 				<button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
 					<%= t(:legend_admin) %> <span class="caret"></span>
@@ -208,6 +213,7 @@
 					</li>
 				</ul>
 			</div>
+			<%end%>
 		</div><!-- /btn-toolbar -->
 	</div><!-- /navbar-inner -->
 </div><!-- /navbar -->

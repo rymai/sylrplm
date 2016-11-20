@@ -65,6 +65,7 @@
 		<%end%>
 		</div>
 	</div>
+	<% unless mobile?%>
 	<div id="colRight" name="colRight">
 		<div id="object_tree" name="object_tree" style="display: block;">
 			<div id="tree" class="tab-pane inactive">
@@ -74,7 +75,9 @@
 			</div>
 		</div>
 	</div>
+	<%end%>
 </div>
+<% unless mobile?%>
 <div id="rowTwo"  name="rowTwo">
 	<div id="object_list" name="object_list" style="display: block;">
 		<% unless @object_plms.nil? %>
@@ -86,4 +89,5 @@
 		<%end%>
 	</div>
 </div>
+<%end%>
 

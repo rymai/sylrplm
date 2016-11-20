@@ -82,6 +82,7 @@ GEM
     atom-tools (2.0.5)
     bigdecimal (1.2.7)
     blankslate (2.1.2.4)
+    browser (2.3.0)
     builder (3.2.2)
     byebug (9.0.6)
     capybara (2.10.1)
@@ -451,6 +452,7 @@ DEPENDENCIES
   activesupport
   atom-tools
   bigdecimal
+  browser
   bundler
   byebug
   capybara
