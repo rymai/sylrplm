@@ -11,7 +11,6 @@ module MainHelper
 			browser = Browser.new("Some User Agent", accept_language: "en-us")
 			LOG.debug(fname){"platform=#{browser.platform} mobile?=#{browser.device.mobile?}"}
 			browser.device.mobile?
-			true
 	end
 
 
