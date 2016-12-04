@@ -1,4 +1,4 @@
-require_dependency 'plm_mailer'
+#require_dependency 'plm_mailer'
 
 def ctrl_revise(object)
 	previous_rev = object.revision
