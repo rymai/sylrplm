@@ -100,7 +100,6 @@ class Definition < ActiveRecord::Base
 		if uri.blank?
 			self.errors.add(:base,"nothing to do !!!")
 		else
-		#@_tree = (RuotePlugin.ruote_engine.get_def_parser.parse(uri) rescue nil)
 			@_tree = (RuoteKit.engine.get_def_parser.parse(uri) rescue nil)
 			LOG.debug(fname) {"@_tree=#{@_tree}"}
 			unless @_tree

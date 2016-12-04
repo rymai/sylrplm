@@ -395,7 +395,12 @@ class PlmServices
 		puts fname+  "pg_connection=#{pg_connection}"
 		begin
 			table_name='ruote_docs'
-			#Ruote::Postgres.create_table(pg_connection, true, table_name)
+			Ruote::Postgres.create_table(pg_connection, true, table_name)
+			rescue Exception=>e
+				# the table still exists, no pb
+			puts fname+  "Warning:#{e}"
+		end
+		begin
 			storage_opts={"pg_table_name" => table_name}
 			ruote_storage=Ruote::Postgres::Storage.new(pg_connection, storage_opts)
 			puts fname+ "ruote_storage=#{ruote_storage}"

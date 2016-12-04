@@ -97,8 +97,6 @@ class DefinitionsController < ApplicationController
 				PlmServices.ruote_init
 			end
 			tree = pdef ?
-			#RuotePlugin.ruote_engine.get_def_parser.parse(pdef) :
-
 			RuoteKit.engine.get_def_parser.parse(pdef) :
 			nil
 		LOG.debug(fname){"tree:definitions.tree=#{tree.inspect}"}

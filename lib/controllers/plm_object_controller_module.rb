@@ -1,5 +1,5 @@
 require_dependency 'controllers/controllers'
-
+require_dependency 'ruote/sylrplm/sylrplm'
 
 module Controllers
 	module PlmObjectControllerModule
@@ -615,7 +615,7 @@ module Controllers
 					#LOG.debug(fname){"id #{id} ko check=#{check}"}
 				end
 			end
-			index_
+			ndex_
 			respond_to do |format|
 				params[:controller]=
 				url={:controller=>get_controller_from_model_type(model.name.downcase), :action=>"index"}
@@ -630,6 +630,10 @@ module Controllers
 		#
 		def ctrl_create_process(format, process_name, a_object, value1, value2)
 			fname= "#{self.class.name}.#{__method__}"
+			if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+			end
+			LOG.debug(fname) {"ctrl_create_process: RuoteKit.engine= #{RuoteKit.engine} "}
 			flash[:notice] =nil
 			flash[:error] =nil
 			# create a process
@@ -638,42 +642,31 @@ module Controllers
 				LOG.debug(fname) {"ctrl_create_process: @definition= #{@definition} "}
 				wait_for=true
 				unless @definition.nil?
-					params[:definition_id] = @definition.id
-					li = parse_launchitem
-					options = { :variables => { 'launcher' => @current_user.login } ,:wait_for => wait_for}
+					#params[:definition_id] = @definition.id
+					#launchitem = parse_launchitem
+					#options = { :variables => { 'launcher' => @current_user.login } ,:wait_for => wait_for}
 				#
 				# launch the process
 				#
-				#triplet = RuotePlugin.ruote_engine.launch(li, options)
-				triplet = RuoteKit.engine.launch(li, options)
+				LOG.debug(fname) {"ctrl_create_process: @definition.uri=#{@definition.uri}"}
+			    fei_wfid = RuoteKit.engine.launch(@definition.uri)
 				#wait_for=true=> return [ message, info, fei ]
-				LOG.debug(fname) {"ctrl_create_process: triplet=#{triplet}"}
-					if wait_for
-						fei=triplet[:fei]
-					else
-						fei=triplet
-					end
-				LOG.debug(fname) {"ctrl_create_process: launchitem=#{li} launched options=#{options} => fei.wfid(#{fei.wfid}"}
-					headers['Location'] = process_url(fei.wfid)
-					nb=0
-					workitem = nil
-					while nb<10 and workitem.nil?
-						LOG.debug(fname) {"ctrl_create_process: boucle #{nb} #{fei.wfid}"}
-						sleep 0.3
-						nb+=1
-						workitem = ::Ruote::Sylrplm::ArWorkitem.get_workitem(fei.wfid)
-					end
-				LOG.debug(fname) {"launched workitem=#{workitem.inspect} (nil=ko)"}
-				unless workitem.nil?
-					flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")
-					add_object_to_workitem(a_object, workitem)
-					###format.html { redirect_to(a_object) }
-					###format.xml  { head :ok }
-				else
-					flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")
-					###format.html { redirect_to(a_object) }
-					####format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
-				end
+				LOG.debug(fname) {" process lance: fei_wfid(#{fei_wfid}) "}
+					#nb=0
+					#workitem = nil
+					#while nb<10 and workitem.nil?
+						#LOG.debug(fname) {"ctrl_create_process: boucle #{nb} #{fei.wfid}"}
+						#sleep 0.3
+						#nb+=1
+						#workitem = ::Ruote::Sylrplm::ArWorkitem.get_workitem(fei.wfid)
+					#end
+				#LOG.debug(fname) {"launched workitem=#{workitem.inspect} (nil=ko)"}
+				#unless workitem.nil?
+					#flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")
+					#add_object_to_workitem(a_object, workitem)
+				#else
+					#flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")
+				#end
 			else
 				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "definition to validate the user not found")
 				###format.html { redirect_to(a_object) }
@@ -681,8 +674,6 @@ module Controllers
 			end
 		rescue Exception => e
 			LOG.error(fname){"fei not launched error="+e.inspect}
-			LOG.error(fname){" fei not launched li="+li.inspect}
-			LOG.error(fname){" options="+options.inspect}
 			LOG.error(fname){"trace"}
 			e.backtrace.each {|x| LOG.error(fname){x}}
 			flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "fei not launched error=#{e}")

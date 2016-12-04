@@ -74,10 +74,10 @@ class WorkitemsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"update:params=#{params}"}
 		ok=true
-		fields = Rufus::Json.decode(params[:workitem][:fields])
+		fields = Rufus::Json.decode(params[:workitem][:fields]) unless params[:workitem].blank?
 		@workitem = RuoteKit.storage_participant[params[:id]]
 		LOG.debug(fname) {"@workitems debut=#{RuoteKit.storage_participant.query(:wfid => @workitem.wfid).size}"}
-		@workitem.fields.merge!(fields)
+		@workitem.fields.merge!(fields) unless fields.nil?
 		submit = params[:state]
 		LOG.debug(fname){"submit=#{submit}"}
 		LOG.debug(fname){"workitem.wf_name=#{@workitem.wf_name}"}

@@ -569,7 +569,8 @@ module ApplicationHelper
 			ret+="<h1>"
 			ret+=t(:legend_fields)
 			ret+="</h1>"
-			ret+= h_render_fields(obj, fonct, "fields", true)
+			hrf=h_render_fields(obj, fonct, "fields", true)
+			ret+=hrf.to_s unless hrf.nil?
 		else
 			ret=t("history_no_fields")
 		end
@@ -728,7 +729,7 @@ module ApplicationHelper
           };
         }
       </script>
-        }.html_safe unless ret.html_safe?
+        }.html_safe
 	end
 
 	#

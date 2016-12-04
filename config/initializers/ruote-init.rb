@@ -1,4 +1,4 @@
-require 'ruote/sylrplm/sylrplm'
+#require 'ruote/sylrplm/sylrplm'
 # make changes when needed
 #
 # you may use another persistent storage for example or include a worker so that

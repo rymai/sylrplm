@@ -350,7 +350,7 @@ class DocumentsController < ApplicationController
 
 	def index_
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug(fname){"params=#{params.inspect} object_plm=#{@object_plm}"}
+		LOG.debug(fname){"index_params=#{params.inspect} object_plm=#{@object_plm}"}
 		@object_plms = Document.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 	end
 
