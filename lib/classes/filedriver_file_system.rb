@@ -1,5 +1,4 @@
 require 'classes/filedriver'
-require 'zip'
 class FiledriverFileSystem < Filedriver
 
 	private
@@ -31,7 +30,7 @@ class FiledriverFileSystem < Filedriver
 		LOG.debug(fname) {"datafile.volume.dir_name=#{datafile.volume.dir_name} datafile.class.name=#{datafile.class.name} ident=#{datafile.ident}"}
 		ret=""
 		unless datafile.volume.dir_name.nil? || datafile.ident.nil?
-			ret=File.join datafile.volume.dir_name.gsub("_","-"), datafile.modelname, datafile.ident
+			ret=[datafile.volume.dir_name.gsub("_","-"), datafile.modelname, datafile.ident].join('/')
 		end
 		LOG.debug(fname) {"dir_datafile=#{ret}"}
 		ret
@@ -42,7 +41,7 @@ class FiledriverFileSystem < Filedriver
 		fname= "#{self.class.name}.#{__method__}"
 		ret=[]
 		dir = datafile.dir_repository
-		if File.exists?(dir)
+		if PlmServices.file_exists?(dir)
 			repos=datafile.filename_repository
 			Dir.foreach(dir) do |file|
 				filename=::Datafile.filename_from_file(file)
@@ -61,20 +60,16 @@ class FiledriverFileSystem < Filedriver
 		fname= "#{self.class.name}.#{__method__}"
 		ret=""
 		unless datafile.filename.nil?
-			ret = File.join(datafile.dir_repository, datafile.filename_repository)
+			ret = [datafile.dir_repository, datafile.filename_repository].join('/')
 		end
 		ret
 	end
 
 	def read_file(datafile)
 		fname= "#{self.class.name}.#{__method__}"
-		if File.exists?(datafile.repository)
-			data=''
-			f = File.open(datafile.repository, "rb")
-			nctot = File.size(datafile.repository)
-			data = f.sysread(nctot)
-			f.close
-			LOG.debug(fname) {"fin lecture #{datafile.repository}: #{nctot}"}
+		if PlmServices.file_exists?(datafile.repository)
+			data=PlmServices.file_sysread(datafile.repository)
+			LOG.debug(fname) {"fin lecture #{datafile.repository}: #{data.length}"}
 		else
 			data=nil
 		end
@@ -92,16 +87,7 @@ class FiledriverFileSystem < Filedriver
 		fname= "#{self.class.name}.#{__method__}"
 		repos=datafile.repository
 		LOG.debug(fname) {"content size=#{content.length} repos=#{repos}"}
-		if content.length>0
-			f = File.open(repos, "wb")
-			begin
-				f.puts(content)
-			rescue Exception => e
-				e.backtrace.each {|x| LOG.error x}
-				raise Exception.new "Error writing in server file #{repos}:#{e}"
-			end
-		f.close
-		end
+		PlmServices.file_write(content,repos)
 		#LOG.debug(fname) {"ecriture terminee"}
 	end
 
@@ -128,7 +114,7 @@ class FiledriverFileSystem < Filedriver
 		end
 		if(ret!=nil && olddirname != nil && olddirname != vol_dir_name)
 			dirfrom = olddirname
-			if(File.exists?(dirfrom))
+			if(PlmServices.file_exists?(dirfrom))
 				dirto=vol_dir_name
 				if(dirto != dirfrom)
 					begin
@@ -143,7 +129,7 @@ class FiledriverFileSystem < Filedriver
 					end
 				end
 			else
-				LOG.info(fname) {"File.exists?(#{dirfrom}):#{File.exists?(dirfrom)}"}
+				LOG.info(fname) {"PlmServices.file_exists?(#{dirfrom}):#{PlmServices.file_exists?(dirfrom)}"}
 				ret=nil
 			end
 		else
@@ -168,7 +154,7 @@ class FiledriverFileSystem < Filedriver
 
 	def delete_volume_dir(volume)
 		fname= "#{self.class.name}.#{__method__}"
-		if File.exists? volume.dir_name
+		if PlmServices.file_exists? volume.dir_name
 			begin
 				strm = FileUtils.remove_dir volume.dir_name
 			rescue Exception => e
@@ -191,7 +177,7 @@ class FiledriverFileSystem < Filedriver
 		fname= "#{self.class.name}.#{__method__}"
 		dir = datafile.dir_repository
 		#puts "datafile.remove_files:"+dir
-		if File.exists?(dir)
+		if PlmServices.file_exists?(dir)
 			Dir.foreach(dir) { |file|
 				repos=File.join(dir,file)
 				#LOG.debug(fname) {"datafile.remove_files:file="+repos}
@@ -294,7 +280,7 @@ class FiledriverFileSystem < Filedriver
 	protected
 
 	def directory_exists?(adir)
-		File.exists?(adir)
+		PlmServices.file_exists?(adir)
 	end
 
 	def directories(purge = false)

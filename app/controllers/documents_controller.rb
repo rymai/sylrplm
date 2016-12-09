@@ -304,6 +304,7 @@ class DocumentsController < ApplicationController
 		#LOG.debug(fname){"params=#{params.inspect}"}
 		@object_plm = Document.find(params[:id])
 		@datafile = Datafile.new({:user => current_user, :thedocument => @object_plm})
+		@datafile.document=@object_plm
 		ctrl_new_datafile(@object_plm)
 	end
 

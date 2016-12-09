@@ -1,4 +1,5 @@
 require 'ruote/sylrplm/sylrplm'
+require 'zip'
 
 class PlmServices
 	include ::Ruote::Sylrplm
@@ -450,4 +451,43 @@ class PlmServices
 		RuoteKit.engine.context.logger.noisy = false
 	end
 
+	def self.file_exists?(filename)
+		return File.exists?(filename)
+	end
+
+	def self.file_write(content,repos)
+		if content.length>0
+			f = File.open(repos, "wb")
+			begin
+				f.puts(content)
+			rescue Exception => e
+				e.backtrace.each {|x| LOG.error x}
+				raise Exception.new "Error writing in server file #{repos}:#{e}"
+			end
+			f.close
+		end
+	end
+
+	def self.file_sysread(repository)
+		f = File.open(repository, "rb")
+		nctot=file_size(repository)
+		data = f.sysread(nctot)
+		f.close
+		data
+	end
+
+	def self.file_size(repository)
+		nctot = File.size(repository)
+	end
+
+	def self.file_basename(filename)
+		File.basename(filename)
+	end
+
+	def self.write_ouput_stream(tmpfile,tmpname,content)
+		::Zip::ZipOutputStream.open(tmpfile) do |zio|
+			zio.put_next_entry(tmpname)
+			zio.write content
+		end
+	end
 end

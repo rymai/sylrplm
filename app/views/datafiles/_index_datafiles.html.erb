@@ -8,10 +8,10 @@
 		<th <%= sort_td_class_helper :plm_object %>> <%= sort_link_helper t(:label_datafile_object), :plm_object %> </th>
 		<th <%= sort_td_class_helper :volume_id %>> <%= sort_link_helper t(:label_volume), :volume_id %> </th>
 		<th <%= sort_td_class_helper :filename %>> <%= sort_link_helper t(:label_filename), :filename %> </th>
+		<% if admin_logged_in?%>
 		<th <%= sort_td_class_helper :owner %>> <%= sort_link_helper t(:label_responsible), :owner %> </th>
 		<th <%= sort_td_class_helper :group %>> <%= sort_link_helper t(:label_group), :group %> </th>
 		<th <%= sort_td_class_helper :projowner %>> <%= sort_link_helper t(:label_projowner), :projowner %> </th>
-		<% if admin_logged_in?%>
 		<th <%= sort_td_class_helper :content_type %>> <%= sort_link_helper t(:label_content_type), :content_type %> </th>
 		<th <%= sort_td_class_helper :created_at %>> <%= sort_link_helper t(:label_date), :created_at %> </th>
 		<th <%= sort_td_class_helper :domain %>> <%= sort_link_helper t(:label_domain), :domain %> </th>
@@ -56,10 +56,11 @@
 		<% end %>
 		<% end %> <td> <%= link_to "#{datafile.volume.name}.#{datafile.volume.protocol}", volume_path(datafile.volume) %> </td>
 		<td><a href="<%= url_for(:controller=> 'datafiles',:action=>'show_file', :id => datafile.id) %>" title="<%= datafile.repository %>"><%= h datafile.filename %></a></td>
+		<% if admin_logged_in?%>
 		<td> <%= link_to datafile.owner.login, user_path(datafile.owner) %> </td>
 		<td> <%= link_to datafile.group.name, group_path(datafile.group) %> </td>
 		<td> <%= link_to datafile.projowner.ident, project_path(datafile.projowner) %> </td>
-		<% if admin_logged_in?%>
+
 		<td> <% if datafile.content_type != nil %>
 		<%= datafile.content_type[0..20] %>
 		<%end %> </td>

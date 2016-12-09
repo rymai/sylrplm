@@ -1,7 +1,10 @@
 require 'tmpdir'
+require 'rubygems'
+require 'zip'
 class Datafile < ActiveRecord::Base
 	include Models::PlmObject
 	include Models::SylrplmCommon
+include Zip
 
 	attr_accessor :user, :file_field, :file_import
 	attr_accessible :id, :owner_id, :typesobject_id, :customer_id, :document_id, :part_id, :project_id, :volume_id
@@ -22,8 +25,7 @@ class Datafile < ActiveRecord::Base
 	belongs_to :group
 	belongs_to :projowner,
     :class_name => "Project"
-
-	before_save :upload_file
+	#rails2 before_save :upload_file
 	# for rules about fog names
 	# http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html
 	#
@@ -65,14 +67,14 @@ class Datafile < ActiveRecord::Base
 	#
 	def repository
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug(fname) {"appel #{volume.protocol_driver}.repository"}
+		LOG.debug(fname) {"appel_repository #{volume.protocol_driver}.repository"}
 		ret= volume.protocol_driver.repository(self)
 		ret
 	end
 
 	def read_file
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug(fname) {"appel #{volume.protocol_driver}.read_file"}
+		LOG.debug(fname) {"appel_read_file #{volume.protocol_driver}.read_file"}
 		ret= volume.protocol_driver.read_file(self)
 		ret
 	end
@@ -126,7 +128,6 @@ class Datafile < ActiveRecord::Base
 		# no code to modify the file, we read the file as is
 		ret = self.read_file
 		end
-		LOG.debug(fname) {"ret=\n#{ret.size}"}
 		ret
 	end
 
@@ -138,12 +139,13 @@ class Datafile < ActiveRecord::Base
 
 	def write_file(content)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug(fname) {"content size=#{content.length} volume=#{volume} protocol=#{volume.protocol}"}
+		LOG.debug(fname) {"content size=#{content.length} volume=#{volume} protocol=#{volume.protocol}"}
 		ret=true
 		if content.length>0
 			create_directory
 			repos = self.repository
-			#LOG.debug(fname) {"appel #{volume.protocol_driver}.write_file"}
+			LOG.debug(fname) {"write_file_appel #{volume.protocol_driver}.write_file"}
+			LOG.debug(fname) {"write_file_repository= #{repos}"}
 			ret = volume.protocol_driver.write_file(self, content)
 		end
 		ret
@@ -176,7 +178,7 @@ class Datafile < ActiveRecord::Base
 	#TODO: dispatcher dans les drivers
 	def file_exists?
 		fname= "#{self.class.name}.#{__method__}"
-		File.exists?(repository)
+		PlmServices.file_exists?(repository)
 	end
 
 	#TODO: dispatcher dans les drivers
@@ -184,7 +186,7 @@ class Datafile < ActiveRecord::Base
 		fname= "#{self.class.name}.#{__method__}"
 		repos=repository
 		if(repos!=nil)
-			if (File.exists?(repos))
+			if (PlmServices.file_exists?(repos))
 				begin
 					File.unlink(repos)
 				rescue
@@ -220,6 +222,7 @@ class Datafile < ActiveRecord::Base
 	end
 
 	def m_update(params, user)
+		fname= "#{self.class.name}.#{__method__}"
 		update_accessor(user)
 		stupd = update_attributes_repos(params, user)
 	end
@@ -240,11 +243,11 @@ class Datafile < ActiveRecord::Base
 	end
 
 	def initialize(*args)
-			fname= "plm_object:#{self.class.name}.#{__method__}"
-			LOG.debug(fname) {"datafile.initialize debut args=#{args.length}:#{args.inspect}"}
-			super(args[0])
-			self.revision=1
-			LOG.debug(fname) {"datafile.initialize fin args=#{args.length}:#{args.inspect}"}
+		fname= "plm_object:#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {"datafile.initialize debut args=#{args.length}:#{args.inspect}"}
+		super(args[0])
+		self.revision=1
+		LOG.debug(fname) {"datafile.initialize fin args=#{args.length}:#{args.inspect}"}
 	end
 
 	def user_obsolete=(user)
@@ -306,10 +309,10 @@ class Datafile < ActiveRecord::Base
 						# on remet la revision demandee active
 						parameters[:revision]=from_rev
 						parameters[:filename]=Datafile.filename_from_file(params[:restore_file])
-					LOG.debug(fname){"update_attributes_repos: parameters=#{parameters.inspect}"}
+						LOG.debug(fname){"update_attributes_repos: parameters=#{parameters.inspect}"}
 					self.update_attributes(parameters)
 					else
-					LOG.debug(fname){"update_attributes_repos: parameters=#{parameters.inspect}"}
+						LOG.debug(fname){"update_attributes_repos: parameters=#{parameters.inspect}"}
 					self.update_attributes(parameters)
 					end
 				end
@@ -329,24 +332,26 @@ class Datafile < ActiveRecord::Base
 		ret
 	end
 
+	#obsolete in rails4
 	def uploaded_file=(file_field)
 		fname= "#{self.class.name}.#{__method__}"
-		#LOG.debug(fname){"file_field=#{file_field.inspect} volume=#{volume} protocol=#{volume.protocol}"}
+		LOG.debug(fname){"uploaded_file=file_field=#{file_field.inspect} volume=#{volume} protocol=#{volume.protocol}"}
 		self.file_field = file_field
 	end
 
-	def upload_file
+	def upload_file(file_field)
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"upload_file: filename=#{filename}"}
 		LOG.debug(fname){"upload_file: debut de upload: file_field=#{file_field.inspect}"}
 		LOG.debug(fname){"upload_file: original_filename=#{file_field.original_filename if file_field.respond_to? :original_filename}"}
+		LOG.debug(fname){"upload_file: path=#{file_field.path if file_field.respond_to? :path}"}
 		LOG.debug(fname){"upload_file: datafile=#{self.inspect}"}
-		unless self.file_field.blank?
+		unless file_field.blank?
 			self.content_type = file_field.content_type.chomp if file_field.respond_to? :content_type
 			self.filename = base_part_of(file_field.original_filename) if file_field.respond_to? :original_filename
-			#LOG.debug(fname){"filename=#{self.filename} content_type=#{self.content_type}"}
-			#content = file_field.read
+			LOG.debug(fname){"upload_file: filename=#{self.filename} content_type=#{self.content_type}"}
 			content = open(file_field.path,"rb") { |io| io.read }
+			LOG.debug(fname){"content=#{content.size}"}
 			ret = write_file(content)
 			self.file_field=nil
 		else unless self.file_import.nil?
@@ -372,18 +377,18 @@ class Datafile < ActiveRecord::Base
 
 	def base_part_of(file_name)
 		fname= "#{self.class.name}.#{__method__}"
-		File.basename(file_name).gsub(/[^\w._-]/, '')
+		PlmServices.file_basename(file_name).gsub(/[^\w._-]/, '')
 	end
 
 	def file_path
-		File.basename(self.filename)
+		PlmServices.file_basename(self.filename)
 	end
 
 	# return the filename without the dir path and the extension
 	def file_name
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname) {"filename=#{filename}"}
-		File.basename(self.filename).split(".")[0] unless self.filename.blank?
+		PlmServices.file_basename(self.filename).split(".")[0] unless self.filename.blank?
 	end
 
 	def file_fullname
@@ -395,7 +400,7 @@ class Datafile < ActiveRecord::Base
 
 	# return the extension of the file, nil if no . in the name
 	def file_extension
-		sp=File.basename(filename).split(".")
+		sp=PlmServices.file_basename(filename).split(".")
 		sp[sp.size-1] if sp.size>1
 	end
 
@@ -406,7 +411,7 @@ class Datafile < ActiveRecord::Base
 		else
 		ret = self.filename.to_s
 		end
-		#LOG.info(fname) {"filename_repository=#{ret}"}
+		LOG.info(fname) {"filename_repository=#{ret}"}
 		ret
 	end
 
@@ -437,7 +442,7 @@ class Datafile < ActiveRecord::Base
 
 	def read_file_by_lines
 		fname= "#{self.class.name}.#{__method__}"
-		if File.exists?(repository)
+		if PlmServices.file_exists?(repository)
 			data=''
 			f = File.open(repository, "r")
 			f.each_line do |line|
@@ -460,16 +465,16 @@ class Datafile < ActiveRecord::Base
 		unless content.nil? || content.size<=0
 			LOG.debug(fname) {"content.length=#{content.length}"}
 			dir_repos=File.join("public","tmp")
-			FileUtils.mkdir_p(dir_repos) unless File.exists?(dir_repos)
+			FileUtils.mkdir_p(dir_repos) unless PlmServices.file_exists?(dir_repos)
 			tmpfilename=repository.gsub("/","_")
 			repos = File.join(dir_repos, tmpfilename)
-			LOG.debug(fname) {"repository=#{repos} dir_repos=#{dir_repos} exist=#{File.exists?(dir_repos)}"}
-			unless File.exists?(repos)
-				if File.exists?(dir_repos)
+			LOG.debug(fname) {"repository=#{repos} dir_repos=#{dir_repos} exist=#{PlmServices.file_exists?(dir_repos)}"}
+			unless PlmServices.file_exists?(repos)
+				if PlmServices.file_exists?(dir_repos)
 					f = File.open(repos, "wb")
 					begin
 						f.puts(content)
-						LOG.debug(fname) {"file is writed in #{repos}:#{File.exists?(repos)}"}
+						LOG.debug(fname) {"file is writed in #{repos}:#{PlmServices.file_exists?(repos)}"}
 					rescue Exception => e
 						e.backtrace.each {|x| LOG.error x}
 						raise Exception.new "Error writing in tmp file #{repos}:#{e}"
@@ -481,9 +486,9 @@ class Datafile < ActiveRecord::Base
 			else
 				LOG.debug(fname) {"#{repos} already existing, using it"}
 			end
-		ret = File.join("/tmp",tmpfilename)
+			ret = File.join("/tmp",tmpfilename)
 		end
-		#LOG.info(fname) {"src=#{ret.to_s} exist=#{File.exists?(repos)}"}
+		#LOG.info(fname) {"src=#{ret.to_s} exist=#{PlmServices.file_exists?(repos)}"}
 		ret
 	end
 
@@ -515,10 +520,7 @@ class Datafile < ActiveRecord::Base
 		content=self.read_file_for_download
 		unless content.blank?
 			size=content.size
-			::Zip::ZipOutputStream.open(tmpfile) do |zio|
-				zio.put_next_entry(tmpname)
-				zio.write content
-			end
+			PlmServices.write_ouput_stream(tmpfile,tmpname,content)
 		else
 		size=0
 		end

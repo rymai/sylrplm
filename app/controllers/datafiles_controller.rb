@@ -72,6 +72,9 @@ class DatafilesController < ApplicationController
 		#puts "datafiles_controller.create:errors=#{@datafile.errors.inspect}"
 		respond_to do |format|
 			@datafile=Datafile.m_create(params)
+			uploaded_file=params[:datafile][:uploaded_file]
+			LOG.debug(fname) {"create: uploaded_file=#{uploaded_file}"}
+			@datafile.upload_file(uploaded_file)
 			if @datafile.errors.empty?
 				flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_datafile), :ident => @datafile.ident)
 				params[:id]=@datafile.id
@@ -92,10 +95,14 @@ class DatafilesController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"update: params=#{params.inspect}"}
 		@datafile = Datafile.find(params[:id])
+		uploaded_file=params[:datafile][:uploaded_file]
+		LOG.debug(fname) {"update: uploaded_file=#{uploaded_file}"}
+
 		LOG.debug(fname){"update: revision=#{@datafile.revision}"}
 		@types    = Typesobject.get_types("datafile")
 		@object_plm = Document.find(params["doc"]) if params["doc"]
 		stupd = @datafile.m_update(params, @current_user)
+		@datafile.upload_file(uploaded_file)
 		respond_to do |format|
 			if stupd && !@datafile.have_errors?
 				LOG.debug(fname){"update: ok=#{@datafile.inspect}"}

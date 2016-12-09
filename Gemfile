@@ -76,6 +76,7 @@ gem 'will_paginate','3.1.5'
 
 # 		read and create zip files
 gem 'rubyzip', '1.1.7'
+gem 'zip-zip'
 
 #gem 'string_to_sha1', :git => "git://github.com/sylvani/string_to_sha1.git"
 #gem 'string_to_sha1', :path => "/home/syl/trav/rubyonrails/string_to_sha1"

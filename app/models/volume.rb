@@ -218,7 +218,7 @@ class Volume < ActiveRecord::Base
 		else
 			dir=File.join(self.directory,self.name)
 			ret=""
-			if (File.exists?(dir))
+			if (PlmServices.file_exists?(dir))
 				Dir.foreach(dir) do |objectdir|
 					if (objectdir!="." && objectdir!="..")
 						dirobject=File.join(dir,objectdir)
