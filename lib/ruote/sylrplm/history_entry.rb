@@ -56,7 +56,7 @@ module Ruote
 			end
 
 			def typesobject
-				Typesobject.find_by_forobject(model_name)
+				Typesobject.find_by_forobject(model_name).to_a[0]
 			end
 
 			def model_name

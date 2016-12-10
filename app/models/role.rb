@@ -32,7 +32,7 @@ class Role < ActiveRecord::Base
 	def ident; title; end
 
 	def typesobject
-		Typesobject.find_by_forobject(modelname).to_a
+		Typesobject.find_by_forobject(modelname).to_a[0]
 	end
 
 	def title_translate

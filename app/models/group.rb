@@ -39,7 +39,7 @@ class Group < ActiveRecord::Base
 	end
 
 	def typesobject
-		Typesobject.find_by_forobject(modelname)
+		Typesobject.find_by_forobject(modelname).to_a[0]
 	end
 
 	def father_name
