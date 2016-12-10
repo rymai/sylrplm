@@ -241,12 +241,12 @@ class CustomersController < ApplicationController
 	def add_docs
 		#puts "#{self.class.name}.#{__method__}:#{params.inspect}"
 		@object_plm = Customer.find(params[:id])
-		ctrl_add_objects_from_clipboardtes(@object_plm, :document)
+		ctrl_add_objects_from_clipboard(@object_plm, :document)
 	end
 
 	def add_projects
 		@object_plm = Customer.find(params[:id])
-		ctrl_add_objects_from_clipboardtes(@object_plm, :project)
+		ctrl_add_objects_from_clipboard(@object_plm, :project)
 	end
 
 	#

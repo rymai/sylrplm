@@ -13,7 +13,6 @@ class WorkitemsController < ApplicationController
 	def show
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"params="+params.inspect}
-		#@workitem =  RuoteKit.storage_participant[params[:id]]
 		sleep 0.2
 		@workitem = Ruote::Sylrplm::ArWorkitem.find_by_wfid(params[:wfid])
 		LOG.debug(fname){"@workitem="+@workitem.inspect}
@@ -28,6 +27,9 @@ class WorkitemsController < ApplicationController
 	def edit
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"params="+params.inspect}
+		if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+		end
 		@workitem = RuoteKit.storage_participant[params[:id]]
 		return error_reply('no workitem', 404) unless @workitem
 		LOG.debug(fname){"@workitem="+@workitem.inspect}
@@ -75,6 +77,9 @@ class WorkitemsController < ApplicationController
 		LOG.debug(fname){"update:params=#{params}"}
 		ok=true
 		fields = Rufus::Json.decode(params[:workitem][:fields]) unless params[:workitem].blank?
+		if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+		end
 		@workitem = RuoteKit.storage_participant[params[:id]]
 		LOG.debug(fname) {"@workitems debut=#{RuoteKit.storage_participant.query(:wfid => @workitem.wfid).size}"}
 		@workitem.fields.merge!(fields) unless fields.nil?
@@ -190,6 +195,9 @@ class WorkitemsController < ApplicationController
 
 	def index_
 		fname= "#{self.class.name}.#{__method__}"
+		if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+		end
 		@workitems = RuoteKit.storage_participant.all(:order=>[:label,:wfid,:expid])
 		LOG.debug(fname) {"@workitems=#{RuoteKit.storage_participant.query(:wfid => @workitem.wfid).size}"} unless @workitem.nil?
 	end

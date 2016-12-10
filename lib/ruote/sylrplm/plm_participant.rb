@@ -36,6 +36,9 @@ module  Ruote
 			fname="#{self.class.name}.#{__method__}"
 			LOG.debug(fname) {"workitem=#{workitem.inspect}, opts?=#{@opts.nil?}"}
 			LOG.debug(fname) {"workitem.h=#{workitem.to_h}"}
+			if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+		   	end
 			process=RuoteKit.engine.process(workitem.wfid)
 			begin
 				unless workitem.nil?

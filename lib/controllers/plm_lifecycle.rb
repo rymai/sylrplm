@@ -1,34 +1,13 @@
 #require_dependency 'plm_mailer'
-
-def ctrl_revise(object)
-	previous_rev = object.revision
-	@object = object.revise
-	@types = Typesobject.get_types(object.class.name.downcase!)
-	respond_to do |format|
-		unless @object.nil?
-			flash[:notice] = t(:ctrl_object_revised,:typeobj =>t(:ctrl_.to_s+@object.class.name.downcase!),:ident=>@object.ident,:previous_rev=>previous_rev,:revision=>@object.revision)
-			format.html { redirect_to(@object) }
-			format.xml  { head :ok }
-		else
-			@object = object
-			flash[:notice] = t(:ctrl_object_not_revised,:typeobj =>t(:ctrl_.to_s+@object.class.name.downcase!),:ident=>@object.ident,:previous_rev=>previous_rev)
-			format.html { redirect_to(@object) }
-			format.xml  { head :ok }
-		end
-	end
-end
-
 def commit_promote?
 	fname= "#{self.class.name}.#{__method__}"
 	ret = [t("promote_by_select"),t("promote_by_menu"),t("promote_by_action")].include? params[:commit]
-	#LOG.debug(fname){"commit=#{params[:commit]} ret=#{ret}"}
 	ret
 end
 
 def commit_demote?
 	fname= "#{self.class.name}.#{__method__}"
 	ret = [t("demote_by_select"),t("demote_by_menu"),t("demote_by_action")].include? params[:commit]
-	#LOG.debug(fname){"commit=#{params[:commit]} menu:#{t("demote_by_menu").force_encoding("UTF-8")} ret=#{ret}"}
 	ret
 end
 
@@ -36,6 +15,41 @@ def commit_revise?
 	fname= "#{self.class.name}.#{__method__}"
 	ret = [t("revise_by_menu"),t("revise_by_action")].include? params[:commit]
 	ret
+end
+
+def ctrl_revise(a_object)
+	fname= "#{self.class.name}.#{__method__}"
+	LOG.debug(fname){"a_object=#{a_object}"}
+	respond_to do |format|
+		if ctrl_update_lifecycle(a_object)
+			previous_rev = a_object.revision
+			@types = Typesobject.get_types(a_object.class.name.downcase!)
+			if a_object.revise_by_action?
+				LOG.debug(fname){"ctrl_create_process #{a_object}"}
+				ctrl_create_process(format, "revision", a_object, nil, nil)
+				@object =a_object
+			else
+			# revise by menu
+				@object = a_object.revise
+			end
+			unless @object.nil?
+				flash[:notice] = t(:ctrl_object_revised,:typeobj =>t(:ctrl_.to_s+@object.class.name.downcase!),:ident=>@object.ident,:previous_rev=>previous_rev,:revision=>@object.revision)
+				format.html { redirect_to(@object) }
+				format.xml  { head :ok }
+			else
+				@object = a_object
+				flash[:notice] = t(:ctrl_object_not_revised,:typeobj =>t(:ctrl_.to_s+@object.class.name.downcase!),:ident=>@object.ident,:previous_rev=>previous_rev)
+				format.html { redirect_to(@object) }
+				format.xml  { head :ok }
+			end
+		else
+			@object = a_object
+			flash[:error] = t(:ctrl_object_not_updated, :typeobj => t(:ctrl_document), :ident => @object.ident, :error => @object.errors.full_messages)
+			format.html { render :action => "edit_lifecycle" }
+			format.xml  { render :xml => a_object.errors, :status => :unprocessable_entity }
+		end
+	end
+
 end
 
 def ctrl_promote(a_object, withMail=true)
@@ -60,12 +74,12 @@ def ctrl_promote(a_object, withMail=true)
 					if flash[:error].blank?
 						flash[:notice] = msg+ "<br/>"+t(:ctrl_object_promote_by_action,:typeobj =>t(:ctrl_.to_s+a_object.modelname),:ident=>a_object.ident,:current_rank=>current_rank,:new_rank=>nil,:validersMail=>nil)
 						format.html { render :action => "show" }
-###						format.html { redirect_to(a_object) }
+						###						format.html { redirect_to(a_object) }
 						format.xml  { head :ok }
 					else
 						flash[:notice] = msg + "<br/>"+t(:ctrl_object_not_promote_by_action,:typeobj =>t(:ctrl_.to_s+a_object.modelname),:ident=>a_object.ident,:current_rank=>current_rank,:new_rank=>nil,:validersMail=>nil)
 						format.html { render :action => "show" }
-###						format.html { redirect_to(a_object) }
+						###						format.html { redirect_to(a_object) }
 						format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
 					end
 
@@ -160,7 +174,6 @@ def ctrl_demote(a_object, withMail=true, st_from=nil, st_next=nil)
 			format.xml  { render :xml => a_object.errors, :status => :unprocessable_entity }
 		end
 	end
+
 end
-
-
 

@@ -123,6 +123,9 @@ class PlmServices
 		end
 		#
 		unless mdl.nil?
+			if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+		    end
 			begin
 				if(mdl.to_s=="Ruote::Sylrplm::Process" || mdl.to_s=="Process")
 				ret=::RuoteKit.engine.process(id)
@@ -397,7 +400,7 @@ class PlmServices
 		begin
 			table_name='ruote_docs'
 			Ruote::Postgres.create_table(pg_connection, true, table_name)
-			rescue Exception=>e
+		rescue Exception=>e
 				# the table still exists, no pb
 			puts fname+  "Warning:#{e}"
 		end

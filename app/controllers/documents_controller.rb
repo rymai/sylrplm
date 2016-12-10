@@ -324,7 +324,7 @@ class DocumentsController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug(fname){"params=#{params.inspect}"}
 		@object_plm = Document.find(params[:id])
-		ctrl_add_objects_from_clipboardtes(@object_plm, :document)
+		ctrl_add_objects_from_clipboard(@object_plm, :document)
 	end
 
 	def show_design

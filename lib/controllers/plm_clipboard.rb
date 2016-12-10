@@ -12,7 +12,7 @@ def empty_clipboard_obsolete
   empty_clipboard_by_type(get_model_type(params))
 end
 
-def ctrl_add_objects_from_clipboardtes(object, child_plmtype, flash)
+def ctrl_add_objects_from_clipboard(object, child_plmtype, flash)
 	fname="#{self.class.name}.#{__method__}"
 	LOG.info(fname) {"object=#{object} child_plmtype=#{child_plmtype}"}
 	if child_plmtype.nil?
@@ -20,11 +20,11 @@ def ctrl_add_objects_from_clipboardtes(object, child_plmtype, flash)
 		LOG.info(fname) {"params[:objecttoadd]=#{params[:objecttoadd]}"}
 		unless params[:objecttoadd].nil?
 			params[:objecttoadd].each do |childplmtype, value|
-				flash = add_objects_from_clipboardtes(object, childplmtype, flash)
+				flash = add_objects_from_clipboard(object, childplmtype, flash)
 			end
 		end
 	else
-		flash = add_objects_from_clipboardtes(object, child_plmtype, flash)
+		flash = add_objects_from_clipboard(object, child_plmtype, flash)
 	end
 	respond_to do |format|
 		format.html { redirect_to(object) }
@@ -32,7 +32,7 @@ def ctrl_add_objects_from_clipboardtes(object, child_plmtype, flash)
   end
 end
 
-def add_objects_from_clipboardtes(object, child_plmtype, flash)
+def add_objects_from_clipboard(object, child_plmtype, flash)
 	fname="#{self.class.name}.#{__method__}"
   	LOG.info(fname) {"object=#{object} child_plmtype=#{child_plmtype}"}
   	#LOG.info(fname) {"#{object.inspect}.#{child_plmtype}"}

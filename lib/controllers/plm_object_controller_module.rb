@@ -36,8 +36,8 @@ module Controllers
 			flash = {}
 			flash[:notice] = ""
 			flash[:error] = ""
-			LOG.info() { "appel ctrl_add_objects_from_clipboardtes" }
-			flash = ctrl_add_objects_from_clipboardtes(obj, nil, flash)
+			LOG.info() { "appel ctrl_add_objects_from_clipboard" }
+			flash = ctrl_add_objects_from_clipboard(obj, nil, flash)
 		end
 
 		def add_clipboard
@@ -56,7 +56,7 @@ module Controllers
 				#TODO normalement le format html n'est pas appelle mais en rails4, ajax ne fonctionne pas, donc il appelle le html
 				#format.html { render :action => :index}
 				format.js { render('shared/refresh_clipboards') }
-				format.json { render('shared/refresh_clipboards') }
+				#format.json { render('shared/refresh_clipboards') }
 			end
 		end
 
@@ -633,7 +633,6 @@ module Controllers
 			if RuoteKit.engine.nil?
 				PlmServices.ruote_init
 			end
-			LOG.debug(fname) {"ctrl_create_process: RuoteKit.engine= #{RuoteKit.engine} "}
 			flash[:notice] =nil
 			flash[:error] =nil
 			# create a process
@@ -642,46 +641,25 @@ module Controllers
 				LOG.debug(fname) {"ctrl_create_process: @definition= #{@definition} "}
 				wait_for=true
 				unless @definition.nil?
-					#params[:definition_id] = @definition.id
-					#launchitem = parse_launchitem
-					#options = { :variables => { 'launcher' => @current_user.login } ,:wait_for => wait_for}
-				#
-				# launch the process
-				#
-				LOG.debug(fname) {"ctrl_create_process: @definition.uri=#{@definition.uri}"}
-			    fei_wfid = RuoteKit.engine.launch(@definition.uri)
-				#wait_for=true=> return [ message, info, fei ]
-				LOG.debug(fname) {" process lance: fei_wfid(#{fei_wfid}) "}
-					#nb=0
-					#workitem = nil
-					#while nb<10 and workitem.nil?
-						#LOG.debug(fname) {"ctrl_create_process: boucle #{nb} #{fei.wfid}"}
-						#sleep 0.3
-						#nb+=1
-						#workitem = ::Ruote::Sylrplm::ArWorkitem.get_workitem(fei.wfid)
-					#end
-				#LOG.debug(fname) {"launched workitem=#{workitem.inspect} (nil=ko)"}
-				#unless workitem.nil?
-					#flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_process), :ident => "#{workitem.id} #{fei.wfid}")
-					#add_object_to_workitem(a_object, workitem)
-				#else
-					#flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "workitem non trouve")
-				#end
-			else
-				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "definition to validate the user not found")
-				###format.html { redirect_to(a_object) }
-				###format.xml  { render :xml => fei.errors, :status => :unprocessable_entity }
-			end
-		rescue Exception => e
-			LOG.error(fname){"fei not launched error="+e.inspect}
-			LOG.error(fname){"trace"}
-			e.backtrace.each {|x| LOG.error(fname){x}}
-			flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "fei not launched error=#{e}")
-				#format.html { redirect_to new_process_path(:definition_id => @definition.id)}
-				#format.html { redirect_to ({:controller => :definitions , :action => :new_process, :definition_id => @definition.id}) }
+					#
+					# launch the process
+					#
+					LOG.debug(fname) {"ctrl_create_process: @definition.uri=#{@definition.uri}"}
+			    	fei_wfid = RuoteKit.engine.launch(@definition.uri)
+					LOG.debug(fname) {" process lance: fei_wfid(#{fei_wfid}) "}
+					#
+					# add the object to the clipboard, the next tasks will use it
+					#
+					@clipboard.add(a_object)
+				else
+					flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "definition to validate the user not found")
+				end
+			rescue Exception => e
+				LOG.error(fname){"process not launched error="+e.inspect}
+				LOG.error(fname){"trace"}
+				e.backtrace.each {|x| LOG.error(fname){x}}
+				flash[:error] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_process), :msg => "fei not launched error=#{e}")
 				LOG.error(fname){"a_object=#{a_object}"}
-				###format.html { redirect_to(a_object) }
-				###format.xml  { render :xml => e, :status => :unprocessable_entity }
 			end
 		end
 

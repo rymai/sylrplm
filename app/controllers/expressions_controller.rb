@@ -66,7 +66,9 @@ class ExpressionsController < ApplicationController
 
 		#puts "expressions_controller.destroy:params="+params.inspect
 		find_expression
-
+if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+		end
 		RuoteKit.engine.cancel_expression(@expression)
 
 		sleep 0.3
@@ -121,6 +123,9 @@ class ExpressionsController < ApplicationController
 		expid = PlmServices.to_dots(params[:expid])
 
 		#rails2 @process = ruote_engine.process_status(params[:wfid])
+		if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+		end
 		@process = RuoteKit.engine.process(params[:wfid])
 		#LOG.debug(fname){"expressions="+@process.expressions.inspect}
 		@expression = @process.expressions.find { |fexp|

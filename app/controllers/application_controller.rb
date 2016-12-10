@@ -70,14 +70,13 @@ class ApplicationController < ActionController::Base
 		action_controller="#{action}_#{params[:controller]}"
 		action_controller_type="#{action_controller}_#{params[:filter_types]}"
 		@UI_TABLE=UiTable.find_by_ident(action_controller_type)
-		LOG.debug(fname) {"action_controller_type='#{action_controller_type}' => @UI_TABLE='#{@UI_TABLE.inspect}'"}
+		LOG.debug(fname) {"1-action_controller_type='#{action_controller_type}' => @UI_TABLE='#{@UI_TABLE.inspect}'"}
 		if @UI_TABLE.nil?
-			#
 			@UI_TABLE=UiTable.find_by_ident(action_controller)
-			LOG.debug(fname) {"<====action_controller='#{action_controller}', => @UI_TABLE='#{@UI_TABLE.inspect}'"}
+			LOG.debug(fname) {"2-action_controller='#{action_controller}', => @UI_TABLE='#{@UI_TABLE.inspect}'"}
 			if @UI_TABLE.nil?
 				@UI_TABLE=UiTable.find_by_ident(action)
-				LOG.debug(fname) {"<====action='#{action}', => @UI_TABLE='#{@UI_TABLE.inspect}'"}
+				LOG.debug(fname) {"3-action='#{action}', => @UI_TABLE='#{@UI_TABLE.inspect}'"}
 			end
 		end
 	end

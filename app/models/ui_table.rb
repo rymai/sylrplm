@@ -25,6 +25,7 @@ class UiTable < ActiveRecord::Base
 
 	def get_ui_columns(columns=nil)
 		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"columns=#{columns}"}
 		ret=[]
 		st=0
 		if columns.nil?
@@ -32,6 +33,7 @@ class UiTable < ActiveRecord::Base
 		else
 			cols_idents=columns.split(",")
 		end
+		LOG.debug(fname){"cols_idents=#{cols_idents}"}
 		cols_idents.each do |colident|
 			colident=colident.gsub("\n","")
 			colident=colident.gsub("\r","")
@@ -47,8 +49,8 @@ class UiTable < ActiveRecord::Base
 				self.errors.add(:base,msg)
 			end
 		end
-		ret=nil if st!=0
-		unless ret.nil?
+		#ret=nil if st!=0
+		if st==0
 		LOG.debug(fname){"<====> #{ret.size} columns"}
 		else
 			self.errors.add(:base,"ERROR: can't build columns, Verify the list of columns")

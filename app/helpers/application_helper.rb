@@ -562,6 +562,7 @@ module ApplicationHelper
 	end
 
 	def h_workitem_fields(obj, fonct)
+		fname="#{self.class.name}.#{__method__}"
 		fields=obj.fields
 		#puts "application_helper.h_workitem_fields:fields=#{fields}"
 		ret=""
@@ -570,20 +571,21 @@ module ApplicationHelper
 			ret+=t(:legend_fields)
 			ret+="</h1>"
 			hrf=h_render_fields(obj, fonct, "fields", true)
+			LOG.info(fname){"hrf apres h_render_fields=#{hrf.length}"}
 			ret+=hrf.to_s unless hrf.nil?
 		else
 			ret=t("history_no_fields")
 		end
 		#puts "******************** h_history_fields:ret="+ret
-		ret.html_safe unless ret.html_safe?
+		ret.html_safe
 	end
 
 	def h_render_fields(obj, fonct, method, to_json=false)
 		fname="#{self.class.name}.#{__method__}"
 		fields = obj.send(method)
+		LOG.debug(fname) {"fields=#{fields}"}
 		form_id=h_form_html_id(obj, fonct)
-		LOG.info(fname){">>>>h_render_fields: obj=#{obj}, fonct=#{fonct}, method=#{method}, form_id=#{form_id}"}
-		#LOG.info(fname){">>>>fields=#{fields}"}
+		LOG.info(fname) {"h_render_fields: obj=#{obj}, fonct=#{fonct}, method=#{method}, form_id=#{form_id}"}
 		unless fields.nil?
 			if to_json
 			fields=fields.to_json
@@ -621,9 +623,9 @@ module ApplicationHelper
 		else
 			ret=""
 		end
-		LOG.info(fname){"<<<<h_render_fields: obj=#{obj}, fonct=#{fonct}, method=#{method} "}
-		LOG.info(fname){"<<<<h_render_fields: ret=#{ret}"}
-		ret.html_safe unless ret.html_safe?
+		LOG.info(fname){"h_render_fields: obj=#{obj}, fonct=#{fonct}, method=#{method} "}
+		LOG.info(fname){"h_render_fields: ret=#{ret.length}"}
+		ret.html_safe
 	end
 
 	# renvoi l'identifiant du formulaire en fonction de l'objet et de la fonction demandee
@@ -644,6 +646,9 @@ module ApplicationHelper
 	def get_tree_process(process_id)
 		fname="#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"begin:params=#{params}"}
+		if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+		end
 		process = RuoteKit.engine.process(process_id)
 		var ='proc_tree'
 		unless process.nil?

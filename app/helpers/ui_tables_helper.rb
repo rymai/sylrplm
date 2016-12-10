@@ -15,9 +15,11 @@ module UiTablesHelper
 			end
 		end
 		unless @UI_TABLE.blank?
+			LOG.debug(fname) {"====>@UI_TABLE=#{@UI_TABLE.ident} "}
 			columns=@UI_TABLE.get_ui_columns
-			ret+=h_form_simple_query("/#{controller_name}", @object_plms, @object_plm)
-			ret+=build_form columns
+			LOG.debug(fname) {"====>columns=#{columns}"}
+				ret+=h_form_simple_query("/#{controller_name}", @object_plms, @object_plm)
+			ret+=build_form(columns)
 		else
 			ret+="<h2>"
 			ret+=t(:ui_table_not_define,:controller=>params[:controller],:action=>params[:action])

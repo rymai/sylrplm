@@ -267,12 +267,12 @@ def show
 
 	def add_docs
 		@object_plm = Project.find(params[:id])
-		ctrl_add_objects_from_clipboardtes(@object_plm, :document)
+		ctrl_add_objects_from_clipboard(@object_plm, :document)
 	end
 
 	def add_parts
 		@object_plm = Project.find(params[:id])
-		ctrl_add_objects_from_clipboardtes(@object_plm, :part)
+		ctrl_add_objects_from_clipboard(@object_plm, :part)
 	end
 
 	#

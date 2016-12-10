@@ -124,6 +124,9 @@ class ProcessesController < ApplicationController
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"begin:params=#{params}"}
 		begin
+			if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+			end
 			@process = RuoteKit.engine.process(params[:id])
 			RuoteKit.engine.remove_process(params[:id])
 			redirect_to :action => :index
@@ -142,6 +145,9 @@ class ProcessesController < ApplicationController
 	def tree
 		fname= "#{self.class.name}.#{__method__}"
 		#LOG.debug(fname){"begin:params=#{params}"}
+		if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+		end
 		process = RuoteKit.engine.process(params[:id])
 		var = params[:var] || 'proc_tree'
 		unless process.nil?

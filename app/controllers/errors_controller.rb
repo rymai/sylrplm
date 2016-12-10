@@ -85,7 +85,9 @@ include Ruote
 		return error_reply(
 		"no error at /errors/#{params[:wfid]}/#{params[:expid]}", 404
 		) unless e
-
+if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+		end
 		RuoteKit.engine.replay_at_error(e)
 
 		msg = "replayed /errors/#{params[:wfid]}/#{params[:expid]}"

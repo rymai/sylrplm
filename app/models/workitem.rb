@@ -19,7 +19,9 @@ class Ruote::Workitem
   def self.for_user(username)
 
     user = User.find(username)
-
+        if RuoteKit.engine.nil?
+				PlmServices.ruote_init
+		end
     return RuoteKit.engine.storage_participant.all if user.admin?
 
     # note : ruote 2.1.12 should make it possible to write
