@@ -4,7 +4,9 @@
 
 <td> <%= link_to t("new_#{object.modelname}"), {:controller=>object.controller_name, :action=>"new"} %></td>
 
-<% if Controller.route_exists?(object.controller_name, "new_dup")%>
+<% new_dup=Controller.route_exists?(object.controller_name, "new_dup")%>
+<% puts "#{__FILE__} new_dup? #{new_dup}, object=#{object.inspect}" %>
+<% if Controller.route_exists?(object.controller_name, "new_dup") && !object.id.nil? %>
 <td> <%= link_to t("duplicate"), {:controller=>object.controller_name, :action=>"new_dup", :id => object.id} %> </td>
 <% end %>
 

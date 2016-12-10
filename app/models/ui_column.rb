@@ -15,7 +15,7 @@ def getTypesShow
 	end
 
 	def getTypesEditable
-		["input_text", "input_textarea","input_integer", "input_float", "input_file", "input_check","input_radio","search"]
+		["input_text", "input_textarea","input_integer", "input_float", "input_file", "input_check","input_radio","select","search"]
 	end
 
 	def getTypesEditableFile

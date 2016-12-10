@@ -61,7 +61,6 @@ class ApplicationController < ActionController::Base
 
 	def define_table(*args)
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug(fname) {"====>args=#{args.inspect} "}
 		LOG.debug(fname) {"params=#{params.inspect} "}
 		action=params[:action]
 		# for portal, show visualize 3 views
@@ -491,13 +490,8 @@ class ApplicationController < ActionController::Base
 
 	def icone_fic(obj)
 		fname="#{self.class.name}.#{__method__}"
-		unless obj.modelname.nil? || !obj.respond_to?(:typesobject) || obj.typesobject.nil?
-			begin
+		if !obj.modelname.nil? && obj.respond_to?(:typesobject) && !obj.typesobject.nil?
 				ret = "/images/#{obj.modelname}_#{obj.typesobject.name}.png"
-			rescue Exception=>e
-						LOG.warn(fname) {"Exception:#{e}"}
-				ret = "/images/#{obj.modelname}.png"
-			end
 			unless File.exist?("#{Rails.root}/public#{ret}")
 				ret = "/images/#{obj.modelname}.png"
 				unless File.exist?("#{Rails.root}/public#{ret}")
@@ -508,9 +502,16 @@ class ApplicationController < ActionController::Base
 				end
 			end
 		else
-			ret = ""
+			# no type
+			ret = "/images/#{obj.modelname}.png"
+			unless File.exist?("#{Rails.root}/public#{ret}")
+				ret = "/images/default_object.png"
+				unless File.exist?("#{Rails.root}/public#{ret}")
+					ret = ""
+				end
+			end
 		end
-		#LOG.debug  (fname){"icone:#{obj.modelname}:#{obj.typesobject.name}:#{ret}"}
+		LOG.debug(fname) {"icone_fic5: #{obj.modelname} :  #{ret}"}
 		ret
 	end
 
