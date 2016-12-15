@@ -19,33 +19,10 @@ domain:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:51:50.912921000 Z
-
-date:
-  id: 12
-  ident: date
-  type_column: ''
-  description: ''
-  belong_object: ''
-  belong_method: ''
-  visible_guest: false
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  sortable: true
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: explorer
-  type_index: explorer
-  type_editable: 
-  type_editable_file: 
-  domain: sicm.custo
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 16:52:03.745734000 Z
 
 owner:
   id: 8
@@ -67,6 +44,7 @@ owner:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:52:11.700181000 Z
@@ -91,6 +69,7 @@ project:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:52:19.100236000 Z
@@ -115,6 +94,7 @@ confidentiality:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:52:30.017809000 Z
@@ -139,6 +119,7 @@ responder:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 14:58:36.658646000 Z
   updated_at: 2016-11-13 16:52:49.585396000 Z
@@ -163,6 +144,7 @@ nbfiles:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:53:21.417857000 Z
@@ -187,6 +169,7 @@ users:
   type_index: comma_links
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:53:34.015327000 Z
@@ -211,6 +194,7 @@ id:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: admin
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:53:43.896100000 Z
@@ -235,6 +219,7 @@ asker:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 14:56:16.984244000 Z
   updated_at: 2016-11-13 16:54:02.982752000 Z
@@ -259,6 +244,7 @@ father:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 06:41:25.086715000 Z
   updated_at: 2016-11-14 06:41:25.086715000 Z
@@ -283,6 +269,7 @@ father_tr:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 06:42:02.440313000 Z
   updated_at: 2016-11-14 06:42:02.440313000 Z
@@ -307,6 +294,7 @@ name:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 06:56:18.239903000 Z
   updated_at: 2016-11-14 06:56:18.239903000 Z
@@ -331,6 +319,7 @@ name_translate:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 07:17:12.758122000 Z
   updated_at: 2016-11-14 07:17:12.758122000 Z
@@ -355,6 +344,7 @@ protocol:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 20:21:00.910780000 Z
   updated_at: 2016-12-10 08:23:06.983129000 Z
@@ -379,6 +369,7 @@ group:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-10 08:14:18.029552000 Z
@@ -403,6 +394,7 @@ encode:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 20:21:20.534325000 Z
   updated_at: 2016-11-14 20:23:47.721025000 Z
@@ -427,6 +419,7 @@ decompress:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 20:22:27.618909000 Z
   updated_at: 2016-11-14 20:24:06.695054000 Z
@@ -451,6 +444,7 @@ compress:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 20:22:14.578745000 Z
   updated_at: 2016-11-14 20:24:23.170841000 Z
@@ -475,6 +469,7 @@ decode:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 20:21:56.199929000 Z
   updated_at: 2016-11-14 20:24:36.928433000 Z
@@ -499,6 +494,7 @@ father_plmtype:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:49:52.827933000 Z
   updated_at: 2016-11-16 19:49:52.827933000 Z
@@ -523,6 +519,7 @@ child_plmtype:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:53:03.530533000 Z
   updated_at: 2016-11-16 19:53:03.530533000 Z
@@ -547,6 +544,7 @@ father_typesobject:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:54:24.357436000 Z
   updated_at: 2016-11-16 19:54:24.357436000 Z
@@ -571,6 +569,7 @@ child_typesobject:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:54:48.521883000 Z
   updated_at: 2016-11-16 19:54:48.521883000 Z
@@ -595,6 +594,7 @@ paste_way:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:58:14.465075000 Z
   updated_at: 2016-11-16 19:58:14.465075000 Z
@@ -619,6 +619,7 @@ cardin_occur_min:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:58:52.445129000 Z
   updated_at: 2016-11-16 19:58:52.445129000 Z
@@ -643,6 +644,7 @@ cardin_occur_max:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:59:15.455344000 Z
   updated_at: 2016-11-16 19:59:15.455344000 Z
@@ -667,6 +669,7 @@ cardin_use_min:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:59:30.838796000 Z
   updated_at: 2016-11-16 19:59:30.838796000 Z
@@ -691,6 +694,7 @@ cardin_use_max:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:59:39.357242000 Z
   updated_at: 2016-11-16 19:59:39.357242000 Z
@@ -715,6 +719,7 @@ views:
   type_index: comma
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 20:00:28.261420000 Z
   updated_at: 2016-11-16 20:17:11.182377000 Z
@@ -739,6 +744,7 @@ father_plmtype_translate:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 06:42:50.088046000 Z
   updated_at: 2016-11-17 06:42:50.088046000 Z
@@ -763,6 +769,7 @@ child_plmtype_translate:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 06:43:19.247179000 Z
   updated_at: 2016-11-17 06:43:19.247179000 Z
@@ -787,6 +794,7 @@ sequence:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 07:08:27.463637000 Z
   updated_at: 2016-11-17 07:08:27.463637000 Z
@@ -811,6 +819,7 @@ modify:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 07:08:43.199445000 Z
   updated_at: 2016-11-17 07:08:43.199445000 Z
@@ -835,6 +844,7 @@ min:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 07:09:02.484923000 Z
   updated_at: 2016-11-17 07:09:02.484923000 Z
@@ -859,6 +869,7 @@ max:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 07:09:10.151586000 Z
   updated_at: 2016-11-17 07:09:10.151586000 Z
@@ -883,6 +894,7 @@ forobject:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:25:20.009744000 Z
   updated_at: 2016-11-17 19:25:20.009744000 Z
@@ -907,6 +919,7 @@ rank:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:26:00.084767000 Z
   updated_at: 2016-11-17 19:26:00.084767000 Z
@@ -931,6 +944,7 @@ fields:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:26:53.760804000 Z
   updated_at: 2016-11-17 19:26:53.760804000 Z
@@ -955,6 +969,7 @@ forobject_translate:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:35:53.769282000 Z
   updated_at: 2016-11-17 19:35:53.769282000 Z
@@ -979,6 +994,7 @@ promote:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:48:29.473496000 Z
   updated_at: 2016-11-17 19:48:29.473496000 Z
@@ -1003,6 +1019,7 @@ demote:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:48:40.907629000 Z
   updated_at: 2016-11-17 19:48:40.907629000 Z
@@ -1027,6 +1044,7 @@ revise:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:48:46.407443000 Z
   updated_at: 2016-11-17 19:48:46.407443000 Z
@@ -1051,6 +1069,7 @@ question:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 14:57:13.275356000 Z
   updated_at: 2016-12-10 08:14:29.085941000 Z
@@ -1075,6 +1094,7 @@ typesobject:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-10 08:14:48.241624000 Z
@@ -1099,6 +1119,7 @@ next_statusobjects:
   type_index: comma
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:50:51.499417000 Z
   updated_at: 2016-11-17 19:55:57.980366000 Z
@@ -1123,6 +1144,7 @@ designation:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-10 08:13:47.847080000 Z
@@ -1147,6 +1169,7 @@ statusobject:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-10 08:15:03.796545000 Z
@@ -1171,6 +1194,7 @@ revision:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-10 08:15:31.031649000 Z
@@ -1195,6 +1219,7 @@ subject:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 16:23:47.747245000 Z
   updated_at: 2016-12-10 08:15:49.987663000 Z
@@ -1219,6 +1244,7 @@ ident:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-10 08:16:04.324665000 Z
@@ -1243,6 +1269,7 @@ title:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 06:39:10.368871000 Z
   updated_at: 2016-12-10 08:16:18.624045000 Z
@@ -1267,6 +1294,7 @@ answer:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 14:59:05.264918000 Z
   updated_at: 2016-12-10 08:20:40.335227000 Z
@@ -1291,6 +1319,7 @@ description:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 16:24:19.111908000 Z
   updated_at: 2016-12-10 08:22:41.363833000 Z
@@ -1315,6 +1344,7 @@ directory:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 20:20:22.355391000 Z
   updated_at: 2016-12-10 08:22:54.668653000 Z
@@ -1339,6 +1369,7 @@ utility:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 07:08:13.707733000 Z
   updated_at: 2016-12-10 08:28:14.822139000 Z
@@ -1363,6 +1394,7 @@ value:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 07:08:51.676297000 Z
   updated_at: 2016-12-10 08:28:34.952420000 Z
@@ -1387,6 +1419,7 @@ relations:
   type_index: comma_links
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:51:07.082546000 Z
   updated_at: 2016-12-10 08:59:52.008974000 Z
@@ -1411,9 +1444,35 @@ previous_statusobjects:
   type_index: comma
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: ''
   created_at: 2016-12-10 18:23:31.353133000 Z
   updated_at: 2016-12-10 18:23:31.353133000 Z
+
+date:
+  id: 12
+  ident: date
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-14 19:52:21.035507000 Z
 
 domain:
   id: 6
@@ -1435,33 +1494,10 @@ domain:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:51:50.912921000 Z
-
-date:
-  id: 12
-  ident: date
-  type_column: ''
-  description: ''
-  belong_object: ''
-  belong_method: ''
-  visible_guest: false
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  sortable: true
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: explorer
-  type_index: explorer
-  type_editable: 
-  type_editable_file: 
-  domain: sicm.custo
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 16:52:03.745734000 Z
 
 owner:
   id: 8
@@ -1483,6 +1519,7 @@ owner:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:52:11.700181000 Z
@@ -1507,6 +1544,7 @@ project:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:52:19.100236000 Z
@@ -1531,6 +1569,7 @@ confidentiality:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:52:30.017809000 Z
@@ -1555,6 +1594,7 @@ responder:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 14:58:36.658646000 Z
   updated_at: 2016-11-13 16:52:49.585396000 Z
@@ -1579,6 +1619,7 @@ nbfiles:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:53:21.417857000 Z
@@ -1603,6 +1644,7 @@ users:
   type_index: comma_links
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:53:34.015327000 Z
@@ -1627,6 +1669,7 @@ id:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: admin
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-11-13 16:53:43.896100000 Z
@@ -1651,6 +1694,7 @@ asker:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 14:56:16.984244000 Z
   updated_at: 2016-11-13 16:54:02.982752000 Z
@@ -1675,6 +1719,7 @@ father:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 06:41:25.086715000 Z
   updated_at: 2016-11-14 06:41:25.086715000 Z
@@ -1699,6 +1744,7 @@ father_tr:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 06:42:02.440313000 Z
   updated_at: 2016-11-14 06:42:02.440313000 Z
@@ -1723,6 +1769,7 @@ name:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 06:56:18.239903000 Z
   updated_at: 2016-11-14 06:56:18.239903000 Z
@@ -1747,6 +1794,7 @@ name_translate:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 07:17:12.758122000 Z
   updated_at: 2016-11-14 07:17:12.758122000 Z
@@ -1771,6 +1819,7 @@ protocol:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 20:21:00.910780000 Z
   updated_at: 2016-12-10 08:23:06.983129000 Z
@@ -1795,6 +1844,7 @@ group:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-10 08:14:18.029552000 Z
@@ -1819,6 +1869,7 @@ encode:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 20:21:20.534325000 Z
   updated_at: 2016-11-14 20:23:47.721025000 Z
@@ -1843,6 +1894,7 @@ decompress:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 20:22:27.618909000 Z
   updated_at: 2016-11-14 20:24:06.695054000 Z
@@ -1867,6 +1919,7 @@ compress:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 20:22:14.578745000 Z
   updated_at: 2016-11-14 20:24:23.170841000 Z
@@ -1891,6 +1944,7 @@ decode:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 20:21:56.199929000 Z
   updated_at: 2016-11-14 20:24:36.928433000 Z
@@ -1915,6 +1969,7 @@ father_plmtype:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:49:52.827933000 Z
   updated_at: 2016-11-16 19:49:52.827933000 Z
@@ -1939,6 +1994,7 @@ child_plmtype:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:53:03.530533000 Z
   updated_at: 2016-11-16 19:53:03.530533000 Z
@@ -1963,6 +2019,7 @@ father_typesobject:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:54:24.357436000 Z
   updated_at: 2016-11-16 19:54:24.357436000 Z
@@ -1987,6 +2044,7 @@ child_typesobject:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:54:48.521883000 Z
   updated_at: 2016-11-16 19:54:48.521883000 Z
@@ -2011,6 +2069,7 @@ paste_way:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:58:14.465075000 Z
   updated_at: 2016-11-16 19:58:14.465075000 Z
@@ -2035,6 +2094,7 @@ cardin_occur_min:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:58:52.445129000 Z
   updated_at: 2016-11-16 19:58:52.445129000 Z
@@ -2059,6 +2119,7 @@ cardin_occur_max:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:59:15.455344000 Z
   updated_at: 2016-11-16 19:59:15.455344000 Z
@@ -2083,6 +2144,7 @@ cardin_use_min:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:59:30.838796000 Z
   updated_at: 2016-11-16 19:59:30.838796000 Z
@@ -2107,6 +2169,7 @@ cardin_use_max:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 19:59:39.357242000 Z
   updated_at: 2016-11-16 19:59:39.357242000 Z
@@ -2131,6 +2194,7 @@ views:
   type_index: comma
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-16 20:00:28.261420000 Z
   updated_at: 2016-11-16 20:17:11.182377000 Z
@@ -2155,6 +2219,7 @@ father_plmtype_translate:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 06:42:50.088046000 Z
   updated_at: 2016-11-17 06:42:50.088046000 Z
@@ -2179,6 +2244,7 @@ child_plmtype_translate:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 06:43:19.247179000 Z
   updated_at: 2016-11-17 06:43:19.247179000 Z
@@ -2203,6 +2269,7 @@ sequence:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 07:08:27.463637000 Z
   updated_at: 2016-11-17 07:08:27.463637000 Z
@@ -2227,6 +2294,7 @@ modify:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 07:08:43.199445000 Z
   updated_at: 2016-11-17 07:08:43.199445000 Z
@@ -2251,6 +2319,7 @@ min:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 07:09:02.484923000 Z
   updated_at: 2016-11-17 07:09:02.484923000 Z
@@ -2275,6 +2344,7 @@ max:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 07:09:10.151586000 Z
   updated_at: 2016-11-17 07:09:10.151586000 Z
@@ -2299,6 +2369,7 @@ forobject:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:25:20.009744000 Z
   updated_at: 2016-11-17 19:25:20.009744000 Z
@@ -2323,6 +2394,7 @@ rank:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:26:00.084767000 Z
   updated_at: 2016-11-17 19:26:00.084767000 Z
@@ -2347,6 +2419,7 @@ fields:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:26:53.760804000 Z
   updated_at: 2016-11-17 19:26:53.760804000 Z
@@ -2371,6 +2444,7 @@ forobject_translate:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:35:53.769282000 Z
   updated_at: 2016-11-17 19:35:53.769282000 Z
@@ -2395,6 +2469,7 @@ promote:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:48:29.473496000 Z
   updated_at: 2016-11-17 19:48:29.473496000 Z
@@ -2419,6 +2494,7 @@ demote:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:48:40.907629000 Z
   updated_at: 2016-11-17 19:48:40.907629000 Z
@@ -2443,6 +2519,7 @@ revise:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:48:46.407443000 Z
   updated_at: 2016-11-17 19:48:46.407443000 Z
@@ -2467,6 +2544,7 @@ question:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 14:57:13.275356000 Z
   updated_at: 2016-12-10 08:14:29.085941000 Z
@@ -2491,6 +2569,7 @@ typesobject:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-10 08:14:48.241624000 Z
@@ -2515,6 +2594,7 @@ next_statusobjects:
   type_index: comma
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:50:51.499417000 Z
   updated_at: 2016-11-17 19:55:57.980366000 Z
@@ -2539,6 +2619,7 @@ designation:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-10 08:13:47.847080000 Z
@@ -2563,6 +2644,7 @@ statusobject:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-10 08:15:03.796545000 Z
@@ -2587,6 +2669,7 @@ revision:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-10 08:15:31.031649000 Z
@@ -2611,6 +2694,7 @@ subject:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 16:23:47.747245000 Z
   updated_at: 2016-12-10 08:15:49.987663000 Z
@@ -2635,6 +2719,7 @@ ident:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-10 08:16:04.324665000 Z
@@ -2659,6 +2744,7 @@ title:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 06:39:10.368871000 Z
   updated_at: 2016-12-10 08:16:18.624045000 Z
@@ -2683,6 +2769,7 @@ answer:
   type_index: explorer
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 14:59:05.264918000 Z
   updated_at: 2016-12-10 08:20:40.335227000 Z
@@ -2707,6 +2794,7 @@ description:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-13 16:24:19.111908000 Z
   updated_at: 2016-12-10 08:22:41.363833000 Z
@@ -2731,6 +2819,7 @@ directory:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-14 20:20:22.355391000 Z
   updated_at: 2016-12-10 08:22:54.668653000 Z
@@ -2755,6 +2844,7 @@ utility:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 07:08:13.707733000 Z
   updated_at: 2016-12-10 08:28:14.822139000 Z
@@ -2779,6 +2869,7 @@ value:
   type_index: text
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 07:08:51.676297000 Z
   updated_at: 2016-12-10 08:28:34.952420000 Z
@@ -2803,6 +2894,7 @@ relations:
   type_index: comma_links
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: sicm.custo
   created_at: 2016-11-17 19:51:07.082546000 Z
   updated_at: 2016-12-10 08:59:52.008974000 Z
@@ -2827,6 +2919,32 @@ previous_statusobjects:
   type_index: comma
   type_editable: 
   type_editable_file: 
+  type_export: 
   domain: ''
   created_at: 2016-12-10 18:23:31.353133000 Z
   updated_at: 2016-12-10 18:23:31.353133000 Z
+
+date:
+  id: 12
+  ident: date
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-14 19:52:21.035507000 Z

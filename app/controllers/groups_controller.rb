@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 	###before_filter :login_required
 	# GET /groups
 	# GET /groups.xml

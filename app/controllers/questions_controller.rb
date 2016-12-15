@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 
 	skip_before_filter :authorize
 

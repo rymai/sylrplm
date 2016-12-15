@@ -1,5 +1,5 @@
 class UiTablesController < ApplicationController
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 	respond_to :html, :js, :json, :xml
 	access_control(Access.find_for_controller(controller_name.classify))
 

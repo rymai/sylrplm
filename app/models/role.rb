@@ -25,6 +25,10 @@ class Role < ActiveRecord::Base
 		Role.all
 	end
 
+	def name
+		title
+	end
+
 	def father_name
 		(father ? father.title : "")
 	end

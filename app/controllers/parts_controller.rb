@@ -1,5 +1,5 @@
 class PartsController < ApplicationController
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 	respond_to :html, :js, :json
 	access_control(Access.find_for_controller(controller_name.classify))
 	#

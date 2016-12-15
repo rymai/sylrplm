@@ -27,16 +27,19 @@
 	<%= f.check_box :editable %>
 	<br/>
 	<%= f.label t(:label_type_index) %>
-	<%= f.select(:type_index, @ui_column.getTypesIndex,  { },  ) %>
+	<%= f.select(:type_index, @ui_column.getTypesIndex  ) %>
 	<br/>
 	<%= f.label t(:label_type_show) %>
-	<%= f.select(:type_show, @ui_column.getTypesShow,  { },  ) %>
+	<%= f.select(:type_show, @ui_column.getTypesShow ) %>
 	<br/>
 	<%= f.label t(:label_type_editable) %>
-	<%= select(f, :type_editable, @ui_column.getTypesEditable,{ },  ) %>
+	<%= select(f, :type_editable, @ui_column.getTypesEditable ) %>
 	<br/>
 	<%= f.label t(:label_type_editable_file) %>
 	<%= select(f, :type_editable_file, @ui_column.getTypesEditableFile,{ }, {:multiple=>true} ) %>
+	<br/>
+	<%= f.label t(:label_type_export) %>
+	<%= select(f, :type_export, @ui_column.getTypesExport) %>
 	<br/>
 	<%= f.label t(:label_belong_object) %>
 	<%= f.text_field :belong_object%>

@@ -1,5 +1,5 @@
 class LinksController < ApplicationController
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 	access_control(Access.find_for_controller(controller_name.classify))
 
 	# GET /links

@@ -30,6 +30,11 @@ class Group < ActiveRecord::Base
 		PlmServices.translate("group_name_#{name}")
 	end
 
+	# ruse pour export excel, la colonne father_tr est commune a role et group
+	def title_translate
+		name_translate
+	end
+
 	def variants
 		nil
 	end

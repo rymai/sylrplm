@@ -609,6 +609,7 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string   "type_index"
     t.string   "type_editable"
     t.string   "type_editable_file"
+    t.string   "type_export"
     t.string   "domain"
     t.datetime "created_at"
     t.datetime "updated_at"

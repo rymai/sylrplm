@@ -1,9 +1,40 @@
-require_dependency 'controllers/controllers'
 require_dependency 'ruote/sylrplm/sylrplm'
+require_dependency 'controllers/controllers'
 
 module Controllers
-	module PlmObjectControllerModule
-	 # extend ActiveSupport::Concern
+	module PlmObjectController
+
+		def export
+			fname="#{self.class.name}.#{__method__}"
+			LOG.info(fname) { "params=#{params.inspect}" }
+			define_table
+			LOG.info(fname) { "table=#{@UI_TABLE.ident}" }unless @UI_TABLE.nil?
+			#ctrl=eval "::"+params[:controller].to_s.camelize
+			ctrl=get_model_from_controller
+			@object_plms = ctrl.find_paginate({ :user=> current_user, :filter_types => params[:filter_types], :query => params[:query], :sort => params[:sort], :nb_items =>30000})
+		error=nil
+			#
+			# show_file: inline without a tool
+			#
+			content = export_table @UI_TABLE
+		LOG.info(fname) { "content=#{content.length}" }
+			unless content.blank?
+				# send_data inline
+				filename="#{params[:controller]}_#{params[:action]}.csv"
+			error = ctrl_send_data(content, filename, "application/text", "inline")
+			else
+				error = "Content is empty"
+			end
+			LOG.info(fname) { "error=#{error}" }
+			#respond_to do |format|
+				#url=url_for({:controller=>params[:controller], :action=>:index})
+				#unless error.nil?
+					#format.html { redirect_to(url) }
+				#else
+					#format.html { redirect_to(url) }
+				#end
+			#end
+		end
 
 		def add_link_objects
 			fname="#{self.class.name}.#{__method__}"
@@ -53,10 +84,8 @@ module Controllers
 			#index_
 			respond_to do |format|
 				LOG.info(fname) { "format=#{request.format}"}
-				#TODO normalement le format html n'est pas appelle mais en rails4, ajax ne fonctionne pas, donc il appelle le html
 				#format.html { render :action => :index}
 				format.js { render('shared/refresh_clipboards') }
-				#format.json { render('shared/refresh_clipboards') }
 			end
 		end
 
@@ -750,6 +779,24 @@ module Controllers
 			end
 		end
 	end
+
+	def ctrl_send_data(content, filename, content_type, disposition)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"content.length=#{content.length} filename=#{filename} content_type=#{content_type} disposition=#{disposition} "}
+		error=nil
+		begin
+			send_data(content,
+	              :filename => filename,
+	              :type => content_type,
+	              :disposition => disposition)
+		rescue Exception => e
+			LOG.error " error="+e.inspect
+			e.backtrace.each {|x| LOG.error x}
+			error = t(:ctrl_object_not_found,:typeobj => t(:ctrl_datafile),  :ident => @datafile.ident)
+		end
+		error
+	end
+
 
 	end
 end

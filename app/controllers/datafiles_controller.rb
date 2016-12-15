@@ -2,7 +2,7 @@ require 'net/http'
 require 'classes/filedrivers'
 
 class DatafilesController < ApplicationController
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 	# GET /datafiles
 	# GET /datafiles.xml
 	def index
@@ -241,23 +241,6 @@ class DatafilesController < ApplicationController
 			end
 		end
 		flash
-	end
-
-	def ctrl_send_data(content, filename, content_type, disposition)
-		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug(fname){"content.length=#{content.length} filename=#{filename} content_type=#{content_type} disposition=#{disposition} "}
-		error=nil
-		begin
-			send_data(content,
-	              :filename => filename,
-	              :type => content_type,
-	              :disposition => disposition)
-		rescue Exception => e
-			LOG.error " error="+e.inspect
-			e.backtrace.each {|x| LOG.error x}
-			error = t(:ctrl_object_not_found,:typeobj => t(:ctrl_datafile),  :ident => @datafile.ident)
-		end
-		error
 	end
 
 	def ctrl_send_file(tmpfile, disposition)

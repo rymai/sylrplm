@@ -1,5 +1,5 @@
 class DocumentsController < ApplicationController
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 	#droits d'acces suivant le controller et l'action demandee
 	#administration par le menu Access
 	#access_control (Document.controller_access())

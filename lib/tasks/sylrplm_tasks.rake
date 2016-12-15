@@ -8,7 +8,7 @@ require 'classes/app_classes'
 require 'controllers/plm_event'
 require 'controllers/plm_lifecycle'
 require 'controllers/plm_tree'
-require 'controllers/plm_object_controller_module'
+require 'controllers/plm_object_controller'
 
 #
 require 'rufus/scheduler'

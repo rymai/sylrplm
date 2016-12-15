@@ -44,6 +44,7 @@ Rails.application.routes.draw do
 		end
 		collection do
 			get :empty_clipboard
+			get :export
 		end
 	end
 
@@ -87,7 +88,13 @@ Rails.application.routes.draw do
 	match 'customers/:id/update_type', :to => 'customers#update_type', via: [:get, :post]
 
 	#rails2 map.resources :datafiles
-	resources :datafiles
+	resources :datafiles do
+		member do
+		end
+		collection do
+			get :export
+		end
+	end
 
 	#rails2 map.connect(	'datafiles/:id/show_file',	:controller => 'datafiles',	:action => 'show_file')
 	match 'datafiles/:id/show_file', :to => 'datafiles#show_file', via: [:get, :post]
@@ -108,6 +115,7 @@ Rails.application.routes.draw do
 		end
 		collection do
 			get :new_process
+			get :export
 		end
 	end
 	#rails2map.connect(	'definitions/index_execute',	:controller => 'definitions',	:action => 'index_execute')
@@ -124,6 +132,7 @@ Rails.application.routes.draw do
 		end
 		collection do
 			get :empty_clipboard
+			get :export
 		end
 	end
 	#rails2 map.connect(	'documents/index_execute',	:controller => 'documents',	:action => 'index_execute')
@@ -198,6 +207,9 @@ Rails.application.routes.draw do
 		member do
 			get :edit_lifecycle
 		end
+		collection do
+			get :export
+		end
 	end
 	#rails2 map.connect(	'forums/:id/update_lifecycle',	:controller => 'forums',	:action => 'update_lifecycle')
 	match 'forums/update_lifecycle', :to => 'forums#update_lifecycle', via: [:get, :post]
@@ -213,6 +225,7 @@ Rails.application.routes.draw do
 		end
 		collection do
 			get :new
+			get :export
 		end
 	end
 	match 	'forum_items/index', :to => 'forum_items#index', via: [:get, :post]
@@ -221,6 +234,9 @@ Rails.application.routes.draw do
 	resources :groups do
 		member do
 			get :new_dup
+		end
+		collection do
+			get :export
 		end
 	end
 	#rails2 map.connect(	'groups/index_execute',	:controller => 'groups',	:action => 'index_execute')
@@ -250,6 +266,9 @@ Rails.application.routes.draw do
 			get :reset
 			get :empty_clipboard
 		end
+		collection do
+			get :export
+		end
 	end
 	#rails2 map.connect(	'links/:id/edit_in_tree',	:controller => 'links',	:action => 'edit_in_tree',	:conditions => { :method => :get })
 	match 	'links/:id/edit_in_tree', :to => 'links#edit_in_tree', via: [:get, :post]
@@ -268,6 +287,9 @@ Rails.application.routes.draw do
 		member do
 			get :notify
 		end
+		collection do
+			get :export
+		end
 	end
 	#rails2 map.resources :parts, :has_many => :documents, :collection => { :empty_clipboard => :get}, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	resources :parts do
@@ -278,6 +300,7 @@ Rails.application.routes.draw do
 		end
 		collection do
 			get :empty_clipboard
+			get :export
 		end
 	end
 	#rails2 map.connect(	'parts/index_execute',	:controller => 'parts',	:action => 'index_execute')
@@ -349,6 +372,7 @@ Rails.application.routes.draw do
 		end
 		collection do
 			get :empty_clipboard
+			get :export
 		end
 	end
 	#rails2 map.connect(	'projects/index_execute',	:controller => 'projects',	:action => 'index_execute')
@@ -401,6 +425,9 @@ Rails.application.routes.draw do
 		member do
 			get :new_dup
 		end
+		collection do
+			get :export
+		end
 	end
 	#rails2 map.connect(	'relations/index_execute',	:controller => 'relations',	:action => 'index_execute')
 	match 'relations/index_execute', :to => 'relations#index_execute', via: [:get, :post]
@@ -423,6 +450,9 @@ Rails.application.routes.draw do
 		member do
 			get :new_dup
 		end
+		collection do
+			get :export
+		end
 	end
 	#rails2 map.connect(	'roles/index_execute',	:controller => 'roles',	:action => 'index_execute')
 	match 'roles/index_execute', :to => 'roles#index_execute', via: [:get, :post]
@@ -434,6 +464,9 @@ Rails.application.routes.draw do
 	resources :sequences do
 		member do
 			get :new_dup
+		end
+		collection do
+			get :export
 		end
 	end
 	#rails2 map.connect(	'sequences/index_execute',	:controller => 'sequences',	:action => 'index_execute')
@@ -462,6 +495,9 @@ Rails.application.routes.draw do
 		member do
 			get :new_dup
 		end
+		collection do
+			get :export
+		end
 	end
 	#rails2 map.connect(	'statusobjects/index_execute',	:controller => 'statusobjects',	:action => 'index_execute')
 	match 'statusobjects/index_execute', :to => 'statusobjects#index_execute', via: [:get, :post]
@@ -474,6 +510,9 @@ Rails.application.routes.draw do
 		member do
 			get :new_dup
 		end
+		collection do
+			get :export
+		end
 	end
 	#rails2 map.connect(	'subscriptions/index_execute',	:controller => 'subscriptions',	:action => 'index_execute')
 	match 'subscriptions/index_execute', :to => 'subscriptions#index_execute', via: [:get, :post]
@@ -482,6 +521,9 @@ Rails.application.routes.draw do
 	resources :typesobjects do
 		member do
 			get :new_dup
+		end
+		collection do
+			get :export
 		end
 	end
 	#rails2 map.connect(	'typesobjects/index_execute' ,	:controller => 'typesobjects',	:action => 'index_execute')
@@ -492,11 +534,12 @@ Rails.application.routes.draw do
 
 	#rails2 map.resources :users, :collection => { :empty_clipboard => :get }, :member=> {:new_dup => :get}
 	resources :users do
-		collection do
-			get :empty_clipboard
-		end
 		member do
 			get :new_dup
+		end
+		collection do
+			get :empty_clipboard
+			get :export
 		end
 	end
 	#rails2 map.connect(	'users/index_execute',	:controller => 'users',	:action => 'index_execute')
@@ -534,6 +577,9 @@ Rails.application.routes.draw do
 	member do
 			get :new_dup
 		end
+		collection do
+			get :export
+		end
 	end
 	match 'ui_columns/index_execute', :to => 'ui_columns#index_execute', via: [:get, :post]
 
@@ -542,6 +588,10 @@ Rails.application.routes.draw do
 	member do
 			get :new_dup
 		end
+		collection do
+			get :export
+		end
+
 	end
 	match 'ui_tables/index_execute', :to => 'ui_tables#index_execute', via: [:get, :post]
 
@@ -549,6 +599,9 @@ Rails.application.routes.draw do
 	resources :views do
 		member do
 			get :new_dup
+		end
+		collection do
+			get :export
 		end
 	end
 	#rails2 map.connect(	'views/index_execute',	:controller => 'views',	:action => 'index_execute')
@@ -558,6 +611,9 @@ Rails.application.routes.draw do
 	resources :volumes do
 		member do
 			get :new_dup
+		end
+		collection do
+			get :export
 		end
 	end
 	#rails2 map.connect(	'volumes/index_execute',	:controller => 'volumes',	:action => 'index_execute')

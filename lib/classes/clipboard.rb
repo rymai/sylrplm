@@ -1,5 +1,5 @@
 class Clipboard
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 	attr_reader :items
 	def initialize
 		@items={}

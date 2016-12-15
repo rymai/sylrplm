@@ -18,7 +18,7 @@ module UiTablesHelper
 			LOG.debug(fname) {"====>@UI_TABLE=#{@UI_TABLE.ident} "}
 			columns=@UI_TABLE.get_ui_columns
 			LOG.debug(fname) {"====>columns=#{columns}"}
-				ret+=h_form_simple_query("/#{controller_name}", @object_plms, @object_plm)
+			ret+=h_form_simple_query("/#{controller_name}", @object_plms, @object_plm)
 			ret+=build_form(columns)
 		else
 			ret+="<h2>"
@@ -194,13 +194,6 @@ module UiTablesHelper
 		ret
 	end
 
-	def show? col
-		show=false
-		if admin_logged_in? && col.visible_admin || logged_in? && col.visible_user ||  col.visible_guest
-		show=true
-		end
-	end
-
 	def build_right_action_menus(object)
 		fname="#{self.class.name}.#{__method__}"
 		ret=""
@@ -321,40 +314,6 @@ module UiTablesHelper
 
 	end
 
-	def truncate_text(txt,column)
-		fname= "#{self.class.name}.#{__method__}"
-		ret=txt
-		LOG.debug(fname) {"col truncate= #{column}"}
-		begin
-			unless column.input_size.nil?
-				len=column.input_size.to_i
-				LOG.debug(fname) {"txt truncate before = #{txt}"}
-				ret=truncate(txt,:length=>len) if len>0
-				LOG.debug(fname) {"txt truncate after = #{txt}"}
-			end
-		rescue Exception=>e
-			stack=""
-			cnt=0
-			e.backtrace.each do |x|
-				if cnt<10
-					stack+= x+"\n"
-				end
-				cnt+=1
-			end
-			LOG.debug(fname) {"Error:#{e}\nstack=\n#{stack}\n"}
-		end
-		ret
-	end
 
-	def get_belong_method(object, col)
-		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug(fname) {"object=#{object} col=#{col.ident} "}
-		unless col.belong_method.blank?
-		belong_method=col.belong_method
-		else
-		belong_method=col.ident
-		end
-		LOG.debug(fname) {"object=#{object} col=#{col.ident} belong_method=#{belong_method}"}
-		belong_method
-	end
+
 end

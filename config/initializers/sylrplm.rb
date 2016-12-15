@@ -26,6 +26,8 @@ module SYLRPLM
 	# admin domain name to keep OOTB functionnalities
 	DOMAIN_ADMIN							= "admin"
 	#
+	EXPORT_COLUMN_SEP				= ";"
+	#
 	# repertoires des chargements
 	#TODO not yet in property
 	DIR_FIXTURES               = "#{Rails.root}/db/fixtures"

@@ -1,5 +1,5 @@
 class UiColumnsController < ApplicationController
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 	respond_to :html, :js, :json, :xml
 	access_control(Access.find_for_controller(controller_name.classify))
 	before_action :set_ui_column, only: [:show, :edit, :update, :destroy]

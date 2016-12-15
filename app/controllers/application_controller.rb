@@ -1,24 +1,20 @@
 require_dependency 'filters/log_definition_filter'
-require_dependency 'controllers/plm_event'
-require_dependency 'controllers/plm_object_controller_module'
+require_dependency 'controllers/plm_object_controller'
 require_dependency 'error_reply'
 require_dependency 'acl_system2/lib/caboose/access_control'
 
 require "sylrplm_ext"
 
 class ApplicationController < ActionController::Base
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 	include Caboose::AccessControl
-	# include all helpers, all the time
 	respond_to :html, :js, :json
+	# include all helpers, all the time
 	helper :all
 	helper_method :current_user, :logged_in?, :admin_logged_in?, :param_equals?, :get_domain, :get_list_modes, :icone, :h_thumbnails, :tr_def
 	helper_method :get_controller_from_model_type, :icone_fic
-	# See ActionController::RequestForgeryProtection for details
-	#rails2 protect_from_forgery
-
-	# bug: page non affichee before_render :check_access_data
-	#rails4 ko before_filter LogDefinitionFilter
+	#in plm_table
+	helper_method :show?, :truncate_text, :get_belong_method,:comma_string
 
 	before_filter :run_debug
 	before_filter :check_init
@@ -55,16 +51,19 @@ class ApplicationController < ActionController::Base
 	end
 
 	def render *args
-	define_table args
+	define_table
 	super
 	end
 
-	def define_table(*args)
+	def define_table
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname) {"params=#{params.inspect} "}
 		action=params[:action]
 		# for portal, show visualize 3 views
 		if action=="show"
+			action="index"
+		end
+		if action=="export"
 			action="index"
 		end
 		action_controller="#{action}_#{params[:controller]}"

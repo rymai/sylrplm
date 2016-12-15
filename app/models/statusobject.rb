@@ -11,8 +11,6 @@
 class Statusobject < ActiveRecord::Base
 	include Models::SylrplmCommon
 
-
-
 	attr_accessible :forobject
 	attr_accessible :typesobject_id
 	attr_accessible :name

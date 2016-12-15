@@ -1,5 +1,5 @@
 class AccessesController < ApplicationController
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 	#
 	access_control(Access.find_for_controller(controller_name.classify))
 	before_filter :find_by_id, :only => [:show, :edit, :update, :destroy]

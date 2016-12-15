@@ -10,12 +10,16 @@ class UiColumn < ActiveRecord::Base
 		["explorer","text","comma","comma_links","image"]
 	end
 
-def getTypesShow
+	def getTypesShow
 		["explorer","text","textarea","comma","comma_links","image"]
 	end
 
 	def getTypesEditable
 		["input_text", "input_textarea","input_integer", "input_float", "input_file", "input_check","input_radio","select","search"]
+	end
+
+	def getTypesExport
+		["text"]
 	end
 
 	def getTypesEditableFile

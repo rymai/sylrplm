@@ -1,7 +1,7 @@
-#require 'lib/controllers/plm_object_controller_module'
+#require 'lib/controllers/plm_object_controller'
 #require 'lib/controllers/plm_init_controller_module'
 class ProjectsController < ApplicationController
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 	#access_control (Access.find_for_controller(controller_name.classify))
 	#before_filter :authorize, :only => [ :show, :edit , :new, :destroy ]
 	# GET /projects

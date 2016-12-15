@@ -4,27 +4,6 @@ require "digest/sha1"
 # = ApplicationHelper
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-	def h_menu_index_action(modelname)
-		fname="#{self.class.name}.#{__method__}"
-		ret=""
-		ret += "<div id='menu_index_action' class='menu_toolbar'>"
-		ret += "<table class='menu_toolbar'>"
-		ret +=	"<tr>"
-		link=t("new_#{modelname}")
-		url={:controller=>get_controller_from_model_type(modelname), :action=>:new}
-		LOG.debug(fname){"link=#{link} url=#{url}"}
-		linkto=eval "link_to('#{link}', #{url})"
-		ret += "<td>#{linkto}</td>"
-		ret += "#{h_menu_execute_submit(modelname)}"
-		help = show_help("help_#{modelname}s")
-		ret << "<td id='separator_vertical'></td>"
-		ret +=	"<td>#{help}</td>"
-		ret +=	"</tr>"
-		ret += "</table>"
-		ret += "</div>"
-		#LOG.debug(fname){"h_menu_index_action=#{ret}"}
-		ret.html_safe unless ret.html_safe?
-	end
 
 	#
 	# select on type for update_type by Ajax
@@ -81,12 +60,6 @@ module ApplicationHelper
 		" (#{item})"
 	end
 
-	def h_menu_duplicate(object_plm)
-		# new_dup_customer_path
-		url="{new_dup_object_plm.modelname}_path"
-		link_to h_img(:duplicate),  {:controller => object_plm.controller_name, :action => :new_dup, :id => object_plm.id}
-	end
-
 	def h_edit_lifecycle(a_form, a_object)
 		render(
 		:partial => "shared/lifecycle_edit",
@@ -141,17 +114,6 @@ module ApplicationHelper
 		#puts "blk="+blk
 		ret = eval blk
 		ret
-	end
-
-	def h_menu_rails2(href,help,title)
-		bloc=""
-		#ne marche pas avec boostrap bloc<<"<a class='menu' onclick=\"return helpPopup('#{help}','#{href}');\" >#{title}</a>";
-		bloc<<"<a class='menu' id='#{title} name='#{title}' href='#{href}' >#{title}</a>";
-		bloc.html_safe? unless ret.html_safe?
-	end
-
-	def h_menu(href,help,title)
-		link_to  title , href, :class=>'menu', :id => title, :name=>title
 	end
 
 	def h_count_objects(objects)
@@ -473,14 +435,7 @@ module ApplicationHelper
 		ret.html_safe unless ret.html_safe?
 	end
 
-	#
-	# build a set of strings separated by a comma
-	# each part of the string is composed of the accessor applicated on the object
-	def comma_string (objects, accessor=:name)
-		objects.collect { |o|
-			o.send(accessor)
-		}.join(', ')
-	end
+
 
 	#
 	# build a set of links separated by a comma
@@ -818,17 +773,7 @@ module ApplicationHelper
 
 	:private
 
-	def h_menu_execute_submit(modelname)
-		ret=""
-		ret << "<td id='separator_vertical'></td>"
-		submit_copy=t("submit_copy")
-		submit_destroy=t("submit_destroy")
-		if logged_in? && Clipboard.can_clipboard?(modelname)
-			ret<< "<td>#{submit_tag(submit_copy)}</td>"
-		end
-		ret<<	"<td>#{submit_tag(submit_destroy)}</td>"
-		ret.html_safe unless ret.html_safe?
-	end
+
 
 	# Displays object errors
 	def form_errors_for(plm_object=nil)

@@ -5,7 +5,7 @@ fr:
   #########################################
   # modules
   #########################################
-  # plm_object_controller_module
+  # plm_object_controller
   ctrl_datafile: Fichier
 
   #########################################

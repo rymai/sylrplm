@@ -1,5 +1,5 @@
 class SubscriptionsController < ApplicationController
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 	before_filter :authorize, :except => nil
 	access_control(Access.find_for_controller(controller_name.classify))
 	# GET /subscriptions

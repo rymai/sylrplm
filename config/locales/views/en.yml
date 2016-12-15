@@ -104,6 +104,7 @@ en:
   update_type: Refresh on type
   submit_copy: Copy
   submit_destroy: Delete
+  export_objects: Export
   form_validation_errors: "%{errors_number} errors prevented the form from being saved."
   button_abort: Abort
   button_delete: Delete
@@ -785,6 +786,7 @@ en:
   label_type_show: Show type
   label_type_editable: Edit Type
   label_type_editable_file: File Types
+  label_type_export: Export type
   label_sortable: Sortable
   label_ui_tables: Tables
   legend_column: Column

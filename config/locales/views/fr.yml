@@ -103,6 +103,7 @@ fr:
   update_type: Rafraichir suivant le type
   submit_copy: Copie
   submit_destroy: Supprime
+  export_objects: Exporte
   form_validation_errors: "%{errors_number} erreurs durant la sauvegarde du formulaire."
   button_abort: Stopper
   button_delete: Supprimer
@@ -786,6 +787,7 @@ fr:
   label_type_show: Type d'affichage
   label_type_editable: Type édition
   label_type_editable_file: Types de fichiers
+  label_type_export: Type Export
   label_sortable: Tri possible
   label_ui_tables: Tables
   legend_column: Colonne

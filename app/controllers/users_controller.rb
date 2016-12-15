@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	include Controllers::PlmObjectControllerModule
+	include Controllers::PlmObjectController
 	##include CheckboxSelectable
 	#
 

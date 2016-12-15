@@ -48,7 +48,9 @@ class Project < ActiveRecord::Base
 	def user=(user)
 		def_user(user)
 	end
-
+	def name_translate
+		ident
+	end
 	# renvoie le nom du projet affecte par defaut au user
 	def self.for_user(username)
 		PlmServices.get_property(:USER_PROJECT_IDENT)+username

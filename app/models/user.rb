@@ -71,7 +71,9 @@ class User < ActiveRecord::Base
 		#LOG.info(fname) {"errors=#{errors.inspect}"}
 		valid
 	end
-
+	def name_translate
+		login
+	end
 	def revisable?
 		false
 	end
