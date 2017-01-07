@@ -149,6 +149,30 @@ index_projects:
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-14 19:55:56.389118000 Z
 
+index_parts:
+  id: 14
+  ident: index_parts
+  type_table: index
+  description: ''
+  ui_columns: id, ident, designation,  typesobject, statusobject, owner, group, project,date,  domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2017-01-07 08:39:17.471631000 Z
+  updated_at: 2017-01-07 08:39:17.471631000 Z
+
+index_documents:
+  id: 15
+  ident: index_documents
+  type_table: index
+  description: ''
+  ui_columns: id, ident, designation,  typesobject, statusobject, owner, group, project,date,  domain
+  pagination: 
+  menus_action: 
+  domain: ''
+  created_at: 2017-01-07 08:40:21.058099000 Z
+  updated_at: 2017-01-07 08:42:43.913093000 Z
+
 index_forums:
   id: 5
   ident: index_forums
@@ -298,3 +322,27 @@ index_projects:
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
   updated_at: 2016-12-14 19:55:56.389118000 Z
+
+index_parts:
+  id: 14
+  ident: index_parts
+  type_table: index
+  description: ''
+  ui_columns: id, ident, designation,  typesobject, statusobject, owner, group, project,date,  domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2017-01-07 08:39:17.471631000 Z
+  updated_at: 2017-01-07 08:39:17.471631000 Z
+
+index_documents:
+  id: 15
+  ident: index_documents
+  type_table: index
+  description: ''
+  ui_columns: id, ident, designation,  typesobject, statusobject, owner, group, project,date,  domain
+  pagination: 
+  menus_action: 
+  domain: ''
+  created_at: 2017-01-07 08:40:21.058099000 Z
+  updated_at: 2017-01-07 08:42:43.913093000 Z

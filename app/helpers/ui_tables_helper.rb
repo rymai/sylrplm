@@ -1,7 +1,6 @@
 module UiTablesHelper
 	def h_build_table
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug(fname) {"====>@UI_TABLE=#{@UI_TABLE.ident} "}
 		LOG.debug(fname) {"====>@object_plms=(true=>ko)#{@object_plms.nil?} "}
 		ret=""
 		ret+=hidden_field_tag("filter_types" , @myparams["filter_types"]) unless @myparams.nil?
