@@ -381,12 +381,14 @@ class PlmServices
 		fname = "PlmServices.#{__method__}"
 		ActiveRecord::Base.configurations = Rails.application.config.database_configuration
 		db_config=ActiveRecord::Base.configurations[Rails.env]
-		puts fname+db_config.to_s
+		puts fname+ "Rails.env=#{Rails.env}"
+		puts fname+"db_config="+db_config.to_s
 		pg_db_config={}
 		pg_db_config["dbname"]=db_config["database"]
 		pg_db_config["user"]=db_config["username"]
 		pg_db_config["password"]=db_config["password"]
 		pg_db_config["host"]="localhost"
+
 		puts fname+ "pg_db_config=#{pg_db_config}"
 
 		#puts fname+  "connection_config=#{ActiveRecord::Base.connection_config}"
