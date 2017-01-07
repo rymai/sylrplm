@@ -387,7 +387,7 @@ class PlmServices
 		pg_db_config["user"]=db_config["username"]
 		pg_db_config["password"]=db_config["password"]
 		pg_db_config["host"]=db_config["localhost"]
-		LOG.debug(fname){"pg_db_config=#{pg_db_config}"}
+		puts fname+ "pg_db_config=#{pg_db_config}"
 
 		#puts fname+  "connection_config=#{ActiveRecord::Base.connection_config}"
 
@@ -397,7 +397,7 @@ class PlmServices
 
 		#pg_pool =ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[Rails.env])
 		#pg_connection=pg_pool.checkout
-		LOG.debug(fname){ "pg_connection=#{pg_connection}"}
+		puts fname+  "pg_connection=#{pg_connection}"
 		begin
 			table_name='ruote_docs'
 			Ruote::Postgres.create_table(pg_connection, true, table_name)
@@ -413,7 +413,7 @@ class PlmServices
 			pg_worker=Ruote::Worker.new(ruote_storage)
 			RuoteKit.engine  = Ruote::Dashboard.new(pg_worker)
 		rescue Exception=>e
-			LOG.error(fname){"Error:#{e}"}
+			puts fname+  "Error:#{e}"
 		end
 
 		# By default, there is a running worker when you start the Rails server. That is
@@ -436,19 +436,19 @@ class PlmServices
 		# Stop the task by pressing Ctrl+C
 
 		unless $RAKE_TASK # don't register participants in rake tasks
-			LOG.debug(fname){"RuoteKit.engine=#{RuoteKit.engine}"}
+			puts fname+  "RuoteKit.engine=#{RuoteKit.engine}"
 		  RuoteKit.engine.register do
 		    # register your own participants using the participant method
 		    # Example: participant 'alice', Ruote::StorageParticipant see
 		    # http://ruote.rubyforge.org/participants.html for more info
-			LOG.debug(fname){ "loading participants"}
+			puts fname+ "loading participants"
 			# only enter this block if the engine is running
 			participant 'plm', Ruote::PlmParticipant
 		    # register the catchall storage participant named '.+'
 		    catchall
 		  end
 		end
-		LOG.debug(fname){ "list of participants"}
+		puts fname+ "list of participants"
 		RuoteKit.engine.participant_list.each { |pe| puts "#{pe}" }
 		#
 		# when true, the engine will be very noisy (stdout)
