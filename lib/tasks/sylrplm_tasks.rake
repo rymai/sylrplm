@@ -110,15 +110,17 @@ namespace :sylrplm do
 			LOG.debug(fname) {"sites=#{props}"}
 			Datafile.all.each do |file|
 				unless file.filename.nil?
-					LOG.debug(fname) {"import of #{file.inspect}"}
+					LOG.debug(fname) {"===import of #{file}"}
 					LOG.debug(fname) {"import of #{file.filename} protocol=#{file.volume.protocol} file_field=#{file.file_field}"}
 					file.file_import = {}
 					file.file_import[:file] = File.new(file.filename)
 					file.file_import[:original_filename] = file.filename
-					st = file.save
-					LOG.debug(fname) {"save file_field=#{file.file_field}, filename:#{file.filename}=#{st}"}
+					#RAILS 2 st = file.save
+					# RAILS 4:
+					st = file.save_file(file.filename)
+					LOG.debug(fname) {"after save file_field=#{file.file_field}, filename:#{file.filename} = #{st}"}
 				else
-					LOG.debug(fname) {"mport_domain:save file.filename null dans #{file.inspect}"}
+					LOG.debug(fname) {"import_domain:save file.filename null dans #{file.inspect}"}
 				end
 			end
 			LOG.debug(fname) {"loading of datafiles if needed terminated"}

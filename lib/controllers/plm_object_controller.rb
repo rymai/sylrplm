@@ -391,9 +391,9 @@ module Controllers
 					end
 				else
 					respond_to do |format|
-						flash[:error] = "Error during model generation:#{object.errors.inspect}"
-						LOG.debug(fname){"flash=#{flash[:error]} err=#{object.errors.inspect}"}
-						format.html { redirect_to(object) }
+						flash[:error] = "Error during model generation:#{object.errors.full_messages}"
+						LOG.debug(fname){"flash=#{flash[:error]} err=#{object.errors.full_messages}"}
+						#format.html { redirect_to(object) }
 						format.html { render :action => "show"  }
 						format.xml  { render :xml => object.errors, :status => :unprocessable_entity }
 					end

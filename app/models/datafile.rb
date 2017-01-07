@@ -375,6 +375,21 @@ include Zip
 		ret
 	end
 
+	def save_file(file_path)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"save_file file_path=#{file_path}"}
+		unless file_path.blank?
+			self.filename = base_part_of(file_path)
+			LOG.debug(fname){"save_file: filename=#{self.filename} content_type=#{self.content_type}"}
+			content = open(file_path,"rb") { |io| io.read }
+			LOG.debug(fname){"save_file: content=#{content.size}"}
+			ret = write_file(content)
+			self.save
+		end
+		#LOG.debug(fname){"fin de upload:ret=#{ret}"}
+		ret
+	end
+
 	def base_part_of(file_name)
 		fname= "#{self.class.name}.#{__method__}"
 		PlmServices.file_basename(file_name).gsub(/[^\w._-]/, '')
@@ -387,7 +402,7 @@ include Zip
 	# return the filename without the dir path and the extension
 	def file_name
 		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug(fname) {"filename=#{filename}"}
+		#LOG.debug(fname) {"filename=#{filename}"}
 		PlmServices.file_basename(self.filename).split(".")[0] unless self.filename.blank?
 	end
 

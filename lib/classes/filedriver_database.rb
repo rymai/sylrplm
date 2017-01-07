@@ -140,7 +140,10 @@ class FiledriverDatabase < Filedriver
 			datafile.errors.add(:base,"Exception during read_file:#{e.message}")
 			e.backtrace.each {|x| LOG.error x}
 		end
-		PlmServices.stack "Error during read_file:data is null", 5 if data.nil?
+		if data.nil?
+		PlmServices.stack "Error during read_file:data is null", 5
+		datafile.errors.add(:base,"Error during read_file:data is null for datafile #{datafile.ident}")
+		end
 		data
 	end
 

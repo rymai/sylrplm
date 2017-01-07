@@ -16,7 +16,7 @@ module UiTablesHelper
 		unless @UI_TABLE.blank?
 			LOG.debug(fname) {"====>@UI_TABLE=#{@UI_TABLE.ident} "}
 			columns=@UI_TABLE.get_ui_columns
-			LOG.debug(fname) {"====>columns=#{columns}"}
+			LOG.debug(fname) {"====>columns=#{columns.size}"}
 			ret+=h_form_simple_query("/#{controller_name}", @object_plms, @object_plm)
 			ret+=build_form(columns)
 		else

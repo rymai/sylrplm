@@ -19,6 +19,7 @@ NOLOGS=[
 	"clipboard",
 	"def_user",
 	"define_variables",
+	"Filedriver",
 	"find_paginate",
 	"form_errors_for",
 	"frozen?",
@@ -57,6 +58,7 @@ NOLOGS=[
 	"to_s",
 	"truncate_text",
 	"Typesobject.get_types",
+	"zip_stringio"
 
 ]
 #NOLOGS=[]

@@ -88,16 +88,18 @@ def build_model_tree(plmobject, tree, type_model)
 	end
 	LOG.debug(fname) {"#{files.count} files ret=#{ret}"}
 	files.each do |datafile|
+		LOG.debug(fname) {"datafile=#{datafile}"}
 		content = datafile.read_file_for_tree
 		unless content.nil?
-			LOG.debug(fname) {"file:#{datafile.file_fullname} : #{content.size}"}
+			LOG.debug(fname) {"datafile.file_fullname=#{datafile.file_fullname} : #{content.size}"}
 			ret << "//file#{10.chr}"
 			ret << "#{content}#{10.chr}"
 		else
+			LOG.debug(fname) {"datafile.errors= : #{datafile.errors}"}
 			datafile.errors.each do |type,err|
 				plmobject.errors.add :base ,  err
 			end
-			return nil
+			ret=nil
 		end
 	end
 	unless ret.nil?
@@ -105,7 +107,7 @@ def build_model_tree(plmobject, tree, type_model)
 		ret << "}#{10.chr}"
 		ret << "#{plmobject.ident}();#{10.chr}"
 	end
-	plmobject.errors.add(:base, errors) unless errors.blank?
+	plmobject.errors.add(:base ,  errors) unless errors.blank?
 	{"content"=>ret, "filename"=>ret_filename, "content_type"=>ret_type}
 end
 

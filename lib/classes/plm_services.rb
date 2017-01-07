@@ -6,7 +6,7 @@ class PlmServices
 	@@plmcache={}
 
 	def self.zip_in_stringio(filename, content)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "PlmServices.#{__method__}"
 		LOG.debug(fname) {"filename=#{filename } content=#{content.size}"}
 		stringio = Zip::OutputStream::write_buffer(::StringIO.new) do |zio|
 		zio.put_next_entry(filename)
@@ -17,14 +17,14 @@ class PlmServices
 	end
 
 	def self.unzip_stringio(content)
-		fname= "#{self.class.name}.#{__method__}"
+		fname= "PlmServices.#{__method__}"
 		ret=nil
 		unless content.blank?
 			LOG.debug(fname) {"content=#{content.size}"}
 			stringio=::StringIO.new(content)
-			LOG.debug(fname) {"stringio=#{stringio.inspect}"}
+			#LOG.debug(fname) {"stringio=#{stringio.inspect}"}
 			Zip::InputStream.open(stringio) do |zio|
-				LOG.debug(fname) {"zio=#{zio}"}
+				#LOG.debug(fname) {"zio=#{zio}"}
 				while (entry = zio.get_next_entry)
 					LOG.debug(fname) {"zio.read:#{entry.name}"}
 					ret = zio.read

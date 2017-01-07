@@ -34,7 +34,7 @@ class FiledriverFog < Filedriver
 				:path_style => true
 			})
 		end
-		LOG.debug(fname) {"@@instance=#{@@instance.inspect}"}
+		LOG.debug(fname) {"@@instance=#{@@instance}"}
 		return @@instance
 	end
 
@@ -81,7 +81,8 @@ class FiledriverFog < Filedriver
 		fname= "FiledriverFog.#{__method__}"
 		fog_file = retrieve(datafile.dir_repository, datafile.filename_repository)
 		data=fog_file.body unless fog_file.nil?
-		#LOG.debug(fname) {"fog_file=#{fog_file} taille=#{data}"}
+		LOG.debug(fname) {"fog_file=#{fog_file} data=#{data}"}
+		datafile.errors.add(:base,"Error during read_file:data is null for datafile #{datafile.ident}") if data.nil?
 		data
 	end
 
@@ -298,7 +299,7 @@ class FiledriverFog < Filedriver
 		fname= "#{self.class.name}.#{__method__}"
 		begin
 			ret=storage.directories.get(directory_key)
-			#puts "sylrplm_fog.directory("+directory_key+")="+ret.inspect
+			LOG.debug(fname){"directory_key=#{directory_key} ret=#{ret.inspect}"}
 		rescue Exception => exc
 			LOG.debug(fname){"Exception during fog access, verify the network, dir_key=#{directory_key} exception=#{exc}"}
 			ret=nil
@@ -307,10 +308,14 @@ class FiledriverFog < Filedriver
 	end
 
 	def file(directory_key, file_key)
-		#puts "sylrplm_fog.file("+directory_key+","+ file_key+")"
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname){"directory_key=#{directory_key} file_key=#{file_key}"}
 		dir=directory(directory_key)
+		dir.files.each do |file|
+			LOG.debug(fname){"directory_key=#{directory_key} file=#{file.inspect}"}
+		end
 		ret=dir.files.get(file_key) unless dir.nil?
-		#puts "sylrplm_fog.file("+directory_key+","+ file_key+")="+ret.inspect
+		LOG.debug(fname){"directory_key=#{directory_key} file_key=#{file_key} ret=#{ret.inspect}"}
 		ret
 	end
 
