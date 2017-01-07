@@ -390,8 +390,8 @@ class PlmServices
 
 		#puts fname+  "connection_config=#{ActiveRecord::Base.connection_config}"
 
-		#pg_connection =PG.connect(pg_db_config)
-		pg_connection =PG::Connection.open(pg_db_config)
+		pg_connection =PG.connect(pg_db_config)
+		####pg_connection =PG::Connection.open(pg_db_config)
 		#pg_connection =ActiveRecord::Base.connection
 
 		#pg_pool =ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[Rails.env])
