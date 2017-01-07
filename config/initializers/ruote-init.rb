@@ -8,4 +8,5 @@
 # ruote.
 module SYLRPLM
 ###init dans PlmServices.ruote_init
+PlmServices.ruote_init
 end
