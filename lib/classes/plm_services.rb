@@ -386,7 +386,7 @@ class PlmServices
 		pg_db_config["dbname"]=db_config["database"]
 		pg_db_config["user"]=db_config["username"]
 		pg_db_config["password"]=db_config["password"]
-		pg_db_config["host"]=db_config["localhost"]
+		pg_db_config["host"]="localhost"
 		puts fname+ "pg_db_config=#{pg_db_config}"
 
 		#puts fname+  "connection_config=#{ActiveRecord::Base.connection_config}"
