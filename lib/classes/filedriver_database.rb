@@ -1,5 +1,6 @@
 require 'classes/filedriver'
 require 'zip'
+
 class FiledriverDatabase < Filedriver
 
 	private
@@ -119,30 +120,32 @@ class FiledriverDatabase < Filedriver
 
 	def read_file(datafile)
 		fname= "#{self.class.name}.#{__method__}"
-		cmd="SELECT * FROM \"#{datafile.dir_repository}\" WHERE datafile = '#{datafile.ident}' AND filename='#{datafile.file_fullname}' AND revision='#{datafile.revision}'"
-		LOG.debug(fname) {"cmd=#{cmd}"}
-		data=nil
-		begin
-			records = ActiveRecord::Base.connection.execute(cmd)
-			dsize=records.fsize(records.fnumber("content"))
-			LOG.debug(fname) {"records(#{dsize})=#{records.fields} records.ntuples=#{records.ntuples}"}
-			#records.each {|tuple| LOG.debug(fname){"#{tuple.inspect}"}}
-			if records.ntuples == 1
-				content = records[0]["content"]
-				#ActiveSupport::Base64.decode64(data)
-				data=untransform_content(datafile, content)
-			else
-				LOG.debug(fname) {"data=nil"}
-				data=nil
+		unless datafile.filename.nil?
+			cmd="SELECT * FROM \"#{datafile.dir_repository}\" WHERE datafile = '#{datafile.ident}' AND filename='#{datafile.file_fullname}' AND revision='#{datafile.revision}'"
+			LOG.debug(fname) {"cmd=#{cmd}"}
+			data=nil
+			begin
+				records = ActiveRecord::Base.connection.execute(cmd)
+				dsize=records.fsize(records.fnumber("content"))
+				LOG.debug(fname) {"records(#{dsize})=#{records.fields} records.ntuples=#{records.ntuples}"}
+				#records.each {|tuple| LOG.debug(fname){"#{tuple.inspect}"}}
+				if records.ntuples == 1
+					content = records[0]["content"]
+					#ActiveSupport::Base64.decode64(data)
+					data=untransform_content(datafile, content)
+				else
+					LOG.debug(fname) {"data=nil"}
+					data=nil
+				end
+			rescue Exception => e
+				LOG.error(fname){"Exception during read_file:#{e.message}"}
+				datafile.errors.add(:base,"Exception during read_file:#{e.message}")
+				e.backtrace.each {|x| LOG.error x}
 			end
-		rescue Exception => e
-			LOG.error(fname){"Exception during read_file:#{e.message}"}
-			datafile.errors.add(:base,"Exception during read_file:#{e.message}")
-			e.backtrace.each {|x| LOG.error x}
 		end
 		if data.nil?
-		PlmServices.stack "Error during read_file:data is null", 5
-		datafile.errors.add(:base,"Error during read_file:data is null for datafile #{datafile.ident}")
+			PlmServices.stack "Error during read_file:data is null", 5
+			datafile.errors.add(:base,"Error during read_file:data is null for datafile #{datafile.ident}")
 		end
 		data
 	end
