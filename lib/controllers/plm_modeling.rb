@@ -64,14 +64,15 @@ end
 # result depends of the datatype (scad,...)
 # @param customer or document or part or project
 #
-def build_model_tree(plmobject, tree, type_model)
+def build_model_tree(plmobject, tree, otype_model)
 	fname="plm_modeling:"#{self.class.name}.#{__method__}"
 	nodes = tree.nodes
 	matrix = nil
 	files = []
-	ret_filename = "#{plmobject.ident}.#{type_model.name}"
-	ret_type = "application/#{type_model.name}"
-	LOG.debug(fname) {" type_model=Object type.datafile.scad"}
+	ret_filename = "#{plmobject.ident}.#{otype_model.name}"
+	ret_type = "application/#{otype_model.name}"
+	LOG.debug(fname) {" type_model=#{otype_model}"}
+	type_model=otype_model.name
 	if type_model=="scad"
 		ret = ""
 		ret << "module #{plmobject.ident}() {#{10.chr}"
@@ -83,11 +84,11 @@ def build_model_tree(plmobject, tree, type_model)
 	errors=[]
 	if nodes.count > 0
 		nodes.each do |nod|
-			ret=read_node(plmobject, nod, type_model, ret, matrix, files, errors)
+			ret=read_node(plmobject, nod, otype_model, ret, matrix, files, errors)
 		end
 	else
 		plmobject.datafiles.each do |datafile|
-			if datafile.typesobject==type_model
+			if datafile.typesobject==otype_model
 			files << datafile unless files.include?(datafile)
 			end
 		end
@@ -102,6 +103,7 @@ def build_model_tree(plmobject, tree, type_model)
 				ret << "//file#{10.chr}"
 				ret << "#{content}#{10.chr}"
 			else
+				LOG.debug(fname) {"ret content=#{ret}"}
 			ret.put_next_entry(datafile.file_fullname)
 			ret<< content
 			end
@@ -119,6 +121,7 @@ def build_model_tree(plmobject, tree, type_model)
 			ret << "}#{10.chr}"
 			ret << "#{plmobject.ident}();#{10.chr}"
 		else
+			LOG.debug(fname) {"ret final=#{ret}"}
 		# fin du zip
 		ret.close_buffer
 		stringio.rewind
@@ -142,7 +145,7 @@ def read_node(plmobject, node, type_model, ret, mx, files, errors)
 				if datafile.typesobject.name == type_model.name
 					files << datafile unless files.include?(datafile)
 					LOG.debug(fname) { "lnk=#{lnk}"}
-					if type_model=="scad"
+					if type_model.name=="scad"
 						ret << "//tmx#{10.chr}"
 						if mx.nil?
 							ret<<"#{datafile.file_name}();"
@@ -168,7 +171,7 @@ def read_node(plmobject, node, type_model, ret, mx, files, errors)
 				LOG.debug(fname) { "mx_dx=#{mx_dx} mx_dy=#{mx_dy} mx_dz=#{mx_dz} mx_rx=#{mx_rx} mx_ry=#{mx_ry} mx_rz=#{mx_rz}"}
 				unless mx_rx.nil? && mx_ry.nil? && mx_rz.nil?
 					unless mx_rx.zero? && mx_ry.zero? && mx_rz.zero?
-						if type_model=="scad"
+						if type_model.name=="scad"
 							ret << "rotate([#{mx_rx}, #{mx_ry},#{mx_rz}])#{10.chr}"
 						end
 					yamx=true
@@ -176,7 +179,7 @@ def read_node(plmobject, node, type_model, ret, mx, files, errors)
 				end
 				unless mx_dx.nil?  && mx_dy.nil? && mx_dz.nil?
 					unless  mx_dx.zero?  && mx_dy.zero?  && mx_dz.zero?
-						if type_model=="scad"
+						if type_model.name=="scad"
 							ret << "translate([#{mx_dx}, #{mx_dy}, #{mx_dz}])#{10.chr}"
 						end
 					yamx=true
@@ -190,7 +193,7 @@ def read_node(plmobject, node, type_model, ret, mx, files, errors)
 		end
 	end
 	unless ret.nil?
-		if type_model=="scad"
+		if type_model.name=="scad"
 			ret << ""
 			ret <<"{#{10.chr}" if yamx==true
 			node.nodes.each do |nod|
