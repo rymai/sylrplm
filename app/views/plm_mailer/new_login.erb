@@ -2,11 +2,11 @@
 <br>
 <p>
 	<b><%= t(:label_login)%></b>
-	<%= h @user.login %>
+	<%= h @new_user.login %>
 </p>
 <p>
 	<b><%= t(:label_email)%></b>
-	<%= h @user.email %>
+	<%= h @new_user.email %>
 </p>
 <b><%= t("new_login_activate")%> </b>
-<a href="<%= @urlbase %><%= url_for(:controller=>'sessions', :action=>'activate', :id => @user.id) %>" title="<%= @user.login %>" ><%= @user.login %> </a>
+<a href="<%= @urlbase %><%= url_for(:controller=>'sessions', :action=>'activate', :id => @new_user.id) %>" title="<%= @new_user.login %>" ><%= @new_user.login %> </a>

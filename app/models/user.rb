@@ -71,9 +71,11 @@ class User < ActiveRecord::Base
 		#LOG.info(fname) {"errors=#{errors.inspect}"}
 		valid
 	end
+
 	def name_translate
 		login
 	end
+
 	def revisable?
 		false
 	end
@@ -149,20 +151,12 @@ class User < ActiveRecord::Base
 	#
 	#
 	def self.create_new_login(aparams, urlbase)
-		fname="User.create_new_login:"
-		#LOG.debug(fname) {"params login=#{aparams}"}
-		###type = Typesobject.find_by_forobject_and_name("user", ::SYLRPLM::TYPE_USER_NEW_ACCOUNT)
-		#puts fname+" type="+type.inspect
-		#role_consultant=Role.find_by_title(::SYLRPLM::ROLE_CONSULTANT)
-		admin = User.find_by_login(PlmServices.get_property(:USER_ADMIN))
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {"params login=#{aparams}"}
 		proj=Project.find_by_ident("PROJECT-admin")
-		#puts fname+" proj="+proj.inspect
-		#unless role_consultant.nil? || type.nil?
 		new_user=User.find_by_login(aparams["login"])
 		new_user.destroy unless new_user.nil?
 		params={}
-		#params["typesobject_id"]=type.id
-		#params["volume_id"]=1
 		params["login"]    = aparams["login"]
 		params["password"] = aparams["password"]
 		params["email"]    = aparams["email"]
@@ -172,21 +166,10 @@ class User < ActiveRecord::Base
 		new_user = User.new(params)
 		if new_user.errors.nil? || new_user.errors.count==0
 			if new_user.save
-				#
-				#puts fname+" new_user="+new_user.inspect
-				#puts fname+"urlbase="+urlbase
-				email = PlmMailer.create_new_login(new_user, admin, new_user, urlbase)
-				unless email.nil?
-					msg = :ctrl_mail_created_and_delivered
-					puts fname+" message cree et envoye pour #{new_user.login}"
-				else
-					puts fname+" message non cree pour #{new_user.login}"
-					msg = :ctrl_mail_not_created
-				end
-
+				LOG.debug(fname) {" new_user=#{new_user.inspect}"}
+				LOG.debug(fname) {"urlbase=#{urlbase}"}
 			else
 				LOG.error(fname) {" user non sauve: errors= #{new_user.errors.inspect}"}
-			#new_user=nil
 			end
 		else
 			LOG.error(fname) {" user non cree: errors= #{new_user.errors.inspect}"}
@@ -204,6 +187,22 @@ new_user=nil
 
 		#end
 		new_user
+	end
+
+	def self.send_mail_new_login_to_admin(new_user,urlbase)
+		fname= "#{self.class.name}.#{__method__}"
+		LOG.debug(fname) {" new_user=#{new_user.inspect}"}
+		LOG.debug(fname) {"urlbase=#{urlbase}"}
+		admin = User.find_by_login(PlmServices.get_property(:USER_ADMIN))
+		email = PlmMailer.new_login(new_user, admin, new_user, urlbase).deliver_now
+		unless email.nil?
+			msg = :ctrl_mail_created_and_delivered
+			puts fname+" message cree et envoye pour #{new_user.login}"
+		else
+			puts fname+" message non cree pour #{new_user.login}"
+			msg = :ctrl_mail_not_created
+		end
+		email
 	end
 
 	def validate_user_by_action?
@@ -438,7 +437,7 @@ new_user=nil
 
 	def self.encrypted_password(pwd, salt)
 		#puts __FILE__+".encrypted_password:"+pwd.to_s+":"+salt.to_s
-		string_to_hash = pwd + "wibble" + salt
+		string_to_hash = "#{pwd}wibble#{salt}"
 		Digest::SHA1.hexdigest(string_to_hash)
 	end
 

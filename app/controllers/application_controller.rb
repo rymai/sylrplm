@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
 	helper_method :get_controller_from_model_type, :icone_fic
 	#in plm_table
 	helper_method :show?, :truncate_text, :get_belong_method,:comma_string
+	helper_method :get_html_options
 
 	before_filter :run_debug
 	before_filter :check_init

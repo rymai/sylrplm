@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 #sylrplm debut
-ruby "2.1.2"
+ruby "2.1.9"
 #pour respond_to dans les controlleurs
 ###gem 'responders', '~> 2.0'
 gem 'responders', '2.3.0'

@@ -318,7 +318,7 @@ module Controllers
 			ret
 		end
 
-		def  get_html_options_obsolete(lst, default, translate=false)
+		def  get_html_options(lst, default, translate=false)
 			ret=""
 			lst.each do |item|
 				if translate

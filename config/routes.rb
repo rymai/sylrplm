@@ -476,7 +476,7 @@ Rails.application.routes.draw do
 	resources :sessions , :only => [:new, :create , :destroy] do
 		collection do
 			get :new_account
-			get :create_account
+			post :create_account
 		end
 	end
 	match 'sessions/', :to => 'sessions#destroy', via: [:delete]

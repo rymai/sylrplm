@@ -1,9 +1,10 @@
 class SessionsController < ApplicationController
 
 	skip_before_filter :authorize, :check_user
-def index
+	def index
 
-end
+	end
+
 	def new
 		puts "sessions_controller.new"+params.inspect
 		puts "sessions_controller.new:flash="+flash[:notice] unless flash[:notice].nil?
@@ -97,7 +98,7 @@ end
 						format.xml { head :ok }
 					end
 				else
-				LOG.debug(fname) {"create: il ne peut se connecter"}
+					LOG.debug(fname) {"create: il ne peut se connecter"}
 					@current_user=nil
 					session[:user_id] = nil
 					respond_to do |format|
@@ -106,7 +107,7 @@ end
 					end
 				end
 			else
-			  LOG.debug(fname) {"create: login/mot de passe non reconnu=> nouvelle saisie"}
+				LOG.debug(fname) {"create: login/mot de passe non reconnu=> nouvelle saisie"}
 				@current_user=nil
 				session[:user_id] = nil
 				flash[:error] = t(:ctrl_invalid_login)
@@ -138,22 +139,14 @@ end
 		@current_users = User.find_paginate({:user=> current_user, :filter_types => params[:filter_types], :page=>params[:page],:query=>params[:query],:sort=>params[:sort], :nb_items => get_nb_items(params[:nb_items])})
 		# validation du compte
 		# nouvel utilisateur potentiel
-		respond_to do |format|
-
-		# if par["login"].empty? || par["password"].empty? || par["new_email"].empty? || par["language"].empty?
-		# 	LOG.debug(fname) {"validation du compte ko"}
-		# 	@current_user=nil
-		# 	session[:user_id] = nil
-		# 	flash[:error] =t(:ctrl_invalid_login)
-		# 	format.html { render :new_account }
-		# 	format.xml { render :xml => errs, :status => :unprocessable_entity }
-		# else
-		#LOG.debug(fname) {"validation du compte ok"}
 		# tout est saisis: creation du nouveau compte
-			cur_user = User.create_new_login(par, @urlbase)
-			#LOG.debug(fname){"cur_user=#{cur_user.inspect} errors=#{cur_user.errors.inspect}"}
+		cur_user = User.create_new_login(par, @urlbase)
+		LOG.debug(fname){"cur_user=#{cur_user.inspect} errors=#{cur_user.errors.inspect}"}
+		respond_to do |format|
 			if  cur_user.errors.nil? || cur_user.errors.count==0
-				#LOG.debug(fname){"create_process"}
+				LOG.debug(fname){"pas d'erreurs, send mail from #{cur_user} to admin to activate the new account"}
+				User.send_mail_new_login_to_admin(cur_user,@urlbase)
+				LOG.debug(fname){"pas d'erreurs, create_process"}
 				current_toremove=false
 				if @current_user.nil?
 					@current_user = User.find_by_login(PlmServices.get_property(:USER_ADMIN))
@@ -182,7 +175,7 @@ end
 				flash[:error] = t(:ctrl_new_account_not_created, :user=>par["login"])
 				@session=cur_user
 				#LOG.debug(fname){"render new_account:session=#{session}"}
-				format.html { render :new_account_sessions }
+				format.html { render :new_account}
 				format.xml {render :xml => errs, :status => :unprocessable_entity }
 			end
 		### TODO cur_user.destroy unless (cur_user.nil? && !cur_user.errors.nil? && cur_user.errors==0)
