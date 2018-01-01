@@ -29,7 +29,7 @@ module HelpHelper
 				:next_src=>suitable_helps[:next_src],
 				:childs_src=>suitable_helps[:childs_src]}
 		end
-		help.html_safe
+		help
 	end
 
 	def h_help_key(key)

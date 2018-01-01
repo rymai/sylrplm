@@ -73,15 +73,14 @@ module UiTablesHelper
 			show=show? col
 			if(show)
 				ret+= "<th class='table_header'"
+				label=t("label_#{col.ident}")
 				if col.sortable
 					ret+= sort_td_class_helper('col.ident').to_s
 					ret+= ">"
-					label="label_#{col.ident}"
-					ret+= sort_link_helper(t(label),col.ident).to_s
+					ret+= sort_link_helper(label,col.ident).to_s
 				else
 					ret+= ">"
-					label="label_#{col.ident}"
-				ret+= col.ident
+				ret+= label
 				end
 				ret+="</th>"
 			end
@@ -312,7 +311,5 @@ module UiTablesHelper
 	def build_image(object,col,type_table)
 
 	end
-
-
 
 end

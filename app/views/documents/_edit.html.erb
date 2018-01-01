@@ -4,7 +4,7 @@
 <%= f.text_field :ident , :readonly => object.column_readonly?(:ident) %>
 <br/>
 <%= f.label t("label_revision") %>
-<%= text_field_tag :revision, object.revision, :readonly => true %>
+<%= f.text_field :revision,  :readonly => true %>
 <br/>
 <%= f.label t("label_designation") %>
 <%= f.text_field :designation, :readonly => object.column_readonly?(:designation) %>

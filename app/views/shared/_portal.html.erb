@@ -81,8 +81,6 @@
 <div id="rowTwo"  name="rowTwo">
 	<div id="object_list" name="object_list" style="display: block;">
 		<% unless @object_plms.nil? %>
-		<% puts "@object_plms=#{@object_plms.inspect}"%>
-		<% puts "@object_plms=#{@object_plms.to_a.inspect}"%>
 		<% obj=@object_plms[:recordset][0]
 		controller=get_controller_from_model_type(obj.modelname)%>
 		<%= render :partial =>  "#{controller}/index"%>

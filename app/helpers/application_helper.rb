@@ -309,23 +309,29 @@ module ApplicationHelper
 	end
 
 	def sort_link_helper(text, param)
+		fname="#{self.class.name}.#{__method__}"
 		key = param
 		key += " DESC" if params[:sort] == param
 		#
 		#DEPRECATION WARNING: The :overwrite_params option is deprecated. Specify all the necessary parameters instead.
 		#old url = {:overwrite_params => {:sort => key, :page => nil}}
+		#TODO ajouter le refresh: :onclick=>"window.location.reload()"
 		url = params.merge(:sort => key, :page => nil)
 		options = {
 			:url => url,
 			:update => 'table',
 			:before => "Element.show('spinner')",
 			:success => "Element.hide('spinner')",
-			:remote => true
+			:remote => false
 		}
 		html_options = {
 			:title => t("h_sort_by_field"),
-			:href => url_for(:action => 'index', :params => params.merge({:sort => key, :page => nil}))
+			:href => url_for(:action => 'index', :params => params.merge({:sort => key, :page => nil})),
+			:onclick=>"window.location.reload(false)"
 		}
+		LOG.debug(fname){"sort_link_helper: text=#{text}"}
+		LOG.debug(fname){"sort_link_helper: options=#{options}"}
+		LOG.debug(fname){"sort_link_helper: html_options=#{html_options}"}
 		link_to(text, options, html_options)
 	end
 

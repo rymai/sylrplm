@@ -352,6 +352,8 @@ include Zip
 			LOG.debug(fname){"upload_file: filename=#{self.filename} content_type=#{self.content_type}"}
 			content = open(file_field.path,"rb") { |io| io.read }
 			LOG.debug(fname){"content=#{content.size}"}
+			#syl saving filename and content_type !
+			self.save
 			ret = write_file(content)
 			self.file_field=nil
 		else unless self.file_import.nil?

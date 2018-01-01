@@ -168,23 +168,29 @@ module Models
 
 		def next_revision
 			fname= "#{self.modelname}.#{__method__}"
-			next_revision = self.revision
-			found = false
-			modl = eval self.class.name
-			while found == false
-				next_revision = next_revision.next
-				obj=nil
-				begin
-					LOG.debug(fname){"find_by_ident_and_revision"}
-					obj = modl.find_by_ident_and_revision(self.ident, next_revision)
-					if obj.nil?
+			revision_next = self.revision
+			unless revision_next.blank?
+				found = false
+				modl = eval self.class.name
+				while found == false
+					revision_next = revision_next.next
+					LOG.debug(fname){"revision_next=#{revision_next}"}
+					obj=nil
+					begin
+						#LOG.debug(fname){"find_by_ident_and_revision ident=#{self.ident} revision _next=#{revision_next}"}
+						obj = modl.find_by_ident_and_revision(self.ident, revision_next)
+						LOG.debug(fname){"find_by_ident_and_revision ident=#{self.ident} revision_next=#{revision_next} obj=#{obj}"}
+						if obj.nil?
+						found = true
+						end
+					rescue Exception=>e
 					found = true
 					end
-				rescue Exception=>e
-				found = true
 				end
+			else
+				LOG.error(fname){"the object '#{self}' does not have a revision !!}"}
 			end
-			next_revision
+			revision_next
 		end
 
 		#si params.nil?, on duplique tous les liens

@@ -134,6 +134,7 @@ fr:
   label_recent_description: Description
   label_recent_action: Action
   # messages
+  label_nb_forum_items: Nombre messages
   msg_no_item_to_display: Il n'y a rien à afficher.
   msg_confirm: Etes vous sûr ?
   msg_tobedefine: A définir
@@ -321,7 +322,7 @@ fr:
   label_restore_file: Fichier à restaurer
   datafile_show_file: Voir le fichier
   datafile_download_file: Télécharger le fichier
-  datafile_without_file: Pas de fichier
+  datafile_without_file: Pas de fichier associé
   sylrplm_files_list: Liste des fichiers
   # definitions
   definition_simple_sequence: Séquence simple

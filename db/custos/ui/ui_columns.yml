@@ -1,157 +1,28 @@
 
-id:
-  id: 1
-  ident: id
+group:
+  id: 9
+  ident: group
   type_column: ''
   description: ''
-  belong_object: ''
-  belong_method: ''
-  visible_guest: 
-  visible_user: false
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: text
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-ident:
-  id: 2
-  ident: ident
-  type_column: ''
-  description: ''
-  belong_object: ''
-  belong_method: ''
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: explorer
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-typesobject:
-  id: 3
-  ident: typesobject
-  type_column: ''
-  description: ''
-  belong_object: typesobject
+  belong_object: group
   belong_method: name_translate
-  visible_guest: 
+  visible_guest: true
   visible_user: true
   visible_admin: true
   visible_support: true
   editable: false
+  sortable: false
   input_size: ''
   value_mini: ''
   value_maxi: ''
   type_show: explorer
+  type_index: explorer
   type_editable: 
   type_editable_file: 
-  domain: 
+  type_export: 
+  domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-revision:
-  id: 4
-  ident: revision
-  type_column: ''
-  description: ''
-  belong_object: ''
-  belong_method: ''
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: text
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-statusobject:
-  id: 5
-  ident: statusobject
-  type_column: ''
-  description: ''
-  belong_object: statusobject
-  belong_method: name_translate
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: explorer
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-domain:
-  id: 6
-  ident: domain
-  type_column: ''
-  description: ''
-  belong_object: ''
-  belong_method: ''
-  visible_guest: 
-  visible_user: false
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: text
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-nbfiles:
-  id: 7
-  ident: nbfiles
-  type_column: ''
-  description: ''
-  belong_object: datafiles
-  belong_method: length
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: text
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2018-01-01 16:59:38.472135000 Z
 
 owner:
   id: 8
@@ -160,42 +31,23 @@ owner:
   description: ''
   belong_object: owner
   belong_method: name_translate
-  visible_guest: 
+  visible_guest: false
   visible_user: true
   visible_admin: true
   visible_support: true
   editable: false
+  sortable: false
   input_size: ''
   value_mini: ''
   value_maxi: ''
   type_show: explorer
+  type_index: explorer
   type_editable: 
   type_editable_file: 
-  domain: 
+  type_export: 
+  domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-group:
-  id: 9
-  ident: group
-  type_column: ''
-  description: ''
-  belong_object: group
-  belong_method: name_translate
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: explorer
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2018-01-01 17:01:04.670421000 Z
 
 project:
   id: 10
@@ -204,218 +56,23 @@ project:
   description: ''
   belong_object: projowner
   belong_method: name_translate
-  visible_guest: 
+  visible_guest: false
   visible_user: true
   visible_admin: true
   visible_support: true
   editable: false
+  sortable: false
   input_size: ''
   value_mini: ''
   value_maxi: ''
   type_show: explorer
+  type_index: explorer
   type_editable: 
   type_editable_file: 
-  domain: 
+  type_export: 
+  domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-designation:
-  id: 11
-  ident: designation
-  type_column: ''
-  description: ''
-  belong_object: ''
-  belong_method: ''
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: text
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-date:
-  id: 12
-  ident: date
-  type_column: ''
-  description: ''
-  belong_object: ''
-  belong_method: ''
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: text
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-confidentiality:
-  id: 13
-  ident: confidentiality
-  type_column: ''
-  description: ''
-  belong_object: typeaccess
-  belong_method: name_translate
-  visible_guest: 
-  visible_user: false
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: explorer
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-users:
-  id: 14
-  ident: users
-  type_column: ''
-  description: ''
-  belong_object: users
-  belong_method: login
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: comma_links
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-id:
-  id: 1
-  ident: id
-  type_column: ''
-  description: ''
-  belong_object: ''
-  belong_method: ''
-  visible_guest: 
-  visible_user: false
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: text
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-ident:
-  id: 2
-  ident: ident
-  type_column: ''
-  description: ''
-  belong_object: ''
-  belong_method: ''
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: explorer
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-typesobject:
-  id: 3
-  ident: typesobject
-  type_column: ''
-  description: ''
-  belong_object: typesobject
-  belong_method: name_translate
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: explorer
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-revision:
-  id: 4
-  ident: revision
-  type_column: ''
-  description: ''
-  belong_object: ''
-  belong_method: ''
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: text
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-statusobject:
-  id: 5
-  ident: statusobject
-  type_column: ''
-  description: ''
-  belong_object: statusobject
-  belong_method: name_translate
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: explorer
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2018-01-01 17:01:18.001987000 Z
 
 domain:
   id: 6
@@ -424,152 +81,23 @@ domain:
   description: ''
   belong_object: ''
   belong_method: ''
-  visible_guest: 
+  visible_guest: false
   visible_user: false
   visible_admin: true
   visible_support: true
   editable: false
+  sortable: true
   input_size: ''
   value_mini: ''
   value_maxi: ''
   type_show: text
+  type_index: text
   type_editable: 
   type_editable_file: 
-  domain: 
+  type_export: 
+  domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-nbfiles:
-  id: 7
-  ident: nbfiles
-  type_column: ''
-  description: ''
-  belong_object: datafiles
-  belong_method: length
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: text
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-owner:
-  id: 8
-  ident: owner
-  type_column: ''
-  description: ''
-  belong_object: owner
-  belong_method: name_translate
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: explorer
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-group:
-  id: 9
-  ident: group
-  type_column: ''
-  description: ''
-  belong_object: group
-  belong_method: name_translate
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: explorer
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-project:
-  id: 10
-  ident: project
-  type_column: ''
-  description: ''
-  belong_object: projowner
-  belong_method: name_translate
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: explorer
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-designation:
-  id: 11
-  ident: designation
-  type_column: ''
-  description: ''
-  belong_object: ''
-  belong_method: ''
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: text
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
-
-date:
-  id: 12
-  ident: date
-  type_column: ''
-  description: ''
-  belong_object: ''
-  belong_method: ''
-  visible_guest: 
-  visible_user: true
-  visible_admin: true
-  visible_support: true
-  editable: false
-  input_size: ''
-  value_mini: ''
-  value_maxi: ''
-  type_show: text
-  type_editable: 
-  type_editable_file: 
-  domain: 
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 16:51:50.912921000 Z
 
 confidentiality:
   id: 13
@@ -578,20 +106,73 @@ confidentiality:
   description: ''
   belong_object: typeaccess
   belong_method: name_translate
-  visible_guest: 
+  visible_guest: false
   visible_user: false
   visible_admin: true
   visible_support: true
   editable: false
+  sortable: true
   input_size: ''
   value_mini: ''
   value_maxi: ''
   type_show: explorer
+  type_index: explorer
   type_editable: 
   type_editable_file: 
-  domain: 
+  type_export: 
+  domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 16:52:30.017809000 Z
+
+responder:
+  id: 17
+  ident: responder
+  type_column: ''
+  description: ''
+  belong_object: responder
+  belong_method: login
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 14:58:36.658646000 Z
+  updated_at: 2016-11-13 16:52:49.585396000 Z
+
+nbfiles:
+  id: 7
+  ident: nbfiles
+  type_column: ''
+  description: ''
+  belong_object: datafiles
+  belong_method: length
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 16:53:21.417857000 Z
 
 users:
   id: 14
@@ -600,17 +181,2770 @@ users:
   description: ''
   belong_object: users
   belong_method: login
-  visible_guest: 
+  visible_guest: false
   visible_user: true
   visible_admin: true
   visible_support: true
   editable: false
+  sortable: false
   input_size: ''
   value_mini: ''
   value_maxi: ''
   type_show: comma_links
+  type_index: comma_links
   type_editable: 
   type_editable_file: 
-  domain: 
+  type_export: 
+  domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 16:53:34.015327000 Z
+
+id:
+  id: 1
+  ident: id
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: false
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: admin
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 16:53:43.896100000 Z
+
+asker:
+  id: 15
+  ident: asker
+  type_column: ''
+  description: ''
+  belong_object: asker
+  belong_method: login
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 14:56:16.984244000 Z
+  updated_at: 2016-11-13 16:54:02.982752000 Z
+
+father:
+  id: 22
+  ident: father
+  type_column: ''
+  description: ''
+  belong_object: father
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:41:25.086715000 Z
+  updated_at: 2016-11-14 06:41:25.086715000 Z
+
+father_tr:
+  id: 23
+  ident: father_tr
+  type_column: ''
+  description: ''
+  belong_object: father
+  belong_method: title_translate
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:42:02.440313000 Z
+  updated_at: 2016-11-14 06:42:02.440313000 Z
+
+name:
+  id: 24
+  ident: name
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:56:18.239903000 Z
+  updated_at: 2016-11-14 06:56:18.239903000 Z
+
+name_translate:
+  id: 25
+  ident: name_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 07:17:12.758122000 Z
+  updated_at: 2016-11-14 07:17:12.758122000 Z
+
+protocol:
+  id: 27
+  ident: protocol
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:21:00.910780000 Z
+  updated_at: 2016-12-10 08:23:06.983129000 Z
+
+encode:
+  id: 28
+  ident: encode
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: false
+  input_size: '20'
+  value_mini: ''
+  value_maxi: ''
+  type_show: textarea
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:21:20.534325000 Z
+  updated_at: 2016-11-14 20:23:47.721025000 Z
+
+decompress:
+  id: 31
+  ident: decompress
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: false
+  input_size: '20'
+  value_mini: ''
+  value_maxi: ''
+  type_show: textarea
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:22:27.618909000 Z
+  updated_at: 2016-11-14 20:24:06.695054000 Z
+
+compress:
+  id: 30
+  ident: compress
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: false
+  input_size: '20'
+  value_mini: ''
+  value_maxi: ''
+  type_show: textarea
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:22:14.578745000 Z
+  updated_at: 2016-11-14 20:24:23.170841000 Z
+
+decode:
+  id: 29
+  ident: decode
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: false
+  input_size: '20'
+  value_mini: ''
+  value_maxi: ''
+  type_show: textarea
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:21:56.199929000 Z
+  updated_at: 2016-11-14 20:24:36.928433000 Z
+
+father_plmtype:
+  id: 32
+  ident: father_plmtype
+  type_column: ident
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:49:52.827933000 Z
+  updated_at: 2016-11-16 19:49:52.827933000 Z
+
+child_plmtype:
+  id: 33
+  ident: child_plmtype
+  type_column: index
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:53:03.530533000 Z
+  updated_at: 2016-11-16 19:53:03.530533000 Z
+
+father_typesobject:
+  id: 34
+  ident: father_typesobject
+  type_column: ''
+  description: ''
+  belong_object: father_typesobject
+  belong_method: name_translate
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:54:24.357436000 Z
+  updated_at: 2016-11-16 19:54:24.357436000 Z
+
+child_typesobject:
+  id: 35
+  ident: child_typesobject
+  type_column: ''
+  description: ''
+  belong_object: child_typesobject
+  belong_method: name_translate
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:54:48.521883000 Z
+  updated_at: 2016-11-16 19:54:48.521883000 Z
+
+paste_way:
+  id: 36
+  ident: paste_way
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:58:14.465075000 Z
+  updated_at: 2016-11-16 19:58:14.465075000 Z
+
+cardin_occur_min:
+  id: 37
+  ident: cardin_occur_min
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:58:52.445129000 Z
+  updated_at: 2016-11-16 19:58:52.445129000 Z
+
+cardin_occur_max:
+  id: 38
+  ident: cardin_occur_max
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:59:15.455344000 Z
+  updated_at: 2016-11-16 19:59:15.455344000 Z
+
+cardin_use_min:
+  id: 39
+  ident: cardin_use_min
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:59:30.838796000 Z
+  updated_at: 2016-11-16 19:59:30.838796000 Z
+
+cardin_use_max:
+  id: 40
+  ident: cardin_use_max
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:59:39.357242000 Z
+  updated_at: 2016-11-16 19:59:39.357242000 Z
+
+views:
+  id: 41
+  ident: views
+  type_column: ''
+  description: ''
+  belong_object: views
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '10'
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma
+  type_index: comma
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 20:00:28.261420000 Z
+  updated_at: 2016-11-16 20:17:11.182377000 Z
+
+father_plmtype_translate:
+  id: 42
+  ident: father_plmtype_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: father_plmtype_translate
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 06:42:50.088046000 Z
+  updated_at: 2016-11-17 06:42:50.088046000 Z
+
+child_plmtype_translate:
+  id: 43
+  ident: child_plmtype_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: child_plmtype_translate
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 06:43:19.247179000 Z
+  updated_at: 2016-11-17 06:43:19.247179000 Z
+
+sequence:
+  id: 45
+  ident: sequence
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:08:27.463637000 Z
+  updated_at: 2016-11-17 07:08:27.463637000 Z
+
+modify:
+  id: 46
+  ident: modify
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:08:43.199445000 Z
+  updated_at: 2016-11-17 07:08:43.199445000 Z
+
+min:
+  id: 48
+  ident: min
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:09:02.484923000 Z
+  updated_at: 2016-11-17 07:09:02.484923000 Z
+
+max:
+  id: 49
+  ident: max
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:09:10.151586000 Z
+  updated_at: 2016-11-17 07:09:10.151586000 Z
+
+forobject:
+  id: 50
+  ident: forobject
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:25:20.009744000 Z
+  updated_at: 2016-11-17 19:25:20.009744000 Z
+
+rank:
+  id: 51
+  ident: rank
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:26:00.084767000 Z
+  updated_at: 2016-11-17 19:26:00.084767000 Z
+
+fields:
+  id: 52
+  ident: fields
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '20'
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:26:53.760804000 Z
+  updated_at: 2016-11-17 19:26:53.760804000 Z
+
+forobject_translate:
+  id: 53
+  ident: forobject_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:35:53.769282000 Z
+  updated_at: 2016-11-17 19:35:53.769282000 Z
+
+promote:
+  id: 54
+  ident: promote
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:48:29.473496000 Z
+  updated_at: 2016-11-17 19:48:29.473496000 Z
+
+demote:
+  id: 55
+  ident: demote
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:48:40.907629000 Z
+  updated_at: 2016-11-17 19:48:40.907629000 Z
+
+revise:
+  id: 56
+  ident: revise
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:48:46.407443000 Z
+  updated_at: 2016-11-17 19:48:46.407443000 Z
+
+question:
+  id: 16
+  ident: question
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 14:57:13.275356000 Z
+  updated_at: 2016-12-10 08:14:29.085941000 Z
+
+typesobject:
+  id: 3
+  ident: typesobject
+  type_column: ''
+  description: ''
+  belong_object: typesobject
+  belong_method: name_translate
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-10 08:14:48.241624000 Z
+
+next_statusobjects:
+  id: 57
+  ident: next_statusobjects
+  type_column: ''
+  description: ''
+  belong_object: next_statusobjects
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '10'
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma
+  type_index: comma
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:50:51.499417000 Z
+  updated_at: 2016-11-17 19:55:57.980366000 Z
+
+designation:
+  id: 11
+  ident: designation
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-10 08:13:47.847080000 Z
+
+statusobject:
+  id: 5
+  ident: statusobject
+  type_column: ''
+  description: ''
+  belong_object: statusobject
+  belong_method: name_translate
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-10 08:15:03.796545000 Z
+
+revision:
+  id: 4
+  ident: revision
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-10 08:15:31.031649000 Z
+
+subject:
+  id: 19
+  ident: subject
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 16:23:47.747245000 Z
+  updated_at: 2016-12-10 08:15:49.987663000 Z
+
+ident:
+  id: 2
+  ident: ident
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-10 08:16:04.324665000 Z
+
+title:
+  id: 21
+  ident: title
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:39:10.368871000 Z
+  updated_at: 2016-12-10 08:16:18.624045000 Z
+
+answer:
+  id: 18
+  ident: answer
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 14:59:05.264918000 Z
+  updated_at: 2016-12-10 08:20:40.335227000 Z
+
+description:
+  id: 20
+  ident: description
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '30'
+  value_mini: ''
+  value_maxi: ''
+  type_show: textarea
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 16:24:19.111908000 Z
+  updated_at: 2016-12-10 08:22:41.363833000 Z
+
+directory:
+  id: 26
+  ident: directory
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:20:22.355391000 Z
+  updated_at: 2016-12-10 08:22:54.668653000 Z
+
+utility:
+  id: 44
+  ident: utility
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:08:13.707733000 Z
+  updated_at: 2016-12-10 08:28:14.822139000 Z
+
+value:
+  id: 47
+  ident: value
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:08:51.676297000 Z
+  updated_at: 2016-12-10 08:28:34.952420000 Z
+
+relations:
+  id: 58
+  ident: relations
+  type_column: ''
+  description: ''
+  belong_object: relations
+  belong_method: name
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma_links
+  type_index: comma_links
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:51:07.082546000 Z
+  updated_at: 2016-12-10 08:59:52.008974000 Z
+
+previous_statusobjects:
+  id: 59
+  ident: previous_statusobjects
+  type_column: ''
+  description: ''
+  belong_object: previous_statusobjects
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '10'
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma
+  type_index: comma
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: ''
+  created_at: 2016-12-10 18:23:31.353133000 Z
+  updated_at: 2016-12-10 18:23:31.353133000 Z
+
+date:
+  id: 12
+  ident: date
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-14 19:52:21.035507000 Z
+
+group:
+  id: 9
+  ident: group
+  type_column: ''
+  description: ''
+  belong_object: group
+  belong_method: name_translate
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2018-01-01 16:59:38.472135000 Z
+
+owner:
+  id: 8
+  ident: owner
+  type_column: ''
+  description: ''
+  belong_object: owner
+  belong_method: name_translate
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2018-01-01 17:01:04.670421000 Z
+
+project:
+  id: 10
+  ident: project
+  type_column: ''
+  description: ''
+  belong_object: projowner
+  belong_method: name_translate
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2018-01-01 17:01:18.001987000 Z
+
+domain:
+  id: 6
+  ident: domain
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: false
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 16:51:50.912921000 Z
+
+confidentiality:
+  id: 13
+  ident: confidentiality
+  type_column: ''
+  description: ''
+  belong_object: typeaccess
+  belong_method: name_translate
+  visible_guest: false
+  visible_user: false
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 16:52:30.017809000 Z
+
+responder:
+  id: 17
+  ident: responder
+  type_column: ''
+  description: ''
+  belong_object: responder
+  belong_method: login
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 14:58:36.658646000 Z
+  updated_at: 2016-11-13 16:52:49.585396000 Z
+
+nbfiles:
+  id: 7
+  ident: nbfiles
+  type_column: ''
+  description: ''
+  belong_object: datafiles
+  belong_method: length
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 16:53:21.417857000 Z
+
+users:
+  id: 14
+  ident: users
+  type_column: ''
+  description: ''
+  belong_object: users
+  belong_method: login
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma_links
+  type_index: comma_links
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 16:53:34.015327000 Z
+
+id:
+  id: 1
+  ident: id
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: false
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: admin
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 16:53:43.896100000 Z
+
+asker:
+  id: 15
+  ident: asker
+  type_column: ''
+  description: ''
+  belong_object: asker
+  belong_method: login
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 14:56:16.984244000 Z
+  updated_at: 2016-11-13 16:54:02.982752000 Z
+
+father:
+  id: 22
+  ident: father
+  type_column: ''
+  description: ''
+  belong_object: father
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:41:25.086715000 Z
+  updated_at: 2016-11-14 06:41:25.086715000 Z
+
+father_tr:
+  id: 23
+  ident: father_tr
+  type_column: ''
+  description: ''
+  belong_object: father
+  belong_method: title_translate
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:42:02.440313000 Z
+  updated_at: 2016-11-14 06:42:02.440313000 Z
+
+name:
+  id: 24
+  ident: name
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:56:18.239903000 Z
+  updated_at: 2016-11-14 06:56:18.239903000 Z
+
+name_translate:
+  id: 25
+  ident: name_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 07:17:12.758122000 Z
+  updated_at: 2016-11-14 07:17:12.758122000 Z
+
+protocol:
+  id: 27
+  ident: protocol
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:21:00.910780000 Z
+  updated_at: 2016-12-10 08:23:06.983129000 Z
+
+encode:
+  id: 28
+  ident: encode
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: false
+  input_size: '20'
+  value_mini: ''
+  value_maxi: ''
+  type_show: textarea
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:21:20.534325000 Z
+  updated_at: 2016-11-14 20:23:47.721025000 Z
+
+decompress:
+  id: 31
+  ident: decompress
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: false
+  input_size: '20'
+  value_mini: ''
+  value_maxi: ''
+  type_show: textarea
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:22:27.618909000 Z
+  updated_at: 2016-11-14 20:24:06.695054000 Z
+
+compress:
+  id: 30
+  ident: compress
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: false
+  input_size: '20'
+  value_mini: ''
+  value_maxi: ''
+  type_show: textarea
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:22:14.578745000 Z
+  updated_at: 2016-11-14 20:24:23.170841000 Z
+
+decode:
+  id: 29
+  ident: decode
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: false
+  input_size: '20'
+  value_mini: ''
+  value_maxi: ''
+  type_show: textarea
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:21:56.199929000 Z
+  updated_at: 2016-11-14 20:24:36.928433000 Z
+
+father_plmtype:
+  id: 32
+  ident: father_plmtype
+  type_column: ident
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:49:52.827933000 Z
+  updated_at: 2016-11-16 19:49:52.827933000 Z
+
+child_plmtype:
+  id: 33
+  ident: child_plmtype
+  type_column: index
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:53:03.530533000 Z
+  updated_at: 2016-11-16 19:53:03.530533000 Z
+
+father_typesobject:
+  id: 34
+  ident: father_typesobject
+  type_column: ''
+  description: ''
+  belong_object: father_typesobject
+  belong_method: name_translate
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:54:24.357436000 Z
+  updated_at: 2016-11-16 19:54:24.357436000 Z
+
+child_typesobject:
+  id: 35
+  ident: child_typesobject
+  type_column: ''
+  description: ''
+  belong_object: child_typesobject
+  belong_method: name_translate
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:54:48.521883000 Z
+  updated_at: 2016-11-16 19:54:48.521883000 Z
+
+paste_way:
+  id: 36
+  ident: paste_way
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:58:14.465075000 Z
+  updated_at: 2016-11-16 19:58:14.465075000 Z
+
+cardin_occur_min:
+  id: 37
+  ident: cardin_occur_min
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:58:52.445129000 Z
+  updated_at: 2016-11-16 19:58:52.445129000 Z
+
+cardin_occur_max:
+  id: 38
+  ident: cardin_occur_max
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:59:15.455344000 Z
+  updated_at: 2016-11-16 19:59:15.455344000 Z
+
+cardin_use_min:
+  id: 39
+  ident: cardin_use_min
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:59:30.838796000 Z
+  updated_at: 2016-11-16 19:59:30.838796000 Z
+
+cardin_use_max:
+  id: 40
+  ident: cardin_use_max
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:59:39.357242000 Z
+  updated_at: 2016-11-16 19:59:39.357242000 Z
+
+views:
+  id: 41
+  ident: views
+  type_column: ''
+  description: ''
+  belong_object: views
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '10'
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma
+  type_index: comma
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-16 20:00:28.261420000 Z
+  updated_at: 2016-11-16 20:17:11.182377000 Z
+
+father_plmtype_translate:
+  id: 42
+  ident: father_plmtype_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: father_plmtype_translate
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 06:42:50.088046000 Z
+  updated_at: 2016-11-17 06:42:50.088046000 Z
+
+child_plmtype_translate:
+  id: 43
+  ident: child_plmtype_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: child_plmtype_translate
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 06:43:19.247179000 Z
+  updated_at: 2016-11-17 06:43:19.247179000 Z
+
+sequence:
+  id: 45
+  ident: sequence
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:08:27.463637000 Z
+  updated_at: 2016-11-17 07:08:27.463637000 Z
+
+modify:
+  id: 46
+  ident: modify
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:08:43.199445000 Z
+  updated_at: 2016-11-17 07:08:43.199445000 Z
+
+min:
+  id: 48
+  ident: min
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:09:02.484923000 Z
+  updated_at: 2016-11-17 07:09:02.484923000 Z
+
+max:
+  id: 49
+  ident: max
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:09:10.151586000 Z
+  updated_at: 2016-11-17 07:09:10.151586000 Z
+
+forobject:
+  id: 50
+  ident: forobject
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:25:20.009744000 Z
+  updated_at: 2016-11-17 19:25:20.009744000 Z
+
+rank:
+  id: 51
+  ident: rank
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:26:00.084767000 Z
+  updated_at: 2016-11-17 19:26:00.084767000 Z
+
+fields:
+  id: 52
+  ident: fields
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '20'
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:26:53.760804000 Z
+  updated_at: 2016-11-17 19:26:53.760804000 Z
+
+forobject_translate:
+  id: 53
+  ident: forobject_translate
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:35:53.769282000 Z
+  updated_at: 2016-11-17 19:35:53.769282000 Z
+
+promote:
+  id: 54
+  ident: promote
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:48:29.473496000 Z
+  updated_at: 2016-11-17 19:48:29.473496000 Z
+
+demote:
+  id: 55
+  ident: demote
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:48:40.907629000 Z
+  updated_at: 2016-11-17 19:48:40.907629000 Z
+
+revise:
+  id: 56
+  ident: revise
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:48:46.407443000 Z
+  updated_at: 2016-11-17 19:48:46.407443000 Z
+
+question:
+  id: 16
+  ident: question
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 14:57:13.275356000 Z
+  updated_at: 2016-12-10 08:14:29.085941000 Z
+
+typesobject:
+  id: 3
+  ident: typesobject
+  type_column: ''
+  description: ''
+  belong_object: typesobject
+  belong_method: name_translate
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-10 08:14:48.241624000 Z
+
+next_statusobjects:
+  id: 57
+  ident: next_statusobjects
+  type_column: ''
+  description: ''
+  belong_object: next_statusobjects
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '10'
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma
+  type_index: comma
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:50:51.499417000 Z
+  updated_at: 2016-11-17 19:55:57.980366000 Z
+
+designation:
+  id: 11
+  ident: designation
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-10 08:13:47.847080000 Z
+
+statusobject:
+  id: 5
+  ident: statusobject
+  type_column: ''
+  description: ''
+  belong_object: statusobject
+  belong_method: name_translate
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-10 08:15:03.796545000 Z
+
+revision:
+  id: 4
+  ident: revision
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-10 08:15:31.031649000 Z
+
+subject:
+  id: 19
+  ident: subject
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: false
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 16:23:47.747245000 Z
+  updated_at: 2016-12-10 08:15:49.987663000 Z
+
+ident:
+  id: 2
+  ident: ident
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-10 08:16:04.324665000 Z
+
+title:
+  id: 21
+  ident: title
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:39:10.368871000 Z
+  updated_at: 2016-12-10 08:16:18.624045000 Z
+
+answer:
+  id: 18
+  ident: answer
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: explorer
+  type_index: explorer
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 14:59:05.264918000 Z
+  updated_at: 2016-12-10 08:20:40.335227000 Z
+
+description:
+  id: 20
+  ident: description
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '30'
+  value_mini: ''
+  value_maxi: ''
+  type_show: textarea
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 16:24:19.111908000 Z
+  updated_at: 2016-12-10 08:22:41.363833000 Z
+
+directory:
+  id: 26
+  ident: directory
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:20:22.355391000 Z
+  updated_at: 2016-12-10 08:22:54.668653000 Z
+
+utility:
+  id: 44
+  ident: utility
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:08:13.707733000 Z
+  updated_at: 2016-12-10 08:28:14.822139000 Z
+
+value:
+  id: 47
+  ident: value
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:08:51.676297000 Z
+  updated_at: 2016-12-10 08:28:34.952420000 Z
+
+relations:
+  id: 58
+  ident: relations
+  type_column: ''
+  description: ''
+  belong_object: relations
+  belong_method: name
+  visible_guest: true
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma_links
+  type_index: comma_links
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-17 19:51:07.082546000 Z
+  updated_at: 2016-12-10 08:59:52.008974000 Z
+
+previous_statusobjects:
+  id: 59
+  ident: previous_statusobjects
+  type_column: ''
+  description: ''
+  belong_object: previous_statusobjects
+  belong_method: name
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: true
+  sortable: true
+  input_size: '10'
+  value_mini: ''
+  value_maxi: ''
+  type_show: comma
+  type_index: comma
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: ''
+  created_at: 2016-12-10 18:23:31.353133000 Z
+  updated_at: 2016-12-10 18:23:31.353133000 Z
+
+date:
+  id: 12
+  ident: date
+  type_column: ''
+  description: ''
+  belong_object: ''
+  belong_method: ''
+  visible_guest: false
+  visible_user: true
+  visible_admin: true
+  visible_support: true
+  editable: false
+  sortable: true
+  input_size: ''
+  value_mini: ''
+  value_maxi: ''
+  type_show: text
+  type_index: text
+  type_editable: 
+  type_editable_file: 
+  type_export: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-14 19:52:21.035507000 Z

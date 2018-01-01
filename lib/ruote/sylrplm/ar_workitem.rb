@@ -29,7 +29,8 @@ module Ruote
 			end
 
 			def typesobject
-				::Typesobject.find_by_forobject(modelname).to_a[0]
+				#::Typesobject.find_by_forobject(modelname).to_a[0]
+				::Typesobject.find_by_forobject(modelname)
 			end
 
 			def modelname

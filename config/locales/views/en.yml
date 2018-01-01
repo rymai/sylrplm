@@ -135,6 +135,7 @@ en:
   label_recent_description: Description
   label_recent_action: Action
   # messages
+  label_nb_forum_items: Messages number
   msg.no_item_to_display: "There are no items to display."
   msg_confirm: Are you sure?
   msg_tobedefine: To be define

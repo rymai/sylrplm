@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
 		@groups = Group.find_paginate({:user=> current_user, :filter_types => params[:filter_types], :page => params[:page], :query => params[:query], :sort => params[:sort], :nb_items => get_nb_items(params[:nb_items]) })
 		@object_plms=@groups
 		LOG.debug(fname){"@groups=#{@groups}"}
-		LOG.debug(fname){"@object_plms=#{@object_plms}"}
+		#LOG.debug(fname){"@object_plms=#{@object_plms}"}
 	end
 
 	def index_execute

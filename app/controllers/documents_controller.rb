@@ -107,7 +107,6 @@ class DocumentsController < ApplicationController
 
 		@object_plm = Document.new(params[:document])
 		@object_plm.def_user(current_user)
-		#rails4 @object_plm = Document.new(docpar)
 		LOG.debug(fname) {"create:@object_plm=#{@object_plm.inspect}"}
 		@types    = Typesobject.get_types("document")
 		@status   = Statusobject.get_status("document")

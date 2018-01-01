@@ -467,7 +467,7 @@ module Controllers
 			@object_plm=get_object_plm_from_params(params)
 				if @object_plm.nil?
 					index_
-					LOG.debug(fname){"@object_plms=#{@object_plms}"}
+					#LOG.debug(fname){"@object_plms=#{@object_plms}"}
 					respond_to do |format|
 						format.html # index.html.erb
 						format.xml  { render :xml => @object_plms }

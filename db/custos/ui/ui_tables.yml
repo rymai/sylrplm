@@ -1,76 +1,352 @@
 
-index:
-  id: 1
-  ident: index
-  type_table: 
-  description: 
-  ui_columns: id, ident, revision, designation,  typesobject, statusobject, owner, group,project,
-    date, nbfiles, domain
+index_parts:
+  id: 14
+  ident: index_parts
+  type_table: index
+  description: ''
+  ui_columns: id, ident,revision, designation,  typesobject, statusobject, owner, group,
+    project,date,  domain
   pagination: 
   menus_action: 
   domain: sicm.custo
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
+  created_at: 2017-01-07 08:39:17.471631000 Z
+  updated_at: 2018-01-01 15:05:53.557200000 Z
 
-index_projects:
-  id: 2
-  ident: index_projects
-  type_table: 
-  description: 
-  ui_columns: id, ident, revision, designation,  typesobject, statusobject, confidentiality,owner,
-    group, users, date, domain
+index_forums:
+  id: 5
+  ident: index_forums
+  type_table: index
+  description: ''
+  ui_columns: id, ident, typesobject,statusobject,subject, description, owner, group,project,
+    domain
   pagination: 
   menus_action: 
   domain: sicm.custo
-  created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
+  created_at: 2016-11-13 16:18:51.198152000 Z
+  updated_at: 2016-11-13 17:13:16.262317000 Z
+
+index_questions:
+  id: 4
+  ident: index_questions
+  type_table: index
+  description: ''
+  ui_columns: id, asker, question, responder, answer,domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-13 10:45:35.186838000 Z
+  updated_at: 2016-11-13 17:13:23.610198000 Z
 
 index_customers:
   id: 3
   ident: index_customers
-  type_table: 
-  description: 
+  type_table: index
+  description: ''
   ui_columns: id, ident, designation,  typesobject, statusobject, owner, group, project,date,  domain
   pagination: 
   menus_action: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 17:13:33.253587000 Z
 
-index:
-  id: 1
-  ident: index
-  type_table: 
-  description: 
-  ui_columns: id, ident, revision, designation,  typesobject, statusobject, owner, group,project,
-    date, nbfiles, domain
+index_roles:
+  id: 6
+  ident: index_roles
+  type_table: index
+  description: ''
+  ui_columns: title,description, father, father_tr, users
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:42:58.342491000 Z
+  updated_at: 2016-11-14 06:46:48.645155000 Z
+
+index_groups:
+  id: 7
+  ident: index_groups
+  type_table: index
+  description: ''
+  ui_columns: name, name_translate, father, father_tr, users,domain
+  pagination: 10
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:57:05.243211000 Z
+  updated_at: 2016-11-14 07:18:56.939701000 Z
+
+index_volumes:
+  id: 8
+  ident: index_volumes
+  type_table: index
+  description: ''
+  ui_columns: name,description,directory, protocol, encode, decode, compress, decompress,users,
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:17:15.528740000 Z
+  updated_at: 2016-11-14 20:22:55.843163000 Z
+
+index_relations:
+  id: 9
+  ident: index_relations
+  type_table: index
+  description: ''
+  ui_columns: name, name_translate,  typesobject, father_plmtype,father_plmtype_translate
+    ,father_typesobject,child_plmtype,child_plmtype_translate,child_typesobject,paste_way,
+    cardin_occur_min, cardin_occur_max, cardin_use_min, cardin_use_max, views, domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:42:57.702664000 Z
+  updated_at: 2016-11-17 06:44:37.765015000 Z
+
+index_sequences:
+  id: 12
+  ident: index_sequences
+  type_table: index
+  description: ''
+  ui_columns: id, utility, sequence, modify, value, min, max,domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:04:10.650911000 Z
+  updated_at: 2016-11-17 07:11:22.055874000 Z
+
+index_typesobjects:
+  id: 10
+  ident: index_typesobjects
+  type_table: index
+  description: ''
+  ui_columns: id, name, name_translate, forobject, forobject_translate,  rank, description,
+    father, fields, domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:00:00.698698000 Z
+  updated_at: 2016-11-17 19:36:28.740309000 Z
+
+index_statusobjects:
+  id: 11
+  ident: index_statusobjects
+  type_table: index
+  description: ''
+  ui_columns: id, name, name_translate, forobject,forobject_translate,  typesobject,
+    rank, description, promote, demote, revise, next_statusobjects, previous_statusobjects,  domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:01:59.355497000 Z
+  updated_at: 2016-11-17 19:51:37.030001000 Z
+
+index_views:
+  id: 2
+  ident: index_views
+  type_table: index
+  description: ''
+  ui_columns: id, name, description, relations, domain
   pagination: 
   menus_action: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-10 08:53:58.031115000 Z
 
 index_projects:
-  id: 2
+  id: 1
   ident: index_projects
-  type_table: 
-  description: 
-  ui_columns: id, ident, revision, designation,  typesobject, statusobject, confidentiality,owner,
-    group, users, date, domain
+  type_table: index
+  description: ''
+  ui_columns: id, ident, revision, designation,  typesobject, statusobject, owner, group,
+    date, domain
   pagination: 
   menus_action: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-14 19:55:56.389118000 Z
+
+index_documents:
+  id: 15
+  ident: index_documents
+  type_table: index
+  description: ''
+  ui_columns: id, ident,revision, designation,  typesobject, statusobject, owner, group,
+    project,date,  domain
+  pagination: 
+  menus_action: 
+  domain: ''
+  created_at: 2017-01-07 08:40:21.058099000 Z
+  updated_at: 2018-01-01 15:06:24.275921000 Z
+
+index_parts:
+  id: 14
+  ident: index_parts
+  type_table: index
+  description: ''
+  ui_columns: id, ident,revision, designation,  typesobject, statusobject, owner, group,
+    project,date,  domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2017-01-07 08:39:17.471631000 Z
+  updated_at: 2018-01-01 15:05:53.557200000 Z
+
+index_forums:
+  id: 5
+  ident: index_forums
+  type_table: index
+  description: ''
+  ui_columns: id, ident, typesobject,statusobject,subject, description, owner, group,project,
+    domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-13 16:18:51.198152000 Z
+  updated_at: 2016-11-13 17:13:16.262317000 Z
+
+index_questions:
+  id: 4
+  ident: index_questions
+  type_table: index
+  description: ''
+  ui_columns: id, asker, question, responder, answer,domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-13 10:45:35.186838000 Z
+  updated_at: 2016-11-13 17:13:23.610198000 Z
 
 index_customers:
   id: 3
   ident: index_customers
-  type_table: 
-  description: 
+  type_table: index
+  description: ''
   ui_columns: id, ident, designation,  typesobject, statusobject, owner, group, project,date,  domain
   pagination: 
   menus_action: 
   domain: sicm.custo
   created_at: 2016-11-13 08:28:52.000000000 Z
-  updated_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-11-13 17:13:33.253587000 Z
+
+index_roles:
+  id: 6
+  ident: index_roles
+  type_table: index
+  description: ''
+  ui_columns: title,description, father, father_tr, users
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:42:58.342491000 Z
+  updated_at: 2016-11-14 06:46:48.645155000 Z
+
+index_groups:
+  id: 7
+  ident: index_groups
+  type_table: index
+  description: ''
+  ui_columns: name, name_translate, father, father_tr, users,domain
+  pagination: 10
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-14 06:57:05.243211000 Z
+  updated_at: 2016-11-14 07:18:56.939701000 Z
+
+index_volumes:
+  id: 8
+  ident: index_volumes
+  type_table: index
+  description: ''
+  ui_columns: name,description,directory, protocol, encode, decode, compress, decompress,users,
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-14 20:17:15.528740000 Z
+  updated_at: 2016-11-14 20:22:55.843163000 Z
+
+index_relations:
+  id: 9
+  ident: index_relations
+  type_table: index
+  description: ''
+  ui_columns: name, name_translate,  typesobject, father_plmtype,father_plmtype_translate
+    ,father_typesobject,child_plmtype,child_plmtype_translate,child_typesobject,paste_way,
+    cardin_occur_min, cardin_occur_max, cardin_use_min, cardin_use_max, views, domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-16 19:42:57.702664000 Z
+  updated_at: 2016-11-17 06:44:37.765015000 Z
+
+index_sequences:
+  id: 12
+  ident: index_sequences
+  type_table: index
+  description: ''
+  ui_columns: id, utility, sequence, modify, value, min, max,domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:04:10.650911000 Z
+  updated_at: 2016-11-17 07:11:22.055874000 Z
+
+index_typesobjects:
+  id: 10
+  ident: index_typesobjects
+  type_table: index
+  description: ''
+  ui_columns: id, name, name_translate, forobject, forobject_translate,  rank, description,
+    father, fields, domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:00:00.698698000 Z
+  updated_at: 2016-11-17 19:36:28.740309000 Z
+
+index_statusobjects:
+  id: 11
+  ident: index_statusobjects
+  type_table: index
+  description: ''
+  ui_columns: id, name, name_translate, forobject,forobject_translate,  typesobject,
+    rank, description, promote, demote, revise, next_statusobjects, previous_statusobjects,  domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-17 07:01:59.355497000 Z
+  updated_at: 2016-11-17 19:51:37.030001000 Z
+
+index_views:
+  id: 2
+  ident: index_views
+  type_table: index
+  description: ''
+  ui_columns: id, name, description, relations, domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-10 08:53:58.031115000 Z
+
+index_projects:
+  id: 1
+  ident: index_projects
+  type_table: index
+  description: ''
+  ui_columns: id, ident, revision, designation,  typesobject, statusobject, owner, group,
+    date, domain
+  pagination: 
+  menus_action: 
+  domain: sicm.custo
+  created_at: 2016-11-13 08:28:52.000000000 Z
+  updated_at: 2016-12-14 19:55:56.389118000 Z
+
+index_documents:
+  id: 15
+  ident: index_documents
+  type_table: index
+  description: ''
+  ui_columns: id, ident,revision, designation,  typesobject, statusobject, owner, group,
+    project,date,  domain
+  pagination: 
+  menus_action: 
+  domain: ''
+  created_at: 2017-01-07 08:40:21.058099000 Z
+  updated_at: 2018-01-01 15:06:24.275921000 Z
