@@ -15,14 +15,6 @@ module Sylrplm
 		# Application configuration should go into files in config/initializers
 		# -- all .rb files in that directory are automatically loaded.
 
-		# Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-		# Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-		# config.time_zone = 'Central Time (US & Canada)'
-
-		# The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-		# config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-		# config.i18n.default_locale = :de
-
 		# Do not swallow errors in after_commit/after_rollback callbacks.
 		config.active_record.raise_in_transactional_callbacks = true
 
@@ -41,9 +33,7 @@ module Sylrplm
 		Encoding.default_external = Encoding::UTF_8
 		Encoding.default_internal = Encoding::UTF_8
 
-		# config.gem 'will_paginate', :version => '~> 2.3.15', :source => 'http://gemcutter.org'
 		# Add additional load paths for your own custom dirs
-
 		config.autoload_paths +=  %W(#{config.root}/lib/active_record)
 		config.autoload_paths +=  %W(#{config.root}/lib/classes)
 		config.autoload_paths +=  %W(#{config.root}/lib/controllers)
@@ -98,6 +88,5 @@ module Sylrplm
 
 		#config.http_authenticatable_on_xhr = false
 		#config.navigational_formats = ["*/*", :html, :json]
-
 	end
 end

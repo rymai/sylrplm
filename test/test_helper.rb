@@ -7,7 +7,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 # require File.dirname(__FILE__) + '/../lib/caboose/logic_parser'
 # require File.dirname(__FILE__) + '/../lib/caboose/role_handler'
 # require File.dirname(__FILE__) + '/../lib/caboose/access_control'
-#require 'rails/test_help'
+require 'rails/test_help'
 # Choix du driver par défaut : selenium pour le Javascript
 Capybara.default_driver = :selenium
 
@@ -17,7 +17,7 @@ Capybara.default_driver = :selenium
 #end
 class ActiveSupport::TestCase
 	ActiveRecord::Migration.check_pending!
-	fixtures :all
+	# fixtures :all
 	# Transactional fixtures accelerate your tests by wrapping each test method
 	# in a transaction that's rolled back on completion.  This ensures that the
 	# test database remains unchanged so your fixtures don't have to be reloaded
@@ -73,4 +73,3 @@ class CapybaraTestCase <  ActiveSupport::TestCase
 		Capybara.use_default_driver
 	end
 end
-

@@ -67,4 +67,3 @@ module Ruote
 
 	end
 end
-
