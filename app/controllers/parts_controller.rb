@@ -26,16 +26,6 @@ class PartsController < ApplicationController
 		end
 	end
 
-	# GET /parts/1
-	# GET /parts/1.xml
-	def show_old
-		show_
-		respond_to do |format|
-			format.html # show.html.erb
-			format.xml  { render :xml => @object_plm }
-		end
-	end
-
 	def select_view
 		fname= "#{self.class.name}.#{__method__}"
 		LOG.debug(fname){"params=#{params.inspect}"}
@@ -140,7 +130,7 @@ class PartsController < ApplicationController
 			respond_to do |format|
 				st=@object_plm.update_attributes(params[:part])
 				LOG.debug(fname){"st update=#{st}"}
-				if st
+				unless st.blank?
 					flash[:notice] = t(:ctrl_object_updated,:typeobj =>t(:ctrl_part),:ident=>@object_plm.ident)
 					format.html { redirect_to(@object_plm) }
 					format.xml  { head :ok }

@@ -113,11 +113,12 @@ class Notification < ActiveRecord::Base
 		# loop on users with a valid email
 		#
 		User.find_with_mail.each do |user|
-		#LOG.debug(fname) {"user=#{user} subscription=#{user.subscription}"}
+		LOG.debug(fname) {"***** user=#{user} subscription=#{user.subscription}"}
 			to_notify = notify_user(user, id)
 			#
 			# send notifications for the user
 			msg = send_notifications(to_notify, from, user)
+			LOG.debug(fname) {"***** msg=#{msg}"}
 			if msg == :mail_delivered
 				to_notify.each do |tonotif, notify|
 					unless to_notify_all.include? tonotif
@@ -145,21 +146,24 @@ class Notification < ActiveRecord::Base
 		#
 		#user.subscriptions.each do |subscription|
 		# notifications to send to the user
+		LOG.debug(fname) {"	***** user=#{user}, id=#{id}, user.subscription=#{user.subscription}"}
 		to_notify = notify_for_subscription(id, user.subscription)
+		LOG.debug(fname) {"	***** user=#{user}, id=#{id}"}
+		LOG.debug(fname) {"	***** to_notify=#{to_notify.size}"}
 		#end
 		to_notify
 	end
 
 	def self.notify_for_subscription(id, subscription)
 		fname = "#{self.class.name}.#{__method__}"
-		#LOG.debug(fname) {"	*** subscription=#{subscription}"}
+		LOG.debug(fname) {"	***** id=#{id} , subscription=#{subscription}"}
 		# notifications to send to the user
 		to_notify  = Hash.new
 		unless subscription.nil?
 			inproject = subscription.inproject_array
 			ingroup = subscription.ingroup_array
-			#LOG.debug(fname) {"subscription.ingroup=#{ingroup}"}
-			#LOG.debug(fname) {"subscription.inproject=#{inproject}"}
+			LOG.debug(fname) {"subscription.ingroup=#{ingroup}"}
+			LOG.debug(fname) {"subscription.inproject=#{inproject}"}
 			# all notifications for the user
 			the_notifs = Hash.new
 			subscription.fortypesobject.each do |fortype|
@@ -167,9 +171,10 @@ class Notification < ActiveRecord::Base
 			# search for active notification (not yet notify)
 			#
 				if id.nil? || id == "all"
-					notifs = self.find(:all, :conditions => ["notify_date is null and forobject_type = '#{fortype.forobject}'"])
+					#rails2 notifs = self.find(:all, :conditions => ["notify_date is null and forobject_type = '#{fortype.forobject}'"])
+					notifs = self.all.where("notify_date is null and forobject_type = '#{fortype.forobject}'").to_a
 				else
-					notifs = Notification.find(id)
+					notifs = Notification.find(id).to_a
 				end
 				if notifs.is_a?(Array)
 					notifs.each do |notif|
@@ -179,15 +184,18 @@ class Notification < ActiveRecord::Base
 				# only one notification was found
 					the_notifs[notifs] = {:to_notify => false, :notify => true} if to_notify[notifs].nil?
 				end
-				#LOG.debug(fname) {"		*** fortype=#{fortype.forobject} / #{fortype.name} : the_notifs.count=#{the_notifs.count}"}
+				LOG.debug(fname) {"***** fortype=#{fortype.forobject} / #{fortype.name} : the_notifs.count=#{the_notifs.count}"}
 				the_notifs.each do |notif, notify|
-				#LOG.debug(fname) {"			*** notif=#{notif}, notify=#{notify}"}
-				# if the object is destroy, we can't retrieve group and projowner !!, then, no notif
-				#LOG.debug(fname) {"type=#{notif.forobject_type} id=#{notif.forobject_id}"}
+					# notif=ActiveRecord::Relation []
+					# nil notif=notif[0]
+					# nil notif=notif.to_a[0]
+					LOG.debug(fname) {"***** notification=#{notif.inspect}, notify=#{notify}"}
+					# if the object is destroy, we can't retrieve group and projowner !!, then, no notif
+					LOG.debug(fname) {"type=#{notif.forobject_type} id=#{notif.forobject_id}"}
 					begin
 						notif_obj = ::PlmServices.get_object(notif.forobject_type, notif.forobject_id)
 					rescue Exception => e
-						LOG.warn(fname) {"object no more existing=#{notif.forobject_type}.#{notif.forobject_id}:#{e}"}
+						LOG.error(fname) {"notification no more existing=#{notif}:#{e}"}
 					end
 					unless notif_obj.nil?
 						if notif_obj.typesobject.name == fortype.name
@@ -240,8 +248,10 @@ class Notification < ActiveRecord::Base
 			end
 			notifs[:recordset] = recordset
 
-			#LOG.debug(fname){"fromuser='#{from.login}' frommail='#{from.email}' touser='#{user.login}' tomail='#{user.email}'"}
+			LOG.debug(fname){"fromuser='#{from.login}' frommail='#{from.email}' touser='#{user.login}' tomail='#{user.email}'"}
 			email = PlmMailer.notify(notifs, from, user)
+			LOG.debug(fname){"email=#{email}"}
+			LOG.debug(fname){"fin email"}
 			###################
 			#TODO syl test
 			#email=nil

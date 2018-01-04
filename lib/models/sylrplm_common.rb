@@ -254,12 +254,14 @@ module Models
 		#update des attributs + des liens many (ne marche plus par update_attributes dans rails4)
 		def update_attributes(params)
 			fname= "#{self.class.name}.#{__method__}"
+			ret="ok"
 			unless params.nil?
 				params.each do |attr_name, attr_value|
 					begin
 						LOG.debug(fname) {"update_attribute #{attr_name} = #{attr_value}"}
 						update_attribute(attr_name, attr_value) if respond_to?(attr_name)
 					rescue Exception=>e
+						#ret=nil
 						LOG.error(fname) {"Error=#{e}"}
 					end
 				end
@@ -270,6 +272,7 @@ module Models
 				mdl_ids="#{model}_ids"
 				update_belong_to(params[mdl_ids],model.capitalize, "#{model}s") unless params.nil? || params[mdl_ids].nil?
 			end
+			ret
 		end
 
 		def update_belong_to(array_ids, model, key)

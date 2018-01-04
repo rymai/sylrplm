@@ -10,30 +10,34 @@ class PlmMailer < ActionMailer::Base
 		ret
 	end
 
-	def notify(object, from, to, sent_at = Time.now)
+	def notify_rails2(object, from, to, sent_at = Time.now)
 		subject    'PLMMailer#create_notify'
 		recipients to.email
 		from       from.email
 		sent_on    sent_at
+		body["user"] = to
 		body["notifications"]=object
 		body["theme"]=from.theme
 		content_type "text/html"
 	end
 
-	def new_login(object, from, to, urlbase, sent_at = Time.now)
-		@new_user=from
-		mail(subject:    'PLMMailer#new_login',
-		recipients: to.email,
-		from:     from.email,
-		cc:         from.email,
+	def notify(object, from, to, sent_at = Time.now)
+		@user = from
+		bodyMail={}
+		bodyMail["user"]=to
+		bodyMail["notifications"]=object
+		bodyMail["theme"]=from.theme
+		mail(subject:    'PLMMailer#create_notify',
+		to: to.email,
+		from:       from.email,
 		sent_on:    sent_at,
-		content_type: "text/html")
+		body: bodyMail)
 	end
 
-	def new_login_rails2(object, from, to, urlbase, sent_at = Time.now)
+	def new_login(object, from, to, urlbase, sent_at = Time.now)
 		subject    'PLMMailer#new_login'
 		recipients to.email
-		from       from.email
+		from     from.email
 		cc         from.email
 		sent_on    sent_at
 		body["user"]=object
@@ -79,6 +83,21 @@ class PlmMailer < ActionMailer::Base
 		sent_on    sent_at
 		body["document"]=document
 		body["urlbase"]=urlbase
+	end
+
+	#rails4
+	def docValidated(document, from, urlbase, asker, validersMail, sent_at = Time.now)
+		@user = from
+		@url  = urlbase
+		bodyMail={}
+		bodyMail["document"]=document
+		bodyMail["urlbase"]=urlbase
+		mail(subject:    'PLMMailer#docValidated',
+		recipients: asker,
+		from:       from.email,
+		cc:      validersMail,
+		sent_on:    sent_at,
+		body: bodyMail)
 	end
 
 	def partToValidate(part, from, urlbase, validers, sent_at = Time.now)

@@ -19,24 +19,24 @@ class Plmobserver < ActiveRecord::Observer
 	end
 
 	def before_validation(object)
-		name="****************"+"#{self.class.name}.#{__method__}"+":"
+		fname="****************"+"#{self.class.name}.#{__method__}"+":"
 	#puts name+object.inspect
 	end
 
 	def after_validation(object)
-		name="****************"+"#{self.class.name}.#{__method__}"+":"
+		fname="****************"+"#{self.class.name}.#{__method__}"+":"
 	#puts name+object.inspect
 	end
 
 	def before_save(object)
-		name="****************"+"#{self.class.name}.#{__method__}"+":"
+		fname="****************"+"#{self.class.name}.#{__method__}"+":"
 	#puts name+object.inspect
 	end
 
 	def after_save(object)
 		fname="#{self.class.name}.#{__method__}"
-		#LOG.debug(fname) {"object=#{object} "}
-	#add_notification(__method__.to_s, object)
+		LOG.debug(fname) {"object=#{object} "}
+		add_notification(__method__.to_s, object)
 	end
 
 	def before_create(object)
@@ -58,41 +58,42 @@ class Plmobserver < ActiveRecord::Observer
 	end
 
 	def before_update(object)
-		name="****************"+"#{self.class.name}.#{__method__}"+":"
-	#puts name+object.inspect
+		fname="****************"+"#{self.class.name}.#{__method__}"+":"
+	#LOG.debug(fname){"object=#{object.inspect}"}
 	end
 
 	def after_update(object)
-		name="****************"+"#{self.class.name}.#{__method__}"+":"
-		#puts name+object.inspect
+		fname="****************"+"#{self.class.name}.#{__method__}"+":"
+		LOG.debug(fname){"object=#{object.inspect}"}
 		add_notification(__method__.to_s, object)
 	end
 
 	def around_update(object)
-		name="****************"+"#{self.class.name}.#{__method__}"+":"
+		fname="****************"+"#{self.class.name}.#{__method__}"+":"
+		LOG.debug(fname){"object=#{object.inspect}"}
 	#add_notification(__method__.to_s, object)
 	end
 
 	def before_destroy(object)
-		name="****************"+"#{self.class.name}.#{__method__}"+":"
-	#puts name+object.inspect
+		fname="****************"+"#{self.class.name}.#{__method__}"+":"
 	#add_notification(__method__.to_s, object)
 	end
 
 	def after_destroy(object)
 		name="****************"+"#{self.class.name}.#{__method__}"+":"
-		#puts name+object.inspect
+		LOG.debug(fname){"object=#{object.inspect}"}
 		add_notification(__method__.to_s, object)
 	end
 
 	def around_destroy(object)
-		name="****************"+"#{self.class.name}.#{__method__}"+":"
+		fname="****************"+"#{self.class.name}.#{__method__}"+":"
+		LOG.debug(fname){"object=#{object.inspect}"}
 	#add_notification(__method__.to_s, object)
 	end
 
 	def add_notification(event_type, object)
 		fname="****************"+"#{self.class.name}.#{__method__}"+":"
-		#puts fname+event_type+":"+object.inspect
+		LOG.debug(fname){"event_type=#{event_type} , object=#{object.inspect}"}
 		unless object.modelname == self.modelname
 			params={}
 			params[:forobject_type] = object.modelname

@@ -13,7 +13,8 @@
 <%= h_text_editor f, object, :description%>
 <br/>
 <%= f.label t("label_responsible") %>
-<%= select_in_list(:document, :owner, object.owner.login, :users) unless object.owner.nil?%>
+<!--%= select_in_list(:document, :owner, @object_plm.owner.login, :users) %-->
+<%= f.text_field :owner, :readonly => true %>
 <br/>
 <%= f.label t("label_date") %>
 <%= f.date_select :date %>

@@ -61,5 +61,12 @@ Rails.application.configure do
 #DEBUG
 ###config.http_authenticatable_on_xhr = false
 ###config.navigational_formats = ["*/*", :html, :json, :js]
+config.action_mailer.delivery_method = :smtp
+# SMTP settings
+config.action_mailer.smtp_settings = {
+ :address              => "smtp.free.fr",
+ :port                 => 25,
+:enable_starttls_auto => true
+}
 
 end

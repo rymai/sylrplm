@@ -48,7 +48,8 @@ attr_accessible :id, :name, :designation, :description,  :owner_id, :oncreate, :
 
 	def ingroup_array
 		ret=[]
-		self.ingroup(:all,:select => "name").each do |o|
+		#syl self.ingroup(:all,:select => "name").each do |o|
+		self.ingroup(:select => "name").each do |o|
 			ret << o.name
 		end
 		ret
@@ -56,7 +57,8 @@ attr_accessible :id, :name, :designation, :description,  :owner_id, :oncreate, :
 
 	def inproject_array
 		ret=[]
-		self.inproject(:all,:select => "ident").each do |o|
+		#syl self.inproject(:all,:select => "ident").each do |o|
+		self.inproject(:select => "ident").each do |o|
 			ret << o.ident
 		end
 		ret

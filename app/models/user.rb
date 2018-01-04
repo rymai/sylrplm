@@ -448,7 +448,8 @@ new_user=nil
 	end
 
 	def self.find_with_mail
-		find(:all, :order => "login ASC", :conditions => 'email IS NOT NULL')
+		#rails2 find(:all, :order => "login ASC", :conditions => 'email IS NOT NULL')
+		self.all.order("login ASC").where("email IS NOT NULL")
 	end
 
 	#
