@@ -1,23 +1,19 @@
 require File.expand_path("../../test_helper", __FILE__)
 
 class DocumentTest < ActiveSupport::TestCase
-	#syl TODO fixtures :users, :groups, :groups_users, :projects, :projects_users, :statusobjects, :typesobjects
-	# Replace this with your real tests.
-	test "the truth" do
-		assert true
-	end
+	fixtures :documents, :users
 
 	def test_invalid
 		fname= "#{self.class.name}.#{__method__}:"
 		doc = Document.new
 		assert !doc.valid?
-		assert doc.errors.invalid?(:ident)
-		assert doc.errors.invalid?(:designation)
+		assert doc.invalid?(:ident)
+		assert doc.invalid?(:designation)
 		# bad ident
 		doc=Document.new(:ident => "000001")
 		assert !doc.valid?
-		assert doc.errors.invalid?(:ident)
-		assert_equal I18n.translate('activerecord.errors.messages')[:invalid]  , doc.errors.on(:ident)
+		assert doc.invalid?(:ident)
+		assert_equal [I18n.translate('activerecord.errors.messages')[:invalid]], doc.errors[:ident]
 	end
 
 	def test_unique
@@ -29,7 +25,7 @@ class DocumentTest < ActiveSupport::TestCase
 		doc1b = Document.new(:ident => "DOC01",
 		:designation => "Mon doc",:owner_id=>1)
 		assert !doc1b.valid?
-		assert_equal I18n.translate('activerecord.errors.messages')[:taken]  , doc1b.errors.on(:ident)
+		assert_equal [I18n.translate('activerecord.errors.messages')[:taken]], doc1b.errors[:ident]
 		# revision
 		doc1c = Document.new(:ident => "DOC01",
 		:revision => "2",
@@ -41,8 +37,7 @@ class DocumentTest < ActiveSupport::TestCase
 	def test_with_user
 		fname= "#{self.class.name}.#{__method__}:"
 		u=users(:user_admin)
-		o1 = Document.new(:user => u)
-		o1.designation="ma designation"
+		o1 = Document.new(:ident => "DOC01", :designation => "ma designation", :user => u)
 		#puts "test_with_user:o1=#{o1.inspect}"
 		assert o1.valid?
 		o1 = Document.new(:ident=>"DOC0003", :owner => u, :group => u.group, :projowner => u.project, :designation=>"ma designation")

@@ -64,61 +64,6 @@ module OpenWFE::Extras
     end
   end
 
-  #
-  # The active record for process errors. Not much to say.
-  #
-  class HistoryEntry < ActiveRecord::Base
-    include SingleConnectionMixin
-
-    #TODO syl set_table_name('history')
-    #ko rails 4set_table_name('history_entry')
-    #ok rails4
-    self.table_name = 'history_entry'
-
-    #
-    # returns a FlowExpressionId instance if the entry has a 'fei' or
-    # nil instead.
-    #
-    def full_fei
-
-      self.fei ? OpenWFE::FlowExpressionId.from_s(self.fei) : nil
-    end
-
-    #
-    # Directly logs an event (may throw an exception)
-    #
-    def self.log! (source, event, opts={})
-
-      fei = opts[:fei]
-
-      if fei
-        opts[:wfid] = fei.parent_wfid
-        opts[:wfname] = fei.wfname
-        opts[:wfrevision] = fei.wfrevision
-        opts[:fei] = fei.to_s
-      end
-
-      opts[:source] = source.to_s
-      opts[:event] = event.to_s
-
-      #self.new(opts).save!
-      # syl: unknown attribute
-      #puts "db_history.log:opts=#{opts.inspect}"
-      opts.delete(:inflow)
-      ret=self.new(opts)
-      st=ret.save_without_transactions!
-      #begin
-      #  self.new(opts).save!
-      #rescue Exception => e
-      #  puts ; puts e
-      #  self.new(opts).save! rescue nil
-      #end
-      #_syl_ pour recuperer l'entry
-      #puts "********** db_history.log:wi_fields=#{ret.fields}"
-      (st ? ret : nil)
-    end
-  end
-
   class DbHistory < OpenWFE::History
 
     #def initialize (service_name, application_context)
@@ -139,7 +84,7 @@ module OpenWFE::Extras
 
       begin
 
-        HistoryEntry.log!(
+        Ruote::Sylrplm::HistoryEntry.log!(
           source, event,
           :fei => fei,
           :message => get_message(source, event, args),
@@ -170,4 +115,3 @@ module OpenWFE::Extras
   end
 
 end
-
