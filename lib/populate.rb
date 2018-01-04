@@ -10,7 +10,7 @@ module Populate
         if %w[AccessesController LoginController RolesController RolesUsersController SequencesController].include?(controller.name)
           # fonctions d' administration
           #roles = "admin & (!designer | !consultant | !valider)"
-          roles = "#{Access.roles_yes(acc_roles[:cat_admins])}& (#{Access.roles_no(acc_roles[:cat_consultants])}!#{Access.roles_no(acc_roles[:cat_creators])})"
+          roles = "#{Access.roles_yes(acc_roles[:cat_admins])} & (#{Access.roles_no(acc_roles[:cat_consultants])} | #{Access.roles_no(acc_roles[:cat_creators])})"
         else
           case controller.name
           when 'SessionsController'
