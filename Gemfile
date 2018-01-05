@@ -52,8 +52,8 @@ gem 'pg' , '0.19.0'
 gem 'yajl-ruby', '1.3.0', :require => 'yajl'
 gem 'ruote','2.3.0.3'
 gem 'ruote-extras','0.9.18'
-gem 'ruote-postgres' , :git => "git://github.com/ifad/ruote-postgres.git"
-gem 'ruote-kit', :git => 'http://github.com/tosch/ruote-kit.git'
+gem 'ruote-postgres' , :git => "https://github.com/ifad/ruote-postgres.git"
+gem 'ruote-kit', :git => 'https://github.com/tosch/ruote-kit.git'
 gem 'yaml_db','0.4.2'
 gem 'fog'  ,'1.38.0'
 gem 'rufus-verbs','1.0.1'
@@ -67,11 +67,11 @@ gem 'will_paginate','3.1.5'
 gem 'rubyzip', '1.1.7'
 gem 'zip-zip'
 
-gem 'sylrplm_ext', :git => "git://github.com/sylvani/sylrplm_ext.git"
+gem 'sylrplm_ext', :git => "https://github.com/sylvani/sylrplm_ext.git"
 # gem 'sylrplm_ext', :path => "/home/syl/trav/rubyonrails/sylrplm_ext"
 
 #If you would like to use RJS, you need to include
-gem 'prototype-rails', github: 'rails/prototype-rails', branch: '4.2'
+gem 'prototype-rails', git: 'https://github.com/rails/prototype-rails.git', branch: '4.2'
 gem 'activerecord-session_store','1.0.0'
 
 # pour rails4 et les attr_accessible
