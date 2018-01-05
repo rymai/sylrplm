@@ -103,6 +103,9 @@ group :development do
  	# gem 'spring'
 
 	gem 'byebug','9.0.6'
+
+	# Better errors handler
+  gem 'better_errors', '~> 2.1.0'
 end
 
 group :test do

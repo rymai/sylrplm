@@ -253,7 +253,7 @@ new_user=nil
 	end
 
 	def to_s
-		self.login+"/"+(self.role.nil? ? " " :self.role.title)+"/"+(self.group.nil? ? " " : self.group.name)+"/"
+		(self.login.presence || 'New user') +"/"+(self.role.nil? ? " " : self.role.title)+"/"+(self.group.nil? ? " " : self.group.name)+"/"
 	end
 
 	def validate
