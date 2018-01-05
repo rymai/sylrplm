@@ -11,7 +11,7 @@
 
 - Cloner le repository git hébergé sur GitHub : `$> git clone git://github.com/sylvani/sylrplm.git`
 - Installer les gems : `$> cd sylrplm && bundle install`
-- Avec mysql sur Environnement Windows 
+- Avec mysql sur Environnement Windows
     - Ajouter le chemin de mysql/bin au PATH
     - Télécharger http://instantrails.rubyforge.org/svn/trunk/InstantRails-win/InstantRails/mysql/bin/libmySQL.dll
     et copier la dll dans le répertoire bin de Ruby
@@ -27,7 +27,14 @@
     - `$> be rake 'sylrplm:run_scheduler'` (lance le gestionnaire de taches:notifications).
 - Créer le fichier `.env` qui contient les variables d'environnement utilisées par l' app:
     - `$> echo "RACK_ENV=development" >>.env`
-- Lancer l' app: `$> foreman start ou '$>ruby script/server'` 
+- Lancer l' app:
+  ```
+  # Avec la Heroku toolbelt
+  RAILS_ENV=development PORT=3000 heroku local
+
+  # ou sans
+  bin/rails server
+  ```
 - [Visiter `localhost:5000`](http://localhost:5000)
 
 ## Déploiement sur Heroku
