@@ -1,0 +1,9 @@
+inherit_from: .rubocop_todo.yml
+
+Layout/Tab:
+  Enabled: true
+
+# Offense count: 40
+# Configuration parameters: AllowedChars.
+Style/AsciiComments:
+  Enabled: false
