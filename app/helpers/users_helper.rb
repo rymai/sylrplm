@@ -1,6 +1,7 @@
 
-module UsersHelper
+# frozen_string_literal: true
 
+module UsersHelper
   #
   # Use this to wrap view elements that the user can't access.
   # !! Note: this is an *interface*, not *security* feature !!
@@ -12,10 +13,8 @@ module UsersHelper
   # <%= if_authorized?(:destroy, @current_user) do link_to 'Destroy', @current_user, :confirm => 'Are you sure?', :method => :delete end %>
   #
   #
-  def if_authorized?(action, resource, &block)
-    if authorized?(action, resource)
-      yield action, resource
-    end
+  def if_authorized?(action, resource)
+    yield action, resource if authorized?(action, resource)
   end
 
   #
@@ -44,9 +43,9 @@ module UsersHelper
   #   link_to_user @current_user, :content_text => 'Your user page'
   #   # => <a href="/users/3" title="barmy" class="nickname">Your user page</a>
   #
-  def link_to_user(user, options={})
-    raise "Invalid user" unless user
-    options.reverse_merge! :content_method => :login, :title_method => :login, :class => :nickname
+  def link_to_user(user, options = {})
+    raise 'Invalid user' unless user
+    options.reverse_merge! content_method: :login, title_method: :login, class: :nickname
     content_text      = options.delete(:content_text)
     content_text    ||= user.send(options.delete(:content_method))
     options[:title] ||= user.send(options.delete(:title_method))
@@ -56,7 +55,7 @@ module UsersHelper
   #
   # Link to login page using remote ip address as link content
   #
-  # The :title (and thus, tooltip) is set to the IP address 
+  # The :title (and thus, tooltip) is set to the IP address
   #
   # Examples:
   #   link_to_login_with_IP
@@ -65,10 +64,10 @@ module UsersHelper
   #   link_to_login_with_IP :content_text => 'not signed in'
   #   # => <a href="/login" title="169.69.69.69">not signed in</a>
   #
-  def link_to_login_with_IP content_text=nil, options={}
+  def link_to_login_with_IP(content_text = nil, options = {})
     ip_addr           = request.remote_ip
     content_text    ||= ip_addr
-    options.reverse_merge! :title => ip_addr
+    options.reverse_merge! title: ip_addr
     if tag = options.delete(:tag)
       content_tag tag, h(content_text), options
     else
@@ -80,15 +79,14 @@ module UsersHelper
   # Link to the current user's page (using link_to_user) or to the login page
   # (using link_to_login_with_IP).
   #
-  def link_to_current_user(options={})
+  def link_to_current_user(options = {})
     if @current_user
       link_to_user @current_user, options
     else
       content_text = options.delete(:content_text) || 'not signed in'
       # kill ignored options from link_to_user
-      [:content_method, :title_method].each{|opt| options.delete(opt)} 
+      [:content_method, :title_method].each { |opt| options.delete(opt) }
       link_to_login_with_IP content_text, options
     end
   end
-
 end

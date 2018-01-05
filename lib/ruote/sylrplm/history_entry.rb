@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ruote
   module Sylrplm
     #
@@ -9,13 +11,13 @@ module Ruote
 
       attr_reader :link_attributes
 
-      #TODO syl set_table_name('history')
-      #ko rails 4set_table_name('history_entry')
-      #ok rails4
+      # TODO: syl set_table_name('history')
+      # ko rails 4set_table_name('history_entry')
+      # ok rails4
       self.table_name = 'history_entry'
 
       def self.model_name
-        "history_entry"
+        'history_entry'
       end
 
       #
@@ -23,13 +25,13 @@ module Ruote
       # nil instead.
       #
       def full_fei
-        self.fei ? OpenWFE::FlowExpressionId.from_s(self.fei) : nil
+        fei ? OpenWFE::FlowExpressionId.from_s(fei) : nil
       end
 
       #
       # Directly logs an event (may throw an exception)
       #
-      def self.log! (source, event, opts={})
+      def self.log!(source, event, opts = {})
         fei = opts[:fei]
 
         if fei
@@ -42,43 +44,43 @@ module Ruote
         opts[:source] = source.to_s
         opts[:event] = event.to_s
 
-        #self.new(opts).save!
+        # self.new(opts).save!
         # syl: unknown attribute
-        #puts "db_history.log:opts=#{opts.inspect}"
+        # puts "db_history.log:opts=#{opts.inspect}"
         opts.delete(:inflow)
-        ret=self.new(opts)
-        st=ret.save_without_transactions!
-        #begin
+        ret = new(opts)
+        st = ret.save_without_transactions!
+        # begin
         #  self.new(opts).save!
-        #rescue Exception => e
+        # rescue Exception => e
         #  puts ; puts e
         #  self.new(opts).save! rescue nil
-        #end
-        #_syl_ pour recuperer l'entry
-        #puts "********** db_history.log:wi_fields=#{ret.fields}"
+        # end
+        # _syl_ pour recuperer l'entry
+        # puts "********** db_history.log:wi_fields=#{ret.fields}"
         (st ? ret : nil)
       end
 
       attr_accessor :link_attributes
 
       def plm_objects
-        fname= "#{self.class.name}.#{__method__}"
-        ret=[]
-        #self.links_plmobjects.each do |lnk|
-        cond = "father_plmtype='history_entry' and father_id = '#{self.id}'"
-        lnks = Link.find(:all, :conditions => [cond])
-        #LOG.debug (fname){"cond=#{cond} #{lnks.count} link trouves"}
+        fname = "#{self.class.name}.#{__method__}"
+        ret = []
+        # self.links_plmobjects.each do |lnk|
+        cond = "father_plmtype='history_entry' and father_id = '#{id}'"
+        lnks = Link.find(:all, conditions: [cond])
+        # LOG.debug (fname){"cond=#{cond} #{lnks.count} link trouves"}
         lnks.each do |lnk|
-          #LOG.debug (fname){"lnk=#{lnk} father=#{lnk.father.ident} child=#{lnk.child.ident}"}
+          # LOG.debug (fname){"lnk=#{lnk} father=#{lnk.father.ident} child=#{lnk.child.ident}"}
           ret.push lnk.child unless lnk.child.nil?
         end
         ret
       end
 
       def link_attributes=(att)
-        fname= "#{self.class.name}.#{__method__}"
+        fname = "#{self.class.name}.#{__method__}"
         @link_attributes = att
-        #LOG.debug (fname){"HistoryEntry:link_attributes=#{@link_attributes}"}
+        # LOG.debug (fname){"HistoryEntry:link_attributes=#{@link_attributes}"}
         @link_attributes
       end
 
@@ -91,12 +93,12 @@ module Ruote
       end
 
       def ident
-        #fei.to_s+"_"+wfid.to_s+"_"+wf_name.to_s
-        [wfid, wf_name].join("_")
+        # fei.to_s+"_"+wfid.to_s+"_"+wf_name.to_s
+        [wfid, wf_name].join('_')
       end
 
       def cancel?
-        source=='expool' && event=='cancel'
+        source == 'expool' && event == 'cancel'
       end
     end
   end

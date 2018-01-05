@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,9 +24,7 @@
 # Made in Japan.
 #++
 
-
-$:.unshift('lib')
-
+$LOAD_PATH.unshift('lib')
 
 require 'rubygems'
 require 'openwfe/expool/wfidgen'
@@ -38,7 +38,7 @@ require 'openwfe/expressions/expression_map'
 
 USAGE = %{
   = ruby #{File.dirname(__FILE__)} [opts] {source} {target}
-  
+
   pooltool.rb migrates an expression pool (Ruote persistence) from one
   format to the other.
 
@@ -79,11 +79,11 @@ USAGE = %{
     ruby work/pooltool.ru work/expool/ dump.yaml
 
 
-  Warning : if the source is an ActiveRecord based storage, then the target 
+  Warning : if the source is an ActiveRecord based storage, then the target
             must be of another type, and vice versa.
             No such worries with DataMapper.
 
-  
+
   == options
 
   -v, --version   : print the version of itog.rb and exits
@@ -103,31 +103,31 @@ USAGE = %{
 #
 # parsing options
 
-rest = ARGV.select { |e| !e.match(/^-/)  }[-2, 2] || []
+rest = ARGV.reject { |e| e.match(/^-/) }[-2, 2] || []
 
-opts = (ARGV - rest).inject([]) { |a, e|
-  t, v = e[0, 1] == '-' ? [ a, [ e ] ] : [ a.last, e ]; t << v; a
-}.inject({}) { |h, (k, v)|
-  h[k] = v || true; h
-}
+opts = (ARGV - rest).each_with_object([]) do |e, a|
+  t, v = e[0, 1] == '-' ? [a, [e]] : [a.last, e]; t << v
+end.each_with_object({}) do |(k, v), h|
+  h[k] = v || true
+end
 
 if rest.size < 2
   puts
-  puts "  ** missing {source} and/or {target}"
+  puts '  ** missing {source} and/or {target}'
   puts
-  p [ opts, rest ]
+  p [opts, rest]
   puts
   puts
   puts USAGE
   exit(1)
 end
 
-if opts['--help'] or opts['-h']
+if opts['--help'] || opts['-h']
   puts USAGE
   exit(0)
 end
 
-if opts['--version'] or opts['-v']
+if opts['--version'] || opts['-v']
   puts '0.0.1'
   exit(0)
 end
@@ -136,27 +136,33 @@ end
 # dump.yaml storage
 
 class YamlDump
-  def initialize (path)
+  def initialize(path)
     @path = path
   end
-  def [] (fei)
+
+  def [](_fei)
     nil
   end
-  def []= (fei, fexp)
+
+  def []=(_fei, fexp)
     dump.write(fexp.to_yaml)
   end
+
   def each
     return unless block_given?
     File.open(@path, 'r') do |f|
       YAML.load_documents(f) { |fexp| yield(fexp.fei, fexp) }
     end
   end
+
   def close
     return unless @dump
     @dump.close
     @dump = nil
   end
+
   protected
+
   def dump
     @dump ||= File.open(@path, 'w')
   end
@@ -165,19 +171,17 @@ end
 #
 # database / ORM connection methods
 
-def ar_connect (ac, s)
-
+def ar_connect(_ac, s)
   require 'openwfe/extras/expool/ar_expstorage'
 
-  options = s.split(':').inject({}) { |h, pair|
-    ss = pair.split('='); h[ss[0]] = ss[1]; h
-  }
+  options = s.split(':').each_with_object({}) do |pair, h|
+    ss = pair.split('='); h[ss[0]] = ss[1]
+  end
 
   ActiveRecord::Base.establish_connection(options)
 end
 
-def dm_connect (ac, s)
-
+def dm_connect(ac, s)
   require 'openwfe/extras/expool/dm_expstorage'
 
   repo = "repo#{s.hash}".to_sym
@@ -189,63 +193,61 @@ end
 #
 # conf methods
 
-def determine_source_suffix (dir)
-
+def determine_source_suffix(dir)
   Dir["#{dir}/**/*.ruote"].size > Dir["#{dir}/**/*.yaml"].size ?
     'ruote' : 'yaml'
 end
 
-def determine_storage (s, opts, target=false)
-
+def determine_storage(s, opts, target = false)
   ac = {}
 
   ac[:s_wfid_generator] =
     OpenWFE::KotobaWfidGenerator.new(:s_wfid_generator, ac)
 
-  sto =  if s.match(/^dm:/)
+  sto = if s =~ /^dm:/
 
-    dm_connect(ac, s[3..-1])
-    OpenWFE::Extras::DmExpressionStorage.new('storage', ac)
+          dm_connect(ac, s[3..-1])
+          OpenWFE::Extras::DmExpressionStorage.new('storage', ac)
 
-  elsif s.index('=') # active record
+        elsif s.index('=') # active record
 
-    ar_connect(ac, s)
-    OpenWFE::Extras::ArExpressionStorage.new('storage', ac)
+          ar_connect(ac, s)
+          OpenWFE::Extras::ArExpressionStorage.new('storage', ac)
 
-  elsif s.index(':') # tokyo tyrant
+        elsif s.index(':') # tokyo tyrant
 
-    require 'openwfe/expool/tt_expstorage'
-    ss = s.split(':')
-    ac[:tyrant_expstorage_host] = ss.first
-    ac[:tyrant_expstorage_port] = ss.last.to_i
-    OpenWFE::TtExpressionStorage.new('storage', ac)
+          require 'openwfe/expool/tt_expstorage'
+          ss = s.split(':')
+          ac[:tyrant_expstorage_host] = ss.first
+          ac[:tyrant_expstorage_port] = ss.last.to_i
+          OpenWFE::TtExpressionStorage.new('storage', ac)
 
-  elsif s.match(/\.yaml$/) # dump.yaml
+        elsif s =~ /\.yaml$/ # dump.yaml
 
-    require 'yaml'
-    YamlDump.new(s)
+          require 'yaml'
+          YamlDump.new(s)
 
-  elsif s.match(/\.tct$/) # tokyo cabinet
+        elsif s =~ /\.tct$/ # tokyo cabinet
 
-    require 'openwfe/expool/tc_expstorage'
-    ac[:expstorage_path] = s
-    OpenWFE::TcExpressionStorage.new('storage', ac)
+          require 'openwfe/expool/tc_expstorage'
+          ac[:expstorage_path] = s
+          OpenWFE::TcExpressionStorage.new('storage', ac)
 
-  else # it's a dir
+        else # it's a dir
 
-    ac[:expstorage_path] = s
-    OpenWFE::FsExpressionStorage.new('storage', ac)
+          ac[:expstorage_path] = s
+          OpenWFE::FsExpressionStorage.new('storage', ac)
 
   end
 
-  if ( ! target) and sto.respond_to?(:suffix=)
+  if !target && sto.respond_to?(:suffix=)
     sto.suffix = determine_source_suffix(s)
   end
 
-  if (target and
-    (opts['-y'] or opts['--yaml']) and
-    sto.respond_to?(:persist_as_yaml=)
-  )
+  if target &&
+     (opts['-y'] || opts['--yaml']) &&
+     sto.respond_to?(:persist_as_yaml=)
+
     sto.persist_as_yaml = true
   end
 
@@ -276,7 +278,6 @@ s = 0
 processes = {}
 
 source.each do |fei, fexp|
-
   label = "#{fei.wfid} #{fei.expid} #{fei.expname}  (#{fexp.class})"
 
   if target[fei]
@@ -302,10 +303,9 @@ source.close
 target.close
 
 processes.delete('0')
-  # not counting the lonely engine env as a process instance
+# not counting the lonely engine env as a process instance
 
 puts
 puts "  migrated #{i} expressions (skipped #{s} / overwrote #{o})."
 puts "  migrated #{processes.size} processes."
 puts
-

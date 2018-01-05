@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,20 +24,16 @@
 # Made in Japan.
 #++
 
-
 require 'openwfe/engine/engine'
 require 'openwfe/extras/expool/dm_expstorage'
-#require 'openwfe/extras/expool/db_errorjournal'
+# require 'openwfe/extras/expool/db_errorjournal'
 require 'openwfe/expool/yaml_errorjournal'
 
-
 module OpenWFE::Extras
-
   #
   # A DataMapper persisted engine.
   #
   class DmPersistedEngine < OpenWFE::Engine
-
     protected
 
     #
@@ -43,7 +41,6 @@ module OpenWFE::Extras
     # expression storage
     #
     def build_expression_storage
-
       init_storage(DmExpressionStorage)
     end
 
@@ -51,9 +48,7 @@ module OpenWFE::Extras
     # Uses a file persisted error journal.
     #
     def build_error_journal
-
       init_service(:s_error_journal, OpenWFE::YamlErrorJournal)
     end
   end
 end
-

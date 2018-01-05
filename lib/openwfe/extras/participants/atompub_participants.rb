@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -38,9 +40,7 @@ require 'openwfe/participants/participants'
 require 'atom/entry' # gem 'atom-tools'
 require 'atom/collection'
 
-
 module OpenWFE::Extras
-
   #
   # This participants posts (as in HTTP POST) a workitem
   # to an AtomPub enabled resource.
@@ -69,9 +69,7 @@ module OpenWFE::Extras
 
     attr_accessor :author_name, :author_uri
 
-
-    def initialize (target_uri, params)
-
+    def initialize(target_uri, params)
       @target_uri = target_uri
 
       @username = params[:username]
@@ -80,11 +78,10 @@ module OpenWFE::Extras
       @author_name = \
         params[:author_name] || self.class.name
       @author_uri = \
-        params[:author_uri] || "http://openwferu.rubyforge.org"
-
+        params[:author_uri] || 'http://openwferu.rubyforge.org'
 
       @categories = params[:categories] || []
-      @categories = @categories.split(",") if @categories.is_a?(String)
+      @categories = @categories.split(',') if @categories.is_a?(String)
       @categories = Array(@categories)
     end
 
@@ -95,8 +92,7 @@ module OpenWFE::Extras
     # This consume() method returns the URI (as a String) where the
     # just uploaded post can be edited.
     #
-    def consume (workitem)
-
+    def consume(workitem)
       entry = Atom::Entry.new
       entry.updated! # set updated time to now
 
@@ -114,78 +110,73 @@ module OpenWFE::Extras
       # initial implementation
       # don't catch an error, let the process fail
 
-      #res.read_body
+      # res.read_body
       extract_new_link res
     end
 
     protected
 
-      #
-      # This base implementation simply uses a YAML dump of the workitem
-      # as the post content (with a content type of 'html').
-      #
-      def render_content (entry, workitem)
+    #
+    # This base implementation simply uses a YAML dump of the workitem
+    # as the post content (with a content type of 'html').
+    #
+    def render_content(entry, workitem)
+      entry.title = \
+        workitem.participant_name + ' ' +
+        workitem.fei.expression_id + ' ' +
+        workitem.fei.workflow_instance_id
 
-        entry.title = \
-          workitem.participant_name + " " +
-          workitem.fei.expression_id + " " +
-          workitem.fei.workflow_instance_id
+      entry.content = workitem.to_yaml
+      entry.content['type'] = 'html'
+    end
 
-        entry.content = workitem.to_yaml
-        entry.content["type"] = "html"
+    #
+    # This default implementation simply builds a single author
+    # out of the :author_name, :author_uri passed as initialization
+    # params.
+    #
+    def render_author(entry, _workitem)
+      author = Atom::Author.new
+      author.name = author_name
+      author.uri = author_uri
+
+      entry.authors << author
+    end
+
+    #
+    # This base implementations simply adds the categories listed
+    # in the :categories initialization parameter.
+    # The target_uri is used as the scheme for the categories.
+    #
+    # You can override this method to add extra categories or to
+    # have completely different categories.
+    #
+    def render_categories(entry, _workitem)
+      @categories.each do |s|
+        c = Atom::Category.new
+
+        c['scheme'] = @target_uri
+        c['term'] = s.strip
+
+        entry.categories << c
       end
+    end
 
+    #
+    # Extracts the link of the newly created resource (newly posted blog
+    # entry), and returns it as a String.
+    #
+    def extract_new_link(response)
+      doc = REXML::Document.new response.read_body
+
+      # REXML::XPath.first(doc.root, "//link[@rel='edit']")
       #
-      # This default implementation simply builds a single author
-      # out of the :author_name, :author_uri passed as initialization
-      # params.
+      # doesn't work :(
+
+      REXML::XPath.first(doc.root, '//link[2]').attribute('href')
       #
-      def render_author (entry, workitem)
-
-        author = Atom::Author.new
-        author.name = author_name
-        author.uri = author_uri
-
-        entry.authors << author
-      end
-
-      #
-      # This base implementations simply adds the categories listed
-      # in the :categories initialization parameter.
-      # The target_uri is used as the scheme for the categories.
-      #
-      # You can override this method to add extra categories or to
-      # have completely different categories.
-      #
-      def render_categories (entry, workitem)
-
-        @categories.each do |s|
-
-          c = Atom::Category.new
-
-          c["scheme"] = @target_uri
-          c["term"] = s.strip
-
-          entry.categories << c
-        end
-      end
-
-      #
-      # Extracts the link of the newly created resource (newly posted blog
-      # entry), and returns it as a String.
-      #
-      def extract_new_link (response)
-
-        doc = REXML::Document.new response.read_body
-
-        #REXML::XPath.first(doc.root, "//link[@rel='edit']")
-          #
-          # doesn't work :(
-
-        REXML::XPath.first(doc.root, "//link[2]").attribute('href')
-          #
-          # will break if the order changes :(
-      end
+      # will break if the order changes :(
+    end
   end
 
   #
@@ -226,27 +217,24 @@ module OpenWFE::Extras
   class BlogParticipant < AtomPubParticipant
     include OpenWFE::TemplateMixin
 
-    def initialize (target_uri, params, &block)
-
+    def initialize(target_uri, params, &block)
       super
 
       @template = params[:template]
       @block_template = block
 
-      @content_type = params[:content_type] || "html"
+      @content_type = params[:content_type] || 'html'
 
-      @title_field = params[:title_field] || "title"
+      @title_field = params[:title_field] || 'title'
     end
 
     protected
 
-      def render_content (entry, workitem)
+    def render_content(entry, workitem)
+      entry.title = workitem.attributes[@title_field].to_s
 
-        entry.title = workitem.attributes[@title_field].to_s
-
-        entry.content = eval_template workitem
-        entry.content["type"] = @content_type
-      end
+      entry.content = eval_template workitem
+      entry.content['type'] = @content_type
+    end
   end
 end
-

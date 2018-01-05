@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2006-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,19 +24,15 @@
 # Made in Japan.
 #++
 
-
 module OpenWFE
-
   #
   # Gets included into the ExpressionPool class
   #
   module ExpoolPauseMethods
-
     #
     # Pauses a process (sets its /__paused__ variable to true).
     #
-    def pause_process (wfid)
-
+    def pause_process(wfid)
       wfid = extract_wfid(wfid)
 
       root_expression = fetch_root(wfid)
@@ -50,8 +48,7 @@ module OpenWFE
     # sure to 'replay' events (replies) that came for it while it was
     # in pause.
     #
-    def resume_process (wfid)
-
+    def resume_process(wfid)
       wfid = extract_wfid wfid
 
       root_expression = fetch_root(wfid)
@@ -76,7 +73,7 @@ module OpenWFE
       error_class = OpenWFE::PausedError.name
       paused_errors = errors.select { |e| e.error_class == error_class }
 
-      return if paused_errors.size < 1
+      return if paused_errors.empty?
 
       # replay select PausedError instances
 
@@ -84,4 +81,3 @@ module OpenWFE
     end
   end
 end
-

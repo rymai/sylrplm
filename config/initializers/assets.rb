@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Be sure to restart your server when you modify this file.
 
 # Version of your assets, change this if you want to expire all your assets.
@@ -10,7 +12,7 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 
-#syl
-Rails.application.config.assets.precompile += %w(jquery.js)
-Rails.application.config.assets.precompile += %w(bootstrap.css)
-Rails.application.config.assets.precompile += %w( depot.css )
+# syl
+Rails.application.config.assets.precompile += %w[jquery.js]
+Rails.application.config.assets.precompile += %w[bootstrap.css]
+Rails.application.config.assets.precompile += %w[depot.css]

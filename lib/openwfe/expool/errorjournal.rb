@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,21 +24,17 @@
 # Made in Japan.
 #++
 
-
 require 'openwfe/service'
 require 'openwfe/omixins'
 require 'openwfe/rudefinitions'
 
-
 module OpenWFE
-
   #
   # Encapsulating process error information.
   #
   # Instances of this class may be used to replay_at_error
   #
   class ProcessError
-
     #
     # When did the error occur.
     #
@@ -64,15 +62,14 @@ module OpenWFE
     #
     attr_reader :stacktrace
 
-    alias :backtrace :stacktrace
+    alias backtrace stacktrace
 
     #
     # The error class (String) of the top level error
     #
     attr_reader :error_class
 
-    def initialize (*args)
-
+    def initialize(*args)
       @date = Time.new
       @fei, @message, @workitem, @error_class, @stacktrace = args
     end
@@ -85,14 +82,14 @@ module OpenWFE
       @fei.parent_wfid
     end
 
-    alias :parent_wfid :wfid
+    alias parent_wfid wfid
 
     #
     # Produces a human readable version of the information in the
     # ProcessError instance.
     #
     def to_s
-      s = ""
+      s = ''
       s << "-- #{self.class.name} --\n"
       s << "   date :    #{@date}\n"
       s << "   fei :     #{@fei}\n"
@@ -108,19 +105,19 @@ module OpenWFE
     #
     def hash
       to_s.hash
-        #
-        # a bit costly but as it's only used by resume_process()...
+      #
+      # a bit costly but as it's only used by resume_process()...
     end
 
     #
     # Returns true if the other instance is a ProcessError and is the
     # same error as this one.
     #
-    def == (other)
+    def ==(other)
       return false unless other.is_a?(OpenWFE::ProcessError)
-      return to_s == other.to_s
-        #
-        # a bit costly but as it's only used by resume_process()...
+      to_s == other.to_s
+      #
+      # a bit costly but as it's only used by resume_process()...
     end
   end
 
@@ -130,31 +127,27 @@ module OpenWFE
   # or YamlErrorJournal.
   #
   class ErrorJournal < Service
-
     include OwfeServiceLocator
     include FeiMixin
 
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       super
 
       @observers = []
 
-      @observers << get_expression_pool.add_observer(:error) do |evt, *args|
+      @observers << get_expression_pool.add_observer(:error) do |_evt, *args|
         #
         # logs each error occurring in the expression pool
 
         begin
-
           record_error(OpenWFE::ProcessError.new(*args))
-
         rescue Exception => e
           lwarn { "(failed to record error : #{e})\n#{e.backtrace.join("\n")}" }
           lwarn { "*** process error : \n#{args.join("\n")}" }
         end
       end
 
-      @observers << get_expression_pool.add_observer(:terminate) do |evt, *args|
+      @observers << get_expression_pool.add_observer(:terminate) do |_evt, *args|
         #
         # removes error log when a process terminates
 
@@ -168,7 +161,6 @@ module OpenWFE
     # Stops this journal, takes care of 'unobserving' the expression pool
     #
     def stop
-
       super
 
       @observers.each { |o| get_expression_pool.remove_observer(o) }
@@ -178,29 +170,29 @@ module OpenWFE
     # Returns true if the given wfid (or fei) (process instance id)
     # has had errors.
     #
-    def has_errors? (wfid)
-
-      get_error_log(wfid).size > 0
+    def has_errors?(wfid)
+      !get_error_log(wfid).empty?
     end
 
     #
     # Takes care of removing an error from the error journal and
     # they replays its process at that point.
     #
-    def replay_at_error (error)
-
+    def replay_at_error(error)
       error = error.as_owfe_error if error.respond_to?(:as_owfe_error)
 
       remove_errors(
         error.fei.parent_wfid,
-        error)
+        error
+      )
 
       get_workqueue.push(
         get_expression_pool,
         :do_apply_reply,
         error.message,
         error.fei,
-        error.workitem)
+        error.workitem
+      )
     end
 
     #
@@ -212,14 +204,11 @@ module OpenWFE
     # Could be useful when considering a process where multiple replay
     # attempts failed.
     #
-    def ErrorJournal.reduce_error_list (errors)
-
-      errors.inject({}) { |h, e|
-        h[e.fei] = e; h
-          # last errors do override previous errors for the same fei
-      }.values.sort { |error_a, error_b|
-        error_a.date <=> error_b.date
-      }
+    def self.reduce_error_list(errors)
+      errors.each_with_object({}) do |e, h|
+        h[e.fei] = e
+        # last errors do override previous errors for the same fei
+      end.values.sort_by(&:date)
     end
   end
 
@@ -228,9 +217,7 @@ module OpenWFE
   # the InMemoryExpressionStorage.
   #
   class InMemoryErrorJournal < ErrorJournal
-
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       super
 
       @per_processes = {}
@@ -243,21 +230,20 @@ module OpenWFE
     # Will return an empty list if there a no errors for the process
     # instances.
     #
-    def get_error_log (wfid)
-puts "debut get_error_log:"+wfid
+    def get_error_log(wfid)
+      puts 'debut get_error_log:' + wfid
       wfid = extract_wfid(wfid, true)
 
-puts "get_error_log avant @per_processes"
-      ret=@per_processes[wfid] || []
-      puts "fin get_error_log:"+wfid+":"+ret
+      puts 'get_error_log avant @per_processes'
+      ret = @per_processes[wfid] || []
+      puts 'fin get_error_log:' + wfid + ':' + ret
       ret
     end
 
     #
     # Removes the error log for a process instance.
     #
-    def remove_error_log (wfid)
-
+    def remove_error_log(wfid)
       wfid = extract_wfid(wfid, true)
       @per_processes.delete(wfid)
     end
@@ -267,8 +253,7 @@ puts "get_error_log avant @per_processes"
     #
     # The 'errors' parameter may be a single error (instead of an array).
     #
-    def remove_errors (wfid, errors)
-
+    def remove_errors(wfid, errors)
       errors = Array(errors)
 
       log = get_error_log(wfid)
@@ -283,16 +268,14 @@ puts "get_error_log avant @per_processes"
     # Returns a hash wfid --> error list.
     #
     def get_error_logs
-
       @per_processes
     end
 
     protected
 
-      def record_error (error)
-
-        (@per_processes[error.wfid] ||= []) << error
-          # not that unreadable after all...
-      end
+    def record_error(error)
+      (@per_processes[error.wfid] ||= []) << error
+      # not that unreadable after all...
+    end
   end
 end

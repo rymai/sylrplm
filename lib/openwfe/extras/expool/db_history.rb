@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2008-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,25 +24,19 @@
 # Made in Japan.
 #++
 
-
 require 'openwfe/expool/history'
 require 'openwfe/extras/singlecon'
 
-
 module OpenWFE::Extras
-
   #
   # The migration for the DbHistory table
   #
   class HistoryTables < ActiveRecord::Migration
-
     def self.up
-
       create_table :history do |t|
-
         t.column :created_at, :timestamp
-        t.column :source, :string, :null => false
-        t.column :event, :string, :null => false
+        t.column :source, :string, null: false
+        t.column :event, :string, null: false
         t.column :wfid, :string
         t.column :wfname, :string
         t.column :wfrevision, :string
@@ -59,40 +55,35 @@ module OpenWFE::Extras
     end
 
     def self.down
-
       drop_table :history
     end
   end
 
   class DbHistory < OpenWFE::History
-
-    #def initialize (service_name, application_context)
+    # def initialize (service_name, application_context)
     #  super
-    #end
+    # end
 
-    def log (source, event, *args)
-
+    def log(source, event, *args)
       do_log(source, event, *args)
     end
 
     protected
 
-    def do_log (source, event, *args)
-
+    def do_log(source, event, *args)
       fei = get_fei(args)
       wi = get_workitem(args)
 
       begin
-
         Ruote::Sylrplm::HistoryEntry.log!(
           source, event,
-          :fei => fei,
-          :message => get_message(source, event, args),
-          :participant => wi.respond_to?(:participant_name) ?
-            wi.participant_name : nil)
-
+          fei: fei,
+          message: get_message(source, event, args),
+          participant: wi.respond_to?(:participant_name) ?
+            wi.participant_name : nil
+        )
       rescue Exception => e
-        #p e
+        # p e
         lerror { "db_history logging failure : #{e}" }
       end
     end
@@ -107,11 +98,8 @@ module OpenWFE::Extras
   # Currently in use in ruote-rest.
   #
   class QueuedDbHistory < DbHistory
-
-    def log (source, event, *args)
-
+    def log(source, event, *args)
       get_workqueue.push(self, :do_log, source, event, *args)
     end
   end
-
 end

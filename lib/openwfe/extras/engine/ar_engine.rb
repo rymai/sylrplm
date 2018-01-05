@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, Tomaso Tosolini and John Mettraux, OpenWFE.org
 #
@@ -22,19 +24,15 @@
 # Made in Italy.
 #++
 
-
 require 'openwfe/engine/engine'
 require 'openwfe/extras/expool/ar_expstorage'
 require 'openwfe/extras/expool/db_errorjournal'
 
-
 module OpenWFE::Extras
-
   #
   # A simple ArPersistedEngine, pure storage, no caching, no optimization.
   #
   class ArPersistedEngine < OpenWFE::Engine
-
     protected
 
     #
@@ -42,7 +40,6 @@ module OpenWFE::Extras
     # expression storage
     #
     def build_expression_storage
-
       init_storage(ArExpressionStorage)
     end
 
@@ -50,9 +47,7 @@ module OpenWFE::Extras
     # Uses a file persisted error journal.
     #
     def build_error_journal
-
       init_service(:s_error_journal, DbErrorJournal)
     end
   end
 end
-

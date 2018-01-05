@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -30,104 +32,99 @@
 # atom-tools' license is X11/MIT
 #++
 
-
-#require 'rubygems'
-#gem 'twitter4r', '0.2.3'
+# require 'rubygems'
+# gem 'twitter4r', '0.2.3'
 require 'twitter' # gem 'twitter4r'
 
 require 'openwfe/utils'
 require 'openwfe/participants/participant'
 
-
 module OpenWFE
-module Extras
-
-  #
-  # Sometimes email is a bit too heavy for notification, this participant
-  # emit messages via a twitter account.
-  #
-  # By default, the message emitted is the value of the field
-  # "twitter_message", but this behaviour can be changed by overriding
-  # the extract_message() method.
-  #
-  # If the extract_message doesn't find a message, the message will
-  # be the result of the default_message method call, of course this
-  # method is overridable as well.
-  #
-  class TwitterParticipant
-    include OpenWFE::LocalParticipant
-
+  module Extras
     #
-    # The actual twitter4r client instance.
+    # Sometimes email is a bit too heavy for notification, this participant
+    # emit messages via a twitter account.
     #
-    attr_accessor :client
-
+    # By default, the message emitted is the value of the field
+    # "twitter_message", but this behaviour can be changed by overriding
+    # the extract_message() method.
     #
-    # Keeping the initialization params at hand (if any)
+    # If the extract_message doesn't find a message, the message will
+    # be the result of the default_message method call, of course this
+    # method is overridable as well.
     #
-    attr_accessor :params
+    class TwitterParticipant
+      include OpenWFE::LocalParticipant
 
-    #
-    # This participant expects a login (twitter user name) and a password.
-    #
-    # The only optional param for now is :no_ssl, which you can set to
-    # true if you want the connection to twitter to not use SSL.
-    # (seems like the Twitter SSL service is available less often
-    # than the plain http one).
-    #
-    def initialize (login, password, params={})
+      #
+      # The actual twitter4r client instance.
+      #
+      attr_accessor :client
 
-      super()
+      #
+      # Keeping the initialization params at hand (if any)
+      #
+      attr_accessor :params
 
-      Twitter::Client.configure do |conf|
-        conf.protocol = :http
-        conf.port = 80
-      end if params[:no_ssl] == true
+      #
+      # This participant expects a login (twitter user name) and a password.
+      #
+      # The only optional param for now is :no_ssl, which you can set to
+      # true if you want the connection to twitter to not use SSL.
+      # (seems like the Twitter SSL service is available less often
+      # than the plain http one).
+      #
+      def initialize(login, password, params = {})
+        super()
 
-      @client = Twitter::Client.new(
-        :login => login,
-        :password => password)
-
-      @params = params
-    end
-
-    #
-    # The method called by the engine when a workitem for this
-    # participant is available.
-    #
-    def consume (workitem)
-
-      user, tmessage = extract_message workitem
-
-      tmessage = default_message(workitem) unless tmessage
-
-      begin
-
-        if user
-          #
-          # direct message
-          #
-          tuser = @client.user user.to_s
-          @client.message :post, tmessage, tuser
-        else
-          #
-          # just the classical status
-          #
-          @client.status :post, tmessage
+        if params[:no_ssl] == true
+          Twitter::Client.configure do |conf|
+            conf.protocol = :http
+            conf.port = 80
+          end
         end
 
-      rescue Exception => e
+        @client = Twitter::Client.new(
+          login: login,
+          password: password
+        )
 
-        linfo do
-          "consume() not emitted twitter, because of " +
-          OpenWFE::exception_to_s(e)
-        end
+        @params = params
       end
 
-      reply_to_engine(workitem) if @application_context
-    end
+      #
+      # The method called by the engine when a workitem for this
+      # participant is available.
+      #
+      def consume(workitem)
+        user, tmessage = extract_message workitem
 
-    protected
+        tmessage ||= default_message(workitem)
+
+        begin
+          if user
+            #
+            # direct message
+            #
+            tuser = @client.user user.to_s
+            @client.message :post, tmessage, tuser
+          else
+            #
+            # just the classical status
+            #
+            @client.status :post, tmessage
+          end
+        rescue Exception => e
+          linfo do
+            'consume() not emitted twitter, because of ' +
+              OpenWFE.exception_to_s(e)
+          end
+        end
+
+        reply_to_engine(workitem) if @application_context
+      end
+
+      protected
 
       #
       # Returns a pair : the target user (twitter login name)
@@ -138,10 +135,9 @@ module Extras
       # values of the field 'twitter_target' and of the field
       # 'twitter_message'.
       #
-      def extract_message (workitem)
-
-        [ workitem.attributes['twitter_target'],
-          workitem.attributes['twitter_message'] ]
+      def extract_message(workitem)
+        [workitem.attributes['twitter_target'],
+         workitem.attributes['twitter_message']]
       end
 
       #
@@ -151,12 +147,9 @@ module Extras
       # This default implementation simply returns the workitem
       # FlowExpressionId instance in its to_s() representation.
       #
-      def default_message (workitem)
-
+      def default_message(workitem)
         workitem.fei.to_s
       end
+    end
   end
-
 end
-end
-

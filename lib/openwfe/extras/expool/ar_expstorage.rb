@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, Tomaso Tosolini, John Mettraux OpenWFE.org
 #
@@ -22,12 +24,11 @@
 # Made in Italy.
 #++
 
-
 require 'base64'
 
 require 'openwfe/service'
 
-#syl
+# syl
 require 'openwfe/expressions/expression_map'
 
 require 'openwfe/rudefinitions'
@@ -35,42 +36,36 @@ require 'openwfe/expool/expstorage'
 require 'openwfe/extras/singlecon'
 require 'openwfe/expressions/fe_define'
 
-
 module OpenWFE::Extras
-
   #
   # A migration for creating/dropping the "expressions" table.
   # 'expressions' are atomic pieces of running process instances.
   #
   class ExpressionTables < ActiveRecord::Migration
-
     def self.up
-
       create_table :expressions do |t|
+        t.column :fei, :string, null: false
+        t.column :wfid, :string, null: false
+        t.column :expid, :string, null: false
+        # t.column :wfname, :string, :null => false
+        t.column :exp_class, :string, null: false
 
-        t.column :fei, :string, :null => false
-        t.column :wfid, :string, :null => false
-        t.column :expid, :string, :null => false
-        #t.column :wfname, :string, :null => false
-        t.column :exp_class, :string, :null => false
-
-        #t.column :svalue, :text, :null => false
-        t.column :svalue, :text, :null => false, :limit => 1024 * 1024
-          #
-          # 'value' could be reserved, using 'svalue' instead
-          #
-          # :limit patch by Maarten Oelering (a greater value
-          # could be required in some cases)
+        # t.column :svalue, :text, :null => false
+        t.column :svalue, :text, null: false, limit: 1024 * 1024
+        #
+        # 'value' could be reserved, using 'svalue' instead
+        #
+        # :limit patch by Maarten Oelering (a greater value
+        # could be required in some cases)
       end
       add_index :expressions, :fei
       add_index :expressions, :wfid
       add_index :expressions, :expid
-      #add_index :expressions, :wfname
+      # add_index :expressions, :wfname
       add_index :expressions, :exp_class
     end
 
     def self.down
-
       drop_table :expressions
     end
   end
@@ -86,7 +81,6 @@ module OpenWFE::Extras
   # Storing OpenWFE flow expressions in a database.
   #
   class ArExpressionStorage
-
     include OpenWFE::ServiceMixin
     include OpenWFE::OwfeServiceLocator
     include OpenWFE::ExpressionStorageBase
@@ -96,8 +90,7 @@ module OpenWFE::Extras
     #
     # Constructor.
     #
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       super()
       service_init(service_name, application_context)
 
@@ -109,8 +102,7 @@ module OpenWFE::Extras
     #
     # Stores an expression.
     #
-    def []= (fei, flow_expression)
-
+    def []=(fei, flow_expression)
       e = Expression.find_by_fei(fei.to_s)
 
       unless e
@@ -118,77 +110,71 @@ module OpenWFE::Extras
         e.fei = fei.to_s
         e.wfid = fei.wfid
         e.expid = fei.expid
-        #e.wfname = fei.wfname
+        # e.wfname = fei.wfname
       end
 
       e.exp_class = flow_expression.class.name
-     # puts  "ExpressionTables.[]=:flow=#{flow_expression.inspect}"
+      # puts  "ExpressionTables.[]=:flow=#{flow_expression.inspect}"
       e.svalue = @persist_as_yaml ?
-        YAML::dump(flow_expression) :
+        YAML.dump(flow_expression) :
         Base64.encode64(Marshal.dump(flow_expression))
-      #puts  "ExpressionTables.[]=:e=#{e.svalue.size}"
+      # puts  "ExpressionTables.[]=:e=#{e.svalue.size}"
 
-      #TODO syl pour postgresql qui refuse le null
-      ###if e.respond_to? :text
-      e.text="text" if e.text.nil?
-      ##end
+      # TODO: syl pour postgresql qui refuse le null
+      # ##if e.respond_to? :text
+      e.text = 'text' if e.text.nil?
+      # #end
       e.save_without_transactions!
     end
 
     #
     # Retrieves a flow expression.
     #
-    def [] (fei)
-
+    def [](fei)
       (e = Expression.find_by_fei(fei.to_s)) ? as_owfe_expression(e) : nil
     end
 
     #
     # Returns true if there is a FlowExpression stored with the given id.
     #
-    def has_key? (fei)
-
+    def has_key?(fei)
       (Expression.find_by_fei(fei.to_s) != nil)
     end
 
     #
     # Deletes a flow expression.
     #
-    def delete (fei)
-
-      Expression.delete_all([ 'fei = ?', fei.to_s ])
+    def delete(fei)
+      Expression.delete_all(['fei = ?', fei.to_s])
     end
 
     #
     # Returns the count of expressions currently stored.
     #
     def size
-
       Expression.count
     end
 
-    alias :length :size
+    alias length size
 
     #
     # Danger ! Will remove all the expressions in the database.
     #
     def purge
-
       Expression.delete_all
     end
 
     #
     # Gather expressions matching certain parameters.
     #
-    def find_expressions (options={})
-
+    def find_expressions(options = {})
       conditions = determine_conditions(options)
-        # note : this call modifies the options hash...
+      # note : this call modifies the options hash...
 
       #
       # maximize usage of SQL querying
-##puts "*************** ar_expstorage.find_expressions:conditions=#{conditions} ****************"
-      exps = Expression.find(:all, :conditions => conditions)
+      # #puts "*************** ar_expstorage.find_expressions:conditions=#{conditions} ****************"
+      exps = Expression.find(:all, conditions: conditions)
 
       #
       # do the rest of the filtering
@@ -205,8 +191,7 @@ module OpenWFE::Extras
     #
     # Fetches the root of a process instance.
     #
-    def fetch_root (wfid)
-
+    def fetch_root(wfid)
       params = {}
 
       params[:conditions] = [
@@ -218,8 +203,8 @@ module OpenWFE::Extras
       exps = Expression.find(:all, params)
 
       e = exps.sort { |fe1, fe2| fe1.fei.expid <=> fe2.fei.expid }[0]
-        #
-        # find the one with the smallest expid
+      #
+      # find the one with the smallest expid
 
       as_owfe_expression(e)
     end
@@ -228,7 +213,6 @@ module OpenWFE::Extras
     # Used only by work/pooltool.ru for storage migrations.
     #
     def each
-
       return unless block_given?
 
       Expression.find(:all).each do |e|
@@ -241,7 +225,6 @@ module OpenWFE::Extras
     # Closes the underlying database... Does nothing in this implementation.
     #
     def close
-
       # nothing to do here.
     end
 
@@ -254,11 +237,10 @@ module OpenWFE::Extras
     # Note : this method, modifies the options hash (it removes
     # the args it needs).
     #
-    def determine_conditions (options)
-
+    def determine_conditions(options)
       wfid = options.delete :wfid
       wfid_prefix = options.delete :wfid_prefix
-      #parent_wfid = options.delete :parent_wfid
+      # parent_wfid = options.delete :parent_wfid
 
       query = []
       conditions = []
@@ -275,7 +257,7 @@ module OpenWFE::Extras
 
       conditions = conditions.flatten
 
-      if conditions.size < 1
+      if conditions.empty?
         nil
       else
         conditions.insert(0, query.join(' AND '))
@@ -285,8 +267,7 @@ module OpenWFE::Extras
     #
     # Used by determine_conditions().
     #
-    def add_class_conditions (options, query, conditions)
-
+    def add_class_conditions(options, query, conditions)
       ic = options.delete :include_classes
       ic = Array(ic)
 
@@ -297,9 +278,8 @@ module OpenWFE::Extras
       acc ec, query, conditions, 'AND'
     end
 
-    def acc (classes, query, conditions, join)
-
-      return if classes.size < 1
+    def acc(classes, query, conditions, join)
+      return if classes.empty?
 
       classes = classes.collect do |kind|
         get_expression_map.get_expression_classes kind
@@ -309,11 +289,10 @@ module OpenWFE::Extras
       quer = []
       cond = []
       classes.each do |cl|
-
         quer << if join == 'AND'
-          'exp_class != ?'
-        else
-          'exp_class = ?'
+                  'exp_class != ?'
+                else
+                  'exp_class = ?'
         end
 
         cond << cl.to_s
@@ -330,21 +309,20 @@ module OpenWFE::Extras
     # Extracts the OpenWFE FlowExpression instance from the
     # active record and makes sure its application_context is set.
     #
-    def as_owfe_expression (record)
-#puts "================== ar_expstorage.as_owfe_expression:record=#{record}"
+    def as_owfe_expression(record)
+      # puts "================== ar_expstorage.as_owfe_expression:record=#{record}"
       return nil unless record
-      #begin
+      # begin
       s = record.svalue
 
-     ##fe = s.match(Y_START) ? YAML.load(s) : ::OpenWFE::Xml::from_xml(s)
-     fe = s.match(Y_START) ? YAML.load(s) : Marshal.load(Base64.decode64(s))
+      # #fe = s.match(Y_START) ? YAML.load(s) : ::OpenWFE::Xml::from_xml(s)
+      fe = s.match(Y_START) ? YAML.safe_load(s) : Marshal.load(Base64.decode64(s))
       fe.application_context = @application_context
       fe
-      #rescue Exception=>exc
+      # rescue Exception=>exc
       #  puts "================== ar_expstorage.as_owfe_expression:no svalue"
-      #nil
-      #end
+      # nil
+      # end
     end
   end
 end
-

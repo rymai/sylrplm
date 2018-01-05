@@ -1,20 +1,20 @@
-class String
-	def zero?
-		ret = false
-		if self.blank?
-		ret=true
-		else
-			str=self.strip!
-			if str.nil?
-				if vself=""
-				ret=true
-				end
-			else
-				if str==""
-				ret=true
-				end
-			end
+# frozen_string_literal: true
 
-		end
-	end
+class String
+  def zero?
+    ret = false
+    if blank?
+      ret = true
+    else
+      str = strip!
+      if str.nil?
+        if vself = ''
+          ret = true
+        end
+      else
+        ret = true if str == ''
+      end
+
+    end
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_dependency 'controllers/plm_clipboard'
 require_dependency 'controllers/plm_event'
 require_dependency 'controllers/plm_lifecycle'

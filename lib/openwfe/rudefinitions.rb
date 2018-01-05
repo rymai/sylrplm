@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2006-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,19 +24,16 @@
 # Made in Japan.
 #++
 
-
 require 'fileutils'
 
 require 'openwfe/utils'
 require 'openwfe/version'
 
-
 module OpenWFE
-
   #
   # service names
 
-  #S_LOGGER = :logger
+  # S_LOGGER = :logger
 
   #
   # some special expression names
@@ -51,44 +50,52 @@ module OpenWFE
   # (assumes the presence of an application context instance var)
   #
   module OwfeServiceLocator
-
     def get_engine
       @application_context[:s_engine]
     end
+
     def get_scheduler
       @application_context[:s_scheduler]
     end
+
     def get_expression_map
       @application_context[:s_expression_map]
     end
+
     def get_wfid_generator
       @application_context[:s_wfid_generator]
     end
 
     def get_workqueue
-     fname= "rudefinitions.#{__method__}"
-        ##LOG.debug (fname) { "workqueue=#{@application_context[:s_workqueue].inspect[0,200]}"}
+      fname = "rudefinitions.#{__method__}"
+      # #LOG.debug (fname) { "workqueue=#{@application_context[:s_workqueue].inspect[0,200]}"}
       @application_context[:s_workqueue]
     end
-    
+
     def get_expool
       @application_context[:s_expression_pool]
     end
+
     def get_expression_pool
       @application_context[:s_expression_pool]
     end
+
     def get_expression_storage
       @application_context[:s_expression_storage]
     end
+
     def get_participant_map
       @application_context[:s_participant_map]
     end
+
     def get_error_journal
       @application_context[:s_error_journal]
     end
+
     def get_tree_checker
       @application_context[:s_tree_checker]
     end
+
     def get_def_parser
       @application_context[:s_def_parser]
     end
@@ -106,12 +113,9 @@ module OpenWFE
     # (there is usually a cache and a persisted exp storage).
     #
     def get_expression_storages
-
-      @application_context.inject([]) do |r, (k, v)|
-        r << v if k.to_s.match(/^s_expression_storage/); r
+      @application_context.each_with_object([]) do |(k, v), r|
+        r << v if k.to_s =~ /^s_expression_storage/
       end
     end
   end
-
 end
-

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,24 +24,19 @@
 # Made in Japan.
 #++
 
-
 require 'openwfe/flowexpressionid'
 
-
 module OpenWFE
-
   #
   # A few methods about FlowExpressionIds
   #
   module FeiMixin
-
     protected
 
       #
       # Makes sure to return a FlowExpressionId instance.
       #
-      def extract_fei (o)
-
+      def extract_fei(o)
         return o.fei if o.respond_to?(:fei)
         return FlowExpressionId.to_fei(o) if o.is_a?(String)
         raise "cannot extract FlowExpressionId out of #{o.inspect} (#{o.class})"
@@ -48,17 +45,14 @@ module OpenWFE
       #
       # A small method for ensuring we have a workflow instance id.
       #
-      def extract_wfid (o, parent=false)
-
+      def extract_wfid(o, parent = false)
         case o
-          #TODO
-          when String then o
-          when FlowExpressionId then o.wfid(parent)
-          when FlowExpression then o.fei.wfid(parent)
-          else o.to_s
+          # TODO
+        when String then o
+        when FlowExpressionId then o.wfid(parent)
+        when FlowExpression then o.fei.wfid(parent)
+        else o.to_s
         end
       end
   end
-
 end
-

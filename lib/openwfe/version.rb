@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2005-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -23,7 +25,5 @@
 #++
 
 module OpenWFE
-
   OPENWFERU_VERSION = '0.9.21'
 end
-

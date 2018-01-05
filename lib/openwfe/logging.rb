@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2006-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,87 +24,76 @@
 # Made in Japan.
 #++
 
-
 require 'logger'
 require 'openwfe/utils'
 
-
 module OpenWFE
-
   #
   # A Mixin for adding logging method to any class
   #
   module Logging
-
-    def ldebug (message=nil, &block)
+    def ldebug(message = nil, &block)
       do_log(:debug, message, &block)
     end
 
-    def linfo (message=nil, &block)
+    def linfo(message = nil, &block)
       do_log(:info, message, &block)
     end
 
-    def lwarn (message=nil, &block)
+    def lwarn(message = nil, &block)
       do_log(:warn, message, &block)
     end
 
-    def lerror (message=nil, &block)
+    def lerror(message = nil, &block)
       do_log(:error, message, &block)
     end
 
-    def lfatal (message=nil, &block)
+    def lfatal(message = nil, &block)
       do_log(:fatal, message, &block)
     end
 
-    def lunknown (message=nil, &block)
+    def lunknown(message = nil, &block)
       do_log(:unknown, message, &block)
     end
 
-    def llog (level, message=nil, &block)
+    def llog(level, message = nil, &block)
       do_log(level, message, &block)
     end
 
     #
     # A simplification of caller_to_s for direct usage when debugging
     #
-    def ldebug_callstack (msg, max_lines=nil)
-
-      ldebug { "#{msg}\n" + OpenWFE::caller_to_s(9, max_lines) }
+    def ldebug_callstack(msg, max_lines = nil)
+      ldebug { "#{msg}\n" + OpenWFE.caller_to_s(9, max_lines) }
     end
 
     private
 
-      def do_log (level, message, &block)
+    def do_log(level, message, &block)
+      return unless $OWFE_LOG
 
-        return unless $OWFE_LOG
-
-        logblock = lambda do
-          if block
-            "#{log_prepare(message)} - #{block.call}"
-          else
-            "#{log_prepare(message)}"
-          end
-        end
-
-        $OWFE_LOG.send level, &logblock
-      end
-
-      def log_prepare (message)
-
-        return log_author() unless message
-        "#{log_author} - #{message}"
-      end
-
-      def log_author
-
-        if respond_to?(:service_name)
-          "#{self.class} '#{self.service_name}'"
+      logblock = lambda do
+        if block
+          "#{log_prepare(message)} - #{yield}"
         else
-          "#{self.class}"
+          log_prepare(message).to_s
         end
       end
 
+      $OWFE_LOG.send level, &logblock
+    end
+
+    def log_prepare(message)
+      return log_author unless message
+      "#{log_author} - #{message}"
+    end
+
+    def log_author
+      if respond_to?(:service_name)
+        "#{self.class} '#{service_name}'"
+      else
+        self.class.to_s
+      end
+    end
   end
-
 end
-

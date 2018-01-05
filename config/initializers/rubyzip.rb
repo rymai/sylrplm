@@ -1,2 +1,3 @@
-require 'rubygems'
+# frozen_string_literal: true
 
+require 'rubygems'

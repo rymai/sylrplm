@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,107 +24,94 @@
 # Made in Japan.
 #++
 
-
 require 'yaml'
 require 'base64'
-require 'thread'
-
 require 'openwfe/service'
 require 'openwfe/listeners/listener'
 
 require 'rufus/sqs' # gem 'rufus-sqs'
 
-
 module OpenWFE
-module Extras
-
-  #
-  # Polls an Amazon SQS queue for workitems
-  #
-  # Workitems can be instances of InFlowWorkItem or LaunchItem.
-  #
-  #   require 'openwfe/extras/listeners/sqslisteners'
-  #
-  #   ql = OpenWFE::SqsListener("workqueue1", engine.application_context)
-  #
-  #   engine.add_workitem_listener(ql, "2m30s")
-  #     #
-  #     # thus, the engine will poll our "workqueue1" SQS queue
-  #     # every 2 minutes and 30 seconds
-  #
-  class SqsListener < Service
-
-    include WorkItemListener
-    include Rufus::Schedulable
-
+  module Extras
     #
-    # The name of the Amazon SQS whom this listener cares for
+    # Polls an Amazon SQS queue for workitems
     #
-    attr_reader :queue_name
-
-    def initialize (service_name, opts)
-
-      @mutex = Mutex.new
-
-      @queue_name = opts[:queue_name] || service_name
-
-      super(service_name, opts)
-
-      linfo { "new() queue is '#{@queue_name}'" }
-    end
-
+    # Workitems can be instances of InFlowWorkItem or LaunchItem.
     #
-    # polls the SQS for incoming messages
+    #   require 'openwfe/extras/listeners/sqslisteners'
     #
-    def trigger (params)
+    #   ql = OpenWFE::SqsListener("workqueue1", engine.application_context)
+    #
+    #   engine.add_workitem_listener(ql, "2m30s")
+    #     #
+    #     # thus, the engine will poll our "workqueue1" SQS queue
+    #     # every 2 minutes and 30 seconds
+    #
+    class SqsListener < Service
+      include WorkItemListener
+      include Rufus::Schedulable
 
-      @mutex.synchronize do
-        # making sure executions do not overlap
+      #
+      # The name of the Amazon SQS whom this listener cares for
+      #
+      attr_reader :queue_name
 
-        ldebug { "trigger()" }
+      def initialize(service_name, opts)
+        @mutex = Mutex.new
 
-        qs = Rufus::SQS::QueueService.new
+        @queue_name = opts[:queue_name] || service_name
 
-        qs.create_queue(@queue_name)
+        super(service_name, opts)
+
+        linfo { "new() queue is '#{@queue_name}'" }
+      end
+
+      #
+      # polls the SQS for incoming messages
+      #
+      def trigger(_params)
+        @mutex.synchronize do
+          # making sure executions do not overlap
+
+          ldebug { 'trigger()' }
+
+          qs = Rufus::SQS::QueueService.new
+
+          qs.create_queue(@queue_name)
           # just to be sure it is there
 
-        loop do
+          loop do
+            l = qs.get_messages(@queue_name, timeout: 0, count: 255)
 
-          l = qs.get_messages(@queue_name, :timeout => 0, :count => 255)
+            break if l.empty?
 
-          break if l.length < 1
+            l.each do |msg|
+              o = decode_object(msg)
 
-          l.each do |msg|
+              handle_item(o)
 
-            o = decode_object(msg)
+              msg.delete
 
-            handle_item(o)
-
-            msg.delete
-
-            ldebug { "trigger() handled successfully msg #{msg.message_id}" }
+              ldebug { "trigger() handled successfully msg #{msg.message_id}" }
+            end
           end
         end
       end
+
+      #
+      # Extracts a workitem from the message's body.
+      #
+      # By default, this listeners assumes the workitem is stored in
+      # its "hash form" (not directly as a Ruby InFlowWorkItem instance).
+      #
+      # LaunchItem instances (as hash as well) are also accepted.
+      #
+      def decode_object(message)
+        o = Base64.decode64(message.message_body)
+        o = YAML.safe_load(o)
+        o = OpenWFE.workitem_from_h(o)
+        o
+      end
     end
-
-    #
-    # Extracts a workitem from the message's body.
-    #
-    # By default, this listeners assumes the workitem is stored in
-    # its "hash form" (not directly as a Ruby InFlowWorkItem instance).
-    #
-    # LaunchItem instances (as hash as well) are also accepted.
-    #
-    def decode_object (message)
-
-      o = Base64.decode64(message.message_body)
-      o = YAML.load(o)
-      o = OpenWFE::workitem_from_h(o)
-      o
     end
-  end
-
 end
-end
-

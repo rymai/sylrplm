@@ -1,6 +1,5 @@
-def protect_against_forgery?
+# frozen_string_literal: true
 
-end
-def protect_against_forgery
+def protect_against_forgery?; end
 
-end
+def protect_against_forgery; end

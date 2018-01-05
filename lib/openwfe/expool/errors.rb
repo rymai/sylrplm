@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2006-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,19 +24,15 @@
 # Made in Japan.
 #++
 
-
 module OpenWFE
-
   #
   # This error is raised when an expression belonging to a paused
   # process is applied or replied to.
   #
   class PausedError < RuntimeError
-
     attr_reader :wfid
 
-    def initialize (wfid)
-
+    def initialize(wfid)
       super "process '#{wfid}' is paused"
       @wfid = wfid
     end
@@ -44,7 +42,6 @@ module OpenWFE
     # (simply returns the hash of the paused process' wfid).
     #
     def hash
-
       @wfid.hash
     end
 
@@ -52,8 +49,7 @@ module OpenWFE
     # Returns true if the other is a PausedError issued for the
     # same process instance (wfid).
     #
-    def == (other)
-
+    def ==(other)
       return false unless other.is_a?(PausedError)
 
       (@wfid == other.wfid)
@@ -66,4 +62,3 @@ module OpenWFE
   class ForcedError < RuntimeError
   end
 end
-

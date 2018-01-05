@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'classes/filedriver'
 require 'classes/filedriver_database'
 require 'classes/filedriver_fog'
