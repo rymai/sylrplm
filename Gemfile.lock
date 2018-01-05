@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/ifad/ruote-postgres.git
+  remote: https://github.com/ifad/ruote-postgres.git
   revision: 941ef3be5137c99d734890d87d3d62e5ef6bb803
   specs:
     ruote-postgres (0.0.1)
@@ -8,7 +8,7 @@ GIT
       ruote
 
 GIT
-  remote: git://github.com/rails/prototype-rails.git
+  remote: https://github.com/rails/prototype-rails.git
   revision: 0fed929ff48c10c3b978edd3baa983a81f404dbf
   branch: 4.2
   specs:
@@ -16,13 +16,13 @@ GIT
       rails (~> 4.0)
 
 GIT
-  remote: git://github.com/sylvani/sylrplm_ext.git
+  remote: https://github.com/sylvani/sylrplm_ext.git
   revision: a3822ce037a801a4a90fe6a6061c1036baf5314a
   specs:
     sylrplm_ext (0.0.4)
 
 GIT
-  remote: http://github.com/tosch/ruote-kit.git
+  remote: https://github.com/tosch/ruote-kit.git
   revision: e213dc9e8402d81f85baf4bab5ddc2ac24e6182a
   specs:
     ruote-kit (2.3.0)
