@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,23 +24,18 @@
 # Made in Japan.
 #++
 
-
 require 'openwfe/expool/tc_expstorage'
 
 require 'rufus/tokyo/tyrant' # sudo gem install rufus-tokyo
 
 # TODO : maybe implement a ntt_expstorage...
 
-
 module OpenWFE
-
   #
   # A Tokyo Tyrant based persistence for Ruote expressions.
   #
   class TtExpressionStorage < TcExpressionStorage
-
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       service_init(service_name, application_context)
 
       host = application_context[:tyrant_expstorage_host] || '127.0.0.1'
@@ -52,4 +49,3 @@ module OpenWFE
     end
   end
 end
-

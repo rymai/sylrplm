@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,48 +24,44 @@
 # Made in Japan.
 #++
 
-#require_gem 'activerecord'
-#gem 'activerecord'; require 'active_record'
+# require_gem 'activerecord'
+# gem 'activerecord'; require 'active_record'
 require 'active_record'
 
 module Ruote
-	module Sylrplm
+  module Sylrplm
+    #
+    # Dumber connection management for records that need to be manipulated outside
+    # of the HTTP request circuit (where Rails takes care of everything).
+    #
+    module SingleConnectionMixin
+      def self.included(target_module)
+        target_module.module_eval do
+          def self.connection_
+            fname = "#{self.class.name}.#{__method__}"
 
-		#
-		# Dumber connection management for records that need to be manipulated outside
-		# of the HTTP request circuit (where Rails takes care of everything).
-		#
-		module SingleConnectionMixin
-			def self.included (target_module)
+            # ActiveRecord::Base.configurations = Rails.application.config.database_configuration
+            LOG.debug(fname) { "useActiveRecord::Base.configurations=#{ActiveRecord::Base.configurations[Rails.env]}" }
+            # ActiveRecord::ConnectionAdapters::ConnectionPool.new Rails.application.config.database_configuration[Rails.env]
+            #
+            # ActiveRecord::Base.connection_pool.checkout
+            # @@connection ||= ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[Rails.env])
+            ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[Rails.env])
+            # ActiveRecord::Base.connection
+            ActiveRecord::Base.connection.reconnect!
+            # LOG.debug(fname) {"@@connection=#{@@connection}"}
+            # @@connection
+          end
 
-				target_module.module_eval do
-					def self.connection_
-						fname= "#{self.class.name}.#{__method__}"
-
-						#ActiveRecord::Base.configurations = Rails.application.config.database_configuration
-						LOG.debug(fname) {"useActiveRecord::Base.configurations=#{ActiveRecord::Base.configurations[Rails.env]}"}
-						#ActiveRecord::ConnectionAdapters::ConnectionPool.new Rails.application.config.database_configuration[Rails.env]
-						#
-						#ActiveRecord::Base.connection_pool.checkout
-						#@@connection ||= ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[Rails.env])
-						ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[Rails.env])
-						#ActiveRecord::Base.connection
-						ActiveRecord::Base.connection.reconnect!
-						#LOG.debug(fname) {"@@connection=#{@@connection}"}
-						#@@connection
-					end
-
-					def self.connection_rail2
-						ActiveRecord::Base.verify_active_connections!
-						@@connection ||= ActiveRecord::Base.connection_pool.checkout
-						#puts "#{__FILE__} : connection active= #{connection.active?}"
-						@@connection.active? || @@connection.reconnect!
-						@@connection
-					end
-				end
-			end
-
-		end
-
-	end
+          def self.connection_rail2
+            ActiveRecord::Base.verify_active_connections!
+            @@connection ||= ActiveRecord::Base.connection_pool.checkout
+            # puts "#{__FILE__} : connection active= #{connection.active?}"
+            @@connection.active? || @@connection.reconnect!
+            @@connection
+          end
+        end
+      end
+    end
+  end
 end

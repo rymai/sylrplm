@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Be sure to restart your server when you modify this file
 
 # Specifies gem version of Rails to use when vendor/rails is not present
@@ -40,22 +42,21 @@ Rails::Initializer.run do |config|
   # config.i18n.default_locale = :de
   config.action_controller.session_store = :active_record_store
 
-  config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
-  
+  config.gem 'will_paginate', version: '~> 2.3.11', source: 'http://gemcutter.org'
+
   config.i18n.default_locale = :fr
-  
-  config.action_mailer.delivery_method= :smtp
+
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_charset = 'iso-8859-1' 
-  
+  config.action_mailer.default_charset = 'iso-8859-1'
+
   config.action_mailer.smtp_settings = {
-    :address => "smtp.free.fr",
-    :port => 25,
-    :domain => "free.fr",
+    address: 'smtp.free.fr',
+    port: 25,
+    domain: 'free.fr',
     #:authentication => :login,
     #:user_name => xxx,
     #:password => xxx
   }
-  
 end

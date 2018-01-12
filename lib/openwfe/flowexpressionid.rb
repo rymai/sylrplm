@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2005-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,12 +24,9 @@
 # Made in Japan and Costa Rica.
 #++
 
-
 require 'yaml'
 
-
 module OpenWFE
-
   #
   # A FlowExpressionId is a unique identifier for a FlowExpression (an atomic
   # piece of a process instance).
@@ -39,7 +38,6 @@ module OpenWFE
   # to come back).
   #
   class FlowExpressionId
-
     FIELDS = [
       :owfe_version,
       :engine_id,
@@ -50,17 +48,17 @@ module OpenWFE
       :workflow_instance_id,
       :expression_name,
       :expression_id
-    ]
+    ].freeze
 
     FIELDS.each { |f| attr_accessor f }
 
-    alias :expid :expression_id
-    alias :expid= :expression_id=
+    alias expid expression_id
+    alias expid= expression_id=
 
-    alias :expname :expression_name
-    alias :wfurl :workflow_definition_url
-    alias :wfname :workflow_definition_name
-    alias :wfrevision :workflow_definition_revision
+    alias expname expression_name
+    alias wfurl workflow_definition_url
+    alias wfname workflow_definition_name
+    alias wfrevision workflow_definition_revision
 
     #
     # a trick : returns self...
@@ -82,26 +80,24 @@ module OpenWFE
     # true, if will return the same result as
     # parent_workflow_instance_id().
     #
-    def wfid (parent=false)
-
+    def wfid(parent = false)
       if parent
         parent_workflow_instance_id
       else
         workflow_instance_id
       end
     end
-    alias :wfid= :workflow_instance_id=
+    alias wfid= workflow_instance_id=
 
     #
     # the old 'initial_engine_id' is now deprecated, the methods
     # are still around though.
     #
-    def initial_engine_id= (s)
-
+    def initial_engine_id=(s)
       # discard silently
     end
-    def initial_engine_id
 
+    def initial_engine_id
       @engine_id
     end
 
@@ -109,7 +105,6 @@ module OpenWFE
     # Overrides the classical to_s()
     #
     def to_s
-
       "(fei #{@owfe_version} #{@engine_id} #{wfurl} #{wfname} #{wfrevision} #{wfid} #{expname} #{expid})"
     end
 
@@ -117,34 +112,31 @@ module OpenWFE
     # Returns a hash version of this FlowExpressionId instance.
     #
     def to_h
-
-      FIELDS.inject({}) { |r, f| r[f] = instance_variable_get("@#{f.to_s}"); r }
+      FIELDS.each_with_object({}) { |f, r| r[f] = instance_variable_get("@#{f}"); }
     end
 
     #
     # Rebuilds a FlowExpressionId from its Hash representation.
     #
-    def self.from_h (h)
-
-      FIELDS.inject(FlowExpressionId.new) do |fei, f|
-        fei.instance_variable_set("@#{f}", h[f] || h[f.to_s]); fei
+    def self.from_h(h)
+      FIELDS.each_with_object(FlowExpressionId.new) do |f, fei|
+        fei.instance_variable_set("@#{f}", h[f] || h[f.to_s])
       end
     end
 
     #
     # Builds a new FlowExpressionId out of a hash (overriding some defaults)
     #
-    def self.new_fei (h={})
-
+    def self.new_fei(h = {})
       from_h({
-        :owfe_version => OPENWFERU_VERSION,
-        :engine_id => 'engine',
-        :workflow_definition_url => 'no-url',
-        :workflow_definition_name => 'no-name',
-        :workflow_definition_revision => '0',
-        :workflow_instance_id => '-1',
-        :expression_name => 'no-exp',
-        :expression_id => '0'
+        owfe_version: OPENWFERU_VERSION,
+        engine_id: 'engine',
+        workflow_definition_url: 'no-url',
+        workflow_definition_name: 'no-name',
+        workflow_definition_revision: '0',
+        workflow_instance_id: '-1',
+        expression_name: 'no-exp',
+        expression_id: '0'
       }.merge(h))
     end
 
@@ -152,7 +144,6 @@ module OpenWFE
     # full blown hash
     #
     def hash
-
       to_s.hash
     end
 
@@ -160,29 +151,27 @@ module OpenWFE
     # short hash (used by the cached expression storage among others)
     #
     def short_hash
-
       "#{wfid} #{expid} #{expname}".hash
     end
 
-    def == (other)
-
+    def ==(other)
       return false unless other.is_a?(FlowExpressionId)
 
-      #return self.to_s == other.to_s
-        # no perf gain
+      # return self.to_s == other.to_s
+      # no perf gain
 
-      @workflow_instance_id == other.workflow_instance_id and
-      @expression_id == other.expression_id and
-      @workflow_definition_url == other.workflow_definition_url and
-      @workflow_definition_revision == other.workflow_definition_revision and
-      @workflow_definition_name == other.workflow_definition_name and
-      @expression_name == other.expression_name and
-      @owfe_version == other.owfe_version and
-      @engine_id == other.engine_id
-      #@initial_engine_id == other.initial_engine_id
-        #
-        # Made sure to put on top of the 'and' the things that
-        # change the most...
+      (@workflow_instance_id == other.workflow_instance_id) &&
+        (@expression_id == other.expression_id) &&
+        (@workflow_definition_url == other.workflow_definition_url) &&
+        (@workflow_definition_revision == other.workflow_definition_revision) &&
+        (@workflow_definition_name == other.workflow_definition_name) &&
+        (@expression_name == other.expression_name) &&
+        (@owfe_version == other.owfe_version) &&
+        (@engine_id == other.engine_id)
+      # @initial_engine_id == other.initial_engine_id
+      #
+      # Made sure to put on top of the 'and' the things that
+      # change the most...
     end
 
     #
@@ -195,8 +184,7 @@ module OpenWFE
     # This current implementation doesn't cross the subprocesses
     # boundaries.
     #
-    def ancestor_of? (other_fei)
-
+    def ancestor_of?(other_fei)
       o = other_fei.dup
       o.expression_name = @expression_name
       o.expression_id = @expression_id
@@ -209,8 +197,7 @@ module OpenWFE
     # Returns a deep copy of this FlowExpressionId instance.
     #
     def dup
-
-      OpenWFE::fulldup(self)
+      OpenWFE.fulldup(self)
     end
 
     alias eql? ==
@@ -232,20 +219,20 @@ module OpenWFE
     #
     # Useful for unique identifier in URIs.
     #
-    #def to_web_s
+    # def to_web_s
     #  wid = wfid.gsub("\.", '_')
     #  eid = expid.gsub("\.", '_')
     #  URI.escape("#{wid}__#{eid}")
-    #end
+    # end
     #++
 
     #--
     # Splits the web fei into the workflow instance id and the expression
     # id.
-    #def self.split_web_s (s)
+    # def self.split_web_s (s)
     #  i = s.rindex('__')
     #  [ s[0..i-1].gsub("\_", '.'), s[i+2..-1].gsub("\_", '.') ]
-    #end
+    # end
     #++
 
     #
@@ -262,11 +249,10 @@ module OpenWFE
     # return "1234".
     #
     def parent_workflow_instance_id
-
       FlowExpressionId.to_parent_wfid(workflow_instance_id)
     end
 
-    alias :parent_wfid :parent_workflow_instance_id
+    alias parent_wfid parent_workflow_instance_id
 
     #
     # Returns '' if this expression id belongs to a top process,
@@ -275,7 +261,6 @@ module OpenWFE
     # (Only used in some unit tests for now)
     #
     def sub_instance_id
-
       i = workflow_instance_id.index('.')
       i ? workflow_instance_id[i..-1] : ''
     end
@@ -291,9 +276,8 @@ module OpenWFE
     # will be returned.
     #
     def last_sub_instance_id
-
       i = workflow_instance_id.rindex('.')
-      i ? workflow_instance_id[i+1..-1] : nil
+      i ? workflow_instance_id[i + 1..-1] : nil
     end
 
     #
@@ -301,7 +285,6 @@ module OpenWFE
     # which is not a subprocess.
     #
     def is_in_parent_process?
-
       (sub_instance_id == '')
     end
 
@@ -313,16 +296,14 @@ module OpenWFE
     # backing from the children expressions.
     #
     def child_id
-
-      i = @expression_id.rindex(".")
-      i ? @expression_id[i+1..-1] : @expression_id
+      i = @expression_id.rindex('.')
+      i ? @expression_id[i + 1..-1] : @expression_id
     end
 
     #
     # This class method parses a string into a FlowExpressionId instance
     #
-    def self.to_fei (string)
-
+    def self.to_fei(string)
       fei = FlowExpressionId.new
 
       ss = string.split
@@ -333,7 +314,7 @@ module OpenWFE
 
       ssRawEngineId = ss[2].split('/')
       fei.engine_id = ssRawEngineId[0]
-      #fei.initial_engine_id = ssRawEngineId[1]
+      # fei.initial_engine_id = ssRawEngineId[1]
 
       fei.workflow_definition_url = ss[3]
       fei.workflow_definition_name = ss[4]
@@ -351,8 +332,7 @@ module OpenWFE
     #
     # An alias for to_fei(string)
     #
-    def self.from_s (string)
-
+    def self.from_s(string)
       to_fei(string)
     end
 
@@ -360,8 +340,7 @@ module OpenWFE
     # If wfid is already a 'parent wfid' (no sub id), returns it. Else
     # returns the parent wfid (whatever is before the first ".").
     #
-    def self.to_parent_wfid (wfid)
-
+    def self.to_parent_wfid(wfid)
       wfid.split('.').first
     end
 
@@ -370,20 +349,16 @@ module OpenWFE
 
     yaml_as("tag:ruby.yaml.org,2002:#{self}")
 
-    def to_yaml (opts={}) #:nodoc#
-      YAML::quick_emit(self.object_id, opts) do |out|
+    def to_yaml(opts = {}) #:nodoc#
+      YAML.quick_emit(object_id, opts) do |out|
         out.map(taguri) { |map| map.add('s', to_s) }
       end
     end
 
-    def self.yaml_new (klass, tag, val) #:nodoc#
-      begin
-        FlowExpressionId.to_fei(val['s'])
-      rescue Exception => e
-        raise "failed to decode FlowExpressionId out of '#{s}', #{e}"
-      end
+    def self.yaml_new(_klass, _tag, val) #:nodoc#
+      FlowExpressionId.to_fei(val['s'])
+    rescue Exception => e
+      raise "failed to decode FlowExpressionId out of '#{s}', #{e}"
     end
   end
-
 end
-

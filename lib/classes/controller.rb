@@ -29,10 +29,10 @@ class Controller
         method = smet.to_s
 
         if controller != 'SessionsController' &&
-          (
-            %w[init_objects login logout].include?(method) ||
-            method =~ /(_old|authorized)($|_obsolete$|_$)/
-          )
+           (
+             %w[init_objects login logout].include?(method) ||
+             method =~ /(_old|authorized)($|_obsolete$|_$)/
+           )
           next
         end
 

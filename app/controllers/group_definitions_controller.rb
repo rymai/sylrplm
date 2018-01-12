@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2008-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -27,65 +29,61 @@
 # interaction via HTML.
 #
 class GroupDefinitionsController < ApplicationController
-
-  ###before_filter :login_required
-
+  # ##before_filter :login_required
 
   # GET /group_definitions
   # GET /group_definitions.xml
   #
   def index
-
     @group_definitions = GroupDefinition.find(:all)
 
-    render :xml => @group_definitions
+    render xml: @group_definitions
   end
 
   # GET /group_definitions/1
   # GET /group_definitions/1.xml
   #
   def show
-
     @group_definition = GroupDefinition.find(params[:id])
 
-    render :xml => @group_definition
+    render xml: @group_definition
   end
 
   # POST /group_definitions
   # POST /group_definitions.xml
   #
   def create
-
     @group_definition = GroupDefinition.new(params[:group_definition])
 
     respond_to do |format|
-
       if @group_definition.save
 
-        flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_group_definitions), :ident => @group_definition.group.name+"/"+@group_definition.definition.name)    
-        #flash[:notice] = 'GroupDefinition was successfully created.'
+        flash[:notice] = t(:ctrl_object_created, typeobj: t(:ctrl_group_definitions), ident: @group_definition.group.name + '/' + @group_definition.definition.name)
+        # flash[:notice] = 'GroupDefinition was successfully created.'
         format.html do
           if request.env['HTTP_REFERER']
             redirect_to(:back)
           else
             redirect_to(
-              :controller => :definitions,
-              :action => 'show',
-              :id => @group_definition.definition_id)
+              controller: :definitions,
+              action: 'show',
+              id: @group_definition.definition_id
+            )
           end
         end
         format.xml do
           render(
-            :xml => @group_definition,
-            :status => :created,
-            :location => @group_definition)
+            xml: @group_definition,
+            status: :created,
+            location: @group_definition
+          )
         end
 
       else
-        flash[:notice] = t(:ctrl_object_not_created, :typeobj => t(:ctrl_group_definitions), :ident => @group_definition.group.name+"/"+@group_definition.definition.name, :msg => nil)    
+        flash[:notice] = t(:ctrl_object_not_created, typeobj: t(:ctrl_group_definitions), ident: @group_definition.group.name + '/' + @group_definition.definition.name, msg: nil)
 
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @group_definition.errors, :status => :unprocessable_entity }
+        format.html { render action: 'new' }
+        format.xml  { render xml: @group_definition.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -94,7 +92,6 @@ class GroupDefinitionsController < ApplicationController
   # DELETE /group_definitions/1.xml
   #
   def destroy
-
     @group_definition = GroupDefinition.find(params[:id])
     @group_definition.destroy
 
@@ -111,5 +108,4 @@ class GroupDefinitionsController < ApplicationController
       end
     end
   end
-  
 end

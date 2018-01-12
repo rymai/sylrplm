@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,14 +24,12 @@
 # Made in Japan.
 #++
 
-
 #
 # a small convenience method for
 # will_paginate (http://github.com/mislav/will_paginate)
 #
 require 'will_paginate'
 module WillPaginate::Finder::ClassMethods
-
   #
   # an usage example : app/controllers/workitems_controller#index()
   #
@@ -44,26 +44,23 @@ module WillPaginate::Finder::ClassMethods
   #     params,
   #     :order => 'dispatch_time DESC')
   #
-  def paginate_by_params (parcol_array, params, paginate_options={})
-
+  def paginate_by_params(parcol_array, params, paginate_options = {})
     conditions = paginate_options[:conditions] || {}
 
-    conditions = parcol_array.inject(conditions) do |h, k|
+    conditions = parcol_array.each_with_object(conditions) do |k, h|
       k = Array(k)
       key = k[0]
       col = k[1] || key
       val = params[key]
       h[col] = val if val
-      h
     end
 
     paginate_options[:conditions] = conditions
 
     paginate_options[:page] = params[:page]
 
-    #p paginate_options
+    # p paginate_options
 
     paginate(paginate_options)
   end
 end
-

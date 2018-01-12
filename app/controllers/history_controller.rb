@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2009, John Mettraux, jmettraux@gmail.com
 #
@@ -24,64 +26,60 @@
 require 'ruote/sylrplm/sylrplm'
 
 class HistoryController < ApplicationController
-	###before_filter :login_required
-	# GET /history
-	#
-	def index
-		fname= "#{self.class.name}.#{__method__}"
-		LOG.debug(fname){"params=#{params}"}
-		opts = { :page => params[:page], :order => 'created_at DESC' }
+  # ##before_filter :login_required
+  # GET /history
+  #
+  def index
+    fname = "#{self.class.name}.#{__method__}"
+    LOG.debug(fname) { "params=#{params}" }
+    opts = { page: params[:page], order: 'created_at DESC' }
 
-		cs = [
-			:source, :wfid, :event, :participant, :wf_name
-		].inject([[]]) do |a, p|
-			if v = params[p]
-				a.first << "#{p} = ?"
-			a << v
-			end
-			a
-		end
+    cs = [:source, :wfid, :event, :participant, :wf_name].each_with_object([[]]) do |p, a|
+      if v = params[p]
+        a.first << "#{p} = ?"
+        a << v
+      end
+    end
 
-		opts[:conditions] = [ cs.first.join(' AND ') ] + cs[1..-1] \
+    opts[:conditions] = [cs.first.join(' AND ')] + cs[1..-1] \
 
-		@entries = nil
+    @entries = nil
 
-		unless cs.first.empty?
-			#puts "HistoryController.index:opts="+opts.inspect
-			@all = (opts[:conditions] == nil)
-		end
-		#puts "HistoryController.index:params="+params.inspect
-		unless params["fonct"].nil? || params["fonct"]["current"].nil?
-			if params[:fonct][:current] = 'on_plm_objects'
-				@entries = Ruote::Sylrplm::HistoryEntry.all
-				#puts "HistoryController.index:on_plm_objects:#{@entries.count}"
-			end
-		end
-		#@entries = Ruote::Sylrplm::HistoryEntry.paginate(opts) if @entries.nil?
-		LOG.debug(fname){"opts=#{opts}"}
-		@entries = Ruote::Sylrplm::HistoryEntry.where(opts[:conditions]).order(opts[:order])  if @entries.nil?
-		 if @entries.nil?
-		 	@entries=[]
-		else
-			@entries=@entries.to_a
-		end
-		@entries.to_a.each do |en|
-			en.link_attributes={"relation"=>""}
-		end
-	# TODO : XML and JSON
-	end
+    unless cs.first.empty?
+      # puts "HistoryController.index:opts="+opts.inspect
+      @all = opts[:conditions].nil?
+    end
+    # puts "HistoryController.index:params="+params.inspect
+    unless params['fonct'].nil? || params['fonct']['current'].nil?
+      if params[:fonct][:current] = 'on_plm_objects'
+        @entries = Ruote::Sylrplm::HistoryEntry.all
+        # puts "HistoryController.index:on_plm_objects:#{@entries.count}"
+      end
+    end
+    # @entries = Ruote::Sylrplm::HistoryEntry.paginate(opts) if @entries.nil?
+    LOG.debug(fname) { "opts=#{opts}" }
+    @entries = Ruote::Sylrplm::HistoryEntry.where(opts[:conditions]).order(opts[:order]) if @entries.nil?
+    @entries = if @entries.nil?
+                 []
+               else
+                 @entries.to_a
+               end
+    @entries.to_a.each do |en|
+      en.link_attributes = { 'relation' => '' }
+    end
+    # TODO : XML and JSON
+  end
 
-	# GET /history
-	# GET /history.xml
-	def show
-		@entry = Ruote::Sylrplm::HistoryEntry.find(params[:id])
-		unless params[:obj_id].nil? || params[:obj_type].nil?
-			@object = PlmServices.get_object(params[:obj_type], params[:obj_id])
-		end
-		respond_to do |format|
-			format.html # show.html.erb
-			format.xml  { render :xml => @entry }
-		end
-	end
-
+  # GET /history
+  # GET /history.xml
+  def show
+    @entry = Ruote::Sylrplm::HistoryEntry.find(params[:id])
+    unless params[:obj_id].nil? || params[:obj_type].nil?
+      @object = PlmServices.get_object(params[:obj_type], params[:obj_id])
+    end
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml { render xml: @entry }
+    end
+  end
 end

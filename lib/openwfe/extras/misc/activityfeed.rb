@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -30,22 +32,18 @@
 # atom-tools' license is X11/MIT
 #++
 
-#require 'monitor'
+# require 'monitor'
 
-#require 'rubygems'
+# require 'rubygems'
 require 'atom/collection' # gem 'atoom-tools'
 
 require 'openwfe/service'
 
-
-
 module OpenWFE::Extras
-
   #
   # A workitem event as kept
   #
   class Entry
-
     attr_accessor :id
     attr_accessor :updated
 
@@ -54,12 +52,10 @@ module OpenWFE::Extras
     attr_accessor :workitem
 
     def initialize
-
       @update = Time.now
     end
 
     def as_atom_entry
-
       e = Atom::Entry.new
 
       e.id = @id
@@ -76,13 +72,11 @@ module OpenWFE::Extras
   # The get_feed() method produces an atom feed of participant activity.
   #
   class ActivityFeedService
-    #include MonitorMixin
+    # include MonitorMixin
     include OpenWFE::ServiceMixin
     include OpenWFE::OwfeServiceLocator
 
-
     attr_accessor :max_item_count
-
 
     #
     # This service is generally tied to an engine by doing :
@@ -92,8 +86,7 @@ module OpenWFE::Extras
     # The init_service() will take care of calling the constructor
     # implemented here.
     #
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       super()
 
       service_init service_name, application_context
@@ -101,16 +94,15 @@ module OpenWFE::Extras
       @entries = []
       @max_item_count = 100
 
-      get_participant_map.add_observer ".*", self
+      get_participant_map.add_observer '.*', self
     end
 
     #
     # This is the method call by the expression pool each time a
     # workitem reaches a participant.
     #
-    def call (channel, *args)
-
-      #ldebug "call() c '#{channel}' entries count : #{@entries.size}"
+    def call(channel, *args)
+      # ldebug "call() c '#{channel}' entries count : #{@entries.size}"
 
       e = Entry.new
 
@@ -120,15 +112,13 @@ module OpenWFE::Extras
       e.updated = Time.now
 
       e.id = \
-        "#{e.workitem.participant_name} - #{e.upon} " +
-        "#{e.workitem.fei.workflow_instance_id}--" +
+        "#{e.workitem.participant_name} - #{e.upon} " \
+        "#{e.workitem.fei.workflow_instance_id}--" \
         "#{e.workitem.fei.expression_id}"
 
       @entries << e
 
-      while @entries.length > @max_item_count
-        @entries.delete_at 0
-      end
+      @entries.delete_at 0 while @entries.length > @max_item_count
     end
 
     #
@@ -148,14 +138,13 @@ module OpenWFE::Extras
     # [:format]   yaml|text|json
     #
     #
-    def get_feed (participant_regex, options={})
-
+    def get_feed(participant_regex, options = {})
       participant_regex = Regexp.compile(participant_regex) \
         if participant_regex.is_a?(String)
 
       upon = options[:upon]
-      feed_uri = options[:feed_uri] || "http://localhost/feed"
-      title = options[:feed_title] || "OpenWFEru engine activity feed"
+      feed_uri = options[:feed_uri] || 'http://localhost/feed'
+      title = options[:feed_title] || 'OpenWFEru engine activity feed'
 
       feed = Atom::Feed.new feed_uri
       feed.title = title
@@ -164,12 +153,11 @@ module OpenWFE::Extras
       format = validate_format(format)
 
       @entries.each do |e|
-
         next unless participant_regex.match(e.participant_name)
-        next if upon and upon != e.upon
+        next if upon && (upon != e.upon)
 
         feed.updated = e.updated \
-          if feed.updated == nil or e.updated > feed.updated
+          if feed.updated.nil? || (e.updated > feed.updated)
 
         feed << as_atom_entry(format, e)
       end
@@ -179,71 +167,65 @@ module OpenWFE::Extras
 
     protected
 
-      #
-      # Makes sure the required 'render' is valid. Returns it
-      # as a Symbol.
-      #
-      def validate_format (f)
+    #
+    # Makes sure the required 'render' is valid. Returns it
+    # as a Symbol.
+    #
+    def validate_format(f)
+      f = "as_#{f}"
+      return :as_yaml unless methods.include?(f)
+      f.to_sym
+    end
 
-        f = "as_#{f}"
-        return :as_yaml unless methods.include?(f)
-        f.to_sym
-      end
+    def as_atom_entry(render, entry)
+      send(
+        render,
+        entry.as_atom_entry,
+        entry.participant_name,
+        entry.upon,
+        entry.workitem
+      )
+    end
 
-      def as_atom_entry (render, entry)
+    #
+    # A basic rendition of a workitem as a YAML string
+    #
+    def as_yaml(atom_entry, participant_name, upon, workitem)
+      atom_entry.title = "#{participant_name} - #{upon}"
+      atom_entry.content = workitem.to_yaml
+      atom_entry.content['type'] = 'text/plain'
 
-        send(
-          render,
-          entry.as_atom_entry,
-          entry.participant_name,
-          entry.upon,
-          entry.workitem)
-      end
+      atom_entry
+    end
 
-      #
-      # A basic rendition of a workitem as a YAML string
-      #
-      def as_yaml (atom_entry, participant_name, upon, workitem)
+    # class Atom::Content
+    #  def convert_contents e
+    #    REXML::CData.new(@content.to_s)
+    #  end
+    # end
 
-        atom_entry.title = "#{participant_name} - #{upon}"
-        atom_entry.content = workitem.to_yaml
-        atom_entry.content['type'] = "text/plain"
+    #
+    # A basic rendition of a workitem as text.
+    #
+    def as_text(atom_entry, participant_name, upon, workitem)
+      atom_entry.title = "#{participant_name} - #{upon}"
 
-        atom_entry
-      end
+      atom_entry.content = workitem.to_s
+      atom_entry.content['type'] = 'text/plain'
 
-      #class Atom::Content
-      #  def convert_contents e
-      #    REXML::CData.new(@content.to_s)
-      #  end
-      #end
+      atom_entry
+    end
 
-      #
-      # A basic rendition of a workitem as text.
-      #
-      def as_text (atom_entry, participant_name, upon, workitem)
+    #
+    # Renders the workitem as a JSON string.
+    #
+    def as_json(atom_entry, participant_name, upon, workitem)
+      atom_entry.title = "#{participant_name} - #{upon}"
 
-        atom_entry.title = "#{participant_name} - #{upon}"
+      atom_entry.content = workitem.to_json
+      atom_entry.content['type'] = 'text/plain'
 
-        atom_entry.content = workitem.to_s
-        atom_entry.content['type'] = "text/plain"
-
-        atom_entry
-      end
-
-      #
-      # Renders the workitem as a JSON string.
-      #
-      def as_json (atom_entry, participant_name, upon, workitem)
-
-        atom_entry.title = "#{participant_name} - #{upon}"
-
-        atom_entry.content = workitem.to_json
-        atom_entry.content['type'] = "text/plain"
-
-        atom_entry
-      end
+      atom_entry
+    end
   end
-
 end
-

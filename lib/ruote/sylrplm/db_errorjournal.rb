@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'openwfe/extras/expool/db_errorjournal'
 module OpenWFE::Extras
   class DbErrorJournal

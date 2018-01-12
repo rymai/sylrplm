@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2006-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,20 +24,16 @@
 # Made in Japan.
 #++
 
-
 require 'openwfe/logging'
 require 'openwfe/contextual'
 
-
 module OpenWFE
-
   #
   # Most of the functionalities of an OpenWFEru service are implemented
   # here as a mixin. It's then easy to either extend Service or include
   # ServiceMixin, to compose an OpenWFEru service class.
   #
   module ServiceMixin
-
     include Contextual
     include Logging
 
@@ -49,15 +47,14 @@ module OpenWFE
     # context. Does also bind the service under the service name in the
     # application context.
     #
-    def service_init (service_name, application_context)
-
+    def service_init(service_name, application_context)
       @service_name = service_name
       @application_context = application_context
 
       @application_context[@service_name] = self \
-        if @service_name and @application_context
-          #
-          # don't register if it's not needed
+        if @service_name && @application_context
+      #
+      # don't register if it's not needed
     end
 
     #
@@ -65,8 +62,7 @@ module OpenWFE
     # free some resources upon stopping. This can be achieved by
     # overwriting this method.
     #
-    def stop
-    end
+    def stop; end
   end
 
   #
@@ -77,16 +73,13 @@ module OpenWFE
   class Service
     include ServiceMixin
 
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       service_init(service_name, application_context)
     end
   end
 
-  #def register (service)
+  # def register (service)
   #  service.application_context[service.service_name] = service
   #  return service
-  #end
-
+  # end
 end
-

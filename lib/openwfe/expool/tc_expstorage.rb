@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,7 +24,6 @@
 # Made in Japan.
 #++
 
-
 require 'base64'
 
 require 'openwfe/flowexpressionid'
@@ -36,9 +37,7 @@ begin
 rescue LoadError
 end
 
-
 module OpenWFE
-
   #
   # Tokyo Cabinet based expstorage.
   #
@@ -51,12 +50,11 @@ module OpenWFE
 
     attr_reader :db, :path
 
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       service_init(service_name, application_context)
 
-      klass = (defined?(TokyoCabinet) &&
-        ( ! application_context[:use_rufus_tokyo])) ?
+      klass = defined?(TokyoCabinet) &&
+        (!application_context[:use_rufus_tokyo]) ?
         Rufus::Edo::Table : Rufus::Tokyo::Table
 
       linfo { "using #{klass} to access TokyoCabinet" }
@@ -76,8 +74,7 @@ module OpenWFE
     # Takes care of closing the cabinet
     #
     def stop
-
-      self.close
+      close
       super
     end
 
@@ -85,13 +82,11 @@ module OpenWFE
     # Returns the count of stored expressions
     #
     def size
-
       @db.size
     end
-    alias :length :size
+    alias length size
 
-    def [] (fei)
-
+    def [](fei)
       v = @db[fei.as_string_key]
 
       return nil unless v
@@ -102,8 +97,7 @@ module OpenWFE
       fexp
     end
 
-    def []= (fei, fexp)
-
+    def []=(fei, fexp)
       @db[fei.as_string_key] = {
         'wfid' => fexp.fei.wfid,
         'pwfid' => fexp.fei.parent_workflow_instance_id,
@@ -112,13 +106,11 @@ module OpenWFE
       }
     end
 
-    def delete (fei)
-
+    def delete(fei)
       @db.delete(fei.as_string_key)
     end
 
     def purge
-
       @db.clear
     end
 
@@ -161,61 +153,58 @@ module OpenWFE
     #   if this option is set to true, will only return the expressions
     #   that have been applied (exp.apply_time != nil).
     #
-    def find_expressions (options={})
-
+    def find_expressions(options = {})
       values = if wfid = options.delete(:wfid)
-        @db.query { |q|
-          q.add('wfid', :equals, wfid)
-        }
-      elsif pwfid = options.delete(:parent_wfid)
-        @db.query { |q|
-          q.add('pwfid', :equals, pwfid)
-        }
-      elsif wfidp = options.delete(:wfid_prefix)
-        @db.query { |q|
-          q.add('wfid', :starts_with, wfidp)
-        }
-      elsif options.delete(:workitem)
-        #
-        # union of matching expressions (good perf)
-        #
-        get_expression_map.workitem_holders.inject([]) do |a, k|
-          a += @db.query { |q| q.add('class', :equals, k.to_s) }
-        end
-      else
-        @db.values # everything :(
+                 @db.query do |q|
+                   q.add('wfid', :equals, wfid)
+                 end
+               elsif pwfid = options.delete(:parent_wfid)
+                 @db.query do |q|
+                   q.add('pwfid', :equals, pwfid)
+                 end
+               elsif wfidp = options.delete(:wfid_prefix)
+                 @db.query do |q|
+                   q.add('wfid', :starts_with, wfidp)
+                 end
+               elsif options.delete(:workitem)
+                 #
+                 # union of matching expressions (good perf)
+                 #
+                 get_expression_map.workitem_holders.inject([]) do |a, k|
+                   a += @db.query { |q| q.add('class', :equals, k.to_s) }
+                 end
+               else
+                 @db.values # everything :(
       end
 
-      values.inject([]) { |a, v|
+      values.each_with_object([]) do |v, a|
         fexp = Marshal.load(Base64.decode64(v['fexp']))
         if does_match?(options, fexp)
           fexp.application_context = @application_context
           a << fexp
         end
-        a
-      }
+      end
     end
 
     #
     # Attempts at fetching the root expression of a given process
     # instance.
     #
-    def fetch_root (wfid)
-
+    def fetch_root(wfid)
       find_expressions(
-        :wfid => wfid,
-        :consider_subprocesses => false,
-        :include_classes => DefineExpression)[0]
+        wfid: wfid,
+        consider_subprocesses: false,
+        include_classes: DefineExpression
+      )[0]
     end
 
     #
     # Used only by pooltool.ru
     #
     def each
-
       return unless block_given?
 
-      @db.each do |k, v|
+      @db.each do |_k, v|
         fexp = Marshal.load(Base64.decode64(v['fexp']))
         yield(fexp.fei, fexp)
       end
@@ -225,7 +214,6 @@ module OpenWFE
     # Closes the underlying database
     #
     def close
-
       @db.close
       @db = nil
     end
@@ -236,12 +224,10 @@ module OpenWFE
     # Sets the indexes for the Tokyo Cabinet/Tyrant table.
     #
     def set_indexes
-
       @db.set_index(:pk, :lexical)
       @db.set_index('wfid', :lexical)
       @db.set_index('pwfid', :lexical)
       @db.set_index('class', :lexical)
     end
   end
-
 end

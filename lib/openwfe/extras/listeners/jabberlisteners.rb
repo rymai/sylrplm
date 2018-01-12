@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2009, John Mettraux, jmettraux@gmail.com
 #
@@ -23,4 +25,3 @@
 #++
 
 require File.dirname(__FILE__) + '/jabber_listeners'
-

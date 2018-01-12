@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,7 +24,6 @@
 # Made in Japan.
 #++
 
-
 require 'monitor'
 require 'fileutils'
 
@@ -32,14 +33,11 @@ require 'openwfe/rudefinitions'
 require 'openwfe/flowexpressionid'
 require 'openwfe/expool/journal_replay'
 
-
 module OpenWFE
-
   #
   # Keeping a replayable track of the events in an OpenWFEru engine
   #
   class Journal < Service
-
     include MonitorMixin
     include OwfeServiceLocator
     include JournalReplay
@@ -48,11 +46,10 @@ module OpenWFE
     attr_reader :workdir, :donedir
 
     FREQ = '1m'
-      #
-      # once per minute, makes sure the buckets are flushed
+    #
+    # once per minute, makes sure the buckets are flushed
 
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       super # necessary since we're extending MonitorMixin
 
       @buckets = {}
@@ -63,12 +60,12 @@ module OpenWFE
       FileUtils.makedirs(@donedir) unless File.exist?(@donedir)
 
       get_expression_pool.add_observer(:all) do |event, *args|
-        #ldebug { ":#{event}  for #{args[0].class.name}" }
+        # ldebug { ":#{event}  for #{args[0].class.name}" }
         queue_event(event, *args)
       end
 
       @thread_id = get_scheduler.schedule_every(FREQ) do
-        flush_buckets()
+        flush_buckets
       end
     end
 
@@ -77,134 +74,128 @@ module OpenWFE
     #
     def stop
       get_scheduler.unschedule(@thread_id) if @thread_id
-      flush_buckets()
+      flush_buckets
     end
 
     protected
 
+    #
+    # Queues the events before a flush.
+    #
+    # If the event is a :terminate, the individual bucket will get
+    # flushed.
+    #
+    def queue_event(event, *args)
+      # ldebug { "queue_event() :#{event}" }
+
+      return if event == :stop
+      return if event == :launch
+      return if event == :reschedule
+
+      wfid = extract_fei(args[0]).parent_wfid
       #
-      # Queues the events before a flush.
-      #
-      # If the event is a :terminate, the individual bucket will get
-      # flushed.
-      #
-      def queue_event (event, *args)
+      # maybe args[0] could be a FlowExpression instead
+      # of a FlowExpressionId instance
+      # puts "___#{event}__wfid : #{wfid}"
 
-        #ldebug { "queue_event() :#{event}" }
+      e = serialize_event(event, *args)
 
-        return if event == :stop
-        return if event == :launch
-        return if event == :reschedule
+      bucket = nil
 
-        wfid = extract_fei(args[0]).parent_wfid
-          #
-          # maybe args[0] could be a FlowExpression instead
-          # of a FlowExpressionId instance
-        #puts "___#{event}__wfid : #{wfid}"
+      synchronize do
+        bucket = get_bucket(wfid)
+        bucket << e
 
-        e = serialize_event(event, *args)
+        # ldebug { "queue_event() bucket : #{bucket.object_id}" }
 
-        bucket = nil
-
-        synchronize do
-
-          bucket = get_bucket(wfid)
-          bucket << e
-
-          #ldebug { "queue_event() bucket : #{bucket.object_id}" }
-
-          if event == :terminate
-
-            bucket.flush
-            @buckets.delete(wfid)
-          end
-        end
-          #
-          # minimizing the sync block
-
-        # TODO : spin that off this thread, to the
-        # flush thread...
-        #
         if event == :terminate
-          if @application_context[:keep_journals] == true
-            #
-            # 'move' journal to the done/ subdir of journal/
-            #
-            FileUtils.cp(
-              bucket.path,
-              @donedir + "/" + File.basename(bucket.path))
+
+          bucket.flush
+          @buckets.delete(wfid)
+        end
+      end
+      #
+      # minimizing the sync block
+
+      # TODO : spin that off this thread, to the
+      # flush thread...
+      #
+      if event == :terminate
+        if @application_context[:keep_journals] == true
+          #
+          # 'move' journal to the done/ subdir of journal/
+          #
+          FileUtils.cp(
+            bucket.path,
+            @donedir + '/' + File.basename(bucket.path)
+          )
+        end
+        FileUtils.rm bucket.path
+      end
+    end
+
+    #
+    # Makes sure that all the buckets are persisted to disk
+    #
+    def flush_buckets
+      count = 0
+
+      synchronize do
+        @buckets.each do |_k, v|
+          v.flush
+          count += 1
+        end
+        @buckets.clear
+      end
+
+      linfo { "flush_buckets() flushed #{count} buckets" } \
+        if count > 0
+    end
+
+    def get_bucket(wfid)
+      @buckets[wfid] ||= Bucket.new(get_path(wfid))
+    end
+
+    def serialize_event(event, *args)
+      args.insert(0, event)
+      args.insert(1, Time.now)
+      args.to_yaml
+    end
+
+    def get_path(wfid)
+      "#{@workdir}/#{wfid}.journal"
+    end
+
+    #
+    # for each process instance, there is one bucket holding the
+    # events waiting to get written in the journal
+    #
+    class Bucket
+      attr_reader :path, :events
+
+      def initialize(path)
+        super()
+        @path = path
+        @events = []
+      end
+
+      def <<(event)
+        @events << event
+      end
+
+      def size
+        @events.size
+      end
+      alias length size
+
+      def flush
+        File.open(@path, 'a+') do |f|
+          @events.each do |e|
+            f.puts e
           end
-          FileUtils.rm bucket.path
         end
+        @events.clear
       end
-
-      #
-      # Makes sure that all the buckets are persisted to disk
-      #
-      def flush_buckets
-
-        count = 0
-
-        synchronize do
-
-          @buckets.each do |k, v|
-            v.flush
-            count += 1
-          end
-          @buckets.clear
-        end
-
-        linfo { "flush_buckets() flushed #{count} buckets" } \
-          if count > 0
-      end
-
-      def get_bucket (wfid)
-        @buckets[wfid] ||= Bucket.new(get_path(wfid))
-      end
-
-      def serialize_event (event, *args)
-        args.insert(0, event)
-        args.insert(1, Time.now)
-        args.to_yaml
-      end
-
-      def get_path (wfid)
-        "#{@workdir}/#{wfid.to_s}.journal"
-      end
-
-      #
-      # for each process instance, there is one bucket holding the
-      # events waiting to get written in the journal
-      #
-      class Bucket
-
-        attr_reader :path, :events
-
-        def initialize (path)
-          super()
-          @path = path
-          @events = []
-        end
-
-        def << (event)
-          @events << event
-        end
-
-        def size
-          @events.size
-        end
-        alias :length :size
-
-        def flush
-          File.open(@path, 'a+') do |f|
-            @events.each do |e|
-              f.puts e
-            end
-          end
-          @events.clear
-        end
-      end
-
+    end
   end
-
 end

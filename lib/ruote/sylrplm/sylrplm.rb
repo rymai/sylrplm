@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ruote/sylrplm/ar_workitem'
 require 'ruote/sylrplm/db_errorjournal'
 require 'ruote/sylrplm/history_entry'

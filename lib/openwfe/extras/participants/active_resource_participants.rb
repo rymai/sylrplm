@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2008-2009, Torsten Schönebaum, John Mettraux (OpenWFE.org)
 #
@@ -22,15 +24,12 @@
 # Made in Europe and Japan.
 #++
 
-
 require 'activeresource' # gem activeresource
 
 require 'openwfe/participants/participants'
 
-
 module OpenWFE
   module Extras
-
     #
     # Ruote participant which does a REST call. It's using ActiveResource to do
     # the actual magic. You can call every class and instance method
@@ -146,8 +145,7 @@ module OpenWFE
       # -- you can always override them in the process definition. Just use the
       # corresponding symbol name (without ":") as attribute.
       #
-      def initialize (options, &block)
-
+      def initialize(options, &block)
         @options = options
 
         # some defaults
@@ -162,15 +160,14 @@ module OpenWFE
       # calls the requested ActiveResource method, calls the response handling
       # code if present and then immediatly replies to the engine.
       #
-      def consume (workitem)
-
+      def consume(workitem)
         # use block to determine the method's arguments if given
         args = if @block
-          call_block(@block, workitem)
-        elsif a = param(workitem, :arg) || param(workitem, :argument)
-          Array(a)
-        else
-          [] # no arguments
+                 call_block(@block, workitem)
+               elsif a = param(workitem, :arg) || param(workitem, :argument)
+                 Array(a)
+               else
+                 [] # no arguments
         end
 
         # create new subclass of ActiveResource::Base
@@ -183,12 +180,12 @@ module OpenWFE
 
         resource_id = param(workitem, :resource_id)
 
-        active_resource = if (!resource_id) || (resource_id.to_i < 0)
-          # set of resources
-          active_resource_class
-        else
-          # specific resource
-          active_resource_class.new(:id => resource_id)
+        active_resource = if !resource_id || (resource_id.to_i < 0)
+                            # set of resources
+                            active_resource_class
+                          else
+                            # specific resource
+                            active_resource_class.new(id: resource_id)
         end
 
         response = active_resource.send(param(workitem, :method), args)
@@ -204,10 +201,9 @@ module OpenWFE
 
       protected
 
-      def param (workitem, key)
+      def param(workitem, key)
         workitem.params[key] || @options[key]
       end
     end
-
   end
 end

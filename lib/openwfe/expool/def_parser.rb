@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2008-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,7 +24,6 @@
 # Made in Japan.
 #++
 
-
 require 'uri'
 require 'yaml'
 require 'openwfe/rexml'
@@ -36,9 +37,7 @@ require 'openwfe/expressions/expression_map'
 
 require 'rufus/verbs' # sudo gem install 'rufus-verbs'
 
-
 module OpenWFE
-
   #
   # A process definition parser.
   #
@@ -51,11 +50,10 @@ module OpenWFE
     # a static version of the parse method,
     # by default checks the tree if it's Ruby code that is passed.
     #
-    def self.parse (pdef, use_ruby_treechecker=true)
-
+    def self.parse(pdef, use_ruby_treechecker = true)
       # preparing a small ad-hoc env (app context) for this parsing
 
-      ac = { :use_ruby_treechecker => use_ruby_treechecker }
+      ac = { use_ruby_treechecker: use_ruby_treechecker }
 
       ac[:s_tree_checker] = TreeChecker.new(:s_tree_checker, ac)
       ac[:s_def_parser] = DefParser.new(:s_def_parser, ac)
@@ -67,7 +65,7 @@ module OpenWFE
     #
     # the classical initialize() of Ruote services
     #
-    def initialize (service_name, application_context)
+    def initialize(service_name, application_context)
       super
     end
 
@@ -76,14 +74,13 @@ module OpenWFE
     # is read, so this is where the :remote_definitions_allowed
     # security check is enforced.
     #
-    def read_uri (uri)
-
+    def read_uri(uri)
       u = URI.parse(uri.to_s)
 
       raise(':remote_definitions_allowed is set to false') \
-        if (ac[:remote_definitions_allowed] != true and
-          u.scheme and
-          u.scheme != 'file')
+        if (ac[:remote_definitions_allowed] != true) &&
+           u.scheme &&
+           (u.scheme != 'file')
 
       f = Rufus::Verbs.fopen(u) # Rufus::Verbs is OK with redirections
       result = f.read
@@ -95,8 +92,7 @@ module OpenWFE
     #
     # Returns the tree representation into behind the param (uri, string, ...)
     #
-    def determine_rep (param)
-
+    def determine_rep(param)
       param = param.is_a?(URI) ? read_uri(param) : param
       parse(param)
     end
@@ -105,38 +101,37 @@ module OpenWFE
     # in : a process pdefinition
     # out : a tree [ name, attributes, children ]
     #
-    def parse (pdef)
+    def parse(pdef)
       tree = case pdef
-        when Array then pdef
-        when String then parse_string(pdef)
-        when Class then pdef.do_make
-        when ProcessDefinition then pdef.do_make
-        when SimpleExpRepresentation then pdef.do_make # legacy...
-        else
-          raise "cannot handle pdefinition of class #{pdef.class.name}"
+             when Array then pdef
+             when String then parse_string(pdef)
+             when Class then pdef.do_make
+             when ProcessDefinition then pdef.do_make
+             when SimpleExpRepresentation then pdef.do_make # legacy...
+             else
+               raise "cannot handle pdefinition of class #{pdef.class.name}"
       end
-      tree = [ 'define', { 'name' => 'NoName', 'revision' => '0' }, [ tree ] ] \
+      tree = ['define', { 'name' => 'NoName', 'revision' => '0' }, [tree]] \
         unless get_expression_map.is_definition?(tree.first)
-          #
-          # making sure the first expression in the tree is a DefineExpression
-          # (an alias for 'process-definition')
+      #
+      # making sure the first expression in the tree is a DefineExpression
+      # (an alias for 'process-definition')
       tree
     end
 
     X_START = /^</
     Y_START = /^--- /
     J_ARRAY = /^\[.*\]$/
-      #
-      # TODO : place that somewhere in utils/
+    #
+    # TODO : place that somewhere in utils/
 
-    def parse_string (pdef)
-
+    def parse_string(pdef)
       pdef = pdef.strip
 
       return parse_xml(pdef) if pdef.match(X_START)
-      return YAML.load(pdef) if pdef.match(Y_START)
+      return YAML.safe_load(pdef) if pdef.match(Y_START)
 
-      #(json = (OpenWFE::Json.from_json(pdef) rescue nil)) and return json
+      # (json = (OpenWFE::Json.from_json(pdef) rescue nil)) and return json
       return OpenWFE::Json.from_json(pdef) if pdef.match(J_ARRAY)
 
       #
@@ -153,8 +148,7 @@ module OpenWFE
     # The process definition is expressed as XML, turn that into
     # an expression tree.
     #
-    def parse_xml (xml)
-
+    def parse_xml(xml)
       xml = REXML::Document.new(xml) \
         if xml.is_a?(String)
 
@@ -165,7 +159,7 @@ module OpenWFE
 
         s = xml.to_s.strip
 
-        return s if s.length > 0
+        return s unless s.empty?
 
         return nil
       end
@@ -176,11 +170,11 @@ module OpenWFE
 
       rep = [
         xml.name,
-        xml.attributes.inject({}) { |r, (k, v)| r[k] = v; r },
-        [] ]
+        xml.attributes.each_with_object({}) { |(k, v), r| r[k] = v; },
+        []
+      ]
 
       xml.children.each do |c|
-
         r = parse_xml(c)
 
         rep.last << r if r
@@ -190,4 +184,3 @@ module OpenWFE
     end
   end
 end
-
