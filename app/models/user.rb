@@ -194,7 +194,8 @@ new_user=nil
 		LOG.debug(fname) {" new_user=#{new_user.inspect}"}
 		LOG.debug(fname) {"urlbase=#{urlbase}"}
 		admin = User.find_by_login(PlmServices.get_property(:USER_ADMIN))
-		email = PlmMailer.new_login(new_user, admin, new_user, urlbase).deliver_now
+		email = PlmMailer.new_login(admin, new_user, urlbase).deliver_now
+		LOG.debug(fname) {"email=#{email}"}
 		unless email.nil?
 			msg = :ctrl_mail_created_and_delivered
 			puts fname+" message cree et envoye pour #{new_user.login}"

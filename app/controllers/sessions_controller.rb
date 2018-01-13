@@ -145,7 +145,7 @@ class SessionsController < ApplicationController
 		respond_to do |format|
 			if  cur_user.errors.nil? || cur_user.errors.count==0
 				LOG.debug(fname){"pas d'erreurs, send mail from #{cur_user} to admin to activate the new account"}
-				User.send_mail_new_login_to_admin(cur_user,@urlbase)
+				User.send_mail_new_login_to_new_user(cur_user,@urlbase)
 				LOG.debug(fname){"pas d'erreurs, create_process"}
 				current_toremove=false
 				if @current_user.nil?

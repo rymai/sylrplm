@@ -83,13 +83,13 @@ end
 LOG.info ("sylrplm"){"env=#{Rails.env.inspect} loglevel=#{LOG.level}"}
 LOG.info ("sylrplm"){"--------------------------------------------"}
 
-if (false)
+if (true)
 	scheduler = Rufus::Scheduler.start_new
 	puts '*** Starting Scheduler ***'
 	# every day of the week at 21:00
 	#scheduler.cron '0 21 * * 1-5' do
-	# every 10 mn of each hour during the week
-	job = scheduler.cron '*/10 7-21 * * 1-5' do
+	# every 1 mn of each hour during the week
+	job = scheduler.cron '*/1 7-21 * * 1-5' do
 		Notification.notify_all(nil)
 	#Rake.application[:notify].invoke
 	#Rake::Task["notify"].invoke

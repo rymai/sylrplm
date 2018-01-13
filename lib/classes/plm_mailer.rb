@@ -34,46 +34,79 @@ class PlmMailer < ActionMailer::Base
 		body: bodyMail)
 	end
 
-	def new_login(object, from, to, urlbase, sent_at = Time.now)
-		subject    'PLMMailer#new_login'
-		recipients to.email
-		from     from.email
-		cc         from.email
-		sent_on    sent_at
-		body["user"]=object
-		body["urlbase"]=urlbase
-		content_type "text/html"
+    # send a mail to new_user (to) from admin (from)
+	def new_login(from, to, urlbase, sent_at = Time.now)
+		bodyMail={}
+        bodyMail["user"]=to
+        bodyMail["urlbase"]=urlbase
+        mail(subject:    'PLMMailer#new_login',
+        to: to.email,
+        from:       from.email,
+        sent_on:    sent_at,
+        body: bodyMail)
 	end
 
-	def toValidate(object, from, urlbase, validers, sent_at = Time.now)
-		subject    'PLMMailer#docToValidate'
-		recipients validers
-		from       from.email
-		sent_on    sent_at
-		body["object"]=object
-		body["urlbase"]=urlbase
-		content_type "text/html"
-	end
+    def toValidate_rails2 (object, from, urlbase, validers, sent_at = Time.now)
+        subject    'PLMMailer#docToValidate'
+        recipients validers
+        from       from.email
+        sent_on    sent_at
+        body["object"]=object
+        body["urlbase"]=urlbase
+        content_type "text/html"
+    end
 
-	def validated(object, from, urlbase, validersMail, sent_at = Time.now)
-		subject    'PLMMailer#docValidated'
-		recipients object.owner.email
-		from       from.email
-		cc      validersMail
-		sent_on    sent_at
-		body["object"]=object
-		body["urlbase"]=urlbase
-		content_type "text/html"
-	end
+    def toValidate(object, from, urlbase, validers, sent_at = Time.now)
+        bodyMail={}
+        bodyMail["object"]=object
+        bodyMail["urlbase"]=urlbase
+        mail(subject:    'PLMMailer#ToValidate',
+        to: to.email,
+        from:       from.email,
+        sent_on:    sent_at,
+        body: bodyMail)
+    end
 
-	def docToValidate(document, from, urlbase, validers, sent_at = Time.now)
-		subject    'PLMMailer#docToValidate'
-		recipients validers
-		from       from.email
-		sent_on    sent_at
-		body["document"]=document
-		body["urlbase"]=urlbase
-	end
+	def validatedRails2(object, from, urlbase, validersMail, sent_at = Time.now)
+        subject    'PLMMailer#docValidated'
+        recipients object.owner.email
+        from       from.email
+        cc      validersMail
+        sent_on    sent_at
+        body["object"]=object
+        body["urlbase"]=urlbase
+        content_type "text/html"
+    end
+
+def validated(object, from, urlbase, validersMail, sent_at = Time.now)
+        bodyMail={}
+        bodyMail["object"]=to
+        bodyMail["urlbase"]=urlbase
+        mail(subject:    'PLMMailer#docValidated',
+        to: to.email,
+        from:       from.email,
+        sent_on:    sent_at,
+        body: bodyMail)
+    end
+
+    def docToValidateRails2(document, from, urlbase, validers, sent_at = Time.now)
+        subject    'PLMMailer#docToValidate'
+        recipients validers
+        from       from.email
+        sent_on    sent_at
+        body["document"]=document
+        body["urlbase"]=urlbase
+    end
+    def docToValidate(document, from, urlbase, validers, sent_at = Time.now)
+        vbodyMail={}
+        bodyMail["document"]=document
+        bodyMail["urlbase"]=urlbase
+        mail(subject:    'PLMMailer#docToValidate',
+        to: to.email,
+        from:       from.email,
+        sent_on:    sent_at,
+        body: bodyMail)
+    end
 
 	def docValidated(document, from, urlbase, asker, validersMail, sent_at = Time.now)
 		subject    'PLMMailer#docValidated'
@@ -100,23 +133,56 @@ class PlmMailer < ActionMailer::Base
 		body: bodyMail)
 	end
 
-	def partToValidate(part, from, urlbase, validers, sent_at = Time.now)
-		subject    'PLMMailer#partToValidate'
-		recipients validers
-		from       from.email
-		sent_on    sent_at
-		body["part"]=part
-		body["urlbase"]=urlbase
-	end
+    def partToValidateRails2(part, from, urlbase, validers, sent_at = Time.now)
+        subject    'PLMMailer#partToValidate'
+        recipients validers
+        from       from.email
+        sent_on    sent_at
+        body["part"]=part
+        body["urlbase"]=urlbase
+    end
+    def partToValidate(part, from, urlbase, validers, sent_at = Time.now)
+        bodyMail={}
+        bodyMail["part"]=part
+        bodyMail["urlbase"]=urlbase
+        mail(subject:    'PLMMailer#partToValidate',
+        recipients: asker,
+        from:       from.email,
+        cc:      validersMail,
+        sent_on:    sent_at,
+        body: bodyMail)
+    end
 
-	def partValidated(part, from, urlbase, asker, validersMail, sent_at = Time.now)
-		subject    'PLMMailer#partValidated'
-		recipients asker
-		from       from.email
-		cc      validersMail
-		sent_on    sent_at
-		body["part"]=part
-		body["urlbase"]=urlbase
-	end
+    def partValidatedRails2(part, from, urlbase, asker, validersMail, sent_at = Time.now)
+        subject    'PLMMailer#partValidated'
+        recipients asker
+        from       from.email
+        cc      validersMail
+        sent_on    sent_at
+        body["part"]=part
+        body["urlbase"]=urlbase
+    end
+    def partValidated(part, from, urlbase, asker, validersMail, sent_at = Time.now)
+        bodyMail={}
+        bodyMail["part"]=part
+        bodyMail["urlbase"]=urlbase
+        mail(subject:    'PLMMailer#partValidated',
+        recipients: asker,
+        from:       from.email,
+        cc:      validersMail,
+        sent_on:    sent_at,
+        body: bodyMail)
+    end
+
+    def contactSylrplm(object, from, to, urlbase, sent_at = Time.now)
+        bodyMail={}
+        bodyMail["user"]=to
+        bodyMail["urlbase"]=urlbase
+        mail(subject:    'PLMMailer#new_login',
+        to: to.email,
+        from:       from.email,
+        sent_on:    sent_at,
+        body: bodyMail)
+    end
 
 end
