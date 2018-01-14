@@ -1,26 +1,8 @@
 # frozen_string_literal: true
 
-# config/unicorn.rb
-require 'rails'
-
-# 5 mn
-timeout 300
+worker_processes Integer(ENV['WEB_CONCURRENCY'] || 2)
+timeout Integer(30)
 preload_app true
-puts "#{__FILE__} ======================== #{Rails.env}"
-nbproc = 0
-if Rails.env == 'development'
-  nbproc = 1
-  listen '0.0.0.0:3000' # listen to port 3000 on the loopback interface
-elsif Rails.env == 'test'
-  nbproc = 1
-elsif Rails.env == 'production'
-  nbproc = 3
-end
-if ENV['WEB_CONCURRENCY'].blank?
-  worker_processes nbproc
-else
-  worker_processes Integer(ENV['WEB_CONCURRENCY'])
-end
 
 before_fork do |_server, _worker|
   Signal.trap 'TERM' do
@@ -28,15 +10,18 @@ before_fork do |_server, _worker|
     Process.kill 'QUIT', Process.pid
   end
 
-  defined?(ActiveRecord::Base) &&
-    ActiveRecord::Base.connection.disconnect!
+  defined?(ActiveRecord::Base) && ActiveRecord::Base.connection.disconnect!
 end
 
 after_fork do |_server, _worker|
   Signal.trap 'TERM' do
-    puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to send QUIT'
+    puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to sent QUIT'
   end
 
-  defined?(ActiveRecord::Base) &&
-    ActiveRecord::Base.establish_connection
+  if defined?(ActiveRecord::Base)
+    config = Rails.application.config.database_configuration[Rails.env]
+    config['reaping_frequency'] = ENV['DB_REAP_FREQ'] || 10 # seconds
+    config['pool']              = ENV['DB_POOL'] || 5
+    ActiveRecord::Base.establish_connection(config)
+  end
 end
