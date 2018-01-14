@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 require File.expand_path('../boot', __FILE__)
+
 require 'rails/all'
-require 'bundler/setup'
-# Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
-Bundler.require(*Rails.groups)
+
+Bundler.require(:default, Rails.env)
 
 module Sylrplm
   class Application < Rails::Application
@@ -35,16 +34,18 @@ module Sylrplm
     Encoding.default_internal = Encoding::UTF_8
 
     # Add additional load paths for your own custom dirs
-    config.autoload_paths +=  %W[#{config.root}/lib/active_record]
-    config.autoload_paths +=  %W[#{config.root}/lib/classes]
-    config.autoload_paths +=  %W[#{config.root}/lib/controllers]
-    config.autoload_paths += %W[#{config.root}/lib/helper]
-    config.autoload_paths += %W[#{config.root}/lib]
-    config.autoload_paths += %W[#{config.root}/lib/models]
-    config.autoload_paths += %W[#{config.root}/lib/ruote]
-    config.autoload_paths += %W[#{config.root}/lib/ruote/sylrplm]
-    config.autoload_paths += %W[#{config.root}/vendor/plugins/ruote_plugin/lib]
-    config.autoload_paths += %W[#{config.root}/vendor/plugins/acl_system2/lib]
+    config.autoload_paths.push(*%W[
+      #{config.root}/lib/active_record
+      #{config.root}/lib/classes
+      #{config.root}/lib/controllers
+      #{config.root}/lib/helper
+      #{config.root}/lib
+      #{config.root}/lib/models
+      #{config.root}/lib/ruote
+      #{config.root}/lib/ruote/sylrplm
+      #{config.root}/vendor/plugins/ruote_plugin/lib
+      #{config.root}/vendor/plugins/acl_system2/lib
+    ])
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named
@@ -75,17 +76,12 @@ module Sylrplm
 
     # dans session_store config.action_controller.session_store = :active_record_store
 
-    config.action_mailer.delivery_method       = :smtp
-    config.action_mailer.perform_deliveries    = true
-    config.action_mailer.raise_delivery_errors = true
-    # pb rails 4 config.action_mailer.default_charset       = 'utf-8'
-
     # #RUOTE_ENV = {:persist_as_yaml => false}
     RUOTE_ENV = {}.freeze
     # passing a hash of parameters (application context) to the ruote engine
     # (well via the ruote_plugin)
 
-    $LOAD_PATH.unshift('~/ruote/lib')
+    $LOAD_PATH.unshift('~/ruote/lib') if Rails.env.development?
     # using the local 'ruote', comment that out if you're using ruote as a gem
 
     # config.http_authenticatable_on_xhr = false

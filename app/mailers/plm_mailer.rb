@@ -29,12 +29,14 @@ class PlmMailer < ActionMailer::Base
     bodyMail['user'] = to
     bodyMail['notifications'] = object
     bodyMail['theme'] = from.theme
-    mail(subject:    'PLMMailer#create_notify',
-         recipients: to,
-         from:       from.email,
-         sent_on:    sent_at,
-         body: bodyMail)
-    end
+    mail(
+      subject:    'PLMMailer#create_notify',
+      recipients: to,
+      from:       from.email,
+      sent_on:    sent_at,
+      body: bodyMail
+    )
+  end
 
   def new_login(object, from, to, urlbase, sent_at = Time.now)
     subject    'PLMMailer#new_login'

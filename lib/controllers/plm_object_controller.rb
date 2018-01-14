@@ -313,22 +313,19 @@ module Controllers
     end
 
     def get_html_options(lst, default, translate = false)
-      ret = ''
-      lst.each do |item|
+      lst.each_with_object('') do |item, ret|
         val = if translate
                 t(item[1])
               else
                 item[1]
               end
-        ret << if item[0].to_s == default.to_s
+        ret += if item[0].to_s == default.to_s
                  # puts "get_html_options:"+item.inspect+" = "+default.to_s
                  "<option value=\"#{item[0]}\" selected=\"selected\">#{val}</option>"
                else
                  "<option value=\"#{item[0]}\">#{val}</option>"
                end
       end
-      # puts "application_controller.get_html_options:"+ret
-      ret
     end
 
     def ctrl_update_type(plm_object, type_id)

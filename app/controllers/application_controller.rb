@@ -31,9 +31,9 @@ class ApplicationController < ActionController::Base
 
   def run_debug
     if Rails.env == 'development'
-         # byebug
-         # console
-       end
+      # byebug
+      # console
+    end
   end
 
   def manage_recents
@@ -314,8 +314,6 @@ class ApplicationController < ActionController::Base
     LOG.debug(fname) { "@datas=#{@datas}" }
     # ##########TODO inutile @notification=PlmServices.get_property(:NOTIFICATION_DEFAULT)
     # ##########TODO inutile @time_zone=PlmServices.get_property(:TIME_ZONE_DEFAULT)
-    WillPaginate::ViewHelpers.pagination_options[:previous_label] = t('label_previous')
-    WillPaginate::ViewHelpers.pagination_options[:next_label] = t('label_next')
     # when false, only previous/next links are rendered (default: true)
     WillPaginate::ViewHelpers.pagination_options[:page_links] = true
     # how many links are shown around the current page (default: 4)

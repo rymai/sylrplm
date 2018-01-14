@@ -85,11 +85,7 @@ gem 'simple_form', '~> 3.1.0.rc1'
 # detect mobile
 gem 'useragent', '0.16.8'
 
-group :norb do
-  # 		will load compatibility for old rubyzip API.
-  # gem 'zip-zip'
-  # gem 'selenium-webdriver'
-end
+gem 'letter_opener_web'
 
 group :staging, :production do
   # gem 'thin'
@@ -125,20 +121,4 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # gem 'byebug'
   gem 'rubocop', '~> 0.52.1', require: false
-end
-
-group :essai do
-  gem 'actionpack'
-  gem 'activesupport'
-  gem 'bigdecimal'
-  gem 'bundler'
-  gem 'foreman'
-  gem 'haml'
-  gem 'iconv'
-  gem 'letter_opener'
-  gem 'locale'
-  gem 'log4r'
-  gem 'railroad'
-  gem 'railroady'
-  gem 'rb-readline'
 end

@@ -1,6 +1,3 @@
-# frozen_string_literal: true
-
-# ##require "string_to_sha1/version"
 require 'digest/sha1'
 
 # = ApplicationHelper
@@ -23,13 +20,13 @@ module ApplicationHelper
       option_onchange = { onchange: remote_function(url: url, with: with) }
     end
     ret = ''
-    ret << form.label(t('label_type'))
-    if option_onchange.nil?
-      ret << form.collection_select(:typesobject_id, types, :id, :name, option_readonly)
+    ret += form.label(t('label_type'))
+    ret += if option_onchange.nil?
+      form.collection_select(:typesobject_id, types, :id, :name, option_readonly)
     else
-      ret << form.collection_select(:typesobject_id, types, :id, :name, option_readonly, option_onchange)
+      form.collection_select(:typesobject_id, types, :id, :name, option_readonly, option_onchange)
     end
-    ret << '</br>'
+    ret += '</br>'
     ret.html_safe unless ret.html_safe?
   end
 
@@ -47,13 +44,13 @@ module ApplicationHelper
       option_onchange = { onchange: remote_function(url: url, with: with) }
     end
     ret = ''
-    ret << form.label(t('label_object'))
-    ret << if option_onchange.nil?
+    ret += form.label(t('label_object'))
+    ret += if option_onchange.nil?
              form.select(:forobject, forobjects, option_readonly)
            else
              form.select(:forobject, forobjects, option_readonly, option_onchange)
            end
-    ret << '</br>'
+    ret += '</br>'
     ret.html_safe unless ret.html_safe?
   end
 
@@ -138,14 +135,12 @@ module ApplicationHelper
   end
 
   def h_thumbnails_objs(objs)
-    ret = ''
-    objs[:recordset].each do |obj|
-      ret << "<span class='thumbnail'>"
-      ret << h_explorer(obj, :ident)
-      ret << icone(obj)
-      ret << '</span>'
-    end
-    ret.html_safe
+    objs[:recordset].each_with_object('') do |obj, ret|
+      ret += "<span class='thumbnail'>"
+      ret += h_explorer(obj, :ident)
+      ret += icone(obj)
+      ret += '</span>'
+    end.html_safe
   end
 
   def h_img_path(name)
@@ -455,15 +450,14 @@ module ApplicationHelper
     href = [
       :protocol, :host, ':', :port,
       :request_uri, ".#{format}?plain=true"
-    ].inject('') do |s, elt|
-      s << if elt.is_a?(String)
+    ].each_with_object('') do |elt, s|
+      s += if elt.is_a?(String)
              elt
            elsif request.respond_to?(elt)
              request.send(elt).to_s
-           else # shouldn't happen, so let's be verbose
-             elt.inspect
-      end
-      s
+          else # shouldn't happen, so let's be verbose
+            elt.inspect
+          end
     end
     href << "&#{request.query_string}" unless request.query_string.empty?
     href
