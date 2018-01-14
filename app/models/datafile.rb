@@ -342,21 +342,22 @@ class Datafile < ActiveRecord::Base
     LOG.debug(fname) { "upload_file: original_filename=#{file_field.original_filename if file_field.respond_to? :original_filename}" }
     LOG.debug(fname) { "upload_file: path=#{file_field.path if file_field.respond_to? :path}" }
     LOG.debug(fname) { "upload_file: datafile=#{inspect}" }
-    if file_field.blank? unless file_import.nil?
-           self.filename = base_part_of(file_import[:original_filename])
-           content = file_import[:file].read
-           begin
-             ret = write_file(content)
-             self.file_field = nil
-           rescue Exception => e
-             LOG.error(fname) { "Exception 2 during write_file: #{e.inspect} " }
-             e.backtrace.each { |x| LOG.error x }
-             if e.class == Excon::Errors::SocketError
-               LOG.error(fname) { "Probleme potentiel de connection reseau:#{e.class}:#{e.message}" }
-             end
-             ret = false
-             raise Exception, "Error uploaded file 2 #{file_field}:#{e}"
-           end
+    if file_field.blank?
+      if file_import.present?
+        self.filename = base_part_of(file_import[:original_filename])
+        content = file_import[:file].read
+        begin
+          ret = write_file(content)
+          self.file_field = nil
+        rescue Exception => e
+          LOG.error(fname) { "Exception 2 during write_file: #{e.inspect} " }
+          e.backtrace.each { |x| LOG.error x }
+          if e.class == Excon::Errors::SocketError
+            LOG.error(fname) { "Probleme potentiel de connection reseau:#{e.class}:#{e.message}" }
+          end
+          ret = false
+          raise Exception, "Error uploaded file 2 #{file_field}:#{e}"
+        end
       end
     else
       self.content_type = file_field.content_type.chomp if file_field.respond_to? :content_type

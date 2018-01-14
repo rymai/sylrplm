@@ -68,19 +68,18 @@ module MainHelper
 
   def h_menu_execute_submit(modelname)
     ret = ''
-    ret << "<td id='separator_vertical'></td>"
+    ret += "<td id='separator_vertical'></td>"
     submit_copy = t('submit_copy')
     submit_destroy = t('submit_destroy')
     if logged_in? && Clipboard.can_clipboard?(modelname)
-      ret << "<td>#{submit_tag(submit_copy)}</td>"
+      ret += "<td>#{submit_tag(submit_copy)}</td>"
     end
     ret.html_safe unless ret.html_safe?
   end
 
   def h_menu_rails2(href, _help, title)
-    bloc = ''
     # ne marche pas avec boostrap bloc<<"<a class='menu' onclick=\"return helpPopup('#{help}','#{href}');\" >#{title}</a>";
-    bloc << "<a class='menu' id='#{title} name='#{title}' href='#{href}' >#{title}</a>"
+    bloc = "<a class='menu' id='#{title} name='#{title}' href='#{href}' >#{title}</a>"
     bloc.html_safe? unless ret.html_safe?
   end
 

@@ -262,19 +262,16 @@ module Controllers
       fname = "#{self.class.name}.#{__method__}:"
       # renvoie la liste des themes
       dirname = "#{Rails.root}/public/stylesheets/*"
-      ret = ''
-      Dir[dirname].each do |dir|
+      Dir[dirname].each_with_object('') do |dir, ret|
         LOG.debug(fname) { "get_themes; dir=#{dir} " }
         next unless File.directory?(dir)
         theme = File.basename(dir, '.*')
-        ret << if theme == default
+        ret += if theme == default
                  "<option selected=\"selected\">#{theme}</option>"
                else
                  "<option>#{theme}</option>"
                end
-      end
-      LOG.debug(fname) { "get_themes; ret=#{ret} " }
-      ret.html_safe
+      end.html_safe
     end
 
     def get_languages
