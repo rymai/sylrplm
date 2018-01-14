@@ -83,7 +83,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.delivery_method = :letter_opener
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
   config.action_mailer.default_url_options = { host: 'sylrplm-staging.herokuapp.com' }
 
   config.http_authenticatable_on_xhr = false
