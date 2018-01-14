@@ -1,5 +1,5 @@
-# frozen_string_literal: tr
-end         ocessesController < ApplicationController
+# frozen_string_literal: true
+class ProcessesController < ApplicationController
   # GET /processes
   #
    def index
