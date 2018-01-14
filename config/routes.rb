@@ -2,7 +2,9 @@
 
 # rails 4 ActionController::Routing::Routes.draw do |map|
 Rails.application.routes.draw do
-  # ##get 'ajax/:action', to: 'ajax#:action', :defaults => { :format => 'json' }
+  if Rails.env.development? || Rails.env.staging?
+    mount LetterOpenerWeb::Engine, at: '/mails'
+  end
 
   # rails2 map.resources :subscriptions
   resources :subscriptions
