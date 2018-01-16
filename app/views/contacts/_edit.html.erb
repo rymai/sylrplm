@@ -1,0 +1,27 @@
+<h1><%= t(:legend_contact) %></h1>
+<%= h_edit_type_object(f, @contact, @types) %>
+<%= f.label t(:label_contact_firstname) %>
+<%= f.text_field :firstname %>
+<br/>
+<%= f.label t(:label_contact_lastname) %>
+<%= f.text_field :lastname %>
+<br/>
+<%= f.label t(:label_contact_adress) %>
+<%= f.text_field :adress %>
+<br/>
+<%= f.label t(:label_contact_postalcode) %>
+<%= f.text_field :postalcode %>
+<br/>
+<%= f.label t(:label_contact_town) %>
+<%= f.text_field :town %>
+<br/>
+<%= f.label t(:label_contact_email) %>
+<%= f.text_field :email %>
+<br/>
+<%= f.label t(:label_contact_subject) %>
+<%= f.text_field :subject %>
+<br/>
+<%= f.label t(:label_contact_body) %>
+<%= f.text_area :body %>
+<br/>
+<%= h_input_domain(f) %>

@@ -1,0 +1,54 @@
+<% fonct="show" %>
+<%= form_for(@contact, :html => { :id => h_form_html_id(@contact, fonct) }) do |f| %>
+<%= form_errors_for @contact %>
+<p>
+	<b><%= t("label_contact_type") %></b>
+	<%= h @contact.typesobject.name_translate %>
+</p>
+    <b><%= t("label_contact_firstname") %></b>
+    <%= h @contact.firstname %>
+</p>
+</p>
+    <b><%= t("label_contact_lastname") %></b>
+    <%= h @contact.lastname%>
+</p>
+</p>
+    <b><%= t("label_contact_adress") %></b>
+    <%= h @contact.adress %>
+</p>
+</p>
+    <b><%= t("label_contact_postalcode") %></b>
+    <%= h @contact.postalcode %>
+</p>
+</p>
+    <b><%= t("label_contact_town") %></b>
+    <%= h @contact.town %>
+</p>
+</p>
+    <b><%= t("label_contact_email") %></b>
+    <%= h @contact.email %>
+</p>
+</p>
+    <b><%= t("label_contact_subject") %></b>
+    <%= h @contact.subject %>
+</p>
+</p>
+    <b><%= t("label_contact_body") %></b>
+    <%= h @contact.body %>
+</p>
+<p>
+    <b><%= t("label_created_at") %></b>
+    <%= h @contact.created_at %>
+</p>
+<p>
+    <b><%= t("label_domain") %></b>
+    <%= h @contact.domain %>
+</p>
+<% end %>
+
+<table class='menu_toolbar'>
+	<tr>
+		<td><%= link_to t("edit"), edit_contact_path(@contact) %></td>
+		<td><%= link_to t("list"), contacts_path %></td>
+	</tr>
+</table>
