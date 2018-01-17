@@ -205,7 +205,6 @@ class Statusobject < ActiveRecord::Base
 		cond="forobject='#{obj.modelname}' and (typesobject_id=#{objtype.id} or typesobject_id=#{any_type.id} or typesobject_id is null)"
 		#rails2 ret=Statusobject.order_default.find(:first, :conditions => [cond])
 		ret=Statusobject.where(cond).order(ORDER_DEFAULT).first
-		#LOG.info(fname){"status.get_first:cond=#{cond} : #{ret}"}
 		ret
 	end
 

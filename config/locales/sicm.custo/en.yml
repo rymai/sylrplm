@@ -29,7 +29,9 @@ en:
   relation_revise_from: Revise from
   relation_revise_to: Revise to
   #
-  typesobject_name_lifecycle: Lifecyle
+  typesobject_name_send: Send
+  typesobject_name_recept: Recept
+  typesobject_name_lifecycle: Lifecycle
   typesobject_name_objects_names: Names
   typesobject_name_others: Others
   typesobject_name_sites: Sites
@@ -105,6 +107,7 @@ en:
   typesobject_name_inactive: Inactive
   typesobject_name_validated: Validated
   # forobject
+  forobject_contact: Contact
   forobject_customer: Client
   forobject_document: Document
   forobject_part: Part

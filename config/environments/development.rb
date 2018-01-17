@@ -62,11 +62,15 @@ Rails.application.configure do
 ###config.http_authenticatable_on_xhr = false
 ###config.navigational_formats = ["*/*", :html, :json, :js]
 config.action_mailer.delivery_method = :smtp
+config.action_mailer.perform_deliveries = true
+config.action_mailer.logger = Logger.new(File.join(Rails.root, 'log', 'sylrplm_mail.log'), 'daily')
 # SMTP settings
 config.action_mailer.smtp_settings = {
- :address              => "smtp.free.fr",
- :port                 => 25,
-:enable_starttls_auto => true
+    address:"smtp.free.fr", port:25,
+    enable_starttls_auto: false,
+    authentication:       "plain",
+    user_name:            "sylvani",password:             "pa33zp62",
+    domain: "sylrplm"
 }
 
 end

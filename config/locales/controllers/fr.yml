@@ -64,6 +64,8 @@ fr:
   data_access_forbidden: "Accès interdit à ces données: %{msg}"
   host_not_defined: "Host non défini, le définir dans Type object property/sites/SITE_CENTRAL=xxx"
   database_not_consistency: "Database not consistency: %{msg}"
+  # contact
+  ctrl_contact: Contact
   # customers
   ctrl_customer: Client
   # datafiles

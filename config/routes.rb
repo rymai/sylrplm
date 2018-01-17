@@ -36,6 +36,15 @@ Rails.application.routes.draw do
 	#rails2 map.resources :checks
 	resources :checks
 
+resources :contacts do
+        collection do
+            get :export
+        end
+    end
+    #rails2 map.connect(    'forums/:id/update_lifecycle',  :controller => 'forums',    :action => 'update_lifecycle')
+   match 'contacts/index_execute', :to => 'contacts#index_execute', via: [:get, :post]
+   match 'contacts/update_type', :to => 'contacts#update_type', via: [:get, :post]
+
 	#rails2 map.resources :customers, :has_many => :documents, :collection => { :empty_clipboard => :get }, :member=> {:edit_lifecycle => :get,:new_dup => :get}
 	resources :customers do
 		member do
@@ -204,19 +213,19 @@ Rails.application.routes.draw do
 
 	#rails2 map.resources :forums, :member=> {:edit_lifecycle => :get}
 	resources :forums do
-		member do
-			get :edit_lifecycle
-		end
-		collection do
-			get :export
-		end
-	end
-	#rails2 map.connect(	'forums/:id/update_lifecycle',	:controller => 'forums',	:action => 'update_lifecycle')
-	match 'forums/update_lifecycle', :to => 'forums#update_lifecycle', via: [:get, :post]
-	match 'forums/index_execute', :to => 'forums#index_execute', via: [:get, :post]
+        member do
+            get :edit_lifecycle
+        end
+        collection do
+            get :export
+        end
+    end
+    #rails2 map.connect(    'forums/:id/update_lifecycle',  :controller => 'forums',    :action => 'update_lifecycle')
+    match 'forums/update_lifecycle', :to => 'forums#update_lifecycle', via: [:get, :post]
+    match 'forums/index_execute', :to => 'forums#index_execute', via: [:get, :post]
 
-	#rails2 map.connect(	'forums/:id/update_type',	:controller => 'forums',	:action => 'update_type')
-	match 'forums/update_type', :to => 'forums#update_type', via: [:get, :post]
+    #rails2 map.connect(    'forums/:id/update_type',   :controller => 'forums',    :action => 'update_type')
+    match 'forums/update_type', :to => 'forums#update_type', via: [:get, :post]
 
 	#rails2 map.resources :forum_items
 	resources :forum_items , :only => [:create, :edit, :update] do

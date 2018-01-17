@@ -495,7 +495,6 @@ module ApplicationHelper
 		if !fonct.include?("new") && obj.respond_to?(:typesobject)
 			unless obj.typesobject.nil?
 				objfields = obj.typesobject.get_fields
-				LOG.info(fname){"fields=#{objfields} obj.type_values=#{obj.type_values}"}
 				unless objfields.nil?
 					case fonct
 					when "edit", "account_edit"
@@ -779,12 +778,10 @@ module ApplicationHelper
 
 	:private
 
-
-
 	# Displays object errors
 	def form_errors_for(plm_object=nil)
 		fname="#{self.class.name}.#{__method__}"
-		LOG.debug(fname){"plm_object=#{plm_object}"}
+		#LOG.debug(fname){"plm_object=#{plm_object}"}
 		unless plm_object.blank?
 			errors=plm_object.errors
 			err_msg=[]

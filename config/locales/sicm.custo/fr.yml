@@ -29,6 +29,8 @@ fr:
   relation_revise_from: Révision depuis
   relation_revise_to: Révision vers
   #
+  typesobject_name_send: Envoyé
+  typesobject_name_recept: Reçu
   typesobject_name_lifecycle: Cycle de vie
   typesobject_name_objects_names: Noms
   typesobject_name_others: Autres
@@ -105,6 +107,7 @@ fr:
   typesobject_name_inactive: Inactif
   typesobject_name_validated: Validé
   # forobject
+  forobject_contact: Contact
   forobject_customer: Client
   forobject_document: Document
   forobject_part: Article

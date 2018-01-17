@@ -63,6 +63,7 @@ fr:
   new_forum_item: "Nouveau message"
   new_access: "Nouvelle autorisation"
   new_check: "Nouvelle réservation"
+  new_contact: "Nouveau contact"
   new_user: "Nouvel utilisateur"
   new_statusobject: Nouveau statut
   new_typesobject: Nouveau type
@@ -168,7 +169,8 @@ fr:
   mnu_customers: Clients
   mnu_questions: Questions
   mnu_news: Nouveautés
-  mnu_contact: Contacts
+  mnu_contact: Contact
+  mnu_contacts: Contacts
   mnu_forums: Discussions
   mnu_forum_items: Messages
   mnu_users: Utilisateurs
@@ -285,6 +287,16 @@ fr:
   label_local_dir: Répertoire local
   label_in_group: Groupe libérant
   label_out_group: Groupe réservant
+  #contacts
+  label_contact_type: Type
+  label_contact_firstname: Prénom
+  label_contactlastname: Nom
+  label_contact_adress: Adresse
+  label_contact_postalcode: Code postal
+  label_contact_town: Ville
+  label_contact_email: "Email *"
+  label_contact_subject: "Objet *"
+  label_contact_body: "Corps *"
   # customers
   legend_customer: Renseignez les propriétés du client
   customer_edit: Edition client

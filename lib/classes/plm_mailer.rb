@@ -185,4 +185,16 @@ def validated(object, from, urlbase, validersMail, sent_at = Time.now)
         body: bodyMail)
     end
 
+     def sendContact(from_email, to, subject, body, sent_at = Time.now)
+        @user_to=to
+        @from_email=from_email
+        @body=body
+        mail(subject:     "PLMMailer:Contact from #{from_email} : #{subject}",
+        recipients: to,
+        from:       from_email,
+        to:      to.email,
+        sent_on:    sent_at,
+        body: body)
+    end
+
 end

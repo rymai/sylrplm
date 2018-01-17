@@ -63,6 +63,7 @@ en:
   new_forum_item: "New discussion message"
   new_access: "New access"
   new_check: "New check"
+  new_contact: "New contact"
   new_user: "New user"
   new_statusobject: New status
   new_typesobject: New type
@@ -76,7 +77,6 @@ en:
   new_link: New link
   new_ui_column: New UI column
   new_ui_table: New UI table
-  new_link: New link
   paste_users: Paste users
   paste_part: Paste parts
   paste_documents: Paste documents
@@ -170,6 +170,7 @@ en:
   mnu_questions: Questions
   mnu_news: News
   mnu_contact: Contact
+  mnu_contacts: Contacts
   mnu_forums: Discussions
   mnu_forum_items: Messages
   mnu_users: Users
@@ -286,6 +287,16 @@ en:
   label_local_dir: Local dir
   label_in_group: Check in group
   label_out_group: Check out group
+  #contacts
+  label_contact_type: Type
+  label_contact_firstname: First name
+  label_contact_lastname: Last name
+  label_contact_adress: Adress
+  label_contact_postalcode: Postal code
+  label_contact_town: Town
+  label_contact_email: "Email *"
+  label_contact_subject: "Subject *"
+  label_contact_body: "Body *"
   # customers
   legend_customer: Enter customer details
   customer_edit: Editing customer

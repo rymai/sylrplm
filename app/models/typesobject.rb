@@ -7,7 +7,8 @@ class Typesobject < ActiveRecord::Base
 	has_many :documents
 	has_many :parts
 	has_many :projects
-	has_many :customers
+    has_many :customers
+    has_many :contact
 	#bug! has_many :statusobject
 	belongs_to :father, :class_name => "Typesobject"
 	#rails4 named_scope :order_default, :order=>"forobject ASC, rank ASC, name ASC"
@@ -73,7 +74,7 @@ class Typesobject < ActiveRecord::Base
 		end
 		ret
 	end
-
+belongs_to :typesobject
 	def self.get_types(s_object, with_generic=false)
 		fname="Typesobject.#{__method__}(#{s_object})"
 		sgeneric = PlmServices.get_property(:TYPE_GENERIC)
@@ -136,7 +137,7 @@ class Typesobject < ActiveRecord::Base
 		#   +objets generiques: ::SYLRPLM::PROPERTIES, PLMTYPE_GENERIC
 		# objets non pris en compte:
 		#   definition: pas de besoin
-		ret=[::SYLRPLM::PLM_PROPERTIES, PlmServices.get_property(:PLMTYPE_GENERIC), "ar_workitem", "document", "part", "project", "customer", "forum", "datafile", "relation", "link", "history_entry", "relation", "user"].sort
+		ret=[::SYLRPLM::PLM_PROPERTIES, PlmServices.get_property(:PLMTYPE_GENERIC), "ar_workitem", "contact","document", "part", "project", "customer", "forum", "datafile", "relation", "link", "history_entry", "relation", "user"].sort
 		ret
 	end
 
