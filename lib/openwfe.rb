@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2005-2007, John Mettraux and Alain Hoang, OpenWFE.org
 #
@@ -24,4 +26,3 @@
 
 require 'openwfe/engine/engine'
 require 'openwfe/engine/fs_engine'
-

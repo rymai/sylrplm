@@ -1,12 +1,13 @@
 
+# frozen_string_literal: true
+
 #
 # Simply opening the ruote workitem class to add some things specific
 # to arts (and ActiveModel).
 #
 class Ruote::Workitem
-
-  #include ActiveModel::Naming
-  #include ActiveModel::Validations
+  # include ActiveModel::Naming
+  # include ActiveModel::Validations
 
   def task
     params['task']
@@ -17,11 +18,8 @@ class Ruote::Workitem
   end
 
   def self.for_user(username)
-
     user = User.find(username)
-        if RuoteKit.engine.nil?
-				PlmServices.ruote_init
-		end
+    PlmServices.ruote_init if RuoteKit.engine.nil?
     return RuoteKit.engine.storage_participant.all if user.admin?
 
     # note : ruote 2.1.12 should make it possible to write
@@ -31,47 +29,46 @@ class Ruote::Workitem
     #
     # directly.
 
-    [ username, user.groups, 'anyone' ].flatten.collect { |pname|
+    [username, user.groups, 'anyone'].flatten.collect do |pname|
       RuoteKit.engine.storage_participant.by_participant(pname)
-    }.flatten
+    end.flatten
   end
 
   #--
   # active model (method need to make of workitems active models)
   #++
 
-#  def self.model_name
-#
-#    return @_model_name if @_model_name
-#
-#    mn = Object.new
-#    def mn.name; 'workitem'; end
-#    @_model_name = ActiveModel::Name.new(mn)
-#  end
-#
-#  def to_model
-#    self
-#  end
-#
-#  def destroyed?
-#    fields['_destroyed'] == true
-#  end
-#
-#  def new_record?
-#    @h['fei'] == {}
-#  end
-#
-#  def persisted?
-#    @h['fei'] != {}
-#  end
-#
-#  def to_key
-#    return nil unless persisted?
-#    [ @h['_id'] ]
-#  end
+  #  def self.model_name
+  #
+  #    return @_model_name if @_model_name
+  #
+  #    mn = Object.new
+  #    def mn.name; 'workitem'; end
+  #    @_model_name = ActiveModel::Name.new(mn)
+  #  end
+  #
+  #  def to_model
+  #    self
+  #  end
+  #
+  #  def destroyed?
+  #    fields['_destroyed'] == true
+  #  end
+  #
+  #  def new_record?
+  #    @h['fei'] == {}
+  #  end
+  #
+  #  def persisted?
+  #    @h['fei'] != {}
+  #  end
+  #
+  #  def to_key
+  #    return nil unless persisted?
+  #    [ @h['_id'] ]
+  #  end
 
   def to_param
     fei.sid
   end
 end
-

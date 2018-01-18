@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2008-2009, Kenneth Kalmer, opensourcery.co.za
 #
@@ -22,20 +24,15 @@
 # Made in Africa. Kenneth Kalmer of opensourcery.co.za
 #++
 
-
 require 'activesupport'
 require 'xmpp4r-simple'
 
-
 module OpenWFE
   module Extras
-
     # Common functionality shared by the JabberListener and
     # JabberParticipant implementations in ruote.
     module JabberCommon
-
-      def self.included( base )
-
+      def self.included(base)
         base.instance_eval do
           # JabberID to use
           @@jabber_id = nil
@@ -53,9 +50,8 @@ module OpenWFE
           @@contacts = []
           cattr_accessor :contacts
         end
-        
       end
-      
+
       # Configures this class from the provided options hash. Looking
       # for (and removes) the following keys from the hash:
       #
@@ -67,7 +63,7 @@ module OpenWFE
       #
       # If a connection is provided, the :jabber_id, :password,
       # :resource and :contact keys are ignored
-      def configure_jabber!( options )
+      def configure_jabber!(options)
         unless @connection = options.delete(:connection)
           self.class.jabber_id = options.delete(:jabber_id)
           self.class.password  = options.delete(:password)
@@ -86,36 +82,34 @@ module OpenWFE
       def connect!
         if @connection.nil?
           jid = self.class.jabber_id + '/' + self.class.resource
-          @connection = Jabber::Simple.new( jid, self.class.password )
-          @connection.status( :chat, "#{self.class} waiting for instructions" )
+          @connection = Jabber::Simple.new(jid, self.class.password)
+          @connection.status(:chat, "#{self.class} waiting for instructions")
         end
       end
 
       # Clear all contacts from the roster, and build up the roster again
       def setup_roster!
         # Clean the roster
-        self.connection.roster.items.each_pair do |jid, roster_item|
+        connection.roster.items.each_pair do |jid, _roster_item|
           jid = jid.strip.to_s
-          unless self.class.contacts.include?( jid )
-            self.connection.remove( jid )
-          end
+          connection.remove(jid) unless self.class.contacts.include?(jid)
         end
-        
+
         # Add missing contacts
         self.class.contacts.each do |contact|
-          unless self.connection.subscribed_to?( contact )
-            self.connection.add( contact )
-            self.connection.roster.accept_subscription( contact )
+          unless connection.subscribed_to?(contact)
+            connection.add(contact)
+            connection.roster.accept_subscription(contact)
           end
         end
       end
 
       # Change status to 'busy' while performing a command, and back to 'chat'
       # afterwards
-      def busy( &block )
-        self.connection.status( :dnd, "Working..." )
+      def busy
+        connection.status(:dnd, 'Working...')
         yield
-        self.connection.status( :chat, "JabberListener waiting for instructions" )
+        connection.status(:chat, 'JabberListener waiting for instructions')
       end
     end
   end

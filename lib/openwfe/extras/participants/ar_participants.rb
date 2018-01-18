@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, John Mettraux, Tomaso Tosolini OpenWFE.org
 #
@@ -22,22 +24,16 @@
 # Made in Japan and Italy.
 #++
 
-
 require 'openwfe/workitem'
 require 'openwfe/flowexpressionid'
 require 'openwfe/engine/engine'
 require 'openwfe/participants/participant'
 require 'openwfe/extras/singlecon'
 
-
 module OpenWFE::Extras
-
   class ArWorkitemTables < ActiveRecord::Migration
-
     def self.up
-
       create_table :ar_workitems do |t|
-
         t.column :fei, :string
         t.column :wfid, :string
         t.column :expid, :string
@@ -56,25 +52,24 @@ module OpenWFE::Extras
         t.column :keywords, :text
       end
 
-      add_index :ar_workitems, :fei, :unique => true
-        # with sqlite3, comment out this :unique => true on :fei :(
+      add_index :ar_workitems, :fei, unique: true
+      # with sqlite3, comment out this :unique => true on :fei :(
 
-          add_index :ar_workitems, :wfid
-          add_index :ar_workitems, :expid
-          add_index :ar_workitems, :wfname
-          add_index :ar_workitems, :wfrevision
-          add_index :ar_workitems, :participant_name
-          add_index :ar_workitems, :store_name
+      add_index :ar_workitems, :wfid
+      add_index :ar_workitems, :expid
+      add_index :ar_workitems, :wfname
+      add_index :ar_workitems, :wfrevision
+      add_index :ar_workitems, :participant_name
+      add_index :ar_workitems, :store_name
         end
 
-        def self.down
-
-          drop_table :ar_workitems
-        end
+    def self.down
+      drop_table :ar_workitems
+    end
       end
 
-      class ArWorkitem < ActiveRecord::Base
-        include SingleConnectionMixin
+  class ArWorkitem < ActiveRecord::Base
+    include SingleConnectionMixin
 
     #
     # Returns the flow expression id of this work (its unique OpenWFEru (Ruote)
@@ -82,31 +77,34 @@ module OpenWFE::Extras
     # (within the Workitem it's just stored as a String).
     #
     def full_fei
-      fname="base ArWorkitem.full_fei"
-        #LOG.debug (fname) {"fei:#{fei}"}
-        @full_fei ||= OpenWFE::FlowExpressionId.from_s(fei)
+      fname = 'base ArWorkitem.full_fei'
+      # LOG.debug (fname) {"fei:#{fei}"}
+      @full_fei ||= OpenWFE::FlowExpressionId.from_s(fei)
       end
 
     #
     # Making sure last_modified is set to Time.now before each save.
     #
     def before_save
-     fname="base ArWorkitem.before_save:"
-      #LOG.debug (fname) {"saving:#{self.inspect}"}
+      fname = 'base ArWorkitem.before_save:'
+      # LOG.debug (fname) {"saving:#{self.inspect}"}
       touch
     end
+
     def after_save
-     fname="base ArWorkitem.after_save:"
-      #LOG.debug (fname) {"saved:#{self.inspect}"}
+      fname = 'base ArWorkitem.after_save:'
+      # LOG.debug (fname) {"saved:#{self.inspect}"}
       true
     end
+
     def before_destroy
-     fname="base ArWorkitem.before_destroy:"
-      #LOG.debug (fname) {"destroy:#{self.inspect}"}
+      fname = 'base ArWorkitem.before_destroy:'
+      # LOG.debug (fname) {"destroy:#{self.inspect}"}
       true
     end
-    def self.from_owfe_workitem (wi, store_name=nil)
-      fname="base ArWorkitem.after_save:"
+
+    def self.from_owfe_workitem(wi, store_name = nil)
+      fname = 'base ArWorkitem.after_save:'
       arwi = ArWorkitem.new
       arwi.fei = wi.fei.to_s
       arwi.wfid = wi.fei.wfid
@@ -121,24 +119,24 @@ module OpenWFE::Extras
       arwi.last_modified = nil
 
       arwi.wi_fields = YAML.dump(wi.fields)
-        # using YAML as it's more future proof
+      # using YAML as it's more future proof
 
-        arwi.keywords = flatten_keywords(wi.fields, wi.participant_name)
+      arwi.keywords = flatten_keywords(wi.fields, wi.participant_name)
 
-      #arwi.save! # making sure to throw an exception in case of trouble
-      #TODO syl
-      if(true)
+      # arwi.save! # making sure to throw an exception in case of trouble
+      # TODO syl
+      if true
         begin
           arwi.save_without_transactions!
         rescue Exception => e
-          LOG.error (fname) {"error=#{e}"}
-          stack=""
+          LOG.error (fname) { "error=#{e}" }
+          stack = ''
           e.backtrace.each do |x|
-            stack+= x+"\n"
+            stack += x + "\n"
           end
-          LOG.debug (fname) {"stack=\n#{stack}"}
+          LOG.debug (fname) { "stack=\n#{stack}" }
           raise e
-        end 
+        end
       end
       arwi.save_without_transactions!
       arwi
@@ -148,8 +146,7 @@ module OpenWFE::Extras
     # The default implementation fetches the value for the 'activity' in
     # the hash field named 'params'.
     #
-    def extract_activity (wi)
-
+    def extract_activity(wi)
       wi.fields['params']['activity']
     end
 
@@ -157,12 +154,11 @@ module OpenWFE::Extras
     # Turns the 'active' Workitem into a ruote InFlowWorkItem.
     #
     def to_owfe_workitem
-
       wi = OpenWFE::InFlowWorkItem.new
 
       wi.fei = full_fei
       wi.participant_name = participant_name
-      wi.fields = YAML.load(self.wi_fields)
+      wi.fields = YAML.safe_load(wi_fields)
 
       wi.dispatch_time = dispatch_time
       wi.last_modified = last_modified
@@ -170,25 +166,23 @@ module OpenWFE::Extras
       wi
     end
 
-    alias :as_owfe_workitem :to_owfe_workitem
+    alias as_owfe_workitem to_owfe_workitem
 
-    def replace_fields (fields)
-
+    def replace_fields(fields)
       self.wi_fields = YAML.dump(fields)
 
-      self.keywords = self.class.flatten_keywords(fields, self.participant_name)
+      self.keywords = self.class.flatten_keywords(fields, participant_name)
 
-      #self.save!
-      self.save_without_transactions!
+      # self.save!
+      save_without_transactions!
     end
 
     def field_hash
-      ###puts "**************** ar_participants.field_hash:self=#{self.inspect} ******************"
-      YAML.load(self.wi_fields)
+      # ##puts "**************** ar_participants.field_hash:self=#{self.inspect} ******************"
+      YAML.safe_load(wi_fields)
     end
 
-    def field (k)
-
+    def field(k)
       field_hash[k]
     end
 
@@ -197,7 +191,6 @@ module OpenWFE::Extras
     # (Doesn't save the workitem though).
     #
     def touch
-
       self.last_modified = Time.now
     end
 
@@ -207,8 +200,7 @@ module OpenWFE::Extras
     # The result is a Hash whose keys are the store names and whose
     # values are list of workitems.
     #
-    def self.find_in_stores (storename_list)
-
+    def self.find_in_stores(storename_list)
       workitems = find_all_by_store_name(storename_list)
       workitems.inject({}) { |h, wi| (h[wi.store_name] ||= []) << wi }
     end
@@ -219,71 +211,70 @@ module OpenWFE::Extras
     # It deserves its own method because the workitem could be in a
     # subprocess, thus escaping the vanilla find_by_wfid_and_participant()
     #
-    def self.find_just_launched (wfid, participant_name)
-
+    def self.find_just_launched(wfid, participant_name)
       find(
         :first,
-        :conditions => [
+        conditions: [
           'wfid LIKE ? AND participant_name = ?',
           "#{wfid}%",
-          participant_name ])
+          participant_name
+        ]
+      )
     end
-    
-    def self.find_by_wfid_ (wfid)
 
+    def self.find_by_wfid_(wfid)
       find(
         :all,
-        :conditions => [
+        conditions: [
           'wfid LIKE ? ',
-          "#{wfid}%" ])
+          "#{wfid}%"
+        ]
+      )
     end
 
     #
     # a very naive search functionality
     #
-    def self.search (query, store_names)
-
+    def self.search(query, store_names)
       query = query.split(' ').first
 
       i = query.index(':')
 
       query = if i == query.length - 1
-        "%|#{query}%"
-      elsif i != nil and i != 0
-        "%|#{query}|%"
-      else
-        "%#{query}|%"
+                "%|#{query}%"
+              elsif !i.nil? && (i != 0)
+                "%|#{query}|%"
+              else
+                "%#{query}|%"
       end
 
-      conditions = [ 'keywords LIKE ?', query ]
+      conditions = ['keywords LIKE ?', query]
 
-      if store_names and not (store_names.empty?)
+      if store_names && !store_names.empty?
         conditions[0] = "#{conditions[0]} AND store_name IN (?)"
         conditions << store_names
       end
 
-      #p conditions
+      # p conditions
 
-      find(:all, :conditions => conditions)
+      find(:all, conditions: conditions)
     end
 
     protected
 
-    def self.flatten_keywords (h, participant_name)
-
+    def self.flatten_keywords(h, participant_name)
       h = h.merge('participant' => participant_name) if participant_name
 
       fk(h).gsub(/\|+/, '|')
     end
 
-    def self.fk (o)
-
+    def self.fk(o)
       if o.is_a?(Hash)
         "|#{o.collect { |k, v| "#{fk(k)}:#{fk(v)}" }.join('|')}|"
       elsif o.is_a?(Array)
-        "|#{o.collect { |e| fk(e)}.join('|')}|"
+        "|#{o.collect { |e| fk(e) }.join('|')}|"
       else
-        o.to_s.gsub('|', '').gsub(':', '')
+        o.to_s.delete('|').delete(':')
       end
     end
   end
@@ -293,7 +284,7 @@ module OpenWFE::Extras
 
     attr_reader :store_name
 
-    def initialize (store_name=nil)
+    def initialize(store_name = nil)
       super()
       @store_name = store_name
     end
@@ -301,18 +292,16 @@ module OpenWFE::Extras
     ##
     ## Forces ruote to not spawn a thread when dispatching to this participant.
     ##
-    #def do_not_thread
+    # def do_not_thread
     #  true
-    #end
+    # end
 
-    def consume (workitem)
+    def consume(workitem)
       ArWorkitem.from_owfe_workitem(workitem, @store_name)
     end
 
-    def cancel (cancelitem)
-      ArWorkitem.destroy_all([ 'fei = ?', cancelitem.fei.to_s ])
+    def cancel(cancelitem)
+      ArWorkitem.destroy_all(['fei = ?', cancelitem.fei.to_s])
     end
   end
-
 end
-

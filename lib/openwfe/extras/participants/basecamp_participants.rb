@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2008-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,52 +24,47 @@
 # Made in Japan.
 #++
 
-
 require 'openwfe/participants/participants'
 require 'openwfe/extras/misc/basecamp'
 
-
 module OpenWFE
-module Extras
+  module Extras
+    class BasecampParticipant
+      include OpenWFE::LocalParticipant
+      include OpenWFE::TemplateMixin
 
-  class BasecampParticipant
-    include OpenWFE::LocalParticipant
-    include OpenWFE::TemplateMixin
+      def initialize(params, &block)
+        super()
 
-    def initialize (params, &block)
+        @template = params[:template]
+        @block_template = block
 
-      super()
+        @company_id = params[:company_id]
+        # @object_plm_id = params[:project_id]
 
-      @template = params[:template]
-      @block_template = block
+        @responsible_party_id = params[:responsible_party_id]
+        @todo_list_id = params[:todo_list_id]
 
-      @company_id = params[:company_id]
-      #@object_plm_id = params[:project_id]
+        ssl = params[:ssl]
+        ssl = true if ssl.nil?
 
-      @responsible_party_id = params[:responsible_party_id]
-      @todo_list_id = params[:todo_list_id]
+        @camp = Basecamp.new(
+          params[:host], params[:username], params[:password], ssl
+        )
+      end
 
-      ssl = params[:ssl]
-      ssl = true if ssl == nil
+      def consume(workitem)
+        text = workitem['todo_text'] || eval_template(wi)
 
-      @camp = Basecamp.new(
-        params[:host], params[:username], params[:password], ssl)
-    end
+        resp = workitem['todo_responsible_party'] || @responsible_party_id
+        list = workitem['toto_list_id'] || @todo_list_id
 
-    def consume (workitem)
+        todo = @camp.create_item list, text, resp
 
-      text = workitem['todo_text'] || eval_template(wi)
+        workitem['todo_id'] = todo.id
 
-      resp = workitem['todo_responsible_party'] || @responsible_party_id
-      list = workitem['toto_list_id'] || @todo_list_id
-
-      todo = @camp.create_item list, text, resp
-
-      workitem['todo_id'] = todo.id
-
-      reply_to_engine workitem
-    end
+        reply_to_engine workitem
+      end
+  end
   end
 end
-end
-

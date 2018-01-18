@@ -4,8 +4,6 @@ en:
   ui_table_not_define: Table not existing for controller %{controller} and action %{action} , see the administrator
   label_father: Father
   label_father_tr: Father
-  label_next: Next
-  label_previous: Previous
   label_owner: Owner
   label_name_translate: Name
   window_details_hide: Hide détails

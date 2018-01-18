@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2008-2009, Kenneth Kalmer, opensourcery.co.za
 #
@@ -22,8 +24,6 @@
 # Made in Africa. Kenneth Kalmer of opensourcery.co.za
 #++
 
-
-require 'thread'
 require 'yaml'
 
 require 'openwfe/util/xml'
@@ -34,7 +34,6 @@ require 'openwfe/extras/misc/jabber_common'
 
 module OpenWFE
   module Extras
-
     #
     # Use Jabber (XMPP) during a workflow to communicate with people/processes
     # outside the running engine in an asynchrous fashion.
@@ -44,59 +43,60 @@ module OpenWFE
       include Rufus::Schedulable
       include OpenWFE::Extras::JabberCommon
 
-      def initialize( service_name, options )
-
+      def initialize(service_name, options)
         @mutex = Mutex.new
 
-        configure_jabber!( options )
+        configure_jabber!(options)
 
         service_name = "#{self.class}::#{self.class.jabber_id}"
-        super( service_name, options )
+        super(service_name, options)
 
         connect!
         setup_roster!
       end
 
-      def trigger( params )
+      def trigger(_params)
         @mutex.synchronize do
+          ldebug { 'trigger()' }
 
-          ldebug { "trigger()" }
-
-          self.connection.received_messages do |message|
+          connection.received_messages do |message|
             busy do
               ldebug { "processing message: #{message.inspect}" }
               # the sender must be on our roster
 
-              workitem = decode_workitem( message.body )
+              workitem = decode_workitem(message.body)
               ldebug { "workitem: #{workitem.inspect}" }
-              handle_item( workitem )
+              handle_item(workitem)
             end
           end
         end
       end
 
       def stop
-      	
-      debug { "sylrplm:stop disconnect" }
-        self.connection.disconnect rescue nil
+        debug { 'sylrplm:stop disconnect' }
+        begin
+        connection.disconnect
+      rescue StandardError
+        nil
+      end
       end
 
       protected
 
       # Complicated guesswork that needs to happen here to detect the format
-      def decode_workitem( msg )
+      def decode_workitem(msg)
         ldebug { "decoding workitem from: #{msg}" }
 
         # YAML?
         if msg.index('ruby/object:OpenWFE::InFlowWorkItem')
-          YAML.load( msg )
+          YAML.safe_load(msg)
         # XML?
         elsif msg =~ /^<.*>$/m
-          OpenWFE::Xml.workitem_from_xml( msg )
+          OpenWFE::Xml.workitem_from_xml(msg)
         # Assume JSON encoded Hash
         else
           hash = defined?(ActiveSupport::JSON) ? ActiveSupport::JSON.decode(msg) : JSON.parse(msg)
-          OpenWFE.workitem_from_h( hash )
+          OpenWFE.workitem_from_h(hash)
         end
       end
     end

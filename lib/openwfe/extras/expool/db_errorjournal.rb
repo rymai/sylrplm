@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, Tomaso Tosolini, John Mettraux, OpenWFE.org
 #
@@ -22,14 +24,11 @@
 # Made in Italy.
 #++
 
-
 require 'openwfe/omixins'
 require 'openwfe/expool/errorjournal'
 require 'openwfe/extras/singlecon'
 
-
 module OpenWFE::Extras
-
   #
   # A migration for creating/dropping the "process errors" table, the
   # content of this table makes up for an error journal.
@@ -38,18 +37,15 @@ module OpenWFE::Extras
   # easily rebuilt by doing find_all_by_wfid().
   #
   class ProcessErrorTables < ActiveRecord::Migration
-
     def self.up
-
       create_table :process_errors do |t|
-
         t.column :created_at, :timestamp
-        t.column :wfid, :string, :null => false
-        t.column :expid, :string, :null => false
+        t.column :wfid, :string, null: false
+        t.column :expid, :string, null: false
 
-        t.column :svalue, :text, :null => false
-          # 'value' could be reserved, using 'svalue' instead
-          # It stands for 'serialized value'.
+        t.column :svalue, :text, null: false
+        # 'value' could be reserved, using 'svalue' instead
+        # It stands for 'serialized value'.
       end
       add_index :process_errors, :created_at
       add_index :process_errors, :wfid
@@ -57,7 +53,6 @@ module OpenWFE::Extras
     end
 
     def self.down
-
       drop_table :process_errors
     end
   end
@@ -68,7 +63,7 @@ module OpenWFE::Extras
   class ProcessError < ActiveRecord::Base
     include SingleConnectionMixin
 
-    #serialize :svalue, OpenWFE::ProcessError
+    # serialize :svalue, OpenWFE::ProcessError
     serialize :svalue
 
     #
@@ -76,7 +71,6 @@ module OpenWFE::Extras
     # (but takes care of setting its db_id)
     #
     def as_owfe_error
-
       result = svalue
       class << result
         attr_accessor :db_id
@@ -85,7 +79,7 @@ module OpenWFE::Extras
       result
     end
 
-    alias :owfe_error :as_owfe_error
+    alias owfe_error as_owfe_error
   end
 
   #
@@ -100,23 +94,21 @@ module OpenWFE::Extras
     # Returns the error log for a given workflow/process instance,
     # the older error first.
     #
-    def get_error_log (wfid)
-
-puts "debut DbErrorJournal.get_error_log:"+wfid
+    def get_error_log(wfid)
+      puts 'debut DbErrorJournal.get_error_log:' + wfid
       wfid = extract_wfid(wfid, true)
-      errors = ProcessError.find_all_by_wfid(wfid, :order => 'id asc')
-      puts "DbErrorJournal.get_error_log avant errors.collect:"+wfid
-      ret=errors.collect { |e| e.as_owfe_error }
-      puts "fin DbErrorJournal.get_error_log:"+wfid+":"+ret.inspect
+      errors = ProcessError.find_all_by_wfid(wfid, order: 'id asc')
+      puts 'DbErrorJournal.get_error_log avant errors.collect:' + wfid
+      ret = errors.collect(&:as_owfe_error)
+      puts 'fin DbErrorJournal.get_error_log:' + wfid + ':' + ret.inspect
       ret
     end
 
     #
     # Erases all the errors for one given workflow/process instance.
     #
-    def remove_error_log (wfid)
-
-      ProcessError.destroy_all([ 'wfid = ?', wfid ])
+    def remove_error_log(wfid)
+      ProcessError.destroy_all(['wfid = ?', wfid])
     end
 
     #
@@ -124,9 +116,8 @@ puts "debut DbErrorJournal.get_error_log:"+wfid
     # each workflow/process instance that encountered an error.
     #
     def get_error_logs
-
-      ProcessError.find(:all).inject({}) do |h, e|
-        (h[e.wfid] ||= []) << e.as_owfe_error; h
+      ProcessError.find(:all).each_with_object({}) do |e, h|
+        (h[e.wfid] ||= []) << e.as_owfe_error
       end
     end
 
@@ -134,8 +125,7 @@ puts "debut DbErrorJournal.get_error_log:"+wfid
     # Removes a set of errors. This is used by the expool when
     # resuming a previously broken process instance.
     #
-    def remove_errors (wfid, errors)
-
+    def remove_errors(_wfid, errors)
       Array(errors).each do |e|
         ProcessError.delete(e.db_id)
       end
@@ -143,27 +133,25 @@ puts "debut DbErrorJournal.get_error_log:"+wfid
 
     # _syl_ protected
 
-      #
-      # This is the inner method used by the error journal to
-      # record a process error (instance of OpenWFE::ProcessError)
-      # that it observed in the expression pool.
-      #
-      # This method will throw an exception in case of trouble with
-      # the database.
-      #
-      def record_error (process_error)
+    #
+    # This is the inner method used by the error journal to
+    # record a process error (instance of OpenWFE::ProcessError)
+    # that it observed in the expression pool.
+    #
+    # This method will throw an exception in case of trouble with
+    # the database.
+    #
+    def record_error(process_error)
+      e = OpenWFE::Extras::ProcessError.new
 
-        e = OpenWFE::Extras::ProcessError.new
+      e.created_at = process_error.date
+      # making sure they are, well, in sync
 
-        e.created_at = process_error.date
-          # making sure they are, well, in sync
+      e.wfid = process_error.wfid
+      e.expid = process_error.fei.expid
+      e.svalue = process_error
 
-        e.wfid = process_error.wfid
-        e.expid = process_error.fei.expid
-        e.svalue = process_error
-
-        e.save_without_transactions!
-      end
+      e.save_without_transactions!
+    end
   end
 end
-

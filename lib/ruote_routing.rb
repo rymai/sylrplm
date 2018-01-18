@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2008-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -28,73 +30,82 @@ module ActionController
   module Routing
     class RouteSet
       class Mapper
-        def wfid_resources (controller_name)
-
+        def wfid_resources(controller_name)
           controller_name = controller_name.to_s
 
           # GET
           #
           connect(
-      controller_name,
-      :controller => controller_name,
-      :action => 'index',
-      :conditions => { :method => :get })
+            controller_name,
+            controller: controller_name,
+            action: 'index',
+            conditions: { method: :get }
+          )
           connect(
-      "#{controller_name}.:format",
-      :controller => controller_name,
-      :action => 'index',
-      :conditions => { :method => :get })
+            "#{controller_name}.:format",
+            controller: controller_name,
+            action: 'index',
+            conditions: { method: :get }
+          )
 
           connect(
-      "#{controller_name}/:wfid",
-      :controller => controller_name,
-      :action => 'index',
-      :conditions => { :method => :get })
+            "#{controller_name}/:wfid",
+            controller: controller_name,
+            action: 'index',
+            conditions: { method: :get }
+          )
 
           connect(
-      "#{controller_name}/:wfid/:expid",
-      :controller => controller_name,
-      :action => 'show',
-      :conditions => { :method => :get })
+            "#{controller_name}/:wfid/:expid",
+            controller: controller_name,
+            action: 'show',
+            conditions: { method: :get }
+          )
           connect(
-      "#{controller_name}/:wfid/:expid.:format",
-      :controller => controller_name,
-      :action => 'show',
-      :conditions => { :method => :get })
+            "#{controller_name}/:wfid/:expid.:format",
+            controller: controller_name,
+            action: 'show',
+            conditions: { method: :get }
+          )
 
           connect(
-      "#{controller_name}/:wfid/:expid/edit",
-      :controller => controller_name,
-      :action => 'edit',
-      :conditions => { :method => :get })
+            "#{controller_name}/:wfid/:expid/edit",
+            controller: controller_name,
+            action: 'edit',
+            conditions: { method: :get }
+          )
 
           # (no POST)
 
           # PUT
           #
           connect(
-      "#{controller_name}/:wfid/:expid",
-      :controller => controller_name,
-      :action => 'update',
-      :conditions => { :method => :put })
+            "#{controller_name}/:wfid/:expid",
+            controller: controller_name,
+            action: 'update',
+            conditions: { method: :put }
+          )
           connect(
-      "#{controller_name}/:wfid/:expid.:format",
-      :controller => controller_name,
-      :action => 'update',
-      :conditions => { :method => :put })
+            "#{controller_name}/:wfid/:expid.:format",
+            controller: controller_name,
+            action: 'update',
+            conditions: { method: :put }
+          )
 
           # DELETE
           #
           connect(
-      "#{controller_name}/:wfid/:expid",
-      :controller => controller_name,
-      :action => 'destroy',
-      :conditions => { :method => :delete })
+            "#{controller_name}/:wfid/:expid",
+            controller: controller_name,
+            action: 'destroy',
+            conditions: { method: :delete }
+          )
           connect(
-      "#{controller_name}/:wfid/:expid.:format",
-      :controller => controller_name,
-      :action => 'destroy',
-      :conditions => { :method => :delete })
+            "#{controller_name}/:wfid/:expid.:format",
+            controller: controller_name,
+            action: 'destroy',
+            conditions: { method: :delete }
+          )
 
           #
           # paths and URLs
@@ -142,7 +153,7 @@ end
 # adding Links to models' to_xml / to_json
 #
 module LinksMixin
-  def to_xml (opts={})
+  def to_xml(opts = {})
     super(opts) do |xml|
       xml.links do
         links(opts).each { |l| xml.link(l) }
@@ -150,14 +161,13 @@ module LinksMixin
     end
   end
 
-  #def to_json (opts={})
+  # def to_json (opts={})
   #  super(opts.merge(:methods => :links))
-  #end
-  def to_json (opts={})
+  # end
+  def to_json(opts = {})
     js = ActiveRecord::Serialization::JsonSerializer.new(self, opts)
     sr = js.serializable_record
     sr['links'] = links(opts)
     sr.to_json
   end
 end
-

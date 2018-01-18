@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -36,9 +38,7 @@ require 'atom/collection' # gem 'atom-tools'
 
 require 'openwfe/participants/participant'
 
-
 module OpenWFE::Extras
-
   #
   # Stores the incoming workitem into an 'atom feed'
   #
@@ -93,30 +93,28 @@ module OpenWFE::Extras
     #
     attr_accessor :content_type
 
-    def initialize (max_item_count, template=nil, &block)
-
+    def initialize(max_item_count, template = nil, &block)
       super() # very important as this class includes MonitorMixin
 
       @template = template
       @max_item_count = max_item_count
       @block_template = block
 
-      @feed = Atom::Feed.new("http://localhost")
-      @content_type = "xhtml"
+      @feed = Atom::Feed.new('http://localhost')
+      @content_type = 'xhtml'
     end
 
-    def consume (workitem)
-
+    def consume(workitem)
       e = Atom::Entry.new
 
       e.id = \
-        "#{workitem.fei.workflow_instance_id}--" +
+        "#{workitem.fei.workflow_instance_id}--" \
         "#{workitem.fei.expression_id}"
 
       e.title = workitem.atom_entry_title
       e.content = render(workitem)
 
-      e.content["type"] = @content_type
+      e.content['type'] = @content_type
 
       @feed << e
 
@@ -130,29 +128,26 @@ module OpenWFE::Extras
 
     protected
 
-      #
-      # This base implementation simply calls the eval_template()
-      # method of the TemplateMixin.
-      # Feel free to override this render() method for custom
-      # representations.
-      #
-      def render (workitem)
+    #
+    # This base implementation simply calls the eval_template()
+    # method of the TemplateMixin.
+    # Feel free to override this render() method for custom
+    # representations.
+    #
+    def render(workitem)
+      eval_template workitem
+    end
 
-        eval_template workitem
+    #
+    # For the moment, just dumps the feed into a file.
+    #
+    def publish(workitem)
+      synchronize do
+        filename = "work/atom_#{workitem.participant_name}.xml"
+        f = File.open(filename, 'w')
+        f << @feed.to_s
+        f.close
       end
-
-      #
-      # For the moment, just dumps the feed into a file.
-      #
-      def publish (workitem)
-        synchronize do
-          filename = "work/atom_#{workitem.participant_name}.xml"
-          f = File.open(filename, "w")
-          f << @feed.to_s
-          f.close()
-        end
-      end
+    end
   end
-
 end
-

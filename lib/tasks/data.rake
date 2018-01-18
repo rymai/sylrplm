@@ -1,19 +1,19 @@
 
-namespace :data do
+# frozen_string_literal: true
 
+namespace :data do
   require 'active_record'
-  #TODO syl require 'active_record/fixtures'
+  # TODO: syl require 'active_record/fixtures'
 
   #
   # Populates the development database with the data found under db/dev_fixtures
   #
   #   rake data:populate
   #
-  task :populate => :environment do
-
-    #TODO syl Fixtures.create_fixtures(
-    #TODO syl   'db/dev_fixtures',
-    #TODO syl   %w{ users groups user_groups definitions group_definitions })
+  task populate: :environment do
+    # TODO: syl Fixtures.create_fixtures(
+    # TODO syl   'db/dev_fixtures',
+    # TODO syl   %w{ users groups user_groups definitions group_definitions })
 
     puts
     puts "loaded #{User.find(:all).size} users"
@@ -29,7 +29,7 @@ namespace :data do
   ##
   ##   rake data:bootstrap
   ##
-  #task :bootstrap do
+  # task :bootstrap do
 
   #  db = 'rw2_development'
   #  db_admin_user = 'root'
@@ -42,6 +42,5 @@ namespace :data do
   #  rm_rf [ 'work_test', 'work_development' ]
   #  sh 'rm log/*.log'
   #  touch 'log/development.log'
-  #end
+  # end
 end
-

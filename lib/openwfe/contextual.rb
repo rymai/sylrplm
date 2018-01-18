@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2006-2009, John Mettraux, Nicolas Modrzyk OpenWFE.org
 #
@@ -23,26 +25,23 @@
 #++
 
 module OpenWFE
-
   #
   # This mixin helds an application_context field and provides a
   # lookup method for digging into that context.
   #
   module Contextual
-
     attr_accessor :application_context
 
-    alias :ac :application_context
+    alias ac application_context
 
     #
     # Looks up something in the application context, if the given
     # key is a class, then the first value in the context of that
     # class is returned.
     #
-    def lookup (key)
-
-      if key.kind_of?(Class)
-        @application_context.each do |k, value|
+    def lookup(key)
+      if key.is_a?(Class)
+        @application_context.each do |_k, value|
           return value if value.class == key
         end
         return nil
@@ -57,8 +56,7 @@ module OpenWFE
     # The service_name can be a String or a Symbol (which will be
     # turned into a String).
     #
-    def init_service (service_name, service_class)
-
+    def init_service(service_name, service_class)
       if service_name
         #
         # if there is a service previously registered under the same name,
@@ -87,17 +85,16 @@ module OpenWFE
     # Returns the work directory for the OpenWFE[ru] application context
     # (if any).
     #
-    def get_work_directory (context_or_dir=nil)
-
+    def get_work_directory(context_or_dir = nil)
       dir = if context_or_dir.is_a?(String)
-        context_or_dir
-      elsif context_or_dir.respond_to?(:[])
-        context_or_dir[:work_directory]
-      else
-        @application_context[:work_directory] if @application_context
+              context_or_dir
+            elsif context_or_dir.respond_to?(:[])
+              context_or_dir[:work_directory]
+            else
+              @application_context[:work_directory] if @application_context
       end
 
-      dir = DEFAULT_WORK_DIRECTORY unless dir
+      dir ||= DEFAULT_WORK_DIRECTORY
 
       FileUtils.makedirs(dir) unless File.exist?(dir)
 
@@ -108,13 +105,11 @@ module OpenWFE
 
     protected
 
-    def copy_pooltool (dir)
+    def copy_pooltool(dir)
       target = dir + '/pooltool.ru'
       return if File.exist?(target)
       source = File.dirname(__FILE__) + '/../pooltool.ru'
       # FileUtils.cp(source, target)
     end
-
   end
 end
-

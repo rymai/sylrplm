@@ -4,8 +4,6 @@ fr:
   ui_table_not_define: Table absente pour le  controller %{controller} et l'action %{action} , contacter l' administrateur
   label_father: Père
   label_father_tr: Père
-  label_next: Suite
-  label_previous: Précédent
   label_owner: Propriétaire
   label_name_translate: Nom
   window_details_hide: Cacher détails

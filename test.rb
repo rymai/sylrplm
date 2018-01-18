@@ -1,3 +1,5 @@
-#require 'base64'
+# frozen_string_literal: true
 
-puts Marshal.dump("test")
+# require 'base64'
+
+puts Marshal.dump('test')

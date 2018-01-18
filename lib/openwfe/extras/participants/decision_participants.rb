@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,92 +24,85 @@
 # Made in Japan.
 #++
 
-
-#require 'rubygems'
+# require 'rubygems'
 require 'rufus/decision' # gem 'rufus-decision'
 
 require 'openwfe/utils'
 require 'openwfe/util/dollar'
 require 'openwfe/participants/participant'
 
-
 module OpenWFE
-module Extras
-
-  #
-  # Using CSV files to transform workitems
-  # This concept is called "decision participant" in OpenWFEja, here
-  # it's simply called "csv participant".
-  #
-  # See CsvTable for an explanation of the core concept behind a
-  # CsvParticipant
-  #
-  # An example :
-  #
-  #   class TestDefinition0 < ProcessDefinition
-  #     sequence do
-  #       set :field => "weather", :value => "cloudy"
-  #       set :field => "month", :value => "may"
-  #       decision
-  #       _print "${f:take_umbrella?}"
-  #     end
-  #   end
-  #
-  #
-  #   csvParticipant = CsvParticipant.new(
-  #   """
-  #   in:weather, in:month, out:take_umbrella?
-  #   ,,
-  #   raining,  ,     yes
-  #   sunny,    ,     no
-  #   cloudy,   june,   yes
-  #   cloudy,   may,    yes
-  #   cloudy,   ,     no
-  #   """)
-  #
-  #   engine.register_participant("decision", csvParticipant)
-  #
-  #   # ...
-  #
-  #   engine.launch(new OpenWFE::LaunchItem(TestDefinition0)
-  #
-  # Note that the CsvParticipant constructor also accepts a block.
-  #
-  class CsvParticipant
-    include LocalParticipant
-
-    attr_accessor :csv_table
-
+  module Extras
     #
-    # Builds a new CsvParticipant instance, csv_data or the block
-    # may contain a File instance, a String or an Array of Array of
-    # String instances.
+    # Using CSV files to transform workitems
+    # This concept is called "decision participant" in OpenWFEja, here
+    # it's simply called "csv participant".
     #
-    def initialize (csv_data=nil, &block)
-
-      super()
-
-      csv_data = block.call if block
-
-      @csv_table = Rufus::DecisionTable.new csv_data
-    end
-
+    # See CsvTable for an explanation of the core concept behind a
+    # CsvParticipant
     #
-    # This is the method called by the engine (actually the
-    # ParticipantExpression) when handling a workitem to this participant.
+    # An example :
     #
-    def consume (workitem)
+    #   class TestDefinition0 < ProcessDefinition
+    #     sequence do
+    #       set :field => "weather", :value => "cloudy"
+    #       set :field => "month", :value => "may"
+    #       decision
+    #       _print "${f:take_umbrella?}"
+    #     end
+    #   end
+    #
+    #
+    #   csvParticipant = CsvParticipant.new(
+    #   """
+    #   in:weather, in:month, out:take_umbrella?
+    #   ,,
+    #   raining,  ,     yes
+    #   sunny,    ,     no
+    #   cloudy,   june,   yes
+    #   cloudy,   may,    yes
+    #   cloudy,   ,     no
+    #   """)
+    #
+    #   engine.register_participant("decision", csvParticipant)
+    #
+    #   # ...
+    #
+    #   engine.launch(new OpenWFE::LaunchItem(TestDefinition0)
+    #
+    # Note that the CsvParticipant constructor also accepts a block.
+    #
+    class CsvParticipant
+      include LocalParticipant
 
-      fe = get_flow_expression workitem
+      attr_accessor :csv_table
 
-      @csv_table.transform!(FlowDict.new(fe, workitem, 'f'))
+      #
+      # Builds a new CsvParticipant instance, csv_data or the block
+      # may contain a File instance, a String or an Array of Array of
+      # String instances.
+      #
+      def initialize(csv_data = nil, &block)
+        super()
+
+        csv_data = yield if block
+
+        @csv_table = Rufus::DecisionTable.new csv_data
+      end
+
+      #
+      # This is the method called by the engine (actually the
+      # ParticipantExpression) when handling a workitem to this participant.
+      #
+      def consume(workitem)
+        fe = get_flow_expression workitem
+
+        @csv_table.transform!(FlowDict.new(fe, workitem, 'f'))
         #
         # default_prefix set to 'f'
 
-      reply_to_engine workitem
+        reply_to_engine workitem
+      end
     end
-  end
-
+    end
 end
-end
-

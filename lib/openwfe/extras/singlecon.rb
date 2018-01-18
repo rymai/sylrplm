@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,38 +24,29 @@
 # Made in Japan.
 #++
 
-
-#require_gem 'activerecord'
-#gem 'activerecord'; require 'active_record'
+# require_gem 'activerecord'
+# gem 'activerecord'; require 'active_record'
 require 'active_record'
 
-
 module OpenWFE
-module Extras
-
-  #
-  # Dumber connection management for records that need to be manipulated outside
-  # of the HTTP request circuit (where Rails takes care of everything).
-  #
-  module SingleConnectionMixin
-
-    def self.included (target_module)
-
-      target_module.module_eval do
-
-        def self.connection
-         #rails2  ActiveRecord::Base.verify_active_connections!
-          #ActiveRecord::Base.verify_active_connections!
-          @@connection ||= ActiveRecord::Base.connection_pool.checkout
-		#puts "#{__FILE__} : connection active= #{connection.active?}"
-          @@connection.active? || @@connection.reconnect!
-          @@connection
+  module Extras
+    #
+    # Dumber connection management for records that need to be manipulated outside
+    # of the HTTP request circuit (where Rails takes care of everything).
+    #
+    module SingleConnectionMixin
+      def self.included(target_module)
+        target_module.module_eval do
+          def self.connection
+            # rails2  ActiveRecord::Base.verify_active_connections!
+            # ActiveRecord::Base.verify_active_connections!
+            @@connection ||= ActiveRecord::Base.connection_pool.checkout
+            # puts "#{__FILE__} : connection active= #{connection.active?}"
+            @@connection.active? || @@connection.reconnect!
+            @@connection
         end
+        end
+    end
       end
     end
-
-  end
-
 end
-end
-

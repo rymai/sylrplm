@@ -1,50 +1,52 @@
+# frozen_string_literal: true
+
 require 'test_helper'
 
 class StatusobjectsControllerTest < ActionController::TestCase
-  test "should get index" do
+  test 'should get index' do
     login_as_admin(@request)
     get :index
     assert_response :success
     assert_not_nil assigns(:statusobjects)
   end
 
-  test "should get new" do
+  test 'should get new' do
     login_as_admin(@request)
     get :new
     assert_response :success
   end
 
-  test "should create statusobject" do
+  test 'should create statusobject' do
     login_as_admin(@request)
     assert_difference('Statusobject.count') do
-      post :create, :statusobject => {:forobject=>"part", :name=>"good", :rank=>1, :typesobject_id=>1045584116 }
+      post :create, statusobject: { forobject: 'part', name: 'good', rank: 1, typesobject_id: 1_045_584_116 }
     end
     assert_response :success
-    #assert_redirected_to statusobject_path(assigns(:statusobject))
+    # assert_redirected_to statusobject_path(assigns(:statusobject))
   end
 
-  test "should show statusobject" do
+  test 'should show statusobject' do
     login_as_admin(@request)
-    get :show, :id => statusobjects(:Statusobject_5).to_param
+    get :show, id: statusobjects(:Statusobject_5).to_param
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     login_as_admin(@request)
-    get :edit, :id => statusobjects(:Statusobject_5).to_param
+    get :edit, id: statusobjects(:Statusobject_5).to_param
     assert_response :success
   end
 
-  test "should update statusobject" do
+  test 'should update statusobject' do
     login_as_admin(@request)
-    put :update, :id => statusobjects(:Statusobject_5).to_param, :statusobject => { }
+    put :update, id: statusobjects(:Statusobject_5).to_param, statusobject: {}
     assert_response :success
   end
 
-  test "should destroy statusobject" do
+  test 'should destroy statusobject' do
     login_as_admin(@request)
     assert_difference('Statusobject.count', -1) do
-      delete :destroy, :id => statusobjects(:Statusobject_5).to_param
+      delete :destroy, id: statusobjects(:Statusobject_5).to_param
     end
     assert_redirected_to statusobjects_path
   end

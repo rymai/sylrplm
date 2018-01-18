@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,14 +24,11 @@
 # Made in Japan.
 #++
 
-
 require 'openwfe/service'
 require 'openwfe/omixins'
 require 'openwfe/rudefinitions'
 
-
 module OpenWFE
-
   #
   # A Mixin for history modules
   #
@@ -54,10 +53,9 @@ module OpenWFE
       #:apply,
       #:reply,
       #:reply_to_parent, # expression replies to its parent expression
-    ]
+    ].freeze
 
-    def service_init (service_name, application_context)
-
+    def service_init(service_name, application_context)
       super
 
       @expool_observer = get_expression_pool.add_observer(:all) do |evt, *args|
@@ -72,7 +70,6 @@ module OpenWFE
     # Mainly, stops observing the expool and the participant map
     #
     def stop
-
       super
 
       stop_observing
@@ -81,24 +78,23 @@ module OpenWFE
     #
     # filter events, eventually logs them
     #
-    def handle (source, event, *args)
-
+    def handle(source, event, *args)
       # filtering expool events
 
-      return if source == :expool and (not EXPOOL_EVENTS.include?(event))
+      return if (source == :expool) && !EXPOOL_EVENTS.include?(event)
 
       # normalizing pmap events
 
-      return if source == :pmap and args.first == :after_consume
+      return if (source == :pmap) && (args.first == :after_consume)
 
-      if source == :pmap and (not event.is_a?(Symbol))
+      if (source == :pmap) && !event.is_a?(Symbol)
         return if args.first == :apply
         e = event
         event = args.first
         args[0] = e
       end
-        # have to do that swap has pmap uses the participant name as
-        # a "channel name"
+      # have to do that swap has pmap uses the participant name as
+      # a "channel name"
 
       # ok, do log now
 
@@ -108,18 +104,15 @@ module OpenWFE
     #
     # the logging job itself
     #
-    def log (source, event, *args)
-
-      raise NotImplementedError.new(
-        "please provide an implementation of log(source, event, *args)")
+    def log(_source, _event, *_args)
+      raise NotImplementedError, 'please provide an implementation of log(source, event, *args)'
     end
 
     #
     # scans the arguments of the event to determine the fei
     # (flow expression id) related to the event
     #
-    def get_fei (args)
-
+    def get_fei(args)
       args.each do |a|
         return a.fei if a.respond_to?(:fei)
         return a if a.is_a?(FlowExpressionId)
@@ -131,57 +124,50 @@ module OpenWFE
     #
     # builds a 'message' string out of the event / args combination
     #
-    def get_message (source, event, args)
-
-      args.inject([]) { |r, a|
-        r << a if a.is_a?(Symbol) or a.is_a?(String)
-        r
-      }.join(' ')
+    def get_message(_source, _event, args)
+      args.each_with_object([]) do |a, r|
+        r << a if a.is_a?(Symbol) || a.is_a?(String)
+      end.join(' ')
     end
 
     #
     # returns the workitem among the logged args
     #
-    def get_workitem (args)
-
+    def get_workitem(args)
       args.find { |a| a.is_a?(WorkItem) }
     end
 
     protected
 
-      #
-      # Removes the observers on the expool and the participant map
-      #
-      # (called by stop())
-      #
-      def stop_observing
-
-        get_expression_pool.remove_observer(@expool_observer)
-        get_participant_map.remove_observer(@pmap_observer)
-      end
+    #
+    # Removes the observers on the expool and the participant map
+    #
+    # (called by stop())
+    #
+    def stop_observing
+      get_expression_pool.remove_observer(@expool_observer)
+      get_participant_map.remove_observer(@pmap_observer)
+    end
   end
 
   #
   # A base implementation for InMemoryHistory and FileHistory.
   #
   class History
-
     include HistoryMixin
 
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       super()
 
       service_init(service_name, application_context)
     end
 
-    def log (source, event, *args)
-
+    def log(source, event, *args)
       t = Time.now
 
-      msg = "#{t} .#{t.usec} -- #{source.to_s} #{event.to_s}"
+      msg = "#{t} .#{t.usec} -- #{source} #{event}"
 
-      msg << " #{get_fei(args).to_s}" if args.length > 0
+      msg << " #{get_fei(args)}" unless args.empty?
 
       m = get_message(source, event, args)
       msg << " #{m}" if m
@@ -195,14 +181,12 @@ module OpenWFE
   # entries in memory.
   #
   class InMemoryHistory < History
-
     #
     # the max number of history items stored. By default it's 1000
     #
     attr_accessor :maxsize
 
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       super
 
       @output = []
@@ -216,13 +200,10 @@ module OpenWFE
       @output
     end
 
-    def log (source, event, *args)
-
+    def log(source, event, *args)
       super
 
-      while @output.size > @maxsize
-        @output.shift
-      end
+      @output.shift while @output.size > @maxsize
     end
 
     #
@@ -239,9 +220,7 @@ module OpenWFE
   # Warning : no fancy rotation or compression implemented here.
   #
   class FileHistory < History
-
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       super
 
       @output = get_work_directory + '/history.log'
@@ -250,8 +229,7 @@ module OpenWFE
       linfo { "new() outputting history to #{@output.path}" }
     end
 
-    def log (source, event, *args)
-
+    def log(source, event, *args)
       super unless @output.closed?
     end
 
@@ -267,12 +245,9 @@ module OpenWFE
     # Stops observing the expool and close the output file
     #
     def stop
-
       stop_observing
 
       @output.close
     end
   end
-
 end
-

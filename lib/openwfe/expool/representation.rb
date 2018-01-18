@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2008-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,9 +24,7 @@
 # Made in Japan.
 #++
 
-
 module OpenWFE
-
   #
   # This module gets included into the result of the expression pool (and
   # engine) process_stack method (if the optional parameter 'unapplied' is
@@ -35,7 +35,6 @@ module OpenWFE
   # This representation is suitable for 'fluo' rendering.
   #
   module RepresentationMixin
-
     #
     # Computes and returns the up-to-date representation of
     # the process definition (on the fly changes included)
@@ -46,7 +45,6 @@ module OpenWFE
     # an Array of representations.
     #
     def tree
-
       get_updated_rep(find_root_expression)
     end
 
@@ -56,7 +54,6 @@ module OpenWFE
     # (Where as tree() includes 'in-flight' manipulations)
     #
     def initial_tree
-
       find_root_expression.raw_representation
     end
 
@@ -65,41 +62,38 @@ module OpenWFE
     # among the expressions in self (Array of FlowExpression instances).
     #
     def find_root_expression
-
-      self.find do |fexp|
+      find do |fexp|
         fexp.fei.expid == '0' &&
-        ( ! fexp.is_a?(OpenWFE::Environment)) &&
-        fexp.fei.is_in_parent_process?
+          !fexp.is_a?(OpenWFE::Environment) &&
+          fexp.fei.is_in_parent_process?
       end
     end
 
     #
     # Returns an expression given its FlowExpressionId.
     #
-    def find_expression (fei)
-
-      self.find { |fexp| fexp.fei == fei }
+    def find_expression(fei)
+      find { |fexp| fexp.fei == fei }
     end
 
     protected
 
-      #
-      # If a child expression is present (in the process stack)
-      # makes sure to take its current representation and include
-      # it in the parent representation.
-      #
-      def get_updated_rep (flow_expression)
+    #
+    # If a child expression is present (in the process stack)
+    # makes sure to take its current representation and include
+    # it in the parent representation.
+    #
+    def get_updated_rep(flow_expression)
+      rep = flow_expression.raw_representation.dup
+      rep[2] = rep[2].dup
 
-        rep = flow_expression.raw_representation.dup
-        rep[2] = rep[2].dup
-
-        (flow_expression.children || []).each do |fei|
-          fexp = find_expression(fei)
-          next unless fexp
-          rep[2][fei.child_id.to_i] = get_updated_rep(fexp)
-        end
-
-        rep
+      (flow_expression.children || []).each do |fei|
+        fexp = find_expression(fei)
+        next unless fexp
+        rep[2][fei.child_id.to_i] = get_updated_rep(fexp)
       end
+
+      rep
+    end
   end
 end

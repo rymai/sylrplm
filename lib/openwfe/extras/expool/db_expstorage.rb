@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2007-2009, Tomaso Tosolini, John Mettraux OpenWFE.org
 #
@@ -25,9 +27,7 @@
 require 'openwfe/expool/threaded_expstorage'
 require 'openwfe/extras/expool/ar_expstorage'
 
-
 module OpenWFE::Extras
-
   #
   # DEPRECATED !! use openwfe/extras/expool/ar_expstorage instead
   #
@@ -39,12 +39,10 @@ module OpenWFE::Extras
   # variants), have a look at work/pooltool.ru
   #
   class DbExpressionStorage < ArExpressionStorage
-
     #
     # Constructor.
     #
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       application_context[:persist_as_yaml] = true
 
       super
@@ -60,14 +58,12 @@ module OpenWFE::Extras
   class ThreadedDbExpressionStorage < DbExpressionStorage
     include OpenWFE::ThreadedStorageMixin
 
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       super
 
       start_queue
-        #
-        # which sets @thread_id
+      #
+      # which sets @thread_id
     end
   end
 end
-

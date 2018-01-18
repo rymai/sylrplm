@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2008-2009, John Mettraux, jmettraux@gmail.com
 #
@@ -22,15 +24,12 @@
 # Made in Japan.
 #++
 
-
 module HistoryHelper
-
- def view_link (entry, member)
-   if v = entry.send(member)
-     "<a href='#{url_for(:controller => 'history')}?#{member}=#{v}'>#{v}</a>"
-   else
-     ''
-   end
- end
+  def view_link(entry, member)
+    if v = entry.send(member)
+      "<a href='#{url_for(controller: 'history')}?#{member}=#{v}'>#{v}</a>"
+    else
+      ''
+    end
+  end
 end
-

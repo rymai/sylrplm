@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #--
 # Copyright (c) 2006-2009, Nicolas Modryzk and John Mettraux, OpenWFE.org
 #
@@ -22,16 +24,13 @@
 # Made in Japan.
 #++
 
-
 require 'rufus/lru'
 
 require 'openwfe/service'
 require 'openwfe/flowexpressionid'
 require 'openwfe/rudefinitions'
 
-
 module OpenWFE
-
   #
   # This module contains the observe_expool method which binds the
   # storage to the expression pool.
@@ -39,16 +38,14 @@ module OpenWFE
   # it.
   #
   module ExpressionStorageBase
-
     def observe_expool
-
       return unless get_expression_pool
 
-      get_expression_pool.add_observer(:update) do |channel, fei, fe|
+      get_expression_pool.add_observer(:update) do |_channel, fei, fe|
         self[fei] = fe
       end
-      get_expression_pool.add_observer(:remove) do |channel, fei|
-        self.delete(fei)
+      get_expression_pool.add_observer(:remove) do |_channel, fei|
+        delete(fei)
       end
     end
 
@@ -60,17 +57,15 @@ module OpenWFE
     # (especially when called against a cache).
     #
     def to_s
-
       s = "\n\n==== #{self.class} ===="
 
       find_expressions.each do |fexp|
-
         s << "\n"
-        if fexp.kind_of?(RawExpression)
-          s << "*raw"
-        else
-          s << "  "
-        end
+        s << if fexp.is_a?(RawExpression)
+               '*raw'
+             else
+               '  '
+             end
         s << fexp.fei.to_s
       end
       s << "\n==== . ====\n"
@@ -82,8 +77,7 @@ module OpenWFE
     # This method is used by the various implementations of
     # find_expressions()
     #
-    def does_match? (options, fexp_or_fei)
-
+    def does_match?(options, fexp_or_fei)
       wfid = options[:wfid]
       wfid_prefix = options[:wfid_prefix]
       parent_wfid = options[:parent_wfid]
@@ -102,9 +96,9 @@ module OpenWFE
       wi = options[:workitem]
 
       fexp, fei = if fexp_or_fei.is_a?(FlowExpressionId)
-        [ nil, fexp_or_fei ]
-      else
-        [ fexp_or_fei, fexp_or_fei.fei ]
+                    [nil, fexp_or_fei]
+                  else
+                    [fexp_or_fei, fexp_or_fei.fei]
       end
 
       #
@@ -114,30 +108,30 @@ module OpenWFE
 
       if fexp
 
-        return false if (ap == true and not fexp.apply_time)
-        return false if (ap == false and fexp.apply_time)
+        return false if (ap == true) && !fexp.apply_time
+        return false if (ap == false) && fexp.apply_time
 
         if wi == true
           return false unless fexp.respond_to?(:applied_workitem)
-          return false if fexp.applied_workitem == nil
+          return false if fexp.applied_workitem.nil?
         end
 
         return false unless class_accepted?(fexp, ic, ec)
       end
 
       return false \
-        if wfname and fei.wfname != wfname
+        if wfname && (fei.wfname != wfname)
       return false \
-        if wfrevision and fei.wfrevision != wfrevision
+        if wfrevision && (fei.wfrevision != wfrevision)
 
       return false \
-        if cs and fei.sub_instance_id != ''
+        if cs && (fei.sub_instance_id != '')
       return false \
-        if wfid and fei.wfid != wfid
+        if wfid && (fei.wfid != wfid)
       return false \
-        if wfid_prefix and not fei.wfid.match("^#{wfid_prefix}")
+        if wfid_prefix && !fei.wfid.match("^#{wfid_prefix}")
       return false \
-        if parent_wfid and not fei.parent_wfid == parent_wfid
+        if parent_wfid && (fei.parent_wfid != parent_wfid)
 
       true
     end
@@ -148,12 +142,11 @@ module OpenWFE
     #
     # include_classes has precedence of exclude_classes.
     #
-    def class_accepted? (fexp, include_classes, exclude_classes)
-
-      return false if include_classes and (not include_classes.find do |klazz|
+    def class_accepted?(fexp, include_classes, exclude_classes)
+      return false unless include_classes&.find do |klazz|
         fexp.is_a?(klazz)
-      end)
-      return false if exclude_classes and exclude_classes.find do |klazz|
+      end
+      return false if exclude_classes&.find do |klazz|
         fexp.is_a?(klazz)
       end
 
@@ -182,8 +175,7 @@ module OpenWFE
 
     DEFAULT_SIZE = 5000
 
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       super()
 
       service_init(service_name, application_context)
@@ -198,34 +190,31 @@ module OpenWFE
       observe_expool
     end
 
-    def [] (fei)
-
-      #ldebug { "[] size is #{@cache.size}" }
-      #ldebug { "[] (sz #{@cache.size}) for #{fei.to_debug_s}" }
+    def [](fei)
+      # ldebug { "[] size is #{@cache.size}" }
+      # ldebug { "[] (sz #{@cache.size}) for #{fei.to_debug_s}" }
 
       fe = @cache[fei.short_hash]
       return fe if fe
 
-      #ldebug { "[] (reload) for #{fei.to_debug_s}" }
+      # ldebug { "[] (reload) for #{fei.to_debug_s}" }
 
       fe = get_real_storage[fei]
 
       unless fe
-        #ldebug { "[] (reload) miss for #{fei.to_debug_s}" }
+        # ldebug { "[] (reload) miss for #{fei.to_debug_s}" }
         return nil
       end
 
       @cache[fei.short_hash] = fe
     end
 
-    def []= (fei, fe)
-
-      #ldebug { "[]= caching #{fei}" }
+    def []=(fei, fe)
+      # ldebug { "[]= caching #{fei}" }
       @cache[fei.short_hash] = fe
     end
 
-    def delete (fei)
-
+    def delete(fei)
       @cache.delete(fei.short_hash)
     end
 
@@ -233,27 +222,24 @@ module OpenWFE
     # returns the count of expressions currently cached here
     #
     def length
-
       @cache.length
     end
 
-    alias :size :length
+    alias size length
 
     def clear
-
       @cache.clear
     end
 
-    alias :purge :clear
+    alias purge clear
 
     #
     # This implementations of find_expressions() immediately passes
     # the call to the underlying real storage.
     #
-    def find_expressions (options={})
-
+    def find_expressions(options = {})
       options[:cache] = self
-#puts "*************** expstorage.find_expressions:options=#{options.count} ****************"
+      # puts "*************** expstorage.find_expressions:options=#{options.count} ****************"
 
       get_real_storage.find_expressions(options)
     end
@@ -262,11 +248,10 @@ module OpenWFE
     # Attempts at fetching the root expression of a given process
     # instance.
     #
-    def fetch_root (wfid)
-
-      @cache.values.find { |fexp|
-        fexp.fei.wfid == wfid and fexp.is_a?(DefineExpression)
-      } || get_real_storage.fetch_root(wfid)
+    def fetch_root(wfid)
+      @cache.values.find do |fexp|
+        (fexp.fei.wfid == wfid) && fexp.is_a?(DefineExpression)
+      end || get_real_storage.fetch_root(wfid)
     end
 
     #
@@ -274,8 +259,7 @@ module OpenWFE
     # Does not lookup in the underlying "real" storage (will therefore
     # return nil if the expression is not cached.
     #
-    def fetch (fei)
-
+    def fetch(fei)
       @cache[fei.short_hash]
     end
 
@@ -286,7 +270,6 @@ module OpenWFE
     # persistence behind this "cache storage".
     #
     def get_real_storage
-
       @application_context[:s_expression_storage__1]
     end
   end
@@ -302,25 +285,24 @@ module OpenWFE
     include OwfeServiceLocator
     include ExpressionStorageBase
 
-    def initialize (service_name, application_context)
-
+    def initialize(service_name, application_context)
       service_init(service_name, application_context)
 
       observe_expool
     end
 
-    alias :purge :clear
+    alias purge clear
 
     #--
-    #def [] (k)
+    # def [] (k)
     #  super(k.short_hash)
-    #end
-    #def []= (k, v)
+    # end
+    # def []= (k, v)
     #  super(k.short_hash, v)
-    #end
-    #def delete (k)
+    # end
+    # def delete (k)
     #  super(k.short_hash)
-    #end
+    # end
     #++
 
     #
@@ -365,8 +347,7 @@ module OpenWFE
     #   if this option is set to true, will only return the expressions
     #   that hold an 'applied_workitem' field (with a workitem in it)
     #
-    def find_expressions (options={})
-
+    def find_expressions(options = {})
       values.find_all { |fexp| does_match?(options, fexp) }
     end
 
@@ -374,11 +355,8 @@ module OpenWFE
     # Attempts at fetching the root expression of a given process
     # instance.
     #
-    def fetch_root (wfid)
-
-      find_expressions(:wfid => wfid, :include_classes => DefineExpression)[0]
+    def fetch_root(wfid)
+      find_expressions(wfid: wfid, include_classes: DefineExpression)[0]
     end
-
   end
-
 end
