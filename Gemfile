@@ -87,11 +87,11 @@ gem 'useragent', '0.16.8'
 
 gem 'letter_opener_web'
 gem "binding_of_caller"
-group :staging, :production do
+
+group :production do
   gem 'newrelic_rpm'
   # gem 'thin'
   # gem 'rack-ssl'
-  # gem 'newrelic_rpm'
 end
 
 group :development do
