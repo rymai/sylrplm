@@ -90,6 +90,7 @@ gem "binding_of_caller"
 
 group :production do
   gem 'scout_apm'
+  gem 'lograge'
   # gem 'thin'
   # gem 'rack-ssl'
 end
@@ -119,6 +120,7 @@ end
 # ######################sylrplm fin
 
 group :development, :test do
+  gem 'dotenv-rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   # gem 'byebug'
   gem 'rubocop', '~> 0.52.1', require: false

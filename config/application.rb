@@ -78,7 +78,7 @@ module Sylrplm
     # when problems arise.
     config.log_level = ENV.fetch('LOG_LEVEL', 'fatal')
 
-    config.action_mailer.delivery_method = ENV.fetch('LOG_LEVEL', 'letter_opener').to_sym
+    config.action_mailer.delivery_method = ENV.fetch('MAILER_DELIVERY_METHOD', 'letter_opener').to_sym
     config.action_mailer.default_url_options = { host: ENV['HOSTNAME'] }
 
     # dans session_store config.action_controller.session_store = :active_record_store
