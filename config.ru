@@ -4,4 +4,4 @@
 
 require ::File.expand_path('../config/environment', __FILE__)
 
-run Sylrplm::Application
+run Rails.application
