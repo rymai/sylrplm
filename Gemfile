@@ -89,7 +89,7 @@ gem 'letter_opener_web'
 gem "binding_of_caller"
 
 group :production do
-  gem 'newrelic_rpm'
+  gem 'scout_apm'
   # gem 'thin'
   # gem 'rack-ssl'
 end
