@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'dotenv/load'
+
+system "bundle exec unicorn_rails -p $PORT -c #{File.expand_path('../config/unicorn.rb', __dir__)}"

@@ -17,34 +17,17 @@
 
 - Créer la DB et générer des données de base:
   ```
-  # Seulement si changement de modele
-  bin/rake db:reset
-
-  # Recharger les données indispensables
-  bin/rake 'sylrplm:import_domain[db/custos/sicm,sicm.custo_base]'
-
-  # Recharger le parametrage de base
-  bin/rake 'sylrplm:import_domain[db/custos/sicm,sicm.custo]'
-
-  # Recharger un exemple de projet
-  bin/rake 'sylrplm:import_domain[db/custos/sicm,sample.table]'
+  bin/setup
 
   # Lancer le gestionnaire de taches:notifications
   bin/rake sylrplm:run_scheduler
   ```
-- Créer le fichier `.env` qui contient les variables d'environnement utilisées par l' app:
-    ```
-    cp .env.example .env
-    ```
 - Lancer l' app:
   ```
-  # Avec la Heroku toolbelt
-  heroku local
-
-  # ou sans
-  bin/rails server
+  bin/server
   ```
 - [Visiter `localhost:3000`](http://localhost:3000)
+- Pour afficher tous les logs de debug, metter `DEBUG=true` dans `.env`
 
 ### Voir les mails "envoyés" en développement ou en staging
 

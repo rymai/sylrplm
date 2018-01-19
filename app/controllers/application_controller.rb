@@ -20,7 +20,6 @@ class ApplicationController < ActionController::Base
   helper_method :get_html_options
 
   before_filter :run_debug
-  before_filter :check_init
   before_filter :authorize, except: [:index, :init_objects]
   before_filter :check_user
   before_filter :define_variables
@@ -201,19 +200,6 @@ class ApplicationController < ActionController::Base
     msg = nil if user.login == PlmServices.get_property(:USER_ADMIN)
     LOG.debug(fname) { "<<<<user=#{user} msg=#{msg}" }
     msg
-  end
-
-  def check_init
-    fname = "#{self.class.name}.#{__method__}"
-    LOG.debug(fname) { '>>>>' }
-    if User.count == 0
-      LOG.error(fname) { 'Database is empty (no user)' }
-      flash[:error] = t(:ctrl_init_to_do)
-      LOG.debug(fname) { "<<<<flash[:error]=#{flash[:error]}" }
-      respond_to do |format|
-        format.html { redirect_to_main(nil, 'check_init') }
-      end
-    end
   end
 
   def event

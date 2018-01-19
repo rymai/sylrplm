@@ -38,7 +38,7 @@ class Document < ActiveRecord::Base
   # rails2 has_many :thumbnails,  	:class_name => "Datafile",  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='thumbnail')"
   has_many :thumbnails, -> { where("typesobject_id=(select id from typesobjects as t where t.name='thumbnail')") }, class_name: 'Datafile'
 
-  has_many :checks
+  has_many :checks, -> { where(checkobject_plmtype: 'document') }, foreign_type: :checkobject_plmtype, foreign_key: :checkobject_id
 
   # rails2 has_many :links_document_forum,    :class_name => "Link",    :foreign_key => "father_id",    :conditions => { father_plmtype: 'document', child_plmtype: 'forum' }
   has_many :links_document_forums, -> { where(father_plmtype: 'document', child_plmtype: 'forum') }, class_name: 'Link', foreign_key: 'father_id'
@@ -196,7 +196,9 @@ class Document < ActiveRecord::Base
   end
 
   def checked?
-    Check.get_checkout(self).present?
+    return @checked if defined?(@checked)
+
+    @checked = checks.where(status: Check::CHECK_STATUS_OUT).any?
   end
 
   def variants

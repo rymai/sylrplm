@@ -15,8 +15,6 @@ NOLOGS = [
   'ArWorkitem.create_from_wi',
   'build_column',
   'build_text',
-  # "authorize",
-  'check_init',
   'check_user',
   'clipboard',
   'def_user',
@@ -64,7 +62,10 @@ NOLOGS = [
 
 ].freeze
 # NOLOGS=[]
-LOG.formatter = Classes::AppClasses::LogFormatter.new(NOLOGS)
+if ENV.fetch('DEBUG', false) == 'true'
+  LOG.formatter = Classes::AppClasses::LogFormatter.new(NOLOGS)
+end
+
 # @logger.datetime_format = "%Y-%m-%d %H:%M:%S"
 # DEBUG INFO WARN ERROR FATAL
 LOG.level = Logger.const_get(ENV.fetch('LOG_LEVEL', 'fatal').upcase)
@@ -78,7 +79,7 @@ end
 LOG.info ('sylrplm') { "env=#{Rails.env.inspect} loglevel=#{LOG.level}" }
 LOG.info ('sylrplm') { '--------------------------------------------' }
 
-if (true)
+if true
 	scheduler = Rufus::Scheduler.start_new
 	puts '*** Starting Scheduler ***'
 	# every day of the week at 21:00
