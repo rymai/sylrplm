@@ -67,17 +67,7 @@ NOLOGS = [
 LOG.formatter = Classes::AppClasses::LogFormatter.new(NOLOGS)
 # @logger.datetime_format = "%Y-%m-%d %H:%M:%S"
 # DEBUG INFO WARN ERROR FATAL
-LOG.level =
-  case Rails.env
-  when 'development'
-    Logger::DEBUG
-  when 'test', 'staging'
-    Logger::WARN
-  when 'production'
-    Logger::ERROR
-  else
-    Logger::FATAL
-  end
+LOG.level = Logger.const_get(ENV.fetch('LOG_LEVEL', 'fatal').upcase)
 LOG.info('sylrplm') { 'Lancement SYLRPLM' }
 LOG.progname = 'Constantes'
 LOG.info { 'Constantes du module SYLRPLM:' }
