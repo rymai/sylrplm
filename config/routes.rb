@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 # rails 4 ActionController::Routing::Routes.draw do |map|
 Rails.application.routes.draw do
-  if Rails.env.development? || Rails.env.staging?
+  if ENV['MAILER_DELIVERY_METHOD'] == 'letter_opener'
     mount LetterOpenerWeb::Engine, at: '/mails'
   end
 

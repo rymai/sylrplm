@@ -74,6 +74,13 @@ module Sylrplm
     # config.i18n.default_locale = :de
     config.i18n.default_locale = :fr
 
+    # Use the lowest log level to ensure availability of diagnostic information
+    # when problems arise.
+    config.log_level = ENV.fetch('LOG_LEVEL', 'fatal')
+
+    config.action_mailer.delivery_method = ENV.fetch('MAILER_DELIVERY_METHOD', 'letter_opener').to_sym
+    config.action_mailer.default_url_options = { host: ENV['HOSTNAME'] }
+
     # dans session_store config.action_controller.session_store = :active_record_store
 
     # #RUOTE_ENV = {:persist_as_yaml => false}

@@ -69,7 +69,10 @@ En staging, les mails ne sont pas ouverts automatiquement, mais toujours visible
   ```
   heroku push staging
 
-  # ou en production
+  # ou pour déployer une branche particulière en staging
+  heroku push staging ma_branche:master
+
+  # ou en production (seulement master donc ne jamais passer ma_branche:master)
   heroku push production
   ```
 - Lancer les migrations (si besoin):

@@ -17,8 +17,6 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.delivery_method = :letter_opener
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -49,21 +47,13 @@ Rails.application.configure do
 
 	# See everything in the log (default is :info)
 	#ActiveRecord::Base.logger = ActiveSupport::Logger.new(STDOUT)
-	config.log_level = :error
-#FATAL an unhandleable error that results in a program crash
-#ERROR a handleable error condition
-#WARN  a warning
-#INFO  generic (useful) information about system operation
-#DEBUG
-###config.http_authenticatable_on_xhr = false
-###config.navigational_formats = ["*/*", :html, :json, :js]
-#config.action_mailer.delivery_method = :smtp
-#config.action_mailer.perform_deliveries = true
-#config.action_mailer.logger = Logger.new(File.join(Rails.root, 'log', 'sylrplm_mail.log'), 'daily')
-# SMTP settings
-#config.action_mailer.smtp_settings = {
- #   address:"smtp.free.fr", port:25,    enable_starttls_auto: false,    authentication:       "plain",    user_name:  "sylvani",password: #"pa33zp62",domain: "sylrplm"
-#}
+  #FATAL an unhandleable error that results in a program crash
+  #ERROR a handleable error condition
+  #WARN  a warning
+  #INFO  generic (useful) information about system operation
+  #DEBUG
+  ###config.http_authenticatable_on_xhr = false
+  ###config.navigational_formats = ["*/*", :html, :json, :js]
 
   # Show full error reports and disable caching
   # config.action_view.debug_rjs                         = false
