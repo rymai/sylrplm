@@ -24,7 +24,8 @@ class Statusobject < ActiveRecord::Base
   attr_accessible :domain
 
   validates_presence_of :forobject, :name, :rank
-  validates_uniqueness_of :name, scope: :forobject, scope: :rank
+
+  validates_uniqueness_of :name, scope: [:forobject, :rank]
 
   has_many :documents
   has_many :parts
