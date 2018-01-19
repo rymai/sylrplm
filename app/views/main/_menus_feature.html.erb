@@ -5,6 +5,8 @@ mnu_feature=get_controller_from_model_type(feature)
 	<%= h_menu("#","help_#{mnu_feature}",t("mnu_#{mnu_feature}")) %>
 	<ul class="dropdown-menu">
 		<%types.each do |type|
+			next if type.nil?
+
 			LOG.debug("menus_feature") {"feature=#{feature} type=#{type}"}
 		mdl = get_controller_from_model_type(type.forobject)
 		help="help_#{mdl}_#{type.name}"

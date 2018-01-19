@@ -140,7 +140,6 @@ class Controller
           end
         end
       end
-      LOG.info(fname) { "avant sort:#{features_types[feature]}"}
       features_types[feature].sort! do |type1 , type2|
         mdl1 = type1.forobject+"s"
         mnu1=tr_def("mnu_#{mdl1}_#{type1.name}")
@@ -152,15 +151,12 @@ class Controller
       end
       generic_type = Typesobject.generic(feature)
       divider=Typesobject.new ({:name=>"divider",:forobject=>feature})
-      LOG.info(fname) { "generic_type for '#{feature}' = '#{generic_type.inspect}'"  }
       ret[feature]=[]
       ret[feature] << generic_type
       ret[feature] << divider
       features_types[feature].each do |menus|
         ret[feature] << menus
       end
-      LOG.info(fname) { "apres sort:"}
-      ret[feature].each { |typ| LOG.info(fname) { "type for #{feature} = #{typ.name}" } }
 
     end
     LOG.debug(fname) {"ret=#{ret}"}

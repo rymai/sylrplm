@@ -340,7 +340,6 @@ class DocumentsController < ApplicationController
     LOG.debug(fname) { "params[:id]=#{params[:id]} @object_plm=#{@object_plm}" }
     @tree         						= build_tree(@object_plm, @myparams[:view_id])
     @tree_up      						= build_tree_up(@object_plm, @myparams[:view_id])
-    @object_plm = @object_plm
     LOG.debug(fname) { "taille tree=#{@tree.size} flash=#{flash.inspect}" }
   end
 

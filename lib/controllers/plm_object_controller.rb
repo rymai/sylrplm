@@ -468,7 +468,7 @@ module Controllers
         LOG.debug(fname) { "object_plm=#{@object_plm} => portal" }
         params[:id] = @object_plm.id
         show
-        end
+      end
     end
 
     def ctrl_add_datafile(at_object)

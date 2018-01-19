@@ -232,15 +232,16 @@ module UiTablesHelper
         end
         ret += '</td>'
         ret += '<td>'
-        if object.respond_to? :checked?
-          if object.checked?
-            ret += h_img_checkout if object.checked?
+        ret +=
+          if object.respond_to?(:checked?)
+            if object.checked?
+              h_img_checkout
+            else
+              h_img_checkin
+            end
           else
-            ret += h_img_checkin
+            'no check'
           end
-        else
-          ret += 'no check'
-        end
         ret += '</td>'
         ret += "<td>#{check_box(:action_on, object.id)}</td>"
       end

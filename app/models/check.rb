@@ -75,12 +75,7 @@ class Check < ActiveRecord::Base
   #
   def self.get_checkout(object)
     fname = "#{self.class.name}.#{__method__}"
-    # rails 2 find(:last, :conditions => ["checkobject_plmtype = ? and checkobject_id = ? and status = ?", object.modelname, object.id, CHECK_STATUS_OUT])
-    where = "checkobject_plmtype = '#{object.modelname}' and checkobject_id = '#{object.id}' and status = '#{CHECK_STATUS_OUT}'"
-    ret = Check.where(where).to_a
-    if ret.is_a?(Array)
-      ret = (ret[0] if ret.size == 1)
-    end
+    ret = Check.where(checkobject_plmtype: object.modelname, checkobject_id: object.id, status: CHECK_STATUS_OUT).first
     LOG.debug(fname) { "check.get_checkout object=#{object}, where=#{where} ret=#{ret}" }
     ret
   end
