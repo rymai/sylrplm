@@ -1,15 +1,7 @@
-
 # encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
-=======
-# frozen_string_literal: true
-
-# This file is auto-generated from the current state of the database. Instead of editing this file,
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
->>>>>>> d5827dc40dcd21dc27244e82959d58686124819f
 #
 # Note that this schema.rb definition is the authoritative source for your
 # database schema. If you need to create the application database on another
@@ -17,7 +9,6 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-<<<<<<< HEAD
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20180113113354) do
@@ -512,7 +503,7 @@ ActiveRecord::Schema.define(version: 20180113113354) do
     t.string  "ide",              limit: 255, null: false
     t.integer "rev",                          null: false
     t.string  "typ",              limit: 55,  null: false
-    t.json    "doc",                          null: false
+    t.text    "doc",                          null: false
     t.string  "wfid",             limit: 255
     t.string  "participant_name", limit: 512
   end
@@ -704,66 +695,6 @@ ActiveRecord::Schema.define(version: 20180113113354) do
   end
 
   add_index "views", ["name"], name: "index_views_on_name", unique: true, using: :btree
-
-  create_table "voltxt_table01", force: :cascade do |t|
-    t.string   "datafile_model"
-    t.string   "datafile"
-    t.string   "filename"
-    t.string   "revision"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "acceded_at"
-    t.integer  "size"
-    t.string   "domain"
-    t.text     "content"
-  end
-
-  add_index "voltxt_table01", ["datafile", "filename", "revision"], name: "idx_voltxt_table01_on_datafile_filename_revision", unique: true, using: :btree
-
-  create_table "voltxt_table02", force: :cascade do |t|
-    t.string   "datafile_model"
-    t.string   "datafile"
-    t.string   "filename"
-    t.string   "revision"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "acceded_at"
-    t.integer  "size"
-    t.string   "domain"
-    t.text     "content"
-  end
-
-  add_index "voltxt_table02", ["datafile", "filename", "revision"], name: "idx_voltxt_table02_on_datafile_filename_revision", unique: true, using: :btree
-
-  create_table "voltxt_table03", force: :cascade do |t|
-    t.string   "datafile_model"
-    t.string   "datafile"
-    t.string   "filename"
-    t.string   "revision"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "acceded_at"
-    t.integer  "size"
-    t.string   "domain"
-    t.text     "content"
-  end
-
-  add_index "voltxt_table03", ["datafile", "filename", "revision"], name: "idx_voltxt_table03_on_datafile_filename_revision", unique: true, using: :btree
-
-  create_table "voltxt_table04", force: :cascade do |t|
-    t.string   "datafile_model"
-    t.string   "datafile"
-    t.string   "filename"
-    t.string   "revision"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "acceded_at"
-    t.integer  "size"
-    t.string   "domain"
-    t.text     "content"
-  end
-
-  add_index "voltxt_table04", ["datafile", "filename", "revision"], name: "idx_voltxt_table04_on_datafile_filename_revision", unique: true, using: :btree
 
   create_table "volumes", force: :cascade do |t|
     t.string   "name"
