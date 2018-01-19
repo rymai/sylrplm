@@ -59,9 +59,9 @@ gem 'ruote', '2.3.0.3'
 gem 'ruote-extras', '0.9.18'
 gem 'ruote-kit', git: 'https://github.com/tosch/ruote-kit.git'
 gem 'ruote-postgres', git: 'https://github.com/ifad/ruote-postgres.git'
-gem 'yajl-ruby', '1.3.0', require: 'yajl'
+# Faster JSON parsing
+gem 'yajl-ruby', '1.3.1', require: 'yajl'
 gem 'yaml_db', '0.4.2'
-
 # paginate Views of a lot of lines
 gem 'will_paginate', '3.1.5'
 

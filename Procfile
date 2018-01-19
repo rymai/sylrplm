@@ -1,1 +1,1 @@
-web: bin/rails server -p ${PORT:-3000} -e ${RACK_ENV:-development}
+web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
