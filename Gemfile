@@ -86,7 +86,7 @@ gem 'simple_form', '~> 3.1.0.rc1'
 gem 'useragent', '0.16.8'
 
 gem 'letter_opener_web'
-
+gem "binding_of_caller"
 group :staging, :production do
   # gem 'thin'
   # gem 'rack-ssl'
