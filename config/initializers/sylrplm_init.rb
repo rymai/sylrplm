@@ -2,7 +2,8 @@
 
 #
 require 'rufus/scheduler'
-
+fname = 'sylrplm-init.rb:'
+  puts ">>>>#{fname}"
 #
 # fichier de log specifique
 #
@@ -91,3 +92,5 @@ if true
 	#Rake::Task["notify"].invoke
 	end
 end
+fname = 'sylrplm-init.rb:'
+  puts "<<<<#{fname}"

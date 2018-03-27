@@ -258,7 +258,7 @@ class Link < ActiveRecord::Base
 
   def relation_ident
     rel = Relation.find(relation_id) unless relation_id.nil?
-    relation_id.to_s + (rel&.ident)
+    relation_id.to_s + (rel.ident)
   rescue StandardError
     relation_id.to_s
   end

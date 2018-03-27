@@ -118,18 +118,27 @@ module Models
       # LOG.debug(fname){"#{self.ident}"}
       # recherche si c'est la derniere revision
       rev_cur = revision
-      last_rev = last_revision
-      next_rev = next_revision
+      last_rev = last_revision()
+      next_rev = next_revision()
       if revisable?
         LOG.debug(fname) { "rev_cur=#{rev_cur} last_rev=#{last_rev} next_rev=#{next_rev}" }
+       puts "#{fname} rev_cur=#{rev_cur} last_rev=#{last_rev} next_rev=#{next_rev}"
         admin = User.find_by_name(PlmServices.get_property(:ROLE_ADMIN))
         # rails2 obj = self.clone
-        obj = dup
-        LOG.debug(fname) { "designation origine=#{designation} revision=#{obj.designation} " }
+        obj = self.dup
+        st=obj.save
+        LOG.debug(fname) { "st=#{st} designation origine=#{designation} revision=#{obj.designation} " }
+        puts "st save=#{st} designation origine=#{designation} revision=#{obj.designation} "
+        puts "id origine=#{id} revision=#{obj.id} "
+        if obj.id.nil?
+            # TODO pasbo mais efficace
+            obj.id=id+1
+            obj.save
+        end
         obj.typesobject = typesobject
         obj.statusobject = ::Statusobject.get_first(self)
         obj.revision = next_rev
-        LOG.debug(fname) { "origine=#{inspect} " }
+        LOG.debug(fname) { "origine=#{self.inspect} " }
         LOG.debug(fname) { "revision=#{obj.inspect}" }
         if has_attribute?(:filename)
           unless filename.nil?
@@ -222,7 +231,7 @@ module Models
         if lnk_new.nil?
           ret = false
         else
-          lnk_new&.save
+          lnk_new.save
         end
       end
       ret
@@ -367,21 +376,21 @@ module Models
     end
 
     def promote
-      fname = "#{self.class.name}.#{__method__}"
-      st_cur_name = statusobject.name
-      LOG.debug(fname) { "st_cur_name=#{st_cur_name} next_status=#{next_status}" }
-      LOG.debug(fname) { "self=#{inspect}" }
-      # self.statusobject=::Statusobject.find(self.next_status_id)
-      if next_status.nil?
-        raise Exception, 'Error during promotion: Next status not found'
-      else
-        self.statusobject = next_status
+        fname = "#{self.class.name}.#{__method__}"
+        LOG.debug(fname) { "statusobject=#{statusobject}"}
+        st_cur_name = statusobject.name
+        LOG.debug(fname) { "st_cur_name=#{st_cur_name} next_status=#{next_status}" }
+        LOG.debug(fname) { "self=#{inspect}" }
+        if next_status.nil?
+            raise Exception, 'Error during promotion: Next status not found'
+        else
+            self.statusobject = next_status
         # puts "Document.promote:res=#{res}:#{st_cur_name}->#{statusobject.name}"
-      end
-      self.next_status = ::Statusobject.get_next_status(self)
-      self.previous_status = ::Statusobject.get_previous_status(self)
-      ret = self
-      # puts "object.promote:#{st_cur_name} -> #{self.statusobject.name} ret=#{ret}"
+        end
+        self.next_status = ::Statusobject.get_next_status(self)
+        self.previous_status = ::Statusobject.get_previous_status(self)
+        ret = self
+        # puts "object.promote:#{st_cur_name} -> #{self.statusobject.name} ret=#{ret}"
       ret
     end
 
@@ -564,17 +573,15 @@ module Models
     def ok_for_show?(user)
       acc_public = ::Typesobject.find_by_forobject_and_name('project_typeaccess', 'public')
       # index possible meme sans user connecte
-      # puts "ok_for_show? acc_public:"+self.projowner.typeaccess.name+"=="+acc_public.name
-      if user.nil?
+      if user.nil? || !user.is_a?(User)
         (projowner.typeaccess_id == acc_public.id)
       else
-        # puts "ok_for_show? group:"+self.group.name+"=="+user.group.name
         (group_id == user.group.id || projowner.typeaccess_id == acc_public.id)
       end
     end
 
     def initialize(*args)
-      super(*args)
+      #TODO super(*args)
       fname = "PlmObject:#{self.class.name}.#{__method__}"
       LOG.debug(fname) { "initialize debut args=#{args.length}:#{args.inspect}" }
       initialize_(*args)

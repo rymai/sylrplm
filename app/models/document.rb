@@ -19,14 +19,15 @@ class Document < ActiveRecord::Base
   attr_accessible :id, :revision, :typesobject_id, :statusobject_id, :next_status_id, :previous_status_id, :ident
   attr_accessible :designation, :description, :date, :owner, :domain, :type_values
   attr_accessible :owner_id, :group_id, :projowner_id
+
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident, scope: :revision
   # validates_format_of :ident, :with => /^(doc|img)[0-9]+$/, :message=>" doit commencer par doc ou img suivi de chiffres"
   # rails2 validates_format_of :ident, :with => /^([a-z]|[A-Z])+[0-9]+$/ #, :message=>t(:valid_ident,:typeobj =>:ctrl_document)
-  validates_format_of :ident, with: /\A([a-z]|[A-Z])+[0-9]+\Z/ # , :message=>t(:valid_ident,:typeobj =>:ctrl_document)
+  validates_format_of :ident, with: /\A([a-z]|[A-Z])+[0-9]+\Z/ , :message=>"ident is not valid for document"
 
   belongs_to :typesobject, foreign_key: :typesobject_id
-  belongs_to :statusobject
+  belongs_to :statusobject, foreign_key: :statusobject_id
   belongs_to :next_status, class_name: 'Statusobject'
   belongs_to :previous_status, class_name: 'Statusobject'
   belongs_to :owner, class_name: 'User', foreign_key: :owner_id

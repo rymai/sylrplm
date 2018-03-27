@@ -55,7 +55,7 @@ class ApplicationController < ActionController::Base
 
   def render(*args)
     define_table
-    super
+    super(*args)
   end
 
   def define_table

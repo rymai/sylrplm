@@ -452,7 +452,11 @@ resources :contacts do
   match 'relations/update_type', to: 'relations#update_type', via: [:get, :post]
 
   # rails2 map.resources :questions
-  resources :questions
+  resources :questions do
+        collection do
+            get :export
+        end
+    end
   match 'questions/index_execute', to: 'questions#index_execute', via: [:get, :post]
 
   # rails2 map.resources :roles, :member=> {:new_dup => :get}

@@ -19,7 +19,8 @@
 	<tr>
 		<td> <%= t("is_check_out") %></td>
 		<td> <%= t("label_out_reason") %></td>
-		<td> <%= text_field_tag "checkout[out_reason]" , document.get_check_out.out_reason.force_encoding('utf-8') , :readonly=>:true %> </td>
+		<td> <%= text_field_tag "checkout[out_reason]" , document.get_check_out.out_reason.force_encoding('utf-8') , :readonly=>:true%>
+		</td>
 		<td> <%= t("label_out_user") %></td>
 		<td> <%= text_field_tag "checkout[out_user]" , document.get_check_out.out_user, :readonly=>:true %> </td>
 	</tr>

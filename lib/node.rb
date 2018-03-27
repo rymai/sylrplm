@@ -211,7 +211,9 @@ class Node
     # LOG.debug(fname){"<<<level=#{level}, ret=#{ret}"}
     ret
   end
-
+    def empty?
+        self.nil? || self.size==0
+    end
   private
 
   def url_formater(options, parameters_for_method_reference)

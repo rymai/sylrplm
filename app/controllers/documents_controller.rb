@@ -30,16 +30,6 @@ class DocumentsController < ApplicationController
     end
   end
 
-  # GET /documents/1
-  # GET /documents/1.xml
-  def show_old
-    show_
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render xml: @object_plm }
-    end
-  end
-
   def select_view
     if params['commit'].force_encoding('utf-8') == t('root_model_design').force_encoding('utf-8')
       show_design
@@ -59,6 +49,7 @@ class DocumentsController < ApplicationController
     LOG.debug(fname) { "params=#{params.inspect}" }
     params = {}
     @object_plm = Document.new(user: current_user)
+    @document=@object_plm
     LOG.debug(fname) { "new:@object_plm=#{@object_plm.inspect}" }
     @types    = Typesobject.get_types('document')
     @volumes  = Volume.all.to_a

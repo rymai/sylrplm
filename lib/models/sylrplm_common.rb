@@ -215,7 +215,7 @@ module Models
             order = 'ident asc, revision desc'
             order += ",#{params[:sort]}" unless params[:sort].nil?
             LOG.debug(fname) { "last_rev_only sort=#{order}  , select=#{select} , conditions=#{conditions}" }
-            recordset = where(conditions)..order(params[:sort]).paginate(page: params[:page],
+            recordset = where(conditions).order(params[:sort]).paginate(page: params[:page],
                                                                          select: select,
                                                                          per_page: params[:nb_items])
           else
@@ -232,11 +232,11 @@ module Models
         end
         # puts self.modelname+".find_paginate:conditions="+conditions.inspect
         # puts self.modelname+"."+__method__.to_s+":"+recordset.inspect
-        LOG.debug(fname) { "fin conditions=#{conditions} : #{recordset&.count}" }
+        LOG.debug(fname) { "fin conditions=#{conditions} : #{recordset.count}" }
         ret = { recordset: recordset,
                 query: params[:query],
                 page: params[:page],
-                total: count(conditions: conditions),
+                #TODO plantage !!    total: count(conditions: conditions),
                 nb_items: params[:nb_items],
                 conditions: conditions }
         LOG.debug(fname) { "ret records=#{ret[recordset].size}" } unless ret[recordset].nil?
@@ -252,7 +252,7 @@ module Models
     def update_attributes(params)
       fname = "#{self.class.name}.#{__method__}"
       ret = 'ok'
-      params&.each do |attr_name, attr_value|
+      params.each do |attr_name, attr_value|
         begin
           LOG.debug(fname) { "update_attribute #{attr_name} = #{attr_value}" }
           update_attribute(attr_name, attr_value) if respond_to?(attr_name)
@@ -827,7 +827,10 @@ module Models
     def from_function(from, function)
       fname = "#{modelname}.#{__method__}"
       LOG.debug(fname) { "from=#{from} function=#{function}" }
+      puts "#{fname} self=#{self.id} #{self} rev=#{self.revision} function=#{function}"
+      puts "#{fname} from=#{from.id} #{from} rev=#{from.revision}"
       rel = ::Relation.find_by_name(function)
+      puts "#{fname} rel=#{rel}"
       # LOG.debug(fname){"rel=#{rel}"}
       if respond_to?(:owner)
         own = owner

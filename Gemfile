@@ -8,7 +8,7 @@ ruby '2.3.6'
 gem 'responders', '2.3.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.5'
+gem 'rails' #, '4.2.5'
 # heroku: to enable all platform features
 gem 'rails_12factor', '0.0.3'
 # observer remove from core Rails4

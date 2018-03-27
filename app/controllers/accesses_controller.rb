@@ -111,17 +111,6 @@ class AccessesController < ApplicationController
     end
   end
 
-  # DELETE /accesses/1
-  # DELETE /accesses/1.xml
-  def destroy_old
-    @access.destroy
-    flash[:notice] = t(:ctrl_object_deleted, typeobj: 'Access', ident: @access.controller)
-    respond_to do |format|
-      format.html { redirect_to(accesses_url) }
-      format.xml  { head :ok }
-    end
-  end
-
   def reset
     # puts __FILE__+"."+__method__.to_s+":params="+params.inspect
     # on refait les autorisations:

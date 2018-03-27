@@ -57,7 +57,7 @@ end
 def associate_users(node, father)
   usersnode = tree_level("'users_#{father.id}'", t("label_#{father.modelname}_users"), icone_plmtype('user'), icone_plmtype('user'))
   tree_users(usersnode, father)
-  node << usersnode unless usersnode.empty?
+  node << usersnode unless usersnode.nil?
   if father.respond_to?(:childs)
     organode = tree_level("'#{father.modelname}_#{father.id}'", t("label_#{father.modelname}_#{father.controller_name}"), icone_plmtype(father.modelname), icone_plmtype(father.modelname))
     tree_organization(organode, father)
