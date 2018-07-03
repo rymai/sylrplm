@@ -74,7 +74,7 @@ class Statusobject < ActiveRecord::Base
 
     if respond_to? :typesobject
       # rails2 if args.size==0 || (args.size>0 && (!args[0].include?(:typesobject)))
-      self[:typesobject] = ::Typesobject.find_for(forobject).first
+      ##TODO bug self[:typesobject] = ::Typesobject.find_for(forobject).first
       # rails2end
     end
 
@@ -153,6 +153,7 @@ class Statusobject < ActiveRecord::Base
   #
   def self.get_status(object, choice = 1)
     fname = "#{self.class.name}.#{__method__}"
+   cond = "forobject = '#{object}'"
     if object.is_a?(String)
       # object est une string
       cond = "forobject = '#{object}'"
@@ -164,23 +165,28 @@ class Statusobject < ActiveRecord::Base
       else
         LOG.info(fname) { "choice(#{choice}),promote_id(#{stat_cur.promote_id}),demote_id(#{stat_cur.demote_id})" }
         # cond="object = '#{object.modelname}' && ((demote_id = #{choice} && rank <= #{stat_cur.rank}) || (promote_id = #{choice} && rank >= #{stat_cur.rank})) "
-        cond_object = "forobject = '#{object.modelname}'"
+        cond_object = "forobject = '#{object.model_name}'"
         cond_promote = "rank >= #{stat_cur.rank}" if stat_cur.promote_id == choice
         cond_demote = "rank <= #{stat_cur.rank}" if stat_cur.demote_id == choice
-        cond_ = if !cond_promote.nil? && !cond_demote.nil?
+                 #puts "******************** statusobject: cond_promote= #{cond_promote}"
+                 #puts "******************** statusobject: cond_demote= #{cond_demote}"
+       if !cond_promote.nil? && !cond_demote.nil?
                   # LOG.info(fname){"!cond_promote.nil? &&  !cond_demote.nil?"}
-                  "(#{cond_promote} or #{cond_demote})"
+                  cond_="(#{cond_promote} or #{cond_demote})"
                 else
-                  cond_ = if cond_promote.nil?
-                            cond_demote
+                  if cond_promote.nil?
+                     cond_=       cond_demote
                           else
-                            cond_promote
+                      cond_=      cond_promote
                           end
                 end
-        cond = "#{cond_object} and (#{cond_}) " unless cond_.nil?
-      end
+          end
+                #puts "******************** statusobject: cond_= #{cond_}"
+    cond = "#{cond_object}"
+       cond += "and (#{cond_}) " unless cond_.nil?
+
     end
-    # LOG.debug(fname) {"cond= #{cond}"}
+    #puts "******************** statusobject: cond= #{cond}"
     # rails2 ret = Statusobject.order_default.find(:all, :conditions => [cond]) unless cond.nil?
     ret = Statusobject.all.where(cond).order(ORDER_DEFAULT) unless cond.nil?
     # LOG.debug(fname){"stat_cur=#{stat_cur} choice(#{choice})=>cond_promote(#{cond_promote}),cond_demote(#{cond_demote}),cond(#{cond}) ret=#{ret}"}

@@ -5,8 +5,9 @@ class Customer < ActiveRecord::Base
   include Models::PlmObject
 
   attr_accessor :link_attributes, :user
+
   attr_accessible :id, :owner_id, :typesobject_id, :statusobject_id, :next_status_id, :previous_status_id
-  attr_accessible :ident, :revision, :designation, :description, :date, :owner, :group_id, :projowner_id, :domain, :type_values
+  attr_accessible :ident, :revision, :designation, :description, :date, :group_id, :projowner_id, :domain, :type_values
 
   validates_presence_of :ident, :designation
   validates_uniqueness_of :ident
@@ -37,10 +38,17 @@ class Customer < ActiveRecord::Base
   # rails2  has_many :links_customer_projects,    :class_name => "Link",    :foreign_key => "father_id",    :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
   has_many :links_customer_projects, -> { where(father_plmtype: 'customer', child_plmtype: 'project') }, class_name: 'Link', foreign_key: 'father_id'
   has_many :projects, through: :links_customer_projects, source: :project_down
+after_save :test_me
 
+   def test_me
+       #reload()
+     puts "customer:********************* id=#{self.id}"
+   end
   def user=(user)
     def_user(user)
   end
+
+
 
   def self.create_new(_customer, _user)
     raise Exception, "Don't use this method!"

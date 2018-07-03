@@ -581,11 +581,18 @@ module Models
     end
 
     def initialize(*args)
-      #TODO super(*args)
+        puts  "initialize debut: args=#{args.inspect}"
+        phase_new = !(args[0].nil? || args[0][:user].nil?)
+      if phase_new
+      super(*args)
+      else
+          super(*args)
+      end
       fname = "PlmObject:#{self.class.name}.#{__method__}"
       LOG.debug(fname) { "initialize debut args=#{args.length}:#{args.inspect}" }
       initialize_(*args)
       LOG.debug(fname) { "initialize fin: self=#{inspect}" }
+      #puts  "initialize fin: self=#{inspect}"
     end
 
     def after_initialize_(*args)

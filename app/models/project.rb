@@ -9,7 +9,7 @@ class Project < ActiveRecord::Base
 
   attr_accessor :user, :link_attributes
   attr_accessible :id, :owner_id, :typesobject_id, :statusobject_id, :next_status_id, :previous_status_id
-  attr_accessible :ident, :revision, :designation, :description, :date, :owner, :group_id, :typeaccess_id, :domain, :type_values
+  attr_accessible :ident, :revision, :designation, :description, :date, :group_id, :typeaccess_id, :domain, :type_values
 
   has_many :datafiles, dependent: :destroy
 

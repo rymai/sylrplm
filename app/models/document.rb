@@ -17,7 +17,7 @@ class Document < ActiveRecord::Base
 
   # rails4: indispensable pour creer/updater
   attr_accessible :id, :revision, :typesobject_id, :statusobject_id, :next_status_id, :previous_status_id, :ident
-  attr_accessible :designation, :description, :date, :owner, :domain, :type_values
+  attr_accessible :designation, :description, :date, :domain, :type_values
   attr_accessible :owner_id, :group_id, :projowner_id
 
   validates_presence_of :ident, :designation

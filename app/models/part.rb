@@ -12,7 +12,7 @@ class Part < ActiveRecord::Base
   validates_uniqueness_of :ident, scope: :revision
 
   attr_accessor :user, :link_attributes
-  attr_accessible :id, :owner_id, :typesobject_id, :statusobject_id, :next_status_id, :previous_status_id, :ident, :revision, :designation, :description, :date, :owner, :group_id, :projowner_id, :domain, :type_values
+  attr_accessible :id, :owner_id, :typesobject_id, :statusobject_id, :next_status_id, :previous_status_id, :ident, :revision, :designation, :description, :date, :group_id, :projowner_id, :domain, :type_values
 
   has_many :datafiles, dependent: :destroy
 
