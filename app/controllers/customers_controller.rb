@@ -110,6 +110,7 @@ class CustomersController < ApplicationController
         # LOG.debug(fname) {"params=#{params.inspect}"}
         @object_plm = Customer.new(params[:customer])
         @object_plm.def_user(current_user)
+        @object_plm.id=123456
         #st=@object_plm.save
         #puts "************** save customer=#{st} : #{@object_plm.inspect} : #{@object_plm.errors.full_messages}"
         @types    = Typesobject.get_types('customer')

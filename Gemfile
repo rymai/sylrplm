@@ -87,7 +87,8 @@ gem 'useragent', '0.16.8'
 
 gem 'letter_opener_web'
 gem "binding_of_caller"
-
+# pour console
+gem "rb-readline"
 group :production do
   gem 'scout_apm'
   gem 'lograge'
