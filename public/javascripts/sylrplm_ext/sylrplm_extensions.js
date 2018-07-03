@@ -1,6 +1,8 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
-
+function byId(id) {
+	return document.getElementById(id);
+}
 function selectInOutFill(select_ref_id) {
 	//alert('selectInOutFill:'+select_ref_id);
 	select_from = byId(select_ref_id);
