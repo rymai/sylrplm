@@ -405,6 +405,8 @@ module Controllers
       LOG.debug(fname) { "ctrl_new_datafile: datafile.doc=#{@datafile.document}" }
       @types = Typesobject.get_types('datafile')
       @checkout_needed = at_object.checkout_needed?
+      @datafile=Datafile.new()
+      @datafile.owner=current_user
       if @checkout_needed
         LOG.debug(fname) { "ctrl_new_datafile: #{at_object} checkout demande" }
         check = Check.get_checkout(at_object)

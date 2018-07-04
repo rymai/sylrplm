@@ -132,8 +132,8 @@ module Models
         puts "id origine=#{id} revision=#{obj.id} "
         if obj.id.nil?
             # TODO pasbo mais efficace
-            obj.id=id+1
-            obj.save
+            #obj.id=id+1
+            #obj.save
         end
         obj.typesobject = typesobject
         obj.statusobject = ::Statusobject.get_first(self)
@@ -414,7 +414,8 @@ module Models
       fname = "#{self.class.name}.#{__method__}"
       child_type = nil
       ret = ::Relation.relations_for(self, child_plmtype, child_type, relation_type_name, relation_paste_way)
-      LOG.debug(fname) { "relations from #{modelname} to #{child_plmtype}:ret=#{ret.size}" }
+      LOG.debug(fname) { "relations from #{modelname}/#{child_type} to #{child_plmtype}/#{relation_type_name}:ret=#{ret.size}" }
+      #puts "relations ************ relations from #{modelname}/#{child_type} to #{child_plmtype}/#{relation_type_name}/#{relation_paste_way}:ret=#{ret.size}"
       ret
     end
 
@@ -581,7 +582,7 @@ module Models
     end
 
     def initialize(*args)
-        puts  "initialize debut: args=#{args.inspect}"
+        #puts  "initialize debut: args=#{args.inspect}"
         phase_new = !(args[0].nil? || args[0][:user].nil?)
       if phase_new
       super(*args)

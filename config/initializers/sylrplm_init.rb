@@ -59,17 +59,18 @@ NOLOGS = [
   'to_s',
   'truncate_text',
   'Typesobject.get_types',
-  'zip_stringio'
-
+  'zip_stringio',
+  'Class.notify_'
 ].freeze
-# NOLOGS=[]
-if ENV.fetch('DEBUG', false) == 'true'
+#NOLOGS=[]
+#if ENV.fetch('DEBUG', true) == 'true'
   LOG.formatter = Classes::AppClasses::LogFormatter.new(NOLOGS)
-end
+#end
 
 # @logger.datetime_format = "%Y-%m-%d %H:%M:%S"
 # DEBUG INFO WARN ERROR FATAL
-LOG.level = Logger.const_get(ENV.fetch('LOG_LEVEL', 'fatal').upcase)
+LOG.level = Logger.const_get(ENV.fetch('LOG_LEVEL', 'debug').upcase)
+LOG.level = "DEBUG"
 LOG.info('sylrplm') { 'Lancement SYLRPLM' }
 LOG.progname = 'Constantes'
 LOG.info { 'Constantes du module SYLRPLM:' }

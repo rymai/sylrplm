@@ -636,8 +636,10 @@ module ApplicationHelper
       workitems = opts[:workitems]
     else
       workitems = []
+      unless opts[:workitems].nil?
       opts[:workitems].each do |wi|
         workitems << PlmServices.to_dots(wi)
+      end
       end
     end
     %{

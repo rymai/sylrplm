@@ -2,7 +2,7 @@
 	<legend>
 		<%= t(:legend_datafile) %>
 	</legend>
-	<%= hidden_field_tag "datafile[volume_id]" , @datafile.volume.id %>
+	<%= hidden_field_tag "datafile[volume_id]" , @datafile.volume.id unless @datafile.volume.nil? %>
 	<%= hidden_field_tag :fonct , fonct %>
 	<%= hidden_field_tag "datafile[group_id]" , current_user.group_id %>
 	<%= hidden_field_tag "datafile[projowner_id]" , current_user.project_id %>

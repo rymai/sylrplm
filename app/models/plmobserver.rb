@@ -7,7 +7,8 @@ class Plmobserver < ActiveRecord::Observer
   # include Models::PlmObject
   include Models::SylrplmCommon
 
-  observe :customer, :document, :part, :project
+  #ko , TODO impossible de creer les objets: observe :customer, :document, :part, :project
+
   # list of modelname observed by this observer,
   # TODO: instead of this constant, use introspection by using observe method just above
   MODELS_OBSERVE = %w[customer document part project].freeze
@@ -17,7 +18,7 @@ class Plmobserver < ActiveRecord::Observer
   def initialize(*args)
     super
     fname = "#{self.class.name}.#{__method__}"
-    # LOG.debug(fname) {"args=#{args.inspect}"}
+    LOG.debug(fname) {"args=#{args.inspect}"}
   end
 
   def before_validation(_object)

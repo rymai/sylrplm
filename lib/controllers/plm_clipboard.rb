@@ -18,7 +18,7 @@ def ctrl_add_objects_from_clipboard(object, child_plmtype, flash)
   if child_plmtype.nil?
     # ["document", "part", "project", "customer", "user"].each do |childplmtype|
     LOG.info(fname) { "params[:objecttoadd]=#{params[:objecttoadd]}" }
-    params[:objecttoadd]&.each do |childplmtype, _value|
+    params[:objecttoadd].each do |childplmtype, _value|
       flash = add_objects_from_clipboard(object, childplmtype, flash)
     end
   else
@@ -45,11 +45,11 @@ def add_objects_from_clipboard(object, child_plmtype, flash)
      clipboards_to_add = params[:objecttoadd][child_plmtype]
      # LOG.info(fname) {"clipboards to add=#{clipboards_to_add}"}
      if object.nil?
-       flash[:error] << t(:ctrl_object_not_found, typeobj: '', ident: '')
+       flash[:error] = t(:ctrl_object_not_found, typeobj: '', ident: '')
      else
        # objecttoadd[#{clipboard.modelname}][#{clipboard.id}][#{relation.id}]
        if params[:objecttoadd][child_plmtype].nil?
-         flash[:notice] << t(:ctrl_nothing_to_paste, typeobj: ctrltype)
+         flash[:notice] = t(:ctrl_nothing_to_paste, typeobj: ctrltype)
        else
          params[:objecttoadd][child_plmtype].each do |clipboard_id, clipboard_val|
            LOG.info(fname) { "clipboard_id=#{clipboard_id} clipboard_val=#{clipboard_val} " }
@@ -67,14 +67,14 @@ def add_objects_from_clipboard(object, child_plmtype, flash)
                # LOG.info(fname) {"adding=#{item}"}
                link = Link.new(father: object, child: item, relation: relation, user: current_user)
                if link.save
-                 flash[:notice] << t(:ctrl_object_added,
+                 flash[:notice] = t(:ctrl_object_added,
                                      typeobj: ctrltype,
                                      ident: item.ident,
                                      relation: relation.ident,
                                      msg: "ctrl_link_#{link.ident}")
                  @clipboard.remove(item)
                else
-                 flash[:notice] << t(:ctrl_object_not_added,
+                 flash[:notice] = t(:ctrl_object_not_added,
                                      typeobj: ctrltype,
                                      ident: item.ident,
                                      relation: relation.ident,
@@ -87,7 +87,7 @@ def add_objects_from_clipboard(object, child_plmtype, flash)
      end
    rescue Exception => e
      # TODO: translate
-     flash[:notice] << "Error durant le sauve du lien : #{e}"
+     flash[:notice] += " Error durant le sauve du lien : #{e}"
    end
   flash
 end

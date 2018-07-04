@@ -13,9 +13,9 @@ class View < ActiveRecord::Base
     ret = "View(#{id}), relations=[\n"
     # rails2 relations.sort! { |a,b| a.typesobject.name <=> b.typesobject.name  }.each do |rel|
     relations.to_a.sort! { |a, b| a.typesobject.name <=> b.typesobject.name }.each do |rel|
-      ret << "\t#{rel.ident}\n"
+      ret += "\t#{rel.ident}\n"
     end
-    ret << ']'
+    ret += ']'
     ret
   end
 
