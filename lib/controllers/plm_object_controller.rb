@@ -752,13 +752,14 @@ module Controllers
         if @object.nil?
           flash[:error] = t(:ctrl_object_not_deleted, typeobj: t(:ctrl_project), ident: @object.ident)
         else
+          url = url_for(controller: params[:controller], action: :index)
           if @object.destroy
             flash[:notice] = t(:ctrl_object_deleted, typeobj: t(key), ident: @object.ident)
-            url = url_for(controller: params[:controller], action: :index)
             format.html { redirect_to(url) }
             format.xml  { head :ok }
           else
             flash[:error] = t(:ctrl_object_not_deleted, typeobj: t(key), ident: @object.ident)
+            LOG.error(fname){"#{flash[:error]}"}
             index_
             format.html { render action: 'index' }
             format.xml  { render xml: @object.errors, status: :unprocessable_entity }

@@ -65,6 +65,7 @@ class ApplicationController < ActionController::Base
     # for portal, show visualize 3 views
     action = 'index' if action == 'show'
     action = 'index' if action == 'export'
+    action = 'index' if action == 'destroy'
     action_controller = "#{action}_#{params[:controller]}"
     action_controller_type = "#{action_controller}_#{params[:filter_types]}"
     @UI_TABLE = UiTable.find_by_ident(action_controller_type)
