@@ -14,6 +14,7 @@ class Part < ActiveRecord::Base
   attr_accessor :user, :link_attributes
   attr_accessible :id, :owner_id, :typesobject_id, :statusobject_id, :next_status_id, :previous_status_id, :ident, :revision, :designation, :description, :date, :group_id, :projowner_id, :domain, :type_values
 
+  before_destroy :before_destroy_
   has_many :datafiles, dependent: :destroy
 
   # rails2 has_many :thumbnails,  	:class_name => "Datafile",  	:conditions => "typesobject_id = (select id from typesobjects as t where t.name='thumbnail')"

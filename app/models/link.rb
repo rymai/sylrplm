@@ -453,14 +453,10 @@ class Link < ActiveRecord::Base
         false
       else
         relation_recent_action = ::Relation.find_by_name(::SYLRPLM::RELATION_RECENT_ACTION)
-        cond = "child_plmtype = '#{obj.modelname}' and child_id = #{obj.id} and relation_id !=#{relation_recent_action.id}"
-        ret = find(:all,
-                   conditions: [cond])
-        LOG.debug "linked cond=#{cond} nb=#{ret.count}"
-        ret.each do |lnk|
-          LOG.debug "linked link=#{lnk.ident}"
-        end
-        ret.count > 0
+        cond = "child_plmtype = '#{obj.modelname}' and child_id = #{obj.id} and relation_id != #{relation_recent_action.id}"
+        ret = Link.where(cond).count
+        LOG.info "linked cond=#{cond} nb=#{ret}"
+        ret>0
       end
     else
       false

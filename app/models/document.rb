@@ -7,7 +7,7 @@ class Document < ActiveRecord::Base
   # ##include ActiveModel::Model
 
   # before_save :before_save_
-  # before_destroy :before_destroy_
+  before_destroy :before_destroy_
 
   # after_initialize :after_initialize_
 
