@@ -974,6 +974,13 @@ module Models
         ret = false
       else
         ret = true
+        # si besoin, destruction des liens fils, les objets correspondants seront peut etre orphelins
+        childs=Link.find_childs(self)
+        LOG.debug(fname) { "childs of #{self}=#{childs.count}" }
+        childs.each do |child|
+            st=child.destroy
+            LOG.debug(fname) { "destroy child #{child}=#{st}" }
+        end
       end
       ret
     end

@@ -9,7 +9,7 @@ fr:
   ctrl_object_not_found: "%{typeobj} '%{ident}' non trouvé"
   ctrl_object_not_updated: "%{typeobj} '%{ident}' non modifié: %{error}"
   ctrl_object_deleted: "%{typeobj} '%{ident}' supprimé avec succès"
-  ctrl_object_not_deleted: "%{typeobj} '%{ident}' ne peut être supprimé"
+  ctrl_object_not_deleted: "%{typeobj} '%{ident}' ne peut être supprimé (liens)"
   ctrl_object_promoted: "%{typeobj} '%{ident}' promu de %{current_rank} à %{new_rank}, valideurs=%{validersMail}"
   ctrl_object_promote_by_action: "%{typeobj} '%{ident}' en attente de promote par action (Mon Bureau / Mes Actions)"
   ctrl_object_not_promote_by_action: "Echec de lancement du processus de promote de %{typeobj} '%{ident}'"

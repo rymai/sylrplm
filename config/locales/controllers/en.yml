@@ -9,7 +9,7 @@ en:
   ctrl_object_not_found: "%{typeobj} '%{ident}' not found"
   ctrl_object_not_updated: "%{typeobj} %{ident} not updated: %{error}"
   ctrl_object_deleted: "%{typeobj} %{ident} successfully deleted"
-  ctrl_object_not_deleted: "%{typeobj} %{ident} could not be deleted"
+  ctrl_object_not_deleted: "%{typeobj} %{ident} could not be deleted (links ?)"
   ctrl_object_promoted: "%{typeobj} %{ident} was successfully promoted from %{current_rank} to %{new_rank}, validers=%{validersMail}"
   ctrl_object_promote_by_action: "%{typeobj} '%{ident}' is promoting by action (My Desk / My Actions)"
   ctrl_object_not_promote_by_action: "Echec de lancement du processus de promote de %{typeobj} '%{ident}'"
