@@ -75,6 +75,7 @@ class VolumesController < ApplicationController
         st = @volume.save
       end
       if st
+        @volume.update_attributes(params[:volume])
         flash[:notice] = t(:ctrl_object_created, typeobj: t(:ctrl_volume), ident: @volume.name)
         params[:id] = @volume.id
         show_

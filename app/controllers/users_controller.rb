@@ -109,7 +109,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @the_user = User.new(params['user'])
+    @the_user = User.new(params[:user])
     @the_user.def_user(current_user)
     respond_to do |format|
       if fonct_new_dup?
@@ -119,6 +119,8 @@ class UsersController < ApplicationController
         st = @the_user.save
       end
       if st
+          #pour association has_many_and_belongs
+                @the_user.update_attributes(params[:user])
         flash.now[:notice] = t(:ctrl_user_created, user: @the_user.login)
         params[:id] = @the_user.id
         show_
@@ -133,7 +135,7 @@ class UsersController < ApplicationController
         @volumes = Volume.all
         @types = Typesobject.get_types('user')
         @subscriptions = Subscription.all
-        flash.now[:error] = t(:ctrl_user_not_created, user: @the_user.login, msg: @the_user.errors.inspect)
+        flash.now[:error] = t(:ctrl_user_not_created, user: @the_user.login, msg: @the_user.errors.inspect[0,50])
         format.html { render action: 'new' }
         format.xml  { render xml: @the_user.errors, status: :unprocessable_entity }
       end

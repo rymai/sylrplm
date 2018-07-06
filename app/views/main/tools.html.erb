@@ -21,7 +21,7 @@
 
   <p>
     <%= label_tag t(:label_theme) %>
-    <%= select_tag(:theme, @themes) %>
+    <%= select_tag(:theme, options_for_select(@themes)) %>
   </p>
 
   <p>

@@ -34,7 +34,8 @@ class Notification < ActiveRecord::Base
   end
 
   def ident
-    "#{forobject_type}.#{forobject_id}.#{responsible.login}.#{event_type}"
+    ret="#{forobject_type}.#{forobject_id}.#{event_type}"
+    ret+=".#{responsible.login}" unless responsible.nil?
   end
 
   def init_mdd

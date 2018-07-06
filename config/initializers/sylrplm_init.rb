@@ -37,7 +37,7 @@ NOLOGS = [
   'get_type_values',
   'get_types_by_features',
   'get_themes',
-  # "get_ui_columns",
+  "get_ui_columns",
   'h_render_fields',
   'h_type_values',
   'icone',

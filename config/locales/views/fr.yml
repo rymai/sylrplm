@@ -308,7 +308,6 @@ fr:
   label_designation: Désignation
   label_responsible: Responsable
   label_group: Groupe
-  label_statusobject: Statut
   label_date: Date
   label_description: Description
   label_statusobject: Statut
@@ -732,6 +731,7 @@ fr:
   label_last_revision: Lister seulement la dernière révision
   label_check_automatic: Réservation/libération automatique
   label_subscription: Abonnement
+  label_last_revision: Only last revision
   #views
   legend_view: "Renseignez les propriétés de la vue"
   views_list: Liste des vues
@@ -808,13 +808,15 @@ fr:
   label_value_mini: Valeur minimale
   label_value_maxi: Valeur maximum
   #ui_table
+  legend_table: Table
+  label_title: Titre
   label_type_table: Type de table
   label_pagination: Pagination
   label_ui_columns: Colonnes
   label_ui_columns_order: Choix et ordre des colonnes
-  legend_table: Table
   label_ui_table_ui_column_ids_out: Colonnes disponibles
   label_ui_table_ui_column_ids_in: Colonnes de la table
+  #ui_table
   # variables de contexte ou autre
   variable_key: Nom variable
   variable_value: Valeur

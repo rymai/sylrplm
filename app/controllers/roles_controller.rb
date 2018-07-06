@@ -81,6 +81,8 @@ class RolesController < ApplicationController
         st = @role.save
       end
       if st
+         # for *_ids
+        @role.update_attributes(params[:role])
         flash[:notice] = t(:ctrl_object_created, typeobj: t(:ctrl_role), ident: @role.title)
         params[:id] = @role.id
         show_

@@ -107,6 +107,7 @@ class GroupsController < ApplicationController
         st = @group.save
       end
       if st
+        @group.update_attributes(params[:group])
         flash[:notice] = t(:ctrl_object_created, typeobj: t(:ctrl_group), ident: @group.name)
         params[:id] = @group.id
         show_

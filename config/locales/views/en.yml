@@ -731,6 +731,7 @@ en:
   label last revision: List only last revision
   label_check_automatic: Operate automatic check
   label_subscription: Subscription
+  label_last_revision: Seulement dernière révision
   #views
   legend_view: Enter view details
   views_list: Listing of views
@@ -787,6 +788,7 @@ en:
   button_task_validate: Validate this task
   #ui_columns
   label_type_column: Column type
+  label_title: Title
   label_visible_guest: Visible by guest
   label_visible_user: Visible by user
   label_visible_admin: Visible by admin

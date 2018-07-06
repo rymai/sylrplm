@@ -827,8 +827,6 @@ module Models
     def from_function(from, function)
       fname = "#{modelname}.#{__method__}"
       LOG.debug(fname) { "from=#{from} function=#{function}" }
-      puts "#{fname} self=#{self.id} #{self} rev=#{self.revision} function=#{function}"
-      puts "#{fname} from=#{from.id} #{from} rev=#{from.revision}"
       rel = ::Relation.find_by_name(function)
       puts "#{fname} rel=#{rel}"
       # LOG.debug(fname){"rel=#{rel}"}

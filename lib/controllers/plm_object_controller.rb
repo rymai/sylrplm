@@ -221,6 +221,8 @@ module Controllers
             when 'typesobjects' then params[:controller].chop
             when 'users' then params[:controller].chop
             when 'volumes' then params[:controller].chop
+            when 'roles' then params[:controller].chop
+            when 'groups' then params[:controller].chop
             else params[:controller]
       end
       LOG.debug(fname) { "#{params[:controller]}=#{ret}" }
@@ -237,7 +239,9 @@ module Controllers
       fname = "#{self.class.name}.#{__method__}:"
       # parts devient Part
       LOG.debug(fname) { "params=#{params.inspect}" }
-      eval get_model_type(params).capitalize
+      model_type=get_model_type(params).capitalize
+      LOG.debug(fname) { "model_type=#{model_type}" }
+      eval model_type.capitalize
     end
 
     def get_modelname(model)
@@ -262,16 +266,19 @@ module Controllers
       fname = "#{self.class.name}.#{__method__}:"
       # renvoie la liste des themes
       dirname = "#{Rails.root}/public/stylesheets/*"
-      Dir[dirname].each_with_object('') do |dir, ret|
+      ret=""
+      Dir[dirname].each_with_object('') do |dir, rettt|
         LOG.debug(fname) { "get_themes; dir=#{dir} " }
         next unless File.directory?(dir)
         theme = File.basename(dir, '.*')
+        LOG.debug(fname) { "get_themes; theme=#{theme} " }
         ret += if theme == default
                  "<option selected=\"selected\">#{theme}</option>"
                else
                  "<option>#{theme}</option>"
                end
       end.html_safe
+      ret.html_safe
     end
 
     def get_languages

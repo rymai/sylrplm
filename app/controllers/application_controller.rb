@@ -80,7 +80,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def render_(*args)
+  def render_old(*args)
     fname = "#{self.class.name}.#{__method__}"
     LOG.debug(fname) { ">>>>args=#{args.inspect} flash=#{flash.inspect}" }
     if args.nil? || args.count == 0
