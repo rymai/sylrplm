@@ -46,15 +46,12 @@ class HistoryController < ApplicationController
     @entries = nil
 
     unless cs.first.empty?
-      # puts "HistoryController.index:opts="+opts.inspect
-      @all = opts[:conditions].nil?
+       @all = opts[:conditions].nil?
     end
-    # puts "HistoryController.index:params="+params.inspect
     unless params['fonct'].nil? || params['fonct']['current'].nil?
       if params[:fonct][:current] = 'on_plm_objects'
         @entries = Ruote::Sylrplm::HistoryEntry.all
-        # puts "HistoryController.index:on_plm_objects:#{@entries.count}"
-      end
+       end
     end
     # @entries = Ruote::Sylrplm::HistoryEntry.paginate(opts) if @entries.nil?
     LOG.debug(fname) { "opts=#{opts}" }

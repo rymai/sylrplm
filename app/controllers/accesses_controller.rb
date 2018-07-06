@@ -112,7 +112,6 @@ class AccessesController < ApplicationController
   end
 
   def reset
-    # puts __FILE__+"."+__method__.to_s+":params="+params.inspect
     # on refait les autorisations:
     # - apres l'ajout d'un controller (rare et manuel)
     # - apres ajout/suppression de role (peut etre automatise)

@@ -86,7 +86,6 @@ class MainController < ApplicationController
   end
 
   def helpgeneral
-    # puts " helpgeneral"
     respond_to do |format|
       format.html # helpgeneral.html.erb
     end

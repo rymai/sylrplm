@@ -35,10 +35,8 @@ class DatafilesController < ApplicationController
     @types = Typesobject.get_types('datafile')
     if params['doc']
       @object_plm = Document.find(params['doc'])
-      # puts "datafiles_controller.show:doc(#{params["doc"]})=#{@object_plm} filedoc=#{@datafile.document}"
     end
-    # puts "datafiles_controller.show:doc=#{@datafile.document} part=#{@datafile.part} project=#{@datafile.project} cust=#{@datafile.customer}"
-  end
+   end
 
   # GET /datafiles/new
   # GET /datafiles/new.xml
@@ -71,7 +69,6 @@ class DatafilesController < ApplicationController
     @types = Typesobject.get_types('datafile')
     @object_plm = Document.find(params['doc']) if params['doc']
     @object_plm.def_user(current_user)
-    # puts "datafiles_controller.create:errors=#{@datafile.errors.inspect}"
     respond_to do |format|
       @datafile = Datafile.m_create(params)
       uploaded_file = params[:datafile][:uploaded_file]
@@ -174,7 +171,6 @@ class DatafilesController < ApplicationController
       @datafile = Datafile.find(params[:id])
       tool = @datafile.typesobject.get_fields_values_by_key('tool')
       LOG.debug(fname) { "datafile=#{@datafile} tool=#{tool} disposition=#{disposition}" }
-      # puts "datafiles_controller.send_file_content:"+fields.inspect
       if disposition == 'inline'
         #
         # show_file: inline

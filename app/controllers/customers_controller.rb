@@ -56,19 +56,14 @@ class CustomersController < ApplicationController
             @tree         						= build_tree(@object_plm, @myparams[:view_id], nil, 3)
             @tree_up      						= build_tree_up(@object_plm, @myparams[:view_id])
         else
-            puts "*********************************************** no params id"
         end
     end
 
     # GET /customers/new
     # GET /customers/new.xml
     def new
-        # puts "===CustomersController.new:"+params.inspect+" user="+@current_user.inspect
         @object_plm = Customer.new(user: current_user)
-        ##@object_plm = Customer.new
         @object_plm.def_user(current_user)
-        #@object_plm.save
-        puts "===CustomersController.new:object_plm=#{@object_plm}"
         @types    = Typesobject.get_types('customer')
         @status   = Statusobject.get_status('customer', 2)
         respond_to do |format|
@@ -110,8 +105,6 @@ class CustomersController < ApplicationController
         # LOG.debug(fname) {"params=#{params.inspect}"}
         @object_plm = Customer.new(params[:customer])
         @object_plm.def_user(current_user)
-        #st=@object_plm.save
-        #puts "************** save customer=#{st} : #{@object_plm.inspect} : #{@object_plm.errors.full_messages}"
         @types    = Typesobject.get_types('customer')
         @status   = Statusobject.get_status(@object_plm)
         respond_to do |format|
@@ -122,7 +115,6 @@ class CustomersController < ApplicationController
             st = @object_plm.save
             end
             if st
-                puts "************** save customer=#{st} : #{@object_plm.inspect} : #{@object_plm.errors.full_messages}"
                 st = ctrl_duplicate_links(params, @object_plm, current_user)
                 flash[:notice] = t(:ctrl_object_created, typeobj: t(:ctrl_customer), ident: @object_plm.ident)
                 params[:id] = @object_plm.id
@@ -222,7 +214,6 @@ class CustomersController < ApplicationController
     end
 
     def new_forum
-        # puts "CustomerController.new_forum:id=#{params[:id]}"
         @object = Customer.find(params[:id])
         @types  = Typesobject.get_types('forum')
         @status = Statusobject.get_status('forum')
@@ -242,7 +233,6 @@ class CustomersController < ApplicationController
     end
 
     def add_docs
-        # puts "#{self.class.name}.#{__method__}:#{params.inspect}"
         @object_plm = Customer.find(params[:id])
         ctrl_add_objects_from_clipboard(@object_plm, :document)
     end

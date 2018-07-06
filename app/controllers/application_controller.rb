@@ -197,7 +197,6 @@ class ApplicationController < ActionController::Base
     fname = "#{self.class.name}.#{__method__}"
     LOG.debug(fname) { ">>>>user=#{user}" }
     msg = t(:ctrl_user_not_valid, user: user) unless user.may_connect?
-    # puts "check_user_connect:"+user.inspect+":"+flash[:notice].to_s
     msg = nil if user.login == PlmServices.get_property(:USER_ADMIN)
     LOG.debug(fname) { "<<<<user=#{user} msg=#{msg}" }
     msg
@@ -220,8 +219,6 @@ class ApplicationController < ActionController::Base
   # definition de la langue
   def set_locale
     fname = "#{self.class.name}.#{__method__}"
-    LOG.debug(fname) { '>>>>' }
-    # puts "set_locale:params[:locale]=#{params[:locale]}"
     if params[:locale]
       I18n.locale = params[:locale]
       session[:lng] = I18n.locale
@@ -234,7 +231,6 @@ class ApplicationController < ActionController::Base
           session[:lng] = I18n.locale
         end
       else
-        # puts "set_locale:@current_user=#{@current_user} lng=#{@current_user.language}"
         I18n.locale = @current_user.language
       end
     end
@@ -340,7 +336,6 @@ class ApplicationController < ActionController::Base
 
   # redirection vers l'action index du main si besoin
   def redirect_to_main(uri = nil, msg = nil)
-    puts "application_controller: redirect_to_main:flash=#{flash.inspect} msg=#{msg}"
     flash[:error] = msg if msg
     redirect_to(uri || { controller: 'main', action: 'index' })
   end
@@ -430,7 +425,6 @@ class ApplicationController < ActionController::Base
   def admin_logged_in?
     ret = false
     if logged_in?
-      # puts "admin_connected: connected is_admin="+@current_user.is_admin?.to_s
       ret = current_user.is_admin? if current_user.is_admin?
     end
     ret
@@ -496,7 +490,6 @@ class ApplicationController < ActionController::Base
   #
   def param_equals?(key, value)
     ret = @myparams.include?(key) && @myparams[key] == value
-    # puts "#{controller_name}.#{__method__}:#{key}.#{value}=#{ret}"
     ret
   end
 
@@ -504,7 +497,7 @@ class ApplicationController < ActionController::Base
     fname = "#{self.class.name}.#{__method__}"
     ret = ''
     if obj.respond_to? :thumbnails
-      obj.thumbnails&.each do |img|
+      obj.thumbnails.each do |img|
         src = img.write_file_tmp
         LOG.debug(fname) { "src=#{src} " }
         ret << "<img class='thumbnail' src='#{src}'/>"
@@ -520,7 +513,6 @@ class ApplicationController < ActionController::Base
   def t(*args)
     tr = PlmServices.translate(args)
     tr = tr[0] if tr.is_a?(Array)
-    # puts "t:#{args.inspect} env:#{Rails.env}:#{tr}"
     tr
   end
 

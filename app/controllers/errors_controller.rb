@@ -34,7 +34,6 @@ class ErrorsController < ApplicationController
   def index
     fname = 'errors_controller.index'
     LOG.debug(fname) { 'params=' + params.inspect }
-    # puts "errors_controller.index:params="+params.inspect
     opts = { page: params[:page], order: 'created_at DESC' }
 
     @all = opts[:conditions].nil?

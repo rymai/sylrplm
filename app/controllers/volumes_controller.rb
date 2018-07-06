@@ -64,9 +64,7 @@ class VolumesController < ApplicationController
   # POST /volumes
   # POST /volumes.xml
   def create
-    # puts "volumes_controller.create:"+params.inspect
     @volume = Volume.new(params[:volume])
-    # puts "volumes_controller.create:errors="+@volume.errors.count.to_s+":"+@volume.errors.inspect
     respond_to do |format|
       if fonct_new_dup?
         object_orig = Volume.find(params[:object_orig_id])
@@ -127,8 +125,7 @@ class VolumesController < ApplicationController
         format.xml  { head :ok }
       else
         flash[:error] = t(:ctrl_object_not_deleted, typeobj: t(:ctrl_volume), ident: "#{name}:#{dir}")
-        puts 'volumes_controller.destroy:errors=' + @volume.errors.inspect
-        format.html { render action: 'show' }
+         format.html { render action: 'show' }
         format.xml  { head :ok }
       end
     end

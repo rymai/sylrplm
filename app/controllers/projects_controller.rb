@@ -240,7 +240,6 @@ class ProjectsController < ApplicationController
   end
 
   def new_forum
-    puts 'CustomerController.new_forum:id=' + params[:id]
     @object = Project.find(params[:id])
     @types = Typesobject.get_types('forum')
     @status = Statusobject.get_status('forum')

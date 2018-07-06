@@ -107,8 +107,7 @@ module ApplicationHelper
   # att peut etre un attribut "compose" tel que owner.login, d'ou l'utilisation de eval
   def get_val(obj, att)
     blk = "obj = #{obj.class.name}.find(#{obj.id})\nobj.#{att}"
-    # puts "blk="+blk
-    ret = eval blk
+     ret = eval blk
     ret
   end
 
@@ -504,7 +503,6 @@ module ApplicationHelper
   def h_workitem_fields(obj, fonct)
     fname = "#{self.class.name}.#{__method__}"
     fields = obj.fields
-    # puts "application_helper.h_workitem_fields:fields=#{fields}"
     ret = ''
     if fields.nil?
       ret = t('history_no_fields')

@@ -78,7 +78,6 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    # puts "users_controller.edit:#{params["user"].inspect}"
     @the_user = User.find(params[:id])
     @roles   = Role.all
     @groups  = Group.all
@@ -88,7 +87,6 @@ class UsersController < ApplicationController
     @volumes = Volume.all.to_a
     @types = Typesobject.get_types('user')
     @subscriptions = Subscription.all
-    # puts __FILE__+"."+__method__.to_s+":"+@roles.inspect
   end
 
   # GET /users/1/reset_passwd
@@ -218,21 +216,16 @@ class UsersController < ApplicationController
   end
 
   def account_update
-    # puts "users_controller.account_update:params="+params.inspect
-    @the_user = User.find(params[:id])
+     @the_user = User.find(params[:id])
     @themes = get_themes(@theme)
     @time_zones = get_time_zones(@the_user.time_zone)
     @volumes = Volume.get_all
-    # puts "users_controller.update:password=#{params[:user][:password]}"
     ok = true
     if params[:user][:password].nil?
       if @the_user.update_attributes(params[:user])
-        # puts "users_controller.update:update_attributes ok:#{params[:user]}"
         ok = true
       else
-        # puts "users_controller.update:update_attributes ko:#{params[:user]}"
         msg = @the_user.errors.full_messages
-        # puts "users_controller.update:update_attributes ko:msg=#{msg}"
         ok = false
       end
     else
@@ -241,7 +234,6 @@ class UsersController < ApplicationController
         msg = t('password_needed')
       else
         if @the_user.update_attributes(params[:user])
-          # puts "users_controller.update:update_attributes ok:#{params[:user]}"
           ok = true
         else
           msg = @the_user.errors.full_messages

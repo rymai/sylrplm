@@ -55,7 +55,6 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    # puts "questions_controller.update:"+params.inspect
     @faq = Question.find(params[:id])
     @faq.update_accessor(current_user)
     respond_to do |format|

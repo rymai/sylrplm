@@ -5,20 +5,15 @@ class SessionsController < ApplicationController
   def index; end
 
   def new
-    puts 'sessions_controller.new' + params.inspect
-    puts 'sessions_controller.new:flash=' + flash[:notice] unless flash[:notice].nil?
     @current_users = User.find_paginate(user: current_user, filter_types: params[:filter_types], page: params[:page], query: params[:query], sort: params[:sort], nb_items: get_nb_items(params[:nb_items]))
-    # puts "sessions_controller.new @current_users=#{@current_users}"
-  end
+   end
 
   def edit
-    # puts "sessions_controller.edit"+params.inspect
   end
 
   # activation d'un nouveau compte
   # appelle depuis un mail envoye par PLMMailer.new_login
   def activate
-    # puts "sessions_controller.activate"+params.inspect
     user = User.find(params[:id]) if User.exists?(params[:id])
     if user.nil?
       flash[:notice] = t(:ctrl_new_account_not_existing, user: nil)
@@ -40,8 +35,7 @@ class SessionsController < ApplicationController
           end
         else
           flash[:notice] = t(:ctrl_new_account_not_validated, user: user.login)
-          # puts "sessions_controller.activate new_account_not_validated :"+user.to_s
-          respond_to do |format|
+           respond_to do |format|
             # format.html { render :action => :new }
             format.html { redirect_to user }
             format.xml { render xml: errs, status: :unprocessable_entity }
@@ -50,7 +44,6 @@ class SessionsController < ApplicationController
       else
         flash[:error] = t(:ctrl_user_not_valid, user: user)
         @current_user = nil
-        # puts "sessions_controller.activate user_not_valid :"+user.to_s
         respond_to do |format|
           format.html { redirect_to user }
           format.xml { render xml: errs, status: :unprocessable_entity }
@@ -63,13 +56,10 @@ class SessionsController < ApplicationController
     fname = "#{self.class.name}.#{__method__}"
     LOG.debug(fname) { "params=#{params}" }
     par = params[:session]
-    # puts "sessions_controller.create"+params.inspect
     @current_users = User.find_paginate(user: current_user, filter_types: params[:filter_types], page: params[:page], query: params[:query], sort: params[:sort], nb_items: get_nb_items(params[:nb_items]))
     commit = params['commit']
     submit_account = t(:submit_account)
-    # puts "sessions_controller.create:commit=#{commit} submit_account=#{submit_account}"
     if commit == submit_account
-      # puts "sessions_controller.create:compte renseigne"
       # compte renseigne (new)
       cur_user = User.authenticate(par['login'], par['password'])
       if cur_user.nil?
@@ -82,7 +72,6 @@ class SessionsController < ApplicationController
           format.xml { render xml: errs, status: :unprocessable_entity }
         end
       else
-        # puts "sessions_controller.create:user reconnu, verif si il peut se connecter"
         # user reconnu, verif si il peut se connecter (role, groupe, projet, ...)
         flash[:notice] = check_user_connect(cur_user)
         if flash[:notice].nil?
@@ -115,9 +104,6 @@ class SessionsController < ApplicationController
         end
       end
 
-###<<<<<<< HEAD
-
-
     elsif params[:commit] == t(:submit_new_account)
       # session[:login]=nil
       # session[:password]=nil
@@ -129,7 +115,6 @@ class SessionsController < ApplicationController
         format.xml { head :ok }
       end
     end
-    # puts "sessions_controller.create:fin"
   end
 
 
@@ -184,7 +169,6 @@ class SessionsController < ApplicationController
   end
 
   def login
-    puts 'sessions_controller.login' + params.inspect
     par = params[:session]
     if params[:commit] == t(:submit_login)
       cur_user = User.find(params[:user_id])
@@ -223,7 +207,6 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    # puts "sessions_controller.destroy:"+params.inspect
     session[:user_id] = nil
     flash[:notice] = t(:ctrl_user_disconnected, user: current_user.login) unless current_user.nil?
     # bouclage
