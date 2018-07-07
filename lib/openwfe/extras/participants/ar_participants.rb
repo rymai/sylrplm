@@ -178,7 +178,6 @@ module OpenWFE::Extras
     end
 
     def field_hash
-      # ##puts "**************** ar_participants.field_hash:self=#{self.inspect} ******************"
       YAML.safe_load(wi_fields)
     end
 

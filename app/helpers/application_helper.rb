@@ -514,7 +514,6 @@ module ApplicationHelper
       LOG.info(fname) { "hrf apres h_render_fields=#{hrf.length}" }
       ret += hrf.to_s unless hrf.nil?
     end
-    # puts "******************** h_history_fields:ret="+ret
     ret.html_safe
   end
 
@@ -591,7 +590,6 @@ module ApplicationHelper
       opts = {}
       opts[:page] = nil
       opts[:conditions] = "wfid = '" + params[:id] + "' and event = 'proceeded'" # TODO
-      # puts fname+" opts="+opts.inspect
       # history = Ruote::Sylrplm::HistoryEntry.paginate(opts)
       # TODO render_text = "var #{var} = #{history.last.tree};"
     else

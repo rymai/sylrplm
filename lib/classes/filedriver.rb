@@ -8,7 +8,6 @@ class Filedriver
   private
 
   def initialize
-    puts 'Filedriver.initialize'
   end
 
   public

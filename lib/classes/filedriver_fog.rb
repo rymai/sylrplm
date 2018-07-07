@@ -8,7 +8,6 @@ class FiledriverFog < Filedriver
   private
 
   def initialize
-    puts 'SylrplmFog.initialize'
   end
 
   public
@@ -136,7 +135,6 @@ class FiledriverFog < Filedriver
     dir = directory(datafile.dir_repository)
     unless dir.nil?
       dir.files.each do |file|
-        puts 'datafile.remove_files:file=' + file.inspect
         file.destroy
       end
       dir.destroy
@@ -341,7 +339,6 @@ class FiledriverFog < Filedriver
   end
 
   def retrieve(directory_key, file_key)
-    # puts "sylrplm_fog.retrieve("+directory_key+","+ file_key+")"
     # get the resume file
     fog_file = file(directory_key, file_key)
   end

@@ -16,12 +16,13 @@ class Question < ActiveRecord::Base
              class_name: 'User'
   #
   def user=(user)
+      fname= "#{self.class.name}.#{__method__}"
     def_user(user)
     if user.nil?
       begin
         self.asker = User.find_by_login('visiteur')
       rescue Exception => e
-        puts 'user visiteur non trouve:' + e.inspect
+        LOG.error(fname){ 'user visiteur non trouve:' + e.inspect}
       end
     end
     unless user.nil?
@@ -46,7 +47,6 @@ class Question < ActiveRecord::Base
   end
 
   def update_from_params(question, user)
-    # puts "question.update:"+question.inspect
     self.responder = user
     update_attributes(question)
   end

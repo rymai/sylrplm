@@ -68,17 +68,12 @@ class Notification < ActiveRecord::Base
           else
             obj.follow_up(nil)
           end
-    puts name + ' branches:'
-    ret.each do |path|
-      puts path
-    end
     ret
   end
 
   def object
     name = "#{self.class.name}.#{__method__}" + ':'
     ret = get_object(forobject_type, forobject_id)
-    # puts name +" object="+ret.inspect
     ret
   end
 
@@ -236,7 +231,6 @@ class Notification < ActiveRecord::Base
     LOG.info(name) { "#{to_notify.count} notification to send for #{user.login}" }
     txt = nil
     if to_notify.count > 0
-      # puts to_notify.inspect
       notifs = {}
       recordset = []
       to_notify.each do |tonotif, _notify|

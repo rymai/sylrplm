@@ -56,7 +56,6 @@ module Ruote
           def self.connection_rail2
             ActiveRecord::Base.verify_active_connections!
             @@connection ||= ActiveRecord::Base.connection_pool.checkout
-            # puts "#{__FILE__} : connection active= #{connection.active?}"
             @@connection.active? || @@connection.reconnect!
             @@connection
           end

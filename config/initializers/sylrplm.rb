@@ -12,7 +12,6 @@ require 'os_functions'
 
 module SYLRPLM
   fname = 'sylrplm.rb:'
-  puts ">>>>#{fname}"
   #########################################
   # version
   SYLRPLM_VERSION	= '1.0.1'
@@ -151,5 +150,4 @@ module SYLRPLM
 
   end
 
-  puts "<<<<#{fname}"
 end

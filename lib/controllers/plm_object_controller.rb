@@ -327,8 +327,7 @@ module Controllers
                 item[1]
               end
         ret += if item[0].to_s == default.to_s
-                 # puts "get_html_options:"+item.inspect+" = "+default.to_s
-                 "<option value=\"#{item[0]}\" selected=\"selected\">#{val}</option>"
+                  "<option value=\"#{item[0]}\" selected=\"selected\">#{val}</option>"
                else
                  "<option value=\"#{item[0]}\">#{val}</option>"
                end
@@ -542,7 +541,6 @@ module Controllers
     # controle des vues et de la vue active
     #
     def define_view
-      # puts "#{controller_name}.define_view:begin view=#{@myparams[:view_id]}"
       # views: liste des vues possibles est utilisee dans la view ruby show
       @views = View.all
       # view_id: id de la vue selectionnee est utilisee dans la view ruby show
@@ -550,8 +548,7 @@ module Controllers
       if @myparams[:view_id].nil?
         @myparams[:view_id] = current_user.get_default_view.id if logged_in?
       end
-      # puts "#{controller_name}.define_view:end view=#{@myparams[:view_id]}"
-    end
+     end
 
     #
     # Creates an HistoryEntry record

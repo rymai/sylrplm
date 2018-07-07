@@ -109,7 +109,7 @@ module OpenWFE
     # One can very easily build a worklist based on a participant name via :
     #
     #   wl = OpenWFE::Extras::Workitem.find_all_by_participant_name("toto")
-    #   puts "found #{wl.size} workitems for participant 'toto'"
+    #   puts_ "found #{wl.size} workitems for participant 'toto'"
     #
     # These workitems are not OpenWFEru workitems directly. But the conversion
     # is pretty easy.
@@ -364,7 +364,7 @@ module OpenWFE
         fields = Field.search(search_string, storename_list)
         merge_search_results(ids, result, fields)
 
-        # puts "... took #{t.duration} ms"
+        # puts_ "... took #{t.duration} ms"
 
         # over.
 

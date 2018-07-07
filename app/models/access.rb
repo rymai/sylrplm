@@ -70,7 +70,6 @@ class Access < ActiveRecord::Base
         st = allowed?(actions, aa.action, access_context)
         actions_by_roles[arole][aa.controller] = [] if actions_by_roles[arole][aa.controller].nil?
         actions_by_roles[arole][aa.controller] << aa.action if st == true
-        # puts "controller= #{aa.controller} , action= #{aa.action} , roles= #{aa.roles} , user=#{user}, st=#{st}"
       end
     end
     # traces
@@ -88,15 +87,12 @@ class Access < ActiveRecord::Base
   def self.allowed?(actions, action, access_context)
     if actions.key? action
       ret = RoleHandler.new.process(actions[action].dup, access_context)
-      # puts "allowed:actions.has_key #{action}:#{ret}"
       ret
     elsif actions.key? :DEFAULT
       ret = RoleHandler.new.process(actions[:DEFAULT].dup, access_context)
-      # puts "allowed:actions.has_key #{:DEFAULT}:#{ret}"
       ret
     else
-      # puts "allowed:actions.has_no_key #{action} or #{:DEFAULT}"
-      true
+       true
     end
       end
 
@@ -179,16 +175,12 @@ class Access < ActiveRecord::Base
     LOG.debug(fname) { 'remplissage des autorisations' }
     destroy_all
     acc_roles = Access.access_roles
-    # puts "acces.init:#{acc_roles.count} acc_roles"
     controllers_methods = Controller.get_controllers_and_methods
-    # puts "acces.init:#{controllers_methods.count} controllers_methods"
     controllers_methods.each do |controller|
-      # puts "acces.init:#{controller.name} #{controller.method}"
       if controller.method == 'index' || controller.method[0, 6] == 'update' || controller.method[0, 6] == 'create' || controller.method[0, 4] == 'add_' || controller.method == 'select_view'
         # methodes activees apres le formulaire, tt le monde peut, c'est la methode avant formulaire qui est permise ou non (new, new_datafile...)
         roles = nil
       elsif %w[AccessesController DefinitionsController GroupsController RelationsController RolesController SequencesController StatusObjectsController SubscriptionsController TypesobjectsController ViewsController VolumesController].include?(controller.name)
-        # puts "acces.init:#{controller.name} #{controller.method}: fonctions admin"
         roles = if controller.method[0, 5] == 'reset'
                   # roles = "admin"
                   roles_admin acc_roles
@@ -198,22 +190,18 @@ class Access < ActiveRecord::Base
                 end
       else
         if controller.name == 'SessionsController'
-          #  puts "acces.init:#{controller.name} #{controller.method}: tout le monde peut se connecter/deconnecter"
           # roles = "admin | creator | consultant"
           roles = roles_admin_or_creator_or_consultant acc_roles
         elsif %w["WorkitemsController ErrorsController ExpressionsController HistoryController"].include?(controller.name)
-          # puts "acces.init:#{controller.name} #{controller.method}: tout le monde peut executer une tache sauf le consultant"
           # roles = "(admin | creator) & !consultant"
           roles = roles_admin_or_creator_not_consultant acc_roles
         elsif controller.name == 'QuestionsController'
-          # puts "acces.init:#{controller.name} #{controller.method}: tout le monde peut poser une question, le consultant ne peut repondre"
           roles = nil
           if controller.method == 'edit'
             # roles = "(admin | creator) & !consultant"
             roles = roles_admin_or_creator_not_consultant acc_roles
            end
         elsif controller.name == 'UsersController'
-          # puts "acces.init:#{controller.name} #{controller.method}: seulement admin"
           roles = nil
           if controller.method != 'show' && controller.method[0, 7] != 'account'
             # roles = "admin"
@@ -222,11 +210,9 @@ class Access < ActiveRecord::Base
         else
           # les fonctions plm
           if %w[show].include?(controller.method)
-            # puts "acces.init:#{controller.name} #{controller.method}:fonctions plm:show index: "
             # roles = "admin | designer | valider | consultant"
             roles = roles_admin_or_creator_or_consultant acc_roles
           else
-            # puts "acces.init:#{controller.name} #{controller.method}: fonctions plm:autres:#{controller.method}"
             # roles = "(admin | creator) & !consultant"
             roles = roles_admin_or_creator_not_consultant acc_roles
             # #roles = "("+roles_yes(acc_roles[:cat_admins]) +" | "+ roles_yes(acc_roles[:cat_creators]) +" | "+ roles_yes(acc_roles[:cat_consultants])+ ")"

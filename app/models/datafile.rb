@@ -443,7 +443,6 @@ class Datafile < ActiveRecord::Base
 
   def current_revision_file
     fname = "#{self.class.name}.#{__method__}"
-    # puts "current_revision_file:"+self.revision.to_s+" filename="+self.filename.to_s
     ret = ''
     unless revision.blank? && filename.blank?
       ret = Volume::FILE_REV_DELIMITER
@@ -461,7 +460,6 @@ class Datafile < ActiveRecord::Base
       f = File.open(repository, 'r')
       f.each_line do |line|
         data += line
-        # puts "datafile.read_file a line"
       end
     else
       data = nil

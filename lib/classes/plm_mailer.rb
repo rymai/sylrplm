@@ -8,7 +8,6 @@ class PlmMailer < ActionMailer::Base
         ret << user.login + '<' + user.email + '>'
       end
     end
-    puts 'PlmMailer.listUserMail:' + ret.inspect
     ret
   end
 

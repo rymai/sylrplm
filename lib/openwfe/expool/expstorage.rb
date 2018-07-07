@@ -239,7 +239,6 @@ module OpenWFE
     #
     def find_expressions(options = {})
       options[:cache] = self
-      # puts "*************** expstorage.find_expressions:options=#{options.count} ****************"
 
       get_real_storage.find_expressions(options)
     end
@@ -276,7 +275,7 @@ module OpenWFE
 
   #
   # [memory consuming] in-memory storage.
-  # No memory limit, puts everything in a Hash
+  # No memory limit, puts_ everything in a Hash
   #
   # USE ONLY FOR TESTS
   #

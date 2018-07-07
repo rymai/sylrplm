@@ -173,16 +173,7 @@ class User < ActiveRecord::Base
     else
       LOG.error(fname) {" user non cree: errors= #{new_user.errors.inspect}"}
     end
-    #else
-# puts fname+" manque des objets associes"
-# puts fname+" admin="+admin.inspect
-# puts fname+" group_consultants="+group_consultants.inspect
-# puts fname+" role_consultant="+role_consultant.inspect
-# puts fname+" proj="+proj.inspect
-# puts fname+" type user="+type.inspect
-# new_user=nil
 
-    #end
     new_user
   end
 
@@ -194,9 +185,9 @@ class User < ActiveRecord::Base
     email = PlmMailer.new_login(new_user, admin, new_user, urlbase).deliver_now
     unless email.nil?
       msg = :ctrl_mail_created_and_delivered
-      puts fname+" message cree et envoye pour #{new_user.login}"
+      LOG.info(fname) {" message cree et envoye pour #{new_user.login}"}
     else
-      puts fname+" message non cree pour #{new_user.login}"
+      LOG.info(fname) {" message non cree pour #{new_user.login}"}
       msg = :ctrl_mail_not_created
     end
     email
@@ -258,8 +249,7 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(log, pwd)
-    #puts __FILE__+".authenticate:"+log+":"+pwd
-    user = self.find_by_login(log)
+     user = self.find_by_login(log)
     if user
       if (user.salt.nil? || user.salt == "") && log==PlmServices.get_property(:USER_ADMIN)
         user.update_attributes({"salt" => "1234", "hashed_password" => encrypted_password(pwd, "1234")})
@@ -277,7 +267,6 @@ class User < ActiveRecord::Base
   end
 
   def password=(pwd)
-    #puts __FILE__+".password="+pwd
     @password = pwd
     return if pwd.blank?
     create_new_salt
@@ -317,8 +306,7 @@ class User < ActiveRecord::Base
   # Returns true if the username is "admin" or user is member of the administrators group
   #
   def is_admin?
-    #puts "is_admin:"+login+" USER_ADMIN"+::SYLRPLM::USER_ADMIN+":"+login+" GROUP_ADMINS="+::SYLRPLM::GROUP_ADMINS+":"+group_names.to_s
-    ret = login==PlmServices.get_property(:USER_ADMIN)
+     ret = login==PlmServices.get_property(:USER_ADMIN)
     ret ||= group_names.include?(PlmServices.get_property(:GROUP_ADMINS))
     ret
   end
@@ -338,7 +326,6 @@ class User < ActiveRecord::Base
   #
   def may_launch? (definition)
     return false if definition.is_special?
-    #puts "User.may_launch? #{definition} user.groups=#{self.groups}  def.groups=#{definition.groups}:#{(self.groups & definition.groups).size}"
     is_admin? or (self.roles & definition.roles).size > 0
   end
 
@@ -364,9 +351,7 @@ class User < ActiveRecord::Base
   # (always returns true for an admin).
   #
   def may_see? (workitem)
-    #rails2 ret=is_admin? || store_names.include?(workitem.store_name)
-    ret=is_admin? || true
-    #puts "User.may_see?: workitem=#{workitem.inspect}:#{ret}"
+     ret=is_admin? || true
     ret
   end
 
@@ -374,10 +359,11 @@ class User < ActiveRecord::Base
   # Returns true if the user can send email
   #
   def may_send_email?
+    fname= "#{self.class.name}.#{__method__}"
     ret = true
     askUserMail=self.email
     if askUserMail.blank?
-      puts "User.may_send_email? :pas de mail"
+      LOG.error(fname) {"User.may_send_email? :pas de mail"}
     ret=false
     end
     ret
@@ -386,14 +372,12 @@ class User < ActiveRecord::Base
   # peut creer des objets avec accessor
   def may_access?
     ret=!self.role.nil? && !self.group.nil? && !self.project.nil?
-    #puts "User.may_access?:#{ret}"
     ret
   end
 
   # peut se connecter
   def may_connect?
     ret=!self.typesobject.nil? && self.typesobject.name != PlmServices.get_property(:TYPE_USER_NEW_ACCOUNT) && !self.roles.empty? && !self.groups.empty? && !self.projects.empty?
-    #puts "#{login} may_connect:type:#{typesobject.name} roles?:#{roles} group:#{groups} project:#{projects}:ret=#{ret}"
     ret
   end
 
@@ -413,7 +397,6 @@ class User < ActiveRecord::Base
   #renvoie la liste des time zone tries sur le nom ([[texte,nom]])
   def self.time_zones
     ret=ActiveSupport::TimeZone.all.sort_by(&:name).collect {|z| [ z.to_s, z.name ]}
-    #puts "time_zones:" + ret.inspect
     ret
   end
 
@@ -428,12 +411,10 @@ class User < ActiveRecord::Base
   end
 
   def tooltip
-    #puts "user.tooltip"
     "#{first_name} #{last_name} (#{typesobject.ident})"
   end
 
   def self.encrypted_password(pwd, salt)
-    #puts __FILE__+".encrypted_password:"+pwd.to_s+":"+salt.to_s
     string_to_hash = "#{pwd}wibble#{salt}"
     Digest::SHA1.hexdigest(string_to_hash)
   end

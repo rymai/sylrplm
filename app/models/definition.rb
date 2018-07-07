@@ -290,30 +290,11 @@ class Definition < ActiveRecord::Base
           else
             ActiveSupport::JSON.decode(launch_fields)
           end
-    # puts "definition.launch_fields_hash:"+ret.inspect
     ret
   end
 
   def definition
     ''
-  end
-
-  def definition_obsolete=(s)
-    #    puts "definition.definition("+s.inspect+")"
-    return if s.blank?
-    pref = "#{config.root}/public"
-    base = "/definitions/#{OpenWFE.ensure_for_filename(name)}"
-    i = ''
-    fn = pref + base + i.to_s + '.def'
-
-    # while File.exist?(fn)
-    #   i = (i == '') ? 1 : i + 1
-    #   fn = pref + base + i.to_s + '.def'
-    # end
-
-    File.open(fn, 'w') { |f| f.write(s) }
-
-    self.uri = base + i.to_s + '.def'
   end
 
   protected

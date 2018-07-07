@@ -18,8 +18,7 @@ class Controller
     controllers_and_methods = []
 
     Dir.glob(Rails.root.join('app/controllers', '**', '*_controller.rb')).each_with_index do |file, index|
-      ###puts "Controller.get_controllers:"+controller
-      controller = File.basename(file, '.rb').camelize
+       controller = File.basename(file, '.rb').camelize
       controller_class = controller.safe_constantize
       next unless controller_class
 
@@ -64,23 +63,17 @@ class Controller
 
   #appelle par main_controller.init_objects
   def self.create_admin
-    puts "Controller.create_admin:"
     dirname="#{PlmServices.get_property(:DIR_FIXTURES)}/admin/*.yml"
-    puts "Controller.create_admin:"+dirname
     Dir.glob(dirname).each do |file|
       dirfile="#{PlmServices.get_property(:DIR_FIXTURES)}/admin"
-      puts "Controller.create_admin:dirfile="+dirfile+" file="+File.basename(file, '.*')
       Fixtures.create_fixtures(dirfile, File.basename(file, '.*'))
     end
   end
 
   def self.create_domain(domain)
-    puts "Controller.create_domain:"+domain
     dirname="#{PlmServices.get_property(:DIR_FIXTURES)}/domains/#{domain}/*.yml"
-    puts "Controller.create_domain:"+dirname
-    Dir.glob(dirname).each do |file|
+   Dir.glob(dirname).each do |file|
       dirfile = "#{PlmServices.get_property(:DIR_FIXTURES)}/domains/#{domain}"
-      puts "Controller.create_domain:dirfile="+dirfile+" file="+File.basename(file, '.*')
       Fixtures.create_fixtures(dirfile, File.basename(file, '.*'))
     end
 
@@ -94,25 +87,21 @@ class Controller
     Dir.glob(dirname).each do |dir|
       ret<<"<option>"<<File.basename(dir, '.*')<<"</option>"
     end
-    #puts "plm_init_controller.get_domains:"+dirname+"="+ret
-    ret
+     ret
   end
 
   #appelle par main_controller.init_objects
   #maj le volume de depart id=1 defini dans le fichier db/fixtures/volume.yml et cree par create_domain
   def self.update_admin(dir)
-    #puts "Controller.update_admin="+dir.to_s
     vol=Volume.find_first
     unless vol.nil?
       #vol.update_attributes(:directory=>dir) unless vol.nil?
       vol.set_directory
-      puts "Controller.update_admin="+vol.name+" protocol="+vol.protocol+" dir="+vol.directory.to_s
       vol.save
       User.get_all.each do |auser|
         auser.volume=vol
         ##auser.password=auser.login
         auser.save
-      #puts "Controller.update_admin="+auser.inspect
       end
     end
   end

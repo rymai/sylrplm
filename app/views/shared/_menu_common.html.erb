@@ -1,4 +1,3 @@
-<% puts "menu_common:filter_types=#{@myparams[:filter_types]}" %>
 <%= hidden_field_tag("filter_types" , @myparams["filter_types"]) unless @myparams.nil? %>
 <% if object.respond_to? :document %>
 <% unless object.document.nil? %> <td> <%= link_to t("document_show"), document_path(object.document) %> </td>

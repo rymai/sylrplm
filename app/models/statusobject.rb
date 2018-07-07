@@ -134,9 +134,7 @@ class Statusobject < ActiveRecord::Base
     cond << "id <> #{id} and " unless id.nil?
     # #cond << " forobject = '#{self.forobject}' and (typesobject_id=#{objtype.id} or typesobject_id=#{any_type.id} or typesobject_id is null)"
     cond << " forobject = '#{forobject}' and (typesobject_id=#{objtype.id} or typesobject_id is null)"
-    # puts "get_others_status:objtype=#{objtype} any_type=#{any_type} cond=#{cond}"
-    # rails2 ret=Statusobject.order_default.find(:all, :conditions => [cond]).each  do |status|
-    ret = Statusobject.where(cond).order(ORDER_DEFAULT).to_a.each do |status|
+     ret = Statusobject.where(cond).order(ORDER_DEFAULT).to_a.each do |status|
       status.name = status.name_translate
     end
     ret
@@ -168,9 +166,7 @@ class Statusobject < ActiveRecord::Base
         cond_object = "forobject = '#{object.model_name}'"
         cond_promote = "rank >= #{stat_cur.rank}" if stat_cur.promote_id == choice
         cond_demote = "rank <= #{stat_cur.rank}" if stat_cur.demote_id == choice
-                 #puts "******************** statusobject: cond_promote= #{cond_promote}"
-                 #puts "******************** statusobject: cond_demote= #{cond_demote}"
-       if !cond_promote.nil? && !cond_demote.nil?
+        if !cond_promote.nil? && !cond_demote.nil?
                   # LOG.info(fname){"!cond_promote.nil? &&  !cond_demote.nil?"}
                   cond_="(#{cond_promote} or #{cond_demote})"
                 else
@@ -181,13 +177,10 @@ class Statusobject < ActiveRecord::Base
                           end
                 end
           end
-                #puts "******************** statusobject: cond_= #{cond_}"
-    cond = "#{cond_object}"
+     cond = "#{cond_object}"
        cond += "and (#{cond_}) " unless cond_.nil?
 
     end
-    #puts "******************** statusobject: cond= #{cond}"
-    # rails2 ret = Statusobject.order_default.find(:all, :conditions => [cond]) unless cond.nil?
     ret = Statusobject.all.where(cond).order(ORDER_DEFAULT) unless cond.nil?
     # LOG.debug(fname){"stat_cur=#{stat_cur} choice(#{choice})=>cond_promote(#{cond_promote}),cond_demote(#{cond_demote}),cond(#{cond}) ret=#{ret}"}
     ret.each do |status|
@@ -236,8 +229,7 @@ class Statusobject < ActiveRecord::Base
     cond = "forobject='#{obj.modelname}' and (typesobject_id=#{obj.typesobject_id} or typesobject_id= #{any_type.id} or typesobject_id is null)"
     # rails2 ret=Statusobject.order_default.find(:last, :conditions => [cond])
     ret = Statusobject.where(cond).order(ORDER_DEFAULT).last
-    # puts "cond=#{cond} get_last:#{ret}"
-    ret
+     ret
   end
 
   def self.get_conditions(filter)

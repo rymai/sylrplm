@@ -6,7 +6,6 @@ module Classes
     class LogFormatter < Logger::Formatter
       # Provide a call() method that returns the formatted message.
       def initialize(*args)
-        puts "LogFormatter:args=#{args}"
         @NOLOGS = args[0]
       end
 

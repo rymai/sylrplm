@@ -288,7 +288,7 @@ fr:
   #contacts
   label_contact_type: Type
   label_contact_firstname: Prénom
-  label_contactlastname: Nom
+  label_contact_lastname: Nom
   label_contact_adress: Adresse
   label_contact_postalcode: Code postal
   label_contact_town: Ville

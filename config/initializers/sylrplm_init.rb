@@ -3,7 +3,6 @@
 #
 require 'rufus/scheduler'
 fname = 'sylrplm-init.rb:'
-  puts ">>>>#{fname}"
 #
 # fichier de log specifique
 #
@@ -78,12 +77,12 @@ SYLRPLM.constants.sort.each do |c|
   v = SYLRPLM.const_get(c)
   LOG.debug('Constante') { "#{c}\t\t= #{v}" }
 end
-LOG.info ('sylrplm') { "env=#{Rails.env.inspect} loglevel=#{LOG.level}" }
-LOG.info ('sylrplm') { '--------------------------------------------' }
+LOG.info('sylrplm') { "env=#{Rails.env.inspect} loglevel=#{LOG.level}" }
+LOG.info('sylrplm') { '--------------------------------------------' }
 
 if true
 	scheduler = Rufus::Scheduler.start_new
-	puts '*** Starting Scheduler ***'
+	LOG.info('sylrplm') {'*** Starting Scheduler ***'}
 	# every day of the week at 21:00
 	#scheduler.cron '0 21 * * 1-5' do
 	# every 1 mn of each hour during the week
@@ -93,5 +92,3 @@ if true
 	#Rake::Task["notify"].invoke
 	end
 end
-fname = 'sylrplm-init.rb:'
-  puts "<<<<#{fname}"

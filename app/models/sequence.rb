@@ -38,8 +38,7 @@ class Sequence < ActiveRecord::Base
     Module.constants.select do |constant_name|
       constant = eval constant_name
       isClass = constant.is_a? Class
-      # puts 'Sequence.get_constants='+constant.to_s+' class='+isClass.to_s
-      # if not constant.nil? && isClass && constant.extend? ActiveRecord::Base
+       # if not constant.nil? && isClass && constant.extend? ActiveRecord::Base
     end
   end
 
@@ -68,12 +67,8 @@ class Sequence < ActiveRecord::Base
     ret = nil
     get_all.each do |line|
       tokens = line.utility.split('.')
-      # puts "Sequence.find_col_for:#{model}.#{col}:#{tokens.inspect}"
-      # puts "Sequence.find_col_for:tokens[0] '#{tokens[0]}' == '#{model.to_s}' ? #{tokens[0] == model.to_s}"
-      # puts "Sequence.find_col_for:tokens[1] '#{tokens[1]}' == '#{col.to_s}' ? #{tokens[1] == col.to_s}"
-      ret = line if tokens[0] == model.to_s && tokens[1] == col.to_s
+       ret = line if tokens[0] == model.to_s && tokens[1] == col.to_s
     end
-    # puts "Sequence.find_col_for(#{model}.#{col}):ret=#{ret}"
     ret
   end
 

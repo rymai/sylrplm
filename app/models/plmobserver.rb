@@ -23,17 +23,14 @@ class Plmobserver < ActiveRecord::Observer
 
   def before_validation(_object)
     fname = '****************' + "#{self.class.name}.#{__method__}" + ':'
-    # puts name+object.inspect
   end
 
   def after_validation(_object)
     fname = '****************' + "#{self.class.name}.#{__method__}" + ':'
-    # puts name+object.inspect
   end
 
   def before_save(_object)
     fname = '****************' + "#{self.class.name}.#{__method__}" + ':'
-    # puts name+object.inspect
   end
 
   def after_save(object)
@@ -44,18 +41,15 @@ class Plmobserver < ActiveRecord::Observer
 
   def before_create(_object)
     name = '****************' + "#{self.class.name}.#{__method__}" + ':'
-    # puts name+object.inspect
   end
 
   def after_create(object)
     name = '****************' + "#{self.class.name}.#{__method__}" + ':'
-    # puts name+object.inspect
     add_notification(__method__.to_s, object)
   end
 
   def around_create(_object)
     name = '****************' + "#{self.class.name}.#{__method__}" + ':'
-    # puts name+object.inspect
     # add_notification(__method__.to_s, object)
   end
 

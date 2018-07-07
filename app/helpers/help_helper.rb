@@ -35,19 +35,15 @@ module HelpHelper
 
   def h_help_key(key)
     # ret = h_help_elem(h_help_root, key)[:el]
-    # puts "h_help_key(#{key})=(#{ret.count})#{ret.inspect}"
-    # ret.each do |tt|
-    # puts "h_help_key(#{key})=#{tt.inspect}"
+     # ret.each do |tt|
     # end
     # ret=h_help_replace(ret)
     elem = h_elem_key(key)
-    # puts "========= h_help_key(#{key})elem=#{elem}"
     ret = if elem.nil?
             "<h2>No help definition for the key '#{key}'</h2>"
           else
             h_help_level(elem, false)
           end
-    # puts "h_help_key(#{key})=#{ret}"
     ret.html_safe
   end
 
@@ -59,14 +55,12 @@ module HelpHelper
         amsg = h_help_elem(element, key)
         next if amsg.nil?
         msg_ul = h_help_ul(element)
-        # puts "h_help_elem:msg_ul="+element.attribute(:key).to_s+":"+msg_ul
         amsg[:el].text += msg_ul if msg_ul != ''
         helem = { el: amsg[:el], main_elem: element }
         return helem
       end
     else
       msg_ul = h_help_ul(el)
-      # puts "h_help_elem:msg_ul="+el.attribute(:key).to_s+":"+msg_ul
       el.text += msg_ul if msg_ul != ''
       helem = { el: el, main_elem: elem }
     end
@@ -142,18 +136,15 @@ module HelpHelper
 
   def write_help_file(hlp)
     filename = get_help_file_name
-    # puts "help_helper.write_help_file:"+filename
-    f = File.new(filename, 'w')
+     f = File.new(filename, 'w')
     f.write(hlp)
   end
 
   def read_help_file
     filename = get_help_file_name
-    # puts "help_helper.read_help_file:"+filename
     if File.exist?(filename)
       ret = File.new(filename).read
     else
-      puts 'read_help_file:pas de fichier help:' + filename
       ret = ''
     end
   end
@@ -164,15 +155,12 @@ module HelpHelper
   end
 
   def h_elem_key(key, parent = nil)
-    # puts "h_elem_key:key=#{key} parent=#{parent}"
     ret = nil
     if parent.nil?
       parent = h_help_root
-      # puts "h_elem_key:key=#{key} parent=#{parent}"
-    end
+     end
     parent.elements.each('msg') do |element|
       if element.attributes['key'] == key.to_s
-        # puts "h_elem_key:key=#{key} element=#{element.inspect}"
         ret = element
         break
       else
@@ -183,7 +171,6 @@ module HelpHelper
   end
 
   def h_help_level(elem, with_anchor = true)
-    # puts "=============== h_help_level:with_anchor=#{with_anchor} #{elem} "
     msg = ''
     unless elem.nil?
       msg += "<ul class='help_key'>\n"
@@ -277,7 +264,6 @@ module HelpHelper
   end
 
   def h_help_replace(txt)
-    # puts "h_help_transform:"+txt.length.to_s+":"+txt
     txt.gsub!('#br#', '<br/>')
     txt.gsub!('\n\n', '\n')
     # ##txt.gsub!('\n','<br/>')

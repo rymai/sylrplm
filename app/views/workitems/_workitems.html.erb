@@ -31,8 +31,6 @@
 <table class='coll'>
 	<thead>
 		<tr>
-			<% if current_user.is_admin?%>
-			<% end %>
 			<% if fonct == "show_only" %>
 			<th> <%= t(:label_relation)%> </th>
 			<% end %>
@@ -72,6 +70,6 @@
 :id => 'workitem_delegation_form',
 :method => :put,
 :multipart => true) do -%>
-<input type="hidden" name="store_name" id="store_name" value="<%= current_user.login %>" />
+<input type="hidden" name="store_name" id="store_name" value="<%= current_user.login unless current_user.nil? %>"  />
 <% end %>
 

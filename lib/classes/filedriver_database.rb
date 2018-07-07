@@ -7,7 +7,6 @@ class FiledriverDatabase < Filedriver
   private
 
   def initialize
-    puts 'FiledriverDatabase.initialize'
   end
 
   public
@@ -233,13 +232,10 @@ class FiledriverDatabase < Filedriver
 
   def directory(directory_key)
     ret = directories.get(directory_key)
-    # puts "sylrplm_fog.directory("+directory_key+")="+ret.inspect
     ret
   end
 
   def file(_directory_key, _file_key)
-    # puts "sylrplm_fog.file("+directory_key+","+ file_key+")"
-    # puts "sylrplm_fog.file("+directory_key+","+ file_key+")="+ret.inspect
     ret
   end
 
@@ -250,14 +246,12 @@ class FiledriverDatabase < Filedriver
 
   # upload d'un contenu
   def upload_content(directory_key, file_key, content)
-    # puts "sylrplm_fog.upload_content:"+directory_key+" file_key="+file_key
     # upload
   end
 
   def update(directory_key, file_key, local_filename); end
 
   def retrieve(directory_key, file_key)
-    # puts "sylrplm_fog.retrieve("+directory_key+","+ file_key+")"
     # get the resume file
   end
 

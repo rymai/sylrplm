@@ -96,7 +96,6 @@ module OpenWFE
       #
       # maybe args[0] could be a FlowExpression instead
       # of a FlowExpressionId instance
-      # puts "___#{event}__wfid : #{wfid}"
 
       e = serialize_event(event, *args)
 

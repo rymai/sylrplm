@@ -46,18 +46,9 @@ module Ruote
 
         # self.new(opts).save!
         # syl: unknown attribute
-        # puts "db_history.log:opts=#{opts.inspect}"
         opts.delete(:inflow)
         ret = new(opts)
         st = ret.save_without_transactions!
-        # begin
-        #  self.new(opts).save!
-        # rescue Exception => e
-        #  puts ; puts e
-        #  self.new(opts).save! rescue nil
-        # end
-        # _syl_ pour recuperer l'entry
-        # puts "********** db_history.log:wi_fields=#{ret.fields}"
         (st ? ret : nil)
       end
 

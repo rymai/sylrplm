@@ -116,8 +116,6 @@ def ctrl_promote(a_object, withMail = true)
 end
 
 def ctrl_update_lifecycle(a_object)
-    puts "ctrl_update_lifecycle  ******************* : a_object.modelname=#{a_object.modelname}"
-    puts "ctrl_update_lifecycle  ******************* : params=#{params}"
   ret = if a_object.update_attributes(params[a_object.modelname])
           true
         else

@@ -20,7 +20,6 @@ module Classes
               role_title = c.access_context[:user].role.title
             end
           end
-          puts name + 'before: role_title=' + role_title + ' controller=' + c.controller_name + ' action=' + c.action_name
         end
         after_filter do |c|
           # syl
@@ -30,7 +29,6 @@ module Classes
               role_title = c.access_context[:user].role.title
             end
           end
-          puts name + 'after: role_title=' + role_title + ' controller=' + c.controller_name + ' action=' + c.action_name
         end
       end
 
@@ -44,13 +42,11 @@ module Classes
               role_title = c.access_context[:user].role.title
             end
           end
-          puts name + 'before: role_title=' + role_title + ' controller=' + c.controller_name + ' action=' + c.action_name
-        end
+         end
       end
 
       def event_manager_after
         name = controller_class_name + '.event_manager_after:'
-        puts name
         after_filter do |c|
           # syl
           role_title = ''
@@ -59,7 +55,6 @@ module Classes
               role_title = c.access_context[:user].role.title
             end
           end
-          puts name + 'role_title=' + role_title + ' controller=' + c.controller_name + ' action=' + c.action_name
         end
       end
 

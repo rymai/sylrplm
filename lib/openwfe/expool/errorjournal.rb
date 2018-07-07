@@ -231,12 +231,8 @@ module OpenWFE
     # instances.
     #
     def get_error_log(wfid)
-      puts 'debut get_error_log:' + wfid
       wfid = extract_wfid(wfid, true)
-
-      puts 'get_error_log avant @per_processes'
       ret = @per_processes[wfid] || []
-      puts 'fin get_error_log:' + wfid + ':' + ret
       ret
     end
 

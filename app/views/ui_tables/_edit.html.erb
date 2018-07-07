@@ -17,7 +17,6 @@
 	<%= text_area_tag(:ui_columns_ident,comma_string(@columns,:ident))%>
 	<br/>
 	<%= f.label t(:label_ui_columns_order) %>
-	<% puts __FILE__+" "+@ui_table_columns.inspect%>
 	<%= text_area(:ui_table, :ui_columns)%>
 	<br/>
 	<%= f.label t(:label_domain) %>

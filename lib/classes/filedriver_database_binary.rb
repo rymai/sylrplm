@@ -7,7 +7,6 @@ class FiledriverDatabaseBinary < FiledriverDatabase
   private
 
   def initialize
-    puts 'FiledriverDatabaseBinary.initialize'
   end
 
   public
@@ -19,16 +18,12 @@ class FiledriverDatabaseBinary < FiledriverDatabase
 
   def self.instance
     @@instance = FiledriverDatabaseBinary.new if @@instance.nil?
-    # puts "FiledriverDatabaseBinary.instance:"+@@instance.inspect
     @@instance
   end
 
   class VolumeTablesBinary < ActiveRecord::Migration
     def self.init_table(table_name)
-      puts 'VolumeTablesBinary:establish_connection=' + ActiveRecord::Base.establish_connection
-      # rails2 database_conf=Rails::Configuration.new.database_configuration
       database_conf = Rails.application.config.database_configuration
-      puts "VolumeTablesBinary:database_configuration=#{database_conf.inspect}"
       unless ActiveRecord::Base.connection.table_exists? table_name
         create_table table_name do |t|
           t.column :datafile_model, :string

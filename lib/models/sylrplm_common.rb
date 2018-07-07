@@ -109,7 +109,6 @@ module Models
         fname = "#{self.class.name}.#{__method__}"
         LOG.debug(fname) { "params=#{params}" }
         user = params[:user]
-        # puts self.modelname+"."+__method__.to_s+":user="+user.inspect
         filter_access = {}
         filter_access[:qry] = ''
         filter_access[:values] = {}
@@ -140,7 +139,6 @@ module Models
           filter_access[:qry] += par_close
         end
 
-        # puts self.modelname+".find_paginate:filter_access="+filter_access.inspect
         LOG.debug(fname) { "filter_access=#{filter_access.inspect}" }
 
         if filter_access[:qry] == par_open + par_close || filter_access[:qry] == par_open || filter_access[:qry] == par_close
@@ -179,7 +177,6 @@ module Models
             LOG.debug(fname) { "stype=#{stype} sany_type=#{sany_type} , objtype=#{objtype} idstype=#{idstype}" }
             types_id << idstype unless stype == sany_type
           end
-          # puts "#{self.modelname}.find_paginate:filter_types=#{filter_types} , types_id=#{types_id}"
           unless types_id.empty?
             filter_access[:qry] += ' and ' unless filter_access[:qry].blank?
             filter_access[:qry] += " typesobject_id in (#{types_id.join(',')})"
@@ -230,8 +227,6 @@ module Models
 
           end
         end
-        # puts self.modelname+".find_paginate:conditions="+conditions.inspect
-        # puts self.modelname+"."+__method__.to_s+":"+recordset.inspect
         LOG.debug(fname) { "fin conditions=#{conditions} : #{recordset.count}" }
         ret = { recordset: recordset,
                 query: params[:query],
@@ -421,7 +416,6 @@ module Models
 
     def follow_up(path)
       name = "#{self.class.name}.#{__method__}" + ':'
-      # puts name+path
       ret = []
       path = get_path if path.nil?
       links = ::Link.get_all_fathers(self)
@@ -436,7 +430,6 @@ module Models
         end
       end
       ret << path if ret.count == 0
-      # puts name+"end ret="+ret.inspect
       ret
     end
 
@@ -476,15 +469,11 @@ module Models
       super
       # @attributes.delete("created_at")
       # @attributes.delete("updated_at")
-      # puts "to_yaml_properties:"+instance_variables.inspect
-      # puts "to_yaml_properties:"+@attributes.inspect
-      atts_varname = "@#{[self.class.name, id].join('_')}"
+       atts_varname = "@#{[self.class.name, id].join('_')}"
       instance_variable_set atts_varname, @attributes
       atts_var = instance_variable_get atts_varname
       atts_var.delete('created_at')
       atts_var.delete('updated_at')
-      # puts "to_yaml_properties:"+atts_varname.to_s+"="+atts_var.inspect
-      # puts "to_yaml_properties:"+atts_var.inspect
       [atts_varname]
     end
 
@@ -497,18 +486,8 @@ module Models
       ret = super
       idx = ret.index("\n")
       ret = ret[idx, ret.length - idx]
-      # puts "to_yaml:"+ret
       ret
     end
-    # def encode_with(coder)
-    #  puts "encode_with"+coder.inspect
-
-    # atts=@attributes
-    # coder["attributes"] = atts
-    # coder.tag = ['!ruby/ActiveRecord', self.class.name].join(':')
-    # coder.tag =["a","b"]
-    # nil
-    # end
 
     def label
       fname = "#{self.class.name}.#{__method__}:"
@@ -624,7 +603,6 @@ module Models
         LOG.debug(fname) { "#{inspect} type_value=#{type_values}" }
         unless type_values.blank?
           decod = ActiveSupport::JSON.decode(type_values)
-          # puts "get_type_values:values=#{type_values} decod=#{decod}"
         end
       end
       decod
@@ -646,7 +624,6 @@ module Models
       fname = "#{self.class.name}.#{__method__}"
       unless new_type_values.blank?
         self.type_values = ActiveSupport::JSON.encode(new_type_values)
-        # puts "set_type_values:values=#{type_values} "
       end
     end
 
@@ -656,10 +633,8 @@ module Models
     def set_type_value(key, value)
       fname = "#{self.class.name}.#{__method__}"
       values = get_type_values
-      # puts "set_type_value:key=#{key} values=#{values} "
       values[key] = value
       set_type_values(values)
-      # puts "set_type_value:key=#{key} values=#{self.type_values} "
     end
 
     #
@@ -828,7 +803,6 @@ module Models
       fname = "#{modelname}.#{__method__}"
       LOG.debug(fname) { "from=#{from} function=#{function}" }
       rel = ::Relation.find_by_name(function)
-      puts "#{fname} rel=#{rel}"
       # LOG.debug(fname){"rel=#{rel}"}
       if respond_to?(:owner)
         own = owner

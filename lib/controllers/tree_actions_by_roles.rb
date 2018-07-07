@@ -50,7 +50,6 @@ def build_tree_actions_by_roles(actions_by_roles)
         }
         action_node = Node.new(options)
         ctrl_node << action_node
-        # puts "controller=#{controller[0]} , #{controller[1].count} actions=#{controller[1]}"
       end
     end
   end

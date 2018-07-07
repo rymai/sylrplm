@@ -211,8 +211,6 @@ module OpenWFE
       sec = (i / 10_000) % 60
       usec = (i * 100) % 1_000_000
 
-      # puts "hms #{hour} #{min} #{sec} #{usec}"
-
       Time.utc(year, month, day, hour, min, sec, usec)
     end
 

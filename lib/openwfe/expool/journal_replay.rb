@@ -50,8 +50,6 @@ module OpenWFE
 
       raise "cannot replay offset #{offset}" unless state
 
-      # puts "expstorage size 0 = #{get_expression_storage.size}"
-
       state.static.each do |update|
         flow_expression = update[3]
         flow_expression.application_context = @application_context
@@ -60,11 +58,7 @@ module OpenWFE
 
       get_expression_pool.reschedule
 
-      # puts "expstorage size 1 = #{get_expression_storage.size}"
-
       return unless trigger_action
-
-      # puts "sds : #{state.dynamic.size}"
 
       state.dynamic.each do |ply|
         message = ply[0]
@@ -105,9 +99,6 @@ module OpenWFE
       states.each do |state|
         next if state.dynamic.empty?
 
-        puts
-        puts state.to_s
-        puts
       end
     end
 

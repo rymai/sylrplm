@@ -122,19 +122,11 @@ module Models
       next_rev = next_revision()
       if revisable?
         LOG.debug(fname) { "rev_cur=#{rev_cur} last_rev=#{last_rev} next_rev=#{next_rev}" }
-       puts "#{fname} rev_cur=#{rev_cur} last_rev=#{last_rev} next_rev=#{next_rev}"
         admin = User.find_by_name(PlmServices.get_property(:ROLE_ADMIN))
         # rails2 obj = self.clone
         obj = self.dup
         st=obj.save
         LOG.debug(fname) { "st=#{st} designation origine=#{designation} revision=#{obj.designation} " }
-        puts "st save=#{st} designation origine=#{designation} revision=#{obj.designation} "
-        puts "id origine=#{id} revision=#{obj.id} "
-        if obj.id.nil?
-            # TODO pasbo mais efficace
-            #obj.id=id+1
-            #obj.save
-        end
         obj.typesobject = typesobject
         obj.statusobject = ::Statusobject.get_first(self)
         obj.revision = next_rev
@@ -278,7 +270,6 @@ module Models
 
     def promote_by?(choice)
       fname = "#{self.class.name}.#{__method__}"
-      # puts "#{fname}: promote_id=#{self.statusobject.promote_id} choice#{choice} #{self.respond_to? :statusobject}"
       ret = false
       if respond_to? :statusobject
         if statusobject.nil?
@@ -299,7 +290,6 @@ module Models
 
     def demote_by?(choice)
       fname = "#{self.class.name}.#{__method__}"
-      # puts "#{fname}==> #{self.ident}: demote_id=#{self.statusobject.demote_id} choice#{choice} #{self.respond_to? :statusobject}"
       ret = false
       if respond_to? :statusobject
         if statusobject.nil?
@@ -350,8 +340,7 @@ module Models
           ret = 'promote_by_menu' if promote_by_menu?
           ret = 'promote_by_action' if promote_by_action?
         end
-        # puts "promote_button?:nexts.size=#{nexts.size} by_select?=#{promote_by_select?} by_menu?=#{promote_by_menu?} by_action?=#{promote_by_action?} ret=#{ret}"
-      end
+       end
       ret
     end
 
@@ -364,7 +353,6 @@ module Models
           ret = 'demote_by_menu' if demote_by_menu?
           ret = 'demote_by_action' if demote_by_action?
         end
-        # puts "demote_button?:prevs.size=#{prevs.size} by_select?=#{demote_by_select?} by_menu?=#{demote_by_menu?} by_action?=#{demote_by_action?} ret=#{ret}"
       end
       ret
     end
@@ -385,12 +373,10 @@ module Models
             raise Exception, 'Error during promotion: Next status not found'
         else
             self.statusobject = next_status
-        # puts "Document.promote:res=#{res}:#{st_cur_name}->#{statusobject.name}"
         end
         self.next_status = ::Statusobject.get_next_status(self)
         self.previous_status = ::Statusobject.get_previous_status(self)
         ret = self
-        # puts "object.promote:#{st_cur_name} -> #{self.statusobject.name} ret=#{ret}"
       ret
     end
 
@@ -406,7 +392,6 @@ module Models
       self.next_status = ::Statusobject.get_next_status(self)
       self.previous_status = ::Statusobject.get_previous_status(self)
       ret = self
-      # puts "object.demote:#{st_cur_name} -> #{self.statusobject.name} ret=#{ret}"
       ret
     end
 
@@ -415,7 +400,6 @@ module Models
       child_type = nil
       ret = ::Relation.relations_for(self, child_plmtype, child_type, relation_type_name, relation_paste_way)
       LOG.debug(fname) { "relations from #{modelname}/#{child_type} to #{child_plmtype}/#{relation_type_name}:ret=#{ret.size}" }
-      #puts "relations ************ relations from #{modelname}/#{child_type} to #{child_plmtype}/#{relation_type_name}/#{relation_paste_way}:ret=#{ret.size}"
       ret
     end
 
@@ -432,15 +416,12 @@ module Models
       ret = []
       ## links = ::Link.find_fathers(self.modelname, self,  "ar_workitem")
       links = ::Link.find_fathers(self, 'ar_workitem')
-      # puts "plm_object.get_workitems:links="+links.inspect
       links.each do |link|
         begin
           father = Ruote::Sylrplm::ArWorkitem.find(link.father_id) unless Ruote::Sylrplm::ArWorkitem.count(link.father_id) == 1
-          # puts "plm_object.get_workitems:workitem="+father.inspect
           father.link_attributes = { 'relation' => link.relation }
           ret << father
         rescue Exception => e
-          # puts "plm_object.get_workitems:erreur="+e.inspect
           LOG.info 'plm_object.get_workitems:erreur=' + e.inspect
         end
       end
@@ -455,15 +436,12 @@ module Models
       links.each do |link|
         begin
           father = Ruote::Sylrplm::HistoryEntry.find(link.father_id) unless Ruote::Sylrplm::HistoryEntry.count(link.father_id) == 1
-          # puts "plm_object.get_histories:history="+father.inspect
           father.link_attributes = { 'relation' => link.relation }
           ret << father
         rescue Exception => e
-          puts 'plm_object.get_histories:erreur=' + e.inspect
           LOG.error 'plm_object.get_histories:erreur=' + e.inspect
         end
       end
-      # puts "plm_object.get_histories:ret="+ret.inspect
       ret
     end
 
@@ -554,17 +532,10 @@ module Models
     def ok_for_index?(user)
       acc_public = ::Typesobject.find_by_forobject_and_name('project_typeaccess', 'public')
       acc_confidential = ::Typesobject.find_by_forobject_and_name('project_typeaccess', 'confidential')
-      # puts "ok_for_index?:acc_public="+acc_public.inspect
-      # puts "ok_for_index?:acc_confidential="+acc_confidential.inspect
-      # puts "ok_for_index?:self="+self.inspect
-      # puts "ok_for_index?:user="+user.inspect
-      # index possible meme sans user connecte
-      puts 'ok_for_index? acc_public:' + projowner.typeaccess.name + '==' + acc_public.name
-      puts 'ok_for_index? acc_confidential:' + projowner.typeaccess.name + '==' + acc_confidential.name
+       # index possible meme sans user connecte
       if user.nil?
         (projowner.typeaccess_id == acc_public.id || projowner.typeaccess_id == acc_confidential.id)
       else
-        puts 'ok_for_index? group:' + group.name + '==' + user.group.name
         (group_id == user.group.id || projowner.typeaccess_id == acc_public.id || projowner.typeaccess_id == acc_confidential.id)
       end
       true
@@ -582,8 +553,7 @@ module Models
     end
 
     def initialize(*args)
-        #puts  "initialize debut: args=#{args.inspect}"
-        phase_new = !(args[0].nil? || args[0][:user].nil?)
+       phase_new = !(args[0].nil? || args[0][:user].nil?)
       if phase_new
       super(*args)
       else
@@ -593,7 +563,6 @@ module Models
       LOG.debug(fname) { "initialize debut args=#{args.length}:#{args.inspect}" }
       initialize_(*args)
       LOG.debug(fname) { "initialize fin: self=#{inspect}" }
-      #puts  "initialize fin: self=#{inspect}"
     end
 
     def after_initialize_(*args)

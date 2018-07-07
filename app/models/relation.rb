@@ -74,12 +74,10 @@ class Relation < ActiveRecord::Base
     sep_child = '.'
     sep_name  = ' - '
     sep = '.'
-    # puts aname+ "relation="+self.inspect
     ret = child_plmtype + sep_type
     ret += child_typesobject.name unless child_typesobject.nil?
     ret += sep_name + name unless name.nil?
     ret += sep_name + father_plmtype + sep_type
-    # puts aname+ "father_type="+father_type.inspect
     # ret+=father_typesobject.name unless father_typesobject.nil?
 
     # on recommence plus simplement
@@ -170,7 +168,6 @@ class Relation < ActiveRecord::Base
 
   def self.names
     ret = Relation.connection.select_rows("SELECT DISTINCT name FROM #{Relation.table_name}").flatten.uniq
-    # ##puts "Relations."+__method__.to_s+":"+ret.inspect
     ret
   end
 

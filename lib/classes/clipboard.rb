@@ -22,8 +22,7 @@ class Clipboard
   end
 
   def remove(obj)
-    puts 'clipboard.remove:' + obj.modelname + ':' + @items[obj.modelname].inspect
-    @items[obj.modelname].delete(obj)
+     @items[obj.modelname].delete(obj)
   end
 
   def reset(type = nil)

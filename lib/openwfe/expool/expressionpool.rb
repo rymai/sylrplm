@@ -261,7 +261,6 @@ module OpenWFE
     # expression.
     #
     def cancel_expression(exp)
-      puts "=================== expressionpool.cancel_expression:exp=#{exp}"
       exp, fei = fetch(exp)
 
       raise "cannot cancel 'missing' expression #{fei.to_short_s}" unless exp

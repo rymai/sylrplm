@@ -15,7 +15,6 @@
 <% end %>
 <% end %>
 <% rescue Exception => e %>
-<%= puts "Exception:#{e}"%>
 <% end %>
 
 <% if Controller.route_exists?(object.controller_name, "new_process")

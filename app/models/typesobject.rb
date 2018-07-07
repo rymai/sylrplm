@@ -134,7 +134,7 @@ class Typesobject < ActiveRecord::Base
     #   +objets generiques: ::SYLRPLM::PROPERTIES, PLMTYPE_GENERIC
     # objets non pris en compte:
     #   definition: pas de besoin
-    ret = [::SYLRPLM::PLM_PROPERTIES, PlmServices.get_property(:PLMTYPE_GENERIC), 'ar_workitem', 'document', 'part', 'project', 'customer', 'forum', 'datafile', 'relation', 'link', 'history_entry', 'relation', 'user'].sort
+    ret = [::SYLRPLM::PLM_PROPERTIES, PlmServices.get_property(:PLMTYPE_GENERIC), 'ar_workitem', 'contact','document', 'part', 'project', 'customer', 'forum', 'datafile', 'relation', 'link', 'history_entry', 'relation', 'user'].sort
     ret
   end
 

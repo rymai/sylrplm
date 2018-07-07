@@ -1,4 +1,3 @@
-<%= puts "document.view._edit:document=#{object.inspect}" %> <h1><%= t(:legend_document) %></h1>
 <%= h_edit_type_object(f, object, @types) %>
 <%= f.label t("label_ident") %>
 <%= f.text_field :ident , :readonly => object.column_readonly?(:ident) %>

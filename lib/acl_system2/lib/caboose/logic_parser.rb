@@ -13,8 +13,7 @@ module Caboose
                    else
                      ''
                        end
-      # ##puts "process:string=#{logicstring} role=#{role_title}"
-      # if logicstring contains any parenthasized patterns, call process recursively on them
+       # if logicstring contains any parenthasized patterns, call process recursively on them
       while logicstring =~ /\(/
         logicstring.sub!(/\(([^\)]+)\)/) do
           process(Regexp.last_match(1), context)

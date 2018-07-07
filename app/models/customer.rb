@@ -38,17 +38,10 @@ class Customer < ActiveRecord::Base
   # rails2  has_many :links_customer_projects,    :class_name => "Link",    :foreign_key => "father_id",    :conditions => ["father_plmtype='customer' and child_plmtype='project'"]
   has_many :links_customer_projects, -> { where(father_plmtype: 'customer', child_plmtype: 'project') }, class_name: 'Link', foreign_key: 'father_id'
   has_many :projects, through: :links_customer_projects, source: :project_down
-after_save :test_me
 
-   def test_me
-       #reload()
-     puts "customer:********************* id=#{self.id}"
-   end
   def user=(user)
     def_user(user)
   end
-
-
 
   def self.create_new(_customer, _user)
     raise Exception, "Don't use this method!"

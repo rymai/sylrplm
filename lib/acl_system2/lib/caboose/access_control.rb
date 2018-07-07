@@ -34,26 +34,17 @@ module Caboose
             end
           end
           action = actions[c.action_name.to_sym]
-          # puts "access_control:actions=#{actions.inspect} "
           ### LOG.debug(fname) {"action=#{action.inspect}"}
-          # ####puts "access_control:c=#{c.inspect} "
-          # puts "access_control:c.action=#{c.action_name} "
-          # puts "access_control:c.access_context=#{c.access_context.inspect}"
-          # puts "access_control:role_title=#{role_title}"
           if @access.allowed?(c.action_name)
             c.send(:permission_granted) if c.respond_to? :permission_granted
-          # puts "access_control:allowed #{c.controller_name}/#{c.action_name} to #{role_title}"
           else
             if c.respond_to? :permission_denied
-              # puts "access_control:not allowed #{c.controller_name}/#{c.action_name} permission_denied to #{role_title}"
-              c.send(:permission_denied, role_title, c.controller_name, c.action_name)
+             c.send(:permission_denied, role_title, c.controller_name, c.action_name)
             else
-              # puts "access_control:not allowed #{c.controller_name}/#{c.action_name} not permission_denied to #{role_title}"
-              c.send(:render_text, role_title, c.controller_name, c.action_name)
+             c.send(:render_text, role_title, c.controller_name, c.action_name)
             end
           end
         end
-        # puts "access_control:fin"
       end
     end # module ClassMethods
 
@@ -111,14 +102,11 @@ module Caboose
       def allowed?(action)
         if @actions.key? action.to_sym
           ret = @subject.access_handler.process(@actions[action.to_sym].dup, @subject.access_context)
-          # puts "allowed:actions.has_key #{action}:#{ret}"
           ret
         elsif @actions.key? :DEFAULT
           ret = @subject.access_handler.process(@actions[:DEFAULT].dup, @subject.access_context)
-          # puts "allowed:actions.has_key #{:DEFAULT}:#{ret}"
           ret
         else
-          # puts "allowed:actions.has_no_key #{action} or #{:DEFAULT}"
           true
         end
       end

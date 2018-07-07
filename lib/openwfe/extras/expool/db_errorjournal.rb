@@ -95,12 +95,9 @@ module OpenWFE::Extras
     # the older error first.
     #
     def get_error_log(wfid)
-      puts 'debut DbErrorJournal.get_error_log:' + wfid
       wfid = extract_wfid(wfid, true)
       errors = ProcessError.find_all_by_wfid(wfid, order: 'id asc')
-      puts 'DbErrorJournal.get_error_log avant errors.collect:' + wfid
-      ret = errors.collect(&:as_owfe_error)
-      puts 'fin DbErrorJournal.get_error_log:' + wfid + ':' + ret.inspect
+       ret = errors.collect(&:as_owfe_error)
       ret
     end
 

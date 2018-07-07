@@ -5,7 +5,6 @@ class FiledriverFileSystem < Filedriver
   private
 
   def initialize
-    puts 'FiledriverFileSystem.initialize'
   end
 
   public
@@ -18,7 +17,6 @@ class FiledriverFileSystem < Filedriver
 
   def self.instance
     @@instance = FiledriverFileSystem.new if @@instance.nil?
-    # puts "SylrplmFog.instance:"+@@instance.inspect
     @@instance
   end
 
@@ -47,7 +45,6 @@ class FiledriverFileSystem < Filedriver
         filename = ::Datafile.filename_from_file(file)
         revision = ::Datafile.revision_from_file(file)
         unless filename.nil? && revision.nil?
-          # puts "plm_object.get_revisions;file="+file+" name="+filename.to_s+" rev="+revision.to_s
           ret << file.to_s
         end
       end
@@ -158,7 +155,7 @@ class FiledriverFileSystem < Filedriver
       begin
         strm = FileUtils.remove_dir volume.dir_name
       rescue Exception => e
-        # e.backtrace.each {|x| puts x}
+        # e.backtrace.each {|x| LOG.debug(fname) {" #{x}"}
         LOG.debug(fname) { 'volume.destroy_volume:error=' + e.inspect }
         volume.errors.add(:base, I18n.t(:check_volume_no_rmdir, name: volume.name, dir: volume.directory))
         strm = false
@@ -176,7 +173,6 @@ class FiledriverFileSystem < Filedriver
   def remove_files(datafile)
     fname = "#{self.class.name}.#{__method__}"
     dir = datafile.dir_repository
-    # puts "datafile.remove_files:"+dir
     if PlmServices.file_exists?(dir)
       Dir.foreach(dir) do |file|
         repos = File.join(dir, file)
@@ -305,14 +301,12 @@ class FiledriverFileSystem < Filedriver
 
   # upload d'un contenu
   def upload_content(directory_key, file_key, content)
-    # puts "sylrplm_fog.upload_content:"+directory_key+" file_key="+file_key
     # upload
   end
 
   def update(directory_key, file_key, local_filename); end
 
   def retrieve(directory_key, file_key)
-    # puts "sylrplm_fog.retrieve("+directory_key+","+ file_key+")"
     # get the resume file
   end
 

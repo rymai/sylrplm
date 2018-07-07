@@ -342,20 +342,6 @@ class Link < ActiveRecord::Base
     raise Exception, "Don't use this method Link.valid?"
   end
 
-  #  def before_save
-  #    puts "link.before_save:"+self.inspect
-  #    # ##self.child_plmtype=self.child.class.to_s.underscore
-  #    self.name=self.child.link_attributes[:name]
-  #    puts "link.before_save:"+self.inspect
-  #    self
-  #  end
-
-  #  def child
-  #    child_cls=eval(self.child_plmtype.capitalize)
-  #    #puts "link.child:classe="+child_cls.inspect
-  #    c=child_cls.new(self.child_id)
-  #  end
-
   def self.find_childs(father, child_plmtype = nil, relation_name = nil)
     find_childs_with_father_plmtype(father.modelname, father, child_plmtype, relation_name)
   end
@@ -376,7 +362,6 @@ class Link < ActiveRecord::Base
         ret << lnk if lnk.relation.name == relation_name
       end
     end
-    # puts "Link.find_childs_with_father_plmtype:"+father.modelname+"."+father.id.to_s+"."+child_plmtype+":'"+cond+"'= "+ret.inspect
     ret.to_a
   end
 
@@ -398,13 +383,11 @@ class Link < ActiveRecord::Base
     child_plmtype = child.modelname
     cond = "child_plmtype='#{child_plmtype}' and child_id =#{child.id}"
     ret = all.where(cond).order('child_id').to_a
-    # puts name+child_plmtype+" cond="+cond+":"+ret.inspect
     ret
   end
 
   def self.find_by_father_plmtype(plmtype)
     fname = "#{self.class.name}.#{__method__}" + ':'
-    # puts name+plmtype
     links = all.where("father_plmtype='#{plmtype}'").order('father_id DESC , child_id DESC').to_a
   end
 
@@ -470,8 +453,7 @@ class Link < ActiveRecord::Base
   # == Usage from controller or script:
   #    if @object_plm.save
   #		  lnk_orig = Link.find(lnkid)
-  #			#puts "=========================lnk_orig="+lnk_orig.inspect
-  #			lnk_new = lnk_orig.duplicate(new_obj, user)
+   #			lnk_new = lnk_orig.duplicate(new_obj, user)
   # === Result
   # 	the duplicate object , all characteristics of the object are copied excepted the followings:
   # * +new_father+ become the father of the new link
