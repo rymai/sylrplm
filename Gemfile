@@ -53,6 +53,7 @@ gem 'pg', '0.19.0'
 # Internals
 gem 'atom-tools', '2.0.5'
 gem 'fog', '1.38.0'
+gem 'mime-types'
 gem 'rufus-scheduler', '2.0.24'
 gem 'rufus-verbs', '1.0.1'
 gem 'ruote', '2.3.0.3'
