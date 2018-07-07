@@ -155,8 +155,8 @@ class Access < ActiveRecord::Base
   def self.roles_prefixe(lst, yes_no)
     ret = ''
     lst.each_with_index do |r, i|
-      ret << ' | ' unless i == 0
-      ret << yes_no + r unless r.nil?
+      ret +=' | ' unless i == 0
+      ret += yes_no + r unless r.nil?
     end
     ret
   end
