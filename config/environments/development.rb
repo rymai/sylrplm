@@ -59,4 +59,13 @@ Rails.application.configure do
   # Show full error reports and disable caching
   # config.action_view.debug_rjs                         = false
   config.action_view.cache_template_loading = false
+
+  config.action_mailer.delivery_method = :smtp
+config.action_mailer.perform_deliveries = true
+# SMTP settings
+config.action_mailer.smtp_settings = {
+    address:"smtp.free.fr", port:25,enable_starttls_auto: false,
+    authentication:       "plain",
+    user_name:            "sylvani",password:             "pa33zp62"
+}
 end

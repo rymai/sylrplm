@@ -47,7 +47,7 @@ class ContactsController < ApplicationController
         @types  = Typesobject.get_types("contact")
         respond_to do |format|
             if @contact.save
-                sendContact
+                send_contact
                 flash[:notice] = t(:ctrl_object_created, :typeobj => t(:ctrl_contact), :ident => @contact.ident)
                 params[:id]=@contact.id
                 show_
@@ -67,7 +67,7 @@ class ContactsController < ApplicationController
         @contact = Contact.find(params[:id])
         respond_to do |format|
             if @contact.update_attributes(params[:contact])
-                sendContact
+                send_contact
                 flash[:notice] = t(:ctrl_object_updated, :typeobj => t(:ctrl_contact), :ident => @contact.ident)
                 show_
                 format.html { render :action => "show" }
@@ -113,7 +113,7 @@ class ContactsController < ApplicationController
 
     :private
 
-    def sendContact
+    def send_contact
         fname= "#{self.class.name}.#{__method__}"
         from=params[:contact][:email]
         body=params[:contact][:body]
