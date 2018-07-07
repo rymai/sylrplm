@@ -3,5 +3,5 @@
 <%= render(:partial => "shared/menu_edit",:locals => { :object => @forum, :fonct=>fonct}) %>
 <%= form_for(@forum, :url => {:controller=>"forums", :action=>"update_lifecycle", :id => @forum.id}, :method=>:get) do |f| %>
 <%= form_errors_for @forum %>
-<%= render(:partial => "forums/edit_lifecycle",:locals => {  :fonct=>fonct }) %>
+<%= render(:partial => "forums/edit_lifecycle",:locals => {:f=>f,  :fonct=>fonct }) %>
 <% end %>
