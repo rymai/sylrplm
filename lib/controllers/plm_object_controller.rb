@@ -133,7 +133,7 @@ module Controllers
             LOG.info(fname) { "ctrl_add_forum: item is saved:#{item}" }
             if relation.nil?
               LOG.info(fname) { 'ctrl_add_forum: relation is nil' }
-              flash[:notice] << t(:ctrl_object_not_created, typeobj: t(:ctrl_forum), ident: @forum.subject, relation: 'no relation', msg: nil)
+              flash[:notice] = t(:ctrl_object_not_created, typeobj: t(:ctrl_forum), ident: @forum.subject, relation: 'no relation', msg: nil)
               @forum.destroy
               error = true
             else
@@ -141,11 +141,11 @@ module Controllers
               link = Link.new(father: object, child: @forum, relation: relation, user: current_user)
               if link.save
                 LOG.info(fname) { "ctrl_add_forum: link is saved:#{link}" }
-                flash[:notice] << t(:ctrl_object_added, typeobj: t(:ctrl_forum), ident: @forum.subject, relation: relation.ident, msg: nil)
+                flash[:notice] = t(:ctrl_object_added, typeobj: t(:ctrl_forum), ident: @forum.subject, relation: relation.ident, msg: nil)
               else
                 LOG.info(fname) { "ctrl_add_forum: link is not saved:#{link}" }
                 msg = link.errors.full_messages
-                flash[:notice] << t(:ctrl_object_not_added, typeobj: t(:ctrl_forum), ident: @forum.subject, relation: relation.ident, msg: msg)
+                flash[:notice] = t(:ctrl_object_not_added, typeobj: t(:ctrl_forum), ident: @forum.subject, relation: relation.ident, msg: msg)
                 @forum.destroy
                 error = true
               end
@@ -159,13 +159,13 @@ module Controllers
           else
             LOG.info(fname) { "ctrl_add_forum: item is not saved:#{item}" }
             msg = item.errors.full_messages
-            flash[:notice] << t(:ctrl_object_not_created, typeobj: t(:ctrl_forum_item), msg: msg)
+            flash[:notice] = t(:ctrl_object_not_created, typeobj: t(:ctrl_forum_item), msg: msg)
             @forum.destroy
             error = true
           end
         else
           LOG.info(fname) { "ctrl_add_forum: forum is not saved:#{@forum}" }
-          flash[:notice] << t(:ctrl_object_not_saved, typeobj: t(:ctrl_forum), ident: @forum.subject, relation: relation.ident, msg: nil)
+          flash[:notice] = t(:ctrl_object_not_saved, typeobj: t(:ctrl_forum), ident: @forum.subject, relation: relation.ident, msg: nil)
           error = true
         end
         if error

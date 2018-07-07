@@ -172,7 +172,7 @@ class Document < ActiveRecord::Base
             ret.update_accessor(user)
             ret.checkIn(params, user)
             if ret.save
-                update_attributes(params[:document])
+                update_attributes(params)
             else
                 LOG.error(fname) { "not saved=#{ret}" }
             end
@@ -188,7 +188,7 @@ class Document < ActiveRecord::Base
         unless ret.nil?
             ret.update_accessor(user)
             ret.checkFree(params, user)
-            update_attributes(params[:document]) if ret.save
+            update_attributes(params) if ret.save
             ret = nil unless ret.errors.empty?
         end
         ret

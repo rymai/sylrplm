@@ -222,16 +222,17 @@ resources :contacts do
     end
   end
   # rails2 map.connect(	'forums/:id/update_lifecycle',	:controller => 'forums',	:action => 'update_lifecycle')
-  match 'forums/update_lifecycle', to: 'forums#update_lifecycle', via: [:get, :post]
+  match 'forums/:id/update_lifecycle', to: 'forums#update_lifecycle', via: [:get, :post]
   match 'forums/index_execute', to: 'forums#index_execute', via: [:get, :post]
 
   # rails2 map.connect(	'forums/:id/update_type',	:controller => 'forums',	:action => 'update_type')
-  match 'forums/update_type', to: 'forums#update_type', via: [:get, :post]
+  match 'forums/:id/update_type', to: 'forums#update_type', via: [:get, :post]
 
   # rails2 map.resources :forum_items
   resources :forum_items, only: [:create, :edit, :update] do
     member do
       get :destroy
+      delete :destroy
     end
     collection do
       get :new
