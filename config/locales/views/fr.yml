@@ -368,7 +368,7 @@ fr:
   add_datafile: Ajouter fichier
   label_nbfiles: Nb fichiers
   button_check_out: "Réserver"
-  is_check_out: "Est réservé"
+  is_check_out: "Est réservé:"
   button_check_in: "Maj et libérer"
   button_check_free: "Libérer"
   download: "Télécharger fichier"

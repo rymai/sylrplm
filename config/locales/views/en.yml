@@ -368,7 +368,7 @@ en:
   add_datafile: Add file
   label_nb_files: Nb files
   button_check_out: Check Out
-  is_check_out: Is Check Out
+  is_check_out: "Is Check Out:"
   button_check_in: Check In
   button_check_free: Unlock
   download: download file

@@ -53,7 +53,7 @@
 <!-- left colum : detail + list-->
 <div>
 	<a onclick="toggleWindowVisibility(this,'object_details','<%= details_show%>','<%= details_hide%>');"> <%= details_hide%> </a>
-	<a onclick="toggleWindowVisibility(this ,'object_list','<%= list_show%>','<%= list_hide%>');"><%= list_hide%></a>
+	<a onclick="toggleWindowVisibility(this ,'object_list','<%= list_show%>','<%= list_hide%>');"><%= list_show%></a>
 	<a onclick="toggleWindowVisibility(this, 'object_tree','<%= tree_show%>','<%= tree_hide%>');"><%= tree_hide%></a>
 </div>
 <div id="rowOne"  name="rowOne">
@@ -79,7 +79,7 @@
 </div>
 <% unless mobile?%>
 <div id="rowTwo"  name="rowTwo">
-	<div id="object_list" name="object_list" style="display: block;">
+	<div id="object_list" name="object_list" style="display: none;">
 		<% unless @object_plms.nil? %>
 		<% obj=@object_plms[:recordset][0]
 		controller=get_controller_from_model_type(obj.modelname)%>
